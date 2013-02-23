@@ -100,7 +100,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		
 		$cmd = AdminGroups::addAdminCommand('set server maxplayers', $this, 'setServerMaxPlayers', 'server_maxplayer');
 		$cmd->setHelp('Sets a new maximum of players');
-		$cmd->setHelp('Sets the maximum number of players who can play on this server.');
+		$cmd->setHelpMore('Sets the maximum number of players who can play on this server.');
 		$cmd->setMinParam(1);
 		$cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Interger::getInstance());
 		AdminGroups::addAlias($cmd, "setmaxplayers");
