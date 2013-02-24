@@ -48,7 +48,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * List of all permissions
      * @var type 
      */
-    static private $permissionList = array();
+    static public $permissionList = array();
 
     /**
      * List of all Groups

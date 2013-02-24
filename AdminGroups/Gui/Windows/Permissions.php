@@ -70,7 +70,6 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	
 	function click_ok($login){
 		foreach($this->permissions as $key => $val){
-			echo $val->getStatus()."\n";
 			$this->group->addPermission($key, $val->getStatus());
 		}
 		$this->Erase($login);
