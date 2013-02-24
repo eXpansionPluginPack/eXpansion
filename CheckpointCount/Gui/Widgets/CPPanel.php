@@ -31,8 +31,12 @@ class CPPanel extends \ManiaLive\Gui\Window {
     function onShow() {
         
     }
-
-    function setText($text) {
+    /**
+     * SetText(string $text)
+     * Sets the text used in the widget
+     * @param string $text
+     */
+    public function setText($text) {
         $this->label->setText($text);    
     }
     function destroy() {

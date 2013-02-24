@@ -26,6 +26,13 @@ class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, true);
     }
 
+    /**
+     * displayWidget(string $login)
+     * Refreshes and Displays checpoint counter widget to player
+     
+     * * If no login is given, widget is displayed for all players
+     * @param string $login|null
+     */
     function displayWidget($login = null) {
         if ($login == null)
             CPPanel::EraseAll();
@@ -45,7 +52,7 @@ class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         
         $info = CPPanel::Create($login);
         $info->setSize(30, 6);
-        $text = ($checkpointIndex+1) . " / " . $this->storage->currentMap->nbCheckpoints;
+        $text = ($checkpointIndex+1) . " / " . $this->storage->currentMap->nbCheckpoints;        
         $info->setText('$fff'. $text);
         $info->setPosition(0, -68.5);
         $info->show();
