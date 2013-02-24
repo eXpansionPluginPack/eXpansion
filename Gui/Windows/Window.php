@@ -212,6 +212,7 @@ class Window extends \ManiaLive\Gui\Window {
     
     
     }
+    
     function destroy() {
        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->_closeAction);
         parent::destroy();
