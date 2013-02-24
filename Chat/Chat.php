@@ -1,7 +1,7 @@
 <?php
 
 /**
- * eXpansion
+ * eXpansion - Chat plugin
  *
  * @name Chat
  * @date 29-01-2013
@@ -11,26 +11,7 @@
  * @author Petri Järvisalo
  * @copyright 2013
  *
- * ---------------------------------------------------------------------
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ---------------------------------------------------------------------
- * You are allowed to change things or use this in other projects, as
- * long as you leave the information at the top (name, date, version,
- * website, package, author, copyright) and publish the code under
- * the GNU General Public License version 3.
- * ---------------------------------------------------------------------
- */
+ */ 
 
 namespace ManiaLivePlugins\eXpansion\Chat;
 
@@ -39,17 +20,17 @@ use ManiaLive\Features\Admin\AdminGroup;
 use ManiaLivePlugins\eXpansion\Chat\Config;
 
 class Chat extends \ManiaLive\PluginHandler\Plugin {
-
+    /** Is the redirection enabled or not ?
+     * @type bool */
     private $enabled = true;
 
     /**
      * onInit()
-     * Function called on initialisation of ManiaLive.
      *
      * @return void
      */
     function onInit() {
-        $this->setVersion(1170);
+        $this->setVersion("0.1");
     }
 
     /**
@@ -67,7 +48,18 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
             $this->enabled = false;
         }
     }
-
+    
+    /**
+     * onPlayerChat()
+     * Processes the chat incoming from server, changes the look and color.
+     *
+     *  @param int $playerUid
+     *  @param string $login 
+     *  @param string $text
+     *  @param bool $isRegistredCmd 
+     *  
+     * * @return void
+     */
     function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
         if ($playerUid != 0 && substr($text, 0, 1) != "/" && $this->enabled) {
             $config = Config::getInstance();

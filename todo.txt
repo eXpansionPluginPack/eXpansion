@@ -1,3 +1,12 @@
+Features to do
+==============
+
+
+Already implemented features
+=============================
+
+
+
 Relay server tools improvement ideas
 ======================================
 
@@ -10,3 +19,5 @@ that you can switch between the chat of the different servers.
 e.g. I'm on relay A, but wanne see, what's written on the other servers. Then we can have different chat streams (matchserver,relay A,B,C and D). 
 So i can switch between the serverschatstreams and read (all) and write to them (only relay chatstream). 
 Also a longer chatbox would be great, where you can scroll a little bit (more than just pressing c in TMF).
+
+
