@@ -11,7 +11,7 @@
  * @author Petri Järvisalo
  * @copyright 2013
  *
- */ 
+ */
 
 namespace ManiaLivePlugins\eXpansion\Chat;
 
@@ -20,6 +20,7 @@ use ManiaLive\Features\Admin\AdminGroup;
 use ManiaLivePlugins\eXpansion\Chat\Config;
 
 class Chat extends \ManiaLive\PluginHandler\Plugin {
+
     /** Is the redirection enabled or not ?
      * @type bool */
     private $enabled = true;
@@ -44,12 +45,12 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
         try {
             $this->connection->chatEnableManualRouting(true);
         } catch (\Exception $e) {
-            
+
             Console::println(_("[eXpansion|Chat] Couldn't initialize chat. Error from server: %s", $e->getMessage()));
             $this->enabled = false;
         }
     }
-    
+
     /**
      * onPlayerChat()
      * Processes the chat incoming from server, changes the look and color.
@@ -77,7 +78,7 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
                     $this->connection->chatSendServerMessage("\$fff$nick\$z\$s" . $config->publicChatColor . "  " . $text);
                 }
             } catch (\Exception $e) {
-                Console::println('[eXpansion|Chat] error sending chat from ' . $login . ': ' . $text . ' with folloing error' . "\n" . $e->getMessage());
+                Console::println(_('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $text, $e->getMessage()));
             }
         }
     }

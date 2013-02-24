@@ -8,16 +8,15 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $timeStamps = array();
 
-
     function exp_onReady() {
         $this->enableDedicatedEvents();
         EmotePanel::$emotePlugin = $this;
-        
+
         $this->registerChatCommand("gg", "GG", 0, true);
         $this->registerChatCommand("bg", "BG", 0, true);
         $this->registerChatCommand("lol", "Lol", 0, true);
         $this->registerChatCommand("afk", "Afk", 0, true);
-         $this->registerChatCommand("bootme", "BootMe", 0, true);
+        $this->registerChatCommand("bootme", "BootMe", 0, true);
 
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
@@ -53,12 +52,12 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function Afk($login) {
         $this->sendEmote($login, __FUNCTION__);
     }
-    
+
     public function BootMe($login) {
         $this->sendEmote($login, __FUNCTION__);
         $this->connection->kick($login);
     }
-    
+
     public function sendEmote($login, $action) {
         try {
             if (!isset($this->timeStamps[$login])) {
@@ -74,7 +73,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 case "GG":
                     $this->connection->chatSendServerMessage($player->nickName . '$z$s$i$o$f90 Good Game, everybody!');
                     break;
-                 case "BootMe":
+                case "BootMe":
                     $this->connection->chatSendServerMessage($player->nickName . '$z$s$i$o$f90 Chooses the real life! Cya..');
                     break;
                 case "BG":
@@ -89,7 +88,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
             $this->timeStamps[$login] = time();
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('$f00$bError! $z$s$fff' . $e->getMessage(), $login);
+            $this->connection->chatSendServerMessage(_('$f00$bError! $z$s$fff %s', $e->getMessage()), $login);
         }
     }
 

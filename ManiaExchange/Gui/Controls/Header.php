@@ -32,17 +32,17 @@ class Header extends \ManiaLive\Gui\Control {
 
         $this->label = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->label->setAlign('left', 'center');
-        $this->label->setText("Map name");        
+        $this->label->setText(_("Map name"));        
         $this->frame->addComponent($this->label);
 
         $info = new \ManiaLib\Gui\Elements\Label(25, 4);
         $info->setAlign('left', 'center');       
-        $info->setText("Creators name");
+        $info->setText(_("Creators name"));
         $this->frame->addComponent($info);
 
         $this->time = new \ManiaLib\Gui\Elements\Label(20, 4);
         $this->time->setAlign('left', 'center');        
-        $this->time->setText("Length");
+        $this->time->setText(_("Length"));
         $this->frame->addComponent($this->time);
 
     

@@ -90,13 +90,13 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
 
 			$this->kickButton = new MyButton(16, 6);
-			$this->kickButton->setText("Kick");
+			$this->kickButton->setText(_("Kick"));
 			$this->kickButton->setAction($this->kickAction);
 			$this->kickButton->setScale(0.6);
 			$this->frame->addComponent($this->kickButton);
 
 			$this->banButton = new MyButton(16, 6);
-			$this->banButton->setText("Ban");
+			$this->banButton->setText(_("Ban"));
 			$this->banButton->setAction($this->banAction);
 			$this->banButton->setScale(0.6);
 			$this->frame->addComponent($this->banButton);
@@ -114,9 +114,9 @@ class Playeritem extends \ManiaLive\Gui\Control {
 //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
 		if ($this->isAdmin) {
 			if ($this->player->forceSpectator == 1 || $this->player->isSpectator) {
-				$this->forceButton->setText("Release Spec");
+				$this->forceButton->setText(_("Release Spec"));
 			} else {
-				$this->forceButton->setText("Force Spec");
+				$this->forceButton->setText(_("Force Spec"));
 			}
 		}
 	}
@@ -128,8 +128,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
 	function __destruct() {
 		ActionHandler::getInstance()->deleteAction($this->kickAction);
 		ActionHandler::getInstance()->deleteAction($this->banAction);
-		ActionHandler::getInstance()->deleteAction($this->forceAction);
-		echo "playerItem remove";
+		ActionHandler::getInstance()->deleteAction($this->forceAction);		
 	}
 
 }

@@ -17,9 +17,7 @@ class PersonalBestTimes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function exp_onLoad() {
         $this->enableDatabase();
-        $this->enableDedicatedEvents();
-        $this->registerChatCommand("test", "save", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-        $this->registerChatCommand("test2", "load", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+        $this->enableDedicatedEvents();       
         if (!$this->isPluginLoaded('eXpansion\LocalRecords'))
             die("Error, you MUST have enabled eXpansion\localrecords plugin to run this plugin!");
 

@@ -53,13 +53,13 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
        
         
         $this->addButton = new MyButton(16, 6);
-        $this->addButton->setText("Load");
+        $this->addButton->setText(_("Load"));
         $this->addButton->setAction($this->loadAction);
         $this->addButton->setScale(0.6);
         $this->frame->addComponent($this->addButton);
         
         $this->addButton = new MyButton(16, 6);
-        $this->addButton->setText("Save");
+        $this->addButton->setText(_("Save"));
         $this->addButton->setAction($this->saveAction);
         $this->addButton->setScale(0.6);
         $this->frame->addComponent($this->addButton);

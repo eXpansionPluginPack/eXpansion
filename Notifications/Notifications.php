@@ -34,7 +34,7 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->messages = array_reverse($array, true);
             $this->reDraw();
         } else {
-            \ManiaLive\Utilities\Console::println("Adding a button failed from plugin:" . $pluginid . " button callback is not valid.");
+            \ManiaLive\Utilities\Console::println("Notification adding failed for plugin:" . $pluginid . " callback is not valid.");
         }
     }
 

@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange;
 
 class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
-
     public function exp_onReady() {
         $this->registerChatCommand("mx", "chatMX", 2, true);
         $this->registerChatCommand("mx", "chatMX", 1, true);
@@ -14,8 +13,8 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->buildMenu();
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
-            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', 'ManiaExchange', true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', 'Search Maps', null, array($this, 'mxSearch'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', _('ManiaExchange'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', _('Search Maps'), null, array($this, 'mxSearch'), true);
         }
 
         $this->enableDedicatedEvents();
@@ -27,7 +26,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function buildMenu() {
         $this->callPublicMethod('Standard\Menubar', 'initMenu', \ManiaLib\Gui\Elements\Icons128x128_1::Download);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', 'Search', array($this, 'mxSearch'), true);
+        $this->callPublicMethod('Standard\Menubar', 'addButton', _('Search Maps'), array($this, 'mxSearch'), true);
     }
 
     public function chatMX($login, $arg, $param = null) {
@@ -43,7 +42,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 break;
             case "help":
             default:
-                $this->connection->chatSendServerMessage('Usage /mx add [id] or /mx search "your search terms here"', $login);
+                $this->connection->chatSendServerMessage(_('Usage /mx add [id] or /mx search "your search terms here"'), $login);
                 break;
         }
     }
@@ -59,7 +58,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function addMap($login, $mxId) {
         if (!is_numeric($mxId)) {
-            $this->connection->chatSendServerMessage('"' . $mxId . '" is not a numeric value.', $login);
+            $this->connection->chatSendServerMessage(_('"%s" is not a numeric value.', $mxId), $login);
             return;
         }
         try {
@@ -76,7 +75,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     $query = 'http://tm.mania-exchange.com/tracks/download/' . $mxId;
                     break;
             }
-            
+
             $ch = curl_init($query);
             curl_setopt($ch, CURLOPT_USERAGENT, "Manialive/eXpansion MXapi [getter] ver 0.1");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -85,32 +84,32 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             curl_close($ch);
 
             if ($data === false) {
-                $this->connection->chatSendServerMessage('$f00$oError $z$s$fffMX is down', $login);
+                $this->connection->chatSendServerMessage(_('MX is down'), $login);
                 return;
             }
 
             if ($status["http_code"] !== 200) {
                 if ($status["http_code"] == 301) {
-                    $this->connection->chatSendServerMessage('$f00$oError $z$s$fffMap not found for id ' . $mxId, $login);
+                    $this->connection->chatSendServerMessage(_('Map not found for id %s', $mxId), $login);
                     return;
                 }
 
-                $this->connection->chatSendServerMessage('$f00$oError $z$s$fffMX returned http error code:' . $status["http_code"], $login);
+                $this->connection->chatSendServerMessage(_('MX returned http error code: %s', $status["http_code"]), $login);
                 return;
             }
 
             $file = $this->connection->getMapsDirectory() . "/Downloaded/" . $mxId . ".Map.Gbx";
 
             if (!touch($file)) {
-                $this->connection->chatSendServerMessage("Couldn't create mapfile in maps folder, check folder permissions!", $login);
+                $this->connection->chatSendServerMessage(_("Couldn't create mapfile in maps folder, check folder permissions!"), $login);
             }
             file_put_contents($file, $data);
             $this->connection->addMap($file);
 
             $map = $this->connection->getMapInfo($file);
-            $this->connection->chatSendServerMessage("Map " . $map->name . '$z$s$fff added from MX Succesfully.', $login);
+            $this->connection->chatSendServerMessage(_('Map %s $z$s$fff added from MX Succesfully.', $map->name), $login);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('$f00$oError! $z$s$fff' . $e->getMessage(), $login);
+            $this->connection->chatSendServerMessage(_("Error: %s", $e->getMessage()), $login);
         }
     }
 

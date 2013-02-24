@@ -20,7 +20,7 @@ class PersonalMessages extends  \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function sendPersonalMessage($login, $message = "") {
         $window = \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Create($login);
-        $window->setTitle('Select Player to send message');
+        $window->setTitle(_('Select Player to send message'));
         $window->setMessage($message);
         $window->setSize(120, 100);
         $window->centerOnScreen();

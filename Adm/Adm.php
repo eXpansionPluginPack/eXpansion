@@ -15,7 +15,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->buildStdMenu();
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
-            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', 'Server Management', true);
+            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', _('Server Management'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', _('Server Options'), null, array($this, 'serverOptions'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', _('Game Options'), null, array($this, 'gameOptions'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', _('Match Settings'), null, array($this, 'matchSettings'), true);
@@ -44,9 +44,9 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function buildStdMenu() {
         $this->callPublicMethod('Standard\Menubar', 'initMenu', \ManiaLib\Gui\Elements\Icons128x128_1::Options);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', 'Server Options', array($this, 'serverOptions'), true);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', 'Game Options', array($this, 'gameOptions'), true);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', 'Match Settings', array($this, 'matchSettings'), true);
+        $this->callPublicMethod('Standard\Menubar', 'addButton', _('Server Options'), array($this, 'serverOptions'), true);
+        $this->callPublicMethod('Standard\Menubar', 'addButton', _('Game Options'), array($this, 'gameOptions'), true);
+        $this->callPublicMethod('Standard\Menubar', 'addButton', _('Match Settings'), array($this, 'matchSettings'), true);
     }
 
     public function serverOptions($login) {

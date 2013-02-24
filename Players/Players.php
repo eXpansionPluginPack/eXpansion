@@ -11,8 +11,8 @@ class Players extends  \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->buildMenu();
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
-            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', 'Players', false);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', 'Show Players', null, array($this, 'showPlayerList'), false);
+            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', _('Players'), false);            
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', _('Show Players'), null, array($this, 'showPlayerList'), false);
         }
     }
 
@@ -35,7 +35,7 @@ class Players extends  \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function buildMenu() {
         $this->callPublicMethod('Standard\Menubar', 'initMenu', \ManiaLib\Gui\Elements\Icons64x64_1::Buddy);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', 'Players', array($this, 'showPlayerList'), false);
+        $this->callPublicMethod('Standard\Menubar', 'addButton', _('Players'), array($this, 'showPlayerList'), false);
     }
 
     public function showPlayerList($login) {

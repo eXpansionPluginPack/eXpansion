@@ -105,28 +105,24 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($spacer);
 
         $this->queueButton = new MyButton(16, 6);
-        $this->queueButton->setText("Queue");
+        $this->queueButton->setText(_("Queue"));
         $this->queueButton->setAction($this->chooseNextMap);
         $this->queueButton->setScale(0.6);
         $this->frame->addComponent($this->queueButton);
 
         if ($this->isAdmin) {
             $this->goButton = new MyButton(16, 6);
-            $this->goButton->setText("Go now");
+            $this->goButton->setText(_("Go now"));
             $this->goButton->setAction($this->gotoMap);
             $this->goButton->setScale(0.6);
             $this->frame->addComponent($this->goButton);
 
             $this->removeButton = new MyButton(16, 6);
-            $this->removeButton->setText("Remove");
+            $this->removeButton->setText(_("Remove"));
             $this->removeButton->setAction($this->removeMap);
             $this->removeButton->setScale(0.6);
             $this->frame->addComponent($this->removeButton);
         }
-
-        // disabled... todo: get remove button to refresh the tracklist
-
-
 
         $this->addComponent($this->frame);
 

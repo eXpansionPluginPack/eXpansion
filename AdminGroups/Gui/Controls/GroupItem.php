@@ -51,19 +51,19 @@ class GroupItem extends \ManiaLive\Gui\Control {
 			
 			$plistButton = new MyButton(24, 6);
             $plistButton->setAction($this->action_playerList);
-            $plistButton->setText("Player List");
+            $plistButton->setText(_("Player List"));
             $plistButton->setScale(0.6);
             $frame->addComponent($plistButton);
 			
 			$aPlayerButton = new MyButton(24, 6);
             $aPlayerButton->setAction($this->action_addPlayer);
-            $aPlayerButton->setText("Add Player");
+            $aPlayerButton->setText(_("Add Player"));
             $aPlayerButton->setScale(0.6);
             $frame->addComponent($aPlayerButton);
 			
 			$permiButton = new MyButton(28, 6);
             $permiButton->setAction($this->action_changePermissions);
-            $permiButton->setText("Change Permissions");
+            $permiButton->setText(_("Change Permissions"));
             $permiButton->setScale(0.6);
             $frame->addComponent($permiButton);
 		}

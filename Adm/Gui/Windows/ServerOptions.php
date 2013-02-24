@@ -29,7 +29,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->actionOK = ActionHandler::getInstance()->createAction(array($this, "serverOptionsOk"));        
         $this->actionCancel = ActionHandler::getInstance()->createAction(array($this, "serverOptionsCancel"));
         
-        $this->setTitle('Server Options');
+        $this->setTitle(_('Server Options'));
 
 
         $this->inputboxes();
@@ -47,12 +47,12 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameInputbox->setLayout(new \ManiaLib\Gui\Layouts\Column());
 		
 		$this->serverName = new Inputbox("serverName");
-        $this->serverName->setLabel("Server Name");
+        $this->serverName->setLabel(_("Server Name"));
         $this->serverName->setText($server->name);
         $this->frameInputbox->addComponent($this->serverName);
 		
         $this->serverComment = new Inputbox("serverComment");
-        $this->serverComment->setLabel("Server comment");
+        $this->serverComment->setLabel(_("Server comment"));
         $this->serverComment->setText($server->comment);
         $this->frameInputbox->addComponent($this->serverComment);
 
@@ -63,7 +63,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->framePlayers->setSize(100, 11);
 
         $this->maxPlayers = new Inputbox("maxPlayers", 12);
-        $this->maxPlayers->setLabel("Players");
+        $this->maxPlayers->setLabel(_("Players"));
         $this->maxPlayers->setText($server->currentMaxPlayers);
         $this->framePlayers->addComponent($this->maxPlayers);
 
@@ -71,7 +71,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->framePlayers->addComponent($spacer);
 
         $this->maxSpec = new Inputbox("maxSpec", 12);
-        $this->maxSpec->setLabel("Spectators");
+        $this->maxSpec->setLabel(_("Spectators"));
         $this->maxSpec->setText($server->currentMaxSpectators);
         $this->framePlayers->addComponent($this->maxSpec);
 
@@ -83,7 +83,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameLadder->setSize(100, 11);
 
         $this->minLadder = new Inputbox("ladderMin");
-        $this->minLadder->setLabel("Ladderpoints minimum");
+        $this->minLadder->setLabel(_("Ladderpoints minimum"));
         $this->minLadder->setText($server->ladderServerLimitMin);
         $this->frameLadder->addComponent($this->minLadder);
 
@@ -91,7 +91,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameLadder->addComponent($spacer);
 
         $this->maxLadder = new Inputbox("ladderMax");
-        $this->maxLadder->setLabel("Ladderpoints Maximum");
+        $this->maxLadder->setLabel(_("Ladderpoints Maximum"));
         $this->maxLadder->setText($server->ladderServerLimitMax);
         $this->frameLadder->addComponent($this->maxLadder);
 
@@ -99,19 +99,19 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         // end of ladder points
         // server password
         $this->serverPass = new Inputbox("serverPass");
-        $this->serverPass->setLabel("Password for server");
+        $this->serverPass->setLabel(_("Password for server"));
         $this->serverPass->setText($server->password);
         $this->frameInputbox->addComponent($this->serverPass);
 
         // spectator password
         $this->serverSpecPass = new Inputbox("serverSpecPass");
-        $this->serverSpecPass->setLabel("Password for spectators");
+        $this->serverSpecPass->setLabel(_("Password for spectators"));
         $this->serverSpecPass->setText($server->passwordForSpectator);
         $this->frameInputbox->addComponent($this->serverSpecPass);
 
         // referee password
         $this->refereePass = new Inputbox("refereePass");
-        $this->refereePass->setLabel("Referee password");
+        $this->refereePass->setLabel(_("Referee password"));
         $this->refereePass->setText($server->refereePassword);
         $this->frameInputbox->addComponent($this->refereePass);
     }
@@ -130,43 +130,43 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $publicServer = false;  // 0 = visible, 1 = hidden 2 = hidden from nations
         $this->cbPublicServer = new Checkbox(4, 4, 50);
         $this->cbPublicServer->setStatus($publicServer);
-        $this->cbPublicServer->setText("Show Server in public server list");
+        $this->cbPublicServer->setText(_("Show Server in public server list"));
         $this->frameCb->addComponent($this->cbPublicServer);
 
         // checkbox for ladder server
         $this->cbLadderServer = new Checkbox();
         $this->cbLadderServer->setStatus($server->currentLadderMode);
-        $this->cbLadderServer->setText("Ladder server");
+        $this->cbLadderServer->setText(_("Ladder server"));
         $this->frameCb->addComponent($this->cbLadderServer);
 
         // checkbox for allow map download
         $this->cbAllowMapDl = new Checkbox(4, 4, 50);
         $this->cbAllowMapDl->setStatus($server->allowMapDownload);
-        $this->cbAllowMapDl->setText("Allow map download using ingame menu");
+        $this->cbAllowMapDl->setText(_("Allow map download using ingame menu"));
         $this->frameCb->addComponent($this->cbAllowMapDl);
 
         // checkbox for p2p download
         $this->cbAllowp2pDown = new Checkbox(4, 4, 50);
         $this->cbAllowp2pDown->setStatus($server->isP2PDownload);
-        $this->cbAllowp2pDown->setText("Allow Peer-2-Peer download");
+        $this->cbAllowp2pDown->setText(_("Allow Peer-2-Peer download"));
         $this->frameCb->addComponent($this->cbAllowp2pDown);
 
         // checkbox for p2p upload
         $this->cbAllowp2pUp = new Checkbox(4, 4, 50);
         $this->cbAllowp2pUp->setStatus($server->isP2PUpload);
-        $this->cbAllowp2pUp->setText("Allow Peer-2-Peer upload");
+        $this->cbAllowp2pUp->setText(_("Allow Peer-2-Peer upload"));
         $this->frameCb->addComponent($this->cbAllowp2pUp);
 
         // checkbox for changing validation seed
         $this->cbValidation = new Checkbox(4, 4, 50);
         $this->cbValidation->setStatus($server->useChangingValidationSeed);
-        $this->cbValidation->setText("Allow changing validation seed");
+        $this->cbValidation->setText(_("Allow changing validation seed"));
         $this->frameCb->addComponent($this->cbValidation);
 
         // checkbox for Enable referee mode
         $this->cbReferee = new Checkbox(4, 4, 50);
         $this->cbReferee->setStatus($server->refereeMode);
-        $this->cbReferee->setText("Enable Referee-mode");
+        $this->cbReferee->setText(_("Enable Referee-mode"));
         $this->frameCb->addComponent($this->cbReferee);
 
         // spacer
@@ -181,12 +181,12 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
         $this->buttonOK = new OkButton();
-        $this->buttonOK->setText("Apply");
+        $this->buttonOK->setText(_("Apply"));
         $this->buttonOK->setAction($this->actionOK);
         $frame->addComponent($this->buttonOK);
 
         $this->buttonCancel = new OkButton();
-        $this->buttonCancel->setText("Cancel");
+        $this->buttonCancel->setText(_("Cancel"));
         $this->buttonCancel->setAction($this->actionCancel);
         $frame->addComponent($this->buttonCancel);
 
