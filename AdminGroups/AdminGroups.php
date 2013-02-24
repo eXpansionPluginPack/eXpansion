@@ -38,6 +38,19 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	static private $commandsList = array();
 	
 	/**
+	 * List of all permissions
+	 * @var type 
+	 */
+	static private $permissionList = array();
+	
+	
+	/**
+	 * List of all Groups
+	 */
+	static public $groupList = array();
+	
+	
+	/**
 	 * The Configuration
 	 */
 	private $config;
@@ -61,10 +74,13 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 			} else {
 				$param = explode(": ", $key);
 				
-				//We have found a Admin group, lets see the permissions of 
-				//the group and the players that is part of it
-				if ($param[0] == 'Group')
+				if ($param[0] == 'MasterAdmin'){
+					$this->parseMaster($param[1], $value);
+				}else if ($param[0] == 'Group'){
+					//We have found a Admin group, lets see the permissions of 
+					//the group and the players that is part of it
 					$this->parseGroup($param[1], $value);
+				}
 			}
 		}
 	}
@@ -79,7 +95,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$this->setPublicMethod('getPermission');
 		
 		//Registering the admin chat comman with a lot of parameters
-		$this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());      
+		$this->registerChatCommand('admin', "adminCmd", -1, true, $this->get()); 
+		
+		$this->addAdminCommand('test', $this, "windowGroups", null);
 	}
 	
 	/**
@@ -89,34 +107,59 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	 * @param type $value
 	 */
 	private function ParseGroup($groupName, $value) {
-		//List of admins of this group
-		$groupAdmins = array();
 		
-		//The list of this groups permissions
-		$groupPermissions = array();
+		$group = new Group($groupName, false);
 		
-		//List of this groups settings (Un used for further usage)
-		$groupSettings = array();
-
 		//Settings and Permissions
 		foreach ($value as $key => $val) {
 			$param = explode(".", $key);
 
 			if ($param[0] == 'permission') {
-				$groupPermissions[$param[1]] = $this->stringToBool($val);
+				self::$permissionList[$param[1]] = true;
+				$group->addPermission($param[1], $this->stringToBool($val));
 			} elseif ($param[0] == 'settings') {
-				$groupSettings[$param[1]] = $val;
+				//
 			}
 		}
 
 		//Lets get the players
 		if (isset($value["login"])) {
 			foreach ($value["login"] as $login){
-				$admin = new Admin($login, $groupPermissions, $groupName);
-				self::$admins[$login] = $admin;
-				$groupAdmins[$login] = $admin;
+				$admin = new Admin($login, $group);
+				if(!isset(self::$admins[$login])){
+					self::$admins[$login] = $admin;
+					$group->addAdmin($admin);
+				}
 			}
 		}
+		self::$groupList[] = $group;
+	}
+	
+	/**
+	 * Parsing the Master group
+	 * 
+	 * @param type $groupName The groups name
+	 * @param type $value
+	 */
+	private function parseMaster($groupName, $permissions){
+		//Settings and Permissions
+		foreach ($permissions as $key => $val) {
+			$param = explode(".", $key);
+
+			if ($param[0] == 'permission') {
+				self::$permissionList[$param[1]] = true;
+			}
+		}
+		
+		$group = new Group($groupName, true);
+		if (isset($permissions["login"])) {
+			foreach ($permissions["login"] as $login){
+				$admin = new Admin($login, $group);
+				$group->addAdmin($admin);
+				self::$admins[$login] = $admin;
+			}
+		}
+		self::$groupList[] = $group;
 	}
 
 	/**
@@ -127,6 +170,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	 * @return boolean Has the player this permission
 	 */
 	static public function hasPermission($login, $permissionName) {
+
+		self::$permissionList[$permissionName] = true;
+
 		//Is this player an Admin
 		if (isset(self::$admins[$login])){
 			//Does he has this permission
@@ -144,7 +190,6 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	 */
 	public function getPermission($login, $permissionName){
 		//Is this player an Admin
-		print_r($login);
 		if (isset(self::$admins[$login])){
 			//Does he has this permission
 			if(self::$admins[$login]->hasPermission($permissionName)){
@@ -156,6 +201,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 			$this->exp_chatSendServerMessage($this->config->msg_needBeAdmin, $login);
 			return false;
 		}
+	}
+	
+	public static function getAdmin($login){
+		return isset(self::$admins[$login])? self::$admins[$login] : null;		
 	}
 	
 	/**
@@ -302,6 +351,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		return self::$commandsList;
 	}
 	
+	
+	
 	/**
 	 * Return the list of all admins and capabilities
 	 * @return type
@@ -318,5 +369,14 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             return array_keys(self::$admins);
         }
 
+		
+	public function windowGroups($login, $params){
+		\ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::Erase($login);
+        $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::Create($login);
+        $window->setTitle('Admin Groups');
+        $window->setSize(120, 100);
+        $window->centerOnScreen();
+        $window->show();
+	}	
 
 }

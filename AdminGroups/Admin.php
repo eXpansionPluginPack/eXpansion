@@ -10,34 +10,27 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups;
 class Admin {
 
     private $login;
-    private $permissions;
-    private $GroupName;
+    private $group;
 
-    function __construct($login, $permissions, $groupName) {
-
+    function __construct($login, Group $group) {
         $this->login = $login;
-        $this->permissions = $permissions;
-        $this->GroupName = $groupName;
+        $this->group = $group;
     }
 
     public function getLogin() {
         return $this->login;
     }
+	
+	public function hasPermission($name){
+		return $this->group->hasPermission($name);
+	}
+	
+	public function getGroup() {
+		return $this->group;
+	}
 
-    public function getGroupName() {
-        return $this->GroupName;
-    }
 
-    public function hasPermission($name) {
-        if ($name == "")
-            return true;
-        else if (isset($this->permissions[$name])) {
-            return $this->permissions[$name];
-        }
-        else
-            return false;
-    }
-
+	
 }
 
 ?>
