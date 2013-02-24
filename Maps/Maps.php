@@ -67,7 +67,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             Gui\Windows\MapList::$records = $this->callPublicMethod('eXpansion\LocalRecords', 'getRecords');
 
         $window = Gui\Windows\Maplist::Create($login);
-        $window->setTitle('Maps on server');
+        $window->setTitle(_('Maps on server'));
         $window->centerOnScreen();
         $window->setSize(140, 100);
         $window->show();
@@ -75,7 +75,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function removeMap($login, $mapNumber) {
         if (!\ManiaLive\Features\Admin\AdminGroup::contains($login)) {
-            $this->connection->chatSendServerMessage("You are not allowed to do this!", $login);
+            $this->connection->chatSendServerMessage(_("You are not allowed to do this!"), $login);
             return;
         }
 
@@ -83,10 +83,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             $player = $this->storage->players[$login];
             $map = $this->storage->maps[$mapNumber];
-            $this->connection->chatSendServerMessage($player->nickName . '$z$s$fff removed map ' . $map->name . '$z$s$fff from the playlist.');
+            
+            $this->connection->chatSendServerMessage(_('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.', $player->nickName, $map->name));
             $this->connection->removeMap($map->fileName);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('$f00$oError $z$s$fff$o' . $e->getMessage());
+            $this->connection->chatSendServerMessage(_("Error: %s",$e->getMessage()));
         }
     }
 

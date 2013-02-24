@@ -32,7 +32,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->actionCup = ActionHandler::getInstance()->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_CUP);
         $this->actionTeam = ActionHandler::getInstance()->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_TEAM);
 
-        $this->setTitle('Game Options');
+        $this->setTitle(_('Game Options'));
         $this->genGameModes();
     }
 
@@ -47,7 +47,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $nextGameInfo = $this->connection->getNextGameInfo();
 
         $button = new myButton();
-        $button->setText("TimeAttack");
+        $button->setText(_("Time Attack"));
         $button->setValue(GameInfos::GAMEMODE_TIMEATTACK);
         $button->setAction($this->actionTA);
 
@@ -56,7 +56,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameGameMode->addComponent($button);
 
         $button = new myButton();
-        $button->setText("Rounds");
+        $button->setText(_("Rounds"));
         $button->setAction($this->actionRounds);
         $button->setValue(GameInfos::GAMEMODE_ROUNDS);
         if ($nextGameInfo->gameMode == GameInfos::GAMEMODE_ROUNDS)
@@ -64,7 +64,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameGameMode->addComponent($button);
 
         $button = new myButton();
-        $button->setText("Cup");
+        $button->setText(_("Cup"));
         $button->setAction($this->actionCup);
         $button->setValue(GameInfos::GAMEMODE_CUP);
         if ($nextGameInfo->gameMode == GameInfos::GAMEMODE_CUP)
@@ -72,7 +72,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameGameMode->addComponent($button);
 
         $button = new myButton();
-        $button->setText("Laps");
+        $button->setText(_("Laps"));
         $button->setAction($this->actionLaps);
         $button->setValue(GameInfos::GAMEMODE_LAPS);
         if ($nextGameInfo->gameMode == GameInfos::GAMEMODE_LAPS)
@@ -80,7 +80,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameGameMode->addComponent($button);
 
         $button = new myButton();
-        $button->setText("Team");
+        $button->setText(_("Team"));
         $button->setAction($this->actionTeam);
         $button->setValue(GameInfos::GAMEMODE_TEAM);
         if ($nextGameInfo->gameMode == GameInfos::GAMEMODE_TEAM)
@@ -115,35 +115,34 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         try {
             switch ($gameMode) {
                 case GameInfos::GAMEMODE_TIMEATTACK:
-                    $mode = "Time Attack";
+                    $mode = _("Time Attack");
                     break;
                 case GameInfos::GAMEMODE_CUP:
-                    $mode = "Cup";
+                    $mode = _("Cup");
                     break;
                 case GameInfos::GAMEMODE_LAPS:
-                    $mode = "Laps";
+                    $mode = _("Laps");
                     break;
                 case GameInfos::GAMEMODE_ROUNDS:
-                    $mode = "Rounds";
+                    $mode = _("Rounds");
                     break;
                 case GameInfos::GAMEMODE_TEAM:
-                    $mode = "Team";
+                    $mode = _("Team");
                     break;
                 default:
                     $mode = $gameMode;
             }
             $this->connection->setGameMode($gameMode);
-            $this->connection->chatSendServerMessage('$fff Next Gamemode is now set to $o' . $mode);
+            $this->connection->chatSendServerMessage(_('$fff Next Gamemode is now set to $o%s', $mode));
             $this->mainFrame->removeComponent($this->frameGameMode);
             $this->genGameModes();
             $this->redraw();
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('$f00$oError! $o$fff' . $e->getMessage(), $this->getRecipient());
+            $this->connection->chatSendServerMessage(_('$f00$oError! $o$fff%s', $e->getMessage()), $this->getRecipient());
         }
     }
 
     public function Ok($login) {
-
         $this->hide();
     }
 

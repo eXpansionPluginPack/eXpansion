@@ -14,7 +14,7 @@ class PBPanel extends \ManiaLive\Gui\Window {
         parent::onConstruct();
         $login = $this->getRecipient();
         $label = new \ManiaLib\Gui\Elements\Label();        
-        $label->setText('$dddPersonal Best');
+        $label->setText('$ddd'._('Personal Best'));
         $label->setAlign("right", "top");                
         $this->addComponent($label);
         

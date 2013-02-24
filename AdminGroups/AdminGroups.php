@@ -373,7 +373,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function windowGroups($login, $params) {
         \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::Erase($login);
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::Create($login);
-        $window->setTitle('Admin Groups');
+        $window->setTitle(_('Admin Groups'));
         $window->setSize(120, 100);
         $window->centerOnScreen();
         $window->show();
