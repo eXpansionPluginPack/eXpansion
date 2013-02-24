@@ -16,9 +16,9 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', 'Server Management', true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', 'Server Options', null, array($this, 'serverOptions'), true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', 'Game Options', null, array($this, 'gameOptions'), true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', 'Match Settings', null, array($this, 'matchSettings'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', _('Server Options'), null, array($this, 'serverOptions'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', _('Game Options'), null, array($this, 'gameOptions'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', _('Match Settings'), null, array($this, 'matchSettings'), true);
         }
 
         $this->enableDedicatedEvents();
@@ -52,7 +52,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function serverOptions($login) {
 		if($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')){
 			$window = ServerOptions::Create($login);
-			$window->setTitle('Server Options');
+			$window->setTitle(_('Server Options'));
 			$window->centerOnScreen();
 			$window->setSize(160, 100);
 			$window->show();
@@ -62,7 +62,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function gameOptions($login) {
 		if($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')){
 			$window = GameOptions::Create($login);
-			$window->setTitle('Game Options');
+			$window->setTitle(_('Game Options'));
 			$window->centerOnScreen();
 			$window->setSize(160, 100);
 			$window->show();
@@ -72,7 +72,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function matchSettings($login) {
 		if($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')){
 			$window = Gui\Windows\MatchSettings::Create($login);
-			$window->setTitle('Match Settings');
+			$window->setTitle(_('Match Settings'));
 			$window->centerOnScreen();
 			$window->setSize(120, 100);
 			$window->show();

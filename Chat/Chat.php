@@ -44,7 +44,8 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
         try {
             $this->connection->chatEnableManualRouting(true);
         } catch (\Exception $e) {
-            Console::println('[eXpansion|Chat] Couldn\'t initialize chat.' . "\n" . ' Error from server: ' . $e->getMessage());
+            
+            Console::println(_("[eXpansion|Chat] Couldn't initialize chat. Error from server: %s", $e->getMessage()));
             $this->enabled = false;
         }
     }

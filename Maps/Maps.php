@@ -4,9 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Maps;
 
 class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
-    private $records = array();
-
-
     public function exp_onReady() {
         $this->enableDedicatedEvents();
         Gui\Windows\Maplist::$mapsPlugin = $this;
@@ -17,9 +14,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->callPublicMethod('eXpansion\Menu', 'addItem', 'Add map', null, array($this, 'addMaps'), true);
         }
 
-
-        if ($this->isPluginLoaded('Standard\Menubar'))
-            $this->buildMenu();
 
         if ($this->isPluginLoaded('Standard\Menubar'))
             $this->buildMenu();
@@ -37,12 +31,17 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         // user call votes disabled since dedicated doesn't support them atm.
         //  $this->callPublicMethod('Standard\Menubar', 'addButton', 'Vote for skip map', array($this, 'voteSkip'), false);
-          $this->callPublicMethod('Standard\Menubar', 'addButton', 'Vote for replay map', array($this, 'voteRestart'), false);
+        //  $this->callPublicMethod('Standard\Menubar', 'addButton', 'Vote for replay map', array($this, 'voteRestart'), false);
     }
 
+    /**
+     * 
+     * @param string $login
+     * @todo enable the method for menu, currently votes are not working!
+     */
     public function voteRestart($login) {
-    //    $this->connection->callVoteRestartMap();
-               
+        //    $this->connection->callVoteRestartMap();
+
         $vote = new \DedicatedApi\Structures\Vote();
         $vote->callerLogin = $login;
         $vote->cmdName = "Cmd name";
@@ -95,9 +94,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($isListModified) {
             $windows = Gui\Windows\Maplist::GetAll();
 
-            foreach ($windows as $window) {  
-               $login = $window->getRecipient();          
-               $this->showMapList($login);
+            foreach ($windows as $window) {
+                $login = $window->getRecipient();
+                $this->showMapList($login);
             }
         }
     }
