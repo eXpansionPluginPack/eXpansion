@@ -59,7 +59,6 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function changePermission($login, $group) {
-        \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Permissions::Erase($login);
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Permissions::Create($login);
         $window->setGroup($group);
         $window->setTitle(_('Admin Group Permission - %s', $group->getGroupName()));
@@ -69,7 +68,12 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function playerList($login, $group) {
-        
+        $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Players::Create($login);
+        $window->setGroup($group);
+        $window->setTitle(_('Admin Group Players - %s', $group->getGroupName()));
+        $window->setSize(80, 100);
+        $window->centerOnScreen();
+        $window->show();
     }
 
 }
