@@ -99,12 +99,12 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         AdminGroups::addAlias($cmd, "spec");
 
         $cmd = AdminGroups::addAdminCommand('player ignore', $this, 'ignore', 'player_ignore');
-        $cmd->setHelp('adds player to ignore list and mutes him from the chat');
+        $cmd->setHelp('Adds player to ignore list and mutes him from the chat');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "ignore");
 
         $cmd = AdminGroups::addAdminCommand('player unignore', $this, 'unignore', 'player_ignore');
-        $cmd->setHelp('removes player to ignore list and allows him to chat');
+        $cmd->setHelp('Removes player to ignore list and allows him to chat');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "unignore");
 
@@ -416,6 +416,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
     }
+
     function kick($fromLogin, $params) {
 
         $player = $this->storage->getPlayerObject($params[0]);
@@ -533,6 +534,22 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function setserverchattime($fromLogin, $params) {
         $timelimit = explode(":", trim($params[0]));
         $newLimit = intval($timelimit[0] * 60 * 1000) + ($timelimit[1] * 1000) - 8000;
+
+        if ($newLimit < 0)
+            $newLimit = 0;
+
+        try {
+            $this->connection->SetChatTime($newLimit);
+            $admin = $this->storage->getPlayerObject($fromLogin);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets new chat time limit of %variable% %s %admina_action%minutes.', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setTaTimelimit($fromLogin, $params) {
+        $timelimit = explode(":", trim($params[0]));
+        $newLimit = intval($timelimit[0] * 60 * 1000) + ($timelimit[1] * 1000);
 
         if ($newLimit < 0)
             $newLimit = 0;

@@ -17,7 +17,7 @@ class Window extends \ManiaLive\Gui\Window {
     public $_closebutton;
     public $_minbutton;
     public $_closeAction;
-    
+    public $_showCoords = 'False';
     public $_windowFrame;
 
     protected function onConstruct() {
@@ -44,6 +44,7 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_windowFrame->addComponent($this->_titlebar);
 
         $this->_title = new \ManiaLib\Gui\Elements\Label(60, 4);
+        $this->_title->setId("TitlebarText");
         $this->_title->setStyle("TextCardInfoSmall");
         $this->_title->setScale(0.9);
         $this->_windowFrame->addComponent($this->_title);
@@ -83,8 +84,9 @@ class Window extends \ManiaLive\Gui\Window {
         <timeout>0</timeout>            
         <script><!--
                        main () {     
-                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");   
-                        
+                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");    
+                        declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);
+                        declare showCoords = '.$this->_showCoords.';
                         declare MoveWindow = False;
                         declare CloseWindow = False;   
                         declare isMinimized = False;   
@@ -98,7 +100,11 @@ class Window extends \ManiaLive\Gui\Window {
                                                                                
                         while(True) {                                                               
                                 
-                               
+                               if (showCoords) {                               
+                                    declare coords = "$fffX:" ^ (MouseX - Window.PosnX) ^ " Y:" ^ (MouseY - Window.PosnY + 3 );                                   
+                                    TitlebarText.Value = coords;
+                                }
+                                
                                 if (MoveWindow) {                                                                                                    
                                     DeltaPos.X = MouseX - lastMouseX;
                                     DeltaPos.Y = MouseY - lastMouseY;
@@ -195,13 +201,20 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_minbutton->setPosition($this->sizeX - 5, 0);
         $this->mainFrame->setSize($this->sizeX - 4, $this->sizeY - 8);
         //$this->mainFrame->setPosY(-6);
-        $this->setPositionZ(-75);
+        $this->setPositionZ(75);
     }
 
     function onShow() {
         
     }
-
+    
+    function setDebug($bool) {
+        if ($bool) {
+            $this->_showCoords = 'True';
+            
+        }
+    }
+    
     function setText($text) {
         $this->_mainText->setText($text);
     }
