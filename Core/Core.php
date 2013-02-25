@@ -24,7 +24,6 @@ namespace ManiaLivePlugins\eXpansion\Core;
          */
         function exp_onInit() {
             parent::exp_onInit();
-            $this->setVersion(self::getMaxVersion());
         }
 
         /**

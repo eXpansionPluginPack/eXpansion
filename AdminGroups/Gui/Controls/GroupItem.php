@@ -18,7 +18,6 @@ class GroupItem extends \ManiaLive\Gui\Control {
 	
 	private $action_changePermissions;
 	private $action_addPlayer;
-	private $action_playerList;
 	private $action_removeGroup;
 	 
 	function __construct(Group $group, $controller, $login) {
@@ -27,7 +26,6 @@ class GroupItem extends \ManiaLive\Gui\Control {
         $sizeY = 4;
 		
 		$this->action_changePermissions = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'changePermission'), $group);
-		$this->action_addPlayer = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'addPlayer'), $group);
 		$this->action_playerList = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'playerList'), $group);
 		
 		$frame = new \ManiaLive\Gui\Controls\Frame();
@@ -54,12 +52,6 @@ class GroupItem extends \ManiaLive\Gui\Control {
             $plistButton->setText(_("Player List"));
             $plistButton->setScale(0.6);
             $frame->addComponent($plistButton);
-			
-			$aPlayerButton = new MyButton(24, 6);
-            $aPlayerButton->setAction($this->action_addPlayer);
-            $aPlayerButton->setText(_("Add Player"));
-            $aPlayerButton->setScale(0.6);
-            $frame->addComponent($aPlayerButton);
 			
 			$permiButton = new MyButton(28, 6);
             $permiButton->setAction($this->action_changePermissions);

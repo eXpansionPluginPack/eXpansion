@@ -68,10 +68,6 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $window->show();
     }
 
-    public function addPlayer($login, $group) {
-        echo $group->getGroupName() . "\n";
-    }
-
     public function playerList($login, $group) {
         
     }

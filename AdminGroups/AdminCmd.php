@@ -46,7 +46,6 @@ class AdminCmd {
 					}
 				}
 			}
-			call_user_func_array('sprintf', func_get_args();)
 			call_user_func_array(array($this->class, $this->function), array($login, $param));
 			return "";
 		}

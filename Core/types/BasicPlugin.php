@@ -52,6 +52,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
             $this->setPublicMethod('exp_unload');
             $this->setPublicMethod('getDependencies');
+            $this->setPublicMethod('exp_chatSendServerMessage');
             $this->setPublicMethod('exp_activateChatRedirect');
             $this->setPublicMethod('exp_deactivateChatRedirect');
             $this->setPublicMethod('exp_activateAnnounceRedirect');
@@ -102,7 +103,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param type $msg
          * @param type $login null to send to everyone
          */
-        protected function exp_chatSendServerMessage($msg, $login = null) {
+        public function exp_chatSendServerMessage($msg, $login = null) {
             if ($login == null) {
                 //If we send it to everyone we consider it as a announcement
                 $this->exp_announce($msg);
