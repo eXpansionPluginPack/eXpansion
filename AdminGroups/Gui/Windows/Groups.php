@@ -33,7 +33,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function onShow() {
-		$this->pager->clearComponents();
+		$this->pager->clearItems();
         $this->populateList();
     }
 

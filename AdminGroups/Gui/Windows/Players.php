@@ -52,22 +52,21 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 25);
         $this->pager->setStretchContentX($this->sizeX);
-        $this->pager->setPosition(4, -22);
+        $this->pager->setPosition(4, -17);
 		
 		$this->login_add->setSize($this->sizeX - 20, 7);
 		$this->login_add->setPosition(4, -12);
 		
 		$this->button_add->setSize(30, 5);
-		$this->button_add->setPosition($this->sizeX-35, -15);
+		$this->button_add->setPosition($this->sizeX-35, -12);
     }
 	
 	function onShow() {
-		$this->pager->clearComponents();
+		$this->pager->clearItems();
         $this->populateList();
     }
 
     function populateList() {
-		echo "Draw\n";
 		foreach ($this->group->getGroupUsers() as $admin) {		
 			$this->pager->addItem(new AdminItem($admin, $this, $this->getRecipient()));
 		}
