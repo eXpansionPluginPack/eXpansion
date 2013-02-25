@@ -2,8 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\AdminItem;
 
 /**
  * Description of Permissions
@@ -12,6 +13,7 @@ use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
  */
 class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	
+	private $adminGroups;
 	private $pager;
 	private $group;
 	
@@ -23,6 +25,8 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	protected function onConstruct() {
 		parent::onConstruct();
 		$config = \ManiaLive\DedicatedApi\Config::getInstance();
+		
+		$this->adminGroups = AdminGroups::getInstance();
 		
 		$this->pager = new \ManiaLive\Gui\Controls\Pager();
 		$this->mainFrame->addComponent($this->pager);
@@ -64,7 +68,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function populateList() {
 			
 		foreach ($this->group->getGroupUsers() as $admin) {		
-			
+			$this->pager->addItem(new AdminItem($admin, $this, $this->getRecipient()));
 		}
 	}
 	
@@ -83,8 +87,16 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 		$this->redraw($login2);	
 	}
 	
-	function click_remove($login, $admin_login){
-		
+	function click_remove($login, $admin){
+		$this->adminGroups->removeFromGroup($login, $this->group, $admin);
+		self::Erase($login);
+		self::Create($login);
+		$windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
+
+		foreach ($windows as $window) {
+			$login = $window->getRecipient();
+			$this->redraw($login);
+		}
 	}
 	
 	function __destruct() {
