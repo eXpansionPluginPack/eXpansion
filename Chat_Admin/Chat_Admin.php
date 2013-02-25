@@ -5,6 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Chat_Admin;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Data\Storage;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Windows\GenericPlayerList;
+use ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Controls\BannedPlayeritem;
 
 /**
  * Description of Admin
@@ -60,31 +62,51 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd->setHelp('clears the banlist of players');
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "cleanbanlist");
-       
+
+        $cmd = AdminGroups::addAdminCommand('player get banlist', $this, 'getBanlist', 'player_black');
+        $cmd->setHelp('shows the current banlist of players');
+        $cmd->setMinParam(0);
+        AdminGroups::addAlias($cmd, "getbanlist");
+
         $cmd = AdminGroups::addAdminCommand('player clean blacklist', $this, 'cleanBlacklist', 'player_black');
         $cmd->setHelp('clears the blacklist of players');
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "cleanblacklist");
 
+        $cmd = AdminGroups::addAdminCommand('player get blacklist', $this, 'getBlacklist', 'player_black');
+        $cmd->setHelp('shows the current banlist of players');
+        $cmd->setMinParam(0);
+        AdminGroups::addAlias($cmd, "getblacklist");
+
+        $cmd = AdminGroups::addAdminCommand('player get guestlist', $this, 'getGuestlist', 'player_black');
+        $cmd->setHelp('shows the current guest of players');
+        $cmd->setMinParam(0);
+        AdminGroups::addAlias($cmd, "getguestlist");
+
+        $cmd = AdminGroups::addAdminCommand('player get ignorelist', $this, 'getIgnorelist', 'player_ignore');
+        $cmd->setHelp('shows the current ignorelist of players');
+        $cmd->setMinParam(0);
+        AdminGroups::addAlias($cmd, "getignorelist");
 
         $cmd = AdminGroups::addAdminCommand('player remove black', $this, 'unBlacklist', 'player_black');
         $cmd->setHelp('Removes the player from the black list');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "unBlack");
 
-
-
-
-
-
-
-        /* AdminGroups::addAdminCommand('unignore', $this, 'unignore', 'player_ignore', 'The player won\'t be ignored any more');
-          AdminGroups::addAdminCommand('player remove ignore', $this, 'unignore', 'player_ignore', 'The player won\'t be ignored any more'); */
-
         $cmd = AdminGroups::addAdminCommand('player spec', $this, 'forceSpec', 'player_spec');
         $cmd->setHelp('Forces the player to become spectator');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "spec");
+
+        $cmd = AdminGroups::addAdminCommand('player ignore', $this, 'ignore', 'player_ignore');
+        $cmd->setHelp('adds player to ignore list and mutes him from the chat');
+        $cmd->setMinParam(1);
+        AdminGroups::addAlias($cmd, "ignore");
+
+        $cmd = AdminGroups::addAdminCommand('player unignore', $this, 'unignore', 'player_ignore');
+        $cmd->setHelp('removes player to ignore list and allows him to chat');
+        $cmd->setMinParam(1);
+        AdminGroups::addAlias($cmd, "unignore");
 
         /*
          * *************************** 
@@ -283,14 +305,14 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $player = $this->storage->getPlayerObject($params[0]);
         if ($player == null) {
-            $this->sendErrorChat($fromLogin, 'Player %variable%' . $params[0] . '$0ae doesn\' exist.');
+            $this->sendErrorChat($fromLogin, _('%admina_action%Player %variable% %s %admina_action%doesn\' exist.', $params[0]));
             return;
         }
 
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
-            $this->connection->banAndBlackList($player, $params[1], true);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% blacklists the player %variable%' . $player->nickName);
+            $this->connection->banAndBlackList($player, "", true);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin %variable% %s %admina_action%blacklists the player %variable% %s', $admin->nickName, $player->nickName));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -300,7 +322,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->cleanBlackList();
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% cleans the blacklist.');
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%cleans the blacklist.', $admin->nickName));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -310,7 +332,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->cleanBanList();
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% cleans the banlist.');
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%cleans the banlist.', $admin->nickName));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -320,7 +342,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->cleanIgnoreList();
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% cleans the ignorelist.');
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%cleans the ignorelist.', $admin->nickName));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -331,7 +353,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->unBlackList($params[0]);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% unblacklists the player ' . $params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%unblacklists the player %s', $admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -349,7 +371,25 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->ban($params[0]);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% bans the player %variable%' . $nickname);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin %variable% %s %admina_action% bans the player%variable% %s', $admin->nickName, $nickname));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function ignore($fromLogin, $params) {
+
+        $player = $this->storage->getPlayerObject($params[0]);
+        if (is_object($player)) {
+            $nickname = $player->nickName;
+        } else {
+            $nickname = $params[0];
+        }
+
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->ignore($params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin %variable% %s %admina_action% ignores the player%variable% %s', $admin->nickName, $nickname));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -360,25 +400,34 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         try {
             $this->connection->unBan($params[0]);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% unban the player ' . $params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%unbans the player %s', $admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
     }
 
+    function unignore($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+
+        try {
+            $this->connection->unIgnore($params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%unignores the player %s', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
     function kick($fromLogin, $params) {
 
         $player = $this->storage->getPlayerObject($params[0]);
         if ($player == null) {
-            $this->sendErrorChat($fromLogin, 'Player %variable%' . $param1 . '$0ae doesn\' exist.');
+            $this->sendErrorChat($fromLogin, _('%admina_action%Player %variable% %s doesn\' exist.', $params[0]));
             return;
         }
 
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->kick($player);
-            $plNick = $player->nickName;
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% kicks the player %variable%' . $player->nickName);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%kicks the player%variable% %s', $admin->nickName, $player->nickName));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -387,16 +436,17 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function forceSpec($fromLogin, $params) {
         $player = $this->storage->getPlayerObject($params[0]);
         if ($player == null) {
-            $this->sendErrorChat($fromLogin, 'Player %variable%' . $param1 . '$0ae doesn\' exist.');
+            $this->sendErrorChat($fromLogin, _('%admina_action%Player %variable% %s doesn\' exist.', $params[0]));
             return;
         }
-
-        $player = $this->storage->getPlayerObject($param1);
-        $admin = $this->storage->getPlayerObject($fromLogin);
-        $this->connection->forceSpectator($player, 1);
-        $this->connection->forceSpectator($player, 0);
-        $plNick = $player->nickName;
-        $this->exp_chatSendServerMessage('%admin_action%Admin %variable%' . $admin->nickName . '$z$s%admina_ction% Forces the player %variable%' . $player->nickName . '$z$s%admin_action% to Spectator.');
+        try {
+            $admin = $this->storage->getPlayerObject($fromLogin);
+            $this->connection->forceSpectator($player, 1);
+            $this->connection->forceSpectator($player, 0);
+            $this->exp_chatSendServerMessage(_('%admin_action%Admin%variable% %s %admina_action%Forces the player %variable% %s %admin_action%to Spectator.', $admin->nickName, $player->nickName));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
     }
 
     public function sendErrorChat($login, $message) {
@@ -404,24 +454,22 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function setServerName($fromLogin, $params) {
-
         $name = implode(" ", $params);
         try {
             $this->connection->setServerName($name);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% sets new server name: %variable%' . $name);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action% sets new server name:%variable% %s', $admin->nickName, $name));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
     }
 
     function setServerComment($fromLogin, $params) {
-
         $comment = implode(" ", $params);
         try {
             $this->connection->setServerName($comment);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% sets new server comment');
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets new server comment:%variable% %s', $admin->nickName, $comment));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -429,15 +477,10 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function setServerMaxPlayers($fromLogin, $params) {
         $params[0] = (int) $params[0];
-
-        if ($params[0] > 150) {
-            $this->sendErrorChat($fromLogin, 'Parameter value too big. Max players is limited to 150.');
-            return;
-        }
         try {
             $this->connection->setMaxPlayers($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% sets server maximum players to %variable%' . $params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets server maximum players to%variable% %s', $admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -445,11 +488,10 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function setServerMaxSpectators($fromLogin, $params) {
         $params[0] = (int) $params[0];
-
         try {
             $this->connection->setMaxSpectators($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% sets server maximum spectators to %variable%' . $params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets server maximum spectators to%variable% %s', $admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -459,8 +501,8 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $this->connection->setServerPassword($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% sets/unsets new server password.');
-            $this->exp_chatSendServerMessage($fromLogin, '%admina_action% New password: %variable%' . $params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin %variable% %s %admina_action% sets/unsets new server password.', $admin->nickName));
+            $this->exp_chatSendServerMessage(_('%admina_action%New server password:%variable% %s', $params[0]), $fromLogin);
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -470,8 +512,8 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $this->connection->setServerPasswordForSpectator($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% sets/unsets new spectator password.');
-            $this->exp_chatSendServerMessage($fromLogin, '%admina_action% New spectator password: %variable%' . $params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets/unsets new spectator password.', $admin->nickName));
+            $this->exp_chatSendServerMessage(_('%admina_action%New spectator password:%variable% %s', $params[0]), $fromLogin);
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -481,8 +523,8 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $this->connection->setRefereePassword($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% sets/unsets new referee password.');
-            $this->exp_chatSendServerMessage($fromLogin, '%admina_action% New referee password: %variable%' . $params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets/unsets new referee password.', $admin->nickName));
+            $this->exp_chatSendServerMessage(_('%admina_action%New referee password:%variable% %s', $params[0]), $fromLogin);
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -490,14 +532,15 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function setserverchattime($fromLogin, $params) {
         $timelimit = explode(":", trim($params[0]));
-
         $newLimit = intval($timelimit[0] * 60 * 1000) + ($timelimit[1] * 1000) - 8000;
+
         if ($newLimit < 0)
             $newLimit = 0;
+
         try {
             $this->connection->SetChatTime($newLimit);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% sets new chat time limit of %variable%' . $params[0] . '$0ae minutes.');
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets new chat time limit of %variable% %s %admina_action%minutes.', $admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -513,14 +556,14 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $bool = false;
         }
         else {
-            $this->sendErrorChat($fromLogin, 'Invalid parameter. Correct parameter for the command is either true or false.');
+            $this->sendErrorChat($fromLogin, _('Invalid parameter. Correct parameter for the command is either true or false.'));
             return;
         }
 
         try {
             $this->connection->allowMapDownload($bool);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% set allow download challenge to %variable%' . $param1);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%set allow download maps to%variable% %s', $admin->nickName, $param1));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -536,23 +579,27 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($params[0] == 'nations')
                 $output = 2;
             if (is_numeric($params[0]))
-                $output = $params[0];
+                $output = intval($params[0]);
         }
         else {
-            $this->sendErrorChat($fromLogin, 'Invalid parameter. Correct parameters for command are: 0,1,2,visible,hidden,nations.');
+            $this->sendErrorChat($fromLogin, _('Invalid parameter. Correct parameters for command are: 0,1,2,visible,hidden,nations.'));
             return;
         }
         try {
             $this->connection->setHideServer($output);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% set Hide Server to %variable%' . $params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%set Hide Server to%variable% %s', $admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
     }
 
     function stopDedicated($fromLogin, $params) {
-        $this->connection->stopServer();
+        try {
+            $this->connection->stopServer();
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
     }
 
     function stopManiaLive($fromLogin, $params) {
@@ -563,7 +610,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $this->connection->nextMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% skips challenge!');
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%skips the challenge!', $admin->nickName));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -574,7 +621,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
             $admin = $this->storage->getPlayerObject($fromLogin);
             Dispatcher::dispatch(new events\onMaxAdmin_Restart());
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% restarts challenge!');
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%restarts the challenge!', $admin->nickName));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -601,7 +648,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if (strtolower($param1) == "cup")
                 $gamemode = \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP;
             if ($gamemode === NULL) {
-                $this->sendErrorChat($fromLogin, 'Usage: /admin set game mode script,team,ta,rounds,laps,stunts,cup ');
+                $this->sendErrorChat($fromLogin, _('Invalid parameter. Valid parameteres are: script,team,timeattack,ta,rounds,laps,stunts,cup.'));
                 return;
             }
         }
@@ -609,7 +656,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $this->connection->setGameMode($gamemode);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% sets game mode to %variable%' . $params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets game mode to%variable% %s', $admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -620,7 +667,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $this->connection->setAllWarmUpDuration($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% sets all game modes warmup duration to %variable%' . $params[0]);
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin %variable% %s %admina_action%sets all game modes warmup duration to%variable% %s', $admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
             return;
@@ -635,14 +682,112 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $bool = true; // ^^
         }
         else {
-            $this->sendErrorChat($fromLogin, '%adminerror%Invalid parameter. Correct parameter for the command is either true or false.');
+            $this->sendErrorChat($fromLogin, _('Invalid parameter. Correct parameter for the command is either true or false.'));
             return;
         }
 
         try {
             $this->connection->setDisableRespawn($bool);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('%admina_action%Admin %variable%' . $admin->nickName . '$z$s%admina_action% set allow respawn to %variable%' . $param1);
+            $this->exp_chatSendServerMessage('%admina_action%Admin%variable% %s %admina_action%set allow respawn to %variable% %s', $admin->nickName, $param1);
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    /* Graphical Methods */
+
+    function getBanList($login) {
+        GenericPlayerList::Erase($login);
+
+        try {
+            $window = GenericPlayerList::Create($login);
+            $window->setTitle(_('Banned Players on the server'));
+            $indexNumber = 0;
+            $items = array();
+
+            /**
+             * @var \DedicatedApi\Structures\Player 
+             */
+            foreach ($this->connection->getBanList(-1, 0) as $player) {
+                $items[] = new BannedPlayeritem($indexNumber, $player, $this);
+            }
+            $window->populateList($items);
+            $window->setSize(120, 100);
+            $window->centerOnScreen();
+            $window->show();
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function getBlackList($login) {
+        GenericPlayerList::Erase($login);
+
+        try {
+            $window = GenericPlayerList::Create($login);
+            $window->setTitle(_('Blacklisted Players on the server'));
+            $indexNumber = 0;
+            $items = array();
+
+            /**
+             * @var \DedicatedApi\Structures\Player 
+             */
+            foreach ($this->connection->getBlackList(-1, 0) as $player) {
+                $items[] = new BlacklistPlayeritem($indexNumber, $player, $this);
+            }
+            $window->populateList($items);
+            $window->setSize(120, 100);
+            $window->centerOnScreen();
+            $window->show();
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function getGuestList($login) {
+        GenericPlayerList::Erase($login);
+
+        try {
+            $window = GenericPlayerList::Create($login);
+            $window->setTitle(_('Guest Players on the server'));
+            $indexNumber = 0;
+            $items = array();
+
+            /**
+             * @var \DedicatedApi\Structures\Player 
+             */
+            foreach ($this->connection->getGuestList(-1, 0) as $player) {
+                $items[] = new GuestPlayeritem($indexNumber, $player, $this);
+            }
+            $window->populateList($items);
+            $window->setSize(120, 100);
+            $window->centerOnScreen();
+            $window->show();
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function getIgnoreList($login) {
+        GenericPlayerList::Erase($login);
+
+        try {
+            $window = GenericPlayerList::Create($login);
+            $window->setTitle(_('Ignored Players on the server'));
+            $indexNumber = 0;
+            $items = array();
+
+            /**
+             * @var \DedicatedApi\Structures\Player 
+             */
+            foreach ($this->connection->getIgnoreList(-1, 0) as $player) {
+                $items[] = new IgnoredPlayeritem($indexNumber, $player, $this);
+            }
+            $window->populateList($items);
+            $window->setSize(120, 100);
+            $window->centerOnScreen();
+            $window->show();
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }

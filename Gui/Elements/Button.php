@@ -11,6 +11,7 @@ class Button extends \ManiaLive\Gui\Control {
     private $value;
     private $isActive = false;
     private $activeFrame;
+    private $color;
 
     function __construct($sizeX = 25, $sizeY = 7) {
         $config = Config::getInstance();
@@ -32,6 +33,12 @@ class Button extends \ManiaLive\Gui\Control {
         $this->label->setAlign('center', 'center');
         //$this->label->setStyle("TextCardInfoSmall");
         $this->label->setScriptEvents(true);
+
+        $this->color = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+        $this->color->setAlign('left', 'center');
+        $this->color->setBgcolor('999');
+
+
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;
         $this->setSize($sizeX, $sizeY);
@@ -39,45 +46,53 @@ class Button extends \ManiaLive\Gui\Control {
 
     protected function onResize($oldX, $oldY) {
         $this->button->setSize($this->sizeX, $this->sizeY);
-
+        $this->color->setSize($this->sizeX, $this->sizeY);
         $this->label->setSize($this->sizeX, $this->sizeY);
         $this->label->setPosX($this->sizeX / 2);
     }
 
     function onDraw() {
         $this->clearComponents();
-        if ($this->isActive) 
+        if ($this->isActive)
             $this->addComponent($this->activeFrame);
 
-            $this->addComponent($this->button);
-            $this->addComponent($this->label);
-        }
-
-        function getText() {
-            return $this->label->getText();
-        }
-
-        function setText($text) {
-            $this->label->setText('$000' . $text);
-        }
-
-        function setActive($bool = true) {
-            $this->isActive = $bool;
-        }
-
-        function getValue() {
-            return $this->value;
-        }
-
-        function setValue($text) {
-            $this->value = $text;
-        }
-
-        function setAction($action) {
-            $this->button->setAction($action);
-            $this->label->setAction($action);
-        }
-
+        $this->addComponent($this->color);
+        $this->addComponent($this->button);
+        $this->addComponent($this->label);
     }
+
+    function getText() {
+        return $this->label->getText();
+    }
+
+    function setText($text) {
+        $this->label->setText('$000' . $text);
+    }
+
+    function setActive($bool = true) {
+        $this->isActive = $bool;
+    }
+
+    function getValue() {
+        return $this->value;
+    }
+    /**
+     * Colorize the button background     
+     * @param string $value 3-digit RGB code
+     */
+    function colorize($value) {
+        $this->color->setBgcolor($value);    
+    }
+
+    function setValue($text) {
+        $this->value = $text;
+    }
+
+    function setAction($action) {
+        $this->button->setAction($action);
+        $this->label->setAction($action);
+    }
+
+}
 
 ?>

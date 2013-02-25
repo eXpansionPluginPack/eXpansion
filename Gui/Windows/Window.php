@@ -4,6 +4,9 @@ namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
+/**
+ * @abstract
+ */
 class Window extends \ManiaLive\Gui\Window {
 
     public $_titlebar;
