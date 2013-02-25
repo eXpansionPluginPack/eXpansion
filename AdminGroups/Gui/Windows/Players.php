@@ -58,15 +58,16 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 		$this->login_add->setPosition(4, -12);
 		
 		$this->button_add->setSize(30, 5);
-		$this->button_add->setPosition($this->sizeX-35, -19);
+		$this->button_add->setPosition($this->sizeX-35, -15);
     }
 	
 	function onShow() {
+		$this->pager->clearComponents();
         $this->populateList();
     }
 
     function populateList() {
-			
+		echo "Draw\n";
 		foreach ($this->group->getGroupUsers() as $admin) {		
 			$this->pager->addItem(new AdminItem($admin, $this, $this->getRecipient()));
 		}
@@ -74,9 +75,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	
 	function click_add($login2){
 		$login = $this->login_add->getText();
-		echo "Test : ".$login."\n";
 		if(AdminGroups::isInList($login)){
-			echo "Test";
 			$message = array(_('%adminerror%Player is already in the admin group : %variable%%1 %adminerror%. Plz remove firsty', AdminGroups::getAdmin($login)->getGroup()->getGroupName()));
 			\ManiaLive\PluginHandler\PluginHandler::getInstance()->callPublicMethod(null, 'eXpansion\AdminGroups', 'exp_chatSendServerMessage', $message);
 		}else{
@@ -89,13 +88,15 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	
 	function click_remove($login, $admin){
 		$this->adminGroups->removeFromGroup($login, $this->group, $admin);
-		self::Erase($login);
-		self::Create($login);
+		$this->onShow();
+		$this->redraw();
+		
 		$windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
 
 		foreach ($windows as $window) {
 			$login = $window->getRecipient();
-			$this->redraw($login);
+			$window->onShow();
+			$window->redraw($login);
 		}
 	}
 	
