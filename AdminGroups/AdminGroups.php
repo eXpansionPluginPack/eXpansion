@@ -57,6 +57,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @var Config
      */
     private $config;
+	
+	/**
+	 * When was the configuration file loaded? 
+	 * @var type 
+	 */
+	private $readTime;
 
     public function exp_onInit() {
         parent::exp_onInit();
@@ -65,9 +71,45 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //Recovering the configuration 
         $this->config = Config::getInstance();
 
-        //Recovering the admin groups
-        $values = \parse_ini_file("config/" . $this->config->config_file, true);
+       $this->loadAdmins();
+    }
 
+    public function exp_onLoad() {
+        parent::exp_onLoad();
+        //No idea if needed, I think not need to check
+        // $this->enableDedicatedEvents();  
+        //Registering public functions
+        $this->setPublicMethod('adminCmd');
+        $this->setPublicMethod('getPermission');
+
+        //Registering the admin chat comman with a lot of parameters              
+        $this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());
+
+        $this->addAdminCommand('test', $this, "windowGroups", null);
+    }
+	
+	public function reLoadAdmins(){
+		$time = filemtime("config/" . $this->config->config_file);
+		
+		if($time > $this->readTime)
+			$this->loadAdmins ();
+	}
+	
+	/**
+	 * Loads the Admin configuration File. And will reset everything
+	 */
+	public function loadAdmins(){
+		//Reseting settings
+		self::$admins = array();
+		self::$groupList = array();
+		self::$permissionList = array();
+		
+		 //Recovering the admin groups
+        $values = \parse_ini_file("config/" . $this->config->config_file, true);
+		
+		//Save the read Time
+		$this->readTime = time();
+		
         //reading the admin groups and settings
         foreach ($values as $key => $value) {
             //THe settings
@@ -85,21 +127,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 }
             }
         }
-    }
-
-    public function exp_onLoad() {
-        parent::exp_onLoad();
-        //No idea if needed, I think not need to check
-        // $this->enableDedicatedEvents();  
-        //Registering public functions
-        $this->setPublicMethod('adminCmd');
-        $this->setPublicMethod('getPermission');
-
-        //Registering the admin chat comman with a lot of parameters              
-        $this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());
-
-        $this->addAdminCommand('test', $this, "windowGroups", null);
-    }
+	}
 
     /**
      * Parsing a group
@@ -163,6 +191,40 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$groupList[] = $group;
     }
 
+	public function saveFile(){
+		$string = "";
+		
+		foreach(self::$groupList as $group){
+			
+			if($group->isMaster()){
+				$string .= ";MasterAdmin is a special group that has all permissions. \n";
+				$string .= ";No need to specify permissions. But we will to show all permissions\n";
+				$string .= "[MasterAdmin: ".$group->getGroupName()."]\n";
+			}else{
+				$string .= "\n\n[Group: ".$group->getGroupName()."]\n";
+			}
+			
+			foreach (self::$permissionList as $key => $value) {
+				$cBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 68);
+				$cBox->setStatus($this->group->hasPermission($key));
+				$cBox->setText($key);             
+				$this->pager->addItem($cBox);
+				$this->permissions[$key] = $cBox;
+			}
+			
+			foreach ($group->getPermissions() as $key => $value) {
+				$string .= "permission.restart".$key." = '".$value."'\n";
+			}
+			
+			$string.="\n;List of Players.\n";
+			foreach ($group->getGroupUsers() as $value) {
+				$string .= "login[] = '".$value."'\n";
+			}
+		}
+		
+		file_put_contents("config/" . $this->config->config_file, $string);
+	}
+	
     /**
      * Does the player has this permission
      * 
@@ -351,33 +413,70 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-	
+	/**
+	 * Adds a player to a group
+	 * 
+	 * @param String The login of the player who makes the changes
+	 * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group The group to which the player needs to be added
+	 * @param String $login2 The player to add to the group
+	 */
 	public function addToGroup($login, Group $group, $login2){
 		if (isset(self::$admins[$login2])){
 			$this->exp_chatSendServerMessage('#admin_error#Player "%1" is already in a group %2. Remove him first');
 		}else{
+			$this->reLoadAdmins();
+			
 			self::$admins[$login2]=true;
 			$group->addAdmin(new Admin($login2, $group));
 			$this->exp_chatSendServerMessage('#admin_action#Player "%1" has been added to admin group #variable#%2.');
+			
+			$this->saveFile();
 		}
 	}
-    /**
-     * 
+    
+	/**
+     * Removes a player from a group
+	 * 
      * @param string $login
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Admin $admin
      */
     public function removeFromGroup($login, Group $group, Admin $admin) {
          if (isset(self::$admins[$login]) && $admin->getLogin() == $login) {
-            unset(self::$admins[$login]);
-            $this->exp_chatSendServerMessage('#admin_error#Your are : "%1" You can\'t remove yourself from a group');
+            $this->exp_chatSendServerMessage('#admin_error#Your are : "%1" You can\'t remove yourself from a group', $login);
         }else if (isset(self::$admins[$login]) && $group->removeAdmin($admin->getLogin())) {
+			$this->reLoadAdmins();
+			
+			$group->removeAdmin($admin->getLogin());
             unset(self::$admins[$login]);
-            $this->exp_chatSendServerMessage('#admin_error#Player : "%1" Has been taken out admin groups');
+            $this->exp_chatSendServerMessage('#admin_error#Player : "%1" Has been taken out admin group %2');
+			
+			$this->saveFile();
         } else {
             $this->exp_chatSendServerMessage('#admin_error#Player : "%1" isn\'t in the grop', $login);
         }
     }
+	
+	/**
+	 * Change the permissions of a group
+	 * 
+	 * @param String $login
+	 * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
+	 * @param array $newPermissions The list of new permissions.
+	 */
+	public function changePermissionOfGroup($login, Group $group, array $newPermissions){
+		if($group->isMaster()){
+			$this->exp_chatSendServerMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
+		} else{
+			$this->reLoadAdmins();
+			
+			foreach ($newPermissions as $key => $val) {
+				$group->addPermission($key, $val);
+			}
+			
+			$this->saveFile();
+		}
+	}
 
     /**
      * 

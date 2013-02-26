@@ -68,7 +68,7 @@ class Group {
 		return $this->groupName;
 	}
 
-	public function getMaster() {
+	public function isMaster() {
 		return $this->master;
 	}
 
