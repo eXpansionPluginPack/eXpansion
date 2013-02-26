@@ -13,10 +13,9 @@ class Playeritem extends \ManiaLive\Gui\Control {
     private $sendAction;
     private $frame;
 
-    function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin) {
+    function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller) {
         $sizeX = 120;
-        $sizeY = 4;
-        $this->isAdmin = $isAdmin;
+        $sizeY = 4;        
         $this->player = $player;
 
         $this->sendAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'sendPm'), $player->login);

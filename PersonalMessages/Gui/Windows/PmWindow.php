@@ -8,7 +8,6 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLib\Utils\Formatting;
-
 use ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Controls\Playeritem;
 use ManiaLivePlugins\eXpansion\PersonalMessages\PersonalMessages;
 
@@ -16,9 +15,10 @@ class PmWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     private $pager;
     private $connection;
-    private $storage;   
+    private $storage;
     private $message;
-    
+    private $controller;
+
     protected function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
@@ -29,19 +29,6 @@ class PmWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->mainFrame->addComponent($this->pager);
     }
 
-    function sendPm($login, $target) {
-        try {            
-            $this->hide();
-            $targetPlayer = $this->storage->getPlayerObject($target);
-            $sourcePlayer = $this->storage->getPlayerObject($login);
-            PersonalMessages::$reply[$login] = $target;
-            $this->connection->chatSendServerMessage('$abcYou whisper to '.($targetPlayer->nickName).'$z$s$abc: '. $this->message , $login);
-            $this->connection->chatSendServerMessage('$abcA whisper from '.($sourcePlayer->nickName).'$z$s$abc: '. $this->message, $target);
-            } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('$f00$oError $z$s$fff' . $e->getMessage());
-        }       
-    }
-   
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 14);
@@ -59,15 +46,24 @@ class PmWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $x = 0;
         $login = $this->getRecipient();
-        foreach ($this->storage->players as $player)
-            $this->pager->addItem(new Playeritem($x++, $player, $this, \ManiaLive\Features\Admin\AdminGroup::contains($login)));
-        foreach ($this->storage->spectators as $player)
-            $this->pager->addItem(new Playeritem($x++, $player, $this, \ManiaLive\Features\Admin\AdminGroup::contains($login)));
+        foreach ($this->storage->players as $player) {
+            if ($player->login !== $this->getRecipient())
+                $this->pager->addItem(new Playeritem($x++, $player, $this->controller));
+        }
+        foreach ($this->storage->spectators as $player) {
+            if ($player->login !== $this->getRecipient())
+                $this->pager->addItem(new Playeritem($x++, $player, $this->controller));
+        }
     }
+
     function setMessage($message) {
         $this->message = $message;
-    
     }
+
+    function setController($obj) {
+        $this->controller = $obj;
+    }
+
     function destroy() {
         parent::destroy();
     }
