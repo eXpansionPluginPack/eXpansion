@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Core\types {
 
     use DedicatedApi\Structures\GameInfos;
-use ManiaLive\Utilities\Console;
+    use ManiaLive\Utilities\Console;
 
     /**
      * Description of BasicPlugin
@@ -35,16 +35,26 @@ use ManiaLive\Utilities\Console;
         private $exp_unloading = false;
 
         /**
+         * The path to the directory of this plugin
+         * @var String 
+         */
+        private $exp_dir = null;
+        
+        /**
          * The Expansion Pack tools
          * @var \ManiaLivePlugins\eXpansion\Core\eXpansion Expansion tools
          */
         protected $exp_maxp;
+        
+
 
         public final function onInit() {
             //Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
 
             $this->exp_unloading = false;
+            
+            \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
 
             //All plugins need the eXpansion Core to work properly
             if ($this->getId() != 'eXpansion\Core')
@@ -95,6 +105,20 @@ use ManiaLive\Utilities\Console;
          */
         public function exp_onReady() {
             
+        }
+        
+        private function exp_getdir(){
+            if($this->exp_dir == null){
+                $exploded = explode("\\", get_class($this));
+                $this->exp_dir = "libraries/";
+                $i = 0;
+                while($i < sizeof($exploded)-2){
+                     $this->exp_dir .= $exploded[$i]."/";
+                     $i++;
+                }
+                 $this->exp_dir .= $exploded[$i];
+            }
+            return $this->exp_dir;
         }
 
         /**
@@ -271,6 +295,7 @@ use ManiaLive\Utilities\Console;
 
 namespace {
     if (!function_exists('__')) {
+
         function __() {
             $args = func_get_args();
             $string = array_shift($args);

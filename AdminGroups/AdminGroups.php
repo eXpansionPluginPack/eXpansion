@@ -255,7 +255,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->exp_chatSendServerMessage($this->config->msg->msg_noPermissionMsg, $login);
             }
         } else {
-            $this->exp_chatSendServerMessage($this->config->msg_needBeAdmin, $login);
+            $this->exp_chatSendServerMessage("#admin_action#You need to be an Admin to use that command", $login);
             return false;
         }
     }
@@ -367,14 +367,14 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         //First lets check if player is an admin
         if (!isset(self::$admins[$login])) {
-            $this->exp_chatSendServerMessage($this->config->msg_needBeAdmin, $login);
+            $this->exp_chatSendServerMessage("#admin_action#You need to be an Admin to use that command", $login);
         } else {
             //Lets see if the command is correct
             $arg = strtolower(array_shift($args));
             if (isset(self::$commands[$arg])) {
                 $this->doAdminCmd(self::$commands[$arg], $args, $login);
             } else {
-                $this->exp_chatSendServerMessage($this->config->msg_commandDonExist, $login);
+                $this->exp_chatSendServerMessage("#admin_action#The command don't exist", $login);
             }
         }
     }
@@ -393,17 +393,17 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 if ($error != '')
                     $this->exp_chatSendServerMessage('#admin_error#' . $error, $login);
             }else {
-                $this->exp_chatSendServerMessage($this->config->msg_noPermissionMsg, $login);
+                $this->exp_chatSendServerMessage("#admin_action#You don't have the permission to use that admin command", $login);
             }
         } else if (isset($chats[0])) {
             $chat = strtolower(array_shift($chats));
             if (is_array($commands) && isset($commands[$chat])) {
                 $this->doAdminCmd($commands[$chat], $chats, $login);
             } else {
-                $this->exp_chatSendServerMessage($this->config->msg_commandDonExist, $login);
+                $this->exp_chatSendServerMessage("#admin_action#The command don't exist", $login);
             }
         } else {
-            $this->exp_chatSendServerMessage($this->config->msg_commandDonExist, $login);
+            $this->exp_chatSendServerMessage("#admin_action#The command don't exist", $login);
         }
     }
 

@@ -34,7 +34,9 @@ namespace ManiaLivePlugins\eXpansion\Core;
             $config = Config::getInstance();
             
             $this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_BEGIN_MAP);
-
+            
+            i18n::getInstance()->start();
+            
             Console::println(' #####################################################################');
             Console::println('[eXpension Pack] Enabling eXpension version:' . $this->getVersion() . ' . . .');
             Console::println(' Language support detected for:' . implode(",",i18n::getInstance()->getSupportedLocales()) . '!');

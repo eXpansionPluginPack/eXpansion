@@ -1,0 +1,2 @@
+#admin_action#You need to be an Admin to use that command
+#admin_action#Vous devez etre un administrateur pour utiliser cette commande!
