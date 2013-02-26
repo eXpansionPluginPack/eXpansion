@@ -270,7 +270,7 @@ use ManiaLive\Utilities\Console;
 }
 
 namespace {
-    if (!function_exists('_')) {
+    if (!function_exists('__')) {
         function __() {
             $args = func_get_args();
             $string = array_shift($args);

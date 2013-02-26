@@ -25,7 +25,8 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->mainFrame->addComponent($this->pager);
     }
 
-    function saveSettings($login, $filename) {
+    function saveSettings($login, $filename, $args) {
+        
         try {
             $this->connection->saveMatchSettings($filename);
             $file = explode("/", $filename);
@@ -35,7 +36,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    function loadSettings($login, $filename) {
+    function loadSettings($login, $filename, $args) {
         try {
             $this->connection->loadMatchSettings($filename);
             $file = explode("/", $filename);

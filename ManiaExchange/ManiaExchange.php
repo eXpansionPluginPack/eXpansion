@@ -111,7 +111,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connection->addMap($file);
 
             $map = $this->connection->getMapInfo($file);
-            $this->connection->chatSendServerMessage(__('Map %s $z$s$fff added from MX Succesfully.', $map->name), $login);
+            $this->connection->chatSendServerMessage(__('Map %s $z$s$fff added from MX Succesfully.', $map->name));
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()), $login);
         }

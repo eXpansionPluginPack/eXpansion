@@ -6,6 +6,7 @@ use \ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerOptions;
 use \ManiaLivePlugins\eXpansion\Adm\Gui\Windows\GameOptions;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\AdminPanel;
+use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerControlMain;
 
 class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -16,12 +17,11 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Server Management'), true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Server Options'), null, array($this, 'serverOptions'), true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Game Options'), null, array($this, 'gameOptions'), true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Match Settings'), null, array($this, 'matchSettings'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Server Management'), null, array($this, 'serverControlMain'), true);            
         }
 
         $this->enableDedicatedEvents();
+        ServerControlMain::$mainPlugin = $this;
 
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
@@ -69,6 +69,25 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    public function serverManagement($login) {
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+            $window = Gui\Windows\ServerManagement::Create($login);
+            $window->setTitle(__('Server Management'));            
+            $window->setSize(60, 20);
+            $window->centerOnScreen();
+            $window->show();
+        }
+    }
+
+    public function serverControlMain($login) {
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+            $window = Gui\Windows\ServerControlMain::Create($login);
+            $window->setTitle(__('Server Management'));            
+            $window->setSize(120, 20);
+            $window->show();
+        }
+    }
+
     public function matchSettings($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
             $window = Gui\Windows\MatchSettings::Create($login);
@@ -77,7 +96,14 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $window->setSize(120, 100);
             $window->show();
         }
-    }   
+    }
+
+    public function adminGroups($login) {
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
+            \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->windowGroups($login);
+        }
+    }
+
 }
 
 ?>

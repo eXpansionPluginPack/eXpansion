@@ -19,19 +19,27 @@ class Window extends \ManiaLive\Gui\Window {
     public $_closeAction;
     public $_showCoords = 'False';
     public $_windowFrame;
-
+    public $_windowPos;
+    
     protected function onConstruct() {
         parent::onConstruct();
         $config = Config::getInstance();
         $this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
+        
+        $this->_windowPos = new \ManiaLib\Gui\Elements\Entry();
+        $this->_windowPos->setName("_pos");
+        $this->_windowPos->setId("windowPosition");
+        $this->_windowPos->setScriptEvents(true);
+        $this->_windowPos->setPosition(0,80);
+       // $this->addComponent($this->_windowPos);
+        
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame($this->sizeX, $this->sizeY);
         $this->_windowFrame->setScriptEvents(true);       
         $this->_windowFrame->setAlign("left", "top");
 
 
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
-        $this->_mainWindow->setId("MainWindow");
-        // $this->mainWindow->setScriptEvents(true);
+        $this->_mainWindow->setId("MainWindow");        
         $this->_mainWindow->setStyle("Bgs1InRace");
         $this->_mainWindow->setSubStyle("BgWindow2");        
         $this->_mainWindow->setScriptEvents(true);
@@ -86,6 +94,7 @@ class Window extends \ManiaLive\Gui\Window {
                        main () {     
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");    
                         declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);
+                       // declare CMlEntry windowPos <=> (Page.GetFirstChild("windowPosition") as CMlEntry);
                         declare showCoords = '.$this->_showCoords.';
                         declare MoveWindow = False;
                         declare CloseWindow = False;   
@@ -109,7 +118,8 @@ class Window extends \ManiaLive\Gui\Window {
                                     DeltaPos.X = MouseX - lastMouseX;
                                     DeltaPos.Y = MouseY - lastMouseY;
                                     LastDelta += DeltaPos;
-                                    Window.RelativePosition = LastDelta;                                    
+                                    Window.RelativePosition = LastDelta;      
+                                   // windowPos.Value = Window.PosnX ^ "," ^ Window.PosnY;
                                     lastMouseX = MouseX;
                                     lastMouseY = MouseY;
                                     }
@@ -149,10 +159,10 @@ class Window extends \ManiaLive\Gui\Window {
                        
                                         foreach (Event in PendingEvents) {
                                                         if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Titlebar")  {                                                          
-                                                        lastMouseX = MouseX;
-                                                        lastMouseY = MouseY;                                                   
-                                                        MoveWindow = True;   
-                                                        }                                                                                                                 
+                                                            lastMouseX = MouseX;
+                                                            lastMouseY = MouseY;                                                   
+                                                            MoveWindow = True;   
+                                                        }                                     
                                                 }
                                         }
                                         
@@ -204,7 +214,7 @@ class Window extends \ManiaLive\Gui\Window {
         $this->setPositionZ(75);
     }
 
-    function onShow() {
+    function onShow() {        
         
     }
     
