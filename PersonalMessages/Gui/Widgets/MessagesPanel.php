@@ -21,9 +21,12 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
     private $labelPlayer;
     private $inputboxMessage;
     private $buttonSend;
+    private $status = "True";
+    private $minMaxAction;
 
     /** @var \DedicatedApi\Structures\Player */
     private $targetPlayer = false;
+    private $xml;
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -87,29 +90,43 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
 
         $this->_minButton = new \ManiaLib\Gui\Elements\Quad(5, 5);
         $this->_minButton->setId("minimizeButton");
-        $this->_minButton->setStyle("Icons128x128_1");
-        $this->_minButton->setSubStyle("ProfileAdvanced");
+        $this->_minButton->setStyle("Icons64x64_1");
+        $this->_minButton->setSubStyle("Outbox");
         $this->_minButton->setScriptEvents(true);
+        //$this->_minButton->setAction($this->minMaxAction);
         $this->_minButton->setAlign("left", "bottom");
 
         $this->_windowFrame->addComponent($this->_minButton);
 
         $this->addComponent($this->_windowFrame);
 
-        $xml = new \ManiaLive\Gui\Elements\Xml();
-        $xml->setContent('
+        $this->xml = new \ManiaLive\Gui\Elements\Xml();
+        $this->addComponent($this->xml);
+    }
+
+    function onResize($oldX, $oldY) {
+        parent::onResize($oldX, $oldY);
+        $this->_windowFrame->setSize(100, 6);
+        $this->_mainWindow->setSize(100, 6);
+        $this->_minButton->setPosition(100 - 6, -2.5);
+        $this->removeComponent($this->xml);
+        $this->xml->setContent('
         <timeout>0</timeout>            
         <script><!--
                      main () {
                        
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");
-                        declare mainWindow <=> Page.GetFirstChild("Frame");
-                        declare isMinimized = True;                                          
+                        declare mainWindow <=> Page.GetFirstChild("Frame");                        
+                        declare isMinimized = ' . $this->status . ';                                          
                         declare lastAction = Now;
-                        declare positionMin = -80.0;
+                        declare positionMin = -90.0;
                         declare positionMax = -4.0;
-                        mainWindow.PosnX = -80.0;                        
-                                              
+                        if (isMinimized)  {
+                        mainWindow.PosnX = -90.0;                        
+                        }   
+                        else {
+                        mainWindow.PosnX = -3.9;                        
+                        }
                         while(True) {
                                 
                                 if (isMinimized)
@@ -125,10 +142,10 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
                                             mainWindow.PosnX += 4;
                                   }
                                 }
-                                    
+                                        
                                 foreach (Event in PendingEvents) {                                                
                                     if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "myWindow" || Event.ControlId == "minimizeButton" )) {
-                                           isMinimized = !isMinimized;    
+                                           isMinimized = !isMinimized;                                      
                                            lastAction = Now;                                           
                                     }                                       
                                 }
@@ -137,14 +154,7 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
                         
                 }
                 --></script>');
-        //$this->addComponent($xml);
-    }
-
-    function onResize($oldX, $oldY) {
-        parent::onResize($oldX, $oldY);
-        $this->_windowFrame->setSize(100, 6);
-        $this->_mainWindow->setSize(100, 6);
-        $this->_minButton->setPosition(100 - 6, -2.5);
+        $this->addComponent($this->xml);
     }
 
     function onShow() {
@@ -156,10 +166,12 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
         $targetPlayer = $this->storage->getPlayerObject($target);
         $this->labelPlayer->setText($targetPlayer->nickName);
         \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Erase($login);
+        $this->onResize($this->sizeX, $this->sizeY);
         $this->redraw($this->getRecipient());
     }
 
-    function players() {
+    function players($login, $args) {
+        $this->status = "False";
         $window = \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Create($this->getRecipient());
         $window->setController($this);
         $window->setTitle(__('Select Player to send message'));
@@ -170,14 +182,20 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
 
     function send($login, $args) {
         try {
+            $this->status = "False";
             $target = $this->targetPlayer;
-            if ($target == false && empty($args['message'])) {
+            if ($target == false) {
                 $this->connection->chatSendServerMessage('Select a player to send pm first by clicking!', $login);
                 return;
             }
+            if (empty($args['message'])) {
+                $this->connection->chatSendServerMessage('Empty message!', $login);
+                return;
+            }
+
 
             $targetPlayer = $this->storage->getPlayerObject($target);
-            $sourcePlayer = $this->storage->getPlayerObject($login);            
+            $sourcePlayer = $this->storage->getPlayerObject($login);
             \ManiaLivePlugins\eXpansion\PersonalMessages\PersonalMessages::$reply[$login] = $target;
             $this->connection->chatSendServerMessage('$abcYou whisper to ' . ($targetPlayer->nickName) . '$z$s$abc: ' . $args['message'], $login);
             $this->connection->chatSendServerMessage('$abcA whisper from ' . ($sourcePlayer->nickName) . '$z$s$abc: ' . $args['message'], $target);
@@ -185,15 +203,17 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
             $this->connection->chatSendServerMessage('$f00$oError $z$s$fff' . $e->getMessage(), $login);
         }
         $this->inputboxMessage->setDefault("");
+        $this->onResize($this->sizeX, $this->sizeY);
         $this->redraw($this->getRecipient());
     }
 
-    function setTargetPlayer($login) {        
-         $this->targetPlayer = $login;
-         $this->labelPlayer->setText($targetPlayer->nickName);
-         $this->redraw($this->getRecipient());
+    function setTargetPlayer($login) {
+        $this->targetPlayer = $login;
+        $this->labelPlayer->setText($targetPlayer->nickName);
+        $this->onResize($this->sizeX, $this->sizeY);
+        $this->redraw($this->getRecipient());
     }
-    
+
     function destroy() {
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionPlayers);
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionSend);
