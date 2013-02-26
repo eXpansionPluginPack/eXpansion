@@ -25,7 +25,12 @@ class AdminCmd {
 		$this->function = $function;
 		$this->permission = $permission;
 	}
-
+        /**
+         * 
+         * @param string $login
+         * @param array $param
+         * @return string
+         */
 	public function cmd($login, $param) {
 		if (method_exists($this->class, $this->function)) {
 
@@ -46,6 +51,8 @@ class AdminCmd {
 					}
 				}
 			}
+                        // add login to the first element of the params array;
+                        
 			call_user_func_array(array($this->class, $this->function), array($login, $param));
 			return "";
 		}
