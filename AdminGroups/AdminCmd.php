@@ -64,7 +64,7 @@ class AdminCmd {
 	}
 
 	public function addchecker($numParam, types\absChecker $check) {
-		$this->checker[$numParam-1][] = $check;;
+		$this->checker[$numParam-1][] = $check;
 	}
 
 	public function getPermission() {

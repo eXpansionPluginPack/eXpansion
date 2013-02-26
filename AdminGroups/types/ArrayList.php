@@ -7,18 +7,27 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups\types;
  *
  * @author oliverde8
  */
-class Interger extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker{
-	
-	public function check($data) {
-		return is_numeric($data);
-	}
+class Arraylist extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker {
 
-	public function getErrorMsg() {
-		return "A numerical value was expected";
-	}
-	
-	
-	
+    private $haystack = array();
+
+    public function check($data) {
+        return in_array($data, $this->haystack);
+    }
+
+    public function items($data) {
+        if (is_array($data))
+            $this->haystack = $data;
+        else
+            $this->haystack = explode(",", $data);
+        
+        return $this;
+    }
+
+    public function getErrorMsg() {
+        return "A value of following (".implode(",", $this->haystack).") was expected.";
+    }
+
 }
 
 ?>

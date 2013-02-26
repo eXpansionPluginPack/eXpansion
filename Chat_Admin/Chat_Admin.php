@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Chat_Admin;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Data\Storage;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Windows\GenericPlayerList;
 use ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Controls\BannedPlayeritem;
 
@@ -37,8 +38,10 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          * 
          * 
          */
+        $cmd = AdminGroups::addAdminCommand('help', $this, 'help', '');
+        $cmd->setHelp(_('help'));        
 
-        $cmd = AdminGroups::addAdminCommand('player kick', $this, 'kick', 'player_kick');
+        $cmd = AdminGroups::addAdminCommand('player kick', $this, 'kick', Permission::player_kick); //
         $cmd->setHelp(_('kick the player from the server'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "kick");
@@ -144,14 +147,14 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd->setHelp('Sets a new maximum of players');
         $cmd->setHelpMore('Sets the maximum number of players who can play on this server.');
         $cmd->setMinParam(1);
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Interger::getInstance());
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setmaxplayers");
 
         $cmd = AdminGroups::addAdminCommand('set server maxspectators', $this, 'setServerMaxSpectators', 'server_maxspec');
         $cmd->setHelp('Sets a new maximum of spectator');
         $cmd->setHelp('Sets the maximum number of players who can spectate the players on this server.');
         $cmd->setMinParam(1);
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Interger::getInstance());
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setmaxspecs");
 
         $cmd = AdminGroups::addAdminCommand('set server chattime', $this, 'setserverchattime', 'server_chattime');
@@ -161,18 +164,21 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         AdminGroups::addAlias($cmd, "setchattime");
 
         $cmd = AdminGroups::addAdminCommand('set server hide', $this, 'setHideServer', 'server_admin');
-        AdminGroups::addAlias($cmd, "sethideserver");
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
         $cmd->setMinParam(1);
+        AdminGroups::addAlias($cmd, "sethideserver");
 
         $cmd = AdminGroups::addAdminCommand('set server mapdownload', $this, 'setServerMapDownload', 'server_admin');
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
         $cmd->setMinParam(1);
+        AdminGroups::addAlias($cmd, "setMapDownload");
 
         $cmd = AdminGroups::addAdminCommand('stop dedicated', $this, 'stopDedicated', 'server_admin');
-        $cmd->getHelp("Will stop this server.");
+        $cmd->getHelp("Stops this server.");
         AdminGroups::addAlias($cmd, 'stop ml');
 
         $cmd = AdminGroups::addAdminCommand('stop manialive', $this, 'stopManiaLive', 'server_admin');
-        $cmd->getHelp("Will stop the Manialive instance running on this server.");
+        $cmd->getHelp("Stops the Manialive instance running on for the server.");
         AdminGroups::addAlias($cmd, 'stop dedi');
 
         /* 		 
@@ -180,13 +186,13 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          * Concerning Game Settings 
          * *************************
          */
-        $cmd = AdminGroups::addAdminCommand('skip', $this, 'skipTrack', 'map_skip');
+        $cmd = AdminGroups::addAdminCommand('skip', $this, 'skipMap', 'map_skip');
         $cmd->setHelp("Skips the current track");
         AdminGroups::addAlias($cmd, 'skipmap');
         AdminGroups::addAlias($cmd, 'next');
         AdminGroups::addAlias($cmd, 'nextmap');
 
-        $cmd = AdminGroups::addAdminCommand('restart', $this, 'restartTrack', 'map_skip');
+        $cmd = AdminGroups::addAdminCommand('restart', $this, 'restartMap', 'map_skip');
         AdminGroups::addAlias($cmd, 'res');
         AdminGroups::addAlias($cmd, 'resmap');
         AdminGroups::addAlias($cmd, 'restartmap');
@@ -199,7 +205,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $cmd = AdminGroups::addAdminCommand('set game AllWarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
         $cmd->setMinParam(1);
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Interger::getInstance());
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, 'setAllWarmUpDuration');
 
         $cmd = AdminGroups::addAdminCommand('set game disableRespawn', $this, 'setDisableRespawn', 'game_settings');
@@ -214,7 +220,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $cmd = AdminGroups::addAdminCommand('set game ta WarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
         $cmd->setMinParam(1);
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Interger::getInstance());
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
 
         //rounds
         $cmd = AdminGroups::addAdminCommand('set game rounds end', $this, 'forceEndRound', 'map_roundEnd');
@@ -223,64 +229,91 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $cmd = AdminGroups::addAdminCommand('set game rounds PointsLimit', $this, 'setRoundPointsLimit', 'game_settings');
         $cmd->setMinParam(1);
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, 'rpoints');
 
         $cmd = AdminGroups::addAdminCommand('set game rounds ForcedLaps', $this, 'setRoundForcedLaps', 'game_settings');
         $cmd->setMinParam(1);
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+        AdminGroups::addAlias($cmd, 'setRoundForcedLaps');
 
         $cmd = AdminGroups::addAdminCommand('set game rounds NewRules', $this, 'setUseNewRulesRound', 'game_settings');
         $cmd->setMinParam(1);
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
+        AdminGroups::addAlias($cmd, 'setUseNewRulesRound');
 
         $cmd = AdminGroups::addAdminCommand('set game rounds WarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
         $cmd->setMinParam(1);
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Interger::getInstance());
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
 
         //laps
         $cmd = AdminGroups::addAdminCommand('set game laps TimeLimit', $this, 'setLapsTimeLimit', 'game_settings');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
+        AdminGroups::addAlias($cmd, "setLapsTimeLimit");
 
         $cmd = AdminGroups::addAdminCommand('set game laps nbLaps', $this, 'setNbLaps', 'game_settings');
         $cmd->setMinParam(1);
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+        AdminGroups::addAlias($cmd, "setNbLaps");
 
         $cmd = AdminGroups::addAdminCommand('set game laps FinishTimeOut', $this, 'setFinishTimeout', 'game_settings');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
+        AdminGroups::addAlias($cmd, "setFinishTimeout");
+
 
         $cmd = AdminGroups::addAdminCommand('set game laps WarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
         $cmd->setMinParam(1);
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Interger::getInstance());
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
 
         //team
         $cmd = AdminGroups::addAdminCommand('set game team PointsLimit', $this, 'setTeamPointsLimit', 'game_settings');
         $cmd->setMinParam(1);
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+        AdminGroups::addAlias($cmd, "setTeamPointsLimit");
 
-        $cmd = AdminGroups::addAdminCommand('set game team maxPoint', $this, 'setMaxPointsTeam', 'game_settings');
+
+        $cmd = AdminGroups::addAdminCommand('set game team maxPoints', $this, 'setMaxPointsTeam', 'game_settings');
         $cmd->setMinParam(1);
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+        AdminGroups::addAlias($cmd, "setMaxPointsTeam");
 
         $cmd = AdminGroups::addAdminCommand('set game team NewRules', $this, 'setUseNewRulesTeam', 'game_settings');
         $cmd->setMinParam(1);
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
+        AdminGroups::addAlias($cmd, "setUseNewRulesTeam");
 
         $cmd = AdminGroups::addAdminCommand('set game team forcePlayer', $this, 'forcePlayerTeam', 'game_settings');
-        $cmd->setMinParam(1);
+        $cmd->setMinParam(2);
+        $cmd->addchecker(2, \ManiaLivePlugins\eXpansion\AdminGroups\types\Arraylist::getInstance()->items("0,1,red,blue"));
+        AdminGroups::addAlias($cmd, "forcePlayerTeam");
+
 
         $cmd = AdminGroups::addAdminCommand('set game team WarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
         $cmd->setMinParam(1);
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Interger::getInstance());
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
 
         //cup
         $cmd = AdminGroups::addAdminCommand('set game cup PointsLimit', $this, 'setCupPointsLimit', 'game_settings');
         $cmd->setMinParam(1);
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+        AdminGroups::addAlias($cmd, "setCupPointsLimit");
 
-        $cmd = AdminGroups::addAdminCommand('set game cup RoundsPerChallenge', $this, 'setCupRoundsPerChallenge', 'game_settings');
+        $cmd = AdminGroups::addAdminCommand('set game cup RoundsPerMap', $this, 'setCupRoundsPerMap', 'game_settings');
         $cmd->setMinParam(1);
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+        AdminGroups::addAlias($cmd, "setCupRoundsPerMap");
 
         $cmd = AdminGroups::addAdminCommand('set game cup WarmUpDuration', $this, 'setCupWarmUpDuration', 'game_settings');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
+        AdminGroups::addAlias($cmd, "setCupWarmUpDuration");
 
         $cmd = AdminGroups::addAdminCommand('set game cup NbWinners', $this, 'setCupNbWinners', 'game_settings');
         $cmd->setMinParam(1);
+        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+        AdminGroups::addAlias($cmd, "setCupNbWinners");
 
         $cmd = AdminGroups::addAdminCommand('set game cup customPoints', $this, 'prepareRoundPoints', 'game_settings');
         $cmd->setMinParam(1);
@@ -299,6 +332,175 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function onOliverde8HudMenuReady($menu) {
         //new oliverde8HudMenu($this, $menu, $this->storage, $this->connection);
+    }
+
+    function help($fromLogin, $param) {
+        $adminGroups = AdminGroups::getInstance();
+        $commands = $adminGroups->getAdminCommands();
+        print_r($commands);        
+        
+    }
+
+    function setCupNbWinners($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setCupWarmUpDuration(intval($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets cup winners to%variable% %s %admina_action%.', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setCupWarmUpDuration($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setCupWarmUpDuration(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets use new cup points limit to%variable% %s %admina_action%.', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setCupRoundsPerMap($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setCupRoundsPerMap(intval($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets use new cup points limit to%variable% %s %admina_action%.', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setCupPointsLimit($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setCupPointsLimit(intval($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets use new cup points limit to%variable% %s %admina_action%.', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function forcePlayerTeam($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        $player = $this->storage->getPlayerObject($params[0]);
+        if ($player == null) {
+            $this->sendErrorChat($fromLogin, _('%admina_action%Player %variable% %s %admina_action%doesn\' exist.', $params[0]));
+            return;
+        }
+        /** @todo check which if red == 1 and blue == 0 */
+        if ($params[1] == "red")
+            $params[1] = 1;
+        if ($params[1] == "blue")
+            $params[1] = 0;
+
+        try {
+            $this->connection->forcePlayerTeam($player, intval($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%forces player %variable% %s %admina_action% to team%variable% %s %admina_action%.', $admin->nickName, $player->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setUseNewRulesTeam($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setMaxPointsTeam(filter_var($params[0], FILTER_VALIDATE_BOOLEAN));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets use new team rules to%variable% %s %admina_action%.', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setMaxPointsTeam($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setMaxPointsTeam(intval($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets Team max points to%variable% %s %admina_action%.', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setTeamPointsLimit($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setTeamPointsLimit(intval($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets Team points limit to%variable% %s %admina_action%.', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setFinishTimeout($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setFinishTimeout(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets new finish timeout to%variable% %s %admina_action%minutes.', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setNbLaps($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setNbLaps(intval($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets new number of laps to%variable% %s', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setLapsTimeLimit($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setLapsTimeLimit(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets new laps timelimit to%variable% %s %admina_action%minutes.', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setRoundPointsLimit($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setRoundPointsLimit(int_val($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets rounds points limits to%variable% %s.', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function forceEndRound($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->forceEndRound();
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%forces the round to end.', $admin->nickName));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setUseNewRulesRound($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setUseNewRulesRound(filter_var($params[0], FILTER_VALIDATE_BOOLEAN));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets new round rules to%variable% %s', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setRoundForcedLaps($fromLogin, $params) {
+
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->setRoundForcedLaps(int_val($params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets new round forced laps to%variable% %s', $admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
     }
 
     function blacklist($fromLogin, $params) {
@@ -532,8 +734,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function setserverchattime($fromLogin, $params) {
-        $timelimit = explode(":", trim($params[0]));
-        $newLimit = intval($timelimit[0] * 60 * 1000) + ($timelimit[1] * 1000) - 8000;
+        $newLimit = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($params[0]) - 8000;
 
         if ($newLimit < 0)
             $newLimit = 0;
@@ -547,17 +748,12 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function setTaTimelimit($fromLogin, $params) {
-        $timelimit = explode(":", trim($params[0]));
-        $newLimit = intval($timelimit[0] * 60 * 1000) + ($timelimit[1] * 1000);
-
-        if ($newLimit < 0)
-            $newLimit = 0;
+    function setTAlimit($fromLogin, $params) {
 
         try {
-            $this->connection->SetChatTime($newLimit);
+            $this->connection->setTimeAttackLimit(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($params[0]));
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets new chat time limit of %variable% %s %admina_action%minutes.', $admin->nickName, $params[0]));
+            $this->exp_chatSendServerMessage(_('%admina_action%Admin%variable% %s %admina_action%sets new time limit of %variable% %s %admina_action%minutes.', $admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -623,7 +819,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         die();
     }
 
-    function skipTrack($fromLogin, $params) {
+    function skipMap($fromLogin, $params) {
         try {
             $this->connection->nextMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
             $admin = $this->storage->getPlayerObject($fromLogin);
@@ -633,7 +829,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function restartTrack($fromLogin, $params) {
+    function restartMap($fromLogin, $params) {
         try {
             $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
             $admin = $this->storage->getPlayerObject($fromLogin);
