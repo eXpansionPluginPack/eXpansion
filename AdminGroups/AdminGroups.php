@@ -63,6 +63,19 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	 * @var type 
 	 */
 	private $readTime;
+    
+    /**
+     * All messages needed
+     */
+    private $msg_needBeAdmin;
+    private $msg_cmdDontEx;
+    private $msg_neeMorPerm;
+    private $msg_aInGroup;
+    private $msg_paddSuc;
+    private $msg_premoveSelf;
+    private $msg_pRemoveSuc;
+    private $msg_pRemoveFa;
+    private $msg_masterMasterE;
 
     public function exp_onInit() {
         parent::exp_onInit();
@@ -76,6 +89,18 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onLoad() {
         parent::exp_onLoad();
+        
+        //Loading all Messages;
+        $this->msg_needBeAdmin = exp_getMessage('#admin_action#You need to be an Admin to use that command');
+        $this->msg_cmdDontEx = exp_getMessage('#admin_error#The Admin command doesen\'t exist');
+        $this->msg_neeMorPerm = exp_getMessage('#admin_error#You don\'t have the permission to use that admin command');
+        $this->msg_aInGroup = exp_getMessage('#admin_error#Player "%1" is already in a group %2. Remove him first');
+        $this->msg_paddSuc = exp_getMessage('#admin_action#Player "%1" has been added to admin group #variable#%2.');
+        $this->msg_premoveSelf = exp_getMessage('#admin_error#Your are : "%1" You can\'t remove yourself from a group');
+        $this->msg_pRemoveSuc = exp_getMessage('#admin_error#Player : "%1" Has been taken out admin group %2');
+        $this->msg_pRemoveFa = exp_getMessage('#admin_error#Player : "%1" isn\'t in the group');
+        $this->msg_masterMasterE = exp_getMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
+        
         //No idea if needed, I think not need to check
         // $this->enableDedicatedEvents();  
         //Registering public functions
@@ -255,7 +280,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->exp_chatSendServerMessage($this->config->msg->msg_noPermissionMsg, $login);
             }
         } else {
-            $this->exp_chatSendServerMessage("#admin_action#You need to be an Admin to use that command", $login);
+            $this->exp_chatSendServerMessage($this->msg_needBeAdmin, $login);
             return false;
         }
     }
@@ -361,20 +386,20 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param string $args
      */
     public function adminCmd($login, $args) {
-
+        
         /** @var array */
         $args = explode(" ", $args);
 
         //First lets check if player is an admin
         if (!isset(self::$admins[$login])) {
-            $this->exp_chatSendServerMessage("#admin_action#You need to be an Admin to use that command", $login);
+            $this->exp_chatSendServerMessage($this->msg_needBeAdmin, $login);
         } else {
             //Lets see if the command is correct
             $arg = strtolower(array_shift($args));
             if (isset(self::$commands[$arg])) {
                 $this->doAdminCmd(self::$commands[$arg], $args, $login);
             } else {
-                $this->exp_chatSendServerMessage("#admin_action#The command don't exist", $login);
+                $this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
             }
         }
     }
@@ -393,7 +418,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 if ($error != '')
                     $this->exp_chatSendServerMessage('#admin_error#' . $error, $login);
             }else {
-                $this->exp_chatSendServerMessage("#admin_action#You don't have the permission to use that admin command", $login);
+                $this->exp_chatSendServerMessage($this->msg_neeMorPerm, $login);
             }
         } else if (isset($chats[0])) {
             $chat = strtolower(array_shift($chats));
@@ -416,13 +441,13 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	 */
 	public function addToGroup($login, Group $group, $login2){
 		if (isset(self::$admins[$login2])){
-			$this->exp_chatSendServerMessage('#admin_error#Player "%1" is already in a group %2. Remove him first');
+			$this->exp_chatSendServerMessage($this->msg_aInGroup, array($login2, $group->getGroupName()));
 		}else{
 			$this->reLoadAdmins();
 			
 			self::$admins[$login2]=true;
 			$group->addAdmin(new Admin($login2, $group));
-			$this->exp_chatSendServerMessage('#admin_action#Player "%1" has been added to admin group #variable#%2.');
+			$this->exp_chatSendServerMessage($this->msg_paddSuc, array($login2, $group->getGroupName()));
 			
 			$this->saveFile();
 		}
@@ -437,17 +462,17 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function removeFromGroup($login, Group $group, Admin $admin) {
          if (isset(self::$admins[$login]) && $admin->getLogin() == $login) {
-            $this->exp_chatSendServerMessage('#admin_error#Your are : "%1" You can\'t remove yourself from a group', $login);
+            $this->exp_chatSendServerMessage($this->msg_premoveSelf, $login);
         }else if (isset(self::$admins[$login]) && $group->removeAdmin($admin->getLogin())) {
 			$this->reLoadAdmins();
 			
 			$group->removeAdmin($admin->getLogin());
             unset(self::$admins[$login]);
-            $this->exp_chatSendServerMessage('#admin_error#Player : "%1" Has been taken out admin group %2');
+            $this->exp_chatSendServerMessage($this->msg_pRemoveSuc);
 			
 			$this->saveFile();
         } else {
-            $this->exp_chatSendServerMessage('#admin_error#Player : "%1" isn\'t in the grop', $login);
+            $this->exp_chatSendServerMessage($this->msg_pRemoveFa, $login);
         }
     }
 	
@@ -466,7 +491,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	 */
 	public function changePermissionOfGroup($login, Group $group, array $newPermissions){
 		if($group->isMaster()){
-			$this->exp_chatSendServerMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
+			$this->exp_chatSendServerMessage($this->msg_masterMasterE, $login);
 		} else{
 			$this->reLoadAdmins();
 			

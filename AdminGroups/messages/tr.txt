@@ -1,0 +1,8 @@
+#admin_action#You need to be an Admin to use that command
+#admin_action#Bu komutu kullanmak için Admin olmalisiniz!
+
+#admin_error#The Admin command doesen't exist
+#admin_error#Böyle bir Komut yok
+
+#admin_error#You don't have the permission to use that admin command
+#admin_error#Bu admin komutunu kullanmak için yetkilere sahip degilsiniz

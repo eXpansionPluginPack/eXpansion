@@ -128,7 +128,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param type $msg
          * @param type $login null to send to everyone
          */
-        public function exp_chatSendServerMessage($msg, $login = null) {
+        public function exp_chatSendServerMessage($msg, $login = null, $args=array()) {
             if( !($msg instanceof MultiLangMsg)){
                 Console::println("#Plugin ".$this->getId()." uses chatSendServerMessage in an unoptimized way!!");
                 $msg = exp_getMessage($msg);
@@ -138,12 +138,16 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                 //If we send it to everyone we consider it as a announcement
                 $this->exp_announce($msg->getMessage());
             } else {
+                
+
                 //Lets get the player language
                 $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($login);
-                if($player == null)
-                    $msgString = $msg->getMessage();
-                else{
-                    $msgString = $msg->getMessage($player->language);
+                if($player == null){
+                    array_unshift($args, $msg);
+                    $msgString = call_user_func_array('__', $args);
+                }else{
+                    array_unshift($args, $msg, $player->language);
+                    $msgString = call_user_func_array('__', $args);
                 }
                 
                 //Check if it needs to ve redirected
@@ -313,7 +317,7 @@ namespace {
         function __() {
             $args = func_get_args();
             $message = array_shift($args);
-            if(sizeof($args)>1){
+            if(sizeof($args)>0){
                 $language = array_shift($args);
             }  else {
                 $language = null;
@@ -323,6 +327,7 @@ namespace {
             }else{
                 $lang = \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getString($message, $language);
             }
+            
             array_unshift($args, $lang);
             return call_user_func_array('sprintf', $args);
         }

@@ -1,2 +1,8 @@
 #admin_action#You need to be an Admin to use that command
 #admin_action#Vous devez etre un administrateur pour utiliser cette commande!
+
+#admin_error#The Admin command doesen't exist
+#admin_error#Cette commande administrateur n'existe pas
+
+#admin_error#You don't have the permission to use that admin command
+#admin_error#Vous n'avez pas les permission requis pour cette commande
