@@ -351,6 +351,16 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+	
+	public function addToGroup($login, Group $group, $login2){
+		if (isset(self::$admins[$login2])){
+			$this->exp_chatSendServerMessage('#admin_error#Player "%1" is already in a group %2. Remove him first');
+		}else{
+			self::$admins[$login2]=true;
+			$group->addAdmin(new Admin($login2, $group));
+			$this->exp_chatSendServerMessage('#admin_action#Player "%1" has been added to admin group #variable#%2.');
+		}
+	}
     /**
      * 
      * @param string $login
@@ -358,10 +368,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Admin $admin
      */
     public function removeFromGroup($login, Group $group, Admin $admin) {
-         if (self::$admins[$login] && $group->removeAdmin($admin->getLogin())) {
+         if (isset(self::$admins[$login]) && $admin->getLogin() == $login) {
             unset(self::$admins[$login]);
             $this->exp_chatSendServerMessage('#admin_error#Your are : "%1" You can\'t remove yourself from a group');
-        }if (self::$admins[$login] && $group->removeAdmin($admin->getLogin())) {
+        }else if (isset(self::$admins[$login]) && $group->removeAdmin($admin->getLogin())) {
             unset(self::$admins[$login]);
             $this->exp_chatSendServerMessage('#admin_error#Player : "%1" Has been taken out admin groups');
         } else {
