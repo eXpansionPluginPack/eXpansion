@@ -50,35 +50,34 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function serverOptions($login) {
-		if($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')){
-			$window = ServerOptions::Create($login);
-			$window->setTitle(_('Server Options'));
-			$window->centerOnScreen();
-			$window->setSize(160, 100);
-			$window->show();
-		}
-    }
-    
-    public function gameOptions($login) {
-		if($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')){
-			$window = GameOptions::Create($login);
-			$window->setTitle(_('Game Options'));
-			$window->centerOnScreen();
-			$window->setSize(160, 100);
-			$window->show();
-		}
-    }
-    
-    public function matchSettings($login) {
-		if($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')){
-			$window = Gui\Windows\MatchSettings::Create($login);
-			$window->setTitle(_('Match Settings'));
-			$window->centerOnScreen();
-			$window->setSize(120, 100);
-			$window->show();
-		}
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+            $window = ServerOptions::Create($login);
+            $window->setTitle(_('Server Options'));
+            $window->centerOnScreen();
+            $window->setSize(160, 100);
+            $window->show();
+        }
     }
 
+    public function gameOptions($login) {
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
+            $window = GameOptions::Create($login);
+            $window->setTitle(_('Game Options'));
+            $window->centerOnScreen();
+            $window->setSize(160, 100);
+            $window->show();
+        }
+    }
+
+    public function matchSettings($login) {
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
+            $window = Gui\Windows\MatchSettings::Create($login);
+            $window->setTitle(_('Match Settings'));
+            $window->centerOnScreen();
+            $window->setSize(120, 100);
+            $window->show();
+        }
+    }   
 }
 
 ?>

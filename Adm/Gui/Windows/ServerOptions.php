@@ -2,13 +2,11 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
-
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-
 use \ManiaLive\Gui\Controls\Pager;
 use ManiaLive\Gui\ActionHandler;
 
@@ -20,15 +18,15 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $frameInputbox, $frameLadder;
     private $buttonOK, $buttonCancel;
     private $connection;
-    private  $actionOK, $actionCancel;
+    private $actionOK, $actionCancel;
 
     function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
-        $this->actionOK = ActionHandler::getInstance()->createAction(array($this, "serverOptionsOk"));        
+        $this->actionOK = ActionHandler::getInstance()->createAction(array($this, "serverOptionsOk"));
         $this->actionCancel = ActionHandler::getInstance()->createAction(array($this, "serverOptionsCancel"));
-        
+
         $this->setTitle(_('Server Options'));
 
 
@@ -41,19 +39,22 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     // Generate all inputboxes
     private function inputboxes() {
-        $server = \ManiaLive\Data\Storage::getInstance()->server;
+        
+        /** @var \DedicatedApi\Structures\ServerOptions */        
+        $server = $this->connection->getServerOptions();
+                
         $this->frameInputbox = new \ManiaLive\Gui\Controls\Frame();
         $this->frameInputbox->setAlign("left", "top");
         $this->frameInputbox->setLayout(new \ManiaLib\Gui\Layouts\Column());
-		
-		$this->serverName = new Inputbox("serverName");
+
+        $this->serverName = new Inputbox("serverName");
         $this->serverName->setLabel(_("Server Name"));
-        $this->serverName->setText($server->name);
+        $this->serverName->setText($this->connection->getServerName());
         $this->frameInputbox->addComponent($this->serverName);
-		
+
         $this->serverComment = new Inputbox("serverComment");
         $this->serverComment->setLabel(_("Server comment"));
-        $this->serverComment->setText($server->comment);
+        $this->serverComment->setText($this->connection->getServerComment());
         $this->frameInputbox->addComponent($this->serverComment);
 
 
@@ -64,7 +65,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->maxPlayers = new Inputbox("maxPlayers", 12);
         $this->maxPlayers->setLabel(_("Players"));
-        $this->maxPlayers->setText($server->currentMaxPlayers);
+        $this->maxPlayers->setText($server->nextMaxPlayers);
         $this->framePlayers->addComponent($this->maxPlayers);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad(3, 16);
@@ -72,7 +73,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->maxSpec = new Inputbox("maxSpec", 12);
         $this->maxSpec->setLabel(_("Spectators"));
-        $this->maxSpec->setText($server->currentMaxSpectators);
+        $this->maxSpec->setText($server->nextMaxSpectators);
         $this->framePlayers->addComponent($this->maxSpec);
 
         $this->frameInputbox->addComponent($this->framePlayers);
@@ -100,19 +101,19 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         // server password
         $this->serverPass = new Inputbox("serverPass");
         $this->serverPass->setLabel(_("Password for server"));
-        $this->serverPass->setText($server->password);
+        $this->serverPass->setText($this->connection->getServerPassword());
         $this->frameInputbox->addComponent($this->serverPass);
 
         // spectator password
         $this->serverSpecPass = new Inputbox("serverSpecPass");
         $this->serverSpecPass->setLabel(_("Password for spectators"));
-        $this->serverSpecPass->setText($server->passwordForSpectator);
+        $this->serverSpecPass->setText($this->connection->getServerPasswordForSpectator());
         $this->frameInputbox->addComponent($this->serverSpecPass);
 
         // referee password
         $this->refereePass = new Inputbox("refereePass");
         $this->refereePass->setLabel(_("Referee password"));
-        $this->refereePass->setText($server->refereePassword);
+        $this->refereePass->setText($this->connection->getRefereePassword());
         $this->frameInputbox->addComponent($this->refereePass);
     }
 
@@ -195,25 +196,25 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onDraw() {
         parent::onDraw();
-		$login = $this->getRecipient();
+        $login = $this->getRecipient();
 
-		$this->serverName->setVisibility(AdminGroups::hasPermission($login, 'server_name')); 
-		$this->serverComment->setVisibility(AdminGroups::hasPermission($login, 'server_comment'));
-		$this->maxPlayers->setVisibility(AdminGroups::hasPermission($login, 'server_maxplayer'));
-		$this->maxSpec->setVisibility(AdminGroups::hasPermission($login, 'server_maxspec'));
-		$this->minLadder->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-		$this->maxLadder->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-		$this->serverPass->setVisibility(AdminGroups::hasPermission($login, 'server_password'));
-		$this->serverSpecPass->setVisibility(AdminGroups::hasPermission($login, 'server_specpwd'));
-		$this->refereePass->setVisibility(AdminGroups::hasPermission($login, 'server_refpwd'));
-		$this->cbPublicServer->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-		$this->cbLadderServer->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-		$this->cbAllowMapDl->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-		$this->cbAllowp2pDown->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-		$this->cbAllowp2pUp->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-		$this->cbValidation->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-		$this->cbReferee->setVisibility(AdminGroups::hasPermission($login, 'server_refmode'));
-	}
+        $this->serverName->setVisibility(AdminGroups::hasPermission($login, 'server_name'));
+        $this->serverComment->setVisibility(AdminGroups::hasPermission($login, 'server_comment'));
+        $this->maxPlayers->setVisibility(AdminGroups::hasPermission($login, 'server_maxplayer'));
+        $this->maxSpec->setVisibility(AdminGroups::hasPermission($login, 'server_maxspec'));
+        $this->minLadder->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
+        $this->maxLadder->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
+        $this->serverPass->setVisibility(AdminGroups::hasPermission($login, 'server_password'));
+        $this->serverSpecPass->setVisibility(AdminGroups::hasPermission($login, 'server_specpwd'));
+        $this->refereePass->setVisibility(AdminGroups::hasPermission($login, 'server_refpwd'));
+        $this->cbPublicServer->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
+        $this->cbLadderServer->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
+        $this->cbAllowMapDl->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
+        $this->cbAllowp2pDown->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
+        $this->cbAllowp2pUp->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
+        $this->cbValidation->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
+        $this->cbReferee->setVisibility(AdminGroups::hasPermission($login, 'server_refmode'));
+    }
 
     function destroy() {
         ActionHandler::getInstance()->deleteAction($this->actionOK);
@@ -233,57 +234,31 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameCb->setPosition($this->sizeX / 2 + 20, -$this->sizeY / 2);
     }
 
-    public function serverOptionsOk($login) {              
+    public function serverOptionsOk($login, $args) {
+        
         $server = \ManiaLive\Data\Storage::getInstance()->server;
 
         $serverOptions = Array(
-            "Name" => !AdminGroups::hasPermission($login, 'server_name')					
-				? $server->name		: $this->serverName->getText(),
-			
-            "Comment" => !AdminGroups::hasPermission($login, 'server_comment')				
-				? $server->comment	: $this->serverComment->getText(),
-			
-            "Password" => !AdminGroups::hasPermission($login, 'server_password')			
-				? $server->password : $this->serverPass->getText(),
-			
-            "PasswordForSpectator" => !AdminGroups::hasPermission($login, 'server_specpwd')	
-				? $server->passwordForSpectator : $this->serverSpecPass->getText(),
-			
-            "NextCallVoteTimeOut" => !AdminGroups::hasPermission($login, 'server_vote')		
-				? $server->nextCallVoteTimeOut : $server->nextCallVoteTimeOut ,
-			
-            "CallVoteRatio" => !AdminGroups::hasPermission($login, 'server_vote')	
-				? $server->callVoteRatio : $server->callVoteRatio,
-			
-            "RefereePassword" => !AdminGroups::hasPermission($login, 'server_refpwd') 
-				? $server->refereePassword : $this->refereePass->getText(),
-			
-            "IsP2PUpload" => !AdminGroups::hasPermission($login, 'server_admin') 
-				? $server->isP2PUpload : $this->cbAllowp2pUp->getStatus(),
-			
-            "IsP2PDownload" => !AdminGroups::hasPermission($login, 'server_admin') 
-				? $server->isP2PDownload : $this->cbAllowp2pDown->getStatus(),
-			
-            "AllowMapDownload" => !AdminGroups::hasPermission($login, 'server_admin') 
-				? $server->allowMapDownload : $this->cbAllowMapDl->getStatus(),
-			
-            "NextMaxPlayer" => !AdminGroups::hasPermission($login, 'server_maxplayer') 
-				? $server->nextMaxPlayers : $this->maxPlayers->getText(),
-			
-            "NextMaxSpectator" => !AdminGroups::hasPermission($login, 'server_maxspec') 
-				? $server->nextMaxSpectators : $this->maxSpec->getText(),
-			
-            "RefereeMode" => !AdminGroups::hasPermission($login, 'server_refmode') 
-				? $server->refereeMode : $this->cbReferee->getStatus()
+            "Name" => !AdminGroups::hasPermission($login, 'server_name') ? $server->name : $args['serverName'],
+            "Comment" => !AdminGroups::hasPermission($login, 'server_comment') ? $server->comment : $args['serverComment'],
+            "Password" => !AdminGroups::hasPermission($login, 'server_password') ? $server->password : $args['serverPass'],
+            "PasswordForSpectator" => !AdminGroups::hasPermission($login, 'server_specpwd') ? $server->passwordForSpectator : $args['serverSpecPass'],
+            "NextCallVoteTimeOut" => !AdminGroups::hasPermission($login, 'server_vote') ? $server->nextCallVoteTimeOut : $server->nextCallVoteTimeOut,
+            "CallVoteRatio" => !AdminGroups::hasPermission($login, 'server_vote') ? $server->callVoteRatio : $server->callVoteRatio,
+            "RefereePassword" => !AdminGroups::hasPermission($login, 'server_refpwd') ? $server->refereePassword : $args['refereePass'],
+            "IsP2PUpload" => !AdminGroups::hasPermission($login, 'server_admin') ? $server->isP2PUpload : $this->cbAllowp2pUp->getStatus(),
+            "IsP2PDownload" => !AdminGroups::hasPermission($login, 'server_admin') ? $server->isP2PDownload : $this->cbAllowp2pDown->getStatus(),
+            "AllowMapDownload" => !AdminGroups::hasPermission($login, 'server_admin') ? $server->allowMapDownload : $this->cbAllowMapDl->getStatus(),
+            "NextMaxPlayer" => !AdminGroups::hasPermission($login, 'server_maxplayer') ? $server->nextMaxPlayers : $args['maxPlayers'],
+            "NextMaxSpectator" => !AdminGroups::hasPermission($login, 'server_maxspec') ? $server->nextMaxSpectators : $args['maxSpec'],
+            "RefereeMode" => !AdminGroups::hasPermission($login, 'server_refmode') ? $server->refereeMode : $this->cbReferee->getStatus()
         );
-
-
         $this->connection->setServerOptions($serverOptions);
         $this->Erase($this->getRecipient());
-        
     }
 
-    public function serverOptionsCancel($login) {
+    public function serverOptionsCancel($login, $args) {                
         $this->Erase($this->getRecipient());
     }
+
 }

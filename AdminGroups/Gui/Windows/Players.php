@@ -72,8 +72,8 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 		}
 	}
 	
-	function click_add($login2){
-		$login = $this->login_add->getText();
+	function click_add($login2, $args){
+		$login = $args['login'];
 		if(AdminGroups::isInList($login)){
 			$message = array(_('%adminerror%Player is already in the admin group : %variable%%1 %adminerror%. Plz remove firsty', AdminGroups::getAdmin($login)->getGroup()->getGroupName()));
 			\ManiaLive\PluginHandler\PluginHandler::getInstance()->callPublicMethod(null, 'eXpansion\AdminGroups', 'exp_chatSendServerMessage', $message);
