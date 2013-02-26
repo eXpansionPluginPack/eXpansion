@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\GroupItem;
+use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 /**
  * Description of Groups
@@ -11,12 +12,15 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\GroupItem;
  */
 class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
+	
+	private $adminGroups;
     private $pager;
 
     protected function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
-
+		
+		$this->adminGroups = AdminGroups::getInstance();
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
         $this->mainFrame->addComponent($this->pager);
     }
@@ -29,6 +33,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function onShow() {
+		$this->pager->clearItems();
         $this->populateList();
     }
 
@@ -53,7 +58,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $x = 0;
         $login = $this->getRecipient();
-        foreach (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::$groupList as $group) {
+        foreach ($this->adminGroups->getGroupList() as $group) {
             $this->pager->addItem(new GroupItem($group, $this, $login));
         }
     }

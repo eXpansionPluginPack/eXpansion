@@ -48,12 +48,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * List of all permissions
      * @var type 
      */
-    static public $permissionList = array();
+    static private $permissionList = array();
 
     /**
      * List of all Groups
      */
-    static public $groupList = array();
+    static private $groupList = array();
 
     /**
      * The Configuration
@@ -341,11 +341,16 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    /**
-     * 
-     * @param string $string
-     * @return boolean
-     */
+	
+	public function removeFromGroup($login, Group $group, Admin $admin){
+		if(self::$admins[$login] && $group->removeAdmin($admin->getLogin())){
+			unset(self::$admins[$login]);
+			$this->exp_chatSendServerMessage('%admin_error%Player : "%1" Has been taken out admin groups');
+		}else{
+			$this->exp_chatSendServerMessage('%admin_error%Player : "%1" isn\'t in the grop', $login);
+		}
+	}
+	
     private function stringToBool($string) {
         if (strtoupper($string) == "FALSE" || $string == "0" || strtoupper($string) == "NO" || empty($string))
             return false;
@@ -366,6 +371,22 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function getAdmins() {
         return self::$admins;
+    }
+	
+	    /**
+     * Returns the list of all Groups
+     * @return type
+     */
+    public function getGroupList() {
+        return self::$groupList;
+    }
+
+    /**
+     * Return the list of all the permissions
+     * @return type
+     */
+    public function getPermissionList() {
+        return self::$permissionList;
     }
 
     /**

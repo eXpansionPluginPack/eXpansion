@@ -10,7 +10,7 @@ use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
  * @author oliverde8
  */
 class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
-
+	private $adminGroups;
     private $pager;
     private $group;
     private $button_ok;
@@ -20,7 +20,9 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
-
+		
+		$this->adminGroups = AdminGroups::getInstance();
+		
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
         $this->mainFrame->addComponent($this->pager);
 
@@ -51,13 +53,14 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function onShow() {
+		$this->pager->clearItems();
         $this->populateList();
     }
 
     function populateList() {
         $this->pager->clearItems();
         
-        foreach (AdminGroups::$permissionList as $key => $value) {
+        foreach ($this->adminGroups->getPermissionList() as $key => $value) {
             $cBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 68);
             $cBox->setStatus($this->group->hasPermission($key));
             $cBox->setText($key);             

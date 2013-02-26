@@ -23,6 +23,25 @@ class Group {
 		$this->groupUsers[] = $admin;
 	}
 	
+	public function removeAdmin($login){
+		$i = 0;
+		$found = false;
+		while($i < sizeof($this->groupUsers) && !$found){
+			if($this->groupUsers[$i]->getLogin() == $login){
+				$found = true;
+				while(isset($this->groupUsers[$i+1])){
+					$this->groupUsers[$i] = $this->groupUsers[$i+1];
+					$i++;
+				}
+				unset($this->groupUsers[$i]);
+				return true;
+			}
+			
+		}
+		return false;
+	}
+
+
 	public function addPermission($name, $val){
 		$this->permissions[$name] = $val;
 	}
