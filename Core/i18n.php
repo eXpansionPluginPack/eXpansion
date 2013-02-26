@@ -61,7 +61,11 @@ class i18n extends \ManiaLib\Utils\Singleton {
                 for ($x = 0; $x < count($data) - 1; $x += 3) {
                     $orig = trim($data[$x]);
                     $trans = trim($data[$x + 1]);
-                    $this->messages[$language][$orig] = $trans;
+                    
+                    if(!isset($this->messages[$orig])){
+                        $this->messages[$orig] = new i18n\Message($orig);
+                    }
+                   $this->messages[$orig]->addLanguageMessage($language, $trans);
                 }
             }
         }
@@ -71,6 +75,16 @@ class i18n extends \ManiaLib\Utils\Singleton {
         $this->defaultLanguage = $language;
     }
 
+    public function getObject($string){
+        if(isset($this->messages[$string])){
+            return $this->messages[$string];
+        }else{
+            $nmessage = new i18n\Message($string);
+            $this->messages[$string] = $nmessage;
+            return $nmessage;
+        }
+    }
+    
     public function getString($string, $fromLanguage = null) {
         if ($fromLanguage == null)
             return $this->translate($string, $this->defaultLanguage);
@@ -81,18 +95,12 @@ class i18n extends \ManiaLib\Utils\Singleton {
         return $this->supportedLocales;        
     }
     
-    private function translate($string, $language) {
-        if ($language == null) {
+    private function translate($string, $language = null) {
+        
+        if(isset($this->messages[$string])){
+            return $this->messages[$string]->getMessage($language);
+        }else
             return $string;
-        } else {
-            if (array_key_exists($string, $this->messages[$language])) {
-                return $this->messages[$language][$string];
-            }
-            else
-                return $string;
-        }
-        // fail safe to ensure default message is delivered;
-        return $string;
     }
 
 }

@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
     use DedicatedApi\Structures\GameInfos;
     use ManiaLive\Utilities\Console;
+    use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
 
     /**
      * Description of BasicPlugin
@@ -128,12 +129,25 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param type $login null to send to everyone
          */
         public function exp_chatSendServerMessage($msg, $login = null) {
+            if( !($msg instanceof MultiLangMsg)){
+                Console::println("#Plugin ".$this->getId()." uses chatSendServerMessage in an unoptimized way!!");
+                $msg = exp_getMessage($msg);
+            }
+            
             if ($login == null) {
                 //If we send it to everyone we consider it as a announcement
-                $this->exp_announce($msg);
+                $this->exp_announce($msg->getMessage());
             } else {
+                //Lets get the player language
+                $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($login);
+                if($player == null)
+                    $msgString = $msg->getMessage();
+                else{
+                    $msgString = $msg->getMessage($player->language);
+                }
+                
                 //Check if it needs to ve redirected
-                $this->exp_redirectedChatSendServerMessage($msg, $login, get_class($this));
+                $this->exp_redirectedChatSendServerMessage($msgString, $login, get_class($this));
             }
         }
 
@@ -298,10 +312,23 @@ namespace {
 
         function __() {
             $args = func_get_args();
-            $string = array_shift($args);
-            $lang = \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getString($string);
+            $message = array_shift($args);
+            if(sizeof($args)>1){
+                $language = array_shift($args);
+            }  else {
+                $language = null;
+            }
+            if(is_object($message)){
+                $lang = $message->getMessage($language);
+            }else{
+                $lang = \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getString($message, $language);
+            }
             array_unshift($args, $lang);
             return call_user_func_array('sprintf', $args);
+        }
+        
+        function exp_getMessage($string){
+            return \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getObject($string);
         }
 
     }
