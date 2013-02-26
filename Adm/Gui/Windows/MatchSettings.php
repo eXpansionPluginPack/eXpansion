@@ -29,9 +29,9 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         try {
             $this->connection->saveMatchSettings($filename);
             $file = explode("/", $filename);
-            $this->connection->chatSendServerMessage(_("Saved MatchSettings to file: %s", end($file)));
+            $this->connection->chatSendServerMessage(__("Saved MatchSettings to file: %s", end($file)));
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(_('$f00$oError $z$s$fff%s', $e->getMessage()));
+            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $e->getMessage()));
         }
     }
 
@@ -39,9 +39,9 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         try {
             $this->connection->loadMatchSettings($filename);
             $file = explode("/", $filename);
-            $this->connection->chatSendServerMessage(_("Loaded MatchSettings from file: %s", end($file)));
+            $this->connection->chatSendServerMessage(__("Loaded MatchSettings from file: %s", end($file)));
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(_('$f00$oError $z$s$fff', $e->getMessage()));
+            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff', $e->getMessage()));
         }
     }
 

@@ -42,7 +42,7 @@ class GuestPlayeritem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($spacer);
 
         $this->removeButton = new MyButton(16, 6);
-        $this->removeButton->setText(_("Remove"));
+        $this->removeButton->setText(__("Remove"));
         $this->removeButton->setAction($this->removeAction);
         $this->removeButton->setScale(0.6);
         $this->frame->addComponent($this->removeButton);

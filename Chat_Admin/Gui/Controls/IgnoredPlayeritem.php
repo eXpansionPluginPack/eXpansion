@@ -42,7 +42,7 @@ class IgnoredPlayeritem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($spacer);
 
         $this->unignoreButton = new MyButton(16, 6);
-        $this->unignoreButton->setText(_("unIgnore"));
+        $this->unignoreButton->setText(__("unIgnore"));
         $this->unignoreButton->setAction($this->unignoreAction);
         $this->unignoreButton->setScale(0.6);
         $this->frame->addComponent($this->unignoreButton);

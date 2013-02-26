@@ -30,12 +30,12 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $login = $this->getRecipient();
             $player = $this->storage->getPlayerObject($target);
             $admin = $this->storage->getPlayerObject($login);
-            $this->connection->kick($target, _("Please behave next time you visit the server!"));
-            $this->connection->chatSendServerMessage(_('$%sz were kicked from the server by admin.', $player->nickName));
+            $this->connection->kick($target, __("Please behave next time you visit the server!"));
+            $this->connection->chatSendServerMessage(__('$%sz were kicked from the server by admin.', $player->nickName));
             // can't use notice...since $this->storage->players too slow.
             // $this->connection->sendNotice($this->storage->players, $player->nickName . '$z were kicked from the server by admin.');
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(_("Error: %s",$e->getMessage()));
+            $this->connection->chatSendServerMessage(__("Error: %s",$e->getMessage()));
         }
     }
 
@@ -44,11 +44,11 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $login = $this->getRecipient();
             $player = $this->storage->getPlayerObject($target);
             $admin = $this->storage->getPlayerObject($login);
-            $this->connection->ban($target, _("You are now banned from the server."));
-            $this->connection->chatSendServerMessage(_('%s$z has been banned from the server.',$player->nickName));
+            $this->connection->ban($target, __("You are now banned from the server."));
+            $this->connection->chatSendServerMessage(__('%s$z has been banned from the server.',$player->nickName));
             //$this->connection->sendNotice($this->storage->players, $player->nickName . '$z has been banned from the server.');
         } catch (\Exception $e) {
-             $this->connection->chatSendServerMessage(_("Error: %s",$e->getMessage()));
+             $this->connection->chatSendServerMessage(__("Error: %s",$e->getMessage()));
         }
     }
 
@@ -58,16 +58,16 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
             if ($player->forceSpectator == 0) {
                 $this->connection->forceSpectator($target, 1);
-                $this->connection->sendNotice($target, _('Admin has forced you to specate!'));
+                $this->connection->sendNotice($target, __('Admin has forced you to specate!'));
             }
 
             if ($player->forceSpectator == 1) {
                 $this->connection->forceSpectator($target, 2);
                 $this->connection->forceSpectator($target, 0);
-                $this->connection->sendNotice($target, _("Admin has released you from specate to play."));
+                $this->connection->sendNotice($target, __("Admin has released you from specate to play."));
             }
         } catch (\Exception $e) {
-             $this->connection->chatSendServerMessage(_("Error: %s",$e->getMessage()));
+             $this->connection->chatSendServerMessage(__("Error: %s",$e->getMessage()));
         }
     }
 

@@ -33,9 +33,9 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->connection->jumpToMapIndex($mapNumber);
             $map = $this->connection->getNextMapInfo();
             $player = $this->storage->players[$login];
-            $this->connection->chatSendServerMessage(_('Speedjump to map %s $z$s$fff by %s', $map->name, $map->author));
+            $this->connection->chatSendServerMessage(__('Speedjump to map %s $z$s$fff by %s', $map->name, $map->author));
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(_('Error:', $e->getMessage()));
+            $this->connection->chatSendServerMessage(__('Error:', $e->getMessage()));
         }
     }
 
@@ -49,9 +49,9 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->connection->setNextMapIndex($mapNumber);
             $map = $this->connection->getNextMapInfo();
             $player = $this->storage->players[$login];           
-            $this->connection->chatSendServerMessage(_('Next map will be %s $z$s$fff by %s', $map->name, $map->author));        
+            $this->connection->chatSendServerMessage(__('Next map will be %s $z$s$fff by %s', $map->name, $map->author));        
         } catch (\Exception $e) {
-           $this->connection->chatSendServerMessage(_('Error:', $e->getMessage()));
+           $this->connection->chatSendServerMessage(__('Error:', $e->getMessage()));
         }
     }
 

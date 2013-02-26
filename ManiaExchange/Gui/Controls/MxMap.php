@@ -73,7 +73,7 @@ class MxMap extends \ManiaLive\Gui\Control {
         if ($this->isAdmin) {
             $this->addButton = new MyButton(16, 5);
             $this->addButton->setScale(0.7);
-            $this->addButton->setText(_("Install"));
+            $this->addButton->setText(__("Install"));
             $this->addButton->setAction($this->addAction);
             $this->frame->addComponent($this->addButton);
         }

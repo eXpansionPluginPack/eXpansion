@@ -47,7 +47,7 @@ class AdminItem extends \ManiaLive\Gui\Control {
 			
 			$plistButton = new MyButton(24, 6);
             $plistButton->setAction($this->action_remove);
-            $plistButton->setText(_("Remove"));
+            $plistButton->setText(__("Remove"));
             $plistButton->setScale(0.6);
             $frame->addComponent($plistButton);
 		}

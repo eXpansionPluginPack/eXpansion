@@ -67,7 +67,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             Gui\Windows\MapList::$records = $this->callPublicMethod('eXpansion\LocalRecords', 'getRecords');
 
         $window = Gui\Windows\Maplist::Create($login);
-        $window->setTitle(_('Maps on server'));
+        $window->setTitle(__('Maps on server'));
         $window->centerOnScreen();
         $window->setSize(140, 100);
         $window->show();
@@ -75,7 +75,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function removeMap($login, $mapNumber) {
         if (!\ManiaLive\Features\Admin\AdminGroup::contains($login)) {
-            $this->connection->chatSendServerMessage(_("You are not allowed to do this!"), $login);
+            $this->connection->chatSendServerMessage(__("You are not allowed to do this!"), $login);
             return;
         }
 
@@ -84,10 +84,10 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $player = $this->storage->players[$login];
             $map = $this->storage->maps[$mapNumber];
             
-            $this->connection->chatSendServerMessage(_('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.', $player->nickName, $map->name));
+            $this->connection->chatSendServerMessage(__('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.', $player->nickName, $map->name));
             $this->connection->removeMap($map->fileName);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(_("Error: %s",$e->getMessage()));
+            $this->connection->chatSendServerMessage(__("Error: %s",$e->getMessage()));
         }
     }
 
@@ -103,8 +103,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function addMaps($login) {
-        Gui\Windows\addMaps::Erase($login);
-        $window = Gui\Windows\addMaps::Create($login);
+        Gui\Windows\AddMaps::Erase($login);
+        $window = Gui\Windows\AddMaps::Create($login);
         $window->setTitle('Add Maps on server');
         $window->centerOnScreen();
         $window->setSize(120, 100);

@@ -13,8 +13,8 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->buildMenu();
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
-            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', _('ManiaExchange'), true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', _('Search Maps'), null, array($this, 'mxSearch'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('ManiaExchange'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Search Maps'), null, array($this, 'mxSearch'), true);
         }
 
         $this->enableDedicatedEvents();
@@ -26,7 +26,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function buildMenu() {
         $this->callPublicMethod('Standard\Menubar', 'initMenu', \ManiaLib\Gui\Elements\Icons128x128_1::Download);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', _('Search Maps'), array($this, 'mxSearch'), true);
+        $this->callPublicMethod('Standard\Menubar', 'addButton', __('Search Maps'), array($this, 'mxSearch'), true);
     }
 
     public function chatMX($login, $arg, $param = null) {
@@ -42,7 +42,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 break;
             case "help":
             default:
-                $this->connection->chatSendServerMessage(_('Usage /mx add [id] or /mx search "your search terms here"'), $login);
+                $this->connection->chatSendServerMessage(__('Usage /mx add [id] or /mx search "your search terms here"'), $login);
                 break;
         }
     }
@@ -58,7 +58,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function addMap($login, $mxId) {
         if (!is_numeric($mxId)) {
-            $this->connection->chatSendServerMessage(_('"%s" is not a numeric value.', $mxId), $login);
+            $this->connection->chatSendServerMessage(__('"%s" is not a numeric value.', $mxId), $login);
             return;
         }
         try {
@@ -88,32 +88,32 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             curl_close($ch);
 
             if ($data === false) {
-                $this->connection->chatSendServerMessage(_('MX is down'), $login);
+                $this->connection->chatSendServerMessage(__('MX is down'), $login);
                 return;
             }
 
             if ($status["http_code"] !== 200) {
                 if ($status["http_code"] == 301) {
-                    $this->connection->chatSendServerMessage(_('Map not found for id %s', $mxId), $login);
+                    $this->connection->chatSendServerMessage(__('Map not found for id %s', $mxId), $login);
                     return;
                 }
 
-                $this->connection->chatSendServerMessage(_('MX returned http error code: %s', $status["http_code"]), $login);
+                $this->connection->chatSendServerMessage(__('MX returned http error code: %s', $status["http_code"]), $login);
                 return;
             }
 
             $file = $this->connection->getMapsDirectory() . "/Downloaded/" . $mxId . ".Map.Gbx";
 
             if (!touch($file)) {
-                $this->connection->chatSendServerMessage(_("Couldn't create mapfile in maps folder, check folder permissions!"), $login);
+                $this->connection->chatSendServerMessage(__("Couldn't create mapfile in maps folder, check folder permissions!"), $login);
             }
             file_put_contents($file, $data);
             $this->connection->addMap($file);
 
             $map = $this->connection->getMapInfo($file);
-            $this->connection->chatSendServerMessage(_('Map %s $z$s$fff added from MX Succesfully.', $map->name), $login);
+            $this->connection->chatSendServerMessage(__('Map %s $z$s$fff added from MX Succesfully.', $map->name), $login);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(_("Error: %s", $e->getMessage()), $login);
+            $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()), $login);
         }
     }
 

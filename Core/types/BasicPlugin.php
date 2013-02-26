@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Core\types {
 
     use DedicatedApi\Structures\GameInfos;
-    use ManiaLive\Utilities\Console;
+use ManiaLive\Utilities\Console;
 
     /**
      * Description of BasicPlugin
@@ -270,14 +270,15 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 }
 
 namespace {
+    if (!function_exists('_')) {
+        function __() {
+            $args = func_get_args();
+            $string = array_shift($args);
+            $lang = \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getString($string);
+            array_unshift($args, $lang);
+            return call_user_func_array('sprintf', $args);
+        }
 
-    function _() {
-        $args = func_get_args();
-        $string = array_shift($args);
-        $lang = \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getString($string);
-        array_unshift($args, $lang);                     
-        return call_user_func_array('sprintf', $args);        
     }
-
 }
 ?>

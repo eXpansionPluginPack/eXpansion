@@ -212,11 +212,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function syncPlayers() {
         $db = $this->db->query("Select * FROM exp_players")->fetchArrayOfAssoc();
         foreach ($db as $array)
-            self::$players[$array['login']] = Structures\DbPLayer::fromArray($array);
+            self::$players[$array['login']] = \ManiaLivePlugins\eXpansion\LocalRecords\Structures\DbPlayer::fromArray ($array);
     }
 
     function onPlayerConnect($login, $isSpectator) {
-        $player = new Structures\DbPLayer();
+        $player = new \ManiaLivePlugins\eXpansion\LocalRecords\Structures\DbPlayer();
         $player->fromPlayerObj($this->storage->getPlayerObject($login));
         $this->db->execute($player->exportToDb());
         self::$players[$login] = $player;

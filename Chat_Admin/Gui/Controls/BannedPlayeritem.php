@@ -42,7 +42,7 @@ class BannedPlayeritem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($spacer);
 
         $this->unbanButton = new MyButton(16, 6);
-        $this->unbanButton->setText(_("unBan"));
+        $this->unbanButton->setText(__("unBan"));
         $this->unbanButton->setAction($this->unbanAction);
         $this->unbanButton->setScale(0.6);
         $this->frame->addComponent($this->unbanButton);

@@ -38,7 +38,7 @@ class BlacklistPlayeritem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($spacer);
 
         $this->unblackButton = new MyButton(16, 6);
-        $this->unblackButton->setText(_("unBan"));
+        $this->unblackButton->setText(__("unBan"));
         $this->unblackButton->setAction($this->unblackAction);
         $this->unblackButton->setScale(0.6);
         $this->frame->addComponent($this->unblackButton);

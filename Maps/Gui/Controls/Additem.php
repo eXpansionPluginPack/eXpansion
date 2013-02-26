@@ -71,7 +71,7 @@ class Additem extends \ManiaLive\Gui\Control {
 
 
         $this->addButton = new MyButton(16, 6);
-        $this->addButton->setText(_("Add map"));
+        $this->addButton->setText(__("Add map"));
         $this->addButton->setAction($this->addMapAction);
         $this->addButton->setScale(0.6);
         $this->frame->addComponent($this->addButton);

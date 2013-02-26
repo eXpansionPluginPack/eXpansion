@@ -27,12 +27,12 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->mainFrame->addComponent($this->pager);
 
         $this->button_ok = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
-        $this->button_ok->setText(_("OK"));
+        $this->button_ok->setText(__("OK"));
         $this->button_ok->setAction($this->createAction(array($this, 'click_ok')));
         $this->mainFrame->addComponent($this->button_ok);
 
         $this->button_cancel = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
-        $this->button_cancel->setText(_("Cancel"));
+        $this->button_cancel->setText(__("Cancel"));
         $this->button_cancel->setAction($this->createAction(array($this, 'click_cancel')));
         $this->mainFrame->addComponent($this->button_cancel);
     }

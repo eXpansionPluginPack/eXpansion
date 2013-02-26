@@ -33,7 +33,7 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_mainWindow->setId("MainWindow");
         // $this->mainWindow->setScriptEvents(true);
         $this->_mainWindow->setStyle("Bgs1InRace");
-        $this->_mainWindow->setSubStyle("BgWindow2");
+        $this->_mainWindow->setSubStyle("BgWindow2");        
         $this->_mainWindow->setScriptEvents(true);
         $this->_windowFrame->addComponent($this->_mainWindow);
 

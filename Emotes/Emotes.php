@@ -88,7 +88,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
             $this->timeStamps[$login] = time();
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(_('$f00$bError! $z$s$fff %s', $e->getMessage()), $login);
+            $this->connection->chatSendServerMessage(__('$f00$bError! $z$s$fff %s', $e->getMessage()), $login);
         }
     }
 

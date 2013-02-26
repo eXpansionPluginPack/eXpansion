@@ -84,14 +84,14 @@ class Playeritem extends \ManiaLive\Gui\Control {
         if ($this->isAdmin) {
 
             $this->banButton = new MyButton(16, 6);
-            $this->banButton->setText(_("Ban"));
+            $this->banButton->setText(__("Ban"));
             $this->banButton->colorize("000");
             $this->banButton->setAction($this->banAction);
             $this->banButton->setScale(0.6);
             $this->frame->addComponent($this->banButton);
 
             $this->kickButton = new MyButton(16, 6);
-            $this->kickButton->setText(_("Kick"));
+            $this->kickButton->setText(__("Kick"));
             $this->kickButton->setAction($this->kickAction);
             $this->kickButton->colorize("f00");
             $this->kickButton->setScale(0.6);
@@ -116,9 +116,9 @@ class Playeritem extends \ManiaLive\Gui\Control {
 //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
         if ($this->isAdmin) {
             if ($this->player->forceSpectator == 1 || $this->player->isSpectator) {
-                $this->forceButton->setText(_("Release Spec"));
+                $this->forceButton->setText(__("Release Spec"));
             } else {
-                $this->forceButton->setText(_("Force Spec"));
+                $this->forceButton->setText(__("Force Spec"));
             }
         }
     }

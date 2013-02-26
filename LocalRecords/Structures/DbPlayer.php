@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Structures;
 
-class DbPLayer extends \DedicatedApi\Structures\AbstractStructure {
+class DbPlayer extends \DedicatedApi\Structures\AbstractStructure {
 
     public $login = "";
     public $nickname = "";

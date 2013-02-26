@@ -105,20 +105,20 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($spacer);
 
         $this->queueButton = new MyButton(16, 6);
-        $this->queueButton->setText(_("Queue"));
+        $this->queueButton->setText(__("Queue"));
         $this->queueButton->setAction($this->chooseNextMap);
         $this->queueButton->setScale(0.6);
         $this->frame->addComponent($this->queueButton);
 
         if ($this->isAdmin) {
             $this->goButton = new MyButton(16, 6);
-            $this->goButton->setText(_("Go now"));
+            $this->goButton->setText(__("Go now"));
             $this->goButton->setAction($this->gotoMap);
             $this->goButton->setScale(0.6);
             $this->frame->addComponent($this->goButton);
 
             $this->removeButton = new MyButton(16, 6);
-            $this->removeButton->setText(_("Remove"));
+            $this->removeButton->setText(__("Remove"));
             $this->removeButton->setAction($this->removeMap);
             $this->removeButton->setScale(0.6);
             $this->frame->addComponent($this->removeButton);

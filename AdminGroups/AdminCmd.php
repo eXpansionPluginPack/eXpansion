@@ -40,7 +40,7 @@ class AdminCmd {
 			
 			//Parameter count
 			if (sizeof($param) < $this->minParam)
-				return _("This command expect at least one parameter");
+				return __("This command expect at least one parameter");
 			
 			//All Parameters.
 			foreach($this->checker as $cmd_num => $checkers){
