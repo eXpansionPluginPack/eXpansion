@@ -18,7 +18,6 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	private $group;
 	private $button_add;
 	private $login_add;
-	private $permissions = array();
 
 	protected function onConstruct() {
 		parent::onConstruct();
@@ -96,9 +95,6 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 		}
 	}
 
-	function __destruct() {
-		$this->permissions = array();
-	}
 
 }
 

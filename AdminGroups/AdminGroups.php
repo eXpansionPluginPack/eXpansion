@@ -91,8 +91,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	public function reLoadAdmins(){
 		$time = filemtime("config/" . $this->config->config_file);
 		
-		if($time > $this->readTime)
-			$this->loadAdmins ();
+		if($time > $this->readTime){
+			$this->loadAdmins();	
+		}
 	}
 	
 	/**
@@ -199,21 +200,14 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 			if($group->isMaster()){
 				$string .= ";MasterAdmin is a special group that has all permissions. \n";
 				$string .= ";No need to specify permissions. But we will to show all permissions\n";
-				$string .= "[MasterAdmin: ".$group->getGroupName()."]\n";
+				$string .= "\n\n[MasterAdmin: ".$group->getGroupName()."]\n";
 			}else{
 				$string .= "\n\n[Group: ".$group->getGroupName()."]\n";
 			}
 			
 			foreach (self::$permissionList as $key => $value) {
-				$cBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 68);
-				$cBox->setStatus($this->group->hasPermission($key));
-				$cBox->setText($key);             
-				$this->pager->addItem($cBox);
-				$this->permissions[$key] = $cBox;
-			}
-			
-			foreach ($group->getPermissions() as $key => $value) {
-				$string .= "permission.restart".$key." = '".$value."'\n";
+				$bool = $group->hasPermission($key)? "true" : "false";
+				$string .= "permission.restart".$key." = '".$bool."'\n";
 			}
 			
 			$string.="\n;List of Players.\n";
@@ -456,6 +450,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->exp_chatSendServerMessage('#admin_error#Player : "%1" isn\'t in the grop', $login);
         }
     }
+	
+	public function addGroup($login2, $groupName){
+		$this->reLoadAdmins();
+		self::$groupList[] = new Group($groupName, false);
+		$this->saveFile();
+	}
 	
 	/**
 	 * Change the permissions of a group
