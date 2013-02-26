@@ -2,10 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
-use ManiaLive\DedicatedApi\Connection;
-use ManiaLive\Data\Storage;
-use ManiaLive\Config\Loader;
-
 /**
  *  
  * @author oliver
@@ -362,11 +358,14 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Admin $admin
      */
     public function removeFromGroup($login, Group $group, Admin $admin) {
-        if (self::$admins[$login] && $group->removeAdmin($admin->getLogin())) {
+         if (self::$admins[$login] && $group->removeAdmin($admin->getLogin())) {
             unset(self::$admins[$login]);
-            $this->exp_chatSendServerMessage('%admin_error%Player : "%1" Has been taken out admin groups');
+            $this->exp_chatSendServerMessage('#admin_error#Your are : "%1" You can\'t remove yourself from a group');
+        }if (self::$admins[$login] && $group->removeAdmin($admin->getLogin())) {
+            unset(self::$admins[$login]);
+            $this->exp_chatSendServerMessage('#admin_error#Player : "%1" Has been taken out admin groups');
         } else {
-            $this->exp_chatSendServerMessage('%admin_error%Player : "%1" isn\'t in the grop', $login);
+            $this->exp_chatSendServerMessage('#admin_error#Player : "%1" isn\'t in the grop', $login);
         }
     }
 
@@ -433,5 +432,14 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->centerOnScreen();
         $window->show();
     }
+	
+	public function onUnload() {
+		parent::onUnload();
+		self::$admins = array();
+		self::$commands = array();
+		self::$commandsList = array();
+		self::$groupList = array();
+		self::$permissionList = array();
+	}
 
 }
