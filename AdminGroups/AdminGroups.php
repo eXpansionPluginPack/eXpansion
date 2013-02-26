@@ -85,7 +85,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //Registering the admin chat comman with a lot of parameters              
         $this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());
 
-        $this->addAdminCommand('test', $this, "windowGroups", null);
+        $this->addAdminCommand('groups', $this, "windowGroups", null);
     }
 	
 	public function reLoadAdmins(){
@@ -212,7 +212,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 			
 			$string.="\n;List of Players.\n";
 			foreach ($group->getGroupUsers() as $value) {
-				$string .= "login[] = '".$value."'\n";
+				$string .= "login[] = '".$value->getLogin()."'\n";
 			}
 		}
 		
