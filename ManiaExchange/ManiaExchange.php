@@ -62,18 +62,22 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             return;
         }
         try {
-            $script = $this->connection->getModeScriptInfo();
-            $query = "";
-            switch ($script->name) {
-                case "ShootMania\Royal":
-                case "ShootMania\Melee":
-                case "ShootMania\Battle":
-                case "ShootMania\Elite":
-                    $query = 'http://sm.mania-exchange.com/tracks/download/' . $mxId;
-                    break;
-                default:
-                    $query = 'http://tm.mania-exchange.com/tracks/download/' . $mxId;
-                    break;
+            if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
+                $script = $this->connection->getModeScriptInfo();
+                $query = "";
+                switch ($script->name) {
+                    case "ShootMania\Royal":
+                    case "ShootMania\Melee":
+                    case "ShootMania\Battle":
+                    case "ShootMania\Elite":
+                        $query = 'http://sm.mania-exchange.com/tracks/download/' . $mxId;
+                        break;
+                    default:
+                        $query = 'http://tm.mania-exchange.com/tracks/download/' . $mxId;
+                        break;
+                }
+            } else {
+                $query = 'http://tm.mania-exchange.com/tracks/download/' . $mxId;
             }
 
             $ch = curl_init($query);
