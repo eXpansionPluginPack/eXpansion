@@ -1,8 +1,56 @@
-#admin_action#You need to be an Admin to use that command
-#admin_action#Vous devez etre un administrateur pour utiliser cette commande!
+#admin_error#You need to be an Admin to use that command
+#admin_error#Vous devez etre un administrateur pour utiliser cette commande
 
-#admin_error#The Admin command doesen't exist
-#admin_error#Cette commande administrateur n'existe pas
+#admin_error#That Admin command doesen't exist. Use #variable#\admin help #admin_error#to see all commands
+#admin_error#Cette commande n'existe pas. Utiliser #variable#\admin help #admin_error#pour voir les commandes
 
 #admin_error#You don't have the permission to use that admin command
-#admin_error#Vous n'avez pas les permission requis pour cette commande
+#admin_error#Vous n'avez pas les permission requise pour utiliser cette commande
+
+#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
+#admin_error#Le Joueur #variable#%1$s #admin_error#est deja dans le group #admin_error#%2$s. #admin_error#Enelevez le d'abord
+
+#admin_action#Player #variable#%1$s #admin_action#has been added to admin group #variable#%2$s
+#admin_action#Le Joueur #variable#%1$s #admin_action#a ete ajoute dans le group admin #variable#%2$s
+
+#admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
+#admin_error#Vous ete #variable#%1$s #admin_error#Vous pouvez pas vous enlevez vous meme d'un group
+
+#admin_action#Player #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
+#admin_action#Le Joueur #variable#%1$s #admin_action#a étè enleve du group #variable#%2$s
+
+#admin_error#Player #variable#%1$s #admin_action#isn't in the group
+#admin_error#Le Joueur #variable#%1$s #admin_action#n'est pas dans le group
+
+#admin_error#Master Admins has all rights. You can't change that!
+#admin_error#Le group Master Admins a tous les droits. Vous ne pouvez pas changer cela!
+
+Admin Groups
+Group Administrateur
+
+Admin Group Permission - %1$s
+Permission du Group Administrateur - %1$s
+
+Admin Group Players - %1$s
+Joueur du Group Administrateur - %1$s
+
+New Group Name :
+Nom du Nouveau Group :
+
+Group Name
+Nom du Groupe
+
+Nb Players
+Nb de Joeur
+
+Add
+Ajouter
+
+Player List
+List de Jouers
+
+Change Permissions
+Changer les Permissions
+
+Remove Player
+Retirer le Jouer

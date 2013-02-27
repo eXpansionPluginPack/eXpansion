@@ -15,11 +15,11 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableDedicatedEvents();        
     }
     
-    public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries) {
+    /*public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries) {
         echo $answer;
         print_r($entries);
         
-    }
+    }*/
     
     
 }

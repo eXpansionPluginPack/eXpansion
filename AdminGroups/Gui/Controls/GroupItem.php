@@ -17,7 +17,7 @@ class GroupItem extends \ManiaLive\Gui\Control {
     private $action_changePermissions;
     private $action_addPlayer;
     private $action_removeGroup;
-
+    
     function __construct(Group $group, $controller, $login) {
         $this->group = $group;
         $sizeX = 120;
@@ -45,15 +45,15 @@ class GroupItem extends \ManiaLive\Gui\Control {
         if (AdminGroups::hasPermission($login, 'group_admin') || (
                 AdminGroups::hasPermission($login, 'own_group') && AdminGroups::getAdmin($login)->getGroup()->getGroupName() == $group->getGroupName())) {
 
-            $plistButton = new MyButton(24, 6);
+            $plistButton = new MyButton(30, 6);
             $plistButton->setAction($this->action_playerList);
-            $plistButton->setText(__("Player List"));
+            $plistButton->setText(__(AdminGroups::$txt_playerList, $login));
             $plistButton->setScale(0.6);
             $frame->addComponent($plistButton);
 
-            $permiButton = new MyButton(28, 6);
+            $permiButton = new MyButton(40, 6);
             $permiButton->setAction($this->action_changePermissions);
-            $permiButton->setText(__("Change Permissions"));
+            $permiButton->setText(__(AdminGroups::$txt_permissionList, $login));
             $permiButton->setScale(0.6);
             $frame->addComponent($permiButton);
         }

@@ -60,6 +60,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 	function onShow() {
 		$this->pager->clearItems();
+        $this->button_add->setText(__(AdminGroups::$txt_add, $this->getRecipient()));
 		$this->populateList();
 	}
 

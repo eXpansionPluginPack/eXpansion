@@ -11,10 +11,13 @@ use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
  * @author oliverde8
  */
 class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
-
+    
     private $adminGroups;
     private $pager;
-
+    
+    private $group_add;
+    private $button_add;
+    
     protected function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
@@ -24,13 +27,13 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->mainFrame->addComponent($this->pager);
 
         $this->group_add = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("group_name");
-        $this->group_add->setLabel(__("New Group Name : "));
+        $this->group_add->setLabel(__(AdminGroups::$txt_nwGroupNameL));
         $this->group_add->setText("");
         $this->group_add->setScale(0.8);
         $this->mainFrame->addComponent($this->group_add);
 
         $this->button_add = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
-        $this->button_add->setText(__("Add"));
+        $this->button_add->setText(__(AdminGroups::$txt_add));
         $this->button_add->setAction($this->createAction(array($this, 'click_add')));
         $this->button_add->setScale(0.8);
         $this->mainFrame->addComponent($this->button_add);
@@ -51,6 +54,10 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onShow() {
         $this->pager->clearItems();
+        
+        $this->group_add->setLabel(__(AdminGroups::$txt_nwGroupNameL, $this->getRecipient()));
+        $this->button_add->setText(__(AdminGroups::$txt_add, $this->getRecipient()));
+        
         $this->populateList();
     }
 
@@ -63,13 +70,13 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $label = new \ManiaLib\Gui\Elements\Label(35, 4);
         $label->setAlign('left', 'center');
-        $label->setText(__('$wGroup Name'));
+        $label->setText(__(AdminGroups::$txt_groupName,$this->getRecipient()));
         $label->setScale(0.8);
         $frame->addComponent($label);
 
         $label = new \ManiaLib\Gui\Elements\Label(20, 4);
         $label->setAlign('left', 'center');
-        $label->setText(__('$wNb Players'));
+        $label->setText(__(AdminGroups::$txt_nbPlayers, $this->getRecipient()));
         $label->setScale(0.8);
         $frame->addComponent($label);
 
@@ -95,7 +102,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public function changePermission($login, $group) {
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Permissions::Create($login);
         $window->setGroup($group);
-        $window->setTitle(__('Admin Group Permission - %s', $group->getGroupName()));
+        $window->setTitle(__(AdminGroups::$txt_permissionsTitle, $login, $group->getGroupName()));
         $window->setSize(80, 100);
         $window->centerOnScreen();
         $window->show();
@@ -104,7 +111,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public function playerList($login, $group) {
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Players::Create($login);
         $window->setGroup($group);
-        $window->setTitle(__('Admin Group Players - %s', $group->getGroupName()));
+        $window->setTitle(__(AdminGroups::$txt_playersTitle, $login, $group->getGroupName()));
         $window->setSize(80, 100);
         $window->centerOnScreen();
         $window->show();

@@ -36,7 +36,7 @@ class Group {
 				unset($this->groupUsers[$i]);
 				return true;
 			}
-			
+            $i++;			
 		}
 		return false;
 	}

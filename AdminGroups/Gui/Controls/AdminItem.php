@@ -45,9 +45,9 @@ class AdminItem extends \ManiaLive\Gui\Control {
 		
 		if(AdminGroups::hasPermission($login, 'group_admin')){
 			
-			$plistButton = new MyButton(24, 6);
+			$plistButton = new MyButton(30, 6);
             $plistButton->setAction($this->action_remove);
-            $plistButton->setText(__("Remove"));
+            $plistButton->setText(__(AdminGroups::$txt_rmPlayer, $login));
             $plistButton->setScale(0.6);
             $frame->addComponent($plistButton);
 		}

@@ -3,8 +3,8 @@
 namespace ManiaLivePlugins\eXpansion\Core\types {
 
     use DedicatedApi\Structures\GameInfos;
-    use ManiaLive\Utilities\Console;
-    use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
+use ManiaLive\Utilities\Console;
+use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
 
     /**
      * Description of BasicPlugin
@@ -40,21 +40,19 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @var String 
          */
         private $exp_dir = null;
-        
+
         /**
          * The Expansion Pack tools
          * @var \ManiaLivePlugins\eXpansion\Core\eXpansion Expansion tools
          */
         protected $exp_maxp;
-        
-
 
         public final function onInit() {
             //Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
 
             $this->exp_unloading = false;
-            
+
             \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
 
             //All plugins need the eXpansion Core to work properly
@@ -107,17 +105,17 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         public function exp_onReady() {
             
         }
-        
-        private function exp_getdir(){
-            if($this->exp_dir == null){
+
+        private function exp_getdir() {
+            if ($this->exp_dir == null) {
                 $exploded = explode("\\", get_class($this));
                 $this->exp_dir = "libraries/";
                 $i = 0;
-                while($i < sizeof($exploded)-2){
-                     $this->exp_dir .= $exploded[$i]."/";
-                     $i++;
+                while ($i < sizeof($exploded) - 2) {
+                    $this->exp_dir .= $exploded[$i] . "/";
+                    $i++;
                 }
-                 $this->exp_dir .= $exploded[$i];
+                $this->exp_dir .= $exploded[$i];
             }
             return $this->exp_dir;
         }
@@ -128,28 +126,21 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param type $msg
          * @param type $login null to send to everyone
          */
-        public function exp_chatSendServerMessage($msg, $login = null, $args=array()) {
-            if( !($msg instanceof MultiLangMsg)){
-                Console::println("#Plugin ".$this->getId()." uses chatSendServerMessage in an unoptimized way!!");
+        public function exp_chatSendServerMessage($msg, $login = null, $args = array()) {
+            if (!($msg instanceof MultiLangMsg)) {
+                Console::println("#Plugin " . $this->getId() . " uses chatSendServerMessage in an unoptimized way!!");
                 $msg = exp_getMessage($msg);
             }
-            
-            if ($login == null) {
-                //If we send it to everyone we consider it as a announcement
-                $this->exp_announce($msg->getMessage());
-            } else {
-                
 
-                //Lets get the player language
-                $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($login);
-                if($player == null){
-                    array_unshift($args, $msg);
-                    $msgString = call_user_func_array('__', $args);
-                }else{
-                    array_unshift($args, $msg, $player->language);
-                    $msgString = call_user_func_array('__', $args);
-                }
-                
+            if ($login == null) {
+                array_unshift($args, $msg->getMessage());
+                $msg = call_user_func_array('sprintf', $args);
+                                
+                $this->exp_announce($msg);
+            } else {
+                array_unshift($args, $msg, $login);
+                $msgString = call_user_func_array('__', $args);
+
                 //Check if it needs to ve redirected
                 $this->exp_redirectedChatSendServerMessage($msgString, $login, get_class($this));
             }
@@ -314,25 +305,43 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 namespace {
     if (!function_exists('__')) {
 
+        /**
+         * $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($login);
+          if($player == null){
+          array_unshift($args, $msg);
+          $msgString = call_user_func_array('__', $args);
+          }else{
+          array_unshift($args, $msg, $login);
+          $msgString = call_user_func_array('__', $args);
+          }
+         * 
+         */
         function __() {
             $args = func_get_args();
             $message = array_shift($args);
-            if(sizeof($args)>0){
-                $language = array_shift($args);
-            }  else {
+
+            if (sizeof($args) > 0) {
+                $login = array_shift($args);
+                $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($login);
+                if ($player == null) {
+                    $language = null;
+                } else {
+                    $language = $player->language;
+                }
+            } else {
                 $language = null;
             }
-            if(is_object($message)){
+            if (is_object($message)) {
                 $lang = $message->getMessage($language);
-            }else{
+            } else {
                 $lang = \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getString($message, $language);
             }
-            
+
             array_unshift($args, $lang);
             return call_user_func_array('sprintf', $args);
         }
-        
-        function exp_getMessage($string){
+
+        function exp_getMessage($string) {
             return \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getObject($string);
         }
 

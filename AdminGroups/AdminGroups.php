@@ -65,7 +65,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	private $readTime;
     
     /**
-     * All messages needed
+     * All messages & text needed
      */
     private $msg_needBeAdmin;
     private $msg_cmdDontEx;
@@ -76,6 +76,16 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_pRemoveSuc;
     private $msg_pRemoveFa;
     private $msg_masterMasterE;
+    static public $txt_groupsTitle;
+    static public $txt_permissionsTitle;
+    static public $txt_playersTitle;
+    static public $txt_nwGroupNameL;
+    static public $txt_add;
+    static public $txt_groupName ;
+    static public $txt_nbPlayers;
+    static public $txt_playerList;
+    static public $txt_permissionList;
+    static public $txt_rmPlayer;
 
     public function exp_onInit() {
         parent::exp_onInit();
@@ -91,15 +101,25 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         parent::exp_onLoad();
         
         //Loading all Messages;
-        $this->msg_needBeAdmin = exp_getMessage('#admin_action#You need to be an Admin to use that command');
-        $this->msg_cmdDontEx = exp_getMessage('#admin_error#The Admin command doesen\'t exist');
+        $this->msg_needBeAdmin = exp_getMessage('#admin_error#You need to be an Admin to use that command');
+        $this->msg_cmdDontEx = exp_getMessage('#admin_error#That Admin command doesen\'t exist. Use #variable#\admin help #admin_error#to see all commands');
         $this->msg_neeMorPerm = exp_getMessage('#admin_error#You don\'t have the permission to use that admin command');
-        $this->msg_aInGroup = exp_getMessage('#admin_error#Player "%1" is already in a group %2. Remove him first');
-        $this->msg_paddSuc = exp_getMessage('#admin_action#Player "%1" has been added to admin group #variable#%2.');
-        $this->msg_premoveSelf = exp_getMessage('#admin_error#Your are : "%1" You can\'t remove yourself from a group');
-        $this->msg_pRemoveSuc = exp_getMessage('#admin_error#Player : "%1" Has been taken out admin group %2');
-        $this->msg_pRemoveFa = exp_getMessage('#admin_error#Player : "%1" isn\'t in the group');
+        $this->msg_aInGroup = exp_getMessage('#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first');
+        $this->msg_paddSuc = exp_getMessage('#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s');
+        $this->msg_premoveSelf = exp_getMessage('#admin_error#Your are #variable#%1$s #admin_error#You can\'t remove yourself from a group');
+        $this->msg_pRemoveSuc = exp_getMessage('#admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s');
+        $this->msg_pRemoveFa = exp_getMessage('#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group');
         $this->msg_masterMasterE = exp_getMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
+        self::$txt_groupsTitle = exp_getMessage('Admin Groups');
+        self::$txt_permissionsTitle = exp_getMessage('Admin Group Permission - %1$s');
+        self::$txt_playersTitle = exp_getMessage('Admin Group Players - %1$s');
+        self::$txt_nwGroupNameL = exp_getMessage('New Group Name :');
+        self::$txt_add = exp_getMessage('Add');
+        self::$txt_groupName = exp_getMessage('Group Name');
+        self::$txt_nbPlayers = exp_getMessage('Nb Players');
+        self::$txt_playerList = exp_getMessage("Player List");
+        self::$txt_permissionList = exp_getMessage('Change Permissions');
+        self::$txt_rmPlayer = exp_getMessage('Remove Player');
         
         //No idea if needed, I think not need to check
         // $this->enableDedicatedEvents();  
@@ -277,7 +297,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if (self::$admins[$login]->hasPermission($permissionName)) {
                 return true;
             } else {
-                $this->exp_chatSendServerMessage($this->config->msg->msg_noPermissionMsg, $login);
+                $this->exp_chatSendServerMessage($this->msg_neeMorPerm, $login);
             }
         } else {
             $this->exp_chatSendServerMessage($this->msg_needBeAdmin, $login);
@@ -416,7 +436,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($this->hasPermission($login, $commands->getPermission())) {
                 $error = $commands->cmd($login, $chats);               
                 if ($error != '')
-                    $this->exp_chatSendServerMessage('#admin_error#' . $error, $login);
+                    $this->exp_chatSendServerMessage(__('#admin_error#' . $error,$login), $login);
             }else {
                 $this->exp_chatSendServerMessage($this->msg_neeMorPerm, $login);
             }
@@ -425,10 +445,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if (is_array($commands) && isset($commands[$chat])) {
                 $this->doAdminCmd($commands[$chat], $chats, $login);
             } else {
-                $this->exp_chatSendServerMessage("#admin_action#The command don't exist", $login);
+                $this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
             }
         } else {
-            $this->exp_chatSendServerMessage("#admin_action#The command don't exist", $login);
+            $this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
         }
     }
 
@@ -441,13 +461,13 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	 */
 	public function addToGroup($login, Group $group, $login2){
 		if (isset(self::$admins[$login2])){
-			$this->exp_chatSendServerMessage($this->msg_aInGroup, array($login2, $group->getGroupName()));
+			$this->exp_chatSendServerMessage($this->msg_aInGroup, $login, array($login2, $group->getGroupName()));
 		}else{
 			$this->reLoadAdmins();
 			
 			self::$admins[$login2]=true;
 			$group->addAdmin(new Admin($login2, $group));
-			$this->exp_chatSendServerMessage($this->msg_paddSuc, array($login2, $group->getGroupName()));
+			$this->exp_chatSendServerMessage($this->msg_paddSuc, null, array($login2, $group->getGroupName()));
 			
 			$this->saveFile();
 		}
@@ -462,17 +482,18 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function removeFromGroup($login, Group $group, Admin $admin) {
          if (isset(self::$admins[$login]) && $admin->getLogin() == $login) {
-            $this->exp_chatSendServerMessage($this->msg_premoveSelf, $login);
+            $this->exp_chatSendServerMessage($this->msg_premoveSelf, $login, array($login));
+            
         }else if (isset(self::$admins[$login]) && $group->removeAdmin($admin->getLogin())) {
 			$this->reLoadAdmins();
 			
 			$group->removeAdmin($admin->getLogin());
             unset(self::$admins[$login]);
-            $this->exp_chatSendServerMessage($this->msg_pRemoveSuc);
+            $this->exp_chatSendServerMessage($this->msg_pRemoveSuc, null, array($admin->getLogin(), $group->getGroupName()) );
 			
 			$this->saveFile();
         } else {
-            $this->exp_chatSendServerMessage($this->msg_pRemoveFa, $login);
+            $this->exp_chatSendServerMessage($this->msg_pRemoveFa, $login, array($admin->getLogin()));
         }
     }
 	
@@ -561,7 +582,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function windowGroups($login) {
         \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::Erase($login);
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::Create($login);
-        $window->setTitle(__('Admin Groups'));
+        $window->setTitle(__(self::$txt_groupsTitle, $login));
         $window->setSize(120, 100);
         $window->centerOnScreen();
         $window->show();
