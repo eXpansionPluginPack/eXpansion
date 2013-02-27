@@ -39,126 +39,128 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          * 
          */
         $cmd = AdminGroups::addAdminCommand('help', $this, 'help', '');
-        $cmd->setHelp(__('help'));        
+        $cmd->setHelp(exp_getMessage('help'));        
 
         $cmd = AdminGroups::addAdminCommand('player kick', $this, 'kick', Permission::player_kick); //
-        $cmd->setHelp(__('kick the player from the server'));
+        $cmd->setHelp(exp_getMessage('kick the player from the server'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "kick");
 
         $cmd = AdminGroups::addAdminCommand('player ban', $this, 'ban', 'player_black');
-        $cmd->setHelp('Ban the player from the server');
+        $cmd->setHelp(exp_getMessage('Ban the player from the server'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "ban");
 
         $cmd = AdminGroups::addAdminCommand('player black', $this, 'blacklist', 'player_black');
-        $cmd->setHelp('Add the player to the black list');
+        $cmd->setHelp(exp_getMessage('Add the player to the black list'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "black");
 
         $cmd = AdminGroups::addAdminCommand('player remove ban', $this, 'unban', 'player_black');
-        $cmd->setHelp('Removes the ban of the player');
+        $cmd->setHelp(exp_getMessage('Removes the ban of the player'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "unban");
 
         $cmd = AdminGroups::addAdminCommand('player clean banlist', $this, 'cleanBanlist', 'player_black');
-        $cmd->setHelp('clears the banlist of players');
+        $cmd->setHelp(exp_getMessage('clears the banlist of players'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "cleanbanlist");
 
         $cmd = AdminGroups::addAdminCommand('player get banlist', $this, 'getBanlist', 'player_black');
-        $cmd->setHelp('shows the current banlist of players');
+        $cmd->setHelp(exp_getMessage('shows the current banlist of players'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "getbanlist");
 
         $cmd = AdminGroups::addAdminCommand('player clean blacklist', $this, 'cleanBlacklist', 'player_black');
-        $cmd->setHelp('clears the blacklist of players');
+        $cmd->setHelp(exp_getMessage('clears the blacklist of players'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "cleanblacklist");
 
         $cmd = AdminGroups::addAdminCommand('player get blacklist', $this, 'getBlacklist', 'player_black');
-        $cmd->setHelp('shows the current banlist of players');
+        $cmd->setHelp(exp_getMessage('shows the current banlist of players'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "getblacklist");
 
         $cmd = AdminGroups::addAdminCommand('player get guestlist', $this, 'getGuestlist', 'player_black');
-        $cmd->setHelp('shows the current guest of players');
+        $cmd->setHelp(exp_getMessage('shows the current guest of players'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "getguestlist");
 
         $cmd = AdminGroups::addAdminCommand('player get ignorelist', $this, 'getIgnorelist', 'player_ignore');
-        $cmd->setHelp('shows the current ignorelist of players');
+        $cmd->setHelp(exp_getMessage('shows the current ignorelist of players'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "getignorelist");
 
         $cmd = AdminGroups::addAdminCommand('player remove black', $this, 'unBlacklist', 'player_black');
-        $cmd->setHelp('Removes the player from the black list');
+        $cmd->setHelp(exp_getMessage('Removes the player from the black list'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "unBlack");
 
         $cmd = AdminGroups::addAdminCommand('player spec', $this, 'forceSpec', 'player_spec');
-        $cmd->setHelp('Forces the player to become spectator');
+        $cmd->setHelp(exp_getMessage('Forces the player to become spectator'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "spec");
 
         $cmd = AdminGroups::addAdminCommand('player ignore', $this, 'ignore', 'player_ignore');
-        $cmd->setHelp('Adds player to ignore list and mutes him from the chat');
+        $cmd->setHelp(exp_getMessage('Adds player to ignore list and mutes him from the chat'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "ignore");
 
         $cmd = AdminGroups::addAdminCommand('player unignore', $this, 'unignore', 'player_ignore');
-        $cmd->setHelp('Removes player to ignore list and allows him to chat');
+        $cmd->setHelp(exp_getMessage('Removes player to ignore list and allows him to chat'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "unignore");
-
+		
+		//ENDSUPER
+		
         /*
          * *************************** 
          * Concerning Server Settings 
          * ***************************
          */
         $cmd = AdminGroups::addAdminCommand('set server name', $this, 'setServerName', 'server_name');
-        $cmd->setHelp('Changes the name of the server');
+        $cmd->setHelp(exp_getMessage('Changes the name of the server'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "setservername");
 
         $cmd = AdminGroups::addAdminCommand('set server comment', $this, 'setServerComment', 'server_comment');
-        $cmd->setHelp('Changes the server comment');
+        $cmd->setHelp(exp_getMessage('Changes the server comment'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "setcomment");
 
         $cmd = AdminGroups::addAdminCommand('set server player password', $this, 'setServerPassword', 'server_password');
-        $cmd->setHelp('Changes the player password');
-        $cmd->setHelpMore("Changes the password for players to connect");
+        $cmd->setHelp(exp_getMessage('Changes the player password'));
+        $cmd->setHelpMore(exp_getMessage("Changes the password for players to connect"));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "setpwd");
 
         $cmd = AdminGroups::addAdminCommand('set server spec password', $this, 'setSpecPassword', 'server_specpwd');
-        $cmd->setHelp('Changes the spectator password');
-        $cmd->setHelpMore("Changes the password for spectators to connect");
+        $cmd->setHelp(exp_getMessage('Changes the spectator password'));
+        $cmd->setHelpMore(exp_getMessage("Changes the password for spectators to connect"));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "setspecpwd");
 
         $cmd = AdminGroups::addAdminCommand('set server ref password', $this, 'setSpecPassword', 'server_specpwd');
-        $cmd->setHelp('Changes the Referee password');
+        $cmd->setHelp(exp_getMessage('Changes the Referee password'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "setrefpwd");
 
         $cmd = AdminGroups::addAdminCommand('set server maxplayers', $this, 'setServerMaxPlayers', 'server_maxplayer');
-        $cmd->setHelp('Sets a new maximum of players');
-        $cmd->setHelpMore('Sets the maximum number of players who can play on this server.');
+        $cmd->setHelp(exp_getMessage('Sets a new maximum of players'));
+        $cmd->setHelpMore(exp_getMessage('Sets the maximum number of players who can play on this server.'));
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setmaxplayers");
 
         $cmd = AdminGroups::addAdminCommand('set server maxspectators', $this, 'setServerMaxSpectators', 'server_maxspec');
-        $cmd->setHelp('Sets a new maximum of spectator');
-        $cmd->setHelp('Sets the maximum number of players who can spectate the players on this server.');
+        $cmd->setHelp(exp_getMessage('Sets a new maximum of spectator'));
+        $cmd->setHelp(exp_getMessage('Sets the maximum number of players who can spectate the players on this server.'));
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setmaxspecs");
 
         $cmd = AdminGroups::addAdminCommand('set server chattime', $this, 'setserverchattime', 'server_chattime');
-        $cmd->setHelp('Sets the Chat time duration.');
+        $cmd->setHelp(exp_getMessage('Sets the Chat time duration.'));
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
         AdminGroups::addAlias($cmd, "setchattime");
@@ -187,7 +189,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          * *************************
          */
         $cmd = AdminGroups::addAdminCommand('skip', $this, 'skipMap', 'map_skip');
-        $cmd->setHelp("Skips the current track");
+        $cmd->setHelp(exp_getMessage("Skips the current track"));
         AdminGroups::addAlias($cmd, 'skipmap');
         AdminGroups::addAlias($cmd, 'next');
         AdminGroups::addAlias($cmd, 'nextmap');
@@ -199,7 +201,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 
         $cmd = AdminGroups::addAdminCommand('set game mode', $this, 'setGameMode', 'game_gamemode');
-        $cmd->setHelp('Sets next mode {ta,rounds,team,laps,stunts,cup}');
+        $cmd->setHelp(exp_getMessage('Sets next mode {ta,rounds,team,laps,stunts,cup}'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, 'setgamemode');
 
