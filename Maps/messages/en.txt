@@ -1,0 +1,12 @@
+Maps on server
+fill in here
+
+You are not allowed to do this!
+fill in here
+
+Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.
+fill in here
+
+Error: %s
+fill in here
+

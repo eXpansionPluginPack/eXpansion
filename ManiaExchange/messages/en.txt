@@ -1,0 +1,30 @@
+ManiaExchange
+fill in here
+
+Search Maps
+fill in here
+
+Usage /mx add [id] or /mx search 
+fill in here
+
+
+fill in here
+
+MX is down
+fill in here
+
+Map not found for id %s
+fill in here
+
+MX returned http error code: %s
+fill in here
+
+Couldn
+fill in here
+
+Map %s $z$s$fff added from MX Succesfully.
+fill in here
+
+Error: %s
+fill in here
+

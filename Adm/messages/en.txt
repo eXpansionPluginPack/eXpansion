@@ -1,0 +1,12 @@
+Server Management
+fill in here
+
+Server Options
+fill in here
+
+Game Options
+fill in here
+
+Match Settings
+fill in here
+

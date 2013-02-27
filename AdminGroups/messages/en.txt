@@ -1,0 +1,63 @@
+This command expect at least one parameter
+fill in here
+
+#admin_error#You need to be an Admin to use that command
+fill in here
+
+#admin_error#That Admin command doesen\
+fill in here
+
+#admin_error#You don\
+fill in here
+
+#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
+fill in here
+
+#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
+fill in here
+
+#admin_error#Your are #variable#%1$s #admin_error#You can\
+fill in here
+
+#admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
+fill in here
+
+#admin_error#Player #variable#%1$s #admin_action#isn\
+fill in here
+
+#admin_error#Master Admins has all rights. You can\
+fill in here
+
+Admin Groups
+fill in here
+
+Admin Group Permission - %1$s
+fill in here
+
+Admin Group Players - %1$s
+fill in here
+
+New Group Name :
+fill in here
+
+Add
+fill in here
+
+Group Name
+fill in here
+
+Nb Players
+fill in here
+
+Player List
+fill in here
+
+Change Permissions
+fill in here
+
+Remove Player
+fill in here
+
+#admin_error#
+fill in here
+

@@ -24,7 +24,7 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
     /** Is the redirection enabled or not ?
      * @type bool */
     private $enabled = true;
-
+    
     /**
      * onInit()
      *

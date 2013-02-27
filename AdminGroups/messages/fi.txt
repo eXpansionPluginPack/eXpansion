@@ -1,0 +1,56 @@
+#admin_action#You need to be an Admin to use that command
+#admin_action#Sinulla täytyy olla ylläpito-oikeudet tämän komennon suorittamiseen
+
+#admin_error#That Admin command doesen't exist. Use #variable#\admin help #admin_error#to see all commands
+#admin_error#Kyseistä ylläpitokomentoa ei löyty. Kirjoita #variable#\admin help #admin_error#nähdäksesi kaikki komennot.
+
+#admin_error#You don't have the permission to use that admin command
+#admin_error#Sinulla ei ole tarvittavia oikeuksia tähän ylläpitokomentoon
+
+#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
+#admin_error#Pelaaja#variable#%1$s #admin_error#on jo ryhmässä #admin_error#%2$s. #admin_error#Poista käyttäjä ryhmästä ensin.
+
+#admin_action#Player #variable#%1$s #admin_action#has been added to admin group #variable#%2$s
+#admin_action#Pelaaja #variable#%1$s #admin_action#on lisätty ryhmään #variable#%2$s
+
+#admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
+#admin_error#Olet ryhmässä #variable#%1$s #admin_error#Et voi poistaa itseäsi tästä ryhmästä.
+
+#admin_action#Player #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
+#admin_action#Pelaaja #variable#%1$s #admin_action#poiistettu ryhmästä #variable#%2$s
+
+#admin_error#Player #variable#%1$s #admin_action#isn't in the group
+#admin_error#Pelaaja #variable#%1$s #admin_action#ei ole ryhmässä
+
+#admin_error#Master Admins has all rights. You can't change that!
+#admin_error#Master Adminilla on jo kaikki oikeudet. Et voi muuttaa tätä!
+
+Admin Groups
+Ylläpitoryhmät
+
+Admin Group Permission - %1$s
+Ylläpitoryhmän oikeudet - %1$s
+
+Admin Group Players - %1$s
+Ylläpitoryhmän henkilöt - %1$s
+
+New Group Name :
+Uusi ryhmän nimi :
+
+Group Name
+Ryhmän nimi
+
+Nb Players
+Nr. Käyttäjiä
+
+Add
+Lisää
+
+Player List
+Käyttäjälista
+
+Change Permissions
+Muuta oikeuksia
+
+Remove Player
+Poista käyttäjä

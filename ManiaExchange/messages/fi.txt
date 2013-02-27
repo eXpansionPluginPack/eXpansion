@@ -1,0 +1,24 @@
+ManiaExchange
+ManiaExchange
+
+Search Maps
+Etsi karttoja
+
+Usage /mx add [id] or /mx search 
+Kirjoita /ms add [id] tai /mx search [hakutermi]
+
+MX is down
+MX palvelimeen ei saada yhteyttä
+
+Map not found for id %s
+Karttaa id:llä %s ei löydy.
+
+MX returned http error code: %s
+MX palautti http virhekoodin: %s
+
+Map %s $z$s$fff added from MX Succesfully.
+Kartta %s $z$s$fff lisätty MX:stä!
+
+Error: %s
+Virhe: %s
+

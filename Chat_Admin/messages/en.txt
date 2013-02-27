@@ -1,0 +1,93 @@
+help
+fill in here
+
+kick the player from the server
+fill in here
+
+Ban the player from the server
+fill in here
+
+Add the player to the black list
+fill in here
+
+Removes the ban of the player
+fill in here
+
+clears the banlist of players
+fill in here
+
+shows the current banlist of players
+fill in here
+
+clears the blacklist of players
+fill in here
+
+shows the current guest of players
+fill in here
+
+shows the current ignorelist of players
+fill in here
+
+Removes the player from the black list
+fill in here
+
+Forces the player to become spectator
+fill in here
+
+Adds player to ignore list and mutes him from the chat
+fill in here
+
+Removes player to ignore list and allows him to chat
+fill in here
+
+Changes the name of the server
+fill in here
+
+Changes the server comment
+fill in here
+
+Changes the player password
+fill in here
+
+Changes the password for players to connect
+fill in here
+
+Changes the spectator password
+fill in here
+
+Changes the password for spectators to connect
+fill in here
+
+Changes the Referee password
+fill in here
+
+Sets a new maximum of players
+fill in here
+
+Sets the maximum number of players who can play on this server.
+fill in here
+
+Sets a new maximum of spectator
+fill in here
+
+Sets the maximum number of players who can spectate the players on this server.
+fill in here
+
+Sets the Chat time duration.
+fill in here
+
+Skips the current track
+fill in here
+
+Sets next mode {ta,rounds,team,laps,stunts,cup}
+fill in here
+
+Blacklisted Players on the server
+fill in here
+
+Guest Players on the server
+fill in here
+
+Ignored Players on the server
+fill in here
+
