@@ -1,12 +1,12 @@
 Server Management
-fill in here
+Server Management
 
 Server Options
-fill in here
+Server Options
 
 Game Options
-fill in here
+Game Options
 
 Match Settings
-fill in here
+Match Settings
 

@@ -17,14 +17,14 @@ foreach (scandir(__DIR__) as $filename) {
                 preg_match("/__\((\"|\')(.*?)(\"|\')/", $row, $matches);
                 if (sizeof($matches) > 2) {
                     $messageCount++;
-                    $pluginMessages[$filename][$matches[2]] = $matches[2] . "\nfill in here\n\n";
+                    $pluginMessages[$filename][$matches[2]] = $matches[2] . "\n".$matches[2]."\n\n";
                 }
             }
             if (strstr($row, "exp_getMessage(")) {
                 preg_match("/exp_getMessage\((\"|\')(.*?)(\"|\')/", $row, $matches);
                 if (sizeof($matches) > 2) {
                     $messageCount++;
-                    $pluginMessages[$filename][$matches[2]] = $matches[2] . "\nfill in here\n\n";
+                    $pluginMessages[$filename][$matches[2]] = $matches[2] . "\n".$matches[2]."\n\n";
                 }
             }
         }

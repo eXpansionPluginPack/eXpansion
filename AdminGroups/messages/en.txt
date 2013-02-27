@@ -1,63 +1,63 @@
 This command expect at least one parameter
-fill in here
+This command expect at least one parameter
 
 #admin_error#You need to be an Admin to use that command
-fill in here
+#admin_error#You need to be an Admin to use that command
 
 #admin_error#That Admin command doesen\
-fill in here
+#admin_error#That Admin command doesen\
 
 #admin_error#You don\
-fill in here
+#admin_error#You don\
 
 #admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
-fill in here
+#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
 
 #admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
-fill in here
+#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
 
 #admin_error#Your are #variable#%1$s #admin_error#You can\
-fill in here
+#admin_error#Your are #variable#%1$s #admin_error#You can\
 
 #admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
-fill in here
+#admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
 
 #admin_error#Player #variable#%1$s #admin_action#isn\
-fill in here
+#admin_error#Player #variable#%1$s #admin_action#isn\
 
 #admin_error#Master Admins has all rights. You can\
-fill in here
+#admin_error#Master Admins has all rights. You can\
 
 Admin Groups
-fill in here
+Admin Groups
 
 Admin Group Permission - %1$s
-fill in here
+Admin Group Permission - %1$s
 
 Admin Group Players - %1$s
-fill in here
+Admin Group Players - %1$s
 
 New Group Name :
-fill in here
+New Group Name :
 
 Add
-fill in here
+Add
 
 Group Name
-fill in here
+Group Name
 
 Nb Players
-fill in here
+Nb Players
 
 Player List
-fill in here
+Player List
 
 Change Permissions
-fill in here
+Change Permissions
 
 Remove Player
-fill in here
+Remove Player
 
 #admin_error#
-fill in here
+#admin_error#
 

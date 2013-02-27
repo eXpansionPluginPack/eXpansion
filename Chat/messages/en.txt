@@ -1,6 +1,6 @@
 [eXpansion|Chat] Couldn
-fill in here
+[eXpansion|Chat] Couldn
 
 [eXpansion|Chat] error sending chat from %s: %s with folloing error %s
-fill in here
+[eXpansion|Chat] error sending chat from %s: %s with folloing error %s
 
