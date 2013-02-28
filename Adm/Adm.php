@@ -54,29 +54,27 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     
     public function onOliverde8HudMenuReady($menu) {
         
-        $parent = $menu->findButton(array('admin'));
-        $bts = $parent->getSubButtons();
-        if(!empty($bts)){
-            echo "test\n";
-            $separator["seperator"] = true;
-            $menu->addButton('admin', "eXpansion", $separator);
+        $parent = $menu->findButton(array('admin','Server Options'));
+        if(!$parent){
+            $button["style"] = "Icons128x128_1";
+            $button["substyle"] = "Options";        
+            $button["plugin"] = $this;
+            $parent = $menu->addButton("admin", "Server Options", $button);
         }
-        
-		$button["style"] = "Icons128x128_1";
-		$button["substyle"] = "Options";        
-		$button["plugin"] = $this;
-		$parent = $menu->addButton("admin", "Server Options", $button);
         
         $button["style"] = "Icons128x128_1";
 		$button["substyle"] = "Options";        
 		$button["plugin"] = $this;
 		$button["function"] = "serverOptions";
-		$parent = $menu->addButton($parent, "Server Window", $button);
+		$menu->addButton($parent, "Server Window", $button);
         
-		$button["style"] = "Icons128x128_1";
-		$button["substyle"] = "ProfileAdvanced";
-        $button["plugin"] = $this;  
-		$parent = $menu->addButton("admin", "Game Settings", $button);
+        $parent = $menu->findButton(array('admin','Game Options'));
+        if(!$parent){
+            $button["style"] = "Icons128x128_1";
+            $button["substyle"] = "ProfileAdvanced";        
+            $button["plugin"] = $this;
+            $parent = $menu->addButton("admin", "Game Options", $button);
+        }
         
         $button["style"] = "Icons128x128_1";
 		$button["substyle"] = "ProfileAdvanced";
@@ -88,7 +86,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$button["substyle"] = "Save";
         $button["plugin"] = $this;
         $button["function"] = "matchSettings";
-		$parent = $menu->addButton($parent, "Match Settings", $button);
+		$menu->addButton($parent, "Match Settings", $button);
     }
     
     public function buildStdMenu() {

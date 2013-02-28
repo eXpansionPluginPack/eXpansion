@@ -2,8 +2,18 @@
 
 namespace ManiaLivePlugins\eXpansion\Players;
 
-class Players extends  \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+use ManiaLive\Event\Dispatcher;
 
+class Players extends  \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+    
+    public function exp_onInit() {
+       parent::exp_onInit();
+         //Oliverde8 Menu
+        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
+        }
+    }
+    
     public function exp_onReady() {
         $this->enableDedicatedEvents();
 
@@ -14,6 +24,14 @@ class Players extends  \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Players'), false);            
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Show Players'), null, array($this, 'showPlayerList'), false);
         }
+    }
+    
+     public function onOliverde8HudMenuReady($menu) {        
+		$button["style"] = "Icons128x128_1";
+		$button["substyle"] = "Profile";        
+		$button["plugin"] = $this;
+		$button["function"] = 'showPlayerList';
+		$parent = $menu->addButton("admin", "Show Players", $button);
     }
 
     public function onPlayerDisconnect($login) {

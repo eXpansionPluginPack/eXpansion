@@ -2,8 +2,18 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps;
 
+use ManiaLive\Event\Dispatcher;
+
 class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
+    public function exp_onInit() {
+       parent::exp_onInit();
+         //Oliverde8 Menu
+        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
+        }
+    }
+    
     public function exp_onReady() {
         $this->enableDedicatedEvents();
         Gui\Windows\Maplist::$mapsPlugin = $this;
@@ -18,6 +28,27 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->isPluginLoaded('Standard\Menubar'))
             $this->buildMenu();
     }
+    
+    public function onOliverde8HudMenuReady($menu) {
+        
+        $button["style"] = "UIConstructionSimple_Buttons";
+        $button["substyle"] = "Drive";        
+        $button["plugin"] = $this;
+        $parent = $menu->findButton(array('menu','Maps'));
+        if(!$parent){
+            $parent = $menu->addButton('menu', "Maps", $button);
+        }
+        
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "Drive";  
+		$button["plugin"] = $this;
+        $button["function"] = 'showMapList';
+		$menu->addButton($parent, "List all Maps", $button);
+        
+        $button["substyle"] = "newTrack"; 
+        $button["function"] = 'addMaps';
+		$parent = $menu->addButton($parent, "Add Map", $button);
+     }
 
     public function onPlayerDisconnect($login) {
         Gui\Windows\Maplist::Erase($login);

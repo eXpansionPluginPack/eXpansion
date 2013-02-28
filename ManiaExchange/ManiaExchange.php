@@ -33,17 +33,12 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      public function onOliverde8HudMenuReady($menu) {
         
         $parent = $menu->findButton(array('menu','Maps'));
+        $button["style"] = "UIConstructionSimple_Buttons";
+        $button["substyle"] = "Drive";
+        $button["plugin"] = $this;
         if(!$parent){
-            $button["style"] = "UIConstructionSimple_Buttons";
-            $button["substyle"] = "Drive";        
-            $button["plugin"] = $this;
             $parent = $menu->addButton('menu', "Maps", $button);
         }
-        
-        $button["style"] = "UIConstructionSimple_Buttons";
-        $button["substyle"] = "Drive";        
-        $button["plugin"] = $this;
-        $parent = $menu->addButton('menu', "Maps", $button);
         
         unset($button["style"]);
         unset($button["substyle"]);
