@@ -27,11 +27,19 @@ class Players extends  \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
     
      public function onOliverde8HudMenuReady($menu) {        
-		$button["style"] = "Icons128x128_1";
+		$parent = $menu->findButton(array("admin", "Players"));
+		$button["plugin"] = $this;
+		if (!$parent) {
+			$button["style"] = "Icons128x128_1";
+            $button["substyle"] = "Profile";
+            $parent = $menu->addButton("admin", "Players", $button);
+		}
+         
+        $button["style"] = "Icons128x128_1";
 		$button["substyle"] = "Profile";        
 		$button["plugin"] = $this;
 		$button["function"] = 'showPlayerList';
-		$parent = $menu->addButton("admin", "Show Players", $button);
+		$parent = $menu->addButton($parent, "Show Players", $button);
     }
 
     public function onPlayerDisconnect($login) {

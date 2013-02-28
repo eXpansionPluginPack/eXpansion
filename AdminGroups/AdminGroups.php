@@ -142,11 +142,18 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	
     public function onOliverde8HudMenuReady($menu) {
         
+        $parent = $menu->findButton(array("admin", "Players"));
+		if (!$parent) {
+			$button["style"] = "Icons128x128_1";
+            $button["substyle"] = "Profile";
+            $parent = $menu->addButton("admin", "Players", $button);
+		}
+        
         $button["style"] = "Icons128x128_1";
 		$button["substyle"] = "Invite";        
 		$button["plugin"] = $this;
 		$button["function"] = "windowGroups";
-		$parent = $menu->addButton('admin', "Admin Grpups", $button);
+		$parent = $menu->addButton($parent, "Admin Grpups", $button);
  
     }
     

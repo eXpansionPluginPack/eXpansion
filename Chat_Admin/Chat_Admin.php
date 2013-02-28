@@ -195,7 +195,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         AdminGroups::addAlias($cmd, 'next');
         AdminGroups::addAlias($cmd, 'nextmap');
 
-        $cmd = AdminGroups::addAdminCommand('restart', $this, 'restartMap', 'map_skip');
+        $cmd = AdminGroups::addAdminCommand('restart', $this, 'restartMap', 'map_res');
         AdminGroups::addAlias($cmd, 'res');
         AdminGroups::addAlias($cmd, 'resmap');
         AdminGroups::addAlias($cmd, 'restartmap');
@@ -334,7 +334,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return void
      */
     public function onOliverde8HudMenuReady($menu) {
-        //new oliverde8HudMenu($this, $menu, $this->storage, $this->connection);
+        new adapter\oliverde8HudMenu($this, $menu, $this->storage, $this->connection);
     }
 
     function help($fromLogin, $param) {
