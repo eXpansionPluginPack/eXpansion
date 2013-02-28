@@ -84,10 +84,10 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $player = $this->storage->players[$login];
             $map = $this->storage->maps[$mapNumber];
             
-            $this->connection->chatSendServerMessage(__('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.', $player->nickName, $map->name));
+            $this->connection->chatSendServerMessage(__('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.',$login , $player->nickName, $map->name));
             $this->connection->removeMap($map->fileName);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__("Error: %s",$e->getMessage()));
+            $this->connection->chatSendServerMessage(__("Error: %s",$login,$e->getMessage()));
         }
     }
 

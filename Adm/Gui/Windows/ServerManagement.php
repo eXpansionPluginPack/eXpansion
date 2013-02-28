@@ -40,13 +40,13 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->actions->stopManialive = ActionHandler::getInstance()->createAction(array($this, "stopManialive"));
 
         $elem = new myButton(16, 6);
-        $elem->setText(__("Stop Server"));
+        $elem->setText(__("Stop Server",$this->getRecipient()));
         $elem->setAction($this->actions->stopServer);
         $elem->colorize("d00");
         $this->frame->addComponent($elem);
 
         $elem = new myButton(16, 6);
-        $elem->setText(__("Stop Manialive"));
+        $elem->setText(__("Stop Manialive",$this->getRecipient()));
         $elem->setAction($this->actions->stopManialive);
         $elem->colorize("d00");
         $this->frame->addComponent($elem);

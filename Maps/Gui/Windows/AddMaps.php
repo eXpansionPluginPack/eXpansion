@@ -31,7 +31,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         try {
             $this->connection->addMap($filename);
             $mapinfo = $this->connection->getMapInfo($filename);
-            $this->connection->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.', $mapinfo->name));
+            $this->connection->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.',$this->getRecipient(), $mapinfo->name));
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage(__('Error:', $e->getMessage()));
         }

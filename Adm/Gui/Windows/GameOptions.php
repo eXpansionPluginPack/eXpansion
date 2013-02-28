@@ -86,7 +86,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         if ($nextGameInfo->gameMode == GameInfos::GAMEMODE_TEAM)
             $button->setActive();
         $this->frameGameMode->addComponent($button);
-        
+
         $this->frameGameMode->setPosition(4, -10);
         $this->frameGameMode->setScale(0.7);
         $this->mainFrame->addComponent($this->frameGameMode);
@@ -133,12 +133,12 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                     $mode = $gameMode;
             }
             $this->connection->setGameMode($gameMode);
-            $this->connection->chatSendServerMessage(__('$fff Next Gamemode is now set to $o%s', $mode));
+            $this->connection->chatSendServerMessage(__('$fff Next Gamemode is now set to $o%s', $this->getRecipient(), $mode));
             $this->mainFrame->removeComponent($this->frameGameMode);
             $this->genGameModes();
             $this->redraw();
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__('$f00$oError! $o$fff%s', $e->getMessage()), $this->getRecipient());
+            $this->connection->chatSendServerMessage(__('$f00$oError! $o$fff%s', $this->getRecipient(), $e->getMessage()), $this->getRecipient());
         }
     }
 

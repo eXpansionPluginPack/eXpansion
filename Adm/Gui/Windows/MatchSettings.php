@@ -25,24 +25,24 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->mainFrame->addComponent($this->pager);
     }
 
-    function saveSettings($login, $filename, $args) {
-        
+    function saveSettings($login, $filename) {
+
         try {
             $this->connection->saveMatchSettings($filename);
             $file = explode("/", $filename);
-            $this->connection->chatSendServerMessage(__("Saved MatchSettings to file: %s", end($file)));
+            $this->connection->chatSendServerMessage(__("Saved MatchSettings to file: %s", $this->getRecipient(), end($file)));
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $e->getMessage()));
+            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()));
         }
     }
 
-    function loadSettings($login, $filename, $args) {
+    function loadSettings($login, $filename) {
         try {
             $this->connection->loadMatchSettings($filename);
             $file = explode("/", $filename);
-            $this->connection->chatSendServerMessage(__("Loaded MatchSettings from file: %s", end($file)));
+            $this->connection->chatSendServerMessage(__("Loaded MatchSettings from file: %s", $this->getRecipient(), end($file)));
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff', $e->getMessage()));
+            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()));
         }
     }
 
