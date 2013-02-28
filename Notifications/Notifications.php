@@ -43,7 +43,7 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function onPlayerConnect($login, $isSpectator) {
-        $info = NotificationPanel::Create($login);
+        $info = NotificationPanel::Create($login, true);
         $info->setSize(100, 40);
         $info->setItems($this->messages);
         $info->setPosition(0, 38);
