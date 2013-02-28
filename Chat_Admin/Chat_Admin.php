@@ -23,6 +23,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            echo "GOGO40\n\n\n\n";
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
     }

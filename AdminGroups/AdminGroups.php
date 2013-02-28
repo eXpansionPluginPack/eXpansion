@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
+use ManiaLive\Event\Dispatcher;
+
 /**
  *  
  * @author oliver
@@ -95,6 +97,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->config = Config::getInstance();
 
        $this->loadAdmins();
+       
+        //Oliverde8 Menu
+        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
+        }
     }
 
     public function exp_onLoad() {
@@ -133,6 +140,16 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->addAdminCommand('groups', $this, "windowGroups", null);
     }
 	
+    public function onOliverde8HudMenuReady($menu) {
+        
+        $button["style"] = "Icons128x128_1";
+		$button["substyle"] = "Invite";        
+		$button["plugin"] = $this;
+		$button["function"] = "windowGroups";
+		$parent = $menu->addButton('admin', "Admin Grpups", $button);
+ 
+    }
+    
 	public function reLoadAdmins(){
 		$time = filemtime("config/" . $this->config->config_file);
 		
@@ -252,7 +269,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 			
 			foreach (self::$permissionList as $key => $value) {
 				$bool = $group->hasPermission($key)? "true" : "false";
-				$string .= "permission.restart".$key." = '".$bool."'\n";
+				$string .= "permission.".$key." = '".$bool."'\n";
 			}
 			
 			$string.="\n;List of Players.\n";

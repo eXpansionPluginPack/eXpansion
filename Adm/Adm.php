@@ -2,14 +2,24 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm;
 
-use \ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerOptions;
-use \ManiaLivePlugins\eXpansion\Adm\Gui\Windows\GameOptions;
+use ManiaLive\Event\Dispatcher;
 use ManiaLive\Gui\ActionHandler;
+
+use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerOptions;
+use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\GameOptions;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\AdminPanel;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerControlMain;
 
 class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
+    
+    public function exp_onInit() {
+        parent::exp_onInit();
+         //Oliverde8 Menu
+        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
+        }
+    }
     function exp_onReady() {
         //    $methods = get_class_methods($this->connection);
         if ($this->isPluginLoaded('Standard\Menubar'))
@@ -19,7 +29,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Server Management'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Server Management'), null, array($this, 'serverControlMain'), true);            
         }
-
+       
         $this->enableDedicatedEvents();
         ServerControlMain::$mainPlugin = $this;
 
@@ -41,7 +51,46 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onPlayerDisconnect($login) {
         AdminPanel::Erase($login);
     }
-
+    
+    public function onOliverde8HudMenuReady($menu) {
+        
+        $parent = $menu->findButton(array('admin'));
+        $bts = $parent->getSubButtons();
+        if(!empty($bts)){
+            echo "test\n";
+            $separator["seperator"] = true;
+            $menu->addButton('admin', "eXpansion", $separator);
+        }
+        
+		$button["style"] = "Icons128x128_1";
+		$button["substyle"] = "Options";        
+		$button["plugin"] = $this;
+		$parent = $menu->addButton("admin", "Server Options", $button);
+        
+        $button["style"] = "Icons128x128_1";
+		$button["substyle"] = "Options";        
+		$button["plugin"] = $this;
+		$button["function"] = "serverOptions";
+		$parent = $menu->addButton($parent, "Server Window", $button);
+        
+		$button["style"] = "Icons128x128_1";
+		$button["substyle"] = "ProfileAdvanced";
+        $button["plugin"] = $this;  
+		$parent = $menu->addButton("admin", "Game Settings", $button);
+        
+        $button["style"] = "Icons128x128_1";
+		$button["substyle"] = "ProfileAdvanced";
+        $button["plugin"] = $this;  
+        $button["function"] = "gameOptions";
+		$menu->addButton($parent, "Game Window", $button);
+        
+        $button["style"] = "Icons128x128_1";
+		$button["substyle"] = "Save";
+        $button["plugin"] = $this;
+        $button["function"] = "matchSettings";
+		$parent = $menu->addButton($parent, "Match Settings", $button);
+    }
+    
     public function buildStdMenu() {
         $this->callPublicMethod('Standard\Menubar', 'initMenu', \ManiaLib\Gui\Elements\Icons128x128_1::Options);
         $this->callPublicMethod('Standard\Menubar', 'addButton', __('Server Options'), array($this, 'serverOptions'), true);
