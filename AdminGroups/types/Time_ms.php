@@ -14,7 +14,7 @@ class Time_ms extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker{
 	}
 
 	public function getErrorMsg() {
-		return 'use time in format %variable%m:ss';
+		return 'use time in format #variable#m:ss';
 	}
 }
 

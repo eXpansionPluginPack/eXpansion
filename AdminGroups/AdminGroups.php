@@ -460,7 +460,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($this->hasPermission($login, $commands->getPermission())) {
                 $error = $commands->cmd($login, $chats);               
                 if ($error != '')
-                    $this->exp_chatSendServerMessage(__('#admin_error#' . $error,$login), $login);
+                    $this->exp_chatSendServerMessage(__('#admin_error#' . $error, $login), $login);
             }else {
                 $this->exp_chatSendServerMessage($this->msg_neeMorPerm, $login);
             }

@@ -102,7 +102,7 @@ class oliverde8HudMenu {
 
 		$this->gameSettings_GameMode($parent);
 
-		//$this->gameSettings_Rounds($parent);
+		$this->gameSettings_Rounds($parent);
 		$this->gameSettings_TimeAttack($parent);
 		//$this->gameSettings_Team($parent);
 		//$this->gameSettings_Laps($parent);
@@ -129,7 +129,8 @@ class oliverde8HudMenu {
 			$new['params'] = $modes2[$i];
 			$new["forceRefresh"] = "true";
 
-			$menu->addButton($gmode, 'Set To:' . $modes[$i], $new);
+			$b = $menu->addButton($gmode, 'Set To:' . $modes[$i], $new);
+            $b->setParamsAsArray(true);
 			unset($new);
 		}
 	}
@@ -147,6 +148,35 @@ class oliverde8HudMenu {
 		$this->generate_GameSettings_WarmUp($parent);
 		$this->generate_GameSettings_FinishTimeout($parent);
 		$this->generate_GameSettings_TATimeLimit($parent);
+	}
+    
+    public function check_gameSettings_NoTimeAttack(){
+		return !$this->check_gameSettings_TimeAttack();
+	}
+    public function check_gameSettings_TimeAttack() {
+		return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK;
+    }
+    
+    private function gameSettings_Rounds($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$button["style"] = 'Icons128x32_1';
+		$button["substyle"] = "RT_rounds";
+		$button['function'] = 'check_gameSettings_Rounds';
+		$button["checkFunction"] = "check_gameSettings_Rounds";
+		$parent = $menu->addButton($parent, "Round Settings", $button);
+
+		$this->generate_GameSettings_WarmUp($parent);
+		$this->generate_GameSettings_FinishTimeout($parent);
+		$this->generate_GameSettings_RoundPointsLimit($parent);
+		$this->generate_GameSettings_RoundForcedLaps($parent);
+		$this->generate_GameSettings_RoundUseNewRules($parent);
+	}
+    
+    public function check_gameSettings_Rounds() {
+		return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS;
+
 	}
     
     public function setGameMode($login, $params) {
@@ -174,10 +204,11 @@ class oliverde8HudMenu {
 			$new["params"] = $Time;
 
 			if ($Time == 0) {
-				$menu->addButton($wup, "Close it", $new);
+				$b = $menu->addButton($wup, "Close it", $new);
 			} else {
-				$menu->addButton($wup, "Set to : " . $Time, $new);
+				$b = $menu->addButton($wup, "Set to : " . $Time, $new);
 			}
+            $b->setParamsAsArray(true);
 
 			unset($new);
 		}
@@ -197,8 +228,8 @@ class oliverde8HudMenu {
 			$new["plugin"] = $this->adminPlugin;
 			$new["params"] = $Time;
 
-			$menu->addButton($wup, "Set to : " . $Time, $new);
-
+			$b = $menu->addButton($wup, "Set to : " . $Time, $new);
+            $b->setParamsAsArray(true);
 			unset($new);
 		}
 	}
@@ -211,27 +242,98 @@ class oliverde8HudMenu {
 		$button["substyle"] = "SendScore";
 		$wup = $menu->addButton($parent, "Time Limit", $button);
 
-		$times = array(30, 60, 90, 120, 180, 240, 300, 360, 390, 480);
+		$times = array(30, 60, 90, 120, 180, 240, 300, 360, 420, 480,600,720,900,1200);
 		foreach ($times as $Time) {
 			$new['style'] = 'BgRaceScore2';
 			$new["substyle"] = 'SandTimer';
 			$new['function'] = 'setTAlimit';
 			$new["plugin"] = $this->adminPlugin;
-			$new["params"] = $Time;
-
-			$menu->addButton($wup, "Set to : " .  Time::fromTM($Time * 1000), $new);
-
+			$new["params"] = $this->formatTime($Time);
+			$b = $menu->addButton($wup, "Set to : " .  Time::fromTM($Time * 1000, false), $new);
+            $b->setParamsAsArray(true);
 			unset($new);
         }
     }
-		
     
-    public function check_gameSettings_NoTimeAttack(){
-		return !$this->check_gameSettings_TimeAttack();
+    private function generate_GameSettings_RoundPointsLimit($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$button['style'] = 'BgRaceScore2';
+		$button["substyle"] = 'Points';
+		$wup = $menu->addButton($parent, "Point Limit", $button);
+
+		$times = array(10, 20, 30, 40, 50, 75, 100, 120, 150);
+		foreach ($times as $Time) {
+			$new['style'] = 'BgRaceScore2';
+			$new["substyle"] = 'Points';
+			$new['function'] = 'setRoundPointsLimit';
+			$new["plugin"] = $this->adminPlugin;
+			$new["params"] = $Time;
+
+			if ($Time == 0) {
+				$b = $menu->addButton($wup, "Close it", $new);
+			} else {
+				$b = $menu->addButton($wup, "Set to : " . $Time, $new);
+			}
+            $b->setParamsAsArray(true);
+
+			unset($new);
+		}
 	}
-    public function check_gameSettings_TimeAttack() {
-		return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK;
+    
+    private function generate_GameSettings_RoundForcedLaps($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$button['style'] = 'BgRaceScore2';
+		$button["substyle"] = 'Laps';
+		$wup = $menu->addButton($parent, "Forced Laps", $button);
+
+		$times = array(1, 2, 5, 8, 10, 20, 25, 30, 45, 50);
+		foreach ($times as $Time) {
+			$new['style'] = 'BgRaceScore2';
+			$new["substyle"] = 'Laps';
+			$new['function'] = 'setRoundForcedLaps';
+			$new["plugin"] = $this->adminPlugin;
+			$new["params"] = $Time;
+
+			if ($Time == 1) {
+				$b = $menu->addButton($wup, "Disable", $new);
+			} else {
+				$b = $menu->addButton($wup, "Set to : " . $Time, $new);
+			}
+            $b->setParamsAsArray(true);
+            
+			unset($new);
+		}
+	}
+    
+    private function generate_GameSettings_RoundUseNewRules($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$button["function"] = "save_GameSettings_RoundUseNewRules";
+		$button["switchFunction"] = "get_GameSettings_RoundUseNewRules";
+		$button["forceRefresh"] = true;
+
+		$wup = $menu->addButton($parent, "Use New Rules", $button);
+	}
+    public function save_GameSettings_RoundUseNewRules($login){
+        $val = $this->get_GameSettings_RoundUseNewRules() ? 'false' : 'true';
+        $this->adminPlugin->setUseNewRulesRound($login,array($val));
     }
+    public function get_GameSettings_RoundUseNewRules(){
+        return $this->connection->getNextGameInfo()->roundsUseNewRules;
+    }
+		
+    private function formatTime($secs){
+        $min = (int)($secs/60);
+        $sec = $secs - ($min * 60);
+        return sprintf('%1$02d:%2$02d', $min, $sec);
+    }
+    
+   
 }
 
 ?>
