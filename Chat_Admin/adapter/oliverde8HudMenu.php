@@ -24,7 +24,7 @@ class oliverde8HudMenu {
 
 		$this->generate_BasicCommands();
 		$this->generate_PlayerLists();
-		//$this->generate_ServerSettings();
+		$this->generate_ServerSettings();
 		$this->generate_GameSettings();
 	}
     
@@ -104,10 +104,66 @@ class oliverde8HudMenu {
 
 		$this->gameSettings_Rounds($parent);
 		$this->gameSettings_TimeAttack($parent);
-		//$this->gameSettings_Team($parent);
-		//$this->gameSettings_Laps($parent);
+		$this->gameSettings_Team($parent);
+		$this->gameSettings_Laps($parent);
 		//$this->gameSettings_Stunts($parent);
-		//$this->gameSettings_Cup($parent);
+		$this->gameSettings_Cup($parent);
+	}
+    
+    	private function generate_ServerSettings() {
+		$menu = $this->menuPlugin;
+
+		$parent = $menu->findButton(array('admin','Server Options'));
+        if(!$parent){
+            $button["style"] = "Icons128x128_1";
+            $button["substyle"] = "Options";        
+            $button["plugin"] = $this;
+            $parent = $menu->addButton("admin", "Server Options", $button);
+        }
+
+		$separator["seperator"] = true;
+
+		$button["forceRefresh"] = true;
+		$button["plugin"] = $this;
+		$button["function"] = "ServerSettings_setDisableRespawn";
+		$button["switchFunction"] = "ServerSettings_getDisableRespawn";
+		$menu->addButton($parent, "Disable Respawn", $button);
+
+		$button["plugin"] = $this;
+		$button["function"] = "ServerSettings_setMapDownload";
+		$button["switchFunction"] = "ServerSettings_getMapDownload";
+		$menu->addButton($parent, "Challlange Dwld", $button);
+		unset($button["switchFunction"]);
+
+		$menu->addButton($parent, "Other ...", $separator);
+	}
+    
+    public function ServerSettings_setDisableRespawn($login, $params) {
+		$respawn = $this->connection->getDisableRespawn();
+		if ($respawn['NextValue'])
+			$val = "true";
+		else
+			$val = "false";
+
+		$this->adminPlugin->setDisableRespawn($login, array($val));
+	}
+    
+    public function ServerSettings_getDisableRespawn(){
+        return $this->connection->getDisableRespawn();
+    }
+    
+    public function ServerSettings_getMapDownload() {
+		return $this->connection->isMapDownloadAllowed();
+	}
+
+	public function ServerSettings_setMapDownload($login) {
+
+		if (!$this->connection->isMapDownloadAllowed())
+			$val = "true";
+		else
+			$val = "false";
+
+		$this->adminPlugin->setServerMapDownload($login, $val);
 	}
     
     private function gameSettings_GameMode($parent) {
@@ -176,8 +232,223 @@ class oliverde8HudMenu {
     
     public function check_gameSettings_Rounds() {
 		return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS;
-
 	}
+    
+    private function gameSettings_Team($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$button["style"] = 'Icons128x32_1';
+		$button["substyle"] = "RT_Team";
+		$button['function'] = 'check_gameSettings_Team';
+		$button["checkFunction"] = "check_gameSettings_Team";
+		$parent = $menu->addButton($parent, "Team Settings", $button);
+
+		$this->generate_GameSettings_WarmUp($parent);
+		$this->generate_GameSettings_FinishTimeout($parent);
+		$this->generate_GameSettings_TeamPointsLimit($parent);
+	}
+    public function check_gameSettings_Team() {
+		return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM;
+	}
+    
+    private function gameSettings_Laps($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$button["style"] = 'Icons128x32_1';
+		$button["substyle"] = "RT_Laps";
+		$button['function'] = 'check_gameSettings_Laps';
+		$button["checkFunction"] = "check_gameSettings_Laps";
+		$parent = $menu->addButton($parent, "Laps Settings", $button);
+
+		$this->generate_GameSettings_WarmUp($parent);
+		$this->generate_GameSettings_FinishTimeout($parent);
+		$this->generate_GameSettings_LapsTimeLimit($parent);
+		$this->generate_GameSettings_LapsNbLaps($parent);
+	}
+    public function check_gameSettings_Laps() {
+		return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS;
+	}
+    
+    private function gameSettings_Cup($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$button["style"] = 'Icons128x32_1';
+		$button["substyle"] = "RT_Cup";
+		$button['function'] = 'check_gameSettings_Cup';
+		$button["checkFunction"] = "check_gameSettings_Cup";
+		$parent = $menu->addButton($parent, "Cup Settings", $button);
+
+		$this->generate_GameSettings_WarmUp($parent);
+		$this->generate_GameSettings_FinishTimeout($parent);
+		$this->generate_GameSettings_CupPointsLimit($parent);
+		$this->generate_GameSettings_CupNbWinners($parent);
+		$this->generate_GameSettings_CupRoundsPerChallenge($parent);
+	}
+     public function check_gameSettings_Cup() {
+		return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP;
+	}
+    
+    	private function generate_GameSettings_CupRoundsPerChallenge($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+
+		$wup = $menu->addButton($parent, "Round Par Challenge", $button);
+
+		$times = array(1, 2, 3, 4, 5, 7, 8, 10,12,15,20,25,30);
+		foreach ($times as $Time) {
+			$new['function'] = 'setCupRoundsPerMap';
+			$new["plugin"] = $this->adminPlugin;
+			$new["params"] = $Time;
+
+			if ($Time == 1) {
+				$b = $menu->addButton($wup, "Disable", $new);
+			} else {
+				$b = $menu->addButton($wup, "Set to : " . $Time, $new);
+			}
+            $b->setParamsAsArray(true);
+
+			unset($new);
+		}
+	}
+    
+    private function generate_GameSettings_CupNbWinners($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$button['style'] = 'Icons64x64_1';
+		$button["substyle"] = 'OfficialRace';
+		$wup = $menu->addButton($parent, "Nb Winners", $button);
+
+		$times = array(1, 2, 3, 5, 7, 8, 10,12,15,20,25,30);
+		foreach ($times as $Time) {
+			$new['style'] = 'Icons64x64_1';
+			$new["substyle"] = 'OfficialRace';
+			$new['function'] = 'setCupNbWinners';
+			$new["plugin"] = $this->adminPlugin;
+			$new["params"] = $Time;
+
+			if ($Time == 1) {
+				$b = $menu->addButton($wup, "Disable", $new);
+			} else {
+				$b = $menu->addButton($wup, "Set to : " . $Time, $new);
+			}
+            $b->setParamsAsArray(true);
+
+			unset($new);
+		}
+	}
+    
+    private function generate_GameSettings_CupPointsLimit($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$button['style'] = 'BgRaceScore2';
+		$button["substyle"] = 'Points';
+		$wup = $menu->addButton($parent, "Points Limit", $button);
+
+		$times = array(10, 20, 30, 40, 50, 75, 100, 120, 150);
+		foreach ($times as $Time) {
+			$new['style'] = 'BgRaceScore2';
+			$new["substyle"] = 'Points';
+			$new['function'] = 'setCupPointsLimit';
+			$new["plugin"] = $this->adminPlugin;
+			$new["params"] = $Time;
+
+			if ($Time == 1) {
+				$b = $menu->addButton($wup, "Disable", $new);
+			} else {
+				$b = $menu->addButton($wup, "Set to : " . $Time, $new);
+			}
+            $b->setParamsAsArray(true);
+
+			unset($new);
+		}
+	}
+    
+    private function generate_GameSettings_LapsTimeLimit($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$button['style'] = 'BgRaceScore2';
+		$button["substyle"] = 'SendScore';
+		$wup = $menu->addButton($parent, "Time Limit", $button);
+
+		$times = array(0, 10, 30, 60, 90, 120, 180, 240, 300);
+		foreach ($times as $Time) {
+			$new['style'] = 'BgRaceScore2';
+			$new["substyle"] = 'SandTimer';
+			$new['function'] = 'setLapsTimeLimit';
+			$new["plugin"] = $this->adminPlugin;
+			$new["params"] = $this->formatTime($Time);
+
+			if ($Time == 1) {
+				$b = $menu->addButton($wup, "Disable", $new);
+			} else {
+				$b = $menu->addButton($wup, "Set to : " . $Time, $new);
+			}
+            $b->setParamsAsArray(true);
+
+			unset($new);
+		}
+	}
+    
+    
+    
+    private function generate_GameSettings_LapsNbLaps($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$wup = $menu->addButton($parent, "Nb Laps", $button);
+
+		$times = array(1, 2, 5, 8, 10, 20, 25, 30, 45, 50);
+		foreach ($times as $Time) {
+			$new['function'] = 'setNbLaps';
+			$new["plugin"] = $this->adminPlugin;
+			$new["params"] = $Time;
+
+			if ($Time == 1) {
+				$b = $menu->addButton($wup, "Disable", $new);
+			} else {
+				$b = $menu->addButton($wup, "Set to : " . $Time, $new);
+			}
+            $b->setParamsAsArray(true);
+
+			unset($new);
+		}
+	}
+    
+    private function generate_GameSettings_TeamPointsLimit($parent) {
+		$menu = $this->menuPlugin;
+
+		$button["plugin"] = $this;
+		$button['style'] = 'BgRaceScore2';
+		$button["substyle"] = 'Points';
+		$wup = $menu->addButton($parent, "Point Limit", $button);
+
+		$times = array(10, 15, 20, 30, 40, 50, 75, 100, 120, 150);
+		foreach ($times as $Time) {
+			$new['style'] = 'BgRaceScore2';
+			$new["substyle"] = 'Points';
+			$new['function'] = 'setTeamPointsLimit';
+			$new["plugin"] = $this->adminPlugin;
+			$new["params"] = $Time;
+
+			if ($Time == 1) {
+				$b = $menu->addButton($wup, "Disable", $new);
+			} else {
+				$b = $menu->addButton($wup, "Set to : " . $Time, $new);
+			}
+            $b->setParamsAsArray(true);
+
+			unset($new);
+		}
+	}
+    
+    
     
     public function setGameMode($login, $params) {
 		$this->adminPlugin->setGameMode($login, $params);
@@ -226,7 +497,7 @@ class oliverde8HudMenu {
 			$new["substyle"] = 'SandTimer';
 			$new['function'] = 'setFinishTimeout';
 			$new["plugin"] = $this->adminPlugin;
-			$new["params"] = $Time;
+			$new["params"] = $this->formatTime($Time);
 
 			$b = $menu->addButton($wup, "Set to : " . $Time, $new);
             $b->setParamsAsArray(true);

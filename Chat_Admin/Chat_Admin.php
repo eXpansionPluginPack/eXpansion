@@ -23,7 +23,6 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
-            echo "GOGO40\n\n\n\n";
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
     }
@@ -458,7 +457,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function setLapsTimeLimit($fromLogin, $params) {
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
-            $this->connection->setLapsTimeLimit(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($params[0]));
+            $this->connection->setLapsTimeLimit(time_TMtoMS($params[0]));
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new laps timelimit to#variable# %s #admin_action#minutes.', null, array($admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
@@ -753,17 +752,14 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function setTAlimit($fromLogin, $params) {       
         
-        //try {
+        try {
             $this->connection->setTimeAttackLimit(self::time_TMtoMS($params[0]));
-            echo "Test : ";
-            print_r($fromLogin);
-             echo "\n\n";
             $admin = $this->storage->getPlayerObject($fromLogin);
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new time limit of #variable# %s #admin_action#minutes.', null, array($admin->nickName, $params[0]));
-       /* } catch (\Exception $e) {
+       } catch (\Exception $e) {
             print $e->getMessage();
             $this->sendErrorChat($fromLogin, $e->getMessage());
-        }*/
+        }
     }
 
     function setServerMapDownload($fromLogin, $params) {
