@@ -161,6 +161,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             // $this->connection->jumpToMapIndex($mapNumber);
             $this->connection->chooseNextMap($map->fileName);
+            $this->connection->nextMap();
             $map = $this->connection->getNextMapInfo();
             $this->connection->chatSendServerMessage(__('Speedjump to map %s $z$s$fff by %s', $login, $map->name, $map->author));
         } catch (\Exception $e) {

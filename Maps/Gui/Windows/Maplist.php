@@ -36,7 +36,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function removeMap($login,  \DedicatedApi\Structures\Map $map) {
-        self::$mapsPlugin->removeMap($login, $mapNumber);
+        self::$mapsPlugin->removeMap($login, $map);
     }
 
     function chooseNextMap($login, \DedicatedApi\Structures\Map $map) {
