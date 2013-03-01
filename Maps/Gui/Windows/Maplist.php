@@ -12,7 +12,10 @@ use ManiaLive\Gui\ActionHandler;
 class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     private $pager;
+    /** @var  \DedicatedApi\Connection */
     private $connection;
+
+    /** @var  \ManiaLive\Data\Storage */
     private $storage;
     public static $records = array();
     public static $mapsPlugin = null;
@@ -27,30 +30,18 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
        
     }
 
-    function gotoMap($login, $mapNumber) {
-        try {            
-            $this->connection->jumpToMapIndex($mapNumber);
-            $map = $this->connection->getNextMapInfo();            
-            $this->connection->chatSendServerMessage(__('Speedjump to map %s $z$s$fff by %s',$this->getRecipient(), $map->name, $map->author));
-            $this->Erase($this->getRecipient());
-        } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__('Error:', $e->getMessage()));
-        }
+    function gotoMap($login, \DedicatedApi\Structures\Map $map) {
+       self::$mapsPlugin->gotoMap($login, $map);
+        $this->Erase($login);
     }
 
-    function removeMap($login, $mapNumber) {
+    function removeMap($login,  \DedicatedApi\Structures\Map $map) {
         self::$mapsPlugin->removeMap($login, $mapNumber);
     }
 
-    function chooseNextMap($login, $mapNumber) {
-        try {            
-            $this->connection->setNextMapIndex($mapNumber);
-            $map = $this->connection->getNextMapInfo();            
-            $this->connection->chatSendServerMessage(__('Next map will be %s $z$s$fff by %s',$this->getRecipient(), $map->name, $map->author));        
-            $this->Erase($this->getRecipient());
-        } catch (\Exception $e) {
-           $this->connection->chatSendServerMessage(__('Error:', $e->getMessage()));
-        }
+    function chooseNextMap($login, \DedicatedApi\Structures\Map $map) {
+       self::$mapsPlugin->chooseNextMap($login, $map);
+        $this->Erase($login);
     }
 
     function onResize($oldX, $oldY) {
@@ -69,8 +60,9 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->pager->clearItems();
         $x = 0;
         $login = $this->getRecipient();
+        $isAdmin = \ManiaLive\Features\Admin\AdminGroup::contains($login);
         foreach ($this->storage->maps as $map)
-            $this->pager->addItem(new Mapitem($x++, $login, $map, $this, \ManiaLive\Features\Admin\AdminGroup::contains($login)));
+            $this->pager->addItem(new Mapitem($x++, $login, $map, $this, $isAdmin));
     }
 
     function destroy() {           

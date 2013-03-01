@@ -8,13 +8,16 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Mapitem;
 use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Additem;
-
 use ManiaLive\Gui\ActionHandler;
 
 class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     private $pager;
+
+    /** @var  \DedicatedApi\Connection */
     private $connection;
+
+    /** @var  \ManiaLive\Data\Storage */
     private $storage;
 
     protected function onConstruct() {
@@ -31,7 +34,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         try {
             $this->connection->addMap($filename);
             $mapinfo = $this->connection->getMapInfo($filename);
-            $this->connection->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.',$this->getRecipient(), $mapinfo->name));
+            $this->connection->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.', $this->getRecipient(), $mapinfo->name));
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage(__('Error:', $e->getMessage()));
         }
@@ -48,18 +51,21 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->populateList();
     }
 
-    function populateList() {     
+    function populateList() {
         $this->pager->clearItems();
 
 
         $login = $this->getRecipient();
-        $path = $this->connection->getMapsDirectory() . "/Downloaded/*.Map.Gbx";
-        
+
+        /** @var \DedicatedApi\Structures\Version */
+        $game = $this->connection->getVersion();
+        $path = $this->connection->getMapsDirectory() . "/Downloaded/" . $game->titleId . "/*.Map.Gbx";
+
         $maps = glob($path);
         $x = 0;
         if (count($maps) >= 1) {
-        foreach ($maps as $map)
-            $this->pager->addItem(new Additem($x++, $map, $this));
+            foreach ($maps as $map)
+                $this->pager->addItem(new Additem($x++, $map, $this));
         }
     }
 

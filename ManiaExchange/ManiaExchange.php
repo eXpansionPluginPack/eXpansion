@@ -5,15 +5,15 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange;
 use ManiaLive\Event\Dispatcher;
 
 class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
-
+       
     public function exp_onInit() {
-       parent::exp_onInit();
-         //Oliverde8 Menu
+        parent::exp_onInit();
+        //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
     }
-    
+
     public function exp_onReady() {
         $this->registerChatCommand("mx", "chatMX", 2, true);
         $this->registerChatCommand("mx", "chatMX", 1, true);
@@ -28,33 +28,32 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         $this->enableDedicatedEvents();
-       
     }
 
-     public function onOliverde8HudMenuReady($menu) {
-        
-        $parent = $menu->findButton(array('menu','Maps'));
+    public function onOliverde8HudMenuReady($menu) {
+
+        $parent = $menu->findButton(array('menu', 'Maps'));
         $button["style"] = "UIConstructionSimple_Buttons";
         $button["substyle"] = "Drive";
         $button["plugin"] = $this;
-        if(!$parent){
+        if (!$parent) {
             $parent = $menu->addButton('menu', "Maps", $button);
         }
-        
+
         unset($button["style"]);
         unset($button["substyle"]);
-		$button["image"] = "http://files.oliver-decramer.com/data/maniaplanet/images/forHud/planet_mx_logo.png";      
-		$button["plugin"] = $this;
-		$parent = $menu->addButton($parent, "ManiaExchange", $button);
-           
-		$button["plugin"] = $this;
-		$button["function"] = 'chatMX';
-		$button["params"] = 'search';
-		$menu->addButton($parent, "Search Maps", $button);
+        $button["image"] = "http://files.oliver-decramer.com/data/maniaplanet/images/forHud/planet_mx_logo.png";
+        $button["plugin"] = $this;
+        $parent = $menu->addButton($parent, "ManiaExchange", $button);
+
+        $button["plugin"] = $this;
+        $button["function"] = 'chatMX';
+        $button["params"] = 'search';
+        $menu->addButton($parent, "Search Maps", $button);
         $button["params"] = 'help';
-		$menu->addButton($parent, "Help", $button);
-     }
-    
+        $menu->addButton($parent, "Help", $button);
+    }
+
     public function onPlayerDisconnect($login) {
         Gui\Windows\MxSearch::Erase($login);
     }
@@ -133,22 +132,31 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     return;
                 }
 
-                $this->connection->chatSendServerMessage(__('MX returned http error code: %s',$login, $status["http_code"]), $login);
+                $this->connection->chatSendServerMessage(__('MX returned http error code: %s', $login, $status["http_code"]), $login);
                 return;
             }
+            /** @var \DedicatedApi\Structures\Version */
+            $game = $this->connection->getVersion();
 
-            $file = $this->connection->getMapsDirectory() . "/Downloaded/" . $mxId . ".Map.Gbx";
-
+            $maps = $this->connection->getMapsDirectory();
+            $dir = $maps . "/Downloaded/" . $game->titleId;
+            $file = $dir . "/" . $mxId . ".Map.Gbx";
+            
+            if (!is_dir($dir)) {
+                mkdir($dir, 0775);
+            }
+            
             if (!touch($file)) {
                 $this->connection->chatSendServerMessage(__("Couldn't create mapfile in maps folder, check folder permissions!"), $login);
             }
+
             file_put_contents($file, $data);
             $this->connection->addMap($file);
 
             $map = $this->connection->getMapInfo($file);
             $this->connection->chatSendServerMessage(__('Map %s $z$s$fff added from MX Succesfully.', $login, $map->name));
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__("Error: %s",$login, $e->getMessage()), $login);
+            $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
         }
     }
 

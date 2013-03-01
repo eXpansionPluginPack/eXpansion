@@ -3,23 +3,33 @@
 namespace ManiaLivePlugins\eXpansion\Maps;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\Maps\Structures\MapWish;
 
 class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
+    /** @var array(MapWish) */
+    private $nextMaps = array();
+
+    /* will be used when custom votes works again */
+
+    /** @var MapWish */
+    private $voteItem;
+
     public function exp_onInit() {
-       parent::exp_onInit();
-         //Oliverde8 Menu
+        parent::exp_onInit();
+
+        //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
     }
-    
+
     public function exp_onReady() {
         $this->enableDedicatedEvents();
         Gui\Windows\Maplist::$mapsPlugin = $this;
-        
+
         $this->registerChatCommand('list', "showMapList", 0, true);
-        
+
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', 'Maps', false);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', 'List maps', null, array($this, 'showMapList'), false);
@@ -30,27 +40,27 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->isPluginLoaded('Standard\Menubar'))
             $this->buildMenu();
     }
-    
+
     public function onOliverde8HudMenuReady($menu) {
-        
+
         $button["style"] = "UIConstructionSimple_Buttons";
-        $button["substyle"] = "Drive";        
+        $button["substyle"] = "Drive";
         $button["plugin"] = $this;
-        $parent = $menu->findButton(array('menu','Maps'));
-        if(!$parent){
+        $parent = $menu->findButton(array('menu', 'Maps'));
+        if (!$parent) {
             $parent = $menu->addButton('menu', "Maps", $button);
         }
-        
+
         $button["style"] = "Icons128x128_1";
-        $button["substyle"] = "Drive";  
-		$button["plugin"] = $this;
+        $button["substyle"] = "Drive";
+        $button["plugin"] = $this;
         $button["function"] = 'showMapList';
-		$menu->addButton($parent, "List all Maps", $button);
-        
-        $button["substyle"] = "newTrack"; 
+        $menu->addButton($parent, "List all Maps", $button);
+
+        $button["substyle"] = "newTrack";
         $button["function"] = 'addMaps';
-		$parent = $menu->addButton($parent, "Add Map", $button);
-     }
+        $menu->addButton($parent, "Add Map", $button);
+    }
 
     public function onPlayerDisconnect($login) {
         Gui\Windows\Maplist::Erase($login);
@@ -73,19 +83,17 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @todo enable the method for menu, currently votes are not working!
      */
     public function voteRestart($login) {
-        //    $this->connection->callVoteRestartMap();
-
         $vote = new \DedicatedApi\Structures\Vote();
         $vote->callerLogin = $login;
         $vote->cmdName = "Cmd name";
         $vote->cmdParam = array("param");
-        $this->connection->callVote($vote, 0.5, 0, 0);
+        $this->connection->callVote($vote, 0.3, 0, 0);
         $this->connection->chatSendServerMessage($login . " custom vote restart");
     }
 
     public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {
         $message = $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam . "\n";
-        //$this->connection->chatSendServerMessage($message);
+        //  $this->connection->chatSendServerMessage($message);
     }
 
     public function voteSkip($login) {
@@ -106,17 +114,70 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->show();
     }
 
-    public function removeMap($login, $mapNumber) {
+    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+        if ($restartMap) {
+            return;
+        }
+        try {
+            /** @var MapWish */
+            $nextItem = array_shift($this->nextMaps);
+            if ($nextItem == null)
+                return;
+
+            $nextMap = $nextItem->map;
+            $player = $nextItem->player;
+
+            $this->connection->chooseNextMap($nextMap->fileName);
+            $this->connection->chatSendServerMessage(__('Next map will be %s $z$s$fff by %s, wished by %s', null, $nextMap->name, $nextMap->author, $player->nickName));
+        } catch (\Exception $e) {
+            $this->connection->chatSendServerMessage(__('Error: %s', null, $e->getMessage()));
+        }
+    }
+
+    public function chooseNextMap($login, \DedicatedApi\Structures\Map $map) {
+        try {
+            $player = $this->storage->getPlayerObject($login);
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
+                //  if (sizeof($this->nextMaps) == 0) 
+                $this->nextMaps[] = new MapWish($player, $map);
+                $this->connection->chatSendServerMessage(__('Map %s $z$s$fff by %s, wished by %s $z$s$fff is added to next maps list.', $login, $map->name, $map->author, $player->nickName));
+            } else {
+                foreach ($this->nextMaps as $nextItems) {
+                    if ($nextItems->player->login == $login) {
+                        $this->connection->chatSendServerMessage(__('You have already map in next map wishes.', $login), $login);
+                        return;
+                    }
+                }
+
+                $this->nextMaps[] = new MapWish($player, $map);
+                $this->connection->chatSendServerMessage(__('Map %s $z$s$fff by %s, wished by %s $z$s$fff is added to next maps list.', $login, $map->name, $map->author, $player->nickName));
+            }
+        } catch (\Exception $e) {
+            $this->connection->chatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
+        }
+    }
+
+    public function gotoMap($login, \DedicatedApi\Structures\Map $map) {
+        try {
+            // $this->connection->jumpToMapIndex($mapNumber);
+            $this->connection->chooseNextMap($map->fileName);
+            $map = $this->connection->getNextMapInfo();
+            $this->connection->chatSendServerMessage(__('Speedjump to map %s $z$s$fff by %s', $login, $map->name, $map->author));
+        } catch (\Exception $e) {
+            $this->connection->chatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
+        }
+    }
+
+    public function removeMap($login, \DedicatedApi\Structures\Map $map) {
         if (!\ManiaLive\Features\Admin\AdminGroup::contains($login)) {
-            $this->connection->chatSendServerMessage(__("You are not allowed to do this!"), $login);
+            $this->connection->chatSendServerMessage(__("You are not allowed to do this!", $login), $login);
             return;
         }
 
         try {
 
-            $player = $this->storage->players[$login];
-            $map = $this->storage->maps[$mapNumber];
-
+            $player = $this->storage->getPlayerObj($login);
+            
             $this->connection->chatSendServerMessage(__('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.', $login, $player->nickName, $map->name));
             $this->connection->removeMap($map->fileName);
         } catch (\Exception $e) {

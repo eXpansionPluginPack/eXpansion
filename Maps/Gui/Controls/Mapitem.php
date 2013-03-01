@@ -23,9 +23,9 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $sizeY = 4;
 
         $this->isAdmin = $isAdmin;
-        $this->chooseNextMap = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'chooseNextMap'), $indexNumber);
-        $this->gotoMap = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'gotoMap'), $indexNumber);
-        $this->removeMap = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'removeMap'), $indexNumber);
+        $this->chooseNextMap = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'chooseNextMap'), $map);
+        $this->gotoMap = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'gotoMap'), $map);
+        $this->removeMap = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'removeMap'), $map);
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->bg->setAlign('left', 'center');
@@ -145,6 +145,13 @@ class Mapitem extends \ManiaLive\Gui\Control {
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->gotoMap);
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->removeMap);
         parent::destroy();
+    }
+
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->chooseNextMap);
+        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->gotoMap);
+        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->removeMap);
+        parent::onIsRemoved($target);
     }
 
 }
