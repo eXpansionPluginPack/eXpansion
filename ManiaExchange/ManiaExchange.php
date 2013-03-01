@@ -2,8 +2,18 @@
 
 namespace ManiaLivePlugins\eXpansion\ManiaExchange;
 
+use ManiaLive\Event\Dispatcher;
+
 class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
+    public function exp_onInit() {
+       parent::exp_onInit();
+         //Oliverde8 Menu
+        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
+        }
+    }
+    
     public function exp_onReady() {
         $this->registerChatCommand("mx", "chatMX", 2, true);
         $this->registerChatCommand("mx", "chatMX", 1, true);
@@ -21,6 +31,30 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
        
     }
 
+     public function onOliverde8HudMenuReady($menu) {
+        
+        $parent = $menu->findButton(array('menu','Maps'));
+        $button["style"] = "UIConstructionSimple_Buttons";
+        $button["substyle"] = "Drive";
+        $button["plugin"] = $this;
+        if(!$parent){
+            $parent = $menu->addButton('menu', "Maps", $button);
+        }
+        
+        unset($button["style"]);
+        unset($button["substyle"]);
+		$button["image"] = "http://files.oliver-decramer.com/data/maniaplanet/images/forHud/planet_mx_logo.png";      
+		$button["plugin"] = $this;
+		$parent = $menu->addButton($parent, "ManiaExchange", $button);
+           
+		$button["plugin"] = $this;
+		$button["function"] = 'chatMX';
+		$button["params"] = 'search';
+		$menu->addButton($parent, "Search Maps", $button);
+        $button["params"] = 'help';
+		$menu->addButton($parent, "Help", $button);
+     }
+    
     public function onPlayerDisconnect($login) {
         Gui\Windows\MxSearch::Erase($login);
     }

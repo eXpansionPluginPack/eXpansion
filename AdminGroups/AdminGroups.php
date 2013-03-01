@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
+use ManiaLive\Event\Dispatcher;
+
 /**
  *  
  * @author oliver
@@ -95,6 +97,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->config = Config::getInstance();
 
        $this->loadAdmins();
+       
+        //Oliverde8 Menu
+        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
+        }
     }
 
     public function exp_onLoad() {
@@ -133,6 +140,23 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->addAdminCommand('groups', $this, "windowGroups", null);
     }
 	
+    public function onOliverde8HudMenuReady($menu) {
+        
+        $parent = $menu->findButton(array("admin", "Players"));
+		if (!$parent) {
+			$button["style"] = "Icons128x128_1";
+            $button["substyle"] = "Profile";
+            $parent = $menu->addButton("admin", "Players", $button);
+		}
+        
+        $button["style"] = "Icons128x128_1";
+		$button["substyle"] = "Invite";        
+		$button["plugin"] = $this;
+		$button["function"] = "windowGroups";
+		$parent = $menu->addButton($parent, "Admin Grpups", $button);
+ 
+    }
+    
 	public function reLoadAdmins(){
 		$time = filemtime("config/" . $this->config->config_file);
 		
@@ -252,7 +276,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 			
 			foreach (self::$permissionList as $key => $value) {
 				$bool = $group->hasPermission($key)? "true" : "false";
-				$string .= "permission.restart".$key." = '".$bool."'\n";
+				$string .= "permission.".$key." = '".$bool."'\n";
 			}
 			
 			$string.="\n;List of Players.\n";
@@ -436,7 +460,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($this->hasPermission($login, $commands->getPermission())) {
                 $error = $commands->cmd($login, $chats);               
                 if ($error != '')
-                    $this->exp_chatSendServerMessage(__('#admin_error#' . $error,$login), $login);
+                    $this->exp_chatSendServerMessage(__('#admin_error#' . $error, $login), $login);
             }else {
                 $this->exp_chatSendServerMessage($this->msg_neeMorPerm, $login);
             }

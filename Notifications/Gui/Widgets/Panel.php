@@ -106,6 +106,8 @@ class Panel extends \ManiaLive\Gui\Window {
     }
 
     function setItems(array $menuItems) {
+        if ($this->frame!= null)
+            $this->_windowFrame->removeComponent($this->frame);
         $this->frame = new \ManiaLive\Gui\Controls\Frame(100,40);
         $this->frame->setAlign("left", "bottom");        
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(1));
