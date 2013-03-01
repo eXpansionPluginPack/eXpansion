@@ -7,7 +7,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onReady() {
         $this->enableDedicatedEvents();
         Gui\Windows\Maplist::$mapsPlugin = $this;
-
+        
+        $this->registerChatCommand('list', "showMapList", 0, true);
+        
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', 'Maps', false);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', 'List maps', null, array($this, 'showMapList'), false);
@@ -52,7 +54,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {
         $message = $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam . "\n";
-        $this->connection->chatSendServerMessage($message);
+        //$this->connection->chatSendServerMessage($message);
     }
 
     public function voteSkip($login) {
@@ -83,11 +85,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             $player = $this->storage->players[$login];
             $map = $this->storage->maps[$mapNumber];
-            
-            $this->connection->chatSendServerMessage(__('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.',$login , $player->nickName, $map->name));
+
+            $this->connection->chatSendServerMessage(__('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.', $login, $player->nickName, $map->name));
             $this->connection->removeMap($map->fileName);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__("Error: %s",$login,$e->getMessage()));
+            $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()));
         }
     }
 

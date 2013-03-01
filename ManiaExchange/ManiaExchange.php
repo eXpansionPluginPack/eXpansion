@@ -18,6 +18,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         $this->enableDedicatedEvents();
+       
     }
 
     public function onPlayerDisconnect($login) {
@@ -50,15 +51,15 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function mxSearch($login, $search = "", $author = "") {
         $window = Gui\Windows\MxSearch::Create($login);
         $window->setTitle('ManiaExchange');
-        $window->search("", $search, $author);
+        $window->search($login, $search, $author);
         $window->centerOnScreen();
-        $window->setSize(140, 100);
+        $window->setSize(160, 100);
         $window->show();
     }
 
     public function addMap($login, $mxId) {
         if (!is_numeric($mxId)) {
-            $this->connection->chatSendServerMessage(__('"%s" is not a numeric value.', $mxId), $login);
+            $this->connection->chatSendServerMessage(__('"%s" is not a numeric value.', $login, $mxId), $login);
             return;
         }
         try {
@@ -94,11 +95,11 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             if ($status["http_code"] !== 200) {
                 if ($status["http_code"] == 301) {
-                    $this->connection->chatSendServerMessage(__('Map not found for id %s', $mxId), $login);
+                    $this->connection->chatSendServerMessage(__('Map not found for id %s', $login, $mxId), $login);
                     return;
                 }
 
-                $this->connection->chatSendServerMessage(__('MX returned http error code: %s', $status["http_code"]), $login);
+                $this->connection->chatSendServerMessage(__('MX returned http error code: %s',$login, $status["http_code"]), $login);
                 return;
             }
 
@@ -111,9 +112,9 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connection->addMap($file);
 
             $map = $this->connection->getMapInfo($file);
-            $this->connection->chatSendServerMessage(__('Map %s $z$s$fff added from MX Succesfully.', $map->name));
+            $this->connection->chatSendServerMessage(__('Map %s $z$s$fff added from MX Succesfully.', $login, $map->name));
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()), $login);
+            $this->connection->chatSendServerMessage(__("Error: %s",$login, $e->getMessage()), $login);
         }
     }
 

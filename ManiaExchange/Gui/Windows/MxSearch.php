@@ -25,9 +25,8 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $inputAuthor;
     private $inputMapName;
     private $buttonSearch;
-    private $actionSearch;    
+    private $actionSearch;
     private $header;
-    
     public static $mxPlugin;
 
     protected function onConstruct() {
@@ -39,25 +38,25 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->searchframe = new \ManiaLive\Gui\Controls\Frame();
         $this->searchframe->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        
+
         $this->inputMapName = new Inputbox("mapName");
         $this->inputMapName->setLabel("Map name");
         $this->searchframe->addComponent($this->inputMapName);
-        
-        $this->inputAuthor = new Inputbox("author");        
+
+        $this->inputAuthor = new Inputbox("author");
         $this->inputAuthor->setLabel("Author name");
         $this->searchframe->addComponent($this->inputAuthor);
-              
+
         $this->actionSearch = ActionHandler::getInstance()->createAction(array($this, "actionOk"));
-        
-        $this->buttonSearch = new OkButton(16,6);
+
+        $this->buttonSearch = new OkButton(16, 6);
         $this->buttonSearch->setText("Search");
-        $this->buttonSearch->colorize('0f0');                
-        $this->buttonSearch->setAction($this->actionSearch);        
+        $this->buttonSearch->colorize('0f0');
+        $this->buttonSearch->setAction($this->actionSearch);
         $this->searchframe->addComponent($this->buttonSearch);
-        
+
         $this->mainFrame->addComponent($this->searchframe);
-        
+
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
 
@@ -77,7 +76,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 30);
         $this->pager->setStretchContentX($this->sizeX);
         $this->frame->setPosition(8, -10);
-        $this->searchframe->setPosition(8, -$this->sizeY+6);
+        $this->searchframe->setPosition(8, -$this->sizeY + 6);
     }
 
     function onShow() {
@@ -85,6 +84,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function search($login, $trackname, $author) {
+
         if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
             $script = $this->connection->getModeScriptInfo();
             $query = "";
@@ -107,7 +107,18 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                     break;
             }
         } else {
-            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&tpack=All&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
+            $env = "";
+            $info = $this->connection->getVersion();
+            switch ($info->titleId) {
+                case "TMCanyon":
+                    $env = "TMCanyon";
+                    break;
+                case "TMStadium":
+                    $env = "TMStadium";
+                    break;
+            }
+
+            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&tpack='.$env.'&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&priord=2&limit=40&tracksearch&api=on&format=json';
         }
 
         $ch = curl_init($query);
@@ -147,10 +158,10 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         self::$mxPlugin->addMap($login, $mapId);
     }
 
-    function actionOk($login, $args) {        
-        $this->search($login, $args['mapName'], $args['author']);        
+    function actionOk($login, $args) {
+        $this->search($login, $args['mapName'], $args['author']);
     }
-    
+
     function destroy() {
         parent::destroy();
     }
