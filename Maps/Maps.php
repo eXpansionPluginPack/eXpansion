@@ -177,7 +177,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         try {
 
-            $player = $this->storage->getPlayerObj($login);
+            $player = $this->storage->getPlayerObject($login);
             
             $this->connection->chatSendServerMessage(__('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.', $login, $player->nickName, $map->name));
             $this->connection->removeMap($map->fileName);
