@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Maps;
 
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Maps\Structures\MapWish;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget;
 
 class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -39,6 +40,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($this->isPluginLoaded('Standard\Menubar'))
             $this->buildMenu();
+
+        $widget = NextMapWidget::Create(null);
+        $widget->setPosition(136, 77);
+        $widget->setMap($this->storage->nextMap);
+        $widget->show();
     }
 
     public function onOliverde8HudMenuReady($menu) {
@@ -62,9 +68,25 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $menu->addButton($parent, "Add Map", $button);
     }
 
+    function onPlayerConnect($login, $isSpectator) {
+        $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
+        $info->setPosition(136, 77);
+        $info->setMap($this->storage->nextMap);
+        $info->show();
+    }
+
     public function onPlayerDisconnect($login) {
         Gui\Windows\Maplist::Erase($login);
         Gui\Windows\AddMaps::Erase($login);
+        NextMapWidget::Erase($login);
+    }
+
+    function onBeginMap($map, $warmUp, $matchContinuation) {
+        NextMapWidget::EraseAll();
+        $widget = NextMapWidget::Create(null);
+        $widget->setPosition(136, 77);
+        $widget->setMap($this->storage->nextMap);
+        $widget->show();
     }
 
     public function buildMenu() {
@@ -178,7 +200,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
 
             $player = $this->storage->getPlayerObject($login);
-            
+
             $this->connection->chatSendServerMessage(__('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.', $login, $player->nickName, $map->name));
             $this->connection->removeMap($map->fileName);
         } catch (\Exception $e) {

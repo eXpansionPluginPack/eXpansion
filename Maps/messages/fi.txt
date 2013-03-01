@@ -1,0 +1,24 @@
+Maps on server
+Kartat
+
+Next map will be %s $z$s$fff by %s, wished by %s
+Seuraava kartta on %s $z$s$fff tekijä %s, toive: %s
+
+Error: %s
+Virhe: %s
+
+Map %s $z$s$fff by %s, wished by %s $z$s$fff is added to next maps list.
+Kartta %s $z$s$fff tehnyt %s, ja toivonut: %s $z$s$fff lisätty jonoon.
+
+You have already map in next map wishes.
+Olet jo toivonut karttaa lisättäväksi jonoon.
+
+Speedjump to map %s $z$s$fff by %s
+Seuraava kartta: %s $z$s$fff tekijä %s
+
+You are not allowed to do this!
+Sinulla ei ole oikeuksia tehdä tätä!
+
+Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.
+Ylläpitäjä %s $z$s$fff poisti kartan %s $z$s$fff nykyisestä kokoelmasta.
+
