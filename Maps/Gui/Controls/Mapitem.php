@@ -56,7 +56,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
         $this->label = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->label->setAlign('left', 'center');
-        $this->label->setText(Formatting::contrastColors($map->name, "999f"));
+        $this->label->setText(Formatting::stripColors($map->name, "999f"));
         $this->label->setScale(0.8);
         $this->frame->addComponent($this->label);
 

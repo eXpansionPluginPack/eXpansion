@@ -15,8 +15,9 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onReady() {
-        $this->registerChatCommand("mx", "chatMX", 2, true);
-        $this->registerChatCommand("mx", "chatMX", 1, true);
+        $admGroup = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
+        $this->registerChatCommand("mx", "chatMX", 2, true, $admGroup->get());
+        $this->registerChatCommand("mx", "chatMX", 1, true, $admGroup->get());
         Gui\Windows\MxSearch::$mxPlugin = $this;
 
         if ($this->isPluginLoaded('Standard\Menubar'))
