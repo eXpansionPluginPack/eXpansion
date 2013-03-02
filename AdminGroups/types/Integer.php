@@ -15,7 +15,7 @@ class Integer extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker {
     public function check($data) {
         $value = filter_var($data, FILTER_VALIDATE_INT, $this->options);
 
-        if ($values === null)
+        if ($value === null)
             return false;
         else
             return $value;

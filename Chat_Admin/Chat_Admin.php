@@ -467,7 +467,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function setRoundPointsLimit($fromLogin, $params) {
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
-            $this->connection->setRoundPointsLimit(int_val($params[0]));
+            $this->connection->setRoundPointsLimit(intval($params[0]));
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets rounds points limits to#variable# %s.', null, array($admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
@@ -498,7 +498,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
-            $this->connection->setRoundForcedLaps(int_val($params[0]));
+            $this->connection->setRoundForcedLaps(intval($params[0]));
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new round forced laps to#variable# %s', null, array($admin->nickName, $params[0]));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
