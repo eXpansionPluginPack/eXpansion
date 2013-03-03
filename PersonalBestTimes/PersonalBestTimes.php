@@ -66,7 +66,7 @@ class PersonalBestTimes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     public function load($login) {
-        $database = $this->db->query("SELECT * FROM exp_pbtimes WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . " AND `login` = " . $this->db->quote($login) . " LIMIT 1;")->fetchObject();
+        $database = $this->db->query("SELECT * FROM exp_pbtimes WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . " AND `login` = " . $this->db->quote($login) . " ORDER BY time ASC LIMIT 1;")->fetchObject();
         if ($database !== false)
             self::$personalBestTimes[$login] = new Structures\BestTime($login, $database->time);
     }

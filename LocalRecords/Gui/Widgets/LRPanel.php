@@ -36,7 +36,7 @@ class LRPanel extends \ManiaLive\Gui\Window {
         $this->_mainWindow->setSubStyle("BgList");
         $this->_mainWindow->setAlign("left", "top");
         $this->_mainWindow->setScriptEvents(true);
-        $this->_windowFrame->addComponent($this->_mainWindow);
+       // $this->_windowFrame->addComponent($this->_mainWindow);
 
         $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setAlign("left", "top");
@@ -66,7 +66,7 @@ class LRPanel extends \ManiaLive\Gui\Window {
         $this->_minButton->setScriptEvents(true);
         $this->_minButton->setAlign("left", "center");
 
-        $this->_windowFrame->addComponent($this->_minButton);
+      //  $this->_windowFrame->addComponent($this->_minButton);
 
         $this->addComponent($this->_windowFrame);
 
@@ -149,7 +149,7 @@ class LRPanel extends \ManiaLive\Gui\Window {
                         
                 }
                 --></script>');
-        $this->addComponent($xml);
+       // $this->addComponent($xml);
     }
 
     function onResize($oldX, $oldY) {

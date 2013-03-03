@@ -68,7 +68,8 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
             $source_player = $this->storage->getPlayerObject($login);
             $nick = $source_player->nickName;
             $nick = str_ireplace('$w', '', $nick);
-
+            $nick = str_ireplace('$z', '$z$s', $nick);
+            
             try {
                 if (AdminGroup::contains($login)) {
                     $this->connection->chatSendServerMessage("\$fff" . $config->adminSign . " $nick\$z\$s" . $config->adminChatColor . "  " . $text);

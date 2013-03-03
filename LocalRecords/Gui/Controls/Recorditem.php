@@ -34,7 +34,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(1, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-       // $this->frame->addComponent($spacer);
+        $this->frame->addComponent($spacer);
 
         $this->label = new \ManiaLib\Gui\Elements\Label(14, 4);
         $this->label->setAlign('left', 'center');
@@ -66,7 +66,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
            $this->label->setText('$ff0' . \ManiaLive\Utilities\Time::fromTM($diffTime, true));
         
         }
-        $this->frame->addComponent($this->label);
+       // $this->frame->addComponent($this->label);
         
 
         $this->addComponent($this->frame);
