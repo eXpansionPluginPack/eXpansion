@@ -42,7 +42,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->buildMenu();
 
         $widget = NextMapWidget::Create(null);
-        $widget->setPosition(136, 77);
+        $widget->setPosition(136, 74);
         $widget->setMap($this->storage->nextMap);
         $widget->show();
     }
@@ -70,7 +70,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function onPlayerConnect($login, $isSpectator) {
         $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
-        $info->setPosition(136, 77);
+        $info->setPosition(136, 74);
         $info->setMap($this->storage->nextMap);
         $info->show();
     }
@@ -84,7 +84,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onBeginMap($map, $warmUp, $matchContinuation) {
         NextMapWidget::EraseAll();
         $widget = NextMapWidget::Create(null);
-        $widget->setPosition(136, 77);
+        $widget->setPosition(136, 74);
         $widget->setMap($this->storage->nextMap);
         $widget->show();
     }

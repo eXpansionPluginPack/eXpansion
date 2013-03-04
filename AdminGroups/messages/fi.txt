@@ -1,56 +1,56 @@
 #admin_action#You need to be an Admin to use that command
-#admin_action#Sinulla t‰ytyy olla yll‰pito-oikeudet t‰m‰n komennon suorittamiseen
+#admin_action#Sinulla t√§ytyy olla yll√§pito-oikeudet t√§m√§n komennon suorittamiseen
 
 #admin_error#That Admin command doesen't exist. Use #variable#\admin help #admin_error#to see all commands
-#admin_error#Kyseist‰ yll‰pitokomentoa ei lˆyty. Kirjoita #variable#\admin help #admin_error#n‰hd‰ksesi kaikki komennot.
+#admin_error#Kyseist√§ yll√§pitokomentoa ei l√∂yty. Kirjoita #variable#\admin help #admin_error#n√§hd√§ksesi kaikki komennot.
 
 #admin_error#You don't have the permission to use that admin command
-#admin_error#Sinulla ei ole tarvittavia oikeuksia t‰h‰n yll‰pitokomentoon
+#admin_error#Sinulla ei ole tarvittavia oikeuksia t√§h√§n yll√§pitokomentoon
 
 #admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
-#admin_error#Pelaaja#variable#%1$s #admin_error#on jo ryhm‰ss‰ #admin_error#%2$s. #admin_error#Poista k‰ytt‰j‰ ryhm‰st‰ ensin.
+#admin_error#Pelaaja#variable#%1$s #admin_error#on jo ryhm√§ss√§ #admin_error#%2$s. #admin_error#Poista k√§ytt√§j√§ ryhm√§st√§ ensin.
 
 #admin_action#Player #variable#%1$s #admin_action#has been added to admin group #variable#%2$s
-#admin_action#Pelaaja #variable#%1$s #admin_action#on lis‰tty ryhm‰‰n #variable#%2$s
+#admin_action#Pelaaja #variable#%1$s #admin_action#on lis√§tty ryhm√§√§n #variable#%2$s
 
 #admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
-#admin_error#Olet ryhm‰ss‰ #variable#%1$s #admin_error#Et voi poistaa itse‰si t‰st‰ ryhm‰st‰.
+#admin_error#Olet ryhm√§ss√§ #variable#%1$s #admin_error#Et voi poistaa itse√§si t√§st√§ ryhm√§st√§.
 
 #admin_action#Player #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
-#admin_action#Pelaaja #variable#%1$s #admin_action#poiistettu ryhm‰st‰ #variable#%2$s
+#admin_action#Pelaaja #variable#%1$s #admin_action#poiistettu ryhm√§st√§ #variable#%2$s
 
 #admin_error#Player #variable#%1$s #admin_action#isn't in the group
-#admin_error#Pelaaja #variable#%1$s #admin_action#ei ole ryhm‰ss‰
+#admin_error#Pelaaja #variable#%1$s #admin_action#ei ole ryhm√§ss√§
 
 #admin_error#Master Admins has all rights. You can't change that!
-#admin_error#Master Adminilla on jo kaikki oikeudet. Et voi muuttaa t‰t‰!
+#admin_error#Master Adminilla on jo kaikki oikeudet. Et voi muuttaa t√§t√§!
 
 Admin Groups
-Yll‰pitoryhm‰t
+Yll√§pitoryhm√§t
 
 Admin Group Permission - %1$s
-Yll‰pitoryhm‰n oikeudet - %1$s
+Yll√§pitoryhm√§n oikeudet - %1$s
 
 Admin Group Players - %1$s
-Yll‰pitoryhm‰n henkilˆt - %1$s
+Yll√§pitoryhm√§n henkil√∂t - %1$s
 
 New Group Name :
-Uusi ryhm‰n nimi :
+Uusi ryhm√§n nimi :
 
 Group Name
-Ryhm‰n nimi
+Ryhm√§n nimi
 
 Nb Players
-Nr. K‰ytt‰ji‰
+Nr. K√§ytt√§ji√§
 
 Add
-Lis‰‰
+Lis√§√§
 
 Player List
-K‰ytt‰j‰lista
+K√§ytt√§j√§lista
 
 Change Permissions
 Muuta oikeuksia
 
 Remove Player
-Poista k‰ytt‰j‰
+Poista k√§ytt√§j√§

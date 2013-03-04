@@ -69,14 +69,17 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
             $nick = $source_player->nickName;
             $nick = str_ireplace('$w', '', $nick);
             $nick = str_ireplace('$z', '$z$s', $nick);
+            $smileys = array("ッ","ツ","シ","ジ","ヅ");
+            $rnd = rand(0, sizeof($smileys)-1);
+            $text = str_replace(array(":)", "=)"), $smileys[$rnd], $text);            
             
             try {
                 if (AdminGroup::contains($login)) {
-                    $this->connection->chatSendServerMessage("\$fff" . $config->adminSign . " $nick\$z\$s" . $config->adminChatColor . "  " . $text);
+                    $this->connection->chatSendServerMessage("\$fff" . $config->adminSign . " $nick\$z\$s " . $config->chatSeparator . $config->adminChatColor . $text);
                 } elseif ($source_player->isManagedByAnOtherServer) {
-                    $this->connection->chatSendServerMessage("\$fff$nick\$z\$s" . $config->otherServerChatColor . "  " . $text);
+                    $this->connection->chatSendServerMessage("\$fff$nick\$z\$s " . $config->chatSeparator .$config->otherServerChatColor .  $text);
                 } else {
-                    $this->connection->chatSendServerMessage("\$fff$nick\$z\$s" . $config->publicChatColor . "  " . $text);
+                    $this->connection->chatSendServerMessage("\$fff$nick\$z\$s " . $config->chatSeparator . $config->publicChatColor . $text);
                 }
             } catch (\Exception $e) {
                 Console::println(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $text, $e->getMessage()));

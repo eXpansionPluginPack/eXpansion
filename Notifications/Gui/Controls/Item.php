@@ -14,12 +14,13 @@ class Item extends \ManiaLive\Gui\Control {
 
     function __construct(\ManiaLivePlugins\eXpansion\Notifications\Structures\Item $item) {
         $this->sizeX = 120;
-        $this->sizeY = 6;
+        $this->sizeY = 4;
         $this->setAlign("left", "top");
 
        // $action = \ManiaLive\Gui\ActionHandler::getInstance()->createAction($item->callback);
         $label = new \ManiaLib\Gui\Elements\Label(120, 5);        
-        $label->setText('$fff'.$item->message);  
+        $label->setText($item->message);  
+        $label->setTextColor("fff");
         $label->setStyle("TextRaceChat");
         $this->addComponent($label);
     }

@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Notifications;
 
-use \ManiaLivePlugins\eXpansion\Notifications\Gui\Widgets\Panel as NotificationPanel;
+use \ManiaLivePlugins\eXpansion\Notifications\Gui\Widgets\Panel2 as NotificationPanel;
+//use \ManiaLivePlugins\eXpansion\Notifications\Gui\Widgets\Panel2 as NotifiPanel2;
 use \ManiaLivePlugins\eXpansion\Notifications\Structures\Item;
 
 class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
@@ -15,13 +16,15 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onReady() {
         $this->enableDedicatedEvents();
-		
+          \ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::CHECKPOINT_LIST);
+          
 		/**
 		 * Redirecting The Announcements of the Admin Groups plugin
 		 */
 		$this->callPublicMethod('eXpansion\\Chat_Admin', 'exp_activateAnnounceRedirect', array($this, 'send'));
-        
-		$this->reDraw();
+                
+                $this->callPublicMethod('eXpansion\\LocalRecords', 'exp_activateAnnounceRedirect', array($this, 'send'));
+		$this->reDraw();                
     }
 	
     function send($message, $icon = null, $callback = null, $pluginid = null) {
@@ -42,17 +45,23 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect(NotificationPanel::RECIPIENT_ALL, true);
     }
 
-    function onPlayerConnect($login, $isSpectator) {
-        $info = NotificationPanel::Create($login, true);
+    function onPlayerConnect($login, $isSpectator) {       
+        $ui = \ManiaLive\Gui\CustomUI::Create($login);
+        $ui->hide(\ManiaLive\Gui\CustomUI::CHECKPOINT_LIST);
+        
+       $info = NotificationPanel::Create($login, true);
         $info->setSize(100, 40);
         $info->setItems($this->messages);
-        $info->setPosition(0, 38);
+        $info->setPosition(30, -60);        
+        $info->show(); 
         
-        $info->show();
+        //$info = NotifiPanel2::Create($login, true);
     }
 
     public function onPlayerDisconnect($login) {
-        NotificationPanel::Erase($login);       
+        \ManiaLive\Gui\CustomUI::Erase($login);
+        NotificationPanel::Erase($login);  
+          
     }
 
 }
