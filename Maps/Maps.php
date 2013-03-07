@@ -31,9 +31,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand('n', "testme", 0, true);
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
-            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', 'Maps', false);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', 'List maps', null, array($this, 'showMapList'), false);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', 'Add map', null, array($this, 'addMaps'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Maps'), false);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('List maps'), null, array($this, 'showMapList'), false);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Add map'), null, array($this, 'addMaps'), true);
         }
 
 

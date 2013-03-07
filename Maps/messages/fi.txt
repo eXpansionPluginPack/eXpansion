@@ -1,24 +1,41 @@
-Maps on server
+ÔªøMaps on server
 Kartat
 
+Maps
+Kartat
+
+List maps
+Lista
+
+Queue
+Jonoon
+
+Go now
+Mene heti
+
+Remove
+Poista
+
+Add map
+Lis√§√§
+
 Next map will be %s $z$s$fff by %s, wished by %s
-Seuraava kartta on %s $z$s$fff tekij‰ %s, toive: %s
+Seuraava kartta on %s $z$s$fff tekij√§ %s, toive: %s
 
 Error: %s
 Virhe: %s
 
 Map %s $z$s$fff by %s, wished by %s $z$s$fff is added to next maps list.
-Kartta %s $z$s$fff tehnyt %s, ja toivonut: %s $z$s$fff lis‰tty jonoon.
+Kartta %s $z$s$fff tehnyt %s, ja toivonut: %s $z$s$fff lis√§tty jonoon.
 
 You have already map in next map wishes.
-Olet jo toivonut karttaa lis‰tt‰v‰ksi jonoon.
+Olet jo toivonut karttaa lis√§tt√§v√§ksi jonoon.
 
 Speedjump to map %s $z$s$fff by %s
-Seuraava kartta: %s $z$s$fff tekij‰ %s
+Seuraava kartta: %s $z$s$fff tekij√§ %s
 
 You are not allowed to do this!
-Sinulla ei ole oikeuksia tehd‰ t‰t‰!
+Sinulla ei ole oikeuksia tehd√§ t√§t√§!
 
 Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.
-Yll‰pit‰j‰ %s $z$s$fff poisti kartan %s $z$s$fff nykyisest‰ kokoelmasta.
-
+Yll√§pit√§j√§ %s $z$s$fff poisti kartan %s $z$s$fff nykyisest√§ kokoelmasta.

@@ -1,0 +1,15 @@
+﻿Players
+Pelaajat
+
+Show Players
+Näytä Pelaajat
+
+Kick
+Potkaise
+
+Ban
+Bännää
+
+Force Spec
+Specciin
+
