@@ -17,28 +17,27 @@ class Playeritem extends \ManiaLive\Gui\Control {
     private $banAction;
     private $forceAction;
     private $frame;
-
+    
     function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin) {
         $sizeX = 120;
         $sizeY = 4;
         $this->isAdmin = $isAdmin;
         $this->player = $player;
 
-        $this->kickAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'kickPlayer'), $player->login);
-        $this->banAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'banPlayer'), $player->login);
-        $this->forceAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'toggleSpec'), $player->login);
+        $this->kickAction = $this->createAction(array($controller, 'kickPlayer'), $player->login);
+        $this->banAction = $this->createAction(array($controller, 'banPlayer'), $player->login);
+        $this->forceAction = $this->createAction(array($controller, 'toggleSpec'), $player->login);
+        
+        $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+        $this->bg->setAlign('left', 'center');
+        if ($indexNumber % 2 == 0) {
+            $this->bg->setBgcolor('fff4');
+        } else {
+            $this->bg->setBgcolor('7774');
+        }
+        $this->bg->setScriptEvents(true);
+        $this->addComponent($this->bg);
 
-        // stupid background...
-        /* $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-          $this->bg->setAlign('left', 'center');
-          if ($indexNumber % 2 == 0) {
-          $this->bg->setBgcolor('fff4');
-          } else {
-          $this->bg->setBgcolor('77f4');
-          }
-          $this->bg->setScriptEvents(true);
-          $this->addComponent($this->bg);
-         */
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
@@ -85,6 +84,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
             $this->banButton = new MyButton(16, 6);
             $this->banButton->setText(__("Ban"));
+            $this->banButton->setTextColor("fff");
             $this->banButton->colorize("000");
             $this->banButton->setAction($this->banAction);
             $this->banButton->setScale(0.6);
@@ -96,7 +96,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
             $this->kickButton->colorize("f00");
             $this->kickButton->setScale(0.6);
             $this->frame->addComponent($this->kickButton);
-            
+
             $this->forceButton = new MyButton(24, 6);
             $this->forceButton->setAction($this->forceAction);
             $this->forceButton->setScale(0.6);
@@ -127,10 +127,14 @@ class Playeritem extends \ManiaLive\Gui\Control {
         
     }
 
-    function __destruct() {
-        ActionHandler::getInstance()->deleteAction($this->kickAction);
-        ActionHandler::getInstance()->deleteAction($this->banAction);
-        ActionHandler::getInstance()->deleteAction($this->forceAction);
+    function destroy() {  
+        $this->banButton->destroy();
+        $this->forceButton->destroy();
+        $this->kickButton->destroy();
+        
+        $this->clearComponents();
+        
+        parent::destroy();
     }
 
 }

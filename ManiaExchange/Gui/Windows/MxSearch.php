@@ -27,6 +27,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $buttonSearch;
     private $actionSearch;
     private $header;
+    private $items = array();
     public static $mxPlugin;
 
     protected function onConstruct() {
@@ -118,7 +119,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                     break;
             }
 
-            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&tpack='.$env.'&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&priord=2&limit=40&tracksearch&api=on&format=json';
+            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&tpack=' . $env . '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&priord=2&limit=40&tracksearch&api=on&format=json';
         }
 
         $ch = curl_init($query);
@@ -143,13 +144,20 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->maps = Map::fromArrayOfArray(json_decode($data, true));
 
+        foreach ($this->items as $item)
+            $item->destroy();
+
         $this->pager->clearItems();
+        $this->items = array();
 
         $x = 0;
         $login = $this->getRecipient();
+        $isadmin = \ManiaLive\Features\Admin\AdminGroup::contains($login);
+
         foreach ($this->maps as $map) {
-            $item = new MxMap($x++, $map, $this, \ManiaLive\Features\Admin\AdminGroup::contains($login));
-            $this->pager->addItem($item);
+            $this->items[$x] = new MxMap($x, $map, $this, $isadmin);
+            $this->pager->addItem($this->items[$x]);
+            $x++;
         }
         $this->redraw();
     }
@@ -163,6 +171,15 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function destroy() {
+        foreach ($this->items as $item)
+            $item->destroy();
+        $this->items = null;
+        $this->inputMapName->destroy();
+        $this->inputAuthor->destroy();
+        $this->buttonSearch->destroy();
+        $this->header->destroy();
+        ActionHandler::getInstance()->deleteAction($this->actionSearch);        
+        $this->clearComponents();
         parent::destroy();
     }
 

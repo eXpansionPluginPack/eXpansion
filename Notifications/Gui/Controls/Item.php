@@ -13,12 +13,12 @@ class Item extends \ManiaLive\Gui\Control {
     private $frame;
 
     function __construct(\ManiaLivePlugins\eXpansion\Notifications\Structures\Item $item) {
-        $this->sizeX = 120;
+        $this->sizeX = 100;
         $this->sizeY = 4;
         $this->setAlign("left", "top");
 
        // $action = \ManiaLive\Gui\ActionHandler::getInstance()->createAction($item->callback);
-        $label = new \ManiaLib\Gui\Elements\Label(120, 5);        
+        $label = new \ManiaLib\Gui\Elements\Label(100, 5);        
         $label->setText($item->message);  
         $label->setTextColor("fff");
         $label->setStyle("TextRaceChat");
@@ -32,7 +32,7 @@ class Item extends \ManiaLive\Gui\Control {
     function onDraw() {
         
     }
-
+    
     function __destruct() {
         
     }

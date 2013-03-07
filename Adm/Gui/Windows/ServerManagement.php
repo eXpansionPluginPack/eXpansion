@@ -24,6 +24,7 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $frame;
     private $closeButton;
     private $actions;
+    private $btn1, $btn2;
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -39,17 +40,17 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->actions->stopServer = ActionHandler::getInstance()->createAction(array($this, "stopServer"));
         $this->actions->stopManialive = ActionHandler::getInstance()->createAction(array($this, "stopManialive"));
 
-        $elem = new myButton(16, 6);
-        $elem->setText(__("Stop Server",$this->getRecipient()));
-        $elem->setAction($this->actions->stopServer);
-        $elem->colorize("d00");
-        $this->frame->addComponent($elem);
+        $this->btn1 = new myButton(16, 6);
+        $this->btn1->setText(__("Stop Server", $this->getRecipient()));
+        $this->btn1->setAction($this->actions->stopServer);
+        $this->btn1->colorize("d00");
+        $this->frame->addComponent($this->btn1);
 
-        $elem = new myButton(16, 6);
-        $elem->setText(__("Stop Manialive",$this->getRecipient()));
-        $elem->setAction($this->actions->stopManialive);
-        $elem->colorize("d00");
-        $this->frame->addComponent($elem);
+        $this->btn2 = new myButton(16, 6);
+        $this->btn2->setText(__("Stop Manialive", $this->getRecipient()));
+        $this->btn2->setAction($this->actions->stopManialive);
+        $this->btn2->colorize("d00");
+        $this->frame->addComponent($this->btn2);
 
 
         $this->mainFrame->addComponent($this->frame);
@@ -66,7 +67,7 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function stopManialive($login) {
         die();
-    }    
+    }
 
     function close() {
         $this->Erase($this->getRecipient());
@@ -81,7 +82,10 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function destroy() {
         ActionHandler::getInstance()->deleteAction($this->actions->close);
         ActionHandler::getInstance()->deleteAction($this->actions->stopServer);
-        ActionHandler::getInstance()->deleteAction($this->actions->stopManialive);        
+        ActionHandler::getInstance()->deleteAction($this->actions->stopManialive);
+        $this->closeButton->destroy();
+        $this->btn1->destroy();
+        $this->btn2->destroy();
         unset($this->actions);
         parent::destroy();
     }

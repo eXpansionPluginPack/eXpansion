@@ -192,6 +192,11 @@ class EmotePanel extends \ManiaLive\Gui\Window {
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionGG);
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionBG);
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionLOL);
+        $this->btnAfk->destroy();
+        $this->btnBG->destroy();
+        $this->btnGG->destroy();
+        $this->btnLOL->destroy();
+        $this->clearComponents();
         parent::destroy();
     }
 

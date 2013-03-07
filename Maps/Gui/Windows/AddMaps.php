@@ -2,13 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
-use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Mapitem;
 use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Additem;
-use ManiaLive\Gui\ActionHandler;
 
 class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
@@ -20,6 +14,8 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     /** @var  \ManiaLive\Data\Storage */
     private $storage;
 
+    private $items = array();
+    
     protected function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
@@ -52,8 +48,12 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function populateList() {
-        $this->pager->clearItems();
+        foreach ($this->items as $item) {
+            $item->destroy();
+        }
 
+        $this->pager->clearItems();
+        $this->items = array();
 
         $login = $this->getRecipient();
 
@@ -64,12 +64,25 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $maps = glob($path);
         $x = 0;
         if (count($maps) >= 1) {
-            foreach ($maps as $map)
-                $this->pager->addItem(new Additem($x++, $map, $this));
+            foreach ($maps as $map) {
+                $this->items[$x] = new Additem($x, $map, $this);
+                $this->pager->addItem($this->items[$x]);
+                $x++;
+            }
         }
     }
 
     function destroy() {
+        foreach ($this->items as $item) {
+            $item->destroy();
+        }
+        $this->items = null;
+        
+        $this->connection = null;
+        $this->storage = null;
+        
+        $this->clearComponents();
+
         parent::destroy();
     }
 

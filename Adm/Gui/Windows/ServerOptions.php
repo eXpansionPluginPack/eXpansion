@@ -221,6 +221,27 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function destroy() {
         ActionHandler::getInstance()->deleteAction($this->actionOK);
         ActionHandler::getInstance()->deleteAction($this->actionCancel);
+        $this->buttonCancel->destroy();
+        $this->buttonOK->destroy();
+        $this->cbAllowMapDl->destroy();
+        $this->cbAllowp2pDown->destroy();
+        $this->cbAllowp2pUp->destroy();
+        $this->cbLadderServer->destroy();
+        $this->cbPublicServer->destroy();
+        $this->cbReferee->destroy();
+        $this->cbValidation->destroy();
+        $this->connection = null;
+        $this->storage = null;
+        $this->maxLadder->destroy();
+        $this->minLadder->destroy();
+        $this->maxPlayers->destroy();
+        $this->maxSpec->destroy();
+        $this->refereePass->destroy();
+        $this->serverComment->destroy();
+        $this->serverName->destroy();
+        $this->serverPass->destroy();
+        $this->serverSpecPass->destroy();
+        $this->clearComponents();
         parent::destroy();
     }
 
@@ -262,5 +283,5 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public function serverOptionsCancel($login, $args) {                
         $this->Erase($this->getRecipient());
     }
-
+   
 }

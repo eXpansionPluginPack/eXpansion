@@ -3,8 +3,8 @@
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 use \ManiaLib\Utils\Formatting;
-use \ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 
 class Mapitem extends \ManiaLive\Gui\Control {
 
@@ -16,6 +16,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
     private $chooseNextMap;
     private $gotoMap;
     private $removeMap;
+    private $removeButton;
     private $frame;
 
     function __construct($indexNumber, $login, \DedicatedApi\Structures\Map $map, $controller, $isAdmin) {
@@ -23,19 +24,19 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $sizeY = 4;
 
         $this->isAdmin = $isAdmin;
-        $this->chooseNextMap = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'chooseNextMap'), $map);
-        $this->gotoMap = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'gotoMap'), $map);
-        $this->removeMap = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'removeMap'), $map);
+        $this->chooseNextMap = $this->createAction(array($controller, 'chooseNextMap'), $map);
+        $this->gotoMap = $this->createAction(array($controller, 'gotoMap'), $map);
+        $this->removeMap = $this->createAction(array($controller, 'removeMap'), $map);
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->bg->setAlign('left', 'center');
         if ($indexNumber % 2 == 0) {
             $this->bg->setBgcolor('fff4');
         } else {
-            $this->bg->setBgcolor('77f4');
+            $this->bg->setBgcolor('7774');
         }
         $this->bg->setScriptEvents(true);
-        // $this->addComponent($this->bg);
+        $this->addComponent($this->bg);
 
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
@@ -94,6 +95,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
             $place = "-";
         }
 
+
         $this->time->setText($place);
         $this->frame->addComponent($this->time);
 
@@ -141,19 +143,13 @@ class Mapitem extends \ManiaLive\Gui\Control {
     }
 
     function destroy() {
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->chooseNextMap);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->gotoMap);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->removeMap);
+        $this->goButton->destroy();
+        $this->queueButton->destroy();
+        $this->removeButton->destroy();
+        
+        $this->clearComponents();
         parent::destroy();
     }
-
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->chooseNextMap);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->gotoMap);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->removeMap);
-        parent::onIsRemoved($target);
-    }
-
 }
 ?>
 

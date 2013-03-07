@@ -11,6 +11,7 @@ class MxMap extends \ManiaLive\Gui\Control {
     private $label;
     private $time;
     private $addAction;
+    private $addButton;
     private $actionSearch;
     private $frame;
 
@@ -22,8 +23,8 @@ class MxMap extends \ManiaLive\Gui\Control {
         if (property_exists($map, "mapID"))
             $id = $map->mapID;
 
-        $this->addAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'addMap'), $id);
-        $this->actionSearch = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'search'), "", $map->username);
+        $this->addAction = $this->createAction(array($controller, 'addMap'), $id);
+        $this->actionSearch = $this->createAction(array($controller, 'search'), "", $map->username);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
@@ -108,8 +109,7 @@ class MxMap extends \ManiaLive\Gui\Control {
     }
 
     function destroy() {
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->addAction);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionSearch);
+       $this->addButton->destroy();
         parent::destroy();
     }
 

@@ -13,89 +13,107 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\AdminItem;
  */
 class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
-	private $adminGroups;
-	private $pager;
-	private $group;
-	private $button_add;
-	private $login_add;
+    private $adminGroups;
+    private $pager;
+    private $group;
+    private $button_add;
+    private $login_add;
+    private $action_add;
+    private $items = array();
 
-	protected function onConstruct() {
-		parent::onConstruct();
-		$config = \ManiaLive\DedicatedApi\Config::getInstance();
+    protected function onConstruct() {
+        parent::onConstruct();
+        $config = \ManiaLive\DedicatedApi\Config::getInstance();
 
-		$this->adminGroups = AdminGroups::getInstance();
+        $this->adminGroups = AdminGroups::getInstance();
 
-		$this->pager = new \ManiaLive\Gui\Controls\Pager();
-		$this->mainFrame->addComponent($this->pager);
+        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->mainFrame->addComponent($this->pager);
 
-		$this->login_add = new Inputbox("login");
-		$this->login_add->setLabel(__("Login : "));
-		$this->login_add->setText("");
-		$this->login_add->setScale(0.8);
-		$this->mainFrame->addComponent($this->login_add);
+        $this->login_add = new Inputbox("login");
+        $this->login_add->setLabel(__("Login : "));
+        $this->login_add->setText("");
+        $this->login_add->setScale(0.8);
+        $this->mainFrame->addComponent($this->login_add);
 
-		$this->button_add = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
-		$this->button_add->setText(__("Add"));
-		$this->button_add->setAction($this->createAction(array($this, 'click_add')));
-		$this->button_add->setScale(0.8);
-		$this->mainFrame->addComponent($this->button_add);
-	}
+        $this->button_add = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
+        $this->button_add->setText(__("Add"));
+        $this->action_add = $this->createAction(array($this, 'click_add'));
+        $this->button_add->setAction($this->action_add);
+        $this->button_add->setScale(0.8);
+        $this->mainFrame->addComponent($this->button_add);
+    }
 
-	public function setGroup($g) {
-		$this->group = $g;
-	}
+    public function setGroup($g) {
+        $this->group = $g;
+    }
 
-	function onResize($oldX, $oldY) {
-		parent::onResize($oldX, $oldY);
-		$this->pager->setSize($this->sizeX - 2, $this->sizeY - 25);
-		$this->pager->setStretchContentX($this->sizeX);
-		$this->pager->setPosition(4, -17);
+    function onResize($oldX, $oldY) {
+        parent::onResize($oldX, $oldY);
+        $this->pager->setSize($this->sizeX - 2, $this->sizeY - 25);
+        $this->pager->setStretchContentX($this->sizeX);
+        $this->pager->setPosition(4, -17);
 
-		$this->login_add->setSize($this->sizeX - 20, 7);
-		$this->login_add->setPosition(4, -12);
+        $this->login_add->setSize($this->sizeX - 20, 7);
+        $this->login_add->setPosition(4, -12);
 
-		$this->button_add->setSize(30, 5);
-		$this->button_add->setPosition($this->sizeX - 35, -12);
-	}
+        $this->button_add->setSize(30, 5);
+        $this->button_add->setPosition($this->sizeX - 35, -12);
+    }
 
-	function onShow() {
-		$this->pager->clearItems();
+    function onShow() {
+        foreach ($this->items as $item)
+            $item->destroy();
+        $this->pager->clearItems();
+        $this->items = array();
+
         $this->button_add->setText(__(AdminGroups::$txt_add, $this->getRecipient()));
-		$this->populateList();
-	}
+        $this->populateList();
+    }
 
-	function populateList() {
-		foreach ($this->group->getGroupUsers() as $admin) {
-			$this->pager->addItem(new AdminItem($admin, $this, $this->getRecipient()));
-		}
-	}
+    function populateList() {
+        $x = 0;
+        foreach ($this->group->getGroupUsers() as $admin) {
+            $this->items[$x] = new AdminItem($admin, $this, $this->getRecipient());
+            $this->pager->addItem($this->items[$x]);
+            $x++;
+        }
+    }
 
-	function click_add($login2, $args) {
-		$login = $args['login'];
-		
-		if($login != ""){
-			$this->adminGroups->addToGroup($login2, $this->group, $login);
-		}
-		
-		$this->login_add->setText("");
-		$this->onShow();
-		$this->redraw($login2);
-	}
+    function click_add($login2, $args) {
+        $login = $args['login'];
 
-	function click_remove($login, $admin) {
-		$this->adminGroups->removeFromGroup($login, $this->group, $admin);
-		$this->onShow();
-		$this->redraw();
+        if ($login != "") {
+            $this->adminGroups->addToGroup($login2, $this->group, $login);
+        }
 
-		$windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
+        $this->login_add->setText("");
+        $this->onShow();
+        $this->redraw($login2);
+    }
 
-		foreach ($windows as $window) {
-			$login = $window->getRecipient();
-			$window->onShow();
-			$window->redraw($login);
-		}
-	}
+    function click_remove($login, $admin) {
+        $this->adminGroups->removeFromGroup($login, $this->group, $admin);
+        $this->onShow();
+        $this->redraw();
 
+        $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
+
+        foreach ($windows as $window) {
+            $login = $window->getRecipient();
+            $window->onShow();
+            $window->redraw($login);
+        }
+    }
+
+    public function destroy() {
+        $this->login_add->destroy();
+        $this->button_add->destroy();
+        foreach ($this->items as $item)
+            $item->destroy();
+        $this->items = null;        
+        parent::destroy();
+    }
 
 }
 

@@ -29,7 +29,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
         $this->reload();
-        $this->displayWidget(null);
+        $this->onPlayerConnect(null, true);
     }
 
     public function reload() {
@@ -64,7 +64,26 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function displayWidget($login = null) {
-        $info = null;
+        try {
+            foreach (RatingsWidget::GetAll() as $window) {
+                $window->setStars($this->rating);
+                $window->redraw();                
+            }
+        } catch (\Exception $e) {
+          // do silent exception;
+        }
+    }
+
+    function onBeginMap($map, $warmUp, $matchContinuation) {
+        $this->reload();
+        $this->displayWidget();
+    }
+
+    function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+        
+    }
+
+    function onPlayerConnect($login, $isSpectator) {
         if ($login == null) {
             RatingsWidget::EraseAll();
             $info = RatingsWidget::Create();
@@ -78,19 +97,6 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $info->setPosition(158, 81);
         $info->setStars($this->rating);
         $info->show();
-    }
-
-    function onBeginMap($map, $warmUp, $matchContinuation) {
-        $this->reload();
-        $this->displayWidget(null);
-    }
-
-    function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
-        RatingsWidget::EraseAll();
-    }
-
-    function onPlayerConnect($login, $isSpectator) {
-        $this->displayWidget($login);
     }
 
     function onPlayerDisconnect($login) {

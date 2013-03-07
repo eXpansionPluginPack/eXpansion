@@ -14,6 +14,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $pager;
     private $connection;
     private $storage;
+    private $items = array();
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -35,7 +36,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             // can't use notice...since $this->storage->players too slow.
             // $this->connection->sendNotice($this->storage->players, $player->nickName . '$z were kicked from the server by admin.');
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__("Error: %s",$e->getMessage()));
+            $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()));
         }
     }
 
@@ -45,10 +46,10 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $player = $this->storage->getPlayerObject($target);
             $admin = $this->storage->getPlayerObject($login);
             $this->connection->ban($target, __("You are now banned from the server."));
-            $this->connection->chatSendServerMessage(__('%s$z has been banned from the server.',$player->nickName));
+            $this->connection->chatSendServerMessage(__('%s$z has been banned from the server.', $player->nickName));
             //$this->connection->sendNotice($this->storage->players, $player->nickName . '$z has been banned from the server.');
         } catch (\Exception $e) {
-             $this->connection->chatSendServerMessage(__("Error: %s",$e->getMessage()));
+            $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()));
         }
     }
 
@@ -67,7 +68,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 $this->connection->sendNotice($target, __("Admin has released you from specate to play."));
             }
         } catch (\Exception $e) {
-             $this->connection->chatSendServerMessage(__("Error: %s",$e->getMessage()));
+            $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()));
         }
     }
 
@@ -83,18 +84,35 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function populateList() {
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+
+        foreach ($this->items as $item)
+            $item->destroy();
         $this->pager->clearItems();
+        $this->items = array();
 
         $x = 0;
         $login = $this->getRecipient();
-        foreach ($this->storage->players as $player)
-            $this->pager->addItem(new Playeritem($x++, $player, $this, \ManiaLive\Features\Admin\AdminGroup::contains($login)));
-        foreach ($this->storage->spectators as $player)
-            $this->pager->addItem(new Playeritem($x++, $player, $this, \ManiaLive\Features\Admin\AdminGroup::contains($login)));
+        $isadmin = \ManiaLive\Features\Admin\AdminGroup::contains($login);
+
+        foreach ($this->storage->players as $player) {
+            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin);
+            $this->pager->addItem($this->items[$x]);
+        }
+        foreach ($this->storage->spectators as $player) {
+            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin);
+            $this->pager->addItem($items[$x]);
+        }
     }
 
     function destroy() {
+        $this->connection = null;
+        $this->storage = null;
+        foreach ($this->items as $item)
+            $item->destroy();
+
+        $this->items = null;
+
+
         parent::destroy();
     }
 

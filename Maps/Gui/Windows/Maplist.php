@@ -2,70 +2,83 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Mapitem;
 use ManiaLive\Gui\ActionHandler;
 
 class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
-    private $pager;
-    /** @var  \DedicatedApi\Connection */
-    private $connection;
-
-    /** @var  \ManiaLive\Data\Storage */
-    private $storage;
+    
     public static $records = array();
-    public static $mapsPlugin = null;
-
+    
+    public static $mapsPlugin = null;    
+    
+    private $items = array();
+    
+    /** @var \ManiaLive\Gui\Controls\Pager */   
+    private $pager;
+    
     protected function onConstruct() {
         parent::onConstruct();
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
         $this->mainFrame->addComponent($this->pager);
-       
+    }
+
+    static function Initialize($mapsPlugin) {
+        self::$mapsPlugin = $mapsPlugin;
     }
 
     function gotoMap($login, \DedicatedApi\Structures\Map $map) {
-       self::$mapsPlugin->gotoMap($login, $map);
-        $this->Erase($login);
+        self::$mapsPlugin->gotoMap($login, $map);
+        $this->Erase($this->getRecipient());
     }
 
-    function removeMap($login,  \DedicatedApi\Structures\Map $map) {
+    function removeMap($login, \DedicatedApi\Structures\Map $map) {
         self::$mapsPlugin->removeMap($login, $map);
+        $this->RedrawAll();
     }
 
     function chooseNextMap($login, \DedicatedApi\Structures\Map $map) {
-       self::$mapsPlugin->chooseNextMap($login, $map);
-        $this->Erase($login);
+        self::$mapsPlugin->chooseNextMap($login, $map);
     }
 
     function onResize($oldX, $oldY) {
-        parent::onResize($oldX, $oldY);        
-         $this->populateList();
+        parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 14);
         $this->pager->setStretchContentX($this->sizeX);
         $this->pager->setPosition(4, -10);
     }
 
-    function onShow() {
-     
-    }    
+    protected function onDraw() {
+        print "ondraw";
 
-    function populateList() {       
+        $login = $this->getRecipient();      
+        
+        foreach ($this->items as $item) {
+            $item->destroy();            
+        }
+        
         $this->pager->clearItems();
-        $x = 0;
-        $login = $this->getRecipient();
+        $this->items = array();
+
+
         $isAdmin = \ManiaLive\Features\Admin\AdminGroup::contains($login);
-        foreach ($this->storage->maps as $map)
-            $this->pager->addItem(new Mapitem($x++, $login, $map, $this, $isAdmin));
+        $x = 0;
+        foreach (\ManiaLive\Data\Storage::getInstance()->maps as $map) {
+            $this->items[$x] = new Mapitem($x, $login, $map, $this, $isAdmin);
+            $this->pager->addItem($this->items[$x]);
+            $x++;
+        }
+
+        parent::onDraw();
     }
 
-    function destroy() {           
+    function destroy() {
+        foreach ($this->items as $item) {
+            $item->destroy();            
+        }        
+        $this->items = null;
+        $this->pager->destroy();
+        $this->clearComponents();                
         parent::destroy();
     }
 

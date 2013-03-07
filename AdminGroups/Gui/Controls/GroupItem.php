@@ -15,16 +15,17 @@ class GroupItem extends \ManiaLive\Gui\Control {
 
     private $group;
     private $action_changePermissions;
-    private $action_addPlayer;
-    private $action_removeGroup;
-    
+    private $action_playerList;    
+    private $plistButton;
+    private $permiButton;
+
     function __construct(Group $group, $controller, $login) {
         $this->group = $group;
         $sizeX = 120;
         $sizeY = 4;
 
-        $this->action_changePermissions = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'changePermission'), $group);
-        $this->action_playerList = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'playerList'), $group);
+        $this->action_changePermissions = $this->createAction(array($controller, 'changePermission'), $group);
+        $this->action_playerList = $this->createAction(array($controller, 'playerList'), $group);
 
         $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setSize($sizeX, $sizeY);
@@ -45,17 +46,17 @@ class GroupItem extends \ManiaLive\Gui\Control {
         if (AdminGroups::hasPermission($login, 'group_admin') || (
                 AdminGroups::hasPermission($login, 'own_group') && AdminGroups::getAdmin($login)->getGroup()->getGroupName() == $group->getGroupName())) {
 
-            $plistButton = new MyButton(30, 6);
-            $plistButton->setAction($this->action_playerList);
-            $plistButton->setText(__(AdminGroups::$txt_playerList, $login));
-            $plistButton->setScale(0.6);
-            $frame->addComponent($plistButton);
+            $this->plistButton = new MyButton(30, 6);
+            $this->plistButton->setAction($this->action_playerList);
+            $this->plistButton->setText(__(AdminGroups::$txt_playerList, $login));
+            $this->plistButton->setScale(0.6);
+            $frame->addComponent($this->plistButton);
 
-            $permiButton = new MyButton(40, 6);
-            $permiButton->setAction($this->action_changePermissions);
-            $permiButton->setText(__(AdminGroups::$txt_permissionList, $login));
-            $permiButton->setScale(0.6);
-            $frame->addComponent($permiButton);
+            $this->permiButton = new MyButton(40, 6);
+            $this->permiButton->setAction($this->action_changePermissions);
+            $this->permiButton->setText(__(AdminGroups::$txt_permissionList, $login));
+            $this->permiButton->setScale(0.6);
+            $frame->addComponent($this->permiButton);
         }
 
         $this->addComponent($frame);
@@ -65,10 +66,13 @@ class GroupItem extends \ManiaLive\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    function __destruct() {
-        ActionHandler::getInstance()->deleteAction($this->action_changePermissions);
-        ActionHandler::getInstance()->deleteAction($this->action_addPlayer);
-        ActionHandler::getInstance()->deleteAction($this->action_playerList);
+    public function destroy() {
+        $this->plistButton->destroy();
+        $this->permiButton->destroy();
+        $this->clearComponents();
+
+
+        parent::destroy();
     }
 
 }

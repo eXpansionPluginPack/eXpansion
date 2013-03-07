@@ -12,12 +12,10 @@ use \DedicatedApi\Structures\GameInfos;
 
 class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
-    private $frameCb;
-    private $frameInputbox, $frameLadder;
-    private $buttonOK, $buttonCancel;
     private $connection;
     private $actionOK, $actionCancel, $actionTa, $actionRounds, $actionLaps, $actionCup, $actionTeam;
-
+    private $btn_ta, $btn_rounds, $btn_cup, $btn_team, $btn_laps;  
+    
     function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
@@ -46,46 +44,46 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $nextGameInfo = $this->connection->getNextGameInfo();
 
-        $button = new myButton();
-        $button->setText(__("Time Attack"));
-        $button->setValue(GameInfos::GAMEMODE_TIMEATTACK);
-        $button->setAction($this->actionTA);
+        $this->btn_ta = new myButton();
+        $this->btn_ta->setText(__("Time Attack"));
+        $this->btn_ta->setValue(GameInfos::GAMEMODE_TIMEATTACK);
+        $this->btn_ta->setAction($this->actionTA);
 
         if ($nextGameInfo->gameMode == GameInfos::GAMEMODE_TIMEATTACK)
-            $button->setActive();
-        $this->frameGameMode->addComponent($button);
+            $this->btn_ta->setActive();
+        $this->frameGameMode->addComponent($this->btn_ta);
 
-        $button = new myButton();
-        $button->setText(__("Rounds"));
-        $button->setAction($this->actionRounds);
-        $button->setValue(GameInfos::GAMEMODE_ROUNDS);
+        $this->btn_rounds = new myButton();
+        $this->btn_rounds->setText(__("Rounds"));
+        $this->btn_rounds->setAction($this->actionRounds);
+        $this->btn_rounds->setValue(GameInfos::GAMEMODE_ROUNDS);
         if ($nextGameInfo->gameMode == GameInfos::GAMEMODE_ROUNDS)
-            $button->setActive();
-        $this->frameGameMode->addComponent($button);
+            $this->btn_rounds->setActive();
+        $this->frameGameMode->addComponent($this->btn_rounds);
 
-        $button = new myButton();
-        $button->setText(__("Cup"));
-        $button->setAction($this->actionCup);
-        $button->setValue(GameInfos::GAMEMODE_CUP);
+        $this->btn_cup = new myButton();
+        $this->btn_cup->setText(__("Cup"));
+        $this->btn_cup->setAction($this->actionCup);
+        $this->btn_cup->setValue(GameInfos::GAMEMODE_CUP);
         if ($nextGameInfo->gameMode == GameInfos::GAMEMODE_CUP)
-            $button->setActive();
-        $this->frameGameMode->addComponent($button);
+            $this->btn_cup->setActive();
+        $this->frameGameMode->addComponent($this->btn_cup);
 
-        $button = new myButton();
-        $button->setText(__("Laps"));
-        $button->setAction($this->actionLaps);
-        $button->setValue(GameInfos::GAMEMODE_LAPS);
+        $this->btn_laps = new myButton();
+        $this->btn_laps->setText(__("Laps"));
+        $this->btn_laps->setAction($this->actionLaps);
+        $this->btn_laps->setValue(GameInfos::GAMEMODE_LAPS);
         if ($nextGameInfo->gameMode == GameInfos::GAMEMODE_LAPS)
-            $button->setActive();
-        $this->frameGameMode->addComponent($button);
+            $this->btn_laps->setActive();
+        $this->frameGameMode->addComponent($this->btn_laps);
 
-        $button = new myButton();
-        $button->setText(__("Team"));
-        $button->setAction($this->actionTeam);
-        $button->setValue(GameInfos::GAMEMODE_TEAM);
+        $this->btn_team = new myButton();
+        $this->btn_team->setText(__("Team"));
+        $this->btn_team->setAction($this->actionTeam);
+        $this->btn_team->setValue(GameInfos::GAMEMODE_TEAM);
         if ($nextGameInfo->gameMode == GameInfos::GAMEMODE_TEAM)
-            $button->setActive();
-        $this->frameGameMode->addComponent($button);
+            $this->btn_team->setActive();
+        $this->frameGameMode->addComponent($this->btn_team);
 
         $this->frameGameMode->setPosition(4, -10);
         $this->frameGameMode->setScale(0.7);
@@ -104,6 +102,13 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         ActionHandler::getInstance()->deleteAction($this->actionRounds);
         ActionHandler::getInstance()->deleteAction($this->actionTa);
         ActionHandler::getInstance()->deleteAction($this->actionTeam);
+        $this->btn_cup->destroy();
+        $this->btn_laps->destroy();
+        $this->btn_rounds->destroy();
+        $this->btn_ta->destroy();
+        $this->btn_team->destroy();       
+        $this->clearComponents();
+                
         parent::destroy();
     }
 
@@ -143,11 +148,11 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function Ok($login) {
-        $this->hide();
+        $this->Erase($login);
     }
 
     public function Cancel($login) {
-        $this->hide();
+        $this->Erase($login);
     }
 
 }

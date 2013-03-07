@@ -57,6 +57,9 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
     public function sendReply($login, $message) {
         try {
+            if (!isset($message)) {
+                    $this->connection->chatSendServerMessage('$abcNo message to send to', $login);
+            }
             if (isset(self::$reply[$login])) {
                 $targetPlayer = $this->storage->getPlayerObject(self::$reply[$login]);
                 $sourcePlayer = $this->storage->getPlayerObject($login);

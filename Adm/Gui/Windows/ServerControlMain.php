@@ -24,10 +24,10 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     /** @var \ManiaLivePlugins\eXpansion\Adm\Adm */
     public static $mainPlugin;
-    
     private $frame;
     private $closeButton;
     private $actions;
+    private $btn1, $btn2, $btn3, $btn4, $btn5;
 
     function onConstruct() {
         parent::onConstruct();
@@ -46,32 +46,32 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->actions->serverManagement = ActionHandler::getInstance()->createAction(array($this, "serverManagement"));
         $this->actions->adminGroups = ActionHandler::getInstance()->createAction(array($this, "adminGroups"));
 
-        $elem = new myButton();
-        $elem->setText(__("Server management"));
-        $elem->setAction($this->actions->serverManagement);
-        $elem->colorize("f00");
-        $this->frame->addComponent($elem);
+        $this->btn1 = new myButton();
+        $this->btn1->setText(__("Server management"));
+        $this->btn1->setAction($this->actions->serverManagement);
+        $this->btn1->colorize("f00");
+        $this->frame->addComponent($this->btn1);
 
-        $elem = new myButton();
-        $elem->setText(__("Server options"));
-        $elem->setAction($this->actions->serverOptions);
-        $this->frame->addComponent($elem);
+        $this->btn2 = new myButton();
+        $this->btn2->setText(__("Server options"));
+        $this->btn2->setAction($this->actions->serverOptions);
+        $this->frame->addComponent($this->btn2);
 
-        $elem = new myButton();
-        $elem->setText(__("Game options"));
-        $elem->setAction($this->actions->gameOptions);
-        $this->frame->addComponent($elem);
+        $this->btn3 = new myButton();
+        $this->btn3->setText(__("Game options"));
+        $this->btn3->setAction($this->actions->gameOptions);
+        $this->frame->addComponent($this->btn3);
 
-        $elem = new myButton();
-        $elem->setText(__("Admin Groups"));
-        $elem->setAction($this->actions->adminGroups);
-        $elem->colorize("0d0");
-        $this->frame->addComponent($elem);
-        
-        $elem = new myButton();
-        $elem->setText(__("Match settings"));
-        $elem->setAction($this->actions->matchSettings);
-        $this->frame->addComponent($elem);
+        $this->btn4 = new myButton();
+        $this->btn4->setText(__("Admin Groups"));
+        $this->btn4->setAction($this->actions->adminGroups);
+        $this->btn4->colorize("0d0");
+        $this->frame->addComponent($this->btn4);
+
+        $this->btn5 = new myButton();
+        $this->btn5->setText(__("Match settings"));
+        $this->btn5->setAction($this->actions->matchSettings);
+        $this->frame->addComponent($this->btn5);
 
         $this->mainFrame->addComponent($this->frame);
 
@@ -100,7 +100,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function adminGroups($login) {
         self::$mainPlugin->adminGroups($login);
     }
-    
+
     function close() {
         $this->Erase($this->getRecipient());
     }
@@ -118,6 +118,15 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         ActionHandler::getInstance()->deleteAction($this->actions->matchSettings);
         ActionHandler::getInstance()->deleteAction($this->actions->serverManagement);
         unset($this->actions);
+        $this->btn1->destroy();
+        $this->btn2->destroy();
+        $this->btn3->destroy();
+        $this->btn4->destroy();
+        $this->btn5->destroy();
+        $this->frame->clearComponents();        
+        $this->connection = null;
+        $this->storage = null;
+
         parent::destroy();
     }
 

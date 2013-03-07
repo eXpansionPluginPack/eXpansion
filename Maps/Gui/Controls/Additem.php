@@ -20,7 +20,7 @@ class Additem extends \ManiaLive\Gui\Control {
     function __construct($indexNumber, $filename, $controller) {
         $sizeX = 120;
         $sizeY = 4;
-        $this->addMapAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'addMap'), $filename);
+        $this->addMapAction = $this->createAction(array($controller, 'addMap'), $filename);
 
         $gbx = new \GBXChallMapFetcher(true, false, false);
         try {
@@ -93,7 +93,11 @@ class Additem extends \ManiaLive\Gui\Control {
     }
 
     function destroy() {
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->chooseNextMap);
+        $this->frame->clearComponents();
+        $this->frame->destroy();
+        $this->addButton->destroy();
+        $this->clearComponents();
+        
         parent::destroy();
     }   
 }

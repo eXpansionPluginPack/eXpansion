@@ -192,6 +192,9 @@ class AdminPanel extends \ManiaLive\Gui\Window {
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionEndRound);
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionRestart);
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionSkip);
+        $this->connection = null;
+        $this->storage = null;        
+        $this->clearComponents();
         parent::destroy();
     }
 

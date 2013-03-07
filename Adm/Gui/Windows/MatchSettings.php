@@ -14,6 +14,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $pager;
     private $connection;
     private $storage;
+    private $items = array();
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -58,9 +59,10 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function populateList() {
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+        foreach ($this->items as $item)
+            $item->destroy();
         $this->pager->clearItems();
-
+        $this->items = array();
 
         $login = $this->getRecipient();
         $path = $this->connection->getMapsDirectory() . "/MatchSettings/*.txt";
@@ -68,13 +70,23 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $settings = glob($path);
         $x = 0;
         if (count($settings) > 1) {
-            foreach ($settings as $file)
-                $this->pager->addItem(new MatchSettingsFile($x++, $file, $this));
+            foreach ($settings as $file) {
+                $this->items[$x] = new MatchSettingsFile($x++, $file, $this);
+                $this->pager->addItem($this->items[$x]);
+                $x++;
+            }
         }
     }
 
     function destroy() {
+        foreach ($this->items as $item)
+            $item->destroy();
+
+        $this->items = null;
         $this->pager->destroy();
+        $this->connection = null;
+        $this->storage = null;
+        $this->clearComponents();
         parent::destroy();
     }
 

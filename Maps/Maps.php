@@ -27,9 +27,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
         $this->enableDedicatedEvents();
-        Gui\Windows\Maplist::$mapsPlugin = $this;
-
         $this->registerChatCommand('list', "showMapList", 0, true);
+        $this->registerChatCommand('n', "testme", 0, true);
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', 'Maps', false);
@@ -40,6 +39,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($this->isPluginLoaded('Standard\Menubar'))
             $this->buildMenu();
+
+        Gui\Windows\Maplist::Initialize($this);
 
         $widget = NextMapWidget::Create(null);
         $widget->setPosition(136, 74);
@@ -123,6 +124,10 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->connection->chatSendServerMessage($login . " vote skip");
     }
 
+    public function testme($login) {
+        print "total number: " . count(Gui\Windows\Maplist::GetAll());
+    }
+
     public function showMapList($login) {
         Gui\Windows\Maplist::Erase($login);
 
@@ -133,8 +138,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Maps on server'));
         $window->centerOnScreen();
         $window->setSize(140, 100);
-        $window->show();
-    }
+        $window->show();        
+        
+        }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
         if ($restartMap) {
@@ -220,7 +226,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function addMaps($login) {
-        Gui\Windows\AddMaps::Erase($login);
         $window = Gui\Windows\AddMaps::Create($login);
         $window->setTitle('Add Maps on server');
         $window->centerOnScreen();

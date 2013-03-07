@@ -69,7 +69,7 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
             $nick = $source_player->nickName;
             $nick = str_ireplace('$w', '', $nick);
             $nick = str_ireplace('$z', '$z$s', $nick);
-            $smileys = array("ッ","ツ","シ","ジ","ヅ");
+            $smileys = array("ッ","ツ","シ");
             $rnd = rand(0, sizeof($smileys)-1);
             $text = str_replace(array(":)", "=)"), $smileys[$rnd], $text);            
             
@@ -82,7 +82,7 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
                     $this->connection->chatSendServerMessage("\$fff$nick\$z\$s " . $config->chatSeparator . $config->publicChatColor . $text);
                 }
             } catch (\Exception $e) {
-                Console::println(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $text, $e->getMessage()));
+                Console::println(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s',$login, $login, $text, $e->getMessage()));
             }
         }
     }

@@ -17,6 +17,8 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     
     private $group_add;
     private $button_add;
+
+    private $items = array();
     
     protected function onConstruct() {
         parent::onConstruct();
@@ -53,7 +55,14 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function onShow() {
+        foreach ($this->items as $item) 
+        {
+            $item->destroy();
+        }  
+          
+            
         $this->pager->clearItems();
+        $this->items = array();
         
         $this->group_add->setLabel(__(AdminGroups::$txt_nwGroupNameL, $this->getRecipient()));
         $this->button_add->setText(__(AdminGroups::$txt_add, $this->getRecipient()));
@@ -83,7 +92,9 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         $login = $this->getRecipient();
         foreach ($this->adminGroups->getGroupList() as $group) {
-            $this->pager->addItem(new GroupItem($group, $this, $login));
+            $this->items[$x] = new GroupItem($group, $this, $login);
+            $this->pager->addItem($this->items[$x]);
+            $x++;
         }
     }
 
@@ -116,7 +127,12 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $window->centerOnScreen();
         $window->show();
     }
-
+    public function destroy() {
+        $this->group_add->destroy();
+        $this->button_add->destroy();
+        
+        parent::destroy();
+    }
 }
 
 ?>

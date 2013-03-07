@@ -14,8 +14,9 @@ class Ratiobutton extends \ManiaLive\Gui\Control
         
         function __construct($sizeX=4, $sizeY=4, $textWidth=25)
 	{
+            \DedicatedApi\Structures\GameInfos::
                 $this->textWidth = $textWidth;
-                $this->action = ActionHandler::getInstance()->CreateAction(array($this, 'toggleActive'));
+                $this->action = $this->createAction(array($this, 'toggleActive'));
                 $config = Config::getInstance();
 		$this->button= new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
                 $this->button->setAlign('left', 'center');                
