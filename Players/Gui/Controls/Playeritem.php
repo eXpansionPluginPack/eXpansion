@@ -17,16 +17,17 @@ class Playeritem extends \ManiaLive\Gui\Control {
     private $banAction;
     private $forceAction;
     private $frame;
-    
+
     function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin) {
         $sizeX = 120;
         $sizeY = 4;
         $this->isAdmin = $isAdmin;
         $this->player = $player;
-
-        $this->kickAction = $this->createAction(array($controller, 'kickPlayer'), $player->login);
-        $this->banAction = $this->createAction(array($controller, 'banPlayer'), $player->login);
-        $this->forceAction = $this->createAction(array($controller, 'toggleSpec'), $player->login);
+        if ($isAdmin) {
+            $this->kickAction = $this->createAction(array($controller, 'kickPlayer'), $player->login);
+            $this->banAction = $this->createAction(array($controller, 'banPlayer'), $player->login);
+            $this->forceAction = $this->createAction(array($controller, 'toggleSpec'), $player->login);
+        }
         
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->bg->setAlign('left', 'center');
@@ -127,13 +128,16 @@ class Playeritem extends \ManiaLive\Gui\Control {
         
     }
 
-    function destroy() {  
-        $this->banButton->destroy();
-        $this->forceButton->destroy();
-        $this->kickButton->destroy();
-        
+    function destroy() {
+        if (is_object($this->banButton))
+            $this->banButton->destroy();
+        if (is_object($this->forceButton))
+            $this->forceButton->destroy();
+        if (is_object($this->kickButton))
+            $this->kickButton->destroy();
+
         $this->clearComponents();
-        
+
         parent::destroy();
     }
 

@@ -143,13 +143,17 @@ class Mapitem extends \ManiaLive\Gui\Control {
     }
 
     function destroy() {
-        $this->goButton->destroy();
         $this->queueButton->destroy();
-        $this->removeButton->destroy();
-        
+       
+        if (is_object($this->goButton))
+            $this->goButton->destroy();
+        if (is_object($this->removeButton))
+            $this->removeButton->destroy();
+
         $this->clearComponents();
         parent::destroy();
     }
+
 }
 ?>
 
