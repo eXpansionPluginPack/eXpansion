@@ -16,7 +16,8 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
         $this->enableDedicatedEvents();
-        $this->registerChatCommand("players", "showPlayerList", 0, true);
+        $this->registerChatCommand("players", "showPlayerList", 0, true); // xaseco
+        $this->registerChatCommand("plist", "showPlayerList", 0, true); // fast
 
         if ($this->isPluginLoaded('Standard\Menubar'))
             $this->buildMenu();

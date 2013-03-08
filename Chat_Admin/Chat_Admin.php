@@ -30,6 +30,12 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onLoad() {
         parent::exp_onLoad();
 
+        $admingroup = AdminGroups::getInstance();
+        $this->registerChatCommand("ta", "support_fastTa", -1, true, $admingroup->get());
+        $this->registerChatCommand("laps", "support_fastLaps", -1, true, $admingroup->get());
+        $this->registerChatCommand("rounds", "support_fastRounds", -1, true, $admingroup->get());
+        $this->registerChatCommand("cup", "support_fastCup", -1, true, $admingroup->get());
+        $this->registerChatCommand("team", "support_fastTeam", -1, true, $admingroup->get());
 
         /* 		
          * ******************* 
@@ -39,32 +45,32 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          * 
          */
         $cmd = AdminGroups::addAdminCommand('help', $this, 'help', '');
-        $cmd->setHelp(exp_getMessage('help'));        
+        $cmd->setHelp(exp_getMessage('help'));
 
         $cmd = AdminGroups::addAdminCommand('player kick', $this, 'kick', Permission::player_kick); //
         $cmd->setHelp(exp_getMessage('kick the player from the server'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "kick");
+        AdminGroups::addAlias($cmd, "kick"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player ban', $this, 'ban', 'player_black');
         $cmd->setHelp(exp_getMessage('Ban the player from the server'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "ban");
+        AdminGroups::addAlias($cmd, "ban"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player black', $this, 'blacklist', 'player_black');
         $cmd->setHelp(exp_getMessage('Add the player to the black list'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "black");
+        AdminGroups::addAlias($cmd, "black"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player remove ban', $this, 'unban', 'player_black');
         $cmd->setHelp(exp_getMessage('Removes the ban of the player'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "unban");
+        AdminGroups::addAlias($cmd, "unban"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player clean banlist', $this, 'cleanBanlist', 'player_black');
         $cmd->setHelp(exp_getMessage('clears the banlist of players'));
         $cmd->setMinParam(0);
-        AdminGroups::addAlias($cmd, "cleanbanlist");
+        AdminGroups::addAlias($cmd, "cleanbanlist"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player get banlist', $this, 'getBanlist', 'player_black');
         $cmd->setHelp(exp_getMessage('shows the current banlist of players'));
@@ -94,25 +100,24 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd = AdminGroups::addAdminCommand('player remove black', $this, 'unBlacklist', 'player_black');
         $cmd->setHelp(exp_getMessage('Removes the player from the black list'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "unBlack");
+        AdminGroups::addAlias($cmd, "unBlack"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player spec', $this, 'forceSpec', 'player_spec');
         $cmd->setHelp(exp_getMessage('Forces the player to become spectator'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "spec");
+        AdminGroups::addAlias($cmd, "spec"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player ignore', $this, 'ignore', 'player_ignore');
         $cmd->setHelp(exp_getMessage('Adds player to ignore list and mutes him from the chat'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "ignore");
+        AdminGroups::addAlias($cmd, "ignore"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player unignore', $this, 'unignore', 'player_ignore');
         $cmd->setHelp(exp_getMessage('Removes player to ignore list and allows him to chat'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "unignore");
-		
-		//ENDSUPER
-		
+        AdminGroups::addAlias($cmd, "unignore"); // xaseco & fast
+        //ENDSUPER
+
         /*
          * *************************** 
          * Concerning Server Settings 
@@ -121,49 +126,58 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd = AdminGroups::addAdminCommand('set server name', $this, 'setServerName', 'server_name');
         $cmd->setHelp(exp_getMessage('Changes the name of the server'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "setservername");
+        AdminGroups::addAlias($cmd, "setservername"); // xaseco
+        AdminGroups::addAlias($cmd, "name"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server comment', $this, 'setServerComment', 'server_comment');
         $cmd->setHelp(exp_getMessage('Changes the server comment'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "setcomment");
+        AdminGroups::addAlias($cmd, "setcomment"); // xaseco
+        AdminGroups::addAlias($cmd, "comment"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server player password', $this, 'setServerPassword', 'server_password');
         $cmd->setHelp(exp_getMessage('Changes the player password'));
         $cmd->setHelpMore(exp_getMessage("Changes the password for players to connect"));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "setpwd");
+        AdminGroups::addAlias($cmd, "setpwd"); // xaseco
+        AdminGroups::addAlias($cmd, "pass"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server spec password', $this, 'setSpecPassword', 'server_specpwd');
         $cmd->setHelp(exp_getMessage('Changes the spectator password'));
         $cmd->setHelpMore(exp_getMessage("Changes the password for spectators to connect"));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "setspecpwd");
+        AdminGroups::addAlias($cmd, "setspecpwd"); // xaseco
+        AdminGroups::addAlias($cmd, "spectpass"); // fast
+
 
         $cmd = AdminGroups::addAdminCommand('set server ref password', $this, 'setSpecPassword', 'server_specpwd');
         $cmd->setHelp(exp_getMessage('Changes the Referee password'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "setrefpwd");
+        AdminGroups::addAlias($cmd, "setrefpwd"); // xaseco
+
 
         $cmd = AdminGroups::addAdminCommand('set server maxplayers', $this, 'setServerMaxPlayers', 'server_maxplayer');
         $cmd->setHelp(exp_getMessage('Sets a new maximum of players'));
         $cmd->setHelpMore(exp_getMessage('Sets the maximum number of players who can play on this server.'));
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
-        AdminGroups::addAlias($cmd, "setmaxplayers");
+        AdminGroups::addAlias($cmd, "setmaxplayers"); //xaseco
+        AdminGroups::addAlias($cmd, "maxplayers"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server maxspectators', $this, 'setServerMaxSpectators', 'server_maxspec');
         $cmd->setHelp(exp_getMessage('Sets a new maximum of spectator'));
         $cmd->setHelp(exp_getMessage('Sets the maximum number of players who can spectate the players on this server.'));
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
-        AdminGroups::addAlias($cmd, "setmaxspecs");
+        AdminGroups::addAlias($cmd, "setmaxspecs"); // xaseco
+        AdminGroups::addAlias($cmd, "maxspec"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server chattime', $this, 'setserverchattime', 'server_chattime');
         $cmd->setHelp(exp_getMessage('Sets the Chat time duration.'));
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
-        AdminGroups::addAlias($cmd, "setchattime");
+        AdminGroups::addAlias($cmd, "setchattime"); // xaseco
+        AdminGroups::addAlias($cmd, "chattime"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server hide', $this, 'setHideServer', 'server_admin');
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
@@ -190,20 +204,22 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          */
         $cmd = AdminGroups::addAdminCommand('skip', $this, 'skipMap', 'map_skip');
         $cmd->setHelp(exp_getMessage("Skips the current track"));
-        AdminGroups::addAlias($cmd, 'skipmap');
-        AdminGroups::addAlias($cmd, 'next');
+        AdminGroups::addAlias($cmd, 'skip'); // shortcut
+        AdminGroups::addAlias($cmd, 'skipmap'); // xaseco
+        AdminGroups::addAlias($cmd, 'next'); // fast
         AdminGroups::addAlias($cmd, 'nextmap');
 
         $cmd = AdminGroups::addAdminCommand('restart', $this, 'restartMap', 'map_res');
-        AdminGroups::addAlias($cmd, 'res');
-        AdminGroups::addAlias($cmd, 'resmap');
-        AdminGroups::addAlias($cmd, 'restartmap');
+        AdminGroups::addAlias($cmd, 'res'); // xaseco
+        AdminGroups::addAlias($cmd, 'restart'); // fast
+        AdminGroups::addAlias($cmd, 'restartmap'); //xaseco
 
 
         $cmd = AdminGroups::addAdminCommand('set game mode', $this, 'setGameMode', 'game_gamemode');
         $cmd->setHelp(exp_getMessage('Sets next mode {ta,rounds,team,laps,stunts,cup}'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, 'setgamemode');
+        AdminGroups::addAlias($cmd, 'setgamemode'); //xaseco
+        AdminGroups::addAlias($cmd, 'mode'); //fast
 
         $cmd = AdminGroups::addAdminCommand('set game AllWarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
         $cmd->setMinParam(1);
@@ -226,8 +242,9 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         //rounds
         $cmd = AdminGroups::addAdminCommand('set game rounds end', $this, 'forceEndRound', 'map_roundEnd');
-        AdminGroups::addAlias($cmd, 'endround');
-        AdminGroups::addAlias($cmd, 'er');
+        AdminGroups::addAlias($cmd, 'end');  // fast
+        AdminGroups::addAlias($cmd, 'endround'); // xaseco
+        AdminGroups::addAlias($cmd, 'er'); // xaseco
 
         $cmd = AdminGroups::addAdminCommand('set game rounds PointsLimit', $this, 'setRoundPointsLimit', 'game_settings');
         $cmd->setMinParam(1);
@@ -339,8 +356,200 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function help($fromLogin, $param) {
         $adminGroups = AdminGroups::getInstance();
         $commands = $adminGroups->getAdminCommands();
-        print_r($commands);        
-        
+        print_r($commands);
+    }
+
+    function support_fastTa($fromLogin, $text) {
+        try {
+            $params = explode(" ", $text);
+            $command = array_shift($params);
+
+
+            switch (strtolower($command)) {
+                case "time":
+                case "limit":
+                case "timelimit":
+                    $this->setTAlimit($fromLogin, $params);
+                    break;
+                case "wud":
+                case "wu":
+                case "warmupduration":
+                    $this->setAllWarmUpDuration($fromLogin, $params);
+                    break;
+                default:
+                    $this->exp_chatSendServerMessage("command not found", $fromLogin);
+                    break;
+            }
+        } catch (\Exception $e) {
+            
+        }
+    }
+
+    function support_fastLaps($fromLogin, $text) {
+        try {
+            $params = explode(" ", $text);
+            $command = array_shift($params);
+
+
+            switch (strtolower($command)) {
+                case "laps":
+                case "nb":
+                case "nblaps":
+                    $this->setNbLaps($fromLogin, $params);
+                    break;
+                case "time":
+                case "limit":
+                case "timelimit":
+                    $this->setLapsTimeLimit($fromLogin, $params);
+                    break;
+                case "wud":
+                case "wu":
+                case "warmupduration":
+                    $this->setAllWarmUpDuration($fromLogin, $params);
+                    break;
+                case "fto":
+                case "ftimeout":
+                case "finishtimeout":
+                    $this->setFinishTimeout($fromLogin, $params);
+                    break;
+                default:
+                    $this->exp_chatSendServerMessage("command not found", $fromLogin);
+                    break;
+            }
+        } catch (\Exception $e) {
+            
+        }
+    }
+
+    function support_fastRounds($fromLogin, $text) {
+        try {
+               $params = explode(" ", $text);
+            $command = array_shift($params);
+
+            switch (strtolower($command)) {
+                case "pointslimit":
+                    $this->setRoundPointsLimit($fromLogin, $params);
+                    break;
+                case "newrules":
+                    $this->setUseNewRulesRound($fromLogin, $params);
+                    break;
+                case "wud":
+                case "wu":
+                case "warmupduration":
+                    $this->setAllWarmUpDuration($fromLogin, $params);
+                    break;
+                case "fto":
+                case "ftimeout":
+                case "finishtimeout":
+                    $this->setFinishTimeout($fromLogin, $params);
+                    break;
+                default:
+                    $this->exp_chatSendServerMessage("command not found", $fromLogin);
+                    break;
+            }
+        } catch (\Exception $e) {
+            
+        }
+    }
+
+    function support_fastCup($fromLogin, $text) {
+        try {
+                $params = explode(" ", $text);
+            $command = array_shift($params);
+
+            switch (strtolower($command)) {
+                case "limit":
+                case "pointslimit":
+                    $this->setCupPointsLimit($fromLogin, $params);
+                    break;
+                case "rpm":
+                case "rpc":
+                case "rounds":
+                case "roundspermap":
+                    $this->setCupRoundsPerMap($fromLogin, $params);
+                    break;
+                case "nbwinners":
+                case "nbwin":
+                case "nbw":
+                case "nb":
+                    $this->setCupNbWinners($fromLogin, $params);
+                    break;
+                case "wud":
+                case "wu":
+                case "warmupduration":
+                    $this->setAllWarmUpDuration($fromLogin, $params);
+                    break;
+                case "fto":
+                case "ftimeout":
+                case "finishtimeout":
+                    $this->setFinishTimeout($fromLogin, $params);
+                    break;
+                default:
+                    $this->exp_chatSendServerMessage("command not found", $fromLogin);
+                    break;
+            }
+        } catch (\Exception $e) {
+            
+        }
+    }
+
+    function support_fastTeam($fromLogin, $text) {
+        try {
+                $params = explode(" ", $text);
+            $command = array_shift($params);
+
+            switch (strtolower($command)) {
+                case "limit":
+                case "pointslimit":
+                    $this->setTeamPointsLimit($fromLogin, $params);
+                    break;
+                case "max":
+                case "maxpoint":
+                    $this->setMaxPointsTeam($fromLogin, $params);
+                    break;
+                case "newrules":
+                    $this->setUseNewRulesTeam($fromLogin, $params);
+                    break;
+                case "wud":
+                case "wu":
+                case "warmupduration":
+                    $this->setAllWarmUpDuration($fromLogin, $params);
+                    break;
+                case "fto":
+                case "ftimeout":
+                case "finishtimeout":
+                    $this->setFinishTimeout($fromLogin, $params);
+                    break;
+                case "blue":
+                    $this->setTeamBlue($fromLogin, $params);
+                    break;
+                case "red":
+                    $this->setTeamRed($fromLogin, $params);
+                    break;
+            }
+        } catch (\Exception $e) {
+            
+        }
+    }
+
+    function setTeamBlue($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->forcePlayerTeam($params[0], 0);
+            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sends player#variable# %s #admin_action#to team $00fBlue.', null, array($admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function setTeamRed($fromLogin, $params) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        try {
+            $this->connection->forcePlayerTeam($params[0], 1);
+            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sends player#variable# %s #admin_action#to team $f00Red.', null, array($admin->nickName, $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
     }
 
     function setCupNbWinners($fromLogin, $params) {
@@ -750,13 +959,13 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function setTAlimit($fromLogin, $params) {       
-        
+    function setTAlimit($fromLogin, $params) {
+
         try {
             $this->connection->setTimeAttackLimit(self::time_TMtoMS($params[0]));
             $admin = $this->storage->getPlayerObject($fromLogin);
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new time limit of #variable# %s #admin_action#minutes.', null, array($admin->nickName, $params[0]));
-       } catch (\Exception $e) {
+        } catch (\Exception $e) {
             print $e->getMessage();
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -943,7 +1152,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         try {
             $window = GenericPlayerList::Create($login);
-            $window->setTitle(__('Blacklisted Players on the server',$login));
+            $window->setTitle(__('Blacklisted Players on the server', $login));
             $indexNumber = 0;
             $items = array();
 
@@ -1009,13 +1218,13 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
     }
-    
-    
-    public static function time_TMtoMS($time){
-        echo $time."\n";
+
+    public static function time_TMtoMS($time) {
+        echo $time . "\n";
         $parts = explode(":", $time);
-        return ($parts[0]*60 + $parts[1])*1000;
+        return ($parts[0] * 60 + $parts[1]) * 1000;
     }
+
 }
 
 ?>

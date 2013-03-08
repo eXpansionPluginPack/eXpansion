@@ -109,7 +109,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         
         //Loading all Messages;
         $this->msg_needBeAdmin = exp_getMessage('#admin_error#You need to be an Admin to use that command');
-        $this->msg_cmdDontEx = exp_getMessage('#admin_error#That Admin command doesen\'t exist. Use #variable#\admin help #admin_error#to see all commands');
+        $this->msg_cmdDontEx = exp_getMessage('#admin_error#That Admin command doesen\'t exist. Use #variable#/admin help #admin_error#to see all commands');
         $this->msg_neeMorPerm = exp_getMessage('#admin_error#You don\'t have the permission to use that admin command');
         $this->msg_aInGroup = exp_getMessage('#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first');
         $this->msg_paddSuc = exp_getMessage('#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s');
@@ -136,7 +136,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         //Registering the admin chat comman with a lot of parameters              
         $this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());
-
+        $this->registerChatCommand('adm', "adminCmd", -1, true, $this->get());
+        
         $this->addAdminCommand('groups', $this, "windowGroups", null);
     }
 	

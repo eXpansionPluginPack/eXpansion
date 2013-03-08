@@ -99,7 +99,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record->place = ++$i;
             $newrecords[$record->login] = $record;
         }
-        $this->records = array_slice($newrecords, 0, 20);
+        $this->records = array_slice($newrecords, 0, 30);
         $this->lastRecord = end($this->records);
 
         if ($save)
@@ -141,7 +141,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         // so if the time is better than the last entry or the count of records is less than 20...
-        if ($this->lastRecord->time > $time || count($this->records) < 20) {
+        if ($this->lastRecord->time > $time || count($this->records) < 30) {
             // if player exists on the list... see if he got better time
             if (array_key_exists($login, $this->records)) {
                 if ($this->records[$login]->time > $time) {
@@ -208,7 +208,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$players[$login] = $player;
         $info = LRPanel::Create();
         $info->setSize(50, 60);
-        $info->setPosition(-160, 88);
+        $info->setPosition(-160, 60);
         $info->show();
     }
 

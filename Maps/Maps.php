@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Maps;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Maps\Structures\MapWish;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget;
-
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /** @var array(MapWish) */
@@ -19,7 +19,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onInit() {
         parent::exp_onInit();
 
-        //Oliverde8 Menu
+//Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
@@ -27,8 +27,14 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
         $this->enableDedicatedEvents();
+
+        $cmd = AdminGroups::addAdminCommand('map remove', $this, 'chat_removeMap', 'server_maps');
+        $cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
+        $cmd->setMinParam(1);        
+        AdminGroups::addAlias($cmd, "remove");
+
         $this->registerChatCommand('list', "showMapList", 0, true);
-        $this->registerChatCommand('n', "testme", 0, true);
+        $this->registerChatCommand('maps', "showMapList", 0, true);
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Maps'), false);
@@ -95,9 +101,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->callPublicMethod('Standard\Menubar', 'addButton', 'List all maps on server', array($this, 'showMapList'), false);
         $this->callPublicMethod('Standard\Menubar', 'addButton', 'Add local map on server', array($this, 'addMaps'), true);
 
-        // user call votes disabled since dedicated doesn't support them atm.
-        //  $this->callPublicMethod('Standard\Menubar', 'addButton', 'Vote for skip map', array($this, 'voteSkip'), false);
-        //  $this->callPublicMethod('Standard\Menubar', 'addButton', 'Vote for replay map', array($this, 'voteRestart'), false);
+// user call votes disabled since dedicated doesn't support them atm.
+//  $this->callPublicMethod('Standard\Menubar', 'addButton', 'Vote for skip map', array($this, 'voteSkip'), false);
+//  $this->callPublicMethod('Standard\Menubar', 'addButton', 'Vote for replay map', array($this, 'voteRestart'), false);
     }
 
     /**
@@ -116,7 +122,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {
         $message = $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam . "\n";
-        //  $this->connection->chatSendServerMessage($message);
+//  $this->connection->chatSendServerMessage($message);
     }
 
     public function voteSkip($login) {
@@ -138,9 +144,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Maps on server'));
         $window->centerOnScreen();
         $window->setSize(140, 100);
-        $window->show();        
-        
-        }
+        $window->show();
+    }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
         if ($restartMap) {
@@ -166,7 +171,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $player = $this->storage->getPlayerObject($login);
             if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
-                //  if (sizeof($this->nextMaps) == 0) 
+//  if (sizeof($this->nextMaps) == 0) 
                 $this->nextMaps[] = new MapWish($player, $map);
                 $this->connection->chatSendServerMessage(__('Map %s $z$s$fff by %s, wished by %s $z$s$fff is added to next maps list.', $login, $map->name, $map->author, $player->nickName));
             } else {
@@ -187,7 +192,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function gotoMap($login, \DedicatedApi\Structures\Map $map) {
         try {
-            // $this->connection->jumpToMapIndex($mapNumber);
+// $this->connection->jumpToMapIndex($mapNumber);
             $this->connection->chooseNextMap($map->fileName);
             $this->connection->nextMap();
             $map = $this->connection->getNextMapInfo();
@@ -225,6 +230,20 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    function chat_removeMap($login, $params) {
+        if (is_numeric($params[0])) 
+        {
+            if (is_object($this->storage->maps[$params[0]])){
+             $this->removeMap($login, $this->storage->maps[$params[0]]);   
+            }
+            return;            
+        }
+        
+        if ($params[0] == "this") {
+            $this->removeMap($login, $this->storage->currentMap);     
+            return;
+        }
+    }
     public function addMaps($login) {
         $window = Gui\Windows\AddMaps::Create($login);
         $window->setTitle('Add Maps on server');
