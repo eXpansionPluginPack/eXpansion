@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
+use ManiaLivePlugins\eXpansion\LocalRecords\Config;
 
 class Recorditem extends \ManiaLive\Gui\Control {
 
@@ -15,7 +16,8 @@ class Recorditem extends \ManiaLive\Gui\Control {
     function __construct($index, \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record) {
         $sizeX = 30;
         $sizeY = 3;
-
+        $config = Config::getInstance();
+        
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
@@ -35,7 +37,25 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $spacer->setSize(1, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         $this->frame->addComponent($spacer);
-
+       
+        $flag = new \ManiaLib\Gui\Elements\Quad(3,3);
+        $flag->setAlign("left", "center");
+        $flag->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+        
+        $path = LocalRecords::$players[$record->login]->nation;
+        if ($path !== null) {
+        $path = explode("|", $path);
+        $image = $config->flags.rawurlencode($path[2]).".dds";
+        $flag->setStyle("");
+        $flag->setImage($image);                        
+        }
+        $this->frame->addComponent($flag);
+        
+        $spacer = new \ManiaLib\Gui\Elements\Quad();
+        $spacer->setSize(1, 4);
+        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+        $this->frame->addComponent($spacer);
+        
         $this->label = new \ManiaLib\Gui\Elements\Label(14, 4);
         $this->label->setAlign('left', 'center');
         $this->label->setScale(0.7);

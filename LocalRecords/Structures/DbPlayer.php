@@ -6,7 +6,8 @@ class DbPlayer extends \DedicatedApi\Structures\AbstractStructure {
 
     public $login = "";
     public $nickname = "";
-
+    public $nation = "";
+    public $language = "en";
     
     function __construct() {
         
@@ -15,6 +16,7 @@ class DbPlayer extends \DedicatedApi\Structures\AbstractStructure {
     function fromPlayerObj(\DedicatedApi\Structures\Player $player) {
         $this->nickname = $player->nickName;
         $this->login = $player->login;
+        $this->nation = $player->path;                
     }
 
     function exportToDb() {
