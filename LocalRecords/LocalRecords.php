@@ -2,12 +2,13 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords;
 
-use \ManiaLivePlugins\eXpansion\LocalRecords\Gui\Widgets\LRPanel;
 use \ManiaLivePlugins\eXpansion\LocalRecords\Config;
+use \ManiaLivePlugins\eXpansion\LocalRecords\Events\Event;
 
 class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public static $players;
+    
     private $records = array();
     private $lastRecord = null;
 
@@ -54,10 +55,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    public function exp_onReady() {              
+    public function exp_onReady() {
         $this->syncPlayers();
         $this->loadRecords($this->storage->currentMap->uId);
         $this->reArrage();
+
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
@@ -69,7 +71,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function resetRecords() {
         $this->records = array();
-
         $this->reArrage();
     }
 
@@ -111,9 +112,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($save)
             $this->saveRecords();
-
-        LRPanel::$records = $this->records;
-        LRPanel::RedrawAll();
+        \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->records));
     }
 
     function getRecords($pluginId = null) {
@@ -143,6 +142,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         // if no records, make entry
         if (count($this->records) == 0) {
             $this->records[$login] = new Structures\Record($login, $time);
+            \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->records[$login]));
             $this->reArrage(false);
             $this->announce($login);
         }
@@ -154,15 +154,19 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 if ($this->records[$login]->time > $time) {
                     $oldRecord = $this->records[$login];
                     $this->records[$login] = new Structures\Record($login, $time);
+                    \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->records[$login]));
                     $this->reArrage(false);
                     $this->announce($login, $oldRecord);
+
                     return;
                 }
                 // if not then just do a update for the time
             } else {
                 $this->records[$login] = new Structures\Record($login, $time);
+                \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->records[$login]));
                 $this->reArrage(false);
                 $this->announce($login);
+
                 return;
             }
         }
@@ -194,11 +198,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             if ($oldRecord !== null) {
                 $diff = \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time - $oldRecord->time, true);
-                $this->exp_chatSendServerMessage($grats.'#record_variable#$o %s$o%s #record#for#record_variable# %s $z$s#record#with a time of$o#record_variable# %s $o#record#$n(%s)', null, array($this->records[$login]->place, $suffix, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time), $diff));
+                $this->exp_chatSendServerMessage($grats . '#record_variable#$o %s$o%s #record#for#record_variable# %s $z$s#record#with a time of$o#record_variable# %s $o#record#$n(%s)', null, array($this->records[$login]->place, $suffix, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time), $diff));
                 return;
             }
 
-            $this->exp_chatSendServerMessage($grats.'#record_variable#$o %s$o%s #record#for#record_variable# %s $z$s#record#with a time of$o#record_variable# %s', null, array($this->records[$login]->place, $suffix, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time)));
+            $this->exp_chatSendServerMessage($grats . '#record_variable#$o %s$o%s #record#for#record_variable# %s $z$s#record#with a time of$o#record_variable# %s', null, array($this->records[$login]->place, $suffix, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time)));
         } catch (\Exception $e) {
             \ManiaLive\Utilities\Console::println("Error: couldn't show localrecords message" . $e->getMessage());
         }
@@ -210,19 +214,15 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             self::$players[$array['login']] = \ManiaLivePlugins\eXpansion\LocalRecords\Structures\DbPlayer::fromArray($array);
     }
 
-    function onPlayerConnect($login, $isSpectator) {             
+    function onPlayerConnect($login, $isSpectator) {
         $player = new \ManiaLivePlugins\eXpansion\LocalRecords\Structures\DbPlayer();
         $player->fromPlayerObj($this->storage->getPlayerObject($login));
         $this->db->execute($player->exportToDb());
         self::$players[$login] = $player;
-        $info = LRPanel::Create();
-        $info->setSize(50, 60);
-        $info->setPosition(-160, 60);
-        $info->show();
     }
 
     function onPlayerDisconnect($login) {
-        LRPanel::Erase($login);
+        
     }
 
 }

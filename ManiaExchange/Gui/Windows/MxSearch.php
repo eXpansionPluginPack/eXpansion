@@ -11,7 +11,8 @@ use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxMap;
 use ManiaLive\Gui\ActionHandler;
 
 class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
-
+   
+    /** @var \ManiaLive\Gui\Controls\Pager */
     private $pager;
 
     /** @var  \DedicatedApi\Connection */
@@ -146,10 +147,10 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         foreach ($this->items as $item)
             $item->destroy();
-
+        
         $this->pager->clearItems();
-        $this->items = array();
-
+        $this->items = array();                          
+        
         $x = 0;
         $login = $this->getRecipient();
         $isadmin = \ManiaLive\Features\Admin\AdminGroup::contains($login);
@@ -158,7 +159,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->items[$x] = new MxMap($x, $map, $this, $isadmin);
             $this->pager->addItem($this->items[$x]);
             $x++;
-        }
+        }        
         $this->redraw();
     }
 
