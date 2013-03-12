@@ -67,7 +67,7 @@ class MxMap extends \ManiaLive\Gui\Control {
 
         $info = new \ManiaLib\Gui\Elements\Label(16, 4);
         $info->setAlign('left', 'center');
-        $info->setText($map->environmentName);
+        $info->setText($map->styleName);
         $this->frame->addComponent($info);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
