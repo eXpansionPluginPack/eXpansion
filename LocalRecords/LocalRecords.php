@@ -8,9 +8,9 @@ use \ManiaLivePlugins\eXpansion\LocalRecords\Events\Event;
 class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public static $players;
-    
     private $records = array();
     private $lastRecord = null;
+    private $config;
 
     function exp_onInit() {
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -18,9 +18,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM);
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
 
-        $config = Config::getInstance();
-        \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->registerCode("record", $config->color_record);
-        \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->registerCode("record_variable", $config->color_record_variable);
+        $this->config = Config::getInstance();
+        \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->registerCode("record", $this->config->color_record);
+        \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->registerCode("record_variable", $this->config->color_record_variable);
     }
 
     function exp_onLoad() {
@@ -28,6 +28,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableDedicatedEvents();
         $this->enablePluginEvents();
         $this->setPublicMethod("getRecords");
+        $this->registerChatCommand("top100", "showRanks", 0, true);
 
         $this->registerChatCommand("save", "saveRecords", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
         $this->registerChatCommand("load", "loadRecords", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
@@ -59,6 +60,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->syncPlayers();
         $this->loadRecords($this->storage->currentMap->uId);
         $this->reArrage();
+
 
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
@@ -107,7 +109,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record->place = ++$i;
             $newrecords[$record->login] = $record;
         }
-        $this->records = array_slice($newrecords, 0, 30);
+        $this->records = array_slice($newrecords, 0, $this->config->recordsCount);
         $this->lastRecord = end($this->records);
 
         if ($save)
@@ -148,7 +150,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         // so if the time is better than the last entry or the count of records is less than 20...
-        if ($this->lastRecord->time > $time || count($this->records) < 30) {
+        if ($this->lastRecord->time > $time || count($this->records) < $this->config->recordsCount) {
             // if player exists on the list... see if he got better time
             if (array_key_exists($login, $this->records)) {
                 if ($this->records[$login]->time > $time) {
@@ -208,6 +210,59 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    function showRanks($login) {
+        /** @var array("Uid" => array(Structures\Record)) */
+        $records = $this->getRecords();
+
+
+        $ranks = array();
+        $nbrec = array();
+        $top3 = array();
+
+        $maps = array();
+        foreach ($this->storage->maps as $map) {
+            $maps[] = $map->uId;
+        }
+
+        foreach ($records as $uid => $record) {
+            if (in_array($uid, $maps)) {
+                foreach ($record as $player) {
+                    if (!array_key_exists($player->login, $ranks))
+                        $ranks[$player->login] = 0;
+                    if (!array_key_exists($player->login, $top3))
+                        $top3[$player->login] = 0;
+                    if (!array_key_exists($player->login, $nbrec))
+                        $nbrec[$player->login] = array("count" => 0, "1" => 0, "2" => 0, "3" => 0);
+
+                    $ranks[$player->login] += $this->config->recordsCount - $player->place;
+
+                    $nbrec[$player->login]['count']++;
+                    if ($player->place == 1) {
+                        $nbrec[$player->login]['1']++;
+                        $top3[$player->login] += 3;
+                    }
+                    if ($player->place == 2) {
+                        $nbrec[$player->login]['2']++;
+                        $top3[$player->login] += 2;
+                    }
+                    if ($player->place == 2) {
+                        $nbrec[$player->login]['3']++;
+                        $top3[$player->login] += 1;
+                    }
+                }
+            }
+        }
+
+        Gui\Windows\RanksWindow::$ranks = $ranks;
+        Gui\Windows\RanksWindow::$nbrec = $nbrec;
+        Gui\Windows\RanksWindow::$top3 = $top3;
+
+        $window = Gui\Windows\RanksWindow::Create($login);
+        $window->setSize(130, 90);
+        $window->centerOnScreen();
+        $window->show();
+    }
+
     function syncPlayers() {
         $db = $this->db->query("Select * FROM exp_players")->fetchArrayOfAssoc();
         foreach ($db as $array)
@@ -226,5 +281,4 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
 }
-
 ?>
