@@ -34,7 +34,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand("load", "loadRecords", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
         $this->registerChatCommand("reset", "resetRecords", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 
-        if (!$this->db->tableExists("exp_players")) {
+        /*if (!$this->db->tableExists("exp_players")) {
             $this->db->execute('CREATE TABLE IF NOT EXISTS `exp_players` (
   `login` varchar(255) NOT NULL,
   `nickname` text NOT NULL,
@@ -43,7 +43,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
   PRIMARY KEY (`login`),
   UNIQUE KEY `login` (`login`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;');
-        }
+        }*/
 
         if (!$this->db->tableExists("exp_records")) {
             $this->db->execute('CREATE TABLE IF NOT EXISTS `exp_records` (
@@ -264,20 +264,20 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function syncPlayers() {
-        $db = $this->db->query("Select * FROM exp_players")->fetchArrayOfAssoc();
+        /*$db = $this->db->query("Select * FROM exp_players")->fetchArrayOfAssoc();
         foreach ($db as $array)
-            self::$players[$array['login']] = \ManiaLivePlugins\eXpansion\LocalRecords\Structures\DbPlayer::fromArray($array);
+            self::$players[$array['login']] = \ManiaLivePlugins\eXpansion\LocalRecords\Structures\DbPlayer::fromArray($array);*/
     }
 
     function onPlayerConnect($login, $isSpectator) {
-        $player = new \ManiaLivePlugins\eXpansion\LocalRecords\Structures\DbPlayer();
+        /*$player = new \ManiaLivePlugins\eXpansion\LocalRecords\Structures\DbPlayer();
         $player->fromPlayerObj($this->storage->getPlayerObject($login));
-        $this->db->execute($player->exportToDb());
-        self::$players[$login] = $player;
+        //$this->db->execute($player->exportToDb());
+        self::$players[$login] = $player;*/
     }
 
     function onPlayerDisconnect($login) {
-        
+        //unset(self::$players[$login]);
     }
 
 }

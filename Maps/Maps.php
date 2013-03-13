@@ -6,6 +6,7 @@ use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Maps\Structures\MapWish;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+
 class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /** @var array(MapWish) */
