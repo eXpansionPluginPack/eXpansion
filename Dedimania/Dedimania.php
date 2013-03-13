@@ -24,7 +24,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     }
 
     public function exp_onReady() {
-        $this->registerChatCommand("check", "checkSession", 0, true);
+      //  $this->registerChatCommand("check", "checkSession", 0, true);
         $this->dedimania->openSession();
     }
 
@@ -32,28 +32,29 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         $this->dedimania->checkSession();
     }
 
-    public function onBeginMap($map, $warmUp, $matchContinuation) {
-        print "onBeginMap";
+    public function onPlayerConnect($login, $isSpectator) {
+        $player = $this->storage->getPlayerObject($login);
+        $this->dedimania->playerConnect($player, $isSpectator);
+    }
+    
+    public function onPlayerDisconnect($login) {
+        $this->dedimania->playerDisconnect($login);
+    }
+    
+    public function onBeginMap($map, $warmUp, $matchContinuation) {        
         $this->getRecords();
     }
 
-    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {    
         $this->dedimania->updateServerPlayers($map);
     }
 
     public function onDedimaniaOpenSession($sessionId) {
-        foreach ($this->storage->players as $player) {
-            if ($player->login != $this->storage->serverLogin)
-                $this->dedimania->playerConnect($player, false);
-        }
-        foreach ($this->storage->spectators as $player)
-            $this->dedimania->playerConnect($player, true);
-
-        //$this->getRecords();
+        $this->dedimania->getChallengeRecords();        
     }
 
     public function onDedimaniaGetRecords($data) {
-        print_r($data);
+      
     }
 
     public function getRecords() {

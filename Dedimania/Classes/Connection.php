@@ -24,15 +24,17 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     /** @var \ManiaLive\Data\Storage */
     private $storage;
     private $url;
-    private $_callbacks = array();
-    private $_requests = array();
     private $sessionId = "";
+    private $counter = 0;
+    private $sessionTicker = false;
 
     function __construct() {
         parent::__construct();
         Dispatcher::register(TickEvent::getClass(), $this);
         $this->webaccess = new Webaccess();
-        $this->url = "http://dedimania.net:8081/Dedimania";
+        
+        // if you are developing change port to 8081
+        $this->url = "http://dedimania.net:8082/Dedimania";
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
@@ -45,10 +47,19 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function onTick() {
         $this->webaccess->select();
+
+
+        // send opensession after 2 seconds of connection.
+        if ($this->sessionTicker) {
+            if ($this->counter > 2) {
+                $this->sessionTicker = false;
+                Dispatcher::dispatch(new Event(Event::ON_OPEN_SESSION, $this->sessionId));
+            }
+            $this->counter++;
+        }
     }
 
     function openSession() {
-
         $version = $this->connection->getVersion();
 
         $serverInfo = $this->connection->getDetailedPlayerInfo($this->storage->serverLogin);
@@ -67,7 +78,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $args = array(array(
                 "Game" => "TM2",
                 "Login" => $config->login,
-                "Code" => $config->code,
+                "Code" => (string) $config->code,
                 "Tool" => "eXpansion",
                 "Version" => "0.11",
                 "Packmask" => $packmask,
@@ -88,7 +99,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $info = array(
             "SrvName" => $this->storage->server->name,
             "Comment" => $this->storage->server->comment,
-            "Private" => ($this->storage->server->password  !== ""),
+            "Private" => ($this->storage->server->password !== ""),
             "NumPlayers" => sizeof($this->storage->players),
             "MaxPlayers" => $this->storage->server->currentMaxPlayers,
             "NumSpecs" => sizeof($this->storage->spectators),
@@ -96,7 +107,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         );
         return $info;
     }
-    
+
     function _getMapInfo() {
         $mapInfo = array(
             "UId" => $this->storage->currentMap->uId,
@@ -150,17 +161,17 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     /**
      * Player Connect
-     * @param string $login
-     * @param string $nickname
-     * @param string $path
-     * @param bool $isSpec
      */
     function playerConnect(\DedicatedApi\Structures\Player $player, $isSpec) {
+
         if ($this->sessionId === null) {
             echo "Session id is null!";
             return;
         }
-
+        if ($player->login == $this->storage->serverLogin) {
+            echo "Abort. tried to send server login.";
+            return;
+        }
         $args = array(
             $this->sessionId,
             $player->login,
@@ -170,10 +181,16 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         );
 
         $request = new myRequest("dedimania.PlayerConnect", $args);
-
-        print $request->getXml();
-
         $this->send($request, array($this, "xPlayerConnect"));
+    }
+
+    function playerDisconnect($login) {
+        $args = array(
+            $this->sessionId,
+            $login,
+            "");
+        $request = new myRequest("dedimania.PlayerDisconnect", $args);
+        $this->send($request, array($this, "xPlayerDisconnect"));
     }
 
     function updateServerPlayers($map) {
@@ -198,15 +215,16 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
                 break;
         }
 
+
         $args = array(
             $this->sessionId,
             $this->_getSrvInfo(),
-            array("UId" => $map->uId, "GameMode" => $gamemode),
+            array("UId" => $map['UId'], "GameMode" => $gamemode),
             $players
         );
 
         $request = new myRequest("dedimania.UpdateServerPlayers", $args);
-        $this->send($request, null);
+        $this->send($request, array($this, "xUpdateServerPlayers"));
     }
 
     function _process($dedires, $callback) {
@@ -214,9 +232,8 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $msg->parse();
         $errors = end($msg->params[0]);
 
-        print_r($errors);
-
-        print "Actual Data\n";
+        //print_r($errors);
+        //print "Actual Data\n";
 
         $array = $msg->params[0][0];
 
@@ -233,12 +250,16 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function xOpenSession($data) {
         $this->sessionId = $data[0]['SessionId'];
-        echo "recieved Session key:" . $this->sessionId . "\n";
-        Dispatcher::dispatch(new Event(Event::ON_OPEN_SESSION, $this->sessionId));
+        // echo "recieved Session key:" . $this->sessionId . "\n";
+        $this->sessionTicker = true;
     }
 
     function xGetRecords($data) {
-        Dispatcher::dispatch(new Event(Event::ON_GET_RECORDS, $data));
+        Dispatcher::dispatch(new Event(Event::ON_GET_RECORDS, $data[0]));
+    }
+
+    function xUpdateServerPlayers($data) {
+        print_r($data);
     }
 
     function xCheckSession($data) {
@@ -247,6 +268,9 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function xPlayerConnect($data) {
         print_r($data);
+    }
+     function xPlayerDisconnect($data) {
+         print_r($data);
     }
 
     function onInit() {

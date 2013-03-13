@@ -28,7 +28,7 @@ class Request {
         $xml = '<?xml version="1.0" encoding="UTF-8" ?>'
                 . "\n<methodCall>\n<methodName>system.multicall</methodName>\n<params>\n";
 
-        $param2 = array($params);
+        $param2 = $params;
 
 
         foreach ($param2 as $key => $param) {

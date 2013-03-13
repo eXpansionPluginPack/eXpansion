@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\RecordWidgets\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\RecordWidgets\Config;
 
-class Dediitem extends \ManiaLive\Gui\Control {
+class DediItem extends \ManiaLive\Gui\Control {
 
     private $bg;
     private $nick;
