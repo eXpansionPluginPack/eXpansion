@@ -1,7 +1,5 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Dedimania\Classes;
-
 ////////////////////////////////////////////////////////////////
 //¤
 // File:      WEB ACCESS 2.1.3
@@ -98,9 +96,16 @@ $_web_access_post_xmlrpc = false;
 // body data (POST) yourself.
 
 
+
+
 class Webaccess {
 
-    private $_WebaccessList = array();
+    private $_WebaccessList;
+    
+    public function __construct() {        
+        $this->_WebaccessList = array();
+        $this->WebaccessList = array();
+    }
 
     function request($url, $callback, $datas, $is_xmlrpc = false, $keepalive_min_timeout = 300, $opentimeout = 3, $waittimeout = 5, $agent = 'XMLaccess') {
         global $_web_access_keepalive, $_web_access_keepalive_timeout, $_web_access_keepalive_max;
@@ -108,13 +113,14 @@ class Webaccess {
         list($host, $port, $path) = getHostPortPath($url);
 
         if ($host === false)
-            print_r ('*Webaccess request(): Bad url: ' . $url);
+            print_r('*Webaccess request(): Bad url: ' . $url);
 
         else {
             $server = $host . ':' . $port;
             // create object is needed
             if (!isset($this->_WebaccessList[$server]) || $this->_WebaccessList[$server] === null) {
-                $this->_WebaccessList[$server] = new WebaccessUrl($this, $host, $port, $_web_access_keepalive, $_web_access_keepalive_timeout, $_web_access_keepalive_max, $agent);
+                //$this->_WebaccessList[$server] = new WebaccessUrl($this, $host, $port, $_web_access_keepalive, $_web_access_keepalive_timeout, $_web_access_keepalive_max, $agent);
+                $this->_WebaccessList[$server] = new WebaccessUrl($this, $host, $port, true, 600, 2000, $agent);
             }
 
             // increase the default timeout for sync/wait request
@@ -136,7 +142,7 @@ class Webaccess {
     function retry($url) {
         list($host, $port, $path) = getHostPortPath($url);
         if ($host === false)
-            print_r ('*Webaccess retry(): Bad url: ' . $url);
+            print_r('*Webaccess retry(): Bad url: ' . $url);
         else {
             $server = $host . ':' . $port;
             if (isset($this->_WebaccessList[$server]))
@@ -144,14 +150,14 @@ class Webaccess {
         }
     }
 
-    function select() {
-        $tv_sec = 0;
-        $tv_usec = 0;
-        
+    function select(&$read, &$write, &$except, $tv_sec, $tv_usec = 0) {
         $timeout = (int) ($tv_sec * 1000000 + $tv_usec);
-        $read = array();
-        $write = array();
-        $except = array();
+        if ($read == null)
+            $read = array();
+        if ($write == null)
+            $write = array();
+        if ($except == null)
+            $except = array();
 
         $read = $this->_getWebaccessReadSockets($read);
         $write = $this->_getWebaccessWriteSockets($write);
@@ -343,7 +349,7 @@ class WebaccessUrl {
     // put connection in BAD state
     function _bad($errstr, $isbad = true) {
         global $_web_access_retry_timeout;
-        print_r ('*' . $this->_webaccess_str . $errstr);
+        print_r('*' . $this->_webaccess_str . $errstr);
 
         $this->infos();
 
@@ -399,7 +405,7 @@ class WebaccessUrl {
         // if asynch, in error, and maximal timeout, then forget the request and return false.
         if (($query['Callback'] != null) && ($this->_state == 'BAD')) {
             if ($this->_bad_timeout > $_web_access_retry_timeout_max) {
-                print_r ('*' . $this->_webaccess_str . 'Request refused for consecutive errors (' . $this->_bad_timeout . " / " . $_web_access_retry_timeout_max . ")");
+                print_r('*' . $this->_webaccess_str . 'Request refused for consecutive errors (' . $this->_bad_timeout . " / " . $_web_access_retry_timeout_max . ")");
                 return false;
             } else {
                 // if not max then accept the request and try a request (minimum $_web_access_retry_timeout/2 after previous try)
@@ -482,7 +488,7 @@ class WebaccessUrl {
                 else
                     $this->_open();
             }else {
-                print_r ('*' . $this->_webaccess_str . 'Bad datas');
+                print_r('*' . $this->_webaccess_str . 'Bad datas');
                 return false;
             }
         } else {
@@ -780,7 +786,7 @@ class WebaccessUrl {
             $this->_spool[0]['Retries']++;
             if ($this->_spool[0]['Retries'] > 2) {
                 // 3 tries failed, remode entry from spool
-                print_r ('*' . $this->_webaccess_str . " Failed {$this->_spool[0]['Retries']} times : skip current request.");
+                print_r('*' . $this->_webaccess_str . " Failed {$this->_spool[0]['Retries']} times : skip current request.");
                 array_shift($this->_spool);
             }
 
@@ -1020,7 +1026,7 @@ class WebaccessUrl {
             if ($this->_compress_request == 'accept')
                 $this->_compress_request = false;
 
-            print_r ($this->_webaccess_str . 'send: ' . ($this->_compress_request === false ? 'no compression' : $this->_compress_request)
+            print_r($this->_webaccess_str . 'send: ' . ($this->_compress_request === false ? 'no compression' : $this->_compress_request)
                     . ', receive: ' . (isset($headers['content-encoding'][0]) ? $headers['content-encoding'][0] : 'no compression'));
         }
 
@@ -1083,7 +1089,7 @@ class WebaccessUrl {
         $size = (isset($this->_spool[0]['Response']['Message'])) ? strlen($this->_spool[0]['Response']['Message']) : 0;
         $msg = $this->_webaccess_str
                 . sprintf("[%s,%s]: %0.3f / %0.3f / %0.3f (%0.3f) / %d [%d,%d,%d]", $this->_state, $this->_spool[0]['State'], $this->_spool[0]['Times']['open'][1], $this->_spool[0]['Times']['send'][1], $this->_spool[0]['Times']['receive'][1], $this->_spool[0]['Times']['receive'][2], $this->_query_num, $this->_spool[0]['DatasSize'], $size, $this->_spool[0]['ResponseSize']);
-        print_r ($msg);
+        print_r($msg);
     }
 
 }

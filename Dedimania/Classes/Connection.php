@@ -2,13 +2,14 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania\Classes;
 
+require_once('Webaccess.php');
 use \ManiaLive\Event\Dispatcher;
 use \ManiaLive\Application\Listener as AppListener;
 use \ManiaLive\Application\Event as AppEvent;
 use \ManiaLive\Features\Tick\Listener as TickListener;
 use \ManiaLive\Features\Tick\Event as TickEvent;
 use \DedicatedApi\Xmlrpc\Client;
-use \ManiaLivePlugins\eXpansion\Dedimania\Classes\Webaccess;
+
 use ManiaLivePlugins\eXpansion\Dedimania\Classes\Request as myRequest;
 use ManiaLivePlugins\eXpansion\Dedimania\Config;
 use ManiaLivePlugins\eXpansion\Dedimania\Events\Event;
@@ -28,10 +29,14 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     private $counter = 0;
     private $sessionTicker = false;
 
+    private $read=array();
+    private $write=array();
+    private $except=array();
+    
     function __construct() {
         parent::__construct();
         Dispatcher::register(TickEvent::getClass(), $this);
-        $this->webaccess = new Webaccess();
+        $this->webaccess = new \Webaccess();
         
         // if you are developing change port to 8081
         $this->url = "http://dedimania.net:8081/Dedimania";
@@ -46,8 +51,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function onTick() {
-        $this->webaccess->select();
-
+        $this->webaccess->select($this->read, $this->write, $this->except, 0, 0);
 
         // send opensession after 2 seconds of connection.
         if ($this->sessionTicker) {
@@ -96,7 +100,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function send(myRequest $request, $callback) {
-        $this->webaccess->request($this->url, array(array($this, '_process'), $callback), $request->getXml(), true);
+        $this->webaccess->request($this->url, array(array($this, '_process'), $callback), $request->getXml(), true, 600, 3, 5);        
     }
 
     function _getSrvInfo() {
