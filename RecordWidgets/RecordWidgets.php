@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as DediEvent;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 
 class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements \ManiaLivePlugins\eXpansion\LocalRecords\Events\Listener, \ManiaLivePlugins\eXpansion\Dedimania\Events\Listener {
-    
+
     public function exp_onInit() {
         $this->setVersion(0.1);
     }
@@ -33,6 +33,8 @@ class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
     public function onDedimaniaGetRecords($data) {
         Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];
         Gui\Widgets\RecordsPanel::RedrawAll();
+        $this->exp_chatSendServerMessage("note Dedimania currenly READ-ONLY: Found %s records for current map.", null, array(sizeof($data['Records'])));
+        echo "Dedimania: Found " . sizeof($data['Records']) . " records for current map!";
     }
 
     public function onPlayerConnect($login, $isSpectator) {

@@ -285,7 +285,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function xOpenSession($data) {
-        print_r($data);
+     //   print_r($data);
         
         $this->sessionId = $data[0]['SessionId'];
         echo "recieved Session key:" . $this->sessionId . "\n";
@@ -297,18 +297,18 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function xUpdateServerPlayers($data) {
-        print_r($data);
+     //   print_r($data);
     }
 
     function xCheckSession($data) {
-        print_r($data);
+       // print_r($data);
     }
 
     function xPlayerConnect($data) {
-        print_r($data);
+       // print_r($data);        
     }
      function xPlayerDisconnect($data) {
-         print_r($data);
+       //  print_r($data);
     }
 
     function onInit() {
