@@ -1,18 +1,21 @@
 <?php
+
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Structures;
 
-class Record extends \DedicatedApi\Structures\AbstractStructure {
+class Record {
     
+    public $isNew = false;
+    public $isUpdated = false;
+    
+    public $place;
     public $login;
+    public $nickName;
     public $time;
-    public $place = -1;
-     
-     
-    public function __construct($login, $time, $place = -1) {
-        $this->login = $login;
-        $this->time = $time;
-        $this->place = $place;
-    }
-    
+    public $nbFinish;
+    public $avgScore;
+    public $gamemode;
+    public $ScoreCheckpoints = array();
+
 }
+
 ?>

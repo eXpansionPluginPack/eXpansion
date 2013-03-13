@@ -42,14 +42,14 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $flag->setAlign("left", "center");
         $flag->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         
-        $path = LocalRecords::$players[$record->login]->nation;
+       /* $path = LocalRecords::$players[$record->login]->nation;
         if ($path !== null) {
         $path = explode("|", $path);
         $image = $config->flags.rawurlencode($path[2]).".dds";
         $flag->setStyle("");
         $flag->setImage($image);                        
         }
-        $this->frame->addComponent($flag);
+        $this->frame->addComponent($flag);*/
         
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(1, 4);
@@ -70,7 +70,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $this->nick = new \ManiaLib\Gui\Elements\Label(34, 4);
         $this->nick->setAlign('left', 'center');
         $this->nick->setScale(0.7);
-        $nickname = LocalRecords::$players[$record->login]->nickname;
+        $nickname = $record->nickName;
         $nickname = \ManiaLib\Utils\Formatting::stripCodes($nickname, "wos");
         $nickname = \ManiaLib\Utils\Formatting::contrastColors($nickname, "777");
         $this->nick->setText('$fff' . $nickname);
