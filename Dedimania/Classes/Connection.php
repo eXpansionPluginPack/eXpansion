@@ -88,7 +88,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $info = array(
             "SrvName" => $this->storage->server->name,
             "Comment" => $this->storage->server->comment,
-            "Private" => !$this->storage->server->hideServer,
+            "Private" => ($this->storage->server->password  !== ""),
             "NumPlayers" => sizeof($this->storage->players),
             "MaxPlayers" => $this->storage->server->currentMaxPlayers,
             "NumSpecs" => sizeof($this->storage->spectators),
@@ -96,7 +96,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         );
         return $info;
     }
-
+    
     function _getMapInfo() {
         $mapInfo = array(
             "UId" => $this->storage->currentMap->uId,
