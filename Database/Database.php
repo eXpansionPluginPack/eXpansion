@@ -118,6 +118,8 @@ class Database  extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
         foreach ($this->storage->players as $login => $player) { // get players
             $this->updatePlayTime($player);
+            if($player->rank == 1)
+                $this->incrementWins ($player);
         }
 
         foreach ($this->storage->spectators as $login => $player) { // get spectators
@@ -126,7 +128,6 @@ class Database  extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function updatePlayTime($player) {
-
         $time = time();
 
         if (isset($player->lastTimeUpdate)) {
@@ -138,6 +139,13 @@ class Database  extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         $player->lastTimeUpdate = $time;
+    }
+    
+    public function incrementWins($player){
+         $q = "UPDATE `exp_players`
+			 SET player_wins` = (`player_wins` + 1)
+			 WHERE `player_login` = " . $this->db->quote($player->login) . ";";
+          $this->db->query($q);
     }
 
     function getDatabaseVersion($table, $fromPlugin = null) {
