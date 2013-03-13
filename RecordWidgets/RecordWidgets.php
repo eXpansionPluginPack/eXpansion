@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as DediEvent;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 
 class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements \ManiaLivePlugins\eXpansion\LocalRecords\Events\Listener, \ManiaLivePlugins\eXpansion\Dedimania\Events\Listener {
-
+    
     public function exp_onInit() {
         $this->setVersion(0.1);
     }
