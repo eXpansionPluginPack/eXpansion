@@ -24,7 +24,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     /** @var \ManiaLive\Data\Storage */
     private $storage;
     private $url;
-    private $sessionId = "";
+    private $sessionId = null;
     private $counter = 0;
     private $sessionTicker = false;
 
@@ -34,8 +34,8 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $this->webaccess = new Webaccess();
         
         // if you are developing change port to 8081
-        $this->url = "http://dedimania.net:8082/Dedimania";
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
+        $this->url = "http://dedimania.net:8081/Dedimania";
+        $config = \ManiaLive\DedicatedApi\Config::getInstance();       
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
     }
@@ -64,6 +64,10 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
         $serverInfo = $this->connection->getDetailedPlayerInfo($this->storage->serverLogin);
         $config = Config::getInstance();
+        print $config->login;
+        
+         if (empty($config->login)) die("Dedimania server login is not configured!");
+        if (empty($config->code)) die("Dedimania server code is not configured!");
         $packmask = "";
         switch ($version->titleId) {
             case "TMStadium":
@@ -77,7 +81,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
         $args = array(array(
                 "Game" => "TM2",
-                "Login" => $config->login,
+                "Login" => (string) $config->login,
                 "Code" => (string) $config->code,
                 "Tool" => "eXpansion",
                 "Version" => "0.11",
@@ -91,7 +95,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $this->send($request, array($this, "xOpenSession"));
     }
 
-    function send(myRequest $request, callable $callback) {
+    function send(myRequest $request, $callback) {
         $this->webaccess->request($this->url, array(array($this, '_process'), $callback), $request->getXml(), true);
     }
 
@@ -121,11 +125,19 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function checkSession() {
+         if ($this->sessionId === null) {
+            echo "Session id is null!";
+            return;
+        }
         $request = new myRequest("dedimania.CheckSession", array($this->sessionId));
         $this->send($request, array($this, "xCheckSession"));
     }
 
     function getChallengeRecords() {
+         if ($this->sessionId === null) {
+            echo "Session id is null!";
+            return;
+        }
         $players = array();
         foreach ($this->storage->players as $player) {
             if ($player->login != $this->storage->serverLogin)
@@ -185,6 +197,10 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function playerDisconnect($login) {
+         if ($this->sessionId === null) {
+            echo "Session id is null!";
+            return;
+        }
         $args = array(
             $this->sessionId,
             $login,
@@ -194,6 +210,10 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function updateServerPlayers($map) {
+         if ($this->sessionId === null) {
+            echo "Session id is null!";
+            return;
+        }
         $players = array();
         foreach ($this->storage->players as $player) {
             if ($player->login != $this->storage->serverLogin)
@@ -237,20 +257,34 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
         $array = $msg->params[0][0];
 
+        print_r($array);
+        
         if (array_key_exists("faultString", $array)) {
             $this->connection->chatSendServerMessage("Dedimania error: " . $array['faultString']);
             \ManiaLive\Utilities\Console::println("Dedimania error: " . $array['faultString']);
             return;
         }
 
+        if (!empty($array[0]['Error'])) {
+            $this->connection->chatSendServerMessage("Dedimania error: " . $array[0]['Error']);
+            \ManiaLive\Utilities\Console::println("Dedimania error: " . $array[0]['Error']);
+            return;            
+        }
+        
         if (is_callable($callback)) {
             call_user_func_array($callback, array($array));
+        }
+        else {
+            $this->connection->chatSendServerMessage("Dedimania error: Callback not valid");
+            \ManiaLive\Utilities\Console::println("Dedimania error: Callback not valid");            
         }
     }
 
     function xOpenSession($data) {
+        print_r($data);
+        
         $this->sessionId = $data[0]['SessionId'];
-        // echo "recieved Session key:" . $this->sessionId . "\n";
+        echo "recieved Session key:" . $this->sessionId . "\n";
         $this->sessionTicker = true;
     }
 

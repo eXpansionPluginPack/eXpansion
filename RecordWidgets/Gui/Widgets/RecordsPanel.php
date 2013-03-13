@@ -95,7 +95,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     }
 
     function destroy() {
-        ActionHandler::getInstance()->deleteAction($this->actionDedin);
+        ActionHandler::getInstance()->deleteAction($this->actionDedi);
         ActionHandler::getInstance()->deleteAction($this->actionLocal);
         $this->btnDedi->destroy();
         $this->btnLocal->destroy();                
