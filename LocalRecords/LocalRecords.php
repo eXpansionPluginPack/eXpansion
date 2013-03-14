@@ -114,6 +114,20 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
         $this->checkpoints[$login] = array();
     }
+    
+    
+	public function onPlayerFinishLap($player, $time, $checkpoints, $nbLap) {
+
+		if ($this->config->lapsModeCount1lap && isset($this->storage->players[$player->login]) && $time > 0) {
+			$gamemode = $this->storage->gameInfos->gameMode;
+
+			if ($gamemode != \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS)//Laps mode has it own on Player finish event
+				return;
+
+			$this->addRecord($login, $timeOrScore, $gamemode, $this->checkpoints[$login]);
+            $this->checkpoints[$login] = array();
+		}
+	}
 
     public function addRecord($login, $score, $gamemode, $cpScore) {
         $uid = $this->storage->currentMap->uId;
