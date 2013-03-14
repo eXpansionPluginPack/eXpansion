@@ -216,7 +216,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                             `record_date` = ' . $this->db->quote($record->date) . '
                         WHERE `record_challengeuid` = ' . $this->db->quote($uid) . '
                             AND `record_playerlogin` =  ' . $this->db->quote($record->login) . '
-                            ADN `record_nbLaps` = ' . $this->db->quote($nbLaps) . ';';
+                            AND `record_nbLaps` = ' . $this->db->quote($nbLaps) . ';';
 
             $this->db->query($q);
         }
