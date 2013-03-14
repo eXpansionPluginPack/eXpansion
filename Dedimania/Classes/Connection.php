@@ -514,6 +514,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
             $player = $this->storage->getPlayerObject($data[0][0]['Login']);
             $this->connection->chatSendServerMessage("Player" . $player->nickName . '$z$s$fff[' . $player->login . '] is $f00BANNED$fff from dedimania.');
         }
+        Dispatcher::dispatch(new Event(Event::ON_PLAYER_CONNECT, $data[0][0]));
     }
 
     function xPlayerMultiConnect($data) {                
@@ -532,6 +533,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function xPlayerDisconnect($data) {
         //print_r($data);
+        Dispatcher::dispatch(new Event(Event::ON_PLAYER_DISCONNECT, null));
     }
 
     function onInit() {
