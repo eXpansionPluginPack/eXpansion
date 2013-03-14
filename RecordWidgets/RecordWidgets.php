@@ -31,8 +31,7 @@ class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
     }
 
     public function onDedimaniaUpdateRecords($data) {
-        Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];
-        
+        Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];        
         Gui\Widgets\RecordsPanel::RedrawAll();
     }
 

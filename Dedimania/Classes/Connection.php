@@ -10,11 +10,18 @@ use \ManiaLive\Features\Tick\Listener as TickListener;
 use \ManiaLive\Features\Tick\Event as TickEvent;
 use \DedicatedApi\Structures\GameInfos;
 use ManiaLive\Utilities\Console;
+use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediPlayer;
 use ManiaLivePlugins\eXpansion\Dedimania\Classes\Request as dediRequest;
 use ManiaLivePlugins\eXpansion\Dedimania\Config;
 use ManiaLivePlugins\eXpansion\Dedimania\Events\Event;
 
 class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickListener {
+
+    /** @var integer */
+    static public $serverMaxRank;
+
+    /** @var array("login" => DediPlayer) */
+    static public $players = array();
 
     /** @var Webaccess */
     private $webaccess;
@@ -37,7 +44,8 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     private $dediBest = 0;
     private $dediUid = null;
     // cached players from dedimania
-    private $dediPlayers = array();
+
+    private $lastUpdate;
 
     function __construct() {
         parent::__construct();
@@ -52,6 +60,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $this->read = array();
         $this->write = array();
         $this->except = array();
+        $this->lastUpdate = time();
         Dispatcher::register(TickEvent::getClass(), $this);
     }
 
@@ -61,9 +70,20 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function onTick() {
+
         $this->webaccess->select($this->read, $this->write, $this->except, 0, 0);
+
+        if ($this->sessionId !== null && (time() - $this->lastUpdate) > 180) {
+            echo "Dediconnection Keepalive!";
+            $this->updateServerPlayers($this->storage->currentMap);
+            $this->lastUpdate = time();
+        }
     }
 
+    /**
+     * dedimania.OpenSession    
+     * Should be called when starting the dedimania conversation     
+     */
     function openSession() {
         $version = $this->connection->getVersion();
 
@@ -88,8 +108,8 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
         $args = array(array(
                 "Game" => "TM2",
-                "Login" => (string) $config->login,
-                "Code" => (string) $config->code,
+                "Login" => $config->login,
+                "Code" => $config->code,
                 "Tool" => "eXpansion",
                 "Version" => "0.11",
                 "Packmask" => $packmask,
@@ -211,6 +231,10 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $this->send($request, array($this, "xCheckSession"));
     }
 
+    /**
+     *  getChallengeRecords
+     *  should be called onNewMap
+     */
     function getChallengeRecords() {
         if ($this->sessionId === null) {
             echo "Session id is null!";
@@ -219,10 +243,10 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $players = array();
         foreach ($this->storage->players as $player) {
             if ($player->login != $this->storage->serverLogin)
-                $players[] = Array("Player" => (string) $player->login, "IsSpec" => false);
+                $players[] = Array("Player" => $player->login, "IsSpec" => false);
         }
         foreach ($this->storage->spectators as $player)
-            $players[] = Array("Player" => (string) $player->login, "IsSpec" => true);
+            $players[] = Array("Player" => $player->login, "IsSpec" => true);
 
         $args = array(
             $this->sessionId,
@@ -231,13 +255,17 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
             $this->_getSrvInfo(),
             $players
         );
+        $this->lastUpdate = time();
 
         $request = new dediRequest("dedimania.GetChallengeRecords", $args);
         $this->send($request, array($this, "xGetRecords"));
     }
 
     /**
-     * Player Connect
+     * PlayerConnect
+     * 
+     * @param \DedicatedApi\Structures\Player $player
+     * @param bool $isSpec     
      */
     function playerConnect(\DedicatedApi\Structures\Player $player, $isSpec) {
 
@@ -245,10 +273,12 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
             echo "Session id is null!";
             return;
         }
+
         if ($player->login == $this->storage->serverLogin) {
             echo "Abort. tried to send server login.";
             return;
         }
+
         $args = array(
             $this->sessionId,
             $player->login,
@@ -261,6 +291,10 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $this->send($request, array($this, "xPlayerConnect"));
     }
 
+    /**
+     * playerDisconnect     
+     * @param string $login     
+     */
     function playerDisconnect($login) {
         if ($this->sessionId === null) {
             echo "Session id is null!";
@@ -274,25 +308,38 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $this->send($request, array($this, "xPlayerDisconnect"));
     }
 
+    /**
+     * UpdateServerPlayers
+     * Should be called Every 3 minutes + onEndChallenge.
+     * 
+     * @param array,\DedicatedApi\Structures\Map $map
+     * @return type
+     */
     function updateServerPlayers($map) {
         if ($this->sessionId === null) {
             echo "Session id is null!";
             return;
         }
+        
+        if (is_array($map))
+            $uid = $map['UId'];
+        if (is_object($map))
+            $uid = $map->uId;
+
         $players = array();
         foreach ($this->storage->players as $player) {
             if ($player->login != $this->storage->serverLogin)
-                $players[] = Array("Player" => (string) $player->login, "IsSpec" => false, "Vote" => -1);
+                $players[] = Array("Player" => $player->login, "IsSpec" => false, "Vote" => -1);
         }
         foreach ($this->storage->spectators as $player)
-            $players[] = Array("Player" => (string) $player->login, "IsSpec" => true, "Vote" => -1);
+            $players[] = Array("Player" => $player->login, "IsSpec" => true, "Vote" => -1);
 
         $gamemode = $this->_getGameMode();
 
         $args = array(
             $this->sessionId,
             $this->_getSrvInfo(),
-            array("UId" => $map['UId'], "GameMode" => $gamemode),
+            array("UId" => $uid, "GameMode" => $gamemode),
             $players
         );
 
@@ -335,7 +382,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $msg->parse();
         $errors = end($msg->params[0]);
 
-        //print_r($errors);
+       // print_r($errors);
         //print "Actual Data\n";
 
         $array = $msg->params[0][0];
@@ -385,6 +432,9 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     function xGetRecords($data) {
         $this->dediRecords = $data[0];
         $this->dediUid = $data[0]['UId'];
+        self::$serverMaxRank = $data[0]['ServerMaxRank'];
+
+
         if (!empty($data[0]['Records'][0]['Best'])) {
             $this->dediBest = $data[0]['Records'][0]['Best'];
         } else {
@@ -406,11 +456,15 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function xPlayerConnect($data) {
-        // print_r($data);
+        self::$players[$data[0]['Login']] = DediPlayer::fromArray($data[0]);
+        if ($data[0]['Banned']) {
+            $player = $this->storage->getPlayerObject($data[0]['Login']);
+            $this->connection->chatSendServerMessage("Player" . $player->nickName . '$z$s$fff[' . $player->login . '] is $f00BANNED$fff from dedimania.');
+        }
     }
 
     function xPlayerDisconnect($data) {
-        //  print_r($data);
+        //print_r($data);
     }
 
     function onInit() {

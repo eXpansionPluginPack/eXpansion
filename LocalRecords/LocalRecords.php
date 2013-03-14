@@ -34,7 +34,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand("load", "loadRecords", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
         $this->registerChatCommand("reset", "resetRecords", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 
-       if (!$this->db->tableExists("exp_players")) {
+        if (!$this->db->tableExists("exp_players")) {
             $this->db->execute('CREATE TABLE IF NOT EXISTS `exp_players` (
   `login` varchar(255) NOT NULL,
   `nickname` text NOT NULL,
@@ -66,7 +66,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
             $this->onPlayerConnect($player->login, true);
-        
     }
 
     public function resetRecords() {
@@ -275,8 +274,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function onPlayerDisconnect($login) {
-        unset(self::$players[$login]);
+        
     }
 
 }
+
 ?>
