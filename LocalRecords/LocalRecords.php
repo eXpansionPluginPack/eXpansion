@@ -33,8 +33,29 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         parent::exp_onLoad();
         $this->enableStorageEvents();
         $this->enableDedicatedEvents();
+<<<<<<< HEAD
         $this->enableDatabase();
     }
+=======
+        $this->enablePluginEvents();
+        $this->setPublicMethod("getRecords");
+        $this->registerChatCommand("top100", "showRanks", 0, true);
+
+        $this->registerChatCommand("save", "saveRecords", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+        $this->registerChatCommand("load", "loadRecords", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+        $this->registerChatCommand("reset", "resetRecords", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+
+        if (!$this->db->tableExists("exp_players")) {
+            $this->db->execute('CREATE TABLE IF NOT EXISTS `exp_players` (
+  `login` varchar(255) NOT NULL,
+  `nickname` text NOT NULL,
+  `nation` text,
+  `language` text,
+  PRIMARY KEY (`login`),
+  UNIQUE KEY `login` (`login`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;');
+        }
+>>>>>>> 5627efa21b36b83cf932a38364c1cbd5da4f212e
 
     public function exp_onReady() {
         parent::exp_onReady();
@@ -71,6 +92,13 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->updateRecordInDatabase($record, $nbLaps);
         }
 
+<<<<<<< HEAD
+=======
+        foreach ($this->storage->players as $player)
+            $this->onPlayerConnect($player->login, false);
+        foreach ($this->storage->spectators as $player)
+            $this->onPlayerConnect($player->login, true);
+>>>>>>> 5627efa21b36b83cf932a38364c1cbd5da4f212e
     }
     
     public function onPlayerConnect($login, $isSpectator) {
@@ -365,6 +393,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         return false;
     }
 
+<<<<<<< HEAD
     /**
      * getNbOfLaps()
      * Helper function, gets number of laps.
@@ -390,6 +419,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             default:
                 return 1;
         }
+=======
+    function onPlayerDisconnect($login) {
+        
+>>>>>>> 5627efa21b36b83cf932a38364c1cbd5da4f212e
     }
 
     /* public static $players;

@@ -13,6 +13,10 @@ class Request {
         $this->requests[] = $this->generate($method, $args);
     }
 
+    function add($method, $args) {
+        $this->requests[] = $this->generate($method, $args);        
+    }
+    
     function generate($method, $args) {
         if ($args == null)
             return array('methodName' => $method);

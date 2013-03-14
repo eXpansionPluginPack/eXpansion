@@ -66,6 +66,13 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         if ($time == 0)
             return;
 
+        if (!array_key_exists($login, DediConnection::$players))
+            return;
+
+
+        if (DediConnection::$players[$login]->banned)
+            return;
+
         $player = $this->storage->getPlayerObject($login);
         if (count($this->records) == 0) {
             $this->records[$login] = new Structures\DediRecord($login, $player->nickName, $time);
@@ -74,8 +81,13 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
             $this->announce($login);
         }
 
+        if (!is_object($this->lastRecord)) {
+            echo "lastRecord not set";
+            return;
+        }
+
         // so if the time is better than the last entry or the count of records is less than 20...
-        if ($this->lastRecord->time > $time || count($this->records) < $this->recordCount) {
+        if ($this->lastRecord->time > $time || count($this->records) < DediConnection::$serverMaxRank) {
             // if player exists on the list... see if he got better time
             if (array_key_exists($login, $this->records)) {
                 if ($this->records[$login]->time > $time) {
@@ -106,9 +118,16 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
             if (array_key_exists($record->login, $newrecords))
                 continue;
             $record->place = ++$i;
-            $newrecords[$record->login] = $record;
+            if (array_key_exists($record->login, DediConnection::$players)) {
+                if ($record->place < DediConnection::$players[$record->login]->maxRank) {                    
+                    $newrecords[$record->login] = $record;
+                }
+            } else {
+                $newrecords[$record->login] = $record;
+            }
         }
-        $this->records = array_slice($newrecords, 0, $this->recordCount);
+
+        $this->records = array_slice($newrecords, 0, DediConnection::$serverMaxRank);
         $this->lastRecord = end($this->records);
 
         $data = array('Records' => array());
@@ -121,6 +140,9 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
     function announce($login, $oldRecord = null) {
         try {
+            if (!array_key_exists($login, $this->records))
+                return;
+
             $player = $this->storage->getPlayerObject($login);
 
             $suffix = "th";
@@ -146,7 +168,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
             $this->exp_chatSendServerMessage($grats . '#dedirecord_variable#$o %s$o%s #dedirecord#for#dedirecord_variable# %s $z$s#dedirecord#with a time of$o#dedirecord_variable# %s', null, array($this->records[$login]->place, $suffix, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time)));
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("Error: couldn't show localrecords message" . $e->getMessage());
+            \ManiaLive\Utilities\Console::println("Error: couldn't show dedimania message" . $e->getMessage());
         }
     }
 
@@ -171,7 +193,17 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         }
     }
 
-    public function onDedimaniaOpenSession($sessionId) {
+    public function onDedimaniaOpenSession($data) {
+        $players = array();
+        foreach ($this->storage->players as $player) {
+            if ($player->login != $this->storage->serverLogin)
+                $players[] = array($player, false);
+        }
+        foreach ($this->storage->spectators as $player)
+            $players[] = array($player, true);
+
+        $this->dedimania->playerMultiConnect($players);
+
         $this->dedimania->getChallengeRecords();
         $this->rankings = array();
     }
@@ -179,6 +211,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     public function onDedimaniaGetRecords($data) {
         $this->records = array();
         $this->recordCount = $data['ServerMaxRank'];
+
         foreach ($data['Records'] as $record) {
             $this->records[$record['Login']] = new Structures\DediRecord($record['Login'], $record['NickName'], $record['Best'], $record['Rank']);
         }

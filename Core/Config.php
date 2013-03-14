@@ -10,6 +10,8 @@ class Config extends \ManiaLib\Utils\Singleton {
 	public $Colors_admin_error = '$f44';
 	public $Colors_admin_action = '$0ae';
 	public $Colors_variable = '$fff';
+	public $Colors_record = '$0f3';
+	public $Colors_rank = '$ff3';
 
 
 }
