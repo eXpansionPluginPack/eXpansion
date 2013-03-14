@@ -438,7 +438,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         unset($array[count($array)-1]);
         
         
-        print_r($array);
+        //print_r($array);
 
         if (array_key_exists("faultString", $array[0])) {
             $this->connection->chatSendServerMessage("Dedimania error: " . $array[0]['faultString']);
@@ -527,7 +527,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
                 $this->connection->chatSendServerMessage("Player" . $player->nickName . '$z$s$fff[' . $player->login . '] is $f00BANNED$fff from dedimania.');
             }
         }        
-        print_r(self::$players);
+        //print_r(self::$players);
     }
 
     function xPlayerDisconnect($data) {

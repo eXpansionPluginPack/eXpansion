@@ -119,8 +119,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
                 continue;
             $record->place = ++$i;
             if (array_key_exists($record->login, DediConnection::$players)) {
-                if ($record->place < DediConnection::$players[$record->login]->maxRank) {
-                    echo "record added";
+                if ($record->place < DediConnection::$players[$record->login]->maxRank) {                    
                     $newrecords[$record->login] = $record;
                 }
             } else {
@@ -210,8 +209,6 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     }
 
     public function onDedimaniaGetRecords($data) {
-        print_r(array_keys($data));
-
         $this->records = array();
         $this->recordCount = $data['ServerMaxRank'];
 
