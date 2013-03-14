@@ -15,6 +15,7 @@ class Record {
     public $avgScore;
     public $ScoreCheckpoints = array();
     public $date;
+    public $nation;
 
 }
 

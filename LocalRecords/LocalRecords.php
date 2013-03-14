@@ -144,6 +144,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record->nbFinish = 1;
             $record->avgScore = $score;
             $record->gamemode = $gamemode;
+            $record->nation = $player->path;
             $record->place = sizeof($this->currentChallengeRecords) + 1;
             $record->ScoreCheckpoints = $cpScore;
             $this->currentChallengeRecords[sizeof($this->currentChallengeRecords)] = $record;
@@ -294,6 +295,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record->time = $data->record_score;
             $record->nbFinish = $data->record_nbFinish;
             $record->avgScore = $data->record_avgScore;
+            $record->nation = $data->player_nation;
             $record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
 
             $records[$i] = $record;
@@ -342,6 +344,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record->nbFinish = $data->record_nbFinish;
             $record->avgScore = $data->record_avgScore;
             $record->date = $data->record_date;
+            $record->nation = $data->player_nation;
             $record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
 
            $this->currentChallengePlayerRecords[$login] = $record;
