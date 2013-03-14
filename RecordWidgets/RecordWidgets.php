@@ -53,7 +53,7 @@ class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
         Gui\Widgets\RecordsPanel::Erase($login);
     }
 
-    public function onDedimaniaOpenSession($sessionId) {
+    public function onDedimaniaOpenSession() {
         
     }
 
@@ -62,6 +62,14 @@ class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
     }
 
     public function onDedimaniaNewRecord($data) {
+        
+    }
+
+    public function onDedimaniaPlayerConnect($data) {
+        
+    }
+
+    public function onDedimaniaPlayerDisconnect() {
         
     }
 

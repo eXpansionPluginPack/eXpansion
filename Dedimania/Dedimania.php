@@ -119,7 +119,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
                 continue;
             $record->place = ++$i;
             if (array_key_exists($record->login, DediConnection::$players)) {
-                if ($record->place < DediConnection::$players[$record->login]->maxRank) {                    
+                if ($record->place < DediConnection::$players[$record->login]->maxRank) {
                     $newrecords[$record->login] = $record;
                 }
             } else {
@@ -193,7 +193,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         }
     }
 
-    public function onDedimaniaOpenSession($data) {
+    public function onDedimaniaOpenSession() {
         $players = array();
         foreach ($this->storage->players as $player) {
             if ($player->login != $this->storage->serverLogin)
@@ -229,6 +229,23 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     }
 
     public function onDedimaniaUpdateRecords($data) {
+        
+    }
+
+    public function onDedimaniaPlayerConnect($data) {
+        if ($data == null)
+            return;
+
+        $player = $this->storage->getPlayerObject($data['Login']);
+
+        $type = '$fffFree';
+        if ($data['MaxRank'] != 15)
+            $type = '$ff0Premium$fff';
+
+        $this->connection->chatSendServerMessage($player->nickName . '$z$s$fff connected with ' . $type . " dedimania account. $0f0top" . $data['MaxRank'] . '$fff records will be sent to global database.');
+    }
+
+    public function onDedimaniaPlayerDisconnect() {
         
     }
 
