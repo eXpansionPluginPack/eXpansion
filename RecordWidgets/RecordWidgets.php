@@ -7,13 +7,13 @@ use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as DediEvent;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 
 class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements \ManiaLivePlugins\eXpansion\LocalRecords\Events\Listener, \ManiaLivePlugins\eXpansion\Dedimania\Events\Listener {
-    
+
     public function exp_onInit() {
         $this->setVersion(0.1);
     }
 
     public function exp_onLoad() {
-        Dispatcher::register(DediEvent::getClass(), $this, DediEvent::ON_GET_RECORDS);
+        Dispatcher::register(DediEvent::getClass(), $this);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
 
@@ -30,9 +30,17 @@ class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
         Gui\Widgets\RecordsPanel::RedrawAll();
     }
 
+    public function onDedimaniaUpdateRecords($data) {
+        Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];
+        
+        Gui\Widgets\RecordsPanel::RedrawAll();
+    }
+
     public function onDedimaniaGetRecords($data) {
         Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];
         Gui\Widgets\RecordsPanel::RedrawAll();
+        $this->exp_chatSendServerMessage("Dedimania found %s records for current map.", null, array(sizeof($data['Records'])));
+        echo "Dedimania: Found " . sizeof($data['Records']) . " records for current map!";
     }
 
     public function onPlayerConnect($login, $isSpectator) {
@@ -51,6 +59,10 @@ class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
     }
 
     public function onNewRecord($data) {
+        
+    }
+
+    public function onDedimaniaNewRecord($data) {
         
     }
 

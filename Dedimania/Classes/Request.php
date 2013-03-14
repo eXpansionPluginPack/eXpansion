@@ -54,11 +54,22 @@ class Request {
   Made available under the Artistic License: http://www.opensource.org/licenses/artistic-license.php
  * 	  
  */
+class IXR_Base64 {
+	private $data;
+        
+	function __construct($data) {
+		$this->data = $data;               
+	}
+
+	function getXml() {
+		return '<base64>'.base64_encode($this->data).'</base64>';
+	}
+}
 
 class IXR_Value {
 
-    var $data;
-    var $type;
+    private $data;
+    private $type;
 
     function __construct($data, $type = false) {
         $this->data = $data;
@@ -97,7 +108,7 @@ class IXR_Value {
         if (is_object($this->data) && is_a($this->data, 'IXR_Date')) {
             return 'date';
         }
-        if (is_object($this->data) && is_a($this->data, 'IXR_Base64')) {
+        if (is_object($this->data) && is_a($this->data, 'ManiaLivePlugins\eXpansion\Dedimania\Classes\IXR_Base64')) {
             return 'base64';
         }
         // If it is a normal PHP object convert it into a struct
@@ -146,7 +157,7 @@ class IXR_Value {
                 return '<struct>' . $xml . '</struct>';
                 break;
             case 'date':
-            case 'base64':
+            case 'base64':                
                 return $this->data->getXml();
                 break;
         }
