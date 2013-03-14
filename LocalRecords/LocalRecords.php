@@ -27,6 +27,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         
         $this->setPublicMethod("getCurrentChallangePlayerRecord");
         $this->setPublicMethod("getRecords");
+        
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
     }
 
     public function exp_onLoad() {
