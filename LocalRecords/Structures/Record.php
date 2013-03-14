@@ -13,8 +13,8 @@ class Record {
     public $time;
     public $nbFinish;
     public $avgScore;
-    public $gamemode;
     public $ScoreCheckpoints = array();
+    public $date;
 
 }
 
