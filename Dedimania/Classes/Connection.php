@@ -29,9 +29,9 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     private $counter = 0;
     private $sessionTicker = false;
     // these are used for async webaccess 
-    private $read = array();
-    private $write = array();
-    private $except = array();
+    private $read;
+    private $write;
+    private $except;
     // cached records from dedimania
     private $dediRecords = array();
     private $dediBest = 0;
@@ -41,7 +41,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function __construct() {
         parent::__construct();
-        Dispatcher::register(TickEvent::getClass(), $this);
+
         $this->webaccess = new \Webaccess();
 
         // if you are developing change port to 8081
@@ -49,6 +49,10 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $this->read = array();
+        $this->write = array();
+        $this->except = array();
+        Dispatcher::register(TickEvent::getClass(), $this);
     }
 
     function __destruct() {
