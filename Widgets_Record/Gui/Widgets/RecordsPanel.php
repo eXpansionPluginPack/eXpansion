@@ -1,12 +1,12 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\RecordWidgets\Gui\Widgets;
+namespace ManiaLivePlugins\eXpansion\Widgets_Record\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 
-use ManiaLivePlugins\eXpansion\RecordWidgets\Gui\Controls\Recorditem;
-use ManiaLivePlugins\eXpansion\RecordWidgets\Gui\Controls\DediItem;
+use ManiaLivePlugins\eXpansion\Widgets_Record\Gui\Controls\Recorditem;
+use ManiaLivePlugins\eXpansion\Widgets_Record\Gui\Controls\DediItem;
 use ManiaLive\Gui\ActionHandler;
 class RecordsPanel extends \ManiaLive\Gui\Window {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\RecordWidgets;
+namespace ManiaLivePlugins\eXpansion\Widgets_Record;
 
 class Config extends \ManiaLib\Utils\Singleton {
 
