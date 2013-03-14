@@ -13,7 +13,7 @@ class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
     }
 
     public function exp_onLoad() {
-        Dispatcher::register(DediEvent::getClass(), $this, DediEvent::ON_GET_RECORDS);
+        Dispatcher::register(DediEvent::getClass(), $this);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
 
@@ -30,10 +30,16 @@ class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
         Gui\Widgets\RecordsPanel::RedrawAll();
     }
 
+    public function onDedimaniaUpdateRecords($data) {
+        Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];
+        print_r($data);
+        Gui\Widgets\RecordsPanel::RedrawAll();
+    }
+
     public function onDedimaniaGetRecords($data) {
         Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];
         Gui\Widgets\RecordsPanel::RedrawAll();
-        $this->exp_chatSendServerMessage("note Dedimania currenly READ-ONLY: Found %s records for current map.", null, array(sizeof($data['Records'])));
+        $this->exp_chatSendServerMessage("Dedimania found %s records for current map.", null, array(sizeof($data['Records'])));
         echo "Dedimania: Found " . sizeof($data['Records']) . " records for current map!";
     }
 
@@ -53,6 +59,10 @@ class RecordWidgets extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
     }
 
     public function onNewRecord($data) {
+        
+    }
+
+    public function onDedimaniaNewRecord($data) {
         
     }
 
