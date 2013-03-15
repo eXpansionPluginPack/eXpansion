@@ -8,6 +8,10 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 
 class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements \ManiaLivePlugins\eXpansion\LocalRecords\Events\Listener, \ManiaLivePlugins\eXpansion\Dedimania\Events\Listener {
 
+    private $lastUpdate;
+    private $forceUpdate = false;
+    private $needUpdate = false;
+
     public function exp_onInit() {
         $this->setVersion(0.1);
     }
@@ -22,23 +26,43 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin im
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false); // create panel for everybody
         foreach ($this->storage->spectators as $player)
-            $this->onPlayerConnect($player->login, true); // create panel for everybody
+            $this->onPlayerConnect($player->login, true); // create panel for everybody 
+
+        $this->lastUpdate = time();
+        $this->enableTickerEvent();
+    }
+
+    public function onTick() {
+        if ((time() - $this->lastUpdate) > 5 && $this->needUpdate || $this->forceUpdate == true) {
+            $this->lastUpdate = time();
+            $this->forceUpdate = false;
+            $this->needUpdate = false;
+
+            foreach (Gui\Widgets\RecordsPanel::GetAll() as $panel) {
+                try {
+                    $panel->update();
+                    $panel->redraw($panel->getRecipient());
+                } catch (\Exception $e) {
+                  // silent exception  
+                }
+            }
+        }
     }
 
     public function onUpdateRecords($data) {
         Gui\Widgets\RecordsPanel::$localrecords = $data;
-        Gui\Widgets\RecordsPanel::RedrawAll();
+        $this->needUpdate = true;
     }
 
     public function onDedimaniaUpdateRecords($data) {
-        Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];        
-        Gui\Widgets\RecordsPanel::RedrawAll();
+        Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];
+        $this->needUpdate = true;
     }
 
     public function onDedimaniaGetRecords($data) {
         Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];
-        Gui\Widgets\RecordsPanel::RedrawAll();
-        $this->exp_chatSendServerMessage("Dedimania found %s records for current map.", null, array(sizeof($data['Records'])));
+        $this->needUpdate = true;
+        $this->exp_chatSendServerMessage("Found %s Dedimania records for current map.", null, array(sizeof($data['Records'])));
         echo "Dedimania: Found " . sizeof($data['Records']) . " records for current map!";
     }
 
@@ -46,6 +70,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin im
         $panel = Gui\Widgets\RecordsPanel::Create($login);
         $panel->setSize(50, 60);
         $panel->setPosition(-160, 60);
+        $panel->update();
         $panel->show();
     }
 

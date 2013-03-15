@@ -65,6 +65,8 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     public function onPlayerFinish($playerUid, $login, $time) {
         if ($time == 0)
             return;
+        if ($this->storage->currentMap->nbCheckpoints == 0)
+            return;
 
         if (!array_key_exists($login, DediConnection::$players))
             return;
@@ -132,7 +134,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
         $data = array('Records' => array());
         foreach ($this->records as $record) {
-            $data['Records'][] = Array("NickName" => $record->nickname, "Best" => $record->time);
+            $data['Records'][] = Array("Login" => $record->login, "NickName" => $record->nickname, "Best" => $record->time);
         }
 
         \ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_UPDATE_DEDI_RECORDS, $data));
@@ -147,11 +149,11 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
             if ($oldRecord !== null) {
                 $diff = \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time - $oldRecord->time, true);
-                $this->exp_chatSendServerMessage('#dedirecord_variable#$o %s$o%s #dedirecord#for#dedirecord_variable# %s $z$s#dedirecord#with a time of$o#dedirecord_variable# %s $o#dedirecord#$n(%s)', null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), $this->records[$login]->place, \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time), $diff));
+                $this->exp_chatSendServerMessage('%1$s#dedirecord# secured the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s #dedirecord#$n(#rank#%4$s#dedirecord#)!', null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), $this->records[$login]->place, \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time), $diff));
                 return;
             }
 
-            $this->exp_chatSendServerMessage('%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s', null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"),$this->records[$login]->place, \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time)));
+            $this->exp_chatSendServerMessage('%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s', null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), $this->records[$login]->place, \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time)));
         } catch (\Exception $e) {
             \ManiaLive\Utilities\Console::println("Error: couldn't show dedimania message" . $e->getMessage());
         }

@@ -12,11 +12,21 @@ class DediItem extends \ManiaLive\Gui\Control {
     private $time;
     private $frame;
 
-    function __construct($index, $record) {
+    function __construct($index, $record, $login) {
         $sizeX = 30;
         $sizeY = 3;
         $config = Config::getInstance();
-        
+        if (!array_key_exists("Login", $record))
+            return;
+
+        if ($record['Login'] == $login) {
+            $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 4, $sizeY);
+            $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+            $this->bg->setAlign('left', 'center');
+            $this->bg->setBgcolor('0b05');
+            $this->addComponent($this->bg);
+        }
+
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
@@ -34,7 +44,7 @@ class DediItem extends \ManiaLive\Gui\Control {
         $spacer->setSize(1, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         $this->frame->addComponent($spacer);
-               
+
         $this->label = new \ManiaLib\Gui\Elements\Label(14, 4);
         $this->label->setAlign('left', 'center');
         $this->label->setScale(0.7);
@@ -74,10 +84,18 @@ class DediItem extends \ManiaLive\Gui\Control {
         
     }
 
-    public function destroy() {              
+    public function destroy() {
+        try {
+        $this->frame->clearComponents();
+        $this->frame->destroy();
         $this->clearComponents();
+        }
+        catch (\Exception $e){
+            
+        }
         parent::destroy();
-    }   
+    }
+
 }
 ?>
 

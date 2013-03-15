@@ -4,10 +4,10 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Record\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-
 use ManiaLivePlugins\eXpansion\Widgets_Record\Gui\Controls\Recorditem;
 use ManiaLivePlugins\eXpansion\Widgets_Record\Gui\Controls\DediItem;
 use ManiaLive\Gui\ActionHandler;
+
 class RecordsPanel extends \ManiaLive\Gui\Window {
 
     /** @var \ManiaLive\Gui\Controls\Frame */
@@ -17,13 +17,16 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     private $btnDedi;
     private $btnLocal;
     
+    private $items = array();
+
+    /** @var integer */
     public static $localrecords = array();
     public static $dedirecords = array();
-    
+
     const SHOW_DEDIMANIA = 0x02;
     const SHOW_LOCALRECORDS = 0x04;
 
-    private $showpanel = self::SHOW_LOCALRECORDS;
+    private $showpanel = self::SHOW_DEDIMANIA;
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -38,7 +41,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
         $this->btnDedi->setPosX(2);
         $this->btnDedi->setScale(0.6);
         $this->addComponent($this->btnDedi);
-        
+
         $this->btnLocal = new myButton();
         $this->btnLocal->setAction($this->actionLocal);
         $this->btnLocal->setText('$fffLocal');
@@ -46,7 +49,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
         $this->btnLocal->setScale(0.6);
         $this->btnLocal->setPosX(20);
         $this->addComponent($this->btnLocal);
-        
+
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setAlign("left", "top");
@@ -59,10 +62,15 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
         parent::onResize($oldX, $oldY);
     }
 
-    function onDraw() {
-        $index = 1;
+    function update() {
+        foreach ($this->items as $item)
+            $item->destroy();
+
+        $this->items = array();
+
         $this->frame->clearComponents();
-        $lbl = new \ManiaLib\Gui\Elements\Label(20, 5);
+        
+        $lbl = new \ManiaLib\Gui\Elements\Label(40, 5);
         $lbl->setAlign("left", "center");
         if ($this->showpanel == self::SHOW_DEDIMANIA)
             $lbl->setText('$fffDedimania Records');
@@ -70,35 +78,50 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
             $lbl->setText('$fffLocal Records');
         $lbl->setScale(0.9);
         $this->frame->addComponent($lbl);
+
+        $index = 1;
+
         if ($this->showpanel == self::SHOW_DEDIMANIA) {
-            if (!is_array(self::$dedirecords)) return;
+            if (!is_array(self::$dedirecords))
+                return;
             foreach (self::$dedirecords as $record) {
                 if ($index > 30)
-                    return;
-                $this->frame->addComponent(new DediItem($index++, $record));
+                    return;                
+                $this->items[] = new DediItem($index, $record, $this->getRecipient());
+                $this->frame->addComponent($this->items[$index - 1]);
+                $index++;
             }
         }
 
         if ($this->showpanel == self::SHOW_LOCALRECORDS) {
+            if (!is_array(self::$localrecords))
+                return;
             foreach (self::$localrecords as $record) {
                 if ($index > 30)
                     return;
-                $this->frame->addComponent(new Recorditem($index++, $record));
+                $this->items[] = new Recorditem($index, $record, $this->getRecipient());
+                $this->frame->addComponent($this->items[$index - 1]);
+                $index++;
             }
-        }
+        }                
+    }
+
+    protected function onDraw() {
         parent::onDraw();
+        echo "draw: " . $this->getRecipient() . "\n";
     }
 
     function setPanel($login, $panel) {
         $this->showpanel = $panel;
-        $this->redraw();
+        $this->update();
+        $this->redraw($this->getRecipient());
     }
 
     function destroy() {
         ActionHandler::getInstance()->deleteAction($this->actionDedi);
         ActionHandler::getInstance()->deleteAction($this->actionLocal);
         $this->btnDedi->destroy();
-        $this->btnLocal->destroy();                
+        $this->btnLocal->destroy();
         $this->frame->clearComponents();
         $this->frame->destroy();
         $this->clearComponents();
@@ -106,5 +129,4 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     }
 
 }
-
 ?>
