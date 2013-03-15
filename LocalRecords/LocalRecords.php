@@ -88,6 +88,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onPlayerConnect($login, $isSpectator) {
         $uid = $this->storage->currentMap->uId;
         $this->getFromDbPlayerRecord($login, $uid);
+         $player = $this->storage->getPlayerObject($login);
+         print_r($player);
     }
 
     /**
