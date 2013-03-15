@@ -12,6 +12,7 @@ class Record {
     public $nickName;
     public $time;
     public $nbFinish;
+    public $nbWins;
     public $avgScore;
     public $ScoreCheckpoints = array();
     public $date;

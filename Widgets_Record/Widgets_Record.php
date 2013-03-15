@@ -13,7 +13,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin im
     private $needUpdate = false;
 
     public function exp_onInit() {
-        $this->setVersion(0.1);
+        parent::exp_onInit();
     }
 
     public function exp_onLoad() {
