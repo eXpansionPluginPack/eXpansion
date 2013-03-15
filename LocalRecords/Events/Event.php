@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\LocalRecords\Events;
 
 class Event extends \ManiaLive\Event\Event {
 
-        const ON_NEW_RECORD          = 1;
+    const ON_NEW_RECORD          = 1;
 	const ON_UPDATE_RECORDS      = 2;
 	
 	

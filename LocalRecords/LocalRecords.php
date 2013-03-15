@@ -11,8 +11,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $currentChallengeRecords = array();
     private $currentChallengePlayerRecords = array();
     private $checkpoints = array();
-
-    private $msg_secure, $msg_new;
+    private $config;
+    
+    private $msg_secure, $msg_new, $msg_BeginMap, $msg_newMap;
     
     function exp_onInit() {
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -24,6 +25,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         
         $this->msg_secure = exp_getMessage('#variable#%1$s #record#secured his/her #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#$n(-%5$s)');
         $this->msg_new = exp_getMessage('#variable#%1$s #record#gained the #rank#%2$s #record#. Local Record with time of #rank#%3$s');
+        $this->msg_newMap = exp_getMessage('#variable#%1$s #record#Is a new Map. Currently no record!');
+        $this->msg_BeginMap = exp_getMessage('#record#Current record on #variable#%1$s #record#is #variable#%2$s #record#by #variable#%3$s');
         
         $this->setPublicMethod("getCurrentChallangePlayerRecord");
         $this->setPublicMethod("getRecords");
@@ -55,12 +58,19 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = MYISAM ;";
             $this->db->query($q);
         }
-        $this->buildCurrentChallangeRecords();
-        $this->updateCurrentChallengeRecords();
+        $this->onBeginMap("", "", "");
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
         $this->updateCurrentChallengeRecords();
+        
+        if(sizeof($this->currentChallengeRecords) == 0 && $this->config->sendBeginMapNotices){
+              $this->exp_chatSendServerMessage($this->msg_newMap , null, 
+                    array($this->storage->currentMap->name));
+        }else if($this->config->sendBeginMapNotices){
+            $this->exp_chatSendServerMessage($this->msg_BeginMap, null, 
+                    array($this->storage->currentMap->name, \ManiaLive\Utilities\Time::fromTM($this->currentChallengeRecords[0]->time), $this->currentChallengeRecords[0]->nickName));
+        }
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
