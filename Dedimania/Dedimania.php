@@ -145,28 +145,13 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
             $player = $this->storage->getPlayerObject($login);
 
-            $suffix = "th";
-            $grats = __("#dedirecord#new dedimania record: ");
-            switch ($this->records[$login]->place) {
-                case 1:
-                    $suffix = "st";
-                    break;
-                case 2:
-                    $suffix = "nd";
-                    break;
-                case 3:
-                    $suffix = "rd";
-
-                    break;
-            }
-
             if ($oldRecord !== null) {
                 $diff = \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time - $oldRecord->time, true);
-                $this->exp_chatSendServerMessage($grats . '#dedirecord_variable#$o %s$o%s #dedirecord#for#dedirecord_variable# %s $z$s#dedirecord#with a time of$o#dedirecord_variable# %s $o#dedirecord#$n(%s)', null, array($this->records[$login]->place, $suffix, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time), $diff));
+                $this->exp_chatSendServerMessage('#dedirecord_variable#$o %s$o%s #dedirecord#for#dedirecord_variable# %s $z$s#dedirecord#with a time of$o#dedirecord_variable# %s $o#dedirecord#$n(%s)', null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), $this->records[$login]->place, \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time), $diff));
                 return;
             }
 
-            $this->exp_chatSendServerMessage($grats . '#dedirecord_variable#$o %s$o%s #dedirecord#for#dedirecord_variable# %s $z$s#dedirecord#with a time of$o#dedirecord_variable# %s', null, array($this->records[$login]->place, $suffix, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time)));
+            $this->exp_chatSendServerMessage('%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s', null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"),$this->records[$login]->place, \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time)));
         } catch (\Exception $e) {
             \ManiaLive\Utilities\Console::println("Error: couldn't show dedimania message" . $e->getMessage());
         }
@@ -242,7 +227,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         if ($data['MaxRank'] != 15)
             $type = '$ff0Premium$fff';
 
-        $this->connection->chatSendServerMessage($player->nickName . '$z$s$fff connected with ' . $type . " dedimania account. $0f0top" . $data['MaxRank'] . '$fff records will be sent to global database.');
+        $this->exp_chatSendServerMessage($player->nickName . '$z$s$fff connected with ' . $type . " dedimania account. $0f0top" . $data['MaxRank'] . '$fff enabled.', null);
     }
 
     public function onDedimaniaPlayerDisconnect() {

@@ -22,15 +22,10 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          * Redirecting The Announcements of the Admin Groups plugin
          */
         $this->callPublicMethod('eXpansion\\Chat_Admin', 'exp_activateAnnounceRedirect', array($this, 'send'));
-
+        $this->callPublicMethod('eXpansion\\Dedimania', 'exp_activateAnnounceRedirect', array($this, 'send'));
         $this->callPublicMethod('eXpansion\\LocalRecords', 'exp_activateAnnounceRedirect', array($this, 'send'));
         
-        $this->onPlayerConnect(null, true); // force update...
-        $this->send("sdaölkjf ölkjafölkfj ölkj sdgffdfgdgdgdgdfgsdg aföslkj ölkj ölkja fsdölkjf aöklj as");
-        $this->send("sdaölkjf ölkjafölkfj ölkj sdfgdggdfgddfdds gdfaföslkj ölkj ölkja fsdölkjf aöklj as");
-        $this->send("sdaölkjf ölkjafölkfj ölkj afösdggdfgfdlkdfg sdfj ölkj ölkja fsdölkjf aöklj as");
-        $this->send("sdaölkjf ölkjafölkfj ölkj dfgdfgdfgdfgdfgdf ölsdg sdkj ölkja fsdölkjf aöklj as");
-        $this->send("sdaölkjf ölkjafölkfj ölkj aföslkjgdfgdgdfgdfg ölkj ölsd fgsdkja fsdölkjf aöklj as");
+        $this->onPlayerConnect(null, true); // force update...        
     }
 
     function send($message, $icon = null, $callback = null, $pluginid = null) {

@@ -208,7 +208,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->db->query($q);
             $record->isNew = false;
         } else if ($record->isUpdated) {
-            $q = 'UPDATE exp_`exp_records`
+            $q = 'UPDATE `exp_records`
                         SET	`record_score` = ' . $this->db->quote($record->time) . ',
                             `record_nbFinish` = ' . $this->db->quote($record->nbFinish) . ',
                             `record_avgScore` = ' . $this->db->quote($record->avgScore) . ', 
