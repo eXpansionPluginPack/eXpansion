@@ -22,8 +22,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS);
         $this->config = Config::getInstance();
         
-        $this->msg_secure = exp_getMessage('#variable#%1$s #record#secured his/her #rank#%2$s #record#. Local Record!');
-        $this->msg_new = exp_getMessage('#variable#%1$s #record#gained the #rank#%2$s #record#. Local Record!');
+        $this->msg_secure = exp_getMessage('#variable#%1$s #record#secured his/her #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#$n(-%5$s)');
+        $this->msg_new = exp_getMessage('#variable#%1$s #record#gained the #rank#%2$s #record#. Local Record with time of #rank#%3$s');
         
         $this->setPublicMethod("getCurrentChallangePlayerRecord");
         $this->setPublicMethod("getRecords");
@@ -183,7 +183,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             //Found new Rank
             if ($nrecord->place == $recordrank_old && !$force) {
-                $this->exp_chatSendServerMessage($this->msg_secure, null, array($nrecord->nickName, $nrecord->place, \ManiaLive\Utilities\Time::fromTM($nrecord->time), $recordrank_old, $recordtime_old));
+                $this->exp_chatSendServerMessage($this->msg_secure, null, array($nrecord->nickName, $nrecord->place, \ManiaLive\Utilities\Time::fromTM($nrecord->time), $recordrank_old, \ManiaLive\Utilities\Time::fromTM($nrecord->time - $recordtime_old)));
             } else {
                 $this->exp_chatSendServerMessage($this->msg_new, null, array($nrecord->nickName, $nrecord->place, \ManiaLive\Utilities\Time::fromTM($nrecord->time), $recordrank_old, $recordtime_old));
             }
@@ -298,7 +298,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record->nation = $data->player_nation;
             $record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
 
-            $records[$i] = $record;
+            $records[$i-1] = $record;
             $i++;
         }
 
