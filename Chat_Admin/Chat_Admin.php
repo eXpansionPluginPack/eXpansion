@@ -85,7 +85,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "getblacklist");
 
-        $cmd = AdminGroups::addAdminCommand('player get guestlist', $this, 'getGuestlist', 'player_black');
+        $cmd = AdminGroups::addAdminCommand('player get guestlist', $this, 'getGuestlist', 'player_guest');
         $cmd->setHelp(exp_getMessage('shows the current guest of players'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "getguestlist");
