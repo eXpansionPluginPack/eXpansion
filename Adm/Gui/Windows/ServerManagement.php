@@ -40,25 +40,25 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->actions->stopServer = ActionHandler::getInstance()->createAction(array($this, "stopServer"));
         $this->actions->stopManialive = ActionHandler::getInstance()->createAction(array($this, "stopManialive"));
 
-        $this->btn1 = new myButton(16, 6);
+        $this->btn1 = new myButton(40, 6);
         $this->btn1->setText(__("Stop Server", $this->getRecipient()));
         $this->btn1->setAction($this->actions->stopServer);
         $this->btn1->colorize("d00");
         $this->frame->addComponent($this->btn1);
 
-        $this->btn2 = new myButton(16, 6);
+        $this->btn2 = new myButton(40, 6);
         $this->btn2->setText(__("Stop Manialive", $this->getRecipient()));
         $this->btn2->setAction($this->actions->stopManialive);
         $this->btn2->colorize("d00");
         $this->frame->addComponent($this->btn2);
 
 
-        $this->mainFrame->addComponent($this->frame);
+        $this->addComponent($this->frame);
 
-        $this->closeButton = new myButton(16, 6);
+        $this->closeButton = new myButton(30, 6);
         $this->closeButton->setText(__("Cancel"));
         $this->closeButton->setAction($this->actions->close);
-        $this->mainFrame->addComponent($this->closeButton);
+        $this->addComponent($this->closeButton);
     }
 
     function stopServer($login) {
@@ -75,8 +75,8 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->frame->setPosition(8, -10);
-        $this->closeButton->setPosition($this->sizeX - 18, -($this->sizeY - 6));
+        $this->frame->setPosition(0, -8);
+        $this->closeButton->setPosition($this->sizeX - 28, -($this->sizeY - 6));
     }
 
     function destroy() {

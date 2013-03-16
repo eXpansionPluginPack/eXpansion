@@ -12,9 +12,11 @@ class Inputbox extends \ManiaLive\Gui\Control
 	{
                 
                 $config = Config::getInstance();
-		$this->button= new \ManiaLib\Gui\Elements\Entry($sizeX, 5);
+		$this->button= new \ManiaLib\Gui\Elements\Entry($sizeX, 6);
                 $this->button->setName($name);
                 $this->button->setAlign('left', 'center');                
+                $this->button->setTextColor('000');
+                $this->button->setTextSize(1);
                 $this->button->setScriptEvents(true);
                 $this->addComponent($this->button);
                 

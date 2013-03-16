@@ -46,36 +46,36 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->actions->serverManagement = ActionHandler::getInstance()->createAction(array($this, "serverManagement"));
         $this->actions->adminGroups = ActionHandler::getInstance()->createAction(array($this, "adminGroups"));
 
-        $this->btn1 = new myButton();
+        $this->btn1 = new myButton(40,6);
         $this->btn1->setText(__("Server management"));
         $this->btn1->setAction($this->actions->serverManagement);
         $this->btn1->colorize("f00");
         $this->frame->addComponent($this->btn1);
 
-        $this->btn2 = new myButton();
+        $this->btn2 = new myButton(40,6);
         $this->btn2->setText(__("Server options"));
         $this->btn2->setAction($this->actions->serverOptions);
         $this->frame->addComponent($this->btn2);
 
-        $this->btn3 = new myButton();
+        $this->btn3 = new myButton(40,6);
         $this->btn3->setText(__("Game options"));
         $this->btn3->setAction($this->actions->gameOptions);
         $this->frame->addComponent($this->btn3);
 
-        $this->btn4 = new myButton();
+        $this->btn4 = new myButton(40,6);
         $this->btn4->setText(__("Admin Groups"));
         $this->btn4->setAction($this->actions->adminGroups);
         $this->btn4->colorize("0d0");
         $this->frame->addComponent($this->btn4);
 
-        $this->btn5 = new myButton();
+        $this->btn5 = new myButton(40,6);
         $this->btn5->setText(__("Match settings"));
         $this->btn5->setAction($this->actions->matchSettings);
         $this->frame->addComponent($this->btn5);
 
         $this->mainFrame->addComponent($this->frame);
 
-        $this->closeButton = new myButton();
+        $this->closeButton = new myButton(30,5);
         $this->closeButton->setText(__("Close"));
         $this->closeButton->setAction($this->actions->close);
         $this->mainFrame->addComponent($this->closeButton);
@@ -107,8 +107,8 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->frame->setPosition(8, -10);
-        $this->closeButton->setPosition($this->sizeX - 18, -($this->sizeY - 6));
+        $this->frame->setPosition(0, -2);
+        $this->closeButton->setPosition($this->sizeX - $this->closeButton->sizeX, -($this->sizeY - 6));
     }
 
     function destroy() {

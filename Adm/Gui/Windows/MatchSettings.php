@@ -49,9 +49,8 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX - 2, $this->sizeY - 14);
-        $this->pager->setStretchContentX($this->sizeX);
-        $this->pager->setPosition(8, -10);
+        $this->pager->setSize($this->sizeX, $this->sizeY - 8);
+        $this->pager->setStretchContentX($this->sizeX);        
     }
 
     function onShow() {
@@ -71,7 +70,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         if (count($settings) > 1) {
             foreach ($settings as $file) {
-                $this->items[$x] = new MatchSettingsFile($x++, $file, $this);
+                $this->items[$x] = new MatchSettingsFile($x, $file, $this, $this->sizeX);
                 $this->pager->addItem($this->items[$x]);
                 $x++;
             }

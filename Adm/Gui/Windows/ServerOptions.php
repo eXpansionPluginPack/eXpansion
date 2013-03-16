@@ -186,12 +186,12 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->buttonOK = new OkButton();
         $this->buttonOK->setText(__("Apply",$this->getRecipient()));
         $this->buttonOK->setAction($this->actionOK);
-        $frame->addComponent($this->buttonOK);
+        $this->addComponent($this->buttonOK);
 
         $this->buttonCancel = new OkButton();
         $this->buttonCancel->setText(__("Cancel",$this->getRecipient()));
         $this->buttonCancel->setAction($this->actionCancel);
-        $frame->addComponent($this->buttonCancel);
+        $this->addComponent($this->buttonCancel);
 
         $this->frameCb->addComponent($frame);
     }
@@ -253,8 +253,10 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->serverPass->setSizeX(($this->sizeX - 8) / 2);
         $this->serverSpecPass->setSizeX(($this->sizeX - 8) / 2);
         $this->refereePass->setSizeX(($this->sizeX - 8) / 2);
-        $this->frameInputbox->setPosition(12, -14);
+        $this->frameInputbox->setPosition(0, -4);
         $this->frameCb->setPosition($this->sizeX / 2 + 20, -$this->sizeY / 2);
+        $this->buttonOK->setPosition($this->sizeX - $this->buttonCancel->sizeX - $this->buttonOK->sizeX, -$this->sizeY + 6);
+        $this->buttonCancel->setPosition($this->sizeX - $this->buttonCancel->sizeX, -$this->sizeY + 6);
     }
 
     public function serverOptionsOk($login, $args) {

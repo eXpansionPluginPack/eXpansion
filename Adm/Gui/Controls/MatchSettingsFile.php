@@ -16,21 +16,20 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
     private $loadAction;
     private $frame;
 
-    function __construct($indexNumber, $filename, $controller) {
-        $sizeX = 120;
+    function __construct($indexNumber, $filename, $controller, $sizeX) {        
         $sizeY = 4;
         $this->saveAction = $this->createAction(array($controller, 'saveSettings'), $filename);
         $this->loadAction = $this->createAction(array($controller, 'loadSettings'), $filename);
-        
+
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->bg->setAlign('left', 'center');
         if ($indexNumber % 2 == 0) {
-            $this->bg->setBgcolor('fff4');
+            $this->bg->setBgcolor('aaa4');
         } else {
             $this->bg->setBgcolor('7774');
         }
-        $this->bg->setScriptEvents(true);
         $this->addComponent($this->bg);
+
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
@@ -49,7 +48,7 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         //$this->frame->addComponent($spacer);
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(90, 4);
+        $this->label = new \ManiaLib\Gui\Elements\Label(120, 4);
         $this->label->setAlign('left', 'center');
         $file = explode('/', $filename);
         $this->label->setText(utf8_encode(end($file)));
@@ -64,16 +63,18 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($spacer);
 
 
-        $this->loadButton = new MyButton(16, 6);
+        $this->loadButton = new MyButton(26, 5);
         $this->loadButton->setText(__("Load"));
         $this->loadButton->setAction($this->loadAction);
-        $this->loadButton->setScale(0.6);
+        $this->loadButton->setScale(0.5);
+        $this->loadButton->colorize("2a2");
         $this->frame->addComponent($this->loadButton);
 
-        $this->saveButton = new MyButton(16, 6);
-        $this->saveButton->setText(__("Save"));
+        $this->saveButton = new MyButton(26, 5);
+        $this->saveButton->setText('$fff'.__("Save"));
+        $this->saveButton->colorize("a22");
         $this->saveButton->setAction($this->saveAction);
-        $this->saveButton->setScale(0.6);
+        $this->saveButton->setScale(0.5);
         $this->frame->addComponent($this->saveButton);
 
         $this->addComponent($this->frame);
@@ -84,6 +85,8 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
     }
 
     protected function onResize($oldX, $oldY) {
+        $this->bg->setSize($this->sizeX, $this->sizeY);
+        $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
