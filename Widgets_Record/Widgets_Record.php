@@ -49,6 +49,10 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin im
         }
     }
 
+    public function onBeginMap($map, $warmUp, $matchContinuation) {        
+        Gui\Widgets\RecordsPanel::$dedirecords = array();
+        $this->forceUpdate = true;        
+    }
     public function onUpdateRecords($data) {
         Gui\Widgets\RecordsPanel::$localrecords = $data;
         $this->needUpdate = true;
@@ -70,6 +74,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin im
         $panel = Gui\Widgets\RecordsPanel::Create($login);
         $panel->setSize(50, 60);
         $panel->setPosition(-160, 60);
+        $panel->setScale(0.8);
         $panel->update();
         $panel->show();
     }

@@ -34,18 +34,18 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 
         $this->actionDedi = ActionHandler::getInstance()->createAction(array($this, "setPanel"), self::SHOW_DEDIMANIA);
         $this->actionLocal = ActionHandler::getInstance()->createAction(array($this, "setPanel"), self::SHOW_LOCALRECORDS);
-        $this->btnDedi = new myButton();
+        $this->btnDedi = new myButton(28);
         $this->btnDedi->setAction($this->actionDedi);
         $this->btnDedi->setText('$fffDedimania');
-        $this->btnDedi->colorize(7774);
+        $this->btnDedi->colorize(7778);        
         $this->btnDedi->setPosX(2);
         $this->btnDedi->setScale(0.6);
         $this->addComponent($this->btnDedi);
 
-        $this->btnLocal = new myButton();
+        $this->btnLocal = new myButton(28);
         $this->btnLocal->setAction($this->actionLocal);
         $this->btnLocal->setText('$fffLocal');
-        $this->btnLocal->colorize(7774);
+        $this->btnLocal->colorize(7778);
         $this->btnLocal->setScale(0.6);
         $this->btnLocal->setPosX(20);
         $this->addComponent($this->btnLocal);
@@ -108,7 +108,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 
     protected function onDraw() {
         parent::onDraw();
-        echo "draw: " . $this->getRecipient() . "\n";
+        //echo "draw: " . $this->getRecipient() . "\n";
     }
 
     function setPanel($login, $panel) {

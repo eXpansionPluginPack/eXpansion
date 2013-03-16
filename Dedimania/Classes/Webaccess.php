@@ -1090,7 +1090,7 @@ class WebaccessUrl {
             $size = (isset($this->_spool[0]['Response']['Message'])) ? strlen($this->_spool[0]['Response']['Message']) : 0;
             $msg = $this->_webaccess_str
                     . sprintf("[%s,%s]: %0.3f / %0.3f / %0.3f (%0.3f) / %d [%d,%d,%d]", $this->_state, $this->_spool[0]['State'], $this->_spool[0]['Times']['open'][1], $this->_spool[0]['Times']['send'][1], $this->_spool[0]['Times']['receive'][1], $this->_spool[0]['Times']['receive'][2], $this->_query_num, $this->_spool[0]['DatasSize'], $size, $this->_spool[0]['ResponseSize']);
-            print_r($msg);
+        //    print_r($msg);
         } catch (Exception $e) {
             print "Exception at infos:" . $e->getMessage();
         }

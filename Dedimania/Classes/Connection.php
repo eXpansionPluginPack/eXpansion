@@ -145,7 +145,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
             return;
 
         if ($this->dediUid != $map['UId']) {
-            Console::println("Challenge UId mismatch on dedimania plugin");
+            Console::println("Error: Challenge UId mismatch! Map UId differs from dedimania recieved uid for the map.");
             return;
         }
 
@@ -483,13 +483,19 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     function xGetRecords($data) {
         $data = $data[0];
 
+        $this->dediRecords = array();
+        $this->dediUid = null;
+
         if (!empty($data[0]['Error'])) {
-            $this->dediRecords = array();
-            $this->dediUid = null;
             echo "Dedimania error: " . $data[0]['Error'];
             return;
         }
-        
+
+        if (!$data[0]['Records']) {
+            echo "Dedimania: No records found.";                                   
+            return;            
+        }
+
         $this->dediRecords = $data[0];
         $this->dediUid = $data[0]['UId'];
         self::$serverMaxRank = $data[0]['ServerMaxRank'];
@@ -500,6 +506,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         } else {
             $this->dediBest = null;
         }
+
         Dispatcher::dispatch(new Event(Event::ON_GET_RECORDS, $data[0]));
     }
 

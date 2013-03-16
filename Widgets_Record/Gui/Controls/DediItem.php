@@ -13,17 +13,18 @@ class DediItem extends \ManiaLive\Gui\Control {
     private $frame;
 
     function __construct($index, $record, $login) {
-        $sizeX = 30;
+        $sizeX = 52;
         $sizeY = 3;
         $config = Config::getInstance();
         if (!array_key_exists("Login", $record))
             return;
 
-        if ($record['Login'] == $login) {
+         if ($record['Login'] == $login) {
             $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 4, $sizeY);
+            $this->bg->setPosX(-2);
             $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
             $this->bg->setAlign('left', 'center');
-            $this->bg->setBgcolor('0b05');
+            $this->bg->setBgcolor('0905');
             $this->addComponent($this->bg);
         }
 
@@ -60,15 +61,9 @@ class DediItem extends \ManiaLive\Gui\Control {
         $this->nick->setAlign('left', 'center');
         $this->nick->setScale(0.7);
         $nickname = $record['NickName'];
-        $nickname = \ManiaLib\Utils\Formatting::stripCodes($nickname, "wos");
-        $nickname = \ManiaLib\Utils\Formatting::contrastColors($nickname, "777");
+        $nickname = \ManiaLib\Utils\Formatting::stripCodes($nickname, "wos");        
         $this->nick->setText('$fff' . $nickname);
         $this->frame->addComponent($this->nick);
-
-        $this->label = new \ManiaLib\Gui\Elements\Label(15, 4);
-        $this->label->setAlign('left', 'center');
-        $this->label->setScale(0.7);
-
         $this->addComponent($this->frame);
 
         $this->sizeX = $sizeX;

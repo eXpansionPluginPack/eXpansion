@@ -62,13 +62,13 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     
     function redrawRecordWidget($login, $record){
         $panel = PBPanel::Get($login);
-        echo "Redraw for : $login";
+     //   echo "Redraw for : $login";
         if(isset($panel[0])){
-            echo "Succes";
+         //   echo "Succes";
             $panel[0]->setRecord($record);
             $panel[0]->redraw($login);
         }
-        echo "\n";
+       // echo "\n";
     }
     
     function displayRecordWidget($login, $record) {

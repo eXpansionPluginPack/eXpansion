@@ -173,8 +173,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
             $grfile = sprintf('Dedimania/%s.%d.%07d.%s.Replay.Gbx', $this->storage->currentMap->uId, $this->storage->gameInfos->gameMode, $rankings[0]['BestTime'], $rankings[0]['Login']);
             $this->connection->SaveBestGhostsReplay($rankings[0]['Login'], $grfile);
             $this->gReplay = file_get_contents($this->connection->gameDataDirectory() . 'Replays/' . $grfile);
-        } catch (\Exception $e) {
-            echo "\n\n\nERROR:" . $e->getMessage() . "\n\n\n";
+        } catch (\Exception $e) {            
             $this->vReplay = "";
             $this->gReplay = "";
         }
@@ -223,13 +222,22 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         if ($data == null)
             return;
 
+        if ($data['Banned']) {
+            return;
+        }
+
         $player = $this->storage->getPlayerObject($data['Login']);
-
+        $upgrade = '$l[http://dedimania.net/tm2stats/?do=donation]Click here to upgrade your dedimania account.$l';
         $type = '$fffFree';
-        if ($data['MaxRank'] != 15)
-            $type = '$ff0Premium$fff';
 
-        $this->exp_chatSendServerMessage($player->nickName . '$z$s$fff connected with ' . $type . " dedimania account. $0f0top" . $data['MaxRank'] . '$fff enabled.', null);
+        if ($data['MaxRank'] != 15) {
+            $type = '$ff0Premium$fff';
+            $upgrade = false;
+        }
+
+        $this->exp_chatSendServerMessage($player->nickName . '$z$s$fff connected with ' . $type . ' dedimania account. $0f0Top' . $data['MaxRank'] . '$fff records enabled.', null);
+        if ($upgrade)
+            $this->exp_chatSendServerMessage($upgrade, $data['Login']);
     }
 
     public function onDedimaniaPlayerDisconnect() {

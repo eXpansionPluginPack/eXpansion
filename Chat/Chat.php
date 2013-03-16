@@ -24,7 +24,7 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
     /** Is the redirection enabled or not ?
      * @type bool */
     private $enabled = true;
-    
+
     /**
      * onInit()
      *
@@ -51,6 +51,17 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
         }
     }
 
+    public function onPlayerConnect($login, $isSpectator) {
+        $player = $this->storage->getPlayerObject($login);
+        $nickLog = \ManiaLib\Utils\Formatting::stripStyles($player->nickName); 
+        \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $player->iPAddress . ") [" . $login . "] Connect with nickname " . $nickLog);
+    }
+    
+    public function onPlayerDisconnect($login) {
+        $player = $this->storage->getPlayerObject($login);        
+        \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $player->iPAddress . ") [" . $login . "] Disconnected");
+    }
+    
     /**
      * onPlayerChat()
      * Processes the chat incoming from server, changes the look and color.
@@ -69,20 +80,23 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
             $nick = $source_player->nickName;
             $nick = str_ireplace('$w', '', $nick);
             $nick = str_ireplace('$z', '$z$s', $nick);
-            $smileys = array("ッ","ツ","シ");
-            $rnd = rand(0, sizeof($smileys)-1);
-            $text = str_replace(array(":)", "=)"), $smileys[$rnd], $text);            
-            
+            $smileys = array("ッ", "ツ", "シ");
+            $rnd = rand(0, sizeof($smileys) - 1);
+            $text = str_replace(array(":)", "=)"), $smileys[$rnd], $text);
+
             try {
                 if (AdminGroup::contains($login)) {
                     $this->connection->chatSendServerMessage("\$fff" . $config->adminSign . " $nick\$z\$s " . $config->chatSeparator . $config->adminChatColor . $text);
                 } elseif ($source_player->isManagedByAnOtherServer) {
-                    $this->connection->chatSendServerMessage("\$fff$nick\$z\$s " . $config->chatSeparator .$config->otherServerChatColor .  $text);
+                    $this->connection->chatSendServerMessage("\$fff$nick\$z\$s " . $config->chatSeparator . $config->otherServerChatColor . $text);
                 } else {
                     $this->connection->chatSendServerMessage("\$fff$nick\$z\$s " . $config->chatSeparator . $config->publicChatColor . $text);
                 }
+                $nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);                
+                
+                \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $source_player->iPAddress . ") [" . $login . "] " . $nickLog . " - " . $text);
             } catch (\Exception $e) {
-                Console::println(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s',$login, $login, $text, $e->getMessage()));
+                Console::println(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()));
             }
         }
     }
