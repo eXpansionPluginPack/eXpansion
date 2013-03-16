@@ -97,6 +97,10 @@ class AdminCmd {
 	public function addAlias($cmd) {
 		$this->aliases[] = $cmd;
 	}
+    
+    public function getAliases() {
+		return $this->aliases;
+	}
 
 }
 

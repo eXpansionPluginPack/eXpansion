@@ -93,6 +93,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     static public $txt_command;
     static public $txt_description;
     static public $txt_descMore;
+    static public $txt_aliases;
 
     public function exp_onInit() {
         parent::exp_onInit();
@@ -138,6 +139,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$txt_command = exp_getMessage('Command');
         self::$txt_description = exp_getMessage('Description');
         self::$txt_descMore = exp_getMessage('More');
+        self::$txt_aliases = exp_getMessage('Aliases');
         
         //No idea if needed, I think not need to check
         // $this->enableDedicatedEvents();  
@@ -166,7 +168,13 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$button["substyle"] = "Invite";        
 		$button["plugin"] = $this;
 		$button["function"] = "windowGroups";
-		$parent = $menu->addButton($parent, "Admin Grpups", $button);
+		$menu->addButton($parent, "Admin Groups", $button);
+        
+        $button["style"] = "Icons64x64_1";
+		$button["substyle"] = "TrackInfo";        
+		$button["plugin"] = $this;
+		$button["function"] = "windowHelp";
+		$menu->addButton("admin", "Admin Commands Help", $button);
  
     }
     
