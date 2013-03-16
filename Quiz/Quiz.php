@@ -21,8 +21,11 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
      *
      * @return void
      */
-    function onInit() {
-        $this->setVersion(0.1);
+     public function onInit() {
+        //Oliverde8 Menu
+        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
+        }
     }
 
     /**
@@ -33,7 +36,7 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
      */
     function onLoad() {
         $this->enableDedicatedEvents();
-        $command = $this->registerChatCommand("q", "quiz", -1, true);
+        $command = $this->registerChatCommand("q", "chatquiz", -1, true);
         $this->registerChatCommand("kysy", "ask", -1, true);
         $this->registerChatCommand("pisteet", "showPoints", 0, true);
         $this->registerChatCommand("peruuta", "cancel", 0, true);
@@ -44,8 +47,37 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
     function onReady() {
         
     }
+    
+    public function onOliverde8HudMenuReady($menu) {
+        $button["style"] = "Icons64x64_1";
+        $button["substyle"] = "ToolRoot";
+        $parent2 = $menu->findButton(array('menu', 'Extras'));
+        if (!$parent2) {
+            $parent2 = $menu->addButton('menu', "Extras", $button);
+        }
+        
+        unset($button["style"]);
+        unset($button["substyle"]);
+        
+        $parent = $menu->findButton(array('menu', "Extras", 'Quiz'));
+        if (!$parent) {
+            $parent = $menu->addButton($parent2, "Quiz", $button);
+        }
+        
+        $button["chat"] = "q points";
+        $menu->addButton($parent, "Points", $button);
+        
+        $button["chat"] = "q cancel";
+        $menu->addButton($parent, "Cancel", $button);
+        
+        $button["chat"] = "q show";
+        $menu->addButton($parent, "Show", $button);
+        
+        $button["chat"] = "q reset";
+        $menu->addButton($parent, "Reset", $button);
+    }
 
-    function quiz($login, $args) {
+    function chatquiz($login, $args) {
         $args = explode(" ", $args);
         $action = array_shift($args);
         $message = implode(" ", $args);
