@@ -33,11 +33,22 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     
     public function onOliverde8HudMenuReady($menu) {
         $config = Config::getInstance();
-        
-        $parent = $menu->findButton(array('menu', 'Emotes'));
+
+        $button["style"] = "Icons64x64_1";
+        $button["substyle"] = "ToolRoot";
+        $parent = $menu->findButton(array('menu', 'Extras'));
         $button["image"] = $config->iconMenu;
         if (!$parent) {
-            $parent = $menu->addButton('menu', "Emotes", $button);
+            $parent = $menu->addButton('menu', "Extras", $button);
+        }
+        
+        unset($button["style"]);
+        unset($button["substyle"]);
+        
+        $parent2 = $menu->findButton(array('menu', "Extras", 'Emotes'));
+        $button["image"] = $config->iconMenu;
+        if (!$parent2) {
+            $parent = $menu->addButton($parent, "Emotes", $button);
         }
 
         $button["image"] = $config->iconGG;
