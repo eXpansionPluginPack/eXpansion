@@ -46,6 +46,9 @@ Add
 Group Name
 Group Name
 
+Delete Group
+Delete Group
+
 Nb Players
 Nb Players
 

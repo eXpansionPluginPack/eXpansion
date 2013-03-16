@@ -40,6 +40,9 @@ Uusi ryhmän nimi :
 Group Name
 Ryhmän nimi
 
+Delete Group
+Poista Ryhmän
+
 Nb Players
 Nr. Käyttäjiä
 

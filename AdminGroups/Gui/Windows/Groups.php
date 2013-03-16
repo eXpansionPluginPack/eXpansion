@@ -45,13 +45,13 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 4, $this->sizeY - 27);
         $this->pager->setStretchContentX($this->sizeX);
-        $this->pager->setPosition(8, -17);
+        $this->pager->setPosition(8, -12);
 
         $this->group_add->setSize($this->sizeX - 20, 7);
-        $this->group_add->setPosition(4, -12);
+        $this->group_add->setPosition(4, -7);
 
         $this->button_add->setSize(30, 5);
-        $this->button_add->setPosition($this->sizeX - 35, -12);
+        $this->button_add->setPosition($this->sizeX - 35, -7);
     }
 
     function onShow() {
@@ -127,6 +127,13 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $window->centerOnScreen();
         $window->show();
     }
+    
+    public function deleteGroup($login, $group){
+        $this->adminGroups->removeGroup($login, $group);
+        $this->onShow();
+        $this->redraw($login);
+    }
+    
     public function destroy() {
         $this->group_add->destroy();
         $this->button_add->destroy();

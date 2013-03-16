@@ -40,6 +40,9 @@ Nom du Nouveau Group :
 Group Name
 Nom du Groupe
 
+Delete Group
+Effacer Groupe
+
 Nb Players
 Nb de Joeur
 

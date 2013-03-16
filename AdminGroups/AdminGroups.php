@@ -87,6 +87,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     static public $txt_nbPlayers;
     static public $txt_playerList;
     static public $txt_permissionList;
+    static public $txt_deletegroup;
     static public $txt_rmPlayer;
 
     public function exp_onInit() {
@@ -126,6 +127,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$txt_nbPlayers = exp_getMessage('Nb Players');
         self::$txt_playerList = exp_getMessage("Player List");
         self::$txt_permissionList = exp_getMessage('Change Permissions');
+        self::$txt_deletegroup = exp_getMessage('Delete Group');
         self::$txt_rmPlayer = exp_getMessage('Remove Player');
         
         //No idea if needed, I think not need to check
@@ -527,6 +529,35 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		self::$groupList[] = new Group($groupName, false);
 		$this->saveFile();
 	}
+    
+    public function removeGroup($login, $group){
+       
+       if($group->isMaster()){
+           $this->exp_chatSendServerMessage($this->msg_masterMasterE, $login);
+           return;
+       }
+       
+              $this->reLoadAdmins();
+       $i=0;
+       $groupName = $group->getGroupName();
+       while($i<sizeof(self::$groupList)){
+           $group = self::$groupList[$i];
+            if($group->getGroupName() == $groupName){
+                echo "DONE\n";
+                foreach($group->getGroupUsers() as $user){
+                    unset(self::$admins[$user->getLogin()]);
+                }
+                while(isset(self::$groupList[$i+1])){
+					self::$groupList[$i] = self::$groupList[$i+1];
+					$i++;
+				}
+                unset(self::$groupList[$i]);
+            }
+            $i++;
+        }
+        
+        $this->saveFile();
+    }
 	
 	/**
 	 * Change the permissions of a group
