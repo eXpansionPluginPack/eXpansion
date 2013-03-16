@@ -66,6 +66,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$button["substyle"] = "Options";        
 		$button["plugin"] = $this;
 		$button["function"] = "serverOptions";
+        $button["permission"] = "server_admin";
 		$menu->addButton($parent, "Server Window", $button);
         
         $parent = $menu->findButton(array('admin','Game Options'));
@@ -80,12 +81,14 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$button["substyle"] = "ProfileAdvanced";
         $button["plugin"] = $this;  
         $button["function"] = "gameOptions";
+        $button["permission"] = "game_gamemode";
 		$menu->addButton($parent, "Game Window", $button);
         
         $button["style"] = "Icons128x128_1";
 		$button["substyle"] = "Save";
         $button["plugin"] = $this;
         $button["function"] = "matchSettings";
+        $button["permission"] = "game_match";
 		$menu->addButton($parent, "Match Settings", $button);
     }
     

@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\MapRatings;
 
+use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\RatingsWidget;
 
 class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
@@ -9,7 +10,9 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $rating = 0;
 
     function exp_onInit() {
-        
+         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
+        }
     }
 
     function exp_onLoad() {
@@ -31,6 +34,42 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->reload();
         $this->onPlayerConnect(null, true);
     }
+    
+    public function onOliverde8HudMenuReady($menu) {
+        $button["style"] = "UIConstructionSimple_Buttons";
+        $button["substyle"] = "Drive";
+        
+        $parent = $menu->findButton(array('menu', 'Maps'));
+        if (!$parent) {
+            $parent = $menu->addButton('menu', "Maps", $button);
+        }
+        
+        $button["style"] = "BgRaceScore2";
+        $button["substyle"] = "Fame";
+        $parent = $menu->addButton($parent, "Rate Map", $button);
+        
+        $button["plugin"] = $this;
+        $button["function"] = 'hudRateMap';
+        
+        $button["params"] = "---";
+        $menu->addButton($parent, "Terrible (---)", $button);
+        
+        $button["params"] = "--";
+        $menu->addButton($parent, "Bad (--)", $button);
+        
+        $button["params"] = "+";
+        $menu->addButton($parent, "Average (+/-)", $button);
+        
+        $button["params"] = "++";
+        $menu->addButton($parent, "Good (++)", $button);
+        
+        $button["params"] = "+++";
+        $menu->addButton($parent, "Fantastic (+++)", $button);
+    }
+    
+    public function hudRateMap($login, $param){
+        $this->onPlayerChat(1, $login, $param, false);
+    }
 
     public function reload() {
         $database = $this->db->query("SELECT avg(rating) AS rating FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";")->fetchObject();
@@ -41,12 +80,11 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function saveRating($login, $rating) {
-
+        
         $uid = $this->db->quote($this->storage->currentMap->uId);
 
         try {
             $test = $this->db->query("SELECT * FROM exp_ratings WHERE `uid`= " . $uid . "  AND `login` = " . $this->db->quote($login) . " LIMIT 1;")->fetchObject();
-
 
             if ($test === false) {
                 $query = $query = "INSERT INTO exp_ratings (`uid`, `login`, `rating`  ) VALUES (" . $uid . "," . $this->db->quote($login) . "," . $this->db->quote($rating) . ") ON DUPLICATE KEY UPDATE `rating`=" . $this->db->quote($rating) . ";";
@@ -106,6 +144,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
         if ($playerUid == 0)
             return;
+        
         if ($text == "1/5")
             $this->saveRating($login, 1);
         if ($text == "2/5")
