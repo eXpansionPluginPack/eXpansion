@@ -21,9 +21,14 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         /**
          * Redirecting The Announcements of the Admin Groups plugin
          */
-        $this->callPublicMethod('eXpansion\\Chat_Admin', 'exp_activateAnnounceRedirect', array($this, 'send'));
-        $this->callPublicMethod('eXpansion\\Dedimania', 'exp_activateAnnounceRedirect', array($this, 'send'));
-        $this->callPublicMethod('eXpansion\\LocalRecords', 'exp_activateAnnounceRedirect', array($this, 'send'));
+        if($this->isPluginLoaded('eXpansion\\Chat_Admin'))
+            $this->callPublicMethod('eXpansion\\Chat_Admin', 'exp_activateAnnounceRedirect', array($this, 'send'));
+        
+        if($this->isPluginLoaded('eXpansion\\Dedimania'))
+            $this->callPublicMethod('eXpansion\\Dedimania', 'exp_activateAnnounceRedirect', array($this, 'send'));
+        
+        if($this->isPluginLoaded('eXpansion\\LocalRecords'))
+            $this->callPublicMethod('eXpansion\\LocalRecords', 'exp_activateAnnounceRedirect', array($this, 'send'));
         
         $this->onPlayerConnect(null, true); // force update...        
     }
