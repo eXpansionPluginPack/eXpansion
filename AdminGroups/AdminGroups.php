@@ -79,6 +79,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_pRemoveFa;
     private $msg_masterMasterE;
     static public $txt_groupsTitle;
+    static public $txt_helpTitle;
     static public $txt_permissionsTitle;
     static public $txt_playersTitle;
     static public $txt_nwGroupNameL;
@@ -89,6 +90,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     static public $txt_permissionList;
     static public $txt_deletegroup;
     static public $txt_rmPlayer;
+    static public $txt_command;
+    static public $txt_description;
+    static public $txt_descMore;
 
     public function exp_onInit() {
         parent::exp_onInit();
@@ -119,6 +123,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_pRemoveFa = exp_getMessage('#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group');
         $this->msg_masterMasterE = exp_getMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
         self::$txt_groupsTitle = exp_getMessage('Admin Groups');
+        self::$txt_helpTitle = exp_getMessage('Admin Commands Help');
         self::$txt_permissionsTitle = exp_getMessage('Admin Group Permission - %1$s');
         self::$txt_playersTitle = exp_getMessage('Admin Group Players - %1$s');
         self::$txt_nwGroupNameL = exp_getMessage('New Group Name :');
@@ -129,6 +134,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$txt_permissionList = exp_getMessage('Change Permissions');
         self::$txt_deletegroup = exp_getMessage('Delete Group');
         self::$txt_rmPlayer = exp_getMessage('Remove Player');
+        
+        self::$txt_command = exp_getMessage('Command');
+        self::$txt_description = exp_getMessage('Description');
+        self::$txt_descMore = exp_getMessage('More');
         
         //No idea if needed, I think not need to check
         // $this->enableDedicatedEvents();  
@@ -141,6 +150,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand('adm', "adminCmd", -1, true, $this->get());
         
         $this->addAdminCommand('groups', $this, "windowGroups", null);
+        $this->addAdminCommand('help', $this, "windowHelp", null);
     }
 	
     public function onOliverde8HudMenuReady($menu) {
@@ -371,7 +381,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $comand = new AdminCmd($cmd, $class, $function, $permission);
 
         self::addCommand($comand, $cmd);
-        self::$commandsList[] = $cmd;
+        self::$commandsList[] = $comand;
         return $comand;
     }
 
@@ -384,7 +394,6 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     static public function addAlias(AdminCmd $adminCmd, $cmd) {
         self::addCommand($adminCmd, $cmd);
         $adminCmd->addAlias($cmd);
-        self::$commandsList[] = $cmd;
     }
 
     /**
@@ -643,6 +652,15 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::Erase($login);
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::Create($login);
         $window->setTitle(__(self::$txt_groupsTitle, $login));
+        $window->setSize(120, 100);
+        $window->centerOnScreen();
+        $window->show();
+    }
+    
+    public function windowHelp($login){
+        \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Help::Erase($login);
+        $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Help::Create($login);
+        $window->setTitle(__(self::$txt_helpTitle, $login));
         $window->setSize(120, 100);
         $window->centerOnScreen();
         $window->show();

@@ -44,8 +44,6 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          * 
          * 
          */
-        $cmd = AdminGroups::addAdminCommand('help', $this, 'help', '');
-        $cmd->setHelp(exp_getMessage('help'));
 
         $cmd = AdminGroups::addAdminCommand('player kick', $this, 'kick', Permission::player_kick); //
         $cmd->setHelp(exp_getMessage('kick the player from the server'));
@@ -351,12 +349,6 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function onOliverde8HudMenuReady($menu) {
         new adapter\oliverde8HudMenu($this, $menu, $this->storage, $this->connection);
-    }
-
-    function help($fromLogin, $param) {
-        $adminGroups = AdminGroups::getInstance();
-        $commands = $adminGroups->getAdminCommands();
-        print_r($commands);
     }
 
     function support_fastTa($fromLogin, $text) {
