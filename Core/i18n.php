@@ -80,7 +80,6 @@ class i18n extends \ManiaLib\Utils\Singleton {
             return $this->messages[$string];
         }else{
             $nmessage = new i18n\Message($string);
-            $this->messages[$string] = $nmessage;
             return $nmessage;
         }
     }
