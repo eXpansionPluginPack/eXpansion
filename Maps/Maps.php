@@ -67,16 +67,52 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         $button["style"] = "Icons128x128_1";
-        $button["substyle"] = "Drive";
+        $button["substyle"] = "Browse";
         $button["plugin"] = $this;
         $button["function"] = 'showMapList';
         $menu->addButton($parent, "List all Maps", $button);
 
-        $button["substyle"] = "newTrack";
+        $button["substyle"] = "NewTrack";
+        $button["function"] = 'addMaps';
+        $menu->addButton($parent, "Add Map", $button);
+        
+        $this->hudMenuAdminButtons($menu);
+    }
+    
+    private function hudMenuAdminButtons($menu){
+        
+        $button["style"] = "UIConstructionSimple_Buttons";
+        $button["substyle"] = "Drive";
+        $button["plugin"] = $this;
+        $parent = $menu->findButton(array('admin', 'Maps'));
+        if (!$parent) {
+            $parent = $menu->addButton('admin', "Maps", $button);
+        }
+        
+        $button["style"] = "Icons64x64_1";
+        $button["substyle"] = "Close";
+        
+        $button["plugin"] = $this;
+        $button["function"] = "chat_removeMap";
+        $button["params"] = "this";
+        $button["permission"] = "server_maps";
+        $menu->addButton($parent, "Remove Current Map", $button);
+        
+        $button["style"] = "Icons64x64_1";
+        $button["substyle"] = "Sub";
+        
+        $button["plugin"] = $this;
+        $button["function"] = "emptyWishes";
+        $button["params"] = "this";
+        $button["permission"] = "server_mapWishes";
+        $menu->addButton($parent, "Empty Wish List", $button);
+        
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "NewTrack";
         $button["function"] = 'addMaps';
         $menu->addButton($parent, "Add Map", $button);
     }
-
+    
     function onPlayerConnect($login, $isSpectator) {
         $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
         $info->setPosition(136, 74);
@@ -263,6 +299,12 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->removeMap($login, $this->storage->currentMap);
             return;
         }
+    }
+    
+    function emptyWishes($login){
+        $this->nextMaps = array();
+        $this->nextMapCount = 0;
+        $this->exp_chatSendServerMessage('Admin %s $z$s$fff emptied wish list.', null, array($login));
     }
 
     public function addMaps($login) {
