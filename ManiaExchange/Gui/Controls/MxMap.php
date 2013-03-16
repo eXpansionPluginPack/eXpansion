@@ -15,14 +15,23 @@ class MxMap extends \ManiaLive\Gui\Control {
     private $actionSearch;
     private $frame;
 
-    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map, $controller, $isAdmin) {
-        $sizeX = 120;
+    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map, $controller, $isAdmin, $sizeX) {
         $sizeY = 4;
         $this->isAdmin = $isAdmin;
         $id = $map->trackID;
         if (property_exists($map, "mapID"))
             $id = $map->mapID;
 
+        $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+        $this->bg->setAlign('left', 'center');
+        if ($indexNumber % 2 == 0) {
+            $this->bg->setBgcolor('aaa4');
+        } else {
+            $this->bg->setBgcolor('7774');
+        }        
+        $this->addComponent($this->bg);
+
+        
         $this->addAction = $this->createAction(array($controller, 'addMap'), $id);
         $this->actionSearch = $this->createAction(array($controller, 'search'), "", $map->username);
 
@@ -77,8 +86,8 @@ class MxMap extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($spacer);
 
         if ($this->isAdmin) {
-            $this->addButton = new MyButton(16, 5);
-            $this->addButton->setScale(0.7);
+            $this->addButton = new MyButton(24, 5);
+            $this->addButton->setScale(0.5);
             $this->addButton->setText(__("Install"));
             $this->addButton->setAction($this->addAction);
             $this->frame->addComponent($this->addButton);
@@ -99,7 +108,8 @@ class MxMap extends \ManiaLive\Gui\Control {
     }
 
     protected function onResize($oldX, $oldY) {
-        //$this->bg->setSize($this->sizeX, $this->sizeY);
+        $this->bg->setSize($this->sizeX, $this->sizeY);
+        $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY + 1);
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }

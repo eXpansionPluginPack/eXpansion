@@ -87,7 +87,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle('ManiaExchange');
         $window->search($login, $search, $author);
         $window->centerOnScreen();
-        $window->setSize(160, 100);
+        $window->setSize(180, 100);
         $window->show();
     }
 

@@ -18,8 +18,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
     private $forceAction;
     private $frame;
 
-    function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin) {
-        $sizeX = 120;
+    function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin, $sizeX) {
         $sizeY = 4;
         $this->isAdmin = $isAdmin;
         $this->player = $player;
@@ -32,11 +31,10 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->bg->setAlign('left', 'center');
         if ($indexNumber % 2 == 0) {
-            $this->bg->setBgcolor('fff4');
+            $this->bg->setBgcolor('aaa4');
         } else {
             $this->bg->setBgcolor('7774');
-        }
-        $this->bg->setScriptEvents(true);
+        }        
         $this->addComponent($this->bg);
 
 
@@ -83,25 +81,26 @@ class Playeritem extends \ManiaLive\Gui\Control {
 // admin additions
         if ($this->isAdmin) {
 
-            $this->banButton = new MyButton(16, 6);
+            $this->banButton = new MyButton(24, 5);
             $this->banButton->setText(__("Ban"));
             $this->banButton->setTextColor("fff");
-            $this->banButton->colorize("000");
+            $this->banButton->colorize("a22");
             $this->banButton->setAction($this->banAction);
-            $this->banButton->setScale(0.6);
+            $this->banButton->setScale(0.5);
             $this->frame->addComponent($this->banButton);
 
-            $this->kickButton = new MyButton(16, 6);
+            $this->kickButton = new MyButton(24, 5);
             $this->kickButton->setText(__("Kick"));
+            $this->kickButton->setTextColor("fff");
             $this->kickButton->setAction($this->kickAction);
-            $this->kickButton->colorize("f00");
-            $this->kickButton->setScale(0.6);
+            $this->kickButton->colorize("a22");
+            $this->kickButton->setScale(0.5);
             $this->frame->addComponent($this->kickButton);
 
-            $this->forceButton = new MyButton(24, 6);
+            $this->forceButton = new MyButton(24, 5);
             $this->forceButton->setAction($this->forceAction);
-            $this->forceButton->setScale(0.6);
-            $this->forceButton->colorize("ff0");
+            $this->forceButton->setScale(0.5);
+            $this->forceButton->colorize("2f2");
             $this->frame->addComponent($this->forceButton);
         }
 
@@ -113,8 +112,9 @@ class Playeritem extends \ManiaLive\Gui\Control {
     }
 
     protected function onResize($oldX, $oldY) {
-// $this->frame->setSize($this->sizeX, $this->sizeY);
-//  $this->button->setPosx($this->sizeX - $this->button->sizeX);
+     $this->frame->setSize($this->sizeX, $this->sizeY);
+     $this->bg->setPosX(-2);
+     $this->bg->setSize($this->sizeX, $this->sizeY);
         if ($this->isAdmin) {
             if ($this->player->forceSpectator == 1 || $this->player->isSpectator) {
                 $this->forceButton->setText(__("Release Spec"));

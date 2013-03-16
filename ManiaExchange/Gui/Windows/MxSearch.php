@@ -11,7 +11,7 @@ use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxMap;
 use ManiaLive\Gui\ActionHandler;
 
 class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
-   
+
     /** @var \ManiaLive\Gui\Controls\Pager */
     private $pager;
 
@@ -44,17 +44,29 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->inputMapName = new Inputbox("mapName");
         $this->inputMapName->setLabel("Map name");
         $this->searchframe->addComponent($this->inputMapName);
+        $spacer = new \ManiaLib\Gui\Elements\Quad();
+        $spacer->setSize(3, 4);
+        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+        $this->searchframe->addComponent($spacer);
 
         $this->inputAuthor = new Inputbox("author");
         $this->inputAuthor->setLabel("Author name");
         $this->searchframe->addComponent($this->inputAuthor);
+        
+        $spacer = new \ManiaLib\Gui\Elements\Quad();
+        $spacer->setSize(3, 4);
+        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+        $this->searchframe->addComponent($spacer);        
 
         $this->actionSearch = ActionHandler::getInstance()->createAction(array($this, "actionOk"));
 
-        $this->buttonSearch = new OkButton(16, 6);
+
+        $this->buttonSearch = new OkButton(24, 6);
         $this->buttonSearch->setText("Search");
         $this->buttonSearch->colorize('0f0');
+        $this->buttonSearch->setScale(0.6);
         $this->buttonSearch->setAction($this->actionSearch);
+
         $this->searchframe->addComponent($this->buttonSearch);
 
         $this->mainFrame->addComponent($this->searchframe);
@@ -75,9 +87,8 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onResize($oldX, $oldY);
         $this->frame->setSizeX($this->sizeX);
         $this->header->setSize($this->sizeX, 5);
-        $this->pager->setSize($this->sizeX - 2, $this->sizeY - 30);
+        $this->pager->setSize($this->sizeX, $this->sizeY - 22);
         $this->pager->setStretchContentX($this->sizeX);
-        $this->frame->setPosition(8, -10);
         $this->searchframe->setPosition(8, -$this->sizeY + 6);
     }
 
@@ -147,19 +158,19 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         foreach ($this->items as $item)
             $item->destroy();
-        
+
         $this->pager->clearItems();
-        $this->items = array();                          
-        
+        $this->items = array();
+
         $x = 0;
         $login = $this->getRecipient();
         $isadmin = \ManiaLive\Features\Admin\AdminGroup::contains($login);
 
         foreach ($this->maps as $map) {
-            $this->items[$x] = new MxMap($x, $map, $this, $isadmin);
+            $this->items[$x] = new MxMap($x, $map, $this, $isadmin, $this->sizeX);
             $this->pager->addItem($this->items[$x]);
             $x++;
-        }        
+        }
         $this->redraw();
     }
 
@@ -179,7 +190,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->inputAuthor->destroy();
         $this->buttonSearch->destroy();
         $this->header->destroy();
-        ActionHandler::getInstance()->deleteAction($this->actionSearch);        
+        ActionHandler::getInstance()->deleteAction($this->actionSearch);
         $this->clearComponents();
         parent::destroy();
     }

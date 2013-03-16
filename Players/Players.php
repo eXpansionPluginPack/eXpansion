@@ -50,7 +50,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-        $this->updateOpenedWindows();
+        $this->updateOpenedWindows();        
     }
 
     public function updateOpenedWindows() {
@@ -70,7 +70,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         \ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist::Erase($login);
         $window = \ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist::Create($login);
         $window->setTitle('Players');
-        $window->setSize(120, 100);
+        $window->setSize(160, 100);
         $window->centerOnScreen();
         $window->show();
     }

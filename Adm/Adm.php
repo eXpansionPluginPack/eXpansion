@@ -130,7 +130,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             $window = Gui\Windows\ServerControlMain::Create($login);
             $window->setTitle(__('Server Management'));            
-            $window->setSize(120, 20);
+            $window->setSize(160, 20);
             $window->show();
         }
     }
@@ -140,7 +140,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $window = Gui\Windows\MatchSettings::Create($login);
             $window->setTitle(__('Match Settings'));
             $window->centerOnScreen();
-            $window->setSize(120, 100);
+            $window->setSize(160, 100);
             $window->show();
         }
     }

@@ -43,7 +43,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function banPlayer($login, $target) {
         try {
             $login = $this->getRecipient();
-            $player = $this->storage->getPlayerObject($target);
+            $player = $this->storage->getPlayerObject($target);            
             $admin = $this->storage->getPlayerObject($login);
             $this->connection->ban($target, __("You are now banned from the server."));
             $this->connection->chatSendServerMessage(__('%s$z has been banned from the server.', $player->nickName));
@@ -54,29 +54,28 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function toggleSpec($login, $target) {
-        try {
+        try {                        
             $player = $this->storage->getPlayerObject($target);
-
+            
             if ($player->forceSpectator == 0) {
                 $this->connection->forceSpectator($target, 1);
                 $this->connection->sendNotice($target, __('Admin has forced you to specate!'));
             }
 
             if ($player->forceSpectator == 1) {
-                $this->connection->forceSpectator($target, 2);
                 $this->connection->forceSpectator($target, 0);
                 $this->connection->sendNotice($target, __("Admin has released you from specate to play."));
             }
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()));
+            $this->connection->chatSendServerMessage(__("Error: %s",$login, $e->getMessage()), $login);
         }
     }
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX - 2, $this->sizeY - 14);
+        $this->pager->setSize($this->sizeX - 2, $this->sizeY - 8);
         $this->pager->setStretchContentX($this->sizeX);
-        $this->pager->setPosition(8, -10);
+        $this->pager->setPosition(4, -4);
     }
 
     function onShow() {
@@ -95,12 +94,12 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $isadmin = \ManiaLive\Features\Admin\AdminGroup::contains($login);
 
         foreach ($this->storage->players as $player) {
-            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin);
+            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin,$this->sizeX);
             $this->pager->addItem($this->items[$x]);
         }
         foreach ($this->storage->spectators as $player) {
-            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin);
-            $this->pager->addItem($items[$x]);
+            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin,$this->sizeX);
+            $this->pager->addItem($this->items[$x]);
         }
     }
 
