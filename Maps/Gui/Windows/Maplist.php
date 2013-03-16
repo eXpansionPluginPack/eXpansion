@@ -49,10 +49,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     protected function onDraw() {
-        print "ondraw";
-
         $login = $this->getRecipient();      
-        
         foreach ($this->items as $item) {
             $item->destroy();            
         }
@@ -64,7 +61,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $isAdmin = \ManiaLive\Features\Admin\AdminGroup::contains($login);
         $x = 0;
         foreach (\ManiaLive\Data\Storage::getInstance()->maps as $map) {
-            $this->items[$x] = new Mapitem($x, $login, $map, $this, $isAdmin);
+            $this->items[$x] = new Mapitem($x, $login, $map, $this, $isAdmin, $this->sizeX);
             $this->pager->addItem($this->items[$x]);
             $x++;
         }

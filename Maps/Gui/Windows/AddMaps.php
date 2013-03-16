@@ -38,9 +38,8 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX - 2, $this->sizeY - 14);
-        $this->pager->setStretchContentX($this->sizeX);
-        $this->pager->setPosition(8, -10);
+        $this->pager->setSize($this->sizeX, $this->sizeY - 6);
+        $this->pager->setStretchContentX($this->sizeX);        
     }
 
     function onShow() {
@@ -65,7 +64,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         if (count($maps) >= 1) {
             foreach ($maps as $map) {
-                $this->items[$x] = new Additem($x, $map, $this);
+                $this->items[$x] = new Additem($x, $map, $this, $this->sizeX);
                 $this->pager->addItem($this->items[$x]);
                 $x++;
             }

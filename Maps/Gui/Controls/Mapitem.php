@@ -19,8 +19,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
     private $removeButton;
     private $frame;
 
-    function __construct($indexNumber, $login, \DedicatedApi\Structures\Map $map, $controller, $isAdmin) {
-        $sizeX = 120;
+    function __construct($indexNumber, $login, \DedicatedApi\Structures\Map $map, $controller, $isAdmin, $sizeX) {
         $sizeY = 4;
 
         $this->isAdmin = $isAdmin;
@@ -30,14 +29,13 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->bg->setAlign('left', 'center');
+
         if ($indexNumber % 2 == 0) {
-            $this->bg->setBgcolor('fff4');
+            $this->bg->setBgcolor('ddd4');
         } else {
             $this->bg->setBgcolor('7774');
         }
-        $this->bg->setScriptEvents(true);
         $this->addComponent($this->bg);
-
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
@@ -55,13 +53,13 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         //$this->frame->addComponent($spacer);
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(60, 4);
+        $this->label = new \ManiaLib\Gui\Elements\Label(70, 4);
         $this->label->setAlign('left', 'center');
         $this->label->setText(Formatting::stripColors($map->name, "999f"));
         $this->label->setScale(0.8);
         $this->frame->addComponent($this->label);
 
-        $this->time = new \ManiaLib\Gui\Elements\Label(20, 4);
+        $this->time = new \ManiaLib\Gui\Elements\Label(30, 4);
         $this->time->setAlign('left', 'center');
         $this->time->setScale(0.8);
         $this->time->setText($map->author);
@@ -106,23 +104,31 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
         $this->frame->addComponent($spacer);
 
-        $this->queueButton = new MyButton(16, 6);
+        $this->queueButton = new MyButton(26, 5);
         $this->queueButton->setText(__("Queue"));
         $this->queueButton->setAction($this->chooseNextMap);
-        $this->queueButton->setScale(0.6);
+        $this->queueButton->colorize('2a2');
+        $this->queueButton->setScale(0.5);
         $this->frame->addComponent($this->queueButton);
 
         if ($this->isAdmin) {
-            $this->goButton = new MyButton(16, 6);
+            $this->goButton = new MyButton(26, 5);
             $this->goButton->setText(__("Go now"));
             $this->goButton->setAction($this->gotoMap);
-            $this->goButton->setScale(0.6);
+            $this->goButton->colorize('aa2');
+            $this->goButton->setScale(0.5);
             $this->frame->addComponent($this->goButton);
 
-            $this->removeButton = new MyButton(16, 6);
-            $this->removeButton->setText(__("Remove"));
+            $spacer = new \ManiaLib\Gui\Elements\Quad();
+            $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+            $spacer->setSize(2, 4);
+            $this->frame->addComponent($spacer);
+
+            $this->removeButton = new MyButton(26, 5);
+            $this->removeButton->setText('$fff'.__("Remove"));
             $this->removeButton->setAction($this->removeMap);
-            $this->removeButton->setScale(0.6);
+            $this->removeButton->colorize('a22');
+            $this->removeButton->setScale(0.5);
             $this->frame->addComponent($this->removeButton);
         }
 
@@ -134,6 +140,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
     protected function onResize($oldX, $oldY) {
         $this->bg->setSize($this->sizeX, $this->sizeY);
+        $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY);
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
@@ -144,7 +151,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
     function destroy() {
         $this->queueButton->destroy();
-       
+
         if (is_object($this->goButton))
             $this->goButton->destroy();
         if (is_object($this->removeButton))
