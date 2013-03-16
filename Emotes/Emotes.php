@@ -3,10 +3,17 @@
 namespace ManiaLivePlugins\eXpansion\Emotes;
 
 use \ManiaLivePlugins\eXpansion\Emotes\Gui\Windows\EmotePanel;
+use ManiaLive\Event\Dispatcher;
 
 class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $timeStamps = array();
+    function exp_onInit() {
+        parent::exp_onInit();
+        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
+        }
+    }
 
     function exp_onReady() {
         $this->enableDedicatedEvents();
@@ -22,6 +29,36 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
             $this->onPlayerConnect($player->login, true);
+    }
+    
+    public function onOliverde8HudMenuReady($menu) {
+        $config = Config::getInstance();
+        
+        $parent = $menu->findButton(array('menu', 'Emotes'));
+        $button["image"] = $config->iconMenu;
+        if (!$parent) {
+            $parent = $menu->addButton('menu', "Emotes", $button);
+        }
+
+        $button["image"] = $config->iconGG;
+        $button["chat"] = "gg";
+        $menu->addButton($parent, "Good Game(gg)", $button);
+        
+        $button["image"] = $config->iconBG;
+        $button["chat"] = "bg";
+        $menu->addButton($parent, "Bad Game(bg)", $button);
+        
+        $button["image"] = $config->iconLol;
+        $button["chat"] = "lol";
+        $menu->addButton($parent, "Lol", $button);
+        
+        $button["image"] = $config->iconAfk;
+        $button["chat"] = "afk";
+        $menu->addButton($parent, "Away from Key(afk)", $button);
+        
+        unset($button["image"]);
+        $button["chat"] = "bootme";
+        $menu->addButton($parent, "Boot Me", $button);
     }
 
     function onPlayerConnect($login, $isSpectator) {
