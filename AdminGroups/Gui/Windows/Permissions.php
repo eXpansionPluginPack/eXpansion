@@ -49,9 +49,8 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX - 2, $this->sizeY - 25);
-        $this->pager->setStretchContentX($this->sizeX);
-        $this->pager->setPosition(4, -10);
+        $this->pager->setSize($this->sizeX - 2, $this->sizeY - 12);
+        $this->pager->setPosition(1, -1);
 
         $centerX = $this->sizeX / 2 - 10;
         $this->button_ok->setPosition($centerX + 5, -$this->sizeY + 5);

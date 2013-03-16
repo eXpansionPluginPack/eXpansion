@@ -43,15 +43,15 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX - 4, $this->sizeY - 27);
+        $this->pager->setSize($this->sizeX - 4, $this->sizeY - 12);
         $this->pager->setStretchContentX($this->sizeX);
-        $this->pager->setPosition(8, -12);
+        $this->pager->setPosition(0, -7);
 
-        $this->group_add->setSize($this->sizeX - 20, 7);
-        $this->group_add->setPosition(4, -7);
+        $this->group_add->setSize($this->sizeX*(1/0.8) - 20, 7);
+        $this->group_add->setPosition(0, -3);
 
         $this->button_add->setSize(30, 5);
-        $this->button_add->setPosition($this->sizeX - 35, -7);
+        $this->button_add->setPosition($this->sizeX*(1/0.8) - 45*(1/0.8), -3);
     }
 
     function onShow() {
