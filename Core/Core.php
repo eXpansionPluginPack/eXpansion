@@ -81,6 +81,20 @@ namespace ManiaLivePlugins\eXpansion\Core;
             }
         }
 
+        function onPlayerConnect($login, $isSpectator) {
+            $this->memory();
+        }
+        
+        function onPlayerDisconnect($login) {
+           $this->memory();
+        }
+        
+        function memory() {
+            $mem = "Memory Usage: ". memory_get_usage()/1024 . "Mb";
+            \ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
+            print "\n". $mem ."\n";
+        }
+        
         private function checkLoadedPlugins() {
             $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
             Console::println('#####################################################################');
