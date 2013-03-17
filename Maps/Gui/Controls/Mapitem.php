@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 use \ManiaLib\Utils\Formatting;
 
@@ -27,14 +28,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->gotoMap = $this->createAction(array($controller, 'gotoMap'), $map);
         $this->removeMap = $this->createAction(array($controller, 'removeMap'), $map);
 
-        $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-        $this->bg->setAlign('left', 'center');
-
-        if ($indexNumber % 2 == 0) {
-            $this->bg->setBgcolor('ddd4');
-        } else {
-            $this->bg->setBgcolor('7774');
-        }
+        $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
