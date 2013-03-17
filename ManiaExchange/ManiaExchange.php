@@ -17,8 +17,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onReady() {        
         $admGroup = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();        
         $this->registerChatCommand("mx", "chatMX", 2, true, $admGroup->get());
-        $this->registerChatCommand("mx", "chatMX", 1, true, $admGroup->get());
-        Gui\Windows\MxSearch::$mxPlugin = $this;
+        $this->registerChatCommand("mx", "chatMX", 1, true, $admGroup->get());        
 
         if ($this->isPluginLoaded('Standard\Menubar'))
             $this->buildMenu();
@@ -85,6 +84,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function mxSearch($login, $search = "", $author = "") {
         $window = Gui\Windows\MxSearch::Create($login);
         $window->setTitle('ManiaExchange');
+        $window->setPlugin($this);
         $window->search($login, $search, $author);
         $window->centerOnScreen();
         $window->setSize(180, 100);

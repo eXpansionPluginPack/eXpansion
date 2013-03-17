@@ -78,8 +78,11 @@ class Header extends \ManiaLive\Gui\Control {
         
     }
 
-    function __destruct() {
-        
+    public function destroy() {
+        $this->frame->clearComponents();
+        $this->frame->destroy();
+        $this->clearComponents();
+        parent::destroy();
     }
 
 }

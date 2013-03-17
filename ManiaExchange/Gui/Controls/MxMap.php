@@ -28,10 +28,10 @@ class MxMap extends \ManiaLive\Gui\Control {
             $this->bg->setBgcolor('aaa4');
         } else {
             $this->bg->setBgcolor('7774');
-        }        
+        }
         $this->addComponent($this->bg);
 
-        
+
         $this->addAction = $this->createAction(array($controller, 'addMap'), $id);
         $this->actionSearch = $this->createAction(array($controller, 'search'), "", $map->username);
 
@@ -93,14 +93,6 @@ class MxMap extends \ManiaLive\Gui\Control {
             $this->frame->addComponent($this->addButton);
         }
 
-        // disabled... todo: get remove button to refresh the tracklist
-        /*
-          $this->removeButton = new MyButton(16,6);
-          $this->removeButton->setText("Remove");
-          $this->removeButton->setAction($this->removeMap);
-          $this->removeButton->setScale(0.6);
-          $this->frame->addComponent($this->removeButton); */
-
         $this->addComponent($this->frame);
 
         $this->sizeX = $sizeX;
@@ -119,7 +111,10 @@ class MxMap extends \ManiaLive\Gui\Control {
     }
 
     function destroy() {
-       $this->addButton->destroy();
+        $this->addButton->destroy();
+        $this->frame->clearComponents();
+        $this->frame->destroy();
+        $this->clearComponents();        
         parent::destroy();
     }
 

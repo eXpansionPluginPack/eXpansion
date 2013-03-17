@@ -29,7 +29,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $actionSearch;
     private $header;
     private $items = array();
-    public static $mxPlugin;
+    public $mxPlugin;
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -52,11 +52,11 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->inputAuthor = new Inputbox("author");
         $this->inputAuthor->setLabel("Author name");
         $this->searchframe->addComponent($this->inputAuthor);
-        
+
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(3, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        $this->searchframe->addComponent($spacer);        
+        $this->searchframe->addComponent($spacer);
 
         $this->actionSearch = ActionHandler::getInstance()->createAction(array($this, "actionOk"));
 
@@ -94,6 +94,10 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onShow() {
         
+    }
+
+    public function setPlugin($plugin) {
+        $this->mxPlugin = $plugin;
     }
 
     public function search($login, $trackname, $author) {
@@ -175,7 +179,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function addMap($login, $mapId) {
-        self::$mxPlugin->addMap($login, $mapId);
+        $this->mxPlugin->addMap($login, $mapId);
     }
 
     function actionOk($login, $args) {
@@ -185,11 +189,18 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function destroy() {
         foreach ($this->items as $item)
             $item->destroy();
-        $this->items = null;
+
+        $this->items = array();
+        $this->maps = null;
         $this->inputMapName->destroy();
         $this->inputAuthor->destroy();
         $this->buttonSearch->destroy();
         $this->header->destroy();
+        $this->pager->destroy();
+        $this->connection = null;
+        $this->storage = null;
+        $this->searchframe->clearComponents();
+        $this->searchframe->destroy();
         ActionHandler::getInstance()->deleteAction($this->actionSearch);
         $this->clearComponents();
         parent::destroy();
