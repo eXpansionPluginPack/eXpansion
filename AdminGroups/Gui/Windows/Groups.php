@@ -134,10 +134,16 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->redraw($login);
     }
     
-    public function destroy() {
+    
+    public function destroy(){
+        foreach ($this->items as $item) {
+            $item->destroy();            
+        }        
+        $this->items = null;
+        $this->pager->destroy();
         $this->group_add->destroy();
         $this->button_add->destroy();
-        
+        $this->clearComponents();                
         parent::destroy();
     }
 }

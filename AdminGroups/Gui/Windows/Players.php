@@ -111,7 +111,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->button_add->destroy();
         foreach ($this->items as $item)
             $item->destroy();
-        $this->items = null;        
+        $this->items = array();        
         parent::destroy();
     }
 
