@@ -97,6 +97,8 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
     function destroy() {
         $this->saveButton->destroy();
         $this->loadButton->destroy();
+        $this->frame->clearComponents();
+        $this->frame->destroy();
         $this->clearComponents();
         parent::destroy();
     }

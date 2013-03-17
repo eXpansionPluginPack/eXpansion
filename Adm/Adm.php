@@ -94,6 +94,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     
     public function buildStdMenu() {
         $this->callPublicMethod('Standard\Menubar', 'initMenu', \ManiaLib\Gui\Elements\Icons128x128_1::Options);
+        $this->callPublicMethod('Standard\Menubar', 'addButton', __('Server ControlPanel'), array($this, 'serverControlMain'), true);
         $this->callPublicMethod('Standard\Menubar', 'addButton', __('Server Options'), array($this, 'serverOptions'), true);
         $this->callPublicMethod('Standard\Menubar', 'addButton', __('Game Options'), array($this, 'gameOptions'), true);
         $this->callPublicMethod('Standard\Menubar', 'addButton', __('Match Settings'), array($this, 'matchSettings'), true);

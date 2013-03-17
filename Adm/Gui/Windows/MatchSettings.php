@@ -81,7 +81,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         foreach ($this->items as $item)
             $item->destroy();
 
-        $this->items = null;
+        $this->items = array();
         $this->pager->destroy();
         $this->connection = null;
         $this->storage = null;

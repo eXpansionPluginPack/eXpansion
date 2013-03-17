@@ -241,6 +241,10 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->serverName->destroy();
         $this->serverPass->destroy();
         $this->serverSpecPass->destroy();
+        $this->frameCb->clearComponents();
+        $this->frameCb->destroy();
+        $this->frameInputbox->clearComponents();
+        $this->frameInputbox->destroy();
         $this->clearComponents();
         parent::destroy();
     }

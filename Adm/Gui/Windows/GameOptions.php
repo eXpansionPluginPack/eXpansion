@@ -12,23 +12,24 @@ use \DedicatedApi\Structures\GameInfos;
 
 class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
-    private $connection;
+    private $connection, $storage;
     private $actionOK, $actionCancel, $actionTa, $actionRounds, $actionLaps, $actionCup, $actionTeam;
-    private $btn_ta, $btn_rounds, $btn_cup, $btn_team, $btn_laps;  
-    
+    private $btn_ta, $btn_rounds, $btn_cup, $btn_team, $btn_laps;
+    private $frameGameMode;
+
     function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
-        $this->actionOK = ActionHandler::getInstance()->createAction(array($this, "Ok"));
-        $this->actionCancel = ActionHandler::getInstance()->createAction(array($this, "Cancel"));
-        $this->actionTA = ActionHandler::getInstance()->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_TIMEATTACK);
-        $this->actionRounds = ActionHandler::getInstance()->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_ROUNDS);
-        $this->actionLaps = ActionHandler::getInstance()->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_LAPS);
-        $this->actionCup = ActionHandler::getInstance()->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_CUP);
-        $this->actionTeam = ActionHandler::getInstance()->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_TEAM);
+        $this->actionOK = $this->createAction(array($this, "Ok"));
+        $this->actionCancel = $this->createAction(array($this, "Cancel"));
+        $this->actionTA = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_TIMEATTACK);
+        $this->actionRounds = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_ROUNDS);
+        $this->actionLaps = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_LAPS);
+        $this->actionCup = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_CUP);
+        $this->actionTeam = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_TEAM);
 
         $this->setTitle(__('Game Options'));
         $this->genGameModes();
@@ -95,20 +96,16 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function destroy() {
-        ActionHandler::getInstance()->deleteAction($this->actionCancel);
-        ActionHandler::getInstance()->deleteAction($this->actionOK);
-        ActionHandler::getInstance()->deleteAction($this->actionCup);
-        ActionHandler::getInstance()->deleteAction($this->actionLaps);
-        ActionHandler::getInstance()->deleteAction($this->actionRounds);
-        ActionHandler::getInstance()->deleteAction($this->actionTa);
-        ActionHandler::getInstance()->deleteAction($this->actionTeam);
+        
         $this->btn_cup->destroy();
         $this->btn_laps->destroy();
         $this->btn_rounds->destroy();
         $this->btn_ta->destroy();
-        $this->btn_team->destroy();       
+        $this->btn_team->destroy();
+        $this->frameGameMode->clearComponents();
+        $this->frameGameMode->destroy();
         $this->clearComponents();
-                
+
         parent::destroy();
     }
 
