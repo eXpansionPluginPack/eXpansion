@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords;
 
+use ManiaLive\Event\Dispatcher;
+
 use \ManiaLivePlugins\eXpansion\LocalRecords\Config;
 use \ManiaLivePlugins\eXpansion\LocalRecords\Events\Event;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
@@ -39,6 +41,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod("getRecords");
         
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
+        
+        //Oliverde8 Menu
+        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
+        }
     }
 
     public function exp_onLoad() {
@@ -149,6 +156,23 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->checkpoints[$login] = array();
 		}
 	}
+    
+    public function onOliverde8HudMenuReady($menu) {
+        
+        $parent = $menu->findButton(array("menu", "Records"));
+		if (!$parent) {
+			$button["style"] = "Icons128x128_1";
+            $button["substyle"] = "Replay";
+            $parent = $menu->addButton("menu", "Records", $button);
+		}
+        
+        $button["style"] = "BgRaceScore2";
+		$button["substyle"] = "ScoreLink";        
+		$button["plugin"] = $this;
+		$button["function"] = "showRecsWindow";
+		$menu->addButton($parent, "Local Records", $button);
+        
+    }
 
     public function addRecord($login, $score, $gamemode, $cpScore) {
         $uid = $this->storage->currentMap->uId;
