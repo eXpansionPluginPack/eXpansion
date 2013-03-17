@@ -75,11 +75,11 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         foreach ($this->items as $item) {
             $item->destroy();
         }
-        $this->items = null;
+        $this->items = array();
         
         $this->connection = null;
         $this->storage = null;
-        
+        $this->pager->destroy();
         $this->clearComponents();
 
         parent::destroy();

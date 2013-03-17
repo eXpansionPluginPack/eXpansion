@@ -90,15 +90,14 @@ class Additem extends \ManiaLive\Gui\Control {
 
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;
+        unset($gbx);
     }
 
     protected function onResize($oldX, $oldY) {
         $this->bg->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY);
-        $this->addButton->setPosX($this->sizeX - 13);
-        
-        //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
+        $this->addButton->setPosX($this->sizeX - 13);              
     }
 
     function onDraw() {
