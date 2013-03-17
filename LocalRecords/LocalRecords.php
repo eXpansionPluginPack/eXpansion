@@ -14,6 +14,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $config;
     
     private $msg_secure, $msg_new, $msg_BeginMap, $msg_newMap;
+    public static $txt_rank, $txt_nick, $txt_score, $txt_avgScore, $txt_nbFinish;
     
     function exp_onInit() {
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -28,6 +29,12 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_newMap = exp_getMessage('#variable#%1$s #record#Is a new Map. Currently no record!');
         $this->msg_BeginMap = exp_getMessage('#record#Current record on #variable#%1$s #record#is #variable#%2$s #record#by #variable#%3$s');
         
+        self::$txt_rank = exp_getMessage("#");
+        self::$txt_nick = exp_getMessage("NickName");
+        self::$txt_score = exp_getMessage("Score");
+        self::$txt_avgScore = exp_getMessage("Average Score");
+        self::$txt_nbFinish = exp_getMessage("Nb Finishes");
+        
         $this->setPublicMethod("getCurrentChallangePlayerRecord");
         $this->setPublicMethod("getRecords");
         
@@ -39,6 +46,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableStorageEvents();
         $this->enableDedicatedEvents();
         $this->enableDatabase();
+        
+        $this->registerChatCommand("recs", "showRecsWindow", 0, true);
     }
 
     public function exp_onReady() {
@@ -423,6 +432,17 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             default:
                 return 1;
         }
+    }
+    
+    public function showRecsWindow($login){
+        Gui\Windows\Records::Erase($login);
+
+        $window = Gui\Windows\Records::Create($login);
+        $window->setTitle(__('Records on Current Map', $login));
+        $window->centerOnScreen();
+        $window->populateList($this->currentChallengeRecords, $this->config->recordsCount);
+        $window->setSize(120, 100);
+        $window->show();
     }
 
     /* public static $players;
