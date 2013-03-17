@@ -34,6 +34,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($login, false);
         }
         
+        $this->setPublicMethod('getPlayer');
         $this->updateServerChallenges();
     }
 
@@ -251,6 +252,19 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                                     `challenge_addtime` INT(9)
                                     ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = MYISAM ;";
         $this->db->query($q);
+    }
+    
+    public function getPlayer($login){
+        $g = "SELECT * FROM `exp_players` WHERE `player_login` = " . $this->db->quote($login) . ";";
+
+        $query = $this->db->query($g);
+
+        if ($query->recordCount() == 0) {
+            return null;
+        } else {
+            $player = $query->fetchStdObject();
+            return $player;
+        }
     }
 
     public function incrementWins($player) {
