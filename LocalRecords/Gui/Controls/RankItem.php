@@ -2,109 +2,62 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
+use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
+use ManiaLivePlugins\eXpansion\Gui\Gui;
+
+/**
+ * Description of RecItem
+ *
+ * @author oliverde8
+ */
 class RankItem extends \ManiaLive\Gui\Control {
-
+    
+    private $label_rank, $label_nick, $label_wins;
     private $bg;
-    private $nbrec;
-    private $nickname;
-    private $frame;
-
-    function __construct($indexNumber, $nickname, $nbrec) {
-        $sizeX = 120;
-        $sizeY = 4;
-
-
-        $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-        $this->bg->setAlign('left', 'center');
-        if ($indexNumber % 2 == 0) {
-            $this->bg->setBgcolor('fff4');
-        } else {
-            $this->bg->setBgcolor('7774');
-        }
+    private $widths;
+     
+    function __construct($indexNumber, $login, $rank, $widths) { 
+        $this->widths = $widths;
+        
+        $this->bg = new ListBackGround($indexNumber, 100, 4);
         $this->addComponent($this->bg);
-
+        
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
-        $this->frame->setSize($sizeX, $sizeY);
+        $this->frame->setSize(100, 4);
+        $this->frame->setPosY(0);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-
-        $lbl = new \ManiaLib\Gui\Elements\Label(6);
-        $lbl->setText('$000' . $indexNumber);
-        $lbl->setAlign('left', 'center');
-        $this->frame->addComponent($lbl);
-
-        $this->nickname = new \ManiaLib\Gui\Elements\Label(80, 4);
-        $this->nickname->setAlign('left', 'center');
-        $this->nickname->setScale(0.8);
-        $this->nickname->setText($nickname);
-        $this->frame->addComponent($this->nickname);
-
-
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        $this->frame->addComponent($spacer);
-
-        $lbl = new \ManiaLib\Gui\Elements\Label(6);
-        $lbl->setText('$000' . $nbrec['count']);
-        $lbl->setAlign('left', 'center');
-        $this->frame->addComponent($lbl);
-
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        $this->frame->addComponent($spacer);
-
-        $lbl = new \ManiaLib\Gui\Elements\Label(6);
-        $lbl->setText('$000' . $nbrec['1']);
-        $lbl->setAlign('left', 'center');
-        $this->frame->addComponent($lbl);
-
-
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        $this->frame->addComponent($spacer);
-
-        $lbl = new \ManiaLib\Gui\Elements\Label(6);
-        $lbl->setText('$000' . $nbrec['2']);
-        $lbl->setAlign('left', 'center');
-        $this->frame->addComponent($lbl);
-
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        $this->frame->addComponent($spacer);
-
-        $lbl = new \ManiaLib\Gui\Elements\Label(6);
-        $lbl->setText('$000' . $nbrec['3']);
-        $lbl->setAlign('left', 'center');
-        $this->frame->addComponent($lbl);
-        
         $this->addComponent($this->frame);
-        $this->sizeX = $sizeX;
-        $this->sizeY = $sizeY;
-        $this->setSize($sizeX, $sizeY);
-    }
-
-    protected function onResize($oldX, $oldY) {
         
-    }
+        $this->label_rank = new \ManiaLib\Gui\Elements\Label(10, 4);
+        $this->label_rank->setAlign('left', 'center');
+        $this->label_rank->setScale(0.8);
+        $this->label_rank->setText($rank->rank.".");
+        $this->frame->addComponent($this->label_rank);
 
-    function onDraw() {
+        $this->label_nick = new \ManiaLib\Gui\Elements\Label(10., 4);
+        $this->label_nick->setAlign('left', 'center');
+        $this->label_nick->setScale(0.8);
+        $this->label_nick->setText($rank->player_nickname);
+        $this->frame->addComponent($this->label_nick);
         
+        $this->label_wins = new \ManiaLib\Gui\Elements\Label(10, 4);
+        $this->label_wins->setAlign('left', 'center');
+        $this->label_wins->setScale(0.8);
+        $this->label_wins->setText($rank->player_wins);
+        $this->frame->addComponent($this->label_wins);
     }
-
-    function destroy() {
-        $this->frame->clearComponents();
-        $this->frame->destroy();
-        $this->clearComponents();
-
-        parent::destroy();
+    
+    
+    public function onResize($oldX, $oldY) {
+        $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX()/.8) - 5);
+        $this->bg->setSizeX($this->getSizeX()-5);
+        echo "Resize\n";
+        $this->label_rank->setSizeX($scaledSizes[0]);
+        $this->label_nick->setSizeX($scaledSizes[1]);
+        $this->label_wins->setSizeX($scaledSizes[2]);
     }
-
 }
-?>
 
+?>

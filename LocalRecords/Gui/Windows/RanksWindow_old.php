@@ -11,7 +11,7 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls\RankItem;
 
 use ManiaLive\Gui\ActionHandler;
 
-class RanksWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class RanksWindow_old extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     private $pager;
     private $connection;
