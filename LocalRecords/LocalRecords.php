@@ -34,7 +34,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$txt_score = exp_getMessage("Score");
         self::$txt_avgScore = exp_getMessage("Average Score");
         self::$txt_nbFinish = exp_getMessage("Nb Finishes");
-        self::$txt_wins = exp_getMessage("Nb Finishes");
+        self::$txt_wins = exp_getMessage("Nb Wins");
         self::$txt_lastRec = exp_getMessage("Last Rec Date");
 
         $this->setPublicMethod("getCurrentChallangePlayerRecord");
@@ -491,7 +491,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 									AND r2.record_score < r1.record_score) 
 							)as ranking, 
                             (SELECT SUM(record_nbFinish) FROM exp_records 
-                                WHERE record_challengeuid IN ('.$uids.')) as nbFinishes, 
+                                WHERE record_challengeuid IN ('.$uids.')
+                                    AND record_playerlogin = r1.record_playerlogin) as nbFinishes, 
                             MAX(record_date) as last_record
             FROM exp_records r1,  exp_players p
             WHERE record_challengeuid IN ('.$uids.')

@@ -102,7 +102,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         
         while($x < $limit && $x < sizeof($recs)){
             $this->items[$x] = new RecItem($x, $login, $recs[$x], $this->widths);
-            $this->pager->addComponent($this->items[$x]);
+            $this->pager->addItem($this->items[$x]);
             $x++;
         }
     }

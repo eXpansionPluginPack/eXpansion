@@ -81,7 +81,7 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->label_rank->setText(__(LocalRecords::$txt_rank,$this->getRecipient()));
         $this->label_nick->setText(__(LocalRecords::$txt_nick,$this->getRecipient()));
         $this->label_wins->setText(__(LocalRecords::$txt_wins,$this->getRecipient()));
-        $this->label_finish->setText(__(LocalRecords::$txt_score,$this->getRecipient()));
+        $this->label_finish->setText(__(LocalRecords::$txt_nbFinish,$this->getRecipient()));
         $this->label_lastRec->setText(__(LocalRecords::$txt_lastRec,$this->getRecipient()));
     }
     
@@ -102,7 +102,7 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         
         while($x < $limit && $x < sizeof($ranks)){
             $this->items[$x] = new RankItem($x, $login, $ranks[$x], $this->widths);
-            $this->pager->addComponent($this->items[$x]);
+            $this->pager->addItem($this->items[$x]);
             $x++;
         }
     }

@@ -20,7 +20,7 @@ class RecItem extends \ManiaLive\Gui\Control {
      
     function __construct($indexNumber, $login, Record $record, $widths) { 
         $this->widths = $widths;
-        
+        $this->sizeY = 4;
         $this->bg = new ListBackGround($indexNumber, 100, 4);
         $this->addComponent($this->bg);
         
@@ -65,7 +65,6 @@ class RecItem extends \ManiaLive\Gui\Control {
     public function onResize($oldX, $oldY) {
         $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX()/.8) - 5);
         $this->bg->setSizeX($this->getSizeX()-5);
-        echo "Resize\n";
         $this->label_rank->setSizeX($scaledSizes[0]);
         $this->label_nick->setSizeX($scaledSizes[1]);
         $this->label_score->setSizeX($scaledSizes[2]);
