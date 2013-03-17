@@ -12,11 +12,21 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableDedicatedEvents();        
     }
     
-    /*public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries) {
-        echo $answer;
-        print_r($entries);
+    public static function getScaledSize($sizes, $totalSize){
+        $nsize = array();
         
-    }*/
+        $total = 0;
+        foreach($sizes as $val){
+            $total += $val;
+        }
+        
+        $coff = $totalSize/$total;
+        
+        foreach ($sizes as $val){
+            $nsize[] = $val * $coff;
+        }
+        return $nsize;
+    }
     
     
 }
