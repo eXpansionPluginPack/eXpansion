@@ -15,8 +15,8 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
 class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     
     private $frame;
-    private $label_rank, $label_nick, $label_wins;
-    private $widths = array(1,5,3);
+    private $label_rank, $label_nick, $label_wins, $label_finish, $label_lastRec;
+    private $widths = array(1,5,3,2,2);
     
     private $pager;    
     private $items = array();
@@ -51,6 +51,16 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->label_wins->setAlign('left', 'center');
         $this->label_wins->setScale(0.8);
         $this->frame->addComponent($this->label_wins);
+        
+        $this->label_finish = new \ManiaLib\Gui\Elements\Label($scaledSizes[3], 4);
+        $this->label_finish->setAlign('left', 'center');
+        $this->label_finish->setScale(0.8);
+        $this->frame->addComponent($this->label_finish);
+        
+        $this->label_lastRec = new \ManiaLib\Gui\Elements\Label($scaledSizes[3], 4);
+        $this->label_lastRec->setAlign('left', 'center');
+        $this->label_lastRec->setScale(0.8);
+        $this->frame->addComponent($this->label_lastRec);
     }
     
     public function onResize($oldX, $oldY) {
@@ -60,6 +70,8 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->label_rank->setSizeX($scaledSizes[0]);
         $this->label_nick->setSizeX($scaledSizes[1]);
         $this->label_wins->setSizeX($scaledSizes[2]);
+        $this->label_finish->setSizeX($scaledSizes[3]);
+        $this->label_lastRec->setSizeX($scaledSizes[4]);
         $this->pager->setSize($this->getSizeX()-4, $this->getSizeY()-7);
         foreach ($this->items as $item)
             $item->setSizeX($this->getSizeX());
@@ -68,7 +80,9 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public function onDraw() {
         $this->label_rank->setText(__(LocalRecords::$txt_rank,$this->getRecipient()));
         $this->label_nick->setText(__(LocalRecords::$txt_nick,$this->getRecipient()));
-        $this->label_wins->setText(__(LocalRecords::$txt_score,$this->getRecipient()));
+        $this->label_wins->setText(__(LocalRecords::$txt_wins,$this->getRecipient()));
+        $this->label_finish->setText(__(LocalRecords::$txt_score,$this->getRecipient()));
+        $this->label_lastRec->setText(__(LocalRecords::$txt_lastRec,$this->getRecipient()));
     }
     
     public function destroy(){
