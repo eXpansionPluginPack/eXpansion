@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\AdminGroups\Admin;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
@@ -16,9 +17,9 @@ class AdminItem extends \ManiaLive\Gui\Control {
     private $admin;
     private $action_remove;
     private $plistButton;
-    function __construct(Admin $admin, $controller, $login) {
+    function __construct($indexNumber, Admin $admin, $controller, $login) {
         $this->group = $admin;
-        $sizeX = 120;
+        $sizeX = 75;
         $sizeY = 4;
 
         $this->action_remove = $this->createAction(array($controller, 'click_remove'), $admin);
@@ -26,15 +27,17 @@ class AdminItem extends \ManiaLive\Gui\Control {
         $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setSize($sizeX, $sizeY);
         $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-
-        $gui_name = new \ManiaLib\Gui\Elements\Label(35, 4);
+        
+        $this->addComponent(new ListBackGround($indexNumber, $sizeX, $sizeY));
+        
+        $gui_name = new \ManiaLib\Gui\Elements\Label(40, 4);
         $gui_name->setAlign('left', 'center');
         $gui_name->setText($admin->getLogin());
         $gui_name->setScale(0.8);
         $frame->addComponent($gui_name);
 
         $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($admin->getLogin());
-        $gui_nick = new \ManiaLib\Gui\Elements\Label(20, 4);
+        $gui_nick = new \ManiaLib\Gui\Elements\Label(32, 4);
         $gui_nick->setAlign('left', 'center');
         $gui_nick->setText($player != null ? $player->nickName : "");
         $gui_nick->setScale(0.8);
@@ -43,7 +46,7 @@ class AdminItem extends \ManiaLive\Gui\Control {
 
         if (AdminGroups::hasPermission($login, 'group_admin')) {
 
-            $this->plistButton = new MyButton(30, 6);
+            $this->plistButton = new MyButton(30, 4);
             $this->plistButton->setAction($this->action_remove);
             $this->plistButton->setText(__(AdminGroups::$txt_rmPlayer, $login));
             $this->plistButton->setScale(0.6);

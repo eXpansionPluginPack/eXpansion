@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
+use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 /**
@@ -66,13 +67,21 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $item->destroy();
         $this->pager->clearItems();
         $this->permissions = array();
-
+        
+        $x=0;
         foreach ($this->adminGroups->getPermissionList() as $key => $value) {
             $cBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 68);
             $cBox->setStatus($this->group->hasPermission($key));
             $cBox->setText($key);
-            $this->permissions[$key] = $cBox;
-            $this->pager->addItem($cBox);
+            $cBox->setScale(0.8);
+            
+            $frame = new \ManiaLive\Gui\Controls\Frame();
+            $frame->setSize(68, 4);
+            $frame->addComponent(new ListBackGround($x++, 68, 4));
+            $frame->addComponent($cBox);
+            
+            $this->permissions[$key] = $frame;
+            $this->pager->addItem($frame);
         }
     }
 

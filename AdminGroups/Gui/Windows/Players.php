@@ -74,7 +74,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function populateList() {
         $x = 0;
         foreach ($this->group->getGroupUsers() as $admin) {
-            $this->items[$x] = new AdminItem($admin, $this, $this->getRecipient());
+            $this->items[$x] = new AdminItem($x,$admin, $this, $this->getRecipient());
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
@@ -111,7 +111,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->button_add->destroy();
         foreach ($this->items as $item)
             $item->destroy();
-        $this->items = null;        
+        $this->items = array();        
         parent::destroy();
     }
 

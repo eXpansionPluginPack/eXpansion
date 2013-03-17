@@ -66,10 +66,20 @@ class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         $login = $this->getRecipient();
         foreach ($this->adminGroups->getAdminCommands() as $cmd) {
-            $this->items[$x] = new HelpItem($cmd, $this, $login);
+            $this->items[$x] = new HelpItem($x, $cmd, $this, $login);
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
+    }
+    
+    public function destroy(){
+        foreach ($this->items as $item) {
+            $item->destroy();            
+        }        
+        $this->items = null;
+        $this->pager->destroy();
+        $this->clearComponents();                
+        parent::destroy();
     }
 }
 ?>

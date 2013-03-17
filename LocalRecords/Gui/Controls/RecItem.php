@@ -12,13 +12,13 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  *
  * @author oliverde8
  */
-class RankItem extends \ManiaLive\Gui\Control {
+class RecItem extends \ManiaLive\Gui\Control {
     
-    private $label_rank, $label_nick, $label_wins, $label_finish, $label_lastRec;
+    private $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
     private $bg;
     private $widths;
      
-    function __construct($indexNumber, $login, $rank, $widths) { 
+    function __construct($indexNumber, $login, Record $record, $widths) { 
         $this->widths = $widths;
         $this->sizeY = 4;
         $this->bg = new ListBackGround($indexNumber, 100, 4);
@@ -33,32 +33,32 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->label_rank = new \ManiaLib\Gui\Elements\Label(10, 4);
         $this->label_rank->setAlign('left', 'center');
         $this->label_rank->setScale(0.8);
-        $this->label_rank->setText($rank->rank.".");
+        $this->label_rank->setText($record->place.".");
         $this->frame->addComponent($this->label_rank);
 
         $this->label_nick = new \ManiaLib\Gui\Elements\Label(10., 4);
         $this->label_nick->setAlign('left', 'center');
         $this->label_nick->setScale(0.8);
-        $this->label_nick->setText($rank->player_nickname);
+        $this->label_nick->setText($record->nickName);
         $this->frame->addComponent($this->label_nick);
         
-        $this->label_wins = new \ManiaLib\Gui\Elements\Label(10, 4);
-        $this->label_wins->setAlign('left', 'center');
-        $this->label_wins->setScale(0.8);
-        $this->label_wins->setText($rank->player_wins);
-        $this->frame->addComponent($this->label_wins);
+        $this->label_score = new \ManiaLib\Gui\Elements\Label(10, 4);
+        $this->label_score->setAlign('left', 'center');
+        $this->label_score->setScale(0.8);
+        $this->label_score->setText(\ManiaLive\Utilities\Time::fromTM($record->time));
+        $this->frame->addComponent($this->label_score);
         
-        $this->label_finish = new \ManiaLib\Gui\Elements\Label(10, 4);
-        $this->label_finish->setAlign('left', 'center');
-        $this->label_finish->setScale(0.8);
-        $this->label_finish->setText($rank->nbFinishes);
-        $this->frame->addComponent($this->label_finish);
+        $this->label_avgScore = new \ManiaLib\Gui\Elements\Label(10, 4);
+        $this->label_avgScore->setAlign('left', 'center');
+        $this->label_avgScore->setScale(0.8);
+        $this->label_avgScore->setText(\ManiaLive\Utilities\Time::fromTM($record->avgScore));
+        $this->frame->addComponent($this->label_avgScore);
         
-        $this->label_lastRec = new \ManiaLib\Gui\Elements\Label(10, 4);
-        $this->label_lastRec->setAlign('left', 'center');
-        $this->label_lastRec->setScale(0.8);
-        $this->label_lastRec->setText(date("j F Y", $rank->last_record));
-        $this->frame->addComponent($this->label_lastRec);
+        $this->label_nbFinish = new \ManiaLib\Gui\Elements\Label(10, 4);
+        $this->label_nbFinish->setAlign('left', 'center');
+        $this->label_nbFinish->setScale(0.8);
+        $this->label_nbFinish->setText($record->nbFinish);
+        $this->frame->addComponent($this->label_nbFinish);
     }
     
     
@@ -67,9 +67,9 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->bg->setSizeX($this->getSizeX()-5);
         $this->label_rank->setSizeX($scaledSizes[0]);
         $this->label_nick->setSizeX($scaledSizes[1]);
-        $this->label_wins->setSizeX($scaledSizes[2]);
-        $this->label_finish->setSizeX($scaledSizes[3]);
-        $this->label_lastRec->setSizeX($scaledSizes[4]);
+        $this->label_score->setSizeX($scaledSizes[2]);
+        $this->label_avgScore->setSizeX($scaledSizes[3]);
+        $this->label_nbFinish->setSizeX($scaledSizes[4]);
     }
 }
 
