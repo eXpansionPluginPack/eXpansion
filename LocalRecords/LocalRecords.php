@@ -477,18 +477,62 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     
     
     public function getRanks(){
+        
+        $ranks2 = array();
+        
+       foreach($this->storage->maps as $map){
+            
+            $q = 'SELECT record_playerlogin, 
+                    ( (SELECT count(*) FROM exp_records WHERE record_challengeuid = '.$this->db->quote($map->uId).')
+                        -
+                    (SELECT count(*)  FROM exp_records r2 WHERE record_challengeuid = '.$this->db->quote($map->uId).'
+                        AND r2.record_score < r1.record_score)
+                    )as ranking
+                    FROM exp_records r1, exp_players p
+                    WHERE record_challengeuid = '.$this->db->quote($map->uId).'
+                        AND r1.record_playerlogin = p.player_login
+                    GROUP BY record_playerlogin, player_nickname, player_wins
+                    ORDER BY ranking ASC
+                    LIMIT 0 , 100 ';
+           $dbData = $this->db->query($q);
+
+            if ($dbData->recordCount() == 0) {
+                
+            }else{
+                 while ($data = $dbData->fetchStdObject()) {
+                    if(!isset($ranks2[$data->record_playerlogin]))
+                        $ranks2[$data->record_playerlogin] = 0;
+                    $ranks2[$data->record_playerlogin] += $data->ranking;
+                }
+            }
+        }
+        
+        arsort($ranks2);
+        $ranks = array();
+        
+        $i = 0;
+        foreach ($ranks2 as $login => $rec) {
+            $player = $this->callPublicMethod('eXpansion\Database', 'getPlayer', $login);
+            if($player != null){
+                $player->tscore = $rec;
+                $ranks[] = $player;
+            }
+            $i++;
+        }
+        return $ranks;
+        /*
         $uids = $this->getUidSqlString();
         
         $q = '
            SELECT record_playerlogin, player_nickname, player_wins, (
-								(SELECT count(*) 
+								((SELECT count(*) 
 								FROM exp_records
 								WHERE record_challengeuid IN ('.$uids.') )*2
 								-
 								(SELECT count(*) 
 								FROM exp_records r2
 								WHERE r2.record_challengeuid IN ('.$uids.')
-									AND r2.record_score < r1.record_score) 
+									AND r2.record_score < r1.record_score))
 							)as ranking, 
                             (SELECT SUM(record_nbFinish) FROM exp_records 
                                 WHERE record_challengeuid IN ('.$uids.')
@@ -498,7 +542,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             WHERE record_challengeuid IN ('.$uids.')
             AND r1.record_playerlogin = p.player_login
             GROUP BY record_playerlogin, player_nickname, player_wins
-            ORDER BY ranking ASC
+            ORDER BY ranking DESC
             LIMIT 0 , 100 
         ';
         
@@ -515,7 +559,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $data->rank = $i;
             $ranks[] = $data;
         }
-        return $ranks;
+        return $ranks;/**/
     }
 
 
@@ -529,10 +573,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function getUidSqlString(){
         $uids = "";
         foreach($this->storage->maps as $map){
-            echo $map->uId.",";
             $uids .= $this->db->quote($map->uId).",";
         }
-        echo "\n".$uids."\n";
         return trim($uids, ",");
     }
 
