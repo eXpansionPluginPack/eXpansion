@@ -92,7 +92,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         $login = $this->getRecipient();
         foreach ($this->adminGroups->getGroupList() as $group) {
-            $this->items[$x] = new GroupItem($group, $this, $login);
+            $this->items[$x] = new GroupItem($x, $group, $this, $login);
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
@@ -114,7 +114,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Permissions::Create($login);
         $window->setGroup($group);
         $window->setTitle(__(AdminGroups::$txt_permissionsTitle, $login, $group->getGroupName()));
-        $window->setSize(80, 100);
+        $window->setSize(74, 100);
         $window->centerOnScreen();
         $window->show();
     }

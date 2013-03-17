@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\AdminGroups\Group;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
@@ -21,9 +22,9 @@ class GroupItem extends \ManiaLive\Gui\Control {
     private $permiButton;
     private $deleteButton;
 
-    function __construct(Group $group, $controller, $login) {
+    function __construct($indexNumber, Group $group, $controller, $login) {
         $this->group = $group;
-        $sizeX = 120;
+        $sizeX = 95;
         $sizeY = 4;
 
         $this->action_changePermissions = $this->createAction(array($controller, 'changePermission'), $group);
@@ -33,6 +34,8 @@ class GroupItem extends \ManiaLive\Gui\Control {
         $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setSize($sizeX, $sizeY);
         $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        
+        $this->addComponent(new ListBackGround($indexNumber, $sizeX, $sizeY));
 
         $gui_name = new \ManiaLib\Gui\Elements\Label(35*(0.8/0.6), 4);
         $gui_name->setAlign('left', 'center');
