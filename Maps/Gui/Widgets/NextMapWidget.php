@@ -74,6 +74,7 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
     }
 
     function destroy() {
+        $this->clearComponents();
         parent::destroy();
     }
 

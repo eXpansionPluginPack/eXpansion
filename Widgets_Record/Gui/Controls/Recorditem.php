@@ -16,10 +16,10 @@ class Recorditem extends \ManiaLive\Gui\Control {
     function __construct($index, \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record, $login) {
         $sizeX = 50;
         $sizeY = 3;
-        $config = Config::getInstance();
-        
+
+
         if ($record->login == $login) {
-            $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX+4, $sizeY);
+            $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 4, $sizeY);
             $this->bg->setPosX(-2);
             $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
             $this->bg->setAlign('left', 'center');
@@ -49,12 +49,16 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $flag->setAlign("left", "center");
         $flag->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
 
+        $config = Config::getInstance();
         $path = $record->nation;
+
         if ($path !== null) {
-            $path = explode("|", $path);
-            $image = $config->flags . rawurlencode($path[2]) . ".dds";
-            $flag->setStyle("");
-            $flag->setImage($image);
+            $path = explode("|", $path);            
+            if (sizeof($path) >= 2) {
+                $image = $config->flags . rawurlencode($path[2]) . ".dds";
+                $flag->setStyle("");
+                $flag->setImage($image);
+            }
         }
         $this->frame->addComponent($flag);
 
@@ -81,7 +85,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $nickname = \ManiaLib\Utils\Formatting::stripCodes($nickname, "wos");
         $this->nick->setText('$fff' . $nickname);
         $this->frame->addComponent($this->nick);
-        
+
         $this->addComponent($this->frame);
 
         $this->sizeX = $sizeX;
