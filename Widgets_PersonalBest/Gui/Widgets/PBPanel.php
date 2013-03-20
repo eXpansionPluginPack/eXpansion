@@ -10,6 +10,8 @@ class PBPanel extends \ManiaLive\Gui\Window {
     private $avg;
     private $wins;
     private $finish;
+    private $rank;
+    private $rankLoading;
     
     protected function onConstruct() {
         parent::onConstruct();
@@ -53,10 +55,32 @@ class PBPanel extends \ManiaLive\Gui\Window {
         $this->finish->setPosX(1);
         $this->finish->setPosY(-6);
         $this->addComponent($this->finish);
+        
+        $label = new \ManiaLib\Gui\Elements\Label();        
+        $label->setText('$ddd'.__('Server Rank'));
+        $label->setAlign("right", "top");
+        $label->setScale(0.7);
+        $label->setPosY(-9);
+        $this->addComponent($label);
+        
+        $this->rank = new \ManiaLib\Gui\Elements\Label(16,4);
+        $this->rank->setScale(0.7);
+        $this->rank->setAlign("left", "top");
+        $this->rank->setPosX(1);
+        $this->rank->setPosY(-9);
+        $this->addComponent($this->rank);
+        
+        $this->rankLoading = new \ManiaLib\Gui\Elements\Quad(6,6);
+        $this->rankLoading->setScale(0.7);
+        $this->rankLoading->setPosX(-.8);
+        $this->rankLoading->setPosY(-8);
+        $this->rankLoading->setStyle('Icons128x128_Blink');
+        $this->rankLoading->setSubStyle('Default');
+        $this->addComponent($this->rankLoading);
      
     }
     
-    function setRecord($record){
+    function setRecord($record, $rank, $rankTotal){
         $this->record = $record;
         if($record == null){
             $pbTime = \ManiaLive\Utilities\Time::fromTM(0);
@@ -73,6 +97,14 @@ class PBPanel extends \ManiaLive\Gui\Window {
         $this->pb->setText('$ddd'.$pbTime);
         $this->avg->setText('$ddd'.$avgTime);
         $this->finish->setText('$ddd'.$nbFinish);
+        $this->rank->setText('$ddd'.$rank.'\\'.$rankTotal);
+        if($rank == - 2){
+            $this->rankLoading->setVisibility(true);
+            $this->rank->setPosX(3);
+        }else{
+            $this->rankLoading->setVisibility(false);
+            $this->rank->setPosX(1);
+        }
     }
 
     function onResize($oldX, $oldY) {

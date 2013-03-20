@@ -11,6 +11,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $currentChallengeRecords = array();
     private $currentChallengePlayerRecords = array();
+    
+    private $player_ranks = array();
+    private $total_ranks = -1;
+    private $reset_count = 0;
+    
     private $checkpoints = array();
     private $config;
     private $msg_secure, $msg_new, $msg_BeginMap, $msg_newMap;
@@ -39,6 +44,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->setPublicMethod("getCurrentChallangePlayerRecord");
         $this->setPublicMethod("getRecords");
+        $this->setPublicMethod("getRanks");
+        $this->setPublicMethod("getPlayerRank");
+        $this->setPublicMethod("getTotalRanked");
 
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
 
@@ -56,6 +64,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->registerChatCommand("recs", "showRecsWindow", 0, true);
         $this->registerChatCommand("top100", "showRanksWindow", 0, true);
+        $this->resetAllRanks();
     }
 
     public function exp_onReady() {
@@ -75,12 +84,26 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = MYISAM ;";
             $this->db->query($q);
         }
+
+        if (!$this->db->tableExists('exp_recordRanks')) {
+            echo "GOGO";
+            $q = "CREATE VIEW exp_recordRanks AS 
+                    SELECT COUNT( * ) AS record_rank, r1.record_playerlogin AS rank_playerlogin, r1.record_challengeuid AS rank_challengeuid
+                    FROM exp_records r1, exp_records r2
+                    WHERE r1.record_challengeuid = r2.record_challengeuid
+                    AND r1.record_score > r2.record_score
+                    AND r1.record_nbLaps = r2.record_nbLaps
+                    
+                    GROUP BY r1.record_playerlogin, r1.record_challengeuid";
+            $this->db->query($q);
+        }
+
         $this->onBeginMap("", "", "");
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
         $this->updateCurrentChallengeRecords();
-
+        
         if (sizeof($this->currentChallengeRecords) == 0 && $this->config->sendBeginMapNotices) {
             $this->exp_chatSendServerMessage($this->msg_newMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wos')));
         } else if ($this->config->sendBeginMapNotices) {
@@ -91,6 +114,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
         $uid = $this->storage->currentMap->uId;
         $nbLaps = $this->getNbOfLaps();
+        
+
         foreach ($this->currentChallengeRecords as $i => $record) {
             $this->updateRecordInDatabase($record, $nbLaps);
         }
@@ -107,6 +132,13 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } else if ($this->config->sendBeginMapNotices) {
             $this->exp_chatSendServerMessage($this->msg_BeginMap, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wos'), \ManiaLive\Utilities\Time::fromTM($this->currentChallengeRecords[0]->time), \ManiaLib\Utils\Formatting::stripCodes($this->currentChallengeRecords[0]->nickName, 'wos')));
         }
+        $this->player_ranks[$login] = $this->getPlayerRank($login);
+    }
+
+    public function onPlayerDisconnect($login) {
+        $this->checkpoints[$login] = array();
+        unset($this->checkpoints[$login]);
+        unset($this->player_ranks[$login]);
     }
 
     /**
@@ -278,16 +310,20 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     private function updateCurrentChallengeRecords() {
 
+        $this->resetAllRanks();
+        
         $this->currentChallengePlayerRecords = array(); //reset
         $this->currentChallengeRecords = array(); //reset
         $this->currentChallengeRecords = $this->buildCurrentChallangeRecords(); // fetch
         $uid = $this->storage->currentMap->uId;
         foreach ($this->storage->players as $login => $player) { // get players
             $this->getFromDbPlayerRecord($login, $uid);
+            $this->player_ranks[$login] = $this->getPlayerRankDb($login);
         }
 
         foreach ($this->storage->spectators as $login => $player) { // get spectators
             $this->getFromDbPlayerRecord($login, $uid);
+            $this->player_ranks[$login] = $this->getPlayerRankDb($login);
         }
         \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
         \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->currentChallengeRecords));
@@ -469,116 +505,224 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->show();
     }
 
-    public function showRanksWindow($login){
+    public function showRanksWindow($login) {
         Gui\Windows\Ranks::Erase($login);
 
         $window = Gui\Windows\Ranks::Create($login);
         $window->setTitle(__('Server Ranks', $login));
         $window->centerOnScreen();
-        $window->populateList($this->getRanks(), 100);
+        $window->populateList($this->getRanks(100), 100);
         $window->setSize(120, 100);
         $window->show();
     }
+    
+    public function getOnlineRanks(){
+        
+    }
 
+    public function resetAllRanks() {
+        
+        $this->reset_count++;
+        if($this->total_ranks <= 0 
+                || $this->total_ranks/100 <= 1
+                || ($this->reset_count % ($this->total_ranks/100)) == 0){
+        
+            $uids = $this->getUidSqlString();
+            $this->player_ranks = array();
+            $q = 'SELECT COUNT(DISTINCT rank_playerlogin) as nbPlayer
+                FROM exp_recordRanks 
+                WHERE rank_challengeuid	IN (' . $uids . ')';
 
-    public function getRanks(){
-
-        $ranks2 = array();
-
-       foreach($this->storage->maps as $map){
-
-            $q = 'SELECT record_playerlogin,
-                    ( (SELECT count(*) FROM exp_records WHERE record_challengeuid = '.$this->db->quote($map->uId).')
-                        -
-                    (SELECT count(*)  FROM exp_records r2 WHERE record_challengeuid = '.$this->db->quote($map->uId).'
-                        AND r2.record_score < r1.record_score)
-                    )as ranking
-                    FROM exp_records r1, exp_players p
-                    WHERE record_challengeuid = '.$this->db->quote($map->uId).'
-                        AND r1.record_playerlogin = p.player_login
-                    GROUP BY record_playerlogin, player_nickname, player_wins
-                    ORDER BY ranking ASC
-                    LIMIT 0 , 100 ';
-           $dbData = $this->db->query($q);
+            $dbData = $this->db->query($q);
 
             if ($dbData->recordCount() == 0) {
-
-            }else{
-                 while ($data = $dbData->fetchStdObject()) {
-                    if(!isset($ranks2[$data->record_playerlogin]))
-                        $ranks2[$data->record_playerlogin] = 0;
-                    $ranks2[$data->record_playerlogin] += $data->ranking;
-                }
+                $this->total_ranks = -1;
+            } else {
+                $data = $dbData->fetchStdObject();
+                $this->total_ranks = $data->nbPlayer;
             }
         }
+    }
 
-        arsort($ranks2);
+    public function getTotalRanked() {
+        return $this->total_ranks;
+    }
+
+    public function getPlayerRank($login) {
+        if (isset($this->player_ranks[$login])) {
+            return $this->player_ranks[$login];
+        } 
+        else{
+            return -2;
+        }
+    }
+    
+    public function getPlayerRankDb($login) {
+        
+        if (isset($this->player_ranks[$login])) {
+            return $this->player_ranks[$login];
+        } else {
+            $uids = $this->getUidSqlString();
+            
+            $q = 'SELECT count(*) as nbRecs 
+                    FROM exp_recordRanks 
+                    WHERE rank_challengeuid	IN (' . $uids . ')
+                        AND rank_playerlogin = '.$this->db->quote($login).'';
+            $dbData = $this->db->query($q);
+
+            if ($dbData->recordCount() == 0) {
+                return -1;
+            } else {
+                $data = $dbData->fetchStdObject();
+                if($data->nbRecs == 0)
+                    return -1;
+            }
+            
+            $q = 'SELECT count(*) as ranking FROM (
+            SELECT COUNT(*)
+            FROM exp_recordRanks  
+            WHERE rank_challengeuid	IN (' . $uids . ')
+            GROUP BY rank_playerlogin
+            HAVING  SUM(100 - record_rank) > (SELECT SUM(100 - record_rank) as points
+                                                FROM exp_recordRanks  
+                                                WHERE rank_challengeuid	IN (' . $uids . ')
+                                                    AND rank_playerlogin = '.$this->db->quote($login).'
+                                                ORDER BY points DESC)) as temp';
+
+            $dbData = $this->db->query($q);
+
+            if ($dbData->recordCount() == 0) {
+                return -1;
+            } else {
+                $data = $dbData->fetchStdObject();
+                return $data->ranking+1;
+            }
+        }
+    }
+
+    public function getRanks($limit) {
+
+
         $ranks = array();
 
-        $i = 0;
-        foreach ($ranks2 as $login => $rec) {
-            $player = $this->callPublicMethod('eXpansion\Database', 'getPlayer', $login);
-            if($player != null){
-                $player->tscore = $rec;
-                $ranks[] = $player;
-            }
-            $i++;
-        }
-        return $ranks;
-        /*
         $uids = $this->getUidSqlString();
 
-        $q = '
-           SELECT record_playerlogin, player_nickname, player_wins, (
-                                ((SELECT count(*)
-                                FROM exp_records
-                                WHERE record_challengeuid IN ('.$uids.') )*2
-                                -
-                                (SELECT count(*)
-                                FROM exp_records r2
-                                WHERE r2.record_challengeuid IN ('.$uids.')
-                                    AND r2.record_score < r1.record_score))
-                            )as ranking,
-                            (SELECT SUM(record_nbFinish) FROM exp_records
-                                WHERE record_challengeuid IN ('.$uids.')
-                                    AND record_playerlogin = r1.record_playerlogin) as nbFinishes,
-                            MAX(record_date) as last_record
-            FROM exp_records r1,  exp_players p
-            WHERE record_challengeuid IN ('.$uids.')
-            AND r1.record_playerlogin = p.player_login
-            GROUP BY record_playerlogin, player_nickname, player_wins
-            ORDER BY ranking DESC
-            LIMIT 0 , 100
-        ';
-
-        echo $q;
+        $q = 'SELECT SUM(100 - record_rank) as points, rank_playerlogin
+        FROM exp_recordranks  
+        WHERE rank_challengeuid	IN (' . $uids . ')
+        GROUP BY rank_playerlogin
+        ORDER BY points DESC
+        LIMIT 0, 100';
 
         $dbData = $this->db->query($q);
 
         if ($dbData->recordCount() == 0) {
-            return array();
+            
+        } else {
+            while ($data = $dbData->fetchStdObject()) {
+                $player = $this->callPublicMethod('eXpansion\Database', 'getPlayer', $data->rank_playerlogin);
+                if ($player != null) {
+                    $player->tscore = $data->points;
+                    $ranks[] = $player;
+                }
+            }
         }
-        $ranks = array();
-        $i = 1;
-        while ($data = $dbData->fetchStdObject()) {
-            $data->rank = $i;
-            $ranks[] = $data;
-        }
-        return $ranks;/**/
+        return $ranks;
+
+        /* $ranks2 = array();
+          foreach($this->storage->maps as $map){
+
+          $q = 'SELECT record_playerlogin,
+          ( (SELECT count(*) FROM exp_records WHERE record_challengeuid = '.$this->db->quote($map->uId).')
+          -
+          (SELECT count(*)  FROM exp_records r2 WHERE record_challengeuid = '.$this->db->quote($map->uId).'
+          AND r2.record_score < r1.record_score)
+          )as ranking
+          FROM exp_records r1, exp_players p
+          WHERE record_challengeuid = '.$this->db->quote($map->uId).'
+          AND r1.record_playerlogin = p.player_login
+          GROUP BY record_playerlogin, player_nickname, player_wins
+          ORDER BY ranking ASC
+          LIMIT 0 , '.$limit.' ';
+          $dbData = $this->db->query($q);
+
+          if ($dbData->recordCount() == 0) {
+
+          }else{
+          while ($data = $dbData->fetchStdObject()) {
+          if(!isset($ranks2[$data->record_playerlogin]))
+          $ranks2[$data->record_playerlogin] = 0;
+          $ranks2[$data->record_playerlogin] += $data->ranking;
+          }
+          }
+          }
+
+          arsort($ranks2);
+          $ranks = array();
+
+          $i = 0;
+          foreach ($ranks2 as $login => $rec) {
+          $player = $this->callPublicMethod('eXpansion\Database', 'getPlayer', $login);
+          if($player != null){
+          $player->tscore = $rec;
+          $ranks[] = $player;
+          }
+          $i++;
+          }
+          return $ranks; /* */
+        /*
+          $uids = $this->getUidSqlString();
+
+          $q = '
+          SELECT record_playerlogin, player_nickname, player_wins, (
+          ((SELECT count(*)
+          FROM exp_records
+          WHERE record_challengeuid IN ('.$uids.') )*2
+          -
+          (SELECT count(*)
+          FROM exp_records r2
+          WHERE r2.record_challengeuid IN ('.$uids.')
+          AND r2.record_score < r1.record_score))
+          )as ranking,
+          (SELECT SUM(record_nbFinish) FROM exp_records
+          WHERE record_challengeuid IN ('.$uids.')
+          AND record_playerlogin = r1.record_playerlogin) as nbFinishes,
+          MAX(record_date) as last_record
+          FROM exp_records r1,  exp_players p
+          WHERE record_challengeuid IN ('.$uids.')
+          AND r1.record_playerlogin = p.player_login
+          GROUP BY record_playerlogin, player_nickname, player_wins
+          ORDER BY ranking DESC
+          LIMIT 0 , 100
+          ';
+
+          echo $q;
+
+          $dbData = $this->db->query($q);
+
+          if ($dbData->recordCount() == 0) {
+          return array();
+          }
+          $ranks = array();
+          $i = 1;
+          while ($data = $dbData->fetchStdObject()) {
+          $data->rank = $i;
+          $ranks[] = $data;
+          }
+          return $ranks;/* */
     }
 
-
-    public function getUidArray(){
+    public function getUidArray() {
         $uids = array();
-        foreach($this->storage->maps as $map){
+        foreach ($this->storage->maps as $map) {
             $uids[] = $map->uId;
         }
     }
 
-    public function getUidSqlString(){
+    public function getUidSqlString() {
         $uids = "";
-        foreach($this->storage->maps as $map){
-            $uids .= $this->db->quote($map->uId).",";
+        foreach ($this->storage->maps as $map) {
+            $uids .= $this->db->quote($map->uId) . ",";
         }
         return trim($uids, ",");
     }
