@@ -64,7 +64,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->registerChatCommand("recs", "showRecsWindow", 0, true);
         $this->registerChatCommand("top100", "showRanksWindow", 0, true);
-        $this->resetAllRanks();
     }
 
     public function exp_onReady() {
@@ -84,10 +83,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = MYISAM ;";
             $this->db->query($q);
         }
-
-        if (!$this->db->tableExists('exp_recordRanks')) {
-            echo "GOGO";
-            $q = "CREATE VIEW exp_recordRanks AS 
+        if (!$this->db->tableExists('exp_recordranks')) {
+            $q = "CREATE VIEW exp_recordranks AS 
                     SELECT COUNT( * ) AS record_rank, r1.record_playerlogin AS rank_playerlogin, r1.record_challengeuid AS rank_challengeuid
                     FROM exp_records r1, exp_records r2
                     WHERE r1.record_challengeuid = r2.record_challengeuid
