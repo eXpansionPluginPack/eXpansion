@@ -23,7 +23,8 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
     public function exp_onReady() {
         parent::exp_onReady();
-        $this->callPublicMethod('Reaby\\Dedimania', 'disableMessages');
+        if ($this->isPluginLoaded('Reaby\\Dedimania'))
+            $this->callPublicMethod('Reaby\\Dedimania', 'disableMessages');
         Dispatcher::register(dediEvent::getClass(), $this);
     }
 
@@ -46,7 +47,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     public function onDedimaniaPlayerConnect($data) {
         if (!$this->config->show_welcome_msg)
             return;
-        
+
         if ($data == null)
             return;
 
