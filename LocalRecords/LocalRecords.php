@@ -528,7 +528,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $uids = $this->getUidSqlString();
             $this->player_ranks = array();
             $q = 'SELECT COUNT(DISTINCT rank_playerlogin) as nbPlayer
-                FROM exp_recordRanks 
+                FROM exp_recordranks 
                 WHERE rank_challengeuid	IN (' . $uids . ')';
 
             $dbData = $this->db->query($q);
@@ -563,7 +563,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $uids = $this->getUidSqlString();
             
             $q = 'SELECT count(*) as nbRecs 
-                    FROM exp_recordRanks 
+                    FROM exp_recordranks 
                     WHERE rank_challengeuid	IN (' . $uids . ')
                         AND rank_playerlogin = '.$this->db->quote($login).'';
             $dbData = $this->db->query($q);
@@ -578,11 +578,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             
             $q = 'SELECT count(*) as ranking FROM (
             SELECT COUNT(*)
-            FROM exp_recordRanks  
+            FROM exp_recordranks  
             WHERE rank_challengeuid	IN (' . $uids . ')
             GROUP BY rank_playerlogin
             HAVING  SUM(100 - record_rank) > (SELECT SUM(100 - record_rank) as points
-                                                FROM exp_recordRanks  
+                                                FROM exp_recordranks  
                                                 WHERE rank_challengeuid	IN (' . $uids . ')
                                                     AND rank_playerlogin = '.$this->db->quote($login).'
                                                 ORDER BY points DESC)) as temp';
