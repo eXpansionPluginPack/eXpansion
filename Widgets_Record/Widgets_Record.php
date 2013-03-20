@@ -3,10 +3,9 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_Record;
 
 use \ManiaLive\Event\Dispatcher;
-use ManiaLivePlugins\Reaby\Dedimania\Events\Event as DediEvent;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 
-class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements \ManiaLivePlugins\eXpansion\LocalRecords\Events\Listener, \ManiaLivePlugins\Reaby\Dedimania\Events\Listener {
+class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $lastUpdate;
     private $forceUpdate = false;
@@ -17,7 +16,8 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin im
     }
 
     public function exp_onLoad() {
-        Dispatcher::register(DediEvent::getClass(), $this);
+        if($this->isPluginLoaded('Reaby\Dedimania'))
+        Dispatcher::register(ManiaLivePlugins\Reaby\Dedimania\Events\Event::getClass(), $this);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
 
