@@ -54,7 +54,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         if ($data['Banned'])
             return;
 
-
+        $upgrade = true;
         $player = $this->storage->getPlayerObject($data['Login']);
         $type = '$fffFree';
 
@@ -64,9 +64,10 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         }
 
 
-        $this->exp_chatSendServerMessage($player->nickName . '$z$s$fff connected with ' . $type . ' dedimania account. $0f0Top' . $data['MaxRank'] . '$fff records enabled.', null);
+        $msg = $this->config->supportMsg;
         if ($upgrade)
-            $this->exp_chatSendServerMessage($this->config->upgradeMsg, $data['Login']);
+            $msg = $this->config->upgradeMsg;
+            $this->exp_chatSendServerMessage($msg, $data['Login'], array($data['MaxRank']));
     }
 
     public function onDedimaniaPlayerDisconnect() {
