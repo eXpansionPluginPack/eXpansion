@@ -32,7 +32,11 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     }
 
     public function onDedimaniaNewRecord($record) {
-        $this->exp_chatSendServerMessage($this->config->newRecordMsg, null, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, \ManiaLive\Utilities\Time::fromTM($record->time)));
+        $recepient = $record->login;
+        if ($this->config->show_record_msg_to_all)
+            $recepient = null;
+
+        $this->exp_chatSendServerMessage($this->config->newRecordMsg, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, \ManiaLive\Utilities\Time::fromTM($record->time)));
     }
 
     public function onDedimaniaOpenSession() {
@@ -40,12 +44,15 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     }
 
     public function onDedimaniaPlayerConnect($data) {
+        if (!$this->config->show_welcome_msg)
+            return;
+        
         if ($data == null)
             return;
 
-        if ($data['Banned']) {
+        if ($data['Banned'])
             return;
-        }
+
 
         $player = $this->storage->getPlayerObject($data['Login']);
         $type = '$fffFree';
@@ -54,6 +61,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
             $type = '$ff0Premium$fff';
             $upgrade = false;
         }
+
 
         $this->exp_chatSendServerMessage($player->nickName . '$z$s$fff connected with ' . $type . ' dedimania account. $0f0Top' . $data['MaxRank'] . '$fff records enabled.', null);
         if ($upgrade)
@@ -65,8 +73,12 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     }
 
     public function onDedimaniaRecord($record, $oldRecord) {
+        $recepient = $record->login;
+        if ($this->config->show_record_msg_to_all)
+            $recepient = null;
+
         $diff = \ManiaLive\Utilities\Time::fromTM($record->time - $oldRecord->time, true);
-        $this->exp_chatSendServerMessage($this->config->recordMsg, null, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, \ManiaLive\Utilities\Time::fromTM($record->time), $diff));
+        $this->exp_chatSendServerMessage($this->config->recordMsg, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, \ManiaLive\Utilities\Time::fromTM($record->time), $diff));
     }
 
     public function onDedimaniaUpdateRecords($data) {
