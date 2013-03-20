@@ -84,6 +84,7 @@ class AdminCmd {
 
 	public function setHelp($help) {
 		$this->help = $help;
+        return $this;
 	}
 
 	public function getHelpMore() {
@@ -92,7 +93,16 @@ class AdminCmd {
 
 	public function setHelpMore($helpMore) {
 		$this->helpMore = $helpMore;
+        return $this;
 	}
+    
+    public function addLineHelpMore($line){
+        if($this->helpMore == null)
+            $this->helpMore = $line;
+        else
+            $this->helpMore .= "\n".$line;
+        return $this;
+    }
 
 	public function addAlias($cmd) {
 		$this->aliases[] = $cmd;
