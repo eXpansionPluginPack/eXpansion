@@ -151,8 +151,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());
         $this->registerChatCommand('adm', "adminCmd", -1, true, $this->get());
         
-        $this->addAdminCommand('groups', $this, "windowGroups", null);
-        $this->addAdminCommand('help', $this, "windowHelp", null);
+        $cmd = $this->addAdminCommand('groups', $this, "windowGroups", null);
+        $cmd->setHelp("Administrate the admin groups players and permissions.");
+        
+        $cmd = $this->addAdminCommand('help', $this, "windowHelp", null);
+        $cmd->setHelp("Show the list of all available admin commands and alliases.");
     }
 	
     public function onOliverde8HudMenuReady($menu) {

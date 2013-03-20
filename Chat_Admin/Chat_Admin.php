@@ -26,7 +26,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
     }
-    
+
     public function exp_onLoad() {
         parent::exp_onLoad();
 
@@ -46,68 +46,87 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          */
 
         $cmd = AdminGroups::addAdminCommand('player kick', $this, 'kick', Permission::player_kick); //
-        $cmd->setHelp(exp_getMessage('kick the player from the server'));
+        $cmd->setHelp('kick the player from the server');
+        $cmd->setHelpMore('$w/admin player kick #login$z will kick the player from the server.
+A kicked player may return to the server whanever he desires.');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "kick"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player ban', $this, 'ban', 'player_black');
-        $cmd->setHelp(exp_getMessage('Ban the player from the server'));
+        $cmd->setHelp('Ban the player from the server');
+        $cmd->setHelpMore('$w/admin player ban #login$z will ban  the player from the server. 
+He may not return until the server is restarted');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "ban"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player black', $this, 'blacklist', 'player_black');
-        $cmd->setHelp(exp_getMessage('Add the player to the black list'));
+        $cmd->setHelp('Add the player to the black list');
+        $cmd->setHelpMore('$w/admin player black #login$z will add the player to the blacklist of this server. 
+He may not return until the server blacklist file is deleted. 
+Other server might use the same blacklist file!!');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "black"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player remove ban', $this, 'unban', 'player_black');
-        $cmd->setHelp(exp_getMessage('Removes the ban of the player'));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Removes the ban of the player')
+                ->addLineHelpMore('$w/admin player remove ban #login$z will remove the ban of the player from this server')
+                ->addLineHelpMore('He may rejoin the server after this.')
+                ->setMinParam(1);
         AdminGroups::addAlias($cmd, "unban"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player clean banlist', $this, 'cleanBanlist', 'player_black');
-        $cmd->setHelp(exp_getMessage('clears the banlist of players'));
-        $cmd->setMinParam(0);
+        $cmd->setHelp('clears the banlist of players')
+                ->addLineHelpMore('Will completeley clear the banlist.')
+                ->addLineHelpMore('All banned players will be able to rejoin the server.')
+                ->setMinParam(0);
         AdminGroups::addAlias($cmd, "cleanbanlist"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player get banlist', $this, 'getBanlist', 'player_black');
-        $cmd->setHelp(exp_getMessage('shows the current banlist of players'));
-        $cmd->setMinParam(0);
+        $cmd->setHelp('shows the current banlist of players')
+                ->setMinParam(0);
         AdminGroups::addAlias($cmd, "getbanlist");
 
         $cmd = AdminGroups::addAdminCommand('player clean blacklist', $this, 'cleanBlacklist', 'player_black');
-        $cmd->setHelp(exp_getMessage('clears the blacklist of players'));
-        $cmd->setMinParam(0);
+        $cmd->setHelp('clears the blacklist of players')
+                ->addLineHelpMore('Will completeley clear the blackList.')
+                ->addLineHelpMore('All blacklist players will be able to rejoin the server.')
+                ->setMinParam(0);
         AdminGroups::addAlias($cmd, "cleanblacklist");
 
         $cmd = AdminGroups::addAdminCommand('player get blacklist', $this, 'getBlacklist', 'player_black');
-        $cmd->setHelp(exp_getMessage('shows the current banlist of players'));
-        $cmd->setMinParam(0);
+        $cmd->setHelp('shows the current banlist of players')
+                ->setMinParam(0);
         AdminGroups::addAlias($cmd, "getblacklist");
 
         $cmd = AdminGroups::addAdminCommand('player get guestlist', $this, 'getGuestlist', 'player_guest');
-        $cmd->setHelp(exp_getMessage('shows the current guest of players'));
-        $cmd->setMinParam(0);
+        $cmd->setHelp('shows the current guest of players')
+                ->setMinParam(0);
         AdminGroups::addAlias($cmd, "getguestlist");
 
         $cmd = AdminGroups::addAdminCommand('player get ignorelist', $this, 'getIgnorelist', 'player_ignore');
-        $cmd->setHelp(exp_getMessage('shows the current ignorelist of players'));
-        $cmd->setMinParam(0);
+        $cmd->setHelp('shows the current ignorelist of players')
+                ->setMinParam(0);
         AdminGroups::addAlias($cmd, "getignorelist");
 
         $cmd = AdminGroups::addAdminCommand('player remove black', $this, 'unBlacklist', 'player_black');
-        $cmd->setHelp(exp_getMessage('Removes the player from the black list'));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Removes the player from the black list')
+                ->addLineHelpMore('$w/admin player remove black #login$z will remove the player from the servers blacklist')
+                ->addLineHelpMore('He may rejoin the server after this.')
+                ->setMinParam(1);
         AdminGroups::addAlias($cmd, "unBlack"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player spec', $this, 'forceSpec', 'player_spec');
-        $cmd->setHelp(exp_getMessage('Forces the player to become spectator'));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Forces the player to become spectator')
+                ->addLineHelpMore('$w/admin player spec #login$z The playing player will be forced to become a spectator')
+                ->addLineHelpMore('If the max spectators is reached it the player won\'t become a spectator')
+                ->setMinParam(1);
         AdminGroups::addAlias($cmd, "spec"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player ignore', $this, 'ignore', 'player_ignore');
-        $cmd->setHelp(exp_getMessage('Adds player to ignore list and mutes him from the chat'));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Adds player to ignore list and mutes him from the chat')
+                ->addLineHelpMore('$w/admin player ignore #login$z will ignore the players chat')
+                ->addLineHelpMore('This player won\'t be able to communicate.')
+                ->setMinParam(1);
         AdminGroups::addAlias($cmd, "ignore"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player unignore', $this, 'unignore', 'player_ignore');
@@ -415,7 +434,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function support_fastRounds($fromLogin, $text) {
         try {
-               $params = explode(" ", $text);
+            $params = explode(" ", $text);
             $command = array_shift($params);
 
             switch (strtolower($command)) {
@@ -446,7 +465,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function support_fastCup($fromLogin, $text) {
         try {
-                $params = explode(" ", $text);
+            $params = explode(" ", $text);
             $command = array_shift($params);
 
             switch (strtolower($command)) {
@@ -487,7 +506,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function support_fastTeam($fromLogin, $text) {
         try {
-                $params = explode(" ", $text);
+            $params = explode(" ", $text);
             $command = array_shift($params);
 
             switch (strtolower($command)) {
