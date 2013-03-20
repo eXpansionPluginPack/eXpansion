@@ -23,6 +23,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     }
     
     public function exp_onReady() {
+        $this->enableDedicatedEvents();
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
@@ -63,7 +64,9 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     function redrawRecordWidget($login, $record){
         $panel = PBPanel::Get($login);
         if(isset($panel[0])){
-            $panel[0]->setRecord($record);
+            $rank = $this->callPublicMethod('eXpansion\\LocalRecords', 'getPlayerRank', $login);
+            $rankTotal = $this->callPublicMethod('eXpansion\\LocalRecords', 'getTotalRanked');
+            $panel[0]->setRecord($record, $rank, $rankTotal);
             $panel[0]->redraw($login);
         }
     }
@@ -73,9 +76,12 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             PBPanel::EraseAll();
         else
             PBPanel::Erase($login);
-
-        $info = PBPanel::Create($login);
-        $info->setRecord($record);
+        
+        $rank = $this->callPublicMethod('eXpansion\\LocalRecords', 'getPlayerRank', $login);
+        $rankTotal = $this->callPublicMethod('eXpansion\\LocalRecords', 'getTotalRanked');
+            
+        $info = PBPanel::Create($login, $rank, $rankTotal);
+        $info->setRecord($record, $rank, $rankTotal);
         $info->setSize(30, 6);
         $info->setPosition(135, -76);
         $info->show();
