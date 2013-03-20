@@ -149,7 +149,11 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
             if ($oldRecord !== null) {
                 $diff = \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time - $oldRecord->time, true);
-                $this->exp_chatSendServerMessage('%1$s#dedirecord# secured the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s #dedirecord#$n(#rank#%4$s#dedirecord#)!', null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), $this->records[$login]->place, \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time), $diff));
+                if ($this->config->show_record_msg_to_all) {
+                    $this->exp_chatSendServerMessage('%1$s#dedirecord# secured the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s #dedirecord#$n(#rank#%4$s#dedirecord#)!', null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), $this->records[$login]->place, \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time), $diff));
+                } else {
+                    $this->exp_chatSendServerMessage('%1$s#dedirecord# secured the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s #dedirecord#$n(#rank#%4$s#dedirecord#)!', $login, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos"), $this->records[$login]->place, \ManiaLive\Utilities\Time::fromTM($this->records[$login]->time), $diff));
+                }
                 return;
             }
 
@@ -173,7 +177,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
             $grfile = sprintf('Dedimania/%s.%d.%07d.%s.Replay.Gbx', $this->storage->currentMap->uId, $this->storage->gameInfos->gameMode, $rankings[0]['BestTime'], $rankings[0]['Login']);
             $this->connection->SaveBestGhostsReplay($rankings[0]['Login'], $grfile);
             $this->gReplay = file_get_contents($this->connection->gameDataDirectory() . 'Replays/' . $grfile);
-        } catch (\Exception $e) {            
+        } catch (\Exception $e) {
             $this->vReplay = "";
             $this->gReplay = "";
         }
@@ -211,11 +215,11 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     }
 
     public function onDedimaniaNewRecord($data) {
-        
+
     }
 
     public function onDedimaniaUpdateRecords($data) {
-        
+
     }
 
     public function onDedimaniaPlayerConnect($data) {
@@ -227,21 +231,20 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         }
 
         $player = $this->storage->getPlayerObject($data['Login']);
-        $upgrade = '$l[http://dedimania.net/tm2stats/?do=donation]Click here to upgrade your dedimania account.$l';
-        $type = '$fffFree';
 
-        if ($data['MaxRank'] != 15) {
-            $type = '$ff0Premium$fff';
-            $upgrade = false;
+        if ($this->config->show_welcome_msg) {
+            if ($data['MaxRank'] != 15) {
+                $msg = '#dedirecord#Thank you for donating to Dedimania..  your max record ranking is set at #rank#'.$data['MaxRank'].'#dedirecord#.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..';
+            } else {
+                $msg = '#dedirecord#Dedimania global ranking limited to top #rank#15#dedirecord# for basic accounts.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..';
+            }
+            $this->exp_chatSendServerMessage($msg, $data['Login']);
         }
 
-        $this->exp_chatSendServerMessage($player->nickName . '$z$s$fff connected with ' . $type . ' dedimania account. $0f0Top' . $data['MaxRank'] . '$fff records enabled.', null);
-        if ($upgrade)
-            $this->exp_chatSendServerMessage($upgrade, $data['Login']);
     }
 
     public function onDedimaniaPlayerDisconnect() {
-        
+
     }
 
 }
