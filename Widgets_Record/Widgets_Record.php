@@ -17,7 +17,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onLoad() {
         if($this->isPluginLoaded('Reaby\Dedimania'))
-        Dispatcher::register(ManiaLivePlugins\Reaby\Dedimania\Events\Event::getClass(), $this);
+        Dispatcher::register(\ManiaLivePlugins\Reaby\Dedimania\Events\Event::getClass(), $this);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
 
