@@ -68,10 +68,12 @@ class AdminCmd {
 
 	public function setMinParam($minParam) {
 		$this->minParam = $minParam;
+        return $this;
 	}
 
 	public function addchecker($numParam, types\absChecker $check) {
 		$this->checker[$numParam-1][] = $check;
+        return $this;
 	}
 
 	public function getPermission() {

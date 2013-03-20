@@ -24,5 +24,17 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $style_list_bgColor = array('ddd4', '7774');
     public $style_list_bgStyle = array('BgsPlayerCard', 'BgsPlayerCard');
     public $style_list_bgSubStyle = array('BgRacePlayerName', 'BgMediaTracker');
+    public $style_list_posXOffset = -1;
+    public $style_list_sizeXOffset = 2;
+    public $style_list_posYOffset = 0;
+    public $style_list_sizeYOffset = 0;
+    
+    public $style_title_bgColor = 'ddd4';
+    public $style_title_bgStyle = 'BgsPlayerCard';
+    public $style_title_bgSubStyle = 'BgActivePlayerName';
+    public $style_title_posXOffset = -1;
+    public $style_title_sizeXOffset = 2;
+    public $style_title_posYOffset = 0;
+    public $style_title_sizeYOffset = 0;
 }
 ?>

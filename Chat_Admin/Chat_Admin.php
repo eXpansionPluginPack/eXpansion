@@ -125,13 +125,15 @@ Other server might use the same blacklist file!!');
         $cmd = AdminGroups::addAdminCommand('player ignore', $this, 'ignore', 'player_ignore');
         $cmd->setHelp('Adds player to ignore list and mutes him from the chat')
                 ->addLineHelpMore('$w/admin player ignore #login$z will ignore the players chat')
-                ->addLineHelpMore('This player won\'t be able to communicate.')
+                ->addLineHelpMore('This player won\'t be able to communicate with other players.')
                 ->setMinParam(1);
         AdminGroups::addAlias($cmd, "ignore"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player unignore', $this, 'unignore', 'player_ignore');
-        $cmd->setHelp(exp_getMessage('Removes player to ignore list and allows him to chat'));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Removes player to ignore list and allows him to chat')
+                ->addLineHelpMore('$w/admin player unignore #login$z will allow this player to use the chat again')
+                ->addLineHelpMore('This player will be able to communicate with other players')        
+                ->setMinParam(1);
         AdminGroups::addAlias($cmd, "unignore"); // xaseco & fast
         //ENDSUPER
 
@@ -141,73 +143,84 @@ Other server might use the same blacklist file!!');
          * ***************************
          */
         $cmd = AdminGroups::addAdminCommand('set server name', $this, 'setServerName', 'server_name');
-        $cmd->setHelp(exp_getMessage('Changes the name of the server'));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Changes the name of the server')
+                ->addLineHelpMore('$w/admin set server name #name$z will change the server name.')
+                ->addLineHelpMore('This servers name will be changed.')
+                ->setMinParam(1);
         AdminGroups::addAlias($cmd, "setservername"); // xaseco
         AdminGroups::addAlias($cmd, "name"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server comment', $this, 'setServerComment', 'server_comment');
-        $cmd->setHelp(exp_getMessage('Changes the server comment'));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Changes the server comment')
+                ->addLineHelpMore('$w/admin set server comment #comment$z will change the server comment.')
+                ->addLineHelpMore('This servers comment will be changed.')
+                ->setMinParam(1);
         AdminGroups::addAlias($cmd, "setcomment"); // xaseco
         AdminGroups::addAlias($cmd, "comment"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server player password', $this, 'setServerPassword', 'server_password');
-        $cmd->setHelp(exp_getMessage('Changes the player password'));
-        $cmd->setHelpMore(exp_getMessage("Changes the password for players to connect"));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Changes the player password')
+            ->setHelpMore('$w/admin set server spec password #pwd$z will change the password needed for players to connect to this server')
+            ->setMinParam(1);
         AdminGroups::addAlias($cmd, "setpwd"); // xaseco
         AdminGroups::addAlias($cmd, "pass"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server spec password', $this, 'setSpecPassword', 'server_specpwd');
-        $cmd->setHelp(exp_getMessage('Changes the spectator password'));
-        $cmd->setHelpMore(exp_getMessage("Changes the password for spectators to connect"));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Changes the spectator password')
+                ->setHelpMore('$w/admin set server spec password #pwd$z will change the password needed for spectators to connect to this server')
+                ->setMinParam(1);
         AdminGroups::addAlias($cmd, "setspecpwd"); // xaseco
         AdminGroups::addAlias($cmd, "spectpass"); // fast
 
 
         $cmd = AdminGroups::addAdminCommand('set server ref password', $this, 'setSpecPassword', 'server_specpwd');
-        $cmd->setHelp(exp_getMessage('Changes the Referee password'));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Changes the Referee password')
+                ->setMinParam(1);
         AdminGroups::addAlias($cmd, "setrefpwd"); // xaseco
 
 
         $cmd = AdminGroups::addAdminCommand('set server maxplayers', $this, 'setServerMaxPlayers', 'server_maxplayer');
-        $cmd->setHelp(exp_getMessage('Sets a new maximum of players'));
-        $cmd->setHelpMore(exp_getMessage('Sets the maximum number of players who can play on this server.'));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Sets a new maximum of players')
+                ->setHelpMore('Sets the maximum number of players who can play on this server.')
+                ->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setmaxplayers"); //xaseco
         AdminGroups::addAlias($cmd, "maxplayers"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server maxspectators', $this, 'setServerMaxSpectators', 'server_maxspec');
-        $cmd->setHelp(exp_getMessage('Sets a new maximum of spectator'));
-        $cmd->setHelp(exp_getMessage('Sets the maximum number of players who can spectate the players on this server.'));
+        $cmd->setHelp('Sets a new maximum of spectator')
+                ->setHelp('Sets the maximum number of players who can spectate the players on this server.');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setmaxspecs"); // xaseco
         AdminGroups::addAlias($cmd, "maxspec"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server chattime', $this, 'setserverchattime', 'server_chattime');
-        $cmd->setHelp(exp_getMessage('Sets the Chat time duration.'));
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Sets the Chat time duration.')
+                ->addLineHelpMore('This is the time players get between the challenge end and the the new map')
+                ->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
         AdminGroups::addAlias($cmd, "setchattime"); // xaseco
         AdminGroups::addAlias($cmd, "chattime"); // fast
 
         $cmd = AdminGroups::addAdminCommand('set server hide', $this, 'setHideServer', 'server_admin');
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
+        $cmd->setHelp('Allows you to hide or show the server to players')
+                ->addLineHelpMore('$w\admin set server hide true$z Will hide the server from other players. Players would need to have the servers in their favorites or need to know the server login ')
+                ->addLineHelpMore('$w\admin set server hide false$z Will make the server visible to any player')
+                ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "sethideserver");
 
         $cmd = AdminGroups::addAdminCommand('set server mapdownload', $this, 'setServerMapDownload', 'server_admin');
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
+        $cmd->setHelp('Will allow players to download maps they are playing from the server.')
+                ->addLineHelpMore('$w\admin set server mapdownload true$z will allow the maps to be downloaded.')
+                ->addLineHelpMore('$w\admin set server mapdownload false$z will not allow players to download the maps of this server.')
+                ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "setMapDownload");
 
         $cmd = AdminGroups::addAdminCommand('stop dedicated', $this, 'stopDedicated', 'server_admin');
-        $cmd->getHelp("Stops this server.");
+        $cmd->getHelp("Stops this server. Manialive will crush after this");
         AdminGroups::addAlias($cmd, 'stop ml');
 
         $cmd = AdminGroups::addAdminCommand('stop manialive', $this, 'stopManiaLive', 'server_admin');
@@ -220,91 +233,119 @@ Other server might use the same blacklist file!!');
          * *************************
          */
         $cmd = AdminGroups::addAdminCommand('skip', $this, 'skipMap', 'map_skip');
-        $cmd->setHelp(exp_getMessage("Skips the current track"));
+        $cmd->setHelp("Skips the current track");
         AdminGroups::addAlias($cmd, 'skip'); // shortcut
         AdminGroups::addAlias($cmd, 'skipmap'); // xaseco
         AdminGroups::addAlias($cmd, 'next'); // fast
         AdminGroups::addAlias($cmd, 'nextmap');
 
         $cmd = AdminGroups::addAdminCommand('restart', $this, 'restartMap', 'map_res');
+        $cmd->setHelp("Restarts this map to allow you to replay the map");
         AdminGroups::addAlias($cmd, 'res'); // xaseco
         AdminGroups::addAlias($cmd, 'restart'); // fast
         AdminGroups::addAlias($cmd, 'restartmap'); //xaseco
 
 
         $cmd = AdminGroups::addAdminCommand('set game mode', $this, 'setGameMode', 'game_gamemode');
-        $cmd->setHelp(exp_getMessage('Sets next mode {ta,rounds,team,laps,stunts,cup}'));
+        $cmd->setHelp('Sets next mode {ta,rounds,team,laps,stunts,cup}')
+                ->addLineHelpMore('$w\admin set game mode ta$z will change gamemode to TimeAttack.')
+                ->addLineHelpMore('$w\admin set game mode rounds$z will change gamemode to Rounds mode.')
+                ->addLineHelpMore('$w\admin set game mode team$z will change gamemode to Team mode.')
+                ->addLineHelpMore('$w\admin set game mode laps$z will change gamemode to Laps mode.')
+                ->addLineHelpMore('$w\admin set game mode cup$z will change gamemode to Cup mode.')
+                ->addLineHelpMore('$w\admin set game mode stunts$z will change gamemode to Stunts mode.');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, 'setgamemode'); //xaseco
         AdminGroups::addAlias($cmd, 'mode'); //fast
 
         $cmd = AdminGroups::addAdminCommand('set game AllWarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
-        $cmd->setMinParam(1);
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+            $cmd->setHelp('Set the warmup duration at the begining of the maps for all gamemodes')
+            ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, 'setAllWarmUpDuration');
 
         $cmd = AdminGroups::addAdminCommand('set game disableRespawn', $this, 'setDisableRespawn', 'game_settings');
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Will disable the respawn capabilities of the players')
+                ->addLineHelpMore('$w/admin set game disableRespawn true$z will force the players to restart the map when they respaw')
+                ->addLineHelpMore('$w/admin set game disableRespawn false$z player that respaw will return back to the last checkpoint')
+                ->addLineHelpMore("\n".'A player respaws when he clicks on backspace on his keyboard')
+                ->setMinParam(1);
         AdminGroups::addAlias($cmd, 'setDisableRespawn');
 
         //TimeAttack
         $cmd = AdminGroups::addAdminCommand('set game ta timelimit', $this, 'setTAlimit', 'game_settings');
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Changes the time limit of Time Attack mode.')
+                ->addLineHelpMore('$w/admin set game ta timelimit #num$z will change the play time of a map')
+                ->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
         AdminGroups::addAlias($cmd, 'setTAlimit');
 
         $cmd = AdminGroups::addAdminCommand('set game ta WarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Changes the warmup duration of Time Attack mode only')
+                ->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
 
         //rounds
         $cmd = AdminGroups::addAdminCommand('set game rounds end', $this, 'forceEndRound', 'map_roundEnd');
+        $cmd->setHelp('Ends a round. Only work in round mode');
         AdminGroups::addAlias($cmd, 'end');  // fast
         AdminGroups::addAlias($cmd, 'endround'); // xaseco
         AdminGroups::addAlias($cmd, 'er'); // xaseco
 
         $cmd = AdminGroups::addAdminCommand('set game rounds PointsLimit', $this, 'setRoundPointsLimit', 'game_settings');
+        $cmd->setHelp('Changes the points limit of rounds mode');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, 'rpoints');
 
         $cmd = AdminGroups::addAdminCommand('set game rounds ForcedLaps', $this, 'setRoundForcedLaps', 'game_settings');
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Forces laps in Rounds mode')
+                ->addLineHelpMore('$w\admin set game rounds ForcedLaps #num$z will force multi laps maps lap number to the given value')
+                ->addLineHelpMore('using 0 as number of laps will change the nb of laps to the default value')
+                ->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, 'setRoundForcedLaps');
 
         $cmd = AdminGroups::addAdminCommand('set game rounds NewRules', $this, 'setUseNewRulesRound', 'game_settings');
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Allows you tu use new rules in rounds mode')
+                ->addLineHelpMore('$w/admin set game rounds NewRules true$z will force the usage of new rules in rounds mode')
+                ->addLineHelpMore('$w/admin set game rounds NewRules false$z will force the usage of old rules in rounds mode')
+                ->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
         AdminGroups::addAlias($cmd, 'setUseNewRulesRound');
 
         $cmd = AdminGroups::addAdminCommand('set game rounds WarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
-        $cmd->setMinParam(1);
+        $cmd->setHelp('Changes the warmup duration of Rounds mode only')
+                ->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
 
         //laps
         $cmd = AdminGroups::addAdminCommand('set game laps TimeLimit', $this, 'setLapsTimeLimit', 'game_settings');
-        $cmd->setMinParam(1);
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
+        $cmd->setHelp('Changes the limit of time players has to finish the track')
+            ->setMinParam(1)
+            ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
         AdminGroups::addAlias($cmd, "setLapsTimeLimit");
 
         $cmd = AdminGroups::addAdminCommand('set game laps nbLaps', $this, 'setNbLaps', 'game_settings');
+        $cmd->setHelp('Changes the numbers of laps players need to do to finish the map');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setNbLaps");
 
         $cmd = AdminGroups::addAdminCommand('set game laps FinishTimeOut', $this, 'setFinishTimeout', 'game_settings');
-        $cmd->setMinParam(1);
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
+        $cmd->setHelp('Changes the time that has a player to finish a map once 1 player has already finished the map')
+                ->setMinParam(1)
+                ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
         AdminGroups::addAlias($cmd, "setFinishTimeout");
 
 
         $cmd = AdminGroups::addAdminCommand('set game laps WarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
-        $cmd->setMinParam(1);
-        $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+        $cmd->setHelp('Changes the warmup duration of laps mode only')
+                ->setMinParam(1)
+                ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
 
         //team
         $cmd = AdminGroups::addAdminCommand('set game team PointsLimit', $this, 'setTeamPointsLimit', 'game_settings');
+        $cmd->setHelp('Changes the points limit of team mode');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setTeamPointsLimit");
