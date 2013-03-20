@@ -84,6 +84,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->db->query($q);
         }
         if (!$this->db->tableExists('exp_recordranks')) {
+            echo '[eXpansion]Creating View ...'."\n";
             $q = "CREATE VIEW exp_recordranks AS 
                     SELECT COUNT( * ) AS record_rank, r1.record_playerlogin AS rank_playerlogin, r1.record_challengeuid AS rank_challengeuid
                     FROM exp_records r1, exp_records r2
