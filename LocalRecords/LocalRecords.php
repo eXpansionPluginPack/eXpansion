@@ -211,6 +211,12 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["plugin"] = $this;
         $button["function"] = "showRecsWindow";
         $menu->addButton($parent, "Local Records", $button);
+        
+        $button["style"] = "BgRaceScore2";
+        $button["substyle"] = "LadderRank";
+        $button["plugin"] = $this;
+        $button["function"] = "showRanksWindow";
+        $menu->addButton($parent, "Local Ranks", $button);
     }
 
     public function addRecord($login, $score, $gamemode, $cpScore) {
@@ -623,7 +629,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                         player_wins,
                         player_timeplayed,
                         player_nation,
-                        MAX(record_date) as lastRec
+                        MAX(record_date) as lastRec,
+                        '.sizeof($this->storage->maps).' as nbMaps
         FROM exp_recordranks rr, exp_records r, exp_players p
         WHERE rank_challengeuid	IN (' . $uids . ')
             AND rr.rank_playerlogin = r.record_playerlogin

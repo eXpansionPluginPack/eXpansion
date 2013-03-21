@@ -63,7 +63,7 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->label_nbRecords = new \ManiaLib\Gui\Elements\Label(10, 4);
         $this->label_nbRecords->setAlign('left', 'center');
         $this->label_nbRecords->setScale(0.8);
-        $this->label_nbRecords->setText($rank->nbRecords);
+        $this->label_nbRecords->setText($rank->nbRecords.'/'.$rank->nbMaps);
         $this->frame->addComponent($this->label_nbRecords);
         
         $this->label_ptime = new \ManiaLib\Gui\Elements\Label(10, 4);
