@@ -271,7 +271,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function incrementWins($player) {
         $q = "UPDATE `exp_players`
-			 SET player_wins` = (`player_wins` + 1)
+			 SET `player_wins` = (`player_wins` + 1)
 			 WHERE `player_login` = " . $this->db->quote($player->login) . ";";
         $this->db->query($q);
     }
