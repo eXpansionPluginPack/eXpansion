@@ -35,6 +35,8 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
         
         $this->setPublicMethod('getPlayer');
+        $this->setPublicMethod('getDatabaseVersion');
+        $this->setPublicMethod('setDatabaseVersion');
         $this->updateServerChallenges();
     }
 
@@ -301,12 +303,15 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 								 )";
             $this->db->query($q);
         } else {
+            $record = $query->fetchStdObject();
+            
+            if($record->database_version < $version){            
+                $q = "UPDATE exp_`databaseversion`
+                SET	`database_version` = " . $this->db->quote($version) . "
+                WHERE `database_table` = " . $this->db->quote($table) . ";";
 
-            $q = "UPDATE exp_`databaseversion`
-			SET	`database_version` = " . $this->db->quote($version) . "
-			WHERE `database_table` = " . $this->db->quote($table) . ";";
-
-            $this->db->query($q);
+                $this->db->query($q);
+            }
         }
     }
 

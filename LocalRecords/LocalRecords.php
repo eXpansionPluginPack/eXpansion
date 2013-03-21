@@ -19,7 +19,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $checkpoints = array();
     private $config;
     private $msg_secure, $msg_new, $msg_BeginMap, $msg_newMap;
-    public static $txt_rank, $txt_nick, $txt_score, $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec;
+    public static $txt_rank, $txt_nick, $txt_score, $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
     function exp_onInit() {
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -38,9 +38,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$txt_nick = exp_getMessage("NickName");
         self::$txt_score = exp_getMessage("Score");
         self::$txt_avgScore = exp_getMessage("Average Score");
-        self::$txt_nbFinish = exp_getMessage("Nb Finishes");
+        self::$txt_nbFinish = exp_getMessage("Finishes");
         self::$txt_wins = exp_getMessage("Nb Wins");
         self::$txt_lastRec = exp_getMessage("Last Rec Date");
+        self::$txt_ptime = exp_getMessage("Play Time");
+        self::$txt_nbRecords = exp_getMessage("nb Rec");
 
         $this->setPublicMethod("getCurrentChallangePlayerRecord");
         $this->setPublicMethod("getRecords");
@@ -83,17 +85,23 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = MYISAM ;";
             $this->db->query($q);
         }
-        if (!$this->db->tableExists('exp_recordranks')) {
+        
+        $version = $this->callPublicMethod('eXpansion\Database', 'getDatabaseVersion', 'exp_recordranks');
+        
+        if (!$version || !$this->db->tableExists('exp_recordranks')) {
+            $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_recordranks', 1);
             echo '[eXpansion]Creating View ...'."\n";
-            $q = "CREATE VIEW exp_recordranks AS 
+            $q = "CREATE or REPLACE VIEW exp_recordranks AS 
                     SELECT COUNT( * ) AS record_rank, r1.record_playerlogin AS rank_playerlogin, r1.record_challengeuid AS rank_challengeuid
                     FROM exp_records r1, exp_records r2
-                    WHERE r1.record_challengeuid = r2.record_challengeuid
-                    AND r1.record_score > r2.record_score
+                    WHERE r1.record_score > r2.record_score
+                    AND 10 < ( SELECT count(*) FROM exp_records r3 WHERE r3.record_playerlogin = r1.record_playerlogin)
+                    AND r1.record_score < (SELECT MAX(r3.record_score) FROM exp_records r3 WHERE r1.record_challengeuid = r3.record_challengeuid LIMIT 0, 100)
                     AND r1.record_nbLaps = r2.record_nbLaps
-                    
+                    AND r1.record_challengeuid = r2.record_challengeuid
                     GROUP BY r1.record_playerlogin, r1.record_challengeuid";
             $this->db->query($q);
+            
         }
 
         $this->onBeginMap("", "", "");
@@ -510,7 +518,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Server Ranks', $login));
         $window->centerOnScreen();
         $window->populateList($this->getRanks(100), 100);
-        $window->setSize(120, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
     
@@ -605,11 +613,30 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $uids = $this->getUidSqlString();
 
-        $q = 'SELECT SUM(100 - record_rank) as points, rank_playerlogin
-        FROM exp_recordranks  
+        $q = 'SELECT SUM(100 - record_rank) as tscore, 
+                        rank_playerlogin, 
+                        SUM(record_nbFinish) as nbFinish,
+                        Count(*) as nbRecords,
+                        player_nickname,
+                        player_nicknameStripped, 
+                        player_updated, 
+                        player_wins,
+                        player_timeplayed,
+                        player_nation,
+                        MAX(record_date) as lastRec
+        FROM exp_recordranks rr, exp_records r, exp_players p
         WHERE rank_challengeuid	IN (' . $uids . ')
-        GROUP BY rank_playerlogin
-        ORDER BY points DESC
+            AND rr.rank_playerlogin = r.record_playerlogin
+            AND r.record_playerlogin = p.player_login
+            AND rank_challengeuid = r.record_challengeuid
+        GROUP BY rank_playerlogin,
+                    player_nickname,
+                    player_nicknameStripped, 
+                    player_updated, 
+                    player_wins,
+                    player_timeplayed,
+                    player_nation
+        ORDER BY tscore DESC
         LIMIT 0, 100';
 
         $dbData = $this->db->query($q);
@@ -618,11 +645,12 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             
         } else {
             while ($data = $dbData->fetchStdObject()) {
-                $player = $this->callPublicMethod('eXpansion\Database', 'getPlayer', $data->rank_playerlogin);
+                $ranks[] = $data;
+                /*$player = $this->callPublicMethod('eXpansion\Database', 'getPlayer', $data->rank_playerlogin);
                 if ($player != null) {
                     $player->tscore = $data->points;
                     $ranks[] = $player;
-                }
+                }*/
             }
         }
         return $ranks;

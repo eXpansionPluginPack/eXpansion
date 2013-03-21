@@ -57,13 +57,25 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->label_finish = new \ManiaLib\Gui\Elements\Label(10, 4);
         $this->label_finish->setAlign('left', 'center');
         $this->label_finish->setScale(0.8);
-        $this->label_finish->setText(0);
+        $this->label_finish->setText($rank->nbFinish);
         $this->frame->addComponent($this->label_finish);
+        
+        $this->label_nbRecords = new \ManiaLib\Gui\Elements\Label(10, 4);
+        $this->label_nbRecords->setAlign('left', 'center');
+        $this->label_nbRecords->setScale(0.8);
+        $this->label_nbRecords->setText($rank->nbRecords);
+        $this->frame->addComponent($this->label_nbRecords);
+        
+        $this->label_ptime = new \ManiaLib\Gui\Elements\Label(10, 4);
+        $this->label_ptime->setAlign('left', 'center');
+        $this->label_ptime->setScale(0.8);
+        $this->label_ptime->setText($this->formatPTime($rank->player_timeplayed));
+        $this->frame->addComponent($this->label_ptime);
         
         $this->label_lastRec = new \ManiaLib\Gui\Elements\Label(10, 4);
         $this->label_lastRec->setAlign('left', 'center');
         $this->label_lastRec->setScale(0.8);
-        $this->label_lastRec->setText(date("j F Y", time()));
+        $this->label_lastRec->setText(date("j F Y", $rank->lastRec));
         $this->frame->addComponent($this->label_lastRec);
     }
     
@@ -76,7 +88,18 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->label_wins->setSizeX($scaledSizes[2]);
         $this->label_score->setSizeX($scaledSizes[3]);
         $this->label_finish->setSizeX($scaledSizes[4]);
-        $this->label_lastRec->setSizeX($scaledSizes[5]);
+        $this->label_nbRecords->setSizeX($scaledSizes[5]);
+        $this->label_ptime->setSizeX($scaledSizes[6]);
+        $this->label_lastRec->setSizeX($scaledSizes[7]);
+    }
+    
+    public function formatPTime($time){
+        $min = (int)($time/60);
+        $hour = (int)($min/60);
+        $min = $min % 60;
+        $day = (int)($hour / 24);
+        $hour = $hour % 24;
+        return $day.'d '.$hour.'h '.$min.'m';
     }
 }
 
