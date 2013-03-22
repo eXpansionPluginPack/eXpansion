@@ -306,10 +306,10 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record = $query->fetchStdObject();
             
             if($record->database_version < $version){            
-                $q = "UPDATE exp_`databaseversion`
+                $q = "UPDATE `exp_databaseversion`
                 SET	`database_version` = " . $this->db->quote($version) . "
                 WHERE `database_table` = " . $this->db->quote($table) . ";";
-
+                echo $q;
                 $this->db->query($q);
             }
         }

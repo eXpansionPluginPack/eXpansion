@@ -88,21 +88,24 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         
         $version = $this->callPublicMethod('eXpansion\Database', 'getDatabaseVersion', 'exp_recordranks');
         
-        if (!$version || !$this->db->tableExists('exp_recordranks')) {
-            $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_recordranks', 1);
+        if (!$version || !$this->db->tableExists('exp_recordranks') || $version<2) {
+            $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_recordranks', 2);
+            $this->exp_chatSendServerMessage('[eXp]Creating Ranks table, this might take some time...', null);
             echo '[eXpansion]Creating View ...'."\n";
             $q = "CREATE or REPLACE VIEW exp_recordranks AS 
                     SELECT COUNT( * ) AS record_rank, r1.record_playerlogin AS rank_playerlogin, r1.record_challengeuid AS rank_challengeuid
                     FROM exp_records r1, exp_records r2
-                    WHERE r1.record_score > r2.record_score
-                    AND 10 < ( SELECT count(*) FROM exp_records r3 WHERE r3.record_playerlogin = r1.record_playerlogin)
-                    AND r1.record_score < (SELECT MAX(r3.record_score) FROM exp_records r3 WHERE r1.record_challengeuid = r3.record_challengeuid LIMIT 0, 100)
+                    WHERE r1.record_score > r2.record_score         
                     AND r1.record_nbLaps = r2.record_nbLaps
                     AND r1.record_challengeuid = r2.record_challengeuid
                     GROUP BY r1.record_playerlogin, r1.record_challengeuid";
             $this->db->query($q);
-            
+            $this->exp_chatSendServerMessage('[eXp]Creating Ranks table, DONE !', null);
         }
+        /*
+         * AND 10 < ( SELECT count(*) FROM exp_records r3 WHERE r3.record_playerlogin = r1.record_playerlogin)
+                    AND r1.record_score < (SELECT MAX(r3.record_score) FROM exp_records r3 WHERE r1.record_challengeuid = r3.record_challengeuid LIMIT 0, 100)
+         */
 
         $this->onBeginMap("", "", "");
     }
@@ -587,6 +590,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             } else {
                 $data = $dbData->fetchStdObject();
                 if($data->nbRecs == 0)
+                    return -1;
+                if($data->nbRecs < 10)
                     return -1;
             }
             
