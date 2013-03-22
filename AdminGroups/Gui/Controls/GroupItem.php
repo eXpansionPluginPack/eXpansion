@@ -79,8 +79,14 @@ class GroupItem extends \ManiaLive\Gui\Control {
     }
 
     public function destroy() {
-        $this->plistButton->destroy();
-        $this->permiButton->destroy();
+        if($this->permiButton != null){
+            $this->permiButton->destroy();
+            $this->plistButton->destroy();
+            $this->deleteButton->destroy();
+        }
+        $this->permiButton=null;
+        $this->plistButton=null;
+        $this->deleteButton=null;
         $this->clearComponents();
 
 
