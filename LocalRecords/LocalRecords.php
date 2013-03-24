@@ -89,6 +89,17 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->db->query($q);
         }
         
+        $version = $this->callPublicMethod('eXpansion\Database', 'getDatabaseVersion', 'exp_records');
+        if(!$version){
+            $q = "ALTER TABLE  `exp_records` ADD UNIQUE (
+                                                `record_challengeuid` ,
+                                                `record_playerlogin` ,
+                                                `record_nbLaps`
+                                                );";
+            $this->db->query($q);
+            $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_recordranks', 1);
+        }
+        
         $version = $this->callPublicMethod('eXpansion\Database', 'getDatabaseVersion', 'exp_recordranks');
         
         if (!$version || !$this->db->tableExists('exp_recordranks') || $version<2) {
@@ -374,6 +385,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $q = "SELECT * FROM `exp_records`, `exp_players`
                     WHERE `record_challengeuid` = " . $this->db->quote($challenge->uId) . " " . $cons . "
                         AND `exp_records`.`record_playerlogin` = `exp_players`.`player_login`
+                        ".$cons."
                     ORDER BY `record_score` ASC
                     LIMIT 0, " . $this->config->recordsCount . ";";
 
