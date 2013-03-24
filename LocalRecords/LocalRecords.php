@@ -97,6 +97,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                                                 `record_nbLaps`
                                                 );";
             $this->db->query($q);
+            $q = "UPDATE `exp_records` SET `record_nbLaps` = 1  WHERE `record_nbLaps` = 0";
+            $this->db->query($q);
             $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_recordranks', 1);
         }
         
@@ -122,6 +124,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          */
 
         $this->onBeginMap("", "", "");
+        
+        
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
@@ -129,6 +133,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->map_count++;
         
         if (sizeof($this->currentChallengeRecords) == 0 && $this->config->sendBeginMapNotices) {
+
             $this->exp_chatSendServerMessage($this->msg_newMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wos')));
         } else if ($this->config->sendBeginMapNotices) {
             $this->exp_chatSendServerMessage($this->msg_BeginMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wos'), \ManiaLive\Utilities\Time::fromTM($this->currentChallengeRecords[0]->time), \ManiaLib\Utils\Formatting::stripCodes($this->currentChallengeRecords[0]->nickName, 'wos')));
@@ -136,10 +141,14 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
-        $uid = $this->storage->currentMap->uId;
-        $nbLaps = $this->getNbOfLaps();
         
-
+        $uid = $this->storage->currentMap->uId;
+        if ($this->useLapsConstraints()) {
+             $nbLaps = $this->getNbOfLaps();
+        } else {
+            $nbLaps = 1;
+        }
+        
         foreach ($this->currentChallengeRecords as $i => $record) {
             $this->updateRecordInDatabase($record, $nbLaps);
         }
@@ -367,8 +376,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return
      */
     private function buildCurrentChallangeRecords($gamemode = NULL) {
-
-
         $challenge = $this->storage->currentMap;
 
         if ($gamemode === NULL || $gamemode == '') {
@@ -510,14 +517,15 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 if ($this->storage->gameInfos->roundsForcedLaps == 0)
                     return $this->storage->currentMap->nbLaps;
                 else
-                    return $this->storage->currentMap->lapRace;
+                    return $this->storage->gameInfos->roundsForcedLaps;
+                
             case \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM:
             case \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP:
-                return $this->storage->gameInfos->roundsForcedLaps;
+                return $this->storage->currentMap->nbLaps;
                 break;
 
             case \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS:
-                return $this->storage->gameInfos->lapsNbLaps;
+                return $this->storage->currentMap->nbLaps;
                 break;
 
             default:
@@ -634,7 +642,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function getRanks() {
 
         if(!$this->rank_firstGet || ($this->map_count - $this->mapnb_rank) % $this->config->nbMap_rankProcess == 0){
-            echo "RECALC\n";
             $this->mapnb_rank = $this->map_count-1;
             $this->rank_firstGet = true;
             $ranks = array();
