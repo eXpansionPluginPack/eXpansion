@@ -562,7 +562,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private function resetTotalRanks() {
         
         if($this->total_ranks <= 0 
-                || ($this->map_count % ($this->total_ranks/$this->config->totalRankProcessCoef)) == 0){
+                || ($this->map_count % (($this->total_ranks/$this->config->totalRankProcessCoef)+1)) == 0){
         
             $uids = $this->getUidSqlString();
             $this->player_ranks = array();
