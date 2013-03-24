@@ -132,8 +132,14 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->updateCurrentChallengeRecords();
         $this->map_count++;
         
+        if ($this->useLapsConstraints()) {
+             $nbLaps = $this->getNbOfLaps();
+        } else {
+            $nbLaps = 1;
+        }
+        echo "[DEBUG LocalRecs]Nb Laps : ".$nbLaps."\n";
+        
         if (sizeof($this->currentChallengeRecords) == 0 && $this->config->sendBeginMapNotices) {
-
             $this->exp_chatSendServerMessage($this->msg_newMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wos')));
         } else if ($this->config->sendBeginMapNotices) {
             $this->exp_chatSendServerMessage($this->msg_BeginMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wos'), \ManiaLive\Utilities\Time::fromTM($this->currentChallengeRecords[0]->time), \ManiaLib\Utils\Formatting::stripCodes($this->currentChallengeRecords[0]->nickName, 'wos')));
@@ -148,6 +154,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } else {
             $nbLaps = 1;
         }
+        echo "[DEBUG LocalRecs]Nb Laps : ".$nbLaps."\n";
         
         foreach ($this->currentChallengeRecords as $i => $record) {
             $this->updateRecordInDatabase($record, $nbLaps);
@@ -492,10 +499,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (!$this->config->lapsModeCount1lap) {
             $gamemode = $this->storage->gameInfos->gameMode;
 
-            if ($gamemode == \ManiaLive\DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK
-                    || $gamemode == \ManiaLive\DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS
-                    || $gamemode == \ManiaLive\DedicatedApi\Structures\GameInfos::GAMEMODE_STUNTS
-                    || $gamemode == \ManiaLive\DedicatedApi\Structures\GameInfos::GAMEMODE_CUP) {
+            if ($gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK
+                    || $gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS
+                    || $gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS
+                    || $gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP) {
                 $nbLaps = $this->getNbOfLaps();
                 if ($nbLaps > 1) {
                     return $this->storage->currentMap->lapRace;
@@ -525,7 +532,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 break;
 
             case \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS:
-                return $this->storage->currentMap->nbLaps;
+                return $this->storage->gameInfos->lapsNbLaps;
                 break;
 
             default:

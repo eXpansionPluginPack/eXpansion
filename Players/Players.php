@@ -42,6 +42,19 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["plugin"] = $this;
         $button["function"] = 'showPlayerList';
         $parent = $menu->addButton($parent, "Show Players", $button);
+        
+        $parent = $menu->findButton(array("menu", "Players"));
+        if (!$parent) {
+            $button["style"] = "Icons128x128_1";
+            $button["substyle"] = "Profile";
+            $parent = $menu->addButton("menu", "Players", $button);
+        }
+        
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "Profile";
+        $button["plugin"] = $this;
+        $button["function"] = 'showPlayerList';
+        $parent = $menu->addButton($parent, "Show Players", $button);
     }
 
     public function onPlayerDisconnect($login) {
