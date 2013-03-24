@@ -17,6 +17,7 @@ class AdminItem extends \ManiaLive\Gui\Control {
     private $admin;
     private $action_remove;
     private $plistButton;
+    
     function __construct($indexNumber, Admin $admin, $controller, $login) {
         $this->group = $admin;
         $sizeX = 75;
@@ -44,7 +45,7 @@ class AdminItem extends \ManiaLive\Gui\Control {
 
         $frame->addComponent($gui_nick);
 
-        if (AdminGroups::hasPermission($login, 'group_admin')) {
+        if (AdminGroups::hasPermission($login, 'group_admin') && !$admin->isReadOnly()) {
 
             $this->plistButton = new MyButton(30, 4);
             $this->plistButton->setAction($this->action_remove);
@@ -61,7 +62,9 @@ class AdminItem extends \ManiaLive\Gui\Control {
     }
 
     public function destroy() {
-        $this->plistButton->destroy();
+        if($this->plistButton != null)
+            $this->plistButton->destroy();
+        $this->plistButton = null;
         $this->clearComponents();
         parent::destroy();
     }

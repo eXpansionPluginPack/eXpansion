@@ -49,14 +49,14 @@ class GroupItem extends \ManiaLive\Gui\Control {
         $gui_nbPlayers->setScale(0.6);
         $frame->addComponent($gui_nbPlayers);
 
+        $this->plistButton = new MyButton(30, 6);
+        $this->plistButton->setAction($this->action_playerList);
+        $this->plistButton->setText(__(AdminGroups::$txt_playerList, $login));
+        $this->plistButton->setScale(0.4);
+        $frame->addComponent($this->plistButton);
+        
         if (AdminGroups::hasPermission($login, 'group_admin') || (
                 AdminGroups::hasPermission($login, 'own_group') && AdminGroups::getAdmin($login)->getGroup()->getGroupName() == $group->getGroupName())) {
-
-            $this->plistButton = new MyButton(30, 6);
-            $this->plistButton->setAction($this->action_playerList);
-            $this->plistButton->setText(__(AdminGroups::$txt_playerList, $login));
-            $this->plistButton->setScale(0.4);
-            $frame->addComponent($this->plistButton);
 
             $this->permiButton = new MyButton(40, 6);
             $this->permiButton->setAction($this->action_changePermissions);
@@ -81,9 +81,10 @@ class GroupItem extends \ManiaLive\Gui\Control {
     public function destroy() {
         if($this->permiButton != null){
             $this->permiButton->destroy();
-            $this->plistButton->destroy();
             $this->deleteButton->destroy();
         }
+        $this->plistButton->destroy();
+        
         $this->permiButton=null;
         $this->plistButton=null;
         $this->deleteButton=null;

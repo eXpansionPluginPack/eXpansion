@@ -11,6 +11,7 @@ class Admin {
 
     private $login;
     private $group;
+    private $readOnly = false;
 
     function __construct($login, Group $group) {
         $this->login = $login;
@@ -29,8 +30,13 @@ class Admin {
 		return $this->group;
 	}
 
+    public function isReadOnly() {
+        return $this->readOnly;
+    }
 
-	
+    public function setReadOnly($readOnly) {
+        $this->readOnly = $readOnly;
+    }	
 }
 
 ?>
