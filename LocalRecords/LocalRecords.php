@@ -91,15 +91,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         
         $version = $this->callPublicMethod('eXpansion\Database', 'getDatabaseVersion', 'exp_records');
         if(!$version){
-            $q = "ALTER TABLE  `exp_records` ADD UNIQUE (
-                                                `record_challengeuid` ,
-                                                `record_playerlogin` ,
-                                                `record_nbLaps`
-                                                );";
-            $this->db->query($q);
-            $q = "UPDATE `exp_records` SET `record_nbLaps` = 1  WHERE `record_nbLaps` = 0";
-            $this->db->query($q);
-            $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_recordranks', 1);
+            $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_records', 1);
         }
         
         $version = $this->callPublicMethod('eXpansion\Database', 'getDatabaseVersion', 'exp_recordranks');
