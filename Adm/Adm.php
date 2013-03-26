@@ -35,9 +35,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
-            $this->onPlayerConnect($player->login, true);
-
-        $this->gameOptions('reaby');
+            $this->onPlayerConnect($player->login, true);          
     }
 
     function onPlayerConnect($login, $isSpectator) {
@@ -106,7 +104,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $window = ServerOptions::Create($login);
             $window->setTitle(__('Server Options'));
             $window->centerOnScreen();
-            $window->setSize(160, 100);
+            $window->setSize(160, 80);
             $window->show();
         }
     }

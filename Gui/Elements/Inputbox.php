@@ -10,10 +10,9 @@ class Inputbox extends \ManiaLive\Gui\Control {
     private $button;
     private $buttonSize;
 
-    function __construct($name, $sizeX = 35) {
-        $this->buttonSize = $sizeX;
+    function __construct($name, $sizeX = 35) {      
         $config = Config::getInstance();
-        $this->button = new \ManiaLib\Gui\Elements\Entry($this->buttonSize, 6);
+        $this->button = new \ManiaLib\Gui\Elements\Entry($sizeX, 6);
         $this->button->setName($name);
         $this->button->setAlign('left', 'center');
         $this->button->setTextColor('000');
@@ -25,13 +24,12 @@ class Inputbox extends \ManiaLive\Gui\Control {
         $this->label->setAlign('left', 'center');
         $this->label->setTextSize(1);
         $this->label->setStyle("TextStaticSmall");
-        $this->addComponent($this->label);
-
-        $this->setSize(30, 10);
+        $this->addComponent($this->label);        
+        $this->setSize($sizeX, 10);
     }
 
     protected function onResize($oldX, $oldY) {
-        $this->button->setSize($this->buttonSize, 4);
+        $this->button->setSize($this->sizeX, 4);
         $this->label->setSize($this->sizeX, 3);
         $this->label->setPosition(0, 4);
     }
