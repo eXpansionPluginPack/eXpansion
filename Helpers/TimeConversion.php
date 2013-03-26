@@ -12,6 +12,11 @@ class TimeConversion {
             return intval($timelimit[0] * 60 * 1000) + intval($timelimit[1] * 1000);
     }
 
+    public static function TMtoMS($time) {
+        $time = intval($time);
+        return gmdate("i:s", $time/1000);                
+    }
+    
 }
 
 ?>

@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Adm;
 
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Gui\ActionHandler;
-
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerOptions;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\GameOptions;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\AdminPanel;
@@ -12,14 +11,14 @@ use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerControlMain;
 
 class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
-    
     public function exp_onInit() {
         parent::exp_onInit();
-         //Oliverde8 Menu
+        //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
     }
+
     function exp_onReady() {
         //    $methods = get_class_methods($this->connection);
         if ($this->isPluginLoaded('Standard\Menubar'))
@@ -27,9 +26,9 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Server Management'), true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Server Management'), null, array($this, 'serverControlMain'), true);            
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Server Management'), null, array($this, 'serverControlMain'), true);
         }
-       
+
         $this->enableDedicatedEvents();
         ServerControlMain::$mainPlugin = $this;
 
@@ -37,6 +36,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
             $this->onPlayerConnect($player->login, true);
+
+        $this->gameOptions('reaby');
     }
 
     function onPlayerConnect($login, $isSpectator) {
@@ -51,47 +52,47 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onPlayerDisconnect($login) {
         AdminPanel::Erase($login);
     }
-    
+
     public function onOliverde8HudMenuReady($menu) {
-        
-        $parent = $menu->findButton(array('admin','Server Options'));
-        if(!$parent){
+
+        $parent = $menu->findButton(array('admin', 'Server Options'));
+        if (!$parent) {
             $button["style"] = "Icons128x128_1";
-            $button["substyle"] = "Options";        
+            $button["substyle"] = "Options";
             $button["plugin"] = $this;
             $parent = $menu->addButton("admin", "Server Options", $button);
         }
-        
+
         $button["style"] = "Icons128x128_1";
-		$button["substyle"] = "Options";        
-		$button["plugin"] = $this;
-		$button["function"] = "serverOptions";
+        $button["substyle"] = "Options";
+        $button["plugin"] = $this;
+        $button["function"] = "serverOptions";
         $button["permission"] = "server_admin";
-		$menu->addButton($parent, "Server Window", $button);
-        
-        $parent = $menu->findButton(array('admin','Game Options'));
-        if(!$parent){
+        $menu->addButton($parent, "Server Window", $button);
+
+        $parent = $menu->findButton(array('admin', 'Game Options'));
+        if (!$parent) {
             $button["style"] = "Icons128x128_1";
-            $button["substyle"] = "ProfileAdvanced";        
+            $button["substyle"] = "ProfileAdvanced";
             $button["plugin"] = $this;
             $parent = $menu->addButton("admin", "Game Options", $button);
         }
-        
+
         $button["style"] = "Icons128x128_1";
-		$button["substyle"] = "ProfileAdvanced";
-        $button["plugin"] = $this;  
+        $button["substyle"] = "ProfileAdvanced";
+        $button["plugin"] = $this;
         $button["function"] = "gameOptions";
         $button["permission"] = "game_gamemode";
-		$menu->addButton($parent, "Game Window", $button);
-        
+        $menu->addButton($parent, "Game Window", $button);
+
         $button["style"] = "Icons128x128_1";
-		$button["substyle"] = "Save";
+        $button["substyle"] = "Save";
         $button["plugin"] = $this;
         $button["function"] = "matchSettings";
         $button["permission"] = "game_match";
-		$menu->addButton($parent, "Match Settings", $button);
+        $menu->addButton($parent, "Match Settings", $button);
     }
-    
+
     public function buildStdMenu() {
         $this->callPublicMethod('Standard\Menubar', 'initMenu', \ManiaLib\Gui\Elements\Icons128x128_1::Options);
         $this->callPublicMethod('Standard\Menubar', 'addButton', __('Server ControlPanel'), array($this, 'serverControlMain'), true);
@@ -114,8 +115,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
             $window = GameOptions::Create($login);
             $window->setTitle(__('Game Options'));
+            $window->setSize(160, 50);
             $window->centerOnScreen();
-            $window->setSize(160, 100);
             $window->show();
         }
     }
@@ -123,7 +124,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function serverManagement($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             $window = Gui\Windows\ServerManagement::Create($login);
-            $window->setTitle(__('Server Management'));            
+            $window->setTitle(__('Server Management'));
             $window->setSize(60, 20);
             $window->centerOnScreen();
             $window->show();
@@ -133,8 +134,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function serverControlMain($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             $window = Gui\Windows\ServerControlMain::Create($login);
-            $window->setTitle(__('Server Management'));            
-            $window->setSize(160, 20);
+            $window->setTitle(__('Server Management'));
+            $window->setSize(120, 20);
             $window->show();
         }
     }

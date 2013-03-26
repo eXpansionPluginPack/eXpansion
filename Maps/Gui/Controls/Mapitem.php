@@ -63,8 +63,8 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $ui = new \ManiaLib\Gui\Elements\Label(20, 4);
         $ui->setAlign('left', 'center');
         $ui->setScale(0.8);
-        $ui->setText($map->mapStyle);
-        //$this->time->setText(\ManiaLive\Utilities\Time::fromTM($map->goldTime));
+        //$ui->setText($map->authorTime);
+        $ui->setText(\ManiaLive\Utilities\Time::fromTM($map->goldTime));
         $this->frame->addComponent($ui);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();

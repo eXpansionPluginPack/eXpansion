@@ -17,18 +17,11 @@ class Button extends \ManiaLive\Gui\Control {
     function __construct($sizeX = 24, $sizeY = 6) {
         $config = Config::getInstance();
 
-        $this->activeFrame = new \ManiaLib\Gui\Elements\Quad($sizeX + 1.5, $sizeY + 2.5);
-        $this->activeFrame->setPosition(-0.5, 0);
+        $this->activeFrame = new \ManiaLib\Gui\Elements\Quad($sizeX + 2, $sizeY + 2.5);
+        $this->activeFrame->setPosition(-1, 0);
         $this->activeFrame->setAlign('left', 'center');
         $this->activeFrame->setStyle("Icons128x128_Blink");
         $this->activeFrame->setSubStyle("ShareBlink");
-
-        /* $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-          $this->button->setAlign('left', 'center');
-          $this->button->setImage($config->button);
-          $this->button->setImageFocus($config->buttonActive);
-          $this->button->setScriptEvents(true);
-         */
 
         $this->label = new \ManiaLib\Gui\Elements\Label($sizeX + 2, $sizeY);
         $this->label->setAlign('center', 'center2');
@@ -37,26 +30,12 @@ class Button extends \ManiaLive\Gui\Control {
         $this->label->setFocusAreaColor1("bbb");
         $this->label->setFocusAreaColor2("fff");
 
-        /*      $this->color = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-          $this->color->setAlign('left', 'center');
-          $this->color->setBgcolor('999');
-         */
-
         $this->sizeX = $sizeX + 2;
         $this->sizeY = $sizeY + 2;
         $this->setSize($sizeX + 2, $sizeY + 2);
-
-        if ($this->isActive)
-            $this->addComponent($this->activeFrame);
-
-        //  $this->addComponent($this->color);
-        $this->addComponent($this->label);
-        // $this->addComponent($this->button);        
     }
 
     protected function onResize($oldX, $oldY) {
-        //      $this->button->setSize($this->sizeX-2, $this->sizeY-1);
-        //      $this->color->setSize($this->sizeX-2, $this->sizeY-1);
         $this->label->setSize($this->sizeX - 2, $this->sizeY - 1);
         $this->label->setPosX(($this->sizeX - 2) / 2);
         $this->label->setPosZ(0);
@@ -64,7 +43,11 @@ class Button extends \ManiaLive\Gui\Control {
     }
 
     function onDraw() {
+        if ($this->isActive)
+            $this->addComponent($this->activeFrame);
+
         $this->label->setText($this->color . $this->text);
+        $this->addComponent($this->label);
     }
 
     function getText() {
@@ -85,7 +68,7 @@ class Button extends \ManiaLive\Gui\Control {
 
     /**
      * Colorize the button background     
-     * @param string $value 3-digit RGB code
+     * @param string $value 4-digit RGBa code
      */
     function colorize($value) {
         $this->label->setFocusAreaColor1($value);
@@ -93,7 +76,7 @@ class Button extends \ManiaLive\Gui\Control {
 
     /**
      * Sets text color 
-     * @param string $value 3-digit RGB code
+     * @param string $value 4-digit RGBa code
      */
     function setTextColor($textcolor) {
         $this->color = '$' . $textcolor;
