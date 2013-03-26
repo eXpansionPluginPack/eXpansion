@@ -10,7 +10,7 @@ use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
 use ManiaLive\Gui\ActionHandler;
 
 /**
- * Server Controlpanel Main window
+ * Server Control panel Main window
  * 
  * @author Petri
  */
@@ -24,6 +24,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     /** @var \ManiaLivePlugins\eXpansion\Adm\Adm */
     public static $mainPlugin;
+
     private $frame;
     private $closeButton;
     private $actions;
@@ -50,27 +51,32 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->btn1->setText(__("Server management"));
         $this->btn1->setAction($this->actions->serverManagement);
         $this->btn1->colorize("f00");
+        $this->btn1->setScale(0.5);
         $this->frame->addComponent($this->btn1);
 
         $this->btn2 = new myButton(40,6);
         $this->btn2->setText(__("Server options"));
         $this->btn2->setAction($this->actions->serverOptions);
+        $this->btn2->setScale(0.5);
         $this->frame->addComponent($this->btn2);
 
         $this->btn3 = new myButton(40,6);
         $this->btn3->setText(__("Game options"));
         $this->btn3->setAction($this->actions->gameOptions);
+        $this->btn3->setScale(0.5);
         $this->frame->addComponent($this->btn3);
 
         $this->btn4 = new myButton(40,6);
         $this->btn4->setText(__("Admin Groups"));
         $this->btn4->setAction($this->actions->adminGroups);
         $this->btn4->colorize("0d0");
+        $this->btn4->setScale(0.5);
         $this->frame->addComponent($this->btn4);
 
         $this->btn5 = new myButton(40,6);
         $this->btn5->setText(__("Match settings"));
         $this->btn5->setAction($this->actions->matchSettings);
+        $this->btn5->setScale(0.5);
         $this->frame->addComponent($this->btn5);
 
         $this->mainFrame->addComponent($this->frame);

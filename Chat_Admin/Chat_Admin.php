@@ -132,7 +132,7 @@ Other server might use the same blacklist file!!');
         $cmd = AdminGroups::addAdminCommand('player unignore', $this, 'unignore', 'player_ignore');
         $cmd->setHelp('Removes player to ignore list and allows him to chat')
                 ->addLineHelpMore('$w/admin player unignore #login$z will allow this player to use the chat again')
-                ->addLineHelpMore('This player will be able to communicate with other players')        
+                ->addLineHelpMore('This player will be able to communicate with other players')
                 ->setMinParam(1);
         AdminGroups::addAlias($cmd, "unignore"); // xaseco & fast
         //ENDSUPER
@@ -160,8 +160,8 @@ Other server might use the same blacklist file!!');
 
         $cmd = AdminGroups::addAdminCommand('set server player password', $this, 'setServerPassword', 'server_password');
         $cmd->setHelp('Changes the player password')
-            ->setHelpMore('$w/admin set server spec password #pwd$z will change the password needed for players to connect to this server')
-            ->setMinParam(1);
+                ->setHelpMore('$w/admin set server spec password #pwd$z will change the password needed for players to connect to this server')
+                ->setMinParam(1);
         AdminGroups::addAlias($cmd, "setpwd"); // xaseco
         AdminGroups::addAlias($cmd, "pass"); // fast
 
@@ -259,15 +259,15 @@ Other server might use the same blacklist file!!');
         AdminGroups::addAlias($cmd, 'mode'); //fast
 
         $cmd = AdminGroups::addAdminCommand('set game AllWarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
-            $cmd->setHelp('Set the warmup duration at the begining of the maps for all gamemodes')
-            ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+        $cmd->setHelp('Set the warmup duration at the begining of the maps for all gamemodes')
+                ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, 'setAllWarmUpDuration');
 
         $cmd = AdminGroups::addAdminCommand('set game disableRespawn', $this, 'setDisableRespawn', 'game_settings');
         $cmd->setHelp('Will disable the respawn capabilities of the players')
                 ->addLineHelpMore('$w/admin set game disableRespawn true$z will force the players to restart the map when they respaw')
                 ->addLineHelpMore('$w/admin set game disableRespawn false$z player that respaw will return back to the last checkpoint')
-                ->addLineHelpMore("\n".'A player respaws when he clicks on backspace on his keyboard')
+                ->addLineHelpMore("\n" . 'A player respaws when he clicks on backspace on his keyboard')
                 ->setMinParam(1);
         AdminGroups::addAlias($cmd, 'setDisableRespawn');
 
@@ -321,8 +321,8 @@ Other server might use the same blacklist file!!');
         //laps
         $cmd = AdminGroups::addAdminCommand('set game laps TimeLimit', $this, 'setLapsTimeLimit', 'game_settings');
         $cmd->setHelp('Changes the limit of time players has to finish the track')
-            ->setMinParam(1)
-            ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
+                ->setMinParam(1)
+                ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
         AdminGroups::addAlias($cmd, "setLapsTimeLimit");
 
         $cmd = AdminGroups::addAdminCommand('set game laps nbLaps', $this, 'setNbLaps', 'game_settings');
@@ -933,7 +933,7 @@ Other server might use the same blacklist file!!');
     function setServerComment($fromLogin, $params) {
         $comment = implode(" ", $params);
         try {
-            $this->connection->setServerName($comment);
+            $this->connection->setServerComment($comment);
             $admin = $this->storage->getPlayerObject($fromLogin);
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new server comment:#variable# %s', null, array($admin->nickName, $comment));
         } catch (\Exception $e) {
