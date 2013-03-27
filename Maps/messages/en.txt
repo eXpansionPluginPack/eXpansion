@@ -1,24 +1,33 @@
-Maps on server
-Maps on server
+Add map
+Add map
 
-Next map will be %s $z$s$fff by %s, wished by %s
-Next map will be %s $z$s$fff by %s, wished by %s
+Queue
+Queue
 
-Error: %s
-Error: %s
+Go now
+Go now
 
-Map %s $z$s$fff by %s, wished by %s $z$s$fff is added to next maps list.
-Map %s $z$s$fff by %s, wished by %s $z$s$fff is added to next maps list.
+Remove
+Remove
 
-You have already map in next map wishes.
-You have already map in next map wishes.
+Current Map
+Current Map
 
-Speedjump to map %s $z$s$fff by %s
-Speedjump to map %s $z$s$fff by %s
+Next map
+Next map
+
+Removes current map from the playlist.
+Removes current map from the playlist.
+
+Maps
+Maps
+
+List maps
+List maps
 
 You are not allowed to do this!
 You are not allowed to do this!
 
-Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.
-Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.
+Error: %s
+Error: %s
 

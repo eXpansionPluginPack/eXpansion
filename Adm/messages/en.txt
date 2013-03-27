@@ -1,6 +1,9 @@
 Server Management
 Server Management
 
+Server ControlPanel
+Server ControlPanel
+
 Server Options
 Server Options
 
@@ -9,4 +12,109 @@ Game Options
 
 Match Settings
 Match Settings
+
+Load
+Load
+
+Save
+Save
+
+Apply
+Apply
+
+Cancel
+Cancel
+
+Time Attack
+Time Attack
+
+Rounds
+Rounds
+
+Cup
+Cup
+
+Laps
+Laps
+
+Team
+Team
+
+Saved MatchSettings to file: %s
+Saved MatchSettings to file: %s
+
+Loaded MatchSettings from file: %s
+Loaded MatchSettings from file: %s
+
+Server management
+Server management
+
+Server options
+Server options
+
+Game options
+Game options
+
+Admin Groups
+Admin Groups
+
+Match settings
+Match settings
+
+Close
+Close
+
+Stop Server
+Stop Server
+
+Stop Manialive
+Stop Manialive
+
+Server Name
+Server Name
+
+Server comment
+Server comment
+
+Players
+Players
+
+Spectators
+Spectators
+
+Ladderpoints minimum
+Ladderpoints minimum
+
+Ladderpoints Maximum
+Ladderpoints Maximum
+
+Password for server
+Password for server
+
+Password for spectators
+Password for spectators
+
+Referee password
+Referee password
+
+Show Server in public server list
+Show Server in public server list
+
+Ladder server
+Ladder server
+
+Allow map download using ingame menu
+Allow map download using ingame menu
+
+Allow Peer-2-Peer download
+Allow Peer-2-Peer download
+
+Allow Peer-2-Peer upload
+Allow Peer-2-Peer upload
+
+Allow changing validation seed
+Allow changing validation seed
+
+Enable Referee-mode
+Enable Referee-mode
 

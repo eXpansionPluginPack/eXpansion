@@ -1,0 +1,42 @@
+#variable#%1$s #record#secured his/her #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#$n(-%5$s)
+#variable#%1$s #record#secured his/her #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#$n(-%5$s)
+
+#variable#%1$s #record#gained the #rank#%2$s #record#. Local Record with time of #rank#%3$s
+#variable#%1$s #record#gained the #rank#%2$s #record#. Local Record with time of #rank#%3$s
+
+#variable#%1$s #record#Is a new Map. Currently no record!
+#variable#%1$s #record#Is a new Map. Currently no record!
+
+#record#Current record on #variable#%1$s #record#is #variable#%2$s #record#by #variable#%3$s
+#record#Current record on #variable#%1$s #record#is #variable#%2$s #record#by #variable#%3$s
+
+#
+#
+
+NickName
+NickName
+
+Score
+Score
+
+Average Score
+Average Score
+
+Finishes
+Finishes
+
+Nb Wins
+Nb Wins
+
+Last Rec Date
+Last Rec Date
+
+Play Time
+Play Time
+
+nb Rec
+nb Rec
+
+a new record: 
+a new record: 
+

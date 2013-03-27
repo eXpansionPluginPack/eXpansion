@@ -1,93 +1,15 @@
-help
-help
-
-kick the player from the server
-kick the player from the server
-
-Ban the player from the server
-Ban the player from the server
-
-Add the player to the black list
-Add the player to the black list
-
-Removes the ban of the player
-Removes the ban of the player
-
-clears the banlist of players
-clears the banlist of players
-
-shows the current banlist of players
-shows the current banlist of players
-
-clears the blacklist of players
-clears the blacklist of players
-
-shows the current guest of players
-shows the current guest of players
-
-shows the current ignorelist of players
-shows the current ignorelist of players
-
-Removes the player from the black list
-Removes the player from the black list
-
-Forces the player to become spectator
-Forces the player to become spectator
-
-Adds player to ignore list and mutes him from the chat
-Adds player to ignore list and mutes him from the chat
-
-Removes player to ignore list and allows him to chat
-Removes player to ignore list and allows him to chat
-
-Changes the name of the server
-Changes the name of the server
-
-Changes the server comment
-Changes the server comment
-
-Changes the player password
-Changes the player password
-
-Changes the password for players to connect
-Changes the password for players to connect
-
-Changes the spectator password
-Changes the spectator password
-
-Changes the password for spectators to connect
-Changes the password for spectators to connect
-
-Changes the Referee password
-Changes the Referee password
-
-Sets a new maximum of players
-Sets a new maximum of players
-
-Sets the maximum number of players who can play on this server.
-Sets the maximum number of players who can play on this server.
-
-Sets a new maximum of spectator
-Sets a new maximum of spectator
-
-Sets the maximum number of players who can spectate the players on this server.
-Sets the maximum number of players who can spectate the players on this server.
-
-Sets the Chat time duration.
-Sets the Chat time duration.
-
-Skips the current track
-Skips the current track
-
-Sets next mode {ta,rounds,team,laps,stunts,cup}
-Sets next mode {ta,rounds,team,laps,stunts,cup}
-
-Blacklisted Players on the server
-Blacklisted Players on the server
-
 Guest Players on the server
 Guest Players on the server
 
 Ignored Players on the server
 Ignored Players on the server
+
+unBan
+unBan
+
+Remove
+Remove
+
+unIgnore
+unIgnore
 
