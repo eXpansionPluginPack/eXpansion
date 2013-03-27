@@ -1,3 +1,30 @@
+Ban
+Ban
+
+Kick
+Kick
+
+Release Spec
+Release Spec
+
+Force Spec
+Force Spec
+
+Please behave next time you visit the server!
+Please behave next time you visit the server!
+
+Error: %s
+Error: %s
+
+You are now banned from the server.
+You are now banned from the server.
+
+Admin has forced you to specate!
+Admin has forced you to specate!
+
+Admin has released you from specate to play.
+Admin has released you from specate to play.
+
 Players
 Players
 

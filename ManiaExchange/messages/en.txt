@@ -1,29 +1,29 @@
+Map name
+Map name
+
+Creators name
+Creators name
+
+Length
+Length
+
+Install
+Install
+
 ManiaExchange
 ManiaExchange
 
 Search Maps
 Search Maps
 
-Usage /mx add [id] or /mx search 
-Usage /mx add [id] or /mx search 
-
-
-
+Usage /mx add [id] or /mx search "your search terms here"
+Usage /mx add [id] or /mx search "your search terms here"
 
 MX is down
 MX is down
 
-Map not found for id %s
-Map not found for id %s
-
-MX returned http error code: %s
-MX returned http error code: %s
-
-Couldn
-Couldn
-
-Map %s $z$s$fff added from MX Succesfully.
-Map %s $z$s$fff added from MX Succesfully.
+Couldn't create mapfile in maps folder, check folder permissions!
+Couldn't create mapfile in maps folder, check folder permissions!
 
 Error: %s
 Error: %s
