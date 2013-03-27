@@ -425,10 +425,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             //For each record worse then the new, push it back and push forward the new one
             while ($i >= 0 && $this->currentChallengeRecords[$i]->time > $nrecord->time) {
+                $record = $this->currentChallengeRecords[$i];
+                
                 if ($this->debug & self::DEBUG_RECS_FULL == self::DEBUG_RECS_FULL)
                     \ManiaLive\Utilities\Console::println("[eXp][DEBUG][LocalRecords:RECS]$login is getting better : ".$nrecord->place."=>".($nrecord->place-1)
                         ."And ".$record->login." is getting worse".$record->place."=>".($record->place-1));
-                $record = $this->currentChallengeRecords[$i];
                 //New record takes old recs place
                 $this->currentChallengeRecords[$i] = $nrecord;
                 //and old takes new recs place
