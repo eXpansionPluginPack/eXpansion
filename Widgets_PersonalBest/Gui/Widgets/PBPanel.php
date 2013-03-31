@@ -92,7 +92,9 @@ class PBPanel extends \ManiaLive\Gui\Window {
              $nbFinish = $record->nbFinish;
         }
         $pbTime = substr($pbTime, 0, -1);
+		if ($pbTime == '0:00.00') $pbTime = '--';
         $avgTime = substr($avgTime, 0, -1);
+		if ($avgTime == '0:00.00') $avgTime = '--';
         
         $this->pb->setText('$ddd'.$pbTime);
         $this->avg->setText('$ddd'.$avgTime);
