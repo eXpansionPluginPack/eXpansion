@@ -187,11 +187,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $parent = $menu->addButton("menu", "Players", $button);
         }
 
-        $button["style"] = "Icons128x128_1";
-        $button["substyle"] = "Invite";
-        $button["plugin"] = $this;
-        $button["function"] = "windowGroups";
-        $menu->addButton($parent, "Admin Groups", $button);
+        //$button["style"] = "Icons128x128_1";
+        //$button["substyle"] = "Invite";
+        //$button["plugin"] = $this;
+        //$button["function"] = "windowGroups";
+        //$menu->addButton($parent, "Admin Groups", $button);
     }
 
     public function reLoadAdmins() {

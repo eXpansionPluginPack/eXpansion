@@ -12,7 +12,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /** @var array(MapWish) */
     private $nextMaps = array();
     private $nextMapCount = 0;
-    
+
     /* will be used when custom votes works again */
 
     /** @var MapWish */
@@ -72,15 +72,16 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["function"] = 'showMapList';
         $menu->addButton($parent, "List all Maps", $button);
 
-        $button["substyle"] = "NewTrack";
-        $button["function"] = 'addMaps';
-        $menu->addButton($parent, "Add Map", $button);
-        
+        //Don't think this is a good idea..  may be useful in the future for temp adds of local maps, though
+        //$button["substyle"] = "NewTrack";
+        //$button["function"] = 'addMaps';
+        //$menu->addButton($parent, "Add Map", $button);
+
         $this->hudMenuAdminButtons($menu);
     }
-    
+
     private function hudMenuAdminButtons($menu){
-        
+
         $button["style"] = "UIConstructionSimple_Buttons";
         $button["substyle"] = "Drive";
         $button["plugin"] = $this;
@@ -88,31 +89,31 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (!$parent) {
             $parent = $menu->addButton('admin', "Maps", $button);
         }
-        
+
         $button["style"] = "Icons64x64_1";
         $button["substyle"] = "Close";
-        
+
         $button["plugin"] = $this;
         $button["function"] = "chat_removeMap";
         $button["params"] = "this";
         $button["permission"] = "server_maps";
         $menu->addButton($parent, "Remove Current Map", $button);
-        
+
         $button["style"] = "Icons64x64_1";
         $button["substyle"] = "Sub";
-        
+
         $button["plugin"] = $this;
         $button["function"] = "emptyWishes";
         $button["params"] = "this";
         $button["permission"] = "server_mapWishes";
         $menu->addButton($parent, "Empty Wish List", $button);
-        
+
         $button["style"] = "Icons128x128_1";
         $button["substyle"] = "NewTrack";
         $button["function"] = 'addMaps';
         $menu->addButton($parent, "Add Map", $button);
     }
-    
+
     function onPlayerConnect($login, $isSpectator) {
         $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
         $info->setPosition(136, 74);
@@ -137,7 +138,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $nextMap = $nextItem->map;
             $player = $nextItem->player;
             $this->connection->chooseNextMap($nextMap->fileName);
-            $this->exp_chatSendServerMessage(__('Next map will be %s $z$s$fff by %s, wished by %s', null, $nextMap->name, $nextMap->author, $player->nickName));
+            $this->exp_chatSendServerMessage(__('Next map will be %s $z$s$fff by %s, wished by %s', null, \ManiaLib\Utils\Formatting::stripCodes($nextMap->name, 'wosnm'), $nextMap->author, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
         } catch (\Exception $e) {
             $this->exp_chatSendServerMessage(__('Error: %s', null, $e->getMessage()));
         }
@@ -161,7 +162,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * 
+     *
      * @param string $login
      * @todo enable the method for menu, currently votes are not working!
      */
@@ -200,42 +201,35 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setSize(160, 100);
         $window->show();
     }
-    
+
     public function chooseNextMap($login, \DedicatedApi\Structures\Map $map) {
         try {
             $player = $this->storage->getPlayerObject($login);
-            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
-                foreach ($this->nextMaps as $nextItems) {
-                    if ($nextItems->map->uId == $map->uId) {
-                        $this->exp_chatSendServerMessage(__('This map is already in the next map wishes.', $login), $login);
-                        return;
-                    }
+			if ($this->storage->currentMap->uId == $map->uId) {
+				$this->exp_chatSendServerMessage(__('This map is currently playing...', $login), $login);
+				return;
+			}
+            foreach ($this->nextMaps as $nextItems) {
+                if ($nextItems->map->uId == $map->uId) {
+                    $this->exp_chatSendServerMessage(__('This map is already in the next map wishes.', $login), $login);
+                    return;
                 }
-                
-                if ($this->nextMapCount == 0) {
-                    $this->connection->chooseNextMap($map->fileName);
-                } else {
-                    $this->nextMaps[] = new MapWish($player, $map);
-                }
-                $this->exp_chatSendServerMessage(__('Map %s $z$s$fff by %s, wished by %s $z$s$fff is added to next maps list.', $login, $map->name, $map->author, $player->nickName));
-                $this->nextMapCount++;                
-            } else {
-
-
+            }
+            if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
                 foreach ($this->nextMaps as $nextItems) {
                     if ($nextItems->player->login == $login) {
                         $this->exp_chatSendServerMessage(__('You have already map in next map wishes.', $login), $login);
                         return;
                     }
                 }
-                if ($this->nextMapCount == 0) {
-                    $this->connection->chooseNextMap($map->fileName);
-                } else {
-                    $this->nextMaps[] = new MapWish($player, $map);
-                }
-                $this->nextMapCount++;
-                $this->exp_chatSendServerMessage(__('Map %s $z$s$fff by %s, wished by %s $z$s$fff is added to next maps list.', $login, $map->name, $map->author, $player->nickName));
             }
+            if ($this->nextMapCount == 0) {
+                $this->connection->chooseNextMap($map->fileName);
+            } else {
+                $this->nextMaps[] = new MapWish($player, $map);
+            }
+            $this->nextMapCount++;
+            $this->exp_chatSendServerMessage(__('Map %s $z$s$fff by %s, wished by %s $z$s$fff is added to next maps list.', null, \ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
         } catch (\Exception $e) {
             $this->exp_chatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
         }
@@ -246,7 +240,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connection->chooseNextMap($map->fileName);
             $this->connection->nextMap();
             $map = $this->connection->getNextMapInfo();
-            $this->exp_chatSendServerMessage(__('Speedjump to map %s $z$s$fff by %s', $login, $map->name, $map->author));
+            $this->exp_chatSendServerMessage(__('Speedjump to map %s $z$s$fff by %s', null, \ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), \ManiaLib\Utils\Formatting::stripCodes($map->author, 'wosnm')));
         } catch (\Exception $e) {
             $this->exp_chatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
         }
@@ -262,7 +256,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             $player = $this->storage->getPlayerObject($login);
 
-            $this->exp_chatSendServerMessage(__('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.', $login, $player->nickName, $map->name));
+            $this->exp_chatSendServerMessage(__('Admin %s $z$s$fff removed map %s $z$s$fff from the playlist.', $login, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), \ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm')));
             $this->connection->removeMap($map->fileName);
         } catch (\Exception $e) {
             $this->exp_chatSendServerMessage(__("Error: %s", $login, $e->getMessage()));
@@ -300,11 +294,12 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             return;
         }
     }
-    
+
     function emptyWishes($login){
+		$player = $this->storage->getPlayerObject($login);
         $this->nextMaps = array();
         $this->nextMapCount = 0;
-        $this->exp_chatSendServerMessage('Admin %s $z$s$fff emptied wish list.', null, array($login));
+        $this->exp_chatSendServerMessage('Admin %s $z$s$fff emptied wish list.', null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
     }
 
     public function addMaps($login) {

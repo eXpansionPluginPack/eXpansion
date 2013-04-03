@@ -65,6 +65,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $panel = PBPanel::Get($login);
         if(isset($panel[0])){
             $rank = $this->callPublicMethod('eXpansion\\LocalRecords', 'getPlayerRank', $login);
+			if ($rank < 0) $rank = '--';
             $rankTotal = $this->callPublicMethod('eXpansion\\LocalRecords', 'getTotalRanked');
             $panel[0]->setRecord($record, $rank, $rankTotal);
             $panel[0]->redraw($login);
@@ -78,6 +79,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             PBPanel::Erase($login);
         
         $rank = $this->callPublicMethod('eXpansion\\LocalRecords', 'getPlayerRank', $login);
+		if ($rank < 0) $rank = '--';
         $rankTotal = $this->callPublicMethod('eXpansion\\LocalRecords', 'getTotalRanked');
             
         $info = PBPanel::Create($login, $rank, $rankTotal);
