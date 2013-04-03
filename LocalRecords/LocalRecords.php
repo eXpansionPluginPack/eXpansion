@@ -334,11 +334,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function onPlayerFinish($playerUid, $login, $timeOrScore) {
         
-        echo "OnPlayerFinish : $login =>";
         
         //Checking for valid time
         if (isset($this->storage->players[$login]) && $timeOrScore > 0) {
-            echo "valid.";
             $gamemode = $this->storage->gameInfos->gameMode;
 
             //If laps mode we need to ignore. Laps has it's own end map event(end finish lap)
@@ -348,7 +346,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             //We add the record to the buffer
             $this->addRecord($login, $timeOrScore, $gamemode, $this->checkpoints[$login]);
         }
-        echo "\n";
         //We reset the checkPoints
         $this->checkpoints[$login] = array();
     }

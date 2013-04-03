@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Database;
 
+use ManiaLive\Utilities\Console;
 use ManiaLib\Utils\Formatting as String;
 
 /**
@@ -194,6 +195,10 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if (!$this->db->tableExists('exp_maps'))
             $this->createMapTable();
+        if($this->getDatabaseVersion('exp_maps') != 2){
+            $this->db->query('ALTER TABLE exp_maps ADD KEY(challenge_uid);');
+            $this->setDatabaseVersion('exp_maps', 2);
+        }
     }
 
     public function createDatabaseTable() {
