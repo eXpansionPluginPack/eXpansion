@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups;
 use ManiaLive\Event\Dispatcher;
 
 /**
- *  
+ *
  * @author oliver
  */
 class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
@@ -13,13 +13,13 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /**
      * The instance of the runing AdminGroup plugin
      *
-     * @var \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups 
+     * @var \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups
      */
     static private $instance;
 
     /**
      * Get currect running instance of the singleton
-     * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups 
+     * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups
      */
     public static function getInstance() {
         return self::$instance;
@@ -33,7 +33,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * The commands array
-     * @var AdminCmd[] 
+     * @var AdminCmd[]
      */
     static private $commands = array();
 
@@ -45,7 +45,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * List of all permissions
-     * @var type 
+     * @var type
      */
     static private $permissionList = array();
 
@@ -61,8 +61,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $config;
 
     /**
-     * When was the configuration file loaded? 
-     * @var type 
+     * When was the configuration file loaded?
+     * @var type
      */
     private $readTime;
 
@@ -99,7 +99,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         parent::exp_onInit();
         self::$instance = $this;
 
-        //Recovering the configuration 
+        //Recovering the configuration
         $this->config = Config::getInstance();
 
         $this->loadAdmins();
@@ -143,12 +143,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$txt_aliases = exp_getMessage('Aliases');
 
         //No idea if needed, I think not need to check
-        // $this->enableDedicatedEvents();  
+        // $this->enableDedicatedEvents();
         //Registering public functions
         $this->setPublicMethod('adminCmd');
         $this->setPublicMethod('getPermission');
 
-        //Registering the admin chat comman with a lot of parameters              
+        //Registering the admin chat comman with a lot of parameters
         $this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());
         $this->registerChatCommand('adm', "adminCmd", -1, true, $this->get());
 
@@ -179,7 +179,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["plugin"] = $this;
         $button["function"] = "windowHelp";
         $menu->addButton("admin", "Admin Commands Help", $button);
-        
+
         $parent = $menu->findButton(array("menu", "Players"));
         if (!$parent) {
             $button["style"] = "Icons128x128_1";
@@ -187,11 +187,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $parent = $menu->addButton("menu", "Players", $button);
         }
 
-        //$button["style"] = "Icons128x128_1";
-        //$button["substyle"] = "Invite";
-        //$button["plugin"] = $this;
-        //$button["function"] = "windowGroups";
-        //$menu->addButton($parent, "Admin Groups", $button);
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "Invite";
+        $button["plugin"] = $this;
+        $button["function"] = "windowGroups";
+        $menu->addButton($parent, "Admin Groups", $button);
     }
 
     public function reLoadAdmins() {
@@ -221,26 +221,26 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($values as $key => $value) {
             //THe settings
             if ($key == 'Settings') {
-                
+
             } else {
                 $param = explode(": ", $key);
 
                 if ($param[0] == 'MasterAdmin') {
                     $this->parseMaster($param[1], $value);
                 } else if ($param[0] == 'Group') {
-                    //We have found a Admin group, lets see the permissions of 
+                    //We have found a Admin group, lets see the permissions of
                     //the group and the players that is part of it
                     $this->parseGroup($param[1], $value);
                 }
             }
         }
-        
+
         $this->loadMLAdmins();
     }
 
     public function loadMLAdmins() {
         $masterGroup = $this->getMasterGroup();
-        
+
         foreach (\ManiaLive\Features\Admin\AdminGroup::get() as $login) {
             $admin = new Admin($login, $masterGroup);
             $admin->setReadOnly(true);
@@ -272,7 +272,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Parsing a group
-     * 
+     *
      * @param string $groupName The groups name
      * @param array $value
      */
@@ -307,7 +307,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Parsing the Master group
-     * 
+     *
      * @param string $groupName The groups name
      * @param array $permissions
      */
@@ -362,7 +362,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Does the player has this permission
-     * 
+     *
      * @param string $login The login of the player
      * @param string $permissionName The permission name
      * @return boolean Has the player this permission
@@ -381,7 +381,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * 
+     *
      * @param string $login
      * @param string $permissionName
      * @return boolean
@@ -407,7 +407,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Is the player in any admin groups
-     * 
+     *
      * @param string $login
      * @return boolean
      */
@@ -428,12 +428,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Add an admin command
-     * 
+     *
      * @param string $cmd The string of the command
      * @param Object $class The object to call
      * @param string $function The name of the function to call
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Permissions $permission The permission level needed to do the command.
-     * 		If null then an admin from any group can do the command
+     *      If null then an admin from any group can do the command
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd The AdminCmd object
      */
     static public function addAdminCommand($cmd, $class, $function, $permission) {
@@ -446,7 +446,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Adds an alias to an existing command
-     * 
+     *
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd The command object to which we want to add an alias
      * @param string $cmd The new command
      */
@@ -456,8 +456,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * Adds the command 
-     * 
+     * Adds the command
+     *
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd
      * @param type $cmd
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
@@ -497,7 +497,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Chat command
-     * @param string $login 
+     * @param string $login
      * @param string $args
      */
     public function adminCmd($login, $args) {
@@ -520,7 +520,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * 
+     *
      * @param AdminCmd $commands
      * @param array $chats
      * @param string $login
@@ -549,7 +549,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Adds a player to a group
-     * 
+     *
      * @param String The login of the player who makes the changes
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group The group to which the player needs to be added
      * @param String $login2 The player to add to the group
@@ -570,7 +570,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Removes a player from a group
-     * 
+     *
      * @param string $login
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Admin $admin
@@ -629,7 +629,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Change the permissions of a group
-     * 
+     *
      * @param String $login
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
      * @param array $newPermissions The list of new permissions.
@@ -649,7 +649,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * 
+     *
      * @param string $string
      * @return boolean
      */

@@ -14,16 +14,23 @@ class Recorditem extends \ManiaLive\Gui\Control {
     private $frame;
 
     function __construct($index, \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record, $login) {
-        $sizeX = 50;
+        $sizeX = 36;
         $sizeY = 3;
 
 
         if ($record->login == $login) {
+            $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 6, $sizeY);
+            $this->bg->setPosX(-2);
+            $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+            $this->bg->setAlign('left', 'center');
+            $this->bg->setBgcolor('0c03');
+            $this->addComponent($this->bg);
+        } else {
             $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 4, $sizeY);
             $this->bg->setPosX(-2);
             $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
             $this->bg->setAlign('left', 'center');
-            $this->bg->setBgcolor('0904');
+            //$this->bg->setBgcolor('0001');
             $this->addComponent($this->bg);
         }
 
@@ -53,7 +60,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $path = $record->nation;
 
         if ($path !== null) {
-            $path = explode("|", $path);            
+            $path = explode("|", $path);
             if (sizeof($path) >= 2) {
                 $image = $config->flags . rawurlencode($path[2]) . ".dds";
                 $flag->setStyle("");
@@ -82,7 +89,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $this->nick->setAlign('left', 'center');
         $this->nick->setScale(0.7);
         $nickname = $record->nickName;
-        $nickname = \ManiaLib\Utils\Formatting::stripCodes($nickname, "wos");
+        $nickname = \ManiaLib\Utils\Formatting::stripCodes($nickname, "wosnm");
         $this->nick->setText('$fff' . $nickname);
         $this->frame->addComponent($this->nick);
 
@@ -98,7 +105,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
     }
 
     function onDraw() {
-        
+
     }
 
     public function destroy() {

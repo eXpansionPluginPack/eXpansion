@@ -13,18 +13,25 @@ class DediItem extends \ManiaLive\Gui\Control {
     private $frame;
 
     function __construct($index, $record, $login) {
-        $sizeX = 52;
+        $sizeX = 36;
         $sizeY = 3;
         $config = Config::getInstance();
         if (!array_key_exists("Login", $record))
             return;
 
          if ($record['Login'] == $login) {
+            $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 6, $sizeY);
+            $this->bg->setPosX(-2);
+            $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+            $this->bg->setAlign('left', 'center');
+            $this->bg->setBgcolor('0c03');
+            $this->addComponent($this->bg);
+        } else {
             $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 4, $sizeY);
             $this->bg->setPosX(-2);
             $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
             $this->bg->setAlign('left', 'center');
-            $this->bg->setBgcolor('0905');
+            //$this->bg->setBgcolor('0000');
             $this->addComponent($this->bg);
         }
 
@@ -61,7 +68,7 @@ class DediItem extends \ManiaLive\Gui\Control {
         $this->nick->setAlign('left', 'center');
         $this->nick->setScale(0.7);
         $nickname = $record['NickName'];
-        $nickname = \ManiaLib\Utils\Formatting::stripCodes($nickname, "wos");        
+        $nickname = \ManiaLib\Utils\Formatting::stripCodes($nickname, "wosnm");
         $this->nick->setText('$fff' . $nickname);
         $this->frame->addComponent($this->nick);
         $this->addComponent($this->frame);
@@ -76,7 +83,7 @@ class DediItem extends \ManiaLive\Gui\Control {
     }
 
     function onDraw() {
-        
+
     }
 
     public function destroy() {
@@ -86,7 +93,7 @@ class DediItem extends \ManiaLive\Gui\Control {
         $this->clearComponents();
         }
         catch (\Exception $e){
-            
+
         }
         parent::destroy();
     }

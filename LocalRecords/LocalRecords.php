@@ -246,7 +246,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+    public function onEndMatch ($rankings, $winnerTeamOrMap) {
 
         //Checking for lap constraints
         $uid = $this->storage->currentMap->uId;
@@ -294,7 +294,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         //Get rank of the player
-        $this->player_ranks[$login] = $this->getPlayerRankDb($login);
         if ($this->config->sendRankingNotices) {
             $this->chat_showRank($login);
         }

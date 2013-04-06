@@ -26,7 +26,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false); // create panel for everybody
         foreach ($this->storage->spectators as $player)
-            $this->onPlayerConnect($player->login, true); // create panel for everybody 
+            $this->onPlayerConnect($player->login, true); // create panel for everybody
 
         $this->lastUpdate = time();
         $this->enableTickerEvent();
@@ -43,15 +43,15 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     $panel->update();
                     $panel->redraw($panel->getRecipient());
                 } catch (\Exception $e) {
-                  // silent exception  
+                  // silent exception
                 }
             }
         }
     }
 
-    public function onBeginMap($map, $warmUp, $matchContinuation) {        
+    public function onBeginMap($map, $warmUp, $matchContinuation) {
         Gui\Widgets\RecordsPanel::$dedirecords = array();
-        $this->forceUpdate = true;        
+        $this->forceUpdate = true;
     }
     public function onUpdateRecords($data) {
         Gui\Widgets\RecordsPanel::$localrecords = $data;
@@ -65,13 +65,13 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onDedimaniaGetRecords($data) {
         Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];
-        $this->needUpdate = true;        
+        $this->needUpdate = true;
         echo "Dedimania: Found " . sizeof($data['Records']) . " records for current map!\n";
     }
 
     public function onPlayerConnect($login, $isSpectator) {
         $panel = Gui\Widgets\RecordsPanel::Create($login);
-        $panel->setSize(50, 60);
+        $panel->setSize(40, 60);
         $panel->setPosition(-160, 60);
         $panel->setScale(0.8);
         $panel->update();
@@ -83,27 +83,27 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onDedimaniaOpenSession() {
-        
+
     }
 
     public function onNewRecord($data) {
-        
+
     }
 
     public function onDedimaniaNewRecord($data) {
-        
+
     }
 
     public function onDedimaniaPlayerConnect($data) {
-        
+
     }
 
     public function onDedimaniaPlayerDisconnect() {
-        
+
     }
 
     public function onDedimaniaRecord($record, $oldrecord) {
-        
+
     }
 
 }
