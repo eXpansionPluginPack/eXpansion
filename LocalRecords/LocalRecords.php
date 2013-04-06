@@ -666,7 +666,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record = new Record();
             $data = $dbData->fetchStdObject();
 
-            $record->place = -1;
+            $record->place = $this->config->recordsCount+1;
             $record->login = $data->record_playerlogin;
             $record->nickName = $data->player_nickname;
             $record->time = $data->record_score;
