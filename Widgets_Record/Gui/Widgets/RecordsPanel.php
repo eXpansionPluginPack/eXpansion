@@ -12,8 +12,8 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 
     /** @var \ManiaLive\Gui\Controls\Frame */
     private $frame;
-    private $actionDedi;
-    private $actionLocal;
+    private $actionDedi = null;
+    private $actionLocal = null;
     private $btnDedi;
     private $btnLocal;
     
@@ -31,25 +31,36 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     protected function onConstruct() {
         parent::onConstruct();
         $this->setAlign("left", "top");
-
-        $this->actionDedi = ActionHandler::getInstance()->createAction(array($this, "setPanel"), self::SHOW_DEDIMANIA);
-        $this->actionLocal = ActionHandler::getInstance()->createAction(array($this, "setPanel"), self::SHOW_LOCALRECORDS);
-        $this->btnDedi = new myButton(28);
-        $this->btnDedi->setAction($this->actionDedi);
-        $this->btnDedi->setText('$fffDedimania');
-        $this->btnDedi->colorize(7778);        
-        $this->btnDedi->setPosX(2);
-        $this->btnDedi->setScale(0.6);
-        $this->addComponent($this->btnDedi);
-
-        $this->btnLocal = new myButton(28);
-        $this->btnLocal->setAction($this->actionLocal);
-        $this->btnLocal->setText('$fffLocal');
-        $this->btnLocal->colorize(7778);
-        $this->btnLocal->setScale(0.6);
-        $this->btnLocal->setPosX(20);
-        $this->addComponent($this->btnLocal);
-
+        
+        $pmanager = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+        
+        if($pmanager->isLoaded('Reaby\Dedimania') && $pmanager->isLoaded('eXpansion\LocalRecords')){
+            $this->actionDedi = ActionHandler::getInstance()->createAction(array($this, "setPanel"), self::SHOW_DEDIMANIA);
+        
+            $this->btnDedi = new myButton(28);
+            $this->btnDedi->setAction($this->actionDedi);
+            $this->btnDedi->setText('$fffDedimania');
+            $this->btnDedi->colorize(7778);        
+            $this->btnDedi->setPosX(2);
+            $this->btnDedi->setScale(0.6);
+            $this->addComponent($this->btnDedi);
+            
+            $this->actionLocal = ActionHandler::getInstance()->createAction(array($this, "setPanel"), self::SHOW_LOCALRECORDS);
+        
+            $this->btnLocal = new myButton(28);
+            $this->btnLocal->setAction($this->actionLocal);
+            $this->btnLocal->setText('$fffLocal');
+            $this->btnLocal->colorize(7778);
+            $this->btnLocal->setScale(0.6);
+            $this->btnLocal->setPosX(20);
+            $this->addComponent($this->btnLocal);
+        }
+        
+        if( $pmanager->isLoaded('eXpansion\LocalRecords'))
+            $this->showpanel = self::SHOW_LOCALRECORDS;
+        
+        if($pmanager->isLoaded('Reaby\Dedimania2'))
+            $this->showpanel = self::SHOW_DEDIMANIA;
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setAlign("left", "top");
@@ -123,10 +134,15 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 
         $this->items = array();
         
-        ActionHandler::getInstance()->deleteAction($this->actionDedi);
-        ActionHandler::getInstance()->deleteAction($this->actionLocal);
-        $this->btnDedi->destroy();
-        $this->btnLocal->destroy();
+        if($this->btnDedi != null){
+            ActionHandler::getInstance()->deleteAction($this->actionDedi);
+            $this->btnDedi->destroy();
+        }
+        
+        if($this->actionLocal != null){
+            ActionHandler::getInstance()->deleteAction($this->actionLocal);
+            $this->btnLocal->destroy();
+        }
         $this->frame->clearComponents();
         $this->frame->destroy();        
         $this->clearComponents();
