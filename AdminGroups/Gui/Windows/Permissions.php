@@ -20,6 +20,7 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $action_ok;
     private $action_cancel;
     
+    private $items = array();
     private $permissions = array();
 
     protected function onConstruct() {
@@ -67,6 +68,7 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $item->destroy();
         $this->pager->clearItems();
         $this->permissions = array();
+        $this->items = array();
         
         $x=0;
         foreach ($this->adminGroups->getPermissionList() as $key => $value) {
@@ -80,7 +82,8 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $frame->addComponent(new ListBackGround($x++, 68, 4));
             $frame->addComponent($cBox);
             
-            $this->permissions[$key] = $frame;
+            $this->permissions[$key] = $cBox;
+            $this->items[$key] = $frame;
             $this->pager->addItem($frame);
         }
     }
@@ -103,6 +106,7 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $item->destroy();
 
         $this->permissions = null;
+        $this->items = array();
         $this->pager->destroy();
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_ok);
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_cancel);
