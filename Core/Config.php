@@ -13,7 +13,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $Colors_record = '$0f3';
     public $Colors_rank = '$fe5';
     public $Colors_rating = '$fb3';
-    public $Colors_queue = '$68e';
+    public $Colors_queue = '$8af';
 
 }
 

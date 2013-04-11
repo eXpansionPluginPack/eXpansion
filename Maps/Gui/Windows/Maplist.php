@@ -7,16 +7,16 @@ use ManiaLive\Gui\ActionHandler;
 
 class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
-    
+
     public static $records = array();
-    
-    public static $mapsPlugin = null;    
-    
+
+    public static $mapsPlugin = null;
+
     private $items = array();
-    
-    /** @var \ManiaLive\Gui\Controls\Pager */   
+
+    /** @var \ManiaLive\Gui\Controls\Pager */
     private $pager;
-    
+
     protected function onConstruct() {
         parent::onConstruct();
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
@@ -37,8 +37,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->RedrawAll();
     }
 
-    function chooseNextMap($login, \DedicatedApi\Structures\Map $map) {
-        self::$mapsPlugin->chooseNextMap($login, $map);
+    function queueMap($login, \DedicatedApi\Structures\Map $map, $isTemp = false) {
+        self::$mapsPlugin->queueMap($login, $map, $isTemp);
     }
 
     function onResize($oldX, $oldY) {
@@ -49,11 +49,11 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     protected function onDraw() {
-        $login = $this->getRecipient();      
+        $login = $this->getRecipient();
         foreach ($this->items as $item) {
-            $item->destroy();            
+            $item->destroy();
         }
-        
+
         $this->pager->clearItems();
         $this->items = array();
 
@@ -71,11 +71,11 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function destroy() {
         foreach ($this->items as $item) {
-            $item->destroy();            
-        }        
+            $item->destroy();
+        }
         $this->items = null;
         $this->pager->destroy();
-        $this->clearComponents();                
+        $this->clearComponents();
         parent::destroy();
     }
 

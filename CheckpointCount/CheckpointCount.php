@@ -7,7 +7,7 @@ use \ManiaLivePlugins\eXpansion\CheckpointCount\Gui\Widgets\CPPanel;
 class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onInit() {
-        //Important for all eXpansion plugins. 
+        //Important for all eXpansion plugins.
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK);
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM);
@@ -62,7 +62,7 @@ class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->displayWidget($login);
     }
 
-    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+    public function onEndMatch ($rankings, $winnerTeamOrMap) {
         CPPanel::EraseAll();
     }
 

@@ -14,7 +14,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
     private $goButton;
     private $label;
     private $time;
-    private $chooseNextMap;
+    private $queueMap;
     private $gotoMap;
     private $removeMap;
     private $removeButton;
@@ -24,7 +24,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $sizeY = 4;
 
         $this->isAdmin = $isAdmin;
-        $this->chooseNextMap = $this->createAction(array($controller, 'chooseNextMap'), $map);
+        $this->queueMap = $this->createAction(array($controller, 'queueMap'), $map);
         $this->gotoMap = $this->createAction(array($controller, 'gotoMap'), $map);
         $this->removeMap = $this->createAction(array($controller, 'removeMap'), $map);
 
@@ -100,7 +100,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
         $this->queueButton = new MyButton(26, 5);
         $this->queueButton->setText(__("Queue"));
-        $this->queueButton->setAction($this->chooseNextMap);
+        $this->queueButton->setAction($this->queueMap);
         $this->queueButton->colorize('2a2');
         $this->queueButton->setScale(0.5);
         $this->frame->addComponent($this->queueButton);
@@ -140,7 +140,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
     }
 
     function onDraw() {
-        
+
     }
 
     function destroy() {

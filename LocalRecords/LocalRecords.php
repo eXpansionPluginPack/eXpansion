@@ -91,7 +91,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * All the messages need to be sent;
      * @var Message
      */
-    private $msg_secure, $msg_new, $msg_BeginMap, $msg_newMap, $msg_showRank, $msg_noRank;
+    private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank;
     public static $txt_rank, $txt_nick, $txt_score, $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
     function exp_onInit() {
@@ -109,8 +109,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //Recovering the multi language messages
         $this->msg_secure = exp_getMessage($this->config->msg_secure);
         $this->msg_new = exp_getMessage($this->config->msg_new);
+        $this->msg_improved = exp_getMessage($this->config->msg_improved);
         $this->msg_newMap = exp_getMessage($this->config->msg_newMap);
         $this->msg_BeginMap = exp_getMessage($this->config->msg_BeginMap);
+        $this->msg_personalBest = exp_getMessage($this->config->msg_personalBest);
+        $this->msg_noPB = exp_getMessage($this->config->msg_noPB);
         $this->msg_showRank = exp_getMessage($this->config->msg_showRank);
         $this->msg_noRank = exp_getMessage($this->config->msg_noRank);
 
@@ -149,6 +152,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand("recs", "showRecsWindow", 0, true);
         $this->registerChatCommand("top100", "showRanksWindow", 0, true);
         $this->registerChatCommand("rank", "chat_showRank", 0, true);
+        $this->registerChatCommand("pb", "chat_personalBest", 0, true);
     }
 
     public function exp_onReady() {
@@ -200,7 +204,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          */
         //Forcing load for current map to happen
         $this->onBeginMap("", "", "");
-        
+
         /*$this->addRecord('test1', 100, 1, array());
         $this->addRecord('test2', 90, 1, array());
         $this->addRecord('test3', 80, 1, array());
@@ -218,8 +222,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->addRecord('test9', 55, 1, array());
         $this->addRecord('test1', 50, 1, array());
         $this->addRecord('test6', 72, 1, array());*/
-        
-        
+
+
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
@@ -242,14 +246,23 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (sizeof($this->currentChallengeRecords) == 0 && $this->config->sendBeginMapNotices) {
             $this->exp_chatSendServerMessage($this->msg_newMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
         } else if ($this->config->sendBeginMapNotices) {
-            $this->exp_chatSendServerMessage($this->msg_BeginMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'), \ManiaLive\Utilities\Time::fromTM($this->currentChallengeRecords[0]->time), \ManiaLib\Utils\Formatting::stripCodes($this->currentChallengeRecords[0]->nickName, 'wosnm')));
+            $time = \ManiaLive\Utilities\Time::fromTM($this->currentChallengeRecords[0]->time);
+            if (substr($time, 0, 2) === "0:") {
+                $time = substr($time, 2);
+            }
+            $this->exp_chatSendServerMessage($this->msg_BeginMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'), $time, \ManiaLib\Utils\Formatting::stripCodes($this->currentChallengeRecords[0]->nickName, 'wosnm')));
+            foreach ($this->storage->players as $login => $player) {
+                $this->chat_personalBest($login, null);
+            }
+            foreach ($this->storage->spectators as $login => $player) {
+                $this->chat_personalBest($login, null);
+            }
         }
     }
 
     public function onEndMatch ($rankings, $winnerTeamOrMap) {
 
         //Checking for lap constraints
-        $uid = $this->storage->currentMap->uId;
         if ($this->useLapsConstraints()) {
             $nbLaps = $this->getNbOfLaps();
         } else {
@@ -290,7 +303,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (sizeof($this->currentChallengeRecords) == 0 && $this->config->sendBeginMapNotices) {
             $this->exp_chatSendServerMessage($this->msg_newMap, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
         } else if ($this->config->sendBeginMapNotices) {
-            $this->exp_chatSendServerMessage($this->msg_BeginMap, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'), \ManiaLive\Utilities\Time::fromTM($this->currentChallengeRecords[0]->time), \ManiaLib\Utils\Formatting::stripCodes($this->currentChallengeRecords[0]->nickName, 'wosnm')));
+            $time = \ManiaLive\Utilities\Time::fromTM($this->currentChallengeRecords[0]->time);
+            if (substr($time, 0, 2) === "0:") {
+                $time = substr($time, 2);
+            }
+            $this->exp_chatSendServerMessage($this->msg_BeginMap, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'), $time, \ManiaLib\Utils\Formatting::stripCodes($this->currentChallengeRecords[0]->nickName, 'wosnm')));
         }
 
         //Get rank of the player
@@ -332,8 +349,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return
      */
     public function onPlayerFinish($playerUid, $login, $timeOrScore) {
-        
-        
+
+
         //Checking for valid time
         if (isset($this->storage->players[$login]) && $timeOrScore > 0) {
             $gamemode = $this->storage->gameInfos->gameMode;
@@ -412,6 +429,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record->avgScore = $score;
             $record->gamemode = $gamemode;
             $record->nation = $player->path;
+            $record->uId = $uid;
             $record->place = sizeof($this->currentChallengeRecords) + 1;
             $record->ScoreCheckpoints = $cpScore;
             $i = sizeof($this->currentChallengeRecords);
@@ -458,14 +476,14 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             //IF old rank was to bad to take in considaration. Let's try the worst record and see
             if ($i >= $this->config->recordsCount)
                 $i = $this->config->recordsCount-1;
-            
+
             $old_i = $i;
-            
+
             if (($this->debug & self::DEBUG_RECS_FULL) == self::DEBUG_RECS_FULL)
                 \ManiaLive\Utilities\Console::println("[eXp][DEBUG][LocalRecords:RECS]Starting to look for the rank of $login 's record at rank $i+1");
-            
+
             $firstRecord = ($i < 0);
-            
+
             //For each record worse then the new, push it back and push forward the new one
             while ($i >= 0 && $this->currentChallengeRecords[$i]->time > $nrecord->time) {
                 $record = $this->currentChallengeRecords[$i];
@@ -483,7 +501,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $nrecord->place--;
                 $i--;
             }
-            
+
             if($firstRecord){
                 $nrecord->place = 1;
             }
@@ -492,11 +510,30 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 \ManiaLive\Utilities\Console::println("[eXp][DEBUG][LocalRecords:RECS]$login new rec Rank found".$nrecord->place." Old was : ".$recordrank_old);
 
             //Found new Rank sending message
+            $time = \ManiaLive\Utilities\Time::fromTM($nrecord->time);
+            if (substr($time, 0, 2) === "0:") {
+                $time = substr($time, 2);
+            }
             if ($nrecord->place == $recordrank_old && !$force && $nrecord->place <= $this->config->recordsCount) {
-                $this->exp_chatSendServerMessage($this->msg_secure, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, \ManiaLive\Utilities\Time::fromTM($nrecord->time), $recordrank_old, \ManiaLive\Utilities\Time::fromTM($nrecord->time - $recordtime_old)));
+                $securedBy = \ManiaLive\Utilities\Time::fromTM($nrecord->time - $recordtime_old);
+                if (substr($securedBy, 0, 3) === "0:0") {
+                    $securedBy = substr($securedBy, 3);
+                } else if (substr($securedBy, 0, 2) === "0:") {
+                    $securedBy = substr($securedBy, 2);
+                }
+                $this->exp_chatSendServerMessage($this->msg_secure, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
+                \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
+            } else if ($nrecord->place < $recordrank_old && !$force && $nrecord->place <= $this->config->recordsCount) {
+                $securedBy = \ManiaLive\Utilities\Time::fromTM($nrecord->time - $recordtime_old);
+                if (substr($securedBy, 0, 3) === "0:0") {
+                    $securedBy = substr($securedBy, 3);
+                } else if (substr($securedBy, 0, 2) === "0:") {
+                    $securedBy = substr($securedBy, 2);
+                }
+                $this->exp_chatSendServerMessage($this->msg_improved, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
                 \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
             } else if ($nrecord->place <= $this->config->recordsCount) {
-                $this->exp_chatSendServerMessage($this->msg_new, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, \ManiaLive\Utilities\Time::fromTM($nrecord->time), $recordrank_old, $recordtime_old));
+                $this->exp_chatSendServerMessage($this->msg_new, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time));
                 \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
             }
             \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_PERSONAl_BEST, $nrecord));
@@ -509,7 +546,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param $nbLaps
      */
     private function updateRecordInDatabase(Record $record, $nbLaps) {
-        $uid = $this->storage->currentMap->uId;
+        //$uid = $this->storage->currentMap->uId;
+        $uid = $record->uId;
         if ($record->isNew) {
             //If the record is new we insert
             $q = 'INSERT INTO `exp_records` (`record_challengeuid`, `record_playerlogin`, `record_nbLaps`
@@ -625,6 +663,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record->avgScore = $data->record_avgScore;
             $record->nation = $data->player_nation;
             $record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
+            $record->uId = $this->storage->currentMap->uId;
 
             $records[$i - 1] = $record;
             $i++;
@@ -674,6 +713,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record->date = $data->record_date;
             $record->nation = $data->player_nation;
             $record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
+            $record->uId = $this->storage->currentMap->uId;
 
             $this->currentChallengePlayerRecords[$login] = $record;
         } else {
@@ -941,15 +981,48 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function chat_showRank ($login = null) {
         if ($login != null) {
-            $rank = $this->getPlayerRank($login);
-			if ($rank == -2) {
-				$rank = $this->getPlayerRankDb($login);
-			}
+            //$rank = $this->getPlayerRank($login);
+            //if ($rank == -2) {
+                $rank = $this->getPlayerRankDb($login);
+            //}
             $rankTotal = $this->getTotalRanked();
             if ($rank > 0) {
                 $this->exp_chatSendServerMessage($this->msg_showRank, $login, array($rank, $rankTotal));
             } else {
                 $this->exp_chatSendServerMessage($this->msg_noRank, $login, array());
+            }
+        }
+    }
+
+    public function chat_personalBest ($login = null) {
+        if ($login != null) {
+            $record = $this->getCurrentChallangePlayerRecord($login);
+            if (!$record) {
+                $this->exp_chatSendServerMessage($this->msg_noPB, $login, array());
+            } else {
+                $time = \ManiaLive\Utilities\Time::fromTM($record->time);
+                if (substr($time, 0, 2) === "0:") {
+                    $time = substr($time, 2);
+                }
+                $avg = \ManiaLive\Utilities\Time::fromTM($record->avgScore);
+                if (substr($avg, 0, 2) === "0:") {
+                    $avg = substr($avg, 2);
+                }
+                if ($record->place > 0 && $record->place <= $this->config->recordsCount) {
+                    $place = $record->place;
+                    if (substr($place, -1) == 1) {
+                        $place.'st';
+                    } else if (substr($place, -1) == 2) {
+                        $place.'nd';
+                    } else if (substr($place, -1) == 3) {
+                        $place.'rd';
+                    } else {
+                        $place.'th';
+                    }
+                } else {
+                    $place = '--';
+                }
+                $this->exp_chatSendServerMessage($this->msg_personalBest, $login, array($time, $place, $avg, $record->nbFinish));
             }
         }
     }
