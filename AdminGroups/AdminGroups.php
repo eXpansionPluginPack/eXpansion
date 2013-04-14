@@ -149,6 +149,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod('getPermission');
 
         //Registering the admin chat comman with a lot of parameters
+        //$this->registerChatCommand('test', "test", 0, true);
+        
         $this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());
         $this->registerChatCommand('adm', "adminCmd", -1, true, $this->get());
 
@@ -157,6 +159,15 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $cmd = $this->addAdminCommand('help', $this, "windowHelp", null);
         $cmd->setHelp("Show the list of all available admin commands and alliases.");
+    }
+    
+    public function test(){
+        $mgroup = self::$groupList[0];
+        if(isset(self::$admins['oliverde8'])){
+            $this->removeFromGroup('test', $mgroup, self::$admins['oliverde8']);
+        }else{
+            $this->addToGroup('test', $mgroup, 'oliverde8');
+        }
     }
 
     public function onOliverde8HudMenuReady($menu) {
@@ -562,9 +573,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->exp_chatSendServerMessage($this->msg_aInGroup, $login, array($login2, $group->getGroupName()));
         } else {
             $this->reLoadAdmins();
-
-            self::$admins[$login2] = true;
-            $group->addAdmin(new Admin($login2, $group));
+            $admin = new Admin($login2, $group);
+            self::$admins[$login2] = $admin;
+            $group->addAdmin($admin);
+            
+            Dispatcher::dispatch(new Events\Event(Events\Event::ON_ADMIN_NEW, $login2));
+            
             $this->exp_chatSendServerMessage($this->msg_paddSuc, null, array($login2, $group->getGroupName()));
 
             $this->saveFile();
@@ -587,7 +601,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->reLoadAdmins();
 
             $group->removeAdmin($admin->getLogin());
-            unset(self::$admins[$login]);
+            unset(self::$admins[$admin->getLogin()]);
+            Dispatcher::dispatch(new Events\Event(Events\Event::ON_ADMIN_REMOVED, $admin->getLogin()));
             $this->exp_chatSendServerMessage($this->msg_pRemoveSuc, null, array($admin->getLogin(), $group->getGroupName()));
 
             $this->saveFile();
