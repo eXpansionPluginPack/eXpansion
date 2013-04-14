@@ -147,10 +147,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //Registering public functions
         $this->setPublicMethod('adminCmd');
         $this->setPublicMethod('getPermission');
-
-        //Registering the admin chat comman with a lot of parameters
+        
         //$this->registerChatCommand('test', "test", 0, true);
         
+        //Registering the admin chat comman with a lot of parameters
         $this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());
         $this->registerChatCommand('adm', "adminCmd", -1, true, $this->get());
 
