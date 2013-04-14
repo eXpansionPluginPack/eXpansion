@@ -103,7 +103,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->config = Config::getInstance();
 
         $this->loadAdmins();
-
+        
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
@@ -209,7 +209,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //Reseting settings
         self::$admins = array();
         self::$groupList = array();
-        self::$permissionList = array();
+        //self::$permissionList = array();
 
         //Recovering the admin groups
         $values = \parse_ini_file("config/" . $this->config->config_file, true);
@@ -441,6 +441,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         self::addCommand($comand, $cmd);
         self::$commandsList[] = $comand;
+        if($permission != null)
+            self::$permissionList[$permission]=true;
+        self::$instance->saveFile();
         return $comand;
     }
 

@@ -398,8 +398,14 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $currentMapIndex = $this->connection->getCurrentMapIndex();
         $i = $currentMapIndex - 1;
         $this->history = array();
-        for ($j = 0; $j < 9; $j++) {
-            $this->history[] = $mapList[$i];
+        
+        $endIndex = 9;
+        if(sizeof($mapList) < 9)
+            $endIndex = sizeof($mapList);
+        for ($j = 0; $j < $endIndex; $j++) {
+            if(isset($mapList[$i])){
+                $this->history[] = $mapList[$i];
+            }
             $i--;
             if ( $i < 0 ) {
                 $i = $mapCount - 1;
