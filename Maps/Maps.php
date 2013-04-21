@@ -331,16 +331,16 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $player = $this->storage->getPlayerObject($login);
             $this->connection->chooseNextMap($map->fileName);
+             $map = $this->connection->getNextMapInfo();
             if ($this->config->showNextMapWidget) {
                 NextMapWidget::EraseAll();
                 $widget = NextMapWidget::Create(null);
                 $widget->setPosition(136, 74);
-                $widget->setMap($this->connection->nextMap);
+                $widget->setMap($map);
                 $widget->show();
             }
             $this->connection->nextMap();
-            $map = $this->connection->getNextMapInfo();
-            $this->exp_chatSendServerMessage($this->config->msg_queueNow, null, array(\ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author, \ManiaLib\Utils\Formatting::stripCodes($player->nickname, 'wosnm'), $login));
+            $this->exp_chatSendServerMessage($this->config->msg_queueNow, null, array(\ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));
         } catch (\Exception $e) {
             $this->exp_chatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
         }
