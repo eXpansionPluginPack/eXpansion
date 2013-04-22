@@ -13,7 +13,10 @@ class MxMap extends \ManiaLive\Gui\Control {
     private $addAction;
     private $addButton;
     private $actionSearch;
+    private $queueButton;
+    private $queueAction;
     private $frame;
+    private $isAdmin;
 
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map, $controller, $isAdmin, $sizeX) {
         $sizeY = 4;
@@ -33,6 +36,7 @@ class MxMap extends \ManiaLive\Gui\Control {
 
 
         $this->addAction = $this->createAction(array($controller, 'addMap'), $id);
+        $this->queueAction = $this->createAction(array($controller, 'mxVote'), $id);
         $this->actionSearch = $this->createAction(array($controller, 'search'), "", $map->username);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
@@ -85,6 +89,12 @@ class MxMap extends \ManiaLive\Gui\Control {
 
         $this->frame->addComponent($spacer);
 
+        $this->queueButton = new MyButton(24, 5);
+        $this->queueButton->setScale(0.5);
+        $this->queueButton->setText(__("Queue"));
+        $this->queueButton->setAction($this->queueAction);
+        $this->frame->addComponent($this->queueButton);
+
         if ($this->isAdmin) {
             $this->addButton = new MyButton(24, 5);
             $this->addButton->setScale(0.5);
@@ -107,14 +117,17 @@ class MxMap extends \ManiaLive\Gui\Control {
     }
 
     function onDraw() {
-        
+
     }
 
     function destroy() {
-        $this->addButton->destroy();
+        $this->queueButton->destroy();
+        if ($this->isAdmin) {
+            $this->addButton->destroy();
+        }
         $this->frame->clearComponents();
         $this->frame->destroy();
-        $this->clearComponents();        
+        $this->clearComponents();
         parent::destroy();
     }
 

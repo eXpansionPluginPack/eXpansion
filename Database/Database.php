@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Database;
 
 use ManiaLive\Utilities\Console;
 use ManiaLib\Utils\Formatting as String;
+use \ManiaLivePlugins\eXpansion\Database\Config;
 
 /**
  * Description of Database
@@ -11,6 +12,12 @@ use ManiaLib\Utils\Formatting as String;
  * @author oliverde8
  */
 class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+
+    private $config;
+
+    function exp_onInit() {
+        $this->config = Config::getInstance();
+    }
 
     public function exp_onLoad() {
         parent::exp_onLoad();
@@ -34,7 +41,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($this->storage->spectators as $login => $player) { // get spectators
             $this->onPlayerConnect($login, false);
         }
-        
+
         $this->setPublicMethod('getPlayer');
         $this->setPublicMethod('getDatabaseVersion');
         $this->setPublicMethod('setDatabaseVersion');
@@ -50,7 +57,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->storage->getPlayerObject($login)->lastTimeUpdate = $time;
 
         if ($query->recordCount() == 0) {
-            $q = "INSERT INTO `exp_players` 
+            $q = "INSERT INTO `exp_players`
                     (`player_login`,`player_nickname`, `player_nicknameStripped`, `player_updated`, `player_ip`,
                         `player_onlinerights`, `player_nation`, `player_wins`, `player_timeplayed`)
                     VALUES (" . $this->db->quote($player->login) . ",
@@ -66,19 +73,19 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->db->query($q);
         } else {
             $q = "UPDATE `exp_players`
-			 SET
+             SET
                 `player_nickname` = " . $this->db->quote($player->nickName) . ",
                 `player_nicknameStripped` = " . $this->db->quote(String::stripColors($player->nickName)) . ",
                 `player_updated` = " . $this->db->quote($time) . ",
                 `player_ip` =  " . $this->db->quote($player->iPAddress) . ",
                 `player_onlinerights` = " . $this->db->quote($player->onlineRights) . "
-			 WHERE
-			 `player_login` = " . $this->db->quote($login) . ";";
+             WHERE
+             `player_login` = " . $this->db->quote($login) . ";";
             $this->db->query($q);
         }
     }
 
-    function onPlayerDisconnect($login, $reason = null) {
+    function onPlayerDisconnect($login) {
         $this->updatePlayTime($this->storage->getPlayerObject($login));
     }
 
@@ -93,7 +100,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->updatePlayTime($player);
         }
     }
-    
+
      public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
          $this->updateServerChallenges();
      }
@@ -104,14 +111,14 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (isset($player->lastTimeUpdate)) {
             $playtime = $time - $player->lastTimeUpdate;
             $q = "UPDATE `exp_players`
-			 SET `player_timeplayed` = (`player_timeplayed` + $playtime)
-			 WHERE `player_login` = " . $this->db->quote($player->login) . ";";
+             SET `player_timeplayed` = (`player_timeplayed` + $playtime)
+             WHERE `player_login` = " . $this->db->quote($player->login) . ";";
             $this->db->query($q);
         }
 
-        $player->lastTimeUpdate = $time;
+        $this->storage->player->lastTimeUpdate = $time;
     }
-    
+
     function updateServerChallenges() {
         //get server challenges
         $serverChallenges = $this->storage->maps;
@@ -136,7 +143,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         }
     }
-    
+
      public function insertMap($data, $login = 'n/a') {
         if (empty($data->mood)) {
             $connection = $this->connection;
@@ -204,10 +211,10 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function createDatabaseTable() {
 
         $q = "CREATE TABLE `exp_databaseversion` (
-					`database_id` mediumint(9) NOT NULL AUTO_INCREMENT,
-					`database_table` varchar(50) NOT NULL,
-					`database_version` mediumint(9) NOT NULL,
-					 PRIMARY KEY (`database_id`),
+                    `database_id` mediumint(9) NOT NULL AUTO_INCREMENT,
+                    `database_table` varchar(50) NOT NULL,
+                    `database_version` mediumint(9) NOT NULL,
+                     PRIMARY KEY (`database_id`),
                      KEY(`database_table`)
                 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=MyISAM;";
         $this->db->query($q);
@@ -218,16 +225,16 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->setDatabaseVersion('exp_players', 1);
         }
         $q = "CREATE TABLE `exp_players` (
-					`player_login` varchar(50) NOT NULL,
-					`player_nickname` varchar(100) NOT NULL,
-					`player_nicknameStripped` varchar(100) NOT NULL,
-					`player_updated` mediumint(9) NOT NULL DEFAULT '0',
-					`player_wins` mediumint(9) NOT NULL DEFAULT '0',
-					`player_timeplayed` mediumint(9) NOT NULL DEFAULT '0',
-					`player_onlinerights` varchar(10) NOT NULL,
-					`player_ip` varchar(50),
-					`player_nation` varchar(100),
-					PRIMARY KEY (`player_login`)
+                    `player_login` varchar(50) NOT NULL,
+                    `player_nickname` varchar(100) NOT NULL,
+                    `player_nicknameStripped` varchar(100) NOT NULL,
+                    `player_updated` mediumint(9) NOT NULL DEFAULT '0',
+                    `player_wins` mediumint(9) NOT NULL DEFAULT '0',
+                    `player_timeplayed` mediumint(9) NOT NULL DEFAULT '0',
+                    `player_onlinerights` varchar(10) NOT NULL,
+                    `player_ip` varchar(50),
+                    `player_nation` varchar(100),
+                    PRIMARY KEY (`player_login`)
                 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=MyISAM;";
         $this->db->query($q);
     }
@@ -260,7 +267,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                                     ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = MYISAM ;";
         $this->db->query($q);
     }
-    
+
     public function getPlayer($login){
         $g = "SELECT * FROM `exp_players` WHERE `player_login` = " . $this->db->quote($login) . ";";
 
@@ -276,9 +283,40 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function incrementWins($player) {
         $q = "UPDATE `exp_players`
-			 SET `player_wins` = (`player_wins` + 1)
-			 WHERE `player_login` = " . $this->db->quote($player->login) . ";";
+             SET `player_wins` = (`player_wins` + 1)
+             WHERE `player_login` = " . $this->db->quote($player->login) . ";";
         $this->db->query($q);
+        if ($this->config->showWins) {
+            $q = "SELECT `player_wins` FROM `exp_players` WHERE `player_login` = ".$this->db->quote($player->login).";";
+            $query = $this->db->query($q);
+            $data = $query->fetchStdObject();
+            $w = $data->player_wins;
+            $msg_pub = exp_getMessage('#rank#Congratulations to #variable#%1$s#rank# for their #variable#%2$s#rank# win!');
+            $msg_self = exp_getMessage('#rank#Congratulations for your #variable#%1$s#rank# win!');
+            $wins = $this->numberize($w);
+            if ($w <= 100 && $w % 10 == 0) {
+                $this->exp_chatSendServerMessage($msg_pub, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wosnm"), $wins));
+            } else if ($w % 25 == 0) {
+                $this->exp_chatSendServerMessage($msg_pub, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wosnm"), $wins));
+            } else {
+                $this->exp_chatSendServerMessage($msg_self, $player->login, array($wins));
+            }
+        }
+    }
+
+    function numberize ($num) {
+        if ($num >= 10 && $num <= 20) {
+            $num = $num.'th';
+        } else if (substr($num, -1) == 1) {
+            $num = $num.'st';
+        } else if (substr($num, -1) == 2) {
+            $num = $num.'nd';
+        } else if (substr($num, -1) == 3) {
+            $num = $num.'rd';
+        } else {
+            $num = $num.'th';
+        }
+        return $num;
     }
 
     function getDatabaseVersion($table, $fromPlugin = null) {
@@ -301,18 +339,18 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($query->recordCount() == 0) {
 
             $q = "INSERT INTO `exp_databaseversion` (`database_table`,
-								 `database_version`
-								 ) VALUES (
-								 " . $this->db->quote($table) . ",
-								 " . $this->db->quote($version) . "
-								 )";
+                                 `database_version`
+                                 ) VALUES (
+                                 " . $this->db->quote($table) . ",
+                                 " . $this->db->quote($version) . "
+                                 )";
             $this->db->query($q);
         } else {
             $record = $query->fetchStdObject();
-            
-            if($record->database_version < $version){            
+
+            if($record->database_version < $version){
                 $q = "UPDATE `exp_databaseversion`
-                SET	`database_version` = " . $this->db->quote($version) . "
+                SET `database_version` = " . $this->db->quote($version) . "
                 WHERE `database_table` = " . $this->db->quote($table) . ";";
                 echo $q;
                 $this->db->query($q);

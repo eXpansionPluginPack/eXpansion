@@ -16,6 +16,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $history = array();
     private $nextMap;
     private $tries = 0;
+    private $atPodium = false;
 
     /* will be used when custom votes works again */
 
@@ -37,6 +38,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->config->msg_nextQueue = exp_getMessage($this->config->msg_nextQueue);
         $this->config->msg_nextMap = exp_getMessage($this->config->msg_nextMap);
         $this->config->msg_queueNow = exp_getMessage($this->config->msg_queueNow);
+
+        $this->setPublicMethod("queueMap");
+        $this->setPublicMethod("queueMxMap");
+        $this->setPublicMethod("replayMap");
+        $this->setPublicMethod("returnQueue");
     }
 
     public function exp_onReady() {
@@ -46,6 +52,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "remove");
+
+        $cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', 'maps_res');
+        $cmd->setHelp(exp_getMessage('Sets current challenge to replay at end of match'));
+        $cmd->setMinParam(0);
+        AdminGroups::addAlias($cmd, "replay");
 
         $this->registerChatCommand('list', "showMapList", 0, true);
         $this->registerChatCommand('maps', "showMapList", 0, true);
@@ -60,8 +71,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Add map'), null, array($this, 'addMaps'), true);
         }
 
-        if ($this->isPluginLoaded('Standard\Menubar'))
+        if ($this->isPluginLoaded('Standard\Menubar')) {
             $this->buildMenu();
+        }
 
         $this->nextMap = $this->storage->nextMap;
 
@@ -133,6 +145,16 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["substyle"] = "NewTrack";
         $button["function"] = 'addMaps';
         $menu->addButton($parent, "Add Map", $button);
+
+        $button["style"] = "Icons64x64_1";
+        $button["substyle"] = "Refresh";
+        $button["function"] = 'replayMap';
+        $button["permission"] = "maps_res";
+        $parent = $menu->findButton(array('admin', 'Basic Commands'));
+        if (!$parent) {
+            $parent = $menu->findButton(array('admin', 'Maps'));  // no basic cmd submenu?  just dump it in with map cmd's..
+        }
+        $menu->addButton($parent, "Replay Map", $button);
     }
 
     function onPlayerConnect($login, $isSpectator) {
@@ -144,14 +166,17 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    public function onPlayerDisconnect($login, $reason = null) {
+    public function onPlayerDisconnect($login) {
         Gui\Windows\Maplist::Erase($login);
         Gui\Windows\AddMaps::Erase($login);
-        if ($this->config->showNextMapWidget)
+        if ($this->config->showNextMapWidget) {
             NextMapWidget::Erase($login);
+        }
     }
 
     function onBeginMap($map, $warmUp, $matchContinuation) {
+
+        $this->atPodium = false;
 
         if (count($this->queue) > 0) {
             $queue = reset($this->queue);
@@ -197,16 +222,20 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onEndMatch ($rankings, $winnerTeamOrMap) {
 
+        $this->atPodium = true;
+
         if (count($this->queue) > 0) {
             $queue = reset($this->queue);
-            try {
-                $this->connection->chooseNextMap($queue->map->fileName);
-                if ($this->config->showEndMatchNotices) {
-                    $this->exp_chatSendServerMessage($this->config->msg_nextQueue, null, array(\ManiaLib\Utils\Formatting::stripCodes($queue->map->name, 'wosnm'), $queue->map->author, \ManiaLib\Utils\Formatting::stripCodes($queue->player->nickName, 'wosnm'), $queue->player->login));
+            //if ($queue->map != $this->storage->nextMap) {
+                try {
+                    $this->connection->chooseNextMap($queue->map->fileName);
+                    if ($this->config->showEndMatchNotices) {
+                        $this->exp_chatSendServerMessage($this->config->msg_nextQueue, null, array(\ManiaLib\Utils\Formatting::stripCodes($queue->map->name, 'wosnm'), $queue->map->author, \ManiaLib\Utils\Formatting::stripCodes($queue->player->nickName, 'wosnm'), $queue->player->login));
+                    }
+                } catch (\Exception $e) {
+                    $this->exp_chatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
                 }
-            } catch (\Exception $e) {
-                $this->exp_chatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
-            }
+            //}
         } else {
             if ($this->config->showEndMatchNotices) {
                 $this->exp_chatSendServerMessage($this->config->msg_nextMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->nextMap->name, 'wosnm'), $this->storage->nextMap->author));
@@ -224,30 +253,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 //  $this->callPublicMethod('Standard\Menubar', 'addButton', 'Vote for replay map', array($this, 'voteRestart'), false);
     }
 
-    /**
-     *
-     * @param string $login
-     * @todo enable the method for menu, currently votes are not working!
-     */
-    public function voteRestart($login) {
-        $vote = new \DedicatedApi\Structures\Vote();
-        $vote->callerLogin = $login;
-        $vote->cmdName = "Cmd name";
-        $vote->cmdParam = array("param");
-        $this->connection->callVote($vote, 0.3, 0, 0);
-        $this->exp_chatSendServerMessage($login . " custom vote restart");
-    }
-
-    public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {
-        $message = $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam . "\n";
-//  $this->exp_chatSendServerMessage($message);
-    }
-
-    public function voteSkip($login) {
-        $this->connection->callVoteNextMap();
-        $this->exp_chatSendServerMessage($login . " vote skip");
-    }
-
     public function testme($login) {
         print "total number: " . count(Gui\Windows\Maplist::GetAll());
     }
@@ -255,8 +260,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showMapList($login) {
         Gui\Windows\Maplist::Erase($login);
 
-        if ($this->isPluginLoaded('eXpansion\LocalRecords'))
+        if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
             Gui\Windows\MapList::$records = $this->callPublicMethod('eXpansion\LocalRecords', 'getRecords');
+        }
 
         $window = Gui\Windows\Maplist::Create($login);
         $window->setTitle(__('Maps on server', $login));
@@ -317,9 +323,41 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     $widget->setMap($this->nextMap);
                     $widget->show();
                 }
+                //$this->connection->chooseNextMap($map->fileName);
             }
-            if ($queueCount <= 31)
+            if ($queueCount <= 31) {
                 $queueCount = date('jS',strtotime('2007-01-' . $queueCount));
+            }
+
+            $this->exp_chatSendServerMessage($this->config->msg_addQueue, null, array(\ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $player->login, $queueCount));
+        } catch (\Exception $e) {
+            $this->exp_chatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
+        }
+    }
+
+    public function queueMxMap ($login, $file) {
+        try {
+            $this->connection->addMap($file);
+            $player = $this->storage->getPlayerObject($login);
+            $map = $this->connection->getMapInfo($file);
+
+            $this->queue[] = new MapWish($player, $map, true);
+
+            $queueCount = count($this->queue);
+            if ($queueCount == 1) {
+                $this->nextMap = $map;
+                if ($this->config->showNextMapWidget) {
+                    NextMapWidget::EraseAll();
+                    $widget = NextMapWidget::Create(null);
+                    $widget->setPosition(136, 74);
+                    $widget->setMap($this->nextMap);
+                    $widget->show();
+                }
+                //$this->connection->chooseNextMap($map->fileName);
+            }
+            if ($queueCount <= 31) {
+                $queueCount = date('jS',strtotime('2007-01-' . $queueCount));
+            }
 
             $this->exp_chatSendServerMessage($this->config->msg_addQueue, null, array(\ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $player->login, $queueCount));
         } catch (\Exception $e) {
@@ -331,16 +369,16 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $player = $this->storage->getPlayerObject($login);
             $this->connection->chooseNextMap($map->fileName);
-             $map = $this->connection->getNextMapInfo();
             if ($this->config->showNextMapWidget) {
                 NextMapWidget::EraseAll();
                 $widget = NextMapWidget::Create(null);
                 $widget->setPosition(136, 74);
-                $widget->setMap($map);
+                $widget->setMap($this->connection->nextMap);
                 $widget->show();
             }
             $this->connection->nextMap();
-            $this->exp_chatSendServerMessage($this->config->msg_queueNow, null, array(\ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+            $map = $this->connection->getNextMapInfo();
+            $this->exp_chatSendServerMessage($this->config->msg_queueNow, null, array(\ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author, \ManiaLib\Utils\Formatting::stripCodes($player->nickname, 'wosnm'), $login));
         } catch (\Exception $e) {
             $this->exp_chatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
         }
@@ -389,19 +427,25 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    public function returnQueue () {
+        return $this->queue;
+    }
+
     function preloadHistory () {
         $mapList = $this->connection->getMapList(-1, 0);
         $mapCount = count($mapList);
-        if ( $mapCount == 0 )
+        if ( $mapCount == 0 ) {
             return;
+        }
 
         $currentMapIndex = $this->connection->getCurrentMapIndex();
         $i = $currentMapIndex - 1;
         $this->history = array();
-        
+
         $endIndex = 9;
-        if(sizeof($mapList) < 9)
+        if(sizeof($mapList) < 9) {
             $endIndex = sizeof($mapList);
+        }
         for ($j = 0; $j < $endIndex; $j++) {
             if(isset($mapList[$i])){
                 $this->history[] = $mapList[$i];
@@ -489,6 +533,37 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));
     }
 
+    function replayMap ($login) {
+        $player = $this->storage->getPlayerObject($login);
+
+        if (count($this->queue) > 0) {
+            $queue = reset($this->queue);
+            if ($queue->map->uId == $this->storage->currentMap->uId) {
+                $msg = exp_getMessage('#admin_error# $iChallenge already set to be replayed!');
+                $this->exp_chatSendServerMessage($msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+                return;
+            }
+        }
+
+        if (!$this->atPodium) {
+            array_unshift($this->queue, new MapWish($player, $this->storage->currentMap, false));
+        } else {
+            $this->connection->restartMap();
+        }
+
+        $msg = exp_getMessage('#queue#Challenge set to be replayed!');
+        $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+
+        if ($this->config->showNextMapWidget && !$this->atPodium) {
+            $this->nextMap = $this->storage->currentMap;
+            NextMapWidget::EraseAll();
+            $widget = NextMapWidget::Create(null);
+            $widget->setPosition(136, 74);
+            $widget->setMap($this->nextMap);
+            $widget->show();
+        }
+    }
+
     public function addMaps($login) {
         $window = Gui\Windows\AddMaps::Create($login);
         $window->setTitle('Add Maps on server');
@@ -499,4 +574,3 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 }
 ?>
-

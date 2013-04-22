@@ -33,9 +33,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     function onPlayerConnect($login, $isSpectator) {
         $this->displayWidget($login);
     }
-    function onPlayerDisconnect($login, $reason = null) {
-      PBPanel::Erase($login);
-    }
+
     public function onPersonalBestRecord(Record $record){
         $this->redrawRecordWidget($record->login, $record);
     }
@@ -68,6 +66,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         if(isset($panel[0])){
             $rank = $this->callPublicMethod('eXpansion\\LocalRecords', 'getPlayerRank', $login);
             if ($rank == -1) $rank = '--';
+            if ($rank == -2) $rank = '';
             $rankTotal = $this->callPublicMethod('eXpansion\\LocalRecords', 'getTotalRanked');
             $panel[0]->setRecord($record, $rank, $rankTotal);
             $panel[0]->redraw($login);
@@ -82,6 +81,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
         $rank = $this->callPublicMethod('eXpansion\\LocalRecords', 'getPlayerRank', $login);
         if ($rank == -1) $rank = '--';
+        if ($rank == -2) $rank = '';
         $rankTotal = $this->callPublicMethod('eXpansion\\LocalRecords', 'getTotalRanked');
 
         $info = PBPanel::Create($login, $rank, $rankTotal);

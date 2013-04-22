@@ -101,7 +101,7 @@ class PBPanel extends \ManiaLive\Gui\Window {
         $this->pb->setText('$ddd'.$pbTime);
         $this->avg->setText('$ddd'.$avgTime);
         $this->finish->setText('$ddd'.$nbFinish);
-        $this->rank->setText('$ddd'.$rank.' / '.$rankTotal);
+        $this->rank->setText('$ddd'.$rank.'$n $m/$n $m'.$rankTotal);
         if($rank == - 2){
             $this->rankLoading->setVisibility(true);
             $this->rank->setPosX(3);

@@ -93,7 +93,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function onShow() {
-        
+
     }
 
     public function setPlugin($plugin) {
@@ -128,14 +128,14 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $info = $this->connection->getVersion();
             switch ($info->titleId) {
                 case "TMCanyon":
-                    $env = "TMCanyon";
+                    $env = "1";
                     break;
                 case "TMStadium":
-                    $env = "TMStadium";
+                    $env = "2";
                     break;
             }
 
-            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&tpack=' . $env . '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&priord=2&limit=40&tracksearch&api=on&format=json';
+            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&environments=' . $env . '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&priord=2&limit=40&tracksearch&api=on&format=json';
         }
 
         $ch = curl_init($query);
@@ -180,6 +180,10 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function addMap($login, $mapId) {
         $this->mxPlugin->addMap($login, $mapId);
+    }
+
+    function mxVote($login, $mapId) {
+        $this->mxPlugin->mxVote($login, $mapId);
     }
 
     function actionOk($login, $args) {

@@ -103,7 +103,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->config = Config::getInstance();
 
         $this->loadAdmins();
-        
+
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
@@ -147,9 +147,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //Registering public functions
         $this->setPublicMethod('adminCmd');
         $this->setPublicMethod('getPermission');
-        
+
         //$this->registerChatCommand('test', "test", 0, true);
-        
+
         //Registering the admin chat comman with a lot of parameters
         $this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());
         $this->registerChatCommand('adm', "adminCmd", -1, true, $this->get());
@@ -160,7 +160,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd = $this->addAdminCommand('help', $this, "windowHelp", null);
         $cmd->setHelp("Show the list of all available admin commands and alliases.");
     }
-    
+
     public function test(){
         $mgroup = self::$groupList[0];
         if(isset(self::$admins['oliverde8'])){
@@ -198,11 +198,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $parent = $menu->addButton("menu", "Players", $button);
         }
 
-        $button["style"] = "Icons128x128_1";
-        $button["substyle"] = "Invite";
-        $button["plugin"] = $this;
-        $button["function"] = "windowGroups";
-        $menu->addButton($parent, "Admin Groups", $button);
+        // Would be fine, but admin check isn't there for adding groups/players to lists..  HUGE BUG!
+        //$button["style"] = "Icons128x128_1";
+        //$button["substyle"] = "Invite";
+        //$button["plugin"] = $this;
+        //$button["function"] = "windowGroups";
+        //$menu->addButton($parent, "Admin Groups", $button);
     }
 
     public function reLoadAdmins() {
@@ -576,9 +577,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $admin = new Admin($login2, $group);
             self::$admins[$login2] = $admin;
             $group->addAdmin($admin);
-            
+
             Dispatcher::dispatch(new Events\Event(Events\Event::ON_ADMIN_NEW, $login2));
-            
+
             $this->exp_chatSendServerMessage($this->msg_paddSuc, null, array($login2, $group->getGroupName()));
 
             $this->saveFile();
