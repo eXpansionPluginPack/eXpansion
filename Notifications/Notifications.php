@@ -74,7 +74,7 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //$info = NotifiPanel2::Create($login, true);
     }
 
-    public function onPlayerDisconnect($login) {
+    public function onPlayerDisconnect($login, $reason = null) {
         \ManiaLive\Gui\CustomUI::Erase($login);
         NotificationPanel::Erase($login);
     }

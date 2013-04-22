@@ -25,7 +25,7 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->checkActivity($login);
     }
 
-    public function onPlayerDisconnect($login) {
+    public function onPlayerDisconnect($login, $reason = null) {
         if (isset($this->timeStamps[$login]))
             unset($this->timeStamps[$login]);
     }

@@ -79,7 +79,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $info->show();
     }
 
-    public function onPlayerDisconnect($login) {
+    public function onPlayerDisconnect($login, $reason = null) {
         EmotePanel::Erase($login);
         if (isset($this->timeStamps[$login]))
             unset($this->timeStamps[$login]);

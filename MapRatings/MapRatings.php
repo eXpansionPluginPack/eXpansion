@@ -227,7 +227,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->sendRating($login, null);
     }
 
-    function onPlayerDisconnect($login) {
+    function onPlayerDisconnect($login, $reason = null) {
         RatingsWidget::Erase($login);
     }
 

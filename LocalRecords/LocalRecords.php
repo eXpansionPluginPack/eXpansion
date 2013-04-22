@@ -316,7 +316,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    public function onPlayerDisconnect($login) {
+    public function onPlayerDisconnect($login, $reason = null) {
         //Remove all checkpoints data
         $this->checkpoints[$login] = array();
         unset($this->checkpoints[$login]);

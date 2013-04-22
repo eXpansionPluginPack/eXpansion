@@ -57,7 +57,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $parent = $menu->addButton($parent, "Show Players", $button);
     }
 
-    public function onPlayerDisconnect($login) {
+    public function onPlayerDisconnect($login, $reason = null) {
         \ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist::Erase($login);
         $this->updateOpenedWindows();
     }

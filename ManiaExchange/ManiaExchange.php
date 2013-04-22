@@ -54,7 +54,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $menu->addButton($parent, "Help", $button);
     }
 
-    public function onPlayerDisconnect($login) {
+    public function onPlayerDisconnect($login, $reason = null) {
         Gui\Windows\MxSearch::Erase($login);
     }
 

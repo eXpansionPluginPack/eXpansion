@@ -51,7 +51,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $info->show();
     }
 
-    public function onPlayerDisconnect($login) {
+    public function onPlayerDisconnect($login, $reason = null) {
         MenuPanel::Erase($login);       
     }
 

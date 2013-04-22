@@ -70,7 +70,7 @@ class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->displayWidget($login);
     }
 
-    function onPlayerDisconnect($login) {
+    function onPlayerDisconnect($login, $reason = null) {
         CPPanel::Erase($login);
     }
 

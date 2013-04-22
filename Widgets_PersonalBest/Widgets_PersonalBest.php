@@ -33,7 +33,9 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     function onPlayerConnect($login, $isSpectator) {
         $this->displayWidget($login);
     }
-
+    function onPlayerDisconnect($login, $reason = null) {
+      PBPanel::Erase($login);
+    }
     public function onPersonalBestRecord(Record $record){
         $this->redrawRecordWidget($record->login, $record);
     }

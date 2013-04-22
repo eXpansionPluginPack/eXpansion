@@ -144,7 +144,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    public function onPlayerDisconnect($login) {
+    public function onPlayerDisconnect($login, $reason = null) {
         Gui\Windows\Maplist::Erase($login);
         Gui\Windows\AddMaps::Erase($login);
         if ($this->config->showNextMapWidget)

@@ -78,7 +78,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $panel->show();
     }
 
-    public function onPlayerDisconnect($login) {
+    public function onPlayerDisconnect($login, $reason = null) {
         Gui\Widgets\RecordsPanel::Erase($login);
     }
 

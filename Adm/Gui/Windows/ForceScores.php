@@ -51,8 +51,8 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX, $this->sizeY - 8);
         $this->pager->setStretchContentX($this->sizeX);
-        $this->ok->setPosition($this->sizeX - 28, -$this->sizeY + 6);
-        $this->cancel->setPosition($this->sizeX - 8, -$this->sizeY + 6);
+        $this->ok->setPosition($this->sizeX - 38, -$this->sizeY + 6);
+        $this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
     }
 
     function onShow() {

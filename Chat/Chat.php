@@ -57,7 +57,7 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
         \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $player->iPAddress . ") [" . $login . "] Connect with nickname " . $nickLog);
     }
     
-    public function onPlayerDisconnect($login) {
+    public function onPlayerDisconnect($login, $reason = null) {
         $player = $this->storage->getPlayerObject($login);        
         \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $player->iPAddress . ") [" . $login . "] Disconnected");
     }
