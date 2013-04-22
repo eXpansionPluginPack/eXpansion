@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Adm;
 
 use ManiaLive\Event\Dispatcher;
+use DedicatedApi\Structures\GameInfos;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerOptions;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\GameOptions;
@@ -27,6 +28,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Server Management'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Server Management'), null, array($this, 'serverControlMain'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Force Scores'), null, array($this, 'forceScores'), true);
         }
 
         $this->enableDedicatedEvents();
@@ -35,7 +37,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
-            $this->onPlayerConnect($player->login, true);          
+            $this->onPlayerConnect($player->login, true);
     }
 
     function onPlayerConnect($login, $isSpectator) {
@@ -106,6 +108,22 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $window->centerOnScreen();
             $window->setSize(160, 80);
             $window->show();
+        }
+    }
+
+    public function forceScores($login) {
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+            $gamemode = $this->storage->gameInfos->gameMode;
+            if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM) {
+            $window = Gui\Windows\ForceScores::Create($login);
+            $window->setTitle(__('Force Scores'));
+            $window->centerOnScreen();
+            $window->setSize(160, 80);
+            $window->show();
+            }
+            else {
+                $this->exp_chatSendServerMessage("ForceScores can be used only with rounds or team mode", $login);
+            }
         }
     }
 
