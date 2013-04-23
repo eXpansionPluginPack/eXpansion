@@ -42,6 +42,7 @@ namespace ManiaLivePlugins\eXpansion\Core;
             Console::println(' Language support detected for:' . implode(",",i18n::getInstance()->getSupportedLocales()) . '!');
             Console::println(' Enabling default locale:' . $config->defaultLanguage . '');
             i18n::getInstance()->setDefaultLanguage($config->defaultLanguage);
+			$this->connection->setApiVersion($config->API_Version); // For SM && TM
             
             $die = false;
 
