@@ -101,9 +101,9 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
-         $this->updateServerChallenges();
-     }
+    public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
+        $this->updateServerChallenges();
+    }
 
     function updatePlayTime($player) {
         $time = time();
@@ -115,8 +115,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
              WHERE `player_login` = " . $this->db->quote($player->login) . ";";
             $this->db->query($q);
         }
-
-        $this->storage->player->lastTimeUpdate = $time;
+        $player->lastTimeUpdate = $time;
     }
 
     function updateServerChallenges() {
@@ -144,7 +143,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-     public function insertMap($data, $login = 'n/a') {
+    public function insertMap($data, $login = 'n/a') {
         if (empty($data->mood)) {
             $connection = $this->connection;
             try {
@@ -202,7 +201,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if (!$this->db->tableExists('exp_maps'))
             $this->createMapTable();
-        if($this->getDatabaseVersion('exp_maps') != 2){
+        if ($this->getDatabaseVersion('exp_maps') != 2) {
             $this->db->query('ALTER TABLE exp_maps ADD KEY(challenge_uid);');
             $this->setDatabaseVersion('exp_maps', 2);
         }
@@ -268,7 +267,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->db->query($q);
     }
 
-    public function getPlayer($login){
+    public function getPlayer($login) {
         $g = "SELECT * FROM `exp_players` WHERE `player_login` = " . $this->db->quote($login) . ";";
 
         $query = $this->db->query($g);
@@ -287,7 +286,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
              WHERE `player_login` = " . $this->db->quote($player->login) . ";";
         $this->db->query($q);
         if ($this->config->showWins) {
-            $q = "SELECT `player_wins` FROM `exp_players` WHERE `player_login` = ".$this->db->quote($player->login).";";
+            $q = "SELECT `player_wins` FROM `exp_players` WHERE `player_login` = " . $this->db->quote($player->login) . ";";
             $query = $this->db->query($q);
             $data = $query->fetchStdObject();
             $w = $data->player_wins;
@@ -304,17 +303,17 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function numberize ($num) {
+    function numberize($num) {
         if ($num >= 10 && $num <= 20) {
-            $num = $num.'th';
+            $num = $num . 'th';
         } else if (substr($num, -1) == 1) {
-            $num = $num.'st';
+            $num = $num . 'st';
         } else if (substr($num, -1) == 2) {
-            $num = $num.'nd';
+            $num = $num . 'nd';
         } else if (substr($num, -1) == 3) {
-            $num = $num.'rd';
+            $num = $num . 'rd';
         } else {
-            $num = $num.'th';
+            $num = $num . 'th';
         }
         return $num;
     }
@@ -348,7 +347,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } else {
             $record = $query->fetchStdObject();
 
-            if($record->database_version < $version){
+            if ($record->database_version < $version) {
                 $q = "UPDATE `exp_databaseversion`
                 SET `database_version` = " . $this->db->quote($version) . "
                 WHERE `database_table` = " . $this->db->quote($table) . ";";

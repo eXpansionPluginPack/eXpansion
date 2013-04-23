@@ -107,8 +107,8 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->show();
     }
 
-    public function addMap($login, $mxId) {
-        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_maps')) {
+    public function addMap($login, $mxId) {        
+        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->hasPermission($login, 'server_maps')) {
             $this->connection->chatSendServerMessage(__('$iYou don\'t have permission to do that!', $login, $mxId), $login);
             return;
         }
