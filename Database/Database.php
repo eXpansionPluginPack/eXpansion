@@ -85,7 +85,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function onPlayerDisconnect($login) {
+    function onPlayerDisconnect($login, $reason = null) {
         $this->updatePlayTime($this->storage->getPlayerObject($login));
     }
 
