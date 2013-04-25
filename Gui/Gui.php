@@ -32,7 +32,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->memory();
     }
 
-    function onPlayerDisconnect($login) {
+    function onPlayerDisconnect($login, $reason = null) {
         $this->memory();
     }
 
