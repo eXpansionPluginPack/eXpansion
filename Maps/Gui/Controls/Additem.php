@@ -5,8 +5,6 @@ namespace ManiaLivePlugins\eXpansion\Maps\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 
-require_once(__DIR__ . "/gbxdatafetcher.inc.php");
-
 class Additem extends \ManiaLive\Gui\Control {
 
     private $bg;
@@ -17,11 +15,11 @@ class Additem extends \ManiaLive\Gui\Control {
     private $addMapAction;
     private $frame;
 
-    function __construct($indexNumber, $filename, $controller, $sizeX) {
+    function __construct($indexNumber, $filename, $controller, $gbx, $sizeX) {
         $sizeY = 4;
         $this->addMapAction = $this->createAction(array($controller, 'addMap'), $filename);
 
-        $gbx = new \GBXChallMapFetcher(true, false, false);
+        
         try {
             $gbx->processFile($filename);
         } catch (Exception $e) {

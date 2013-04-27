@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
+require_once(__DIR__ . "/gbxdatafetcher.inc.php");
 
 use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Additem;
 
@@ -15,13 +16,14 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $storage;
 
     private $items = array();
+    private $gbx;
     
     protected function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
-
+        $this->gbx = new \GBXChallMapFetcher(true, false, false);
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
         $this->mainFrame->addComponent($this->pager);
     }
@@ -64,7 +66,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         if (count($maps) >= 1) {
             foreach ($maps as $map) {
-                $this->items[$x] = new Additem($x, $map, $this, $this->sizeX);
+                $this->items[$x] = new Additem($x, $map, $this, $this->gbx, $this->sizeX);
                 $this->pager->addItem($this->items[$x]);
                 $x++;
             }
@@ -72,6 +74,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function destroy() {
+        $this->gbx = null;
         foreach ($this->items as $item) {
             $item->destroy();
         }
