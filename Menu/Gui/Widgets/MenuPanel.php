@@ -51,65 +51,65 @@ class MenuPanel extends \ManiaLive\Gui\Window {
 
         $xml = new \ManiaLive\Gui\Elements\Xml();
         $xml->setContent('
-        <timeout>0</timeout>            
+        <timeout>0</timeout>
         <script><!--
                        main () {
-                       
+
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");
                         declare mainWindow <=> Page.GetFirstChild("Frame");
-                        declare isMinimized = True;                                          
+                        declare isMinimized = True;
                         declare lastAction = Now;
                         declare autoCloseTimeout = 5000;
                         declare isMouseOver = False;
                         declare positionMin = 0.0;
                         declare positionMax = -30.0;
-                        mainWindow.PosnX = 0.0;                        
-                                              
+                        mainWindow.PosnX = 0.0;
+
                         while(True) {
-                                
+
                                 if (isMinimized)
                                 {
-                                     if (mainWindow.PosnX <= positionMin) {                                          
-                                          mainWindow.PosnX += 4;                                          
+                                     if (mainWindow.PosnX <= positionMin) {
+                                          mainWindow.PosnX += 4;
                                     }
                                 }
 
                                 if (!isMinimized)
-                                {         
-                                    if (!isMouseOver && Now-lastAction > autoCloseTimeout) {                                          
-                                        if (mainWindow.PosnX <= positionMin) {                                                 
-                                                mainWindow.PosnX += 4;                                      
-                                        } 
+                                {
+                                    if (!isMouseOver && Now-lastAction > autoCloseTimeout) {
+                                        if (mainWindow.PosnX <= positionMin) {
+                                                mainWindow.PosnX += 4;
+                                        }
                                         if (mainWindow.PosnX >= positionMin)  {
                                                 isMinimized = True;
                                         }
                                     }
-                                    
+
                                     else {
-                                        if ( mainWindow.PosnX >= positionMax) {                                                      
+                                        if ( mainWindow.PosnX >= positionMax) {
                                                   mainWindow.PosnX -= 4;
-                                        }                                                                                                                                             
+                                        }
                                     }
                                 }
-                                    
-                                foreach (Event in PendingEvents) {                                                
+
+                                foreach (Event in PendingEvents) {
                                     if (Event.Type == CMlEvent::Type::MouseOver && ( Event.ControlId == "myWindow" || Event.ControlId == "minimizeButton" )) {
                                            isMinimized = False;
                                            isMouseOver = True;
-                                           lastAction = Now;                                           
-                                    }     
+                                           lastAction = Now;
+                                    }
                                      if (Event.Type == CMlEvent::Type::MouseOut) {
                                         isMouseOver = False;
                                     }
-                                    
+
                                 /*    if (!isMinimized && Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "myWindow" || Event.ControlId == "minimizeButton" )) {
                                         isMinimized = True;
                                     } */
                                 }
-                                yield;                        
-                        }  
-                        
-                } 
+                                yield;
+                        }
+
+                }
                 --></script>');
         $this->addComponent($xml);
     }
@@ -122,7 +122,7 @@ class MenuPanel extends \ManiaLive\Gui\Window {
     }
 
     function onShow() {
-        
+
     }
 
     function setItems(array $menuItems) {
@@ -132,7 +132,7 @@ class MenuPanel extends \ManiaLive\Gui\Window {
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(-1));
 
         foreach ($menuItems as $menuItem) {
-            if (!$menuItem->isAdmin || \ManiaLive\Features\Admin\AdminGroup::contains($this->getRecipient())) {
+            if (!$menuItem->isAdmin || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($this->getRecipient())) {
                 $item = new PanelItem($menuItem);
                 $this->frame->addComponent($item);
             }

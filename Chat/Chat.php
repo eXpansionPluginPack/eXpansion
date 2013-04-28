@@ -53,24 +53,24 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
 
     public function onPlayerConnect($login, $isSpectator) {
         $player = $this->storage->getPlayerObject($login);
-        $nickLog = \ManiaLib\Utils\Formatting::stripStyles($player->nickName); 
+        $nickLog = \ManiaLib\Utils\Formatting::stripStyles($player->nickName);
         \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $player->iPAddress . ") [" . $login . "] Connect with nickname " . $nickLog);
     }
-    
+
     public function onPlayerDisconnect($login, $reason = null) {
-        $player = $this->storage->getPlayerObject($login);        
+        $player = $this->storage->getPlayerObject($login);
         \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $player->iPAddress . ") [" . $login . "] Disconnected");
     }
-    
+
     /**
      * onPlayerChat()
      * Processes the chat incoming from server, changes the look and color.
      *
      *  @param int $playerUid
-     *  @param string $login 
+     *  @param string $login
      *  @param string $text
-     *  @param bool $isRegistredCmd 
-     *  
+     *  @param bool $isRegistredCmd
+     *
      * * @return void
      */
     function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
@@ -85,15 +85,15 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
             $text = str_replace(array(":)", "=)"), $smileys[$rnd], $text);
 
             try {
-                if (AdminGroup::contains($login)) {
+                if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
                     $this->connection->chatSendServerMessage("\$fff" . $config->adminSign . " $nick\$z\$s " . $config->chatSeparator . $config->adminChatColor . $text);
                 } elseif ($source_player->isManagedByAnOtherServer) {
                     $this->connection->chatSendServerMessage("\$fff$nick\$z\$s " . $config->chatSeparator . $config->otherServerChatColor . $text);
                 } else {
                     $this->connection->chatSendServerMessage("\$fff$nick\$z\$s " . $config->chatSeparator . $config->publicChatColor . $text);
                 }
-                $nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);                
-                
+                $nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);
+
                 \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $source_player->iPAddress . ") [" . $login . "] " . $nickLog . " - " . $text);
             } catch (\Exception $e) {
                 Console::println(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()));

@@ -168,7 +168,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $x = 0;
         $login = $this->getRecipient();
-        $isadmin = \ManiaLive\Features\Admin\AdminGroup::contains($login);
+        $isadmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps');
 
         foreach ($this->maps as $map) {
             $this->items[$x] = new MxMap($x, $map, $this, $isadmin, $this->sizeX);

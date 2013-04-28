@@ -385,7 +385,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function removeMap($login, \DedicatedApi\Structures\Map $map) {
-        if (!\ManiaLive\Features\Admin\AdminGroup::contains($login)) {
+        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps')) {
             $msg = exp_getMessage('#admin_error# $iYou are not allowed to do that!');
             $this->exp_chatSendServerMessage($msg, $login);
             return;

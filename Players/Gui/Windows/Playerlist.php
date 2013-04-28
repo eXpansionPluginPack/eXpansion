@@ -8,6 +8,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Players\Gui\Controls\Playeritem;
 use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
@@ -29,6 +30,9 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function kickPlayer($login, $target) {
         try {
             $login = $this->getRecipient();
+            if (!AdminGroups::hasPermission($login, 'player_kick')) {
+                $this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!'), $login);
+            }
             $player = $this->storage->getPlayerObject($target);
             $admin = $this->storage->getPlayerObject($login);
             $this->connection->kick($target, __("Please behave next time you visit the server!"));
@@ -43,7 +47,10 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function banPlayer($login, $target) {
         try {
             $login = $this->getRecipient();
-            $player = $this->storage->getPlayerObject($target);            
+            if (!AdminGroups::hasPermission($login, 'player_ban')) {
+                $this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!'), $login);
+            }
+            $player = $this->storage->getPlayerObject($target);
             $admin = $this->storage->getPlayerObject($login);
             $this->connection->ban($target, __("You are now banned from the server."));
             $this->connection->chatSendServerMessage(__('%s$z has been banned from the server.', $player->nickName));
@@ -54,14 +61,16 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function toggleSpec($login, $target) {
-        try {                        
+        try {
+            $login = $this->getRecipient();
+            if (!AdminGroups::hasPermission($login, 'player_spec')) {
+                $this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!'), $login);
+            }
             $player = $this->storage->getPlayerObject($target);
-            
             if ($player->forceSpectator == 0) {
                 $this->connection->forceSpectator($target, 1);
                 $this->connection->sendNotice($target, __('Admin has forced you to specate!'));
             }
-
             if ($player->forceSpectator == 1) {
                 $this->connection->forceSpectator($target, 0);
                 $this->connection->sendNotice($target, __("Admin has released you from specate to play."));
@@ -91,14 +100,14 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $x = 0;
         $login = $this->getRecipient();
-        $isadmin = \ManiaLive\Features\Admin\AdminGroup::contains($login);
+        $isadmin = AdminGroups::isInList($login);
 
         foreach ($this->storage->players as $player) {
-            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin,$this->sizeX);
+            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->sizeX);
             $this->pager->addItem($this->items[$x]);
         }
         foreach ($this->storage->spectators as $player) {
-            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin,$this->sizeX);
+            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->sizeX);
             $this->pager->addItem($this->items[$x]);
         }
     }

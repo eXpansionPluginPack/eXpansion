@@ -58,7 +58,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->items = array();
 
 
-        $isAdmin = \ManiaLive\Features\Admin\AdminGroup::contains($login);
+        $isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps');
         $x = 0;
         foreach (\ManiaLive\Data\Storage::getInstance()->maps as $map) {
             $this->items[$x] = new Mapitem($x, $login, $map, $this, $isAdmin, $this->sizeX);
