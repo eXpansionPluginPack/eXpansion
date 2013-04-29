@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Players\Gui\Controls;
 
+use ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 
@@ -9,12 +10,16 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
     private $bg;
     private $forceButton;
+    private $ignoreButton;
     private $kickButton;
     private $banButton;
+    private $blacklistButton;
     private $login;
     private $nickname;
+    private $ignoreAction;
     private $kickAction;
     private $banAction;
+    private $blacklistAction;
     private $forceAction;
     private $frame;
 
@@ -23,8 +28,10 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->isAdmin = $isAdmin;
         $this->player = $player;
         if ($isAdmin) {
+            $this->ignoreAction = $this->createAction(array($controller, 'ignorePlayer'), $player->login);
             $this->kickAction = $this->createAction(array($controller, 'kickPlayer'), $player->login);
             $this->banAction = $this->createAction(array($controller, 'banPlayer'), $player->login);
+            $this->blacklistAction = $this->createAction(array($controller, 'blacklistPlayer'), $player->login);
             $this->forceAction = $this->createAction(array($controller, 'toggleSpec'), $player->login);
         }
         
@@ -60,7 +67,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
 //$this->frame->addComponent($spacer);
 
-        $this->login = new \ManiaLib\Gui\Elements\Label(20, 4);
+        $this->login = new \ManiaLib\Gui\Elements\Label(30, 4);
         $this->login->setAlign('left', 'center');
         $this->login->setText($player->login);
         $this->login->setScale(0.8);
@@ -80,6 +87,22 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
 // admin additions
         if ($this->isAdmin) {
+        
+            $this->ignoreButton = new MyButton(24, 5);
+            $this->ignoreButton->setText(__("Ignore"));
+            $this->ignoreButton->setTextColor("fff");
+            $this->ignoreButton->colorize("a22");
+            $this->ignoreButton->setScale(0.5);
+            $this->ignoreButton->setAction($this->ignoreAction);
+            $this->frame->addComponent($this->ignoreButton);
+            
+            $this->kickButton = new MyButton(24, 5);
+            $this->kickButton->setText(__("Kick"));
+            $this->kickButton->setTextColor("fff");
+            $this->kickButton->setAction($this->kickAction);
+            $this->kickButton->colorize("a22");
+            $this->kickButton->setScale(0.5);
+            $this->frame->addComponent($this->kickButton);
 
             $this->banButton = new MyButton(24, 5);
             $this->banButton->setText(__("Ban"));
@@ -88,14 +111,14 @@ class Playeritem extends \ManiaLive\Gui\Control {
             $this->banButton->setAction($this->banAction);
             $this->banButton->setScale(0.5);
             $this->frame->addComponent($this->banButton);
-
-            $this->kickButton = new MyButton(24, 5);
-            $this->kickButton->setText(__("Kick"));
-            $this->kickButton->setTextColor("fff");
-            $this->kickButton->setAction($this->kickAction);
-            $this->kickButton->colorize("a22");
-            $this->kickButton->setScale(0.5);
-            $this->frame->addComponent($this->kickButton);
+            
+            $this->blacklistButton = new MyButton(24, 5);
+            $this->blacklistButton->setText(__("Blacklist"));
+            $this->blacklistButton->setTextColor("fff");
+            $this->blacklistButton->colorize("a22");
+            $this->blacklistButton->setAction($this->blacklistAction);
+            $this->blacklistButton->setScale(0.5);
+            $this->frame->addComponent($this->blacklistButton);
 
             $this->forceButton = new MyButton(24, 5);
             $this->forceButton->setAction($this->forceAction);
@@ -112,9 +135,9 @@ class Playeritem extends \ManiaLive\Gui\Control {
     }
 
     protected function onResize($oldX, $oldY) {
-     $this->frame->setSize($this->sizeX, $this->sizeY);
-     $this->bg->setPosX(-2);
-     $this->bg->setSize($this->sizeX, $this->sizeY);
+        $this->frame->setSize($this->sizeX, $this->sizeY);
+        $this->bg->setPosX(-2);
+        $this->bg->setSize($this->sizeX, $this->sizeY);
         if ($this->isAdmin) {
             if ($this->player->forceSpectator == 1 || $this->player->isSpectator) {
                 $this->forceButton->setText(__("Release Spec"));
@@ -135,6 +158,10 @@ class Playeritem extends \ManiaLive\Gui\Control {
             $this->forceButton->destroy();
         if (is_object($this->kickButton))
             $this->kickButton->destroy();
+        if (is_object($this->blacklistButton))
+            $this->blacklistButton->destroy();
+        if (is_object($this->ignoreButton))
+            $this->ignoreButton->destroy();
 
         $this->clearComponents();
 
