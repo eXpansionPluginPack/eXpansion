@@ -56,7 +56,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
 
             //All plugins need the eXpansion Core to work properly
-            if ($this->getId() != 'eXpansion\Core')
+            if ($this->getId() != 'eXpansion\Core' && $this->getId() != 'eXpansion\AutoLoad')
                 $this->addDependency(new \ManiaLive\PluginHandler\Dependency('eXpansion\Core'));
 
             $this->setPublicMethod('exp_unload');

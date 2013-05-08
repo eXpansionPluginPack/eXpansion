@@ -273,9 +273,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 break;
             }
         }
-
+        
         if ($masterGroup == null) {
-            $masterGroup = new \ManiaLive\Gui\Group('Master Admin', true);
+            $masterGroup = new Group('Master Admin', true);
             self::$groupList[] = $masterGroup;
         }
 
