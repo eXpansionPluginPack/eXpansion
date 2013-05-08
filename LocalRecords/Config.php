@@ -11,8 +11,9 @@ class Config extends \ManiaLib\Utils\Singleton {
 
     public $lapsModeCount1lap = true;
 
-    public $nbMap_rankProcess = 5;
-    public $totalRankProcessCoef = 20;
+    public $nbMap_rankProcess = 1;
+    public $ranking = true;
+    public $rankRefresh = 5;
 
     public $msg_secure = '#variable#%1$s  #record#secured their #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#(#rank#$n-%5$s#record#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
     public $msg_new = '#variable#%1$s  #record#claimed the #rank#%2$s #record#. Local Record with time of #rank#%3$s';  // %1$s - nickname; %2$s - rank; %3$s - time

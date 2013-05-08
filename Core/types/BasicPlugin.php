@@ -195,10 +195,11 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
          * @param type $scriptName
          */
         protected function exp_addGameModeCompability($gameMode, $scriptName = null) {
+            
             if ($scriptName == null || $gameMode != GameInfos::GAMEMODE_SCRIPT)
-                self::$plugin_gameModeSupport[get_class($this)][$gameMode] = true;
+                self::$plugin_gameModeSupport[get_called_class()][$gameMode] = true;
             else
-                self::$plugin_gameModeSupport[get_class($this)][$gameMode][$scriptName] = true;
+                self::$plugin_gameModeSupport[get_called_class()][$gameMode][$scriptName] = true;
         }
 
         protected function exp_getGameModeCompability() {
@@ -215,12 +216,14 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             $class = get_called_class();
 
             if (isset(self::$plugin_gameModeSupport[$class])) {
-
-                if ($gameInfo->gameMode == GameInfos::GAMEMODE_SCRIPT && is_array(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode])) {
+                if ($gameInfo->gameMode == GameInfos::GAMEMODE_SCRIPT 
+                        && isset(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode]) 
+                        && is_array(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode])) {
                     return isset(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode][$gameInfo->scriptName]) ? self::$plugin_gameModeSupport[$class][$gameInfo->gameMode][$gameInfo->scriptName] : false;
                 }
-                else
+                else{
                     return isset(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode]) ? self::$plugin_gameModeSupport[$class][$gameInfo->gameMode] : false;
+                }
             }
             else
             //This plugin supports all GameModes
