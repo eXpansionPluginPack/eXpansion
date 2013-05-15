@@ -130,7 +130,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod("getPlayerRank");
         $this->setPublicMethod("getTotalRanked");
         $this->setPublicMethod("showRecsWindow");
-        
+
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
 
         //Oliverde8 Menu
@@ -199,7 +199,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->updateRanks('0XSFE6OzSDysuiORuwJIbE4SXnc', 1);
 
         $this->onBeginMap("", "", "");
-
+        if ($this->isPluginLoaded('eXpansion\Menu')) {
+            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Records'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
+        }
         /* $maxTime = 60;
           $minTime = 10;
           $nbTime = 1000;
@@ -219,6 +222,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
           $this->addRecord('test_970', 31100, 1, array());
           $this->addRecord('test_971', 31200, 1, array());
           $this->addRecord('test_974', 30200, 1, array()); */
+    }
+
+    public function showRecsMenuItem($login) {
+        $this->showRecsWindow($login);
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
