@@ -24,7 +24,8 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand("lol", "Lol", 0, true);
         $this->registerChatCommand("afk", "Afk", 0, true);
         $this->registerChatCommand("bootme", "BootMe", 0, true);
-
+        $this->registerChatCommand("me", "Me", -1, true);
+        
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
@@ -105,7 +106,11 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->sendEmote($login, __FUNCTION__);
         $this->connection->kick($login);
     }
-
+    
+    public function Me($login, $text) {
+       $player = $this->storage->getPlayerObject($login);
+       $this->connection->chatSendServerMessage($player->nickName .' $z$s$f90$i' .$text);        
+    }
     public function sendEmote($login, $action) {
         try {
             if (!isset($this->timeStamps[$login])) {

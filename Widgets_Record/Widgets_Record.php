@@ -73,7 +73,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $panel = Gui\Widgets\RecordsPanel::Create($login);
         $panel->setSize(40, 60);
         $panel->setPosition(-160, 60);
-        $panel->setScale(0.8);
+       // $panel->setScale(0.8);
         $panel->update();
         $panel->show();
     }
