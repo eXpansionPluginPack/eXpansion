@@ -15,15 +15,66 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $connection;
     private $storage;
     private $items = array();
+    private $inputboxSaveAs;
+    private $actionSave;
+    private $saveButton;
+    private $frame;
 
     protected function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line(120));
+
+        $this->inputboxSaveAs = new Inputbox("SaveAs", 60);
+        $this->inputboxSaveAs->setLabel("Save MatchSettings as");
+
+        $this->frame->addComponent($this->inputboxSaveAs);
+
+        $this->actionSave = $this->createAction(array($this, "saveAs"));
+
+        $this->saveButton = new OkButton(26, 5);
+        $this->saveButton->setText('$fff' . __("Save"));
+        $this->saveButton->colorize("a22");
+        $this->saveButton->setAction($this->actionSave);
+        $this->saveButton->setScale(0.8);
+        $this->frame->addComponent($this->saveButton);
+
+        $this->mainFrame->addComponent($this->frame);
 
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
         $this->mainFrame->addComponent($this->pager);
+    }
+
+    function saveAs($login, $entries) {
+
+        try {
+            if (empty($entries['SaveAs'])) {
+                $this->connection->chatSendServerMessage(__("Error in filename", $this->getRecipient()));
+                return;
+            }
+            $filename = $this->connection->getMapsDirectory() . "/MatchSettings/" . $entries['SaveAs'] . ".txt";
+            $this->saveSettings($login, $filename);
+            $this->populateList();
+            $this->RedrawAll();
+        } catch (\Exception $e) {
+            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()));
+        }
+    }
+
+    function deleteSetting($login, $filename) {
+
+        try {
+            unlink($filename);
+            $file = explode("/", $filename);
+            $this->connection->chatSendServerMessage(__("File '%s' deleted from filesystem!", $this->getRecipient(), end($file)));
+            $this->populateList();
+            $this->RedrawAll();
+        } catch (\Exception $e) {
+            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()));
+        }
     }
 
     function saveSettings($login, $filename) {
@@ -49,8 +100,10 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX, $this->sizeY - 8);
-        $this->pager->setStretchContentX($this->sizeX);        
+        $this->frame->setPosition(4, -4);
+        $this->pager->setPosY(-12);
+        $this->pager->setSize($this->sizeX, $this->sizeY - 12);
+        $this->pager->setStretchContentX($this->sizeX);
     }
 
     function onShow() {
@@ -82,6 +135,11 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $item->destroy();
 
         $this->items = array();
+
+        $this->saveButton->destroy();
+        $this->inputboxSaveAs->destroy();
+        $this->frame->destroy();
+
         $this->pager->destroy();
         $this->connection = null;
         $this->storage = null;
