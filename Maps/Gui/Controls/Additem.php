@@ -10,16 +10,18 @@ class Additem extends \ManiaLive\Gui\Control {
     private $bg;
     private $mapNick;
     private $addButton;
+    private $deleteButton;
     private $label;
     private $time;
     private $addMapAction;
+    private $deleteAction;
     private $frame;
 
     function __construct($indexNumber, $filename, $controller, $gbx, $sizeX) {
         $sizeY = 4;
         $this->addMapAction = $this->createAction(array($controller, 'addMap'), $filename);
+        $this->deleteAction = $this->createAction(array($controller, 'deleteMap'), $filename);
 
-        
         try {
             $gbx->processFile($filename);
         } catch (Exception $e) {
@@ -39,7 +41,7 @@ class Additem extends \ManiaLive\Gui\Control {
             $this->bg->setBgcolor('7774');
         }
         $this->addComponent($this->bg);
-        
+
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(4, 4);
         $spacer->setAlign("center", "center2");
@@ -78,11 +80,19 @@ class Additem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($spacer);
 
 
-        $this->addButton = new MyButton(18, 5);
+        $this->addButton = new MyButton(24, 5);
         $this->addButton->setText(__("Add map"));
         $this->addButton->setAction($this->addMapAction);
         $this->addButton->setScale(0.5);
-        $this->addComponent($this->addButton);
+        $this->addButton->colorize("2a2");
+        $this->frame->addComponent($this->addButton);
+
+        $this->deleteButton = new MyButton(24, 5);
+        $this->deleteButton->setAction($this->deleteAction);
+        $this->deleteButton->setScale(0.5);
+        $this->deleteButton->setText('$ff0' . __("Delete file"));
+        $this->deleteButton->colorize("222");
+        $this->frame->addComponent($this->deleteButton);
 
         $this->addComponent($this->frame);
 
@@ -95,7 +105,6 @@ class Additem extends \ManiaLive\Gui\Control {
         $this->bg->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY);
-        $this->addButton->setPosX($this->sizeX - 13);              
     }
 
     function onDraw() {
@@ -106,6 +115,8 @@ class Additem extends \ManiaLive\Gui\Control {
         $this->frame->clearComponents();
         $this->frame->destroy();
         $this->addButton->destroy();
+        $this->deleteButton->destroy();
+
         $this->clearComponents();
 
         parent::destroy();
