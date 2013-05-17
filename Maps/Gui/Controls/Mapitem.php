@@ -17,17 +17,19 @@ class Mapitem extends \ManiaLive\Gui\Control {
     private $queueMap;
     private $gotoMap;
     private $removeMap;
+    private $showRecsAction;
     private $removeButton;
+    private $showRecsButton;
     private $frame;
 
-    function __construct($indexNumber, $login, \DedicatedApi\Structures\Map $map, $controller, $isAdmin, $sizeX) {
+    function __construct($indexNumber, $login, \DedicatedApi\Structures\Map $map, $controller, $isAdmin, $mapsPluginLoaded = false, $sizeX) {
         $sizeY = 4;
 
         $this->isAdmin = $isAdmin;
         $this->queueMap = $this->createAction(array($controller, 'queueMap'), $map);
         $this->gotoMap = $this->createAction(array($controller, 'gotoMap'), $map);
         $this->removeMap = $this->createAction(array($controller, 'removeMap'), $map);
-
+        $this->showRecsAction = $this->createAction(array($controller, 'showRec'), $map);
         $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
@@ -104,7 +106,14 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->queueButton->colorize('2a2');
         $this->queueButton->setScale(0.5);
         $this->frame->addComponent($this->queueButton);
-
+        if ($mapsPluginLoaded) {
+            $this->showRecsButton = new MyButton(26, 5);
+            $this->showRecsButton->setText(__("Recs"));
+            $this->showRecsButton->setAction($this->showRecsAction);
+            $this->showRecsButton->colorize('2a2');
+            $this->showRecsButton->setScale(0.5);
+            $this->frame->addComponent($this->showRecsButton);
+        }
         if ($this->isAdmin) {
             $this->goButton = new MyButton(26, 5);
             $this->goButton->setText(__("Go now"));
@@ -119,7 +128,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
             $this->frame->addComponent($spacer);
 
             $this->removeButton = new MyButton(26, 5);
-            $this->removeButton->setText('$fff'.__("Remove"));
+            $this->removeButton->setText('$fff' . __("Remove"));
             $this->removeButton->setAction($this->removeMap);
             $this->removeButton->colorize('a22');
             $this->removeButton->setScale(0.5);
@@ -140,7 +149,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
     }
 
     function onDraw() {
-
+        
     }
 
     function destroy() {
@@ -150,7 +159,9 @@ class Mapitem extends \ManiaLive\Gui\Control {
             $this->goButton->destroy();
         if (is_object($this->removeButton))
             $this->removeButton->destroy();
-
+        if (is_object($this->showRecsButton))
+            $this->showRecsButton->destroy();
+        
         $this->clearComponents();
         parent::destroy();
     }

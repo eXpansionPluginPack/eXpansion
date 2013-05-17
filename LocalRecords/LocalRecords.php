@@ -65,7 +65,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @var int
      */
     private $total_ranks = -1;
-    
     private $ranks_reset = false;
 
     /**
@@ -89,7 +88,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * All the messages need to be sent;
      * @var Message
      */
-    private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank;
+            private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank;
     public static $txt_rank, $txt_nick, $txt_score, $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
     function exp_onInit() {
@@ -130,8 +129,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod("getRanks");
         $this->setPublicMethod("getPlayerRank");
         $this->setPublicMethod("getTotalRanked");
-        
-        //The Database plugin is needed.  
+        $this->setPublicMethod("showRecsWindow");
+
+        //The Database plugin is needed. 
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
 
         //Oliverde8 Menu
@@ -195,9 +195,12 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->db->query($q);
             $this->resetRanks();
         }
-        
-        $this->onBeginMap("", "", "");
 
+        $this->onBeginMap("", "", "");
+        if ($this->isPluginLoaded('eXpansion\Menu')) {
+            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Records'), true);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
+        }
         /* $maxTime = 60;
           $minTime = 10;
           $nbTime = 1000;
@@ -217,6 +220,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
           $this->addRecord('test_970', 31100, 1, array());
           $this->addRecord('test_971', 31200, 1, array());
           $this->addRecord('test_974', 30200, 1, array()); */
+    }
+
+    public function showRecsMenuItem($login) {
+        $this->showRecsWindow($login);
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
@@ -267,7 +274,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             echo "[DEBUG LocalRecs]Nb Laps : " . $nbLaps . "\n";
 
         $updated = false;
-        
+
         //We update the database
         //Firs of the best records
         foreach ($this->currentChallengeRecords as $i => $record) {
@@ -277,8 +284,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($this->currentChallengePlayerRecords as $i => $record) {
             $updated = $updated || $this->updateRecordInDatabase($record, $nbLaps);
         }
-        
-        if($updated){
+
+        if ($updated) {
             $this->updateRanks($this->storage->currentMap->uId, $nbLaps);
         }
 
@@ -292,10 +299,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         }
     }
-    
+
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
-        if($this->ranks_reset)
-            $this->resetRanks ();
+        if ($this->ranks_reset)
+            $this->resetRanks();
     }
 
     public function onPlayerConnect($login, $isSpectator) {
@@ -411,7 +418,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["function"] = "showRanksWindow";
         $menu->addButton($parent, "Local Ranks", $button);
     }
-    
+
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
         $this->ranks_reset = true;
     }
@@ -693,6 +700,89 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
+     * deleteRecord()
+     * deletes a record from database for map.
+     * @param \DedicatedApi\Structures\Map $challenge
+     * @param string $login
+     * @return boolean
+     */
+    private function deleteRecord(\DedicatedApi\Structures\Map $challenge, $login) {
+
+        $q = "DELETE FROM `exp_records` WHERE `exp_records`.`record_challengeuid` = " . $this->db->quote($challenge->uId) . " and " .
+                "`exp_records`.`record_playerlogin` = " . $this->db->quote($recordLogin) . ";";
+        try {
+            $this->db->query($q);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * getRecordsForMap().
+     * gets the records for a map and returns array of record objects
+     *
+     * @param mixed $gamemode
+     * @param Map $challenge
+     * @param string $plugin
+     * @return array(Record)
+     */
+    public function getRecordsForMap($gamemode = NULL, $challenge = NULL, $plugin = Null) {
+
+        if ($challenge === NULL || $challenge == '') {
+            $challenge = $this->storage->currentMap;
+        }
+
+        if ($gamemode === NULL || $gamemode == '') {
+            $gamemode = $this->storage->gameInfos->gameMode;
+        }
+
+        $cons = "";
+        if ($this->useLapsConstraints()) {
+            $cons .= " AND record_nbLaps = " . $this->getNbOfLaps();
+        } else {
+            $cons .= " AND record_nbLaps = 1";
+        }
+
+        $q = "SELECT * FROM `exp_records`, `exp_players`
+                    WHERE `record_challengeuid` = " . $this->db->quote($challenge->uId) . " " . $cons . "
+                        AND `exp_records`.`record_playerlogin` = `exp_players`.`player_login`
+                        " . $cons . "
+                    ORDER BY `record_score` ASC
+                    LIMIT 0, " . $this->config->recordsCount . ";";
+
+        $dbData = $this->db->query($q);
+
+        if ($dbData->recordCount() == 0) {
+            return array();
+        }
+
+        $i = 1;
+        $records = array();
+
+        while ($data = $dbData->fetchStdObject()) {
+
+            $record = new Record();
+            $this->currentChallengePlayerRecords[$data->record_playerlogin] = $record;
+
+            $record->place = $i;
+            $record->login = $data->record_playerlogin;
+            $record->nickName = $data->player_nickname;
+            $record->time = $data->record_score;
+            $record->nbFinish = $data->record_nbFinish;
+            $record->avgScore = $data->record_avgScore;
+            $record->nation = $data->player_nation;
+            $record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
+            $record->uId = $this->storage->currentMap->uId;
+
+            $records[$i - 1] = $record;
+            $i++;
+        }
+
+        return $records;
+    }
+
+    /**
      * getPlayerRecord()
      * Helper function, gets the record of the asked player.
      *
@@ -798,18 +888,31 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * Will show a windows with the best records
-     * @param $login
+     * showRecsWindow()
+     * 
+     * Display a window for a login with best times
+     * @param type $login
+     * @param \DedicatedApi\Structures\Map $map (optional)
      */
-    public function showRecsWindow($login) {
+    public function showRecsWindow($login, $map = NULL) {
         Gui\Windows\Records::Erase($login);
+        try {
+            if ($map === NULL) {
+                $records = $this->currentChallengeRecords;
+                $map = $this->storage->currentMap;
+            } else {
+                $records = $this->getRecordsForMap(null, $map);
+            }
 
-        $window = Gui\Windows\Records::Create($login);
-        $window->setTitle(__('Records on Current Map', $login));
-        $window->centerOnScreen();
-        $window->populateList($this->currentChallengeRecords, $this->config->recordsCount);
-        $window->setSize(120, 100);
-        $window->show();
+            $window = Gui\Windows\Records::Create($login);
+            $window->setTitle(__('Records on a Map', $login));
+            $window->centerOnScreen();
+            $window->populateList($records, $this->config->recordsCount);
+            $window->setSize(120, 100);
+            $window->show();
+        } catch (\Exception $e) {
+            $this->exp_chatSendServerMessage("Error: %s", $login, array($e->getMessage()));
+        }
     }
 
     /**
@@ -842,7 +945,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->db->query('DELETE FROM exp_ranks WHERE rank_challengeuid IN (' . $this->getUidSqlString() . ')');
         $this->ranks = array();
         $this->player_ranks = array();
-        
+
         $q = 'INSERT INTO exp_ranks 
                 SELECT record_playerlogin, 
                         (SELECT Count(*) FROM exp_records r2
@@ -856,13 +959,13 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 GROUP BY record_playerlogin, record_challengeuid, record_nbLaps';
         $this->db->query($q);
     }
-    
-    private function updateRanks($challengeId, $nbLaps){
-         $this->db->query('DELETE FROM exp_ranks 
-                            WHERE rank_challengeuid = \'' .$challengeId . '\'
-                                AND rank_nbLaps = '.$nbLaps);
-         
-         $q = 'INSERT INTO exp_ranks 
+
+    private function updateRanks($challengeId, $nbLaps) {
+        $this->db->query('DELETE FROM exp_ranks 
+                            WHERE rank_challengeuid = \'' . $challengeId . '\'
+                                AND rank_nbLaps = ' . $nbLaps);
+
+        $q = 'INSERT INTO exp_ranks 
                 SELECT record_playerlogin, 
                         (SELECT Count(*) FROM exp_records r2
                             WHERE r1.record_challengeuid = r2.record_challengeuid
@@ -871,11 +974,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                                 ORDER BY record_score ASC) as rank,
                         record_challengeuid, record_nbLaps
                 FROM exp_records r1
-                WHERE record_challengeuid = \'' .$challengeId . '\'
-                                AND record_nbLaps = '.$nbLaps.'
+                WHERE record_challengeuid = \'' . $challengeId . '\'
+                                AND record_nbLaps = ' . $nbLaps . '
                 GROUP BY record_playerlogin, record_challengeuid, record_nbLaps';
         $this->db->query($q);
-         
     }
 
     /**
@@ -908,48 +1010,48 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return int
      */
     public function getPlayerRank($login) {
-        
-        if(!isset($this->player_ranks[$login]) || ($this->map_count % $this->config->nbMap_rankProcess) == 0){
-            
+
+        if (!isset($this->player_ranks[$login]) || ($this->map_count % $this->config->nbMap_rankProcess) == 0) {
+
             $nbTrack = sizeof($this->storage->maps);
             $uids = $this->getUidSqlString();
-            
-            
+
+
             $q = 'SELECT ((SUM( rank_rank ) + ( 81 - COUNT( * ) ) *30) /81) AS points
                     FROM exp_ranks
-                    WHERE rank_playerlogin =  \''.$login.'\'';
-            
+                    WHERE rank_playerlogin =  \'' . $login . '\'';
+
             echo $q . "\n\n";
-            
+
             $data = $this->db->query($q);
-            
+
             if ($data->recordCount() == 0) {
                 $this->player_ranks[$login] = -1;
                 return -1;
             } else {
                 $vals = $data->fetchStdObject();
                 $points = $vals->points;
-                if(empty($points)){
-                     $this->player_ranks[$login] = -1;
+                if (empty($points)) {
+                    $this->player_ranks[$login] = -1;
                     return -1;
-                }    
+                }
             }
-            
+
             $q = 'SELECT count(*) as rank
                     FROM exp_ranks
                     GROUP BY rank_playerlogin
-                    HAVING ((SUM(rank_rank) + (' . $nbTrack . ' - Count(*))*' . $this->config->recordsCount . ')/' . $nbTrack . ') < '.$points.'';
-            
+                    HAVING ((SUM(rank_rank) + (' . $nbTrack . ' - Count(*))*' . $this->config->recordsCount . ')/' . $nbTrack . ') < ' . $points . '';
+
             echo $q;
-            
+
             $data = $this->db->query($q);
-            
+
             if ($data->recordCount() == 0) {
                 $this->player_ranks[$login] = 1;
             } else {
                 $vals = $data->fetchStdObject();
                 $this->player_ranks[$login] = $vals->rank;
-            }            
+            }
         }
         return $this->player_ranks[$login];
     }
@@ -959,11 +1061,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return array
      */
     public function getRanks() {
-        if( (empty($this->ranks) && $this->rank_updated)
-                || (($this->map_count % $this->config->nbMap_rankProcess) == 0 && $this->rank_updated)){
-            
+        if ((empty($this->ranks) && $this->rank_updated)
+                || (($this->map_count % $this->config->nbMap_rankProcess) == 0 && $this->rank_updated)) {
+
             $this->rank_updated = false;
-            
+
             $ranks = array();
             $nbTrack = sizeof($this->storage->maps);
             $uids = $this->getUidSqlString();
@@ -999,7 +1101,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $dbData = $this->db->query($q);
 
             if ($dbData->recordCount() == 0) {
-
+                
             } else {
                 while ($data = $dbData->fetchStdObject()) {
                     $ranks[] = $data;

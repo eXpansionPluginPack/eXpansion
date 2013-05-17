@@ -9,13 +9,14 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     
     private $plugins = array('eXpansion\Core'
                                     , 'eXpansion\AdminGroups'
+                                    , 'eXpansion\Menu'
                                     , 'eXpansion\Adm'
                                     , 'eXpansion\Chat'
                                     , 'eXpansion\Chat_Admin'
                                     , 'eXpansion\CheckpointCount'
                                     , 'eXpansion\Database'
                                     , 'eXpansion\Emotes'
-                                    , 'eXpansion\IdleKick'
+                                   
                                     , 'eXpansion\LocalRecords'
                                     , 'eXpansion\ManiaExchange'
                                     , 'eXpansion\MapRatings'
@@ -69,7 +70,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                         Console::println("[eXpansion Pack]..............................SUCESS");
                     }
                 }
-            }catch(\Exceptio $ex){
+            } catch(\Exception $ex){
                 echo "STRANGE\n";
                 $recheck[] = $pname;
             }

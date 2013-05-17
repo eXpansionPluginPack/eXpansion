@@ -72,7 +72,18 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             }
         }
     }
-
+    
+    function deleteMap($login, $filename) {
+         try {
+            unlink($filename);
+            $file = explode("/", $filename);
+            $this->connection->chatSendServerMessage(__("File '%s' deleted from filesystem!", $this->getRecipient(), end($file)));
+            $this->populateList();
+            $this->RedrawAll();
+        } catch (\Exception $e) {
+            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()));
+        }
+    }
     function destroy() {
         $this->gbx = null;
         foreach ($this->items as $item) {

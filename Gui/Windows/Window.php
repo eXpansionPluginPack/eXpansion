@@ -201,7 +201,7 @@ class Window extends \ManiaLive\Gui\Window {
                 } 
                 --></script>');
         $this->addComponent($this->xml);
-        $this->setPositionZ(-75);
+    
     }
 
     function onResize($oldX, $oldY) {
@@ -226,6 +226,7 @@ class Window extends \ManiaLive\Gui\Window {
 
         $this->mainFrame->setSize($this->sizeX - 4, $this->sizeY - 8);
         $this->mainFrame->setPosition(2, -2);
+   
     }
 
     function onShow() {

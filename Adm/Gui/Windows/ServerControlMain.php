@@ -24,11 +24,10 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     /** @var \ManiaLivePlugins\eXpansion\Adm\Adm */
     public static $mainPlugin;
-
     private $frame;
     private $closeButton;
     private $actions;
-    private $btn1, $btn2, $btn3, $btn4, $btn5;
+    private $btn1, $btn2, $btn3, $btn4, $btn5, $btn6, $btn7;
 
     function onConstruct() {
         parent::onConstruct();
@@ -37,7 +36,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow(120, 60));
 
         $this->actions = new \stdClass();
         $this->actions->close = ActionHandler::getInstance()->createAction(array($this, "close"));
@@ -46,42 +45,56 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->actions->matchSettings = ActionHandler::getInstance()->createAction(array($this, "matchSettings"));
         $this->actions->serverManagement = ActionHandler::getInstance()->createAction(array($this, "serverManagement"));
         $this->actions->adminGroups = ActionHandler::getInstance()->createAction(array($this, "adminGroups"));
+        $this->actions->scriptSettings = ActionHandler::getInstance()->createAction(array($this, "scriptSettings"));
+        $this->actions->forceScores = ActionHandler::getInstance()->createAction(array($this, "forceScores"));
 
-        $this->btn1 = new myButton(40,6);
+        $this->btn1 = new myButton(40, 6);
         $this->btn1->setText(__("Server management"));
         $this->btn1->setAction($this->actions->serverManagement);
         $this->btn1->colorize("f00");
         $this->btn1->setScale(0.5);
         $this->frame->addComponent($this->btn1);
 
-        $this->btn2 = new myButton(40,6);
+        $this->btn2 = new myButton(40, 6);
         $this->btn2->setText(__("Server options"));
         $this->btn2->setAction($this->actions->serverOptions);
         $this->btn2->setScale(0.5);
         $this->frame->addComponent($this->btn2);
 
-        $this->btn3 = new myButton(40,6);
+        $this->btn3 = new myButton(40, 6);
         $this->btn3->setText(__("Game options"));
         $this->btn3->setAction($this->actions->gameOptions);
         $this->btn3->setScale(0.5);
         $this->frame->addComponent($this->btn3);
 
-        $this->btn4 = new myButton(40,6);
+        $this->btn4 = new myButton(40, 6);
         $this->btn4->setText(__("Admin Groups"));
         $this->btn4->setAction($this->actions->adminGroups);
         $this->btn4->colorize("0d0");
         $this->btn4->setScale(0.5);
         $this->frame->addComponent($this->btn4);
 
-        $this->btn5 = new myButton(40,6);
+        $this->btn5 = new myButton(40, 6);
         $this->btn5->setText(__("Match settings"));
         $this->btn5->setAction($this->actions->matchSettings);
         $this->btn5->setScale(0.5);
         $this->frame->addComponent($this->btn5);
 
+        $this->btn6 = new myButton(40, 6);
+        $this->btn6->setText(__("ScriptMode settings"));
+        $this->btn6->setAction($this->actions->scriptSettings);
+        $this->btn6->setScale(0.5);
+        $this->frame->addComponent($this->btn6);
+
+        $this->btn7 = new myButton(40, 6);
+        $this->btn7->setText(__("Force Scores"));
+        $this->btn7->setAction($this->actions->forceScores);
+        $this->btn7->setScale(0.5);
+        $this->frame->addComponent($this->btn7);
+
         $this->mainFrame->addComponent($this->frame);
 
-        $this->closeButton = new myButton(30,5);
+        $this->closeButton = new myButton(30, 5);
         $this->closeButton->setText(__("Close"));
         $this->closeButton->setAction($this->actions->close);
         $this->mainFrame->addComponent($this->closeButton);
@@ -99,12 +112,20 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         self::$mainPlugin->matchSettings($login);
     }
 
+    function scriptSettings($login) {
+        self::$mainPlugin->scriptSettings($login);
+    }
+
     function serverManagement($login) {
         self::$mainPlugin->serverManagement($login);
     }
 
     function adminGroups($login) {
         self::$mainPlugin->adminGroups($login);
+    }
+
+    function forceScores($login) {
+        self::$mainPlugin->forceScores($login);
     }
 
     function close() {
@@ -123,13 +144,19 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         ActionHandler::getInstance()->deleteAction($this->actions->gameOptions);
         ActionHandler::getInstance()->deleteAction($this->actions->matchSettings);
         ActionHandler::getInstance()->deleteAction($this->actions->serverManagement);
+        ActionHandler::getInstance()->deleteAction($this->actions->scriptSettings);
+        ActionHandler::getInstance()->deleteAction($this->actions->forceScores);
+
         unset($this->actions);
         $this->btn1->destroy();
         $this->btn2->destroy();
         $this->btn3->destroy();
         $this->btn4->destroy();
         $this->btn5->destroy();
-        $this->frame->clearComponents();        
+        $this->btn6->destroy();
+        $this->btn7->destroy();
+
+        $this->frame->clearComponents();
         $this->connection = null;
         $this->storage = null;
 

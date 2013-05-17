@@ -107,20 +107,23 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $query = "";
 
             switch ($script->name) {
-                case "ShootMania\Royal":
+                case "Royal.Script.txt":
                     $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=RoyalArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
                     break;
-                case "ShootMania\Melee":
+                case "Melee.Script.txt":
                     $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=MeleeArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
                     break;
-                case "ShootMania\Battle":
+                case "Battle.Script.txt":
                     $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=BattleArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
                     break;
-                case "ShootMania\Elite":
-                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=EliteArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
+                case "Realm.Script.txt":
+                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=RealmArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
+                    break;
+                case "Siege.Script.txt":
+                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=SiegeArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
                     break;
                 default:
-                    $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&tpack=All&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
+                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&tpack=All&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
                     break;
             }
         } else {

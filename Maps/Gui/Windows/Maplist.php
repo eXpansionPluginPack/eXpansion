@@ -21,6 +21,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onConstruct();
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
         $this->mainFrame->addComponent($this->pager);
+        
     }
 
     static function Initialize($mapsPlugin) {
@@ -39,6 +40,10 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function queueMap($login, \DedicatedApi\Structures\Map $map, $isTemp = false) {
         self::$mapsPlugin->queueMap($login, $map, $isTemp);
+    }
+    
+    function showRec($login, \DedicatedApi\Structures\Map $map) {
+        self::$mapsPlugin->showRec($login, $map);
     }
 
     function onResize($oldX, $oldY) {
@@ -59,9 +64,10 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 
         $isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps');
+        $localrec = self::$mapsPlugin->isLocalRecordsLoaded();
         $x = 0;
         foreach (\ManiaLive\Data\Storage::getInstance()->maps as $map) {
-            $this->items[$x] = new Mapitem($x, $login, $map, $this, $isAdmin, $this->sizeX);
+            $this->items[$x] = new Mapitem($x, $login, $map, $this, $isAdmin, $localrec, $this->sizeX);
             $this->pager->addItem($this->items[$x]);
             $x++;
         }

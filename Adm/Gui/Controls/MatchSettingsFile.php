@@ -14,12 +14,15 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
     private $time;
     private $saveAction;
     private $loadAction;
+    private $deleteButton;
+    private $deleteAction;
     private $frame;
 
-    function __construct($indexNumber, $filename, $controller, $sizeX) {        
+    function __construct($indexNumber, $filename, $controller, $sizeX) {
         $sizeY = 4;
         $this->saveAction = $this->createAction(array($controller, 'saveSettings'), $filename);
         $this->loadAction = $this->createAction(array($controller, 'loadSettings'), $filename);
+        $this->deleteAction = $this->createAction(array($controller, 'deleteSetting'), $filename);
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->bg->setAlign('left', 'center');
@@ -51,7 +54,9 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
         $this->label = new \ManiaLib\Gui\Elements\Label(120, 4);
         $this->label->setAlign('left', 'center');
         $file = explode('/', $filename);
-        $this->label->setText(utf8_encode(end($file)));
+        $text = utf8_encode(end($file));
+        $text = str_replace(".txt", "", $text);
+        $this->label->setText($text);
         $this->label->setScale(0.8);
         $this->frame->addComponent($this->label);
 
@@ -71,11 +76,18 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($this->loadButton);
 
         $this->saveButton = new MyButton(26, 5);
-        $this->saveButton->setText('$fff'.__("Save"));
+        $this->saveButton->setText('$fff' . __("Save"));
         $this->saveButton->colorize("a22");
         $this->saveButton->setAction($this->saveAction);
         $this->saveButton->setScale(0.5);
         $this->frame->addComponent($this->saveButton);
+        
+        $this->deleteButton = new MyButton(26, 5);
+        $this->deleteButton->setText('$ff0' . __("Delete"));
+        $this->deleteButton->colorize("222");
+        $this->deleteButton->setAction($this->deleteAction);
+        $this->deleteButton->setScale(0.5);
+        $this->frame->addComponent($this->deleteButton);
 
         $this->addComponent($this->frame);
 
