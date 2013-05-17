@@ -16,7 +16,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                                     , 'eXpansion\CheckpointCount'
                                     , 'eXpansion\Database'
                                     , 'eXpansion\Emotes'
-                                    , 'eXpansion\IdleKick'
+                                   
                                     , 'eXpansion\LocalRecords'
                                     , 'eXpansion\ManiaExchange'
                                     , 'eXpansion\MapRatings'

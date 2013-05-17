@@ -28,7 +28,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Server Management'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Server Management'), null, array($this, 'serverControlMain'), true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Force Scores'), null, array($this, 'forceScores'), true);
+          //  $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Force Scores'), null, array($this, 'forceScores'), true);
         }
 
         $this->enableDedicatedEvents();
@@ -115,13 +115,12 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             $gamemode = $this->storage->gameInfos->gameMode;
             if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM) {
-            $window = Gui\Windows\ForceScores::Create($login);
-            $window->setTitle(__('Force Scores'));
-            $window->centerOnScreen();
-            $window->setSize(160, 80);
-            $window->show();
-            }
-            else {
+                $window = Gui\Windows\ForceScores::Create($login);
+                $window->setTitle(__('Force Scores'));
+                $window->centerOnScreen();
+                $window->setSize(160, 80);
+                $window->show();
+            } else {
                 $this->exp_chatSendServerMessage("ForceScores can be used only with rounds or team mode", $login);
             }
         }
@@ -163,6 +162,20 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $window->centerOnScreen();
             $window->setSize(160, 100);
             $window->show();
+        }
+    }
+
+    public function scriptSettings($login) {
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
+            if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
+                $window = Gui\Windows\ScriptSettings::Create($login);
+                $window->setTitle(__('Script Settings'));
+                $window->centerOnScreen();
+                $window->setSize(160, 100);
+                $window->show();
+            } else {
+                $this->exp_chatSendServerMessage("ScriptSettings available only in script mode", $login);
+            }
         }
     }
 

@@ -14,7 +14,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $Colors_rank = '$fe5';
     public $Colors_rating = '$fb3';
     public $Colors_queue = '$8af';
-	public $API_Version = '2011-10-06'; //ApiVersion can be 2011-10-06 for TM and 2013-04-16 for SM Add in config 
+    public $API_Version = '2013-05-16'; //ApiVersion can be 2011-10-06 for TM and 2013-04-16 for SM Add in config 
 
 }
 
