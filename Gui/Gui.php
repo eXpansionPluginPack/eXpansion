@@ -4,19 +4,26 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 
 class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
+    private $titleId;
+
     public function exp_onInit() {
         $this->setVersion("0.1");
     }
 
     public function exp_onLoad() {
-           $settings = array("S_UseScriptCallbacks" => true);
-        $this->connection->setModeScriptSettings($settings);
+        $version = $this->connection->getVersion();
+        $this->titleId = $version->titleId;
 
+        if ($this->titleId == "SMStorm") {
+            $settings = array("S_UseScriptCallbacks" => true);
+            $this->connection->setModeScriptSettings($settings);
+        }
     }
+
     public function exp_onReady() {
         $this->enableDedicatedEvents();
-        
-     
+
+
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
@@ -41,9 +48,12 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function onPlayerConnect($login, $isSpectator) {
         try {
-            var_dump($this->connection->TriggerModeScriptEvent("LibXmlRpc_DisableAltMenu", $login));
+
+            if ($this->titleId == "SMStorm") {
+                $this->connection->TriggerModeScriptEvent("LibXmlRpc_DisableAltMenu", $login);
+            }
         } catch (\Exception $e) {
-            echo "error: ". $e->getMessage();
+            echo "error: " . $e->getMessage();
         }
     }
 

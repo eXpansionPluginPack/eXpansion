@@ -10,6 +10,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $config;
     private $vote;
+    private $titleId;
 
     public function exp_onInit() {
         parent::exp_onInit();
@@ -40,6 +41,8 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Search Maps'), null, array($this, 'mxSearch'), false);
         }
 
+        $version = $this->connection->getVersion();
+        $this->titleId = $version->titleId;
         $this->enableDedicatedEvents();
     }
 
@@ -107,7 +110,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->show();
     }
 
-    public function addMap($login, $mxId) {        
+    public function addMap($login, $mxId) {
         if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->hasPermission($login, 'server_maps')) {
             $this->connection->chatSendServerMessage(__('$iYou don\'t have permission to do that!', $login, $mxId), $login);
             return;
@@ -129,13 +132,10 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
         try {
             if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
-                $script = $this->connection->getModeScriptInfo();
+
                 $query = "";
-                switch ($script->name) {
-                    case "ShootMania\Royal":
-                    case "ShootMania\Melee":
-                    case "ShootMania\Battle":
-                    case "ShootMania\Elite":
+                switch ($this->titleId) {
+                    case "SMStorm":
                         $query = 'http://sm.mania-exchange.com/tracks/download/' . $mxId;
                         break;
                     default:
@@ -192,7 +192,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function mxVote ($login, $mxId) {
+    function mxVote($login, $mxId) {
         if (!is_numeric($mxId)) {
             $this->connection->chatSendServerMessage(__('"%s" is not a numeric value.', $login, $mxId), $login);
             return;
@@ -214,13 +214,10 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         try {
             if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
-                $script = $this->connection->getModeScriptInfo();
+
                 $query = "";
-                switch ($script->name) {
-                    case "ShootMania\Royal":
-                    case "ShootMania\Melee":
-                    case "ShootMania\Battle":
-                    case "ShootMania\Elite":
+                switch ($this->titleId) {
+                    case "SMStorm":
                         $query = 'http://sm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
                         break;
                     default:
@@ -246,6 +243,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
 
             $version = $this->connection->getVersion();
+
             if (strtolower(substr($version->titleId, 2)) != strtolower($map['EnvironmentName'])) {
                 $this->connection->chatSendServerMessage(__('Wrong environment!'), $login);
                 return;
@@ -257,7 +255,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             $vote = new \DedicatedApi\Structures\Vote();
             $vote->callerLogin = $login;
-            $vote->cmdName = '$0f0add $fff$o'.$map['Name'].'$o$0f0 by $eee'.$map['Username'].' $0f0';
+            $vote->cmdName = '$0f0add $fff$o' . $map['Name'] . '$o$0f0 by $eee' . $map['Username'] . ' $0f0';
             $vote->cmdParam = array("to the queue from MX?$3f3");
             $this->connection->callVote($vote, $this->config->mxVote_ratio, ($this->config->mxVote_timeout * 1000), $this->config->mxVote_voters);
         } catch (\Exception $e) {
@@ -265,16 +263,13 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function mxQueue ($login, $mxId) {
+    function mxQueue($login, $mxId) {
         try {
             if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
-                $script = $this->connection->getModeScriptInfo();
+               
                 $query = "";
-                switch ($script->name) {
-                    case "ShootMania\Royal":
-                    case "ShootMania\Melee":
-                    case "ShootMania\Battle":
-                    case "ShootMania\Elite":
+                switch ($this->titleId) {
+                    case "SMStorm":
                         $query = 'http://sm.mania-exchange.com/tracks/download/' . $mxId;
                         break;
                     default:
