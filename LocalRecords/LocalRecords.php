@@ -131,6 +131,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod("getTotalRanked");
         $this->setPublicMethod("showRecsWindow");
 
+        //The Database plugin is needed. 
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
 
         //Oliverde8 Menu
@@ -146,8 +147,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableStorageEvents();
         $this->enableDedicatedEvents();
         $this->enableDatabase();
-
+        
+        //List of all records
         $this->registerChatCommand("recs", "showRecsWindow", 0, true);
+        
+        //Top 100 ranked players
         $this->registerChatCommand("top100", "showRanksWindow", 0, true);
         $this->registerChatCommand("rank", "chat_showRank", 0, true);
         $this->registerChatCommand("pb", "chat_personalBest", 0, true);
@@ -191,12 +195,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->db->query($q);
             $this->resetRanks();
         }
-
-        echo "TOTAL RANKS : " . $this->getTotalRanked() . "\n";
-
-        echo 'RANK : ' . $this->getPlayerRank('oliverde8') . "\n";
-
-        $this->updateRanks('0XSFE6OzSDysuiORuwJIbE4SXnc', 1);
 
         $this->onBeginMap("", "", "");
         if ($this->isPluginLoaded('eXpansion\Menu')) {
@@ -621,14 +619,18 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->currentChallengePlayerRecords = array(); //reset
         $this->currentChallengeRecords = array(); //reset
+        
+        //Fetch best records
         $this->currentChallengeRecords = $this->buildCurrentChallangeRecords(); // fetch
+        
         $uid = $this->storage->currentMap->uId;
 
-        //Getting current players rank
+        //Getting current players records
         foreach ($this->storage->players as $login => $player) { // get players
             $this->getFromDbPlayerRecord($login, $uid);
         }
-
+    
+        //Getting current spectators records
         foreach ($this->storage->spectators as $login => $player) { // get spectators
             $this->getFromDbPlayerRecord($login, $uid);
         }
@@ -791,7 +793,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private function getFromDbPlayerRecord($login, $uId) {
 
         if (isset($this->currentChallengePlayerRecords[$login]))
-            return;
+            return $this->currentChallengePlayerRecords[$login];
 
         $cons = "";
         if ($this->useLapsConstraints()) {
