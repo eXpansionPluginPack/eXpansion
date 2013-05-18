@@ -18,6 +18,7 @@ class Core extends types\ExpPlugin {
      * @var \DedicatedApi\Structures\GameInfos
      */
     private $lastGameMode;
+    
 
     /**
      * 
@@ -60,7 +61,7 @@ class Core extends types\ExpPlugin {
     public function exp_onReady() {
         $this->connection->chatSendServerMessage("");
         $this->connection->chatSendServerMessage('$fff********************************');
-        $this->exp_chatSendServerMessage('$fff e$a00X$fffpansion v. ' . $this->getVersion() . ' Initialized succesfully. ');
+        $this->connection->chatSendServerMessage('$fff e$a00X$fffpansion v. ' . $this->getVersion() . ' Initialized succesfully. ');
         $this->connection->chatSendServerMessage('$fff********************************');
         $this->connection->chatSendServerMessage("");
         $this->onBeginMap(null, null, null);

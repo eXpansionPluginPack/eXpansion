@@ -135,7 +135,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             if ($login == null) {
                 array_unshift($args, $msg->getMessage());
                 $msg = call_user_func_array('sprintf', $args);
-                                
+
                 $this->exp_announce($msg);
             } else {
                 array_unshift($args, $msg, $login);
@@ -175,6 +175,9 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
          */
         protected function exp_announce($msg, $icon = null, $callback = null, $pluginid = null) {
             $sender = get_class($this);
+            $fromPlugin = explode("\\", $sender);
+            $fromPlugin = str_replace("_", " ",end($fromPlugin));
+            
             if (isset(self::$exp_announceRedirected[$sender])) {
                 if (is_object(self::$exp_announceRedirected[$sender][0]))
                     call_user_func_array(self::$exp_announceRedirected[$sender], array($this->exp_maxp->parseColors($msg), $icon, $callback, $pluginid));
@@ -182,7 +185,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
                     $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($this->exp_maxp->parseColors($msg), $icon, $callback, $pluginid));
                 }
             } else {
-                $this->connection->chatSendServerMessage($this->exp_maxp->parseColors($msg));
+                $this->connection->chatSendServerMessage('$n'.$fromPlugin . '$z$s$ff0 〉$fff'.$this->exp_maxp->parseColors($msg));
             }
         }
 
@@ -195,7 +198,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
          * @param type $scriptName
          */
         protected function exp_addGameModeCompability($gameMode, $scriptName = null) {
-            
+
             if ($scriptName == null || $gameMode != GameInfos::GAMEMODE_SCRIPT)
                 self::$plugin_gameModeSupport[get_called_class()][$gameMode] = true;
             else
@@ -216,12 +219,11 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             $class = get_called_class();
 
             if (isset(self::$plugin_gameModeSupport[$class])) {
-                if ($gameInfo->gameMode == GameInfos::GAMEMODE_SCRIPT 
-                        && isset(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode]) 
+                if ($gameInfo->gameMode == GameInfos::GAMEMODE_SCRIPT
+                        && isset(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode])
                         && is_array(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode])) {
                     return isset(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode][$gameInfo->scriptName]) ? self::$plugin_gameModeSupport[$class][$gameInfo->gameMode][$gameInfo->scriptName] : false;
-                }
-                else{
+                } else {
                     return isset(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode]) ? self::$plugin_gameModeSupport[$class][$gameInfo->gameMode] : false;
                 }
             }
