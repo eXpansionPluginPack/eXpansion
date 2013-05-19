@@ -54,7 +54,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onReady() {
-        $this->showBackupRestore("reaby");
+       
     }
     public function onPlayerConnect($login, $isSpec) {
         $g = "SELECT * FROM `exp_players` WHERE `player_login` = " . $this->db->quote($login) . ";";
