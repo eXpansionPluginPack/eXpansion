@@ -28,6 +28,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $closeButton;
     private $actions;
     private $btn1, $btn2, $btn3, $btn4, $btn5, $btn6, $btn7;
+    private $btnDb;
 
     function onConstruct() {
         parent::onConstruct();
@@ -39,14 +40,15 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow(120, 60));
 
         $this->actions = new \stdClass();
-        $this->actions->close = ActionHandler::getInstance()->createAction(array($this, "close"));
-        $this->actions->serverOptions = ActionHandler::getInstance()->createAction(array($this, "serverOptions"));
-        $this->actions->gameOptions = ActionHandler::getInstance()->createAction(array($this, "gameOptions"));
-        $this->actions->matchSettings = ActionHandler::getInstance()->createAction(array($this, "matchSettings"));
-        $this->actions->serverManagement = ActionHandler::getInstance()->createAction(array($this, "serverManagement"));
-        $this->actions->adminGroups = ActionHandler::getInstance()->createAction(array($this, "adminGroups"));
-        $this->actions->scriptSettings = ActionHandler::getInstance()->createAction(array($this, "scriptSettings"));
-        $this->actions->forceScores = ActionHandler::getInstance()->createAction(array($this, "forceScores"));
+        $this->actions->close = $this->createAction(array($this, "close"));
+        $this->actions->serverOptions = $this->createAction(array($this, "serverOptions"));
+        $this->actions->gameOptions = $this->createAction(array($this, "gameOptions"));
+        $this->actions->matchSettings = $this->createAction(array($this, "matchSettings"));
+        $this->actions->serverManagement = $this->createAction(array($this, "serverManagement"));
+        $this->actions->adminGroups = $this->createAction(array($this, "adminGroups"));
+        $this->actions->scriptSettings = $this->createAction(array($this, "scriptSettings"));
+        $this->actions->forceScores = $this->createAction(array($this, "forceScores"));
+        $this->actions->dbTools = $this->createAction(array($this, "dbTools"));
 
         $this->btn1 = new myButton(40, 6);
         $this->btn1->setText(__("Server management"));
@@ -92,6 +94,12 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->btn7->setScale(0.5);
         $this->frame->addComponent($this->btn7);
 
+        $this->btnDb = new myButton(40, 6);
+        $this->btnDb->setText(__("Database tools"));
+        $this->btnDb->setAction($this->actions->dbTools);
+        $this->btnDb->setScale(0.5);
+        $this->frame->addComponent($this->btnDb);
+
         $this->mainFrame->addComponent($this->frame);
 
         $this->closeButton = new myButton(30, 5);
@@ -128,6 +136,10 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         self::$mainPlugin->forceScores($login);
     }
 
+    function dbTools($login) {
+        self::$mainPlugin->dbTools($login);
+    }
+
     function close() {
         $this->Erase($this->getRecipient());
     }
@@ -139,13 +151,6 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function destroy() {
-        ActionHandler::getInstance()->deleteAction($this->actions->close);
-        ActionHandler::getInstance()->deleteAction($this->actions->serverOptions);
-        ActionHandler::getInstance()->deleteAction($this->actions->gameOptions);
-        ActionHandler::getInstance()->deleteAction($this->actions->matchSettings);
-        ActionHandler::getInstance()->deleteAction($this->actions->serverManagement);
-        ActionHandler::getInstance()->deleteAction($this->actions->scriptSettings);
-        ActionHandler::getInstance()->deleteAction($this->actions->forceScores);
 
         unset($this->actions);
         $this->btn1->destroy();
@@ -155,6 +160,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->btn5->destroy();
         $this->btn6->destroy();
         $this->btn7->destroy();
+        $this->btnDb->destroy();
 
         $this->frame->clearComponents();
         $this->connection = null;

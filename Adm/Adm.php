@@ -178,6 +178,16 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         }
     }
+    
+      public function dbTools($login) {
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+            if ($this->isPluginLoaded("eXpansion\Database")) {
+                $this->callPublicMethod("eXpansion\Database", "showDbMaintainance", $login);
+            } else {
+                $this->exp_chatSendServerMessage("Database plugin not loaded!", $login);
+            }
+        }
+    }
 
     public function adminGroups($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {

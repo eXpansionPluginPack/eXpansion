@@ -277,7 +277,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window = Gui\Windows\Maplist::Create($login);
         $window->setTitle(__('Maps on server', $login));
         $window->centerOnScreen();
-        $window->setSize(160, 100);
+        $window->setSize(180, 100);
         $window->show();
     }
 

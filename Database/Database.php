@@ -45,9 +45,17 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod('getPlayer');
         $this->setPublicMethod('getDatabaseVersion');
         $this->setPublicMethod('setDatabaseVersion');
+        $this->setPublicMethod('showDbMaintainance');
         $this->updateServerChallenges();
+        // add admin command ;)
+        $cmd = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::addAdminCommand('dbtools', $this, 'showDbMaintainance', "server_admin"); //
+        $cmd->setHelp('shows administrative window for database');
+        $cmd->setMinParam(0);
     }
 
+    public function exp_onReady() {
+        $this->showBackupRestore("reaby");
+    }
     public function onPlayerConnect($login, $isSpec) {
         $g = "SELECT * FROM `exp_players` WHERE `player_login` = " . $this->db->quote($login) . ";";
         $query = $this->db->query($g);
@@ -327,6 +335,29 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } else {
             $record = $query->fetchStdObject();
             return $record->database_version;
+        }
+    }
+
+    function showDbMaintainance($login) {
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+            $window = Gui\Windows\Maintainance::Create($login);
+            $window->init($this->db);
+            $window->setTitle(__('Database Maintainance'));
+            $window->centerOnScreen();
+            $window->setSize(160, 100);
+
+            $window->show();
+        }
+    }
+    
+        function showBackupRestore($login) {
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+            $window = Gui\Windows\BackupRestore::Create($login);
+            $window->init($this->db);
+            $window->setTitle(__('Database Backup and Restore'));
+            $window->centerOnScreen();
+            $window->setSize(160, 100);
+            $window->show();
         }
     }
 
