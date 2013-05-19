@@ -21,7 +21,7 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
      *
      * @return void
      */
-     public function onInit() {
+    public function onInit() {
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
@@ -40,14 +40,14 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
         $this->registerChatCommand("kysy", "ask", -1, true);
         $this->registerChatCommand("pisteet", "showPoints", 0, true);
         $this->registerChatCommand("peruuta", "cancel", 0, true);
+        $this->registerChatCommand("vastaus", "showAnswer", 0, true);
         $this->registerChatCommand("kysymys", "showQuestion", 0, true);
-        
     }
 
     function onReady() {
         
     }
-    
+
     public function onOliverde8HudMenuReady($menu) {
         $button["style"] = "Icons64x64_1";
         $button["substyle"] = "ToolRoot";
@@ -55,24 +55,24 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
         if (!$parent2) {
             $parent2 = $menu->addButton('menu', "Extras", $button);
         }
-        
+
         unset($button["style"]);
         unset($button["substyle"]);
-        
+
         $parent = $menu->findButton(array('menu', "Extras", 'Quiz'));
         if (!$parent) {
             $parent = $menu->addButton($parent2, "Quiz", $button);
         }
-        
+
         $button["chat"] = "q points";
         $menu->addButton($parent, "Points", $button);
-        
+
         $button["chat"] = "q cancel";
         $menu->addButton($parent, "Cancel", $button);
-        
+
         $button["chat"] = "q show";
         $menu->addButton($parent, "Show", $button);
-        
+
         $button["chat"] = "q reset";
         $menu->addButton($parent, "Reset", $button);
     }
@@ -148,12 +148,24 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
         $this->connection->chatSendServerMessage("Quiz has been reset!");
     }
 
+    function showAnswer($login) {
+        if (!isset($this->currentQuestion->question))
+            return;
+        if ($login == $this->currentQuestion->login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
+            $this->connection->chatSendServerMessage("\$3e3\$o No answer for next question:");
+            $this->connection->chatSendServerMessage('$z$o$s$fa0' . $this->currentQuestion->question . "?");
+            $this->connection->chatSendServerMessage('$0b0$oRight answers: $z$s$fff' . implode(",", $this->currentQuestion->answer));
+            $this->currentQuestion = null;
+            $this->chooseNextQuestion();
+        }
+    }
+
     function chooseNextQuestion() {
         if ($this->questionDb == null)
             return;
 
         if (isset($this->currentQuestion->question))
-            return;
+            $this->currentQuestion = null;
 
         if (count($this->questionDb) <= 1) {
             $this->currentQuestion = array_shift($this->questionDb);
