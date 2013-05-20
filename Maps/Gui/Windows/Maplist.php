@@ -30,6 +30,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
         $this->mainFrame->addComponent($this->pager);
+        $login = $this->getRecipient();
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps')) {
             $this->actionRemoveAll = $this->createAction(array($this, "removeAllMaps"));
             $this->btnRemoveAll = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
@@ -67,7 +68,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 14);
         $this->pager->setStretchContentX($this->sizeX);
         $this->pager->setPosition(4, 0);
-        $this->btnRemoveAll->setPosition(4, -$this->sizeY + 6);
+        if (is_object($this->btnRemoveAll))
+            $this->btnRemoveAll->setPosition(4, -$this->sizeY + 6);
     }
 
     function removeAllMaps($login) {
