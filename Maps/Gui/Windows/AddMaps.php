@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
+
 require_once(__DIR__ . "/gbxdatafetcher.inc.php");
 
 use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Additem;
@@ -14,10 +15,12 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     /** @var  \ManiaLive\Data\Storage */
     private $storage;
-
     private $items = array();
     private $gbx;
-    
+    private $btnAddAll;
+    private $actionAddAll;
+    private $label;
+
     protected function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
@@ -26,6 +29,13 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->gbx = new \GBXChallMapFetcher(true, false, false);
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
         $this->mainFrame->addComponent($this->pager);
+
+        $this->actionAddAll = $this->createAction(array($this, "addAllMaps"));
+
+        $this->btnAddAll = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+        $this->btnAddAll->setText("Add all");
+        $this->btnAddAll->setAction($this->actionAddAll);
+        $this->mainFrame->addComponent($this->btnAddAll);
     }
 
     function addMap($login, $filename) {
@@ -40,8 +50,10 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX, $this->sizeY - 6);
-        $this->pager->setStretchContentX($this->sizeX);        
+        $this->pager->setSize($this->sizeX, $this->sizeY - 12);
+        $this->pager->setStretchContentX($this->sizeX);
+
+        $this->btnAddAll->setPosition(4, -$this->sizeY + 6);
     }
 
     function onShow() {
@@ -72,9 +84,9 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             }
         }
     }
-    
+
     function deleteMap($login, $filename) {
-         try {
+        try {
             unlink($filename);
             $file = explode("/", $filename);
             $this->connection->chatSendServerMessage(__("File '%s' deleted from filesystem!", $this->getRecipient(), end($file)));
@@ -84,13 +96,30 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()));
         }
     }
+
+    function addAllMaps($login) {
+        $game = $this->connection->getVersion();
+        $mapsDir = $this->connection->getMapsDirectory();
+        $path = str_replace("\\", "/", $mapsDir) . "Downloaded/" . $game->titleId . "/*.Map.Gbx";
+
+        $mapsAtDisk = glob($path);
+//        $mapsAtServer = array();
+//        foreach ($this->storage->maps as $map) {
+//            $mapsAtServer[] = str_replace("\\", "/", $mapsDir . $map->fileName);
+//        }
+//        $mapDiff = array_diff($mapsAtServer, $mapsAtDisk);
+
+        $this->connection->addMapList($mapsAtDisk);
+        $this->connection->chatSendServerMessage("Added " . count($mapsAtDisk) . " maps to playlist.", $login);
+    }
+
     function destroy() {
         $this->gbx = null;
         foreach ($this->items as $item) {
             $item->destroy();
         }
         $this->items = array();
-        
+        $this->btnAddAll->destroy();
         $this->connection = null;
         $this->storage = null;
         $this->pager->destroy();
