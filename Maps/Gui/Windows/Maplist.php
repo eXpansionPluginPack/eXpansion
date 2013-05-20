@@ -30,12 +30,14 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
         $this->mainFrame->addComponent($this->pager);
-        $this->actionRemoveAll = $this->createAction(array($this, "removeAllMaps"));
-        $this->btnRemoveAll = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-        $this->btnRemoveAll->setAction($this->actionRemoveAll);
-        $this->btnRemoveAll->setText("Clear Maplist");
-        $this->btnRemoveAll->colorize("d00");
-        $this->mainFrame->addComponent($this->btnRemoveAll);
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps')) {
+            $this->actionRemoveAll = $this->createAction(array($this, "removeAllMaps"));
+            $this->btnRemoveAll = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+            $this->btnRemoveAll->setAction($this->actionRemoveAll);
+            $this->btnRemoveAll->setText("Clear Maplist");
+            $this->btnRemoveAll->colorize("d00");
+            $this->mainFrame->addComponent($this->btnRemoveAll);
+        }
     }
 
     static function Initialize($mapsPlugin) {
@@ -64,20 +66,20 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 14);
         $this->pager->setStretchContentX($this->sizeX);
+        $this->pager->setPosition(4, 0);
         $this->btnRemoveAll->setPosition(4, -$this->sizeY + 6);
-        $this->pager->setPosition(4, -6);
     }
 
     function removeAllMaps($login) {
         $mapsAtServer = array();
         $maps = $this->connection->getMapList(-1, 0);
-        
+
         foreach ($maps as $map) {
             $mapsAtServer[] = $map->fileName;
         }
-        
+
         array_shift($mapsAtServer);
-        
+
         try {
             $this->connection->RemoveMapList($mapsAtServer);
             $this->connection->chatSendServerMessage("Maplist cleared with:" . count($mapsAtServer) . " maps!", $login);
@@ -113,8 +115,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $item->destroy();
         }
         $this->items = null;
-
-        $this->btnRemoveAll->destroy();
+        if (is_object($this->btnRemoveAll))
+            $this->btnRemoveAll->destroy();
         $this->pager->destroy();
         $this->clearComponents();
         parent::destroy();
