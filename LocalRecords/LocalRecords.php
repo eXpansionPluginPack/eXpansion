@@ -1017,7 +1017,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $uids = $this->getUidSqlString();
 
 
-            $q = 'SELECT ((SUM( rank_rank ) + ( 81 - COUNT( * ) ) *30) /81) AS points
+            $q = 'SELECT ((SUM( rank_rank ) + (' . $nbTrack . ' - COUNT( * ) ) *' .$this->config->recordsCount. ')/' . $nbTrack . ') AS points
                     FROM exp_ranks
                     WHERE rank_playerlogin =  \'' . $login . '\'';
 
