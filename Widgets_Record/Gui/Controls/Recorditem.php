@@ -4,6 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Record\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Widgets_Record\Config;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
+use ManiaLivePlugins\eXpansion\Helpers\Countries;
+
 
 class Recorditem extends \ManiaLive\Gui\Control {
 
@@ -62,9 +64,10 @@ class Recorditem extends \ManiaLive\Gui\Control {
         if ($path !== null) {
             $path = explode("|", $path);
             if (sizeof($path) >= 2) {
-                $image = $config->flags . rawurlencode($path[2]) . ".dds";
-                $flag->setStyle("");
-                $flag->setImage($image);
+                
+                $image = "file://Skins/Avatars/Flags/". Countries::mapCountry($path[2]) . ".dds";               
+                $flag->setStyle("");                
+                $flag->setImage($image, false);
             }
         }
         $this->frame->addComponent($flag);

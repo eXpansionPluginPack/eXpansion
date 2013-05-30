@@ -5,15 +5,17 @@ namespace ManiaLivePlugins\eXpansion\Dedimania;
 use \ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\Reaby\Dedimania\Events\Event as dediEvent;
 use ManiaLivePlugins\eXpansion\Dedimania\Config;
+use ManiaLive\Utilities\Console;
 
 class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements \ManiaLivePlugins\Reaby\Dedimania\Events\Listener {
 
     private $config;
 
     public function exp_onInit() {
-        parent::exp_onInit();
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("Reaby\\Dedimania"));
+        parent::exp_onInit();        
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("Reaby\\Dedimania"));        
         $this->config = Config::getInstance();
+        
     }
 
     public function exp_onLoad() {

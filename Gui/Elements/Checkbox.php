@@ -17,12 +17,22 @@ class Checkbox extends \ManiaLive\Gui\Control {
         $this->textWidth = $textWidth;
         $this->action = $this->createAction(array($this, 'toggleActive'));
         $config = Config::getInstance();
-        $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+        /*$this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->button->setAlign('left', 'center');
         $this->button->setImage($config->checkbox);
         $this->button->setAction($this->action);
         $this->button->setScriptEvents(true);
+        $this->addComponent($this->button); */
+        
+        $this->button = new \ManiaLib\Gui\Elements\Label(4,4);
+        $this->button->setAlign('center', 'center');       
+        $this->button->setBgcolor('ddd');
+        $this->button->setText(' ');
+        $this->button->setSize(0.8);
+        $this->button->setAction($this->action);
+        $this->button->setScriptEvents(true);
         $this->addComponent($this->button);
+        //「×」
 
         $this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 4);
         $this->label->setAlign('left', 'center');
@@ -44,9 +54,11 @@ class Checkbox extends \ManiaLive\Gui\Control {
         $config = Config::getInstance();
 
         if ($this->active) {
-            $this->button->setImage($config->checkboxActive);
+           // $this->button->setImage($config->checkboxActive);
+            $this->button->setText('$0d0×');
         } else {
-            $this->button->setImage($config->checkbox);
+         //   $this->button->setImage($config->checkbox);
+            $this->button->setText(' ');
         }
     }
 

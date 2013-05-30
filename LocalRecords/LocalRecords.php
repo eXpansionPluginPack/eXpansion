@@ -88,7 +88,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * All the messages need to be sent;
      * @var Message
      */
-            private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank;
+    private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank;
     public static $txt_rank, $txt_nick, $txt_score, $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
     function exp_onInit() {
@@ -147,10 +147,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableStorageEvents();
         $this->enableDedicatedEvents();
         $this->enableDatabase();
-        
+
         //List of all records
         $this->registerChatCommand("recs", "showRecsWindow", 0, true);
-        
+
         //Top 100 ranked players
         $this->registerChatCommand("top100", "showRanksWindow", 0, true);
         $this->registerChatCommand("rank", "chat_showRank", 0, true);
@@ -619,17 +619,16 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->currentChallengePlayerRecords = array(); //reset
         $this->currentChallengeRecords = array(); //reset
-        
         //Fetch best records
         $this->currentChallengeRecords = $this->buildCurrentChallangeRecords(); // fetch
-        
+
         $uid = $this->storage->currentMap->uId;
 
         //Getting current players records
         foreach ($this->storage->players as $login => $player) { // get players
             $this->getFromDbPlayerRecord($login, $uid);
         }
-    
+
         //Getting current spectators records
         foreach ($this->storage->spectators as $login => $player) { // get spectators
             $this->getFromDbPlayerRecord($login, $uid);
@@ -988,7 +987,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->total_ranks == -1 || ($this->map_count % $this->config->nbMap_rankProcess) == 0) {
             $q = 'SELECT Count(DISTINCT rank_playerlogin) as nbRanked
                     FROM exp_ranks
-                    WHERE rank_challengeuid IN (' . $this->getUidSqlString() . ')';
+                    WHERE rank_challengeuid IN (' . $this->getUidSqlString() . ');';
 
             $data = $this->db->query($q);
 
@@ -1017,7 +1016,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $uids = $this->getUidSqlString();
 
 
-            $q = 'SELECT ((SUM( rank_rank ) + (' . $nbTrack . ' - COUNT( * ) ) *' .$this->config->recordsCount. ')/' . $nbTrack . ') AS points
+            $q = 'SELECT ((SUM( rank_rank ) + (' . $nbTrack . ' - COUNT( * ) ) *' . $this->config->recordsCount . ')/' . $nbTrack . ') AS points
                     FROM exp_ranks
                     WHERE rank_playerlogin =  \'' . $login . '\'';
 
@@ -1061,8 +1060,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return array
      */
     public function getRanks() {
-        if ((empty($this->ranks) && $this->rank_updated)
-                || (($this->map_count % $this->config->nbMap_rankProcess) == 0 && $this->rank_updated)) {
+        if ((empty($this->ranks) && $this->rank_updated) || (($this->map_count % $this->config->nbMap_rankProcess) == 0 && $this->rank_updated)) {
 
             $this->rank_updated = false;
 

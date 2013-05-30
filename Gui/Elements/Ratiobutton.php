@@ -11,17 +11,25 @@ class Ratiobutton extends \ManiaLive\Gui\Control
         private $active = false;
         private $textWidth;
         private $action;
+        private $buttonac;
         
         function __construct($sizeX=3, $sizeY=3, $textWidth=25)
 	{
                 $this->textWidth = $textWidth;
                 $this->action = $this->createAction(array($this, 'toggleActive'));
                 $config = Config::getInstance();
-		$this->button= new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-                $this->button->setAlign('left', 'center');                
+		// $this->button= new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+                $this->buttonac = new \ManiaLib\Gui\Elements\Label(4,4);                
+                $this->buttonac->setAlign('center', 'center');                                             
+                $this->addComponent($this->buttonac);
+                
+                $this->button = new \ManiaLib\Gui\Elements\Label(4,4);
+                $this->button->setAlign('center', 'center');                
                 $this->button->setAction($this->action);
-                $this->button->setScriptEvents(true);
+                $this->button->setScriptEvents(true);                
+                $this->button->setText("$000〇");
                 $this->addComponent($this->button);
+                
                 
                 $this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 4);
 		$this->label->setAlign('left', 'center');
@@ -45,9 +53,11 @@ class Ratiobutton extends \ManiaLive\Gui\Control
             $config = Config::getInstance();
         
             if ($this->active) {
-                $this->button->setImage($config->ratiobuttonActive);                
+                //$this->button->setImage($config->ratiobuttonActive);                
+                $this->buttonac->setText("$000๏");
             } else {
-                $this->button->setImage($config->ratiobutton);                
+            //    $this->button->setImage($config->ratiobutton);                
+                $this->buttonac->setText(" ");
             }
 	}
 	

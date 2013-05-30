@@ -18,14 +18,15 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
        // $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
 
         $label = new \ManiaLib\Gui\Elements\Label();
-        $label->setText('$222' . __('Next map'));
+        $label->setText('$ddd' . __('Next map'));
+        $label->setTextEmboss(true);
         $label->setAlign("left", "top");
         $label->setPosX(10);
         $this->addComponent($label);
 
         $row = new \ManiaLive\Gui\Controls\Frame(20, 6);
         $row->setPosY(-4);
-        $this->labelName = new \ManiaLib\Gui\Elements\Label();
+        $this->labelName = new \ManiaLib\Gui\Elements\Label(60,7);
         $this->labelName->setText('$ddd' . $this->mapName);
         $this->labelName->setAlign("right", "top");
         $this->labelName->setPosX(0);
@@ -41,7 +42,7 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 
         $row = new \ManiaLive\Gui\Controls\Frame(20, 6);
         $row->setPosY(-8);
-        $this->labelAuthor = new \ManiaLib\Gui\Elements\Label();
+        $this->labelAuthor = new \ManiaLib\Gui\Elements\Label(60,7);
         $this->labelAuthor->setText('$ddd' . $this->mapAuthor);
         $this->labelAuthor->setAlign("right", "top");
         $this->labelAuthor->setPosX(0);
