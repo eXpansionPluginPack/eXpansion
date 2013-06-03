@@ -14,7 +14,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $version = $this->connection->getVersion();
         $this->titleId = $version->titleId;
 
-        if ($this->titleId == "SMStorm") {
+        if ($this->titleId == "SMStorm" || $this->titleId == "SMStormRoyal@nadeolabs") {
             $settings = array("S_UseScriptCallbacks" => true);
             $this->connection->setModeScriptSettings($settings);
         }
@@ -49,7 +49,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onPlayerConnect($login, $isSpectator) {
         try {
 
-            if ($this->titleId == "SMStorm") {
+            if ($this->titleId == "SMStorm" || $this->titleId == "SMStormRoyal@nadeolabs") {
                 $this->connection->TriggerModeScriptEvent("LibXmlRpc_DisableAltMenu", $login);
             }
         } catch (\Exception $e) {
