@@ -67,8 +67,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             echo $e->getMessage();
             $this->enabled = false;
         }
-
-        print_r($this->songs);
+        
         foreach ($this->storage->players as $login => $player) {
             $this->showWidget($login);
         }
@@ -135,6 +134,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     function showWidget($login) {
         $music = $this->connection->getForcedMusic();
+        
         $outsong = new Structures\Song();
         if (!empty($music->url)) {
             foreach ($this->songs as $id => $song) {
@@ -143,7 +143,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $folder = str_replace("%2F", "/", $folder);
 
                 $url = $this->config->url . $folder . "/" . rawurlencode($song->filename);
-
+                
                 if ($url == $music->url) {
                     $outsong = $song;
                     break;

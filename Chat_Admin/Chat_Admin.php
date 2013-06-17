@@ -142,6 +142,19 @@ Other server might use the same blacklist file!!');
          * Concerning Server Settings 
          * ***************************
          */
+        $cmd = AdminGroups::addAdminCommand('get server planets', $this, 'getServerPlanets', 'server_admin');
+        $cmd->setHelp('Gets the serveraccount planets amount')
+                ->addLineHelpMore('$w/admin planets $zreturn the planets amount on server account.')
+                ->setMinParam(0);
+        AdminGroups::addAlias($cmd, "planets"); // fast
+
+        $cmd = AdminGroups::addAdminCommand('set server pay', $this, 'pay', 'server_pay');
+        $cmd->setHelp('Pays out planets')
+                ->addLineHelpMore('$w/admin pay #login #amount$z pays amount of planets to login')
+                ->setMinParam(2);
+        $cmd->addchecker(2, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+        AdminGroups::addAlias($cmd, "pay"); // xaseco
+
         $cmd = AdminGroups::addAdminCommand('set server name', $this, 'setServerName', 'server_name');
         $cmd->setHelp('Changes the name of the server')
                 ->addLineHelpMore('$w/admin set server name #name$z will change the server name.')
@@ -581,6 +594,24 @@ Other server might use the same blacklist file!!');
             }
         } catch (\Exception $e) {
             
+        }
+    }
+
+    function pay($fromLogin, $params) {
+        try {
+            $this->connection->pay($params[0], intval($params[1]), $params[0] . " Planets payed out from server " . $this->storage->server->name);
+            $this->exp_chatSendServerMessage('#admin_action#Server just sent#variable# %s #admin_action#Planets to#variable# %s #admin_action#!', $fromLogin, array($params[1], $params[0]));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+    function getServerPlanets($fromLogin, $params = null) {
+        try {
+
+            $this->exp_chatSendServerMessage('#admin_action#Server has #variable# %s #admin_action#Planets.', $fromLogin, array($this->connection->getServerPlanets()));
+        } catch (\Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
         }
     }
 

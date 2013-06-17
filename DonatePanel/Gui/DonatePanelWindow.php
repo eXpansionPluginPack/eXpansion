@@ -32,12 +32,14 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
         $ui->setText('$fff$sDonate:');
         $this->container->addComponent($ui);
 
-        $donations = array(50, 100, 500, 1000, 2000, 5000);
+        $donations = array(100, 500, 1000, 2000, 5000);
         foreach ($donations as $text) {
-            $ui = new \ManiaLib\Gui\Elements\Label(12, 3);
-            $ui->setHalign('right');
+            $ui = new \ManiaLib\Gui\Elements\Label(14, 3);
+            $ui->setHalign('center');
             $ui->setValign('top');
             $ui->setText('$fff$s' . $text);
+            $ui->setStyle('TextCardMedium');
+            $ui->setScale(0.8);
             $ui->setAction($this->createAction(array($this, "Donate"), $text));
             $this->container->addComponent($ui);
         }

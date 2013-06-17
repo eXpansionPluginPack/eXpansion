@@ -18,7 +18,7 @@ class Integer extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker {
         if ($value === null)
             return false;
         else
-            return $value;
+            return intval($value);
     }
 
     /**
@@ -32,7 +32,7 @@ class Integer extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker {
     }
 
     public function getErrorMsg() {
-        if ($range) return "A numerical value in range ($range) was expected!";
+        if ($this->range) return "A numerical value in range ({$this->range}) was expected!";
         return "A numerical value was expected";
     }
 
