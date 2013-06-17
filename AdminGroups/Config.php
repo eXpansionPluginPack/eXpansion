@@ -9,7 +9,7 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups;
  */
 class Config extends \ManiaLib\Utils\Singleton {
 
-    public $config_file = "config-eXp-admins.ini";
+   
 
 }
 

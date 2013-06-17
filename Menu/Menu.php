@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Menu;
 
+use \ManiaLive\Event\Dispatcher;
 use \ManiaLivePlugins\eXpansion\Menu\Gui\Widgets\MenuPanel;
 use \ManiaLivePlugins\eXpansion\Menu\Structures\Menuitem;
 
@@ -11,11 +12,22 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onInit() {
         $this->setPublicMethod("addItem");
-        $this->setPublicMethod("addSeparator");        
+        $this->setPublicMethod("addSeparator");
     }
 
     function exp_onReady() {
         $this->enableDedicatedEvents();
+        if ($this->isPluginLoaded("eXpansion\AdminGroups")) {
+            Dispatcher::register(\ManiaLivePlugins\eXpansion\AdminGroups\Events\Event::getClass(), $this);
+        }
+    }
+
+    function exp_admin_added($login) {
+        $this->onPlayerConnect($login, false);
+    }
+
+    function exp_admin_removed($login) {
+        $this->onPlayerConnect($login, false);
     }
 
     function addSeparator($title, $isAdmin, $pluginId = null) {
@@ -28,7 +40,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (is_callable($callback)) {
             $item = new Structures\Menuitem($title, $icon, $callback, $isAdmin);
             $hash = spl_object_hash($item);
-            $this->menuItems[$hash] = $item;           
+            $this->menuItems[$hash] = $item;
             $this->reDraw();
         } else {
             \ManiaLive\Utilities\Console::println("Adding a button failed from plugin:" . $pluginid . " button callback is not valid.");
@@ -52,7 +64,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerDisconnect($login, $reason = null) {
-        MenuPanel::Erase($login);       
+        MenuPanel::Erase($login);
     }
 
 }

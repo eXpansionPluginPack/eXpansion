@@ -62,9 +62,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * When was the configuration file loaded?
-     * @var type
+     * @var integer
      */
-    private $readTime;
+    private $readTime = 0;
 
     /**
      * All messages & text needed
@@ -149,7 +149,6 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod('getPermission');
 
         //$this->registerChatCommand('test', "test", 0, true);
-
         //Registering the admin chat comman with a lot of parameters
         $this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());
         $this->registerChatCommand('adm', "adminCmd", -1, true, $this->get());
@@ -161,11 +160,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd->setHelp("Show the list of all available admin commands and alliases.");
     }
 
-    public function test(){
+    public function test() {
         $mgroup = self::$groupList[0];
-        if(isset(self::$admins['oliverde8'])){
+        if (isset(self::$admins['oliverde8'])) {
             $this->removeFromGroup('test', $mgroup, self::$admins['oliverde8']);
-        }else{
+        } else {
             $this->addToGroup('test', $mgroup, 'oliverde8');
         }
     }
@@ -207,7 +206,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function reLoadAdmins() {
-        $time = filemtime("config/" . $this->config->config_file);
+        $time = filemtime("config/" . $this->storage->serverLogin . "_admins.ini");
 
         if ($time > $this->readTime) {
             $this->loadAdmins();
@@ -222,30 +221,34 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$admins = array();
         self::$groupList = array();
         //self::$permissionList = array();
-
         //Recovering the admin groups
-        $values = \parse_ini_file("config/" . $this->config->config_file, true);
+        try {
+            $values = \parse_ini_file("config/" . $this->storage->serverLogin . "_admins.ini", true);
 
-        //Save the read Time
-        $this->readTime = time();
+            //Save the read Time
+            $this->readTime = time();
 
-        //reading the admin groups and settings
-        foreach ($values as $key => $value) {
-            //THe settings
-            if ($key == 'Settings') {
+            //reading the admin groups and settings
+            foreach ($values as $key => $value) {
+                //THe settings
+                if ($key == 'Settings') {
+                    
+                } else {
+                    $param = explode(": ", $key);
 
-            } else {
-                $param = explode(": ", $key);
-
-                if ($param[0] == 'MasterAdmin') {
-                    $this->parseMaster($param[1], $value);
-                } else if ($param[0] == 'Group') {
-                    //We have found a Admin group, lets see the permissions of
-                    //the group and the players that is part of it
-                    $this->parseGroup($param[1], $value);
+                    if ($param[0] == 'MasterAdmin') {
+                        $this->parseMaster($param[1], $value);
+                    } else if ($param[0] == 'Group') {
+                        //We have found a Admin group, lets see the permissions of
+                        //the group and the players that is part of it
+                        $this->parseGroup($param[1], $value);
+                    }
                 }
             }
+        } catch (\Exception $e) {
+            // silent exception handling for failed read
         }
+
 
         $this->loadMLAdmins();
     }
@@ -256,7 +259,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach (\ManiaLive\Features\Admin\AdminGroup::get() as $login) {
             $admin = new Admin($login, $masterGroup);
             $admin->setReadOnly(true);
-            if(isset(self::$admins[$login])){
+            if (isset(self::$admins[$login])) {
                 self::$admins[$login]->getGroup()->removeAdmin($admin->getLogin());
                 unset(self::$admins[$login]);
             }
@@ -273,7 +276,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 break;
             }
         }
-        
+
         if ($masterGroup == null) {
             $masterGroup = new Group('Master Admin', true);
             self::$groupList[] = $masterGroup;
@@ -364,12 +367,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             $string.="\n;List of Players.\n";
             foreach ($group->getGroupUsers() as $value) {
-                if(!$value->isReadOnly())
+                if (!$value->isReadOnly())
                     $string .= "login[] = '" . $value->getLogin() . "'\n";
             }
         }
 
-        file_put_contents("config/" . $this->config->config_file, $string);
+        file_put_contents("config/" . $this->storage->serverLogin . "_admins.ini", $string);
     }
 
     /**
@@ -453,8 +456,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         self::addCommand($comand, $cmd);
         self::$commandsList[] = $comand;
-        if($permission != null)
-            self::$permissionList[$permission]=true;
+        if ($permission != null)
+            self::$permissionList[$permission] = true;
+
         self::$instance->saveFile();
         return $comand;
     }
@@ -596,7 +600,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function removeFromGroup($login, Group $group, Admin $admin) {
         if (isset(self::$admins[$login]) && $admin->getLogin() == $login) {
             $this->exp_chatSendServerMessage($this->msg_premoveSelf, $login, array($login));
-        }else if($admin->isReadOnly()){
+        } else if ($admin->isReadOnly()) {
             $this->exp_chatSendServerMessage($this->msg_removeMlAdmin, $login, array($admin->getLogin()));
         } else if (isset(self::$admins[$login]) && $group->removeAdmin($admin->getLogin())) {
             $this->reLoadAdmins();
