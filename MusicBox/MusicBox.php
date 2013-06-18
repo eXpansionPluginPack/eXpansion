@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\MusicBox;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\MusicBox\Gui\Windows\MusicBoxWindow;
 use ManiaLivePlugins\eXpansion\MusicBox\Gui\Windows\CurrentTrackWidget;
+use ManiaLivePlugins\eXpansion\MusicBox\Gui\Windows\MusicListWindow;
 
 class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -24,9 +25,11 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableDedicatedEvents();
         $this->config = Config::getInstance();
         CurrentTrackWidget::$musicBoxPlugin = $this;
+        Gui\Windows\MusicListWindow::$musicPlugin = $this;
+
         $colors = \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance();
         $colors->registerCode("music", '$f0a');
-        
+
         $command = $this->registerChatCommand("musicbox", "mbox", 0, true);
         $command = $this->registerChatCommand("musicbox", "mbox", 1, true);
         $command = $this->registerChatCommand("mbox", "mbox", 0, true);
@@ -67,7 +70,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             echo $e->getMessage();
             $this->enabled = false;
         }
-        
+
         foreach ($this->storage->players as $login => $player) {
             $this->showWidget($login);
         }
@@ -86,6 +89,8 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return void
      */
     function onEndMatch($rankings, $winnerTeamOrMap) {
+        if (!$this->enabled)
+            return;
         try {
             $song = $this->songs[rand(0, sizeof($this->songs) - 1)];
             // check for same song, and randomize again
@@ -103,7 +108,8 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->nextSong = $song;
             $folder = urlencode($song->folder);
             $folder = str_replace("%2F", "/", $folder);
-            $url = $this->config->url . $folder . "/" . rawurlencode($song->filename);
+
+            $url = trim($this->config->url, "/") . $folder . rawurlencode($song->filename);
 
             $this->connection->setForcedMusic(true, $url);
             if ($wish) {
@@ -124,6 +130,10 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    public function getSongs() {
+        return $this->songs;
+    }
+
     /**
      * showWidget()
      * Helper function, shows the widget.
@@ -133,8 +143,10 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return void
      */
     function showWidget($login) {
+        if (!$this->enabled)
+            return;
         $music = $this->connection->getForcedMusic();
-        
+
         $outsong = new Structures\Song();
         if (!empty($music->url)) {
             foreach ($this->songs as $id => $song) {
@@ -142,8 +154,8 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $folder = urlencode($song->folder);
                 $folder = str_replace("%2F", "/", $folder);
 
-                $url = $this->config->url . $folder . "/" . rawurlencode($song->filename);
-                
+                $url = trim($this->config->url, "/") . $folder . rawurlencode($song->filename);
+
                 if ($url == $music->url) {
                     $outsong = $song;
                     break;
@@ -170,6 +182,8 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return void
      */
     function onPlayerConnect($login, $isSpec) {
+        if (!$this->enabled)
+            return;
         $this->showWidget($login);
     }
 
@@ -186,9 +200,12 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return
      */
     function mbox($login, $number = null) {
+        if (!$this->enabled)
+            return;
+
         $player = $this->storage->getPlayerObject($login);
         if ($number == 'list' || $number == null) {  // parametres redirect
-//$this->mjukeList($login);
+            $this->musicList($login);
             return;
         }
         if (!is_numeric($number)) {  // check for numeric value
@@ -228,93 +245,17 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_chatSendServerMessage($text, null);
     }
 
-    /**
-     * mlist()
-     * Function providing the /mlist command.
-     * "
-     * @param mixed $fromLogin
-     * @param mixed $parameter
-     * @return
-     */
-    function mlist($fromLogin, $parameter = NULL) {
-        if ($parameter == "help") {
-            $this->showHelp($fromLogin, $this->helpMlist);
-            return;
+    function musicList($login) {
+        echo "tere!\n";
+        try {
+            $info = Gui\Windows\MusicListWindow::Create($login);
+            $info->setSize(180,90);
+            $info->centerOnScreen();
+            $info->show();
+        } catch (\Exception $e) {
+            echo $e->getMessage()."\n";
+            echo $e->getFile().":".$e->getLine();
         }
-
-        $musiclist = $this->musicBox;
-
-        if (count($musiclist) == 0) {
-            $infoWindow = SimpleWindow::Create($fromLogin);
-            $infoWindow->setTitle("Notice");
-            $infoWindow->setText("The server doesn't have any music in the MusicBox. Ask kindly the server administrator to add some.");
-            $infoWindow->setSize(40, 40);
-            $infoWindow->centerOnScreen();
-            $infoWindow->show();
-            return;
-        }
-
-        if (!$this->enabled) {
-            $infoWindow = SimpleWindow::Create($fromLogin);
-            $infoWindow->setTitle("Notice");
-            $infoWindow->setText("The music plugin is disabled.");
-            $infoWindow->setSize(40, 40);
-            $infoWindow->centerOnScreen();
-            $infoWindow->show();
-            return;
-        }
-
-        $window = MusicBoxWindow::Create($fromLogin);
-        $window->setSize(210, 100);
-        $window->clearAll();
-// prepare cols ...
-        $window->addColumn('Id', 0.1);
-        $window->addColumn('Song', 0.6);
-        $window->addColumn('Genre', 0.3);
-
-// refresh records for this window ...
-        $window->clearItems();
-        $id = 1;
-        $entry = NULL;
-        foreach ($musiclist as $data) {
-            if (empty($parameter)) {
-                $entry = array
-                    (
-                    'Id' => array($id, NULL, false),
-                    'Song' => array($data[1] . " - " . $data[0], $id, true),
-                    'Genre' => array($data[2], NULL, false)
-                );
-            } else {
-                $pros = 0;
-
-                $awords = explode(" ", $data[0]);
-                $swords = explode(" ", $data[1]);
-                $gwords = explode(" ", $data[2]);
-
-                $search = array_merge($awords, $swords, $gwords);
-
-                foreach ($search as $word) {
-                    similar_text($word, $parameter, $pros);
-                    if ($pros >= 60) {
-                        $entry = array
-                            (
-                            'Id' => array($id, NULL, false),
-                            'Song' => array($data[1] . " - " . $data[0], $id, true),
-                            'Genre' => array($data[3], NULL, false)
-                        );
-                        break;
-                    }
-                }
-            }
-            $id++;
-            if ($entry !== NULL)
-                $window->addAdminItem($entry, array($this, 'onClick'));
-
-            $entry = NULL;
-        }
-// display or update window ...
-        $window->centerOnScreen();
-        $window->show();
     }
 
 }
