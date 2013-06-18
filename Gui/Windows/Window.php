@@ -20,6 +20,9 @@ class Window extends \ManiaLive\Gui\Window {
     protected $_showCoords = 'False';
     protected $_windowFrame;
     protected $_windowPos;
+    private $dDeclares = "";
+    private $dLoop = "";
+    private $dCount = 0;
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -90,16 +93,42 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_minbutton->setScriptEvents(true);
         $this->_minbutton->setId("Minimize");
         $this->_windowFrame->addComponent($this->_minbutton);
-        
+
         $this->mainFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->mainFrame->setPosY(-3);
         $this->_windowFrame->addComponent($this->mainFrame);
 
         $this->addComponent($this->_windowFrame);
-
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
-        $this->xml->setContent('
-        <timeout>0</timeout>            
+    }
+
+    function onResize($oldX, $oldY) {
+        parent::onResize($oldX, $oldY);
+        $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
+        $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY);
+        $this->_mainWindow->setPosX(-0.4);
+
+        $this->_title->setSize($this->sizeX, 4);
+        $this->_title->setPosition(($this->_title->sizeX / 2), 3.5);
+        $this->_title->setHalign("center");
+
+        $this->_titlebar->setPosX(-1);
+        $this->_titlebar->setPosY(4);
+        $this->_titlebar->setSize($this->sizeX + 2, $this->sizeY + 4.5);
+
+        $this->_closebutton->setSize(7, 3);
+        $this->_closebutton->setPosition($this->sizeX - 4, 4);
+
+        $this->_minbutton->setSize(5, 3);
+        $this->_minbutton->setPosition($this->sizeX - 11, 4);
+
+        $this->mainFrame->setSize($this->sizeX - 4, $this->sizeY - 8);
+        $this->mainFrame->setPosition(2, -2);
+    }
+
+    protected function onDraw() {
+        $this->removeComponent($this->xml);
+        $this->xml->setContent('    
         <script><!--
                        main () {     
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");    
@@ -116,9 +145,10 @@ class Window extends \ManiaLive\Gui\Window {
                         declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
                         declare Real lastMouseX = 0.0;
                         declare Real lastMouseY =0.0;                                 
-                                                                               
+                        ' . $this->dDeclares . '  
+                            
                         while(True) {                                                               
-                                
+                               
                                if (showCoords) {                               
                                     declare coords = "$fffX:" ^ (MouseX - Window.PosnX) ^ " Y:" ^ (MouseY - Window.PosnY + 3 );                                   
                                     TitlebarText.Value = coords;
@@ -192,7 +222,7 @@ class Window extends \ManiaLive\Gui\Window {
                                     if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "MainWindow") {                                            
                                             isMinimized = False;                                            
                                     }                                  
-                                    
+                                     ' . $this->dLoop . ' 
                                 }
                                 yield;                        
                         }
@@ -201,36 +231,7 @@ class Window extends \ManiaLive\Gui\Window {
                 } 
                 --></script>');
         $this->addComponent($this->xml);
-    
-    }
-
-    function onResize($oldX, $oldY) {
-        parent::onResize($oldX, $oldY);
-        $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
-        $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY);
-        $this->_mainWindow->setPosX(-0.4);        
-
-        $this->_title->setSize($this->sizeX, 4);
-        $this->_title->setPosition(($this->_title->sizeX / 2), 3.5);
-        $this->_title->setHalign("center");
-
-        $this->_titlebar->setPosX(-1);
-        $this->_titlebar->setPosY(4);
-        $this->_titlebar->setSize($this->sizeX + 2, $this->sizeY + 4.5);
-
-        $this->_closebutton->setSize(7, 3);
-        $this->_closebutton->setPosition($this->sizeX - 4, 4);
-
-        $this->_minbutton->setSize(5, 3);
-        $this->_minbutton->setPosition($this->sizeX - 11, 4);
-
-        $this->mainFrame->setSize($this->sizeX - 4, $this->sizeY - 8);
-        $this->mainFrame->setPosition(2, -2);
-   
-    }
-
-    function onShow() {
-        
+        parent::onDraw();
     }
 
     function setDebug($bool) {
@@ -249,6 +250,41 @@ class Window extends \ManiaLive\Gui\Window {
 
     function closeWindow() {
         $this->erase($this->getRecipient());
+    }
+
+    function addDropdown($name, $items) {
+
+
+        $this->dDeclares .= '           
+                            declare CMlFrame Frame' . $this->dCount . ' <=> (Page.GetFirstChild("' . $name . 'f") as CMlFrame);
+                            declare CMlLabel Label' . $this->dCount . ' <=> (Page.GetFirstChild("' . $name . 'l") as CMlLabel);
+                            declare CMlEntry Output' . $this->dCount . ' <=> (Page.GetFirstChild("' . $name . 'e") as CMlEntry);
+                            Frame' . $this->dCount . '.Hide();
+     ';
+
+        
+        $this->dLoop .= ' 
+                            if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "' . $name . 'l") { 
+                                    Frame' . $this->dCount . '.Show();
+                           }
+            ';
+        
+        
+        
+        
+        
+        $x = 0;
+        foreach ($items as $item) {
+            $this->dLoop .= '
+                             if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "' . $name . $x . '") {                           
+                                           Label' . $this->dCount . '.Value = "' . $item . '";
+                                           Output' . $this->dCount . '.Value = "' . $x . '";
+                                           Frame' . $this->dCount . '.Hide();
+                            }      
+                      ';
+            $x++;
+        }
+        $this->dCount++;
     }
 
     function destroy() {

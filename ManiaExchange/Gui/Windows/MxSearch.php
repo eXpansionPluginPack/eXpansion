@@ -28,6 +28,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $buttonSearch;
     private $actionSearch;
     private $header;
+    private $style;
     private $items = array();
     public $mxPlugin;
 
@@ -52,9 +53,16 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->inputAuthor = new Inputbox("author");
         $this->inputAuthor->setLabel("Author name");
         $this->searchframe->addComponent($this->inputAuthor);
-
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(3, 4);
+        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+        $items = array("All", "Race", "Fullspeed", "Tech", "RPG", 'LOL', 'PressForward', 'SpeedTech', 'Multilap', 'Offroad');
+        $this->style = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("style", $items);
+        $this->addDropdown("style", $items);
+        $this->searchframe->addComponent($this->style);
+
+        $spacer = new \ManiaLib\Gui\Elements\Quad();
+        $spacer->setSize(10, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         $this->searchframe->addComponent($spacer);
 
@@ -93,14 +101,14 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function onShow() {
-
+        
     }
 
     public function setPlugin($plugin) {
         $this->mxPlugin = $plugin;
     }
 
-    public function search($login, $trackname, $author) {
+    public function search($login, $trackname = "", $author = "", $style = null) {
 
         if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
             $script = $this->connection->getModeScriptInfo();
@@ -108,22 +116,22 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
             switch ($script->name) {
                 case "Royal.Script.txt":
-                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=RoyalArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
+                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=RoyalArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=100&environments=1&tracksearch&api=on&format=json';
                     break;
                 case "Melee.Script.txt":
-                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=MeleeArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
+                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=MeleeArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=100&environments=1&tracksearch&api=on&format=json';
                     break;
                 case "Battle.Script.txt":
-                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=BattleArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
+                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=BattleArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=100&environments=1&tracksearch&api=on&format=json';
                     break;
                 case "Realm.Script.txt":
-                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=RealmArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
+                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=RealmArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=100&environments=1&tracksearch&api=on&format=json';
                     break;
                 case "Siege.Script.txt":
-                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=SiegeArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
+                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=SiegeArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=100&environments=1&tracksearch&api=on&format=json';
                     break;
                 default:
-                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&tpack=All&priord=2&limit=40&environments=1&tracksearch&api=on&format=json';
+                    $query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&tpack=All&priord=2&limit=100&environments=1&tracksearch&api=on&format=json';
                     break;
             }
         } else {
@@ -137,8 +145,11 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                     $env = "2";
                     break;
             }
-
-            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&environments=' . $env . '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&priord=2&limit=40&tracksearch&api=on&format=json';
+            $out = "";
+            if ($style != null) {
+                $out = "&style=" . $style;
+            }
+            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&environments=' . $env . '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . $out . '&mtype=All&priord=2&limit=100&tracksearch&api=on&format=json';
         }
 
         $ch = curl_init($query);
@@ -190,7 +201,12 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function actionOk($login, $args) {
-        $this->search($login, $args['mapName'], $args['author']);
+        $style = null;
+        if (intval($args['style']) != 0) {
+            $style = intval($args['style']);
+        }
+
+        $this->search($login, $args['mapName'], $args['author'], $style);
     }
 
     function destroy() {
@@ -199,9 +215,9 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->items = array();
         $this->maps = null;
+        $this->style->destroy();
         $this->inputMapName->destroy();
         $this->inputAuthor->destroy();
-        $this->buttonSearch->destroy();
         $this->header->destroy();
         $this->pager->destroy();
         $this->connection = null;
