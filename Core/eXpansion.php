@@ -12,7 +12,7 @@ namespace ManiaLivePlugins\eXpansion\Core;
  *
  * @author oliverde8
  */
-class eXpansion extends \ManiaLib\Utils\Singleton{
+class eXpansion extends \ManiaLib\Utils\Singleton {
 	/**
          * Config class
          * @var \ManiaLivePlugins\eXpansion\Core\Config

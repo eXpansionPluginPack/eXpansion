@@ -16,7 +16,7 @@ class i18n extends \ManiaLib\Utils\Singleton {
 
     /**
      * Translated messages by language
-     * @var array
+     * @var array(String => Message)
      */
     private $messages = array();
 
@@ -25,33 +25,32 @@ class i18n extends \ManiaLib\Utils\Singleton {
      * @var array
      */
     private $supportedLocales = array();
-    
-    
     private $directorties = array();
-    
     private $started = false;
-    
-    public function registerDirectory($dir){
-        if($this->started){
+
+    public function registerDirectory($dir) {
+        if ($this->started) {
             $this->readFiles($dir);
             $this->supportedLocales = array_unique($this->supportedLocales);
-        }  else {
+        } else {
             $this->directorties[] = $dir;
         }
     }
-    
-    public function start(){
-        if(!empty($this->directorties)){
-            foreach ($this->directorties as $dir){
+
+    public function start() {
+        if (!empty($this->directorties)) {
+            foreach ($this->directorties as $dir) {
                 $this->readFiles($dir);
             }
             $this->supportedLocales = array_unique($this->supportedLocales);
         }
+        $this->started = true;
     }
-    
+
     protected function readFiles($dir) {
-        if(is_dir($dir. "/messages/")){
-            $langFiles = glob($dir. "/messages/*.txt", GLOB_MARK);
+        if (is_dir($dir . "/messages/")) {
+
+            $langFiles = glob($dir . "/messages/*.txt", GLOB_MARK);
             foreach ($langFiles as $file) {
                 $language = explode("/", $file);
                 $language = end($language);
@@ -61,11 +60,11 @@ class i18n extends \ManiaLib\Utils\Singleton {
                 for ($x = 0; $x < count($data) - 1; $x += 3) {
                     $orig = trim($data[$x]);
                     $trans = trim($data[$x + 1]);
-                    
-                    if(!isset($this->messages[$orig])){
+
+                    if (!isset($this->messages[$orig])) {
                         $this->messages[$orig] = new i18n\Message($orig);
                     }
-                   $this->messages[$orig]->addLanguageMessage($language, $trans);
+                    $this->messages[$orig]->addLanguageMessage($language, $trans);
                 }
             }
         }
@@ -75,28 +74,29 @@ class i18n extends \ManiaLib\Utils\Singleton {
         $this->defaultLanguage = $language;
     }
 
-    public function getObject($string){
-        if(isset($this->messages[$string])){
+    public function getObject($string) {
+        if (isset($this->messages[$string])) {
             return $this->messages[$string];
-        }else{
+        } else {
             $nmessage = new i18n\Message($string);
+            echo "uusi! $string\n";
             return $nmessage;
         }
     }
-    
+
     public function getString($string, $fromLanguage = null) {
         if ($fromLanguage == null)
             return $this->translate($string, $this->defaultLanguage);
         return $this->translate($string, $fromLanguage);
     }
-    
+
     public function getSupportedLocales() {
-        return $this->supportedLocales;        
+        return $this->supportedLocales;
     }
-    
+
     private function translate($string, $language = null) {
-        
-        if(isset($this->messages[$string])){
+
+        if (isset($this->messages[$string])) {
             return $this->messages[$string]->getMessage($language);
         }else
             return $string;

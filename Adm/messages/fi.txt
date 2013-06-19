@@ -1,38 +1,38 @@
 Server Management
-Server Management
+Palvelimen hallinta
 
 Force Scores
-Force Scores
+Pakota pisteet
 
 Server ControlPanel
-Server ControlPanel
+Palvelimen ohjauskeskus
 
 Server Options
-Server Options
+Palvelimen säädöt
 
 Game Options
-Game Options
+Pelisäädöt
 
 Match Settings
-Match Settings
+Kartta-asetukset
 
 Script Settings
-Script Settings
+Script-asetukset
 
 Load
-Load
+Lataa
 
 Save
-Save
+Tallenna
 
 Delete
-Delete
+Poista
 
 Apply
-Apply
+Käytä
 
 Cancel
-Cancel
+Peruuta
 
 Time Attack
 Time Attack
@@ -50,92 +50,92 @@ Team
 Team
 
 Error in filename
-Error in filename
+Tiedostonimessä on virhe
 
 File '%s' deleted from filesystem!
-File '%s' deleted from filesystem!
+Tiedosto'%s' poistettu levyltä!
 
 Saved MatchSettings to file: %s
-Saved MatchSettings to file: %s
+Karttaluettelo tallennettu tiedostoon: %s
 
 Loaded MatchSettings from file: %s
-Loaded MatchSettings from file: %s
+Karttaluettelo ladattu tiedostosta: %s
 
 Server management
-Server management
+Palvelimen hallinta
 
 Server options
-Server options
+Palvelimen säädöt
 
 Game options
-Game options
+Peliasetukset
 
 Admin Groups
-Admin Groups
+Ylläpitoryhmät
 
 Match settings
-Match settings
+Kartta-asetukset
 
 ScriptMode settings
-ScriptMode settings
+ScriptMode-asetukset
 
 Database tools
-Database tools
+Tietokannan ylläpito
 
 Close
-Close
+Sulje
 
 Stop Server
-Stop Server
+Pysäytä palvelin
 
 Stop Manialive
-Stop Manialive
+Pysäytä Manialive
 
 Server Name
-Server Name
+Palvelimen nimi
 
 Server comment
-Server comment
+Kommentti
 
 Players
-Players
+Pelaajat
 
 Spectators
-Spectators
+Spekkaajat
 
 Ladderpoints minimum
-Ladderpoints minimum
+Ladderpoints minimi
 
 Ladderpoints Maximum
-Ladderpoints Maximum
+Ladderpoints maksimi
 
 Password for server
-Password for server
+Salasana palvelimelle
 
 Password for spectators
-Password for spectators
+Salasana spekkaajille
 
 Referee password
-Referee password
+Salasana referenssille
 
 Show Server in public server list
-Show Server in public server list
+Näytä palvelin julkisessa listassa
 
 Ladder server
-Ladder server
+Ladderpalvelin
 
 Allow map download using ingame menu
-Allow map download using ingame menu
+Salli karttojen lataaminen pelivalikon kautta
 
 Allow Peer-2-Peer download
-Allow Peer-2-Peer download
+Salli Peer-2-Peer lataus
 
 Allow Peer-2-Peer upload
-Allow Peer-2-Peer upload
+Salli Peer-2-Peer upload
 
 Allow changing validation seed
-Allow changing validation seed
+Käytä vaihtuvaa validaatioavainta
 
 Enable Referee-mode
-Enable Referee-mode
+Salli referee-moodi
 

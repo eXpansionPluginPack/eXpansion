@@ -1,0 +1,33 @@
+Error: %s
+Virhe: %s
+
+Votes
+Äänestys
+
+Restart Map
+Pelaa uudelleen
+
+Skip Map
+Seuraava kartta
+
+Cancel Vote
+Peruuta äänestys
+
+#variable#%1$s #rank#initiated restart map vote..
+#variable#%1$s #rank#initiated restart map vote..
+
+#admin_error# $iMust run skip vote within first %1$s seconds of match start..
+#admin_error# $iMust run skip vote within first %1$s seconds of match start..
+
+#variable#%1$s #rank#initiated skip map vote..
+#variable#%1$s #rank#initiated skip map vote..
+
+#record# $iVote passed!
+#record# $iVote passed!
+
+#admin_error# $iVote failed!
+#admin_error# $iVote failed!
+
+#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
+#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
+

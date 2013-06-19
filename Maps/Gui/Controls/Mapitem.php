@@ -134,11 +134,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
-
-    function onDraw() {
-        
-    }
-
+    
     function destroy() {
         $this->queueButton->destroy();
 

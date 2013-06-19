@@ -7,6 +7,9 @@ Creators name
 Length
 Length
 
+Queue
+Queue
+
 Install
 Install
 
@@ -16,8 +19,11 @@ ManiaExchange
 Search Maps
 Search Maps
 
-Usage /mx add [id] or /mx search "your search terms here"
-Usage /mx add [id] or /mx search "your search terms here"
+Usage.. /mx queue [id] or /mx search "your search terms here"
+Usage.. /mx queue [id] or /mx search "your search terms here"
+
+Error: %s
+Error: %s
 
 MX is down
 MX is down
@@ -25,6 +31,18 @@ MX is down
 Couldn't create mapfile in maps folder, check folder permissions!
 Couldn't create mapfile in maps folder, check folder permissions!
 
-Error: %s
-Error: %s
+#admin_error# $iYou already have a map in the queue...
+#admin_error# $iYou already have a map in the queue...
+
+Unable to retrieve track info from MX..  wrong ID..?
+Unable to retrieve track info from MX..  wrong ID..?
+
+Wrong environment!
+Wrong environment!
+
+#record# $iVote passed!
+#record# $iVote passed!
+
+#admin_error# $iVote failed!
+#admin_error# $iVote failed!
 

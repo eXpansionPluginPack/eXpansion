@@ -1,0 +1,12 @@
+#rank#Congratulations to #variable#%1$s#rank# for their #variable#%2$s#rank# win!
+#rank#Congratulations to #variable#%1$s#rank# for their #variable#%2$s#rank# win!
+
+#rank#Congratulations for your #variable#%1$s#rank# win!
+#rank#Congratulations for your #variable#%1$s#rank# win!
+
+Database Maintainance
+Database Maintainance
+
+Database Backup and Restore
+Database Backup and Restore
+

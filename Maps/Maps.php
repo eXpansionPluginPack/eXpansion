@@ -21,7 +21,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $voteItem;
 
     public function exp_onInit() {
-        parent::exp_onInit();
 
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
@@ -31,11 +30,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->config = Config::getInstance();
         $this->config->bufferSize = $this->config->bufferSize + 1;
 
-        $this->config->msg_addQueue = exp_getMessage($this->config->msg_addQueue);
-        $this->config->msg_nextQueue = exp_getMessage($this->config->msg_nextQueue);
-        $this->config->msg_nextMap = exp_getMessage($this->config->msg_nextMap);
-        $this->config->msg_queueNow = exp_getMessage($this->config->msg_queueNow);
-
         $this->setPublicMethod("queueMap");
         $this->setPublicMethod("queueMxMap");
         $this->setPublicMethod("replayMap");
@@ -43,7 +37,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onReady() {
-        $this->enableDedicatedEvents();
 
         $cmd = AdminGroups::addAdminCommand('map remove', $this, 'chat_removeMap', 'server_maps');
         $cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
@@ -84,6 +77,14 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         $this->preloadHistory();
+    }
+
+    public function exp_onLoad() {
+        $this->config->msg_addQueue = exp_getMessage($this->config->msg_addQueue);
+        $this->config->msg_nextQueue = exp_getMessage($this->config->msg_nextQueue);
+        $this->config->msg_nextMap = exp_getMessage($this->config->msg_nextMap);
+        $this->config->msg_queueNow = exp_getMessage($this->config->msg_queueNow);
+        $this->enableDedicatedEvents();
     }
 
     /**

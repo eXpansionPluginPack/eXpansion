@@ -1,6 +1,5 @@
 [eXpansion|Chat] Couldn't initialize chat. Error from server: %s
 [eXpansion|Chat] Chat-pluginia ei voitu initialisoida. Virhe serverin puolesta: %s
 
-
 [eXpansion|Chat] error sending chat from %s: %s with folloing error %s
-[eXpansion|Chat] virhe l‰hetett‰ess‰ viesti‰ %s: %s seuraava virhe: %s
+[eXpansion|Chat] virhe l√§hetett√§ess√§ viesti√§ %s: %s seuraava virhe: %s

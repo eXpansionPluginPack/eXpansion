@@ -1,24 +1,48 @@
+Map name
+Kartan nimi
+
+Creators name
+Tekijän nimi
+
+Length
+Pituus
+
+Queue
+Jonoon
+
+Install
+Asenna
+
 ManiaExchange
 ManiaExchange
 
 Search Maps
 Etsi karttoja
 
-Usage /mx add [id] or /mx search 
-Kirjoita /ms add [id] tai /mx search [hakutermi]
-
-MX is down
-MX palvelimeen ei saada yhteytt�
-
-Map not found for id %s
-Karttaa id:ll� %s ei l�ydy.
-
-MX returned http error code: %s
-MX palautti http virhekoodin: %s
-
-Map %s $z$s$fff added from MX Succesfully.
-Kartta %s $z$s$fff lis�tty MX:st�!
+Usage.. /mx queue [id] or /mx search "your search terms here"
+Käyttö.. /mx queue [id] tai /mx search "hakutermit tähän"
 
 Error: %s
 Virhe: %s
+
+MX is down
+Yhteyttä MX:n ei voitu muodostaa 
+
+Couldn't create mapfile in maps folder, check folder permissions!
+Karttatiedostoa ei voitu tallentaa karttahakemistoon, tarkista hakemiston oikeudet!
+
+#admin_error# $iYou already have a map in the queue...
+#admin_error# $iSinulla on jo kartta jonossa...
+
+Unable to retrieve track info from MX..  wrong ID..?
+Karttaa ei löytynyt MX:stä..  kenties väärä ID..?
+
+Wrong environment!
+Väärä ympäristö!
+
+#record# $iVote passed!
+#record# $iÄänestys onnistui!
+
+#admin_error# $iVote failed!
+#admin_error# $iÄänestys epäonnistui!
 

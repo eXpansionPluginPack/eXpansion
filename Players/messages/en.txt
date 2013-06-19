@@ -1,8 +1,14 @@
-Ban
-Ban
+Ignore
+Ignore
 
 Kick
 Kick
+
+Ban
+Ban
+
+Blacklist
+Blacklist
 
 Release Spec
 Release Spec
@@ -10,14 +16,20 @@ Release Spec
 Force Spec
 Force Spec
 
-Please behave next time you visit the server!
-Please behave next time you visit the server!
+$ff3$iYou are not allowed to do that!
+$ff3$iYou are not allowed to do that!
 
 Error: %s
 Error: %s
 
+Please behave next time you visit the server!
+Please behave next time you visit the server!
+
 You are now banned from the server.
 You are now banned from the server.
+
+You are now blacklisted from the server.
+You are now blacklisted from the server.
 
 Admin has forced you to specate!
 Admin has forced you to specate!

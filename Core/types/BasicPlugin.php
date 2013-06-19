@@ -133,30 +133,31 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             }
 
             if ($login == null) {
-                array_unshift($args, $msg->getMessage());
-                $msg = call_user_func_array('sprintf', $args);
-
-                $this->exp_announce($msg);
+                /* array_unshift($args, $msg->getMessage());
+                  $msg = call_user_func_array('sprintf', $args);
+                  $this->exp_announce($msg);
+                 */
+                $this->exp_multilangAnnounce($msg->getMultiLangArray($args));
             } else {
                 array_unshift($args, $msg, $login);
                 $msgString = call_user_func_array('__', $args);
 
-                //Check if it needs to ve redirected
+                //Check if it needs to be redirected
                 $this->exp_redirectedChatSendServerMessage($msgString, $login, get_class($this));
             }
         }
 
         /**
-         * Sends a chat message to the server or redirect t to another plugin
+         * Sends a chat message to the server or redirect to another plugin
          * 
-         * @param type $msg	The message
+         * @param type $msg The message
          * @param type $login The login to whom it needs to be sent
          */
         private function exp_redirectedChatSendServerMessage($msg, $login) {
             $sender = get_class($this);
             $fromPlugin = explode("\\", $sender);
             $fromPlugin = str_replace("_", " ", end($fromPlugin));
-            
+
             if (isset(self::$exp_chatRedirected[$sender])) {
                 if (is_object(self::$exp_chatRedirected[$sender][0]))
                     call_user_func_array(self::$exp_chatRedirected[$sender], array($login, $this->exp_maxp->parseColors($msg)));
@@ -164,7 +165,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
                     $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($login, $this->exp_maxp->parseColors($msg)));
                 }
             } else {
-                $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' .$this->exp_maxp->parseColors($msg), $login);
+                $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->exp_maxp->parseColors($msg), $login);
             }
         }
 
@@ -190,6 +191,10 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             } else {
                 $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->exp_maxp->parseColors($msg));
             }
+        }
+
+        protected function exp_multilangAnnounce($msg) {
+            $this->connection->chatSendServerMessageToLanguage($msg);
         }
 
         /**
@@ -327,7 +332,7 @@ namespace {
         function __() {
             $args = func_get_args();
             $message = array_shift($args);
-
+            $language = null;
             if (sizeof($args) > 0) {
                 $login = array_shift($args);
                 $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($login);

@@ -1,0 +1,6 @@
+#rank#$iVote Registered!!
+#rank#$iÄäni rekisteröity!!
+
+#rank# $iUsage /rate #, where number is 1-5..
+#rank# $iKäytä /rate #, missä luku on väliltä 1-5..
+

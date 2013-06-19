@@ -103,27 +103,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS);
         $this->config = Config::getInstance();
 
-        //Recovering the multi language messages
-        $this->msg_secure = exp_getMessage($this->config->msg_secure);
-        $this->msg_new = exp_getMessage($this->config->msg_new);
-        $this->msg_improved = exp_getMessage($this->config->msg_improved);
-        $this->msg_newMap = exp_getMessage($this->config->msg_newMap);
-        $this->msg_BeginMap = exp_getMessage($this->config->msg_BeginMap);
-        $this->msg_personalBest = exp_getMessage($this->config->msg_personalBest);
-        $this->msg_noPB = exp_getMessage($this->config->msg_noPB);
-        $this->msg_showRank = exp_getMessage($this->config->msg_showRank);
-        $this->msg_noRank = exp_getMessage($this->config->msg_noRank);
-
-        self::$txt_rank = exp_getMessage("#");
-        self::$txt_nick = exp_getMessage("NickName");
-        self::$txt_score = exp_getMessage("Score");
-        self::$txt_avgScore = exp_getMessage("Average Score");
-        self::$txt_nbFinish = exp_getMessage("Finishes");
-        self::$txt_wins = exp_getMessage("Nb Wins");
-        self::$txt_lastRec = exp_getMessage("Last Rec Date");
-        self::$txt_ptime = exp_getMessage("Play Time");
-        self::$txt_nbRecords = exp_getMessage("nb Rec");
-
         $this->setPublicMethod("getCurrentChallangePlayerRecord");
         $this->setPublicMethod("getPlayersRecordsForAllMaps");
         $this->setPublicMethod("getRecords");
@@ -144,6 +123,27 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onLoad() {
 
         parent::exp_onLoad();
+
+        //Recovering the multi language messages
+        $this->msg_secure = exp_getMessage($this->config->msg_secure);
+        $this->msg_new = exp_getMessage($this->config->msg_new);
+        $this->msg_improved = exp_getMessage($this->config->msg_improved);
+        $this->msg_newMap = exp_getMessage($this->config->msg_newMap);
+        $this->msg_BeginMap = exp_getMessage($this->config->msg_BeginMap);
+        $this->msg_personalBest = exp_getMessage($this->config->msg_personalBest);
+        $this->msg_noPB = exp_getMessage($this->config->msg_noPB);
+        $this->msg_showRank = exp_getMessage($this->config->msg_showRank);
+        $this->msg_noRank = exp_getMessage($this->config->msg_noRank);
+
+        self::$txt_rank = exp_getMessage("#");
+        self::$txt_nick = exp_getMessage("NickName");
+        self::$txt_score = exp_getMessage("Score");
+        self::$txt_avgScore = exp_getMessage("Average Score");
+        self::$txt_nbFinish = exp_getMessage("Finishes");
+        self::$txt_wins = exp_getMessage("Nb Wins");
+        self::$txt_lastRec = exp_getMessage("Last Rec Date");
+        self::$txt_ptime = exp_getMessage("Play Time");
+        self::$txt_nbRecords = exp_getMessage("nb Rec");
 
         $this->enableStorageEvents();
         $this->enableDedicatedEvents();
@@ -226,8 +226,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showRecsMenuItem($login) {
         $this->showRecsWindow($login);
     }
-    
-    
+
     /**
      * getPlayersRecordsForAllMaps($login)
      * 

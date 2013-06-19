@@ -111,7 +111,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onLoad() {
-        parent::exp_onLoad();
+     
 
         //Loading all Messages;
         $this->msg_needBeAdmin = exp_getMessage('#admin_error#You need to be an Admin to use that command');

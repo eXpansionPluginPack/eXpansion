@@ -1,15 +1,45 @@
-﻿Players
-Pelaajat
-
-Show Players
-Näytä Pelaajat
+Ignore
+Hiljennä
 
 Kick
 Potkaise
 
 Ban
-Bännää
+Bän
+
+Blacklist
+Blacklist
+
+Release Spec
+Vapauta Spec
 
 Force Spec
-Specciin
+Pakota Spec
+
+$ff3$iYou are not allowed to do that!
+$ff3$iSinulla ei oikeuksia tehdä tätä!
+
+Error: %s
+Virhe: %s
+
+Please behave next time you visit the server!
+Käyttäydythän seuraavalla kerralla kun tulet palvelimelle!
+
+You are now banned from the server.
+Sinut on bännätty palvelimelta!
+
+You are now blacklisted from the server.
+Sinut on laitettu palvelimen mustalle listalle!
+
+Admin has forced you to specate!
+Admin on pakottanut sinut katsojaksi!
+
+Admin has released you from specate to play.
+Admin on vapauttanut sinut katsojasta pelaajaksi.
+
+Players
+pelaajat
+
+Show Players
+Näytä pelaajat
 
