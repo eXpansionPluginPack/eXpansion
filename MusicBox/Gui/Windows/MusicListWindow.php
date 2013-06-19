@@ -12,7 +12,7 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     /** @var \ManiaLive\Gui\Controls\Pager */
     private $pager;
 
-    protected function onConstruct() {
+    public function onConstruct() {
         parent::onConstruct();
         $this->setTitle("Music available at server");
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
@@ -31,7 +31,8 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->pager->setPosition(4, 0);
     }
 
-    protected function onDraw() {
+    public function onShow() {
+        parent::onShow();
         $login = $this->getRecipient();
         foreach ($this->items as $item) {
             $item->destroy();

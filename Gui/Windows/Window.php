@@ -40,26 +40,25 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_windowFrame->setScriptEvents(true);
         $this->_windowFrame->setAlign("left", "top");
 
-
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_mainWindow->setId("MainWindow");
-        //$this->_mainWindow->setStyle("Bgs1InRace");
-        //$this->_mainWindow->setSubStyle("BgWindow2");
-        $this->_mainWindow->setStyle("Bgs1");
-        $this->_mainWindow->setSubStyle("BgEmpty");
-        $this->_mainWindow->setBgcolor("fff");
+        $this->_mainWindow->setStyle("Bgs1InRace");
+        $this->_mainWindow->setSubStyle("BgWindow2");
+        // $this->_mainWindow->setStyle("Bgs1InRace");
+        // $this->_mainWindow->setSubStyle("BgEmpty");
+        // $this->_mainWindow->setBgcolor("fff");
         $this->_mainWindow->setScriptEvents(true);
+        $this->_windowFrame->addComponent($this->_mainWindow);
 
-
-        $this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX + 2, $this->sizeY + 2);
+        $this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
         $this->_titlebar->setId("Titlebar");
         $this->_titlebar->setStyle("Bgs1InRace");
-        $this->_titlebar->setSubStyle("BgEmpty");
-        $this->_titlebar->setBgcolor("6bf");
+        $this->_titlebar->setSubStyle("BgTitle3_3");
+        // $this->_titlebar->setBgcolor("6bf");
         //$this->_titlebar->setImage($config->windowTitlebar);
         $this->_titlebar->setScriptEvents(true);
         $this->_windowFrame->addComponent($this->_titlebar);
-        $this->_windowFrame->addComponent($this->_mainWindow);
+
 
         $this->_title = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->_title->setId("TitlebarText");
@@ -68,28 +67,31 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_title->setTextSize(1);
         $this->_windowFrame->addComponent($this->_title);
 
-        $this->_closebutton = new \ManiaLib\Gui\Elements\Label(7, 3);
+        $this->_closebutton = new \ManiaLib\Gui\Elements\Quad(7, 3);
         $this->_closebutton->setAlign('center', 'top');
-        $this->_closebutton->setStyle("TextValueMedium");
+        $this->_closebutton->setStyle("Icons64x64_1");
+        $this->_closebutton->setSubStyle("Close");
+        
+     /*   $this->_closebutton->setStyle("TextChallengeNameMedium");
         $this->_closebutton->setScriptEvents(true);
-        $this->_closebutton->setFocusAreaColor1("c55");
-        $this->_closebutton->setFocusAreaColor2("f55");
+        $this->_closebutton->setFocusAreaColor1("fff");
+        $this->_closebutton->setFocusAreaColor2("000");
         $this->_closebutton->setId("Close");
         $this->_closebutton->setText(' x ');
-        $this->_closebutton->setTextColor('fff');
-        $this->_closebutton->setTextSize(1);
+        $this->_closebutton->setTextColor('000');
+        $this->_closebutton->setTextSize(1); */
         $this->_closebutton->setScriptEvents(true);
         $this->_closebutton->setAction($this->_closeAction);
         $this->_windowFrame->addComponent($this->_closebutton);
 
         $this->_minbutton = new \ManiaLib\Gui\Elements\Label(7, 3);
         $this->_minbutton->setAlign('center', 'top');
-        $this->_minbutton->setStyle("TextValueMedium");
+        $this->_minbutton->setStyle("TextChallengeNameMedium");
         $this->_minbutton->setScriptEvents(true);
         $this->_minbutton->setText('$000-');
-        $this->_closebutton->setTextSize(1);
-        $this->_minbutton->setFocusAreaColor1("6bf");
-        $this->_minbutton->setFocusAreaColor2("36b");
+        
+        $this->_minbutton->setFocusAreaColor1("fff0");
+        $this->_minbutton->setFocusAreaColor2("0000");
         $this->_minbutton->setScriptEvents(true);
         $this->_minbutton->setId("Minimize");
         $this->_windowFrame->addComponent($this->_minbutton);
@@ -105,22 +107,22 @@ class Window extends \ManiaLive\Gui\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
-        $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY);
-        $this->_mainWindow->setPosX(-0.4);
+        $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY+2);
+        $this->_mainWindow->setPosY(1);
 
         $this->_title->setSize($this->sizeX, 4);
         $this->_title->setPosition(($this->_title->sizeX / 2), 3.5);
         $this->_title->setHalign("center");
 
-        $this->_titlebar->setPosX(-1);
-        $this->_titlebar->setPosY(4);
-        $this->_titlebar->setSize($this->sizeX + 2, $this->sizeY + 4.5);
+        $this->_titlebar->setPosX(-4);
+        $this->_titlebar->setPosY(8);
+        $this->_titlebar->setSize($this->sizeX + 8, 10);
 
-        $this->_closebutton->setSize(7, 3);
-        $this->_closebutton->setPosition($this->sizeX - 4, 4);
+        $this->_closebutton->setSize(5, 5);
+        $this->_closebutton->setPosition($this->sizeX - 3, 5.5);
 
-        $this->_minbutton->setSize(5, 3);
-        $this->_minbutton->setPosition($this->sizeX - 11, 4);
+        $this->_minbutton->setSize(5, 5);
+        $this->_minbutton->setPosition($this->sizeX - 8, 5);
 
         $this->mainFrame->setSize($this->sizeX - 4, $this->sizeY - 8);
         $this->mainFrame->setPosition(2, -2);
@@ -262,17 +264,17 @@ class Window extends \ManiaLive\Gui\Window {
                             Frame' . $this->dCount . '.Hide();
      ';
 
-        
+
         $this->dLoop .= ' 
                             if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "' . $name . 'l") { 
                                     Frame' . $this->dCount . '.Show();
                            }
             ';
-        
-        
-        
-        
-        
+
+
+
+
+
         $x = 0;
         foreach ($items as $item) {
             $this->dLoop .= '

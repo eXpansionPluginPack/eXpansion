@@ -86,6 +86,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         $this->preloadHistory();
+        $this->showMapList("reaby");
     }
 
     /**

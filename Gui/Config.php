@@ -21,7 +21,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $windowMinbutton = "http://reaby.kapsi.fi/ml/min_off.png";
     public $windowMinbuttonActive = "http://reaby.kapsi.fi/ml/min_on.png";
     
-    public $style_list_bgColor = array('ddd4', '7774');
+    public $style_list_bgColor = array('eee4', '7774');
     public $style_list_bgStyle = array('BgsPlayerCard', 'BgsPlayerCard');
     public $style_list_bgSubStyle = array('BgRacePlayerName', 'BgMediaTracker');
     public $style_list_posXOffset = -1;

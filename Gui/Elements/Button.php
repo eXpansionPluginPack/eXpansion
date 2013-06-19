@@ -25,9 +25,9 @@ class Button extends \ManiaLive\Gui\Control {
 
         $this->label = new \ManiaLib\Gui\Elements\Label($sizeX + 2, $sizeY);
         $this->label->setAlign('center', 'center2');
-        $this->label->setStyle("TextValueMedium");
+        $this->label->setStyle("TextChallengeNameMedium");
         $this->label->setScriptEvents(true);
-        $this->label->setFocusAreaColor1("bbb");
+        $this->label->setFocusAreaColor1("aaa");
         $this->label->setFocusAreaColor2("fff");
 
         $this->sizeX = $sizeX + 2;

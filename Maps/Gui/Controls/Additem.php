@@ -32,14 +32,7 @@ class Additem extends \ManiaLive\Gui\Control {
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
-        $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-        $this->bg->setAlign('left', 'center');
-
-        if ($indexNumber % 2 == 0) {
-            $this->bg->setBgcolor('fff4');
-        } else {
-            $this->bg->setBgcolor('7774');
-        }
+        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
