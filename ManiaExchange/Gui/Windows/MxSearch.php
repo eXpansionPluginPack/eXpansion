@@ -29,6 +29,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $actionSearch;
     private $header;
     private $style;
+    private $lenght;
     private $items = array();
     public $mxPlugin;
 
@@ -56,10 +57,16 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(3, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+
         $items = array("All", "Race", "Fullspeed", "Tech", "RPG", 'LOL', 'PressForward', 'SpeedTech', 'Multilap', 'Offroad');
         $this->style = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("style", $items);
         $this->addDropdown("style", $items);
         $this->searchframe->addComponent($this->style);
+
+        $items = array("All", "15sec", "30sec", "45sec", "1min");
+        $this->lenght = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("length", $items);
+        $this->addDropdown("length", $items);
+        $this->searchframe->addComponent($this->lenght);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(10, 4);
@@ -108,7 +115,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->mxPlugin = $plugin;
     }
 
-    public function search($login, $trackname = "", $author = "", $style = null) {
+    public function search($login, $trackname = "", $author = "", $style = null, $length = null) {
 
         if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
             $script = $this->connection->getModeScriptInfo();
@@ -147,7 +154,10 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             }
             $out = "";
             if ($style != null) {
-                $out = "&style=" . $style;
+                $out .= "&style=" . $style;
+            }
+            if ($length != null) {
+                $out .= "&length=" . $length . "&lengthop=0";
             }
             $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&environments=' . $env . '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . $out . '&mtype=All&priord=2&limit=100&tracksearch&api=on&format=json';
         }
@@ -189,6 +199,11 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
+        if ($length !== null)
+            $this->lenght->setSelected(intval($length)+1);
+        if ($style !== null)
+            $this->style->setSelected(intval($style));
+        
         $this->redraw();
     }
 
@@ -202,11 +217,16 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function actionOk($login, $args) {
         $style = null;
-        if (intval($args['style']) != 0) {
+        $length = null;
+        if ($args['style']) {
             $style = intval($args['style']);
         }
 
-        $this->search($login, $args['mapName'], $args['author'], $style);
+        if (intval($args['length']) != 0) {
+            $length = intval($args['length']) - 1;
+        }
+
+        $this->search($login, $args['mapName'], $args['author'], $style, $length);
     }
 
     function destroy() {
@@ -216,6 +236,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->items = array();
         $this->maps = null;
         $this->style->destroy();
+        $this->lenght->destroy();
         $this->inputMapName->destroy();
         $this->inputAuthor->destroy();
         $this->header->destroy();

@@ -12,10 +12,12 @@ class Dropdown extends \ManiaLive\Gui\Control {
     private $frame;
     private $label;
     private $xml;
+    private $values;
 
-    function __construct($name, $items, $sizeX = 35) {
+    function __construct($name, $items, $selectedIndex = 0, $sizeX = 35) {
         if (!is_array($items))
             throw new \Exception("Dropdown constructor needs array of values");
+        $this->values = $items;
 
         $this->sizeX = $sizeX;
         $this->sizeY = 6;
@@ -30,7 +32,7 @@ class Dropdown extends \ManiaLive\Gui\Control {
 
         $this->label = new \ManiaLib\Gui\Elements\Label($sizeX, 4);
         $this->label->setId($name . 'l');
-        $this->label->setText("Select...");
+        $this->label->setText($this->values[$selectedIndex]);
         $this->label->setStyle("TextValueMedium");
         $this->label->setTextSize(1);
         $this->label->setAlign('left', 'center');
@@ -42,7 +44,7 @@ class Dropdown extends \ManiaLive\Gui\Control {
         $this->frame->setScriptEvents(true);
         $this->frame->setId($name . "f");
         $this->frame->setAlign("center", "center");
-        $this->frame->setSizeY((sizeof($items)+1) * 6);
+        $this->frame->setSizeY((sizeof($items) + 1) * 6);
         $this->frame->setScale(0.9);
 
         $x = 0;
@@ -66,6 +68,10 @@ class Dropdown extends \ManiaLive\Gui\Control {
 
     protected function onResize($oldX, $oldY) {
         
+    }
+
+    public function setSelected($index) {
+        $this->label->setText($this->values[intval($index)]);
     }
 
 }
