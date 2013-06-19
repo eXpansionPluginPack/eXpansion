@@ -7,8 +7,9 @@ use ManiaLive\Gui\ActionHandler;
 
 class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
-    public static $records = array();
+    public $records = array();
     public static $mapsPlugin = null;
+    public static $localrecordsLoaded = false;
     private $items = array();
     private $btnRemoveAll;
     private $actionRemoveAll;
@@ -101,15 +102,26 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 
         $isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps');
-        $localrec = self::$mapsPlugin->isLocalRecordsLoaded();
         $x = 0;
-        foreach (\ManiaLive\Data\Storage::getInstance()->maps as $map) {
-            $this->items[$x] = new Mapitem($x, $login, $map, $this, $isAdmin, $localrec, $this->sizeX);
+
+
+        foreach ($this->storage->maps as $map) {
+            $localrecord = "-";
+            $maxrec = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
+            if (array_key_exists($map->uId, $this->records)) {
+                if ($this->records[$map->uId] <= $maxrec)
+                    $localrecord = $this->records[$map->uId] . "/" . $maxrec;
+            }
+            $this->items[$x] = new Mapitem($x, $login, $map, $this, $isAdmin, $localrecord, $this->sizeX);
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
 
         parent::onDraw();
+    }
+
+    function setRecords($records) {
+        $this->records = $records;
     }
 
     function destroy() {

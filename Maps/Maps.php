@@ -17,8 +17,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $tries = 0;
     private $atPodium = false;
 
-    /* will be used when custom votes works again */
-
     /** @var MapWish */
     private $voteItem;
 
@@ -95,6 +93,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function isLocalRecordsLoaded() {
         return $this->isPluginLoaded('eXpansion\LocalRecords');
     }
+
     public function showRec($login, $map) {
         $this->callPublicMethod("eXpansion\LocalRecords", "showRecsWindow", $login, $map);
     }
@@ -270,12 +269,14 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showMapList($login) {
         Gui\Windows\Maplist::Erase($login);
 
-        if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
-            Gui\Windows\MapList::$records = $this->callPublicMethod('eXpansion\LocalRecords', 'getRecords');
-        }
+
 
         $window = Gui\Windows\Maplist::Create($login);
         $window->setTitle(__('Maps on server', $login));
+        if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
+            $window->setRecords($this->callPublicMethod('eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
+            Gui\Windows\Maplist::$localrecordsLoaded = true;
+        }
         $window->centerOnScreen();
         $window->setSize(180, 100);
         $window->show();

@@ -22,7 +22,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
     private $showRecsButton;
     private $frame;
 
-    function __construct($indexNumber, $login, \DedicatedApi\Structures\Map $map, $controller, $isAdmin, $mapsPluginLoaded = false, $sizeX) {
+    function __construct($indexNumber, $login, \DedicatedApi\Structures\Map $map, $controller, $isAdmin, $localrec, $sizeX) {
         $sizeY = 4;
 
         $this->isAdmin = $isAdmin;
@@ -74,23 +74,10 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         $this->frame->addComponent($spacer);
 
-        $this->time = new \ManiaLib\Gui\Elements\Label(4, 4);
-        $this->time->setAlign('left', 'center');
+        $this->time = new \ManiaLib\Gui\Elements\Label(6, 4);
+        $this->time->setAlign('center', 'center');
         $this->time->setScale(0.8);
-
-        if (array_key_exists($map->uId, Maplist::$records)) {
-            if (array_key_exists($login, Maplist::$records[$map->uId])) {
-
-                $place = Maplist::$records[$map->uId]->$login->place . ".";
-            } else {
-                $place = "-";
-            }
-        } else {
-            $place = "-";
-        }
-
-
-        $this->time->setText($place);
+        $this->time->setText($localrec);
         $this->frame->addComponent($this->time);
 
 
@@ -106,7 +93,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->queueButton->colorize('2a2');
         $this->queueButton->setScale(0.5);
         $this->frame->addComponent($this->queueButton);
-        if ($mapsPluginLoaded) {
+        if (Maplist::$localrecordsLoaded) {
             $this->showRecsButton = new MyButton(26, 5);
             $this->showRecsButton->setText(__("Recs"));
             $this->showRecsButton->setAction($this->showRecsAction);

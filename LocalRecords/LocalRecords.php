@@ -88,7 +88,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * All the messages need to be sent;
      * @var Message
      */
-    private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank;
+            private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank;
     public static $txt_rank, $txt_nick, $txt_score, $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
     function exp_onInit() {
@@ -125,6 +125,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$txt_nbRecords = exp_getMessage("nb Rec");
 
         $this->setPublicMethod("getCurrentChallangePlayerRecord");
+        $this->setPublicMethod("getPlayersRecordsForAllMaps");
         $this->setPublicMethod("getRecords");
         $this->setPublicMethod("getRanks");
         $this->setPublicMethod("getPlayerRank");
@@ -224,6 +225,38 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function showRecsMenuItem($login) {
         $this->showRecsWindow($login);
+    }
+    
+    
+    /**
+     * getPlayersRecordsForAllMaps($login)
+     * 
+     * @param string $login
+     * @return array $list -> $list[mapuid] = (int) position
+     */
+    public function getPlayersRecordsForAllMaps($login) {
+        $q = ' SELECT `record_playerlogin`,`record_score`,`record_challengeuid` FROM `exp_records` order by `record_challengeuid` asc,`record_score` asc';
+        $data = $this->db->query($q);
+        $list = array();
+        $last = "";
+        $pos = 1;
+        while ($row = $data->fetchObject()) {
+            // check for new map & reset rank
+            if ($last != $row->record_challengeuid) {
+                $last = $row->record_challengeuid;
+                $pos = 1;
+            }
+            if (isset($list[$row->record_challengeuid]))
+                continue;
+
+            // store player's maps & records
+            if ($row->record_playerlogin == $login) {
+                $list[$row->record_challengeuid] = $pos;
+                continue;
+            }
+            $pos++;
+        }
+        return $list;
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
