@@ -22,8 +22,12 @@ class Playeritem extends \ManiaLive\Gui\Control {
     private $blacklistAction;
     private $forceAction;
     private $frame;
+    private $recipient;
 
-    function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin, $sizeX) {
+    function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin, $login, $sizeX) {
+        $this->recipient = $login;
+
+
         $sizeY = 4;
         $this->isAdmin = $isAdmin;
         $this->player = $player;
@@ -34,14 +38,8 @@ class Playeritem extends \ManiaLive\Gui\Control {
             $this->blacklistAction = $this->createAction(array($controller, 'blacklistPlayer'), $player->login);
             $this->forceAction = $this->createAction(array($controller, 'toggleSpec'), $player->login);
         }
-        
-        $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-        $this->bg->setAlign('left', 'center');
-        if ($indexNumber % 2 == 0) {
-            $this->bg->setBgcolor('aaa4');
-        } else {
-            $this->bg->setBgcolor('7774');
-        }        
+
+        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
 
@@ -87,17 +85,17 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
 // admin additions
         if ($this->isAdmin) {
-        
+
             $this->ignoreButton = new MyButton(24, 5);
-            $this->ignoreButton->setText(__("Ignore"));
+            $this->ignoreButton->setText(__("Ignore", $login));
             $this->ignoreButton->setTextColor("fff");
             $this->ignoreButton->colorize("a22");
             $this->ignoreButton->setScale(0.5);
             $this->ignoreButton->setAction($this->ignoreAction);
             $this->frame->addComponent($this->ignoreButton);
-            
+
             $this->kickButton = new MyButton(24, 5);
-            $this->kickButton->setText(__("Kick"));
+            $this->kickButton->setText(__("Kick", $login));
             $this->kickButton->setTextColor("fff");
             $this->kickButton->setAction($this->kickAction);
             $this->kickButton->colorize("a22");
@@ -105,15 +103,15 @@ class Playeritem extends \ManiaLive\Gui\Control {
             $this->frame->addComponent($this->kickButton);
 
             $this->banButton = new MyButton(24, 5);
-            $this->banButton->setText(__("Ban"));
+            $this->banButton->setText(__("Ban", $login));
             $this->banButton->setTextColor("fff");
             $this->banButton->colorize("a22");
             $this->banButton->setAction($this->banAction);
             $this->banButton->setScale(0.5);
             $this->frame->addComponent($this->banButton);
-            
+
             $this->blacklistButton = new MyButton(24, 5);
-            $this->blacklistButton->setText(__("Blacklist"));
+            $this->blacklistButton->setText(__("Blacklist", $login));
             $this->blacklistButton->setTextColor("fff");
             $this->blacklistButton->colorize("a22");
             $this->blacklistButton->setAction($this->blacklistAction);
@@ -140,9 +138,9 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->bg->setSize($this->sizeX, $this->sizeY);
         if ($this->isAdmin) {
             if ($this->player->forceSpectator == 1 || $this->player->isSpectator) {
-                $this->forceButton->setText(__("Release Spec"));
+                $this->forceButton->setText(__("Release Spec", $this->recipient));
             } else {
-                $this->forceButton->setText(__("Force Spec"));
+                $this->forceButton->setText(__("Force Spec", $this->recipient));
             }
         }
     }

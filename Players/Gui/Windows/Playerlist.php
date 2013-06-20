@@ -74,7 +74,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()));
         }
     }
-    
+
     function blacklistPlayer($login, $target) {
         try {
             $login = $this->getRecipient();
@@ -99,14 +99,14 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $player = $this->storage->getPlayerObject($target);
             if ($player->forceSpectator == 0) {
                 $this->connection->forceSpectator($target, 1);
-                $this->connection->sendNotice($target, __('Admin has forced you to specate!'));
+                $this->connection->sendNotice($target, __('Admin has forced you to specate!', $login));
             }
             if ($player->forceSpectator == 1) {
                 $this->connection->forceSpectator($target, 0);
-                $this->connection->sendNotice($target, __("Admin has released you from specate to play."));
+                $this->connection->sendNotice($target, __("Admin has released you from specate to play.", $login));
             }
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__("Error: %s",$login, $e->getMessage()), $login);
+            $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
         }
     }
 
@@ -131,14 +131,17 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         $login = $this->getRecipient();
         $isadmin = AdminGroups::isInList($login);
-
-        foreach ($this->storage->players as $player) {
-            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->sizeX);
-            $this->pager->addItem($this->items[$x]);
-        }
-        foreach ($this->storage->spectators as $player) {
-            $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->sizeX);
-            $this->pager->addItem($this->items[$x]);
+        try {
+            foreach ($this->storage->players as $player) {
+                $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->sizeX);
+                $this->pager->addItem($this->items[$x]);
+            }
+            foreach ($this->storage->spectators as $player) {
+                $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->sizeX);
+                $this->pager->addItem($this->items[$x]);
+            }
+        } catch (\Exception $e) {
+            
         }
     }
 

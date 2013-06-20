@@ -15,10 +15,11 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
     protected function onConstruct() {
         $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setPosY(0);
-       // $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
-
+        // $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
+        $login = $this->getRecipient();
+        
         $label = new \ManiaLib\Gui\Elements\Label();
-        $label->setText('$ddd' . __('Next map'));
+        $label->setText('$ddd' . __('Next map',$login));
         $label->setTextEmboss(true);
         $label->setAlign("left", "top");
         $label->setPosX(10);
@@ -26,13 +27,13 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 
         $row = new \ManiaLive\Gui\Controls\Frame(20, 6);
         $row->setPosY(-4);
-        $this->labelName = new \ManiaLib\Gui\Elements\Label(60,7);
+        $this->labelName = new \ManiaLib\Gui\Elements\Label(60, 7);
         $this->labelName->setText('$ddd' . $this->mapName);
         $this->labelName->setAlign("right", "top");
         $this->labelName->setPosX(0);
         $row->addComponent($this->labelName);
 
-        $icon = new \ManiaLib\Gui\Elements\Quad(6,6);
+        $icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
         $icon->setStyle("UIConstructionSimple_Buttons");
         $icon->setSubStyle("Challenge");
         $icon->setAlign("left", "top");
@@ -42,13 +43,13 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 
         $row = new \ManiaLive\Gui\Controls\Frame(20, 6);
         $row->setPosY(-8);
-        $this->labelAuthor = new \ManiaLib\Gui\Elements\Label(60,7);
+        $this->labelAuthor = new \ManiaLib\Gui\Elements\Label(60, 7);
         $this->labelAuthor->setText('$ddd' . $this->mapAuthor);
         $this->labelAuthor->setAlign("right", "top");
         $this->labelAuthor->setPosX(0);
         $row->addComponent($this->labelAuthor);
 
-        $icon = new \ManiaLib\Gui\Elements\Quad(6,6);
+        $icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
         $icon->setStyle("UIConstructionSimple_Buttons");
         $icon->setSubStyle("Author");
         $icon->setAlign("left", "top");

@@ -20,7 +20,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /** @var MapWish */
     private $voteItem;
-    
     private $msg_addQueue;
     private $msg_nextQueue;
     private $msg_nextMap;
@@ -77,13 +76,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         Gui\Windows\Maplist::Initialize($this);
 
-        if ($this->config->showNextMapWidget) {
-            $widget = NextMapWidget::Create(null);
-            $widget->setPosition(136, 74);
-            $widget->setMap($this->nextMap);
-            $widget->show();
-        }
-
+        foreach ($this->storage->players as $player)
+            $this->onPlayerConnect($player->login, false);
+        foreach ($this->storage->spectators as $player)
+            $this->onPlayerConnect($player->login, true);
+        
         $this->preloadHistory();
     }
 
