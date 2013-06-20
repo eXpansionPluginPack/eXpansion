@@ -1,0 +1,81 @@
+Add map
+Voeg een Map toe
+
+Delete file
+Verwijder bestand
+
+Queue
+Rij
+
+Recs
+Recs
+
+Go now
+Ga nu
+
+Remove
+Verwijder
+
+Current Map
+Huidige Map
+
+File '%s' deleted from filesystem!
+Bestand '%s' verwijderd van filesysteem!
+
+Removes current map from the playlist.
+Verwijderd huidige map van de speellijst.
+
+Sets current challenge to replay at end of match
+Zet de huidige map op herstart op de einde van de wedstrijd
+
+Maps
+Maps
+
+List maps
+Lijst maps
+
+#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position
+#variable#%1$s  #queue#is toegevoegd tot de map rij door #variable#%3$s#queue#, in de #variable#%5$s #queue#position
+
+#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
+#queue#Volgende baan zal zijn #variable#%1$s  #queue#by #variable#%2$s#queue#, als gevraagd door #variable#%3$s
+
+#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#
+#queue#Volgende map zal zijn #variable#%1$s  #queue#by #variable#%2$s#queue#
+
+#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
+#queue#Map veranderd naar #variable#%1$s  #queue#by #variable#%2$s#queue#, als gevraagd door #variable#%3$s
+
+Error: %s
+Fout: %s
+
+#admin_error# $iThis map is currently playing...
+#admin_error# $iDeze map is op het moment aan het spelen...
+
+#admin_error# $iThis map is already in the queue...
+#admin_error# $iDeze map is al in de rij...
+
+#admin_error# $iYou already have a map in the queue...
+#admin_error# $iJe hebt al een map in de rij...
+
+#admin_error# $iMap has been played too recently...
+#admin_error# $iMap is recentelijk al gespeeld...
+
+#admin_error# $iYou are not allowed to do that!
+#admin_error# $iJe bent niet toegestaan om dat te doen!
+
+#admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from the playlist
+#admin_action#Admin #variable#%1$s #admin_action#heeft de map verwijderd #variable#%3$s #admin_action# van de speellijst
+
+#variable#%1$s #queue#removed #variable#%2$s #queue#from the queue..
+#variable#%1$s #queue#verwijderd #variable#%2$s #queue#uit de rij..
+
+#admin_action#Admin #variable#%1$s #admin_action#emptied the map queue list
+#admin_action#Admin #variable#%1$s #admin_action#maakte de map rij lijst leeg
+
+#admin_error# $iChallenge already set to be replayed!
+#admin_error# $iChallenge is al ingesteld om te worden overgespeeld!
+
+#queue#Challenge set to be replayed!
+#queue#Challenge wordt overgespeeld!
+

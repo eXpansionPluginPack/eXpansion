@@ -1,74 +1,74 @@
 Server Management
-Server Management
+Server Beheer
 
 Force Scores
-Force Scores
+Forceer Scores
 
 Server ControlPanel
-Server ControlPanel
+Server ControlePaneel
 
 Server Options
-Server Options
+Server Opties
 
 Game Options
-Game Options
+Spel Opties
 
 Match Settings
-Match Settings
+Wedstrijds Instellingen
 
 Load
-Load
+Laden
 
 Save
-Save
+Opslaan
 
 Delete
-Delete
+Verwijderen
 
 Apply
-Apply
+Toepassen
 
 Cancel
-Cancel
+Annuleren
 
 Podium Chat time
-Podium Chat time
+Podium Chat tijd
 
 WUDuration
-WUDuration
+WUDuur
 
 finishTimeout
 finishTimeout
 
 timeAttackLimit
-timeAttackLimit
+timeAttackLimiet
 
 timeAttackSynchStartPeriod
-timeAttackSynchStartPeriod
+timeAttackSynchStartPeriode
 
 roundsPointsLimit
-roundsPointsLimit
+RondenPuntLimiet
 
 roundsForcedLaps
-roundsForcedLaps
+roundsGeforceerdeLaps
 
 teamPointsLimit
-teamPointsLimit
+teamPuntLimiet
 
 teamMaxPoints
-teamMaxPoints
+teamMaxPunten
 
 cupNbWinners
-cupNbWinners
+cupNumWinners
 
 cupPointsLimit
-cupPointsLimit
+cupPuntenLimiet
 
 cupRoundsPerMap
 cupRoundsPerMap
 
 Choose Gamemode:
-Choose Gamemode:
+Kies Spelmodus:
 
 Time Attack
 Time Attack
@@ -86,52 +86,52 @@ Team
 Team
 
 Additional Options:
-Additional Options:
+Additioneel Opties:
 
 Disable Respawn
-Disable Respawn
+Respawn uitzetten
 
 Force Show All Opponents
-Force Show All Opponents
+Forceer alle tegenstanders
 
 Save MatchSettings as
-Save MatchSettings as
+Sla MatchSettings op als
 
 Error in filename
-Error in filename
+Fout in bestandsnaam
 
 File '%s' deleted from filesystem!
-File '%s' deleted from filesystem!
+Bestand '%s' verwijderd van bestandssysteem!
 
 Saved MatchSettings to file: %s
-Saved MatchSettings to file: %s
+Opgeslagen Wedstrijdsinstellingen naar bestand: %s
 
 Loaded MatchSettings from file: %s
-Loaded MatchSettings from file: %s
+Wedstrijdsinstellingen geladen van bestand: %s
 
 Server management
-Server management
+Server Beheer
 
 Server options
-Server options
+Server opties
 
 Game options
-Game options
+Game opties
 
 Admin Groups
-Admin Groups
+Admin Groepen
 
 Match settings
-Match settings
+Wedstrijdsinstellingen
 
 ScriptMode settings
-ScriptMode settings
+ScriptMode instellingen
 
 Database tools
-Database tools
+Database gereedschappen
 
 Close
-Close
+Sluiten
 
 Stop Server
 Stop Server
@@ -140,16 +140,16 @@ Stop Manialive
 Stop Manialive
 
 Server Name
-Server Name
+Server Naam
 
 Server comment
-Server comment
+Server Opmerking
 
 Players
-Players
+Spelers
 
 Spectators
-Spectators
+Toeschouwers
 
 Ladderpoints minimum
 Ladderpoints minimum
@@ -158,32 +158,31 @@ Ladderpoints Maximum
 Ladderpoints Maximum
 
 Password for server
-Password for server
+Wachtwoord voor de server
 
 Password for spectators
-Password for spectators
+Wachtwoord voor de toeschouwers
 
 Referee password
-Referee password
+Scheidsrechter wachtwoord
 
 Show Server in public server list
-Show Server in public server list
+Server in publieke server lijst laten zien
 
 Ladder server
 Ladder server
 
 Allow map download using ingame menu
-Allow map download using ingame menu
+Sta maps downloaden toe via ingame menu
 
 Allow Peer-2-Peer download
 Allow Peer-2-Peer download
 
 Allow Peer-2-Peer upload
-Allow Peer-2-Peer upload
+Peer-2-Peer upload toestaan
 
 Allow changing validation seed
-Allow changing validation seed
+Validatie seed veranderen toestaan
 
 Enable Referee-mode
-Enable Referee-mode
-
+Activeer Scheidsrechter-modus

@@ -1,0 +1,48 @@
+Map name
+Map naam
+
+Creators name
+Auteurs naam
+
+Length
+Lengte
+
+Queue
+Rij
+
+Install
+Installeer
+
+ManiaExchange
+ManiaExchange
+
+Search Maps
+Zoek Maps
+
+Usage.. /mx queue [id] or /mx search "your search terms here"
+Gebruik.. /mx queue [id] of /mx search "je zoekterm hier"
+
+Error: %s
+Fout: %s
+
+MX is down
+Mx ligt eruit
+
+Couldn't create mapfile in maps folder, check folder permissions!
+Kon geen mapbestand aanmaken in maps bestand, check je bestand permissies!
+
+#admin_error# $iYou already have a map in the queue...
+#admin_error# $iJe hebt al een baan in de rij...
+
+Unable to retrieve track info from MX..  wrong ID..?
+Onmogelijk om baan informatie te krijgen van MX..  verkeerde ID..?
+
+Wrong environment!
+Verkeerde omgeving!
+
+#record# $iVote passed!
+#record# $iStem succesvol!
+
+#admin_error# $iVote failed!
+#admin_error# $iStem is mislukt!
+

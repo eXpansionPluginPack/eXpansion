@@ -1,0 +1,60 @@
+#variable#%1$s  #record#secured their #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#(#rank#$n-%5$s#record#)
+#variable#%1$s  #record#verstevigde zijn/haar#rank#%2$s #record# record. Lokale Record met een tijd van #rank#%3$s #record#(#rank#$n-%5$s#record#)
+
+#variable#%1$s  #record#claimed the #rank#%2$s #record#. Local Record with time of #rank#%3$s
+#variable#%1$s  #record#pakte de #rank#%2$s #record#record. Lokale record met een tijd van #rank#%3$s
+
+#variable#%1$s  #record#gained the #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#(#rank#$n-%5$s#record#)
+#variable#%1$s  #record#pakte de #rank#%2$s #record#Record. Lokale Record met een tijd van #rank#%3$s #record#(#rank#$n-%5$s#record#)
+
+#variable#%1$s  #record#Is a new Map. Currently no record!
+#variable#%1$s  #record#Is een nieuwe Baan! Momenteel geen record!
+
+#record#Current record on #variable#%1$s  #record#is #variable#%2$s #record#by #variable#%3$s
+#record#Huidige record op #variable#%1$s  #record#is #variable#%2$s #record# door #variable#%3$s
+
+#record#Personal Best: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Average: #variable#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
+#record#Persoonlijke tijd: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Gemiddeld: #variable#%3$s #record#($n #variable#%4$s #record#$n aantal x gefinishd $m)
+
+#admin_error# $iYou have not finished this map yet..
+#admin_error# $iJe hebt deze baan nog niet gefinishd..
+
+#record#Server rank: #variable#%1$s#record#/#variable#%2$s
+#record#Server rang: #variable#%1$s#record#/#variable#%2$s
+
+#admin_error#$iNot enough local records to obtain ranking yet..
+#admin_error#$iJe hebt geen lokale records om een ranking te hebben..
+
+#
+#
+
+NickName
+NickName
+
+Score
+Score
+
+Average Score
+Gemiddelde Score
+
+Finishes
+Finishes
+
+Nb Wins
+Aantal Gewonnen
+
+Last Rec Date
+Laatste Rec Datum
+
+Play Time
+Speel Tijd
+
+nb Rec
+Aantal Rec
+
+Records
+Records
+
+Map Records
+Baan Records
+

@@ -19,9 +19,6 @@ Remove
 Current Map
 Current Map
 
-Next map
-Next map
-
 File '%s' deleted from filesystem!
 File '%s' deleted from filesystem!
 
@@ -36,6 +33,18 @@ Maps
 
 List maps
 List maps
+
+#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position
+#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position
+
+#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
+#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
+
+#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#
+#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#
+
+#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
+#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
 
 Error: %s
 Error: %s
@@ -70,14 +79,3 @@ Error: %s
 #queue#Challenge set to be replayed!
 #queue#Challenge set to be replayed!
 
-#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position
-#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position
-
-#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
-#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
-
-#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#
-#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#
-
-#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
-#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s

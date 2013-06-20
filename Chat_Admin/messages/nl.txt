@@ -1,0 +1,15 @@
+Guest Players on the server
+Gast Spelers op de server
+
+Ignored Players on the server
+Genegeerd Spelers op de server
+
+unBan
+unBan
+
+Remove
+Verwijder
+
+unIgnore
+unIgnore
+

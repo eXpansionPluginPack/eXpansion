@@ -1,0 +1,45 @@
+Ignore
+Negeren
+
+Kick
+Uitschoppen
+
+Ban
+Verbannen
+
+Blacklist
+Zwarte lijst
+
+Release Spec
+Vrijlaten Spec
+
+Force Spec
+Forceer Spec
+
+$ff3$iYou are not allowed to do that!
+$ff3$iJe bent niet bevoegd om dat te doen!
+
+Error: %s
+Fout: %s
+
+Please behave next time you visit the server!
+Gelieve U te gedragen volgende keer dat u de server bezoekt!
+
+You are now banned from the server.
+U bent nu verbannen uit de server!
+
+You are now blacklisted from the server.
+U staat nu op de zwarte lijst van de server!
+
+Admin has forced you to specate!
+Admin heeft je gedwongen om te spectaten!
+
+Admin has released you from specate to play.
+Admin heeft je vrijgelaten om van spectate naar speler te gaan.
+
+Players
+Spelers
+
+Show Players
+Laat Spelers zien
+

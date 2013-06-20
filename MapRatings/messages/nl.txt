@@ -1,0 +1,12 @@
+#rating#Map Approval Rating: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Your Rating: #variable#%4$s#rating# / #variable#5
+#rating#Map Goedkeuring Rating: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Je Rating: #variable#%4$s#rating# / #variable#5
+
+#rating# $iMap has not been rated yet!
+#rating# $iMap is nog niet op gestemd!
+
+#rank#$iVote Registered!!
+#rank#$iVote Geregistreerd!!
+
+#rank# $iUsage /rate #, where number is 1-5..
+#rank# $iGebruik /rate #, waar nummer is 1-5..
+

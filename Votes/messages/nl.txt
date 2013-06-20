@@ -1,0 +1,33 @@
+Error: %s
+Fout: %s
+
+Votes
+Stemmen
+
+Restart Map
+Herstart Map
+
+Skip Map
+Sla Map over
+
+Cancel Vote
+Annuleer Stem
+
+#variable#%1$s #rank#initiated restart map vote..
+#variable#%1$s #rank#geïnitieerd herstart map stem..
+
+#admin_error# $iMust run skip vote within first %1$s seconds of match start..
+#admin_error# $iMoet sla over stem binnen de eerste %1$s seconden van een wedstrijd start..
+
+#variable#%1$s #rank#initiated skip map vote..
+#variable#%1$s #rank#geïnitieerd sla over map stem..
+
+#record# $iVote passed!
+#record# $iStem geslaagd!
+
+#admin_error# $iVote failed!
+#admin_error# $iStem niet geslaagd!
+
+#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
+#admin_action#Admin #variable#%1$s #admin_action# annuleert de stem!
+

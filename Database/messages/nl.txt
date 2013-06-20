@@ -1,0 +1,12 @@
+#rank#Congratulations to #variable#%1$s#rank# for their #variable#%2$s#rank# win!
+#rank#Gefelicteerd voor #variable#%1$s#rank# zijn/haar #variable#%2$s#rank# win!
+
+#rank#Congratulations for your #variable#%1$s#rank# win!
+#rank#Gefeliciteerd voor je #variable#%1$s#rank# win!
+
+Database Maintainance
+Database Onderhoud
+
+Database Backup and Restore
+Database Back-up en Terugzetten
+
