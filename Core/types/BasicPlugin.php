@@ -165,7 +165,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
                     $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($login, $this->exp_maxp->parseColors($msg)));
                 }
             } else {
-                $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->exp_maxp->parseColors($msg), $login);
+                $this->connection->chatSendServerMessage($this->exp_maxp->parseColors($msg), $login);
             }
         }
 
