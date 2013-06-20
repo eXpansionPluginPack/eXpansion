@@ -18,7 +18,7 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
     private $deleteAction;
     private $frame;
 
-    function __construct($indexNumber, $filename, $controller, $sizeX) {
+    function __construct($indexNumber, $filename, $controller, $login, $sizeX) {
         $sizeY = 4;
         $this->saveAction = $this->createAction(array($controller, 'saveSettings'), $filename);
         $this->loadAction = $this->createAction(array($controller, 'loadSettings'), $filename);
@@ -69,21 +69,21 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
 
 
         $this->loadButton = new MyButton(26, 5);
-        $this->loadButton->setText(__("Load"));
+        $this->loadButton->setText(__("Load",$login));
         $this->loadButton->setAction($this->loadAction);
         $this->loadButton->setScale(0.5);
         $this->loadButton->colorize("2a2");
         $this->frame->addComponent($this->loadButton);
 
         $this->saveButton = new MyButton(26, 5);
-        $this->saveButton->setText('$fff' . __("Save"));
+        $this->saveButton->setText('$fff' . __("Save",$login));
         $this->saveButton->colorize("a22");
         $this->saveButton->setAction($this->saveAction);
         $this->saveButton->setScale(0.5);
         $this->frame->addComponent($this->saveButton);
         
         $this->deleteButton = new MyButton(26, 5);
-        $this->deleteButton->setText('$ff0' . __("Delete"));
+        $this->deleteButton->setText('$ff0' . __("Delete",$login));
         $this->deleteButton->colorize("222");
         $this->deleteButton->setAction($this->deleteAction);
         $this->deleteButton->setScale(0.5);

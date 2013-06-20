@@ -26,6 +26,7 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     protected function onConstruct() {
         parent::onConstruct();
+        $login = $this->getRecipient();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
@@ -37,12 +38,12 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->ok = new OkButton();
         $this->ok->colorize("0d0");
-        $this->ok->setText("Apply");
+        $this->ok->setText(__("Apply", $login));
         $this->ok->setAction($this->actionOk);
         $this->mainFrame->addComponent($this->ok);
 
         $this->cancel = new OkButton();
-        $this->cancel->setText("Cancel");
+        $this->cancel->setText(__("Cancel", $login));
         $this->cancel->setAction($this->actionCancel);
         $this->mainFrame->addComponent($this->cancel);
     }

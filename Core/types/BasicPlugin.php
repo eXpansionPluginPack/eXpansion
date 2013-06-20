@@ -344,6 +344,7 @@ namespace {
             } else {
                 $language = null;
             }
+
             if (is_object($message)) {
                 $lang = $message->getMessage($language);
             } else {

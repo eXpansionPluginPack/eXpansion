@@ -122,7 +122,7 @@ class MenuPanel extends \ManiaLive\Gui\Window {
     }
 
     function onShow() {
-
+        
     }
 
     function setItems(array $menuItems) {
@@ -130,10 +130,11 @@ class MenuPanel extends \ManiaLive\Gui\Window {
         $this->frame->setAlign("left", "top");
         $this->frame->setPosition(8, -4);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(-1));
+        $login = $this->getRecipient();
 
         foreach ($menuItems as $menuItem) {
-            if (!$menuItem->isAdmin || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($this->getRecipient())) {
-                $item = new PanelItem($menuItem);
+            if (!$menuItem->isAdmin || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
+                $item = new PanelItem($menuItem, $login);
                 $this->frame->addComponent($item);
             }
         }

@@ -32,6 +32,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onConstruct() {
         parent::onConstruct();
+        $login = $this->getRecipient();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
@@ -51,51 +52,51 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->actions->dbTools = $this->createAction(array($this, "dbTools"));
 
         $this->btn1 = new myButton(40, 6);
-        $this->btn1->setText(__("Server management"));
+        $this->btn1->setText(__("Server management", $login));
         $this->btn1->setAction($this->actions->serverManagement);
         $this->btn1->colorize("f00");
         $this->btn1->setScale(0.5);
         $this->frame->addComponent($this->btn1);
 
         $this->btn2 = new myButton(40, 6);
-        $this->btn2->setText(__("Server options"));
+        $this->btn2->setText(__("Server options", $login));
         $this->btn2->setAction($this->actions->serverOptions);
         $this->btn2->setScale(0.5);
         $this->frame->addComponent($this->btn2);
 
         $this->btn3 = new myButton(40, 6);
-        $this->btn3->setText(__("Game options"));
+        $this->btn3->setText(__("Game options", $login));
         $this->btn3->setAction($this->actions->gameOptions);
         $this->btn3->setScale(0.5);
         $this->frame->addComponent($this->btn3);
 
         $this->btn4 = new myButton(40, 6);
-        $this->btn4->setText(__("Admin Groups"));
+        $this->btn4->setText(__("Admin Groups", $login));
         $this->btn4->setAction($this->actions->adminGroups);
         $this->btn4->colorize("0d0");
         $this->btn4->setScale(0.5);
         $this->frame->addComponent($this->btn4);
 
         $this->btn5 = new myButton(40, 6);
-        $this->btn5->setText(__("Match settings"));
+        $this->btn5->setText(__("Match settings", $login));
         $this->btn5->setAction($this->actions->matchSettings);
         $this->btn5->setScale(0.5);
         $this->frame->addComponent($this->btn5);
 
         $this->btn6 = new myButton(40, 6);
-        $this->btn6->setText(__("ScriptMode settings"));
+        $this->btn6->setText(__("ScriptMode settings", $login));
         $this->btn6->setAction($this->actions->scriptSettings);
         $this->btn6->setScale(0.5);
         $this->frame->addComponent($this->btn6);
 
         $this->btn7 = new myButton(40, 6);
-        $this->btn7->setText(__("Force Scores"));
+        $this->btn7->setText(__("Force Scores", $login));
         $this->btn7->setAction($this->actions->forceScores);
         $this->btn7->setScale(0.5);
         $this->frame->addComponent($this->btn7);
 
         $this->btnDb = new myButton(40, 6);
-        $this->btnDb->setText(__("Database tools"));
+        $this->btnDb->setText(__("Database tools", $login));
         $this->btnDb->setAction($this->actions->dbTools);
         $this->btnDb->setScale(0.5);
         $this->frame->addComponent($this->btnDb);
@@ -103,7 +104,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->mainFrame->addComponent($this->frame);
 
         $this->closeButton = new myButton(30, 5);
-        $this->closeButton->setText(__("Close"));
+        $this->closeButton->setText(__("Close", $login));
         $this->closeButton->setAction($this->actions->close);
         $this->mainFrame->addComponent($this->closeButton);
     }

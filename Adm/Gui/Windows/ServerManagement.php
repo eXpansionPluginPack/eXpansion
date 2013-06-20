@@ -56,7 +56,7 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->addComponent($this->frame);
 
         $this->closeButton = new myButton(30, 6);
-        $this->closeButton->setText(__("Cancel"));
+        $this->closeButton->setText(__("Cancel",$this->getRecipient()));
         $this->closeButton->setAction($this->actions->close);
         $this->addComponent($this->closeButton);
     }

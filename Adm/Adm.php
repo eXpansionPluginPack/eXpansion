@@ -104,7 +104,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function serverOptions($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             $window = ServerOptions::Create($login);
-            $window->setTitle(__('Server Options'));
+            $window->setTitle(__('Server Options',$login));
             $window->centerOnScreen();
             $window->setSize(160, 80);
             $window->show();
@@ -116,7 +116,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $gamemode = $this->storage->gameInfos->gameMode;
             if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM) {
                 $window = Gui\Windows\ForceScores::Create($login);
-                $window->setTitle(__('Force Scores'));
+                $window->setTitle(__('Force Scores',$login));
                 $window->centerOnScreen();
                 $window->setSize(160, 80);
                 $window->show();
@@ -129,7 +129,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function gameOptions($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
             $window = GameOptions::Create($login);
-            $window->setTitle(__('Game Options'));
+            $window->setTitle(__('Game Options',$login));
             $window->setSize(160, 50);
             $window->centerOnScreen();
             $window->show();
@@ -149,7 +149,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function serverControlMain($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             $window = Gui\Windows\ServerControlMain::Create($login);
-            $window->setTitle(__('Server Management'));
+            $window->setTitle(__('Server Management', $login));
             $window->setSize(120, 20);
             $window->show();
         }
@@ -158,7 +158,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function matchSettings($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
             $window = Gui\Windows\MatchSettings::Create($login);
-            $window->setTitle(__('Match Settings'));
+            $window->setTitle(__('Match Settings',$login));
             $window->centerOnScreen();
             $window->setSize(160, 100);
             $window->show();
@@ -169,7 +169,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
             if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                 $window = Gui\Windows\ScriptSettings::Create($login);
-                $window->setTitle(__('Script Settings'));
+                $window->setTitle(__('Script Settings',$login));
                 $window->centerOnScreen();
                 $window->setSize(160, 100);
                 $window->show();

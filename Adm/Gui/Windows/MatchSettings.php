@@ -27,16 +27,16 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line(120));
-
+        $login = $this->getRecipient();
         $this->inputboxSaveAs = new Inputbox("SaveAs", 60);
-        $this->inputboxSaveAs->setLabel("Save MatchSettings as");
+        $this->inputboxSaveAs->setLabel(__("Save MatchSettings as", $login));
 
         $this->frame->addComponent($this->inputboxSaveAs);
 
         $this->actionSave = $this->createAction(array($this, "saveAs"));
 
         $this->saveButton = new OkButton(26, 5);
-        $this->saveButton->setText('$fff' . __("Save"));
+        $this->saveButton->setText('$fff' . __("Save", $login));
         $this->saveButton->colorize("a22");
         $this->saveButton->setAction($this->actionSave);
         $this->saveButton->setScale(0.8);
@@ -123,7 +123,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         if (count($settings) > 1) {
             foreach ($settings as $file) {
-                $this->items[$x] = new MatchSettingsFile($x, $file, $this, $this->sizeX);
+                $this->items[$x] = new MatchSettingsFile($x, $file, $this, $this->getRecipient(), $this->sizeX);
                 $this->pager->addItem($this->items[$x]);
                 $x++;
             }

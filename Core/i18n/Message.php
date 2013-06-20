@@ -50,7 +50,6 @@ class Message {
     }
 
     public function getMessage($lang = null) {
-        echo $lang;
         if ($lang == null) {
             return isset($this->lmessages[self::$defaultLanguage]) ? $this->lmessages[self::$defaultLanguage] : $this->originalMessage;
         } else if (isset($this->lmessages[$lang]))

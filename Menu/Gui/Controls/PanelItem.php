@@ -12,7 +12,7 @@ class PanelItem extends \ManiaLive\Gui\Control {
     private $time;
     private $frame;
 
-    function __construct(\ManiaLivePlugins\eXpansion\Menu\Structures\Menuitem $item) {
+    function __construct(\ManiaLivePlugins\eXpansion\Menu\Structures\Menuitem $item, $login) {
         $this->sizeX = 30;
         $this->sizeY = 5;
         $this->setAlign("left", "top");
@@ -25,7 +25,7 @@ class PanelItem extends \ManiaLive\Gui\Control {
         $action = \ManiaLive\Gui\ActionHandler::getInstance()->createAction($item->callback);
         $button = new myButton(30, 6);
         $button->setScale(0.6);
-        $button->setText($item->title);
+        $button->setText(__($item->title, $login));
         $button->setAction($action);
 
         $this->addComponent($button);
@@ -40,8 +40,8 @@ class PanelItem extends \ManiaLive\Gui\Control {
         $this->sizeX = 30;
         $bg = new \ManiaLib\Gui\Elements\Quad(40, 6);
         $bg->setBgcolor('0007');
-       // $this->addComponent($bg);
-        $label = new \ManiaLib\Gui\Elements\Label(30,4);
+        // $this->addComponent($bg);
+        $label = new \ManiaLib\Gui\Elements\Label(30, 4);
         $label->setStyle("TextCardInfoSmall");
         $label->setScale(0.9);
         $label->setText('$fff' . $item->title);
