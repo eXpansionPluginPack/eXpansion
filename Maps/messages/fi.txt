@@ -74,9 +74,9 @@ Virhe: %s
 #variable#%1$s  #queue#on lisätty jonoon #variable#%3$s#queue#, numerolla #variable#%5$s #queue#
 
 #queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
-#queue#Seuraavaksi pelataan #variable#%1$s  #queue#, tehnyt #variable#%2$s#queue# ja toivonut #variable#%3$s
+#queue#Seuraavaksi pelataan #variable#%1$s #queue#, tehnyt #variable#%2$s#queue# ja toivonut #variable#%3$s
 
-#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#quteue#
+#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#
 #queue#Seuraava kartta on #variable#%1$s  #queue#, tekijä #variable#%2$s#queue#
 
 #queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s

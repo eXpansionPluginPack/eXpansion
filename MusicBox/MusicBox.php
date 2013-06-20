@@ -116,7 +116,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $text = exp_getMessage('#variable# %1$s - %2$s $z$s#music# is been played next requested by %3$s #variable#');
                 $this->exp_chatSendServerMessage($text, null, array($song->title, $song->artist, \ManiaLib\Utils\Formatting::stripCodes($wish->player->nickName, "wos")));
             } else {
-                $text = exp_getMessage('#music# Next song: $z$s#variable# %1$s - %2$s ');
+                $text = exp_getMessage('#music#Next song: $z$s#variable# %1$s - %2$s');
                 $this->exp_chatSendServerMessage($text, null, array($song->title, $song->artist));
             }
         } catch (\Exception $e) {

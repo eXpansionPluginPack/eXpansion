@@ -1,9 +1,9 @@
 Queue
-Jono
+Toivo
 
 #variable# %1$s - %2$s $z$s#music# is been played next requested by %3$s #variable#
 #variable# %1$s - %2$s $z$s#music# toistetaan, pyynnön teki %3$s #variable#
 
-#music# Next song: $z$s#variable# %1$s - %2$s 
-#music# Seuraava kappale: $z$s#variable# %1$s - %2$s 
+#music#Next song: $z$s#variable# %1$s - %2$s
+#music#Seuraava kappale: $z$s#variable# %1$s - %2$s
 
