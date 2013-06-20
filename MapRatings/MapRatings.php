@@ -10,21 +10,22 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $rating = 0;
     private $ratingTotal = 0;
     private $config;
-
+    private $msg_rating;
+    private $msg_noRating;
+    
     function exp_onInit() {
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
         //get stuffs
         $this->config = Config::getInstance();
-        $this->config->msg_rating = exp_getMessage($this->config->msg_rating);
-        $this->config->msg_noRating = exp_getMessage($this->config->msg_noRating);
     }
 
     function exp_onLoad() {
         $this->enableDatabase();
         $this->enableDedicatedEvents();
-
+        $this->msg_rating = exp_getMessage('#rating#Map Approval Rating: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Your Rating: #variable#%4$s#rating# / #variable#5');  // '%1$s' = Map Name, '%2$s' = Rating %, '%3$s' = # of Ratings, '%4$s' = Player's Rating);
+        $this->msg_noRating = exp_getMessage('#rating# $iMap has not been rated yet!');
         if (!$this->db->tableExists("exp_ratings")) {
             $this->db->execute('CREATE TABLE IF NOT EXISTS `exp_ratings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -76,7 +77,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $menu->addButton($parent, "Fantastic (+++)", $button);
     }
 
-    public function hudRateMap($login, $param){
+    public function hudRateMap($login, $param) {
         $this->onPlayerChat(1, $login, $param, false);
     }
 
@@ -111,10 +112,10 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function sendRating ($login, $playerRating) {
+    function sendRating($login, $playerRating) {
         if ($login != null) {
             if ($this->ratingTotal == 0) {
-                $this->exp_chatSendServerMessage($this->config->msg_noRating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
+                $this->exp_chatSendServerMessage($this->msg_noRating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
                 return;
             }
             if ($playerRating === null) {
@@ -125,13 +126,13 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     $playerRating = $query->playerRating;
                 }
             }
-            $rating = (($this->rating-1) / 4) * 100;
+            $rating = (($this->rating - 1) / 4) * 100;
             $rating = round($rating) . "%";
-            $this->exp_chatSendServerMessage($this->config->msg_rating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'), $rating, $this->ratingTotal, $playerRating));
+            $this->exp_chatSendServerMessage($this->msg_rating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'), $rating, $this->ratingTotal, $playerRating));
         }
     }
 
-    function chatRate ($login, $arg, $param = null) {
+    function chatRate($login, $arg, $param = null) {
         if ($login != null) {
             switch ($arg) {
                 case "+++":
@@ -173,7 +174,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function chatRating ($login = null) {
+    function chatRating($login = null) {
         if ($login != null) {
             $this->sendRating($login, null);
         }
@@ -186,7 +187,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $window->redraw();
             }
         } catch (\Exception $e) {
-          // do silent exception;
+            // do silent exception;
         }
     }
 
@@ -196,7 +197,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //send msg
         if ($this->config->sendBeginMapNotices) {
             if ($this->ratingTotal == 0) {
-                $this->exp_chatSendServerMessage($this->config->msg_noRating, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
+                $this->exp_chatSendServerMessage($this->msg_noRating, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
             } else {
                 foreach ($this->storage->players as $login => $player) {
                     $this->sendRating($login, null);
@@ -209,7 +210,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
-
+        
     }
 
     function onPlayerConnect($login, $isSpectator) {
@@ -259,4 +260,5 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
 }
+
 ?>

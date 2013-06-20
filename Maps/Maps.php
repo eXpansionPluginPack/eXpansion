@@ -80,7 +80,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
             $this->onPlayerConnect($player->login, true);
-        
+
         $this->preloadHistory();
     }
 
@@ -228,11 +228,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         if ($this->config->showNextMapWidget) {
-            NextMapWidget::EraseAll();
-            $widget = NextMapWidget::Create(null);
-            $widget->setPosition(136, 74);
-            $widget->setMap($this->nextMap);
-            $widget->show();
+          $this->redrawNextMapWidget();
         }
     }
 
@@ -335,11 +331,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($queueCount == 1) {
                 $this->nextMap = $map;
                 if ($this->config->showNextMapWidget) {
-                    NextMapWidget::EraseAll();
-                    $widget = NextMapWidget::Create(null);
-                    $widget->setPosition(136, 74);
-                    $widget->setMap($this->nextMap);
-                    $widget->show();
+                    $this->redrawNextMapWidget();
                 }
 //$this->connection->chooseNextMap($map->fileName);
             }
@@ -351,6 +343,13 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } catch (\Exception $e) {
             $this->exp_chatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
         }
+    }
+
+    public function redrawNextMapWidget() {
+        foreach ($this->storage->players as $player)
+            $this->onPlayerConnect($player->login, false);
+        foreach ($this->storage->spectators as $player)
+            $this->onPlayerConnect($player->login, true);
     }
 
     public function queueMxMap($login, $file) {
@@ -365,11 +364,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($queueCount == 1) {
                 $this->nextMap = $map;
                 if ($this->config->showNextMapWidget) {
-                    NextMapWidget::EraseAll();
-                    $widget = NextMapWidget::Create(null);
-                    $widget->setPosition(136, 74);
-                    $widget->setMap($this->nextMap);
-                    $widget->show();
+                    $this->redrawNextMapWidget();
                 }
 //$this->connection->chooseNextMap($map->fileName);
             }
@@ -385,15 +380,13 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function gotoMap($login, \DedicatedApi\Structures\Map $map) {
         try {
+
             $player = $this->storage->getPlayerObject($login);
+
             $this->connection->chooseNextMap($map->fileName);
             $map = $this->connection->getNextMapInfo();
             if ($this->config->showNextMapWidget) {
-                NextMapWidget::EraseAll();
-                $widget = NextMapWidget::Create(null);
-                $widget->setPosition(136, 74);
-                $widget->setMap($map);
-                $widget->show();
+                $this->redrawNextMapWidget();
             }
             $this->connection->nextMap();
             $this->exp_chatSendServerMessage($this->msg_queueNow, null, array(\ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author, \ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));
@@ -525,11 +518,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->nextMap = $this->storage->nextMap;
             }
             if ($this->config->showNextMapWidget) {
-                NextMapWidget::EraseAll();
-                $widget = NextMapWidget::Create(null);
-                $widget->setPosition(136, 74);
-                $widget->setMap($this->nextMap);
-                $widget->show();
+               $this->redrawNextMapWidget();
             }
         }
     }
@@ -540,11 +529,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->nextMap = $this->storage->nextMap;
 
         if ($this->config->showNextMapWidget) {
-            NextMapWidget::EraseAll();
-            $widget = NextMapWidget::Create(null);
-            $widget->setPosition(136, 74);
-            $widget->setMap($this->nextMap);
-            $widget->show();
+            $this->redrawNextMapWidget();
         }
 
         $msg = exp_getMessage('#admin_action#Admin #variable#%1$s #admin_action#emptied the map queue list');
@@ -574,11 +559,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($this->config->showNextMapWidget && !$this->atPodium) {
             $this->nextMap = $this->storage->currentMap;
-            NextMapWidget::EraseAll();
-            $widget = NextMapWidget::Create(null);
-            $widget->setPosition(136, 74);
-            $widget->setMap($this->nextMap);
-            $widget->show();
+            $this->redrawNextMapWidget();
         }
     }
 
