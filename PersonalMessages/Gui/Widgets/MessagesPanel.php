@@ -197,8 +197,8 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
             $targetPlayer = $this->storage->getPlayerObject($target);
             $sourcePlayer = $this->storage->getPlayerObject($login);
             \ManiaLivePlugins\eXpansion\PersonalMessages\PersonalMessages::$reply[$login] = $target;
-            $this->connection->chatSendServerMessage('$faf' . $sourcePlayer->nickName . '$z$s$faf->' . $targetPlayer->nickName . '$z$s$faf : ' . $args['message'], $login);
-            $this->connection->chatSendServerMessage('$faf' . $sourcePlayer->nickName . '$z$s$faf->' . $targetPlayer->nickName . '$z$s$faf : ' . $args['message'], $target);
+            $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $args['message'], $login);
+            $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $args['message'], $target);
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage('$f00$oError $z$s$fff' . $e->getMessage(), $login);
         }

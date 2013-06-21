@@ -49,8 +49,8 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $sourcePlayer = $this->storage->getPlayerObject($login);
             self::$reply[$login] = $target;
 
-            $this->connection->chatSendServerMessage('$faf' . $sourcePlayer->nickName . '$z$s$faf->' . $targetPlayer->nickName . '$z$s$faf : ' . $this->message, $login);
-            $this->connection->chatSendServerMessage('$faf' . $sourcePlayer->nickName . '$z$s$faf->' . $targetPlayer->nickName . '$z$s$faf : ' . $this->message, $target);
+            $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $this->message, $login);
+            $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $this->message, $target);
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage('$f00$oError $z$s$fff' . $e->getMessage());
         }
@@ -59,15 +59,15 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public function sendReply($login, $message) {
         try {
             if (!isset($message)) {
-                $this->connection->chatSendServerMessage('$fafNo message to send to', $login);
+                $this->connection->chatSendServerMessage('$4bfNo message to send to', $login);
             }
             if (isset(self::$reply[$login])) {
                 $targetPlayer = $this->storage->getPlayerObject(self::$reply[$login]);
                 $sourcePlayer = $this->storage->getPlayerObject($login);
-                $this->connection->chatSendServerMessage('$faf' . $sourcePlayer->nickName . '$z$s$faf->' . $targetPlayer->nickName . '$z$s$faf : ' . $this->message, $login);
-                $this->connection->chatSendServerMessage('$faf' . $sourcePlayer->nickName . '$z$s$faf->' . $targetPlayer->nickName . '$z$s$faf : ' . $this->message, self::$reply[$login]);
+                $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $message, $login);
+                $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $message, self::$reply[$login]);
             } else {
-                $this->connection->chatSendServerMessage('$fafNo one to whisper back', $login);
+                $this->connection->chatSendServerMessage('$4bfNo one to whisper back', $login);
             }
         } catch (\Exception $e) {
             \ManiaLive\Utilities\Console::println("Error sending a reply" . $e->getMessage());
