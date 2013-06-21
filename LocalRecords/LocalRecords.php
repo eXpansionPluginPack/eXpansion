@@ -292,6 +292,14 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->chat_personalBest($login, null);
             }
         }
+        //send Ranking
+        if ($this->config->sendRankingNotices) {
+            foreach ($this->storage->players as $login => $player)
+                $this->chat_showRank($login);
+
+            foreach ($this->storage->spectators as $login => $player)
+                $this->chat_showRank($login);
+        }
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
@@ -320,16 +328,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($updated) {
             $this->updateRanks($this->storage->currentMap->uId, $nbLaps);
-        }
-
-        //send Ranking
-        if ($this->config->sendRankingNotices) {
-            foreach ($this->storage->players as $login => $player) {
-                $this->chat_showRank($login);
-            }
-            foreach ($this->storage->spectators as $login => $player) {
-                $this->chat_showRank($login);
-            }
         }
     }
 
