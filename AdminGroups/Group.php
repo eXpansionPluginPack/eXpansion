@@ -8,52 +8,53 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups;
  * @author oliverde8
  */
 class Group {
-	
-	private $groupName;
-	private $master;
-	private $groupUsers = array();
-	private $permissions;
-	
-	function __construct($groupName, $master) {
-		$this->groupName = $groupName;
-		$this->master = $master;
-	}
-	
-	public function addAdmin($admin){
-		$this->groupUsers[] = $admin;
-	}
-	
-	public function removeAdmin($login){
-		$i = 0;
-		$found = false;
-		while($i < sizeof($this->groupUsers) && !$found){
-			if($this->groupUsers[$i]->getLogin() == $login){
-				$found = true;
-				while(isset($this->groupUsers[$i+1])){
-					$this->groupUsers[$i] = $this->groupUsers[$i+1];
-					$i++;
-				}
-				unset($this->groupUsers[$i]);
-				return true;
-			}
-            $i++;			
-		}
-		return false;
-	}
 
+    private $groupName;
+    
+    /** @var boolean */    
+    private $master;
+    private $groupUsers = array();
+    private $permissions;
 
-	public function addPermission($name, $val){
-		$this->permissions[$name] = $val;
-	}
-	
-	public function removePermission($name){
-		$this->permissions[$name] = false;
-	}
-	
-	public function hasPermission($name){
-		return $name==null || $this->master || $this->hasPermission2($name);
-	}
-	
+    function __construct($groupName, $master) {
+        $this->groupName = $groupName;
+        $this->master = $master;
+    }
+
+    public function addAdmin(Admin $admin) {
+        $this->groupUsers[] = $admin;
+    }
+
+    public function removeAdmin($login) {
+        $i = 0;
+        $found = false;
+        while ($i < sizeof($this->groupUsers) && !$found) {
+            if ($this->groupUsers[$i]->getLogin() == $login) {
+                $found = true;
+                while (isset($this->groupUsers[$i + 1])) {
+                    $this->groupUsers[$i] = $this->groupUsers[$i + 1];
+                    $i++;
+                }
+                unset($this->groupUsers[$i]);
+                return true;
+            }
+            $i++;
+        }
+        return false;
+    }
+
+    public function addPermission($name, $val) {
+        $this->permissions[$name] = $val;
+    }
+
+    public function removePermission($name) {
+        $this->permissions[$name] = false;
+    }
+
+    public function hasPermission($name) {
+        return $name == null || $this->master || $this->hasPermission2($name);
+    }
+
     private function hasPermission2($name) {
         if ($name == "")
             return true;
@@ -63,24 +64,22 @@ class Group {
         else
             return false;
     }
-	
-	public function getGroupName() {
-		return $this->groupName;
-	}
 
-	public function isMaster() {
-		return $this->master;
-	}
+    public function getGroupName() {
+        return $this->groupName;
+    }
 
-	public function getGroupUsers() {
-		return $this->groupUsers;
-	}
+    public function isMaster() {
+        return $this->master;
+    }
 
-	public function getPermissions() {
-		return $this->permissions;
-	}
+    public function getGroupUsers() {
+        return $this->groupUsers;
+    }
 
-
+    public function getPermissions() {
+        return $this->permissions;
+    }
 
 }
 

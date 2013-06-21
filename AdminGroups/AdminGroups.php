@@ -111,7 +111,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onLoad() {
-     
+
 
         //Loading all Messages;
         $this->msg_needBeAdmin = exp_getMessage('#admin_error#You need to be an Admin to use that command');
@@ -371,8 +371,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     $string .= "login[] = '" . $value->getLogin() . "'\n";
             }
         }
-
-        file_put_contents("config/" . $this->storage->serverLogin . "_admins.ini", $string);
+        $status = file_put_contents("config/" . $this->storage->serverLogin . "_admins.ini", $string, LOCK_EX);
+        if ($status === false)
+            throw new \Exception("Writing the admingroups file at config/" . $this->storage->serverLogin . "_admins.ini FAILED. perhaps not enough permissions for folder & file ?");
     }
 
     /**

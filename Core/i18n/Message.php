@@ -35,16 +35,16 @@ class Message {
      * Returns a multilanguage messassage array to be used with Connection->ChatSendServerMessageToLanguage();
      * @return Array(String => String) 
      */
-    public function getMultiLangArray($args) {        
+    public function getMultiLangArray($args) {
         $temp = $this->lmessages;
-        $temp['en'] = $this->originalMessage;
+        $temp[] = $this->originalMessage;
         $out = array();
 
         foreach ($temp as $lang => $msg) {
             $arrgs = $args;
             array_unshift($arrgs, $msg);
             $text = call_user_func_array('sprintf', $arrgs);
-            $out[] = array("Lang" => lcfirst($lang), "Text" => \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text) );
+            $out[] = array("Lang" => lcfirst($lang), "Text" => \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text));
         }
         return $out;
     }
