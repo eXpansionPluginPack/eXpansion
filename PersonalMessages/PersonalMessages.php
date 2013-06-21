@@ -5,7 +5,8 @@ namespace ManiaLivePlugins\eXpansion\PersonalMessages;
 class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public static $reply = array();
-    private $message ;
+    private $message;
+
     public function exp_onReady() {
         $this->enableDedicatedEvents();
         $this->registerChatCommand("pmx", "sendPersonalMessage", -1, true);
@@ -42,14 +43,14 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     function sendPm($login, $target) {
-        try {          
+        try {
             \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Erase($login);
             $targetPlayer = $this->storage->getPlayerObject($target);
             $sourcePlayer = $this->storage->getPlayerObject($login);
-            self::$reply[$login] = $target;            
-            
-            $this->connection->chatSendServerMessage('$abcYou whisper to ' . ($targetPlayer->nickName) . '$z$s$abc: ' . $this->message, $login);
-            $this->connection->chatSendServerMessage('$abcA whisper from ' . ($sourcePlayer->nickName) . '$z$s$abc: ' . $this->message, $target);
+            self::$reply[$login] = $target;
+
+            $this->connection->chatSendServerMessage('$faf' . $sourcePlayer->nickName . '$z$s$faf->' . $targetPlayer->nickName . '$z$s$faf : ' . $this->message, $login);
+            $this->connection->chatSendServerMessage('$faf' . $sourcePlayer->nickName . '$z$s$faf->' . $targetPlayer->nickName . '$z$s$faf : ' . $this->message, $target);
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage('$f00$oError $z$s$fff' . $e->getMessage());
         }
@@ -58,7 +59,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public function sendReply($login, $message) {
         try {
             if (!isset($message)) {
-                    $this->connection->chatSendServerMessage('$abcNo message to send to', $login);
+                $this->connection->chatSendServerMessage('$abcNo message to send to', $login);
             }
             if (isset(self::$reply[$login])) {
                 $targetPlayer = $this->storage->getPlayerObject(self::$reply[$login]);
