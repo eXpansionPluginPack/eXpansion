@@ -59,15 +59,15 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public function sendReply($login, $message) {
         try {
             if (!isset($message)) {
-                $this->connection->chatSendServerMessage('$abcNo message to send to', $login);
+                $this->connection->chatSendServerMessage('$fafNo message to send to', $login);
             }
             if (isset(self::$reply[$login])) {
                 $targetPlayer = $this->storage->getPlayerObject(self::$reply[$login]);
                 $sourcePlayer = $this->storage->getPlayerObject($login);
-                $this->connection->chatSendServerMessage('$abcYou whisper to ' . ($targetPlayer->nickName) . '$z$s$abc: ' . $message, $login);
-                $this->connection->chatSendServerMessage('$abcA whisper from ' . ($sourcePlayer->nickName) . '$z$s$abc: ' . $message, self::$reply[$login]);
+                $this->connection->chatSendServerMessage('$faf' . $sourcePlayer->nickName . '$z$s$faf->' . $targetPlayer->nickName . '$z$s$faf : ' . $this->message, $login);
+                $this->connection->chatSendServerMessage('$faf' . $sourcePlayer->nickName . '$z$s$faf->' . $targetPlayer->nickName . '$z$s$faf : ' . $this->message, self::$reply[$login]);
             } else {
-                $this->connection->chatSendServerMessage('$abcNo one to whisper back', $login);
+                $this->connection->chatSendServerMessage('$fafNo one to whisper back', $login);
             }
         } catch (\Exception $e) {
             \ManiaLive\Utilities\Console::println("Error sending a reply" . $e->getMessage());
