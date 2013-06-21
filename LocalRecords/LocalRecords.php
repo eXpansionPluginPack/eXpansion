@@ -68,10 +68,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $ranks_reset = false;
 
     /**
-     * Checking if we trued to get ranks beffore
+     * Checking if we trued to get ranks before
      * @var bool
      */
-    private $rank_updated = true;
+    private $rank_needUpdated = true;
 
     /**
      * The last time of the players past the checkpoints
@@ -221,6 +221,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
           $this->addRecord('test_970', 31100, 1, array());
           $this->addRecord('test_971', 31200, 1, array());
           $this->addRecord('test_974', 30200, 1, array()); */
+        $this->getRanks();
     }
 
     public function showRecsMenuItem($login) {
@@ -333,8 +334,13 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+
         if ($this->ranks_reset)
             $this->resetRanks();
+
+        // Added this to calulate the new ranks during every map change -reaby
+        $this->rank_needUpdated = true;
+        $this->getRanks();
     }
 
     public function onPlayerConnect($login, $isSpectator) {
@@ -1041,6 +1047,23 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return int
      */
     public function getPlayerRank($login) {
+        $id = -1;
+        foreach ($this->ranks as $id => $class) {
+            if (!property_exists($class, "rank_playerlogin"))
+                return -1;
+
+            if ($class->rank_playerlogin == $login)
+                return $id + 1;
+        }
+    }
+
+    /**
+     * Returns the players server rank as it is buffered.
+     *
+     * @param $login
+     * @return int
+     */
+    public function getPlayerRank_old($login) {
 
         if (!isset($this->player_ranks[$login]) || ($this->map_count % $this->config->nbMap_rankProcess) == 0) {
 
@@ -1092,11 +1115,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return array
      */
     public function getRanks() {
-        if ((empty($this->ranks) && $this->rank_updated) || (($this->map_count % $this->config->nbMap_rankProcess) == 0 && $this->rank_updated)) {
+        // if ((empty($this->ranks) && $this->rank_updated) || (($this->map_count % $this->config->nbMap_rankProcess) == 0 && $this->rank_updated)) {
+        if ((empty($this->ranks) && $this->rank_needUpdated)) {
+            $this->rank_needUpdated = false;
 
-            $this->rank_updated = false;
-
-            $ranks = array();
             $nbTrack = sizeof($this->storage->maps);
             $uids = $this->getUidSqlString();
 
@@ -1130,15 +1152,13 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             $dbData = $this->db->query($q);
 
-            if ($dbData->recordCount() == 0) {
-                
-            } else {
-                while ($data = $dbData->fetchStdObject()) {
-                    $ranks[] = $data;
-                }
+            $this->ranks = array();
 
-                $this->ranks = array();
-                $this->ranks = $ranks;
+            if ($dbData->recordCount() == 0)
+                return $this->ranks;
+
+            while ($data = $dbData->fetchStdObject()) {
+                $this->ranks[] = $data;
             }
         }
         return $this->ranks;

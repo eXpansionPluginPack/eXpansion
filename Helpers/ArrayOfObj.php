@@ -16,6 +16,24 @@ class ArrayOfObj {
                 });
     }
 
+    /**
+     * Gets a matching object by searching property by value 
+     * @param type $array
+     * @param string $prop
+     * @param string $value
+     * @return false|Object $obj
+     */
+    static function getObjbyPropValue(&$array, $prop, $value) {
+        foreach ($array as $class) {
+            if (!property_exists($class, $prop))
+                throw new \Exception("Property $prop doesn't exists!");
+
+            if ($class->$prop == $value)
+                return $class;
+        }
+        return false;
+    }
+
     static function contains(&$array, $prop) {
         foreach ($array as $class) {
             if (property_exists($class, $prop))

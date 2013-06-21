@@ -1,0 +1,11 @@
+﻿%1$s#dedirecord# secured the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s #dedirecord#$n(#rank#%4$s#dedirecord#)!
+%1$s#dedirecord# secured the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s #dedirecord#$n(#rank#%4$s#dedirecord#)!
+
+%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s
+%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s
+
+#dedirecord#Dedimania global ranking limited to top #rank#15#dedirecord# for basic accounts.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..
+#dedirecord#Dedimania global ranking limited to top #rank#15#dedirecord# for basic accounts.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..
+
+#dedirecord#Thank You for supporting Dedimania!  Your max record ranking is set at #rank#%s$1#dedirecord#.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..
+#dedirecord#Thank You for supporting Dedimania!  Your max record ranking is set at #rank#%s$1#dedirecord#.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..
