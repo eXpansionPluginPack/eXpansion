@@ -14,13 +14,13 @@ Cancel Vote
 Annuleer Stem
 
 #variable#%1$s #rank#initiated restart map vote..
-#variable#%1$s #rank#geïnitieerd herstart map stem..
+#variable#%1$s #rank#geÃ¯nitieerd herstart map stem..
 
 #admin_error# $iMust run skip vote within first %1$s seconds of match start..
 #admin_error# $iMoet sla over stem binnen de eerste %1$s seconden van een wedstrijd start..
 
 #variable#%1$s #rank#initiated skip map vote..
-#variable#%1$s #rank#geïnitieerd sla over map stem..
+#variable#%1$s #rank#geÃ¯nitieerd sla over map stem..
 
 #record# $iVote passed!
 #record# $iStem geslaagd!
