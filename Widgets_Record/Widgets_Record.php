@@ -41,7 +41,6 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             foreach (Gui\Widgets\RecordsPanel::GetAll() as $panel) {
                 try {
                     $panel->update();
-                    $panel->redraw($panel->getRecipient());
                 } catch (\Exception $e) {
                   // silent exception
                 }
