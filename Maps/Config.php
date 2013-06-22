@@ -6,7 +6,7 @@ class Config extends \ManiaLib\Utils\Singleton {
 
     public $bufferSize = 5;
     public $showNextMapWidget = true;
-    public $showEndMatchNotices = false;
+    public $showEndMatchNotices = true;
 
 }
 ?>
