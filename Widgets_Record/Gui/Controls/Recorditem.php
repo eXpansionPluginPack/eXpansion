@@ -40,7 +40,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
         $this->label = new \ManiaLib\Gui\Elements\Label(4, 4);
-        $this->label->setAlign('left', 'center');
+        $this->label->setAlign('center', 'center');
         $this->label->setScale(0.7);
         $bold = "";
         if ($index <= 3)
@@ -53,37 +53,37 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         $this->frame->addComponent($spacer);
 
-        $flag = new \ManiaLib\Gui\Elements\Quad(3, 3);
-        $flag->setAlign("left", "center");
-        $flag->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+        /* $flag = new \ManiaLib\Gui\Elements\Quad(3, 3);
+          $flag->setAlign("left", "center");
+          $flag->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
 
-        $config = Config::getInstance();
-        $path = $record->nation;
+          $config = Config::getInstance();
+          $path = $record->nation;
 
-        if ($path !== null) {
-            $path = explode("|", $path);
-            if (sizeof($path) >= 2) {
+          if ($path !== null) {
+          $path = explode("|", $path);
+          if (sizeof($path) >= 2) {
 
-                $image = "file://Skins/Avatars/Flags/" . Countries::mapCountry($path[2]) . ".dds";
-                $flag->setStyle("");
-                $flag->setImage($image, false);
-            }
-        }
-        $this->frame->addComponent($flag);
+          $image = "file://Skins/Avatars/Flags/" . Countries::mapCountry($path[2]) . ".dds";
+          $flag->setStyle("");
+          $flag->setImage($image, false);
+          }
+          }
+          $this->frame->addComponent($flag);
 
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(1, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        $this->frame->addComponent($spacer);
-
+          $spacer = new \ManiaLib\Gui\Elements\Quad();
+          $spacer->setSize(1, 4);
+          $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+          $this->frame->addComponent($spacer);
+         */
         $this->label = new \ManiaLib\Gui\Elements\Label(14, 4);
         $this->label->setAlign('left', 'center');
         $this->label->setScale(0.7);
         $this->label->setText('$fff' . \ManiaLive\Utilities\Time::fromTM($record->time));
         if ($record->login == $login) {
             $this->label->setStyle("TextTitle2Blink");
+            $this->label->setTextSize(1);
         }
-        $this->label->setTextSize(1);
         $this->frame->addComponent($this->label);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
@@ -94,10 +94,12 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $this->nick = new \ManiaLib\Gui\Elements\Label(30, 4);
         $this->nick->setAlign('left', 'center');
         $this->nick->setScale(0.7);
+
         if ($record->login == $login) {
             $this->nick->setStyle("TextTitle2Blink");
+            $this->nick->setTextSize(1);
         }
-        $this->nick->setTextSize(1);
+
         $nickname = \ManiaLib\Utils\Formatting::stripCodes($record->nickName, "wosnm");
         $this->nick->setText('$fff' . $nickname);
         $this->frame->addComponent($this->nick);

@@ -16,7 +16,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onLoad() {
-        if($this->isPluginLoaded('Reaby\Dedimania'))
+        if ($this->isPluginLoaded('Reaby\Dedimania'))
             Dispatcher::register(\ManiaLivePlugins\Reaby\Dedimania\Events\Event::getClass(), $this);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
@@ -42,9 +42,10 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 try {
                     $panel->update();
                 } catch (\Exception $e) {
-                  // silent exception
+                    // silent exception
                 }
             }
+            Gui\Widgets\RecordsPanel::RedrawAll();
         }
     }
 
@@ -52,6 +53,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         Gui\Widgets\RecordsPanel::$dedirecords = array();
         $this->forceUpdate = true;
     }
+
     public function onUpdateRecords($data) {
         Gui\Widgets\RecordsPanel::$localrecords = $data;
         $this->needUpdate = true;
@@ -72,7 +74,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $panel = Gui\Widgets\RecordsPanel::Create($login);
         $panel->setSize(40, 60);
         $panel->setPosition(-160, 60);
-       // $panel->setScale(0.8);
+        // $panel->setScale(0.8);
         $panel->update();
         $panel->show();
     }
@@ -82,27 +84,27 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onDedimaniaOpenSession() {
-
+        
     }
 
     public function onNewRecord($data) {
-
+        
     }
 
     public function onDedimaniaNewRecord($data) {
-
+        
     }
 
     public function onDedimaniaPlayerConnect($data) {
-
+        
     }
 
     public function onDedimaniaPlayerDisconnect() {
-
+        
     }
 
     public function onDedimaniaRecord($record, $oldrecord) {
-
+        
     }
 
 }
