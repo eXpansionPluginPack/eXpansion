@@ -6,7 +6,6 @@ class Record {
 
     public $isNew = false;
     public $isUpdated = false;
-
     public $place;
     public $login;
     public $nickName;
@@ -14,6 +13,8 @@ class Record {
     public $nbFinish;
     public $nbWins;
     public $avgScore;
+
+    /** @var int[] */
     public $ScoreCheckpoints = array();
     public $date;
     public $nation;

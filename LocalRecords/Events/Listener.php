@@ -11,7 +11,11 @@ interface Listener extends \ManiaLive\Event\Listener {
     /** @var \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record */
     function onNewRecord($data);
     
-    /** @var array(\ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record) */
+    /** 
+     * onUpdateRecords($data)
+     * 
+     * Called when 
+     * @param \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record[] $data  */
     function onUpdateRecords($data);
        
 }

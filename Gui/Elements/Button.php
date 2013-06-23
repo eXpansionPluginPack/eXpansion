@@ -14,6 +14,12 @@ class Button extends \ManiaLive\Gui\Control {
     private $color = '$000';
     private $text;
 
+    /**
+     * Button
+     * 
+     * @param int $sizeX = 24
+     * @param intt $sizeY = 6
+     */
     function __construct($sizeX = 24, $sizeY = 6) {
         $config = Config::getInstance();
 
