@@ -81,7 +81,6 @@ class TimePanel extends \ManiaLive\Gui\Window {
             $localcp = array();
             if ($record) {
                 $localcp = $record->ScoreCheckpoints;
-                print_r($localcp);
             }
         }
 
