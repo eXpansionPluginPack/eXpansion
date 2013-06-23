@@ -49,7 +49,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
     public function onCheckpoint($time, $cpIndex, $mode) {
         $this->currentRun[$cpIndex] = $time;
         $this->checkpoint->setText($this->counter . ".." . ($cpIndex + 1));
-        $diff = null;
+
         $dedicp = array();
         $localcp = array();
 
@@ -61,7 +61,8 @@ class TimePanel extends \ManiaLive\Gui\Window {
             $dedicp = array();
             $localcp = array();
             if (isset(self::$dedirecords[0]))
-                $dedicp = explode(",", self::$dedirecords[0]['Checks']);
+                if (array_key_exists('Checks', self::$dedirecords[0]))
+                    $dedicp = explode(",", self::$dedirecords[0]['Checks']);
 
             if (isset(self::$localrecords[0]))
                 $localcp = self::$localrecords[0]->ScoreCheckpoints;
@@ -71,7 +72,8 @@ class TimePanel extends \ManiaLive\Gui\Window {
             $dedicp = array();
             foreach (self::$dedirecords as $dedirec) {
                 if ($dedirec['Login'] == $this->getRecipient()) {
-                    $dedicp = explode(",", self::$dedirecords[0]['Checks']);
+                    if (array_key_exists('Checks', $dedirec))
+                        $dedicp = explode(",", $dedirec['Checks']);
                     break;
                 }
             }
@@ -79,28 +81,32 @@ class TimePanel extends \ManiaLive\Gui\Window {
             $localcp = array();
             if ($record) {
                 $localcp = $record->ScoreCheckpoints;
-               
+                print_r($localcp);
             }
         }
 
         // determin whenever to use deditime or localtime from the checkpoints
-        $deditime = null;
-        $localtime = null;
-        if (isset($dedicp[$cpIndex]))
+        $deditime = 0;
+        $localtime = 0;
+        $diff = null;
+        if (isset($dedicp[$cpIndex])) {
             $deditime = $dedicp[$cpIndex];
+            $diff = $deditime;
+        }
+
         if (isset($localcp[$cpIndex]))
             $localtime = $localcp[$cpIndex];
 
-        $diff = $deditime;
+
         if ($localtime > $deditime)
             $diff = $localtime;
 
-
-        if ($diff !== null) {
-            // if no records found for dedimania or local, fallback to personal best
+        if ($diff == null)
             if (isset($this->bestRun[$cpIndex]))
                 $diff = $this->bestRun[$cpIndex];
 
+        if ($diff !== null) {
+            // if no records found for dedimania or local, fallback to personal best
             $this->time->setText(\ManiaLive\Utilities\Time::fromTM($time - $diff, true));
             $this->time->setTextColor('a00a');
             if ($diff > $time)

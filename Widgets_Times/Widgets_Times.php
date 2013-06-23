@@ -30,7 +30,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function exp_onReady() {
-        $this->onBeginMap(null, null, null);
+        $this->onBeginMatch();
     }
 
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
@@ -69,7 +69,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         TimeChooser::EraseAll();
     }
 
-    public function onBeginMap($map, $warmUp, $matchContinuation) {
+    public function onBeginMatch() {
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
 
@@ -80,6 +80,8 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onPlayerConnect($login, $isSpectator) {
         $widget = TimeChooser::Create($login);
         $widget->setSize(40, 6);
+        if (isset($this->modes[$login]))
+            $widget->updatePanelMode($this->modes[$login]);
         $widget->setPosition(0, -77);
         $widget->show();
     }
