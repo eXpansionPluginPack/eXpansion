@@ -405,7 +405,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $player = $this->storage->getPlayerObject($login);
             $msg = exp_getMessage('#admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from the playlist');
-            $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login, \ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author));
+            $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), null, \ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author));
             $this->connection->removeMap($map->fileName);
         } catch (\Exception $e) {
             $this->exp_chatSendServerMessage(__("Error: %s", $login, $e->getMessage()));

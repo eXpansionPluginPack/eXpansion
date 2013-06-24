@@ -11,6 +11,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $config;
     private $vote;
     private $titleId;
+    private $msg_add;
 
     public function exp_onInit() {
         parent::exp_onInit();
@@ -44,6 +45,11 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $version = $this->connection->getVersion();
         $this->titleId = $version->titleId;
         $this->enableDedicatedEvents();
+    }
+
+    public function exp_onLoad() {
+
+        $this->msg_add = exp_getMessage('Map %s $z$s$fff added from MX Succesfully');
     }
 
     public function onOliverde8HudMenuReady($menu) {
@@ -119,7 +125,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($mxId == 'this') {
             try {
                 $this->connection->addMap($this->storage->currentMap->fileName);
-                $this->connection->chatSendServerMessage(__('Map %s $z$s$fff added from MX Succesfully.', $login, $this->storage->currentMap->name));
+                $this->exp_chatSendServerMessage($this->msg_add, null, array($this->storage->currentMap->name));
             } catch (\Exception $e) {
                 $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
             }
@@ -186,7 +192,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connection->addMap($file);
 
             $map = $this->connection->getMapInfo($file);
-            $this->connection->chatSendServerMessage(__('Map %s $z$s$fff added from MX Succesfully.', $login, $map->name));
+            $this->exp_chatSendServerMessage($this->msg_add, null, array($map->name));
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
         }
@@ -266,7 +272,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function mxQueue($login, $mxId) {
         try {
             if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
-               
+
                 $query = "";
                 switch ($this->titleId) {
                     case "SMStorm":

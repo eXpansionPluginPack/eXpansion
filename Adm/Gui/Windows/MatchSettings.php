@@ -52,7 +52,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         try {
             if (empty($entries['SaveAs'])) {
-                $this->connection->chatSendServerMessage(__("Error in filename", $this->getRecipient()));
+                $this->connection->chatSendServerMessage(__("Error in filename", $login), $login);
                 return;
             }
             $filename = $this->connection->getMapsDirectory() . "/MatchSettings/" . $entries['SaveAs'] . ".txt";
@@ -60,7 +60,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->populateList();
             $this->RedrawAll();
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()));
+            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $login, $e->getMessage()), $login);
         }
     }
 
@@ -69,11 +69,11 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         try {
             unlink($filename);
             $file = explode("/", $filename);
-            $this->connection->chatSendServerMessage(__("File '%s' deleted from filesystem!", $this->getRecipient(), end($file)));
+            $this->connection->chatSendServerMessage(__("File '%s' deleted from filesystem!", $this->getRecipient(), end($file)), $login);
             $this->populateList();
             $this->RedrawAll();
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()));
+            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()), $login);
         }
     }
 
@@ -82,9 +82,9 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         try {
             $this->connection->saveMatchSettings($filename);
             $file = explode("/", $filename);
-            $this->connection->chatSendServerMessage(__("Saved MatchSettings to file: %s", $this->getRecipient(), end($file)));
+            $this->connection->chatSendServerMessage(__("Saved MatchSettings to file: %s", $login, end($file)), $login);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()));
+            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $login, $e->getMessage()), $login);
         }
     }
 
@@ -92,9 +92,9 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         try {
             $this->connection->loadMatchSettings($filename);
             $file = explode("/", $filename);
-            $this->connection->chatSendServerMessage(__("Loaded MatchSettings from file: %s", $this->getRecipient(), end($file)));
+            $this->connection->chatSendServerMessage(__("Loaded MatchSettings from file: %s", $login, end($file)), $login);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()));
+            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $login, $e->getMessage()), $login);
         }
     }
 
