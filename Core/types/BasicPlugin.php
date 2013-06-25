@@ -47,12 +47,15 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
          */
         protected $exp_maxp;
 
+        /* @var \ManiaLivePlugins\eXpansion\Core\RelayLink Relay connector */
+        protected $relay;
+
         public final function onInit() {
             //Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
 
             $this->exp_unloading = false;
-
+            $this->relay = \ManiaLivePlugins\eXpansion\Core\RelayLink::getInstance();
             \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
 
             //All plugins need the eXpansion Core to work properly
@@ -355,6 +358,12 @@ namespace {
             return call_user_func_array('sprintf', $args);
         }
 
+        /**
+         * exp_getMessage(string $string)
+         * 
+         * @param string $string
+         * @return \ManiaLivePlugins\eXpansion\Core\i18n\Message
+         */
         function exp_getMessage($string) {
             return \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getObject($string);
         }

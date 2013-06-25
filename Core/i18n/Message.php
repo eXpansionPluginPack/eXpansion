@@ -33,6 +33,7 @@ class Message {
     /**
      * getMultiLangArray()
      * Returns a multilanguage messassage array to be used with Connection->ChatSendServerMessageToLanguage();
+     * @param Array $args 
      * @return Array(String => String) 
      */
     public function getMultiLangArray($args) {

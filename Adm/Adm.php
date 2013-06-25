@@ -28,11 +28,12 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Server Management'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Server Management'), null, array($this, 'serverControlMain'), true);
-          //  $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Force Scores'), null, array($this, 'forceScores'), true);
+            //  $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Force Scores'), null, array($this, 'forceScores'), true);
         }
 
         $this->enableDedicatedEvents();
         ServerControlMain::$mainPlugin = $this;
+        Gui\Windows\RoundPoints::$plugin = $this;
 
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
@@ -104,7 +105,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function serverOptions($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             $window = ServerOptions::Create($login);
-            $window->setTitle(__('Server Options',$login));
+            $window->setTitle(__('Server Options', $login));
             $window->centerOnScreen();
             $window->setSize(160, 80);
             $window->show();
@@ -116,7 +117,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $gamemode = $this->storage->gameInfos->gameMode;
             if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM) {
                 $window = Gui\Windows\ForceScores::Create($login);
-                $window->setTitle(__('Force Scores',$login));
+                $window->setTitle(__('Force Scores', $login));
                 $window->centerOnScreen();
                 $window->setSize(160, 80);
                 $window->show();
@@ -129,7 +130,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function gameOptions($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
             $window = GameOptions::Create($login);
-            $window->setTitle(__('Game Options',$login));
+            $window->setTitle(__('Game Options', $login));
             $window->setSize(160, 50);
             $window->centerOnScreen();
             $window->show();
@@ -141,6 +142,16 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $window = Gui\Windows\ServerManagement::Create($login);
             $window->setTitle(__('Server Management'));
             $window->setSize(60, 20);
+            $window->centerOnScreen();
+            $window->show();
+        }
+    }
+
+    public function roundPoints($login) {
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+            $window = Gui\Windows\RoundPoints::Create($login);
+            $window->setTitle(__('Custom Round Points'));
+            $window->setSize(160, 70);
             $window->centerOnScreen();
             $window->show();
         }
@@ -158,7 +169,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function matchSettings($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
             $window = Gui\Windows\MatchSettings::Create($login);
-            $window->setTitle(__('Match Settings',$login));
+            $window->setTitle(__('Match Settings', $login));
             $window->centerOnScreen();
             $window->setSize(160, 100);
             $window->show();
@@ -169,7 +180,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
             if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                 $window = Gui\Windows\ScriptSettings::Create($login);
-                $window->setTitle(__('Script Settings',$login));
+                $window->setTitle(__('Script Settings', $login));
                 $window->centerOnScreen();
                 $window->setSize(160, 100);
                 $window->show();
@@ -178,8 +189,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         }
     }
-    
-      public function dbTools($login) {
+
+    public function dbTools($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             if ($this->isPluginLoaded("eXpansion\Database")) {
                 $this->callPublicMethod("eXpansion\Database", "showDbMaintainance", $login);
@@ -192,6 +203,18 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function adminGroups($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
             \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->windowGroups($login);
+        }
+    }
+
+    public function setPoints($login, $points) {
+        try {
+            $nick = $this->storage->getPlayerObject($login)->nickName;
+            $ipoints = implode(",", $points);
+            $msg = exp_getMessage('#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s');
+            $this->exp_chatSendServerMessage($msg, null, array($nick, $ipoints));
+            $this->connection->setRoundCustomPoints($points);
+        } catch (\Exception $e) {
+            $this->connection->chatSendServerMessage(__('#error#Error: %s', $login, $e->getMessage()), $login);
         }
     }
 

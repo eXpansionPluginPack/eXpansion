@@ -42,14 +42,16 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->actions = new \stdClass();
         $this->actions->close = $this->createAction(array($this, "close"));
-        $this->actions->serverOptions = $this->createAction(array($this, "serverOptions"));
-        $this->actions->gameOptions = $this->createAction(array($this, "gameOptions"));
-        $this->actions->matchSettings = $this->createAction(array($this, "matchSettings"));
-        $this->actions->serverManagement = $this->createAction(array($this, "serverManagement"));
-        $this->actions->adminGroups = $this->createAction(array($this, "adminGroups"));
-        $this->actions->scriptSettings = $this->createAction(array($this, "scriptSettings"));
-        $this->actions->forceScores = $this->createAction(array($this, "forceScores"));
-        $this->actions->dbTools = $this->createAction(array($this, "dbTools"));
+        $this->actions->serverOptions = $this->createAction(array(self::$mainPlugin, "serverOptions"));
+        $this->actions->gameOptions = $this->createAction(array(self::$mainPlugin, "gameOptions"));
+        $this->actions->matchSettings = $this->createAction(array(self::$mainPlugin, "matchSettings"));
+        $this->actions->serverManagement = $this->createAction(array(self::$mainPlugin, "serverManagement"));
+        $this->actions->adminGroups = $this->createAction(array(self::$mainPlugin, "adminGroups"));
+        $this->actions->scriptSettings = $this->createAction(array(self::$mainPlugin, "scriptSettings"));
+        $this->actions->forceScores = $this->createAction(array(self::$mainPlugin, "forceScores"));
+        $this->actions->roundPoints = $this->createAction(array(self::$mainPlugin, "roundPoints"));
+        $this->actions->dbTools = $this->createAction(array(self::$mainPlugin, "dbTools"));
+
 
         $this->btn1 = new myButton(40, 6);
         $this->btn1->setText(__("Server management", $login));
@@ -94,6 +96,12 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->btn7->setAction($this->actions->forceScores);
         $this->btn7->setScale(0.5);
         $this->frame->addComponent($this->btn7);
+
+        $this->btn8 = new myButton(40, 6);
+        $this->btn8->setText(__("Round points", $login));
+        $this->btn8->setAction($this->actions->roundPoints);
+        $this->btn8->setScale(0.5);
+        $this->frame->addComponent($this->btn8);
 
         $this->btnDb = new myButton(40, 6);
         $this->btnDb->setText(__("Database tools", $login));
@@ -161,6 +169,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->btn5->destroy();
         $this->btn6->destroy();
         $this->btn7->destroy();
+        $this->btn8->destroy();
         $this->btnDb->destroy();
 
         $this->frame->clearComponents();
