@@ -32,6 +32,16 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableTickerEvent();
     }
 
+    public function onEndMatch($rankings, $winnerTeamOrMap) {
+        foreach (Gui\Widgets\RecordsPanel::GetAll() as $panel) {
+            try {
+                $panel->hide();
+            } catch (\Exception $e) {
+                // silent exception
+            }
+        }
+    }
+
     public function onTick() {
         if ((time() - $this->lastUpdate) > 5 && $this->needUpdate || $this->forceUpdate == true) {
             $this->lastUpdate = time();
@@ -50,6 +60,13 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
+        foreach (Gui\Widgets\RecordsPanel::GetAll() as $panel) {
+            try {
+                $panel->show($panel->getRecipient());
+            } catch (\Exception $e) {
+                // silent exception
+            }
+        }
         Gui\Widgets\RecordsPanel::$dedirecords = array();
         $this->forceUpdate = true;
     }
@@ -74,7 +91,6 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $panel = Gui\Widgets\RecordsPanel::Create($login);
         $panel->setSize(40, 60);
         $panel->setPosition(-160, 60);
-        // $panel->setScale(0.8);
         $panel->update();
         $panel->show();
     }

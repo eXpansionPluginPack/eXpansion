@@ -38,7 +38,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $mode = TimePanel::Mode_PersonalBest;
         if (isset($this->modes[$login]))
             $mode = $this->modes[$login];
-        $info->onCheckpoint($timeOrScore, $checkpointIndex, $mode);
+        $info->onCheckpoint($timeOrScore, $checkpointIndex, $this->storage->currentMap->nbCheckpoints, $mode);
         $info->setSize(30, 6);
         $info->setPosition(0, 40);
         $info->show();

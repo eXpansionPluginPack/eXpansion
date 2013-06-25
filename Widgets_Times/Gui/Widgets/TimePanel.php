@@ -46,9 +46,9 @@ class TimePanel extends \ManiaLive\Gui\Window {
         
     }
 
-    public function onCheckpoint($time, $cpIndex, $mode) {
+    public function onCheckpoint($time, $cpIndex, $cpTotal, $mode) {
         $this->currentRun[$cpIndex] = $time;
-        $this->checkpoint->setText($this->counter . ".." . ($cpIndex + 1));
+        $this->checkpoint->setText($this->counter . "(" . ($cpIndex + 1) . "/" . $cpTotal . ")");
 
         $dedicp = array();
         $localcp = array();

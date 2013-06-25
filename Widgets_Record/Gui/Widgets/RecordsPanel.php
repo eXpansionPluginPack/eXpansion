@@ -16,7 +16,6 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     private $actionLocal = null;
     private $btnDedi;
     private $btnLocal;
-    
     private $items = array();
 
     /** @var integer */
@@ -31,22 +30,22 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     protected function onConstruct() {
         parent::onConstruct();
         $this->setAlign("left", "top");
-        
+
         $pmanager = \ManiaLive\PluginHandler\PluginHandler::getInstance();
-        
-        if($pmanager->isLoaded('Reaby\Dedimania') && $pmanager->isLoaded('eXpansion\LocalRecords')){
+
+        if ($pmanager->isLoaded('Reaby\Dedimania') && $pmanager->isLoaded('eXpansion\LocalRecords')) {
             $this->actionDedi = ActionHandler::getInstance()->createAction(array($this, "setPanel"), self::SHOW_DEDIMANIA);
-        
+
             $this->btnDedi = new myButton(28);
             $this->btnDedi->setAction($this->actionDedi);
             $this->btnDedi->setText('$fffDedimania');
-            $this->btnDedi->colorize(7778);        
+            $this->btnDedi->colorize(7778);
             $this->btnDedi->setPosX(2);
             $this->btnDedi->setScale(0.6);
             $this->addComponent($this->btnDedi);
-            
+
             $this->actionLocal = ActionHandler::getInstance()->createAction(array($this, "setPanel"), self::SHOW_LOCALRECORDS);
-        
+
             $this->btnLocal = new myButton(28);
             $this->btnLocal->setAction($this->actionLocal);
             $this->btnLocal->setText('$fffLocal');
@@ -55,11 +54,11 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
             $this->btnLocal->setPosX(20);
             $this->addComponent($this->btnLocal);
         }
-        
-        if( $pmanager->isLoaded('eXpansion\LocalRecords'))
+
+        if ($pmanager->isLoaded('eXpansion\LocalRecords'))
             $this->showpanel = self::SHOW_LOCALRECORDS;
-        
-        if($pmanager->isLoaded('Reaby\Dedimania2'))
+
+        if ($pmanager->isLoaded('Reaby\Dedimania2'))
             $this->showpanel = self::SHOW_DEDIMANIA;
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
@@ -80,7 +79,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
         $this->items = array();
 
         $this->frame->clearComponents();
-        
+
         $lbl = new \ManiaLib\Gui\Elements\Label(40, 5);
         $lbl->setAlign("left", "center");
         if ($this->showpanel == self::SHOW_DEDIMANIA)
@@ -97,7 +96,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
                 return;
             foreach (self::$dedirecords as $record) {
                 if ($index > 30)
-                    return;                
+                    return;
                 $this->items[] = new DediItem($index, $record, $this->getRecipient());
                 $this->frame->addComponent($this->items[$index - 1]);
                 $index++;
@@ -114,12 +113,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
                 $this->frame->addComponent($this->items[$index - 1]);
                 $index++;
             }
-        }                
-    }
-
-    protected function onDraw() {
-        parent::onDraw();
-        //echo "draw: " . $this->getRecipient() . "\n";
+        }
     }
 
     function setPanel($login, $panel) {
@@ -129,25 +123,26 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     }
 
     function destroy() {
-          foreach ($this->items as $item)
+        foreach ($this->items as $item)
             $item->destroy();
 
         $this->items = array();
-        
-        if($this->btnDedi != null){
+
+        if ($this->btnDedi != null) {
             ActionHandler::getInstance()->deleteAction($this->actionDedi);
             $this->btnDedi->destroy();
         }
-        
-        if($this->actionLocal != null){
+
+        if ($this->actionLocal != null) {
             ActionHandler::getInstance()->deleteAction($this->actionLocal);
             $this->btnLocal->destroy();
         }
         $this->frame->clearComponents();
-        $this->frame->destroy();        
+        $this->frame->destroy();
         $this->clearComponents();
         parent::destroy();
     }
 
 }
+
 ?>
