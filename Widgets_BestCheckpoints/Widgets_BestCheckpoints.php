@@ -46,7 +46,7 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
         $info->show();
     }
 
-    public function onBeginMap($map, $warmUp, $matchContinuation) {
+    public function onBeginMatch() {
         for ($x = 0; $x < $this->storage->currentMap->nbCheckpoints; $x++) {
 
             $this->bestCps[$x] = new Checkpoint($x, "", 0);

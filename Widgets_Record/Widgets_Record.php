@@ -59,7 +59,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    public function onBeginMap($map, $warmUp, $matchContinuation) {
+    public function onBeginMatch() {
         foreach (Gui\Widgets\RecordsPanel::GetAll() as $panel) {
             try {
                 $panel->show($panel->getRecipient());
