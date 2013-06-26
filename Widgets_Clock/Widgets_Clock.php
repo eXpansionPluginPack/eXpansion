@@ -17,7 +17,7 @@ class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param string $login
      */
     function displayWidget($login = null) {
-        $info = Gui\Widgets\Clock::Create(null);
+        $info = Gui\Widgets\Clock::Create($login);
         $info->setSize(40, 60);
         $info->setPosition(-159, 89);
         $info->show();
