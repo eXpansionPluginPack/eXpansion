@@ -118,7 +118,7 @@ class MenuPanel extends \ManiaLive\Gui\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize(60, 12);
-        $this->_mainWindow->setSize(60, 80);
+        $this->_mainWindow->setSize(10, 10);
         $this->_minButton->setPosition(-2, -30);
     }
 
