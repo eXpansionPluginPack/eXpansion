@@ -32,8 +32,8 @@ class MenuPanel extends \ManiaLive\Gui\Window {
 
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad(60, 10);
         $this->_mainWindow->setId("myWindow");
-        $this->_mainWindow->setStyle("Bgs1InRace");
-        $this->_mainWindow->setSubStyle("BgList");
+        $this->_mainWindow->setStyle("Bgs1");
+        $this->_mainWindow->setSubStyle("BgEmpty");
         $this->_mainWindow->setAlign("left", "top");
         $this->_mainWindow->setScriptEvents(true);
         $this->_windowFrame->addComponent($this->_mainWindow);
@@ -118,8 +118,8 @@ class MenuPanel extends \ManiaLive\Gui\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize(60, 12);
-        $this->_mainWindow->setSize(10, 10);
-        $this->_minButton->setPosition(-2, -30);
+        $this->_mainWindow->setSize(60, 80);
+        $this->_minButton->setPosition(-2, -8);
     }
 
     function onShow() {

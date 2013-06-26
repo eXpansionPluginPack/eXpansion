@@ -25,7 +25,7 @@ class RanksPanel extends \ManiaLive\Gui\Window {
 
     function setData($ranks) {
         foreach ($this->items as $item) {
-            $itme->destroy();
+            $item->destroy();
         }
         $this->items = array();
         $this->frame->clearComponents();
