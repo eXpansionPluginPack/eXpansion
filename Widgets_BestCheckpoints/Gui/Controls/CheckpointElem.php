@@ -12,12 +12,12 @@ class CheckpointElem extends \ManiaLive\Gui\Control {
         $sizeX = 35;
         $sizeY = 5;
 
-        $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-        $this->bg->setPosX(-2);
-        $this->bg->setStyle("Bgs1InRace");
-        $this->bg->setSubStyle("BgList");
-        $this->bg->setAlign('left', 'center');
-        $this->addComponent($this->bg);
+        /* $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+          $this->bg->setPosX(-2);
+          $this->bg->setStyle("Bgs1InRace");
+          $this->bg->setSubStyle("BgList");
+          $this->bg->setAlign('left', 'center');
+          $this->addComponent($this->bg); */
 
 
         $this->label = new \ManiaLib\Gui\Elements\Label(10, 3);
