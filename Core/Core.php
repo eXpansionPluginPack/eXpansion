@@ -68,10 +68,10 @@ EOT;
 
         $bExitApp = false;
 
-        if (version_compare(PHP_VERSION, '5.3.5') >= 0) {
-            Console::println('Minimum PHP version 5.3.5: Pass (' . PHP_VERSION . ')');
+        if (version_compare(PHP_VERSION, '5.3.3') >= 0) {
+            Console::println('Minimum PHP version 5.3.3: Pass (' . PHP_VERSION . ')');
         } else {
-            Console::println('Minimum PHP version 5.3.5: Fail (' . PHP_VERSION . ')');
+            Console::println('Minimum PHP version 5.3.3: Fail (' . PHP_VERSION . ')');
             $bExitApp = true;
         }
 
