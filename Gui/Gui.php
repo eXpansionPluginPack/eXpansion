@@ -22,7 +22,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
         $this->enableDedicatedEvents();
-
+       
 
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);

@@ -42,8 +42,9 @@ class Window extends \ManiaLive\Gui\Window {
 
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_mainWindow->setId("MainWindow");
-        $this->_mainWindow->setStyle("Bgs1InRace");
+        $this->_mainWindow->setStyle("Bgs1");
         $this->_mainWindow->setSubStyle("BgWindow2");
+       // $this->_mainWindow->setBgcolor("fffe");
         // $this->_mainWindow->setStyle("Bgs1InRace");
         // $this->_mainWindow->setSubStyle("BgEmpty");
         // $this->_mainWindow->setBgcolor("fff");
@@ -52,8 +53,8 @@ class Window extends \ManiaLive\Gui\Window {
 
         $this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
         $this->_titlebar->setId("Titlebar");
-        $this->_titlebar->setStyle("Bgs1InRace");
-        $this->_titlebar->setSubStyle("BgTitle3_3");
+        $this->_titlebar->setStyle("Bgs1");
+        $this->_titlebar->setSubStyle("ProgressBar");
         // $this->_titlebar->setBgcolor("6bf");
         //$this->_titlebar->setImage($config->windowTitlebar);
         $this->_titlebar->setScriptEvents(true);
@@ -71,15 +72,15 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_closebutton->setAlign('center', 'top');
         $this->_closebutton->setStyle("Icons64x64_1");
         $this->_closebutton->setSubStyle("Close");
-        
-     /*   $this->_closebutton->setStyle("TextChallengeNameMedium");
-        $this->_closebutton->setScriptEvents(true);
-        $this->_closebutton->setFocusAreaColor1("fff");
-        $this->_closebutton->setFocusAreaColor2("000");
-        $this->_closebutton->setId("Close");
-        $this->_closebutton->setText(' x ');
-        $this->_closebutton->setTextColor('000');
-        $this->_closebutton->setTextSize(1); */
+
+        /*   $this->_closebutton->setStyle("TextChallengeNameMedium");
+          $this->_closebutton->setScriptEvents(true);
+          $this->_closebutton->setFocusAreaColor1("fff");
+          $this->_closebutton->setFocusAreaColor2("000");
+          $this->_closebutton->setId("Close");
+          $this->_closebutton->setText(' x ');
+          $this->_closebutton->setTextColor('000');
+          $this->_closebutton->setTextSize(1); */
         $this->_closebutton->setScriptEvents(true);
         $this->_closebutton->setAction($this->_closeAction);
         $this->_windowFrame->addComponent($this->_closebutton);
@@ -89,7 +90,7 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_minbutton->setStyle("TextChallengeNameMedium");
         $this->_minbutton->setScriptEvents(true);
         $this->_minbutton->setText('$000-');
-        
+
         $this->_minbutton->setFocusAreaColor1("fff0");
         $this->_minbutton->setFocusAreaColor2("0000");
         $this->_minbutton->setScriptEvents(true);
@@ -107,7 +108,7 @@ class Window extends \ManiaLive\Gui\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
-        $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY+2);
+        $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY + 2);
         $this->_mainWindow->setPosY(1);
 
         $this->_title->setSize($this->sizeX, 4);
@@ -138,19 +139,33 @@ class Window extends \ManiaLive\Gui\Window {
                        // declare CMlEntry windowPos <=> (Page.GetFirstChild("windowPosition") as CMlEntry);
                         declare showCoords = ' . $this->_showCoords . ';
                         declare MoveWindow = False;
+                        declare Scroll = False;
                         declare CloseWindow = False;   
                         declare isMinimized = False;   
                         declare Real CloseCounter = 1.0;
                         declare Real OpenCounter = 0.0;                        
-                        declare CenterWindow = False;
+                        declare CenterWindow = False;                      
+                        
                         declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
                         declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
                         declare Real lastMouseX = 0.0;
-                        declare Real lastMouseY =0.0;                                 
+                        declare Real lastMouseY =0.0;         
+                        declare active = False;
                         ' . $this->dDeclares . '  
                             
                         while(True) {                                                               
-                               
+                               if (active == True) {
+                                declare temp = Window.RelativePosition;
+                                temp.Z = 5.0;
+                                Window.RelativePosition = temp;
+                              //  TitlebarText.SetText("true");
+                                } else {
+                                declare temp = Window.RelativePosition;
+                                temp.Z = -2.0;
+                                Window.RelativePosition = temp;
+                                //   TitlebarText.SetText("false");
+                                }
+                                
                                if (showCoords) {                               
                                     declare coords = "$fffX:" ^ (MouseX - Window.PosnX) ^ " Y:" ^ (MouseY - Window.PosnY + 3 );                                   
                                     TitlebarText.Value = coords;
@@ -159,13 +174,16 @@ class Window extends \ManiaLive\Gui\Window {
                                 if (MoveWindow) {                                                                                                    
                                     DeltaPos.X = MouseX - lastMouseX;
                                     DeltaPos.Y = MouseY - lastMouseY;
+                                   
                                     LastDelta += DeltaPos;
+                                    LastDelta.Z = 3.0;
                                     Window.RelativePosition = LastDelta;      
                                    // windowPos.Value = Window.PosnX ^ "," ^ Window.PosnY;
                                     lastMouseX = MouseX;
                                     lastMouseY = MouseY;
                                     }
                                 
+                                    
                                 if (CenterWindow == True) {                                                                            
                                     if (Window.PosnX <= -140) {                                    
                                     Window.PosnX +=5.0;
@@ -196,36 +214,53 @@ class Window extends \ManiaLive\Gui\Window {
                                         CloseCounter -=0.075;
                                 }
                                 
-                               if (MouseLeftButton == True || MouseMiddleButton == True) {
                                 
+                                
+                                foreach (Event in PendingEvents) {
+                                 if (Event.Type == CMlEvent::Type::MouseOver)
+                                                 {
+                                                  active = True;
+                                                  
+                                                    }
+                                                    if (Event.Type == CMlEvent::Type::MouseOut) {
+                                                      active = False;
+                                                       }
+                                                
+                                      }              
+                               if (MouseLeftButton == True || MouseMiddleButton == True) {
+                                     
                        
                                         foreach (Event in PendingEvents) {
-                                                        if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Titlebar")  {                                                          
+                                                
+                                               
+                                                       if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Titlebar")  {                                                          
                                                             lastMouseX = MouseX;
-                                                            lastMouseY = MouseY;                                                   
-                                                            MoveWindow = True;   
-                                                        }                                     
+                                                            lastMouseY = MouseY;   
+                                                            MoveWindow = True;
+                                                            Scroll = True;                                                           
+                                                        } 
+
+                                           
+                                                        if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close") {
+                                                         CloseWindow = True;
+                                                        }   
+                                                          if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Minimize") {                                            
+                                                             isMinimized = True;                                                                                       
+                                                         }   
+                                                            if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "MainWindow") {                                            
+                                                             isMinimized = False;                                            
+                                                         }                                  
+                                     ' . $this->dLoop . ' 
+                                         
                                                 }
                                         }
                                         
                                 else {
                                         MoveWindow = False;
+                                        
                                 } 
                                 
                                 
-                             
-                                foreach (Event in PendingEvents) {                                                
-                                    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close") {
-                                            CloseWindow = True;
-                                    }   
-                                    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Minimize") {                                            
-                                            isMinimized = True;                                                                                       
-                                    }   
-                                    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "MainWindow") {                                            
-                                            isMinimized = False;                                            
-                                    }                                  
-                                     ' . $this->dLoop . ' 
-                                }
                                 yield;                        
                         }
                   
@@ -252,6 +287,14 @@ class Window extends \ManiaLive\Gui\Window {
 
     function closeWindow() {
         $this->erase($this->getRecipient());
+    }
+
+    function addScriptToMain($script) {
+        $this->dDeclares .= $script;
+    }
+
+    function addScriptToLoop($script) {
+        $this->dLoop .= $script;
     }
 
     function addDropdown($name, $items) {

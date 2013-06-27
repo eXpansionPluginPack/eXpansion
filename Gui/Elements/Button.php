@@ -44,7 +44,7 @@ class Button extends \ManiaLive\Gui\Control {
     protected function onResize($oldX, $oldY) {
         $this->label->setSize($this->sizeX - 2, $this->sizeY - 1);
         $this->label->setPosX(($this->sizeX - 2) / 2);
-        $this->label->setPosZ(0);
+        $this->label->setPosZ($this->posZ);
         $this->setScale(0.7);
     }
 
