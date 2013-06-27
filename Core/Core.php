@@ -18,7 +18,6 @@ class Core extends types\ExpPlugin {
      * @var \DedicatedApi\Structures\GameInfos
      */
     private $lastGameMode;
-    
 
     /**
      * 
@@ -32,25 +31,64 @@ class Core extends types\ExpPlugin {
      */
     function exp_onLoad() {
         parent::exp_onLoad();
+        $this->connection->chatSendServerMessage('$fffStarting e$a00X$fffpansion v. ' . $this->getVersion());
         $config = Config::getInstance();
+        i18n::getInstance()->start();
 
         $this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_BEGIN_MAP);
 
-        i18n::getInstance()->start();
+        $expansion =
+                <<<'EOT'
+   
+--------------------------------------------------------------------------------   
+                     __   __                      _             
+                     \ \ / /                     (_)            
+                  ___ \ V / _ __   __ _ _ __  ___ _  ___  _ __  
+                 / _ \ > < | '_ \ / _` | '_ \/ __| |/ _ \| '_ \ 
+                |  __// . \| |_) | (_| | | | \__ \ | (_) | | | |
+                 \___/_/ \_\ .__/ \__,_|_| |_|___/_|\___/|_| |_|
+                           | |         Plugin Pack for Manialive    
+                           |_|                                                              
 
-        Console::println(' #####################################################################');
-        Console::println('[eXpansion Pack] Enabling eXpension version:' . $this->getVersion() . ' . . .');
-        Console::println(' Language support detected for:' . implode(",", i18n::getInstance()->getSupportedLocales()) . '!');
-        Console::println(' Enabling default locale:' . $config->defaultLanguage . '');
+-------------------------------------------------------------------------------
+
+EOT;
+
+        Console::println($expansion);
+        $server = $this->connection->getVersion();
+        $d = (object) date_parse_from_format("Y-m-d_H_i", $server->build);
+        Console::println('Dedicated Server running for title: ' . $server->titleId);
+        Console::println('Dedicated Server build: ' . $d->year . "-" . $d->month . "-" . $d->day);
+        Console::println('eXpansion version: ' . $this->getVersion());
+        Console::println('');
+        Console::println('Language support detected for: ' . implode(",", i18n::getInstance()->getSupportedLocales()) . '!');
+        Console::println('Enabling default locale: ' . $config->defaultLanguage . '');
         i18n::getInstance()->setDefaultLanguage($config->defaultLanguage);
         $this->connection->setApiVersion($config->API_Version); // For SM && TM
 
-        $die = false;
+        $bExitApp = false;
 
-        Console::println(' #####################################################################');
+        if (version_compare(PHP_VERSION, '5.3.5') >= 0) {
+            Console::println('Minimum PHP version 5.3.5: Pass (' . PHP_VERSION . ')');
+        } else {
+            Console::println('Minimum PHP version 5.3.5: Fail (' . PHP_VERSION . ')');
+            $bExitApp = true;
+        }
 
-        if ($die)
+        if (gc_enabled()) {
+            Console::println('Garbage Collector enabled: Pass ');
+        } else {
+            Console::println('Garbage Collector enabled: Fail )');
+            $bExitApp = true;
+        }
+        Console::println('');
+        Console::println('-------------------------------------------------------------------------------');
+        Console::println('');
+
+        if ($bExitApp) {
+            $this->connection->chatSendServerMessage("Failed to init eXpansion, see consolelog for more info!");
             die();
+        }
 
         $this->lastGameMode = \ManiaLive\Data\Storage::getInstance()->gameInfos->gameMode;
     }
@@ -59,11 +97,6 @@ class Core extends types\ExpPlugin {
      * 
      */
     public function exp_onReady() {
-        $this->connection->chatSendServerMessage("");
-        $this->connection->chatSendServerMessage('$fff********************************');
-        $this->connection->chatSendServerMessage('$fff e$a00X$fffpansion v. ' . $this->getVersion() . ' Initialized succesfully. ');
-        $this->connection->chatSendServerMessage('$fff********************************');
-        $this->connection->chatSendServerMessage("");
         $this->onBeginMap(null, null, null);
     }
 

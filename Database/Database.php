@@ -100,7 +100,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
         foreach ($this->storage->players as $login => $player) { // get players
             $this->updatePlayTime($player);
-            if ($player->rank == 1)
+            if ($player->rank == 1 && sizeof($this->storage->players) > 1 )
                 $this->incrementWins($player);
         }
 
