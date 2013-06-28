@@ -1175,7 +1175,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($rank > 0) {
                 $this->exp_chatSendServerMessage($this->msg_showRank, $login, array($rank, $rankTotal));
             } else {
-                $this->exp_chatSendServerMessage($this->msg_noRank, $login, array());
+                // reaby disabled this, people doesn't like error messages
+               // $this->exp_chatSendServerMessage($this->msg_noRank, $login, array());
             }
         }
     }
@@ -1184,7 +1185,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($login != null) {
             $record = $this->getCurrentChallangePlayerRecord($login);
             if (!$record) {
-                $this->exp_chatSendServerMessage($this->msg_noPB, $login, array());
+                // reaby disabed this, ppl doesn't like error messages!
+               // $this->exp_chatSendServerMessage($this->msg_noPB, $login, array());
             } else {
                 $time = \ManiaLive\Utilities\Time::fromTM($record->time);
                 if (substr($time, 0, 2) === "0:") {

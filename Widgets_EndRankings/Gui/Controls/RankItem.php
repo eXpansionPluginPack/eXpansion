@@ -18,7 +18,7 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->label->setAlign('center', 'center');
         $this->label->setScale(0.7);
         $bold = "";
-        if ($index <= 3)
+        if ($index < 3)
             $bold = '$o';
         $this->label->setText('$fff' . $bold . ($index + 1));
         $this->label->setPosX(0);
