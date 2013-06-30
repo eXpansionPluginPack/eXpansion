@@ -1,0 +1,15 @@
+Guest Players on the server
+Gastspieler auf dem Server
+
+Ignored Players on the server
+Auf diesem Server ignorierte Spieler
+
+unBan
+Sperre aufheben
+
+Remove
+Entfernen
+
+unIgnore
+Ignorieren aufheben
+

@@ -1,0 +1,90 @@
+This command expect at least one parameter
+Dieser Aufruf benötigt mindestens einen Parameter
+
+#admin_error#You need to be an Admin to use that command
+#admin_error#Diese Anweisung kann nur von Administratoren verwendet werden
+
+#admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
+#admin_error#Dies ist kein Admin-Befehl. Verwende #variable#/admin help #admin_error# um alle Befehle zu sehen
+
+#admin_error#You don't have the permission to use that admin command
+#admin_error#Ungenügende Berechtigungen, um diesen Admin-Befehl zu verwenden.
+
+#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
+#admin_error#Der Spieler #variable#%1$s #admin_error#befindet sich bereits in einer Grupper #admin_error#%2$s. #admin_error#Den Spieler bitte vorher aus der anderen Gruppe entfernen
+
+#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
+#admin_action#Der Spieler #variable# %1$s #admin_action#wurde zur Gruppe der Administratoren hinzugefügt #variable#%2$s
+
+#admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
+#admin_error#Du bist #variable#%1$s #admin_error#Du kannst Dich nicht selber aus einer Gruppe entfernen
+
+#admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
+#admin_action#Spieler : #variable#%1$s #admin_action#wurde von der Gruppe der Administratoren entfernt #variable#%2$s
+
+#admin_error#Player #variable#%1$s #admin_action#isn't in the group
+#admin_error#Der Spieler #variable#%1$s #admin_action#befindet sich nicht in dieser Gruppe
+
+#admin_error#Master Admins has all rights. You can't change that!
+#admin_error#Master-Administratoren haben alle Berechtigungen. Du kannst das nicht ändern!
+
+#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
+#admin_error#Der Master-Administrator #variable#%1$s wurde in config.ini eingetragen und nicht über eXpansion. Kann ihn nicht entfernen!
+
+Admin Groups
+Gruppen verwalten
+
+Admin Commands Help
+Befehlshilfe verwalten
+
+Admin Group Permission - %1$s
+Gruppen-Berechtigungen verwalten - %1$s
+
+Admin Group Players - %1$s
+Spieler-Gruppen verwalten - %1$s
+
+New Group Name :
+Neuer Gruppen-Name :
+
+Add
+Hinzufügen
+
+Group Name
+Gruppen-Name
+
+Nb Players
+Anzahl Spieler
+
+Player List
+Spieler Liste
+
+Change Permissions
+Berechtigungen ändern
+
+Delete Group
+Gruppe löschen
+
+Remove Player
+Spieler entfernen
+
+Command
+Befehl
+
+Description
+Beschreibung
+
+More
+Weiter
+
+Aliases
+Pseudonyme
+
+OK
+OK
+
+Cancel
+Abbrechen
+
+Login : 
+Login : 
+

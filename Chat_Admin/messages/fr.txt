@@ -1,0 +1,15 @@
+Guest Players on the server
+Joueurs invités sur le serveur
+
+Ignored Players on the server
+Joueurs ignorés sur le serveur
+
+unBan
+Ne plus bannir
+
+Remove
+Supprimer
+
+unIgnore
+Ne plus ignorer
+

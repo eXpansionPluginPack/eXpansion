@@ -1,0 +1,42 @@
+Ignore
+Ignorieren
+
+Kick
+Herauskicken
+
+Ban
+Verbannen
+
+Blacklist
+Sperrliste
+
+Release Spec
+Zuschauer entlassen
+
+Force Spec
+Zuschauer erzwingen
+
+$ff3$iYou are not allowed to do that!
+$ff3$iDu hast keine Erlaubnis dazu!
+
+Error: %s
+Fehler: %s
+
+Please behave next time you visit the server!
+Bitte benimm Dich wenn Du das nächste Mal den Server besuchst!
+
+You are now banned from the server.
+Du wurdest vom Server verbannt.
+
+You are now blacklisted from the server.
+Du wurdest jetzt in der Sperrliste des Servers eingetragen.
+
+Admin has released you from spectate to play.
+Der Admin hat Dir erlaubt, am Spiel teilzunehmen.
+
+Players
+Spieler
+
+Show Players
+Spieler zeigen
+

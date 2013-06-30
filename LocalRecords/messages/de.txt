@@ -1,0 +1,59 @@
+#variable#%1$s  #record#secured their #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#(#rank#$n-%5$s#record#)
+#variable#%1$s  #record#hat den #rank#%2$s #record#. lokalen Rekord mit folgender Zeit bestätigt: #rank#%3$s #record#(#rank#$n-%5$s#record#)
+
+#variable#%1$s  #record#claimed the #rank#%2$s #record#. Local Record with time of #rank#%3$s
+#variable#%1$s  #record#hat den #rank#%2$s #record#. lokalen Rekord mit folgender Zeit erreicht: #rank#%3$s
+
+#variable#%1$s  #record#gained the #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#(#rank#$n-%5$s#record#)
+#variable#%1$s  #record#hat den #rank#%2$s #record#. lokalen Rekord mit folgender Zeit verbessert: #rank#%3$s #record#(#rank#$n-%5$s#record#)
+
+#variable#%1$s  #record#Is a new Map. Currently no record!
+#variable#%1$s  #record#ist eine neue Map. Derzeit keine Rekorde!
+
+#record#Current record on #variable#%1$s  #record#is #variable#%2$s #record#by #variable#%3$s
+#record#Aktueller Rekord auf #variable#%1$s  #record#ist #variable#%2$s #record#durch #variable#%3$s
+
+#record#Personal Best: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Average: #variable#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
+#record#Persönliche Bestzeit: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Schnitt: #variable#%3$s #record#($n #variable#%4$s #record#$n Abschlüsse $m)
+
+#admin_error# $iYou have not finished this map yet..
+#admin_error# $iDu hast diese Map noch nicht vollendet..
+
+#record#Server rank: #variable#%1$s#record#/#variable#%2$s
+#record#Server-Rang: #variable#%1$s#record#/#variable#%2$s
+
+#admin_error#$iNot enough local records to obtain ranking yet..
+#admin_error#$iNoch nicht genügend lokale Rekorde für einen Ranglistenplatz erreicht..
+
+#
+#
+
+NickName
+Nickname
+
+Score
+Spielstand
+
+Average Score
+Durchschnittlicher Spielstand
+
+Finishes
+Abschlüsse
+
+Nb Wins
+Anzahl der Gewinne
+
+Last Rec Date
+Datum des letzten Rekords
+
+Play Time
+Spieldauer
+
+nb Rec
+Anzahl Rekorde
+
+Records
+Rekorde
+
+Map Records
+Map-Rekorde

@@ -1,0 +1,81 @@
+Add map
+Ajouter Map
+
+Delete file
+Effacer le fichier
+
+Queue
+File d'attente
+
+Recs
+Records
+
+Go now
+Aller
+
+Remove
+Supprimer
+
+Current Map
+Map actuelle
+
+File '%s' deleted from filesystem!
+Fichier '%s' effacé du système!
+
+Removes current map from the playlist.
+Supprimes la map actuelle de la liste.
+
+Sets current challenge to replay at end of match
+Indique que le challenge actuel sera rejoué à la fin du match
+
+Maps
+Maps
+
+List maps
+Liste des maps
+
+#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position
+#variable#%1$s  #queue#à été ajouté à la file d'attente par #variable#%3$s#queue#, à la #variable#%5$s #queue#ème position
+
+#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
+#queue#La prochaine map sera #variable#%1$s  #queue#de #variable#%2$s#queue#, souhaité par #variable#%3$s
+
+#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#
+#queue#La prochaine map sera #variable#%1$s  #queue#de #variable#%2$s#queue#
+
+#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
+#queue#Map actuelle #variable#%1$s  #queue#de #variable#%2$s#queue#, souhaité par #variable#%3$s
+
+Error: %s
+Erreur: %s
+
+#admin_error# $iThis map is currently playing...
+#admin_error# $iCette map est en cours de jeu...
+
+#admin_error# $iThis map is already in the queue...
+#admin_error# $iCette map se trouve déjà dans la file d'attente...
+
+#admin_error# $iYou already have a map in the queue...
+#admin_error# $iTu as déjà ajouté une map à la file d'attente...
+
+#admin_error# $iMap has been played too recently...
+#admin_error# $iCette map a été jouée trop récemment...
+
+#admin_error# $iYou are not allowed to do that!
+#admin_error# $iTu n'as pas le droit de faire ça!
+
+#admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from the playlist
+#admin_action#Administrateur #variable#%1$s #admin_action#à supprimé la map #variable#%3$s #admin_action# de la liste
+
+#variable#%1$s #queue#removed #variable#%2$s #queue#from the queue..
+#variable#%1$s #queue#supprimé #variable#%2$s #queue#de la file d'attente..
+
+#admin_action#Admin #variable#%1$s #admin_action#emptied the map queue list
+#admin_action#Admin #variable#%1$s #admin_action#a effacé la file d'attente
+
+#admin_error# $iChallenge already set to be replayed!
+#admin_error# $iChallenge déja marqué pour une reprise!
+
+#queue#Challenge set to be replayed!
+#queue#Challenge marqué pour reprise!
+

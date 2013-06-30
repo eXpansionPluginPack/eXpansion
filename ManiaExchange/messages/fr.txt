@@ -1,0 +1,48 @@
+Map name
+Nom de Map
+
+Creators name
+Nom de l'auteur
+
+Length
+Duration
+
+Queue
+Queue
+
+Install
+Installer
+
+ManiaExchange
+ManiaExchange
+
+Search Maps
+Chercher Maps
+
+Usage.. /mx queue [id] or /mx search "your search terms here"
+Usage.. /mx queue [id] ou /mx search "vos termes à chercher"
+
+Error: %s
+Erreur: %s
+
+MX is down
+MX indisponible
+
+Couldn't create mapfile in maps folder, check folder permissions!
+Impossible de créer le fichier dans le répertoire de maps, vérifier les permissions du répertoire!
+
+#admin_error# $iYou already have a map in the queue...
+#admin_error# $iTu as déjà une map dans la queue...
+
+Unable to retrieve track info from MX..  wrong ID..?
+Impossible d'interroger les infos de map de MX..  mauvaise ID..?
+
+Wrong environment!
+Titre / environment invalide!
+
+#record# $iVote passed!
+#record# $iLe vote à succédé!
+
+#admin_error# $iVote failed!
+#admin_error# $iLe vote a échoué!
+

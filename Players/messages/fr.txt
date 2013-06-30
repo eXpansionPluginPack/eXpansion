@@ -1,0 +1,42 @@
+Ignore
+Ignorer
+
+Kick
+Renvoyer
+
+Ban
+Bannir
+
+Blacklist
+Liste Noire
+
+Release Spec
+Relâcher Spectateur
+
+Force Spec
+Forcer Spectateur
+
+$ff3$iYou are not allowed to do that!
+$ff3$iTu n'as pas le droit de faire ça!
+
+Error: %s
+Erreur: %s
+
+Please behave next time you visit the server!
+Comporte toi bien la prochaine fois que tu visiteras le serveur!
+
+You are now banned from the server.
+Tu es banni du serveur.
+
+You are now blacklisted from the server.
+Tu es inscrit dans la liste noire du serveur.
+
+Admin has released you from spectate to play.
+L'admin t'a libéré du mode spectateur pour que tu puisse jouer.
+
+Players
+Joueurs
+
+Show Players
+Montrer les joueurs
+

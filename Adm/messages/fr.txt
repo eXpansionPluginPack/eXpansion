@@ -1,0 +1,141 @@
+Server Management
+Administration du serveur
+
+Force Scores
+Forcer scores
+
+Server ControlPanel
+Panneau de configuration du serveur
+
+Server Options
+Paramètres du serveur
+
+Game Options
+Paramtètres du jeu
+
+Match Settings
+Paramètres du match
+
+Script Settings
+Paramètres de scripts
+
+Load
+Charger
+
+Save
+Enregistrer
+
+Delete
+Effacer
+
+Apply
+Accepter
+
+Cancel
+Abondonner
+
+Time Attack
+Time Attack
+
+Rounds
+Rounds
+
+Cup
+Coupe
+
+Laps
+Tours
+
+Team
+Team
+
+Error in filename
+Erreur de nom du fichier
+
+File '%s' deleted from filesystem!
+Le fichier '%s' a été effacé!
+
+Saved MatchSettings to file: %s
+Paramètres de match enregistrés sous: %s
+
+Loaded MatchSettings from file: %s
+Paramètres de match chargés depuis: %s
+
+Server management
+Administration du serveur
+
+Server options
+Paramètres du serveur
+
+Game options
+Paramtètres du jeu
+
+Admin Groups
+Groupes d'administrateurs
+
+Match settings
+Paramètres du match
+
+ScriptMode settings
+Paramètres de mode de script
+
+Database tools
+Utilitaires de banque de données
+
+Close
+Fermer
+
+Stop Server
+Arrêter le serveur
+
+Stop Manialive
+Arrêter Manialive
+
+Server Name
+Nom du serveur
+
+Server comment
+Description du serveur
+
+Players
+Joueurs
+
+Spectators
+Spectateurs
+
+Ladderpoints minimum
+Points de classement minimum
+
+Ladderpoints Maximum
+Points de classement Maximum
+
+Password for server
+Mot de passe du serveur
+
+Password for spectators
+Mot de passe pour les spectateurs
+
+Referee password
+Mot de passe de l'arbitre
+
+Show Server in public server list
+Montrer serveur dans la liste publique
+
+Ladder server
+Serveur de classement
+
+Allow map download using ingame menu
+Autoriser le téléchargement de maps depuis le menu
+
+Allow Peer-2-Peer download
+Autoriser téléchargements en aval
+
+Allow Peer-2-Peer upload
+Autoriser téléchargements en amont
+
+Allow changing validation seed
+Autoriser la modification du paramètre initial de validation
+
+Enable Referee-mode
+Permettre arbitrage
+

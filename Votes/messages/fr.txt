@@ -1,0 +1,33 @@
+Error: %s
+Erreur: %s
+
+Votes
+Votes
+
+Restart Map
+Redémarrer la Map
+
+Skip Map
+Sauter la Map
+
+Cancel Vote
+Annuler le Vote
+
+#variable#%1$s #rank#initiated restart map vote..
+#variable#%1$s #rank#a initié un vote de redémarrage de map..
+
+#admin_error# $iMust run skip vote within first %1$s seconds of match start..
+#admin_error# $iLe vote de saut de map doit être effectué lors des premières %1$s secondes aprés le démarrage..
+
+#variable#%1$s #rank#initiated skip map vote..
+#variable#%1$s #rank#a initié un vote de saut de map..
+
+#record# $iVote passed!
+#record# $iVote passe!
+
+#admin_error# $iLe vote a succédé!
+#admin_error# $iLe vote a échoué!
+
+#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
+#admin_action#Admin #variable#%1$s #admin_action# a annulé le vote!
+

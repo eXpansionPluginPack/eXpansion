@@ -1,0 +1,11 @@
+#rank#$iVote Registered!!
+#rank#$iAbstimmung registriert!!
+
+#rank# $iUsage /rate #, where number is 1-5..
+#rank# $iVerwendung /rate #, wobei die Ziffer 1 bis 5 sein kann ..
+
+#rating# $iMap has not been rated yet!
+#rating# $iMap wurde noch nicht bewerted!
+
+#rating#Map Approval Rating: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Your Rating: #variable#%4$s#rating# / #variable#5
+#rating#Bewilligung der Map Bewertung: #variable#%2$s#rating# (#variable#%3$s #rating# Stimmen).  Deine Bewertung: #variable#%4$s#rating# / #variable#5

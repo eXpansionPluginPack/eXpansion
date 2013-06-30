@@ -1,0 +1,141 @@
+Server Management
+Server Verwaltung
+
+Force Scores
+Spielstände überarbeiten
+
+Server ControlPanel
+Server Systemsteuerung
+
+Server Options
+Server Optionen
+
+Game Options
+Spiel Optionen
+
+Match Settings
+Wettkampf Einstellungen
+
+Script Settings
+Skript Einstellungen
+
+Load
+Laden
+
+Save
+Speichern
+
+Delete
+Löschen
+
+Apply
+Anwenden
+
+Cancel
+Abbrechen
+
+Time Attack
+Time Attack
+
+Rounds
+Rounds
+
+Cup
+Pokal
+
+Laps
+Runden
+
+Team
+Team
+
+Error in filename
+Fehler im Dateinamen
+
+File '%s' deleted from filesystem!
+Datei '%s' wurde gelöscht!
+
+Saved MatchSettings to file: %s
+Speichere Wettkampfeinstellungen in Datei: %s
+
+Loaded MatchSettings from file: %s
+Lade Wettkampfeinstellungen aus Datei: %s
+
+Server management
+Server Verwaltung
+
+Server options
+Server Einstellungen
+
+Game options
+Spiel Einstellungen
+
+Admin Groups
+Admin Gruppen
+
+Match settings
+Wettkampf Einstellungen
+
+ScriptMode settings
+Skkriptmodus Einstellungen
+
+Database tools
+Datenbank Anwendungen
+
+Close
+Schließen
+
+Stop Server
+Server anhalten
+
+Stop Manialive
+Manialive anhalten
+
+Server Name
+Server Name
+
+Server comment
+Server Beschreibung
+
+Players
+Spieler
+
+Spectators
+Zuschauer
+
+Ladderpoints minimum
+Ranglistenpunkte Minimum
+
+Ladderpoints Maximum
+Ranglistenpunkte Maximum
+
+Password for server
+Serverkennwort
+
+Password for spectators
+Zuschauerkennwort
+
+Referee password
+Schiedsrichterkennwort
+
+Show Server in public server list
+Zeige Server in liste der öffentlichen Server
+
+Ladder server
+Ranglisten-Server
+
+Allow map download using ingame menu
+Erlaube Herunterladen von Maps aus dem Spielmenü heraus
+
+Allow Peer-2-Peer download
+Erlaube P2P-Herunterladen
+
+Allow Peer-2-Peer upload
+Erlaube P2P-Hochladen
+
+Allow changing validation seed
+Erlaube Änderung des Anfangswertes der Validierungsberechnung 
+
+Enable Referee-mode
+Schiedsrichter-Modus einschalten
+
