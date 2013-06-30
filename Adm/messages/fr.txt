@@ -8,16 +8,16 @@ Server ControlPanel
 Panneau de configuration du serveur
 
 Server Options
-Paramètres du serveur
+ParamÃ¨tres du serveur
 
 Game Options
-Paramtètres du jeu
+ParamtÃ¨tres du jeu
 
 Match Settings
-Paramètres du match
+ParamÃ¨tres du match
 
 Script Settings
-Paramètres de scripts
+ParamÃ¨tres de scripts
 
 Load
 Charger
@@ -53,43 +53,43 @@ Error in filename
 Erreur de nom du fichier
 
 File '%s' deleted from filesystem!
-Le fichier '%s' a été effacé!
+Le fichier '%s' a Ã©tÃ© effacÃ©!
 
 Saved MatchSettings to file: %s
-Paramètres de match enregistrés sous: %s
+ParamÃ¨tres de match enregistrÃ©s sous: %s
 
 Loaded MatchSettings from file: %s
-Paramètres de match chargés depuis: %s
+ParamÃ¨tres de match chargÃ©s depuis: %s
 
 Server management
 Administration du serveur
 
 Server options
-Paramètres du serveur
+ParamÃ¨tres du serveur
 
 Game options
-Paramtètres du jeu
+ParamtÃ¨tres du jeu
 
 Admin Groups
 Groupes d'administrateurs
 
 Match settings
-Paramètres du match
+ParamÃ¨tres du match
 
 ScriptMode settings
-Paramètres de mode de script
+ParamÃ¨tres de mode de script
 
 Database tools
-Utilitaires de banque de données
+Utilitaires de banque de donnÃ©es
 
 Close
 Fermer
 
 Stop Server
-Arrêter le serveur
+ArrÃªter le serveur
 
 Stop Manialive
-Arrêter Manialive
+ArrÃªter Manialive
 
 Server Name
 Nom du serveur
@@ -125,16 +125,16 @@ Ladder server
 Serveur de classement
 
 Allow map download using ingame menu
-Autoriser le téléchargement de maps depuis le menu
+Autoriser le tÃ©lÃ©chargement de maps depuis le menu
 
 Allow Peer-2-Peer download
-Autoriser téléchargements en aval
+Autoriser tÃ©lÃ©chargements en aval
 
 Allow Peer-2-Peer upload
-Autoriser téléchargements en amont
+Autoriser tÃ©lÃ©chargements en amont
 
 Allow changing validation seed
-Autoriser la modification du paramètre initial de validation
+Autoriser la modification du paramÃ¨tre initial de validation
 
 Enable Referee-mode
 Permettre arbitrage

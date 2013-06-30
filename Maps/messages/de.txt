@@ -1,8 +1,8 @@
 Add map
-Map hinzufügen
+Map hinzufÃ¼gen
 
 Delete file
-Datei löschen
+Datei lÃ¶schen
 
 Queue
 Warteschlange
@@ -20,7 +20,7 @@ Current Map
 Aktuelle Map
 
 File '%s' deleted from filesystem!
-Datei '%s' wurde gelöscht!
+Datei '%s' wurde gelÃ¶scht!
 
 Removes current map from the playlist.
 Entfernt die aktuelle Map von der Liste.
@@ -38,10 +38,10 @@ Mapliste
 #variable#%1$s  #queue#wurde an die Warteschlange eingetragen von #variable#%3$s#queue#, an der #variable#%5$s #queue#. Position
 
 #queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
-#queue#Nächste Map: #variable#%1$s  #queue#von #variable#%2$s#queue#, angefordert durch #variable#%3$s
+#queue#NÃ¤chste Map: #variable#%1$s  #queue#von #variable#%2$s#queue#, angefordert durch #variable#%3$s
 
 #queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#
-#queue#Nächste Map: #variable#%1$s  #queue#von #variable#%2$s#queue#
+#queue#NÃ¤chste Map: #variable#%1$s  #queue#von #variable#%2$s#queue#
 
 #queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, angefordert durch #variable#%3$s
 #queue#Wechsel der Map zu #variable#%1$s  #queue#von #variable#%2$s#queue#, angefordert durch #variable#%3$s
@@ -59,7 +59,7 @@ Fehler: %s
 #admin_error# $iDu hast bereits eine Map in der Warteschlange...
 
 #admin_error# $iMap has been played too recently...
-#admin_error# $iDiese Map wurde erst kürzlich gespielt...
+#admin_error# $iDiese Map wurde erst kÃ¼rzlich gespielt...
 
 #admin_error# $iYou are not allowed to do that!
 #admin_error# $iDazu fehlt Dir die Berechtigung!

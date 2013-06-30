@@ -2,7 +2,7 @@ Server Management
 Server Verwaltung
 
 Force Scores
-Spielstände überarbeiten
+SpielstÃ¤nde Ã¼berarbeiten
 
 Server ControlPanel
 Server Systemsteuerung
@@ -26,7 +26,7 @@ Save
 Speichern
 
 Delete
-Löschen
+LÃ¶schen
 
 Apply
 Anwenden
@@ -53,7 +53,7 @@ Error in filename
 Fehler im Dateinamen
 
 File '%s' deleted from filesystem!
-Datei '%s' wurde gelöscht!
+Datei '%s' wurde gelÃ¶scht!
 
 Saved MatchSettings to file: %s
 Speichere Wettkampfeinstellungen in Datei: %s
@@ -83,7 +83,7 @@ Database tools
 Datenbank Anwendungen
 
 Close
-Schließen
+SchlieÃŸen
 
 Stop Server
 Server anhalten
@@ -119,13 +119,13 @@ Referee password
 Schiedsrichterkennwort
 
 Show Server in public server list
-Zeige Server in liste der öffentlichen Server
+Zeige Server in liste der Ã¶ffentlichen Server
 
 Ladder server
 Ranglisten-Server
 
 Allow map download using ingame menu
-Erlaube Herunterladen von Maps aus dem Spielmenü heraus
+Erlaube Herunterladen von Maps aus dem SpielmenÃ¼ heraus
 
 Allow Peer-2-Peer download
 Erlaube P2P-Herunterladen
@@ -134,7 +134,7 @@ Allow Peer-2-Peer upload
 Erlaube P2P-Hochladen
 
 Allow changing validation seed
-Erlaube Änderung des Anfangswertes der Validierungsberechnung 
+Erlaube Ã„nderung des Anfangswertes der Validierungsberechnung 
 
 Enable Referee-mode
 Schiedsrichter-Modus einschalten

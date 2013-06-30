@@ -1,8 +1,8 @@
 Guest Players on the server
-Joueurs invités sur le serveur
+Joueurs invitÃ©s sur le serveur
 
 Ignored Players on the server
-Joueurs ignorés sur le serveur
+Joueurs ignorÃ©s sur le serveur
 
 unBan
 Ne plus bannir

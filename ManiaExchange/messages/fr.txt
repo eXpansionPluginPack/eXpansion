@@ -20,7 +20,7 @@ Search Maps
 Chercher Maps
 
 Usage.. /mx queue [id] or /mx search "your search terms here"
-Usage.. /mx queue [id] ou /mx search "vos termes ‡ chercher"
+Usage.. /mx queue [id] ou /mx search "vos termes √† chercher"
 
 Error: %s
 Erreur: %s
@@ -29,10 +29,10 @@ MX is down
 MX indisponible
 
 Couldn't create mapfile in maps folder, check folder permissions!
-Impossible de crÈer le fichier dans le rÈpertoire de maps, vÈrifier les permissions du rÈpertoire!
+Impossible de cr√©er le fichier dans le r√©pertoire de maps, v√©rifier les permissions du r√©pertoire!
 
 #admin_error# $iYou already have a map in the queue...
-#admin_error# $iTu as dÈj‡ une map dans la queue...
+#admin_error# $iTu as d√©j√† une map dans la queue...
 
 Unable to retrieve track info from MX..  wrong ID..?
 Impossible d'interroger les infos de map de MX..  mauvaise ID..?
@@ -41,8 +41,8 @@ Wrong environment!
 Titre / environment invalide!
 
 #record# $iVote passed!
-#record# $iLe vote ‡ succÈdÈ!
+#record# $iLe vote √† succ√©d√©!
 
 #admin_error# $iVote failed!
-#admin_error# $iLe vote a ÈchouÈ!
+#admin_error# $iLe vote a √©chou√©!
 

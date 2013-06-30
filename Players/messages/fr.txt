@@ -11,13 +11,13 @@ Blacklist
 Liste Noire
 
 Release Spec
-Rel‚cher Spectateur
+Rel√¢cher Spectateur
 
 Force Spec
 Forcer Spectateur
 
 $ff3$iYou are not allowed to do that!
-$ff3$iTu n'as pas le droit de faire Áa!
+$ff3$iTu n'as pas le droit de faire √ßa!
 
 Error: %s
 Erreur: %s
@@ -32,7 +32,7 @@ You are now blacklisted from the server.
 Tu es inscrit dans la liste noire du serveur.
 
 Admin has released you from spectate to play.
-L'admin t'a libÈrÈ du mode spectateur pour que tu puisse jouer.
+L'admin t'a lib√©r√© du mode spectateur pour que tu puisse jouer.
 
 Players
 Joueurs

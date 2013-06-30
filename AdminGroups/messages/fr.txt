@@ -1,35 +1,35 @@
 This command expect at least one parameter
-Cette commande nécessite au moins un paramètre
+Cette commande nÃ©cessite au moins un paramÃ¨tre
 
 #admin_error#You need to be an Admin to use that command
-#admin_error#Tu dois être administrateur pour pouvoir utiliser cette commande
+#admin_error#Tu dois Ãªtre administrateur pour pouvoir utiliser cette commande
 
 #admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
 #admin_error#Cette commande administrateur n'existe pas. Tapes #variable#/admin help #admin_error#pour voir toutes les commandes disponibles
 
 #admin_error#You don't have the permission to use that admin command
-#admin_error#Tu n'as pas l'autorisation nécessaire pour utiliser cette commande
+#admin_error#Tu n'as pas l'autorisation nÃ©cessaire pour utiliser cette commande
 
 #admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
-#admin_error#Le joueur #variable#%1$s #admin_error#est déjà dans le groupe #admin_error#%2$s. #admin_error#Supprime le d'abord
+#admin_error#Le joueur #variable#%1$s #admin_error#est dÃ©jÃ  dans le groupe #admin_error#%2$s. #admin_error#Supprime le d'abord
 
 #admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
-#admin_action#Le joueur #variable# %1$s #admin_action#a été ajouté au groupe d'administrateurs #variable#%2$s
+#admin_action#Le joueur #variable# %1$s #admin_action#a Ã©tÃ© ajoutÃ© au groupe d'administrateurs #variable#%2$s
 
 #admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
 #admin_error#Tus es #variable#%1$s #admin_error#Tu ne peux pas te supprimer d'un groupe
 
 #admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
-#admin_action#Le joueur : #variable#%1$s #admin_action#a été supprimé du groupe d'administrateurs #variable#%2$s
+#admin_action#Le joueur : #variable#%1$s #admin_action#a Ã©tÃ© supprimÃ© du groupe d'administrateurs #variable#%2$s
 
 #admin_error#Player #variable#%1$s #admin_action#isn't in the group
 #admin_error#Le joueur #variable#%1$s #admin_action#n'est pas dans ce groupe
 
 #admin_error#Master Admins has all rights. You can't change that!
-#admin_error#L'administrateur principal à tous les droit. Tu ne peux rien y changer!
+#admin_error#L'administrateur principal Ã  tous les droit. Tu ne peux rien y changer!
 
 #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
-#admin_error#L'administrateur principal #variable#%1$s à été défini dans config.ini et pas par eXpansion. Ne peux pas être supprimé!
+#admin_error#L'administrateur principal #variable#%1$s Ã  Ã©tÃ© dÃ©fini dans config.ini et pas par eXpansion. Ne peux pas Ãªtre supprimÃ©!
 
 Admin Groups
 Gestion de groupes

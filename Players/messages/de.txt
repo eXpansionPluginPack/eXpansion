@@ -23,7 +23,7 @@ Error: %s
 Fehler: %s
 
 Please behave next time you visit the server!
-Bitte benimm Dich wenn Du das n‰chste Mal den Server besuchst!
+Bitte benimm Dich wenn Du das n√§chste Mal den Server besuchst!
 
 You are now banned from the server.
 Du wurdest vom Server verbannt.

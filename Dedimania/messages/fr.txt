@@ -1,4 +1,4 @@
-﻿%1$s#dedirecord# secured the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s #dedirecord#$n(#rank#%4$s#dedirecord#)!
+%1$s#dedirecord# secured the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s #dedirecord#$n(#rank#%4$s#dedirecord#)!
 %1$s#dedirecord# a assuré le #rank#%2$s#dedirecord#. Record Dedimania!  Temps:#rank#%3$s #dedirecord#$n(#rank#%4$s#dedirecord#)!
 
 %1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s

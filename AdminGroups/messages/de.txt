@@ -1,5 +1,5 @@
 This command expect at least one parameter
-Dieser Aufruf benötigt mindestens einen Parameter
+Dieser Aufruf benÃ¶tigt mindestens einen Parameter
 
 #admin_error#You need to be an Admin to use that command
 #admin_error#Diese Anweisung kann nur von Administratoren verwendet werden
@@ -8,13 +8,13 @@ Dieser Aufruf benötigt mindestens einen Parameter
 #admin_error#Dies ist kein Admin-Befehl. Verwende #variable#/admin help #admin_error# um alle Befehle zu sehen
 
 #admin_error#You don't have the permission to use that admin command
-#admin_error#Ungenügende Berechtigungen, um diesen Admin-Befehl zu verwenden.
+#admin_error#UngenÃ¼gende Berechtigungen, um diesen Admin-Befehl zu verwenden.
 
 #admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
 #admin_error#Der Spieler #variable#%1$s #admin_error#befindet sich bereits in einer Grupper #admin_error#%2$s. #admin_error#Den Spieler bitte vorher aus der anderen Gruppe entfernen
 
 #admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
-#admin_action#Der Spieler #variable# %1$s #admin_action#wurde zur Gruppe der Administratoren hinzugefügt #variable#%2$s
+#admin_action#Der Spieler #variable# %1$s #admin_action#wurde zur Gruppe der Administratoren hinzugefÃ¼gt #variable#%2$s
 
 #admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
 #admin_error#Du bist #variable#%1$s #admin_error#Du kannst Dich nicht selber aus einer Gruppe entfernen
@@ -26,10 +26,10 @@ Dieser Aufruf benötigt mindestens einen Parameter
 #admin_error#Der Spieler #variable#%1$s #admin_action#befindet sich nicht in dieser Gruppe
 
 #admin_error#Master Admins has all rights. You can't change that!
-#admin_error#Master-Administratoren haben alle Berechtigungen. Du kannst das nicht ändern!
+#admin_error#Master-Administratoren haben alle Berechtigungen. Du kannst das nicht Ã¤ndern!
 
 #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
-#admin_error#Der Master-Administrator #variable#%1$s wurde in config.ini eingetragen und nicht über eXpansion. Kann ihn nicht entfernen!
+#admin_error#Der Master-Administrator #variable#%1$s wurde in config.ini eingetragen und nicht Ã¼ber eXpansion. Kann ihn nicht entfernen!
 
 Admin Groups
 Gruppen verwalten
@@ -47,7 +47,7 @@ New Group Name :
 Neuer Gruppen-Name :
 
 Add
-Hinzufügen
+HinzufÃ¼gen
 
 Group Name
 Gruppen-Name
@@ -59,10 +59,10 @@ Player List
 Spieler Liste
 
 Change Permissions
-Berechtigungen ändern
+Berechtigungen Ã¤ndern
 
 Delete Group
-Gruppe löschen
+Gruppe lÃ¶schen
 
 Remove Player
 Spieler entfernen
