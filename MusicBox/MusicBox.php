@@ -130,6 +130,11 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    public function exp_unload() {
+        parent::exp_unload();
+        $this->connection->setForcedMusic(false, "");
+    }
+
     public function getSongs() {
         return $this->songs;
     }
@@ -249,12 +254,12 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         echo "tere!\n";
         try {
             $info = Gui\Windows\MusicListWindow::Create($login);
-            $info->setSize(180,90);
+            $info->setSize(180, 90);
             $info->centerOnScreen();
             $info->show();
         } catch (\Exception $e) {
-            echo $e->getMessage()."\n";
-            echo $e->getFile().":".$e->getLine();
+            echo $e->getMessage() . "\n";
+            echo $e->getFile() . ":" . $e->getLine();
         }
     }
 
