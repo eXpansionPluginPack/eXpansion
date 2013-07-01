@@ -1,11 +1,11 @@
 Personal Best
-Persönliche Bestzeit
+PersÃ¶nliche Bestzeit
 
 Average
 Schnitt
 
 Finishes
-Abschlüsse
+AbschlÃ¼sse
 
 Server Rank
 Server Rang
