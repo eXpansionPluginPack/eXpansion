@@ -159,7 +159,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             if ($length != null) {
                 $out .= "&length=" . $length . "&lengthop=0";
             }
-            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&environments=' . $env . '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . $out . '&mtype=All&priord=2&limit=100&tracksearch&api=on&format=json';
+            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&environments=' . $env . '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) .'&mtype=All&priord=2&limit=100&tracksearch&api=on&format=json';
         }
 
         $ch = curl_init($query);
