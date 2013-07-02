@@ -1,0 +1,11 @@
+#rank#$iVote Registered!!
+#rank#$iDin stemme er registrert!
+
+#rank# $iUsage /rate #, where number is 1-5..
+#rank# $iBruk /rate #, hvor tall er 1-5..
+
+#rating# $iMap has not been rated yet!
+#rating# $iBanen har enda ikke blitt stemt på!
+
+#rating#Map Approval Rating: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Your Rating: #variable#%4$s#rating# / #variable#5
+#rating#Vurdering for godkjennelse av banen: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Din stemme: #variable#%4$s#rating# / #variable#5

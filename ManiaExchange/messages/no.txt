@@ -1,0 +1,48 @@
+Map name
+Banenavn
+
+Creators name
+Banebygger
+
+Length
+Lengde
+
+Queue
+Kø
+
+Install
+Installere
+
+ManiaExchange
+ManiaExchange
+
+Search Maps
+Søk i baner
+
+Usage.. /mx queue [id] or /mx search "your search terms here"
+Bruk.. /mx queue [id] eller /mx search "dine søkekriterier her"
+
+Error: %s
+Feil: %s
+
+MX is down
+MX er nede
+
+Couldn't create mapfile in maps folder, check folder permissions!
+Kunne ikke opprette banefil i banemappen, sjekk mapperettighetene!
+
+#admin_error# $iYou already have a map in the queue...
+#admin_error# $iDu har allerede en bane i køen...
+
+Unable to retrieve track info from MX..  wrong ID..?
+Kunne ikke hente bane fra MX.. Feil ID?
+
+Wrong environment!
+Feil miljø!
+
+#record# $iVote passed!
+#record# $iAvstemming vellykket!
+
+#admin_error# $iVote failed!
+#admin_error# $iAvstemming mislykket!
+

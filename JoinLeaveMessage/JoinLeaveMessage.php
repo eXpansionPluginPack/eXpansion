@@ -13,7 +13,7 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $color->registerCode("player", '$z$s$39f');
 
         $this->joinMsg = exp_getMessage('#player#Player %s$1 #player# (#variable#%s$2#player#) from #variable#%s$3 #player# joins! #variable#%s$4');
-        $this->leaveMsg = exp_getMessage('#player#Player %s$1 #player# (#variable#%s$2#player#) from %s$3#player# leaves!');
+        $this->leaveMsg = exp_getMessage('#player#Player %s$1 #player# (#variable#%s$2#player#) leaves!');
     }
     
     public function exp_unload() {

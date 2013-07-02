@@ -1,0 +1,33 @@
+Error: %s
+Feil: %s
+
+Votes
+Avstemming
+
+Restart Map
+Start banen på nytt
+
+Skip Map
+Neste bane
+
+Cancel Vote
+Kanseller avstemming
+
+#variable#%1$s #rank#initiated restart map vote..
+#variable#%1$s #rank#Start avstemming om bane-restart.
+
+#admin_error# $iMust run skip vote within first %1$s seconds of match start..
+#admin_error# $iAvstemming om å gå til neste bane må starte %1$s sekunder før kampstart..
+
+#variable#%1$s #rank#initiated skip map vote..
+#variable#%1$s #rank#Startet avstemming om banebytte..
+
+#record# $iVote passed!
+#record# $iAvstemming vellykket!
+
+#admin_error# $iVote failed!
+#admin_error# $iAvstemming mislykket!
+
+#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
+#admin_action#Admin #variable#%1$s #admin_action# kansellerte avstemmingen!
+

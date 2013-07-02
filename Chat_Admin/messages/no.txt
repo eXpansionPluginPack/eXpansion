@@ -1,0 +1,15 @@
+Guest Players on the server
+Gjestespiller på server
+
+Ignored Players on the server
+Ignorerte spillere på server
+
+unBan
+Fjern utestenging
+
+Remove
+Fjern
+
+unIgnore
+Fjern ignorering
+

@@ -1,0 +1,90 @@
+This command expect at least one parameter
+Denne kommandoen trenger minst ett parameter
+
+#admin_error#You need to be an Admin to use that command
+#admin_error#Du må være admin for å bruke denne kommandoen
+
+#admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
+#admin_error#Denne kommandoen eksisterer ikke. Bruk #variable#/admin help #admin_error#for å se alle kommandoene
+
+#admin_error#You don't have the permission to use that admin command
+#admin_error#Du har ikke rettigheter til å bruke denne kommandoen
+
+#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
+#admin_error#Spiller #variable#%1$s #admin_error#er allerede i en gruppe #admin_error#%2$s. #admin_error#fjern han først
+
+#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
+#admin_action#Spiller #variable# %1$s #admin_action#har blitt lagt til i admin gruppen #variable#%2$s
+
+#admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
+#admin_error#Du er #variable#%1$s #admin_error#Du kan ikke fjerne deg selv fra en gruppe
+
+#admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
+#admin_action#Spiller : #variable#%1$s #admin_action#Har blitt fjernet fra gruppen #variable#%2$s
+
+#admin_error#Player #variable#%1$s #admin_action#isn't in the group
+#admin_error#Spiller #variable#%1$s #admin_action#er ikke i gruppen
+
+#admin_error#Master Admins has all rights. You can't change that!
+#admin_error#Master-Admins har alle rettighetene. Du kan ikke endre det!
+
+#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
+#admin_error#Master-Admin #variable#%1$s har blitt definert i config.ini og ikke gjennom eXpansion. Kan ikke fjerne!
+
+Admin Groups
+Admin Gruppe
+
+Admin Commands Help
+Admin Kommandohjelp
+
+Admin Group Permission - %1$s
+Admin Grupperettigheter - %1$s
+
+Admin Group Players - %1$s
+Spillere i admingruppe - %1$s
+
+New Group Name :
+Nytt gruppenavn :
+
+Add
+Legg til
+
+Group Name
+Gruppenavn
+
+Nb Players
+Antall spillere
+
+Player List
+Liste over spillere
+
+Change Permissions
+Endre rettigheter
+
+Delete Group
+Slett gruppe
+
+Remove Player
+Fjern spiller
+
+Command
+Kommando
+
+Description
+Beskrivelse
+
+More
+Mer
+
+Aliases
+Aliaser
+
+OK
+OK
+
+Cancel
+Avbryt
+
+Login : 
+Login : 
+

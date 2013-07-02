@@ -1,0 +1,12 @@
+#rank#Congratulations to #variable#%1$s#rank# for their #variable#%2$s#rank# win!
+#rank#Gratulerer til #variable#%1$s#rank# for hans #variable#%2$s#rank# seier!
+
+#rank#Congratulations for your #variable#%1$s#rank# win!
+#rank#Gratulerer for din #variable#%1$s#rank# seier!
+
+Database Maintainance
+Database vedlikehold
+
+Database Backup and Restore
+Database Sikkerhetskopi og gjennopprett
+

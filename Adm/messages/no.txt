@@ -1,0 +1,141 @@
+Server Management
+Server Administrasjon
+
+Force Scores
+Force Scores
+
+Server ControlPanel
+Server Kontrollpanel
+
+Server Options
+Server Instillinger
+
+Game Options
+Spill Instillinger
+
+Match Settings
+Kampinstillinger
+
+Script Settings
+Script Instillinger
+
+Load
+Åpne
+
+Save
+Lagre
+
+Delete
+Slett
+
+Apply
+Bruk
+
+Cancel
+Avbryt
+
+Time Attack
+Time Attack
+
+Rounds
+Rounds
+
+Cup
+Cup
+
+Laps
+Laps
+
+Team
+Team
+
+Error in filename
+Feil i filnavn
+
+File '%s' deleted from filesystem!
+Fil '%s' er slettet fra filsystemet!
+
+Saved MatchSettings to file: %s
+Lagre Kampinstillinger til fil: %s
+
+Loaded MatchSettings from file: %s
+Åpne kampinstillinger: %s
+
+Server management
+Server administrasjon
+
+Server options
+Server instillinger
+
+Game options
+Spill Instillinger
+
+Admin Groups
+Admin grupper
+
+Match settings
+Kamp instillinger
+
+ScriptMode settings
+ScriptMode settings
+
+Database tools
+Database verktøy
+
+Close
+Lukk
+
+Stop Server
+Stopp Serveren
+
+Stop Manialive
+Stopp Manialive
+
+Server Name
+Server Navn
+
+Server comment
+Server kommentar
+
+Players
+Spillere
+
+Spectators
+Tilskuere
+
+Ladderpoints minimum
+Ladderpoints minimum
+
+Ladderpoints Maximum
+Ladderpoints Maximum
+
+Password for server
+Passord for server
+
+Password for spectators
+Passord for tilskuere
+
+Referee password
+Dommer passord
+
+Show Server in public server list
+Vis server i offentlig serverliste
+
+Ladder server
+Ladder server
+
+Allow map download using ingame menu
+Tillat nedlasting av bane i spillmenyen
+
+Allow Peer-2-Peer download
+Tillat Peer-2-Peer nedlasting
+
+Allow Peer-2-Peer upload
+Tillat Peer-2-Peer opplasting
+
+Allow changing validation seed
+Tillat bytting av validation seed
+
+Enable Referee-mode
+Tillat dommermodus
+

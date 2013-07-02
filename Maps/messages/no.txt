@@ -1,0 +1,81 @@
+Add map
+Legg til bane
+
+Delete file
+Slett fil
+
+Queue
+Kø
+
+Recs
+Recorder
+
+Go now
+Start nå
+
+Remove
+Fjern
+
+Current Map
+Gjeldende bane
+
+File '%s' deleted from filesystem!
+Fil '%s' er slettet fra filsystemet!
+
+Removes current map from the playlist.
+Sletter gjeldende bane fra spillelisten.
+
+Sets current challenge to replay at end of match
+Gjeldende bane blir spilt på nytt ved ende av kampen.
+
+Maps
+Baner
+
+List maps
+Baneliste
+
+#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position
+#variable#%1$s  #queue#har blitt lagt til i køen #variable#%3$s#queue#, i den #variable#%5$s #queue#posisjonen
+
+#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
+#queue#Neste bane er #variable#%1$s  #queue#laget av #variable#%2$s#queue#, som ønsket av #variable#%3$s
+
+#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#
+#queue#Neste bane er #variable#%1$s  #queue#laget av #variable#%2$s#queue#
+
+#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
+#queue#Bane endres til #variable#%1$s  #queue#laget av #variable#%2$s#queue#, som ønsket av #variable#%3$s
+
+Error: %s
+Feil: %s
+
+#admin_error# $iThis map is currently playing...
+#admin_error# $iDenne banen spilles nå...
+
+#admin_error# $iThis map is already in the queue...
+#admin_error# $iBanen er allerede i køen...
+
+#admin_error# $iYou already have a map in the queue...
+#admin_error# $iDu har allerede en annen bane i køen...
+
+#admin_error# $iMap has been played too recently...
+#admin_error# $iBanen har nettopp blitt spilt...
+
+#admin_error# $iYou are not allowed to do that!
+#admin_error# $iDu har ikke tillatelse til å gjøre dette!
+
+#admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from the playlist
+#admin_action#Admin #variable#%1$s #admin_action#Fjernet bane #variable#%3$s #admin_action# fra spillelisten
+
+#variable#%1$s #queue#removed #variable#%2$s #queue#from the queue..
+#variable#%1$s #queue#fjernet #variable#%2$s #queue#fra køen..
+
+#admin_action#Admin #variable#%1$s #admin_action#emptied the map queue list
+#admin_action#Admin #variable#%1$s #admin_action#tømte spillelisten
+
+#admin_error# $iChallenge already set to be replayed!
+#admin_error# $iBanen er allerede satt til å bli spilt på nytt!
+
+#queue#Challenge set to be replayed!
+#queue#Banen er satt til å bli spilt på nytt!
+

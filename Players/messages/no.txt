@@ -1,0 +1,42 @@
+Ignore
+Ignorer
+
+Kick
+Hiv ut
+
+Ban
+Utesteng
+
+Blacklist
+Svarteliste
+
+Release Spec
+Sett som kjører
+
+Force Spec
+Sett som tilskuer
+
+$ff3$iYou are not allowed to do that!
+$ff3$iDu har ikke tillatelse til å gjøre dette!
+
+Error: %s
+Feil: %s
+
+Please behave next time you visit the server!
+Vennligst oppfør deg neste gang du besøker serveren!
+
+You are now banned from the server.
+Du er nå utestengt fra serveren.
+
+You are now blacklisted from the server.
+Du har blitt svartelistet fra serveren.
+
+Admin has released you from specate to play.
+En admin har flyttet deg fra tilskuer til kjører.
+
+Players
+Spillere
+
+Show Players
+Vis spillere
+
