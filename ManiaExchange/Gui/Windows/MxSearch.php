@@ -151,6 +151,9 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 case "TMStadium":
                     $env = "2";
                     break;
+				case "TMValley":
+                    $env = "3";
+                    break;
             }
             $out = "";
             if ($style != null) {
