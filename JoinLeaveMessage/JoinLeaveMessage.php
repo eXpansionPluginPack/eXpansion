@@ -15,18 +15,18 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $this->joinMsg = exp_getMessage('#player#Player %s$1 #player# (#variable#%s$2#player#) from #variable#%s$3 #player# joins! #variable#%s$4');
         $this->leaveMsg = exp_getMessage('#player#Player %s$1 #player# (#variable#%s$2#player#) leaves!');
     }
-    
+
     public function exp_unload() {
         parent::exp_unload();
-        
     }
-    
+
     public function onPlayerConnect($login, $isSpectator) {
         try {
             $player = $this->storage->getPlayerObject($login);
 
             $nick = $player->nickName;
-            $country = $player->path;
+            $country = str_replace("World|", "", $player->path);
+
             $spec = "";
             if ($player->isSpectator)
                 $spec = '$n(Spectator)';
@@ -41,7 +41,7 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         try {
             $player = $this->storage->getPlayerObject($login);
             $nick = $player->nickName;
-            $country = $player->path;
+            $country = str_replace("World|", "", $player->path);
             $this->exp_chatSendServerMessage($this->leaveMsg, null, array($nick, $login, $country));
         } catch (\Exception $e) {
             echo $e->getLine() . ":" . $e->getMessage();

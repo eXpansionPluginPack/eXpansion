@@ -10,8 +10,13 @@ use ManiaLive\Event\Dispatcher;
 
 class Quiz extends \ManiaLive\PluginHandler\Plugin {
 
+    /** @var Structures\Question[] */
     private $questionDb = array();
+
+    /** @var Structures\Question */
     private $currentQuestion = null;
+
+    /** @var Structures\QuizPlayer[] */
     private $players = array();
     private $questionCounter = 0;
 
@@ -38,14 +43,17 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
         $this->enableDedicatedEvents();
         $command = $this->registerChatCommand("q", "chatquiz", -1, true);
         $this->registerChatCommand("kysy", "ask", -1, true);
-        $this->registerChatCommand("pisteet", "showPoints", 0, true);
+        $this->registerChatCommand("pisteet", "showPointsWindow", 0, true);
+        $this->registerChatCommand("piste", "addPointsWindow", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->get());
         $this->registerChatCommand("peruuta", "cancel", 0, true);
         $this->registerChatCommand("vastaus", "showAnswer", 0, true);
         $this->registerChatCommand("kysymys", "showQuestion", 0, true);
     }
 
     function onReady() {
-        
+        Gui\Windows\QuestionWindow::$mainPlugin = $this;
+        Gui\Windows\Playerlist::$mainPlugin = $this;
+        Gui\Windows\AddPoint::$mainPlugin = $this;
     }
 
     public function onOliverde8HudMenuReady($menu) {
@@ -105,33 +113,48 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
         }
     }
 
+    function addQuestion(Structures\Question $question) {
+        $this->questionDb[] = $question;
+        $this->chooseNextQuestion();
+    }
+
     function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
         if ($playerUid == 0)
             return;
 
         if (substr($text, 0, 1) == "/")
             return;
+
         if (!isset($this->currentQuestion->question))
             return;
 
-        if ($login == $this->currentQuestion->login)
-            return; // ignore if answer is from asker
-
-        foreach ($this->currentQuestion->answer as $answer) {
-            if (strtolower(trim($text)) === strtolower(trim($answer))) {
-                $this->currentQuestion = null;
-                $this->connection->chatSendServerMessage("\$0b0 CORRECT! \$fff" . $answer);
+        // if ($login == $this->currentQuestion->asker->login)
+        //     return; // ignore if answer is from asker
+        switch ($this->currentQuestion->checkAnswer($text)) {
+            case Structures\Question::Correct:
+                $this->connection->chatSendServerMessage("\$0b0 CORRECT! \$fff" . $text);
                 $this->addPoint(null, $login);
+                $this->currentQuestion = null;
                 $this->chooseNextQuestion();
-                return;
-            }
+                break;
+            case Structures\Question::MoreAnswersNeeded:
+                $this->connection->chatSendServerMessage("\$0b0 CORRECT! \$fff" . $text);
+                $this->addPoint(null, $login);
+                break;
+            default:
+                break;
         }
+    }
+
+    public function getPlayers() {
+        return $this->players;
     }
 
     function cancel($login) {
         if ($this->currentQuestion === null)
             return;
-        if ($this->currentQuestion->login == $login || $this->mlepp->AdminGroup->hasPermission($fromLogin, 'admin')) {
+
+        if ($this->currentQuestion->asker->login == $login || $this->mlepp->AdminGroup->hasPermission($fromLogin, 'admin')) {
             $this->connection->chatSendServerMessage($this->storage->getPlayerObject($login)->nickName . '$z$s cancels the question.');
             $this->currentQuestion = null;
             $this->chooseNextQuestion();
@@ -165,7 +188,7 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
             return;
 
         if (isset($this->currentQuestion->question))
-            $this->currentQuestion = null;
+            return;
 
         if (count($this->questionDb) <= 1) {
             $this->currentQuestion = array_shift($this->questionDb);
@@ -177,14 +200,10 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
         }
     }
 
-    function addPoint($login = null, $target) {
-        if ($login == null || $this->mlepp->AdminGroup->hasPermission($login, 'admin')) {
+    function addPoint($login, $target) {
+        if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin")) {
             if (!isset($this->players[$target])) {
-                $struct = new \stdClass();
-                $struct->{"points"} = 1;
-                $struct->{"nickName"} = $this->storage->getPlayerObject($target)->nickName;
-                $struct->{"login"} = $target;
-                $this->players[$target] = $struct;
+                $this->players[$target] = new Structures\QuizPlayer($target, $this->storage->getPlayerObject($target)->nickName, 1);
                 $this->showPoints();
             } else {
                 $this->players[$target]->points++;
@@ -193,43 +212,75 @@ class Quiz extends \ManiaLive\PluginHandler\Plugin {
         }
     }
 
+    function removePoint($login, $target) {
+        if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin")) {
+            if (isset($this->players[$target])) {                
+                $this->players[$target]->points--;
+                $this->showPoints();
+            }
+        }
+    }
+
     function showQuestion() {
-        $nickName = $this->currentQuestion->nickName;
+        $nickName = $this->currentQuestion->asker->nickName;
         $question = $this->currentQuestion->question;
         $this->connection->chatSendServerMessage("\$3e3\$oQuestion!! number: \$fff" . $this->questionCounter . "\$z\$s\$3e3\$o Asker: \$z\$s\$fff" . $nickName);
         $this->connection->chatSendServerMessage("\$z\$o\$s\$fa0" . $question . "?");
     }
 
-    function removePoint($login, $target) {
-        if (isset($this->points[$target])) {
-            $this->players[$target]->points--;
+    function ask($login, $text = "") {
+        $window = Gui\Windows\QuestionWindow::Create($login);
+        try {
+            if (strlen($text) > 1) {
+                echo "kysymys";
+                $answerPosition = strpos($text, "?");
+                if ($answerPosition == false) {
+                    $this->connection->chatSendServerMessage("\$f00Question needs to be at the right format!", $login);
+                    return;
+                }
+                $answer = trim(str_replace("?", "", strstr($text, "?")));
+                if ($answer == "") {
+                    $this->connection->chatSendServerMessage("\$f00Aswer is missing from the question!", $login);
+                    return;
+                }
+
+                $question = new Structures\Question($this->storage->getPlayerObject($login), trim(substr($text, 0, $answerPosition)));
+                $answers = explode(",", $answer);
+
+                foreach ($answers as $ans) {
+                    $question->addAnswer(trim($ans));
+                }
+                $window->setQuestion($question);
+            }
+
+            $window->setSize(240, 120);
+            $window->centerOnScreen();
+            $window->Show();
+        } catch (\Exception $e) {
+            echo $e->getFile() . ":" . $e->getLine();
         }
     }
 
-    function ask($login, $text) {
-        $answerPosition = strpos($text, "?");
-        if ($answerPosition == false) {
-            $this->connection->chatSendServerMessage("\$f00Question needs to be at the right format!", $login);
-            return;
-        }
-        $answer = trim(str_replace("?", "", strstr($text, "?")));
-        if ($answer == "") {
-            $this->connection->chatSendServerMessage("\$f00Aswer is missing from the question!", $login);
-            return;
-        }
+    function showPointsWindow($login) {
+        \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->players, "points");
+        $window = Gui\Windows\Playerlist::Create($login);
+        $window->setData($this->players);
+        $window->setSize(90, 60);
+        $window->centerOnScreen();
+        $window->setTitle("Point Holders");
+        $window->Show();
+    }
 
-        $struct = new \stdClass();
-        $struct->{"question"} = trim(substr($text, 0, $answerPosition));
-        $struct->{"answer"} = explode(",", $answer);
-        $struct->{"login"} = $login;
-        $struct->{"nickName"} = $this->storage->getPlayerObject($login)->nickName;
-
-        $this->questionDb[] = $struct;
-        $this->connection->chatSendServerMessage("Added question in queue", $login);
-        $this->chooseNextQuestion();
+    function addPointsWindow($login) {
+        $window = Gui\Windows\AddPoint::Create($login);
+        $window->setSize(90, 60);
+        $window->centerOnScreen();
+        $window->setTitle("Add point to player");
+        $window->Show();
     }
 
     function showPoints($login = null) {
+        \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->players, "points");
         $this->connection->chatSendServerMessage("Current point holders:");
         $output = "";
         foreach ($this->players as $player) {
