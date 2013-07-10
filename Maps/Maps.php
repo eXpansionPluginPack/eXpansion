@@ -11,6 +11,8 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $config;
+
+    /** var MapWish[] */
     private $queue = array();
     private $history = array();
     private $nextMap;
@@ -24,6 +26,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_nextQueue;
     private $msg_nextMap;
     private $msg_queueNow;
+    private $msg_jukehelp;
 
     public function exp_onInit() {
 
@@ -45,26 +48,29 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
 
-        $cmd = AdminGroups::addAdminCommand('map remove', $this, 'chat_removeMap', 'server_maps');
+        $cmd = AdminGroups::addAdminCommand('map remove', $this, 'chat_removeMap', 'map_remove');
         $cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "remove");
 
-        $cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', 'maps_res');
+        $cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', 'map_restart');
         $cmd->setHelp(exp_getMessage('Sets current challenge to replay at end of match'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "replay");
 
         $this->registerChatCommand('list', "showMapList", 0, true);
         $this->registerChatCommand('maps', "showMapList", 0, true);
+
         $this->registerChatCommand('nextmap', "chat_nextMap", 0, true);
-        $this->registerChatCommand('drop', "chat_dropQueue", 0, true);
+
+        $this->registerChatCommand('jb', "jukebox", 1, true);
 //$this->registerChatCommand('history', "chat_history", 0, true);
 //$this->registerChatCommand('queue', "chat_showQueue", 0, true);
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Maps'), false);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('List maps'), null, array($this, 'showMapList'), false);
+            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Jukebox'), null, array($this, 'showJukeList'), false);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Add map'), null, array($this, 'addMaps'), true);
         }
 
@@ -75,6 +81,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->nextMap = $this->storage->nextMap;
 
         Gui\Windows\Maplist::Initialize($this);
+        Gui\Windows\Jukelist::$mainPlugin = $this;
 
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
@@ -89,18 +96,23 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_nextQueue = exp_getMessage('#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s');  // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
         $this->msg_nextMap = exp_getMessage('#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#');  // '%1$s' = Map Name, '%2$s' = Map author
         $this->msg_queueNow = exp_getMessage('#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s');  // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
-
+        $this->msg_jukehelp = exp_getMessage('/jb uses next params: drop, reset and show');
         $this->enableDedicatedEvents();
     }
 
     /**
      * 
-     * @return bool
+     * @return boolean
      */
     public function isLocalRecordsLoaded() {
         return $this->isPluginLoaded('eXpansion\LocalRecords');
     }
 
+    /**
+     * showRec($login, $map)
+     * @param string $login
+     * @param \DedicatedApi\Structures\Map $map
+     */
     public function showRec($login, $map) {
         $this->callPublicMethod("eXpansion\LocalRecords", "showRecsWindow", $login, $map);
     }
@@ -145,7 +157,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["plugin"] = $this;
         $button["function"] = "chat_removeMap";
         $button["params"] = "this";
-        $button["permission"] = "server_maps";
+        $button["permission"] = "map_remove";
         $menu->addButton($parent, "Remove Current Map", $button);
 
         $button["style"] = "Icons64x64_1";
@@ -154,18 +166,19 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["plugin"] = $this;
         $button["function"] = "emptyWishes";
         $button["params"] = "this";
-        $button["permission"] = "server_mapWishes";
+        $button["permission"] = "map_jukebox";
         $menu->addButton($parent, "Empty Wish List", $button);
 
         $button["style"] = "Icons128x128_1";
         $button["substyle"] = "NewTrack";
         $button["function"] = 'addMaps';
+        $button["permission"] = "map_add";
         $menu->addButton($parent, "Add Map", $button);
 
         $button["style"] = "Icons64x64_1";
         $button["substyle"] = "Refresh";
         $button["function"] = 'replayMap';
-        $button["permission"] = "maps_res";
+        $button["permission"] = "map_restart";
         $parent = $menu->findButton(array('admin', 'Basic Commands'));
         if (!$parent) {
             $parent = $menu->findButton(array('admin', 'Maps'));  // no basic cmd submenu?  just dump it in with map cmd's..
@@ -228,7 +241,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         if ($this->config->showNextMapWidget) {
-          $this->redrawNextMapWidget();
+            $this->redrawNextMapWidget();
         }
     }
 
@@ -265,15 +278,40 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 //  $this->callPublicMethod('Standard\Menubar', 'addButton', 'Vote for replay map', array($this, 'voteRestart'), false);
     }
 
-    public function testme($login) {
-        print "total number: " . count(Gui\Windows\Maplist::GetAll());
+    public function jukebox($login, $args = "") {
+        echo $args;
+        try {
+            switch (strtolower($args)) {
+                case "drop":
+                    $this->chat_dropQueue($login);
+                    break;
+                case "reset":
+                    AdminGroups::hasPermission($login, "map_jukebox");
+                    $this->emptyWishes($login);
+                    break;
+                case "list":
+                case "show":
+                    $this->showJukeQueue($login);
+                    break;
+                default:
+                    $this->exp_chatSendServerMessage($this->msg_jukehelp, $login);
+                    break;
+            }
+        } catch (\Exception $e) {
+            echo $e->getFile() . ":" . $e->getLine();
+        }
+    }
+
+    public function showJukeQueue($login) {
+        $window = Gui\Windows\Jukelist::Create($login);
+        $window->setList($this->queue);
+        $window->centerOnScreen();
+        $window->setTitle("Jukebox");
+        $window->setSize(180, 100);
+        $window->show();
     }
 
     public function showMapList($login) {
-        Gui\Windows\Maplist::Erase($login);
-
-
-
         $window = Gui\Windows\Maplist::Create($login);
         $window->setTitle(__('Maps on server', $login));
         if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
@@ -302,14 +340,14 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     return;
                 }
 
-                if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login) && $queue->player->login == $login) {
+                if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_jukebox') && $queue->player->login == $login) {
                     $msg = exp_getMessage('#admin_error# $iYou already have a map in the queue...');
                     $this->exp_chatSendServerMessage($msg, $login);
                     return;
                 }
             }
 
-            if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login) && $this->config->bufferSize > 0) {
+            if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_jukebox') && $this->config->bufferSize > 0) {
                 $i = 0;
                 foreach ($this->history as $played) {
                     $i++;
@@ -396,7 +434,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function removeMap($login, \DedicatedApi\Structures\Map $map) {
-        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps')) {
+        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_remove')) {
             $msg = exp_getMessage('#admin_error# $iYou are not allowed to do that!');
             $this->exp_chatSendServerMessage($msg, $login);
             return;
@@ -494,36 +532,73 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function chat_dropQueue($login = null) {
-        if ($login != null) {
-            if (count($this->queue) > 0) {
-                $player = $this->storage->getPlayerObject($login);
-                $i = 0;
-                foreach ($this->queue as $queue) {
-                    if ($queue->player == $player) {
-                        array_splice($this->queue, $i, 1);
-                        $msg = exp_getMessage('#variable#%1$s #queue#removed #variable#%2$s #queue#from the queue..');
-                        $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($queue->player->nickName, 'wosnm'), \ManiaLib\Utils\Formatting::stripCodes($queue->map->name, 'wosnm')));
-                        break;
-                    }
-                    $i++;
-                }
-            } else {
-                return;
+    function dropQueue($login, $map) {
+        if (!AdminGroups::hasPermission($login, "map_jukebox")) {
+            $this->exp_chatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
+            return;
+        }
+        $i = 0;
+        foreach ($this->queue as $queue) {
+            if ($queue->map->uId == $map->uId) {
+                array_splice($this->queue, $i, 1);
+                $msg = exp_getMessage('#variable#%1$s #queue#removed #variable#%2$s #queue#from the queue..');
+                $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->getPlayerObject($login)->nickName, 'wosnm'), \ManiaLib\Utils\Formatting::stripCodes($queue->map->name, 'wosnm')));
+                $this->showJukeQueue($login);
+                break;
             }
-            if (count($this->queue) > 0) {
-                $queue = reset($this->queue);
-                $this->nextMap = $queue->map;
-            } else {
-                $this->nextMap = $this->storage->nextMap;
-            }
-            if ($this->config->showNextMapWidget) {
-               $this->redrawNextMapWidget();
-            }
+            $i++;
+        }
+        if (count($this->queue) > 0) {
+            $queue = reset($this->queue);
+            $this->nextMap = $queue->map;
+        } else {
+            $this->nextMap = $this->storage->nextMap;
+        }
+        if ($this->config->showNextMapWidget) {
+            $this->redrawNextMapWidget();
         }
     }
 
+    function chat_dropQueue($login = null) {
+        if ($login == null)
+            return;
+
+        if (count($this->queue) > 0) {
+            $player = $this->storage->getPlayerObject($login);
+            $i = 0;
+            foreach ($this->queue as $queue) {
+                if ($queue->player == $player) {
+                    array_splice($this->queue, $i, 1);
+                    $msg = exp_getMessage('#variable#%1$s #queue#removed #variable#%2$s #queue#from the queue..');
+                    $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($queue->player->nickName, 'wosnm'), \ManiaLib\Utils\Formatting::stripCodes($queue->map->name, 'wosnm')));
+                    break;
+                }
+                $i++;
+            }
+        } else {
+            return;
+        }
+        if (count($this->queue) > 0) {
+            $queue = reset($this->queue);
+            $this->nextMap = $queue->map;
+        } else {
+            $this->nextMap = $this->storage->nextMap;
+        }
+        if ($this->config->showNextMapWidget) {
+            $this->redrawNextMapWidget();
+        }
+    }
+
+    function emptyWishesGui($login) {
+        $this->emptyWishes($login);
+        $this->showJukeQueue($login);
+    }
+
     function emptyWishes($login) {
+        if (!AdminGroups::hasPermission($login, "map_jukebox")) {
+            $this->exp_chatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
+            return;
+        }
         $player = $this->storage->getPlayerObject($login);
         $this->queue = array();
         $this->nextMap = $this->storage->nextMap;
@@ -564,6 +639,10 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function addMaps($login) {
+        if (!AdminGroups::hasPermission($login, "map_add")) {
+            $this->exp_chatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
+            return;
+        }
         $window = Gui\Windows\AddMaps::Create($login);
         $window->setTitle('Add Maps on server');
         $window->centerOnScreen();
@@ -572,5 +651,4 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
 }
-
 ?>

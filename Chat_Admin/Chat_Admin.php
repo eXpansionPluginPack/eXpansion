@@ -45,7 +45,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          * 
          */
 
-        $cmd = AdminGroups::addAdminCommand('player kick', $this, 'kick', Permission::player_kick); //
+        $cmd = AdminGroups::addAdminCommand('player kick', $this, 'kick', 'player_kick'); //
         $cmd->setHelp('kick the player from the server');
         $cmd->setHelpMore('$w/admin player kick #login$z will kick the player from the server.
 A kicked player may return to the server whanever he desires.');
@@ -232,11 +232,11 @@ Other server might use the same blacklist file!!');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "setMapDownload");
 
-        $cmd = AdminGroups::addAdminCommand('stop dedicated', $this, 'stopDedicated', 'server_admin');
+        $cmd = AdminGroups::addAdminCommand('stop dedicated', $this, 'stopDedicated', 'server_stopServer');
         $cmd->getHelp("Stops this server. Manialive will crush after this");
         AdminGroups::addAlias($cmd, 'stop ml');
 
-        $cmd = AdminGroups::addAdminCommand('stop manialive', $this, 'stopManiaLive', 'server_admin');
+        $cmd = AdminGroups::addAdminCommand('stop manialive', $this, 'stopManiaLive', 'server_stopManialive');
         $cmd->getHelp("Stops the Manialive instance running on for the server.");
         AdminGroups::addAlias($cmd, 'stop dedi');
 
@@ -252,7 +252,7 @@ Other server might use the same blacklist file!!');
         AdminGroups::addAlias($cmd, 'next'); // fast
         AdminGroups::addAlias($cmd, 'nextmap');
 
-        $cmd = AdminGroups::addAdminCommand('restart', $this, 'restartMap', 'map_res');
+        $cmd = AdminGroups::addAdminCommand('restart', $this, 'restartMap', 'map_restart');
         $cmd->setHelp("Restarts this map to allow you to replay the map");
         AdminGroups::addAlias($cmd, 'res'); // xaseco
         AdminGroups::addAlias($cmd, 'restart'); // fast
@@ -298,7 +298,7 @@ Other server might use the same blacklist file!!');
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
 
         //rounds
-        $cmd = AdminGroups::addAdminCommand('set game rounds end', $this, 'forceEndRound', 'map_roundEnd');
+        $cmd = AdminGroups::addAdminCommand('set game rounds end', $this, 'forceEndRound', 'map_endRound');
         $cmd->setHelp('Ends a round. Only work in round mode');
         AdminGroups::addAlias($cmd, 'end');  // fast
         AdminGroups::addAlias($cmd, 'endround'); // xaseco
@@ -1103,7 +1103,11 @@ Other server might use the same blacklist file!!');
     }
 
     function stopDedicated($fromLogin, $params) {
+        if (!AdminGroups::hasPermission($login, 'server_stopServer'))
+            $this->noPermission();
+
         try {
+
             $this->connection->stopServer();
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
@@ -1111,6 +1115,9 @@ Other server might use the same blacklist file!!');
     }
 
     function stopManiaLive($fromLogin, $params) {
+        if (!AdminGroups::hasPermission($login, 'server_stopManialive'))
+            $this->noPermission();
+
         die();
     }
 

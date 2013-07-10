@@ -73,7 +73,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_question = exp_getMessage("#question#%s ?");
         $this->msg_format = exp_getMessage("#error#Question needs to be at the right format!");
         $this->msg_reset = exp_getMessage("#quiz#Quiz has been reset!");
-        $this->msg_correct = exp_getMessage("#quiz# CORRECT! #variable#%s");
+        $this->msg_correct = exp_getMessage("Correct from");
         $this->msg_rightAnswer = exp_getMessage('#quiz#Right answers: #variable#%s');
         $this->msg_answerMissing = exp_getMessage("#error#Aswer is missing from the question!");
         $this->msg_questionMissing = exp_getMessage("#error#Question is missing from the question!");
@@ -173,12 +173,19 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (!isset($this->currentQuestion->question))
             return;
 
-        if ($login == $this->currentQuestion->asker->login)
-            return; // ignore if answer is from asker
+        //if ($login == $this->currentQuestion->asker->login)
+          //  return; // ignore if answer is from asker
         
         switch ($this->currentQuestion->checkAnswer($text)) {
-            case Structures\Question::Correct:
-                $this->exp_chatSendServerMessage($this->msg_correct, null, array($text));
+            case Structures\Question::Correct:                
+                $player =$this->storage->getPlayerObject($login);
+                $nicklen = strlen(\ManiaLib\Utils\Formatting::stripColors($player->nickName));
+                $starCount = floor((50 - $nicklen) / 2);
+                
+                $header = '$o$af0'. str_repeat("*", $starCount-1).' $z$s$fff'. $player->nickName .' $z$o$s$af0'.str_repeat("*", $starCount-1);
+                $this->connection->chatSendServerMessage($header);                
+                $this->connection->chatSendServerMessage('$o'.$text);
+                $this->connection->chatSendServerMessage('$o$af0'.  str_repeat('*', 45));
                 $this->addPoint(null, $login);
                 $this->currentQuestion = null;
                 $this->chooseNextQuestion();

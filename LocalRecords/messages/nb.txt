@@ -1,11 +1,11 @@
 #variable#%1$s  #record#secured their #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#(#rank#$n-%5$s#record#)
-#variable#%1$s  #record#Sikret sin #rank#%2$s #record#. Lokale rekord med tiden #rank#%3$s #record#(#rank#$n-%5$s#record#)
+#variable#%1$s  #record#Sikret sin #rank#%2$s $n(%4$s)$n#record#. Lokale rekord med tiden #rank#%3$s #record#(#rank#$n-%5$s#record#)
 
 #variable#%1$s  #record#claimed the #rank#%2$s #record#. Local Record with time of #rank#%3$s
 #variable#%1$s  #record#Tok den #rank#%2$s #record#. Lokale rekorden med tiden #rank#%3$s
 
 #variable#%1$s  #record#gained the #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#(#rank#$n-%5$s#record#)
-#variable#%1$s  #record#Tok den #rank#%2$s #record#. Lokale rekorden med tiden #rank#%3$s #record#(#rank#$n-%5$s#record#)
+#variable#%1$s  #record#Tok den #rank#%2$s $n(%4$s)$n#record#. Lokale rekorden med tiden #rank#%3$s #record#(#rank#$n-%5$s#record#)
 
 #variable#%1$s  #record#Is a new Map. Currently no record!
 #variable#%1$s  #record#Dette er en ny bane. Foreløpig ingen rekorder!

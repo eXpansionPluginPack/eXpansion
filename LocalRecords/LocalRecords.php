@@ -93,7 +93,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onInit() {
         //Activating debug for records only
-        $this->debug = self::DEBUG_RECPROCESSTIME;
+        $this->debug = self::DEBUG_NONE;
 
         //Listing the compatible Games
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
