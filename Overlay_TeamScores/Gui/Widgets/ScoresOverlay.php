@@ -15,7 +15,7 @@ class ScoresOverlay extends \ManiaLive\Gui\Window {
         $this->setAlign("center", "top");
 
         $this->background = new \ManiaLib\Gui\Elements\Quad();
-        //$this->background->setImage("http://chris927.tm-betmania.com/images/scoreboard.png");
+        $this->background->setImage("http://chris92.tm-betmania.com/images/scoreboard.png", true);
         $this->background->setSize(110 * 1.5, 12 * 1.5);
         $this->background->setAlign("center", "top");        
         $this->addComponent($this->background);
