@@ -150,12 +150,15 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableDatabase();
 
         //List of all records
-        $this->registerChatCommand("recs", "showRecsWindow", 0, true);
-
+        $cmd = $this->registerChatCommand("recs", "showRecsWindow", 0, true);
+		$cmd->help = 'Show Records Window';
         //Top 100 ranked players
-        $this->registerChatCommand("top100", "showRanksWindow", 0, true);
-        $this->registerChatCommand("rank", "chat_showRank", 0, true);
-        $this->registerChatCommand("pb", "chat_personalBest", 0, true);
+        $cmd = $this->registerChatCommand("top100", "showRanksWindow", 0, true);
+		$cmd->help = 'Show Top 100 Window';
+        $cmd = $this->registerChatCommand("rank", "chat_showRank", 0, true);
+		$cmd->help = 'Show Player Rank';
+        $cmd = $this->registerChatCommand("pb", "chat_personalBest", 0, true);
+		$cmd->help = 'Show Player Personal Best';
     }
 
     public function exp_onReady() {

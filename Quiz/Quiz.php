@@ -62,12 +62,19 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 
         $command = $this->registerChatCommand("q", "chatquiz", -1, true);
-        $this->registerChatCommand("kysy", "ask", -1, true);
-        $this->registerChatCommand("pisteet", "showPointsWindow", 0, true);
-        $this->registerChatCommand("piste", "addPointsWindow", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->get());
-        $this->registerChatCommand("peruuta", "cancel", 0, true);
-        $this->registerChatCommand("vastaus", "showAnswer", 0, true);
-        $this->registerChatCommand("kysymys", "showQuestion", 0, true);
+		$command->help = '/q ask; Ask a question, /q points; show points, /q addpoint; Add Point to player, /q cancel; Cancel question, /q show; Show Answer';
+        $command = $this->registerChatCommand("kysy", "ask", -1, true);
+		$command->help = '/kysy Ask a Question';
+        $command = $this->registerChatCommand("pisteet", "showPointsWindow", 0, true);
+		$command->help = '/pisteet Show Points Window';
+        $command = $this->registerChatCommand("piste", "addPointsWindow", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->get());
+		$command->help = '/piste Add Points to Player Window';
+        $command = $this->registerChatCommand("peruuta", "cancel", 0, true);
+		$command->help = '/peruuta Cancel Question';
+        $command = $this->registerChatCommand("vastaus", "showAnswer", 0, true);
+		$command->help = '/vastaus Show Current Answer for Question';
+        $command = $this->registerChatCommand("kysymys", "showQuestion", 0, true);
+		$command->help = '/kysymys Shows a Question';
 
         $this->msg_questionPre = exp_getMessage("#quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2");
         $this->msg_question = exp_getMessage("#question#%s ?");

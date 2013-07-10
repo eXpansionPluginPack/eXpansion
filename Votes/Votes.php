@@ -44,17 +44,20 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableDedicatedEvents();
 
         if ($this->config->restartVote_enable) {
-            $this->registerChatCommand("replay", "vote_Restart", 0, true);
-            $this->registerChatCommand("restart", "vote_Restart", 0, true);
+            $cmd = $this->registerChatCommand("replay", "vote_Restart", 0, true);
+			$cmd->help = 'Vote Replay for Map';
+            $cmd = $this->registerChatCommand("restart", "vote_Restart", 0, true);
+			$cmd->help = 'Vote Restart for Map';
         }
         if ($this->config->skipVote_enable) {
-            $this->registerChatCommand("skip", "vote_Skip", 0, true);
+            $cmd = $this->registerChatCommand("skip", "vote_Skip", 0, true);
+			$cmd->help = 'Vote Skip for Map';
         }
 //$cmd = $this->addAdminCommand("poll", $this, "vote_Poll", null);
 //$cmd->setHelp("Run a yes/no vote with the entered question");
 
         $cmd = AdminGroups::addAdminCommand('cancelvote', $this, 'cancelVote', 'cancel_vote');
-        $cmd->setHelp('Cancel current running callvote');
+        $cmd->setHelp = 'Cancel current running callvote';
         AdminGroups::addAlias($cmd, "cancel");
     }
 

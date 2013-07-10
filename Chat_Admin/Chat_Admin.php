@@ -31,11 +31,16 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         parent::exp_onLoad();
 
         $admingroup = AdminGroups::getInstance();
-        $this->registerChatCommand("ta", "support_fastTa", -1, true, $admingroup->get());
-        $this->registerChatCommand("laps", "support_fastLaps", -1, true, $admingroup->get());
-        $this->registerChatCommand("rounds", "support_fastRounds", -1, true, $admingroup->get());
-        $this->registerChatCommand("cup", "support_fastCup", -1, true, $admingroup->get());
-        $this->registerChatCommand("team", "support_fastTeam", -1, true, $admingroup->get());
+        $cmd = $this->registerChatCommand("ta", "support_fastTa", -1, true, $admingroup->get());
+		$cmd->help = '/ta limit; Sets timelimit for TimeAttack';
+        $cmd = $this->registerChatCommand("laps", "support_fastLaps", -1, true, $admingroup->get());
+		$cmd->help = '/laps laps X; Sets Laps Limit';
+        $cmd = $this->registerChatCommand("rounds", "support_fastRounds", -1, true, $admingroup->get());
+		$cmd->help = '/rounds limit X; Sets PointLimit in Rounds';
+        $cmd = $this->registerChatCommand("cup", "support_fastCup", -1, true, $admingroup->get());
+		$cmd->help = '/cup limit X; Sets CupRoundsLimit for Winner';
+        $cmd = $this->registerChatCommand("team", "support_fastTeam", -1, true, $admingroup->get());
+		$cmd->help = '/team limit X; Sets Team PointLimit';
 
         /* 		
          * ******************* 
@@ -233,11 +238,11 @@ Other server might use the same blacklist file!!');
         AdminGroups::addAlias($cmd, "setMapDownload");
 
         $cmd = AdminGroups::addAdminCommand('stop dedicated', $this, 'stopDedicated', 'server_stopServer');
-        $cmd->getHelp("Stops this server. Manialive will crush after this");
+        $cmd->setHelp("Stops this server. Manialive will crush after this");
         AdminGroups::addAlias($cmd, 'stop ml');
 
         $cmd = AdminGroups::addAdminCommand('stop manialive', $this, 'stopManiaLive', 'server_stopManialive');
-        $cmd->getHelp("Stops the Manialive instance running on for the server.");
+        $cmd->setHelp("Stops the Manialive instance running on for the server.");
         AdminGroups::addAlias($cmd, 'stop dedi');
 
         /* 		 
@@ -330,7 +335,8 @@ Other server might use the same blacklist file!!');
         $cmd->setHelp('Changes the warmup duration of Rounds mode only')
                 ->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
-
+		AdminGroups::addAlias($cmd, 'setAllWarmUpDuration');
+		
         //laps
         $cmd = AdminGroups::addAdminCommand('set game laps TimeLimit', $this, 'setLapsTimeLimit', 'game_settings');
         $cmd->setHelp('Changes the limit of time players has to finish the track')
@@ -355,6 +361,7 @@ Other server might use the same blacklist file!!');
         $cmd->setHelp('Changes the warmup duration of laps mode only')
                 ->setMinParam(1)
                 ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+		AdminGroups::addAlias($cmd, "setAllWarmUpDuration");		
 
         //team
         $cmd = AdminGroups::addAdminCommand('set game team PointsLimit', $this, 'setTeamPointsLimit', 'game_settings');
@@ -365,52 +372,65 @@ Other server might use the same blacklist file!!');
 
 
         $cmd = AdminGroups::addAdminCommand('set game team maxPoints', $this, 'setMaxPointsTeam', 'game_settings');
+		$cmd->setHelp('Changes the Max PointsLimit of team mode');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setMaxPointsTeam");
 
         $cmd = AdminGroups::addAdminCommand('set game team NewRules', $this, 'setUseNewRulesTeam', 'game_settings');
+		$cmd->setHelp('Changes the NewRules of team mode');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
         AdminGroups::addAlias($cmd, "setUseNewRulesTeam");
 
         $cmd = AdminGroups::addAdminCommand('set game team forcePlayer', $this, 'forcePlayerTeam', 'game_settings');
+		$cmd->setHelp('Changes the Team for a Player by Forcing him');
         $cmd->setMinParam(2);
         $cmd->addchecker(2, \ManiaLivePlugins\eXpansion\AdminGroups\types\Arraylist::getInstance()->items("0,1,red,blue"));
         AdminGroups::addAlias($cmd, "forcePlayerTeam");
 
 
         $cmd = AdminGroups::addAdminCommand('set game team WarmUpDuration', $this, 'setAllWarmUpDuration', 'game_settings');
+		$cmd->setHelp('Changes the WarmUpDuration of team mode');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
+		AdminGroups::addAlias($cmd, "setAllWarmUpDuration");
 
         //cup
         $cmd = AdminGroups::addAdminCommand('set game cup PointsLimit', $this, 'setCupPointsLimit', 'game_settings');
+		$cmd->setHelp('Changes the Cup PointLimit of Cup mode');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setCupPointsLimit");
 
         $cmd = AdminGroups::addAdminCommand('set game cup RoundsPerMap', $this, 'setCupRoundsPerMap', 'game_settings');
+		$cmd->setHelp('Changes the Cup RoundsPerMap of Cup mode');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setCupRoundsPerMap");
 
         $cmd = AdminGroups::addAdminCommand('set game cup WarmUpDuration', $this, 'setCupWarmUpDuration', 'game_settings');
+		$cmd->setHelp('Changes the Cup WarmUpDuration of Cup mode');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
         AdminGroups::addAlias($cmd, "setCupWarmUpDuration");
 
         $cmd = AdminGroups::addAdminCommand('set game cup NbWinners', $this, 'setCupNbWinners', 'game_settings');
+		$cmd->setHelp('Changes the Cup NbWinners of Cup mode');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Integer::getInstance());
         AdminGroups::addAlias($cmd, "setCupNbWinners");
 
         $cmd = AdminGroups::addAdminCommand('set game cup customPoints', $this, 'prepareRoundPoints', 'game_settings');
+		$cmd->setHelp('Changes the Cup CustomPoints of Cup mode');
         $cmd->setMinParam(1);
+		AdminGroups::addAlias($cmd, "prepareRoundPoints");
 
         $cmd = AdminGroups::addAdminCommand('set game cup finishtimeout', $this, 'setFinishTimeout', 'game_settings');
+		$cmd->setHelp('Changes the Cup Finishtimeout of Cup mode');
         $cmd->setMinParam(1);
         $cmd->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms::getInstance());
+		AdminGroups::addAlias($cmd, "setFinishTimeout");
     }
 
     /**

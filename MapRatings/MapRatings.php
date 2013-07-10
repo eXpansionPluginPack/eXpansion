@@ -36,8 +36,10 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;');
         }
 
-        $this->registerChatCommand("rate", "chatRate", 1, true);
-        $this->registerChatCommand("rating", "chatRating", 0, true);
+        $cmd = $this->registerChatCommand("rate", "chatRate", 1, true);
+		$cmd->help = '/rate +++, /rate ++, /rate +-, /rate --, /rate --- or /rate 5, /rate 4, /rate 3. /rate 2, /rate 1';
+        $cmd = $this->registerChatCommand("rating", "chatRating", 0, true);
+		$cmd->help = '/rating Map Rating Approval';
     }
 
     public function exp_onReady() {

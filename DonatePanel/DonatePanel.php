@@ -33,6 +33,7 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, true);
 
         $cmd = $this->registerChatCommand("donate", "donate", 1, true);
+		$cmd->help = '/donate X where X is ammount of Planets';
     }
 
     function onUnload() {
