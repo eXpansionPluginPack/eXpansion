@@ -31,17 +31,14 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function addSeparator($title, $isAdmin, $pluginId = null) {
-        $item = new Structures\Menuitem($title, null, null, $isAdmin, true);
-        $hash = spl_object_hash($item);
-        $this->menuItems[$hash] = $item;
+        $item = new Structures\Menuitem($title, null, null, $isAdmin, true);        
+        $this->menuItems[] = $item;
     }
 
     function addItem($title, $icon, array $callback, $isAdmin, $pluginid = null) {
         if (is_callable($callback)) {
-            $item = new Structures\Menuitem($title, $icon, $callback, $isAdmin);
-            $hash = spl_object_hash($item);
-            $this->menuItems[$hash] = $item;
-            $this->reDraw();
+            $item = new Structures\Menuitem($title, $icon, $callback, $isAdmin);            
+            $this->menuItems[] = $item;           
         } else {
             \ManiaLive\Utilities\Console::println("Adding a button failed from plugin:" . $pluginid . " button callback is not valid.");
         }

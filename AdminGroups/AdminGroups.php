@@ -38,7 +38,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     static private $commands = array();
 
     /**
-     * @var array List of All commans
+     * @var AdminCmd[] List of All commans
      * Used for the Help
      */
     static private $commandsList = array();
@@ -694,7 +694,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Returns the list of all admin commands
-     * @return array
+     * @return AdminCmd[]
      */
     public function getAdminCommands() {
         return self::$commandsList;

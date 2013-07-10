@@ -291,7 +291,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     break;
                 case "list":
                 case "show":
-                    $this->showJukeQueue($login);
+                    $this->showJukeList($login);
                     break;
                 default:
                     $this->exp_chatSendServerMessage($this->msg_jukehelp, $login);
@@ -302,7 +302,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    public function showJukeQueue($login) {
+    public function showJukeList($login) {
         $window = Gui\Windows\Jukelist::Create($login);
         $window->setList($this->queue);
         $window->centerOnScreen();
@@ -543,7 +543,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 array_splice($this->queue, $i, 1);
                 $msg = exp_getMessage('#variable#%1$s #queue#removed #variable#%2$s #queue#from the queue..');
                 $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->getPlayerObject($login)->nickName, 'wosnm'), \ManiaLib\Utils\Formatting::stripCodes($queue->map->name, 'wosnm')));
-                $this->showJukeQueue($login);
+                $this->showJukeList($login);
                 break;
             }
             $i++;
@@ -591,7 +591,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function emptyWishesGui($login) {
         $this->emptyWishes($login);
-        $this->showJukeQueue($login);
+        $this->showJukeList($login);
     }
 
     function emptyWishes($login) {
