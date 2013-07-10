@@ -518,12 +518,21 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /**
      * Chat command
      * @param string $login
-     * @param string $args
+     * @param string $params
      */
-    public function adminCmd($login, $args) {
+    public function adminCmd($login, $params) {
+        
+        // $args = explode(" ", $params);
 
-        /** @var array */
-        $args = explode(" ", $args);
+        $matches = array();
+        preg_match_all('/(?!\\\\)"((?:\\\\"|[^"])+)"?|([^\s]+)/', $params, $matches);
+        $args = array_map(
+                function($str, $word) {
+                    $temp = str_replace('\"', '"', $str != '' ? $str : $word);
+                    if ($temp == '""')
+                        return "";
+                    return $temp;
+                }, $matches[1], $matches[2]);
 
         //First lets check if player is an admin
         if (!isset(self::$admins[$login])) {

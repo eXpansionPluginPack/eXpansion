@@ -174,7 +174,7 @@ Other server might use the same blacklist file!!');
         $cmd = AdminGroups::addAdminCommand('set server player password', $this, 'setServerPassword', 'server_password');
         $cmd->setHelp('Changes the player password')
                 ->setHelpMore('$w/admin set server spec password #pwd$z will change the password needed for players to connect to this server')
-                ->setMinParam(1);
+                ->setMinParam(0);
         AdminGroups::addAlias($cmd, "setpwd"); // xaseco
         AdminGroups::addAlias($cmd, "pass"); // fast
 
@@ -994,7 +994,7 @@ Other server might use the same blacklist file!!');
         }
     }
 
-    function setServerPassword($fromLogin, $params) {
+    function setServerPassword($fromLogin, $params) {        
         try {
             $this->connection->setServerPassword($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
