@@ -31,14 +31,17 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function addSeparator($title, $isAdmin, $pluginId = null) {
-        $item = new Structures\Menuitem($title, null, null, $isAdmin, true);        
-        $this->menuItems[] = $item;
+        $item = new Structures\Menuitem($title, null, null, $isAdmin, true);
+        $hash = spl_object_hash($item);
+        $this->menuItems[$hash] = $item;
     }
 
     function addItem($title, $icon, array $callback, $isAdmin, $pluginid = null) {
         if (is_callable($callback)) {
-            $item = new Structures\Menuitem($title, $icon, $callback, $isAdmin);            
-            $this->menuItems[] = $item;           
+            $item = new Structures\Menuitem($title, $icon, $callback, $isAdmin);
+            $hash = spl_object_hash($item);
+            $this->menuItems[$hash] = $item;
+            $this->reDraw();
         } else {
             \ManiaLive\Utilities\Console::println("Adding a button failed from plugin:" . $pluginid . " button callback is not valid.");
         }
@@ -55,8 +58,10 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         MenuPanel::Erase($login);
         $info = MenuPanel::Create($login);
         $info->setSize(60, 60);
-        $info->setPosition(150, 50);
+        $info->setPosition(150, 35);
         $info->setItems($this->menuItems);
+        $info->setScale(0.8);
+       
         $info->show();
     }
 
