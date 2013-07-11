@@ -151,7 +151,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 case "TMStadium":
                     $env = "2";
                     break;
-				case "TMValley":
+                case "TMValley":
                     $env = "3";
                     break;
             }
@@ -162,7 +162,9 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             if ($length != null) {
                 $out .= "&length=" . $length . "&lengthop=0";
             }
-            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&environments=' . $env . '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) .'&mtype=All&priord=2&limit=100&tracksearch&api=on&format=json';
+            if (!empty($author))
+                $out = "";
+            $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&environments=' . $env . '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . $out . '&mtype=All&priord=2&limit=100&tracksearch&api=on&format=json';
         }
 
         $ch = curl_init($query);
@@ -203,10 +205,10 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $x++;
         }
         if ($length !== null)
-            $this->lenght->setSelected(intval($length)+1);
+            $this->lenght->setSelected(intval($length) + 1);
         if ($style !== null)
             $this->style->setSelected(intval($style));
-        
+
         $this->redraw();
     }
 
