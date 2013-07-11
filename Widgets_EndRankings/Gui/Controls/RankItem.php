@@ -15,31 +15,33 @@ class RankItem extends \ManiaLive\Gui\Control {
         $sizeY = 3;
 
         $this->label = new \ManiaLib\Gui\Elements\Label(4, 4);
-        $this->label->setAlign('center', 'center');
-        $this->label->setScale(0.7);
-        $bold = "";
-        if ($index < 3)
-            $bold = '$o';
-        $this->label->setText('$fff' . $bold . ($index + 1));
-        $this->label->setPosX(0);
+        $this->label->setAlign('right', 'center');
+        $this->label->setPosition(0, 0);
+        $this->label->setStyle("TextRaceChat");
+        $this->label->setScale(0.75);
+        $this->label->setText($index+1);
+        $this->label->setTextColor('fff');
         $this->addComponent($this->label);
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(14, 4);
+        $this->label = new \ManiaLib\Gui\Elements\Label(14, 5);
+        $this->label->setPosX(1);
         $this->label->setAlign('left', 'center');
-        $this->label->setScale(0.7);
-        $this->label->setPosX(2);
-        $this->label->setText('$fff' . number_format($rank->tscore, 2));
+        $this->label->setStyle("TextRaceChat");
+        $this->label->setScale(0.75);
+        $this->label->setText(number_format($rank->tscore, 2));
+        $this->label->setTextColor('ff0');
         $this->addComponent($this->label);
 
+        
 
-        $this->nick = new \ManiaLib\Gui\Elements\Label(34, 4);
+        $this->nick = new \ManiaLib\Gui\Elements\Label(30, 4);
+        $this->nick->setPosition(8, 0);
         $this->nick->setAlign('left', 'center');
-        $this->nick->setScale(0.7);
-        $this->nick->setPosX(10);
-        $nickname = $rank->player_nickname;
-        $nickname = \ManiaLib\Utils\Formatting::stripCodes($nickname, "wosnm");
-        $this->nick->setText('$fff' . $nickname);
-
+        $this->nick->setStyle("TextRaceChat");
+        $this->nick->setScale(0.75);
+        $this->nick->setTextColor('fff');
+        $nickname = \ManiaLib\Utils\Formatting::stripStyles($rank->player_nickname);
+        $this->nick->setText($nickname);
         $this->addComponent($this->nick);
 
 

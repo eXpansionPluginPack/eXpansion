@@ -57,7 +57,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onPlayerConnect($login, $isSpectator) {
         MenuPanel::Erase($login);
         $info = MenuPanel::Create($login);
-        $info->setSize(60, 60);
+        $info->setSize(60, 90);
         $info->setPosition(150, 35);
         $info->setItems($this->menuItems);
         $info->setScale(0.8);

@@ -116,8 +116,8 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_title->setHalign("center");
 
         $this->_titlebar->setPosX(-4);
-        $this->_titlebar->setPosY(8);
-        $this->_titlebar->setSize($this->sizeX + 8, 10);
+        $this->_titlebar->setPosY(6);
+        $this->_titlebar->setSize($this->sizeX + 8, 7);
 
         $this->_closebutton->setSize(5, 5);
         $this->_closebutton->setPosition($this->sizeX - 3, 5.5);

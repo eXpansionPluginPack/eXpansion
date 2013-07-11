@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_EndRankings;
 
-
 class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onInit() {
@@ -19,7 +18,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
     }
 
     function exp_onReady() {
-        //      $this->displayWidget();
+        // $this->displayWidget();
     }
 
     /**
@@ -28,10 +27,10 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
      */
     function displayWidget($login = null) {
         $info = Gui\Widgets\RanksPanel::Create(null);
-        $info->setSize(40, 60);
-        $info->setPosition(-150, 60);
-        $info->setAlign("left", "top");
         $info->setData($this->callPublicMethod("eXpansion\LocalRecords", "getRanks"));
+        $info->setSize(38, 95);
+        $info->setPosition(-160, 60);
+
         $info->show();
     }
 

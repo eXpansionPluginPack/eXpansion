@@ -88,7 +88,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * All the messages need to be sent;
      * @var Message
      */
-            private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank;
+    private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank;
     public static $txt_rank, $txt_nick, $txt_score, $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
     function exp_onInit() {
@@ -151,14 +151,14 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         //List of all records
         $cmd = $this->registerChatCommand("recs", "showRecsWindow", 0, true);
-		$cmd->help = 'Show Records Window';
+        $cmd->help = 'Show Records Window';
         //Top 100 ranked players
         $cmd = $this->registerChatCommand("top100", "showRanksWindow", 0, true);
-		$cmd->help = 'Show Top 100 Window';
+        $cmd->help = 'Show Top 100 Window';
         $cmd = $this->registerChatCommand("rank", "chat_showRank", 0, true);
-		$cmd->help = 'Show Player Rank';
+        $cmd->help = 'Show Player Rank';
         $cmd = $this->registerChatCommand("pb", "chat_personalBest", 0, true);
-		$cmd->help = 'Show Player Personal Best';
+        $cmd->help = 'Show Player Personal Best';
     }
 
     public function exp_onReady() {
@@ -225,6 +225,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
           $this->addRecord('test_971', 31200, 1, array());
           $this->addRecord('test_974', 30200, 1, array()); */
         $this->getRanks();
+        $this->updateCurrentChallengeRecords();
     }
 
     public function showRecsMenuItem($login) {
@@ -675,7 +676,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         //Dispatch event
         \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
-        \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->currentChallengeRecords));
+        //\ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->currentChallengeRecords));
     }
 
     /**
@@ -1179,7 +1180,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->exp_chatSendServerMessage($this->msg_showRank, $login, array($rank, $rankTotal));
             } else {
                 // reaby disabled this, people doesn't like error messages
-               // $this->exp_chatSendServerMessage($this->msg_noRank, $login, array());
+                // $this->exp_chatSendServerMessage($this->msg_noRank, $login, array());
             }
         }
     }
@@ -1189,7 +1190,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record = $this->getCurrentChallangePlayerRecord($login);
             if (!$record) {
                 // reaby disabed this, ppl doesn't like error messages!
-               // $this->exp_chatSendServerMessage($this->msg_noPB, $login, array());
+                // $this->exp_chatSendServerMessage($this->msg_noPB, $login, array());
             } else {
                 $time = \ManiaLive\Utilities\Time::fromTM($record->time);
                 if (substr($time, 0, 2) === "0:") {

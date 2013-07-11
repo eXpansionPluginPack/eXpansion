@@ -30,6 +30,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->lastUpdate = time();
         $this->enableTickerEvent();
+        $this->forceUpdate = true;
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
@@ -89,7 +90,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onPlayerConnect($login, $isSpectator) {
         $panel = Gui\Widgets\RecordsPanel::Create($login);
-        $panel->setSize(50, 98);
+        $panel->setSize(38, 95);
         $panel->setPosition(-160, 60);
         $panel->update();
         $panel->show();

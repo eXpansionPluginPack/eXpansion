@@ -49,12 +49,12 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
         $this->bg->setScriptEvents(true);
         $this->_windowFrame->addComponent($this->bg);
 
-        $this->lbl = new \ManiaLib\Gui\Elements\Label(50, 6);
+        $this->lbl = new \ManiaLib\Gui\Elements\Label(30, 6);
         $this->lbl->setTextSize(1);
         $this->lbl->setStyle("TextStaticVerySmall");
         $this->_windowFrame->addComponent($this->lbl);
 
-        $this->quad = new \ManiaLib\Gui\Elements\Quad(50, 8);
+        $this->quad = new \ManiaLib\Gui\Elements\Quad(30, 8);
         $this->quad->setStyle("Bgs1InRace");
         $this->quad->setSubStyle("BgTitle3_3");
         $this->quad->setAlign("left", "center");
@@ -91,91 +91,10 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setAlign("left", "top");
-        $this->frame->setPosition(4, -4);
+        $this->frame->setPosition(3, -3);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(-1));
         $this->_windowFrame->addComponent($this->frame);
-
-
-        $xml = new \ManiaLive\Gui\Elements\Xml();
-        $xml->setContent('
-        <timeout>0</timeout>            
-        <script><!--
-                      main () {
-                       
-                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");
-                        declare mainWindow <=> Page.GetFirstChild("Frame");
-                        declare isMinimized = False;                                          
-                        declare lastAction = Now;
-                        declare autoCloseTimeout = 5500;
-                        declare positionMin = -40.0;
-                        declare positionMax = -4.0;
-                        //mainWindow.PosnX = -40.0;                        
-                        declare blink = True;
-                        declare blinkDuration = 2000;
-                        declare blinkStartTime = Now;
-                        declare isMouseOver = False;
-                            
-                      
-
-                        while(True) {
-                              /*
-                              // Blink cannot be implemented since CMlControl doesnt have opacity :(((
-                              if (blink) {
-                                     if (Now-blinkStartTime < blinkDuration) {
-                                     declare seed =(Now-blinkStartTime)/1000;
-                                     Window.O
-                                     
-                                    } else {
-                                    blink = False;
-                                    }                                        
-                                } */
-                                
-                                if (isMinimized)
-                                {
-                                     if (mainWindow.PosnX >= positionMin) {                                          
-                                          mainWindow.PosnX -= 4;                                          
-                                    }
-                                }
-
-                            
-                                if (!isMinimized)
-                                {         
-                                    if (!isMouseOver && Now-lastAction > autoCloseTimeout) {                                          
-                                        if (mainWindow.PosnX <= positionMin) {                                                                                                 
-                                                mainWindow.PosnX -= 4;                                      
-                                        } 
-                                        if (mainWindow.PosnX >= positionMin)  {
-                                                isMinimized = True;
-                                        }
-                                    }
-                                    
-                                    else {
-                                        if ( mainWindow.PosnX <= positionMax) {                                                      
-                                                  mainWindow.PosnX += 4;                                                                   
-                                        }                                                                                                                                             
-                                    }
-                                }
-                                    
-                                foreach (Event in PendingEvents) {                                                
-                                    if (Event.Type == CMlEvent::Type::MouseOver && (Event.ControlId == "MainWindow" || Event.ControlId == "minimizeButton" )) {
-                                           isMinimized = False;
-                                           isMouseOver = True;
-                                           lastAction = Now;
-                                    }
-                                    if (Event.Type == CMlEvent::Type::MouseOut) {
-                                        isMouseOver = False;
-                                    }
-                                    
-                                    if (!isMinimized && Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "MainWindow" || Event.ControlId == "minimizeButton" )) {
-                                        isMinimized = True;
-                                    }
-                                }
-                                yield;                        
-                        }  
-                        
-                }
-                --></script>');
-        $this->addComponent($xml);
+        
     }
 
     function onResize($oldX, $oldY) {

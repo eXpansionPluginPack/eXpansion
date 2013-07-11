@@ -35,69 +35,49 @@ class Recorditem extends \ManiaLive\Gui\Control {
           $this->addComponent($this->bg);
           } */
 
-        //  $this->frame = new \ManiaLive\Gui\Controls\Frame();
-        //   $this->frame->setSize($sizeX, $sizeY);
-        //   $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-
         $this->label = new \ManiaLib\Gui\Elements\Label(4, 4);
-        $this->label->setAlign('center', 'center');
+        $this->label->setAlign('right', 'center');
         $this->label->setPosition(0, 0);
         $this->label->setStyle("TextRaceChat");
         $this->label->setScale(0.75);
-        $bold = "";
-        if ($index <= 3)
-            $bold = '$o';
-        $this->label->setText('$fff' . $bold . $index);
-        $this->addComponent($this->label);
-
-        /* $flag = new \ManiaLib\Gui\Elements\Quad(3, 3);
-          $flag->setPosition(4,0);
-          $flag->setAlign("left", "center");
-          $flag->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-
-          $config = Config::getInstance();
-          $path = $record->nation;
-
-          if ($path !== null) {
-          $path = explode("|", $path);
-          if (sizeof($path) >= 2) {
-
-          $image = "file://Skins/Avatars/Flags/" . Countries::mapCountry($path[2]) . ".dds";
-          $flag->setStyle("");
-          $flag->setImage($image, false);
-          }
-          }
-          $this->addComponent($flag);
-          /*
-          $spacer = new \ManiaLib\Gui\Elements\Quad();
-          $spacer->setSize(1, 4);
-          $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-          $this->frame->addComponent($spacer);
-         */
-        $this->label = new \ManiaLib\Gui\Elements\Label(14, 5);
-        $this->label->setPosX(2.4);
-        $this->label->setAlign('left', 'center');
-        $this->label->setStyle("TextRaceChat");
-        $this->label->setScale(0.75);
-        $this->label->setText('$fff' . \ManiaLive\Utilities\Time::fromTM($record->time));
+        $this->label->setText($index);
+        $this->label->setTextColor('fff');
         if ($record->login == $login) {
             $this->label->setStyle("TextTitle2Blink");
             $this->label->setTextSize(1);
+            $this->label->setTextColor('09f');
+        }
+        $this->addComponent($this->label);
+
+        $this->label = new \ManiaLib\Gui\Elements\Label(14, 5);
+        $this->label->setPosX(1);
+        $this->label->setAlign('left', 'center');
+        $this->label->setStyle("TextRaceChat");
+        $this->label->setScale(0.75);
+        $this->label->setText(\ManiaLive\Utilities\Time::fromTM($record->time));
+        $this->label->setTextColor('ff0');
+        if ($record->login == $login) {
+            $this->label->setStyle("TextTitle2Blink");
+            $this->label->setTextSize(1);
+            $this->label->setScale(0.67);
+            $this->label->setTextColor('0ff');
         }
         $this->addComponent($this->label);
 
         $this->nick = new \ManiaLib\Gui\Elements\Label(30, 4);
-        $this->nick->setPosition(14.5, 0);
+        $this->nick->setPosition(11, 0);
         $this->nick->setAlign('left', 'center');
         $this->nick->setStyle("TextRaceChat");
         $this->nick->setScale(0.75);
+        $this->nick->setTextColor('fff');
         if ($record->login == $login) {
             $this->nick->setStyle("TextTitle2Blink");
             $this->nick->setTextSize(1);
+            $this->nick->setTextColor('09f');
         }
 
-        $nickname = \ManiaLib\Utils\Formatting::stripCodes($record->nickName, "w,o,s,n,m");
-        $this->nick->setText('$fff' . $nickname);
+        $nickname = \ManiaLib\Utils\Formatting::stripStyles($record->nickName);
+        $this->nick->setText($nickname);
         $this->addComponent($this->nick);
 
         // $this->addComponent($this->frame);

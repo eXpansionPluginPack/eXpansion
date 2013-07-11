@@ -23,28 +23,36 @@ class PanelItem extends \ManiaLive\Gui\Control {
         }
 
         $action = \ManiaLive\Gui\ActionHandler::getInstance()->createAction($item->callback);
-        $button = new myButton(30, 6);
+        $button = new myButton(40, 6);
         $button->setScale(0.6);
+        $button->setPosX(4);
         $button->setText(__($item->title, $login));
+        $button->colorize('0000');
+        $button->setTextColor('fff');
         $button->setAction($action);
 
         $this->addComponent($button);
     }
 
     protected function onResize($oldX, $oldY) {
-        $this->frame->setSize($this->sizeX, $this->sizeY);
+       // $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-    function doSeparator($item) {
-        $this->sizeY = 6;
+    function doSeparator($item) {        
         $this->sizeX = 30;
-        $bg = new \ManiaLib\Gui\Elements\Quad(40, 6);
-        $bg->setBgcolor('0007');
-        // $this->addComponent($bg);
+        $this->sizeY = 6;
+        $bg = new \ManiaLib\Gui\Elements\Quad(50, 4);
+        $bg->setPosition(-3,1);        
+        $bg->setAlign("left","top");
+                
+        $bg->setStyle('BgsPlayerCard');
+        $bg->setSubStyle('BgRacePlayerName');
+        $this->addComponent($bg);
         $label = new \ManiaLib\Gui\Elements\Label(30, 4);
-        $label->setStyle("TextCardInfoSmall");
-        $label->setScale(0.9);
-        $label->setText('$fff' . $item->title);
+        $label->setStyle("TextStaticVerySmall");
+        $label->setTextColor('fff');
+        $label->setAlign("left","top");
+        $label->setText($item->title);
         $this->addComponent($label);
     }
 
