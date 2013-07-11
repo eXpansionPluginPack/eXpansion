@@ -43,7 +43,7 @@ class DediItem extends \ManiaLive\Gui\Control {
         $this->label = new \ManiaLib\Gui\Elements\Label(4, 4);
         $this->label->setAlign('center', 'center');
         $this->label->setStyle("TextRaceChat");
-        $this->label->setScale(0.85);
+        $this->label->setScale(0.75);
         $bold = "";
         if ($index <= 3)
             $bold = '$o';
@@ -75,7 +75,7 @@ class DediItem extends \ManiaLive\Gui\Control {
         $this->nick = new \ManiaLib\Gui\Elements\Label(34, 4);
         $this->nick->setAlign('left', 'center');
         $this->nick->setStyle("TextRaceChat");
-        $this->nick->setScale(0.85);
+        $this->nick->setScale(0.75);
         $nickname = $record['NickName'];
         $nickname = \ManiaLib\Utils\Formatting::stripCodes($nickname, "w,o,s,n,m");
         $this->nick->setText('$fff' . $nickname);

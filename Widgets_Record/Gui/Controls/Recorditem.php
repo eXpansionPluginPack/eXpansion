@@ -43,7 +43,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $this->label->setAlign('center', 'center');
         $this->label->setPosition(0, 0);
         $this->label->setStyle("TextRaceChat");
-        $this->label->setScale(0.85);
+        $this->label->setScale(0.75);
         $bold = "";
         if ($index <= 3)
             $bold = '$o';
@@ -78,7 +78,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $this->label->setPosX(2.4);
         $this->label->setAlign('left', 'center');
         $this->label->setStyle("TextRaceChat");
-        $this->label->setScale(0.85);
+        $this->label->setScale(0.75);
         $this->label->setText('$fff' . \ManiaLive\Utilities\Time::fromTM($record->time));
         if ($record->login == $login) {
             $this->label->setStyle("TextTitle2Blink");
@@ -90,7 +90,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $this->nick->setPosition(14.5, 0);
         $this->nick->setAlign('left', 'center');
         $this->nick->setStyle("TextRaceChat");
-        $this->nick->setScale(0.85);
+        $this->nick->setScale(0.75);
         if ($record->login == $login) {
             $this->nick->setStyle("TextTitle2Blink");
             $this->nick->setTextSize(1);

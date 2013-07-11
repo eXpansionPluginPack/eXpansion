@@ -13,8 +13,8 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * which means, that they can be overriden from
      * the config file.
      */
-    public static $posX = 158;
-    public static $posY = 48;
+    public static $posX = 159;
+    public static $posY = 52;
     public static $scale = 1;
     public static $countryCode = "";
     public static $login = null;

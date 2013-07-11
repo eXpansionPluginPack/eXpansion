@@ -27,12 +27,12 @@ class Widget extends \ManiaLive\Gui\Window {
 
     function onConstruct() {
         $this->buttons = array(
-            '+1' => TMKarma::VOTE_GOOD,
-            '+2' => TMKarma::VOTE_BEAUTIFUL,
-            '+3' => TMKarma::VOTE_FANTASTIC,
-            '-1' => TMKarma::VOTE_BAD,
-            '-2' => TMKarma::VOTE_POOR,
-            '-3' => TMKarma::VOTE_WASTE
+            '+' => TMKarma::VOTE_GOOD,
+            '++' => TMKarma::VOTE_BEAUTIFUL,
+            '+++' => TMKarma::VOTE_FANTASTIC,
+            '-' => TMKarma::VOTE_BAD,
+            '--' => TMKarma::VOTE_POOR,
+            '---' => TMKarma::VOTE_WASTE
         );
 
         // set the window's size
@@ -47,9 +47,8 @@ class Widget extends \ManiaLive\Gui\Window {
         $this->background->setSubStyle("BgPlayerCardBig");
         $this->background->setAlign("center", "center");
         //$this->addComponent($this->background);
-
         // render cups
-        $this->cupsContainer = new \ManiaLive\Gui\Controls\Frame(0, 5);
+        $this->cupsContainer = new \ManiaLive\Gui\Controls\Frame(0, 8);
         $this->cupsContainer->setSize($this->sizeX, $this->sizeY);
         $this->cupsContainer->setAlign("right", "top");
         $this->cupsContainer->setPosX(10);
@@ -65,7 +64,7 @@ class Widget extends \ManiaLive\Gui\Window {
         // apply layout to the frame that contains
         // the buttons, this way all buttons are positioned
         // automatically
-        $layout = new \ManiaLib\Gui\Layouts\Flow(15,15);
+        $layout = new \ManiaLib\Gui\Layouts\Flow(15, 15);
         $layout->setMargin(0.5, 0.5);
         $this->buttonsContainer->setLayout($layout);
 
@@ -74,14 +73,22 @@ class Widget extends \ManiaLive\Gui\Window {
         $this->info->setTextSize(1);
         $this->info->setAlign('center', "top");
         $this->info->setTextColor('fff');
-        $this->info->setPosition(0, 8);
+        $this->info->setPosition(0, 3);
         $this->addComponent($this->info);
     }
 
     function onDraw() {
         $rate = 100 / self::CUPS_MAX;
 
-        $this->info->setText($this->karma->score . "  " . $this->karma->total . " votes");
+        $votes = $this->karma->total;
+        if (empty($votes))
+            $votes = 0;
+        $score = $this->karma->score;
+
+        if (empty($score))
+            $score = 0;
+
+        $this->info->setText($score . "% " . $votes . " votes");
 
         // first we create all golden cups
         $this->cupsContainer->clearComponents();
@@ -110,7 +117,7 @@ class Widget extends \ManiaLive\Gui\Window {
         $this->buttonsContainer->clearComponents();
         foreach ($this->buttons as $text => $vote) {
             $frame = new \ManiaLive\Gui\Controls\Frame();
-            $frame->setSize(4.5, 4.5);
+            $frame->setSize(4.5, 2.5);
 
             // render the button's background
             $ui = new \ManiaLib\Gui\Elements\Quad();
@@ -132,7 +139,7 @@ class Widget extends \ManiaLive\Gui\Window {
             $ui->setAlign('center', "center");
             $ui->setTextSize(1);
             $ui->setSize($frame->getSizeX(), 2);
-            $ui->setPosition($frame->getSizeX() / 2, -2.5);
+            $ui->setPosition($frame->getSizeX() / 2, -1);
             $frame->addComponent($ui);
 
             // add the frames to the buttons container who will position them
@@ -146,7 +153,7 @@ class Widget extends \ManiaLive\Gui\Window {
             $this->link->setTextColor('fff');
             $this->link->setTextSize(1);
             $this->link->setPosition(0, 12);
-            $this->addComponent($this->link);
+           // $this->addComponent($this->link);
         }
     }
 

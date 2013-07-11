@@ -89,7 +89,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onPlayerConnect($login, $isSpectator) {
         $panel = Gui\Widgets\RecordsPanel::Create($login);
-        $panel->setSize(40, 60);
+        $panel->setSize(50, 98);
         $panel->setPosition(-160, 60);
         $panel->update();
         $panel->show();
