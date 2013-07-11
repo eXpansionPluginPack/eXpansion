@@ -45,6 +45,18 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $version = $this->connection->getVersion();
         $this->titleId = $version->titleId;
         $this->enableDedicatedEvents();
+
+        foreach ($this->storage->players as $player)
+            $this->onPlayerConnect($player->login, false);
+        foreach ($this->storage->spectators as $player)
+            $this->onPlayerConnect($player->login, true);
+    }
+
+    public function onPlayerConnect($login, $isSpectator) {
+        $widget = Gui\Widgets\MxWidget::Create($login);
+        $widget->setSize(60, 20);
+        $widget->setPosition(-160, -38);
+        $widget->show();
     }
 
     public function exp_onLoad() {
@@ -78,6 +90,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onPlayerDisconnect($login, $reason = null) {
         Gui\Windows\MxSearch::Erase($login);
+        Gui\Windows\MxWidget::Erase($login);
     }
 
     public function buildMenu() {

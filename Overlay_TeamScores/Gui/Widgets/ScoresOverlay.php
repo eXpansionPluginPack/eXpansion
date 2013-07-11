@@ -16,8 +16,10 @@ class ScoresOverlay extends \ManiaLive\Gui\Window {
 
         $this->background = new \ManiaLib\Gui\Elements\Quad();
         $this->background->setImage("http://chris92.tm-betmania.com/images/scoreboard.png", true);
+        //$this->background->setImage("http://tm.mania-exchange.com/tracks/screenshot/normal/39208/?i.jpg", false);
+
         $this->background->setSize(110 * 1.5, 12 * 1.5);
-        $this->background->setAlign("center", "top");        
+        $this->background->setAlign("center", "top");
         $this->addComponent($this->background);
 
         $this->team1 = new \ManiaLib\Gui\Elements\Label(60, 8);
@@ -37,16 +39,16 @@ class ScoresOverlay extends \ManiaLive\Gui\Window {
         $this->addComponent($this->team2);
 
         $this->score1 = new \ManiaLib\Gui\Elements\Label(20, 7);
-        $this->score1->setStyle("TextRaceChrono");        
+        $this->score1->setStyle("TextRaceChrono");
         $this->score1->setAlign("left", "top");
         $this->score1->setPosition(3, -5);
         $this->addComponent($this->score1);
 
         $this->score2 = new \ManiaLib\Gui\Elements\Label(20, 7);
         $this->score2->setStyle("TextRaceChrono");
-        $this->score2->setAlign("right", "top");        
+        $this->score2->setAlign("right", "top");
         $this->score2->setPosition(-3, -5);
-        $this->addComponent($this->score2);
+        $this->addComponent($this->score2);        
     }
 
     /**
@@ -58,7 +60,11 @@ class ScoresOverlay extends \ManiaLive\Gui\Window {
         $this->team2->setText($teams[0]->name);
 
         $this->score1->setText($teams[1]->score);
-        $this->score2->setText($teams[0]->score);                        
+        $this->score2->setText($teams[0]->score);
+    }
+
+    function onShow() {
+        
     }
 
 }

@@ -21,7 +21,7 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function exp_onReady() {
-        $this->showWidget();
+        $this->showWidget('reaby');
     }
 
     public function showWidget($login = null) {
