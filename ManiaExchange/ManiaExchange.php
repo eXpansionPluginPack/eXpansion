@@ -55,7 +55,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onPlayerConnect($login, $isSpectator) {
         $widget = Gui\Widgets\MxWidget::Create($login);
         $widget->setSize(60, 20);
-        $widget->setPosition(-160, 60);
+        $widget->setPosition(-160, 76);
         $widget->show();
     }
 
@@ -90,7 +90,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onPlayerDisconnect($login, $reason = null) {
         Gui\Windows\MxSearch::Erase($login);
-        Gui\Windows\MxWidget::Erase($login);
+        Gui\Widgets\MxWidget::Erase($login);
     }
 
     public function buildMenu() {
