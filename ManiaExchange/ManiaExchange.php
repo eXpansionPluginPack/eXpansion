@@ -55,7 +55,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onPlayerConnect($login, $isSpectator) {
         $widget = Gui\Widgets\MxWidget::Create($login);
         $widget->setSize(60, 20);
-        $widget->setPosition(-160, -38);
+        $widget->setPosition(-160, 60);
         $widget->show();
     }
 
