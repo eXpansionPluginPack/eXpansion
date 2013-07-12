@@ -101,7 +101,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     }
 
     public function onDedimaniaUpdateRecords($data) {
-        $this->recs = $data;
+        $this->recs = $data['Records'];
     }
 
 }
