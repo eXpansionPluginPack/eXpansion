@@ -150,8 +150,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         //$this->registerChatCommand('test', "test", 0, true);
         //Registering the admin chat comman with a lot of parameters
-        $this->registerChatCommand('admin', "adminCmd", -1, true, $this->get());
-        $this->registerChatCommand('adm', "adminCmd", -1, true, $this->get());
+        $this->registerChatCommand('admin', "adminCmd", -1, true);
+        $this->registerChatCommand('adm', "adminCmd", -1, true);
 
         $cmd = $this->addAdminCommand('groups', $this, "windowGroups", null);
         $cmd->setHelp("Administrate the admin groups players and permissions.");
@@ -521,7 +521,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param string $params
      */
     public function adminCmd($login, $params) {
-        
+
         // $args = explode(" ", $params);
 
         $matches = array();
@@ -535,7 +535,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 }, $matches[1], $matches[2]);
 
         //First lets check if player is an admin
-        if (!isset(self::$admins[$login])) {
+        if (!self::hasPermission($login, 'server_admin')) {
             $this->exp_chatSendServerMessage($this->msg_needBeAdmin, $login);
         } else {
             //Lets see if the command is correct
@@ -587,7 +587,6 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (isset(self::$admins[$login2])) {
             $this->exp_chatSendServerMessage($this->msg_aInGroup, $login, array($login2, $group->getGroupName()));
         } else {
-            $this->reLoadAdmins();
             $admin = new Admin($login2, $group);
             self::$admins[$login2] = $admin;
             $group->addAdmin($admin);
@@ -597,6 +596,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->exp_chatSendServerMessage($this->msg_paddSuc, null, array($login2, $group->getGroupName()));
 
             $this->saveFile();
+            $this->loadAdmins();
         }
     }
 

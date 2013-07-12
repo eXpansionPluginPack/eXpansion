@@ -1,5 +1,11 @@
 Features to do
 ==============
+* dynamic timelimit
+  --> remember to divide authortime with lapcount!
+* do /list sortable by column
+* add map karma to /list
+
+* make sure AdminGroups::isInList() is never used--> replace with AdminGroups::hasPermission();
 
 
 Already implemented features
@@ -12,8 +18,6 @@ Relay server tools improvement ideas
 
 - list the checkpoint times in specmode (maybe only on relayTVs)
 - add a live ranking of the actual round and overall score (maybe only on relayTVs)
-
-
 - It would be really cool to filter the chat. So for example, if there are 3-4 relays (e.g. FET-Final relay A-D) 
 that you can switch between the chat of the different servers. 
 e.g. I'm on relay A, but wanne see, what's written on the other servers. Then we can have different chat streams (matchserver,relay A,B,C and D). 
