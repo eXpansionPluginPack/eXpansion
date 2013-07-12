@@ -8,16 +8,23 @@ namespace ManiaLivePlugins\eXpansion\LocalRecords\Events;
  */
 interface Listener extends \ManiaLive\Event\Listener {
 
-    /** @var \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record */
-    function onNewRecord($data);
-    
-    /** 
-     * onUpdateRecords($data)
+    /**
+     *  @param \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record
+     */
+    function onNewRecord($record);
+
+    /**
+     * onUpdateRecords($record)
+     *      
+     * @param \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record[] $record 
+     */
+    function onUpdateRecords($record);
+
+    /**
      * 
-     * Called when 
-     * @param \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record[] $data  */
-    function onUpdateRecords($data);
-       
+     * @param \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record
+     */
+    function onPersonalBestRecord($record);
 }
 
 ?>

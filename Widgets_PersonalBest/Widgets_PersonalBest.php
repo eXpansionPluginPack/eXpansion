@@ -3,10 +3,8 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_PersonalBest;
 
 use \ManiaLive\Event\Dispatcher;
-
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
-
 use ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Gui\Widgets\PBPanel;
 
 /**
@@ -20,6 +18,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         parent::exp_onLoad();
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_PERSONAl_BEST);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
+        Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
 
     public function exp_onReady() {
@@ -31,57 +30,47 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     }
 
     function onPlayerConnect($login, $isSpectator) {
-        $this->displayWidget($login);
+        $this->displayRecordWidget($login);
     }
 
-    public function onPersonalBestRecord(Record $record){
-        $this->redrawRecordWidget($record->login, $record);
-    }
-
-    public function onNewRecord($records){
+    function onUpdateRecords($record) {
         foreach ($this->storage->players as $player)
-            $this->redrawWidget($player->login, false);
+            $this->redrawWidget($player->login);
         foreach ($this->storage->spectators as $player)
-            $this->redrawWidget($player->login, true);
+            $this->redrawWidget($player->login);
     }
 
-     public function redrawWidget($login = null){
-        $record = null;
-        if($login != null){
-            $record = $this->callPublicMethod('eXpansion\\LocalRecords', 'getCurrentChallangePlayerRecord', $login);
-        }
-        $this->redrawRecordWidget($login, $record);
+    public function onPersonalBestRecord(Record $record) {
+        $this->redrawWidget($record->login, $record);
     }
 
-    public function displayWidget($login = null){
+    public function onNewRecord($records) {
+        foreach ($this->storage->players as $player)
+            $this->redrawWidget($player->login);
+        foreach ($this->storage->spectators as $player)
+            $this->redrawWidget($player->login);
+    }
+
+    public function redrawWidget($login = null) {
         $record = null;
-        if($login != null){
+        if ($login != null) {
             $record = $this->callPublicMethod('eXpansion\\LocalRecords', 'getCurrentChallangePlayerRecord', $login);
         }
         $this->displayRecordWidget($login, $record);
     }
 
-    function redrawRecordWidget($login, $record){
-        $panel = PBPanel::Get($login);
-        if(isset($panel[0])){
-            $rank = $this->callPublicMethod('eXpansion\\LocalRecords', 'getPlayerRank', $login);
-            if ($rank == -1) $rank = '--';
-            if ($rank == -2) $rank = '';
-            $rankTotal = $this->callPublicMethod('eXpansion\\LocalRecords', 'getTotalRanked');
-            $panel[0]->setRecord($record, $rank, $rankTotal);
-            $panel[0]->redraw($login);
-        }
-    }
-
-    function displayRecordWidget($login, $record) {
+    function displayRecordWidget($login, $record = null) {
         if ($login == null)
-            PBPanel::EraseAll();
-        else
-            PBPanel::Erase($login);
+            return;
+
+        if ($record != null)
+            $record = $this->callPublicMethod('eXpansion\\LocalRecords', 'getCurrentChallangePlayerRecord', $login);
 
         $rank = $this->callPublicMethod('eXpansion\\LocalRecords', 'getPlayerRank', $login);
-        if ($rank == -1) $rank = '--';
-        if ($rank == -2) $rank = '';
+        if ($rank == -1)
+            $rank = '--';
+        if ($rank == -2)
+            $rank = '';
         $rankTotal = $this->callPublicMethod('eXpansion\\LocalRecords', 'getTotalRanked');
 
         $info = PBPanel::Create($login, $rank, $rankTotal);
@@ -90,6 +79,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $info->setPosition(132, -76);
         $info->show();
     }
+
 }
 
 ?>

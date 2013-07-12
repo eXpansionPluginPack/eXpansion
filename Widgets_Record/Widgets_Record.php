@@ -50,7 +50,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->needUpdate = false;
 
             foreach (Gui\Widgets\RecordsPanel::GetAll() as $panel) {
-                try {
+                try {                    
                     $panel->update();
                 } catch (\Exception $e) {
                     // silent exception
@@ -88,7 +88,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         echo "Dedimania: Found " . sizeof($data['Records']) . " records for current map!\n";
     }
 
-    public function onPlayerConnect($login, $isSpectator) {
+    public function onPlayerConnect($login, $isSpectator) {      
         $panel = Gui\Widgets\RecordsPanel::Create($login);
         $panel->setSize(38, 95);
         $panel->setPosition(-160, 60);
