@@ -80,10 +80,11 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
             $nick = $source_player->nickName;
             $nick = str_ireplace('$w', '', $nick);
             $nick = str_ireplace('$z', '$z$s', $nick);
-            $smileys = array("ッ", "ツ", "シ");
-            $rnd = rand(0, sizeof($smileys) - 1);
-            $text = str_replace(array(":)", "=)"), $smileys[$rnd], $text);
-
+            /*
+              $smileys = array("ッ", "ツ", "シ");
+              $rnd = rand(0, sizeof($smileys) - 1);
+              $text = str_replace(array(":)", "=)"), $smileys[$rnd], $text); */
+            
             try {
                 if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
                     $this->connection->chatSendServerMessage("\$fff" . $config->adminSign . " $nick\$z\$s " . $config->chatSeparator . $config->adminChatColor . $text);
