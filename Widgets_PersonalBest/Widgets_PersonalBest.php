@@ -60,10 +60,12 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     }
 
     function displayRecordWidget($login, $record = null) {
+        PBPanel::Erase($login);
+
         if ($login == null)
             return;
 
-        if ($record != null)
+        if ($record == null)
             $record = $this->callPublicMethod('eXpansion\\LocalRecords', 'getCurrentChallangePlayerRecord', $login);
 
         $rank = $this->callPublicMethod('eXpansion\\LocalRecords', 'getPlayerRank', $login);

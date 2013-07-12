@@ -25,12 +25,12 @@ class TimePanel extends \ManiaLive\Gui\Window {
         $login = $this->getRecipient();
 
         $this->time = new \ManiaLib\Gui\Elements\Label(20, 4);
-        $this->time->setPosX(7, 40);
+        $this->time->setPosX(9, 40);
         $this->time->setAlign("left", "center");
         $this->time->setStyle("TextTitle2");
         $this->addComponent($this->time);
 
-        $this->checkpoint = new \ManiaLib\Gui\Elements\Label(6, 4);
+        $this->checkpoint = new \ManiaLib\Gui\Elements\Label(7, 4);
         $this->checkpoint->setPosX(0, 40);
         $this->checkpoint->setTextColor("fff");
         $this->checkpoint->setAlign("left", "center");
@@ -48,7 +48,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
 
     public function onCheckpoint($time, $cpIndex, $cpTotal, $mode) {
         $this->currentRun[$cpIndex] = $time;
-        $this->checkpoint->setText($this->counter . "(" . ($cpIndex + 1) . "/" . $cpTotal . ")");
+        $this->checkpoint->setText("cp " . ($cpIndex + 1) . "/" . $cpTotal . "");
 
         $dedicp = array();
         $localcp = array();

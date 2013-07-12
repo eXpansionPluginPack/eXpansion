@@ -10,12 +10,12 @@ use ManiaLive\Utilities\Console;
 class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements \ManiaLivePlugins\Reaby\Dedimania\Events\Listener {
 
     private $config;
+    private $recs = array();
 
     public function exp_onInit() {
-        parent::exp_onInit();        
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("Reaby\\Dedimania"));        
+        parent::exp_onInit();
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("Reaby\\Dedimania"));
         $this->config = Config::getInstance();
-        
     }
 
     public function exp_onLoad() {
@@ -28,10 +28,25 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         if ($this->isPluginLoaded('Reaby\\Dedimania'))
             $this->callPublicMethod('Reaby\\Dedimania', 'disableMessages');
         Dispatcher::register(dediEvent::getClass(), $this);
+        $this->registerChatCommand("dedirecs", "showRecs", 0, true);
     }
 
     public function onDedimaniaGetRecords($data) {
-        
+        $this->recs = $data['Records'];
+    }
+
+    public function showRecs($login) {
+        Gui\Windows\Records::Erase($login);
+        try {
+            $window = Gui\Windows\Records::Create($login);
+            $window->setTitle(__('DediRecords on a Map', $login));
+            $window->centerOnScreen();
+            $window->populateList($this->recs);
+            $window->setSize(120, 100);
+            $window->show();
+        } catch (\Exception $e) {
+            echo $e->getFile() . ":". $e->getLine();
+        }
     }
 
     public function onDedimaniaNewRecord($record) {
@@ -69,7 +84,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         $msg = $this->config->supportMsg;
         if ($upgrade)
             $msg = $this->config->upgradeMsg;
-            $this->exp_chatSendServerMessage($msg, $data['Login'], array($data['MaxRank']));
+        $this->exp_chatSendServerMessage($msg, $data['Login'], array($data['MaxRank']));
     }
 
     public function onDedimaniaPlayerDisconnect() {
@@ -86,7 +101,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     }
 
     public function onDedimaniaUpdateRecords($data) {
-        
+        $this->recs = $data;
     }
 
 }
