@@ -193,13 +193,6 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 
         $this->items = array();
 
-        if ($this->btnDedi != null)
-            $this->btnDedi->destroy();
-
-
-        if ($this->actionLocal != null)
-            $this->btnLocal->destroy();
-
         $this->frame->clearComponents();
         $this->frame->destroy();
         $this->clearComponents();
