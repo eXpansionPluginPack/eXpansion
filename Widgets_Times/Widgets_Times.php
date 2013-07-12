@@ -16,7 +16,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK);
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM);
-        //$this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS);
+        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS);
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
         TimeChooser::$plugin = $this;
     }
@@ -34,10 +34,14 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
-        $info = TimePanel::Create($login);
+
         $mode = TimePanel::Mode_PersonalBest;
-        if (isset($this->modes[$login]))
+        if (isset($this->modes[$login])) {
+            if ($this->modes[$login] == TimePanel::Mode_None)
+                return;
             $mode = $this->modes[$login];
+        }
+        $info = TimePanel::Create($login);
         $info->onCheckpoint($timeOrScore, $checkpointIndex, $this->storage->currentMap->nbCheckpoints, $mode);
         $info->setSize(30, 6);
         $info->setPosition(0, 40);
@@ -61,7 +65,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function setMode($login, $mode) {
         $this->modes[$login] = $mode;
         $info = Gui\Widgets\TimeChooser::Create($login);
-        $info->updatePanelMode($mode);
+        $info->updatePanelMode($this->modes[$login]);
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
@@ -80,9 +84,11 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onPlayerConnect($login, $isSpectator) {
         $widget = TimeChooser::Create($login);
         $widget->setSize(40, 6);
-        if (isset($this->modes[$login]))
-            $widget->updatePanelMode($this->modes[$login]);
-        $widget->setPosition(0, -77);
+        if (!isset($this->modes[$login]))
+            $this->modes[$login] = TimePanel::Mode_PersonalBest;
+        $widget->updatePanelMode($this->modes[$login]);
+
+        $widget->setPosition(14, -80);
         $widget->show();
     }
 

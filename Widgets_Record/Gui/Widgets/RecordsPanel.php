@@ -106,7 +106,8 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
         $this->lbl->setPosY(1);
         $this->quad->setSizeX($this->sizeX + 22);
         $this->quad->setPosition(-16, 1);
-        $this->btnDedi->setPosition($this->sizeX - 6, 1);
+        if (is_object($this->btnDedi))
+            $this->btnDedi->setPosition($this->sizeX - 6, 1);
         $this->minButton->setPosition($this->sizeX - 2, 1);
 
 
@@ -144,7 +145,8 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
         }
 
         if ($this->showpanel == self::SHOW_LOCALRECORDS) {
-            $this->btnDedi->setAction($this->actionDedi);
+            if (is_object($this->btnDedi))
+                $this->btnDedi->setAction($this->actionDedi);
 
             if (!is_array(self::$localrecords))
                 return;
@@ -177,10 +179,12 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     protected function onDraw() {
         if ($this->isMinimized) {
             $this->minButton->setSubStyle('ArrowNext');
-            $this->btnDedi->setVisibility(false);
+            if (is_object($this->btnDedi))
+                $this->btnDedi->setVisibility(false);
             $this->setPosX($this->originalPosX - $this->sizeX + 6);
         } else {
-            $this->btnDedi->setVisibility(true);
+            if (is_object($this->btnDedi))
+                $this->btnDedi->setVisibility(true);
             $this->minButton->setSubStyle('ArrowPrev');
             $this->setPosX($this->originalPosX);
         }
@@ -200,4 +204,5 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     }
 
 }
+
 ?>

@@ -102,6 +102,9 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     function onPlayerConnect($login, $isSpec) {
         $window = DonatePanelWindow::Create($login);
+        $window->setScale(0.8);
+        $window->setPosition(44,-88);
+        
         $window->show();
     }
 
