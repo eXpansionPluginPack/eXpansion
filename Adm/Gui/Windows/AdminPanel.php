@@ -6,6 +6,9 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 
 class AdminPanel extends \ManiaLive\Gui\Window {
 
+    /**
+     * @var \DedicatedApi\Connection
+     */
     private $connection;
     private $storage;
     private $_windowFrame;
@@ -163,19 +166,19 @@ class AdminPanel extends \ManiaLive\Gui\Window {
             switch ($action) {
                 case "forceEndRound":
                     $this->connection->$action();
-                    $this->connection->sendNotice($this->storage->players, "Admin " . $player->nickName . '$z$s$fff forced the round to end', $player);
+                    $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff forced the round to end');
                     break;
                 case "cancelVote":
                     $this->connection->$action();
-                    $this->connection->sendNotice($this->storage->players, "Admin " . $player->nickName . '$z$s$fff cancels the vote', $player);
+                    $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff cancels the vote');
                     break;
                 case "nextMap":
                     $this->connection->$action();
-                    $this->connection->sendNotice($this->storage->players, "Admin " . $player->nickName . '$z$s$fff skipped to next map!', $player);
+                    $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff skipped to next map!');
                     break;
                 case "restartMap":
                     $this->connection->$action();
-                    $this->connection->sendNotice($this->storage->players, "Admin " . $player->nickName . '$z$s$fff restarted the map', $player);
+                    $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff restarted the map');
                     break;
             }
         } catch (\Exception $e) {
@@ -193,7 +196,7 @@ class AdminPanel extends \ManiaLive\Gui\Window {
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionRestart);
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionSkip);
         $this->connection = null;
-        $this->storage = null;        
+        $this->storage = null;
         $this->clearComponents();
         parent::destroy();
     }
