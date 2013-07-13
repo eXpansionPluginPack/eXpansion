@@ -45,13 +45,15 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($this->config->restartVote_enable) {
             $cmd = $this->registerChatCommand("replay", "vote_Restart", 0, true);
-			$cmd->help = 'Vote Replay for Map';
+            $cmd->help = 'Start a vote to restart a map';
             $cmd = $this->registerChatCommand("restart", "vote_Restart", 0, true);
-			$cmd->help = 'Vote Restart for Map';
+            $cmd->help = 'Start a vote to restart a map';
+            $cmd = $this->registerChatCommand("res", "vote_Restart", 0, true);
+            $cmd->help = 'Start a vote to restart a map';
         }
         if ($this->config->skipVote_enable) {
             $cmd = $this->registerChatCommand("skip", "vote_Skip", 0, true);
-			$cmd->help = 'Vote Skip for Map';
+            $cmd->help = 'Start a vote to skip a map';
         }
 //$cmd = $this->addAdminCommand("poll", $this, "vote_Poll", null);
 //$cmd->setHelp("Run a yes/no vote with the entered question");
@@ -241,6 +243,10 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->exp_chatSendServerMessage($msg, null);
             $voter = $this->voter;
             if ($cmdName == "Replay") {
+                if (sizeof($this->storage->players) == 1) {
+                    $this->connection->restartMap();
+                    return;
+                }
                 $this->callPublicMethod('eXpansion\\Maps', 'replayMap', $voter);
             }
             if ($cmdName == "Skip") {
@@ -265,8 +271,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public
-
-    function onUnload() {
+            function onUnload() {
         parent::onUnload();
 
         /* if ($this->config->defaultVotes_disable) {
