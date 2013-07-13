@@ -21,8 +21,9 @@ class Mapitem extends \ManiaLive\Gui\Control {
     private $removeButton;
     private $showRecsButton;
     private $frame;
+    private $rate;
 
-    function __construct($indexNumber, $login, \DedicatedApi\Structures\Map $map, $controller, $isAdmin, $localrec, $sizeX) {
+    function __construct($indexNumber, $login, \DedicatedApi\Structures\Map $map, $controller, $isAdmin, $localrec, $rating, $sizeX) {
         $sizeY = 4;
 
         $this->isAdmin = $isAdmin;
@@ -49,7 +50,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         //$this->frame->addComponent($spacer);
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(70, 4);
+        $this->label = new \ManiaLib\Gui\Elements\Label(65, 4);
         $this->label->setAlign('left', 'center');
         $this->label->setText(Formatting::stripColors($map->name, "999f"));
         $this->label->setScale(0.8);
@@ -58,8 +59,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->time = new \ManiaLib\Gui\Elements\Label(30, 4);
         $this->time->setAlign('left', 'center');
         $this->time->setScale(0.8);
-        $this->time->setText($map->author);
-        //$this->time->setText(\ManiaLive\Utilities\Time::fromTM($map->goldTime));
+        $this->time->setText($map->author);        
         $this->frame->addComponent($this->time);
 
         $ui = new \ManiaLib\Gui\Elements\Label(20, 4);
@@ -80,6 +80,22 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->time->setText($localrec);
         $this->frame->addComponent($this->time);
 
+        $spacer = new \ManiaLib\Gui\Elements\Quad();
+        $spacer->setSize(2, 4);
+        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+        $this->frame->addComponent($spacer);
+        
+        $this->rate = new \ManiaLib\Gui\Elements\Label(7, 4);
+        $this->rate->setAlign('center', 'center');
+        $this->rate->setScale(0.8);
+
+        $rate = (($rating->rating - 1) / 4) * 100;
+        $rate = round($rate) . "%";
+        if ($rating->rating == -1)
+            $rate = "-";
+        $this->rate->setText($rate);
+        $this->frame->addComponent($this->rate);
+
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(4, 4);
@@ -88,14 +104,14 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($spacer);
 
         $this->queueButton = new MyButton(26, 5);
-        $this->queueButton->setText(__("Queue",$login));
+        $this->queueButton->setText(__("Queue", $login));
         $this->queueButton->setAction($this->queueMap);
         $this->queueButton->colorize('2a2');
         $this->queueButton->setScale(0.5);
         $this->frame->addComponent($this->queueButton);
         if (Maplist::$localrecordsLoaded) {
             $this->showRecsButton = new MyButton(26, 5);
-            $this->showRecsButton->setText(__("Recs",$login));
+            $this->showRecsButton->setText(__("Recs", $login));
             $this->showRecsButton->setAction($this->showRecsAction);
             $this->showRecsButton->colorize('2a2');
             $this->showRecsButton->setScale(0.5);
@@ -103,7 +119,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         }
         if ($this->isAdmin) {
             $this->goButton = new MyButton(26, 5);
-            $this->goButton->setText(__("Go now",$login));
+            $this->goButton->setText(__("Go now", $login));
             $this->goButton->setAction($this->gotoMap);
             $this->goButton->colorize('aa2');
             $this->goButton->setScale(0.5);
@@ -115,7 +131,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
             $this->frame->addComponent($spacer);
 
             $this->removeButton = new MyButton(26, 5);
-            $this->removeButton->setText('$fff' . __("Remove",$login));
+            $this->removeButton->setText('$fff' . __("Remove", $login));
             $this->removeButton->setAction($this->removeMap);
             $this->removeButton->colorize('a22');
             $this->removeButton->setScale(0.5);
@@ -134,7 +150,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
-    
+
     function destroy() {
         $this->queueButton->destroy();
 
@@ -144,7 +160,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
             $this->removeButton->destroy();
         if (is_object($this->showRecsButton))
             $this->showRecsButton->destroy();
-        
+
         $this->clearComponents();
         parent::destroy();
     }

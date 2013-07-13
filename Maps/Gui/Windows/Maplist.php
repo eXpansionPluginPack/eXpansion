@@ -10,9 +10,13 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public $records = array();
     public static $mapsPlugin = null;
     public static $localrecordsLoaded = false;
+    private $ratingsLoaded = false;
     private $items = array();
     private $btnRemoveAll;
     private $actionRemoveAll;
+
+    /** @var \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating[] */
+    private $ratings = array();
 
     /** @var \ManiaLive\Gui\Controls\Pager */
     private $pager;
@@ -107,12 +111,18 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         foreach ($this->storage->maps as $map) {
             $localrecord = "-";
+            $rating = new \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating(-1, 0);
+
+
             $maxrec = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
             if (array_key_exists($map->uId, $this->records)) {
                 if ($this->records[$map->uId] <= $maxrec)
                     $localrecord = $this->records[$map->uId] . "/" . $maxrec;
             }
-            $this->items[$x] = new Mapitem($x, $login, $map, $this, $isAdmin, $localrecord, $this->sizeX);
+            if (array_key_exists($map->uId, $this->ratings)) {
+                $rating = $this->ratings[$map->uId];
+            }
+            $this->items[$x] = new Mapitem($x, $login, $map, $this, $isAdmin, $localrecord, $rating, $this->sizeX);
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
@@ -121,7 +131,13 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function setRecords($records) {
+        self::$localrecordsLoaded = true;
         $this->records = $records;
+    }
+
+    function setRatings($ratings) {
+        $this->ratingsLoaded = true;
+        $this->ratings = $ratings;       
     }
 
     function destroy() {

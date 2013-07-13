@@ -113,48 +113,50 @@ class Widget extends \ManiaLive\Gui\Window {
             //$this->cupsContainer->addComponent($cup);
         }
 
-        // render buttons if a new plugin is set
-        $this->buttonsContainer->clearComponents();
-        foreach ($this->buttons as $text => $vote) {
-            $frame = new \ManiaLive\Gui\Controls\Frame();
-            $frame->setSize(4.5, 2.5);
 
-            // render the button's background
-            $ui = new \ManiaLib\Gui\Elements\Quad();
-            $ui->setStyle("Bgs1InRace");
-            $ui->setSubStyle("Empty");
-            $ui->setBgcolor('fff9');
-            $ui->setBgcolorFocus('2a29');
-            $login = $this->getRecipient();
-            if (isset($this->karma->votes[$login]) && $this->karma->votes[$login] == $vote) {
-                $ui->setBgcolor('6f69');
-            }
-            $ui->setSize($frame->getSizeX(), $frame->getSizeY());
-            $ui->setAction($this->createAction(array($this->plugin, 'doVote'), $vote));
-            $frame->addComponent($ui);
+        //   $this->buttonsContainer->clearComponents();
+        /*   foreach ($this->buttons as $text => $vote) {
+          $frame = new \ManiaLive\Gui\Controls\Frame();
+          $frame->setSize(4.5, 2.5);
 
-            // render the label on top of the background
-            $ui = new \ManiaLib\Gui\Elements\Label();
-            $ui->setText($text);
-            $ui->setAlign('center', "center");
-            $ui->setTextSize(1);
-            $ui->setSize($frame->getSizeX(), 2);
-            $ui->setPosition($frame->getSizeX() / 2, -1);
-            $frame->addComponent($ui);
+          // render the button's background
+          $ui = new \ManiaLib\Gui\Elements\Quad();
+          $ui->setStyle("Bgs1InRace");
+          $ui->setSubStyle("Empty");
+          $ui->setBgcolor('fff9');
+          $ui->setBgcolorFocus('2a29');
+          $login = $this->getRecipient();
+          if (isset($this->karma->votes[$login]) && $this->karma->votes[$login] == $vote) {
+          $ui->setBgcolor('6f69');
+          }
+          $ui->setSize($frame->getSizeX(), $frame->getSizeY());
+          $ui->setAction($this->createAction(array($this->plugin, 'doVote'), $vote));
+          $frame->addComponent($ui);
 
-            // add the frames to the buttons container who will position them
-            $this->buttonsContainer->addComponent($frame);
+          // render the label on top of the background
+          $ui = new \ManiaLib\Gui\Elements\Label();
+          $ui->setText($text);
+          $ui->setAlign('center', "center");
+          $ui->setTextSize(1);
+          $ui->setSize($frame->getSizeX(), 2);
+          $ui->setPosition($frame->getSizeX() / 2, -1);
+          $frame->addComponent($ui);
 
-            // render www.tm-karma.com
-            $this->link = new \ManiaLib\Gui\Elements\Label($this->sizeX, 4);
-            $this->link->setAlign("center", "top");
-            //$this->link->setText('$l[http://www.tm-karma.com/Goto?uid=' . $this->karma->challengeUid . ']www.tm-karma.com$l');
-            $this->link->setText('$l[http://www.tm-karma.com/]tm-karma$l');
-            $this->link->setTextColor('fff');
-            $this->link->setTextSize(1);
-            $this->link->setPosition(0, 12);
-           // $this->addComponent($this->link);
-        }
+          // add the frames to the buttons container who will position them
+          $this->buttonsContainer->addComponent($frame);
+
+          // render www.tm-karma.com
+          $this->link = new \ManiaLib\Gui\Elements\Label($this->sizeX, 4);
+          $this->link->setAlign("center", "top");
+          //$this->link->setText('$l[http://www.tm-karma.com/Goto?uid=' . $this->karma->challengeUid . ']www.tm-karma.com$l');
+          $this->link->setText('$l[http://www.tm-karma.com/]tm-karma$l');
+          $this->link->setTextColor('fff');
+          $this->link->setTextSize(1);
+          $this->link->setPosition(0, 12);
+          // $this->addComponent($this->link);
+
+          }
+         */
     }
 
     function setPlugin(TMKarma $plugin) {

@@ -12,12 +12,12 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $config;
     private $msg_rating;
     private $msg_noRating;
-    
+    private $displayWidget = true;
+
     function exp_onInit() {
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
-        //get stuffs
         $this->config = Config::getInstance();
     }
 
@@ -37,13 +37,18 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         $cmd = $this->registerChatCommand("rate", "chatRate", 1, true);
-		$cmd->help = '/rate +++, /rate ++, /rate +-, /rate --, /rate --- or /rate 5, /rate 4, /rate 3. /rate 2, /rate 1';
+        $cmd->help = '/rate +++, /rate ++, /rate +-, /rate --, /rate --- or /rate 5, /rate 4, /rate 3. /rate 2, /rate 1';
         $cmd = $this->registerChatCommand("rating", "chatRating", 0, true);
-		$cmd->help = '/rating Map Rating Approval';
+        $cmd->help = '/rating Map Rating Approval';
+
+        $this->setPublicMethod("getRatings");
     }
 
     public function exp_onReady() {
         $this->reload();
+        if ($this->isPluginLoaded("eXpansion\TMKarma")) {
+            $this->displayWidget = false;
+        }
         $this->onPlayerConnect(null, true);
     }
 
@@ -83,9 +88,19 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->onPlayerChat(1, $login, $param, false);
     }
 
+    public function getRatings() {
+        $ratings = $this->db->query("SELECT uid, avg(rating) AS rating, COUNT(rating) AS ratingTotal FROM exp_ratings GROUP BY uid;")->fetchArrayOfObject();
+        $out = array();        
+        foreach ($ratings as $rating) {
+            $out[$rating->uid] = new Structures\Rating($rating->rating, $rating->ratingTotal);
+        }        
+        return $out;
+    }
+
     public function reload() {
         $database = $this->db->query("SELECT avg(rating) AS rating, COUNT(rating) AS ratingTotal FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";")->fetchObject();
         $this->rating = 0;
+        $this->ratingTotal = 0;
         if ($database !== false) {
             $this->rating = $database->rating;
             $this->ratingTotal = $database->ratingTotal;
@@ -183,6 +198,8 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function displayWidget($login = null) {
+        if (!$this->displayWidget)
+            return;
         try {
             foreach (RatingsWidget::GetAll() as $window) {
                 $window->setStars($this->rating);
@@ -216,6 +233,9 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function onPlayerConnect($login, $isSpectator) {
+        if (!$this->displayWidget)
+            return;
+
         if ($login == null) {
             RatingsWidget::EraseAll();
             $info = RatingsWidget::Create();
@@ -237,7 +257,8 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
         if ($playerUid == 0)
             return;
-
+        if ($text == "0/5")
+            $this->saveRating($login, 0);
         if ($text == "1/5")
             $this->saveRating($login, 1);
         if ($text == "2/5")
@@ -250,10 +271,12 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->saveRating($login, 5);
 
         if ($text == "---")
-            $this->saveRating($login, 1);
+            $this->saveRating($login, 0);
         if ($text == "--")
+            $this->saveRating($login, 1);
+        if ($text == "-")
             $this->saveRating($login, 2);
-        if ($text == "-" || $text == "+" || $text == "+-")
+        if ($text == "+")
             $this->saveRating($login, 3);
         if ($text == "++")
             $this->saveRating($login, 4);

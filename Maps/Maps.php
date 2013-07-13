@@ -316,8 +316,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Maps on server', $login));
         if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
             $window->setRecords($this->callPublicMethod('eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
-            Gui\Windows\Maplist::$localrecordsLoaded = true;
         }
+        if ($this->isPluginLoaded('eXpansion\MapRatings')) {
+            $window->setRatings($this->callPublicMethod('eXpansion\MapRatings', 'getRatings'));
+        }
+
         $window->centerOnScreen();
         $window->setSize(180, 100);
         $window->show();
@@ -651,4 +654,5 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
 }
+
 ?>
