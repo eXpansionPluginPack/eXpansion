@@ -40,7 +40,7 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->nick->setStyle("TextRaceChat");
         $this->nick->setScale(0.75);
         $this->nick->setTextColor('fff');
-        $nickname = \ManiaLib\Utils\Formatting::stripStyles($rank->player_nickname);
+        $nickname = $rank->player_nickname;
         $this->nick->setText($nickname);
         $this->addComponent($this->nick);
 

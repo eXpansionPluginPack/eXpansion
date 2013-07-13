@@ -76,7 +76,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
             $this->nick->setTextColor('09f');
         }
 
-        $nickname = \ManiaLib\Utils\Formatting::stripStyles($record->nickName);
+        $nickname = $record->nickName;
         $this->nick->setText($nickname);
         $this->addComponent($this->nick);
 

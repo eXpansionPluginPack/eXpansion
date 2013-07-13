@@ -50,7 +50,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->needUpdate = false;
 
             foreach (Gui\Widgets\RecordsPanel::GetAll() as $panel) {
-                try {                    
+                try {
                     $panel->update();
                 } catch (\Exception $e) {
                     // silent exception
@@ -60,6 +60,11 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    public function onBeginMap($map, $warmUp, $matchContinuation) {
+        Gui\Widgets\RecordsPanel::$dedirecords = array(); // on new map, reset deditimes from widget...
+    }
+
+    
     public function onBeginMatch() {
         foreach (Gui\Widgets\RecordsPanel::GetAll() as $panel) {
             try {
@@ -68,7 +73,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 // silent exception
             }
         }
-        Gui\Widgets\RecordsPanel::$dedirecords = array();
+        
         $this->forceUpdate = true;
     }
 
@@ -88,7 +93,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         echo "Dedimania: Found " . sizeof($data['Records']) . " records for current map!\n";
     }
 
-    public function onPlayerConnect($login, $isSpectator) {      
+    public function onPlayerConnect($login, $isSpectator) {
         $panel = Gui\Widgets\RecordsPanel::Create($login);
         $panel->setSize(38, 95);
         $panel->setPosition(-160, 60);

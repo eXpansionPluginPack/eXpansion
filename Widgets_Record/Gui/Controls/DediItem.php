@@ -76,7 +76,7 @@ class DediItem extends \ManiaLive\Gui\Control {
             $this->nick->setTextSize(1);
             $this->nick->setTextColor('09f');
         }
-        $nickname = \ManiaLib\Utils\Formatting::stripStyles($record['NickName']);
+        $nickname = $record['NickName'];
         $this->nick->setText($nickname);
         $this->addComponent($this->nick);
 
