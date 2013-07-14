@@ -128,6 +128,7 @@ function autotrackmanager()
 		{
 	   	$q = $this->db->query("SELECT avg(rating) AS rating, COUNT(rating) AS ratingTotal FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";")->fetchObject();
 		$this->rating = 0;
+		$this->ratingTotal = 0;
 		$votecount = 0;
 		if ($q  !== false) {
             $this->rating = $q->rating;
@@ -135,7 +136,7 @@ function autotrackmanager()
         }
 		$rating = (($this->rating - 1) / 4) * 100;
         $rating = round($rating) . "%";
-		$votecount = $rating+$this->ratingTotal;
+		$votecount = $this->rating+$this->ratingTotal;
 		//echo $rating; Debug for % 
 		//echo $votecount; // Total count of Rating + Rating Votes
 		//$data = $rating/$votecount; // divide Rating with $votecount gives 0.x
@@ -181,11 +182,11 @@ Console::println("Error:\n".$e->getMessage());
 		fwrite($file, '['.date('H:i:s').'] [eXpansion] [ATM] Removed '. $this->storage->currentMap->name .' (UId '. $this->storage->currentMap->uId .') from the tracklist.\n');
 		fclose($file);
 		Console::println('['.date('H:i:s').'] [eXpansion] [ATM] Removing all data from database from '.$this->storage->currentMap->name.'');
-	   	$q = "DELETE FROM exp_maps WHERE challenge_uid = ".$this->db->quote($uid).";";
+	   	$q = "DELETE FROM exp_maps WHERE challenge_uid = ".$this->db->quote($this->storage->currentMap->uId).";";
 		$query = $this->db->query($q);
-	   	$q = "DELETE FROM exp_ranks WHERE rank_challengeuid = ".$this->db->quote($uid).";";
+	   	$q = "DELETE FROM exp_ranks WHERE rank_challengeuid = ".$this->db->quote($this->storage->currentMap->uId).";";
 		$query = $this->db->query($q);
-	   	$q = "DELETE FROM karma WHERE karma_trackuid = ".$this->db->quote($uid).";";
+	   	$q = "DELETE FROM karma WHERE karma_trackuid = ".$this->db->quote($this->storage->currentMap->uId).";";
 		$query = $this->db->query($q);
 			}
 		}
