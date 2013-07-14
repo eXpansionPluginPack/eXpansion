@@ -90,10 +90,10 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function getRatings() {
         $ratings = $this->db->query("SELECT uid, avg(rating) AS rating, COUNT(rating) AS ratingTotal FROM exp_ratings GROUP BY uid;")->fetchArrayOfObject();
-        $out = array();        
+        $out = array();
         foreach ($ratings as $rating) {
             $out[$rating->uid] = new Structures\Rating($rating->rating, $rating->ratingTotal);
-        }        
+        }
         return $out;
     }
 
@@ -121,9 +121,12 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
             $this->reload();
             $this->displayWidget(null);
-            $msg = exp_getMessage('#rank#$iVote Registered!!');
-            $this->exp_chatSendServerMessage($msg, $login);
-            $this->sendRating($login, $rating);
+            
+            if ($this->displayWidget) {
+                $msg = exp_getMessage('#rank#$iVote Registered!!');
+                $this->exp_chatSendServerMessage($msg, $login);
+                $this->sendRating($login, $rating);
+            }
         } catch (\Exception $e) {
             \ManiaLive\Utilities\Console::println("Error in MapRating: " . $e->getMessage());
         }
