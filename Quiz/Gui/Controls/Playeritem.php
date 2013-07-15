@@ -15,16 +15,15 @@ class Playeritem extends \ManiaLive\Gui\Control {
     private $addpointAction;
     private $removeAction;
     private $frame;
-    private $recipient;
     private $points;
-
+    private $isAdmin;
+    
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Quiz\Structures\QuizPlayer $player, $controller, $isAdmin, $login, $sizeX) {
-        $this->recipient = $login;
 
 
         $sizeY = 4;
         $this->isAdmin = $isAdmin;
-        $this->player = $player;
+
         if ($isAdmin) {
             $this->addpointAction = $this->createAction(array($controller, 'addPoint'), $player->login);
             $this->removeAction = $this->createAction(array($controller, 'removePoint'), $player->login);
@@ -70,7 +69,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
         // admin additions
         if ($this->isAdmin) {
             $this->removepointButton = new MyButton(15, 5);
-            $this->removepointButton->setText(__("-1", $login));
+            $this->removepointButton->setText("-1");
             $this->removepointButton->setTextColor("fff");
             $this->removepointButton->colorize("a22");
             $this->removepointButton->setAction($this->removeAction);
@@ -78,7 +77,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
             $this->frame->addComponent($this->removepointButton);
 
             $this->addpointButton = new MyButton(15, 5);
-            $this->addpointButton->setText(__("+1", $login));
+            $this->addpointButton->setText("+1");
             $this->addpointButton->setTextColor("fff");
             $this->addpointButton->colorize("2a2");
             $this->addpointButton->setScale(0.5);
@@ -108,9 +107,10 @@ class Playeritem extends \ManiaLive\Gui\Control {
             $this->addpointButton->destroy();
         if (is_object($this->removepointButton))
             $this->removepointButton->destroy();
-
+        
+        $this->frame->clearComponents();
+        $this->frame->destroy();
         $this->clearComponents();
-
         parent::destroy();
     }
 

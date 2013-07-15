@@ -48,10 +48,10 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $x = 0;
         $login = $this->getRecipient();
-        $isadmin = AdminGroups::isInList($login);
+        $isadmin = AdminGroups::hasPermission($login,"quiz_admin");
         try {
             foreach ($players as $player) {
-                $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->sizeX);
+                $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $login, $this->sizeX);
                 $this->pager->addItem($this->items[$x]);
                 echo $player->login . ":" . $player->points;
             }
@@ -60,14 +60,14 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    function addPoint($target) {
-        self::$mainPlugin->addPoint($this->getRecipient(), $target);
+    function addPoint($login, $target) {
+        self::$mainPlugin->addPoint($login, $target);
         $this->setData(self::$mainPlugin->getPlayers());
         $this->RedrawAll();
     }
 
-    function removePoint($target) {
-        self::$mainPlugin->removePoint($this->getRecipient(), $target);
+    function removePoint($login, $target) {
+        self::$mainPlugin->removePoint($login, $target);
         $this->setData(self::$mainPlugin->getPlayers());
         $this->RedrawAll();
     }
@@ -79,8 +79,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $item->destroy();
 
         $this->items = null;
-
-
+        $this->pager->destroy();
         parent::destroy();
     }
 

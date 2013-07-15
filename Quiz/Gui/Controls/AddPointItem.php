@@ -13,15 +13,10 @@ class AddPointItem extends \ManiaLive\Gui\Control {
     private $nickname;
     private $addpointAction;
     private $frame;
-    private $recipient;    
 
     function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin, $login, $sizeX) {
-        $this->recipient = $login;
-
-
         $sizeY = 4;
-        $this->isAdmin = $isAdmin;
-        $this->player = $player;
+
         if ($isAdmin) {
             $this->addpointAction = $this->createAction(array($controller, 'addPoint'), $player->login);
         }
@@ -54,12 +49,12 @@ class AddPointItem extends \ManiaLive\Gui\Control {
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(4, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        $this->frame->addComponent($spacer);   
+        $this->frame->addComponent($spacer);
 
         // admin additions
-        if ($this->isAdmin) {
+        if ($isAdmin) {
             $this->addpointButton = new MyButton(15, 5);
-            $this->addpointButton->setText(__("+1", $login));
+            $this->addpointButton->setText("+1");
             $this->addpointButton->setTextColor("fff");
             $this->addpointButton->colorize("2a2");
             $this->addpointButton->setScale(0.5);
@@ -75,7 +70,7 @@ class AddPointItem extends \ManiaLive\Gui\Control {
     }
 
     protected function onResize($oldX, $oldY) {
-        $this->frame->setSize($this->sizeX, $this->sizeY);        
+        $this->frame->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(-2);
         $this->bg->setSize($this->sizeX, $this->sizeY);
     }
@@ -87,9 +82,9 @@ class AddPointItem extends \ManiaLive\Gui\Control {
     function destroy() {
         if (is_object($this->addpointButton))
             $this->addpointButton->destroy();
-
+        
+        $this->frame->destroy();
         $this->clearComponents();
-
         parent::destroy();
     }
 
