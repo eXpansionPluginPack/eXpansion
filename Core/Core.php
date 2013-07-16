@@ -98,24 +98,8 @@ EOT;
      */
     public function exp_onReady() {
         $this->onBeginMap(null, null, null);
-        $this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_PLAYER_MANIALINK_PAGE_ANSWER);
     }
-
-    public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries) {
-        $pos = false;
-        $id = false;
-        foreach ($entries as $entry) {
-            if ($entry['Name'] == 'WindowPos')
-                $pos = $entry['Value'];
-            if ($entry['Name'] == 'WindowID')
-                $id = $entry['Value'];
-        }
-
-        if ($pos !== false && $id !== false) {            
-            \ManiaLivePlugins\eXpansion\Gui\WindowService::setPosition($login, $id, $pos);
-        }
-    }
-
+    
     /**
      * 
      * @param array $map

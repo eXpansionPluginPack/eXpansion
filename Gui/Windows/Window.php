@@ -136,18 +136,7 @@ class Window extends \ManiaLive\Gui\Window {
     }
 
     protected function onDraw() {
-        $pos = \ManiaLivePlugins\eXpansion\Gui\WindowService::getPosition($this->getRecipient(), $this->getId());
-        $posA = explode(",", $pos);
-        if (isset($posA[0])) {
-            $this->setPosX(floatval($posA[0]));
-            $this->setAlign("left", "top");
-        }
-        if (isset($posA[1])) {
-            $this->setPosY(floatval($posA[1]));
-            $this->setAlign("left", "top");
-        } else {
-            $this->setPosY(0);
-        }
+
         $this->removeComponent($this->xml);
         $this->xml->setContent('    
         <script><!--
@@ -156,6 +145,7 @@ class Window extends \ManiaLive\Gui\Window {
                         declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);
                         declare CMlEntry windowPos <=> (Page.GetFirstChild("windowPosition") as CMlEntry);
                         declare showCoords = ' . $this->_showCoords . ';
+                        
                         declare MoveWindow = False;
                         declare Scroll = False;
                         declare CloseWindow = False;   
@@ -169,9 +159,21 @@ class Window extends \ManiaLive\Gui\Window {
                         declare Real lastMouseX = 0.0;
                         declare Real lastMouseY =0.0;         
                         declare active = False;
-                        ' . $this->dDeclares . '  
-                            
-                        windowPos.Value = Window.RelativePosition.X ^ "," ^ Window.RelativePosition.Y;
+                        declare Text id = "' . $this->_title->getText() . '";        
+                        declare persistent Vec3[Text] windowLastPos;
+                        declare persistent Vec3[Text] windowLastPosRel;
+                        ' . $this->dDeclares . '                          
+                        
+                         if (!windowLastPos.existskey(id)) {
+                                windowLastPos[id] = <-30.0, 30.0, 0.0>;
+                                }
+                         if (!windowLastPosRel.existskey(id)) {
+                                windowLastPosRel[id] = <0.0, 0.0, 0.0>;
+                                }
+                        Window.PosnX = windowLastPos[id][0];
+                        Window.PosnY = windowLastPos[id][1];
+                        LastDelta = windowLastPosRel[id];
+                        Window.RelativePosition = windowLastPosRel[id];                                                
                         
                         while(True) {                                                               
                                if (active == True) {
@@ -197,11 +199,12 @@ class Window extends \ManiaLive\Gui\Window {
                                    
                                     LastDelta += DeltaPos;
                                     LastDelta.Z = 3.0;
-                                    Window.RelativePosition = LastDelta;                                    
-                                    // windowPos.Value = Window.PosnX ^ "," ^ Window.PosnY;
-                                    windowPos.Value = Window.RelativePosition.X ^ "," ^ Window.RelativePosition.Y;
+                                    Window.RelativePosition = LastDelta;                                
+                                    windowLastPos[id] = Window.AbsolutePosition;
+                                    windowLastPosRel[id] = Window.RelativePosition;
+                                    
                                     lastMouseX = MouseX;
-                                    lastMouseY = MouseY;
+                                    lastMouseY = MouseY;                            
                                     }
                                 
                                     
@@ -353,7 +356,7 @@ class Window extends \ManiaLive\Gui\Window {
         $this->dCount++;
     }
 
-    function destroy() {        
+    function destroy() {
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->_closeAction);
         $this->_windowFrame->clearComponents();
         $this->_windowFrame->destroy();
