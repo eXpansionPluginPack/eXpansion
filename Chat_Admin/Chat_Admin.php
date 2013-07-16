@@ -259,7 +259,7 @@ Other server might use the same blacklist file!!');
         AdminGroups::addAlias($cmd, 'next'); // fast
         AdminGroups::addAlias($cmd, 'nextmap');
 
-        $cmd = AdminGroups::addAdminCommand('restart', $this, 'restartMap', 'map_restart');
+        $cmd = AdminGroups::addAdminCommand('restart', $this, 'restartMap', 'map_res');
         $cmd->setHelp("Restarts this map to allow you to replay the map");
         AdminGroups::addAlias($cmd, 'res'); // xaseco
         AdminGroups::addAlias($cmd, 'restart'); // fast

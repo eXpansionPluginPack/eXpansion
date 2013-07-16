@@ -17,21 +17,21 @@ class Checkbox extends \ManiaLive\Gui\Control {
         $this->textWidth = $textWidth;
         $this->action = $this->createAction(array($this, 'toggleActive'));
         $config = Config::getInstance();
-        /*$this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-        $this->button->setAlign('left', 'center');
+        $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+        $this->button->setAlign('left', 'center2');
         $this->button->setImage($config->checkbox);
         $this->button->setAction($this->action);
         $this->button->setScriptEvents(true);
-        $this->addComponent($this->button); */
+        $this->addComponent($this->button); 
         
-        $this->button = new \ManiaLib\Gui\Elements\Label(4,4);
+        /* $this->button = new \ManiaLib\Gui\Elements\Label(4,4);
         $this->button->setAlign('center', 'center');       
         $this->button->setBgcolor('ddd');
         $this->button->setText(' ');
         $this->button->setSize(0.8);
         $this->button->setAction($this->action);
         $this->button->setScriptEvents(true);
-        $this->addComponent($this->button);
+        $this->addComponent($this->button); */
         //「×」
 
         $this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 4);
@@ -44,21 +44,21 @@ class Checkbox extends \ManiaLive\Gui\Control {
     }
 
     protected function onResize($oldX, $oldY) {
-        $this->button->setSize($this->sizeX - $this->textWidth, $this->sizeY);
+        $this->button->setSize(3,3);
         $this->button->setPosition(0, -0.5);
         $this->label->setSize($this->textWidth, $this->sizeY);
-        $this->label->setPosition($this->sizeX - $this->textWidth + 1, 0);
+        $this->label->setPosition($this->sizeX - $this->textWidth, 0);
     }
 
     function onDraw() {
         $config = Config::getInstance();
 
         if ($this->active) {
-           // $this->button->setImage($config->checkboxActive);
-            $this->button->setText('$0d0×');
+            $this->button->setImage($config->checkboxActive);
+           // $this->button->setText('$0d0×');
         } else {
-         //   $this->button->setImage($config->checkbox);
-            $this->button->setText(' ');
+           $this->button->setImage($config->checkbox);
+         //   $this->button->setText(' ');
         }
     }
 

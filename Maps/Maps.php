@@ -53,7 +53,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "remove");
 
-        $cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', 'map_restart');
+        $cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', 'map_res');
         $cmd->setHelp(exp_getMessage('Sets current challenge to replay at end of match'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "replay");
@@ -178,7 +178,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["style"] = "Icons64x64_1";
         $button["substyle"] = "Refresh";
         $button["function"] = 'replayMap';
-        $button["permission"] = "map_restart";
+        $button["permission"] = "map_res";
         $parent = $menu->findButton(array('admin', 'Basic Commands'));
         if (!$parent) {
             $parent = $menu->findButton(array('admin', 'Maps'));  // no basic cmd submenu?  just dump it in with map cmd's..

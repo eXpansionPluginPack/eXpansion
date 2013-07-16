@@ -54,11 +54,11 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->pager->setStretchContentX($this->sizeX);
         $this->pager->setPosition(0, -7);
 
-        $this->login_add->setSize($this->sizeX*(1/0.8) - 20, 7);
+        $this->login_add->setSize($this->sizeX * (1 / 0.8) - 20, 7);
         $this->login_add->setPosition(0, -3);
 
         $this->button_add->setSize(30, 5);
-        $this->button_add->setPosition($this->sizeX*(1/0.8) - 45*(1/0.8), -3);
+        $this->button_add->setPosition($this->sizeX * (1 / 0.8) - 45 * (1 / 0.8), -3);
     }
 
     function onShow() {
@@ -74,7 +74,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function populateList() {
         $x = 0;
         foreach ($this->group->getGroupUsers() as $admin) {
-            $this->items[$x] = new AdminItem($x,$admin, $this, $this->getRecipient());
+            $this->items[$x] = new AdminItem($x, $admin, $this, $this->getRecipient());
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
@@ -90,6 +90,13 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->login_add->setText("");
         $this->onShow();
         $this->redraw($login2);
+
+        $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
+        foreach ($windows as $window) {
+            $login = $window->getRecipient();
+            $window->onShow();
+            $window->redraw($login);
+        }
     }
 
     function click_remove($login, $admin) {
@@ -111,7 +118,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->button_add->destroy();
         foreach ($this->items as $item)
             $item->destroy();
-        $this->items = array();        
+        $this->items = array();
         parent::destroy();
     }
 

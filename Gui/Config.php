@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 
 class Config extends \ManiaLib\Utils\Singleton {
 
-    public $button = "http://reaby.kapsi.fi/ml/button3.png";
+    public $button = "http://reaby.kapsi.fi/ml/button4.png";
     public $buttonActive = "http://reaby.kapsi.fi/ml/button3_active.png";
     
     public $checkbox = "http://reaby.kapsi.fi/ml/checkbox_off.png";

@@ -32,9 +32,9 @@ class Permission {
     const game_gamemode = 'game_gamemode';
     const game_settings = 'game_settings';
     const map_skip = 'map_skip';
-    const map_restart = 'map_restart';
+    const map_restart = 'map_res';
     const map_next = 'map_next';
-    const map_roundEnd = 'map_roundEnd';
+    const map_roundEnd = 'map_endRound';
     
     const oliverde8_SeeAdminHudMenu = 'oliverde8_SeeAdminHudMenu';
 }

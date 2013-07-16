@@ -130,7 +130,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $x = 0;
         $login = $this->getRecipient();
-        $isadmin = AdminGroups::isInList($login);
+        $isadmin = AdminGroups::hasPermission($login, "server_admin");
         try {
             foreach ($this->storage->players as $player) {
                 $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->sizeX);

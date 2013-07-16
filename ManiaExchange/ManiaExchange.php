@@ -217,7 +217,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             return;
         }
 
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "map_add")) {
             $this->mxQueue($login, $mxId);
             return;
         }

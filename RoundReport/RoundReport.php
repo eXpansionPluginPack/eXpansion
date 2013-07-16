@@ -9,7 +9,7 @@
  * @package expansion
  *
  * @author Willem van den Munckhof
- * @copyright © 2013
+ * @copyright ï¿½ 2013
  *
  * ---------------------------------------------------------------------
  * This program is free software: you can redistribute it and/or modify
@@ -86,7 +86,7 @@ class RoundReport extends \ManiaLive\PluginHandler\Plugin {
 
 
     public function chatEnd($login) {
-     if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
+     if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "server_admin")) {
             $this->connection->chatSendServerMessage('No Permission to fiddle with MapsScores!',$login);
             return;
         }

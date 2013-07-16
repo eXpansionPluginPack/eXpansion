@@ -86,7 +86,7 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
               $text = str_replace(array(":)", "=)"), $smileys[$rnd], $text); */
             
             try {
-                if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
+                if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login,"server_admin")) {
                     $this->connection->chatSendServerMessage("\$fff" . $config->adminSign . " $nick\$z\$s " . $config->chatSeparator . $config->adminChatColor . $text);
                 } elseif ($source_player->isManagedByAnOtherServer) {
                     $this->connection->chatSendServerMessage("\$fff$nick\$z\$s " . $config->chatSeparator . $config->otherServerChatColor . $text);

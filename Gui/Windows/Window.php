@@ -29,12 +29,18 @@ class Window extends \ManiaLive\Gui\Window {
         $config = Config::getInstance();
         $this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
 
-        $this->_windowPos = new \ManiaLib\Gui\Elements\Entry();
-        $this->_windowPos->setName("_pos");
-        $this->_windowPos->setId("windowPosition");
-        $this->_windowPos->setScriptEvents(true);
-        $this->_windowPos->setPosition(0, 80);
-        // $this->addComponent($this->_windowPos);
+        $pos = new \ManiaLib\Gui\Elements\Entry();
+        $pos->setName("WindowPos");
+        $pos->setId("windowPosition");
+        $pos->setScriptEvents(true);
+        $pos->setPosition(0, 1000);  // display it off the screen coordinates
+        $this->addComponent($pos);
+
+        $id = new \ManiaLib\Gui\Elements\Entry();
+        $id->setName("WindowID");
+        $id->setDefault($this->id);
+        $id->setPosition(0, 1000); // display it off the screen coordinates
+        $this->addComponent($id);
 
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setScriptEvents(true);
@@ -44,7 +50,7 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_mainWindow->setId("MainWindow");
         $this->_mainWindow->setStyle("Bgs1");
         $this->_mainWindow->setSubStyle("BgWindow2");
-       // $this->_mainWindow->setBgcolor("fffe");
+        // $this->_mainWindow->setBgcolor("fffe");
         // $this->_mainWindow->setStyle("Bgs1InRace");
         // $this->_mainWindow->setSubStyle("BgEmpty");
         // $this->_mainWindow->setBgcolor("fff");
@@ -130,13 +136,25 @@ class Window extends \ManiaLive\Gui\Window {
     }
 
     protected function onDraw() {
+        $pos = \ManiaLivePlugins\eXpansion\Gui\WindowService::getPosition($this->getRecipient(), $this->getId());
+        $posA = explode(",", $pos);
+        if (isset($posA[0])) {
+            $this->setPosX(floatval($posA[0]));
+            $this->setAlign("left", "top");
+        }
+        if (isset($posA[1])) {
+            $this->setPosY(floatval($posA[1]));
+            $this->setAlign("left", "top");
+        } else {
+            $this->setPosY(0);
+        }
         $this->removeComponent($this->xml);
         $this->xml->setContent('    
         <script><!--
                        main () {     
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");    
                         declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);
-                       // declare CMlEntry windowPos <=> (Page.GetFirstChild("windowPosition") as CMlEntry);
+                        declare CMlEntry windowPos <=> (Page.GetFirstChild("windowPosition") as CMlEntry);
                         declare showCoords = ' . $this->_showCoords . ';
                         declare MoveWindow = False;
                         declare Scroll = False;
@@ -153,6 +171,8 @@ class Window extends \ManiaLive\Gui\Window {
                         declare active = False;
                         ' . $this->dDeclares . '  
                             
+                        windowPos.Value = Window.RelativePosition.X ^ "," ^ Window.RelativePosition.Y;
+                        
                         while(True) {                                                               
                                if (active == True) {
                                 declare temp = Window.RelativePosition;
@@ -177,8 +197,9 @@ class Window extends \ManiaLive\Gui\Window {
                                    
                                     LastDelta += DeltaPos;
                                     LastDelta.Z = 3.0;
-                                    Window.RelativePosition = LastDelta;      
-                                   // windowPos.Value = Window.PosnX ^ "," ^ Window.PosnY;
+                                    Window.RelativePosition = LastDelta;                                    
+                                    // windowPos.Value = Window.PosnX ^ "," ^ Window.PosnY;
+                                    windowPos.Value = Window.RelativePosition.X ^ "," ^ Window.RelativePosition.Y;
                                     lastMouseX = MouseX;
                                     lastMouseY = MouseY;
                                     }

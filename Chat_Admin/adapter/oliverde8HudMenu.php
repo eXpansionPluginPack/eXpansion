@@ -59,10 +59,10 @@ class oliverde8HudMenu {
         $button["substyle"] = "ArrowLast";
         $button["function"] = "forceEndRound";
         $button["plugin"] = $this;
-        $button["permission"] = "map_roundEnd";
+        $button["permission"] = "map_endRound";
         $button["checkFunction"] = "check_gameSettings_NoTimeAttack";
         $buton = $menu->addButton($parent, "End Round", $button);
-        $buton->setPermission('map_roundEnd');
+        $buton->setPermission('map_endRound');
     }
 
     private function generate_PlayerLists() {

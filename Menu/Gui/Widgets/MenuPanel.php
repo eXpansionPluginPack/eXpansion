@@ -39,30 +39,29 @@ class MenuPanel extends \ManiaLive\Gui\Window {
         $this->_mainWindow->setAlign("left", "top");
         $this->_mainWindow->setScriptEvents(true);
         $this->_windowFrame->addComponent($this->_mainWindow);
-        
-        
-        
+
+
+
         $this->lbl = new \ManiaLib\Gui\Elements\Label(30, 6);
         $this->lbl->setTextSize(1);
-        $this->lbl->setAlign("center","center");
+        $this->lbl->setAlign("center", "center");
         $this->lbl->setText("Menu");
         $this->lbl->setStyle("TextStaticVerySmall");
         $this->_windowFrame->addComponent($this->lbl);
-        
+
         $this->quad = new \ManiaLib\Gui\Elements\Quad(30, 8);
         $this->quad->setStyle("Bgs1InRace");
         $this->quad->setSubStyle("BgTitle3_3");
         $this->quad->setAlign("left", "center");
         $this->_windowFrame->addComponent($this->quad);
-        
-        
+
+
 //        $this->_minButton = new \ManiaLib\Gui\Elements\Quad(10, 10);
 //        $this->_minButton->setId("minimizeButton");
 //        $this->_minButton->setStyle("Icons128x128_1");
 //        $this->_minButton->setSubStyle("Options");
 //        $this->_minButton->setScriptEvents(true);
 //        $this->_minButton->setAlign("left", "center");
-
 //        $this->_windowFrame->addComponent($this->_minButton);
 
         $this->addComponent($this->_windowFrame);
@@ -142,7 +141,7 @@ class MenuPanel extends \ManiaLive\Gui\Window {
         $this->lbl->setPosY(1);
         $this->quad->setSizeX($this->sizeX + 10);
         $this->quad->setPosX(-8);
-        $this->quad->setPosY(1);     
+        $this->quad->setPosY(1);
 
 //   $this->_minButton->setPosition(-2, -8);
     }
@@ -159,7 +158,7 @@ class MenuPanel extends \ManiaLive\Gui\Window {
         $login = $this->getRecipient();
 
         foreach ($menuItems as $menuItem) {
-            if (!$menuItem->isAdmin || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
+            if (!$menuItem->isAdmin || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_admin')) {
                 $item = new PanelItem($menuItem, $login);
                 $this->frame->addComponent($item);
             }

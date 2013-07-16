@@ -18,6 +18,8 @@ class Inputbox extends \ManiaLive\Gui\Control {
         $this->button->setTextColor('000');
         $this->button->setTextSize(1);
         $this->button->setScriptEvents(true);
+        $this->button->setFocusAreaColor1("7773");
+        $this->button->setFocusAreaColor2("7773");
         $this->addComponent($this->button);
 
         $this->label = new \ManiaLib\Gui\Elements\Label(30, 3);

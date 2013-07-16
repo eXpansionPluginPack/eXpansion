@@ -42,7 +42,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function onPlayerConnect($login, $isSpectator) {
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login,'server_admin')) {
             $info = AdminPanel::Create($login);
             $info->setSize(50, 20);
             $info->setPosition(-160, -46);
