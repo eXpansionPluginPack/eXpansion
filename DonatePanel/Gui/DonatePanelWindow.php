@@ -74,7 +74,7 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
                         
                         
                          if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <-30.0, 30.0, 0.0>;
+                                windowLastPos[id] = <44.0, -88.0, 0.0>;
                                 }
                          if (!windowLastPosRel.existskey(id)) {
                                 windowLastPosRel[id] = <0.0, 0.0, 0.0>;
