@@ -353,8 +353,7 @@ class Window extends \ManiaLive\Gui\Window {
         $this->dCount++;
     }
 
-    function destroy() {
-        echo "window destroy";
+    function destroy() {        
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->_closeAction);
         $this->_windowFrame->clearComponents();
         $this->_windowFrame->destroy();

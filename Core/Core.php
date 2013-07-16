@@ -111,8 +111,7 @@ EOT;
                 $id = $entry['Value'];
         }
 
-        if ($pos !== false && $id !== false) {
-            echo "position set!";
+        if ($pos !== false && $id !== false) {            
             \ManiaLivePlugins\eXpansion\Gui\WindowService::setPosition($login, $id, $pos);
         }
     }
