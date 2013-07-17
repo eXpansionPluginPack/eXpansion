@@ -185,17 +185,17 @@ class Widget extends \ManiaLive\Gui\Window {
                         declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
                         declare Real lastMouseX = 0.0;
                         declare Real lastMouseY =0.0;                           
-                        declare Text id = "NextMapWidget";      
+                        declare Text id = "TMKarma";      
                         
                         declare persistent Boolean exp_enableHudMove = False;
                         declare persistent Vec3[Text] windowLastPos;
                         declare persistent Vec3[Text] windowLastPosRel;
                                                                          
                          if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <159.0, 52.0, 0.0>;
+                                windowLastPos[id] = <150.0, 52.0, 0.0>;
                                }
                          if (!windowLastPosRel.existskey(id)) {
-                                windowLastPosRel[id] = <159.0, 52.0, 0.0>;
+                                windowLastPosRel[id] = <150.0, 52.0, 0.0>;
                               }
                         Window.PosnX = windowLastPos[id][0];
                         Window.PosnY = windowLastPos[id][1];

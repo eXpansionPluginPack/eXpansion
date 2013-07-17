@@ -101,10 +101,10 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
                         declare persistent Vec3[Text] windowLastPosRel;
                                                                          
                          if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <136.0, 74.0, 0.0>;
+                                windowLastPos[id] = <158.0, 74.0, 0.0>;
                                }
                          if (!windowLastPosRel.existskey(id)) {
-                                windowLastPosRel[id] = <136.0, 74.0, 0.0>;
+                                windowLastPosRel[id] = <158.0, 74.0, 0.0>;
                               }
                         Window.PosnX = windowLastPos[id][0];
                         Window.PosnY = windowLastPos[id][1];
