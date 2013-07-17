@@ -88,10 +88,10 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
                         
                         
                          if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <-159.0, 89.0, 0.0>;
+                                windowLastPos[id] = <44.00,-88.00, 0.0>;
                                }
                          if (!windowLastPosRel.existskey(id)) {
-                                windowLastPosRel[id] = <-159.0, 89.0, 0.0>;
+                                windowLastPosRel[id] = <44.00,-88.00, 0.0>;
                               }
                         Window.PosnX = windowLastPos[id][0];
                         Window.PosnY = windowLastPos[id][1];
