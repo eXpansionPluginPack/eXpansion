@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui;
 
+use ManiaLivePlugins\eXpansion\Gui\Widgets\HudPanel;
+
 class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $titleId;
@@ -11,6 +13,8 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onLoad() {
+        HudPanel::$mainPlugin = $this;
+        
         $version = $this->connection->getVersion();
         $this->titleId = $version->titleId;
 
@@ -50,8 +54,12 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function onPlayerConnect($login, $isSpectator) {
+        $info = HudPanel::Create($login);
+        $info->setSize(60, 20);
+        $info->setPosition(-160, -40);
+        $info->show();
+        
         try {
-
             if ($this->titleId == "SMStorm" || $this->titleId == "SMStormRoyal@nadeolabs") {
                 $this->connection->TriggerModeScriptEvent("LibXmlRpc_DisableAltMenu", $login);
             }

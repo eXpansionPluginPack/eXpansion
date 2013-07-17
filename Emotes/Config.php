@@ -9,6 +9,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $iconBG = "http://reaby.kapsi.fi/ml/icon_bg.png";
     public $iconAfk = "http://reaby.kapsi.fi/ml/icon_afk.png";    
     public $iconMenu = "http://reaby.kapsi.fi/ml/icon_smile.png";    
+    public $showPanel = false;
     
 }
 ?>
