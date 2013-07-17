@@ -93,7 +93,8 @@ class Button extends \ManiaLive\Gui\Control {
         $outval = $value;
 
         if (strlen($value) == 4) {
-            $this->quad->setOpacity(substr($value, 3, 1));
+            $val = substr($value, 3, 1);            
+            $this->quad->setOpacity(floatval(intval($val, 16)/16));
             $outval = substr($value, 0, 3);
         }
         $this->quad->setModulateColor($outval);

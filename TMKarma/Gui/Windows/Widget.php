@@ -22,7 +22,8 @@ class Widget extends \ManiaLive\Gui\Window {
     protected $link;
     protected $info;
     public $challengeData;
-
+    private $xml;
+    
     const CUPS_MAX = 5;
 
     function onConstruct() {
@@ -75,6 +76,19 @@ class Widget extends \ManiaLive\Gui\Window {
         $this->info->setTextColor('fff');
         $this->info->setPosition(0, 3);
         $this->addComponent($this->info);
+        
+        $move = new \ManiaLib\Gui\Elements\Quad(18, 14);
+        $move->setAlign("center", "center");
+        $move->setStyle("Bgs1InRace");
+        $move->setSubStyle("BgEmpty");
+        $move->setModulateColor("f00");
+        $move->setScriptEvents();
+        $move->setId("enableMove");
+        $move->setPosition(0,4);
+        $this->addComponent($move);
+        
+        $this->xml = new \ManiaLive\Gui\Elements\Xml();
+        
     }
 
     function onDraw() {
@@ -157,6 +171,84 @@ class Widget extends \ManiaLive\Gui\Window {
 
           }
          */
+         $this->removeComponent($this->xml);
+        $this->xml->setContent('    
+        <script><!--
+               
+                       main () {     
+                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");                 
+                        declare MoveWindow = False;                       
+                        declare CMlLabel lbl_clock <=> (Page.GetFirstChild("clock") as CMlLabel);
+                        declare CMlLabel lbl_date <=> (Page.GetFirstChild("date") as CMlLabel);                        
+                        declare CMlQuad  quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);      
+                        declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
+                        declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
+                        declare Real lastMouseX = 0.0;
+                        declare Real lastMouseY =0.0;                           
+                        declare Text id = "NextMapWidget";      
+                        
+                        declare persistent Boolean exp_enableHudMove = False;
+                        declare persistent Vec3[Text] windowLastPos;
+                        declare persistent Vec3[Text] windowLastPosRel;
+                                                                         
+                         if (!windowLastPos.existskey(id)) {
+                                windowLastPos[id] = <159.0, 52.0, 0.0>;
+                               }
+                         if (!windowLastPosRel.existskey(id)) {
+                                windowLastPosRel[id] = <159.0, 52.0, 0.0>;
+                              }
+                        Window.PosnX = windowLastPos[id][0];
+                        Window.PosnY = windowLastPos[id][1];
+                        LastDelta = windowLastPosRel[id];
+                        Window.RelativePosition = windowLastPosRel[id];                                                
+                        
+                        while(True) {                                             
+                        if (exp_enableHudMove == True) {
+                                quad.Show();
+                                quad.Substyle="NavButtonBlink";     
+                            
+                            }
+                        else {
+                            quad.Hide();
+                            quad.Substyle="BgEmpty";
+                            
+                        }
+                          if (exp_enableHudMove == True && MouseLeftButton == True) {
+                                     
+                                              foreach (Event in PendingEvents) {
+
+                                                    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "enableMove")  {
+                                                        lastMouseX = MouseX;
+                                                        lastMouseY = MouseY;                                                            
+                                                        MoveWindow = True;                                                           
+                                                        }                                                                                                  
+                                                }
+                                        }
+                                        else {
+                                            MoveWindow = False;                                                                          
+                                        }
+                                        
+                                if (MoveWindow) {                                                                                                    
+                                    DeltaPos.X = MouseX - lastMouseX;
+                                    DeltaPos.Y = MouseY - lastMouseY;
+                                                                      
+                                    LastDelta += DeltaPos;
+                                    LastDelta.Z = 3.0;
+                                    Window.RelativePosition = LastDelta;
+                                    windowLastPos[id] = Window.AbsolutePosition;
+                                    windowLastPosRel[id] = Window.RelativePosition;
+                                    
+                                    lastMouseX = MouseX;
+                                    lastMouseY = MouseY;                            
+                                    }
+                                    yield;
+                           }
+                  
+                  
+                } 
+                --></script>');
+        $this->addComponent($this->xml);
+        parent::onDraw();
     }
 
     function setPlugin(TMKarma $plugin) {

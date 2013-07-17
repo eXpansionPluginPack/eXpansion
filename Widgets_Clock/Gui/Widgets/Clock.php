@@ -10,15 +10,6 @@ class Clock extends \ManiaLive\Gui\Window {
 
     protected function onConstruct() {
         parent::onConstruct();
-        $move = new \ManiaLib\Gui\Elements\Quad(60, 12);
-        $move->setStyle("Bgs1InRace");
-        $move->setSubStyle("BgList");
-        $move->setBgcolor("0000");        
-        $move->setScriptEvents();
-        $move->setId("enableMove");
-        $this->addComponent($move);
-
-
         $this->clock = new \ManiaLib\Gui\Elements\Label();
         $this->clock->setId('clock');
         $this->clock->setAlign("left", "top");
@@ -38,12 +29,16 @@ class Clock extends \ManiaLive\Gui\Window {
         $this->date->setText(\ManiaLive\Data\Storage::getInstance()->server->name);
         $this->addComponent($this->date);
 
+        $move = new \ManiaLib\Gui\Elements\Quad(60, 12);
+        $move->setStyle("Bgs1InRace");
+        $move->setSubStyle("BgEmpty"); 
+        $move->setModulateColor("f00");
+        $move->setScriptEvents();
+        $move->setId("enableMove");
+        $this->addComponent($move);
+        
         $this->setAlign("left", "top");
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
-    }
-
-    public function onDraw() {
-        $this->removeComponent($this->xml);
         $this->xml->setContent('    
         <script><!--
         #Include "TextLib" as TextLib
@@ -52,14 +47,15 @@ class Clock extends \ManiaLive\Gui\Window {
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");                 
                         declare MoveWindow = False;                       
                         declare CMlLabel lbl_clock <=> (Page.GetFirstChild("clock") as CMlLabel);
-                        declare CMlLabel lbl_date <=> (Page.GetFirstChild("date") as CMlLabel);
-               
+                        declare CMlLabel lbl_date <=> (Page.GetFirstChild("date") as CMlLabel);                        
+                        declare CMlQuad  quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);      
                         declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
                         declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
                         declare Real lastMouseX = 0.0;
                         declare Real lastMouseY =0.0;                           
                         declare Text id = "Clock";      
                         
+                        declare persistent Boolean exp_enableHudMove = False;
                         declare persistent Vec3[Text] windowLastPos;
                         declare persistent Vec3[Text] windowLastPosRel;
                         
@@ -69,21 +65,42 @@ class Clock extends \ManiaLive\Gui\Window {
                                }
                          if (!windowLastPosRel.existskey(id)) {
                                 windowLastPosRel[id] = <-159.0, 89.0, 0.0>;
-                                }
+                              }
                         Window.PosnX = windowLastPos[id][0];
                         Window.PosnY = windowLastPos[id][1];
                         LastDelta = windowLastPosRel[id];
                         Window.RelativePosition = windowLastPosRel[id];                                                
                         
-                        while(True) {                                                               
-                       
+                        while(True) {                                             
+                        if (exp_enableHudMove == True) {
+                            quad.Substyle="NavButtonBlink";     
+                            
+                            }
+                        else {
+                            quad.Substyle="BgEmpty";
+                        }
+                          if (exp_enableHudMove == True && MouseLeftButton == True) {
+                                     
+                                              foreach (Event in PendingEvents) {
+
+                                                    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "enableMove")  {
+                                                        lastMouseX = MouseX;
+                                                        lastMouseY = MouseY;                                                            
+                                                        MoveWindow = True;                                                           
+                                                        }                                                                                                  
+                                                }
+                                        }
+                                        else {
+                                            MoveWindow = False;                                                                          
+                                        }
+                                        
                                 if (MoveWindow) {                                                                                                    
                                     DeltaPos.X = MouseX - lastMouseX;
                                     DeltaPos.Y = MouseY - lastMouseY;
-                                   
+                                                                      
                                     LastDelta += DeltaPos;
                                     LastDelta.Z = 3.0;
-                                    Window.RelativePosition = LastDelta;                                
+                                    Window.RelativePosition = LastDelta;
                                     windowLastPos[id] = Window.AbsolutePosition;
                                     windowLastPosRel[id] = Window.RelativePosition;
                                     
@@ -91,25 +108,7 @@ class Clock extends \ManiaLive\Gui\Window {
                                     lastMouseY = MouseY;                            
                                     }
                                     
-                                    if (MouseMiddleButton == True) {
-                                
-                                    foreach (Event in PendingEvents) {
-                                 
-                                        
-                                     
-                                              foreach (Event in PendingEvents) {
-                                                      if (Event.ControlId == "enableMove") {                                                         
-                                                            lastMouseX = MouseX;
-                                                            lastMouseY = MouseY;   
-                                                            MoveWindow = True;                                                           
-                                                        }                                                                                                  
-                                                }
-                                        }
                                     
-                                    }
-                                        else {
-                                            MoveWindow = False;                                                                          
-                                        }
                                 lbl_clock.SetText(""^TextLib::SubString(CurrentLocalDateText, 11, 2)^":"^TextLib::SubString(CurrentLocalDateText, 14, 2)^":"^TextLib::SubString(CurrentLocalDateText, 17, 2));
                                 yield;                        
                             }
@@ -118,12 +117,10 @@ class Clock extends \ManiaLive\Gui\Window {
                 } 
                 --></script>');
         $this->addComponent($this->xml);
-        parent::onDraw();
     }
 
     function destroy() {
         $this->clearComponents();
-
         parent::destroy();
     }
 

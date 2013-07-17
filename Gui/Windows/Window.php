@@ -251,7 +251,7 @@ class Window extends \ManiaLive\Gui\Window {
                                                        }
                                                 
                                       }              
-                               if (MouseLeftButton == True || MouseMiddleButton == True) {
+                               if (MouseLeftButton == True) {
                                      
                        
                                         foreach (Event in PendingEvents) {

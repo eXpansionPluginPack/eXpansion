@@ -22,7 +22,10 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
         $this->enableDedicatedEvents();
-       
+
+        $this->registerChatCommand("hud", "showHudOptions", 0, true);
+        $this->registerChatCommand("hud", "hudCommands", 1, true);
+
 
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
@@ -61,12 +64,47 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         
     }
 
-    function memory() {
-        $mem = "Memory Usage: " . round(memory_get_usage() / 1024) . "Mb";
+    function showHudOptions($login) {
+        
+    }
+
+    function hudCommands($login, $param) {
+        switch ($param) {
+            case "reset":
+                $this->resetHud($login);
+                break;
+            case "move":
+                $this->enableHudMove($login);
+                break;
+            case "freeze":
+                $this->disableHudMove($login);
+                break;
+        }
+    }
+
+    function enableHudMove($login) {
+        $window = Windows\HudMove::Create($login, false);
+        $window->enable();
+        $window->show();
+    }
+
+    function disableHudMove($login) {
+        $window = Windows\HudMove::Create($login, false);
+        $window->disable();
+        $window->show();
+    }
+
+    function resetHud($login) {
+        $window = Windows\ResetHud::Create($login, false);
+        $window->show();
+        $this->exp_chatSendServerMessage(exp_getMessage("Hud Positions reseted. Please reconnect to server."), $login);
+    }
+
+    function logMemory() {
+        $mem = "Memory Usage: " . round(memory_get_usage() / 1024) . "Kb";
         \ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
         print "\n" . $mem . "\n";
     }
 
 }
-
 ?>

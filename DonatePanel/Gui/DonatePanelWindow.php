@@ -18,8 +18,6 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
         $bg = new \ManiaLib\Gui\Elements\Quad(77, 5);
         $bg->setAlign("left", "center");
         $bg->setPosition(-13, 1.5);
-        $bg->setId("enableMove");
-        $bg->setScriptEvents();
         $bg->setStyle("Bgs1InRace");
         $bg->setSubStyle("BgList");
         $this->addComponent($bg);
@@ -48,6 +46,18 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
             $this->items[$x]->setAction($this->createAction(array($this, "Donate"), $text));
             $this->container->addComponent($this->items[$x]);
         }
+
+        $move = new \ManiaLib\Gui\Elements\Quad(79, 6);
+        $move->setAlign("left", "center");
+        $move->setStyle("Bgs1InRace");
+        $move->setPosition(-14, 2);
+        $move->setSubStyle("BgEmpty");
+        $move->setModulateColor("f00");
+        $move->setScriptEvents();
+        $move->setId("enableMove");
+        $this->addComponent($move);
+
+
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
@@ -59,68 +69,76 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
         $this->removeComponent($this->xml);
         $this->xml->setContent('    
         <script><!--
+               
                        main () {     
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");                 
                         declare MoveWindow = False;                       
-                   
+                        declare CMlLabel lbl_clock <=> (Page.GetFirstChild("clock") as CMlLabel);
+                        declare CMlLabel lbl_date <=> (Page.GetFirstChild("date") as CMlLabel);                        
+                        declare CMlQuad  quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);      
                         declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
                         declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
                         declare Real lastMouseX = 0.0;
                         declare Real lastMouseY =0.0;                           
                         declare Text id = "DonatePanel";      
                         
+                        declare persistent Boolean exp_enableHudMove = False;
                         declare persistent Vec3[Text] windowLastPos;
                         declare persistent Vec3[Text] windowLastPosRel;
                         
                         
                          if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <44.0, -88.0, 0.0>;
-                                }
+                                windowLastPos[id] = <-159.0, 89.0, 0.0>;
+                               }
                          if (!windowLastPosRel.existskey(id)) {
-                                windowLastPosRel[id] = <44.0, -88.0, 0.0>;
-                                }
+                                windowLastPosRel[id] = <-159.0, 89.0, 0.0>;
+                              }
                         Window.PosnX = windowLastPos[id][0];
                         Window.PosnY = windowLastPos[id][1];
                         LastDelta = windowLastPosRel[id];
                         Window.RelativePosition = windowLastPosRel[id];                                                
                         
-                        while(True) {                                                               
-                       
+                        while(True) {                                             
+                        if (exp_enableHudMove == True) {
+                                quad.Show();
+                                quad.Substyle="NavButtonBlink";     
+                            
+                            }
+                        else {
+                            quad.Hide();
+                            quad.Substyle="BgEmpty";
+                            
+                        }
+                          if (exp_enableHudMove == True && MouseLeftButton == True) {
+                                     
+                                              foreach (Event in PendingEvents) {
+
+                                                    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "enableMove")  {
+                                                        lastMouseX = MouseX;
+                                                        lastMouseY = MouseY;                                                            
+                                                        MoveWindow = True;                                                           
+                                                        }                                                                                                  
+                                                }
+                                        }
+                                        else {
+                                            MoveWindow = False;                                                                          
+                                        }
+                                        
                                 if (MoveWindow) {                                                                                                    
                                     DeltaPos.X = MouseX - lastMouseX;
                                     DeltaPos.Y = MouseY - lastMouseY;
-                                   
+                                                                      
                                     LastDelta += DeltaPos;
                                     LastDelta.Z = 3.0;
-                                    Window.RelativePosition = LastDelta;                                
+                                    Window.RelativePosition = LastDelta;
                                     windowLastPos[id] = Window.AbsolutePosition;
                                     windowLastPosRel[id] = Window.RelativePosition;
                                     
                                     lastMouseX = MouseX;
                                     lastMouseY = MouseY;                            
                                     }
-                                    
-                                    if (MouseMiddleButton == True) {
-                                
-                                    foreach (Event in PendingEvents) {
-                                 
-                                        
-                                     
-                                              foreach (Event in PendingEvents) {
-                                                      if (Event.ControlId == "enableMove") {                                                         
-                                                            lastMouseX = MouseX;
-                                                            lastMouseY = MouseY;   
-                                                            MoveWindow = True;                                                           
-                                                        }                                                                                                  
-                                                }
-                                        }
-                                    
-                                    }
-                                        else {
-                                            MoveWindow = False;                                                                          
-                                        }
-                                yield;                        
-                            }
+                                    yield;
+                           }
                   
                   
                 } 

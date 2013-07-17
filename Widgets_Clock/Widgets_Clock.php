@@ -9,30 +9,36 @@ class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function exp_onReady() {
-        $this->displayWidget();
+        foreach ($this->storage->players as $login => $player)
+            $this->displayWidget($login);
+        foreach ($this->storage->spectators as $login => $player)
+            $this->displayWidget($login);
     }
 
     /**
      * displayWidget(string $login)
      * @param string $login
      */
-    function displayWidget($login = null) {
+    function displayWidget($login) {       
         $info = Gui\Widgets\Clock::Create($login);
-        $info->setSize(40, 60);
-        $info->setPosition(-159, 89);
+        $info->setSize(60, 12);
         $info->show();
     }
 
-    public function onPlayerConnect($login, $isSpectator) {
+    public function onPlayerConnect($login, $isSpectator) {        
         $this->displayWidget($login);
     }
 
+    public function onPlayerDisconnect($login, $disconnectionReason = null) {
+        Gui\Widgets\Clock::Erase($login);
+    }
+
     public function onBeginMatch() {
-        $this->displayWidget();
+        
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
-        Gui\Widgets\Clock::EraseAll();
+        
     }
 
 }
