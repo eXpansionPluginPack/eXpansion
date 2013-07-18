@@ -52,8 +52,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         try {
             foreach ($players as $player) {
                 $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $login, $this->sizeX);
-                $this->pager->addItem($this->items[$x]);
-                echo $player->login . ":" . $player->points;
+                $this->pager->addItem($this->items[$x]);                
             }
         } catch (\Exception $e) {
             echo $e->getFile() . ":" . $e->getLine();

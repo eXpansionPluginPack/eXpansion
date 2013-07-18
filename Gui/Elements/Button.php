@@ -42,8 +42,8 @@ class Button extends \ManiaLive\Gui\Control {
         $this->label->setStyle("TextChallengeNameMedium");
         $this->label->setTextSize(3);
         //$this->label->setScriptEvents(true);
-        $this->label->setFocusAreaColor1("0000");
-        $this->label->setFocusAreaColor2("fff3");
+        $this->label->setFocusAreaColor1("ddda");
+        $this->label->setFocusAreaColor2("fffa");
 
         $this->sizeX = $sizeX + 2;
         $this->sizeY = $sizeY + 2;
@@ -63,7 +63,7 @@ class Button extends \ManiaLive\Gui\Control {
         if ($this->isActive)
             $this->addComponent($this->activeFrame);
 
-        $this->addComponent($this->quad);
+        //$this->addComponent($this->quad);
 
         $this->label->setText($this->text);
         $this->addComponent($this->label);
@@ -87,17 +87,21 @@ class Button extends \ManiaLive\Gui\Control {
 
     /**
      * Colorize the button background     
-     * @param string $value 3-digit RGBa code
+     * @param string $value 4-digit RGBa code
      */
     function colorize($value) {
+     /** @todo enable this when new manialive version is out && problem with maniascript elements are sorted out!  */
+    
+        /*
         $outval = $value;
-
         if (strlen($value) == 4) {
             $val = substr($value, 3, 1);            
             $this->quad->setOpacity(floatval(intval($val, 16)/16));
             $outval = substr($value, 0, 3);
         }
-        $this->quad->setModulateColor($outval);
+        $this->quad->setModulateColor($outval); */
+        
+        $this->label->setFocusAreaColor1($value);
     }
 
     /**

@@ -11,6 +11,7 @@ class HudPanel extends \ManiaLive\Gui\Window {
         
     private $actionEnableMove;
     private $actionDisableMove;
+    private $actionReset;
     public static $mainPlugin;
     
 
@@ -19,6 +20,8 @@ class HudPanel extends \ManiaLive\Gui\Window {
         
         $this->actionEnableMove = $this->createAction(array(self::$mainPlugin, 'enableHudMove') );
         $this->actionDisableMove = $this->createAction(array(self::$mainPlugin, 'disableHudMove') );
+        $this->actionReset = $this->createAction(array(self::$mainPlugin, 'resetHud') );
+        
         $this->setScriptEvents(true);
         $this->setAlign("left", "top");
 
@@ -39,7 +42,7 @@ class HudPanel extends \ManiaLive\Gui\Window {
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
         
         $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(22,5);
-        $btn->setAction($this->actionEnableMove);
+        $btn->setAction($this->actionReset);
         $btn->setText("Reset HUD");
         $btn->colorize("a00");
         $btn->setTextColor("ff0");

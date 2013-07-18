@@ -24,7 +24,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
     private $rate;
 
     function __construct($indexNumber, $login, \DedicatedApi\Structures\Map $map, $controller, $isAdmin, $localrec, $rating, $sizeX) {
-        $sizeY = 4;
+        $sizeY = 5;
 
         $this->isAdmin = $isAdmin;
         $this->queueMap = $this->createAction(array($controller, 'queueMap'), $map);

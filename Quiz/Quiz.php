@@ -31,6 +31,8 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_points = "";
     private $msg_answerMissing = "";
     private $msg_questionMissing = "";
+    private $msg_pointAdd = "";
+    private $msg_pointRemove = "";
 
     /**
      * onInit()
@@ -102,11 +104,13 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_format = exp_getMessage("#error#Question needs to be at the right format!");
         $this->msg_reset = exp_getMessage("#quiz#Quiz has been reset!");
         $this->msg_correct = exp_getMessage("Correct from");
-        $this->msg_rightAnswer = exp_getMessage('#quiz#Right answers: #variable#%s');
+        $this->msg_rightAnswer = exp_getMessage('#quiz#Right answers: $o#question#%s');
         $this->msg_answerMissing = exp_getMessage("#error#Aswer is missing from the question!");
         $this->msg_questionMissing = exp_getMessage("#error#Question is missing from the question!");
         $this->msg_cancelQuestion = exp_getMessage('%s #quiz#cancels the question.');
         $this->msg_points = exp_getMessage("#quiz#Current point holders:");
+        $this->msg_pointAdd = exp_getMessage('#quiz#$oPoint added for #variable#%s');
+        $this->msg_pointRemove = exp_getMessage('#quiz#$oPoint removed from #variable#%s');
     }
 
     function exp_onReady() {
@@ -248,7 +252,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->currentQuestion === null)
             return;
 
-        if ($this->currentQuestion->asker->login == $login || $this->mlepp->AdminGroup->hasPermission($login, 'quiz_admin')) {
+        if ($this->currentQuestion->asker->login == $login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'quiz_admin')) {
             $this->exp_chatSendServerMessage($this->msg_cancelQuestion, null, array($this->storage->getPlayerObject($login)->nickName));
             $this->currentQuestion = null;
             $this->chooseNextQuestion();
@@ -300,8 +304,11 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function addPoint($login, $target) {
+    function addPoint($login = null, $target) {
         if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "quiz_admin")) {
+            if ($login !== null) {
+                $this->exp_chatSendServerMessage($this->msg_pointAdd, null, array($this->storage->getPlayerObject($target)->nickName));
+            }
             if (!isset($this->players[$target])) {
                 $this->players[$target] = new Structures\QuizPlayer($target, $this->storage->getPlayerObject($target)->nickName, 1);
                 $this->showPoints();
@@ -319,7 +326,11 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function removePoint($login, $target) {
+
         if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "quiz_admin")) {
+            if ($login !== null) {
+                $this->exp_chatSendServerMessage($this->msg_pointRemove, null, array($this->storage->getPlayerObject($target)->nickName));
+            }
             if (isset($this->players[$target])) {
                 $this->players[$target]->points--;
                 $count = $this->db->query("SELECT * FROM `quiz_points` where login = " . $this->db->quote($target) . " LIMIT 1;")->recordCount();
@@ -398,7 +409,8 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_chatSendServerMessage($this->msg_points);
         $output = "";
         foreach ($this->players as $player) {
-            $output .= $player->nickName . '$z$s$fff ' . $player->points . ", ";
+            if ($player->points > 0)
+                $output .= '$z$s$o$ff0'. $player->points . ' $z$s$fff'. $player->nickName . '   $z$s$fff|   ';
         }
 
         $this->connection->chatSendServerMessage(substr($output, 0, (strlen($output) - 2)));

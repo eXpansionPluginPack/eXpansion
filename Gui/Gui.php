@@ -105,7 +105,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function resetHud($login) {
         $window = Windows\ResetHud::Create($login, false);
         $window->show();
-        $this->exp_chatSendServerMessage(exp_getMessage("Hud Positions reseted. Please reconnect to server."), $login);
+        $this->exp_chatSendServerMessage(exp_getMessage("Hud positions reset! Please reconnect to server :)"), $login);
     }
 
     function logMemory() {
