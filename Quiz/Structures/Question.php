@@ -96,7 +96,7 @@ class Question {
             if ($answer->used)
                 continue;
 
-            if (strtolower($answer->answer) === strtolower($message)) {
+            if (mb_strtolower($answer->answer, 'UTF-8') === mb_strtolower($message, 'UTF-8')) {
                 $answer->used = true;
                 if ($this->multipart) {
                     return self::MoreAnswersNeeded;
