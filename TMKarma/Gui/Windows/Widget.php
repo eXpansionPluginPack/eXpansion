@@ -81,7 +81,6 @@ class Widget extends \ManiaLive\Gui\Window {
         $move->setAlign("center", "center");
         $move->setStyle("Bgs1InRace");
         $move->setSubStyle("BgEmpty");
-        $move->setModulateColor("f00");
         $move->setScriptEvents();
         $move->setId("enableMove");
         $move->setPosition(0,4);

@@ -52,7 +52,6 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
         $move->setStyle("Bgs1InRace");
         $move->setPosition(-14, 2);
         $move->setSubStyle("BgEmpty");
-        $move->setModulateColor("f00");
         $move->setScriptEvents();
         $move->setId("enableMove");
         $this->addComponent($move);

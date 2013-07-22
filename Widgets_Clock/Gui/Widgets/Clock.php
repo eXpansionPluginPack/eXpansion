@@ -32,7 +32,6 @@ class Clock extends \ManiaLive\Gui\Window {
         $move = new \ManiaLib\Gui\Elements\Quad(60, 12);
         $move->setStyle("Bgs1InRace");
         $move->setSubStyle("BgEmpty"); 
-        $move->setModulateColor("f00");
         $move->setScriptEvents();
         $move->setId("enableMove");
         $this->addComponent($move);
