@@ -1,0 +1,11 @@
+﻿Admin: Frequently Asked Questions
+!toc|Back to index
+
+#Administartors help
+	$oServer Management
+	!admin_matchsettings|What is MatchSettings used for ?
+	
+	$oMaps
+	!admin_maps|How to add and remove maps in a server ?
+	!admin_mx|How to add a map from Mania-Exchange.com ?
+	
