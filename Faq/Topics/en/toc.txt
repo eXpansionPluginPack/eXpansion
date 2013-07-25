@@ -1,0 +1,8 @@
+﻿Frequently Asked Questions
+
+#Table of contents
+	!dedimania|Dedimania, what it that ?
+	!tmkarma|TM-Karma, what is it ?
+	!maniaexchange|Mania-exchange, what is it ?
+	!t_nickname|How do i customize my nickname colors ?
+	

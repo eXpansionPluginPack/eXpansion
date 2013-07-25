@@ -1,0 +1,5 @@
+Faq: How do i customize my nickname colors ?
+!t_nickname|Back
+
+#Examples of nickname colorcodes
+

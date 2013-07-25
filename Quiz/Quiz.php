@@ -2,10 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Quiz;
 
-use ManiaLive\Features\Admin\AdminGroup;
-use ManiaLive\Features\ChatCommand\Command;
-use ManiaLive\Utilities\Console;
-use ManiaLive\Config\Loader;
 use ManiaLive\Event\Dispatcher;
 
 class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
@@ -82,22 +78,36 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $color->registerCode("question", '$z$s$o$fa0');
 
 
-        $command = $this->registerChatCommand("q", "chatquiz", -1, true);
-        $command->help = '/q ask; Ask a question, /q points; show points, /q addpoint; Add Point to player, /q cancel; Cancel question, /q show; Show Answer';
+        //  $command = $this->registerChatCommand("q", "chatquiz", -1, true);
+        //  $command->help = '/q ask; Ask a question, /q points; show points, /q addpoint; Add Point to player, /q cancel; Cancel question, /q show; Show Answer';
+        $command = $this->registerChatCommand("ask", "ask", -1, true);
+        $command->help = '/ask Ask a question';
         $command = $this->registerChatCommand("kysy", "ask", -1, true);
-        $command->help = '/kysy Ask a Question';
+        $command->help = '/kysy Ask a question';
+        $command = $this->registerChatCommand("points", "showPointsWindow", 0, true);
+        $command->help = '/points Show points window';
         $command = $this->registerChatCommand("pisteet", "showPointsWindow", 0, true);
-        $command->help = '/pisteet Show Points Window';
+        $command->help = '/pisteet Show points window';
+        $command = $this->registerChatCommand("point", "addPointsWindow", 0, true);
+        $command->help = '/piste add a point for any player on server';
         $command = $this->registerChatCommand("piste", "addPointsWindow", 0, true);
-        $command->help = '/piste Add Points to Player Window';
+        $command->help = '/piste add a point for any player on server';
+        $command = $this->registerChatCommand("cancel", "cancel", 0, true);
+        $command->help = '/cancel Cancels a question';
         $command = $this->registerChatCommand("peruuta", "cancel", 0, true);
-        $command->help = '/peruuta Cancel Question';
+        $command->help = '/peruuta Cancels a question';
+        $command = $this->registerChatCommand("answer", "showAnswer", 0, true);
+        $command->help = '/answer Show the current right answers for a question';
         $command = $this->registerChatCommand("vastaus", "showAnswer", 0, true);
-        $command->help = '/vastaus Show Current Answer for Question';
+        $command->help = '/vastaus Show the current right answers for a question';
+        $command = $this->registerChatCommand("question", "showQuestion", 0, true);
+        $command->help = '/question Shows the current question again';
         $command = $this->registerChatCommand("kysymys", "showQuestion", 0, true);
-        $command->help = '/kysymys Shows a Question';
+        $command->help = '/question Shows the current question again';
+        $command = $this->registerChatCommand("reset", "reset", 0, true);
+        $command->help = '/reset resets the quiz points';
         $command = $this->registerChatCommand("nollaa", "reset", 0, true);
-        $command->help = '/nollaa resets the quiz';
+        $command->help = '/nollaa resets the quiz points';
 
         $this->msg_questionPre = exp_getMessage("#quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2");
         $this->msg_question = exp_getMessage("#question#%s ?");
@@ -158,7 +168,6 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $action = array_shift($args);
         $message = implode(" ", $args);
 
-        $player = $this->storage->getPlayerObject($login);
         switch ($action) {
             case 'ask':
                 $this->ask($login, $message);
@@ -201,8 +210,6 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $dbanswer .= $answer->answer . ", ";
             $dbanswer = trim($dbanswer, ", ");
             $this->db->query("INSERT INTO `quiz_questions` (question, answers, asker) VALUES (" . $this->db->quote($question->question) . ", " . $this->db->quote($dbanswer) . ", " . $this->db->quote($question->asker->login) . ");");
-
-            $this->db->query($query);
         } catch (\Exception $e) {
             // silent exception
         }
@@ -410,7 +417,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $output = "";
         foreach ($this->players as $player) {
             if ($player->points > 0)
-                $output .= '$z$s$o$ff0'. $player->points . ' $z$s$fff'. $player->nickName . '   $z$s$fff|   ';
+                $output .= '$z$s$o$ff0' . $player->points . ' $z$s$fff' . $player->nickName . '   $z$s$fff|   ';
         }
 
         $this->connection->chatSendServerMessage(substr($output, 0, (strlen($output) - 2)));

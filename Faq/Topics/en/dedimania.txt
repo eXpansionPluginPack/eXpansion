@@ -1,0 +1,6 @@
+﻿Faq: Dedimania
+!toc|Back to index
+
+#What is Dedimania ?
+
+Dedimania is a global database for map record times.
