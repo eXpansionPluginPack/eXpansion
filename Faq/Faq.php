@@ -10,7 +10,6 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand("faq", "showFaq", 0, true);
         Gui\Windows\FaqWindow::$mainPlugin = $this;
         
-        $this->showFaq("reaby");
     }
 
     public function showFaq($login, $topic = "toc") {
