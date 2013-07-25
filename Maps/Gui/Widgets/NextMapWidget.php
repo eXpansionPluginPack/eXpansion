@@ -62,7 +62,6 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
         $move->setAlign("right", "top");
         $move->setStyle("Bgs1InRace");
         $move->setSubStyle("BgEmpty");
-        $move->setModulateColor("f00");
         $move->setScriptEvents();
         $move->setId("enableMove");
         $this->addComponent($move);
