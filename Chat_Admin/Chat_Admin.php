@@ -237,10 +237,10 @@ Other server might use the same blacklist file!!');
                 ->addLineHelpMore('$w\admin set server mapdownload false$z will not allow players to download the maps of this server.')
                 ->addchecker(1, \ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean::getInstance());
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "setMapDownload");
+        AdminGroups::addAlias($cmd, "setmapdownload");
 
         $cmd = AdminGroups::addAdminCommand('stop dedicated', $this, 'stopDedicated', 'server_stopServer');
-        $cmd->setHelp("Stops this server. Manialive will crush after this");
+        $cmd->setHelp("Stops this server. Manialive will stop after this.");
         AdminGroups::addAlias($cmd, 'stop ml');
 
         $cmd = AdminGroups::addAdminCommand('stop manialive', $this, 'stopManiaLive', 'server_stopManialive');

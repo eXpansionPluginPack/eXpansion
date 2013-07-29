@@ -60,8 +60,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->RedrawAll();
     }
 
-    function queueMap($login, \DedicatedApi\Structures\Map $map, $isTemp = false) {
-        self::$mapsPlugin->queueMap($login, $map, $isTemp);
+    function queueMap($login, \DedicatedApi\Structures\Map $map) {
+        self::$mapsPlugin->queueMap($login, $map, false);
     }
 
     function showRec($login, \DedicatedApi\Structures\Map $map) {

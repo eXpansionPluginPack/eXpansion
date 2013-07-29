@@ -53,6 +53,12 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "remove");
 
+        $cmd = AdminGroups::addAdminCommand('map erase', $this, 'chat_eraseMap', 'map_remove');
+        $cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
+        $cmd->setMinParam(0);
+        AdminGroups::addAlias($cmd, "nuke this");
+        AdminGroups::addAlias($cmd, "trash this");
+
         $cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', 'map_res');
         $cmd->setHelp(exp_getMessage('Sets current challenge to replay at end of match'));
         $cmd->setMinParam(0);
@@ -208,7 +214,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->atPodium = false;
 
         if (count($this->queue) > 0) {
-            $queue = reset($this->queue);
+            reset($this->queue);
+            $queue = current($this->queue);
             if ($queue->map->uId == $this->storage->currentMap->uId) {
                 if ($queue->isTemp) {
                     try {
@@ -229,7 +236,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         if (count($this->queue) > 0) {
-            $queue = reset($this->queue);
+            reset($this->queue);
+            $queue = current($this->queue);
             $this->nextMap = $queue->map;
         } else {
             $this->nextMap = $this->storage->nextMap;
@@ -250,7 +258,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->atPodium = true;
 
         if (count($this->queue) > 0) {
-            $queue = reset($this->queue);
+            reset($this->queue);
+            $queue = current($this->queue);
 //if ($queue->map != $this->storage->nextMap) {
             try {
                 $this->connection->chooseNextMap($queue->map->fileName);
@@ -453,10 +462,28 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
+    public function eraseMap($login, \DedicatedApi\Structures\Map $map) {
+        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_remove')) {
+            $msg = exp_getMessage('#admin_error# $iYou are not allowed to do that!');
+            $this->exp_chatSendServerMessage($msg, $login);
+            return;
+        }
 
+        try {
+            $player = $this->storage->getPlayerObject($login);
+            $msg = exp_getMessage('#admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!');
+            $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), null, \ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author));
+            $this->connection->removeMap($map->fileName);
+            unlink($this->connection->getMapsDirectory() . "/" . $map->fileName);
+        } catch (\Exception $e) {
+            $this->exp_chatSendServerMessage(__("Error: %s", $login, $e->getMessage()));
+        }
+    }
+
+    public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
         if (count($this->queue) > 0) {
-            $queue = reset($this->queue);
+            reset($this->queue);
+            $queue = current($this->queue);
             $this->nextMap = $queue->map;
         } else {
             $this->nextMap = $this->storage->nextMap;
@@ -524,10 +551,19 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    function chat_eraseMap($login, $params) {
+        try {
+            $this->eraseMap($login, $this->storage->currentMap);
+        } catch (\Exception $e) {
+            $this->exp_chatSendServerMessage(__("Error: %s", $login, $e->getMessage()));
+        }
+    }
+
     function chat_nextMap($login = null) {
         if ($login != null) {
             if (count($this->queue) > 0) {
-                $queue = reset($this->queue);
+                reset($this->queue);
+                $queue = current($this->queue);
                 $this->exp_chatSendServerMessage($this->msg_nextQueue, $login, array(\ManiaLib\Utils\Formatting::stripCodes($queue->map->name, 'wosnm'), $queue->map->author, \ManiaLib\Utils\Formatting::stripCodes($queue->player->nickName, 'wosnm'), $queue->player->login));
             } else {
                 $this->exp_chatSendServerMessage($this->msg_nextMap, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->nextMap->name, 'wosnm'), $this->storage->nextMap->author));
@@ -552,7 +588,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $i++;
         }
         if (count($this->queue) > 0) {
-            $queue = reset($this->queue);
+            reset($this->queue);
+            $queue = current($this->queue);
             $this->nextMap = $queue->map;
         } else {
             $this->nextMap = $this->storage->nextMap;
@@ -582,7 +619,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             return;
         }
         if (count($this->queue) > 0) {
-            $queue = reset($this->queue);
+            reset($this->queue);
+            $queue = current($this->queue);
             $this->nextMap = $queue->map;
         } else {
             $this->nextMap = $this->storage->nextMap;
@@ -618,7 +656,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $player = $this->storage->getPlayerObject($login);
 
         if (count($this->queue) > 0) {
-            $queue = reset($this->queue);
+            reset($this->queue);
+            $queue = current($this->queue);
             if ($queue->map->uId == $this->storage->currentMap->uId) {
                 $msg = exp_getMessage('#admin_error# $iChallenge already set to be replayed!');
                 $this->exp_chatSendServerMessage($msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));

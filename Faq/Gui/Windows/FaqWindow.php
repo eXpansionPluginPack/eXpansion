@@ -19,7 +19,7 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onConstruct();
         $this->setTitle("Frequently asked questions");
         $this->frame = new \ManiaLive\Gui\Controls\Frame(6, -4);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow(190,90));
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow(190, 90));
         $this->addComponent($this->frame);
     }
 
@@ -73,6 +73,8 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
             $matches = array();
             preg_match('/\!(.*)\|(.*)/', trim($line), $matches);
+            //preg_match('/\!.*\|(.*)\|(.*)/', trim($line), $matches);
+
             if (sizeof($matches) == 3) {
                 $this->elements[$x]->setText(trim($matches[2]));
                 $this->elements[$x]->setTopicLink($matches[1]);

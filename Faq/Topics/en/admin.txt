@@ -4,8 +4,10 @@
 #Administartors help
 	$oServer Management
 	!admin_matchsettings|What is MatchSettings used for ?
+	!admin_chat|Chat commands for admins ?
 	
 	$oMaps
 	!admin_maps|How to add and remove maps in a server ?
 	!admin_mx|How to add a map from Mania-Exchange.com ?
+	
 	

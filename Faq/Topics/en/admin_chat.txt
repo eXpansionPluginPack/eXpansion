@@ -1,0 +1,14 @@
+﻿Admin: Chat commands ?
+!admin|Back to admin
+
+#Admin: Chat commands for admins ?
+
+Migration to eXpansion is made easy, since you can use both: Xaseco and Fast admin commands!
+
+Admin commands are:
+!admin_adm|$o/adm$o or $o/admin$o Global admin commands
+!admin_ta|$o/ta$o commands for TimeAttack-game mode.
+!admin_rounds|$o/ta$o commands for Rounds-game mode.
+!admin_cup|$o/ta$o commands for Rounds-game mode.
+!admin_team|$o/ta$o commands for Rounds-game mode.
+!admin_laps|$o/ta$o commands for Rounds-game mode.
