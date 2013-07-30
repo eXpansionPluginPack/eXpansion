@@ -212,6 +212,8 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function mxVote($login, $mxId) {
+        if (!$this->config->mxVote_enable) return;
+        
         if (!is_numeric($mxId)) {
             $this->connection->chatSendServerMessage(__('"%s" is not a numeric value.', $login, $mxId), $login);
             return;
@@ -275,7 +277,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $vote = new \DedicatedApi\Structures\Vote();
             $vote->callerLogin = $login;
             $vote->cmdName = '$0f0add $fff$o' . $map['Name'] . '$o$0f0 by $eee' . $map['Username'] . ' $0f0';
-            $vote->cmdParam = array("to the queue from MX?$3f3");
+            $vote->cmdParam = array('to the queue from MX?$3f3');
             $this->connection->callVote($vote, $this->config->mxVote_ratio, ($this->config->mxVote_timeout * 1000), $this->config->mxVote_voters);
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
@@ -349,7 +351,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {
         switch ($cmdParam) {
-            case "to the queue from MX?$3f3":
+            case 'to the queue from MX?$3f3':
                 switch ($stateName) {
                     case "VotePassed":
                         $msg = exp_getMessage('#record# $iVote passed!');

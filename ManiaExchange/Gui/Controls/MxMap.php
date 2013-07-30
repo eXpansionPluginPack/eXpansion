@@ -88,13 +88,14 @@ class MxMap extends \ManiaLive\Gui\Control {
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
 
         $this->frame->addComponent($spacer);
-
-        $this->queueButton = new MyButton(24, 5);
-        $this->queueButton->setScale(0.5);
-        $this->queueButton->setText(__("Queue"));
-        $this->queueButton->setAction($this->queueAction);
-        $this->frame->addComponent($this->queueButton);
-
+        $config = \ManiaLivePlugins\eXpansion\ManiaExchange\Config::getInstance();
+        if ($config->mxVote_enable) {
+            $this->queueButton = new MyButton(24, 5);
+            $this->queueButton->setScale(0.5);
+            $this->queueButton->setText(__("Queue"));
+            $this->queueButton->setAction($this->queueAction);
+            $this->frame->addComponent($this->queueButton);
+        }
         if ($this->isAdmin) {
             $this->addButton = new MyButton(24, 5);
             $this->addButton->setScale(0.5);
@@ -117,11 +118,13 @@ class MxMap extends \ManiaLive\Gui\Control {
     }
 
     function onDraw() {
-
+        
     }
 
     function destroy() {
-        $this->queueButton->destroy();
+        if (is_object($this->queueButton)) {
+            $this->queueButton->destroy();
+        }
         if ($this->isAdmin) {
             $this->addButton->destroy();
         }
