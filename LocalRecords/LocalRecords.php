@@ -666,12 +666,14 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         //Getting current players records
         foreach ($this->storage->players as $login => $player) { // get players
-            $this->getFromDbPlayerRecord($login, $uid);
+            $record = $this->getFromDbPlayerRecord($login, $uid);
+            $this->currentChallengePlayerRecords[$record->login] = $record;
         }
 
         //Getting current spectators records
         foreach ($this->storage->spectators as $login => $player) { // get spectators
-            $this->getFromDbPlayerRecord($login, $uid);
+            $record = $this->getFromDbPlayerRecord($login, $uid);
+            $this->currentChallengePlayerRecords[$record->login] = $record;
         }
 
         //Dispatch event
@@ -719,7 +721,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         while ($data = $dbData->fetchStdObject()) {
 
             $record = new Record();
-            $this->currentChallengePlayerRecords[$data->record_playerlogin] = $record;
+            // $this->currentChallengePlayerRecords[$data->record_playerlogin] = $record;  // disabled by reaby, note: do never insert data from helper function back to main object.. causes unwanted behavior
 
             $record->place = $i;
             $record->login = $data->record_playerlogin;
@@ -802,7 +804,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         while ($data = $dbData->fetchStdObject()) {
 
             $record = new Record();
-            $this->currentChallengePlayerRecords[$data->record_playerlogin] = $record;
+            //$this->currentChallengePlayerRecords[$data->record_playerlogin] = $record; // disabled by reaby, note: do never insert data from helper function back to main object.. causes unwanted behavior
 
             $record->place = $i;
             $record->login = $data->record_playerlogin;
@@ -864,7 +866,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
             $record->uId = $this->storage->currentMap->uId;
 
-            $this->currentChallengePlayerRecords[$login] = $record;
+            // $this->currentChallengePlayerRecords[$login] = $record; // disabled by reaby, note: do never insert data from helper function back to main object.. causes unwanted behavior
+            return $record;
         } else {
             return false;
         }
