@@ -90,7 +90,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
             $this->showpanel = self::SHOW_LOCALRECORDS;
 
         if ($pmanager->isLoaded('Reaby\Dedimania'))
-            $this->showpanel = self::SHOW_DEDIMANIA;
+           // $this->showpanel = self::SHOW_DEDIMANIA;
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setAlign("left", "top");
