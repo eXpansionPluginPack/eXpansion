@@ -200,7 +200,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->resetRanks();
         }
 
-        $this->onBeginMap("", "", "");
+
+
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Records'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
@@ -224,8 +225,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
           $this->addRecord('test_970', 31100, 1, array());
           $this->addRecord('test_971', 31200, 1, array());
           $this->addRecord('test_974', 30200, 1, array()); */
+
         $this->getRanks();
-        $this->updateCurrentChallengeRecords();
+        $this->onBeginMap("", "", "");
     }
 
     public function showRecsMenuItem($login) {
@@ -662,6 +664,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //Fetch best records
         $this->currentChallengeRecords = $this->buildCurrentChallangeRecords(); // fetch
 
+        foreach ($this->currentChallengeRecords as $record)
+            $this->currentChallengePlayerRecords[$record->login] = $record;
+
         $uid = $this->storage->currentMap->uId;
 
         //Getting current players records
@@ -675,6 +680,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $record = $this->getFromDbPlayerRecord($login, $uid);
             $this->currentChallengePlayerRecords[$record->login] = $record;
         }
+
 
         //Dispatch event
         \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
