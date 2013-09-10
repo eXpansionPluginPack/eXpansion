@@ -29,7 +29,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     const SHOW_DEDIMANIA = 0x02;
     const SHOW_LOCALRECORDS = 0x04;
 
-    private $showpanel = self::SHOW_DEDIMANIA;
+    private $showpanel = self::SHOW_LOCALRECORDS;
     private $isMinimized = false;
     private $originalPosX;
 
@@ -89,7 +89,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
         if ($pmanager->isLoaded('eXpansion\LocalRecords'))
             $this->showpanel = self::SHOW_LOCALRECORDS;
 
-        if ($pmanager->isLoaded('Reaby\Dedimania2'))
+        if ($pmanager->isLoaded('Reaby\Dedimania'))
             $this->showpanel = self::SHOW_DEDIMANIA;
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
@@ -131,7 +131,8 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
         $index = 1;
 
         if ($this->showpanel == self::SHOW_DEDIMANIA) {
-            $this->btnDedi->setAction($this->actionLocal);
+            if (is_object($this->btnDedi))
+                $this->btnDedi->setAction($this->actionLocal);
 
             if (!is_array(self::$dedirecords))
                 return;
