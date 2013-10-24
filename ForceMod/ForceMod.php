@@ -15,6 +15,10 @@ class ForceMod extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $mods = array();
 
     public function exp_onInit() {
+        if (!file_exists("config/config-eXp-forcemods.ini")) {
+            $this->writeConfig();
+        }
+
         $this->mods = $this->getConfig();
         $this->setPublicMethod("showOptions");
     }
@@ -26,10 +30,8 @@ class ForceMod extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function showOptions($login) {
         
-        
     }
-    
-    
+
     private function forceMods() {
         try {
             Console::println("Enabling forced mods");
@@ -60,6 +62,8 @@ class ForceMod extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $values = \parse_ini_file("config/config-eXp-forcemods.ini", true);
             if (array_key_exists("mod", $values)) {
                 foreach ($values['mod'] as $entry) {
+                    if (empty($entry))
+                        continue;
                     $mod = new \DedicatedApi\Structures\Mod();
                     $mod->url = $entry;
                     $mod->env = $env;
@@ -75,14 +79,14 @@ class ForceMod extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     private function writeConfig() {
-        $buffer = "";
+        $buffer = ";mod[] = 'http://somewhere.com/directory/mod_name.zip' \r\n;\r\n";
         foreach ($this->mods as $mod) {
-            $buffer .="mod[]='" . $mod->url . "';";
+            $buffer .="mod[]='" . $mod->url . "'\n";
         }
         try {
             file_put_contents("config/config-eXp-forcemods.ini", $buffer);
         } catch (\Exception $e) {
-            Console::println("[eXp\ForceMod] error writing: config/config-eXp-forcemods.ini");
+            Console::println("[eXp\ForceMod] error writing: config/config-eXp-forcemods.ini -->" . $e->getMessage());
         }
     }
 
