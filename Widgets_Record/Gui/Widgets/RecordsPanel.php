@@ -86,12 +86,12 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
         $this->minButton->setAlign("left", "center");
         $this->_windowFrame->addComponent($this->minButton);
 
-        if ($pmanager->isLoaded('eXpansion\LocalRecords'))
+        if ($pmanager->isLoaded('eXpansion\LocalRecords')) {
             $this->showpanel = self::SHOW_LOCALRECORDS;
-
-        if ($pmanager->isLoaded('Reaby\Dedimania'))
-           // $this->showpanel = self::SHOW_DEDIMANIA;
-
+        }
+        if ($pmanager->isLoaded('Reaby\Dedimania')) {
+            // $this->showpanel = self::SHOW_DEDIMANIA;
+        }
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setAlign("left", "top");
         $this->frame->setPosition(3, -3);
