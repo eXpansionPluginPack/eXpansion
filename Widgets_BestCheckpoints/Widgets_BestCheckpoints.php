@@ -7,7 +7,7 @@ use \ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint;
 
 class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
-    private $bestCps = array();
+    private $bestCps ;
 
     function exp_onInit() {
         //Important for all eXpansion plugins.
@@ -23,15 +23,7 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
     }
 
     public function exp_onReady() {
-        for ($x = 0; $x < $this->storage->currentMap->nbCheckpoints; $x++) {
-            $this->bestCps[] = new Checkpoint($x, "", 0);
-        }
-        BestCpPanel::$bestTimes = $this->bestCps;
-
-        foreach ($this->storage->players as $player)
-            $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $player)
-            $this->onPlayerConnect($player->login, true);
+        $this->onBeginMatch();
     }
 
     /**
@@ -47,8 +39,8 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
     }
 
     public function onBeginMatch() {
+        $this->bestCps = new \SplFixedArray($this->storage->currentMap->nbCheckpoints);
         for ($x = 0; $x < $this->storage->currentMap->nbCheckpoints; $x++) {
-
             $this->bestCps[$x] = new Checkpoint($x, "", 0);
         }
         BestCpPanel::$bestTimes = $this->bestCps;
@@ -60,12 +52,16 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
     }
 
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
+        $checkpointIndex = $checkpointIndex % $this->storage->currentMap->nbCheckpoints;
+       
+        /*
+         * It only happens when multilap but fix on the top should fix this
         if (!isset($this->bestCps[$checkpointIndex]))
             $this->bestCps[$checkpointIndex] = new Checkpoint($checkpointIndex, $this->storage->getPlayerObject($login)->nickName, $timeOrScore);
+         */
 
         if ($this->bestCps[$checkpointIndex]->time > $timeOrScore || $this->bestCps[$checkpointIndex]->time == 0) {
             $this->bestCps[$checkpointIndex] = new Checkpoint($checkpointIndex, $this->storage->getPlayerObject($login)->nickName, $timeOrScore);
-            BestCpPanel::$bestTimes = $this->bestCps;
             BestCpPanel::RedrawAll();
         }
     }

@@ -204,6 +204,7 @@ class MxWidget extends \ManiaLive\Gui\Window {
         $json = json_decode($data);
         if ($json === false) {
             $this->connection->chatSendServerMessage(__('Map not found', $login), $login);
+            return 0;
         }
         
         return $json[0]->TrackID;
