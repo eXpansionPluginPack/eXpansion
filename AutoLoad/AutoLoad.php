@@ -16,7 +16,9 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                                     , 'eXpansion\CheckpointCount'
                                     , 'eXpansion\Database'
                                     , 'eXpansion\Emotes'
-                                   
+                                    
+                                    , 'eXpansion\Faq'
+                                    , 'eXpansion\JoinLeaveMessage'
                                     , 'eXpansion\LocalRecords'
                                     , 'eXpansion\ManiaExchange'
                                     , 'eXpansion\MapRatings'
@@ -24,9 +26,14 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                                     , 'eXpansion\Notifications'
                                     , 'eXpansion\PersonalMessages'
                                     , 'eXpansion\Players'
+                                    , 'eXpansion\TmKarma'
                                     , 'eXpansion\Votes'
+                                    , 'eXpansion\Widgets_Clock'
+                                    , 'eXpansion\Widgets_BestCheckpoints'
+                                    , 'eXpansion\Widgets_EndRankings'
                                     , 'eXpansion\Widgets_PersonalBest'
                                     , 'eXpansion\Widgets_Record'
+                                    , 'eXpansion\Widgets_Times'
                             );
     
     public function exp_onReady(){
