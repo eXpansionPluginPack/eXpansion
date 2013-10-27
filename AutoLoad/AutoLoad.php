@@ -17,6 +17,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                                     , 'eXpansion\Database'
                                     , 'eXpansion\Emotes'
                                     
+                                    , 'eXpansion\DonatePanel'
                                     , 'eXpansion\Faq'
                                     , 'eXpansion\JoinLeaveMessage'
                                     , 'eXpansion\LocalRecords'
@@ -36,7 +37,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                                     , 'eXpansion\Widgets_Times'
                             );
     
-    public function exp_onReady(){
+    public function exp_onLoad(){
         
         Console::println("[eXpansion Pack]AutoLoading eXpansion pack ... ");
         
