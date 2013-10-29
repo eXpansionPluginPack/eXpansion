@@ -16,10 +16,9 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function exp_onReady() {
+    function exp_onLoad() {
         $this->enableDedicatedEvents();
         EmotePanel::$emotePlugin = $this;
-
         $this->registerChatCommand("gg", "GG", 0, true);
         $this->registerChatCommand("bg", "BG", 0, true);
         $this->registerChatCommand("lol", "Lol", 0, true);

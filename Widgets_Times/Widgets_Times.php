@@ -26,7 +26,9 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->isPluginLoaded('Reaby\Dedimania')) {
             Dispatcher::register(\ManiaLivePlugins\Reaby\Dedimania\Events\Event::getClass(), $this);
         }
-        Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
+        if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
+            Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
+        }
     }
 
     function exp_onReady() {

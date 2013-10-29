@@ -32,7 +32,6 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * Values that are set for
      * each different vote step.
      */
-
     const VOTE_FANTASTIC = 3;
     const VOTE_BEAUTIFUL = 2;
     const VOTE_GOOD = 1;
@@ -41,10 +40,6 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     const VOTE_WASTE = -3;
 
     function exp_onInit() {
-        // set version for internal dependencies
-    }
-
-    function exp_onLoad() {
         $this->config = Config::getInstance();
 
         // by default we set the server login as authentication login
@@ -54,28 +49,34 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onReady() {
         // check whether the location has been set in the config
-        if (!empty($this->config->countryCode)) {
-            Service::forceCountryCode($this->config->countryCode);
-            $this->writeConsole('Your location has been taken from the config: ' . Service::getLocationInfo());
-        } else {
-            $this->writeConsole('Your location has been detected: ' . Service::getLocationInfo());
-        }
+        try {
+            if (!empty($this->config->countryCode)) {
+                Service::forceCountryCode($this->config->countryCode);
+                $this->writeConsole('Your location has been taken from the config: ' . Service::getLocationInfo());
+            } else {
+                $this->writeConsole('Your location has been detected: ' . Service::getLocationInfo());
+            }
 
-        // try to authenticate at tm-karma
-        if (Service::Authenticate($this->storage->server->name, self::$login, 'Maniaplanet')) {
-            // we are authenticated!
-            $this->writeConsole('Successfully authenticated at the tm-karma webservice!');
+            // try to authenticate at tm-karma
+            if (Service::Authenticate($this->storage->server->name, self::$login, 'Maniaplanet')) {
+                // we are authenticated!
+                $this->writeConsole('Successfully authenticated at the tm-karma webservice!');
 
-            // fake call the begin challenge
-            $this->onBeginMap(null, null, null);
 
-            // enable the dedicated server events
-            // if these are not enabled, you will not be notified
-            // of new players connecting etc.
-            $this->enableDedicatedEvents();
-        } else {
-            // if authentication fails, we print a little message
-            $this->writeConsole('ERROR: Could not authenticate at the tm-karma webservice!');
+                $this->enableDedicatedEvents();
+                // fake call the begin challenge
+                $this->onBeginMap(null, null, null);
+
+                // enable the dedicated server events
+                // if these are not enabled, you will not be notified
+                // of new players connecting etc.
+            } else {
+                // if authentication fails, we print a little message
+                $this->writeConsole('ERROR: Could not authenticate at the tm-karma webservice!');
+            }
+        } catch (\Exception $e) {
+            echo "TmKarma error: ". $e->getMessage() ."\n";
+            return;
         }
     }
 
@@ -182,12 +183,12 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /**
      * When this plugin is unloaded by ManiaLive.    
      */
-    function onUnload() {
+    function exp_onUnload() {
         // erase all widgets
         Widget::EraseAll();
 
         // and let ManiaLive do the rest
-        parent::onUnload();
+       
     }
 
 }

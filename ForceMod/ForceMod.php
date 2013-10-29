@@ -73,8 +73,9 @@ class ForceMod extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
             return $mods;
         } catch (\Exception $e) {
-            return array();
+
             Console::println("[eXp\ForceMod] error reading: config/config-eXp-forcemods.ini");
+            return array();
         }
     }
 
