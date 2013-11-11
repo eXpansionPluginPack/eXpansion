@@ -27,6 +27,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_nextMap;
     private $msg_queueNow;
     private $msg_jukehelp;
+    private $msg_errDwld;
 
     public function exp_onInit() {
 
@@ -62,6 +63,12 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', 'map_res');
         $cmd->setHelp(exp_getMessage('Sets current challenge to replay at end of match'));
         $cmd->setMinParam(0);
+        AdminGroups::addAlias($cmd, "replay");
+        
+        $cmd = AdminGroups::addAdminCommand('map add', $this, 'addMxMap', 'map_add');
+        $cmd->addAlias('add');
+        $cmd->setHelp(exp_getMessage('adds a map via MX'));
+        $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "replay");
 
         $this->registerChatCommand('list', "showMapList", 0, true);
@@ -103,6 +110,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_nextMap = exp_getMessage('#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#');  // '%1$s' = Map Name, '%2$s' = Map author
         $this->msg_queueNow = exp_getMessage('#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s');  // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
         $this->msg_jukehelp = exp_getMessage('/jb uses next params: drop, reset and show');
+        $this->msg_errDwld = exp_getMessage('#admin_error#Error downloading, or MX is down!');
+        $this->msg_errToLarge = exp_getMessage('#admin_error#The map is to large to be added to a server');
         $this->enableDedicatedEvents();
     }
 
@@ -538,7 +547,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function chat_removeMap($login, $params) {
-        if (is_numeric($params[0])) {
+        if (is_numeric($params[0])){
             if (is_object($this->storage->maps[$params[0]])) {
                 $this->removeMap($login, $this->storage->maps[$params[0]]);
             }
@@ -692,6 +701,52 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->show();
     }
 
+    public function addMxMap($login, $params){
+         if (!AdminGroups::hasPermission($login, "map_add")) {
+            $this->exp_chatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
+            return;
+        }
+        
+        foreach ($params as $param){
+            
+            if(is_numeric($param) && $param >= 0){
+                
+                $trkid = ltrim($param, '0');
+                $remotefile = 'http://tm.mania-exchange.com/tracks/download/' . $trkid;
+                $file = file_get_contents($remotefile);
+                
+                if ($file === false || $file == -1) {
+                    $this->exp_chatSendServerMessage($this->msg_errDwld, $login);
+                } else {
+                    if (strlen($file) >= 1024 * 1024) {
+                        $this->exp_chatSendServerMessage($this->msg_errToLarge, $login);
+                        return;
+                    }
+                    $game = $this->connection->getVersion();
+                    $path = $this->connection->getMapsDirectory() . "/Downloaded/" . $game->titleId . "/".$trkid.".Map.Gbx";
+                    
+                    if (!$lfile = @fopen($path, 'wb')) {
+                        $this->exp_chatSendServerMessage('#admin_error#Error creating file. Please contact admin.', $login);                    
+                    }
+                    if (!fwrite($lfile, $file)) {
+                        $this->exp_chatSendServerMessage('#admin_error#Error saving file - unable to write data. Please contact admin.', $login);  
+                        fclose($lfile);
+                        return;
+                    }
+                    fclose($lfile);
+                    
+                     try {
+                        $this->connection->addMap($path);
+                        $mapinfo = $this->connection->getMapInfo($path);
+                        $this->connection->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.', $login, $mapinfo->name));
+                    } catch (\Exception $e) {
+                        $this->connection->chatSendServerMessage(__('Error:', $e->getMessage()));
+                    }
+                }   
+            }
+        }
+    }
+   
 }
 
 ?>
