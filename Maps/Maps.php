@@ -28,6 +28,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_queueNow;
     private $msg_jukehelp;
     private $msg_errDwld;
+    private $msg_errMxId;
+    private $msg_mapAdd;
 
     public function exp_onInit() {
 
@@ -66,10 +68,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         AdminGroups::addAlias($cmd, "replay");
         
         $cmd = AdminGroups::addAdminCommand('map add', $this, 'addMxMap', 'map_add');
-        $cmd->addAlias('add');
         $cmd->setHelp(exp_getMessage('adds a map via MX'));
         $cmd->setMinParam(1);
-        AdminGroups::addAlias($cmd, "replay");
+        AdminGroups::addAlias($cmd, "add");
 
         $this->registerChatCommand('list', "showMapList", 0, true);
         $this->registerChatCommand('maps', "showMapList", 0, true);
@@ -112,6 +113,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_jukehelp = exp_getMessage('/jb uses next params: drop, reset and show');
         $this->msg_errDwld = exp_getMessage('#admin_error#Error downloading, or MX is down!');
         $this->msg_errToLarge = exp_getMessage('#admin_error#The map is to large to be added to a server');
+        $this->msg_errMxId = exp_getMessage("#admin_error#You must include a MX map ID!");
+        $this->msg_mapAdd = exp_getMessage('#admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s');
         $this->enableDedicatedEvents();
     }
 
@@ -738,11 +741,13 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                      try {
                         $this->connection->addMap($path);
                         $mapinfo = $this->connection->getMapInfo($path);
-                        $this->connection->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.', $login, $mapinfo->name));
+                        $this->exp_chatSendServerMessage($this->msg_mapAdd, null, array($mapinfo->name, $this->storage->getPlayerObject($login)->nickName));
                     } catch (\Exception $e) {
                         $this->connection->chatSendServerMessage(__('Error:', $e->getMessage()));
                     }
                 }   
+            }else{
+                $this->exp_chatSendServerMessage($this->msg_errMxId, $login);
             }
         }
     }
