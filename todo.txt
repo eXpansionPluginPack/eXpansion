@@ -3,14 +3,14 @@ Features to do
 * dynamic timelimit
   --> remember to divide authortime with lapcount!
 * do /list sortable by column
-* add map karma to /list
+
 
 * make sure AdminGroups::isInList() is never used--> replace with AdminGroups::hasPermission();
 
 
 Already implemented features
 =============================
-
+* add map karma to /list
 
 
 Relay server tools improvement ideas

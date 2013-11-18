@@ -98,11 +98,15 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->bg->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onDraw() {
+ // manialive 3.1 override to do nothing.
+    function destroy() {
         
     }
 
-    function destroy() {
+    /*
+     * custom function to remove contents.
+     */
+    function erase() {
         if (is_object($this->addpointButton))
             $this->addpointButton->destroy();
         if (is_object($this->removepointButton))

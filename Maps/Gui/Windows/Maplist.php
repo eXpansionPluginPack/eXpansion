@@ -98,7 +98,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected function onDraw() {
         $login = $this->getRecipient();
         foreach ($this->items as $item) {
-            $item->destroy();
+           $item->erase();
         }
 
         $this->pager->clearItems();
@@ -142,7 +142,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function destroy() {
         foreach ($this->items as $item) {
-            $item->destroy();
+           $item->erase();
         }
         $this->items = null;
         if (is_object($this->btnRemoveAll))

@@ -57,7 +57,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function onShow() {
         foreach ($this->items as $item) 
         {
-            $item->destroy();
+            $item->erase();
         }  
           
             
@@ -137,7 +137,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     
     public function destroy(){
         foreach ($this->items as $item) {
-            $item->destroy();            
+           $item->erase();            
         }        
         $this->items = null;
         $this->pager->destroy();

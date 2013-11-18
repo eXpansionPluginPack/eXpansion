@@ -68,11 +68,15 @@ class DbTable extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onDraw() {
+  // manialive 3.1 override to do nothing.
+    function destroy() {
         
     }
 
-    function destroy() {
+    /*
+     * custom function to remove contents.
+     */
+    function erase() {
 
         $this->checkBox->destroy();
 

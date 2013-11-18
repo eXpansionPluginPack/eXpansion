@@ -83,11 +83,15 @@ class Song extends \ManiaLive\Gui\Control {
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
 
-    function onDraw() {
+  // manialive 3.1 override to do nothing.
+    function destroy() {
         
     }
 
-    function destroy() {
+    /*
+     * custom function to remove contents.
+     */
+    function erase() {
         $this->queueButton->destroy();
         $this->clearComponents();
         parent::destroy();

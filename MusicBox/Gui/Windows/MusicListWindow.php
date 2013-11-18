@@ -35,7 +35,7 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onShow();
         $login = $this->getRecipient();
         foreach ($this->items as $item) {
-            $item->destroy();
+           $item->erase();
         }
 
         $this->pager->clearItems();
@@ -53,7 +53,7 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function destroy() {
         foreach ($this->items as $item) {
-            $item->destroy();
+           $item->erase();
         }
         $this->items = null;
 

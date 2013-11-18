@@ -71,6 +71,17 @@ class RecItem extends \ManiaLive\Gui\Control {
         $this->label_avgScore->setSizeX($scaledSizes[3]);
         $this->label_nbFinish->setSizeX($scaledSizes[4]);
     }
+    // manialive 3.1 override to do nothing.
+    function destroy() {
+        
+    }
+
+    /*
+     * custom function to remove contents.
+     */
+    function erase() {
+        parent::destroy();
+    }
 }
 
 ?>

@@ -50,7 +50,7 @@ class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onShow() {
         foreach ($this->items as $item) {
-            $item->destroy();
+           $item->erase();
         }
         $this->pager->clearItems();
         $this->items = array();
@@ -74,7 +74,7 @@ class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     
     public function destroy(){
         foreach ($this->items as $item) {
-            $item->destroy();            
+           $item->erase();            
         }        
         $this->items = null;
         $this->pager->destroy();

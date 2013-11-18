@@ -145,11 +145,16 @@ class Playeritem extends \ManiaLive\Gui\Control {
         }
     }
 
-    function onDraw() {
+// manialive 3.1 override to do nothing.
+    function destroy() {
         
     }
 
-    function destroy() {
+    /*
+     * custom function to remove contents.
+     */
+
+    function erase() {
         if (is_object($this->banButton))
             $this->banButton->destroy();
         if (is_object($this->forceButton))

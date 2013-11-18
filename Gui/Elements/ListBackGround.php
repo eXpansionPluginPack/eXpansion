@@ -31,8 +31,7 @@ class ListBackGround extends \ManiaLive\Gui\Control {
     }
     
     public function onResize($oldX, $oldY) {
-        $config = $this->config;
-        $this->bg->setSize($this->getSizeX()+$config->style_list_sizeXOffset, $this->getSizeY()+$config->style_list_sizeYOffset);
+        $this->bg->setSize($this->getSizeX()+(float)$this->config->style_list_sizeXOffset, $this->getSizeY()+(float)$this->config->style_list_sizeYOffset);
     }
     
     public function destroy() {

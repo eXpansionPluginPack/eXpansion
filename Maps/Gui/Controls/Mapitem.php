@@ -150,8 +150,15 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
-
+// manialive 3.1 override to do nothing.
     function destroy() {
+        
+    }
+
+    /*
+     * custom function to remove contents.
+     */
+    function erase() {
         $this->queueButton->destroy();
 
         if (is_object($this->goButton))

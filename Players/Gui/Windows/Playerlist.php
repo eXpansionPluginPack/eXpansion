@@ -124,7 +124,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function populateList() {
 
         foreach ($this->items as $item)
-            $item->destroy();
+           $item->erase();
         $this->pager->clearItems();
         $this->items = array();
 
@@ -149,7 +149,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->connection = null;
         $this->storage = null;
         foreach ($this->items as $item)
-            $item->destroy();
+           $item->erase();
 
         $this->items = null;
 

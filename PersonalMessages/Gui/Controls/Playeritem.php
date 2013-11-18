@@ -75,7 +75,18 @@ class Playeritem extends \ManiaLive\Gui\Control {
     function onDraw() {
         
     }
+// manialive 3.1 override to do nothing.
+    function destroy() {
+        
+    }
 
+    /*
+     * custom function to remove contents.
+     */
+    function erase() {
+    parent::destroy();    
+    }
+    
     function __destruct() {
         //       \ManiaLive\Gui\ActionHandler::getInstance()->removeAction($this->chooseNextMap);
     }

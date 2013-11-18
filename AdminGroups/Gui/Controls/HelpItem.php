@@ -48,8 +48,15 @@ class HelpItem extends \ManiaLive\Gui\Control {
         
         $this->addComponent($frame);
     }
-    
-    public function destroy() {
+    // manialive 3.1 override to do nothing.
+    function destroy() {
+        
+        
+    }
+    /*
+     * custom function to remove contents.
+     */
+    public function erase() {
         $this->moreButton->destroy();
         $this->clearComponents();
         parent::destroy();

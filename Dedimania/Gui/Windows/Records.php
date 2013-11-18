@@ -66,7 +66,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     public function destroy() {
         foreach ($this->items as $item) {
-            $item->destroy();
+            $item->erase();
         }
 
         $this->items = null;

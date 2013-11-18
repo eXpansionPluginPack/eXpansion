@@ -36,7 +36,7 @@ class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function setData() {
 
         foreach ($this->items as $item)
-            $item->destroy();
+           $item->erase();
         $this->pager->clearItems();
         $this->items = array();
 
@@ -63,7 +63,7 @@ class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->connection = null;
         $this->storage = null;
         foreach ($this->items as $item)
-            $item->destroy();
+           $item->erase();
 
         $this->items = null;
         $this->pager->destroy();        

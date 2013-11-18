@@ -102,13 +102,9 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onResize($oldX, $oldY);
         $this->frame->setSizeX($this->sizeX);
         $this->header->setSize($this->sizeX, 5);
-        $this->pager->setSize($this->sizeX, $this->sizeY - 22);
         $this->pager->setStretchContentX($this->sizeX);
+        $this->pager->setSize($this->sizeX, $this->sizeY - 22);
         $this->searchframe->setPosition(8, -$this->sizeY + 6);
-    }
-
-    function onShow() {
-        
     }
 
     public function setPlugin($plugin) {
@@ -190,7 +186,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->maps = Map::fromArrayOfArray(json_decode($data, true));
 
         foreach ($this->items as $item)
-            $item->destroy();
+            $item->erase();
 
         $this->pager->clearItems();
         $this->items = array();
@@ -236,7 +232,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function destroy() {
         foreach ($this->items as $item)
-            $item->destroy();
+            $item->erase();
 
         $this->items = array();
         $this->maps = null;
@@ -250,7 +246,6 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->storage = null;
         $this->searchframe->clearComponents();
         $this->searchframe->destroy();
-        ActionHandler::getInstance()->deleteAction($this->actionSearch);
         $this->clearComponents();
         parent::destroy();
     }

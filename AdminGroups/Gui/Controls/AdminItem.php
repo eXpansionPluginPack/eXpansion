@@ -61,7 +61,15 @@ class AdminItem extends \ManiaLive\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    public function destroy() {
+    // manialive 3.1 override to do nothing.
+    function destroy() {
+        
+        
+    }
+    /*
+     * custom function to remove contents.
+     */
+    public function erase() {
         if($this->plistButton != null)
             $this->plistButton->destroy();
         $this->plistButton = null;

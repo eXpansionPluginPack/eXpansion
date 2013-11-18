@@ -10,10 +10,8 @@ class SqlFile extends \ManiaLive\Gui\Control {
     public $checkBox = null;
     public $btnRestore;
     public $actionRestore = null;
-    
     public $btnDelete;
     public $actionDelete = null;
-    
 
     /**
      * 
@@ -82,11 +80,16 @@ class SqlFile extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onDraw() {
+// manialive 3.1 override to do nothing.
+    function destroy() {
         
     }
 
-    function destroy() {
+    /*
+     * custom function to remove contents.
+     */
+
+    function erase() {
 
         $this->btnRestore->destroy();
         $this->btnDelete->destroy();

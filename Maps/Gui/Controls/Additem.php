@@ -103,8 +103,15 @@ class Additem extends \ManiaLive\Gui\Control {
     function onDraw() {
         
     }
-
+// manialive 3.1 override to do nothing.
     function destroy() {
+        
+    }
+
+    /*
+     * custom function to remove contents.
+     */
+    function erase() {
         $this->frame->clearComponents();
         $this->frame->destroy();
         $this->addButton->destroy();

@@ -62,7 +62,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function populateList() {
         foreach ($this->items as $item) {
-            $item->destroy();
+           $item->erase();
         }
 
         $this->pager->clearItems();
@@ -116,7 +116,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function destroy() {
         $this->gbx = null;
         foreach ($this->items as $item) {
-            $item->destroy();
+           $item->erase();
         }
         $this->items = array();
         $this->btnAddAll->destroy();

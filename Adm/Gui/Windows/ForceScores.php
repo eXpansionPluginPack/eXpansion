@@ -62,7 +62,7 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function populateList() {
         foreach ($this->items as $item)
-            $item->destroy();
+           $item->erase();
         $this->pager->clearItems();
         $this->items = array();
 
@@ -92,7 +92,7 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function destroy() {
         foreach ($this->items as $item)
-            $item->destroy();
+           $item->erase();
 
         $this->items = array();
         $this->pager->destroy();

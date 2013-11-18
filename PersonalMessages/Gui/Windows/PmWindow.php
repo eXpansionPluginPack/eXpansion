@@ -18,6 +18,7 @@ class PmWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $storage;
     private $message;
     private $controller;
+    private $items = array();
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -42,17 +43,26 @@ class PmWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function populateList() {
         $this->storage = \ManiaLive\Data\Storage::getInstance();
+        foreach ($this->items as $item)
+            $item->erase();
+
         $this->pager->clearItems();
 
         $x = 0;
         $login = $this->getRecipient();
         foreach ($this->storage->players as $player) {
-            if ($player->login !== $this->getRecipient())
-                $this->pager->addItem(new Playeritem($x++, $player, $this->controller));
+            if ($player->login == $this->getRecipient()) {
+                $this->items[$x] = new Playeritem($x, $player, $this->controller);
+                $this->pager->addItem($this->items[$x]);
+                $x++;
+            }
         }
         foreach ($this->storage->spectators as $player) {
-            if ($player->login !== $this->getRecipient())
-                $this->pager->addItem(new Playeritem($x++, $player, $this->controller));
+            if ($player->login !== $this->getRecipient()) {
+                $this->items[$x] = new Playeritem($x, $player, $this->controller);
+                $this->pager->addItem($this->items[$x]);
+                $x++;
+            }
         }
     }
 
@@ -65,6 +75,9 @@ class PmWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function destroy() {
+        foreach ($this->items as $item)
+            $item->erase();
+
         parent::destroy();
     }
 
