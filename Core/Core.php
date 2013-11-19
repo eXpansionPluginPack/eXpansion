@@ -37,8 +37,7 @@ class Core extends types\ExpPlugin {
 
         $this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_BEGIN_MAP);
 
-        $expansion =
-                <<<'EOT'
+        $expansion = <<<'EOT'
    
 --------------------------------------------------------------------------------   
                      __   __                      _             
@@ -99,7 +98,7 @@ EOT;
     public function exp_onReady() {
         $this->onBeginMap(null, null, null);
     }
-    
+
     /**
      * 
      * @param array $map

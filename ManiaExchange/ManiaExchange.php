@@ -8,14 +8,19 @@ use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
 
 class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
+    /** @var Config * */
     private $config;
+
+    /** @var \DedicatedApi\Structures\Vote */
     private $vote;
+
+    /** @var string */
     private $titleId;
+
+    /** @var \ManiaLivePlugins\eXpansion\Core\i18n\Message */
     private $msg_add;
 
     public function exp_onInit() {
-        parent::exp_onInit();
-
         $this->config = Config::getInstance();
 
         //Oliverde8 Menu
@@ -24,8 +29,13 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    public function exp_onLoad() {
+
+        $this->msg_add = exp_getMessage('Map %s $z$s$fff added from MX Succesfully');
+    }
+
     public function exp_onReady() {
-        $admGroup = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
+
         $this->registerChatCommand("mx", "chatMX", 2, true);
         $this->registerChatCommand("mx", "chatMX", 1, true);
 
@@ -57,11 +67,6 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $widget->setSize(60, 20);
         $widget->setPosition(-160, 76);
         $widget->show();
-    }
-
-    public function exp_onLoad() {
-
-        $this->msg_add = exp_getMessage('Map %s $z$s$fff added from MX Succesfully');
     }
 
     public function onOliverde8HudMenuReady($menu) {
@@ -124,8 +129,8 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle('ManiaExchange');
         $window->setPlugin($this);
         $window->search($login, $search, $author);
-        $window->centerOnScreen();
         $window->setSize(180, 100);
+        $window->centerOnScreen();
         $window->show();
     }
 
@@ -212,8 +217,9 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function mxVote($login, $mxId) {
-        if (!$this->config->mxVote_enable) return;
-        
+        if (!$this->config->mxVote_enable)
+            return;
+
         if (!is_numeric($mxId)) {
             $this->connection->chatSendServerMessage(__('"%s" is not a numeric value.', $login, $mxId), $login);
             return;

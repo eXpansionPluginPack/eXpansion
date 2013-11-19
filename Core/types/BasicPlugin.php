@@ -1,8 +1,9 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Core\types {
+    define("DEBUG", true);
 
-    use DedicatedApi\Structures\GameInfos;
+use DedicatedApi\Structures\GameInfos;
 use ManiaLive\Utilities\Console;
 use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
 
@@ -141,7 +142,8 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
          */
         public function exp_chatSendServerMessage($msg, $login = null, $args = array()) {
             if (!($msg instanceof MultiLangMsg)) {
-                Console::println("#Plugin " . $this->getId() . " uses chatSendServerMessage in an unoptimized way!!");
+                if (DEBUG)
+                    Console::println("#Plugin " . $this->getId() . " uses chatSendServerMessage in an unoptimized way!!");
                 $msg = exp_getMessage($msg);
             }
 
@@ -319,6 +321,11 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
          */
         public function exp_deactivateAnnounceRedirect() {
             unset(self::$exp_announceRedirected[get_class($this)]);
+        }
+
+        final public function debug($message) {
+            if (DEBUG)
+                Console::printDebug($message);
         }
 
     }

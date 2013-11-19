@@ -37,7 +37,7 @@ class MxMap extends \ManiaLive\Gui\Control {
 
         $this->addAction = $this->createAction(array($controller, 'addMap'), $id);
         $this->queueAction = $this->createAction(array($controller, 'mxVote'), $id);
-        $this->actionSearch = $this->createAction(array($controller, 'search'), "", $map->username);
+        $this->actionSearch = $this->createAction(array($controller, 'search'), "", $map->username, null, null);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);

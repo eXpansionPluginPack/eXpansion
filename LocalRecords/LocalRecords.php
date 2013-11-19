@@ -26,7 +26,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @var type int
      */
 
-    private $debug;
+    private $debug = 0;
 
     /**
      * List of the records for the current track
@@ -277,7 +277,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $nbLaps = 1;
         }
 
-        if (($this->debug | self::DEBUG_LAPS) == self::DEBUG_LAPS)
+        if (($this->debug & self::DEBUG_LAPS) == self::DEBUG_LAPS)
             echo "[DEBUG LocalRecs]Nb Laps : " . $nbLaps . "\n";
 
         //Sending begin map messages
@@ -315,7 +315,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $nbLaps = 1;
         }
 
-        if (($this->debug | self::DEBUG_LAPS) == self::DEBUG_LAPS)
+        if (($this->debug & self::DEBUG_LAPS) == self::DEBUG_LAPS)
             echo "[DEBUG LocalRecs]Nb Laps : " . $nbLaps . "\n";
 
         $updated = false;

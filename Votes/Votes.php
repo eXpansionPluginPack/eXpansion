@@ -14,7 +14,6 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $useQueue = false;
     private $timer = 0;
     private $voter = null;
-    private $debug = true;
 
     function exp_onInit() {
 
@@ -70,11 +69,9 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($this->isPluginLoaded('eXpansion\Maps') && $this->config->restartVote_useQueue) {
             $this->useQueue = true;
-            if ($this->debug)
-                echo "[exp\Votes] Restart votes set to queue\n";
+            $this->debug("[exp\Votes] Restart votes set to queue");
         } else {
-            if ($this->debug)
-                echo "[exp\Votes] Restart vote set to normal\n";
+            $this->debug("[exp\Votes] Restart vote set to normal");
         }
 
         /* if ($this->config->defaultVotes_disable) {
@@ -91,8 +88,8 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
           } */
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
-            if ($this->debug)
-                echo "[exp\Votes] Building eXp\Menu buttons..\n";
+
+            $this->debug("[exp\Votes] Building eXp\Menu buttons..");
             if ($this->config->restartVote_enable || $this->config->skipVote_enable) {
                 $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Votes'), false);
             }
@@ -106,8 +103,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         if ($this->isPluginLoaded('Standard\Menubar')) {
-            if ($this->debug)
-                echo "[exp\Votes] Building Standard Menubar buttons..";
+            $this->debug("[exp\Votes] Building Standard Menubar buttons..");
             $this->callPublicMethod('Standard\Menubar', 'addButton', 'Restart Map Vote', array($this, 'vote_Restart'), false);
             $this->callPublicMethod('Standard\Menubar', 'addButton', 'Skip Map Vote', array($this, 'vote_Skip'), false);
             $this->callPublicMethod('Standard\Menubar', 'addButton', 'Cancel Vote', array($this, 'cancelVote'), true);
@@ -117,8 +113,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onBeginMatch() {
 
         $this->timer = time();
-        if ($this->debug)
-            echo "[exp\Votes] Timer set..\n";
+        $this->debug("[exp\Votes] Timer set..");
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
@@ -132,8 +127,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function onOliverde8HudMenuReady($menu) {
 
-        if ($this->debug)
-            echo "[exp\Votes] Building Oliverde8Hud submenu..\n";
+        $this->debug("[exp\Votes] Building Oliverde8Hud submenu..");
 
         if ($this->config->restartVote_enable || $this->config->skipVote_enable) {
 
@@ -183,8 +177,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->voter = $login;
 
 
-        if ($this->debug)
-            echo "[exp\Votes] Calling Restart (queue) vote..\n";
+        $this->debug("[exp\Votes] Calling Restart (queue) vote..");
         $vote = new \DedicatedApi\Structures\Vote();
         $vote->callerLogin = $this->voter;
         $vote->cmdName = "Replay";
@@ -200,8 +193,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function vote_Skip($login) {
 
         $this->voter = $login;
-        if ($this->debug)
-            echo "[exp\Votes] Calling skip vote..\n";
+        $this->debug("[exp\Votes] Calling skip vote..");
         $vote = new \DedicatedApi\Structures\Vote();
         $vote->callerLogin = $this->voter;
         $vote->cmdName = "Skip";
@@ -215,8 +207,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {
 
-        if ($this->debug)
-            echo "[exp\Votes] Vote Status: " . $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam . "\n";
+        $this->debug("[exp\Votes] Vote Status: " . $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam);
 
 // disable default votes... and replace them with our own implementations
         if ($stateName == "NewVote") {

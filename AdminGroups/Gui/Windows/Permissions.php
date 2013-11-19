@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 /**
@@ -19,7 +18,6 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $button_cancel;
     private $action_ok;
     private $action_cancel;
-    
     private $items = array();
     private $permissions = array();
 
@@ -66,25 +64,23 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function populateList() {
         foreach ($this->permissions as $item)
             $item->destroy();
+        foreach ($this->items as $item)
+            $item->erase();
+
         $this->pager->clearItems();
         $this->permissions = array();
         $this->items = array();
-        
-        $x=0;
+        $x = 0;
         foreach ($this->adminGroups->getPermissionList() as $key => $value) {
             $cBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 68);
             $cBox->setStatus($this->group->hasPermission($key));
             $cBox->setText($key);
             $cBox->setScale(0.8);
-            
-            $frame = new \ManiaLive\Gui\Controls\Frame();
-            $frame->setSize(68, 4);
-            $frame->addComponent(new ListBackGround($x++, 68, 4));
-            $frame->addComponent($cBox);
-            
+
             $this->permissions[$key] = $cBox;
-            $this->items[$key] = $frame;
-            $this->pager->addItem($frame);
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem($x, $cBox);
+            $this->pager->addItem($this->items[$x]);
+            $x++;
         }
     }
 
@@ -104,16 +100,18 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public function destroy() {
         foreach ($this->permissions as $item)
             $item->destroy();
+        foreach ($this->items as $item)
+            $item->erase();
 
         $this->permissions = null;
         $this->items = array();
         $this->pager->destroy();
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_ok);
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_cancel);
-        
+
         $this->button_cancel->destroy();
         $this->button_ok->destroy();
-                
+
         parent::destroy();
     }
 

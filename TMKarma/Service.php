@@ -84,9 +84,6 @@ abstract class Service {
      * the request.
      */
     protected static function getUserAgent() {
-
-        echo $agent;
-
         return $agent;
     }
 

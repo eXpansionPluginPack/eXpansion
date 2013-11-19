@@ -1,0 +1,19 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   AdminGroups/Gui/Controls/CheckboxItem.php
+#	modified:   AdminGroups/Gui/Windows/Permissions.php
+#	modified:   AutoLoad/AutoLoad.php
+#	modified:   Core/Core.php
+#	modified:   Core/types/BasicPlugin.php
+#	modified:   LocalRecords/LocalRecords.php
+#	modified:   ManiaExchange/Gui/Controls/MxMap.php
+#	modified:   ManiaExchange/Gui/Windows/MxSearch.php
+#	modified:   ManiaExchange/ManiaExchange.php
+#	modified:   Votes/Votes.php
+#
+
