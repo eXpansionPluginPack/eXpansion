@@ -28,7 +28,7 @@ class MxWidget extends \ManiaLive\Gui\Window {
 
         $dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
-        
+
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
         $this->actionVisit = $this->createAction(array($this, 'Visit'));
@@ -167,16 +167,23 @@ class MxWidget extends \ManiaLive\Gui\Window {
     }
 
     function Visit($login) {
-        $link = "http://tm.mania-exchange.com/tracks/view/" . $this->getMXid();
+        $mxId = $this->getMXid($login);
+        if ($mxId === false)
+            return;
+
+        $link = "http://tm.mania-exchange.com/tracks/view/" . $mxId;
         $this->connection->sendOpenLink($login, $link, 0);
     }
 
     function Award($login) {
-        $link = "http://tm.mania-exchange.com/awards/add/" . $this->getMXid();
+        $mxId = $this->getMXid($login);
+        if ($mxId === false)
+            return;
+        $link = "http://tm.mania-exchange.com/awards/add/" . $mxId;
         $this->connection->sendOpenLink($login, $link, 0);
     }
 
-    function getMXid() {
+    function getMXid($login) {
         $query = "http://api.mania-exchange.com/tm/tracks/" . $this->storage->currentMap->uId;
 
         $ch = curl_init($query);
@@ -187,28 +194,27 @@ class MxWidget extends \ManiaLive\Gui\Window {
         curl_close($ch);
 
         if ($data === false) {
-            $this->connection->chatSendServerMessage(__('MX is down'), $login);
-            return;
+            $this->connection->chatSendServerMessage(__('Error receving data from ManiaExchange!'), $login);
+            return false;
         }
 
         if ($status["http_code"] !== 200) {
             if ($status["http_code"] == 301) {
-                $this->connection->chatSendServerMessage(__('Map not found', $login), $login);
-                return;
+                $this->connection->chatSendServerMessage(__('Map not found from ManiaExchange', $login), $login);
+                return false;
             }
 
             $this->connection->chatSendServerMessage(__('MX returned http error code: %s', $login, $status["http_code"]), $login);
-            return;
+            return false;
         }
 
-        $json = json_decode($data);
-        if ($json === false) {
-            $this->connection->chatSendServerMessage(__('Map not found', $login), $login);
-            return 0;
+        $json = \json_decode($data);
+        if ($json === false || sizeof($json) == 0) {
+            $this->connection->chatSendServerMessage(__('Map not found from ManiaExchange', $login), $login);
+            return false;
         }
-        
+
         return $json[0]->TrackID;
-        
     }
 
     function onShow() {
