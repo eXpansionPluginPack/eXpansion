@@ -1,13 +1,13 @@
-#variable#%1$s  #record#secured their #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#(#rank#$n-%5$s#record#)
-#variable#%1$s  #record#a assuré le #rank#%2$s $n(%4$s)$n#record# record local avec un temps de #rank#%3$s #record#(#rank#$n-%5$s#record#)
+#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #rank#%3$s #record#(#variable#$n%4$s#rank#-%5$s#record#$n)
+#variable#%1$s  #record#a assuré le #rank#%2$s #record#. record local! #rank#%3$s #record#(#variable#$n%4$s#rank#-%5$s#record#$n)
 
-#variable#%1$s  #record#claimed the #rank#%2$s #record#. Local Record with time of #rank#%3$s
-#variable#%1$s  #record#a obtenu le #rank#%2$s #record# record local avec un temps de #rank#%3$s
+#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #variable#%2$s: #rank#%3$s
+#variable#%1$s  #record#a obtenu le #rank#%2$s#record#. record local! #variable#%2$s: #rank#%3$s
 
-#variable#%1$s  #record#gained the #rank#%2$s #record#. Local Record with time of #rank#%3$s #record#(#rank#$n-%5$s#record#)
-#variable#%1$s  #record#a amélioré le #rank#%2$s #record# record local avec un temps de #rank#%3$s #record#(#rank#$n-%5$s#record#)
+#variable#%1$s  #record#improved the #rank#%2$s#record#. Local Record! #variable#%2$s: #rank#%3$s #record#(#variable#$n%4$s#rank#-%5$s#record#$n)
+#variable#%1$s  #record#a amélioré le #rank#%2$s #record# record local! #variable#%2$s: #rank#%3$s #record#(#variable#$n%4$s#rank#-%5$s#record#$n)
 
-#variable#%1$s  #record#Is a new Map. Currently no record!
+#variable#%1$s  #record#is a new Map. Currently no record!
 #variable#%1$s  #record#est une nouvelle carte. Aucun record pour le moment!
 
 #record#Current record on #variable#%1$s  #record#is #variable#%2$s #record#by #variable#%3$s

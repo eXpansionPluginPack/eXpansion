@@ -1,8 +1,8 @@
-%1$s#dedirecord# secured the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s #dedirecord#$n(#rank#%4$s#dedirecord#)!
-%1$s#dedirecord# varmisti #rank#%2$s#dedirecord#. Dedimania sijan ajalla:#rank#%3$s #dedirecord#$n(#rank#%4$s#dedirecord#)!
+%1$s#dedirecord# improved the #rank#%2$s#dedirecord#. Dedimania Record!  #variable#%2$s: #rank#%3$s #dedirecord#(#variable#$n%4$s-#rank#%5$s#dedirecord#$n)
+%1$s#dedirecord# varmisti #rank#%2$s#dedirecord#. Dedimania sijan! #variable#%2$s: #rank#%3$s #dedirecord#(#variable#$n%4$s-#rank#%5$s#dedirecord#$n)
 
-%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  time:#rank#%3$s
-%1$s#dedirecord# ottaa #rank#%2$s#dedirecord#. Dedimania sijan ajalla:#rank#%3$s
+%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record! #variable#%2$s: #rank#%3$s
+%1$s#dedirecord# ottaa #rank#%2$s#dedirecord#. Dedimania sijan! #variable#%2$s: #rank#%3$s
 
 #dedirecord#Dedimania global ranking limited to top #rank#15#dedirecord# for basic accounts.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..
 #dedirecord#Dedimanian maailmanlaajuiseen tietokantaan on pääsy top#rank#15#dedirecord# sijoille.  $l[http://dedimania.net/tm2stats/?do=donation]Tästä klikkaamalla$l saat lisätietoja..

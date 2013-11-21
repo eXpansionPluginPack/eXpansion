@@ -127,7 +127,7 @@ abstract class Service {
      * Retrieves the challenge's karma from the webservice.
      * @param \DedicatedApi\Structures\Map $challenge
      * @param \DedicatedApi\Structures\Player[] $players
-     * @return \ManiaLivePlugins\W1lla\TMKarma\Structures\Karma
+     * @return \ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma
      */
     static function GetChallengeKarma($challenge, $players) {
         if (!self::$authCode) {
@@ -174,9 +174,9 @@ abstract class Service {
 
         // Generate the url for this vote
         $requestUrl = sprintf("%s?Action=Vote&login=%s&authcode=%s&uid=%s&map=%s&author=%s&env=%s&votes=%s&tmx=%s", self::getAPIUrl(), urlencode(self::$login), urlencode(self::$authCode), urlencode($challenge->uId), base64_encode($challenge->name), urlencode($challenge->author), urlencode($challenge->environnement), $voteString, '');
-        var_dump($requestUrl);
+        //var_dump($requestUrl);
         $response = self::sendRequest($requestUrl);
-        var_dump($response);
+        //var_dump($response);
         //return new Karma($response);
     }
 

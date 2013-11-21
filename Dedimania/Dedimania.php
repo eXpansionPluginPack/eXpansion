@@ -280,7 +280,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
                 $recepient = null;
 
             $diff = \ManiaLive\Utilities\Time::fromTM($record->time - $oldRecord->time, true);
-            $this->exp_chatSendServerMessage($this->config->recordMsg, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, \ManiaLive\Utilities\Time::fromTM($record->time), $diff));
+            $this->exp_chatSendServerMessage($this->config->recordMsg, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, \ManiaLive\Utilities\Time::fromTM($record->time), $oldRecord->place, $diff));
         } catch (\Exception $e) {
             \ManiaLive\Utilities\Console::println("Error: couldn't show dedimania message");
             print_r($e);
