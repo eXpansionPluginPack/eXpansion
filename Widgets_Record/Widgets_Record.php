@@ -16,8 +16,8 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onLoad() {
-        if ($this->isPluginLoaded('Reaby\Dedimania'))
-            Dispatcher::register(\ManiaLivePlugins\Reaby\Dedimania\Events\Event::getClass(), $this);
+        if ($this->isPluginLoaded('eXpansion\Dedimania'))
+            Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
 
@@ -64,7 +64,6 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         Gui\Widgets\RecordsPanel::$dedirecords = array(); // on new map, reset deditimes from widget...
     }
 
-    
     public function onBeginMatch() {
         foreach (Gui\Widgets\RecordsPanel::GetAll() as $panel) {
             try {
@@ -73,7 +72,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 // silent exception
             }
         }
-        
+
         $this->forceUpdate = true;
     }
 
@@ -90,7 +89,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onDedimaniaGetRecords($data) {
         Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];
         $this->needUpdate = true;
-        echo "Dedimania: Found " . sizeof($data['Records']) . " records for current map!\n";
+        $this->debug("Dedimania: Found " . sizeof($data['Records']) . " records for current map!\n");
     }
 
     public function onPlayerConnect($login, $isSpectator) {

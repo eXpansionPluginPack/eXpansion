@@ -25,7 +25,7 @@ class CheckpointElem extends \ManiaLive\Gui\Control {
         $this->label->setTextSize(1);
         $this->label->setPosX(0);
         if ($cp->time != 0)
-            $this->label->setText('$fff' . ($cp->index + 1 ) . " " . \ManiaLive\Utilities\Time::fromTM($cp->time));
+            $this->label->setText('$fff$o' . ($cp->index + 1 ) . ' $o$ff0' . \ManiaLive\Utilities\Time::fromTM($cp->time));
 
         $this->addComponent($this->label);
 

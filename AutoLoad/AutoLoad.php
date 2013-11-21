@@ -35,7 +35,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onLoad() {
 
-        Console::println("[eXpansion Pack] AutoLoading eXpansion pack ... ");
+        Console::println("[eXpansion] AutoLoading eXpansion pack ... ");
 
         //We Need the plugin Handler
         $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
@@ -70,12 +70,11 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                         Console::println("[" . $pname . "]..............................FAIL -> will retry");
                         $recheck[] = $pname;
                     } else {
-                        if (DEBUG)
-                        Console::println("[" . $pname . "]..............................SUCCESS");
+                        $this->debug("[" . $pname . "]..............................SUCCESS");
                     }
                 }
             } catch (\Exception $ex) {
-                echo "ERROR:" . $ex->getMessage() . "\n";
+                Console::println("[Autoload ERROR]" . $ex->getMessage() . "\n");
                 $recheck[] = $pname;
             }
         }

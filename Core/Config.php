@@ -1,10 +1,10 @@
 <?php
 
-
 namespace ManiaLivePlugins\eXpansion\Core;
 
 class Config extends \ManiaLib\Utils\Singleton {
 
+    public $debug = false;
     public $language = null;
     public $defaultLanguage = null;
     public $Colors_admin_error = '$f44';

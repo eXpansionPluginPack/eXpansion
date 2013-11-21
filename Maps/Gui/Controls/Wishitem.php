@@ -9,26 +9,26 @@ use \ManiaLib\Utils\Formatting;
 
 class Wishitem extends \ManiaLive\Gui\Control {
 
-    private $bg;
-    private $queueButton;
-    private $goButton;
-    private $label;
-    private $time;
-    private $removeMap;
-    private $removeButton;
-    private $frame;
-/**
- * 
- * @param type $indexNumber
- * @param type $login
- * @param \ManiaLivePlugins\eXpansion\Maps\Structures\MapWish $map
- * @param type $controller
- * @param type $isAdmin
- * @param type $localrec
- * @param type $sizeX
- */
+    protected $bg;
+    protected $queueButton;
+    protected $goButton;
+    protected $label;
+    protected $time;
+    protected $removeMap;
+    protected $removeButton;
+    protected $frame;
+
+    /**
+     * 
+     * @param type $indexNumber
+     * @param type $login
+     * @param \ManiaLivePlugins\eXpansion\Maps\Structures\MapWish $map
+     * @param type $controller
+     * @param type $isAdmin
+     * @param type $sizeX
+     */
     function __construct($indexNumber, $login, $map, $controller, $isAdmin, $sizeX) {
-        $sizeY = 4;
+        $sizeY = 5;
 
         $this->isAdmin = $isAdmin;
         $this->removeMap = $this->createAction(array($controller, 'dropQueue'), $map->map);
@@ -39,9 +39,9 @@ class Wishitem extends \ManiaLive\Gui\Control {
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
-        $spacer = new \ManiaLib\Gui\Elements\Label(4,4);        
+        $spacer = new \ManiaLib\Gui\Elements\Label(4, 4);
         $spacer->setAlign("center", "center2");
-        $spacer->setText(($indexNumber+1).".");
+        $spacer->setText(($indexNumber + 1) . ".");
         $this->frame->addComponent($spacer);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
@@ -66,14 +66,14 @@ class Wishitem extends \ManiaLive\Gui\Control {
         $spacer->setSize(2, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         $this->frame->addComponent($spacer);
-        
+
         $this->time = new \ManiaLib\Gui\Elements\Label(30, 4);
         $this->time->setAlign('left', 'center');
         $this->time->setScale(0.8);
         $this->time->setText($map->player->nickName);
         //$this->time->setText(\ManiaLive\Utilities\Time::fromTM($map->goldTime));
         $this->frame->addComponent($this->time);
-        
+
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(4, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
@@ -101,6 +101,7 @@ class Wishitem extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
+
 // manialive 3.1 override to do nothing.
     function destroy() {
         
@@ -109,6 +110,7 @@ class Wishitem extends \ManiaLive\Gui\Control {
     /*
      * custom function to remove contents.
      */
+
     function erase() {
         if (is_object($this->removeButton))
             $this->removeButton->destroy();

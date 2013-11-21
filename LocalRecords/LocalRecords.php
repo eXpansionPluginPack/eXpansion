@@ -603,7 +603,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->exp_chatSendServerMessage($this->msg_new, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time));
                 \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
             }
-            \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_PERSONAl_BEST, $nrecord));
+            \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_PERSONAL_BEST, $nrecord));
         }
     }
 

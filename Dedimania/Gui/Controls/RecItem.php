@@ -13,11 +13,11 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  */
 class RecItem extends \ManiaLive\Gui\Control {
     
-    private $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
-    private $bg;
+    protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
+    protected $bg;
     private $widths;
      
-    function __construct($indexNumber, $login, $record, $widths) { 
+    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $record, $widths) { 
         $this->widths = $widths;
         $this->sizeY = 4;
         $this->bg = new ListBackGround($indexNumber, 100, 4);
@@ -38,13 +38,13 @@ class RecItem extends \ManiaLive\Gui\Control {
         $this->label_nick = new \ManiaLib\Gui\Elements\Label(10., 4);
         $this->label_nick->setAlign('left', 'center');
         $this->label_nick->setScale(0.8);
-        $this->label_nick->setText($record['NickName']);
+        $this->label_nick->setText($record->nickname);
         $this->frame->addComponent($this->label_nick);
         
         $this->label_score = new \ManiaLib\Gui\Elements\Label(10, 4);
         $this->label_score->setAlign('left', 'center');
         $this->label_score->setScale(0.8);
-        $this->label_score->setText(\ManiaLive\Utilities\Time::fromTM($record['Best']));
+        $this->label_score->setText(\ManiaLive\Utilities\Time::fromTM($record->time));
         $this->frame->addComponent($this->label_score);
         
     }
