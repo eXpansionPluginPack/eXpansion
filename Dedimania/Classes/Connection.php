@@ -125,7 +125,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
                 "ServerVersion" => $version->version,
                 "ServerBuild" => $version->build,
                 "Path" => $serverInfo->path
-        ));
+                ));
 
         $request = new dediRequest("dedimania.OpenSession", $args);
         $this->send($request, array($this, "xOpenSession"));
@@ -154,9 +154,10 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         }
 
 // only special maps under 8 seconds are allowed
-        if ($map->authorTime < 8000 && strtolower($map->author) != 'nadeo')
-            echo "special case...";
-        return;
+        if ($map->authorTime < 8000 && strtolower($map->author) != 'nadeo') {
+            Console::println("[Dedimania Warning] Author time under 8 seconds, will not send records.");
+            return;
+        }
 
         if ($this->dediUid != $map->uId) {
             Console::println("[Dedimania Warning] Map UId mismatch! Map UId differs from dedimania recieved uid for the map. Times are not sent.");
@@ -462,13 +463,13 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
             //  print_r($array);
 
             if (array_key_exists("faultString", $array[0])) {
-               // $this->connection->chatSendServerMessage("[Dedimania] " . $array[0]['faultString']);
+                // $this->connection->chatSendServerMessage("[Dedimania] " . $array[0]['faultString']);
                 \ManiaLive\Utilities\Console::println("[Dedimania] from dedimania server: " . $array[0]['faultString']);
                 return;
             }
 
             if (!empty($array[0][0]['Error'])) {
-               // $this->connection->chatSendServerMessage("Dedimania error: " . $array[0][0]['Error']);
+                // $this->connection->chatSendServerMessage("Dedimania error: " . $array[0][0]['Error']);
                 \ManiaLive\Utilities\Console::println("[Dedimania] from dedimania server: " . $array[0][0]['Error']);
                 return;
             }
@@ -476,7 +477,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
             if (is_callable($callback)) {
                 call_user_func_array($callback, array($array));
             } else {
-               // $this->connection->chatSendServerMessage("Dedimania error: Callback not valid");
+                // $this->connection->chatSendServerMessage("Dedimania error: Callback not valid");
                 \ManiaLive\Utilities\Console::println("[Dedimania Error] Callback-function is not valid!");
             }
         } catch (\Exception $e) {
@@ -542,7 +543,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function xSetChallengeTimes($data) {
-        //   print_r($data);
+        //print_r($data);
         $this->debug("[dedimania] Dedimania new times send successfully.");
     }
 

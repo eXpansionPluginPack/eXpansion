@@ -68,13 +68,13 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     public function onBeginMatch() {
         $this->records = array();
         $this->dedimania->getChallengeRecords();
-        $this->rankings = array();
-        $this->vReplay = "";
-        $this->gReplay = "";
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
-        
+        $this->records = array();
+        $this->rankings = array();
+        $this->vReplay = "";
+        $this->gReplay = "";
     }
 
     public function onPlayerFinish($playerUid, $login, $time) {
@@ -172,15 +172,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
      * @param type $restartMap
      */
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
-        // Dedimania doesn't allow times sent without valiadition relay. So, let's just stop here if there is none.
-        if (empty($this->vReplay)) {
-            Console::println("[Dedimania Notice] Couldn't get validation replay of the first player. Dedimania times not sent.");
-            return;
-        }
-        
-        $map = $this->connection->getCurrentMapInfo();
-        $this->dedimania->setChallengeTimes($map, $this->rankings, $this->vReplay, $this->gReplay);
-        $this->dedimania->updateServerPlayers($this->storage->currentMap);
+        // $this->dedimania->updateServerPlayers($this->storage->currentMap); // optional
     }
 
     /**
@@ -191,20 +183,28 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
      */
     public function onEndMatch($rankings, $winnerTeamOrMap) {
         $this->rankings = $rankings;
-
+      
         try {
-            if (sizeof($rankings) == 0) {
+            /*if (sizeof($rankings) == 0) {
                 $this->vReplay = "";
                 $this->gReplay = "";
                 return;
-            }
+            }*/
             $this->vReplay = $this->connection->getValidationReplay($rankings[0]['Login']);
             $greplay = "";
             $grfile = sprintf('Dedimania/%s.%d.%07d.%s.Replay.Gbx', $this->storage->currentMap->uId, $this->storage->gameInfos->gameMode, $rankings[0]['BestTime'], $rankings[0]['Login']);
             $this->connection->SaveBestGhostsReplay($rankings[0]['Login'], $grfile);
             $this->gReplay = file_get_contents($this->connection->gameDataDirectory() . 'Replays/' . $grfile);
+
+            // Dedimania doesn't allow times sent without validation relay. So, let's just stop here if there is none.
+            if (empty($this->vReplay)) {
+                // Console::println("[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent.");
+                return;
+            }
+            
+            $this->dedimania->setChallengeTimes($this->storage->currentMap, $this->rankings, $this->vReplay, $this->gReplay);
         } catch (\Exception $e) {
-            Console::println("[Dedimania] Exception: " . $e->getMessage());
+            Console::println("[Dedimania] " . $e->getMessage());
             $this->vReplay = "";
             $this->gReplay = "";
         }
