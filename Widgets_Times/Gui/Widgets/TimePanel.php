@@ -6,11 +6,10 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 
 class TimePanel extends \ManiaLive\Gui\Window {
 
-    
     const Mode_BestOfAll = 1;
     const Mode_PersonalBest = 2;
     const Mode_None = 3;
-    
+
     private $checkpoint;
     private $time;
     private $bestRun = array();
@@ -21,7 +20,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
     /** @var \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record[] */
     public static $localrecords = array();
     public static $dedirecords = array();
-    
+
     protected function onConstruct() {
         parent::onConstruct();
         $login = $this->getRecipient();
@@ -98,8 +97,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
         if (isset($localcp[$cpIndex]))
             $localtime = $localcp[$cpIndex];
 
-
-        if ($localtime > $deditime)
+        if (($deditime != 0) && ($localtime < $deditime))
             $diff = $localtime;
 
         if ($diff == null)
