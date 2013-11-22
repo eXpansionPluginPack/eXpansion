@@ -80,7 +80,7 @@ class Wishitem extends \ManiaLive\Gui\Control {
 
         $this->frame->addComponent($spacer);
 
-        if ($this->isAdmin) {
+        if ($this->isAdmin || $map->player->login == $login) {
             $this->removeButton = new MyButton(26, 5);
             $this->removeButton->setText('$fff' . __("Drop", $login));
             $this->removeButton->setAction($this->removeMap);
