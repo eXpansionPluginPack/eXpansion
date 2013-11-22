@@ -462,25 +462,25 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
             //  print_r($array);
 
             if (array_key_exists("faultString", $array[0])) {
-                $this->connection->chatSendServerMessage("Dedimania error: " . $array[0]['faultString']);
-                \ManiaLive\Utilities\Console::println("Dedimania error: " . $array[0]['faultString']);
+               // $this->connection->chatSendServerMessage("[Dedimania] " . $array[0]['faultString']);
+                \ManiaLive\Utilities\Console::println("[Dedimania] from dedimania server: " . $array[0]['faultString']);
                 return;
             }
 
             if (!empty($array[0][0]['Error'])) {
-                $this->connection->chatSendServerMessage("Dedimania error: " . $array[0][0]['Error']);
-                \ManiaLive\Utilities\Console::println("Dedimania error: " . $array[0][0]['Error']);
+               // $this->connection->chatSendServerMessage("Dedimania error: " . $array[0][0]['Error']);
+                \ManiaLive\Utilities\Console::println("[Dedimania] from dedimania server: " . $array[0][0]['Error']);
                 return;
             }
 
             if (is_callable($callback)) {
                 call_user_func_array($callback, array($array));
             } else {
-                $this->connection->chatSendServerMessage("Dedimania error: Callback not valid");
-                \ManiaLive\Utilities\Console::println("Dedimania error: Callback not valid");
+               // $this->connection->chatSendServerMessage("Dedimania error: Callback not valid");
+                \ManiaLive\Utilities\Console::println("[Dedimania Error] Callback-function is not valid!");
             }
         } catch (\Exception $e) {
-            echo "Dedimania connection failed." . $e->getMessage();
+            Console::println("[Dedimania Error] connection to dedimania server failed." . $e->getMessage());
         }
     }
 

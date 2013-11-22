@@ -29,8 +29,10 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, true); // create panel for everybody
 
         $this->lastUpdate = time();
+         Gui\Widgets\RecordsPanel::$localrecords = $this->callPublicMethod("eXpansion\\LocalRecords", "getRecords");
         $this->enableTickerEvent();
         $this->forceUpdate = true;
+        
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {

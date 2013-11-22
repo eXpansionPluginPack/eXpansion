@@ -38,7 +38,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /**
      * The best times and other statistics of the current players on the server
      *
-     * @var type Array login => Record
+     * @var Record[] Array[$login] = Record
      */
     private $currentChallengePlayerRecords = array();
 
