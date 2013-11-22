@@ -10,7 +10,7 @@ namespace ManiaLivePlugins\eXpansion\Chatlog;
 class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $log = array();
-    private $historyLentgh = 100;
+    private $historyLength = 100;
 
     public function exp_onLoad() {
         $this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_PLAYER_CHAT);
@@ -25,7 +25,7 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $player = $this->storage->getPlayerObject($login);
         $chatMessage = new Structures\ChatMessage(time(), $login, $player->nickName, $text);
         array_unshift($this->log, $chatMessage);
-        $this->log = array_slice($this->log, 0, $this->historyLenght, True);
+        $this->log = array_slice($this->log, 0, $this->historyLength, True);
     }
 
     public function showLog($login) {
