@@ -185,11 +185,11 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         $this->rankings = $rankings;
       
         try {
-            /*if (sizeof($rankings) == 0) {
+            if (sizeof($rankings) == 0) {
                 $this->vReplay = "";
                 $this->gReplay = "";
                 return;
-            }*/
+            }
             $this->vReplay = $this->connection->getValidationReplay($rankings[0]['Login']);
             $greplay = "";
             $grfile = sprintf('Dedimania/%s.%d.%07d.%s.Replay.Gbx', $this->storage->currentMap->uId, $this->storage->gameInfos->gameMode, $rankings[0]['BestTime'], $rankings[0]['Login']);
