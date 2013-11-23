@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
     use DedicatedApi\Structures\GameInfos;
 use ManiaLive\Utilities\Console;
+use ManiaLivePlugins\eXpansion\Core\Config;
 use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
 
     /**
@@ -52,9 +53,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
         private $_isReady = false;
 
         public final function onInit() {
-            if (!defined("DEBUG"))
-                define("DEBUG", \ManiaLivePlugins\eXpansion\Core\Config::getInstance()->debug);
-            
+
             //Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
 
@@ -336,6 +335,13 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
 }
 
 namespace {
+    
+    if (!defined("DEBUG")) {
+        $config = ManiaLivePlugins\eXpansion\Core\Config::getInstance();
+        define("DEBUG", filter_var($config->debug, FILTER_VALIDATE_BOOLEAN));
+    }
+
+
     if (!function_exists('__')) {
 
         /**

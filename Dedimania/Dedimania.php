@@ -41,7 +41,6 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         $this->config->newRecordMsg = exp_getMessage($this->config->newRecordMsg);
         $this->config->noRecordMsg = exp_getMessage($this->config->noRecordMsg);
         $this->config->recordMsg = exp_getMessage($this->config->recordMsg);
-        
     }
 
     public function exp_onReady() {
@@ -90,9 +89,12 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         if (DediConnection::$players[$login]->banned)
             return;
 
-        $player = $this->storage->getPlayerObject($login);
         if (count($this->records) == 0) {
-            $this->records[$login] = new Structures\DediRecord($login, $player->nickName, $time);
+            $player = $this->connection->getCurrentRankingForLogin($login);
+            // map first array entry to player object;
+            $player = $player[0];
+
+            $this->records[$login] = new Structures\DediRecord($login, $player->nickName, $time, -1, $player->bestCheckpoints);
             $this->reArrage();
             \ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login]));
         }
@@ -108,7 +110,10 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
             if (array_key_exists($login, $this->records)) {
                 if ($this->records[$login]->time > $time) {
                     $oldRecord = $this->records[$login];
-                    $this->records[$login] = new Structures\DediRecord($login, $player->nickName, $time);
+                    $player = $this->connection->getCurrentRankingForLogin($login);
+                    // map first array entry to player object;
+                    $player = $player[0];
+                    $this->records[$login] = new Structures\DediRecord($login, $player->nickName, $time, -1, $player->bestCheckpoints);
                     $this->reArrage();
                     if (array_key_exists($login, $this->records)) // have to recheck if the player is still at the dedi array
                         \ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_DEDI_RECORD, $this->records[$login], $oldRecord));
@@ -116,7 +121,10 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
                 }
                 // if not then just do a update for the time
             } else {
-                $this->records[$login] = new Structures\DediRecord($login, $player->nickName, $time);
+                $player = $this->connection->getCurrentRankingForLogin($login);
+                // map first array entry to player object;
+                $player = $player[0];
+                $this->records[$login] = new Structures\DediRecord($login, $player->nickName, $time, -1, $player->bestCheckpoints);
                 $this->reArrage();
                 if (array_key_exists($login, $this->records)) // have to recheck if the player is still at the dedi array
                     \ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login]));
@@ -149,8 +157,10 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
         // recreate new records entry for update_records
         $data = array('Records' => array());
+        $i = 1;
         foreach ($this->records as $record) {
-            $data['Records'][] = Array("Login" => $record->login, "NickName" => $record->nickname, "Best" => $record->time, "Checks" => $record->checkpoints);
+            $data['Records'][] = Array("Login" => $record->login, "NickName" => $record->nickname, "Best" => $record->time, "Rank" => $i, "Checks" => $record->checkpoints);
+            $i++;
         }
 
         \ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_UPDATE_RECORDS, $data));
@@ -182,7 +192,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
      */
     public function onEndMatch($rankings, $winnerTeamOrMap) {
         $this->rankings = $rankings;
-      
+
         try {
             if (sizeof($rankings) == 0) {
                 $this->vReplay = "";
@@ -197,10 +207,10 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
             // Dedimania doesn't allow times sent without validation relay. So, let's just stop here if there is none.
             if (empty($this->vReplay)) {
-                // Console::println("[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent.");
+                Console::println("[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent.");
                 return;
             }
-            
+
             $this->dedimania->setChallengeTimes($this->storage->currentMap, $this->rankings, $this->vReplay, $this->gReplay);
         } catch (\Exception $e) {
             Console::println("[Dedimania] " . $e->getMessage());

@@ -83,7 +83,13 @@ EOT;
         Console::println('');
         Console::println('-------------------------------------------------------------------------------');
         Console::println('');
-
+        if (DEBUG) {
+            Console::println('                        RUNNING IN DEVELOPMENT MODE  ');
+            Console::println('');
+            Console::println('-------------------------------------------------------------------------------');
+            Console::println('');
+        }
+        
         if ($bExitApp) {
             $this->connection->chatSendServerMessage("Failed to init eXpansion, see consolelog for more info!");
             die();

@@ -119,10 +119,6 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         
     }
 
-    public function onDedimaniaNewRecord($data) {
-        
-    }
-
     public function onDedimaniaPlayerConnect($data) {
         
     }
@@ -131,8 +127,29 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         
     }
 
+    /**
+     * 
+     * @param \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $record
+     * @param \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecorr $oldrecord
+     */
     public function onDedimaniaRecord($record, $oldrecord) {
-        
+        foreach (TimePanel::$dedirecords as $index => $data) {
+            if (TimePanel::$dedirecords[$index]['Login'] == $record->login) {
+                TimePanel::$dedirecords[$index] = Array("Login" => $record->login, "NickName" => $record->nickname, "Rank" => $record->place, "Best" => $record->time, "Checks" => $record->checkpoints);
+            }
+        }
+    }
+
+    /**
+     * 
+     * @param \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $data
+     */
+    public function onDedimaniaNewRecord($record) {
+        foreach (TimePanel::$dedirecords as $index => $data) {
+            if (TimePanel::$dedirecords[$index]['Login'] == $record->login) {
+                TimePanel::$dedirecords[$index] = Array("Login" => $record->login, "NickName" => $record->nickname, "Rank" => $record->place, "Best" => $record->time, "Checks" => $record->checkpoints);
+            }
+        }
     }
 
 }

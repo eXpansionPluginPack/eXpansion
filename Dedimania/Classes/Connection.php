@@ -366,7 +366,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
      */
     function playerDisconnect($login) {
         if ($this->sessionId === null) {
-            echo "Session id is null!";
+            $this->debug("Session id is null!");
             return;
         }
         $args = array(
@@ -386,7 +386,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
      */
     function updateServerPlayers($map) {
         if ($this->sessionId === null) {
-            echo "Session id is null!";
+            $this->debug("Session id is null!");
             return;
         }
 
@@ -507,7 +507,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         } else {
             Console::println("[Dedimania] Authentication to dedimania server failed!");
         }
-//echo "recieved Session key:" . $this->sessionId . "\n";
+        $this->debug("recieved Session key:" . $this->sessionId);
     }
 
     function xGetRecords($data) {
@@ -518,7 +518,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $this->dediBest = null;
 
         if (!empty($data[0]['Error'])) {
-            echo "Dedimania error: " . $data[0]['Error'];
+            Console::println("[Dedimania] error from dediserver: " . $data[0]['Error']);
             return;
         }
 
@@ -528,7 +528,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         self::$serverMaxRank = $data[0]['ServerMaxRank'];
 
         if (!$data[0]['Records']) {
-            echo "Dedimania: No records found.";
+            $this->debug("Dedimania: No records found.");
             return;
         }
 

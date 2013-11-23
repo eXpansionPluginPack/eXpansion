@@ -10,6 +10,14 @@ class DediRecord extends \DedicatedApi\Structures\AbstractStructure {
     public $place = -1;
     public $checkpoints = "";
 
+    /**
+     * 
+     * @param string $login
+     * @param string $nickname
+     * @param int $time
+     * @param int $place
+     * @param array|string $checkpoints
+     */
     public function __construct($login, $nickname, $time, $place = -1, $checkpoints = "") {
         $this->login = $login;
         $this->time = $time;
