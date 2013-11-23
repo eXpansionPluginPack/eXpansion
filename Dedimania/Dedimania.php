@@ -41,8 +41,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
         $this->config->newRecordMsg = exp_getMessage($this->config->newRecordMsg);
         $this->config->noRecordMsg = exp_getMessage($this->config->noRecordMsg);
         $this->config->recordMsg = exp_getMessage($this->config->recordMsg);
-
-        \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->registerCode("dedirecord", $this->config->color_dedirecord);
+        
     }
 
     public function exp_onReady() {

@@ -88,7 +88,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * All the messages need to be sent;
      * @var Message
      */
-    private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank;
+            private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank, $msg_secure_top1, $msg_secure_top5, $msg_new_top1, $msg_new_top5, $msg_improved_top1, $msg_improved_top5;
     public static $txt_rank, $txt_nick, $txt_score, $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
     function exp_onInit() {
@@ -128,6 +128,16 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_secure = exp_getMessage($this->config->msg_secure);
         $this->msg_new = exp_getMessage($this->config->msg_new);
         $this->msg_improved = exp_getMessage($this->config->msg_improved);
+
+        $this->msg_secure_top5 = exp_getMessage(str_replace("#record#", "#record_top#", $this->config->msg_secure));
+        $this->msg_new_top5 = exp_getMessage(str_replace("#record#", "#record_top#", $this->config->msg_new));
+        $this->msg_improved_top5 = exp_getMessage(str_replace("#record#", "#record_top#", $this->config->msg_improved));
+
+        $this->msg_secure_top1 = exp_getMessage($this->config->msg_congratulations . " " . str_replace("#record#", "#record_top#", $this->config->msg_secure));
+        $this->msg_new_top1 = exp_getMessage($this->config->msg_congratulations . " " . str_replace("#record#", "#record_top#", $this->config->msg_new));
+        $this->msg_improved_top1 = exp_getMessage($this->config->msg_congratulations . " " . str_replace("#record#", "#record_top#", $this->config->msg_improved));
+
+
         $this->msg_newMap = exp_getMessage($this->config->msg_newMap);
         $this->msg_BeginMap = exp_getMessage($this->config->msg_BeginMap);
         $this->msg_personalBest = exp_getMessage($this->config->msg_personalBest);
@@ -576,7 +586,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $time = substr($time, 2);
             }
 
-            //No new rank, just drove a bettter time
+            //No new rank, just drove a better time
             if ($nrecord->place == $recordrank_old && !$force && $nrecord->place <= $this->config->recordsCount) {
                 $securedBy = \ManiaLive\Utilities\Time::fromTM($nrecord->time - $recordtime_old);
                 if (substr($securedBy, 0, 3) === "0:0") {
@@ -584,7 +594,15 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 } else if (substr($securedBy, 0, 2) === "0:") {
                     $securedBy = substr($securedBy, 2);
                 }
-                $this->exp_chatSendServerMessage($this->msg_secure, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
+
+                $msg = $this->msg_secure;
+                if ($nrecord->place <= 5) {
+                    $msg = $this->msg_secure_top5;
+                    if ($nrecord->place == 1)
+                        $msg = $this->msg_secure_top1;
+                }
+
+                $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
                 \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
             }
             //Improved time and new Rank
@@ -595,12 +613,25 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 } else if (substr($securedBy, 0, 2) === "0:") {
                     $securedBy = substr($securedBy, 2);
                 }
-                $this->exp_chatSendServerMessage($this->msg_improved, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
+
+                $msg = $this->msg_improved;
+                if ($nrecord->place <= 5) {
+                    $msg = $this->msg_improved_top5;
+                    if ($nrecord->place == 1)
+                        $msg = $this->msg_improved_top1;
+                }
+                $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
                 \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
             }
             //First record the player drove
             else if ($nrecord->place <= $this->config->recordsCount) {
-                $this->exp_chatSendServerMessage($this->msg_new, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time));
+                $msg = $this->msg_new;
+                if ($nrecord->place <= 5) {
+                    $msg = $this->msg_new_top5;
+                    if ($nrecord->place == 1)
+                        $msg = $this->msg_new_top1;
+                }
+                $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time));
                 \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
             }
             \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_PERSONAL_BEST, $nrecord));

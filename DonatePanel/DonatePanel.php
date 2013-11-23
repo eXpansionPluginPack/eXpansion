@@ -21,9 +21,6 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function exp_onLoad() {
         $this->enableDedicatedEvents();
         $this->config = Config::getInstance();
-        $colors = \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance();
-        $colors->registerCode("donate", '$a0f');
-        $colors->registerCode("error", '$f00');
         DonatePanelWindow::$donatePlugin = $this;
 
         foreach ($this->storage->players as $player)

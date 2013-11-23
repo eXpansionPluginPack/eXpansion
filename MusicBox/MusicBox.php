@@ -27,9 +27,6 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         CurrentTrackWidget::$musicBoxPlugin = $this;
         Gui\Windows\MusicListWindow::$musicPlugin = $this;
 
-        $colors = \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance();
-        $colors->registerCode("music", '$f0a');
-
         $command = $this->registerChatCommand("musicbox", "mbox", 0, true);
         $command = $this->registerChatCommand("musicbox", "mbox", 1, true);
         $command = $this->registerChatCommand("mbox", "mbox", 0, true);

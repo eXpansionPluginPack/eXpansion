@@ -89,19 +89,20 @@ class TimePanel extends \ManiaLive\Gui\Window {
         $deditime = 0;
         $localtime = 0;
         $diff = null;
-        if (isset($dedicp[$cpIndex])) {
+
+        if (array_key_exists($cpIndex, $dedicp)) {
             $deditime = $dedicp[$cpIndex];
             $diff = $deditime;
         }
 
-        if (isset($localcp[$cpIndex]))
+        if (array_key_exists($cpIndex, $localcp))
             $localtime = $localcp[$cpIndex];
 
-        if (($deditime != 0) && ($localtime < $deditime))
+        if (($deditime != 0) && ($localtime > $deditime))
             $diff = $localtime;
 
         if ($diff == null)
-            if (isset($this->bestRun[$cpIndex]))
+            if (array_key_exists($cpIndex, $this->bestRun))
                 $diff = $this->bestRun[$cpIndex];
 
         if ($diff !== null) {

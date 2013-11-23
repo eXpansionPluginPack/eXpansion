@@ -71,13 +71,6 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 ) ENGINE=MYISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin; ");
 
 
-
-        /** @var \ManiaLivePlugins\eXpansion\Core\ColorParser */
-        $color = \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance();
-        $color->registerCode("quiz", '$z$s$3e3');
-        $color->registerCode("question", '$z$s$o$fa0');
-
-
         //  $command = $this->registerChatCommand("q", "chatquiz", -1, true);
         //  $command->help = '/q ask; Ask a question, /q points; show points, /q addpoint; Add Point to player, /q cancel; Cancel question, /q show; Show Answer';
         $command = $this->registerChatCommand("ask", "ask", -1, true);
