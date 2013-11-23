@@ -1,4 +1,4 @@
-﻿Admin: Frequently Asked Questions
+﻿Admin: Help topics
 !toc|Back to index
 
 #Administartors help

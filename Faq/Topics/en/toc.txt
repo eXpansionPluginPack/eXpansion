@@ -1,14 +1,14 @@
-﻿Frequently Asked Questions
-
+Frequently asked questions
 #Table of contents
-	$oCommunity services
-	!dedimania|Dedimania, what it that ?
-	!tmkarma|TM-Karma, what is it ?
-	!maniaexchange|Mania-exchange, what is it ?
-	
+
 	$oCustomizing
 	!t_nickname|How do i customize my nickname colors ?
-	!mx_upload|How to get map played in a server ?
-	
-	$oTopics for server administators
-	!admin|Admin questions and answers
+	!mx_upload|I made a map! How to upload it ?
+
+	$oCommunity services
+	!dedimania|Dedimania, what is it ?
+	!tmkarma|TM-Karma, what is it ?
+	!maniaexchange|Mania-exchange, what is it ?
+
+#Administrators
+	!admin|Administartors Guide
