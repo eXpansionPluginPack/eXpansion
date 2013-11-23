@@ -1,14 +1,20 @@
 Frequently asked questions
-#Table of contents
+#Welcome to eXpansion pluginpack for Manialive!
+The system looks different - since it's different, but nearly every chat command works like in the other servers.
 
-	$oCustomizing
-	!t_nickname|How do i customize my nickname colors ?
-	!mx_upload|I made a map! How to upload it ?
+	!ui|I'm not seeing the usual UI, how i find my way around ?
+	!list|How to display list of maps ? 
+	!votes|How to vote for skip or restart a map ?
+	!widgets_record|I see only local records, how i see dedimania times ?
 
-	$oCommunity services
-	!dedimania|Dedimania, what is it ?
-	!tmkarma|TM-Karma, what is it ?
-	!maniaexchange|Mania-exchange, what is it ?
+	!nickname|How do i customize my nickname colors ?
+	!mx_upload|I did a map! How do i get it to server ?
 
-#Administrators
-	!admin|Administartors Guide
+#Community services  
+	!dedimania|Dedimania
+	!tmkarma|TM-Karma
+	!mx|Mania-exchange
+
+#Index
+	!players|$oHelp topics for Players
+	!admin|$oHelp topics for Administrators 

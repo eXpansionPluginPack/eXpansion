@@ -1,0 +1,9 @@
+﻿Admin: Dedimania
+!admin|Back to admin
+
+#Dedimania info
+eXpansion automatically saves a replay file of the map first time every map played.
+These files can take a lot of space if the server is visited regularily, you can safely delete the temporarily files at
+
+$fffdedicated_path$000\UserData\Replays\Dedimania
+

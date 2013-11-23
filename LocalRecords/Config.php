@@ -18,7 +18,6 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $msg_secure = '#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #rank#%3$s #record#(#variable#$n%4$s#rank#-%5$s#record#$n)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
     public $msg_new = '#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #variable#%2$s: #rank#%3$s';  // %1$s - nickname; %2$s - rank; %3$s - time
     public $msg_improved = '#variable#%1$s  #record#improved the #rank#%2$s#record#. Local Record! #variable#%2$s: #rank#%3$s #record#(#variable#$n%4$s#rank#-%5$s#record#$n)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
-    public $msg_top5 = '';
     public $msg_congratulations = '$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s!';
             
     public $msg_newMap = '#variable#%1$s #record#is a new Map. Currently no record!';  // %1$s - map name

@@ -12,6 +12,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         , 'eXpansion\Adm'
         , 'eXpansion\Chat'
         , 'eXpansion\Chat_Admin'
+	, 'eXpansion\Chatlog'
         , 'eXpansion\Database'
         , 'eXpansion\Emotes'
         , 'eXpansion\DonatePanel'

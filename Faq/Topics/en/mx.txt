@@ -14,4 +14,4 @@ uploaded. And you can add your map to be played at MX PlayPal Online.
 ManiaExchange has also a unique way to add very easily maps directly to dedicated servers,
 nearly all community servers supports adding a map from ManiaExchange.
 
-!admin_mx|Adminis: How to add map from mx ?
+!admin_mx|Admins: How to add map from mx ?

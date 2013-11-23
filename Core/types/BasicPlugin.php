@@ -135,12 +135,18 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             return $this->exp_dir;
         }
 
-        /**
-         * Sending a chat message to the login.
-         * 
-         * @param type $msg
-         * @param type $login null to send to everyone
-         */
+       /**
+        * 
+        * to send everybody:
+        * exp_chatSendServerMessage("Message with parameters %1$s %2$s", null, array("parameter1","parameter2));
+        * 
+        * to send login:
+        * exp_chatSendServerMessage("Message with parameters %1$s %2$s", $login, array("parameter1","parameter2));
+        * 
+        * @param string|MultiLangMsg $msg String or MultiLangMsg to sent
+        * @param null|string $login null for everybody, string for individual
+        * @param array $args simple array of parameters
+        */
         public function exp_chatSendServerMessage($msg, $login = null, $args = array()) {
             if (!($msg instanceof MultiLangMsg)) {
                 if (DEBUG)

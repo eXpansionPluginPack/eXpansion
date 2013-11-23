@@ -1,5 +1,5 @@
 ﻿Faq: How do i customize my nickname colors ?
-!t_nickname|Back
+!nickname|Back
 #Nickname control codes
 
 $$w: allows you to $wenlarge$w the width of the nickname.

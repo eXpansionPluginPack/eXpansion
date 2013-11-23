@@ -24,8 +24,8 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
-        $this->actionOK = ActionHandler::getInstance()->createAction(array($this, "serverOptionsOk"));
-        $this->actionCancel = ActionHandler::getInstance()->createAction(array($this, "serverOptionsCancel"));
+        $this->actionOK = $this->createAction(array($this, "serverOptionsOk"));
+        $this->actionCancel = $this->createAction(array($this, "serverOptionsCancel"));
 
         $this->setTitle(__('Server Options',$this->getRecipient()));
 
@@ -219,8 +219,6 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function destroy() {
-        ActionHandler::getInstance()->deleteAction($this->actionOK);
-        ActionHandler::getInstance()->deleteAction($this->actionCancel);
         $this->buttonCancel->destroy();
         $this->buttonOK->destroy();
         $this->cbAllowMapDl->destroy();

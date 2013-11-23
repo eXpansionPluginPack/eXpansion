@@ -3,4 +3,6 @@
 
 #What is Dedimania ?
 
-Dedimania is a global database for map record times.
+Dedimania is a global database for map record times!
+
+!admin_dedimania|Admins: Dedimania
