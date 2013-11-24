@@ -8,8 +8,8 @@ namespace ManiaLivePlugins\eXpansion\Faq\Gui\Controls;
 abstract class FaqControl extends \ManiaLive\Gui\Control {
 
     /** @var ManiaLib\Gui\Elements\Label */
-    public $label;
-    public $action = null;
+    protected $label;
+    protected $action = null;
 
     public function __construct($text) {
         $this->setSize(240, 4);

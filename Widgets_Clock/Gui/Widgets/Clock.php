@@ -4,9 +4,9 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Clock\Gui\Widgets;
 
 class Clock extends \ManiaLive\Gui\Window {
 
-    private $xml;
-    private $clock;
-    private $date;
+    protected $xml;
+    protected $clock;
+    protected $date;
 
     protected function onConstruct() {
         parent::onConstruct();

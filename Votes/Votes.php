@@ -117,8 +117,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
-
-//$this->connection->cancelVote();
+        //$this->connection->cancelVote();
     }
 
     /**
@@ -173,36 +172,41 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function vote_Restart($login) {
-
-        $this->voter = $login;
-
-
-        $this->debug("[exp\Votes] Calling Restart (queue) vote..");
-        $vote = new \DedicatedApi\Structures\Vote();
-        $vote->callerLogin = $this->voter;
-        $vote->cmdName = "Replay";
-        $vote->cmdParam = array("the current map");
-        $this->connection->callVote($vote, $this->config->restartVote_ratio, ($this->config->restartVote_timeout * 1000), $this->config->restartVote_voters);
+        try {
+            $this->voter = $login;
 
 
-        $player = $this->storage->getPlayerObject($login);
-        $msg = exp_getMessage('#variable#%1$s #rank#initiated restart map vote..');
-        $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
+            $this->debug("[exp\Votes] Calling Restart (queue) vote..");
+            $vote = new \DedicatedApi\Structures\Vote();
+            $vote->callerLogin = $this->voter;
+            $vote->cmdName = "Replay";
+            $vote->cmdParam = array("the current map");
+            $this->connection->callVote($vote, $this->config->restartVote_ratio, ($this->config->restartVote_timeout * 1000), $this->config->restartVote_voters);
+
+            $player = $this->storage->getPlayerObject($login);
+            $msg = exp_getMessage('#variable#%1$s #rank#initiated restart map vote..');
+            $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
+        } catch (\Exception $e) {
+            $this->connection->chatSendServerMessage("[Notice] " . $e->getMessage(), $login);
+        }
     }
 
     public function vote_Skip($login) {
+        try {
+            $this->voter = $login;
+            $this->debug("[exp\Votes] Calling skip vote..");
+            $vote = new \DedicatedApi\Structures\Vote();
+            $vote->callerLogin = $this->voter;
+            $vote->cmdName = "Skip";
+            $vote->cmdParam = array("the current map");
+            $this->connection->callVote($vote, $this->config->skipVote_ratio, ($this->config->skipVote_timeout * 1000), $this->config->skipVote_voters);
 
-        $this->voter = $login;
-        $this->debug("[exp\Votes] Calling skip vote..");
-        $vote = new \DedicatedApi\Structures\Vote();
-        $vote->callerLogin = $this->voter;
-        $vote->cmdName = "Skip";
-        $vote->cmdParam = array("the current map");
-        $this->connection->callVote($vote, $this->config->skipVote_ratio, ($this->config->skipVote_timeout * 1000), $this->config->skipVote_voters);
-
-        $player = $this->storage->getPlayerObject($login);
-        $msg = exp_getMessage('#variable#%1$s #rank#initiated skip map vote..');
-        $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
+            $player = $this->storage->getPlayerObject($login);
+            $msg = exp_getMessage('#variable#%1$s #rank#initiated skip map vote..');
+            $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
+        } catch (\Exception $e) {
+            $this->connection->chatSendServerMessage("[Notice] " . $e->getMessage(), $login);
+        }
     }
 
     public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {
@@ -256,9 +260,15 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function cancelVote($login) {
         $player = $this->storage->getPlayerObject($login);
-        $this->connection->cancelVote();
-        $msg = exp_getMessage('#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!');
-        $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+        $vote = $this->connection->getCurrentCallVote();
+        if (!empty($vote->cmdName)) {
+            $this->connection->cancelVote();
+            $msg = exp_getMessage('#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!');
+            $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+            return;
+        } else {
+            $this->connection->chatSendServerMessage('Notice: Can\'t cancel a vote, no vote in progress!', $login);
+        }
     }
 
     public

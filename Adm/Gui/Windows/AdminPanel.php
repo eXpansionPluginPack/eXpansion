@@ -60,22 +60,22 @@ class AdminPanel extends \ManiaLive\Gui\Window {
 
         $this->btnEndRound = new \ManiaLib\Gui\Elements\Quad(7, 7);
         $this->btnEndRound->setAction($this->actionEndRound);
-        $this->btnEndRound->setStyle("UIConstructionSimple_Buttons");
-        $this->btnEndRound->setSubStyle("Validate");
+        $this->btnEndRound->setStyle("Icons128x32_1");
+        $this->btnEndRound->setSubStyle("RT_Rounds");
 
         $frame->addComponent($this->btnEndRound);
 
 
         $this->btnCancelVote = new \ManiaLib\Gui\Elements\Quad(7, 7);
         $this->btnCancelVote->setAction($this->actionCancelVote);
-        $this->btnCancelVote->setStyle("Icons64x64_1");
-        $this->btnCancelVote->setSubStyle("Check");
+        $this->btnCancelVote->setStyle("UIConstructionSimple_Buttons");
+        $this->btnCancelVote->setSubStyle("Add");
         $frame->addComponent($this->btnCancelVote);
 
         $this->btnRestart = new \ManiaLib\Gui\Elements\Quad(7, 7);
         $this->btnRestart->setAction($this->actionRestart);
-        $this->btnRestart->setStyle("Icons128x128_1");
-        $this->btnRestart->setSubStyle("Default");
+        $this->btnRestart->setStyle("Icons128x32_1");
+        $this->btnRestart->setSubStyle("RT_Laps");
         $frame->addComponent($this->btnRestart);
 
         $this->btnSkip = new \ManiaLib\Gui\Elements\Quad(7, 7);
@@ -165,24 +165,35 @@ class AdminPanel extends \ManiaLive\Gui\Window {
             $player = $this->storage->getPlayerObject($login);
             switch ($action) {
                 case "forceEndRound":
-                    $this->connection->$action();
+                    $this->connection->forceEndRound();
                     $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff forced the round to end');
                     break;
                 case "cancelVote":
-                    $this->connection->$action();
-                    $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff cancels the vote');
+                    $this->cancelVote($login);
                     break;
                 case "nextMap":
-                    $this->connection->$action();
+                    $this->connection->nextMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
                     $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff skipped to next map!');
                     break;
                 case "restartMap":
-                    $this->connection->$action();
+                    $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
                     $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff restarted the map');
                     break;
             }
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('$f00$oError! $z$s$fff' . $e->getMessage(), $login);
+            $this->connection->chatSendServerMessage('Notice: ' . $e->getMessage(), $login);
+        }
+    }
+
+    function cancelVote($login) {
+        $player = $this->storage->getPlayerObject($login);
+        $vote = $this->connection->getCurrentCallVote();
+        if (!empty($vote->cmdName)) {
+            $this->connection->cancelVote();
+            $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff cancels the vote');
+            return;
+        } else {
+            $this->connection->chatSendServerMessage('Notice: Can\'t cancel a vote, no vote in progress!', $player->login);
         }
     }
 

@@ -19,13 +19,13 @@ class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * displayWidget(string $login)
      * @param string $login
      */
-    function displayWidget($login) {       
+    function displayWidget($login) {
         $info = Gui\Widgets\Clock::Create($login);
         $info->setSize(60, 12);
         $info->show();
     }
 
-    public function onPlayerConnect($login, $isSpectator) {        
+    public function onPlayerConnect($login, $isSpectator) {
         $this->displayWidget($login);
     }
 
@@ -34,7 +34,10 @@ class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onBeginMatch() {
-        
+        foreach ($this->storage->players as $login => $player)
+            $this->displayWidget($login);
+        foreach ($this->storage->spectators as $login => $player)
+            $this->displayWidget($login);
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {

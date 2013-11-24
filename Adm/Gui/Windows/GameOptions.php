@@ -18,9 +18,9 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     /** @var GameInfos */
     private $nextGameInfo;
-    private $actionOK, $actionCancel, $actionTA, $actionRounds, $actionLaps, $actionCup, $actionTeam;
-    private $btn_ta, $btn_rounds, $btn_cup, $btn_team, $btn_laps, $buttonOK, $buttonCancel;
-    private $frameGameMode, $frameGeneral, $frameCup, $frameTa, $frameRounds, $frameContainer;
+    protected $actionOK, $actionCancel, $actionTA, $actionRounds, $actionLaps, $actionCup, $actionTeam;
+    protected $btn_ta, $btn_rounds, $btn_cup, $btn_team, $btn_laps, $buttonOK, $buttonCancel;
+    protected $frameGameMode, $frameGeneral, $frameCup, $frameTa, $frameRounds, $frameContainer;
     private $e = array();
     private $nextMode = null;
 

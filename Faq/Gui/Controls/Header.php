@@ -17,8 +17,7 @@ class Header extends FaqControl {
         $this->label->setTextColor("0af");
         $this->setSizeY(7);
         $this->setAlign("left", "top");
-        
-       }
+    }
 
 }
 
