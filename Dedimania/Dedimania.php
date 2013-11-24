@@ -25,7 +25,6 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     public function exp_onInit() {
         $this->setVersion(0.1);
         $this->config = Config::getInstance();
-        Dispatcher::register(DediEvent::getClass(), $this);
     }
 
     public function exp_onLoad() {
@@ -36,7 +35,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
             die("[Dedimania] Server login is not configured!" . $helpText);
         if (empty($this->config->code))
             die("[Dedimania] Server code is not configured!" . $helpText);
-
+        Dispatcher::register(DediEvent::getClass(), $this);
         $this->dedimania = DediConnection::getInstance();
         $this->config->newRecordMsg = exp_getMessage($this->config->newRecordMsg);
         $this->config->noRecordMsg = exp_getMessage($this->config->noRecordMsg);
@@ -143,7 +142,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
                 continue;
             $record->place = ++$i;
             if (array_key_exists($record->login, DediConnection::$players)) {
-                if ($record->place < DediConnection::$players[$record->login]->maxRank) {
+                if ($record->place <= DediConnection::$players[$record->login]->maxRank) {
                     $newrecords[$record->login] = $record;
                 }
             } else {
@@ -151,7 +150,8 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
             }
         }
         // assign  the new records
-        $this->records = array_slice($newrecords, 0, DediConnection::$serverMaxRank);
+        // $this->records = array_slice($newrecords, 0, DediConnection::$serverMaxRank);
+        $this->records = $newrecords;
         // assign the last place
         $this->lastRecord = end($this->records);
 
@@ -168,8 +168,8 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
     private function sortAsc(&$array, $prop) {
         usort($array, function($a, $b) use ($prop) {
-                    return $a->$prop > $b->$prop ? 1 : -1;
-                });
+            return $a->$prop > $b->$prop ? 1 : -1;
+        });
     }
 
     /**
@@ -242,6 +242,8 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
             $this->records[$record['Login']] = new Structures\DediRecord($record['Login'], $record['NickName'], $record['Best'], $record['Rank'], $record['Checks']);
         }
         $this->lastRecord = end($this->records);
+        $this->debug("Dedimania get records:");
+        //$this->debug($data);
     }
 
     public function onUnload() {
@@ -255,7 +257,8 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
      * @param type $data
      */
     public function onDedimaniaUpdateRecords($data) {
-        
+        $this->debug("Dedimania update records:");
+       // $this->debug($data);
     }
 
     /**
@@ -265,6 +268,8 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
      * @param Structures\DediRecord $record     
      */
     public function onDedimaniaNewRecord($record) {
+        $this->debug("new dedirecord:");
+        $this->debug($record);
         try {
             if ($this->config->disableMessages == true)
                 return;
@@ -274,6 +279,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
                 $recepient = null;
 
             $this->exp_chatSendServerMessage($this->config->newRecordMsg, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, \ManiaLive\Utilities\Time::fromTM($record->time)));
+            $this->debug("message sent.");
         } catch (\Exception $e) {
             \ManiaLive\Utilities\Console::println("Error: couldn't show dedimania message" . $e->getMessage());
         }
@@ -285,6 +291,8 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
      * @param Structures\DediRecord $oldRecord     
      */
     public function onDedimaniaRecord($record, $oldRecord) {
+        $this->debug("improved dedirecord:");
+        $this->debug($record);
         try {
             if ($this->config->disableMessages == true)
                 return;
@@ -294,30 +302,14 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
             $diff = \ManiaLive\Utilities\Time::fromTM($record->time - $oldRecord->time, true);
             $this->exp_chatSendServerMessage($this->config->recordMsg, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, \ManiaLive\Utilities\Time::fromTM($record->time), $oldRecord->place, $diff));
+            $this->debug("message sent.");
         } catch (\Exception $e) {
             \ManiaLive\Utilities\Console::println("Error: couldn't show dedimania message");
-            print_r($e);
         }
     }
 
     public function onDedimaniaPlayerConnect($data) {
-        if ($this->config->disableMessages)
-            return;
-
-        if ($data == null)
-            return;
-
-        if ($data['Banned']) {
-            return;
-        }
-
-        $player = $this->storage->getPlayerObject($data['Login']);
-        $type = '$fffFree';
-
-        if ($data['MaxRank'] > 15) {
-            $type = '$ff0Premium$fff';
-            $upgrade = false;
-        }
+        
     }
 
     public function onDedimaniaPlayerDisconnect() {

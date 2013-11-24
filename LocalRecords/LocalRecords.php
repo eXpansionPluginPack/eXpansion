@@ -10,6 +10,7 @@ use \ManiaLivePlugins\eXpansion\LocalRecords\Events\Event;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 
 class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+
     //This numbers are important do not change. THey are using binarie thinking.
 
     const DEBUG_NONE = 0;                   //00000
@@ -88,7 +89,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * All the messages need to be sent;
      * @var Message
      */
-            private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank, $msg_secure_top1, $msg_secure_top5, $msg_new_top1, $msg_new_top5, $msg_improved_top1, $msg_improved_top5;
+    private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank, $msg_secure_top1, $msg_secure_top5, $msg_new_top1, $msg_new_top5, $msg_improved_top1, $msg_improved_top5;
     public static $txt_rank, $txt_nick, $txt_score, $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
     function exp_onInit() {
@@ -431,12 +432,13 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerFinishLap($player, $time, $checkpoints, $nbLap) {
+        $this->debug("OnPlayerFinishLap!");
 
         if ($this->config->lapsModeCount1lap && isset($this->storage->players[$player->login]) && $time > 0) {
             $gamemode = $this->storage->gameInfos->gameMode;
 
-            /* if ($gamemode != \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS)//Laps mode has it own on Player finish event
-              return; */
+            if ($gamemode != \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS)//Laps mode has it own on Player finish event
+                return;
 
             $this->addRecord($player->login, $time, $gamemode, $this->checkpoints[$player->login]);
             $this->checkpoints[$player->login] = array();

@@ -97,6 +97,9 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function onPlayerConnect($login, $isSpectator) {
+        $audiopreload = Gui\Widgets\AudioPreload::Create($login);
+        $audiopreload->show();
+        
         $widget = TimeChooser::Create($login);
         $widget->setSize(40, 6);
         if (!isset($this->modes[$login]))

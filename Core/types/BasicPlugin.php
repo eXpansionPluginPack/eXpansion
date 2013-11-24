@@ -135,22 +135,23 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             return $this->exp_dir;
         }
 
-       /**
-        * 
-        * to send everybody:
-        * exp_chatSendServerMessage("Message with parameters %1$s %2$s", null, array("parameter1","parameter2));
-        * 
-        * to send login:
-        * exp_chatSendServerMessage("Message with parameters %1$s %2$s", $login, array("parameter1","parameter2));
-        * 
-        * @param string|MultiLangMsg $msg String or MultiLangMsg to sent
-        * @param null|string $login null for everybody, string for individual
-        * @param array $args simple array of parameters
-        */
+        /**
+         * 
+         * to send everybody:
+         * exp_chatSendServerMessage("Message with parameters %1$s %2$s", null, array("parameter1","parameter2));
+         * 
+         * to send login:
+         * exp_chatSendServerMessage("Message with parameters %1$s %2$s", $login, array("parameter1","parameter2));
+         * 
+         * @param string|MultiLangMsg $msg String or MultiLangMsg to sent
+         * @param null|string $login null for everybody, string for individual
+         * @param array $args simple array of parameters
+         */
         public function exp_chatSendServerMessage($msg, $login = null, $args = array()) {
             if (!($msg instanceof MultiLangMsg)) {
-                if (DEBUG)
+                if (DEBUG) {
                     Console::println("#Plugin " . $this->getId() . " uses chatSendServerMessage in an unoptimized way!!");
+                }
                 $msg = exp_getMessage($msg);
             }
 
@@ -332,8 +333,23 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
 
         final public function debug($message) {
             $config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
-            if ($config->debug)
-                Console::printDebug($message);
+            if (!$config->debug)
+                return;
+
+            if (is_string($message)) {
+                Console::println($message);
+                \ManiaLive\Utilities\Logger::log($message, true, "exp-debug.txt");
+            }
+            if (is_array($message)) {
+                $info = print_r($message, true);
+                Console::println($info);
+                \ManiaLive\Utilities\Logger::log($info, true, "exp-debug.txt");
+            }
+            if (is_object($message)) {
+                $info = var_export($message, true);
+                Console::println($info);
+                \ManiaLive\Utilities\Logger::log($message, true, "exp-debug.txt");
+            }
         }
 
     }
@@ -341,7 +357,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
 }
 
 namespace {
-    
+
     if (!defined("DEBUG")) {
         $config = ManiaLivePlugins\eXpansion\Core\Config::getInstance();
         define("DEBUG", filter_var($config->debug, FILTER_VALIDATE_BOOLEAN));

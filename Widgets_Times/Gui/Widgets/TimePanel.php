@@ -58,6 +58,8 @@ class TimePanel extends \ManiaLive\Gui\Window {
 
         $dedicp = array();
         $localcp = array();
+        $dediTotal = 0;
+        $localTotal = 0;
 
         $this->time->setTextColor('fffa');
         $this->time->setText(\ManiaLive\Utilities\Time::fromTM($time, false));
@@ -67,19 +69,24 @@ class TimePanel extends \ManiaLive\Gui\Window {
             $dedicp = array();
             $localcp = array();
             if (isset(self::$dedirecords[0]))
-                if (array_key_exists('Checks', self::$dedirecords[0]))
+                if (array_key_exists('Checks', self::$dedirecords[0])) {
                     $dedicp = explode(",", self::$dedirecords[0]['Checks']);
-
-            if (isset(self::$localrecords[0]))
+                    $dediTotal = end($dedicp);
+                }
+            if (isset(self::$localrecords[0])) {
                 $localcp = self::$localrecords[0]->ScoreCheckpoints;
+                $localTotal = self::$localrecords[0]->time;
+            }
         }
 
         if ($mode == self::Mode_PersonalBest) {
             $dedicp = array();
             foreach (self::$dedirecords as $dedirec) {
                 if ($dedirec['Login'] == $this->getRecipient()) {
-                    if (array_key_exists('Checks', $dedirec))
+                    if (array_key_exists('Checks', $dedirec)) {
                         $dedicp = explode(",", $dedirec['Checks']);
+                        $dediTotal = end($dedicp);
+                    }
                     break;
                 }
             }
@@ -87,6 +94,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
             $localcp = array();
             if ($record) {
                 $localcp = $record->ScoreCheckpoints;
+                $localTotal = $record->time;
             }
         }
 
@@ -94,35 +102,31 @@ class TimePanel extends \ManiaLive\Gui\Window {
         $deditime = 0;
         $localtime = 0;
         $diff = null;
-        $dediTotal = 0;
-        $localTotal = 0;
+
 
         if (sizeof($dedicp) > 0) {
-            $dediTotal = end($dedicp);
             if (array_key_exists($cpIndex, $dedicp)) {
                 $deditime = $dedicp[$cpIndex];
             }
         }
 
         if (sizeof($localcp) > 0) {
-            $localTotal = end($localcp);
             if (array_key_exists($cpIndex, $localcp)) {
                 $localtime = $localcp[$cpIndex];
             }
         }
-
         // use dedimania times in firstplace
         if ($dediTotal != 0) {
             $diff = $deditime;
             // except if localrecord is set and is faster than dedimania time
-            if ($localTotal != 0 && $localTotal > $dediTotal) {
+            if (($localTotal != 0) && ($localTotal < $dediTotal)) {
                 $diff = $localtime;
             }
             // if no dedimania record, try local record instead
         } elseif ($localTotal != 0) {
             $diff = $localtime;
         }
-        
+
         // if diff is still not set, check for this rounds best time
         if ($diff === null) {
             if (isset($this->bestRun[$cpIndex])) {
