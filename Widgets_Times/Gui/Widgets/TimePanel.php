@@ -94,22 +94,42 @@ class TimePanel extends \ManiaLive\Gui\Window {
         $deditime = 0;
         $localtime = 0;
         $diff = null;
-        if (isset($dedicp[$cpIndex])) {
-            $deditime = $dedicp[$cpIndex];
-            $diff = $deditime;
+        $dediTotal = 0;
+        $localTotal = 0;
+
+        if (sizeof($dedicp) > 0) {
+            $dediTotal = end($dedicp);
+            if (array_key_exists($cpIndex, $dedicp)) {
+                $deditime = $dedicp[$cpIndex];
+            }
         }
 
-        if (isset($localcp[$cpIndex]))
-            $localtime = $localcp[$cpIndex];
+        if (sizeof($localcp) > 0) {
+            $localTotal = end($localcp);
+            if (array_key_exists($cpIndex, $localcp)) {
+                $localtime = $localcp[$cpIndex];
+            }
+        }
 
-
-        if ($localtime > $deditime)
+        // use dedimania times in firstplace
+        if ($dediTotal != 0) {
+            $diff = $deditime;
+            // except if localrecord is set and is faster than dedimania time
+            if ($localTotal != 0 && $localTotal > $dediTotal) {
+                $diff = $localtime;
+            }
+            // if no dedimania record, try local record instead
+        } elseif ($localTotal != 0) {
             $diff = $localtime;
-
-        if ($diff == null)
-            if (isset($this->bestRun[$cpIndex]))
+        }
+        
+        // if diff is still not set, check for this rounds best time
+        if ($diff === null) {
+            if (isset($this->bestRun[$cpIndex])) {
                 $diff = $this->bestRun[$cpIndex];
-
+            }
+        }
+        // set colors and play sound if diffenential is found
         if ($diff !== null) {
             // if no records found for dedimania or local, fallback to personal best
             $this->time->setText(\ManiaLive\Utilities\Time::fromTM($time - $diff, true));
@@ -144,5 +164,4 @@ class TimePanel extends \ManiaLive\Gui\Window {
     }
 
 }
-
 ?>
