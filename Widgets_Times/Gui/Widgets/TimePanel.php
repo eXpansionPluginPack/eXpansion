@@ -10,8 +10,9 @@ class TimePanel extends \ManiaLive\Gui\Window {
     const Mode_PersonalBest = 2;
     const Mode_None = 3;
 
-    private $checkpoint;
-    private $time;
+    protected $checkpoint;
+    protected $time;
+    protected $audio;
     private $bestRun = array();
     private $currentRun = array();
     private $lastFinish = -1;
@@ -37,6 +38,10 @@ class TimePanel extends \ManiaLive\Gui\Window {
         $this->checkpoint->setAlign("left", "center");
         $this->addComponent($this->checkpoint);
         $this->setAlign("center", "top");
+
+        $this->audio = new \ManiaLib\Gui\Elements\Audio();
+        $this->audio->setPosY(260);
+        $this->addComponent($this->audio);
     }
 
     function onResize($oldX, $oldY) {
@@ -47,7 +52,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
         
     }
 
-    public function onCheckpoint($time, $cpIndex, $cpTotal, $mode) {
+    public function onCheckpoint($time, $cpIndex, $cpTotal, $mode, $playAudio) {
         $this->currentRun[$cpIndex] = $time;
         $this->checkpoint->setText("cp " . ($cpIndex + 1) . "/" . $cpTotal . "");
 
@@ -109,8 +114,15 @@ class TimePanel extends \ManiaLive\Gui\Window {
             // if no records found for dedimania or local, fallback to personal best
             $this->time->setText(\ManiaLive\Utilities\Time::fromTM($time - $diff, true));
             $this->time->setTextColor('a00a');
-            if ($diff > $time)
+            $this->audio->setData("");
+
+            if ($diff > $time) {
                 $this->time->setTextColor('00aa');
+                if ($playAudio) {
+                    $this->audio->setData("http://reaby.kapsi.fi/ml/ding.ogg");
+                    $this->audio->autoPlay();
+                }
+            }
         }
     }
 

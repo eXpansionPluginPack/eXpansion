@@ -10,6 +10,7 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $modes = array();
+    private $audio = array();
 
     function exp_onInit() {
         //Important for all eXpansion plugins.
@@ -43,8 +44,14 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 return;
             $mode = $this->modes[$login];
         }
+
+        $playAudio = false;
+        if (isset($this->audio[$login])) {
+            $playAudio = $this->audio[$login];
+        }
+
         $info = TimePanel::Create($login);
-        $info->onCheckpoint($timeOrScore, $checkpointIndex, $this->storage->currentMap->nbCheckpoints, $mode);
+        $info->onCheckpoint($timeOrScore, $checkpointIndex, $this->storage->currentMap->nbCheckpoints, $mode, $playAudio);
         $info->setSize(30, 6);
         $info->setPosition(0, 40);
         $info->show();
@@ -67,7 +74,13 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function setMode($login, $mode) {
         $this->modes[$login] = $mode;
         $info = Gui\Widgets\TimeChooser::Create($login);
-        $info->updatePanelMode($this->modes[$login]);
+        $info->updatePanelMode($this->modes[$login], $this->audio[$login]);
+    }
+
+    public function setAudioMode($login, $audiomode) {
+        $this->audio[$login] = $audiomode;
+        $info = Gui\Widgets\TimeChooser::Create($login);
+        $info->updatePanelMode($this->modes[$login], $this->audio[$login]);
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
@@ -88,9 +101,12 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $widget->setSize(40, 6);
         if (!isset($this->modes[$login]))
             $this->modes[$login] = TimePanel::Mode_PersonalBest;
-        $widget->updatePanelMode($this->modes[$login]);
 
-        $widget->setPosition(14, -80);
+        if (!isset($this->audio[$login]))
+            $this->audio[$login] = false;
+        $widget->updatePanelMode($this->modes[$login], $this->audio[$login]);
+
+        $widget->setPosition(14, -78);
         $widget->show();
     }
 
