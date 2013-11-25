@@ -76,6 +76,8 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         } catch (\Exception $e) {
             echo "TmKarma error: ". $e->getMessage() ."\n";
+	    echo $e->getFile() . ":" . $e->getLine();
+	    
             return;
         }
     }

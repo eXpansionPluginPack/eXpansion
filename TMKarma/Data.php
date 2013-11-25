@@ -40,7 +40,7 @@ abstract class Data
 		'AFG' => array("Afghanistan",					'ASIA'),
 		'AGO' => array("Angola",					'AFRICA'),
 		'AIA' => array("Anguilla",					'NORTHAMERICA'),
-		'ALA' => array("�land Islands",					'EUROPE'),
+		'ALA' => array("Åland Islands",					'EUROPE'),
 		'ALB' => array("Albania",					'EUROPE'),
 		'AND' => array("Andorra",					'EUROPE'),
 		'ANT' => array("Netherlands Antilles",				'NORTHAMERICA'),
