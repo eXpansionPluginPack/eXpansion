@@ -31,3 +31,6 @@ Annuler le Vote
 #admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
 #admin_action#Admin #variable#%1$s #admin_action# a annulé le vote!
 
+#admin_error# $iVote failed!
+#translate# #admin_error# $iVote failed!
+

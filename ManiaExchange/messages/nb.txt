@@ -46,3 +46,9 @@ Feil miljø!
 #admin_error# $iVote failed!
 #admin_error# $iAvstemming mislykket!
 
+Error receving data from ManiaExchange!
+#translate# Error receving data from ManiaExchange!
+
+Map %s $z$s$fff added from MX Succesfully
+#translate# Map %s $z$s$fff added from MX Succesfully
+

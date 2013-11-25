@@ -46,3 +46,9 @@ Wrong environment!
 #admin_error# $iVote failed!
 #admin_error# $iVote failed!
 
+Error receving data from ManiaExchange!
+Error receving data from ManiaExchange!
+
+Map %s $z$s$fff added from MX Succesfully
+Map %s $z$s$fff added from MX Succesfully
+

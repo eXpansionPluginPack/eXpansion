@@ -53,13 +53,16 @@ foreach ($iterator as $dir) {
 		} else {
 		    $new++;
 		    //$difference[$newmessage] = "*!*" . $newmessage;
-		    $outputBuffer .= $newmessage . "\n" . "#translate# " . $newmessage . "\n\n";
+		    if ($filename == "en.txt") {
+			$outputBuffer .= $newmessage . "\n" . $newmessage . "\n\n";
+		    } else {
+			$outputBuffer .= $newmessage . "\n" . "#translate# " . $newmessage . "\n\n";
+		    }
 		}
 	    }
 	    echo $filename . "  old: " . $old . " new:" . $new . "\n";
 	    file_put_contents($localefile, $outputBuffer, FILE_APPEND);
 	}
-	break;
     }
 }
 

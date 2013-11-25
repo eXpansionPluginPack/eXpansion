@@ -79,3 +79,57 @@ Erreur: %s
 #queue#Challenge set to be replayed!
 #queue#Challenge marqué pour reprise!
 
+Add
+#translate# Add
+
+Delete
+#translate# Delete
+
+Drop
+#translate# Drop
+
+Add all
+#translate# Add all
+
+Map name
+#translate# Map name
+
+Author
+#translate# Author
+
+Lenght
+#translate# Lenght
+
+Records
+#translate# Records
+
+Ratings
+#translate# Ratings
+
+Actions
+#translate# Actions
+
+adds a map via MX
+#translate# adds a map via MX
+
+Jukebox
+#translate# Jukebox
+
+/jb uses next params: drop, reset and show
+#translate# /jb uses next params: drop, reset and show
+
+#admin_error#Error downloading, or MX is down!
+#translate# #admin_error#Error downloading, or MX is down!
+
+#admin_error#The map is to large to be added to a server
+#translate# #admin_error#The map is to large to be added to a server
+
+#admin_error#You must include a MX map ID!
+#translate# #admin_error#You must include a MX map ID!
+
+#admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s
+#translate# #admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s
+
+#admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
+#translate# #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
+

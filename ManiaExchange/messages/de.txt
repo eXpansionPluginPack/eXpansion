@@ -46,3 +46,9 @@ Falsche Umgebung/Titel!
 #admin_error# $iVote failed!
 #admin_error# $iiAbstimmung gescheitert!
 
+Error receving data from ManiaExchange!
+#translate# Error receving data from ManiaExchange!
+
+Map %s $z$s$fff added from MX Succesfully
+#translate# Map %s $z$s$fff added from MX Succesfully
+

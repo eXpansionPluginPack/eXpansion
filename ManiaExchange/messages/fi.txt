@@ -38,11 +38,17 @@ Unable to retrieve track info from MX..  wrong ID..?
 Karttaa ei löytynyt MX:stä..  kenties väärä ID..?
 
 Wrong environment!
-Väärä ympäristö!
+Väärä peli!
 
 #record# $iVote passed!
 #record# $iÄänestys onnistui!
 
 #admin_error# $iVote failed!
 #admin_error# $iÄänestys epäonnistui!
+
+Error receving data from ManiaExchange!
+Virhe vastaanotettaessa tietoja Mania-Exchangesta!
+
+Map %s $z$s$fff added from MX Succesfully
+Onnistui! Kartta %s $z$s$fff lisätty MX:stä 
 

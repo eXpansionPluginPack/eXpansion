@@ -139,3 +139,81 @@ Erlaube Änderung des Anfangswertes der Validierungsberechnung
 Enable Referee-mode
 Schiedsrichter-Modus einschalten
 
+ForceScores can be used only with rounds or team mode
+#translate# ForceScores can be used only with rounds or team mode
+
+ScriptSettings available only in script mode
+#translate# ScriptSettings available only in script mode
+
+Database plugin not loaded!
+#translate# Database plugin not loaded!
+
+#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
+#translate# #admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
+
+Podium Chat time
+#translate# Podium Chat time
+
+All Warmup Duration
+#translate# All Warmup Duration
+
+finishTimeout
+#translate# finishTimeout
+
+timeAttackLimit
+#translate# timeAttackLimit
+
+timeAttackSynchStartPeriod
+#translate# timeAttackSynchStartPeriod
+
+roundsPointsLimit
+#translate# roundsPointsLimit
+
+roundsForcedLaps
+#translate# roundsForcedLaps
+
+roundsPointsLimitNewRules
+#translate# roundsPointsLimitNewRules
+
+teamPointsLimit
+#translate# teamPointsLimit
+
+teamMaxPoints
+#translate# teamMaxPoints
+
+teamPointsLimitNewRules
+#translate# teamPointsLimitNewRules
+
+cupPointsLimit
+#translate# cupPointsLimit
+
+cupNbWinners
+#translate# cupNbWinners
+
+cupRoundsPerMap
+#translate# cupRoundsPerMap
+
+Choose Gamemode:
+#translate# Choose Gamemode:
+
+Additional Options:
+#translate# Additional Options:
+
+Rounds: use new rules
+#translate# Rounds: use new rules
+
+Team: use new rules
+#translate# Team: use new rules
+
+Disable Respawn
+#translate# Disable Respawn
+
+Force Show All Opponents
+#translate# Force Show All Opponents
+
+Save MatchSettings as
+#translate# Save MatchSettings as
+
+Round points
+#translate# Round points
+

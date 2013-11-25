@@ -81,3 +81,57 @@ Virhe: %s
 
 #queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
 #queue#Kartta vaihdettu #variable#%1$s  #queue#, tekijänä #variable#%2$s#queue#, ja toivonut #variable#%3$s
+
+Add
+Lisää
+
+Delete
+Poista
+
+Drop
+Tiputa
+
+Add all
+Lisää kaikki
+
+Map name
+Kartan nimi
+
+Author
+Tekijä
+
+Lenght
+Pituus
+
+Records
+Oma ennätys
+
+Ratings
+Arvio
+
+Actions
+Toimenpiteet
+
+adds a map via MX
+Lisää kartan MX:n kautta
+
+Jukebox
+Jukebox
+
+/jb uses next params: drop, reset and show
+/jb käytttää seuraavia valitsimia: drop, reset ja show
+
+#admin_error#Error downloading, or MX is down!
+#admin_error#Virhe ladattaessa, tai MX on alhaalla!
+
+#admin_error#The map is to large to be added to a server
+#admin_error#Kartta on kooltaan liian suuri lisättäväksi palvelimelle
+
+#admin_error#You must include a MX map ID!
+#admin_error#MX ID puuttuu
+
+#admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s
+#admin_action#Kartta #variable# %1$s #admin_action# lisätty karttalistaan, lisääjä #variable#%2$s
+
+#admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
+#admin_action#Ylläpitäjä #variable#%1$s #admin_action#poisti kartan #variable#%3$s #admin_action# sekä karttaluettelosta että kiintolevyltä!

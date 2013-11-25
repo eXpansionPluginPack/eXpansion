@@ -139,3 +139,80 @@ Käytä vaihtuvaa validaatioavainta
 Enable Referee-mode
 Salli referee-moodi
 
+ForceScores can be used only with rounds or team mode
+Voit pakottaa pisteitä vain rounds- tai team-pelimoodeissa.
+
+ScriptSettings available only in script mode
+Scriptiasetukset ovat käytettävissä vain script-pelimoodissa.
+
+Database plugin not loaded!
+Tietokanta (Database) liitännäistä ei ole ladattu.
+
+#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
+#admin_action#Ylläpitäjä %s $z$s#admin_action#asettaa uudet rounds-pisteet: #variable#%s
+
+Podium Chat time
+Palkintokorokeen chat-aika
+
+All Warmup Duration
+All Warmup Duration
+
+finishTimeout
+finishTimeout
+
+timeAttackLimit
+timeAttackLimit
+
+timeAttackSynchStartPeriod
+timeAttackSynchStartPeriod
+
+roundsPointsLimit
+roundsPointsLimit
+
+roundsForcedLaps
+roundsForcedLaps
+
+roundsPointsLimitNewRules
+roundsPointsLimitNewRules
+
+teamPointsLimit
+teamPointsLimit
+
+teamMaxPoints
+teamMaxPoints
+
+teamPointsLimitNewRules
+teamPointsLimitNewRules
+
+cupPointsLimit
+cupPointsLimit
+
+cupNbWinners
+cupNbWinners
+
+cupRoundsPerMap
+cupRoundsPerMap
+
+Choose Gamemode:
+Valitse pelimoodi:
+
+Additional Options:
+Lisäasetuset:
+
+Rounds: use new rules
+Rounds: käytä uusia sääntöjä
+
+Team: use new rules
+Team: käytä uusia sääntöjä
+
+Disable Respawn
+Estä uudelleen aloittaminen
+
+Force Show All Opponents
+Pakota näyttämään kaikki pelaajat
+
+Save MatchSettings as
+Tallenna peliasetukset nimellä
+
+Round points
+Rounds pisteet

@@ -187,3 +187,33 @@ Allow changing validation seed
 Enable Referee-mode
 Enable Referee-mode
 
+ForceScores can be used only with rounds or team mode
+ForceScores can be used only with rounds or team mode
+
+ScriptSettings available only in script mode
+ScriptSettings available only in script mode
+
+Database plugin not loaded!
+Database plugin not loaded!
+
+#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
+#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
+
+All Warmup Duration
+All Warmup Duration
+
+roundsPointsLimitNewRules
+roundsPointsLimitNewRules
+
+teamPointsLimitNewRules
+teamPointsLimitNewRules
+
+Rounds: use new rules
+Rounds: use new rules
+
+Team: use new rules
+Team: use new rules
+
+Round points
+Round points
+

@@ -1,0 +1,51 @@
+Question
+Question
+
+Answer
+Answer
+
+Apply
+Apply
+
+Cancel
+Cancel
+
+#quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2
+#quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2
+
+#question#%s ?
+#question#%s ?
+
+#error#Question needs to be at the right format!
+#error#Question needs to be at the right format!
+
+#quiz#Quiz has been reset!
+#quiz#Quiz has been reset!
+
+Correct from
+Correct from
+
+#quiz#Right answers: $o#question#%s
+#quiz#Right answers: $o#question#%s
+
+#error#Aswer is missing from the question!
+#error#Aswer is missing from the question!
+
+#error#Question is missing from the question!
+#error#Question is missing from the question!
+
+%s #quiz#cancels the question.
+%s #quiz#cancels the question.
+
+#quiz#Current point holders:
+#quiz#Current point holders:
+
+#quiz#$oPoint added for #variable#%s
+#quiz#$oPoint added for #variable#%s
+
+#quiz#$oPoint removed from #variable#%s
+#quiz#$oPoint removed from #variable#%s
+
+New question
+New question
+

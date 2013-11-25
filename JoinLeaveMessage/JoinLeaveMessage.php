@@ -27,7 +27,7 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
 	    $spec = "";
 	    if ($player->isSpectator)
-		$spec = __('$n(Spectator)', $login);
+		$spec = __("\$n(Spectator)", $login);
 
 	    $this->exp_chatSendServerMessage($this->joinMsg, null, array($nick, $login, $country, $spec));
 	} catch (\Exception $e) {

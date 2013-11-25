@@ -2,14 +2,14 @@ Top1
 Top1
 
 Personal Best
-Personal Best
+Oma paras
 
 Off
-Off
+Pois
 
 Audio: off
-Audio: off
+Äänet: pois
 
 Audio: on
-Audio: on
+Äänet: päällä
 
