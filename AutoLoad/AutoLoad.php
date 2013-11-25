@@ -24,7 +24,6 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         , 'eXpansion\Maps'
         , 'eXpansion\PersonalMessages'
         , 'eXpansion\Players'
-        , 'eXpansion\TMKarma'
         , 'eXpansion\Votes'
         , 'eXpansion\Widgets_Clock'
         , 'eXpansion\Widgets_BestCheckpoints'
