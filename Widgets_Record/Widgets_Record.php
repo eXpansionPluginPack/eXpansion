@@ -91,7 +91,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onDedimaniaGetRecords($data) {
         Gui\Widgets\RecordsPanel::$dedirecords = $data['Records'];
         $this->needUpdate = true;
-        $this->debug("Dedimania: Found " . sizeof($data['Records']) . " records for current map!\n");
+        $this->debug("[Localrecords widget]: Found " . sizeof($data['Records']) . " dedimania records for current map!\n");
     }
 
     public function onPlayerConnect($login, $isSpectator) {

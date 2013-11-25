@@ -17,7 +17,7 @@ class Additem extends \ManiaLive\Gui\Control {
     private $deleteAction;
     private $frame;
 
-    function __construct($indexNumber, $filename, $controller, $gbx, $sizeX) {
+    function __construct($indexNumber, $filename, $controller, $gbx, $login, $sizeX) {
         $sizeY = 4;
         $this->addMapAction = $this->createAction(array($controller, 'addMap'), $filename);
         $this->deleteAction = $this->createAction(array($controller, 'deleteMap'), $filename);
@@ -74,7 +74,7 @@ class Additem extends \ManiaLive\Gui\Control {
 
 
         $this->addButton = new MyButton(24, 5);
-        $this->addButton->setText(__("Add map"));
+        $this->addButton->setText(__("Add", $login));
         $this->addButton->setAction($this->addMapAction);
         $this->addButton->setScale(0.5);
         $this->addButton->colorize("2a2");
@@ -83,7 +83,7 @@ class Additem extends \ManiaLive\Gui\Control {
         $this->deleteButton = new MyButton(24, 5);
         $this->deleteButton->setAction($this->deleteAction);
         $this->deleteButton->setScale(0.5);
-        $this->deleteButton->setText('$ff0' . __("Delete file"));
+        $this->deleteButton->setText('$ff0' . __("Delete", $login));
         $this->deleteButton->colorize("222");
         $this->frame->addComponent($this->deleteButton);
 

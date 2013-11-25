@@ -57,7 +57,7 @@ foreach ($files as $data2) {
     echo "Plugin: " . $plugin . " -> generated messages count: " . $messageCount . "\n";
     $totalMessages += $messageCount;
     $string = implode("", $pluginMessages[$plugin]);
-    file_put_contents($plugin . "/messages/en.txt", $string);
+    file_put_contents($plugin . "/messages/en2.txt", $string);
 }
 
 print "\nTotal Message count: " . $totalMessages;

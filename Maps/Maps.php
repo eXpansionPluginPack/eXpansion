@@ -327,7 +327,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window = Gui\Windows\Jukelist::Create($login);
         $window->setList($this->queue);
         $window->centerOnScreen();
-        $window->setTitle("Jukebox");
+        $window->setTitle(__("Jukebox", $login));
         $window->setSize(180, 100);
         $window->show();
     }

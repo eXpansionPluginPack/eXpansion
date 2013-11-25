@@ -1,0 +1,216 @@
+ForceScores can be used only with rounds or team mode
+ForceScores can be used only with rounds or team mode
+
+ScriptSettings available only in script mode
+ScriptSettings available only in script mode
+
+Database plugin not loaded!
+Database plugin not loaded!
+
+Server Management
+Server Management
+
+Force Scores
+Force Scores
+
+Server ControlPanel
+Server ControlPanel
+
+Server Options
+Server Options
+
+Game Options
+Game Options
+
+Match Settings
+Match Settings
+
+#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
+#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
+
+Load
+Load
+
+Save
+Save
+
+Delete
+Delete
+
+Apply
+Apply
+
+Cancel
+Cancel
+
+Podium Chat time
+Podium Chat time
+
+All Warmup Duration
+All Warmup Duration
+
+finishTimeout
+finishTimeout
+
+timeAttackLimit
+timeAttackLimit
+
+timeAttackSynchStartPeriod
+timeAttackSynchStartPeriod
+
+roundsPointsLimit
+roundsPointsLimit
+
+roundsForcedLaps
+roundsForcedLaps
+
+roundsPointsLimitNewRules
+roundsPointsLimitNewRules
+
+teamPointsLimit
+teamPointsLimit
+
+teamMaxPoints
+teamMaxPoints
+
+teamPointsLimitNewRules
+teamPointsLimitNewRules
+
+cupPointsLimit
+cupPointsLimit
+
+cupNbWinners
+cupNbWinners
+
+cupRoundsPerMap
+cupRoundsPerMap
+
+Choose Gamemode:
+Choose Gamemode:
+
+Time Attack
+Time Attack
+
+Rounds
+Rounds
+
+Cup
+Cup
+
+Laps
+Laps
+
+Team
+Team
+
+Additional Options:
+Additional Options:
+
+Rounds: use new rules
+Rounds: use new rules
+
+Team: use new rules
+Team: use new rules
+
+Disable Respawn
+Disable Respawn
+
+Force Show All Opponents
+Force Show All Opponents
+
+Save MatchSettings as
+Save MatchSettings as
+
+Error in filename
+Error in filename
+
+File '%s' deleted from filesystem!
+File '%s' deleted from filesystem!
+
+Saved MatchSettings to file: %s
+Saved MatchSettings to file: %s
+
+Loaded MatchSettings from file: %s
+Loaded MatchSettings from file: %s
+
+Close
+Close
+
+Server management
+Server management
+
+Server options
+Server options
+
+Game options
+Game options
+
+Admin Groups
+Admin Groups
+
+Match settings
+Match settings
+
+ScriptMode settings
+ScriptMode settings
+
+Round points
+Round points
+
+Database tools
+Database tools
+
+Stop Server
+Stop Server
+
+Stop Manialive
+Stop Manialive
+
+Server Name
+Server Name
+
+Server comment
+Server comment
+
+Players
+Players
+
+Spectators
+Spectators
+
+Ladderpoints minimum
+Ladderpoints minimum
+
+Ladderpoints Maximum
+Ladderpoints Maximum
+
+Password for server
+Password for server
+
+Password for spectators
+Password for spectators
+
+Referee password
+Referee password
+
+Show Server in public server list
+Show Server in public server list
+
+Ladder server
+Ladder server
+
+Allow map download using ingame menu
+Allow map download using ingame menu
+
+Allow Peer-2-Peer download
+Allow Peer-2-Peer download
+
+Allow Peer-2-Peer upload
+Allow Peer-2-Peer upload
+
+Allow changing validation seed
+Allow changing validation seed
+
+Enable Referee-mode
+Enable Referee-mode
+

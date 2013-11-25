@@ -1,5 +1,14 @@
 ﻿Faq: widgets help 
 !toc|Back to index
-#User Interface
+#eXpansion User Interface
+	The leading idea for whole user interface is to provide clean, powerful but still easy of use Interface that you 
+	just can just use with ease. The learning curve should be quite low.
 
+	Interface Highlights:
+		* Windows can be moved, like in desktop systems!
+		* Basic server functions accessible using mouse
+		* Graphical admnistrating of the server, no need to remember chat commands
+		* But familiar chat commands still available (90% of Fast and XAseco commands are same)
 
+#Menu access
+	

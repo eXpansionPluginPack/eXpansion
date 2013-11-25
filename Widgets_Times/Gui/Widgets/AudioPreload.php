@@ -16,6 +16,7 @@ class AudioPreload extends \ManiaLive\Gui\Window {
         $this->audio = new \ManiaLib\Gui\Elements\Audio();
         $this->audio->setPosY(260);
         $this->audio->setData("http://reaby.kapsi.fi/ml/ding.ogg");
+	$this->audio->autoPlay();
         $this->addComponent($this->audio);
     }
 

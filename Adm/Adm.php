@@ -12,6 +12,9 @@ use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerControlMain;
 
 class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
+    private $msg_forceScore_error, $msg_scriptSettings, $msg_databasePlugin;
+    
+    
     public function exp_onInit() {
         parent::exp_onInit();
         //Oliverde8 Menu
@@ -19,7 +22,11 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
     }
-
+    public function exp_onLoad() {
+	$this->msg_forceScore_error = exp_getMessage("ForceScores can be used only with rounds or team mode");
+	$this->msg_scriptSettings = exp_getMessage("ScriptSettings available only in script mode");
+	$this->msg_databasePlugin = exp_getMessage("Database plugin not loaded!");
+    }
     function exp_onReady() {
         //    $methods = get_class_methods($this->connection);
         if ($this->isPluginLoaded('Standard\Menubar'))
@@ -122,7 +129,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $window->setSize(160, 80);
                 $window->show();
             } else {
-                $this->exp_chatSendServerMessage("ForceScores can be used only with rounds or team mode", $login);
+                $this->exp_chatSendServerMessage($this->msg_forceScore_error, $login);
             }
         }
     }
@@ -131,7 +138,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
             $window = GameOptions::Create($login);
             $window->setTitle(__('Game Options', $login));
-            $window->setSize(160, 50);
+            $window->setSize(160, 80);
             $window->centerOnScreen();
             $window->show();
         }
@@ -140,7 +147,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function serverManagement($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             $window = Gui\Windows\ServerManagement::Create($login);
-            $window->setTitle(__('Server Management'));
+            $window->setTitle(__('Server Management', $login));
             $window->setSize(60, 20);
             $window->centerOnScreen();
             $window->show();
@@ -150,7 +157,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function roundPoints($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             $window = Gui\Windows\RoundPoints::Create($login);
-            $window->setTitle(__('Custom Round Points'));
+            $window->setTitle(__('Custom Round Points', $login));
             $window->setSize(160, 70);
             $window->centerOnScreen();
             $window->show();
@@ -185,7 +192,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $window->setSize(160, 100);
                 $window->show();
             } else {
-                $this->exp_chatSendServerMessage("ScriptSettings available only in script mode", $login);
+                $this->exp_chatSendServerMessage($this->msg_scriptSettings, $login);
             }
         }
     }
@@ -195,7 +202,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($this->isPluginLoaded("eXpansion\Database")) {
                 $this->callPublicMethod("eXpansion\Database", "showDbMaintainance", $login);
             } else {
-                $this->exp_chatSendServerMessage("Database plugin not loaded!", $login);
+                $this->exp_chatSendServerMessage($this->msg_databasePlugin, $login);
             }
         }
     }

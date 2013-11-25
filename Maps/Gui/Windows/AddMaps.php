@@ -33,7 +33,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->actionAddAll = $this->createAction(array($this, "addAllMaps"));
 
         $this->btnAddAll = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-        $this->btnAddAll->setText("Add all");
+        $this->btnAddAll->setText(__("Add all", $this->getRecipient()));
         $this->btnAddAll->setAction($this->actionAddAll);
         $this->mainFrame->addComponent($this->btnAddAll);
     }
@@ -78,7 +78,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         if (count($maps) >= 1) {
             foreach ($maps as $map) {
-                $this->items[$x] = new Additem($x, $map, $this, $this->gbx, $this->sizeX);
+                $this->items[$x] = new Additem($x, $map, $this, $this->gbx, $login, $this->sizeX);
                 $this->pager->addItem($this->items[$x]);
                 $x++;
             }

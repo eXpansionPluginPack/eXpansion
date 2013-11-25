@@ -15,7 +15,7 @@ class PBPanel extends \ManiaLive\Gui\Window {
     protected function onConstruct() {
         parent::onConstruct();
         $login = $this->getRecipient();
-        $label = new \ManiaLib\Gui\Elements\Label();
+        $label = new \ManiaLib\Gui\Elements\Label(32);
         $label->setText('$ddd' . __('Personal Best', $login));
         $label->setAlign("right", "top");
         $label->setScale(0.7);
@@ -27,7 +27,7 @@ class PBPanel extends \ManiaLive\Gui\Window {
         $this->pb->setPosX(1);
         $this->addComponent($this->pb);
 
-        $label = new \ManiaLib\Gui\Elements\Label();
+        $label = new \ManiaLib\Gui\Elements\Label(32);
         $label->setText('$ddd' . __('Average', $login));
         $label->setAlign("right", "top");
         $label->setScale(0.7);
@@ -41,7 +41,7 @@ class PBPanel extends \ManiaLive\Gui\Window {
         $this->avg->setPosY(-3);
         $this->addComponent($this->avg);
 
-        $label = new \ManiaLib\Gui\Elements\Label();
+        $label = new \ManiaLib\Gui\Elements\Label(32);
         $label->setText('$ddd' . __('Finishes', $login));
         $label->setAlign("right", "top");
         $label->setScale(0.7);
@@ -55,7 +55,7 @@ class PBPanel extends \ManiaLive\Gui\Window {
         $this->finish->setPosY(-6);
         $this->addComponent($this->finish);
 
-        $label = new \ManiaLib\Gui\Elements\Label();
+        $label = new \ManiaLib\Gui\Elements\Label(32);
         $label->setText('$ddd' . __('Server Rank', $login));
         $label->setAlign("right", "top");
         $label->setScale(0.7);

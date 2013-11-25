@@ -22,7 +22,7 @@ class RanksPanel extends \ManiaLive\Gui\Window {
         $this->lbl = new \ManiaLib\Gui\Elements\Label(30, 6);
         $this->lbl->setTextSize(1);
         $this->lbl->setStyle("TextStaticVerySmall");
-        $this->lbl->setText('Rankings');        
+        $this->lbl->setText(__('Server ranks'));        
         $this->lbl->setAlign("center", "center");
         $this->addComponent($this->lbl);
 

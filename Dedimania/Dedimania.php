@@ -30,7 +30,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     public function exp_onLoad() {
         if ($this->isPluginLoaded("Reaby\\Dedimania") || $this->isPluginLoaded("Flo\\Dedimania"))
             die("[eXpansion] Please disable other dedimania plugins, you don't need multiple ones!");
-        $helpText = "\n please correct your config with these instructions: \n add following configuration to config.ini\n\n ManiaLivePlugins\\eXpansion\\Dedimania\\Config.login = 'your_server_login_here' \n ManiaLivePlugins\\eXpansion\\Dedimania\\Config.code = 'your_server_code_here' \n\n";
+        $helpText = "\n please correct your config with these instructions: \n add following configuration to config.ini\n\n ManiaLivePlugins\\eXpansion\\Dedimania\\Config.login = 'your_server_login_here' \n ManiaLivePlugins\\eXpansion\\Dedimania\\Config.code = 'your_server_code_here' \n visit http://dedimania.net/tm2stats/?do=register to get code for your server.\n\n";
         if (empty($this->config->login))
             die("[Dedimania] Server login is not configured!" . $helpText);
         if (empty($this->config->code))
