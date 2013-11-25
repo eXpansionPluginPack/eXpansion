@@ -313,10 +313,8 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function Ok($login, $options) {
-	print_r($options);
-
 	$gameInfos = $this->nextGameInfo;
-
+	
 	// general
 	$gameInfos->allWarmUpDuration = intval($options['AllWarmupDuration']);
 	$gameInfos->cupWarmUpDuration = intval($options['AllWarmupDuration']);
@@ -352,8 +350,6 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$gameInfos->cupNbWinners = intval($options['cupNbWinners']);
 	$gameInfos->cupPointsLimit = intval($options['cupPointsLimit']);
 	$gameInfos->cupRoundsPerMap = intval($options['cupRoundsPerMap']);
-
-	var_dump($gameInfos);
 
 	$this->connection->setGameInfos($gameInfos);
 	$this->Erase($login);
