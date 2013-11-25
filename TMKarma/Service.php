@@ -50,9 +50,13 @@ abstract class Service {
 	    $json = json_decode($data);
 	    if ($json === null) {
 		Console::println("[TMKarma] Autodetect failed, usign default location: Germany");
-		self::$userCountryCode = "GER";
+		self::$userCountryCode = "DEU";
 	    } else {
 		self::$userCountryCode = \ManiaLivePlugins\eXpansion\Helpers\Countries::mapCountry(ucwords(strtolower($json->country_name)));
+		if (self::$userCountryCode == "OTH") {
+		    Console::println("[TMKarma] Autodetect failed, usign default location: Germany, Detected country was: ". ucwords(strtolower($json->country_name)));
+		    self::$userCountryCode = "DEU";
+		}
 	    }
 	}
 

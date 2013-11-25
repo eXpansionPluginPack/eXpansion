@@ -68,7 +68,7 @@ class Countries {
             'Gabon' => 'GAB',
             'Gambia' => 'GAM',
             'Georgia' => 'GEO',
-            'Germany' => 'GER',
+            'Germany' => 'DEU',
             'Ghana' => 'GHA',
             'Greece' => 'GRE',
             'Grenada' => 'GRN',
