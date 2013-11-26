@@ -14,8 +14,8 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $Colors_variable = '$eee'; // generic variable color
     public $Colors_record = '$6EF'; // all other local records
     public $Colors_record_top = '$6f3'; // top5 local records
-    public $Colors_rank = '$f90'; // used in record messages for rank
-    public $Colors_time = '$ff0';
+    public $Colors_rank = '$ff0'; // used in record messages for rank
+    public $Colors_time = '$fff';
     public $Colors_rating = '$fb3'; // map ratings color
     public $Colors_queue = '$8af';  // map queue messages
     public $Colors_dedirecord = '$69C'; // dedimania records

@@ -4,7 +4,7 @@
 #variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #time#%3$s
 #variable#%1$s  #record#a obtenu le #rank#%2$s#record#. record local! #time#%3$s
 
-#variable#%1$s  #record#improved the #rank#%2$s#record#. Local Record! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 #variable#%1$s  #record#a amélioré le #rank#%2$s#record# record local! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 
 #variable#%1$s  #record_top#secured their #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
@@ -13,7 +13,7 @@
 #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s
 #variable#%1$s  #record_top#a obtenu le #rank#%2$s#record_top#. record local! #time#%3$s
 
-#variable#%1$s  #record_top#improved the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+#variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
 #variable#%1$s  #record_top#a amélioré le #rank#%2$s#record_top# record local! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
 
 $FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#secured their #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
@@ -22,7 +22,7 @@ $FF0Fé$FE0li$FD0ci$FC0ta$FB0ti$FA0on$F90s! #variable#%1$s  #record_top#a assur�
 $FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s
 $FF0Fé$FE0li$FD0ci$FC0ta$FB0ti$FA0on$F90s! #variable#%1$s  #record_top#a obtenu le #rank#%2$s#record_top#. record local! #time#%3$s
 
-$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#improved the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
 $FF0Fé$FE0li$FD0ci$FC0ta$FB0ti$FA0on$F90s! #variable#%1$s  #record_top#a amélioré le #rank#%2$s#record_top# record local! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
 
 #variable#%1$s  #record#is a new Map. Currently no record!

@@ -17,15 +17,18 @@ class Config extends \ManiaLib\Utils\Singleton {
     
     public $msg_secure = '#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
     public $msg_new = '#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #time#%3$s';  // %1$s - nickname; %2$s - rank; %3$s - time
-    public $msg_improved = '#variable#%1$s  #record#improved the #rank#%2$s#record#. Local Record! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
+    public $msg_equals = '#variable#%1$s  #record#equals their #rank#%2$s#record#. Local Record! #time#%3$s';  // %1$s - nickname; %2$s - rank; %3$s - time
+    public $msg_improved = '#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
     
     public $msg_secure_top5 = '#variable#%1$s  #record_top#secured their #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
     public $msg_new_top5 = '#variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s';  // %1$s - nickname; %2$s - rank; %3$s - time
-    public $msg_improved_top5 = '#variable#%1$s  #record_top#improved the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
+    public $msg_equals_top5 = '#variable#%1$s  #record_top#equals their #rank#%2$s#record_top#. Local Record! #time#%3$s';  // %1$s - nickname; %2$s - rank; %3$s - time
+    public $msg_improved_top5 = '#variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
     
     public $msg_secure_top1 = '$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#secured their #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
     public $msg_new_top1 = '$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s';  // %1$s - nickname; %2$s - rank; %3$s - time
-    public $msg_improved_top1 = '$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#improved the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
+    public $msg_equals_top1 = '$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#equals their #rank#%2$s#record_top#. Local Record! #time#%3$s';  // %1$s - nickname; %2$s - rank; %3$s - time
+    public $msg_improved_top1 = '$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
             
     public $msg_newMap = '#variable#%1$s  #record#is a new Map. Currently no record!';  // %1$s - map name
     public $msg_BeginMap = '#record#Current record on #variable#%1$s  #record#is #variable#%2$s #record#by #variable#%3$s';  // %1$s - map name, %2$s - record, %3$s - nickname

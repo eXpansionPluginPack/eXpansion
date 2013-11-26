@@ -128,15 +128,18 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	//Recovering the multi language messages
 	$this->msg_secure = exp_getMessage($this->config->msg_secure);
 	$this->msg_new = exp_getMessage($this->config->msg_new);
+	$this->msg_equals = exp_getMessage($this->config->msg_equals);
 	$this->msg_improved = exp_getMessage($this->config->msg_improved);
 
 
 	$this->msg_secure_top5 = exp_getMessage($this->config->msg_secure_top5);
 	$this->msg_new_top5 = exp_getMessage($this->config->msg_new_top5);
+	$this->msg_equals_top5 = exp_getMessage($this->config->msg_equals_top5);
 	$this->msg_improved_top5 = exp_getMessage($this->config->msg_improved_top5);
 
 	$this->msg_secure_top1 = exp_getMessage($this->config->msg_secure_top1);
 	$this->msg_new_top1 = exp_getMessage($this->config->msg_new_top1);
+	$this->msg_equals_top1 = exp_getMessage($this->config->msg_equals_top1);
 	$this->msg_improved_top1 = exp_getMessage($this->config->msg_improved_top1);
 
 	$this->msg_newMap = exp_getMessage($this->config->msg_newMap);
@@ -594,15 +597,29 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		} else if (substr($securedBy, 0, 2) === "0:") {
 		    $securedBy = substr($securedBy, 2);
 		}
+		// equals time
+		if ($nrecord->time == $recordtime_old) {
+		    $msg = $this->msg_equals;
+		    if ($nrecord->place <= 5) {
+			$msg = $this->msg_equals_top5;
+			if ($nrecord->place == 1)
+			    $msg = $this->msg_equas_top1;
+		    }
 
-		$msg = $this->msg_secure;
-		if ($nrecord->place <= 5) {
-		    $msg = $this->msg_secure_top5;
-		    if ($nrecord->place == 1)
-			$msg = $this->msg_secure_top1;
+		    $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time));
+
+		    // improves time
+		} else {
+		    $msg = $this->msg_secure;
+		    if ($nrecord->place <= 5) {
+			$msg = $this->msg_secure_top5;
+			if ($nrecord->place == 1)
+			    $msg = $this->msg_secure_top1;
+		    }
+
+		    $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
 		}
 
-		$this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
 		\ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
 	    }
 	    //Improved time and new Rank

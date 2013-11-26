@@ -1,29 +1,29 @@
 #variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
-#variable#%1$s  #record#varmistaa #rank#%2$s#record#sijan! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+#variable#%1$s  #record#varmistaa #rank#%2$s#record#sijan parantaen aikaansa! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 
 #variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #time#%3$s
 #variable#%1$s  #record#ottaa #rank#%2$s #record#. sijan! #time#%3$s
 
-#variable#%1$s  #record#improved the #rank#%2$s#record#. Local Record! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
-#variable#%1$s  #record#ottaa #rank#%2$s #record#sijan! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+#variable#%1$s  #record#ottaa #rank#%2$s #record#. sijan parantaen aikaansa! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 
 #variable#%1$s  #record_top#secured their #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-#variable#%1$s  #record_top#varmistaa #rank#%2$s#record_top#sijan! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+#variable#%1$s  #record_top#varmistaa #rank#%2$s#record_top#. sijan parantaen aikaansa! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
 
 #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s
-#variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#sijan! #time#%3$s
+#variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#. sijan! #time#%3$s
 
-#variable#%1$s  #record_top#improved the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-#variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#sijan! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+#variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+#variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#sijan parantaen aikaansa! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
 
 $FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#secured their #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-$FF0On$FE0ne$FD0ks$FC0i o$FB0lk$FA0oo$F90n! #variable#%1$s  #record_top#varmistaa #rank#%2$s#record_top#sijan! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+$FF0On$FE0ne$FD0ks$FC0i o$FB0lk$FA0oo$F90n! #variable#%1$s  #record_top#varmistaa #rank#%2$s#record_top#. sijan parantaen aikaansa! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
 
 $FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s
-$FF0On$FE0ne$FD0ks$FC0i o$FB0lk$FA0oo$F90n! #variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#sijan! #time#%3$s
+$FF0On$FE0ne$FD0ks$FC0i o$FB0lk$FA0oo$F90n! #variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#. sijan! #time#%3$s
 
-$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#improved the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-$FF0On$FE0ne$FD0ks$FC0i o$FB0lk$FA0oo$F90n! #variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#sijan! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+$FF0On$FE0ne$FD0ks$FC0i o$FB0lk$FA0oo$F90n! #variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#. sijan parantaen aikaansa! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
 
 
 
