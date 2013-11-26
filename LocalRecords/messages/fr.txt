@@ -28,17 +28,17 @@ $FF0Fé$FE0li$FD0ci$FC0ta$FB0ti$FA0on$F90s! #variable#%1$s  #record_top#a améli
 #variable#%1$s  #record#is a new Map. Currently no record!
 #variable#%1$s  #record#est une nouvelle carte. Aucun record pour le moment!
 
-#record#Current record on #variable#%1$s  #record#is #variable#%2$s #record#by #variable#%3$s
-#record#Le record actuel sur #variable#%1$s  #record#est #variable#%2$s #record#by #variable#%3$s
+#record#Current record on #variable#%1$s  #record#is #time#%2$s #record#by #variable#%3$s
+#record#Le record actuel sur #variable#%1$s  #record#est #time#%2$s #record#by #variable#%3$s
 
-#record#Personal Best: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Average: #variable#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
-#record#Record personnel: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Moyenne: #variable#%3$s #record#($n #variable#%4$s #record#$n achèvements $m)
+#record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Average: #time#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
+#record#Record personnel: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Moyenne: #time#%3$s #record#($n #variable#%4$s #record#$n achèvements $m)
 
 #admin_error# $iYou have not finished this map yet..
 #admin_error# $iVous n'avez pas encore terminé cette carte..
 
-#record#Server rank: #variable#%1$s#record#/#variable#%2$s
-#record#Rang serveur: #variable#%1$s#record#/#variable#%2$s
+#record#Server rank: #rank#%1$s#record#/#rank#%2$s
+#record#Rang serveur: #rank#%1$s#record#/#rank#%2$s
 
 #admin_error#$iNot enough local records to obtain ranking yet..
 #admin_error#$iNombre de records locaux insuffisant pour obtenir un rang..

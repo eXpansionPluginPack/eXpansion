@@ -28,17 +28,17 @@ $FF0G$FE0ra$FD0tu$FC0l$FB0er$FA0er$F90! #variable#%1$s  #record_top#Tok den #ran
 #variable#%1$s  #record#is a new Map. Currently no record!
 #variable#%1$s  #record#dette er en ny bane. Foreløpig ingen rekorder!
 
-#record#Current record on #variable#%1$s  #record#is #variable#%2$s #record#by #variable#%3$s
-#record#Nåværende rekord på #variable#%1$s  #record#er #variable#%2$s #record#av #variable#%3$s
+#record#Current record on #variable#%1$s  #record#is #time#%2$s #record#by #variable#%3$s
+#record#Nåværende rekord på #variable#%1$s  #record#er #time#%2$s #record#av #variable#%3$s
 
-#record#Personal Best: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Average: #variable#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
-#record#Personlig beste: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Gj. snitt: #variable#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
+#record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Average: #time#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
+#record#Personlig beste: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Gj. snitt: #time#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
 
 #admin_error# $iYou have not finished this map yet..
 #admin_error# $iDu har ikke kommet i mål enda..
 
-#record#Server rank: #variable#%1$s#record#/#variable#%2$s
-#record#Server rangering: #variable#%1$s#record#/#variable#%2$s
+#record#Server rank: #rank#%1$s#record#/#rank#%2$s
+#record#Server rangering: #rank#%1$s#record#/#rank#%2$s
 
 #admin_error#$iNot enough local records to obtain ranking yet..
 #admin_error#$iIkke nok lokale rekorder for rangering, enda...

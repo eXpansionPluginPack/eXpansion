@@ -31,8 +31,8 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $msg_improved_top1 = '$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
             
     public $msg_newMap = '#variable#%1$s  #record#is a new Map. Currently no record!';  // %1$s - map name
-    public $msg_BeginMap = '#record#Current record on #variable#%1$s  #record#is #variable#%2$s #record#by #variable#%3$s';  // %1$s - map name, %2$s - record, %3$s - nickname
-
+    public $msg_BeginMap = '#record#Current record on #variable#%1$s  #record#is #time#%2$s #record#by #variable#%3$s';  // %1$s - map name, %2$s - record, %3$s - nickname
+    
     public $msg_personalBest = '#record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Average: #time#%3$s #record#($n #variable#%4$s #record#$n finishes $m)';  // %1$s - pb, %2$s - place (if any), %3$s - average, %4$s - # of finishes
     public $msg_noPB = '#admin_error# $iYou have not finished this map yet..';
 

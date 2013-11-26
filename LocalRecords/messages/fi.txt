@@ -31,17 +31,17 @@ $FF0On$FE0ne$FD0ks$FC0i o$FB0lk$FA0oo$F90n! #variable#%1$s  #record_top#ottaa #r
 #variable#%1$s  #record#is a new Map. Currently no record!
 #variable#%1$s  #record#on uusi kartta! Ei ennätyksiä!
 
-#record#Current record on #variable#%1$s  #record#is #variable#%2$s #record#by #variable#%3$s
-#record#Kartan #variable#%1$s  #record#ennätys #variable#%2$s #record# ajaja #variable#%3$s
+#record#Current record on #variable#%1$s  #record#is #time#%2$s #record#by #variable#%3$s
+#record#Kartan #variable#%1$s  #record#ennätys #time#%2$s #record# ajaja #variable#%3$s
 
-#record#Personal Best: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Average: #variable#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
-#record#Paras aikasi: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Keskiarvo: #variable#%3$s #record#($n #variable#%4$s #record#$n maaliin ajoja $m)
+#record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Average: #time#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
+#record#Paras aikasi: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Keskiarvo: #time#%3$s #record#($n #variable#%4$s #record#$n maaliin ajoja $m)
 
 #admin_error# $iYou have not finished this map yet..
 #admin_error# $iSinulla ei ole vielä aikaa tässä kartassa..
 
-#record#Server rank: #variable#%1$s#record#/#variable#%2$s
-#record#Palvelimen rank-sijoitus: #variable#%1$s#record#/#variable#%2$s
+#record#Server rank: #rank#%1$s#record#/#rank#%2$s
+#record#Palvelimen rank-sijoitus: #rank#%1$s#record#/#rank#%2$s
 
 #admin_error#$iNot enough local records to obtain ranking yet..
 #admin_error#$iEi tarpeeksi ajettuja palvelimen aikoja, rankingia ei voida laskea..

@@ -41,7 +41,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $this->label->setStyle("TextRaceChat");
         $this->label->setScale(0.75);
         $this->label->setText($index);
-        $this->label->setTextColor('fff');
+        $this->label->setTextColor('ff0');
         if ($record->login == $login) {
             $this->label->setStyle("TextTitle2Blink");
             $this->label->setTextSize(1);
@@ -55,7 +55,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $this->label->setStyle("TextRaceChat");
         $this->label->setScale(0.75);
         $this->label->setText(\ManiaLive\Utilities\Time::fromTM($record->time));
-        $this->label->setTextColor('ff0');
+        $this->label->setTextColor('fff');
         if ($record->login == $login) {
             $this->label->setStyle("TextTitle2Blink");
             $this->label->setTextSize(1);

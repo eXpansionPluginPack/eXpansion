@@ -28,17 +28,17 @@ $FF0G$FE0lü$FD0ck$FC0wü$FB0ns$FA0ch$F90e! #variable#%1$s  #record_top#hat den 
 #variable#%1$s  #record#is a new Map. Currently no record!
 #variable#%1$s  #record#ist eine neue Map. Derzeit keine Rekorde!
 
-#record#Current record on #variable#%1$s  #record#is #variable#%2$s #record#by #variable#%3$s
-#record#Aktueller Rekord auf #variable#%1$s  #record#ist #variable#%2$s #record#durch #variable#%3$s
+#record#Current record on #variable#%1$s  #record#is #time#%2$s #record#by #variable#%3$s
+#record#Aktueller Rekord auf #variable#%1$s  #record#ist #time#%2$s #record#durch #variable#%3$s
 
-#record#Personal Best: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Average: #variable#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
-#record#Persönliche Bestzeit: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Schnitt: #variable#%3$s #record#($n #variable#%4$s #record#$n Abschlüsse $m)
+#record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Average: #time#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
+#record#Persönliche Bestzeit: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Schnitt: #time#%3$s #record#($n #variable#%4$s #record#$n Abschlüsse $m)
 
 #admin_error# $iYou have not finished this map yet..
 #admin_error# $iDu hast diese Map noch nicht vollendet..
 
-#record#Server rank: #variable#%1$s#record#/#variable#%2$s
-#record#Server-Rang: #variable#%1$s#record#/#variable#%2$s
+#record#Server rank: #rank#%1$s#record#/#rank#%2$s
+#record#Server-Rang: #rank#%1$s#record#/#rank#%2$s
 
 #admin_error#$iNot enough local records to obtain ranking yet..
 #admin_error#$iNoch nicht genügend lokale Rekorde für einen Ranglistenplatz erreicht..

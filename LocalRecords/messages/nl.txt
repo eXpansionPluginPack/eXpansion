@@ -28,17 +28,17 @@ $FF0Ge$FE0fe$FD0li$FC0ci$FB0te$FA0er$F90d! #variable#%1$s  #record_top#pakte de 
 #variable#%1$s  #record#is a new Map. Currently no record!
 #variable#%1$s  #record#is een nieuwe Baan! Momenteel geen record!
 
-#record#Current record on #variable#%1$s  #record#is #variable#%2$s #record#by #variable#%3$s
-#record#Huidige record op #variable#%1$s  #record#is #variable#%2$s #record# door #variable#%3$s
+#record#Current record on #variable#%1$s  #record#is #time#%2$s #record#by #variable#%3$s
+#record#Huidige record op #variable#%1$s  #record#is #time#%2$s #record# door #variable#%3$s
 
-#record#Personal Best: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Average: #variable#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
-#record#Persoonlijke tijd: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Gemiddeld: #variable#%3$s #record#($n #variable#%4$s #record#$n aantal x gefinishd $m)
+#record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Average: #time#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
+#record#Persoonlijke tijd: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Gemiddeld: #time#%3$s #record#($n #variable#%4$s #record#$n aantal x gefinishd $m)
 
 #admin_error# $iYou have not finished this map yet..
 #admin_error# $iJe hebt deze baan nog niet gefinishd..
 
-#record#Server rank: #variable#%1$s#record#/#variable#%2$s
-#record#Server rang: #variable#%1$s#record#/#variable#%2$s
+#record#Server rank: #rank#%1$s#record#/#rank#%2$s
+#record#Server rang: #rank#%1$s#record#/#rank#%2$s
 
 #admin_error#$iNot enough local records to obtain ranking yet..
 #admin_error#$iJe hebt geen lokale records om een ranking te hebben..

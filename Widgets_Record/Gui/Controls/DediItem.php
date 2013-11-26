@@ -42,7 +42,7 @@ class DediItem extends \ManiaLive\Gui\Control {
         $this->label->setStyle("TextRaceChat");
         $this->label->setScale(0.75);
         $this->label->setText($index);
-        $this->label->setTextColor('fff');
+        $this->label->setTextColor('ff0');
         if ($record['Login'] == $login) {
             $this->label->setStyle("TextTitle2Blink");
             $this->label->setTextSize(1);
@@ -56,7 +56,7 @@ class DediItem extends \ManiaLive\Gui\Control {
         $this->label->setStyle("TextRaceChat");
         $this->label->setScale(0.75);
         $this->label->setText(\ManiaLive\Utilities\Time::fromTM($record['Best']));
-        $this->label->setTextColor('ff0');
+        $this->label->setTextColor('fff');
         if ($record['Login'] == $login) {
             $this->label->setStyle("TextTitle2Blink");
             $this->label->setTextSize(1);
