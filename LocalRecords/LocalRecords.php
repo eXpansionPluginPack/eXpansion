@@ -130,14 +130,14 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->msg_new = exp_getMessage($this->config->msg_new);
 	$this->msg_improved = exp_getMessage($this->config->msg_improved);
 
-	$this->msg_secure_top5 = exp_getMessage(str_replace("#record#", "#record_top#", $this->config->msg_secure));
-	$this->msg_new_top5 = exp_getMessage(str_replace("#record#", "#record_top#", $this->config->msg_new));
-	$this->msg_improved_top5 = exp_getMessage(str_replace("#record#", "#record_top#", $this->config->msg_improved));
 
-	$this->msg_secure_top1 = exp_getMessage($this->config->msg_congratulations . " " . str_replace("#record#", "#record_top#", $this->config->msg_secure));
-	$this->msg_new_top1 = exp_getMessage($this->config->msg_congratulations . " " . str_replace("#record#", "#record_top#", $this->config->msg_new));
-	$this->msg_improved_top1 = exp_getMessage($this->config->msg_congratulations . " " . str_replace("#record#", "#record_top#", $this->config->msg_improved));
+	$this->msg_secure_top5 = exp_getMessage($this->config->msg_secure_top5);
+	$this->msg_new_top5 = exp_getMessage($this->config->msg_new_top5);
+	$this->msg_improved_top5 = exp_getMessage($this->config->msg_improved_top5);
 
+	$this->msg_secure_top1 = exp_getMessage($this->config->msg_secure_top1);
+	$this->msg_new_top1 = exp_getMessage($this->config->msg_new_top1);
+	$this->msg_improved_top1 = exp_getMessage($this->config->msg_improved_top1);
 
 	$this->msg_newMap = exp_getMessage($this->config->msg_newMap);
 	$this->msg_BeginMap = exp_getMessage($this->config->msg_BeginMap);

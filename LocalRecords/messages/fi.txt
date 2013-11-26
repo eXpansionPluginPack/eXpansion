@@ -1,11 +1,32 @@
-#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #rank#%3$s #record#(#variable#$n%4$s#rank#-%5$s#record#)
-#variable#%1$s  #record#varmistaa #rank#%2$s#record#sijan! #rank#%3$s #record#(#variable#$n%4$s#rank#-%5$s#record#$n)
+#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+#variable#%1$s  #record#varmistaa #rank#%2$s#record#sijan! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 
-#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #variable#%2$s: #rank#%3$s
-#variable#%1$s  #record#ottaa #rank#%2$s #record#sijan! #variable#%2$s: #rank#%3$s
+#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #time#%3$s
+#variable#%1$s  #record#ottaa #rank#%2$s #record#sijan! #rank#%3$s
 
-#variable#%1$s  #record#improved the #rank#%2$s#record#. Local Record! #variable#%2$s: #rank#%3$s #record#(#variable#$n%4$s#rank#-%5$s#record#$n)
-#variable#%1$s  #record#ottaa #rank#%2$s #record#sijan! #variable#%2$s: #rank#%3$s #record#(#variable#$n%4$s#rank#-%5$s#record#$n)
+#variable#%1$s  #record#improved the #rank#%2$s#record#. Local Record! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+#variable#%1$s  #record#ottaa #rank#%2$s #record#sijan! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+
+#variable#%1$s  #record_top#secured their #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+#variable#%1$s  #record_top#varmistaa #rank#%2$s#record_top#sijan! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+
+#variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s
+#variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#sijan! #rank#%3$s
+
+#variable#%1$s  #record_top#improved the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+#variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#sijan! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+
+$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#secured their #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+$FF0On$FE0ne$FD0ks$FC0i o$FB0lk$FA0oo$F90n! #variable#%1$s  #record_top#varmistaa #rank#%2$s#record_top#sijan! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+
+$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s
+$FF0On$FE0ne$FD0ks$FC0i o$FB0lk$FA0oo$F90n! #variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#sijan! #rank#%3$s
+
+$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#improved the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+$FF0On$FE0ne$FD0ks$FC0i o$FB0lk$FA0oo$F90n! #variable#%1$s  #record_top#ottaa #rank#%2$s #record_top#sijan! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
+
+
+
 
 #variable#%1$s  #record#is a new Map. Currently no record!
 #variable#%1$s  #record#on uusi kartta! Ei ennätyksiä!
@@ -14,7 +35,7 @@
 #record#Kartan #variable#%1$s  #record#ennätys #variable#%2$s #record# ajaja #variable#%3$s
 
 #record#Personal Best: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Average: #variable#%3$s #record#($n #variable#%4$s #record#$n finishes $m)
-#record#Sinun paras aikasi: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Keskiarvo: #variable#%3$s #record#($n #variable#%4$s #record#$n maaliin ajoja $m)
+#record#Paras aikasi: #variable#%1$s  #record#($n #variable#%2$s$n #record#)  Keskiarvo: #variable#%3$s #record#($n #variable#%4$s #record#$n maaliin ajoja $m)
 
 #admin_error# $iYou have not finished this map yet..
 #admin_error# $iSinulla ei ole vielä aikaa tässä kartassa..

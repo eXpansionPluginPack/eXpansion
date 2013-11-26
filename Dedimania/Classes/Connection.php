@@ -18,7 +18,7 @@ use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as dediEvent;
 class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickListener {
 
     // used for dedimania
-    private $version = 0.12;
+    private $version = 0.13;
 
     /** @var integer */
     static public $serverMaxRank = 30;
@@ -155,7 +155,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
 // only special maps under 8 seconds are allowed
         if ($map->authorTime < 8000 && strtolower($map->author) != 'nadeo') {
-            Console::println("[Dedimania Warning] Author time under 8 seconds, will not send records.");
+            Console::println("[Dedimania Notice] Author time under 8 seconds, will not send records.");
             return;
         }
 
@@ -238,7 +238,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
             );
             return $mapInfo;
         }
-        throw new Exception('[dedimania] error on _getMapInfo, map is in wrong format');
+        throw new Exception('[Dedimania] error on _getMapInfo, map is in wrong format');
     }
 
     function checkSession() {
@@ -518,7 +518,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         $this->dediBest = null;
 
         if (!empty($data[0]['Error'])) {
-            Console::println("[Dedimania] error from dediserver: " . $data[0]['Error']);
+            Console::println("[Dedimania] Error from dediserver: " . $data[0]['Error']);
             return;
         }
 
@@ -544,7 +544,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function xSetChallengeTimes($data) {
         //print_r($data);
-        $this->debug("[dedimania] Dedimania new times send successfully.");
+        Console::println("[Dedimania] Sending times new times: Success");
     }
 
     function xCheckSession($data) {
