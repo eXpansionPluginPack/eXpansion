@@ -2,7 +2,7 @@
 #variable#%1$s  #record#varmistaa #rank#%2$s#record#sijan! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 
 #variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #time#%3$s
-#variable#%1$s  #record#ottaa #rank#%2$s #record#sijan! #time#%3$s
+#variable#%1$s  #record#ottaa #rank#%2$s #record#. sijan! #time#%3$s
 
 #variable#%1$s  #record#improved the #rank#%2$s#record#. Local Record! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 #variable#%1$s  #record#ottaa #rank#%2$s #record#sijan! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
