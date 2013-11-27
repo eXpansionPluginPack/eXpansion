@@ -26,7 +26,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         , 'eXpansion\Players'
         , 'eXpansion\Votes'
         , 'eXpansion\Widgets_Clock'
-        , 'eXpansion\Widgets_BestCheckpoints'
+       // , 'eXpansion\Widgets_BestCheckpoints'
         , 'eXpansion\Widgets_EndRankings'
         , 'eXpansion\Widgets_PersonalBest'
         , 'eXpansion\Widgets_Record'
