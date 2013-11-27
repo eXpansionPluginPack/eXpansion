@@ -6,15 +6,13 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Widgets_Record\Gui\Controls\Recorditem;
 use ManiaLivePlugins\eXpansion\Widgets_Record\Gui\Controls\DediItem;
+use ManiaLivePlugins\eXpansion\Widgets_Record\Widgets_Record;
 
 class RecordsPanel extends \ManiaLive\Gui\Window {
 
     const RIGHT = "right";
     const LEFT = "left";
-
-    public static $localrecords = array();
-    public static $dedirecords = array();
-
+    
     /** @var \ManiaLive\Gui\Controls\Frame */
     private $frame;
     private $actionDedi = null;
@@ -141,9 +139,9 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	    if (is_object($this->btnDedi))
 		$this->btnDedi->setAction($this->actionLocal);
 
-	    if (!is_array(self::$dedirecords))
+	    if (!is_array(Widgets_Record::$dedirecords ))
 		return;
-	    foreach (self::$dedirecords as $record) {
+	    foreach (Widgets_Record::$dedirecords  as $record) {
 		if ($index > 30)
 		    return;
 		$this->items[] = new DediItem($index, $record, $this->getRecipient());
@@ -157,9 +155,9 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	    if (is_object($this->btnDedi))
 		$this->btnDedi->setAction($this->actionDedi);
 
-	    if (!is_array(self::$localrecords))
+	    if (!is_array(Widgets_Record::$localrecords ))
 		return;
-	    foreach (self::$localrecords as $record) {
+	    foreach (Widgets_Record::$localrecords  as $record) {
 		if ($index > 30)
 		    return;
 		$this->items[] = new Recorditem($index, $record, $this->getRecipient());

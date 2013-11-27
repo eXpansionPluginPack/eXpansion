@@ -130,7 +130,7 @@ class MenuPanel extends \ManiaLive\Gui\Window {
 
                 }
                 --></script>');
-	//$this->addComponent($xml);
+	$this->addComponent($xml);
     }
 
     function onResize($oldX, $oldY) {

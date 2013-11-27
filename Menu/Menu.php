@@ -58,8 +58,8 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	MenuPanel::Erase($login);
 	$info = MenuPanel::Create($login);
 	$info->setSize(60, 90);
-	$info->setPosition(126, 35);
-	$info->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+	$info->setPosition(150, 35);
+	$info->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 	$info->setItems($this->menuItems);
 	$info->setScale(0.8);
 
