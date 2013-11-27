@@ -19,7 +19,7 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
         // $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
         $login = $this->getRecipient();
 
-        $label = new \ManiaLib\Gui\Elements\Label();
+        $label = new \ManiaLib\Gui\Elements\Label(50);
         $label->setText('$ddd' . __('Next map', $login));
         $label->setTextEmboss(true);
         $label->setAlign("right", "top");

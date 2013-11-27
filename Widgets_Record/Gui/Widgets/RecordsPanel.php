@@ -9,6 +9,12 @@ use ManiaLivePlugins\eXpansion\Widgets_Record\Gui\Controls\DediItem;
 
 class RecordsPanel extends \ManiaLive\Gui\Window {
 
+    const RIGHT = "right";
+    const LEFT = "left";
+
+    public static $localrecords = array();
+    public static $dedirecords = array();
+
     /** @var \ManiaLive\Gui\Controls\Frame */
     private $frame;
     private $actionDedi = null;
@@ -17,14 +23,10 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     private $btnLocal;
     private $items = array();
     private $bg;
-    private $quad;
-    private $lbl;
+    private $titlebar;
+    private $lbl_title;
     private $_windowFrame;
     private $minButton;
-
-    /** @var integer */
-    public static $localrecords = array();
-    public static $dedirecords = array();
 
     const SHOW_DEDIMANIA = 0x02;
     const SHOW_LOCALRECORDS = 0x04;
@@ -32,12 +34,13 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     private $showpanel = self::SHOW_LOCALRECORDS;
     private $isMinimized = false;
     private $originalPosX;
+    private $edge;
 
     protected function onConstruct() {
 	parent::onConstruct();
 
 	$this->setScriptEvents(true);
-	$this->setAlign("left", "top");
+	$this->setAlign("center", "top");
 
 	$this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
 	$this->_windowFrame->setAlign("left", "top");
@@ -50,18 +53,20 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	$this->bg->setSubStyle("BgList");
 	$this->bg->setId("MainWindow");
 	$this->bg->setScriptEvents(true);
+	$this->bg->setAlign("center", "top");
 	$this->_windowFrame->addComponent($this->bg);
 
-	$this->lbl = new \ManiaLib\Gui\Elements\Label(30, 6);
-	$this->lbl->setTextSize(1);
-	$this->lbl->setStyle("TextStaticVerySmall");
-	$this->_windowFrame->addComponent($this->lbl);
+	$this->lbl_title = new \ManiaLib\Gui\Elements\Label(30, 8);
+	$this->lbl_title->setTextSize(1);
+	$this->lbl_title->setStyle("TextStaticVerySmall");
+	$this->lbl_title->setAlign("center", "center");
+	$this->_windowFrame->addComponent($this->lbl_title);
 
-	$this->quad = new \ManiaLib\Gui\Elements\Quad(30, 8);
-	$this->quad->setStyle("Bgs1InRace");
-	$this->quad->setSubStyle("BgTitle3_3");
-	$this->quad->setAlign("left", "center");
-	$this->_windowFrame->addComponent($this->quad);
+	$this->titlebar = new \ManiaLib\Gui\Elements\Quad(30, 8);
+	$this->titlebar->setStyle("Bgs1InRace");
+	$this->titlebar->setSubStyle("BgTitle3_3");
+	$this->titlebar->setAlign("center", "center");
+	$this->_windowFrame->addComponent($this->titlebar);
 
 
 	$pmanager = \ManiaLive\PluginHandler\PluginHandler::getInstance();
@@ -74,7 +79,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	    $this->btnDedi->setAction($this->actionDedi);
 	    $this->btnDedi->setStyle('Icons64x64_1');
 	    $this->btnDedi->setSubStyle('ToolLeague1');
-	    $this->btnDedi->setAlign("left", "center");
+	    $this->btnDedi->setAlign("centers", "center");
 	    $this->_windowFrame->addComponent($this->btnDedi);
 	}
 
@@ -83,7 +88,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	$this->minButton->setAction($this->actionMin);
 	$this->minButton->setStyle('Icons64x64_1');
 	$this->minButton->setSubStyle('Sub');
-	$this->minButton->setAlign("left", "center");
+	$this->minButton->setAlign("center", "center");
 	$this->_windowFrame->addComponent($this->minButton);
 
 	if ($pmanager->isLoaded('eXpansion\LocalRecords')) {
@@ -94,43 +99,45 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	}
 	$this->frame = new \ManiaLive\Gui\Controls\Frame();
 	$this->frame->setAlign("left", "top");
-	$this->frame->setPosition(3, -3);
+	$this->frame->setPosition(0, -3);
 	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(-1));
 	$this->_windowFrame->addComponent($this->frame);
     }
 
     function onResize($oldX, $oldY) {
-	$this->bg->setSize($this->sizeX + 16, $this->sizeY);
-	$this->bg->setPosX(-16);
-	$this->lbl->setPosX($this->sizeX / 2);
-	$this->lbl->setPosY(1);
-	$this->quad->setSizeX($this->sizeX + 22);
-	$this->quad->setPosition(-16, 1);
-	if (is_object($this->btnDedi))
-	    $this->btnDedi->setPosition($this->sizeX - 6, 1);
-	$this->minButton->setPosition($this->sizeX - 2, 1);
-
-
 	parent::onResize($oldX, $oldY);
+
+	$this->bg->setSize($this->sizeX, $this->sizeY);
+	$this->bg->setPosY(-1);
+
+	$this->titlebar->setSizeX($this->sizeX + 16);
+	$this->lbl_title->setPosY(0);
+
+	$pos = (($this->getSizeX() / 2));
+	$dedipos = 8;
+	if ($this->edge == self::RIGHT) {
+	    $pos = -(($this->getSizeX() / 2));
+	    $dedipos = -3;
+	}
+	if (is_object($this->btnDedi)) {
+	    $this->btnDedi->setPosition($pos - $dedipos, 0);
+	}
+
+	$this->minButton->setPosition($pos, 0);
     }
 
     function update() {
+	$login = $this->getRecipient();
+
 	foreach ($this->items as $item)
 	    $item->destroy();
-
 	$this->items = array();
-
 	$this->frame->clearComponents();
-	$login = $this->getRecipient();
-	$this->lbl->setAlign("center", "center");
-	if ($this->showpanel == self::SHOW_DEDIMANIA)
-	    $this->lbl->setText('$000' . __('Dedimania Records', $login));
-	if ($this->showpanel == self::SHOW_LOCALRECORDS)
-	    $this->lbl->setText('$000' . __('Local Records', $login));
 
 	$index = 1;
 
 	if ($this->showpanel == self::SHOW_DEDIMANIA) {
+	    $this->lbl_title->setText('$000' . __('Dedimania Records', $login));
 	    if (is_object($this->btnDedi))
 		$this->btnDedi->setAction($this->actionLocal);
 
@@ -146,6 +153,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	}
 
 	if ($this->showpanel == self::SHOW_LOCALRECORDS) {
+	    $this->lbl_title->setText('$000' . __('Local Records', $login));
 	    if (is_object($this->btnDedi))
 		$this->btnDedi->setAction($this->actionDedi);
 
@@ -166,6 +174,19 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	$this->redraw($this->getRecipient());
     }
 
+    function setScreenEdge($edge) {
+	$this->edge = $edge;
+	$this->setSize(46, 95);
+	switch ($edge) {
+	    case self::RIGHT:
+		$this->setPosition(161, 50);
+		break;
+	    default:
+		$this->setPosition(-115, 60);
+		break;
+	}
+    }
+
     function setPanel($login, $panel) {
 	$this->showpanel = $panel;
 	$this->update();
@@ -178,17 +199,31 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     }
 
     protected function onDraw() {
+	// set default value 
+	$minBtnStyles = array('ArrowPrev', 'ArrowNext');
+	if ($this->edge == self::RIGHT)
+	    $minBtnStyles = array('ArrowNext', 'ArrowPrev');
+
+	$this->minButton->setSubStyle($minBtnStyles[0]);
+	$this->setPosX($this->originalPosX);
+
+	if (is_object($this->btnDedi))
+	    $this->btnDedi->setVisibility(true);
+
+	// if user has minimized, set new values
 	if ($this->isMinimized) {
-	    $this->minButton->setSubStyle('ArrowNext');
+
+	    $pos = $this->getSizeX();
+	    if ($this->edge == self::RIGHT) {
+		$pos = -1 * ($this->getSizeX() - 8);
+	    }
+	    $this->minButton->setSubStyle($minBtnStyles[1]);
+	    $this->setPosX($this->originalPosX - $pos + 6);
+
 	    if (is_object($this->btnDedi))
 		$this->btnDedi->setVisibility(false);
-	    $this->setPosX($this->originalPosX - $this->sizeX + 6);
-	} else {
-	    if (is_object($this->btnDedi))
-		$this->btnDedi->setVisibility(true);
-	    $this->minButton->setSubStyle('ArrowPrev');
-	    $this->setPosX($this->originalPosX);
 	}
+
 	parent::onDraw();
     }
 

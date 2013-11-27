@@ -98,6 +98,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function showPanel($login) {
 	$widget = TimeChooser::Create($login);
+	$widget->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 	$widget->setSize(40, 6);
 	if (!isset($this->modes[$login]))
 	    $this->modes[$login] = TimePanel::Mode_PersonalBest;

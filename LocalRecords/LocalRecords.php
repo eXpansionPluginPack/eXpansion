@@ -168,7 +168,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$cmd->help = 'Show Records Window';
 	//Top 100 ranked players
 	$cmd = $this->registerChatCommand("top100", "showRanksWindow", 0, true);
-	$cmd->help = 'Show Top 100 Window';
+	$cmd->help = 'Show Server Ranks Window';
+	$cmd = $this->registerChatCommand("ranks", "showRanksWindow", 0, true);
+	$cmd->help = 'Show Server Ranks Window';
 	$cmd = $this->registerChatCommand("rank", "chat_showRank", 0, true);
 	$cmd->help = 'Show Player Rank';
 	$cmd = $this->registerChatCommand("pb", "chat_personalBest", 0, true);

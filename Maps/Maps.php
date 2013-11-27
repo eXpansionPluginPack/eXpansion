@@ -208,6 +208,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if ($this->config->showNextMapWidget) {
 	    $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
 	    $info->setPosition(136, 74);
+	    $info->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 	    $info->setMap($this->nextMap);
 	    $info->show();
 	}
