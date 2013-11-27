@@ -17,6 +17,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         , 'eXpansion\Emotes'
         , 'eXpansion\DonatePanel'
         , 'eXpansion\Faq'
+        , 'eXpansion\Gui'
         , 'eXpansion\JoinLeaveMessage'
         , 'eXpansion\LocalRecords'
         , 'eXpansion\ManiaExchange'

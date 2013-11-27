@@ -60,8 +60,8 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 
         $move = new \ManiaLib\Gui\Elements\Quad(60, 14);
         $move->setAlign("right", "top");
-        $move->setStyle("Bgs1InRace");
-        $move->setSubStyle("BgEmpty");
+        $move->setStyle("Icons128x128_Blink");
+        $move->setSubStyle("ShareBlink");
         $move->setScriptEvents();
         $move->setId("enableMove");
         $this->addComponent($move);
@@ -113,12 +113,12 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
                         while(True) {                                             
                         if (exp_enableHudMove == True) {
                                 quad.Show();
-                                quad.Substyle="NavButtonBlink";     
+                                    
                             
                             }
                         else {
                             quad.Hide();
-                            quad.Substyle="BgEmpty";
+                            
                             
                         }
                           if (exp_enableHudMove == True && MouseLeftButton == True) {
