@@ -28,12 +28,12 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
 	$sizeY = 95;
 	$this->setScriptEvents(true);
 	$this->setAlign("center", "top");
-	$this->container_dedi = new \ManiaLive\Gui\Controls\Frame(-63, 52);
+	$this->container_dedi = new \ManiaLive\Gui\Controls\Frame(155, 52);
 	$this->container_dedi->setAlign("center", "top");
 	$this->container_dedi->setSize($sizeX, $sizeY);
 
 
-	$this->container_local = new \ManiaLive\Gui\Controls\Frame(155, 52);
+	$this->container_local = new \ManiaLive\Gui\Controls\Frame(-63, 52);
 	$this->container_local->setAlign("center", "top");
 	$this->container_local->setSize($sizeX, $sizeY);
 	$this->addComponent($this->container_local);
