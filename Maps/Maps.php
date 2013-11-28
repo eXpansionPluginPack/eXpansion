@@ -18,6 +18,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $nextMap;
     private $tries = 0;
     private $atPodium = false;
+    private $instantReplay = false;
     private $messages;
 
     /** @var MapWish */
@@ -46,6 +47,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->setPublicMethod("queueMap");
 	$this->setPublicMethod("queueMxMap");
 	$this->setPublicMethod("replayMap");
+	$this->setPublicMethod("replayMapInstant");
 	$this->setPublicMethod("returnQueue");
     }
 
@@ -222,8 +224,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	}
     }
 
-    function onBeginMap($map, $warmUp, $matchContinuation) {
-
+// changed from onBeginMap -> it doesn't trigger if map was replayed.    
+    function onBeginMatch() {
 	$this->atPodium = false;
 
 	if (count($this->queue) > 0) {
@@ -285,7 +287,12 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 //}
 	} else {
 	    if ($this->config->showEndMatchNotices) {
-		$this->exp_chatSendServerMessage($this->msg_nextMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->nextMap->name, 'wosnm'), $this->storage->nextMap->author));
+		$map = $this->storage->nextMap;
+		if ($this->instantReplay == true) {
+		    $this->instantReplay = false;
+		    $map = $this->storage->currentMap;
+		}
+		$this->exp_chatSendServerMessage($this->msg_nextMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($map->name, 'wosnm'), $map->author));
 	    }
 	}
     }
@@ -506,14 +513,14 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	} else {
 	    $this->nextMap = $this->storage->nextMap;
 	}
-
+	// update all widgets
 	if ($this->config->showNextMapWidget) {
 	    foreach (NextMapWidget::getAll() as $widget) {
 		$widget->setMap($this->nextMap);
 		$widget->redraw($widget->getRecipient());
 	    }
 	}
-
+	// update all open Maplist windows 
 	if ($isListModified) {
 	    $windows = Gui\Windows\Maplist::GetAll();
 
@@ -670,6 +677,16 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));
     }
 
+    function replayMapInstant($login) {
+	$player = $this->storage->getPlayerObject($login);
+	$this->instantReplay = true;
+	foreach (NextMapWidget::getAll() as $widget) {
+	    $widget->setMap($this->storage->currentMap);
+	    $widget->redraw($widget->getRecipient());
+	}
+	$this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
+    }
+
     function replayMap($login) {
 	$player = $this->storage->getPlayerObject($login);
 
@@ -686,7 +703,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if (!$this->atPodium) {
 	    array_unshift($this->queue, new MapWish($player, $this->storage->currentMap, false));
 	} else {
-	    $this->connection->restartMap();
+	    $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
 	}
 
 	$msg = exp_getMessage('#queue#Challenge set to be replayed!');
