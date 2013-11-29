@@ -78,8 +78,7 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function Ok($login, $scores) {
 	$outScores = array();
-	print_r($scores);
-
+	
 	foreach ($scores as $id => $score) {
 	    if ($id == "WindowPos" || $id == "WindowID")
 		continue;
