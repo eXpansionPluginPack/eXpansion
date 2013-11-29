@@ -101,6 +101,13 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->disable();
         $window->show();
     }
+    
+     function showConfigWindow($login, $entries) {
+        $window = Windows\Configuration::Create($login, true);
+	$window->setSize(120,90);
+        $window->setData($entries);
+	$window->show();
+    }
 
     function resetHud($login) {
         $window = Windows\ResetHud::Create($login, false);

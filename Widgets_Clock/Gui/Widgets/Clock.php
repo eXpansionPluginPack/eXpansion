@@ -58,7 +58,11 @@ class Clock extends \ManiaLive\Gui\Window {
                         declare persistent Vec3[Text] windowLastPos;
                         declare persistent Vec3[Text] windowLastPosRel;
                         
-                        
+			declare persistent Boolean[Text] widgetVisible;
+			    if (!widgetVisible.existskey(id)) {
+				 widgetVisible[id] =  True;
+			    }
+			 
                          if (!windowLastPos.existskey(id)) {
                                 windowLastPos[id] = <-159.0, 89.0, 0.0>;
                                }
@@ -70,14 +74,24 @@ class Clock extends \ManiaLive\Gui\Window {
                         LastDelta = windowLastPosRel[id];
                         Window.RelativePosition = windowLastPosRel[id];                                                
                         
-                        while(True) {                                             
+                        while(True) {    
+			 if (!widgetVisible.existskey(id)) {
+				 widgetVisible[id] =  True;
+			    }   
                         if (exp_enableHudMove == True) {
-                            quad.Show();
-                            
+			    Window.Show();
+                            quad.Show();                            
                             }
                         else {
                             quad.Hide();
                         }
+			if (widgetVisible[id] == True) {
+			    Window.Show();
+			}
+			else {
+			    Window.Hide();
+			    yield;
+			}
                           if (exp_enableHudMove == True && MouseLeftButton == True) {
                                      
                                               foreach (Event in PendingEvents) {

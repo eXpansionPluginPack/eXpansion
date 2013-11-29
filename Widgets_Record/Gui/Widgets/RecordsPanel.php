@@ -12,19 +12,20 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 
     const RIGHT = "right";
     const LEFT = "left";
-    
+
     /** @var \ManiaLive\Gui\Controls\Frame */
-    private $frame;
-    private $actionDedi = null;
-    private $actionLocal = null;
-    private $btnDedi;
-    private $btnLocal;
-    private $items = array();
-    private $bg;
-    private $titlebar;
-    private $lbl_title;
-    private $_windowFrame;
-    private $minButton;
+    protected $frame;
+    protected $actionDedi = null;
+    protected $actionLocal = null;
+    protected $btnDedi;
+    protected $btnLocal;
+    protected $items = array();
+    protected $bg;
+    protected $titlebar;
+    protected $lbl_title;
+    protected $_windowFrame;
+    protected $minButton;
+    protected $xml;
 
     const SHOW_DEDIMANIA = 0x02;
     const SHOW_LOCALRECORDS = 0x04;
@@ -139,9 +140,9 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	    if (is_object($this->btnDedi))
 		$this->btnDedi->setAction($this->actionLocal);
 
-	    if (!is_array(Widgets_Record::$dedirecords ))
+	    if (!is_array(Widgets_Record::$dedirecords))
 		return;
-	    foreach (Widgets_Record::$dedirecords  as $record) {
+	    foreach (Widgets_Record::$dedirecords as $record) {
 		if ($index > 30)
 		    return;
 		$this->items[] = new DediItem($index, $record, $this->getRecipient());
@@ -155,9 +156,9 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	    if (is_object($this->btnDedi))
 		$this->btnDedi->setAction($this->actionDedi);
 
-	    if (!is_array(Widgets_Record::$localrecords ))
+	    if (!is_array(Widgets_Record::$localrecords))
 		return;
-	    foreach (Widgets_Record::$localrecords  as $record) {
+	    foreach (Widgets_Record::$localrecords as $record) {
 		if ($index > 30)
 		    return;
 		$this->items[] = new Recorditem($index, $record, $this->getRecipient());

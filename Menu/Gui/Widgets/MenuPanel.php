@@ -81,9 +81,24 @@ class MenuPanel extends \ManiaLive\Gui\Window {
                         declare positionMin = 4.0;
                         declare positionMax = -24.0;
                         mainWindow.PosnX = 4.0;
-
+			declare Text id = "Menu";
+			
+			declare persistent Boolean[Text] widgetVisible;
+			    if (!widgetVisible.existskey(id)) {
+				 widgetVisible[id] =  True;
+			    }
+			    
                         while(True) {
-
+			 if (!widgetVisible.existskey(id)) {
+				 widgetVisible[id] =  True;
+			    }   
+			    if (widgetVisible[id] == True) {
+				Window.Show();
+			    }
+				else {
+			        Window.Hide();
+				yield;
+			    }
                                 if (isMinimized)
                                 {
                                      if (mainWindow.PosnX <= positionMin) {

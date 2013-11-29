@@ -19,7 +19,6 @@ class Window extends \ManiaLive\Gui\Window {
     protected $_closeAction;
     protected $_showCoords = 'False';
     protected $_windowFrame;
-    protected $_windowPos;
     private $dDeclares = "";
     private $dLoop = "";
     private $dCount = 0;
@@ -28,19 +27,6 @@ class Window extends \ManiaLive\Gui\Window {
 	parent::onConstruct();
 	$config = Config::getInstance();
 	$this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
-
-	$pos = new \ManiaLib\Gui\Elements\Entry();
-	$pos->setName("WindowPos");
-	$pos->setId("windowPosition");
-	$pos->setScriptEvents(true);
-	$pos->setPosition(0, 1000);  // display it off the screen coordinates
-	$this->addComponent($pos);
-
-	$id = new \ManiaLib\Gui\Elements\Entry();
-	$id->setName("WindowID");
-	$id->setDefault($this->id);
-	$id->setPosition(0, 1000); // display it off the screen coordinates
-	$this->addComponent($id);
 
 	$this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
 	$this->_windowFrame->setScriptEvents(true);
@@ -147,7 +133,6 @@ class Window extends \ManiaLive\Gui\Window {
                        main () {     
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");    
                         declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);
-                        declare CMlEntry windowPos <=> (Page.GetFirstChild("windowPosition") as CMlEntry);
                         declare showCoords = ' . $this->_showCoords . ';
                         
                         declare MoveWindow = False;

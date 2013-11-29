@@ -14,73 +14,73 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
     private $map;
 
     protected function onConstruct() {
-        $frame = new \ManiaLive\Gui\Controls\Frame();
-        $frame->setPosY(0);
-        // $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
-        $login = $this->getRecipient();
+	$frame = new \ManiaLive\Gui\Controls\Frame();
+	$frame->setPosY(0);
+	// $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
+	$login = $this->getRecipient();
 
-        $label = new \ManiaLib\Gui\Elements\Label(50);
-        $label->setText('$ddd' . __('Next map', $login));
-        $label->setTextEmboss(true);
-        $label->setAlign("right", "top");
-        $label->setPosX(0);
-        $this->addComponent($label);
+	$label = new \ManiaLib\Gui\Elements\Label(50);
+	$label->setText('$ddd' . __('Next map', $login));
+	$label->setTextEmboss(true);
+	$label->setAlign("right", "top");
+	$label->setPosX(0);
+	$this->addComponent($label);
 
-        $row = new \ManiaLive\Gui\Controls\Frame(0, -4);
-        $this->labelName = new \ManiaLib\Gui\Elements\Label(60, 7);
-        $this->labelName->setText('$ddd' . $this->mapName);
-        $this->labelName->setAlign("right", "top");
-        $this->labelName->setPosX(-6);
-        $row->addComponent($this->labelName);
+	$row = new \ManiaLive\Gui\Controls\Frame(0, -4);
+	$this->labelName = new \ManiaLib\Gui\Elements\Label(60, 7);
+	$this->labelName->setText('$ddd' . $this->mapName);
+	$this->labelName->setAlign("right", "top");
+	$this->labelName->setPosX(-6);
+	$row->addComponent($this->labelName);
 
-        $icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
-        $icon->setStyle("UIConstructionSimple_Buttons");
-        $icon->setSubStyle("Challenge");
-        $icon->setAlign("left", "top");
-        $icon->setPosX(-6);
-        $row->addComponent($icon);
-        $frame->addComponent($row);
+	$icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
+	$icon->setStyle("UIConstructionSimple_Buttons");
+	$icon->setSubStyle("Challenge");
+	$icon->setAlign("left", "top");
+	$icon->setPosX(-6);
+	$row->addComponent($icon);
+	$frame->addComponent($row);
 
-        $row = new \ManiaLive\Gui\Controls\Frame(0, -8);
-        $this->labelAuthor = new \ManiaLib\Gui\Elements\Label(60, 7);
-        $this->labelAuthor->setText('$ddd' . $this->mapAuthor);
-        $this->labelAuthor->setAlign("right", "top");
-        $this->labelAuthor->setPosX(-6);
-        $row->addComponent($this->labelAuthor);
+	$row = new \ManiaLive\Gui\Controls\Frame(0, -8);
+	$this->labelAuthor = new \ManiaLib\Gui\Elements\Label(60, 7);
+	$this->labelAuthor->setText('$ddd' . $this->mapAuthor);
+	$this->labelAuthor->setAlign("right", "top");
+	$this->labelAuthor->setPosX(-6);
+	$row->addComponent($this->labelAuthor);
 
-        $icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
-        $icon->setStyle("UIConstructionSimple_Buttons");
-        $icon->setSubStyle("Author");
-        $icon->setAlign("left", "top");
-        $icon->setPosX(-6);
-        $row->addComponent($icon);
-        $frame->addComponent($row);
+	$icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
+	$icon->setStyle("UIConstructionSimple_Buttons");
+	$icon->setSubStyle("Author");
+	$icon->setAlign("left", "top");
+	$icon->setPosX(-6);
+	$row->addComponent($icon);
+	$frame->addComponent($row);
 
-        $this->addComponent($frame);
+	$this->addComponent($frame);
 
-        $move = new \ManiaLib\Gui\Elements\Quad(60, 14);
-        $move->setAlign("right", "top");
-        $move->setStyle("Icons128x128_Blink");
-        $move->setSubStyle("ShareBlink");
-        $move->setScriptEvents();
-        $move->setId("enableMove");
-        $this->addComponent($move);
+	$move = new \ManiaLib\Gui\Elements\Quad(60, 14);
+	$move->setAlign("right", "top");
+	$move->setStyle("Icons128x128_Blink");
+	$move->setSubStyle("ShareBlink");
+	$move->setScriptEvents();
+	$move->setId("enableMove");
+	$this->addComponent($move);
 
-        $this->setScale(0.8);
-        $this->xml = new \ManiaLive\Gui\Elements\Xml();
+	$this->setScale(0.8);
+	$this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
     function onResize($oldX, $oldY) {
-        parent::onResize($oldX, $oldY);
+	parent::onResize($oldX, $oldY);
     }
 
     function onShow() {
-        
+	
     }
 
     public function onDraw() {
-        $this->removeComponent($this->xml);
-        $this->xml->setContent('    
+	$this->removeComponent($this->xml);
+	$this->xml->setContent('    
         <script><!--
                
                        main () {     
@@ -98,7 +98,11 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
                         declare persistent Boolean exp_enableHudMove = False;
                         declare persistent Vec3[Text] windowLastPos;
                         declare persistent Vec3[Text] windowLastPosRel;
-                                                                         
+                        
+			declare persistent Boolean[Text] widgetVisible;
+			    if (!widgetVisible.existskey(id)) {
+				 widgetVisible[id] =  True;
+			    }                                          
                          if (!windowLastPos.existskey(id)) {
                                 windowLastPos[id] = <158.0, 74.0, 0.0>;
                                }
@@ -110,17 +114,24 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
                         LastDelta = windowLastPosRel[id];
                         Window.RelativePosition = windowLastPosRel[id];                                                
                         
-                        while(True) {                                             
+                        while(True) {   
+			 if (!widgetVisible.existskey(id)) {
+				 widgetVisible[id] =  True;
+			    }   
+			if (widgetVisible[id] == True) {
+				Window.Show();
+			    }
+			    else {
+			        Window.Hide();
+			    }
+			    
                         if (exp_enableHudMove == True) {
                                 quad.Show();
-                                    
-                            
                             }
                         else {
-                            quad.Hide();
-                            
-                            
+                            quad.Hide();  
                         }
+			  
                           if (exp_enableHudMove == True && MouseLeftButton == True) {
                                      
                                               foreach (Event in PendingEvents) {
@@ -155,19 +166,19 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
                   
                 } 
                 --></script>');
-        $this->addComponent($this->xml);
-        parent::onDraw();
+	$this->addComponent($this->xml);
+	parent::onDraw();
     }
 
     function setMap(\DedicatedApi\Structures\Map $map) {
-        $this->map = $map;
-        $this->labelName->setText('$ddd' . $this->map->name);
-        $this->labelAuthor->setText('$ddd' . $this->map->author);
+	$this->map = $map;
+	$this->labelName->setText('$ddd' . $this->map->name);
+	$this->labelAuthor->setText('$ddd' . $this->map->author);
     }
 
     function destroy() {
-        $this->clearComponents();
-        parent::destroy();
+	$this->clearComponents();
+	parent::destroy();
     }
 
 }

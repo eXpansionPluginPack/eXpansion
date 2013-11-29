@@ -58,6 +58,11 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
 
 
 	$this->xml = new \ManiaLive\Gui\Elements\Xml();
+
+
+
+
+	$this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
     function Donate($login, $amount) {
@@ -71,9 +76,7 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
                
                        main () {     
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");                 
-                        declare MoveWindow = False;                       
-                        declare CMlLabel lbl_clock <=> (Page.GetFirstChild("clock") as CMlLabel);
-                        declare CMlLabel lbl_date <=> (Page.GetFirstChild("date") as CMlLabel);                        
+                        declare MoveWindow = False;                      
                         declare CMlQuad  quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);      
                         declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
                         declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
@@ -83,9 +86,12 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
                         
                         declare persistent Boolean exp_enableHudMove = False;
                         declare persistent Vec3[Text] windowLastPos;
-                        declare persistent Vec3[Text] windowLastPosRel;
-                        
-                        
+                        declare persistent Vec3[Text] windowLastPosRel;			
+			declare persistent Boolean[Text] widgetVisible;
+			
+		        if (!widgetVisible.existskey(id)) {
+				 widgetVisible[id] =  True;
+			    }            
                          if (!windowLastPos.existskey(id)) {
                                 windowLastPos[id] = <44.00,-88.00, 0.0>;
                                }
@@ -97,17 +103,27 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
                         LastDelta = windowLastPosRel[id];
                         Window.RelativePosition = windowLastPosRel[id];                                                
                         
-                        while(True) {                                             
+                        while(True) {  
+			 if (!widgetVisible.existskey(id)) {
+				 widgetVisible[id] =  True;
+			    }   
+			    if (widgetVisible[id] == True) {
+				Window.Show();
+			    }
+			    else {
+			        Window.Hide();
+			    }
+			    
                         if (exp_enableHudMove == True) {
-                                quad.Show();
-                                   
-                            
+                                quad.Show();  
                             }
                         else {
-                            quad.Hide();
-                            
-                            
+                            quad.Hide();    
+			   
                         }
+		    
+			    
+			    
                           if (exp_enableHudMove == True && MouseLeftButton == True) {
                                      
                                               foreach (Event in PendingEvents) {
@@ -136,10 +152,8 @@ class DonatePanelWindow extends \ManiaLive\Gui\Window {
                                     lastMouseX = MouseX;
                                     lastMouseY = MouseY;                            
                                     }
-                                    yield;
-                           }
-                  
-                  
+                            yield; 
+                           }                  
                 } 
                 --></script>');
 	$this->addComponent($this->xml);

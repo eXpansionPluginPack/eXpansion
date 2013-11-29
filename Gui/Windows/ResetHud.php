@@ -21,10 +21,11 @@ class ResetHud extends \ManiaLive\Gui\Window {
                        main () {     
                         declare persistent Vec3[Text] windowLastPos;
                         declare persistent Vec3[Text] windowLastPosRel;
-                        
+                        declare persistent Boolean[Text] widgetVisible;
                         windowLastPos.clear();
                         windowLastPosRel.clear();
-                        yield;
+			widgetVisible.clear();
+                       
                        }
                 --></script>');
         $this->addComponent($this->xml);

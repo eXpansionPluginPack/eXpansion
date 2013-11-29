@@ -10,59 +10,60 @@ class Inputbox extends \ManiaLive\Gui\Control {
     private $button;
     private $buttonSize;
 
-    function __construct($name, $sizeX = 35) {      
-        $config = Config::getInstance();
-        $this->button = new \ManiaLib\Gui\Elements\Entry($sizeX, 6);
-        $this->button->setName($name);
-        $this->button->setAlign('left', 'center');
-        $this->button->setTextColor('000');
-        $this->button->setTextSize(1);
-        $this->button->setScriptEvents(true);
-        $this->button->setFocusAreaColor1("7773");
-        $this->button->setFocusAreaColor2("7773");
-        $this->addComponent($this->button);
+    function __construct($name, $sizeX = 35) {
+	$config = Config::getInstance();
+	$this->button = new \ManiaLib\Gui\Elements\Entry($sizeX, 6);
+	$this->button->setName($name);
+	$this->button->setId($name);
+	$this->button->setAlign('left', 'center');
+	$this->button->setTextColor('000');
+	$this->button->setTextSize(1);
+	$this->button->setScriptEvents(true);
+	$this->button->setFocusAreaColor1("7773");
+	$this->button->setFocusAreaColor2("7773");
+	$this->addComponent($this->button);
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
-        $this->label->setAlign('left', 'center');
-        $this->label->setTextSize(1);
-        $this->label->setStyle("TextStaticSmall");
-        $this->addComponent($this->label);        
-        $this->setSize($sizeX, 10);
+	$this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
+	$this->label->setAlign('left', 'center');
+	$this->label->setTextSize(1);
+	$this->label->setStyle("TextStaticSmall");
+	$this->addComponent($this->label);
+	$this->setSize($sizeX, 10);
     }
 
     protected function onResize($oldX, $oldY) {
-        $this->button->setSize($this->sizeX, 4);
-        $this->label->setSize($this->sizeX, 3);
-        $this->label->setPosition(0, 4);
+	$this->button->setSize($this->sizeX, 4);
+	$this->label->setSize($this->sizeX, 3);
+	$this->label->setPosition(0, 4);
     }
 
     function onDraw() {
-        
+	
     }
 
     function getLabel() {
-        return $this->label->getText();
+	return $this->label->getText();
     }
 
     function setLabel($text) {
-        $this->label->setText('$222' . $text);
+	$this->label->setText('$222' . $text);
     }
 
     // todo: Get the actual right text value of the element
     function getText() {
-        return $this->button->getDefault();
+	return $this->button->getDefault();
     }
 
     function setText($text) {
-        $this->button->setDefault($text);
+	$this->button->setDefault($text);
     }
 
     function getName() {
-        return $this->button->getName();
+	return $this->button->getName();
     }
 
     function setName($text) {
-        $this->button->setName($name);
+	$this->button->setName($name);
     }
 
 }
