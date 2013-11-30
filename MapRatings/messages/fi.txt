@@ -9,3 +9,6 @@
 
 #rating#Map Approval Rating: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Your Rating: #variable#%4$s#rating# / #variable#5
 #rating#Kartan arvio: #variable#%2$s#rating# (#variable#%3$s #rating#ääntä).  Arviosi: #variable#%4$s#rating# / #variable#5
+
+Please rate the map!
+Arviosi on tärkeä!
