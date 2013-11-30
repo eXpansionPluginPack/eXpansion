@@ -37,7 +37,7 @@ class Event extends \ManiaLive\Event\Event {
                 break;
             case self::ON_PLAYER_CONNECT: $listener->onDedimaniaPlayerConnect($p[0]);
                 break;
-            case self::ON_PLAYER_DISCONNECT: $listener->onDedimaniaPlayerDisconnect();
+            case self::ON_PLAYER_DISCONNECT: $listener->onDedimaniaPlayerDisconnect($p[0]);
                 break;
         }
     }

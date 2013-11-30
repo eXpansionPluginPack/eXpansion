@@ -13,7 +13,9 @@ interface Listener extends \ManiaLive\Event\Listener {
     /**
      * Callback for dedimania.GetChallengeRecords
      * 
-     * $data =  array {'UId' => string, 'ServerMaxRank' => int, 'AllowedGameModes' => string (list of string, comma separated), 'Records' => array of struct {'Login': string, 'NickName': string, 'Best': int, 'Rank': int, 'MaxRank': int, 'Checks': string (list of int, comma separated), 'Vote': int}, 'Players' => array of {'Login': string, 'MaxRank': int}, 'TotalRaces' => int, 'TotalPlayers' => int }:
+     * $data =  array {'UId' => string, 'ServerMaxRank' => int, 'AllowedGameModes' => string (list of string, comma separated), 
+     *		        'Records' => array of struct {'Login': string, 'NickName': string, 'Best': int, 'Rank': int, 'MaxRank': int, 'Checks': string (list of int, comma separated), 'Vote': int}, 
+     *			'Players' => array of {'Login': string, 'MaxRank': int}, 'TotalRaces' => int, 'TotalPlayers' => int }:
      * ServerMaxRank: the nominal max number of records for this server,
      * MaxRank in records: the max record rank for the record (can be bigger than ServerMaxRank),
      * MaxRank in players: the max record rank for the player (can be bigger than ServerMaxRank!),
@@ -71,7 +73,7 @@ interface Listener extends \ManiaLive\Event\Listener {
      *  Callback for dedimania.PlayerDisconnect
      * 
      */
-    function onDedimaniaPlayerDisconnect();
+    function onDedimaniaPlayerDisconnect($login);
 }
 
 ?>

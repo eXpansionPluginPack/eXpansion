@@ -4,11 +4,20 @@ namespace ManiaLivePlugins\eXpansion\Dedimania\Structures;
 
 class DediPlayer extends \DedicatedApi\Structures\AbstractStructure {
 
+    /** @var string */
     public $login;
-    public $maxRank;
-    public $banned;
-    public $optionsEnabled;
-    public $toolOption;
+
+    /** @var int */
+    public $maxRank = 30;
+
+    /** @var bool */
+    public $banned = false;
+
+    /** @var bool */
+    public $optionsEnabled = false;
+
+    /** @var string */
+    public $toolOption = "";
 
 }
 

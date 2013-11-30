@@ -149,7 +149,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	
     }
 
-    public function onDedimaniaPlayerDisconnect() {
+    public function onDedimaniaPlayerDisconnect($login) {
 	
     }
 

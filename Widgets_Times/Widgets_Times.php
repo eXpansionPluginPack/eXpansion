@@ -146,7 +146,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	
     }
 
-    public function onDedimaniaPlayerDisconnect() {
+    public function onDedimaniaPlayerDisconnect($login) {
 	
     }
 
