@@ -53,7 +53,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	}
 	$this->onPlayerConnect(null, true);
 
-	$this->onEndMatch("", "");
+	// $this->onEndMatch("", "");
     }
 
     public function onOliverde8HudMenuReady($menu) {
