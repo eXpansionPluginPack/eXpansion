@@ -152,7 +152,6 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$txt_aliases = exp_getMessage('Aliases');
 
         foreach(self::$permissionList as $permission => $val){
-            echo $permission."\n";
             self::$txt_permissions[$permission] = exp_getMessage("Permission_".$permission);
         }
         
@@ -582,7 +581,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param string $login
      * @param string $params
      */
-    public function adminCmd($login, $params) {
+    public function adminCmd($login, $params="") {
 
         // $args = explode(" ", $params);
 

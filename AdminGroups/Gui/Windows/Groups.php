@@ -115,6 +115,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function changePermission($login, $group) {
+        \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Permissions::Erase($login);
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Permissions::Create($login);
         $window->setGroup($group);
         $window->setTitle(__(AdminGroups::$txt_permissionsTitle, $login, $group->getGroupName()));
@@ -124,6 +125,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function playerList($login, $group) {
+        \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Players::Erase($login);
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Players::Create($login);
         $window->setGroup($group);
         $window->setTitle(__(AdminGroups::$txt_playersTitle, $login, $group->getGroupName()));
@@ -133,6 +135,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
     
     public function inheritList($login, $group){
+        \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Inherits::Erase($login);
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Inherits::Create($login);
         $window->setGroup($group);
         $window->setTitle(__(AdminGroups::$txt_permissionsTitle, $login, $group->getGroupName()));
