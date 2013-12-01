@@ -23,6 +23,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onLoad() {
 	if ($this->isPluginLoaded('eXpansion\Dedimania'))
 	    Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
+
 	Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
 	$this->config = Config::getInstance();
     }
@@ -149,7 +150,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	
     }
 
-    public function onDedimaniaPlayerDisconnect($login) {
+    public function onDedimaniaPlayerDisconnect() {
 	
     }
 

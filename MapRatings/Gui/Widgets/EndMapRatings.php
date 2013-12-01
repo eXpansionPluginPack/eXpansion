@@ -1,101 +1,116 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_Times\Gui\Widgets;
+namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets;
 
-class TimeChooser extends \ManiaLive\Gui\Window {
+use ManiaLivePlugins\eXpansion\Gui\Config;
+use ManiaLivePlugins\eXpansion\MapRatings\Gui\Controls\RateButton;
 
-    public static $plugin = null;
-    protected $frame;
-    protected $btnBest, $btnPersonal, $btnNone, $btnAudio;
+class EndMapRatings extends \ManiaLive\Gui\Window {
+
+    protected $label, $xml, $frame;
+    protected $b0, $b1, $b2, $b3, $b4, $b5;
+    public static $parentPlugin;
 
     protected function onConstruct() {
 	parent::onConstruct();
+
 	$login = $this->getRecipient();
-	$this->setAlign("center", "center");
+	
+	
+	$this->xml = new \ManiaLive\Gui\Elements\Xml();
+	$this->addComponent($this->xml);
+
+
+	$this->label = new \ManiaLib\Gui\Elements\Label(70, 9);
+	$this->label->setStyle("TextRankingsBig");
+	$this->label->setTextEmboss();
+	$this->label->setText(__("Please rate the map!", $login));
+	$this->label->setAlign("center", "top");
+	$this->label->setPosY(9);
+	$this->addComponent($this->label);
 
 	$this->frame = new \ManiaLive\Gui\Controls\Frame(0, -3);
+	$this->frame->setSize(70, 30);
 	$this->frame->setAlign("center", "top");
-	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(20, 40));
+	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 	$this->addComponent($this->frame);
 
-	$this->btnBest = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(50, 6);
-	$this->btnBest->setAction($this->createAction(array(self::$plugin, "setMode"), TimePanel::Mode_BestOfAll));
-	$this->btnBest->setText(__("Top1", $login));
-	$this->btnBest->setScale(0.4);
-	$this->btnBest->colorize('aaaa');
-	$this->btnBest->setAlign("center");
-	$this->frame->addComponent($this->btnBest);
+	$this->b0 = new RateButton($login, self::$parentPlugin, 0);
+	$this->frame->addComponent($this->b0);
 
-	$this->btnPersonal = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(50, 6);
-	$this->btnPersonal->setAction($this->createAction(array(self::$plugin, "setMode"), TimePanel::Mode_PersonalBest));
-	$this->btnPersonal->setText(__("Personal Best", $login));
-	$this->btnPersonal->colorize('fff8');
-	$this->btnPersonal->setScale(0.4);
-	$this->btnPersonal->setAlign("center");
-	$this->frame->addComponent($this->btnPersonal);
+	$this->b1 = new RateButton($login, self::$parentPlugin, 1);
+	$this->frame->addComponent($this->b1);
 
-	$this->btnNone = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(50, 6);
-	$this->btnNone->setAction($this->createAction(array(self::$plugin, "setMode"), TimePanel::Mode_None));
-	$this->btnNone->setText(__("Off", $login));
-	$this->btnNone->colorize('aaaa');
-	$this->btnNone->setScale(0.4);
-	$this->btnNone->setAlign("center");
-	$this->frame->addComponent($this->btnNone);
+	$this->b2 = new RateButton($login, self::$parentPlugin, 2);
+	$this->frame->addComponent($this->b2);
 
-	$this->btnAudio = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(50, 6);
-	$this->btnAudio->setText(__("Audio: off", $login));
-	$this->btnAudio->colorize('a00a');
-	$this->btnAudio->setScale(0.4);
-	$this->btnAudio->setAlign("center");
-	$this->frame->addComponent($this->btnAudio);
+	$this->b3 = new RateButton($login, self::$parentPlugin, 3);
+	$this->frame->addComponent($this->b3);
 
-	$move = new \ManiaLib\Gui\Elements\Quad(24, 20);
-	$move->setAlign("center", "top");
+	$this->b4 = new RateButton($login, self::$parentPlugin, 4);
+	$this->frame->addComponent($this->b4);
+
+	$this->b5 = new RateButton($login, self::$parentPlugin, 5);
+	$this->frame->addComponent($this->b5);
+
+	$move = new \ManiaLib\Gui\Elements\Quad(140, 24);
+	$move->setAlign("center", "center");
 	$move->setStyle("Icons128x128_Blink");
 	$move->setSubStyle("ShareBlink");
 	$move->setScriptEvents();
 	$move->setId("enableMove");
+	
+	
 	$this->addComponent($move);
+	$this->setSize(90, 30);
+	$this->setAlign("center", "top");
+	$this->setPosition(0, -50);
+    }
 
-	$this->xml = new \ManiaLive\Gui\Elements\Xml();
+    function onResize($oldX, $oldY) {
+	parent::onResize($oldX, $oldY);
+	$this->frame->setPosX(-($this->frame->sizeX / 2)+5);
+    }
+
+    function onDraw() {
+	$this->removeComponent($this->xml);
 	$this->xml->setContent('    
         <script><!--
                
                        main () {     
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");                 
-                        declare MoveWindow = False;                      
+                        declare MoveWindow = False;                                       
                         declare CMlQuad  quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);      
                         declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
                         declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
                         declare Real lastMouseX = 0.0;
                         declare Real lastMouseY =0.0;                           
-                        declare Text id = "Checkpoints Tracker";      
+                        declare Text id = "MapRatings at podium";      
                         
                         declare persistent Boolean exp_enableHudMove = False;
                         declare persistent Vec3[Text] windowLastPos;
-                        declare persistent Vec3[Text] windowLastPosRel;			
+                        declare persistent Vec3[Text] windowLastPosRel;
+                        
 			declare persistent Boolean[Text] widgetVisible;
-			
-		                
+			    if (!widgetVisible.existskey(id)) {
+				 widgetVisible[id] =  True;
+			    }                                          
                          if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <26.0, -74.00, 0.0>;
+                                windowLastPos[id] = <0.0, -50.0, 0.0>;
                                }
                          if (!windowLastPosRel.existskey(id)) {
-                                windowLastPosRel[id] = <26.00, -74.00, 0.0>;
+                                windowLastPosRel[id] = <0.0, -50.0, 0.0>;
                               }
                         Window.PosnX = windowLastPos[id][0];
                         Window.PosnY = windowLastPos[id][1];
                         LastDelta = windowLastPosRel[id];
                         Window.RelativePosition = windowLastPosRel[id];                                                
                         
-                        while(True) { 
+                        while(True) {   
 			 if (!widgetVisible.existskey(id)) {
 				 widgetVisible[id] =  True;
 			    }   
-			 if (!widgetVisible.existskey(id)) {
-				 widgetVisible[id] =  True;
-			    }   
-			    if (widgetVisible[id] == True) {
+			if (widgetVisible[id] == True) {
 				Window.Show();
 			    }
 			    else {
@@ -103,15 +118,12 @@ class TimeChooser extends \ManiaLive\Gui\Window {
 			    }
 			    
                         if (exp_enableHudMove == True) {
-                                quad.Show();  
+                                quad.Show();
                             }
                         else {
-                            quad.Hide();    
-			   
+                            quad.Hide();  
                         }
-		    
-			    
-			    
+			  
                           if (exp_enableHudMove == True && MouseLeftButton == True) {
                                      
                                               foreach (Event in PendingEvents) {
@@ -140,50 +152,17 @@ class TimeChooser extends \ManiaLive\Gui\Window {
                                     lastMouseX = MouseX;
                                     lastMouseY = MouseY;                            
                                     }
-                            yield; 
-                           }                  
+                                    yield;
+                           }
+                  
+                  
                 } 
                 --></script>');
 	$this->addComponent($this->xml);
-    }
-
-    function updatePanelMode($mode, $audiomode) {
-	$login = $this->getRecipient();
-	$this->btnBest->colorize('aaa8');
-	$this->btnPersonal->colorize('aaa8');
-	$this->btnNone->colorize('aaa8');
-
-	if ($mode == TimePanel::Mode_BestOfAll)
-	    $this->btnBest->colorize('fffe');
-
-	if ($mode == TimePanel::Mode_PersonalBest)
-	    $this->btnPersonal->colorize('fffe');
-
-	if ($mode == TimePanel::Mode_None)
-	    $this->btnNone->colorize('fffe');
-
-	if ($audiomode) {
-	    $this->btnAudio->setAction($this->createAction(array(self::$plugin, "setAudioMode"), false));
-	    $this->btnAudio->setText(__("Audio: on", $login));
-	    $this->btnAudio->colorize('0a0a');
-	} else {
-	    $this->btnAudio->setAction($this->createAction(array(self::$plugin, "setAudioMode"), true));
-	    $this->btnAudio->setText(__("Audio: off", $login));
-	    $this->btnAudio->colorize('a00a');
-	}
-	$this->redraw($this->getRecipient());
-    }
-
-    function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
-    }
-
-    function onShow() {
-	
+	parent::onDraw();
     }
 
     function destroy() {
-	$this->clearComponents();
 	parent::destroy();
     }
 

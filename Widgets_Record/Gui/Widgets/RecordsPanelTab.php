@@ -111,6 +111,11 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
 	parent::onResize($oldX, $oldY);
     }
 
+    function onDraw() {
+	$login = $this->getRecipient();
+	parent::onDraw();
+    }
+
     function update() {
 	$login = $this->getRecipient();
 
@@ -123,9 +128,6 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
 	    $this->items_dedi = array();
 	    $this->frame_dedi->clearComponents();
 	    $index = 1;
-
-
-
 
 	    if (!is_array(Widgets_Record::$dedirecords))
 		return;
@@ -142,8 +144,6 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
 	    $item->destroy();
 	$this->items_local = array();
 	$this->frame_local->clearComponents();
-
-
 
 	if (!is_array(Widgets_Record::$localrecords))
 	    return;
@@ -175,4 +175,5 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
     }
 
 }
+
 ?>

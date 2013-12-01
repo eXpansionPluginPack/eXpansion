@@ -603,7 +603,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function xPlayerDisconnect($data) {
-	print_r($data);
+	//print_r($data);
 	Dispatcher::dispatch(new dediEvent(dediEvent::ON_PLAYER_DISCONNECT, $data[0][0]['Login']));
     }
 

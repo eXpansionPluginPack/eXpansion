@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\SimpleCheckbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
 /**
@@ -14,11 +15,15 @@ class CheckboxItem extends \ManiaLive\Gui\Control {
 
     protected $frame;
 
-    public function __construct($counter, Checkbox $cBox) {
+    public function __construct($counter, Checkbox $permission, CheckBox $inheritance = null) {
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize(68, 4);
         $this->frame->addComponent(new ListBackGround($counter, 68, 4));
-        $this->frame->addComponent($cBox);
+        $this->frame->addComponent($permission);
+        if($inheritance != null){
+            $this->frame->addComponent($inheritance);
+            $inheritance->setPosX(54);
+        }
         $this->addComponent($this->frame);
         $this->setSize(68, 4);
     }

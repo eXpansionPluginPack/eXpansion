@@ -105,6 +105,7 @@ EOT;
      * 
      */
     public function exp_onReady() {
+	$this->registerChatCommand("info", "showInfo", 0, true);	
 	$this->onBeginMap(null, null, null);
     }
 
@@ -155,6 +156,16 @@ EOT;
 	    }
 	}
 	Console::println('#####################################################################' . "\n");
+    }
+    
+    public function showInfo($login) {
+	$info = Gui\Windows\InfoWindow::Create($login);
+	$info->setTitle("Server info");
+	$info->centerOnScreen();
+	$info->setSize(120,90);
+	$info->show();
+	
+	
     }
 
 }

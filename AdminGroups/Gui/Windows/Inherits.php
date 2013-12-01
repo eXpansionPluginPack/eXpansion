@@ -3,13 +3,14 @@
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
 use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Group;
 
 /**
  * Description of Permissions
  *
  * @author oliverde8
  */
-class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     private $adminGroups;
     private $pager;
@@ -19,101 +20,122 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $action_ok;
     private $action_cancel;
     private $items = array();
-    private $permissions = array();
+    private $inherits = array();
 
     protected function onConstruct() {
-	parent::onConstruct();
-	$config = \ManiaLive\DedicatedApi\Config::getInstance();
+        parent::onConstruct();
+        $config = \ManiaLive\DedicatedApi\Config::getInstance();
 
-	$this->pager = new \ManiaLive\Gui\Controls\Pager();
-	$this->mainFrame->addComponent($this->pager);
+        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->mainFrame->addComponent($this->pager);
 
-	$this->button_ok = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
-	$this->button_ok->setText(__("OK"));
-	$this->action_ok = $this->createAction(array($this, 'click_ok'));
-	$this->button_ok->setAction($this->action_ok);
-	$this->mainFrame->addComponent($this->button_ok);
+        $this->button_ok = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
+        $this->button_ok->setText(__("OK"));
+        $this->action_ok = $this->createAction(array($this, 'click_ok'));
+        $this->button_ok->setAction($this->action_ok);
+        $this->mainFrame->addComponent($this->button_ok);
 
-	$this->button_cancel = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
-	$this->button_cancel->setText(__("Cancel"));
-	$this->action_cancel = $this->createAction(array($this, 'click_cancel'));
-	$this->button_cancel->setAction($this->action_cancel);
-	$this->mainFrame->addComponent($this->button_cancel);
+        $this->button_cancel = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
+        $this->button_cancel->setText(__("Cancel"));
+        $this->action_cancel = $this->createAction(array($this, 'click_cancel'));
+        $this->button_cancel->setAction($this->action_cancel);
+        $this->mainFrame->addComponent($this->button_cancel);
     }
 
-    public function setGroup($g) {
-	$this->group = $g;
+    public function setGroup(Group $g) {
+        $this->group = $g;
     }
 
     function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
-	$this->pager->setSize($this->sizeX - 2, $this->sizeY - 12);
-	$this->pager->setPosition(1, -1);
+        parent::onResize($oldX, $oldY);
+        $this->pager->setSize($this->sizeX - 2, $this->sizeY - 12);
+        $this->pager->setPosition(1, -1);
 
-	$centerX = $this->sizeX / 2 - 10;
-	$this->button_ok->setPosition($centerX + 5, -$this->sizeY + 5);
-	$this->button_cancel->setPosition($centerX + 30, -$this->sizeY + 5);
+        $centerX = $this->sizeX / 2 - 10;
+        $this->button_ok->setPosition($centerX + 5, -$this->sizeY + 5);
+        $this->button_cancel->setPosition($centerX + 30, -$this->sizeY + 5);
     }
 
     function onShow() {
-	$this->populateList();
+        $this->populateList();
     }
 
     function populateList() {
-	foreach ($this->permissions as $item)
-	    $item->destroy();
-	foreach ($this->items as $item)
-	    $item->erase();
+        foreach ($this->inherits as $item){
+            $item->destroy();
+        }
+        foreach ($this->items as $item)
+            $item->erase();
 
-	$this->pager->clearItems();
-	$this->permissions = array();
-	$this->items = array();
-	$x = 0;
-	$adminGroups = AdminGroups::getInstance();
-	foreach ($adminGroups->getPermissionList() as $key => $value) {
-	    $cBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 68);
-	    $cBox->setStatus($this->group->hasPermission($key));
-	    $cBox->setText($key);
-	    $cBox->setScale(0.8);
+        $this->pager->clearItems();
+        $this->inherits = array();
+        $this->items = array();
+        $x = 0;
+        $adminGroups = AdminGroups::getInstance();
+        
+        $inherits = $this->group->getInherits();
+        
+        foreach ($adminGroups->getGroupList() as $i => $group) {
+            $nh = $group->getInherits();
+            
+            if($this->group != $group && !$group->isMaster() && !isset($nh[$this->group->getGroupName()])){
+                
+                $cInherit = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 38);
+                $cInherit->setText($group->getGroupName());
+                $cInherit->setScale(0.8);
+                
+                if(!empty($inherits)){
+                    $cInherit->setStatus(isset($inherits[$group->getGroupName()]));
+                }
 
-	    $this->permissions[$key] = $cBox;
-	    $this->items[$x] = new \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem($x, $cBox);
-	    $this->pager->addItem($this->items[$x]);
-	    $x++;
-	}
+                $this->inherits[$i] =  $cInherit;
+                $this->items[$x] = new \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem($x, $cInherit);
+                $this->pager->addItem($this->items[$x]);
+                $x++;
+            }
+        }
     }
 
     function click_ok($login) {
-	$newPermissions = array();
-	foreach ($this->permissions as $key => $val) {
-	    $newPermissions[$key] = $val->getStatus();
-	}
-	$adminGroups = AdminGroups::getInstance();
-	$adminGroups->changePermissionOfGroup($login, $this->group, $newPermissions);
-	$this->Erase($login);
-	
+        
+        $adminGroups = AdminGroups::getInstance();
+        
+        $groups = $adminGroups->getGroupList();
+        $newInheritances = array();
+        
+        foreach ($this->inherits as $i => $cbox) {
+            $nh = $groups[$i]->getInherits();
+            if($cbox->getStatus() && !$groups[$i]->isMaster() && !isset($nh[$this->group->getGroupName()])){
+                $newInheritances[] = $groups[$i];
+            }
+        }
+        
+        $adminGroups = AdminGroups::getInstance();
+        $adminGroups->changeInheritanceOfGroup($login, $this->group, $newInheritances);
+        $this->Erase($login);
     }
 
     function click_cancel() {
-	$this->Erase($this->getRecipient());
+        $this->Erase($this->getRecipient());
     }
 
     public function destroy() {
-	foreach ($this->permissions as $item)
-	    $item->destroy();
-	foreach ($this->items as $item)
-	    $item->erase();
+        foreach ($this->inherits as $item){
+            $item->destroy();
+        }
+        foreach ($this->items as $item)
+            $item->erase();
 
-	$this->permissions = null;
-	$this->items = array();
-	$this->pager->destroy();
-	\ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_ok);
-	\ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_cancel);
+        $this->inherits = null;
+        $this->items = array();
+        $this->pager->destroy();
+        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_ok);
+        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_cancel);
 
-	$this->button_cancel->destroy();
-	$this->button_ok->destroy();
+        $this->button_cancel->destroy();
+        $this->button_ok->destroy();
 
-	parent::destroy();
+        parent::destroy();
     }
 
 }

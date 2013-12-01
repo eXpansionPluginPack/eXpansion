@@ -16,6 +16,8 @@ class Group {
     private $groupUsers = array();
     private $permissions;
 
+    private $inherits = array();
+    
     function __construct($groupName, $master) {
         $this->groupName = $groupName;
         $this->master = $master;
@@ -55,14 +57,40 @@ class Group {
         return $name == null || $this->master || $this->hasPermission2($name);
     }
 
+    public function getPermission($name){
+        if($name == null ||  $this->master)
+            return AdminGroups::havePermission;
+        else if(isset($this->permissions[$name]))
+            return $this->permissions[$name];
+        else
+            return AdminGroups::unknownPermission;
+    }
+    
     private function hasPermission2($name) {
         if ($name == "")
             return true;
         else if (isset($this->permissions[$name])) {
-            return $this->permissions[$name];
+            if($this->permissions[$name] == AdminGroups::unknownPermission){
+                
+                return $this->hasInheritancePermission($name);
+            }return $this->permissions[$name]  == AdminGroups::havePermission;
         }
-        else
+        else 
             return false;
+    }
+    
+    private function hasInheritancePermission($name){
+        $actual = AdminGroups::unknownPermission;
+        if(!empty($this->inherits)){
+            $i = 0;
+            
+            foreach($this->inherits as $name => $group){
+                $actual = $group->getPermission($name);
+                if($actual != AdminGroups::unknownPermission)
+                     return $actual  == AdminGroups::havePermission;
+            }
+        }
+        return $actual  == AdminGroups::havePermission;
     }
 
     public function getGroupName() {
@@ -81,6 +109,18 @@ class Group {
         return $this->permissions;
     }
 
+    public function getInherits() {
+        return $this->inherits;
+    }
+    
+    public function resetInherits(){
+        $this->inherits = array();
+    }
+    
+    public function addInherits(Group $group){
+        $this->inherits[$group->getGroupName()] = $group;
+    }
+    
 }
 
 ?>
