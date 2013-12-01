@@ -51,14 +51,14 @@ class PmWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         $login = $this->getRecipient();
         foreach ($this->storage->players as $player) {
-            if ($player->login == $this->getRecipient()) {
+            if ($player->login != $this->getRecipient()) {
                 $this->items[$x] = new Playeritem($x, $player, $this->controller);
                 $this->pager->addItem($this->items[$x]);
                 $x++;
             }
         }
         foreach ($this->storage->spectators as $player) {
-            if ($player->login !== $this->getRecipient()) {
+            if ($player->login != $this->getRecipient()) {
                 $this->items[$x] = new Playeritem($x, $player, $this->controller);
                 $this->pager->addItem($this->items[$x]);
                 $x++;
