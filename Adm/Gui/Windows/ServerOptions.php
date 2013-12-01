@@ -29,7 +29,6 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->setTitle(__('Server Options',$this->getRecipient()));
 
-
         $this->inputboxes();
         $this->checkboxes();
 
@@ -46,11 +45,12 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameInputbox = new \ManiaLive\Gui\Controls\Frame();
         $this->frameInputbox->setAlign("left", "top");
         $this->frameInputbox->setLayout(new \ManiaLib\Gui\Layouts\Column());
-
+        
         $this->serverName = new Inputbox("serverName");
         $this->serverName->setLabel(__("Server Name",$this->getRecipient()));
         $this->serverName->setText($this->connection->getServerName());
         $this->frameInputbox->addComponent($this->serverName);
+        
 
         $this->serverComment = new Inputbox("serverComment");
         $this->serverComment->setLabel(__("Server comment",$this->getRecipient()));
@@ -197,25 +197,26 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function onDraw() {
-        parent::onDraw();
         $login = $this->getRecipient();
 
-        $this->serverName->setVisibility(AdminGroups::hasPermission($login, 'server_name'));
-        $this->serverComment->setVisibility(AdminGroups::hasPermission($login, 'server_comment'));
-        $this->maxPlayers->setVisibility(AdminGroups::hasPermission($login, 'server_maxplayer'));
-        $this->maxSpec->setVisibility(AdminGroups::hasPermission($login, 'server_maxspec'));
-        $this->minLadder->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-        $this->maxLadder->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
+        $this->serverName->setEditable(AdminGroups::hasPermission($login, 'server_name'));
+        $this->serverComment->setEditable(AdminGroups::hasPermission($login, 'server_comment'));
+        $this->maxPlayers->setEditable(AdminGroups::hasPermission($login, 'server_maxplayer'));
+        $this->maxSpec->setEditable(AdminGroups::hasPermission($login, 'server_maxspec'));
+        $this->minLadder->setEditable(AdminGroups::hasPermission($login, 'server_ladder'));
+        $this->maxLadder->setEditable(AdminGroups::hasPermission($login, 'server_ladder'));
         $this->serverPass->setVisibility(AdminGroups::hasPermission($login, 'server_password'));
         $this->serverSpecPass->setVisibility(AdminGroups::hasPermission($login, 'server_specpwd'));
         $this->refereePass->setVisibility(AdminGroups::hasPermission($login, 'server_refpwd'));
-        $this->cbPublicServer->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-        $this->cbLadderServer->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-        $this->cbAllowMapDl->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-        $this->cbAllowp2pDown->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-        $this->cbAllowp2pUp->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-        $this->cbValidation->setVisibility(AdminGroups::hasPermission($login, 'server_admin'));
-        $this->cbReferee->setVisibility(AdminGroups::hasPermission($login, 'server_refmode'));
+        $this->cbPublicServer->SetIsWorking(AdminGroups::hasPermission($login, 'server_public'));
+        $this->cbLadderServer->SetIsWorking(AdminGroups::hasPermission($login, 'server_ladder'));
+        $this->cbAllowMapDl->SetIsWorking(AdminGroups::hasPermission($login, 'server_map'));
+        $this->cbAllowp2pDown->SetIsWorking(AdminGroups::hasPermission($login, 'server_admin'));
+        $this->cbAllowp2pUp->SetIsWorking(AdminGroups::hasPermission($login, 'server_admin'));
+        $this->cbValidation->SetIsWorking(AdminGroups::hasPermission($login, 'server_validation'));
+        $this->cbReferee->SetIsWorking(AdminGroups::hasPermission($login, 'server_refmode'));
+        
+        parent::onDraw();
     }
 
     function destroy() {
@@ -275,7 +276,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             "RefereePassword" => !AdminGroups::hasPermission($login, 'server_refpwd') ? $server->refereePassword : $args['refereePass'],
             "IsP2PUpload" => !AdminGroups::hasPermission($login, 'server_admin') ? $server->isP2PUpload : $this->cbAllowp2pUp->getStatus(),
             "IsP2PDownload" => !AdminGroups::hasPermission($login, 'server_admin') ? $server->isP2PDownload : $this->cbAllowp2pDown->getStatus(),
-            "AllowMapDownload" => !AdminGroups::hasPermission($login, 'server_admin') ? $server->allowMapDownload : $this->cbAllowMapDl->getStatus(),
+            "AllowMapDownload" => !AdminGroups::hasPermission($login, 'server_map') ? $server->allowMapDownload : $this->cbAllowMapDl->getStatus(),
             "NextMaxPlayer" => !AdminGroups::hasPermission($login, 'server_maxplayer') ? $server->nextMaxPlayers : $args['maxPlayers'],
             "NextMaxSpectator" => !AdminGroups::hasPermission($login, 'server_maxspec') ? $server->nextMaxSpectators : $args['maxSpec'],
             "RefereeMode" => !AdminGroups::hasPermission($login, 'server_refmode') ? $server->refereeMode : $this->cbReferee->getStatus()
@@ -284,7 +285,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->Erase($this->getRecipient());
     }
 
-    public function serverOptionsCancel($login, $args) {                
+    public function serverOptionsCancel($login) {                
         $this->Erase($this->getRecipient());
     }
    

@@ -87,7 +87,6 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$button["substyle"] = "Options";
 	$button["plugin"] = $this;
 	$button["function"] = "serverOptions";
-	$button["permission"] = "server_admin";
 	$menu->addButton($parent, "Server Window", $button);
 
 	$parent = $menu->findButton(array('admin', 'Game Options'));
@@ -122,7 +121,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function serverOptions($login) {
-	if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getAdmin($login) != null) {
 	    $window = ServerOptions::Create($login);
 	    $window->setTitle(__('Server Options', $login));
 	    $window->centerOnScreen();
@@ -210,7 +209,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function dbTools($login) {
-	if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+	if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'db_maintainance')) {
 	    if ($this->isPluginLoaded("eXpansion\Database")) {
 		$this->callPublicMethod("eXpansion\Database", "showDbMaintainance", $login);
 	    } else {
