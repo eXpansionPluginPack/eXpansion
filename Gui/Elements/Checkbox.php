@@ -12,10 +12,13 @@ class Checkbox extends \ManiaLive\Gui\Control {
     private $active = false;
     private $textWidth;
     private $action;
+    private $toToggle = null;
 
-    function __construct($sizeX = 4, $sizeY = 4, $textWidth = 25) {
+    function __construct($sizeX = 4, $sizeY = 4, $textWidth = 25, Checkbox $toToggle = null) {
         $this->textWidth = $textWidth;
         $this->action = $this->createAction(array($this, 'toggleActive'));
+        $this->toToggle = $toToggle;
+        
         $config = Config::getInstance();
         $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->button->setAlign('left', 'center2');
@@ -41,6 +44,24 @@ class Checkbox extends \ManiaLive\Gui\Control {
         $this->addComponent($this->label);
 
         $this->setSize($sizeX + $textWidth, $sizeY);
+    }
+    
+    public function SetIsWorking($state){
+        if($state){
+            if($this->button->getAction() == -1){
+                $this->button->setAction($this->action);
+            }
+        }else{
+            $this->button->setAction(-1);
+        }
+    }
+    
+    public function ToogleIsWorking(){
+        if($this->button->getAction() == -1){
+            $this->button->setAction($this->action);
+        }else{
+            $this->button->setAction(-1);
+        }
     }
 
     protected function onResize($oldX, $oldY) {
@@ -80,6 +101,7 @@ class Checkbox extends \ManiaLive\Gui\Control {
 
     function toggleActive($login) {
         $this->active = !$this->active;
+        if($this->toToggle != null)$this->toToggle->ToogleIsWorking($login);
         $this->redraw();
     }
 

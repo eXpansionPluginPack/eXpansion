@@ -84,7 +84,7 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $inheritances = $this->group->getInherits();
             if(!empty($inheritances)){
                 $cInherit = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 15, $cPermission);
-                $cInherit->setText(AdminGroups::$txt_inherits."?");
+                $cInherit->setText(__(AdminGroups::$txt_inherits, $this->getRecipient())."?");
                 $cInherit->setScale(0.8);
                 if($this->group->getPermission($key) == AdminGroups::unknownPermission){
                     $cPermission->SetIsWorking(false);

@@ -84,10 +84,10 @@ class Group {
         if(!empty($this->inherits)){
             $i = 0;
             
-            foreach($this->inherits as $name => $group){
+            foreach($this->inherits as $gname => $group){
                 $actual = $group->getPermission($name);
-                if($actual != AdminGroups::unknownPermission)
-                     return $actual  == AdminGroups::havePermission;
+                if($actual == AdminGroups::havePermission)
+                    return true;
             }
         }
         return $actual  == AdminGroups::havePermission;

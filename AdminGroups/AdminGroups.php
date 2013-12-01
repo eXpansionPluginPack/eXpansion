@@ -269,7 +269,6 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 }
                 
                 foreach($inherits as $groupe){
-                    echo $groupe."\n";
                     $inheritedGroup = null;
                     foreach (self::$groupList as $g) {
                         if (strtolower($g->getGroupName()) == strtolower($groupe)) {
@@ -340,8 +339,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $param = explode(".", $key);
 
             if ($param[0] == 'permission') {
-                self::$permissionList[$param[1]] = true;
-                $group->addPermission($param[1], $this->entryCheck($val));
+                if(!empty($param[1])){
+                    self::$permissionList[$param[1]] = true;
+                    $group->addPermission($param[1], $this->entryCheck($val));
+                }
             } elseif ($param[0] == 'settings') {
                 //
             }
@@ -376,7 +377,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $param = explode(".", $key);
 
             if ($param[0] == 'permission') {
-                self::$permissionList[$param[1]] = true;
+                if(!empty($param[1]))
+                    self::$permissionList[$param[1]] = true;
             }
         }
 
