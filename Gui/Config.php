@@ -9,6 +9,8 @@ class Config extends \ManiaLib\Utils\Singleton {
     
     public $checkbox = "http://reaby.kapsi.fi/ml/checkbox_off.png";
     public $checkboxActive = "http://reaby.kapsi.fi/ml/checkbox_on.png";
+    public $checkboxDisabled = "http://reaby.kapsi.fi/ml/checkbox_disabled_off.png";
+    public $checkboxDisabledActive = "http://reaby.kapsi.fi/ml/checkbox_disabled_on.png";
 
     public $ratiobutton = "http://reaby.kapsi.fi/ml/ratio_off.png";
     public $ratiobuttonActive = "http://reaby.kapsi.fi/ml/ratio_on.png";

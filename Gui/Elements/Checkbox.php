@@ -74,12 +74,18 @@ class Checkbox extends \ManiaLive\Gui\Control {
     function onDraw() {
         $config = Config::getInstance();
 
-        if ($this->active) {
-            $this->button->setImage($config->checkboxActive);
-           // $this->button->setText('$0d0×');
-        } else {
-           $this->button->setImage($config->checkbox);
-         //   $this->button->setText(' ');
+        if($this->button->getAction() == -1){
+            if ($this->active) {
+                $this->button->setImage($config->checkboxDisabledActive);
+            } else {
+               $this->button->setImage($config->checkboxDisabled);
+            }
+        }else{
+            if ($this->active) {
+                $this->button->setImage($config->checkboxActive);
+            } else {
+               $this->button->setImage($config->checkbox);
+            }
         }
     }
 
@@ -108,7 +114,12 @@ class Checkbox extends \ManiaLive\Gui\Control {
     function setAction($action) {
         $this->button->setAction($action);
     }
-
+    
+    public function destroy() {
+        $this->button->setAction($this->action);
+        parent::destroy();
+    }
+    
 }
 
 ?>

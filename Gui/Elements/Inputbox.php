@@ -9,61 +9,96 @@ class Inputbox extends \ManiaLive\Gui\Control {
     private $label;
     private $button;
     private $buttonSize;
+    private $name;
 
-    function __construct($name, $sizeX = 35) {
-	$config = Config::getInstance();
-	$this->button = new \ManiaLib\Gui\Elements\Entry($sizeX, 6);
-	$this->button->setName($name);
-	$this->button->setId($name);
-	$this->button->setAlign('left', 'center');
-	$this->button->setTextColor('000');
-	$this->button->setTextSize(1);
-	$this->button->setScriptEvents(true);
-	$this->button->setFocusAreaColor1("7773");
-	$this->button->setFocusAreaColor2("7773");
-	$this->addComponent($this->button);
-
-	$this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
-	$this->label->setAlign('left', 'center');
-	$this->label->setTextSize(1);
-	$this->label->setStyle("TextStaticSmall");
-	$this->addComponent($this->label);
-	$this->setSize($sizeX, 10);
+    function __construct($name, $sizeX = 35, $editable = true) {
+        $config = Config::getInstance();
+        $this->sizeX = $sizeX;
+        $this->name = $name;
+        
+        $this->createButton($editable);
+        
+        $this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
+        $this->label->setAlign('left', 'center');
+        $this->label->setTextSize(1);
+        $this->label->setStyle("TextStaticSmall");
+        $this->addComponent($this->label);
+        $this->setSize($sizeX, 10);
     }
 
     protected function onResize($oldX, $oldY) {
-	$this->button->setSize($this->sizeX, 4);
-	$this->label->setSize($this->sizeX, 3);
-	$this->label->setPosition(0, 4);
+        $this->button->setSize($this->sizeX, 4);
+        $this->label->setSize($this->sizeX, 3);
+        $this->label->setPosition(0, 4);
+    }
+    
+    protected function createButton($editable){
+        $text = "";
+        if($this->button != null){
+            $this->removeComponent ($this->button);
+            $text = $this->getText();
+        }
+        
+        if ($editable) {
+            $this->button = new \ManiaLib\Gui\Elements\Entry($this->getSizeX(), 6);
+            $this->button->setName($this->name);
+            $this->button->setId($this->name);
+            $this->button->setDefault($text);
+            $this->button->setScriptEvents(true);
+            $this->button->setFocusAreaColor1("7773");
+            $this->button->setFocusAreaColor2("7773");
+        } else {
+            $this->button = new \ManiaLib\Gui\Elements\Label($this->getSizeX(), 6);
+            $this->button->setText($text);
+        }
+
+        $this->button->setAlign('left', 'center');
+        $this->button->setTextColor('000');
+        $this->button->setTextSize(1);
+        $this->addComponent($this->button);
     }
 
     function onDraw() {
-	
+        
     }
 
+    public function setEditable($state){
+        if($state && $this->button instanceof \ManiaLib\Gui\Elements\Label){
+            $this->createButton($state);
+        }elseif(!$state && $this->button instanceof \ManiaLib\Gui\Elements\Entry){
+            $this->createButton($state);
+        }
+    }
+    
     function getLabel() {
-	return $this->label->getText();
+        return $this->label->getText();
     }
 
     function setLabel($text) {
-	$this->label->setText('$222' . $text);
+        $this->label->setText('$222' . $text);
     }
 
     // todo: Get the actual right text value of the element
     function getText() {
-	return $this->button->getDefault();
+        if ($this->button instanceof \ManiaLib\Gui\Elements\Entry)
+            return $this->button->getDefault();
+        else
+            return $this->button->getText();
     }
 
     function setText($text) {
-	$this->button->setDefault($text);
+        if ($this->button instanceof \ManiaLib\Gui\Elements\Entry)
+            $this->button->setDefault($text);
+        else
+            $this->button->setText($text);
     }
 
     function getName() {
-	return $this->button->getName();
+        return $this->button->getName();
     }
 
     function setName($text) {
-	$this->button->setName($name);
+        $this->button->setName($name);
     }
 
 }
