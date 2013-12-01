@@ -42,7 +42,7 @@ class Button extends \ManiaLive\Gui\Control {
         $this->label->setStyle("TextChallengeNameMedium");
         $this->label->setTextSize(3);
         //$this->label->setScriptEvents(true);
-        $this->label->setFocusAreaColor1("ddda");
+        $this->label->setFocusAreaColor1("bbba");
         $this->label->setFocusAreaColor2("fffa");
 
         $this->sizeX = $sizeX + 2;

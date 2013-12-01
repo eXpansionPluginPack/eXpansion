@@ -35,8 +35,8 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
 	$this->_mainWindow->setId("MainWindow");
 	$this->_mainWindow->setStyle("Bgs1");
-	$this->_mainWindow->setSubStyle("BgWindow2");
-	// $this->_mainWindow->setBgcolor("fffe");
+	$this->_mainWindow->setSubStyle("BgCard");
+	$this->_mainWindow->setBgcolor("eeef");
 	// $this->_mainWindow->setStyle("Bgs1InRace");
 	// $this->_mainWindow->setSubStyle("BgEmpty");
 	// $this->_mainWindow->setBgcolor("fff");
@@ -151,6 +151,8 @@ class Window extends \ManiaLive\Gui\Window {
                         declare Text id = "' . $this->_title->getText() . '";        
                         declare persistent Vec3[Text] windowLastPos;
                         declare persistent Vec3[Text] windowLastPosRel;
+			declare persistent Text windowActive = "";
+			
                         ' . $this->dDeclares . '                          
                         
                          if (!windowLastPos.existskey(id)) {
@@ -163,18 +165,19 @@ class Window extends \ManiaLive\Gui\Window {
                         Window.PosnY = windowLastPos[id][1];
                         LastDelta = windowLastPosRel[id];
                         Window.RelativePosition = windowLastPosRel[id];                                                
-                        
+                        windowActive = id;
+			
                         while(True) {                                                               
-                               if (active == True) {
+                               if (windowActive == id) {
                                 declare temp = Window.RelativePosition;
-                                temp.Z = 5.0;
+                                temp.Z = 20.0;
                                 Window.RelativePosition = temp;
-                              //  TitlebarText.SetText("true");
+                            //    TitlebarText.SetText("true");
                                 } else {
                                 declare temp = Window.RelativePosition;
-                                temp.Z = -2.0;
-                                Window.RelativePosition = temp;
-                                //   TitlebarText.SetText("false");
+                                temp.Z = -50.0;
+                                Window.RelativePosition = temp;				
+                              //  TitlebarText.SetText("false");
                                 }
                                 
                                if (showCoords) {                               
@@ -186,8 +189,10 @@ class Window extends \ManiaLive\Gui\Window {
                                     DeltaPos.X = MouseX - lastMouseX;
                                     DeltaPos.Y = MouseY - lastMouseY;
                                    
-                                    LastDelta += DeltaPos;
-                                    LastDelta.Z = 3.0;
+                                    LastDelta += DeltaPos;         
+				     if (windowActive == id) {
+					    LastDelta.Z = 20.0; 
+				    }
                                     Window.RelativePosition = LastDelta;                                
                                     windowLastPos[id] = Window.AbsolutePosition;
                                     windowLastPosRel[id] = Window.RelativePosition;
@@ -250,7 +255,8 @@ class Window extends \ManiaLive\Gui\Window {
                                                             lastMouseX = MouseX;
                                                             lastMouseY = MouseY;   
                                                             MoveWindow = True;
-                                                            Scroll = True;                                                           
+                                                            Scroll = True; 
+							    windowActive = id;
                                                         } 
 
                                            
@@ -261,7 +267,8 @@ class Window extends \ManiaLive\Gui\Window {
                                                              isMinimized = True;                                                                                       
                                                          }   
                                                             if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "MainWindow") {                                            
-                                                             isMinimized = False;                                            
+                                                             isMinimized = False;   
+							      windowActive = id;
                                                          }                                  
                                      ' . $this->dLoop . ' 
                                          
