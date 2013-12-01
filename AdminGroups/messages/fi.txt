@@ -130,3 +130,11 @@ Login :
 #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!
 #translate# #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!
 
+Inherits
+Perii
+
+Admin Group Inherits - %1$s
+Ylläpitoryhmä perii - %1$s
+
+Permission_
+Oikeus_

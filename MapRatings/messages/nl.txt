@@ -10,3 +10,9 @@
 #rank# $iUsage /rate #, where number is 1-5..
 #rank# $iGebruik /rate #, waar nummer is 1-5..
 
+Please rate the map!
+#translate# Please rate the map!
+
+votes
+#translate# votes
+

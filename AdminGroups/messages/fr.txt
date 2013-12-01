@@ -106,3 +106,12 @@ Login :
 #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!
 #translate# #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!
 
+Inherits
+#translate# Inherits
+
+Admin Group Inherits - %1$s
+#translate# Admin Group Inherits - %1$s
+
+Permission_
+#translate# Permission_
+

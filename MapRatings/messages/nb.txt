@@ -9,3 +9,9 @@
 
 #rating#Map Approval Rating: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Your Rating: #variable#%4$s#rating# / #variable#5
 #rating#Vurdering for godkjennelse av banen: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Din stemme: #variable#%4$s#rating# / #variable#5
+
+Please rate the map!
+#translate# Please rate the map!
+
+votes
+#translate# votes

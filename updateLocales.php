@@ -63,6 +63,8 @@ foreach ($iterator as $dir) {
 	    echo $filename . "  old: " . $old . " new:" . $new . "\n";
 	    file_put_contents($localefile, $outputBuffer, FILE_APPEND);
 	}
+	echo "Removing the temporarily diff file..\n";
+	unlink($messagedir . DIRECTORY_SEPARATOR . $newMessagesFileName);
     }
 }
 

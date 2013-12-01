@@ -185,7 +185,9 @@ Allow changing validation seed
 Validatie seed veranderen toestaan
 
 Enable Referee-mode
-Activeer Scheidsrechter-modusForceScores can be used only with rounds or team mode
+Activeer Scheidsrechter-modus
+
+ForceScores can be used only with rounds or team mode
 #translate# ForceScores can be used only with rounds or team mode
 
 ScriptSettings available only in script mode

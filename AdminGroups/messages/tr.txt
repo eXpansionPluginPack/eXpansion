@@ -88,3 +88,12 @@ Cancel
 Login : 
 #translate# Login : 
 
+Inherits
+#translate# Inherits
+
+Admin Group Inherits - %1$s
+#translate# Admin Group Inherits - %1$s
+
+Permission_
+#translate# Permission_
+

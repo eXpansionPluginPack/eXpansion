@@ -1,6 +1,0 @@
-#player#Player %s$1 #player# (#variable#%s$2#player#) from #variable#%s$3 #player# joins! #variable#%s$4
-#player#Player %s$1 #player# (#variable#%s$2#player#) from #variable#%s$3 #player# joins! #variable#%s$4
-
-#player#Player %s$1 #player# (#variable#%s$2#player#) leaves!
-#player#Player %s$1 #player# (#variable#%s$2#player#) leaves!
-

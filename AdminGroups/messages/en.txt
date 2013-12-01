@@ -174,3 +174,12 @@ Can change referee password
 
 Permission_server_refmode
 Can change referee mode
+
+Inherits
+Inherits
+
+Admin Group Inherits - %1$s
+Admin Group Inherits - %1$s
+
+Permission_
+Permission_

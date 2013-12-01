@@ -9,3 +9,9 @@
 
 #rating#Map Approval Rating: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Your Rating: #variable#%4$s#rating# / #variable#5
 #rating#Évaluation de l'approbation de Map: #variable#%2$s#rating# (#variable#%3$s #rating# votes).  Votre évaluation: #variable#%4$s#rating# / #variable#5
+
+Please rate the map!
+#translate# Please rate the map!
+
+votes
+#translate# votes
