@@ -223,7 +223,7 @@ Other server might use the same blacklist file!!');
         AdminGroups::addAlias($cmd, "setchattime"); // xaseco
         AdminGroups::addAlias($cmd, "chattime"); // fast
 
-        $cmd = AdminGroups::addAdminCommand('set server hide', $this, 'setHideServer', 'server_admin');
+        $cmd = AdminGroups::addAdminCommand('set server hide', $this, 'setHideServer', 'server_public');
         $cmd->setHelp('Allows you to hide or show the server to players')
                 ->addLineHelpMore('$w\admin set server hide true$z Will hide the server from other players. Players would need to have the servers in their favorites or need to know the server login ')
                 ->addLineHelpMore('$w\admin set server hide false$z Will make the server visible to any player')
@@ -231,7 +231,7 @@ Other server might use the same blacklist file!!');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "sethideserver");
 
-        $cmd = AdminGroups::addAdminCommand('set server mapdownload', $this, 'setServerMapDownload', 'server_admin');
+        $cmd = AdminGroups::addAdminCommand('set server mapdownload', $this, 'setServerMapDownload', 'server_map');
         $cmd->setHelp('Will allow players to download maps they are playing from the server.')
                 ->addLineHelpMore('$w\admin set server mapdownload true$z will allow the maps to be downloaded.')
                 ->addLineHelpMore('$w\admin set server mapdownload false$z will not allow players to download the maps of this server.')
