@@ -70,7 +70,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
                         declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
                         declare Real lastMouseX = 0.0;
                         declare Real lastMouseY =0.0;                           
-                        declare Text id = "CheckpointsTracker_Display";      
+                        declare Text id = "Checkpoints Tracker";      
                         
                         declare persistent Boolean exp_enableHudMove = False;
                         declare persistent Vec3[Text] windowLastPos;

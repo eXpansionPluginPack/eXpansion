@@ -100,7 +100,6 @@ class Widget extends \ManiaLive\Gui\Window {
 	if (empty($score))
 	    $score = 0;
 
-	$this->info->setText($score . "% " . $votes . " votes");
 
 	// first we create all golden cups
 	$this->cupsContainer->clearComponents();
@@ -202,9 +201,7 @@ class Widget extends \ManiaLive\Gui\Window {
                         
                         while(True) {                                             
                         if (exp_enableHudMove == True) {
-                                quad.Show();
-                                
-                            
+                                quad.Show();                                                      
                             }
                         else {
                             quad.Hide();

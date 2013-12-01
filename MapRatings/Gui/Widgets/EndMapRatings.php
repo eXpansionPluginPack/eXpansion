@@ -15,7 +15,8 @@ class EndMapRatings extends \ManiaLive\Gui\Window {
 	parent::onConstruct();
 
 	$login = $this->getRecipient();
-
+	
+	
 	$this->xml = new \ManiaLive\Gui\Elements\Xml();
 	$this->addComponent($this->xml);
 
@@ -52,12 +53,14 @@ class EndMapRatings extends \ManiaLive\Gui\Window {
 	$this->b5 = new RateButton($login, self::$parentPlugin, 5);
 	$this->frame->addComponent($this->b5);
 
-	$move = new \ManiaLib\Gui\Elements\Quad(60, 14);
-	$move->setAlign("center", "top");
+	$move = new \ManiaLib\Gui\Elements\Quad(140, 24);
+	$move->setAlign("center", "center");
 	$move->setStyle("Icons128x128_Blink");
 	$move->setSubStyle("ShareBlink");
 	$move->setScriptEvents();
 	$move->setId("enableMove");
+	
+	
 	$this->addComponent($move);
 	$this->setSize(90, 30);
 	$this->setAlign("center", "top");
@@ -66,7 +69,7 @@ class EndMapRatings extends \ManiaLive\Gui\Window {
 
     function onResize($oldX, $oldY) {
 	parent::onResize($oldX, $oldY);
-	$this->frame->setPosX(- ($this->frame->sizeX / 2));
+	$this->frame->setPosX(-($this->frame->sizeX / 2)+5);
     }
 
     function onDraw() {

@@ -10,6 +10,8 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $rating = 0;
     private $ratingTotal = 0;
+
+    /** @var Config */
     private $config;
     private $msg_rating;
     private $msg_noRating;
@@ -51,9 +53,14 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if ($this->isPluginLoaded("eXpansion\TMKarma")) {
 	    $this->displayWidget = false;
 	}
-	$this->onPlayerConnect(null, true);
 
-	// $this->onEndMatch("", "");
+	foreach ($this->storage->players as $login => $player)
+	    $this->onPlayerConnect($login, false);
+	foreach ($this->storage->spectators as $login => $player)
+	    $this->onPlayerConnect($login, true);
+
+
+	 // $this->onEndMatch("", "");
     }
 
     public function onOliverde8HudMenuReady($menu) {
@@ -130,14 +137,14 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    if ($this->displayWidget) {
 		$msg = exp_getMessage('#rank#$iVote Registered!!');
 		$this->exp_chatSendServerMessage($msg, $login);
-		$this->sendRating($login, $rating);
+		$this->sendRatingMsg($login, $rating);
 	    }
 	} catch (\Exception $e) {
 	    \ManiaLive\Utilities\Console::println("Error in MapRating: " . $e->getMessage());
 	}
     }
 
-    function sendRating($login, $playerRating) {
+    function sendRatingMsg($login, $playerRating) {
 	if ($login != null) {
 	    if ($this->ratingTotal == 0) {
 		$this->exp_chatSendServerMessage($this->msg_noRating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
@@ -151,7 +158,9 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		    $playerRating = $query->playerRating;
 		}
 	    }
-	    $rating = (($this->rating - 1) / 4) * 100;
+
+	    // $rating = (($this->rating - 1) / 4) * 100;
+	    $rating = ($this->rating / 5) * 100;
 	    $rating = round($rating) . "%";
 	    $this->exp_chatSendServerMessage($this->msg_rating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'), $rating, $this->ratingTotal, $playerRating));
 	}
@@ -201,7 +210,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function chatRating($login = null) {
 	if ($login != null) {
-	    $this->sendRating($login, null);
+	    $this->sendRatingMsg($login, null);
 	}
     }
 
@@ -210,7 +219,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    return;
 	try {
 	    foreach (RatingsWidget::GetAll() as $window) {
-		$window->setStars($this->rating);
+		$window->setStars($this->rating, $this->ratingTotal);
 		$window->redraw();
 	    }
 	} catch (\Exception $e) {
@@ -228,19 +237,21 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$this->exp_chatSendServerMessage($this->msg_noRating, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
 	    } else {
 		foreach ($this->storage->players as $login => $player) {
-		    $this->sendRating($login, null);
+		    $this->sendRatingMsg($login, null);
 		}
 		foreach ($this->storage->spectators as $login => $player) {
-		    $this->sendRating($login, null);
+		    $this->sendRatingMsg($login, null);
 		}
 	    }
 	}
     }
 
     function onEndMatch($rankings, $winnerTeamOrMap) {
-	foreach ($this->storage->players as $login => $player) {
-	    $widget = EndMapRatings::Create($login, true);
-	    $widget->show();
+	if ($this->config->showPodiumWindow) {
+	    foreach ($this->storage->players as $login => $player) {
+		$widget = EndMapRatings::Create($login, true);
+		$widget->show();
+	    }
 	}
     }
 
@@ -248,18 +259,13 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if (!$this->displayWidget)
 	    return;
 
-	if ($login == null) {
-	    RatingsWidget::EraseAll();
-	    $info = RatingsWidget::Create();
-	} else {
-	    RatingsWidget::Erase($login);
-	    $info = RatingsWidget::Create($login);
-	}
+	RatingsWidget::Erase($login);
+	$info = RatingsWidget::Create($login);
 	$info->setSize(30, 6);
-	$info->setPosition(158, 81);
-	$info->setStars($this->rating);
+	// $info->setPosition(158, 81);
+	$info->setStars($this->rating, $this->ratingTotal);
 	$info->show();
-	$this->sendRating($login, null);
+	$this->sendRatingMsg($login, null);
     }
 
     function onPlayerDisconnect($login, $reason = null) {
