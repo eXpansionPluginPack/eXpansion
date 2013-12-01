@@ -88,3 +88,89 @@ Cancel
 Login : 
 Login : 
 
+Permission_server_admin
+General Server Administration Permissions ..........
+
+Permission_player_kick
+Can Kick a Player
+
+Permission_player_black
+Administrates Black list
+
+Permission_player_guest
+Administrates Guest list
+
+Permission_player_ignore
+Administrates Ignored players
+
+Permission_player_spec
+Can force player to Spectator
+
+Permission_server_pay
+Can use servers money
+
+Permission_server_name
+Can change server name
+
+Permission_server_comment
+Can change server comment
+
+Permission_server_password
+Can change server player password
+
+Permission_server_specpwd
+Can change server spectator password
+
+Permission_server_maxplayer
+Can change server Max Players
+
+Permission_server_maxspec
+Can change server Max Spectators
+
+Permission_server_chattime
+Can change server Chat Time
+
+Permission_server_stopServer
+Can stop server
+
+Permission_server_stopManialive
+Can stop manialive
+
+Permission_map_skip
+Can skip map
+
+Permission_map_res
+Can restart map
+
+Permission_game_gamemode
+Can change game mode
+
+Permission_game_settings
+Can change game mode settings
+
+Permission_map_endRound
+Can end a round
+
+Permission_map_remove
+Can remove a map
+
+Permission_cancel_vote
+Can cancel any vote
+
+Permission_map_add
+Can add a map
+
+Permission_oliverde8_SeeAdminHudMenu
+Can see the oliverde8 HudMenu
+
+Permission_group_admin
+Administrate Admin groups(All)
+
+Permission_own_group
+Administrate own group
+
+Permission_server_refpwd
+Can change referee password
+
+Permission_server_refmode
+Can change referee mode

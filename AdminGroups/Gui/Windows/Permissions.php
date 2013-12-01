@@ -74,9 +74,9 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         $adminGroups = AdminGroups::getInstance();
         foreach ($adminGroups->getPermissionList() as $key => $value) {
-            $cPermission = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 38);
+            $cPermission = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 60);
             $cPermission->setStatus($this->group->hasPermission($key));
-            $cPermission->setText($key);
+            $cPermission->setText(__(AdminGroups::getPermissionTitleMessage($key), $this->getRecipient()));
             $cPermission->setScale(0.8);
             
             $cInherit = null;

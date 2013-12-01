@@ -100,6 +100,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     static public $txt_description;
     static public $txt_descMore;
     static public $txt_aliases;
+    static public $txt_permissions = array();
 
     public function exp_onInit() {
         parent::exp_onInit();
@@ -111,7 +112,6 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->loadAdmins();
         $this->saveFile();
 
-
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
@@ -119,7 +119,6 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onLoad() {
-
 
         //Loading all Messages;
         $this->msg_needBeAdmin = exp_getMessage('#admin_error#You need to be an Admin to use that command');
@@ -152,6 +151,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$txt_descMore = exp_getMessage('More');
         self::$txt_aliases = exp_getMessage('Aliases');
 
+        foreach(self::$permissionList as $permission => $val){
+            echo $permission."\n";
+            self::$txt_permissions[$permission] = exp_getMessage("Permission_".$permission);
+        }
+        
         //No idea if needed, I think not need to check
         // $this->enableDedicatedEvents();
         //Registering public functions
@@ -564,7 +568,15 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             return $commands;
         }
     }
-
+    
+    static public function addPermissionTitleMessage($permissionName, \ManiaLivePlugins\eXpansion\Core\i18n\Message $msg){
+        self::$txt_permissions[$permissionName] = $msg;   
+    }
+    
+    static public function getPermissionTitleMessage($permissionName){
+        return isset(self::$txt_permissions[$permissionName]) ? self::$txt_permissions[$permissionName] : $permissionName ;   
+    }
+            
     /**
      * Chat command
      * @param string $login
