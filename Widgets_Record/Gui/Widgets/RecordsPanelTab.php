@@ -21,9 +21,12 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
     protected $container_dedi, $container_local;
     private $isDediLoaded = false;
 
+    /** @var \ManiaLive\Data\Storage */
+    public $storage;
+
     protected function onConstruct() {
 	parent::onConstruct();
-
+	$this->storage = \ManiaLive\Data\Storage::getInstance();
 	$sizeX = 46;
 	$sizeY = 95;
 	$this->setScriptEvents(true);
@@ -121,6 +124,7 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
 
 	$this->lbl_title_dedi->setText('$000' . __('Dedimania Records', $login));
 	$this->lbl_title_local->setText('$000' . __('Local Records', $login));
+	$this->storage = \ManiaLive\Data\Storage::getInstance();
 
 	if ($this->isDediLoaded) {
 	    foreach ($this->items_dedi as $item)
@@ -134,7 +138,12 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
 	    foreach (Widgets_Record::$dedirecords as $record) {
 		if ($index > 30)
 		    return;
-		$this->items_dedi[$index - 1] = new DediItem($index, $record, $this->getRecipient());
+		$highlite = false;
+		if (array_key_exists($record['Login'], $this->storage->players))
+		    $highlite = true;
+		if (array_key_exists($record['Login'], $this->storage->spectators))
+		    $highlite = true;
+		$this->items_dedi[$index - 1] = new DediItem($index, $record, $this->getRecipient(), $highlite);
 		$this->frame_dedi->addComponent($this->items_dedi[$index - 1]);
 		$index++;
 	    }
@@ -152,7 +161,12 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
 	foreach (Widgets_Record::$localrecords as $record) {
 	    if ($index > 30)
 		return;
-	    $this->items_local[$index - 1] = new Recorditem($index, $record, $this->getRecipient());
+	    $highlite = false;
+	    if (array_key_exists($record->login, $this->storage->players))
+		$highlite = true;
+	    if (array_key_exists($record->login, $this->storage->spectators))
+		$highlite = true;
+	    $this->items_local[$index - 1] = new Recorditem($index, $record, $this->getRecipient(), $highlite);
 	    $this->frame_local->addComponent($this->items_local[$index - 1]);
 	    $index++;
 	}

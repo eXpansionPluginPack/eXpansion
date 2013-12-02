@@ -11,30 +11,21 @@ class DediItem extends \ManiaLive\Gui\Control {
     private $label;
     private $time;
 
-    function __construct($index, $record, $login) {
+    function __construct($index, $record, $login, $highlite = false) {
 	$sizeX = 36;
 	$sizeY = 3;
 	$config = Config::getInstance();
 	if (!array_key_exists("Login", $record))
 	    return;
 
-	/* if ($record['Login'] == $login) {
-	  $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 6, $sizeY);
-	  $this->bg->setPosX(-2);
-	  $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-	  $this->bg->setAlign('left', 'center');
-	  $this->bg->setBgcolor('0c03');
-	  $this->addComponent($this->bg);
-	  } else {
-	  $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 4, $sizeY);
-	  $this->bg->setPosX(-2);
-	  $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-	  $this->bg->setAlign('left', 'center');
-	  //$this->bg->setBgcolor('0000');
-	  $this->addComponent($this->bg);
-	  }
-
-	 */
+	if ($highlite) {
+	    $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 8, $sizeY);
+	    $this->bg->setPosX(-4);
+	    $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+	    $this->bg->setAlign('left', 'center');
+	    $this->bg->setBgcolor('aaa6');
+	    $this->addComponent($this->bg);
+	}
 
 	$this->label = new \ManiaLib\Gui\Elements\Label(4, 4);
 	$this->label->setAlign('right', 'center');

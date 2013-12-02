@@ -14,26 +14,19 @@ class Recorditem extends \ManiaLive\Gui\Control {
     private $time;
     private $frame;
 
-    function __construct($index, \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record, $login) {
+    function __construct($index, \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record, $login, $highlite) {
 	$sizeX = 36;
 	$sizeY = 3;
 
 
-	/* if ($record->login == $login) {
-	  $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 6, $sizeY);
-	  $this->bg->setPosX(-2);
-	  $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-	  $this->bg->setAlign('left', 'center');
-	  $this->bg->setBgcolor('0c03');
-	  $this->addComponent($this->bg);
-	  } else {
-	  $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 4, $sizeY);
-	  $this->bg->setPosX(-2);
-	  $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-	  $this->bg->setAlign('left', 'center');
-	  //$this->bg->setBgcolor('0001');
-	  $this->addComponent($this->bg);
-	  } */
+	if ($highlite) {
+	    $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 8, $sizeY);
+	    $this->bg->setPosX(-4);
+	    $this->bg->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+	    $this->bg->setAlign('left', 'center');
+	    $this->bg->setBgcolor('aaa6');
+	    $this->addComponent($this->bg);
+	}
 
 	$this->label = new \ManiaLib\Gui\Elements\Label(4, 4);
 	$this->label->setAlign('right', 'center');

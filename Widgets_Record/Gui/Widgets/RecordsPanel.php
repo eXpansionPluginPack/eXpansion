@@ -35,9 +35,12 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
     private $originalPosX;
     private $edge;
 
+    /** @var \ManiaLive\Data\Storage */
+    public $storage;
+
     protected function onConstruct() {
 	parent::onConstruct();
-
+	$this->storage = \ManiaLive\Data\Storage::getInstance();
 	$this->setScriptEvents(true);
 	$this->setAlign("center", "top");
 
@@ -127,7 +130,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 
     function update() {
 	$login = $this->getRecipient();
-
+	$this->storage = \ManiaLive\Data\Storage::getInstance();
 	foreach ($this->items as $item)
 	    $item->destroy();
 	$this->items = array();
@@ -145,7 +148,12 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	    foreach (Widgets_Record::$dedirecords as $record) {
 		if ($index > 30)
 		    return;
-		$this->items[] = new DediItem($index, $record, $this->getRecipient());
+		$highlite = false;
+		if (array_key_exists($record['Login'], $this->storage->players))
+		    $highlite = true;
+		if (array_key_exists($record['Login'], $this->storage->spectators))
+		    $highlite = true;
+		$this->items_dedi[$index - 1] = new DediItem($index, $record, $this->getRecipient(), $highlite);
 		$this->frame->addComponent($this->items[$index - 1]);
 		$index++;
 	    }
@@ -161,7 +169,12 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	    foreach (Widgets_Record::$localrecords as $record) {
 		if ($index > 30)
 		    return;
-		$this->items[] = new Recorditem($index, $record, $this->getRecipient());
+		$highlite = false;
+		if (array_key_exists($record->login, $this->storage->players))
+		    $highlite = true;
+		if (array_key_exists($record->login, $this->storage->spectators))
+		    $highlite = true;
+		$this->items_local[$index - 1] = new Recorditem($index, $record, $this->getRecipient(), $highlite);
 		$this->frame->addComponent($this->items[$index - 1]);
 		$index++;
 	    }
