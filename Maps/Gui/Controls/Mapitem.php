@@ -24,17 +24,17 @@ class Mapitem extends \ManiaLive\Gui\Control {
     private $showRecsAction;
     private $widths;
 
-    function __construct($indexNumber, $login, \DedicatedApi\Structures\Map $map, $controller, $isAdmin, $localrec, \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating $rating, $widths, $sizeX) {
-	$sizeY = 5;
+    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap $sortableMap, $controller, $isAdmin, $widths, $sizeX) {
+	$sizeY = 5.5;
 	$this->isAdmin = $isAdmin;
 	$this->widths = $widths;
 
 	$scaledSizes = Gui::getScaledSize($this->widths, ($sizeX / .8) - 7);
 
-	$this->queueMapAction = $this->createAction(array($controller, 'queueMap'), $map);
-	$this->gotoMapAction = $this->createAction(array($controller, 'gotoMap'), $map);
-	$this->removeMapAction = $this->createAction(array($controller, 'removeMap'), $map);
-	$this->showRecsAction = $this->createAction(array($controller, 'showRec'), $map);
+	$this->queueMapAction = $this->createAction(array($controller, 'queueMap'), $sortableMap->map);
+	$this->gotoMapAction = $this->createAction(array($controller, 'gotoMap'), $sortableMap->map);
+	$this->removeMapAction = $this->createAction(array($controller, 'removeMap'), $sortableMap->map);
+	$this->showRecsAction = $this->createAction(array($controller, 'showRec'), $sortableMap->map);
 	$this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
 	$this->addComponent($this->bg);
 
@@ -44,36 +44,35 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
 	$this->label_map = new \ManiaLib\Gui\Elements\Label($scaledSizes[0], 4);
 	$this->label_map->setAlign('left', 'center');
-	$this->label_map->setText(Formatting::stripColors($map->name, "999f"));
+	$this->label_map->setText(Formatting::stripColors($sortableMap->name));
 	$this->label_map->setScale(0.8);
 	$this->frame->addComponent($this->label_map);
 
 	$this->label_author = new \ManiaLib\Gui\Elements\Label($scaledSizes[1], 4);
 	$this->label_author->setAlign('left', 'center');
 	$this->label_author->setScale(0.8);
-	$this->label_author->setText($map->author);
+	$this->label_author->setText($sortableMap->author);
 	$this->frame->addComponent($this->label_author);
 
 	$this->label_authortime = new \ManiaLib\Gui\Elements\Label($scaledSizes[2], 4);
 	$this->label_authortime->setAlign('left', 'center');
 	$this->label_authortime->setScale(0.8);
-	//$ui->setText($map->authorTime);
-	$this->label_authortime->setText(\ManiaLive\Utilities\Time::fromTM($map->goldTime));
+	$this->label_authortime->setText(\ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime));
 	$this->frame->addComponent($this->label_authortime);
 
 	$this->label_localrec = new \ManiaLib\Gui\Elements\Label($scaledSizes[3], 4);
 	$this->label_localrec->setAlign('center', 'center');
 	$this->label_localrec->setScale(0.8);
-	$this->label_localrec->setText($localrec);
+	$this->label_localrec->setText($sortableMap->localrecord);
 	$this->frame->addComponent($this->label_localrec);
 
 	$this->label_rating = new \ManiaLib\Gui\Elements\Label($scaledSizes[4], 4);
 	$this->label_rating->setAlign('center', 'center');
 	$this->label_rating->setScale(0.8);
 
-	$rate = ($rating->rating / 5) * 100;
+	$rate = ($sortableMap->rating->rating / 5) * 100;
 	$rate = round($rate) . "%";
-	if ($rating->rating == -1)
+	if ($sortableMap->rating->rating == -1)
 	    $rate = "-";
 	$this->label_rating->setText($rate);
 	$this->frame->addComponent($this->label_rating);
@@ -103,7 +102,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
 	    $this->goButton->setAction($this->gotoMapAction);
 	    $this->goButton->colorize('aa2');
 	    $this->goButton->setScale(0.5);
-	    $this->actionsFrame->addComponent($this->goButton);
+	  //  $this->actionsFrame->addComponent($this->goButton);
 
 	    $spacer = new \ManiaLib\Gui\Elements\Quad();
 	    $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);

@@ -341,6 +341,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function showMapList($login) {
+	Gui\Windows\Maplist::Erase($login);
 	$window = Gui\Windows\Maplist::Create($login);
 	$window->setTitle(__('Maps on server', $login));
 	if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
@@ -351,7 +352,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	}
 
 	$window->centerOnScreen();
-	$window->setSize(180, 100);
+	$window->setSize(180, 120);
+	$window->updateList($login);
 	$window->show();
     }
 
