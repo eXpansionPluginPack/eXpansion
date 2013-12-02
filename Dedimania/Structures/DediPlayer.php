@@ -8,7 +8,7 @@ class DediPlayer extends \DedicatedApi\Structures\AbstractStructure {
     public $login;
 
     /** @var int */
-    public $maxRank = 30;
+    public $maxRank = 15;
 
     /** @var bool */
     public $banned = false;

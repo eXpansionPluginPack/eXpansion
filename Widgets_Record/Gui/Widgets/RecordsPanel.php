@@ -137,7 +137,6 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	$this->frame->clearComponents();
 
 	$index = 1;
-
 	if ($this->showpanel == self::SHOW_DEDIMANIA) {
 	    $this->lbl_title->setText('$000' . __('Dedimania Records', $login));
 	    if (is_object($this->btnDedi))
@@ -153,12 +152,13 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 		    $highlite = true;
 		if (array_key_exists($record['Login'], $this->storage->spectators))
 		    $highlite = true;
-		$this->items_dedi[$index - 1] = new DediItem($index, $record, $this->getRecipient(), $highlite);
+		$this->items[$index - 1] = new DediItem($index, $record, $this->getRecipient(), $highlite);
 		$this->frame->addComponent($this->items[$index - 1]);
 		$index++;
 	    }
 	}
 
+	$index = 1;
 	if ($this->showpanel == self::SHOW_LOCALRECORDS) {
 	    $this->lbl_title->setText('$000' . __('Local Records', $login));
 	    if (is_object($this->btnDedi))
@@ -174,7 +174,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 		    $highlite = true;
 		if (array_key_exists($record->login, $this->storage->spectators))
 		    $highlite = true;
-		$this->items_local[$index - 1] = new Recorditem($index, $record, $this->getRecipient(), $highlite);
+		$this->items[$index - 1] = new Recorditem($index, $record, $this->getRecipient(), $highlite);
 		$this->frame->addComponent($this->items[$index - 1]);
 		$index++;
 	    }

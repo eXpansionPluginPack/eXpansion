@@ -8,7 +8,7 @@ class DediMap extends \DedicatedApi\Structures\AbstractStructure {
     public $uId = null;
 
     /** @var int */
-    public $mapMaxRank = 30;
+    public $mapMaxRank = 15;
 
     /** @var string */
     public $allowedGameModes = "TA,Rounds";

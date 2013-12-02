@@ -20,7 +20,7 @@ class DediRecord extends \DedicatedApi\Structures\AbstractStructure {
     public $checkpoints = "";
 
     /** @var int */
-    public $maxRank = 30;
+    public $maxRank = 15;
 
     /**
      * 

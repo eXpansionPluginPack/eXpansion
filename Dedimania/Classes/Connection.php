@@ -22,7 +22,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     private $version = 0.14;
 
     /** @var integer */
-    public static $serverMaxRank = 30;
+    public static $serverMaxRank = 15;
 
     /** @var \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediMap */
     public static $dediMap = null;
