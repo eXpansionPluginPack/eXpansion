@@ -137,7 +137,7 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
 		return;
 	    foreach (Widgets_Record::$dedirecords as $record) {
 		if ($index > 30)
-		    return;
+		    break;
 		$highlite = false;
 		if (array_key_exists($record['Login'], $this->storage->players))
 		    $highlite = true;
@@ -160,7 +160,7 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
 	$index = 1;
 	foreach (Widgets_Record::$localrecords as $record) {
 	    if ($index > 30)
-		return;
+		break;
 	    $highlite = false;
 	    if (array_key_exists($record->login, $this->storage->players))
 		$highlite = true;
