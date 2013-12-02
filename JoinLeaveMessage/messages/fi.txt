@@ -12,3 +12,6 @@ $n(Katsojana)
 #variable#[Info] Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.
 #translate# #variable#[Info] Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.
 
+#variable#[Info] Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.
+#translate# #variable#[Info] Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.
+

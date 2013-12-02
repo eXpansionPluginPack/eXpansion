@@ -1,7 +1,7 @@
 <?php
 
 $iterator = new RecursiveDirectoryIterator(__DIR__);
-$newMessagesFileName = "en2.txt";
+$newMessagesFileName = "diff.txt";
 
 foreach ($iterator as $dir) {
     $messagedir = $dir . DIRECTORY_SEPARATOR . "messages";
@@ -14,12 +14,14 @@ foreach ($iterator as $dir) {
 	foreach ($filedata as $message) {
 	    $message = str_replace("\r", "", $message);
 	    $message = str_replace("\n", "", $message);
+	    $message = str_replace("\'", "'", $message);
+	    $message = str_replace('\"', '"', $message);
 	    if (trim($message) == "")
 		continue;
 	    if (!array_key_exists($message, $newmessages))
 		$newmessages[$message] = $message;
 	}
-	print_r($newmessages);
+	//print_r($newmessages);
 
 
 	$localefiles = glob($messagedir . DIRECTORY_SEPARATOR . "*.txt");
@@ -37,6 +39,8 @@ foreach ($iterator as $dir) {
 		$message = $filedata[$i];
 		$message = str_replace("\r", "", $message);
 		$message = str_replace("\n", "", $message);
+		$message = str_replace("\'", "'", $message);
+		$message = str_replace('\"', '"', $message);
 		if (trim($message) == "")
 		    continue;
 
@@ -46,7 +50,13 @@ foreach ($iterator as $dir) {
 
 	    $old = 0;
 	    $new = 0;
+	    $lastRow = end($filedata);
+	    $lastRow = str_replace("\r", "", $lastRow);
+	    $lastRow = str_replace("\n", "", $lastRow);
+
 	    $outputBuffer = "";
+	    if (trim($lastRow) != "")
+		$outBuffer = "\n";
 	    foreach ($newmessages as $newmessage) {
 		if (array_key_exists($newmessage, $pluginMessages)) {
 		    $old++;

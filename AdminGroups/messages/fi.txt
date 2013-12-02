@@ -17,7 +17,7 @@
 #admin_error#Olet ryhmässä #variable#%1$s #admin_error#Et voi poistaa itseäsi tästä ryhmästä.
 
 #admin_action#Player #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
-#admin_action#Pelaaja #variable#%1$s #admin_action#poiistettu ryhmästä #variable#%2$s
+#admin_action#Pelaaja #variable#%1$s #admin_action#poistettu ryhmästä #variable#%2$s
 
 #admin_error#Player #variable#%1$s #admin_action#isn't in the group
 #admin_error#Pelaaja #variable#%1$s #admin_action#ei ole ryhmässä
@@ -82,9 +82,6 @@ Tämä komento edellyttää vähintään yhtä valitsinta
 #admin_error#Player #variable#%1$s #admin_action#isn't in the group
 #admin_error#Pelaaja #variable#%1$s #admin_action#isn't in the group
 
-#admin_error#Master Admins has all rights. You can't change that!
-#admin_error#Master Admineilla on jo kaikki oikeudet. Et voi muuttaa tätä!
-
 #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
 #admin_error#Master admin #variable#%1$s on määritetty jo manialiven config.ini:ssä, ei eXpansionissa. Ei voi poistaa!
 
@@ -111,24 +108,6 @@ Peruuta
 
 Login : 
 Login : 
-
-#admin_error#That Admin command doesen\'t exist. Use #variable#/admin help #admin_error#to see all commands
-#translate# #admin_error#That Admin command doesen\'t exist. Use #variable#/admin help #admin_error#to see all commands
-
-#admin_error#You don\'t have the permission to use that admin command
-#translate# #admin_error#You don\'t have the permission to use that admin command
-
-#admin_error#Your are #variable#%1$s #admin_error#You can\'t remove yourself from a group
-#translate# #admin_error#Your are #variable#%1$s #admin_error#You can\'t remove yourself from a group
-
-#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group
-#translate# #admin_error#Player #variable#%1$s #admin_action#isn\'t in the group
-
-#admin_error#Master Admins has all rights. You can\'t change that!
-#translate# #admin_error#Master Admins has all rights. You can\'t change that!
-
-#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!
-#translate# #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!
 
 Inherits
 Perii

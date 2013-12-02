@@ -4,11 +4,11 @@ This command expect at least one parameter
 #admin_error#You need to be an Admin to use that command
 #translate# #admin_error#You need to be an Admin to use that command
 
-#admin_error#That Admin command doesen\'t exist. Use #variable#/admin help #admin_error#to see all commands
-#translate# #admin_error#That Admin command doesen\'t exist. Use #variable#/admin help #admin_error#to see all commands
+#admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
+#translate# #admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
 
-#admin_error#You don\'t have the permission to use that admin command
-#translate# #admin_error#You don\'t have the permission to use that admin command
+#admin_error#You don't have the permission to use that admin command
+#translate# #admin_error#You don't have the permission to use that admin command
 
 #admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
 #translate# #admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
@@ -16,20 +16,20 @@ This command expect at least one parameter
 #admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
 #translate# #admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
 
-#admin_error#Your are #variable#%1$s #admin_error#You can\'t remove yourself from a group
-#translate# #admin_error#Your are #variable#%1$s #admin_error#You can\'t remove yourself from a group
+#admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
+#translate# #admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
 
 #admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
 #translate# #admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
 
-#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group
-#translate# #admin_error#Player #variable#%1$s #admin_action#isn\'t in the group
+#admin_error#Player #variable#%1$s #admin_action#isn't in the group
+#translate# #admin_error#Player #variable#%1$s #admin_action#isn't in the group
 
-#admin_error#Master Admins has all rights. You can\'t change that!
-#translate# #admin_error#Master Admins has all rights. You can\'t change that!
+#admin_error#Master Admins has all rights. You can't change that!
+#translate# #admin_error#Master Admins has all rights. You can't change that!
 
-#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!
-#translate# #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!
+#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
+#translate# #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
 
 Admin Groups
 #translate# Admin Groups

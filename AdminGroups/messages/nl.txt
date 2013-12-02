@@ -4,10 +4,10 @@ Dit commando verwacht op zijn minst een parameter
 #admin_error#You need to be an Admin to use that command
 #admin_error#Je moet een Admin zijn om deze command te gebruiken
 
-#admin_error#That Admin command doesen\'t exist. Use #variable#/admin help #admin_error#to see all commands
+#admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
 #admin_error#Dat Admin commando bestaat niet. Gebruik #variable#/admin help #admin_error#om alle commando\s te zien
 
-#admin_error#You don\'t have the permission to use that admin command
+#admin_error#You don't have the permission to use that admin command
 #admin_error#Je hebt geen permissie om dat Admin commando te gebruiken
 
 #admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
@@ -16,19 +16,19 @@ Dit commando verwacht op zijn minst een parameter
 #admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
 #admin_action#Speler #variable# %1$s #admin_action#is toegevoegd aan admin groep #variable#%2$s
 
-#admin_error#Your are #variable#%1$s #admin_error#You can\'t remove yourself from a group
+#admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
 #admin_error#Je bent #variable#%1$s #admin_error#Je kan jezelf niet verwijderen vanuit een groep
 
 #admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
 #admin_action#Speler : #variable#%1$s #admin_action#Is verwijderd van admin groep #variable#%2$s
 
-#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group
+#admin_error#Player #variable#%1$s #admin_action#isn't in the group
 #admin_error#Speler #variable#%1$s #admin_action#is niet in de groep
 
-#admin_error#Master Admins has all rights. You can\'t change that!
+#admin_error#Master Admins has all rights. You can't change that!
 #admin_error#Master Admins heeft alle rechten. Je kan dit niet veranderen!
 
-#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!
+#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
 #admin_error#Master admin #variable#%1$s is gedefineerd in config.ini en niet door eXpansion. Kan niet verwijderen!
 
 Admin Groups
