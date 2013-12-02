@@ -57,7 +57,7 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
         $file = explode('/', $filename);
         $text = utf8_encode(end($file));
         $text = str_replace(".txt", "", $text);
-        $this->label->setText($text."................................................................................................................................................................");
+        $this->label->setText($text);
         $this->label->setScale(0.8);
         $this->frame->addComponent($this->label);
 
