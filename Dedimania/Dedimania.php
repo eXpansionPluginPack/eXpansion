@@ -116,16 +116,11 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 	    return;
 	}
 
-	$maxrank = DediConnection::$serverMaxRank;
-	if (DediConnection::$players[$login]->maxRank > $maxrank) {
-	    $maxrank = DediConnection::$players[$login]->maxRank;
-	}
-
-	// so if the time is better than the last entry or the count of records is less than $maxrank
 	//print "$time <= " . $this->lastRecord->time . " || " . count($this->records) . " <= $maxrank \n";
 	//var_dump(($time <= $this->lastRecord->time || count($this->records) <= $maxrank) ? true : false);
+	// so if the time is better than the last entry or the count of records is less than player maxRank
+	if ($time <= $this->lastRecord->time || count($this->records) <= DediConnection::$players[$login]->maxRank) {
 
-	if ($time <= $this->lastRecord->time || count($this->records) <= $maxrank) {
 	    //  print "times matches!";
 	    // if player exists on the list... see if he got better time
 	    if (array_key_exists($login, $this->records)) {
@@ -137,11 +132,9 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 		    // get records count
 		    $oldCount = count($this->records);
 		    $this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, $player->bestCheckpoints);
-		    // if new records count is greater than old count, increase the map records limit
-		    // print count($this->records) . " > " . $oldCount . " && " . (DediConnection::$dediMap->mapMaxRank + 1 ) . " < " . DediConnection::$players[$login]->maxRank . "\n";
-		    // var_dump((count($this->records) > $oldCount) && ( (DediConnection::$dediMap->mapMaxRank + 1 ) < DediConnection::$players[$login]->maxRank) ? true : false);
 
-		    if ((count($this->records) > $oldCount) && ( (DediConnection::$dediMap->mapMaxRank + 1 ) < DediConnection::$players[$login]->maxRank)) {
+		    // if new records count is greater than old count, and doesn't exceed the maxrank of the server
+		    if ((count($this->records) > $oldCount) && ( (DediConnection::$dediMap->mapMaxRank + 1 ) < DediConnection::$serverMaxRank)) {
 			//print "increasing maxrank! \n";
 			DediConnection::$dediMap->mapMaxRank++;
 		    }
@@ -162,7 +155,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 		$this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, $player->bestCheckpoints);
 		// if new records count is greater than old count, increase the map records limit
 
-		if ((count($this->records) > $oldCount) && ( (DediConnection::$dediMap->mapMaxRank + 1 ) < DediConnection::$players[$login]->maxRank)) {
+		if ((count($this->records) > $oldCount) && ( (DediConnection::$dediMap->mapMaxRank + 1 ) < DediConnection::$serverMaxRank)) {
 
 		    DediConnection::$dediMap->mapMaxRank++;
 		}
