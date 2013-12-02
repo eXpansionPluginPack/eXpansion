@@ -3,10 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
-use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLive\Gui\ActionHandler;
 
 /**
@@ -59,6 +56,14 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->closeButton->setText(__("Cancel",$this->getRecipient()));
         $this->closeButton->setAction($this->actions->close);
         $this->addComponent($this->closeButton);
+    }
+    
+    public function onDraw() {
+        
+        $this->btn1->setVisibility(AdminGroups::hasPermission($this->getRecipient(), 'server_stopServer'));
+        $this->btn2->setVisibility(AdminGroups::hasPermission($this->getRecipient(), 'server_stopManialive'));
+        
+        parent::onDraw();
     }
 
     function stopServer($login) {

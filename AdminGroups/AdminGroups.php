@@ -420,7 +420,6 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             $string.="\n;List of Players.\n";
             foreach ($group->getGroupUsers() as $value) {
-                echo $value->getLogin()."\n";
                 if (!$value->isReadOnly())
                     $string .= "login[] = '" . $value->getLogin() . "'\n";
             }
@@ -582,7 +581,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param string $login
      * @param string $params
      */
-    public function adminCmd($login, $params="") {
+    public function adminCmd($login, $params = "") {
 
         // $args = explode(" ", $params);
 

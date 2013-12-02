@@ -59,7 +59,7 @@ A kicked player may return to the server whanever he desires.');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "kick"); // xaseco & fast
 
-        $cmd = AdminGroups::addAdminCommand('player ban', $this, 'ban', 'player_black');
+        $cmd = AdminGroups::addAdminCommand('player ban', $this, 'ban', 'player_ban');
         $cmd->setHelp('Ban the player from the server');
         $cmd->setHelpMore('$w/admin player ban #login$z will ban  the player from the server. 
 He may not return until the server is restarted');
@@ -74,14 +74,14 @@ Other server might use the same blacklist file!!');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "black"); // xaseco & fast
 
-        $cmd = AdminGroups::addAdminCommand('player remove ban', $this, 'unban', 'player_black');
+        $cmd = AdminGroups::addAdminCommand('player remove ban', $this, 'unban', 'player_unBan');
         $cmd->setHelp('Removes the ban of the player')
                 ->addLineHelpMore('$w/admin player remove ban #login$z will remove the ban of the player from this server')
                 ->addLineHelpMore('He may rejoin the server after this.')
                 ->setMinParam(1);
         AdminGroups::addAlias($cmd, "unban"); // xaseco & fast
 
-        $cmd = AdminGroups::addAdminCommand('player clean banlist', $this, 'cleanBanlist', 'player_black');
+        $cmd = AdminGroups::addAdminCommand('player clean banlist', $this, 'cleanBanlist', 'player_cleanBan');
         $cmd->setHelp('clears the banlist of players')
                 ->addLineHelpMore('Will completeley clear the banlist.')
                 ->addLineHelpMore('All banned players will be able to rejoin the server.')
@@ -93,7 +93,7 @@ Other server might use the same blacklist file!!');
                 ->setMinParam(0);
         AdminGroups::addAlias($cmd, "getbanlist");
 
-        $cmd = AdminGroups::addAdminCommand('player clean blacklist', $this, 'cleanBlacklist', 'player_black');
+        $cmd = AdminGroups::addAdminCommand('player clean blacklist', $this, 'cleanBlacklist', 'player_cleanBlack');
         $cmd->setHelp('clears the blacklist of players')
                 ->addLineHelpMore('Will completeley clear the blackList.')
                 ->addLineHelpMore('All blacklist players will be able to rejoin the server.')
@@ -115,7 +115,7 @@ Other server might use the same blacklist file!!');
                 ->setMinParam(0);
         AdminGroups::addAlias($cmd, "getignorelist");
 
-        $cmd = AdminGroups::addAdminCommand('player remove black', $this, 'unBlacklist', 'player_black');
+        $cmd = AdminGroups::addAdminCommand('player remove black', $this, 'unBlacklist', 'player_unblack');
         $cmd->setHelp('Removes the player from the black list')
                 ->addLineHelpMore('$w/admin player remove black #login$z will remove the player from the servers blacklist')
                 ->addLineHelpMore('He may rejoin the server after this.')
@@ -136,7 +136,7 @@ Other server might use the same blacklist file!!');
                 ->setMinParam(1);
         AdminGroups::addAlias($cmd, "ignore"); // xaseco & fast
 
-        $cmd = AdminGroups::addAdminCommand('player unignore', $this, 'unignore', 'player_ignore');
+        $cmd = AdminGroups::addAdminCommand('player unignore', $this, 'unignore', 'player_unIgnore');
         $cmd->setHelp('Removes player to ignore list and allows him to chat')
                 ->addLineHelpMore('$w/admin player unignore #login$z will allow this player to use the chat again')
                 ->addLineHelpMore('This player will be able to communicate with other players')
@@ -149,7 +149,7 @@ Other server might use the same blacklist file!!');
          * Concerning Server Settings 
          * ***************************
          */
-        $cmd = AdminGroups::addAdminCommand('get server planets', $this, 'getServerPlanets', 'server_admin');
+        $cmd = AdminGroups::addAdminCommand('get server planets', $this, 'getServerPlanets', 'server_planets');
         $cmd->setHelp('Gets the serveraccount planets amount')
                 ->addLineHelpMore('$w/admin planets $zreturn the planets amount on server account.')
                 ->setMinParam(0);
@@ -193,7 +193,7 @@ Other server might use the same blacklist file!!');
         AdminGroups::addAlias($cmd, "spectpass"); // fast
 
 
-        $cmd = AdminGroups::addAdminCommand('set server ref password', $this, 'setSpecPassword', 'server_specpwd');
+        $cmd = AdminGroups::addAdminCommand('set server ref password', $this, 'setSpecPassword', 'server_refpwd');
         $cmd->setHelp('Changes the Referee password')
                 ->setMinParam(1);
         AdminGroups::addAlias($cmd, "setrefpwd"); // xaseco
