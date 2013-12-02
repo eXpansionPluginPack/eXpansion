@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Chat_Admin\adapter;
 
 use ManiaLive\Utilities\Time;
-
+use DedicatedApi\Connection;
 /**
  * Description of oliverde8HudMenu
  *
@@ -16,7 +16,7 @@ class oliverde8HudMenu {
     private $storage;
     private $connection;
 
-    public function __construct($adminPlugin, $menu, $storage, $connection) {
+    public function __construct($adminPlugin, $menu, $storage, Connection $connection) {
 
         $this->adminPlugin = $adminPlugin;
         $this->menuPlugin = $menu;
@@ -295,7 +295,7 @@ class oliverde8HudMenu {
     }
 
     public function check_gameSettings_NoTimeAttack() {
-        return !$this->check_gameSettings_TimeAttack();
+        return $this->connection->getCurrentGameInfo()->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK;
     }
 
     public function check_gameSettings_TimeAttack() {
