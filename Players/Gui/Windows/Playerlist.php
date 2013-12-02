@@ -9,6 +9,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Players\Gui\Controls\Playeritem;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLive\Utilities\Console;
 
 class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
@@ -35,14 +36,28 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	try {
 	    $login = $this->getRecipient();
 	    if (!AdminGroups::hasPermission($login, 'player_ignore')) {
-		$this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!'), $login);
+		$this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!', $login), $login);
 	    }
 	    $player = $this->storage->getPlayerObject($target);
 	    $admin = $this->storage->getPlayerObject($login);
-	    $this->connection->ignore($target);
-	    $this->connection->chatSendServerMessage(__('$%sz was ignored by admin.', $player->nickName));
+	    $list = $this->connection->getIgnoreList(-1, 0);
+	    $ignore = true;
+	    foreach ($list as $test) {
+		if ($target == $test->login) {
+		    $ignore = false;
+		    break;
+		}
+	    }
+	    if ($ignore) {
+		$this->connection->ignore($target);
+		$this->connection->chatSendServerMessage(__('%s$z$s$fff was ignored by admin %s', $login, $player->nickName, $admin->nickName));
+	    } else {
+		$this->connection->unignore($target);
+		$this->connection->chatSendServerMessage(__('%s$z$s$fff was unignored by admin %s', $login, $player->nickName, $admin->nickName));
+	    }
 	} catch (\Exception $e) {
-	    $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()));
+	    //   $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
+	    Console::println("Error:" . $e->getMessage());
 	}
     }
 
@@ -54,12 +69,13 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    }
 	    $player = $this->storage->getPlayerObject($target);
 	    $admin = $this->storage->getPlayerObject($login);
-	    $this->connection->kick($target, __("Please behave next time you visit the server!"));
-	    $this->connection->chatSendServerMessage(__('$%sz was kicked from the server by admin.', $player->nickName));
+	    $this->connection->kick($target, __("Please behave next time you visit the server!", $target));
+	    $this->connection->chatSendServerMessage(__('$%sz was kicked from the server by admin.', $login, $player->nickName));
 	    // can't use notice...since $this->storage->players too slow.
 	    // $this->connection->sendNotice($this->storage->players, $player->nickName . '$z were kicked from the server by admin.');
 	} catch (\Exception $e) {
-	    $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()));
+	    //$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
+	    Console::println("Error:" . $e->getMessage());
 	}
     }
 
@@ -72,10 +88,11 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    $player = $this->storage->getPlayerObject($target);
 	    $admin = $this->storage->getPlayerObject($login);
 	    $this->connection->ban($target, __("You are now banned from the server."));
-	    $this->connection->chatSendServerMessage(__('%s$z has been banned from the server.', $player->nickName));
+	    $this->connection->chatSendServerMessage(__('%s$z has been banned from the server.', $login, $player->nickName));
 	    //$this->connection->sendNotice($this->storage->players, $player->nickName . '$z has been banned from the server.');
 	} catch (\Exception $e) {
-	    $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()));
+	    //$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
+	    Console::println("Error:" . $e->getMessage());
 	}
     }
 
@@ -83,14 +100,15 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	try {
 	    $login = $this->getRecipient();
 	    if (!AdminGroups::hasPermission($login, 'player_black')) {
-		$this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!'), $login);
+		$this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!', $login), $login);
 	    }
 	    $player = $this->storage->getPlayerObject($target);
 	    $admin = $this->storage->getPlayerObject($login);
-	    $this->connection->banAndBlackList($target, __("You are now blacklisted from the server."), true);
-	    $this->connection->chatSendServerMessage(__('%s$z has been blacklisted from the server.', $player->nickName));
+	    $this->connection->banAndBlackList($target, __("You are now blacklisted from the server.", $target), true);
+	    $this->connection->chatSendServerMessage(__('%s$z has been blacklisted from the server.', $login, $player->nickName));
 	} catch (\Exception $e) {
-	    $this->connection->chatSendServerMessage(__("Error: %s", $e->getMessage()));
+	    //  $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
+	    Console::println("Error:" . $e->getMessage());
 	}
     }
 
@@ -98,7 +116,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	try {
 	    $login = $this->getRecipient();
 	    if (!AdminGroups::hasPermission($login, 'player_spec')) {
-		$this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!'), $login);
+		$this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!', $login), $login);
 	    }
 	    $player = $this->storage->getPlayerObject($target);
 
@@ -114,8 +132,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 		return;
 	    }
 	} catch (\Exception $e) {
-	    echo $e->getMessage();
-	    $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
+	    Console::println("Error:" . $e->getMessage());
+	    //$this->connection->chatSendServerMessage(__("Error:".$login, $e->getMessage()), $login);
 	}
     }
 
