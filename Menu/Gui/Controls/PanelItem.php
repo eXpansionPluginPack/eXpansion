@@ -18,7 +18,7 @@ class PanelItem extends \ManiaLive\Gui\Control {
 	$this->setAlign("left", "top");
 
 	if ($item->isSeparator) {
-	    $this->doSeparator($item);
+	    $this->doSeparator($item, $login);
 	    return;
 	}
 
