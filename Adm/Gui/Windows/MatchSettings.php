@@ -4,10 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
-use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
@@ -102,7 +100,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onResize($oldX, $oldY);
         $this->frame->setPosition(4, -4);
         $this->pager->setPosY(-12);
-        $this->pager->setSize($this->sizeX, $this->sizeY - 12);
+        $this->pager->setSize($this->sizeX, $this->sizeY - 16);
         $this->pager->setStretchContentX($this->sizeX);
     }
 
@@ -110,6 +108,11 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->populateList();
     }
 
+    public function onDraw() {
+        parent::onDraw();
+        $this->frame->setVisibility(AdminGroups::hasPermission($this->getRecipient(), 'game_matchSave'));
+    }
+    
     function populateList() {
         foreach ($this->items as $item)
             $item->destroy();

@@ -186,13 +186,15 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function matchSettings($login) {
-	if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
-	    $window = Gui\Windows\MatchSettings::Create($login);
-	    $window->setTitle(__('Match Settings', $login));
-	    $window->centerOnScreen();
-	    $window->setSize(160, 100);
-	    $window->show();
-	}
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_matchSave')
+                || $this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_matchDelete')
+                || $this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_match')) {
+            $window = Gui\Windows\MatchSettings::Create($login);
+            $window->setTitle(__('Match Settings', $login));
+            $window->centerOnScreen();
+            $window->setSize(160, 100);
+            $window->show();
+        }
     }
 
     public function scriptSettings($login) {

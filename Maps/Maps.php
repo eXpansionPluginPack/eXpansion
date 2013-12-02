@@ -58,7 +58,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$cmd->setMinParam(1);
 	AdminGroups::addAlias($cmd, "remove");
 
-	$cmd = AdminGroups::addAdminCommand('map erase', $this, 'chat_eraseMap', 'map_remove');
+	$cmd = AdminGroups::addAdminCommand('map erase', $this, 'chat_eraseMap', 'map_erease');
 	$cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
 	$cmd->setMinParam(0);
 	AdminGroups::addAlias($cmd, "nuke this");
@@ -69,10 +69,10 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$cmd->setMinParam(0);
 	AdminGroups::addAlias($cmd, "replay");
 
-	$cmd = AdminGroups::addAdminCommand('map add', $this, 'addMxMap', 'map_add');
+	/*$cmd = AdminGroups::addAdminCommand('map add', $this, 'addMxMap', 'map_add');
 	$cmd->setHelp(exp_getMessage('adds a map via MX'));
 	$cmd->setMinParam(1);
-	AdminGroups::addAlias($cmd, "add");
+	AdminGroups::addAlias($cmd, "add");*/
 
 	$this->registerChatCommand('list', "showMapList", 0, true);
 	$this->registerChatCommand('maps', "showMapList", 0, true);
@@ -483,7 +483,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function eraseMap($login, \DedicatedApi\Structures\Map $map) {
-	if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_remove')) {
+	if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_erease')) {
 	    $msg = exp_getMessage('#admin_error# $iYou are not allowed to do that!');
 	    $this->exp_chatSendServerMessage($msg, $login);
 	    return;

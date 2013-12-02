@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange;
 use ManiaLive\Event\Dispatcher;
 use DedicatedApi\Structures\Map;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -135,7 +136,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function addMap($login, $mxId) {
-        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->hasPermission($login, 'server_maps')) {
+        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->hasPermission($login, 'map_add')) {
             $this->connection->chatSendServerMessage(__('$iYou don\'t have permission to do that!', $login, $mxId), $login);
             return;
         }
