@@ -581,7 +581,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param string $login
      * @param string $params
      */
-    public function adminCmd($login, $params="") {
+    public function adminCmd($login, $params = "") {
 
         // $args = explode(" ", $params);
 

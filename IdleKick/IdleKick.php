@@ -3,11 +3,13 @@
 namespace ManiaLivePlugins\eXpansion\IdleKick;
 
 use ManiaLivePlugins\eXpansion\IdleKick\Config;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $timeStamps = array();
-
+    private $tickCounter = 0;
+    
     /** @var Config */
     private $config;
 
@@ -35,13 +37,18 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function onTick() {
-        foreach ($this->timeStamps as $playerLogin => $value) {
-
-            if ((time() - $value) > ($this->config->idleMinutes * 60)) {
-                $player = $this->storage->getPlayerObject($playerLogin);
-                $this->exp_chatSendServerMessage('IdleKick: %s', null, array($player->nickName));
-                $this->connection->kick($playerLogin, "IdleKick");
-                unset($this->timeStamps[$playerLogin]);
+        
+        if($tickCounter % 10 == 0){
+            $tickCounter++;
+        }else{
+            $tickCounter = 0;
+            foreach ($this->timeStamps as $playerLogin => $value) {
+                if (AdminGroups::hasPermission($playerLogin, 'noIdleKick') && (time() - $value) > ($this->config->idleMinutes * 60)) {
+                    $player = $this->storage->getPlayerObject($playerLogin);
+                    $this->exp_chatSendServerMessage('IdleKick: %s', null, array($player->nickName));
+                    $this->connection->kick($playerLogin, "IdleKick");
+                    unset($this->timeStamps[$playerLogin]);
+                }
             }
         }
     }

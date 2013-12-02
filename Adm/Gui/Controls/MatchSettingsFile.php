@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 class MatchSettingsFile extends \ManiaLive\Gui\Control {
 
@@ -90,6 +91,10 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($this->deleteButton);
 
         $this->addComponent($this->frame);
+        
+        $this->loadButton->setVisibility(AdminGroups::hasPermission($login, 'game_match'));
+        $this->saveButton->setVisibility(AdminGroups::hasPermission($login, 'game_matchSave'));
+        $this->deleteButton->setVisibility(AdminGroups::hasPermission($login, 'game_matchDelete'));
 
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;
@@ -98,8 +103,12 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
 
     protected function onResize($oldX, $oldY) {
         $this->bg->setSize($this->sizeX, $this->sizeY);
-        $this->bg->setPosX(-2);
-        $this->frame->setSize($this->sizeX, $this->sizeY);
+        $this->bg->setPosX(0);
+        
+        $this->label->setSizeX(($this->sizeX - 3*26*.5 - 4 - 10)*(1/.8));
+        
+        $this->frame->setPosX(2);
+        $this->frame->setSize($this->sizeX-4, $this->sizeY);
     }
 
     function onDraw() {

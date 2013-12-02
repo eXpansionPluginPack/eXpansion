@@ -131,7 +131,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function forceScores($login) {
-	if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+	if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
 	    $gamemode = $this->storage->gameInfos->gameMode;
 	    if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM) {
 		$window = Gui\Windows\ForceScores::Create($login);
@@ -156,7 +156,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function serverManagement($login) {
-	if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+	if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_stopServer')
+            || $this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_stopManialive') ) {
 	    $window = Gui\Windows\ServerManagement::Create($login);
 	    $window->setTitle(__('Server Management', $login));
 	    $window->setSize(60, 20);
@@ -185,13 +186,15 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function matchSettings($login) {
-	if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
-	    $window = Gui\Windows\MatchSettings::Create($login);
-	    $window->setTitle(__('Match Settings', $login));
-	    $window->centerOnScreen();
-	    $window->setSize(160, 100);
-	    $window->show();
-	}
+        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_matchSave')
+                || $this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_matchDelete')
+                || $this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_match')) {
+            $window = Gui\Windows\MatchSettings::Create($login);
+            $window->setTitle(__('Match Settings', $login));
+            $window->centerOnScreen();
+            $window->setSize(160, 100);
+            $window->show();
+        }
     }
 
     public function scriptSettings($login) {
@@ -219,9 +222,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function adminGroups($login) {
-	if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
 	    \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->windowGroups($login);
-	}
     }
 
     public function setPoints($login, $points) {
