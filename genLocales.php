@@ -28,12 +28,16 @@ foreach ($files as $data2) {
             preg_match('/__\(\"(([^\\\"]|\\.)*)\"/', $row, $matches);
             if (sizeof($matches) > 1) {
                 $messageCount++;
+				$matches[1] = str_replace("\'", "'", $matches[1]);
+				$matches[1] = str_replace('\"', '"', $matches[1]);
                 $pluginMessages[$plugin][$matches[1]] = $matches[1] . "\n" . $matches[1] . "\n\n";
             }
 
             preg_match('/__\(\'(([^\']|.)*?)\'\)/', $row, $matches);
             if (sizeof($matches) > 1) {
                 $messageCount++;
+				$matches[1] = str_replace("\'", "'", $matches[1]);
+				$matches[1] = str_replace('\"', '"', $matches[1]);
                 $pluginMessages[$plugin][$matches[1]] = $matches[1] . "\n" . $matches[1] . "\n\n";
             }
         }
@@ -41,11 +45,15 @@ foreach ($files as $data2) {
             preg_match('/exp_getMessage\(\"(([^\\\"]|\\.)*)\"/', $row, $matches);
             if (sizeof($matches) > 1) {
                 $messageCount++;
+				$matches[1] = str_replace("\'", "'", $matches[1]);
+				$matches[1] = str_replace('\"', '"', $matches[1]);
                 $pluginMessages[$plugin][$matches[1]] = $matches[1] . "\n" . $matches[1] . "\n\n";
             }
             preg_match('/exp_getMessage\(\'(([^\']|.)*?)\'\)/', $row, $matches);
             if (sizeof($matches) > 1) {
                 $messageCount++;
+				$matches[1] = str_replace("\'", "'", $matches[1]);
+				$matches[1] = str_replace('\"', '"', $matches[1]);
                 $pluginMessages[$plugin][$matches[1]] = $matches[1] . "\n" . $matches[1] . "\n\n";
             }
         }
@@ -57,7 +65,7 @@ foreach ($files as $data2) {
     echo "Plugin: " . $plugin . " -> generated messages count: " . $messageCount . "\n";
     $totalMessages += $messageCount;
     $string = implode("", $pluginMessages[$plugin]);
-    file_put_contents($plugin . "/messages/en2.txt", $string);
+    file_put_contents($plugin . "/messages/diff.txt", $string);
 }
 
 print "\nTotal Message count: " . $totalMessages;
