@@ -12,7 +12,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
      *
      * @author oliverde8
      */
-    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin {
+    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin implements \ManiaLive\PluginHandler\WaitingCompliant{
 
         /**
          * The list of Plugin id's that may need to be started

@@ -126,38 +126,41 @@ EOT;
     }
 
     private function checkLoadedPlugins() {
-	$pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
-	Console::println('#####################################################################');
-	Console::println('[eXpension Pack] GameMode Changed Shutting down uncompatible plugins');
-	foreach ($this->exp_getGameModeCompability() as $plugin => $compability) {
-	    $parts = explode('\\', $plugin);
-	    $plugin_id = $parts[1] . '\\' . $parts[2];
-	    if (!$plugin::exp_checkGameCompability()) {
-		try {
-		    $this->callPublicMethod($plugin_id, 'exp_unload');
-		} catch (\Exception $ex) {
-		    
-		}
-	    }
-	}
-	Console::println('#####################################################################' . "\n");
+        $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+        Console::println('#####################################################################');
+        Console::println('[eXpension Pack] GameMode Changed Shutting down uncompatible plugins');
+
+        foreach ($this->exp_getGameModeCompability() as $plugin => $compability) {
+            $parts = explode('\\', $plugin);
+            $plugin_id = $parts[1] . '\\' . $parts[2];
+            if (!$plugin::exp_checkGameCompability()) {
+                try {
+                    $this->callPublicMethod($plugin_id, 'exp_unload');
+                } catch (\Exception $ex) {
+                    
+                }
+            }
+        }
+        Console::println('#####################################################################' . "\n");
     }
 
     private function checkPluginsOnHold() {
-	Console::println('#####################################################################');
-	Console::println('[eXpension Pack] GameMode Changed Starting compatible plugins');
-	if (!empty(types\BasicPlugin::$plugins_onHold)) {
-	    $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
-	    foreach (types\BasicPlugin::$plugins_onHold as $plugin_id) {
-		$className = '\\ManiaLivePlugins\\' . $plugin_id;
-//if($className::exp_checkGameCompability()){
-		$pHandler->load($plugin_id);
-//}
-	    }
-	}
-	Console::println('#####################################################################' . "\n");
+        Console::println('#####################################################################');
+        Console::println('[eXpension Pack] GameMode Changed Starting compatible plugins');
+        
+        if (!empty(types\BasicPlugin::$plugins_onHold)) {
+            $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+            foreach (types\BasicPlugin::$plugins_onHold as $plugin_id) {
+                $parts = explode("\\", $plugin_id);
+                $className = '\\ManiaLivePlugins\\' . $plugin_id . "\\".$parts[1];
+                if($className::exp_checkGameCompability()){
+                    $pHandler->load($plugin_id);
+                }
+            }
+        }
+        Console::println('#####################################################################' . "\n");
     }
-    
+
     public function showInfo($login) {
 	$info = Gui\Windows\InfoWindow::Create($login);
 	$info->setTitle("Server info");

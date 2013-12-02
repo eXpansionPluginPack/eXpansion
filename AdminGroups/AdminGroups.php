@@ -420,6 +420,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             $string.="\n;List of Players.\n";
             foreach ($group->getGroupUsers() as $value) {
+                echo $value->getLogin()."\n";
                 if (!$value->isReadOnly())
                     $string .= "login[] = '" . $value->getLogin() . "'\n";
             }
