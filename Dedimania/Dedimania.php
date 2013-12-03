@@ -217,7 +217,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 		}
 		// if player record is greater than what is allowed, don't allow
 		if ($record->place > DediConnection::$dediMap->mapMaxRank) {
-		    echo "record place: " . $record->place . " is greater than record max rank: " . DediConnection::$dediMap->mapMaxRank;
+		    echo "record place: " . $record->place . " is greater than record max count: " . DediConnection::$dediMap->mapMaxRank;
 		    echo "\n not adding record.\n";
 		    continue;
 		}
@@ -227,8 +227,8 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 		// othervice
 	    } else {
 		// check if some record needs to be erased from the list...
-		if ($record->place > DediConnection::$dediMap->mapMaxRank)
-		    continue;
+		//  if ($record->place > DediConnection::$dediMap->mapMaxRank)
+		  //  continue;
 
 		$newrecords[$record->login] = $record;
 	    }

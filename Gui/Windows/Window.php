@@ -87,7 +87,7 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_minbutton->setFocusAreaColor2("0000");
 	$this->_minbutton->setScriptEvents(true);
 	$this->_minbutton->setId("Minimize");
-	$this->_windowFrame->addComponent($this->_minbutton);
+	// $this->_windowFrame->addComponent($this->_minbutton);
 
 	$this->mainFrame = new \ManiaLive\Gui\Controls\Frame();
 	$this->mainFrame->setPosY(-3);
@@ -184,11 +184,31 @@ class Window extends \ManiaLive\Gui\Window {
                                     declare coords = "$fffX:" ^ (MouseX - Window.PosnX) ^ " Y:" ^ (MouseY - Window.PosnY + 3 );                                   
                                     TitlebarText.Value = coords;
                                 }
-                                
+                                 
+				TitlebarText.SetText( "X:" ^ LastDelta.X ^ "  Y:" ^ LastDelta.Y);
+				       
+				    
                                 if (MoveWindow) {                                                                                                    
                                     DeltaPos.X = MouseX - lastMouseX;
                                     DeltaPos.Y = MouseY - lastMouseY;
                                    
+				    if (Window.PosnX < -140.0) {                                    
+					LastDelta.X = -140.0;	
+					
+				    } 
+                                    if (Window.PosnX > 110.0) {                
+					LastDelta.X = 110.0;
+				       
+                                    }
+                                    if (Window.PosnY > 78.0) {                
+				        LastDelta.Y = 78.0;
+					
+                                    }
+				    if (Window.PosnY < -80.0) {                               
+					LastDelta.Y = -80.0;
+					
+                                    }                          
+				    
                                     LastDelta += DeltaPos;         
 				     if (windowActive == id) {
 					    LastDelta.Z = 20.0; 
@@ -198,53 +218,13 @@ class Window extends \ManiaLive\Gui\Window {
                                     windowLastPosRel[id] = Window.RelativePosition;
                                     
                                     lastMouseX = MouseX;
-                                    lastMouseY = MouseY;                            
+                                    lastMouseY = MouseY; 
+				    yield;
                                     }
-                                
-                                    
-                                if (CenterWindow == True) {                                                                            
-                                    if (Window.PosnX <= -140) {                                    
-                                    Window.PosnX +=5.0;
-                                    } 
-                                    if (Window.PosnX >= -60) {                
-                                    CenterWindow = False;
-                                    }
-
-                                }
-                               
-                                if (Window.Scale >= 0.25 && isMinimized) {
-                                    Window.Scale -=0.075;  
-                                    CenterWindow = True;
-                                }   
-                                
-                                if (Window.Scale <= 1 && !CloseWindow && !isMinimized) {
-                                   Window.Scale +=0.075;                                                                      
-                                }
-                                
-
-                                if (CloseWindow)
-                                {                                                                       
-                                        Window.Scale = CloseCounter;
-                                        if (CloseCounter <= 0) {
-                                                Window.Hide();
-                                                CloseWindow = False;
-                                        }                                
-                                        CloseCounter -=0.075;
-                                }
-                                
-                                
-                                
-                                foreach (Event in PendingEvents) {
-                                 if (Event.Type == CMlEvent::Type::MouseOver)
-                                                 {
-                                                  active = True;
+				    
+				   
+                                                          
                                                   
-                                                    }
-                                                    if (Event.Type == CMlEvent::Type::MouseOut) {
-                                                      active = False;
-                                                       }
-                                                
-                                      }              
                                if (MouseLeftButton == True) {
                                      
                        
@@ -254,19 +234,16 @@ class Window extends \ManiaLive\Gui\Window {
                                                        if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Titlebar")  {                                                          
                                                             lastMouseX = MouseX;
                                                             lastMouseY = MouseY;   
-                                                            MoveWindow = True;
-                                                            Scroll = True; 
+                                                            MoveWindow = True;                                                      
 							    windowActive = id;
                                                         } 
 
                                            
                                                         if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close") {
-                                                         CloseWindow = True;
-                                                        }   
-                                                          if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Minimize") {                                            
-                                                             isMinimized = True;                                                                                       
-                                                         }   
-                                                            if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "MainWindow") {                                            
+                                                          Window.Hide();
+                                                        }                                                             
+                                                        
+							if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "MainWindow") {                                            
                                                              isMinimized = False;   
 							      windowActive = id;
                                                          }                                  
@@ -276,8 +253,7 @@ class Window extends \ManiaLive\Gui\Window {
                                         }
                                         
                                 else {
-                                        MoveWindow = False;
-                                        
+                                        MoveWindow = False;                                      
                                 } 
                                 
                                 
