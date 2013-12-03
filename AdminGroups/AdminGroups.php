@@ -153,10 +153,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$txt_descMore = exp_getMessage('More');
         self::$txt_aliases = exp_getMessage('Aliases');
 
-        foreach(self::$permissionList as $permission => $val){
-            self::$txt_permissions[$permission] = exp_getMessage("Permission_".$permission);
+        foreach (self::$permissionList as $permission => $val) {
+            self::$txt_permissions[$permission] = exp_getMessage("Permission_" . $permission);
         }
-        
+
         //No idea if needed, I think not need to check
         // $this->enableDedicatedEvents();
         //Registering public functions
@@ -173,7 +173,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $cmd = $this->addAdminCommand('help', $this, "windowHelp", null);
         $cmd->setHelp("Show the list of all available admin commands and alliases.");
-        
+
         Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_CHAT);
     }
 
@@ -246,7 +246,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->readTime = time();
 
             $inheritances = array();
-            
+
             //reading the admin groups and settings
             foreach ($values as $key => $value) {
                 //THe settings
@@ -264,9 +264,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     }
                 }
             }
-            
-            
-            foreach($inheritances as $name => $inherits){
+
+
+            foreach ($inheritances as $name => $inherits) {
                 $mainGroup = null;
                 foreach (self::$groupList as $groupe) {
                     if ($groupe->getGroupName() == $name) {
@@ -274,8 +274,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                         break;
                     }
                 }
-                
-                foreach($inherits as $groupe){
+
+                foreach ($inherits as $groupe) {
                     $inheritedGroup = null;
                     foreach (self::$groupList as $g) {
                         if (strtolower($g->getGroupName()) == strtolower($groupe)) {
@@ -283,12 +283,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                             break;
                         }
                     }
-                    
-                    if($inheritedGroup != null && !$inheritedGroup->isMaster())
+
+                    if ($inheritedGroup != null && !$inheritedGroup->isMaster())
                         $mainGroup->addInherits($inheritedGroup);
                 }
             }
-            
         } catch (\Exception $e) {
             // silent exception handling for failed read
         }
@@ -338,7 +337,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private function ParseGroup($groupName, $value) {
 
         $inherits = array();
-        
+
         $group = new Group($groupName, false);
 
         //Settings and Permissions
@@ -346,7 +345,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $param = explode(".", $key);
 
             if ($param[0] == 'permission') {
-                if(!empty($param[1])){
+                if (!empty($param[1])) {
                     self::$permissionList[$param[1]] = true;
                     $group->addPermission($param[1], $this->entryCheck($val));
                 }
@@ -354,8 +353,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 //
             }
         }
-        
-        if(isset($value["inherit"]))
+
+        if (isset($value["inherit"]))
             $inherits = $value["inherit"];
 
         //Lets get the players
@@ -384,7 +383,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $param = explode(".", $key);
 
             if ($param[0] == 'permission') {
-                if(!empty($param[1]))
+                if (!empty($param[1]))
                     self::$permissionList[$param[1]] = true;
             }
         }
@@ -416,7 +415,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             foreach (self::$permissionList as $key => $value) {
                 $string .= "permission." . $key . " = '" . $group->getPermission($key) . "'\n";
             }
-            
+
             $string.="\n;List of Inheritances.\n";
             foreach ($group->getInherits() as $value) {
                 $string .= "inherit[] = '" . $value->getGroupName() . "'\n";
@@ -531,19 +530,28 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::addCommand($adminCmd, $cmd);
         $adminCmd->addAlias($cmd);
     }
-    
-    public function addShortAlias(AdminCmd $adminCmd, $cmd){
+
+    /**
+     * Adds a very short alias to an existing command.
+     * Very short aliases doesen't require /admin 
+     * They work the same way other commands works. 
+     * 
+     * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd
+     * @param type $cmd
+     * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
+     */
+    public function addShortAlias(AdminCmd $adminCmd, $cmd) {
         $adminCmd->addAlias($cmd);
-        
+
         //We explode the command to sub commands
         $cmdArray = explode(" ", strtolower($cmd));
-        
+
         //The first element is the main element
         $ccmd = array_shift($cmdArray);
-        
+
         $this->registerChatCommand($ccmd, "shortAdminCmd", -1, true);
 
-        
+
         //If the command is new we set a value to it. We will change it later
         if (!isset(self::$shortCommands[$ccmd]))
             self::$shortCommands[$ccmd] = null;
@@ -594,47 +602,49 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             return $commands;
         }
     }
-    
-    static public function addPermissionTitleMessage($permissionName, \ManiaLivePlugins\eXpansion\Core\i18n\Message $msg){
-        self::$txt_permissions[$permissionName] = $msg;   
+
+    static public function addPermissionTitleMessage($permissionName, \ManiaLivePlugins\eXpansion\Core\i18n\Message $msg) {
+        self::$txt_permissions[$permissionName] = $msg;
     }
-    
-    static public function getPermissionTitleMessage($permissionName){
-        return isset(self::$txt_permissions[$permissionName]) ? self::$txt_permissions[$permissionName] : $permissionName ;   
+
+    static public function getPermissionTitleMessage($permissionName) {
+        return isset(self::$txt_permissions[$permissionName]) ? self::$txt_permissions[$permissionName] : $permissionName;
     }
-            
+
     /**
      * Chat command
      * @param string $login
      * @param string $params
      */
-    public function adminCmd($login, $params = "", $cmds = array()) {
-        
-        if(empty($cmds)){
-            $cmds = self::$commands;
-        }
-        
-        // $args = explode(" ", $params);
-
-        $matches = array();
-        preg_match_all('/(?!\\\\)"((?:\\\\"|[^"])+)"?|([^\s]+)/', $params, $matches);
-        $args = array_map(
-                function($str, $word) {
-            $temp = str_replace('\"', '"', $str != '' ? $str : $word);
-            if ($temp == '""')
-                return "";
-            return $temp;
-        }, $matches[1], $matches[2]);
+    public function adminCmd($login, $params = "", $cmds = array(), $errors = true) {
 
         //First lets check if player is an admin
         if (!isset(self::$admins[$login])) {
-            $this->exp_chatSendServerMessage($this->msg_needBeAdmin, $login);
+            if ($errors)
+                $this->exp_chatSendServerMessage($this->msg_needBeAdmin, $login);
         } else {
+
+            if (empty($cmds)) {
+                $cmds = self::$commands;
+            }
+
+            // $args = explode(" ", $params);
+
+            $matches = array();
+            preg_match_all('/(?!\\\\)"((?:\\\\"|[^"])+)"?|([^\s]+)/', $params, $matches);
+            $args = array_map(
+                    function($str, $word) {
+                $temp = str_replace('\"', '"', $str != '' ? $str : $word);
+                if ($temp == '""')
+                    return "";
+                return $temp;
+            }, $matches[1], $matches[2]);
+
             //Lets see if the command is correct
             $arg = strtolower(array_shift($args));
             if (isset($cmds[$arg])) {
                 $this->doAdminCmd($cmds[$arg], $args, $login);
-            } else {
+            } else if($errors){
                 $this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
             }
         }
@@ -667,18 +677,18 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
         }
     }
-    
-    public function shortAdminCmd($login, $params = ""){
-       
+
+    public function shortAdminCmd($login, $params = "") {
+        
     }
-    
-    function onPlayerChat($playerUid, $login, $text, $isRegistredCmd){
-		if(!$isRegistredCmd || strpos($text, "/admin") !== false || strpos($text, "/adm") !== false)
-			return;
-        
+
+    function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
+        if (!$isRegistredCmd || strpos($text, "/admin") !== false || strpos($text, "/adm") !== false)
+            return;
+
         $text = substr($text, 1);
-        
-        $this->adminCmd($login, $text, self::$shortCommands);
+
+        $this->adminCmd($login, $text, self::$shortCommands, false);
     }
 
     /**
@@ -785,7 +795,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->saveFile();
         }
     }
-    
+
     /**
      * Change the permissions of a group
      *
@@ -800,7 +810,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->reLoadAdmins();
 
             $group->resetInherits();
-            
+
             foreach ($newHeritances as $val) {
                 $group->addInherits($val);
             }
@@ -818,7 +828,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $upper = strtoupper($string);
         if ($upper == "FALSE" || $string == "0" || $upper == "NO" || $upper == strtoupper(self::noPermission))
             return self::noPermission;
-        else if($upper == "TRUE" || $string == "1" || $upper == "YES" || $upper == strtoupper(self::havePermission))
+        else if ($upper == "TRUE" || $string == "1" || $upper == "YES" || $upper == strtoupper(self::havePermission))
             return self::havePermission;
         else
             return self::unknownPermission;
