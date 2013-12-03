@@ -96,72 +96,87 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 	if (!array_key_exists($login, DediConnection::$players))
 	    return;
 
-	// if player is banned from dedimania, don't send his time.
+// if player is banned from dedimania, don't send his time.
 	if (DediConnection::$players[$login]->banned)
 	    return;
 
-	// if current map doesn't have records, create one.
+// if current map doesn't have records, create one.
 	if (count($this->records) == 0) {
 	    $player = $this->connection->getCurrentRankingForLogin($login);
-	    // map first array entry to player object;
+// map first array entry to player object;
 	    $player = $player[0];
+	    if ($this->storage->players[$login]->bestCheckpoints != $player->bestCheckpoints) {
+		echo "\nplayer cp mismatch!\n";
+	    }
+
 	    $this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, $player->bestCheckpoints);
-	    $this->reArrage();
+	    $this->reArrage($login);
 	    \ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login]));
 	    return;
 	}
 
-	// if last record is not set, don't continue.
+// if last record is not set, don't continue.
 	if (!is_object($this->lastRecord)) {
 	    return;
 	}
 
-	//print "$time <= " . $this->lastRecord->time . " || " . count($this->records) . " <= $maxrank \n";
-	//var_dump(($time <= $this->lastRecord->time || count($this->records) <= $maxrank) ? true : false);
-	// so if the time is better than the last entry or the count of records is less than player maxRank
-	if ($time <= $this->lastRecord->time || count($this->records) <= DediConnection::$players[$login]->maxRank) {
+// so if the time is better than the last entry or the count of records
 
-	    //  print "times matches!";
-	    // if player exists on the list... see if he got better time
+	$maxrank = DediConnection::$serverMaxRank;
+	if (DediConnection::$players[$login]->maxRank > $maxrank) {
+	    $maxrank = DediConnection::$players[$login]->maxRank;
+	}
+
+	if ($time <= $this->lastRecord->time || count($this->records) <= $maxrank) {
+
+//  print "times matches!";
+// if player exists on the list... see if he got better time
 	    if (array_key_exists($login, $this->records)) {
 		if ($this->records[$login]->time > $time) {
 		    $oldRecord = $this->records[$login];
 		    $player = $this->connection->getCurrentRankingForLogin($login);
-		    // map first array entry to player object;
+// map first array entry to player object;
 		    $player = $player[0];
-		    // get records count
+
+		    if ($this->storage->players[$login]->bestCheckpoints != $player->bestCheckpoints) {
+			echo "\nplayer cp mismatch!\n";
+		    }
+
+// get records count
 		    $oldCount = count($this->records);
 		    $this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, $player->bestCheckpoints);
 
-		    // if new records count is greater than old count, and doesn't exceed the maxrank of the server
+// if new records count is greater than old count, and doesn't exceed the maxrank of the server
 		    if ((count($this->records) > $oldCount) && ( (DediConnection::$dediMap->mapMaxRank + 1 ) < DediConnection::$serverMaxRank)) {
-			//print "increasing maxrank! \n";
+//print "increasing maxrank! \n";
 			DediConnection::$dediMap->mapMaxRank++;
+			echo "new maxrank:" . DediConnection::$dediMap->mapMaxRank . " \n";
 		    }
-		    $this->reArrage();
-		    // have to recheck if the player is still at the dedi array
+		    $this->reArrage($login);
+// have to recheck if the player is still at the dedi array
 		    if (array_key_exists($login, $this->records)) // have to recheck if the player is still at the dedi array
 			\ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_DEDI_RECORD, $this->records[$login], $oldRecord));
 		    return;
 		}
 
-		// if not, add the player to records table
+// if not, add the player to records table
 	    } else {
 
 		$player = $this->connection->getCurrentRankingForLogin($login);
-		// map first array entry to player object;
+// map first array entry to player object;
 		$player = $player[0];
 		$oldCount = count($this->records);
 		$this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, $player->bestCheckpoints);
-		// if new records count is greater than old count, increase the map records limit
+// if new records count is greater than old count, increase the map records limit
 
 		if ((count($this->records) > $oldCount) && ( (DediConnection::$dediMap->mapMaxRank + 1 ) < DediConnection::$serverMaxRank)) {
 
 		    DediConnection::$dediMap->mapMaxRank++;
+		    echo "new maxrank:" . DediConnection::$dediMap->mapMaxRank . " \n";
 		}
-		$this->reArrage();
+		$this->reArrage($login);
 
-		// have to recheck if the player is still at the dedi array
+// have to recheck if the player is still at the dedi array
 		if (array_key_exists($login, $this->records))
 		    \ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login]));
 		return;
@@ -169,30 +184,64 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 	}
     }
 
-    function reArrage() {
-	// sort by time
+    /**
+     * rearrages the records list + recreates the indecies
+     * @param string $login is passed to check the server,map and player maxranks for new driven record
+     */
+    function reArrage($login) {
+// sort by time
 	$this->sortAsc($this->records, "time");
 
-	$i = 1;
+	$i = 0;
 	$newrecords = array();
 	foreach ($this->records as $record) {
+	    $i++;
 	    if (array_key_exists($record->login, $newrecords))
 		continue;
 
 	    $record->place = $i;
-	    // if player is at server
-	    // if ($record->place <= DediConnection::$dediMap->mapMaxRank) {
-	    $newrecords[$record->login] = $record;
-	    // }
-	    $i++;
+	    // if record holder is at server, then we must check for additional   
+	    if ($record->login == $login) {
+		echo "login: $login\n";
+		// if record is greater than players max rank, don't allow
+		if ($record->place > DediConnection::$players[$login]->maxRank) {
+		    echo "record place: " . $record->place . " is greater than player max rank: " . DediConnection::$players[$login]->maxRank;
+		    echo "\n not adding record.\n";
+		    continue;
+		}
+		// if player record is greater what server can offer, don't allow
+		if ($record->place > DediConnection::$serverMaxRank) {
+		    echo "record place: " . $record->place . " is greater than server max rank: " . DediConnection::$serverMaxRank;
+		    echo "\n not adding record.\n";
+		    continue;
+		}
+		// if player record is greater than what is allowed, don't allow
+		if ($record->place > DediConnection::$dediMap->mapMaxRank) {
+		    echo "record place: " . $record->place . " is greater than record max rank: " . DediConnection::$dediMap->mapMaxRank;
+		    echo "\n not adding record.\n";
+		    continue;
+		}
+
+		echo "\n DEDIRECORD ADDED.\n";
+		$newrecords[$record->login] = $record;
+		// othervice
+	    } else {
+		// check if some record needs to be erased from the list...
+		if ($record->place > DediConnection::$dediMap->mapMaxRank)
+		    continue;
+
+		$newrecords[$record->login] = $record;
+	    }
 	}
-	// assign  the new records
-	$this->records = array_slice($newrecords, 0, DediConnection::$dediMap->mapMaxRank);
-	//$this->records = $newrecords;
-	// assign the last place
+
+// assign  the new records
+//$this->records = array_slice($newrecords, 0, DediConnection::$dediMap->mapMaxRank);
+
+	$this->records = $newrecords;
+// assign the last place
 	$this->lastRecord = end($this->records);
 
-	// recreate new records entry for update_records
+// recreate new records entry for update_records
 	$data = array('Records' => array());
 	$i = 1;
 	foreach ($this->records as $record) {
@@ -218,7 +267,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
      * @param type $restartMap
      */
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
-	// $this->dedimania->updateServerPlayers($this->storage->currentMap); // optional
+// $this->dedimania->updateServerPlayers($this->storage->currentMap); // optional
     }
 
     /**
@@ -242,7 +291,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 	    $this->connection->SaveBestGhostsReplay($rankings[0]['Login'], $grfile);
 	    $this->gReplay = file_get_contents($this->connection->gameDataDirectory() . 'Replays/' . $grfile);
 
-	    // Dedimania doesn't allow times sent without validation relay. So, let's just stop here if there is none.
+// Dedimania doesn't allow times sent without validation relay. So, let's just stop here if there is none.
 	    if (empty($this->vReplay)) {
 		Console::println("[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent.");
 		return;
@@ -281,7 +330,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 	$this->recordCount = count($this->records);
 
 	$this->debug("Dedimania get records:");
-	//$this->debug($data);
+//$this->debug($data);
     }
 
     public function onUnload() {
@@ -295,8 +344,8 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
      * @param type $data
      */
     public function onDedimaniaUpdateRecords($data) {
-	//$this->debug("Dedimania update records:");
-	// $this->debug($data);
+//$this->debug("Dedimania update records:");
+// $this->debug($data);
     }
 
     /**
