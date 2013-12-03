@@ -9,5 +9,7 @@ class Config extends \ManiaLib\Utils\Singleton
         public $adminChatColor = '$ff0'; 
         public $adminSign = "";
         public $chatSeparator = '$w$0ff·$z$s';
+	public $allowMPcolors = true;
+	
 }
 ?>
