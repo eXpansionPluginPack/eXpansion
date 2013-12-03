@@ -84,14 +84,20 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
 	      $smileys = array("ッ", "ツ", "シ");
 	      $rnd = rand(0, sizeof($smileys) - 1);
 	      $text = str_replace(array(":)", "=)"), $smileys[$rnd], $text); */
+	    
 	    $force = "";
 	    if ($config->allowMPcolors) {
 		if (strstr($source_player->nickName, '$>')) {
+
 		    $pos = strpos($source_player->nickName, '$>');
-		    $force = substr($source_player->nickName, $pos);
-		    $force = str_replace('$>', "", $force);
+		    $color = substr($source_player->nickName, $pos);
+		    if (substr($nick, -1) == '$')
+			$nick = substr($nick, 0, -1);
+		    if ($color != '$>$')
+			$force = str_replace('$>', "", $color);
 		}
 	    }
+
 	    try {
 		if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "server_admin")) {
 		    $this->connection->chatSendServerMessage("\$fff" . $config->adminSign . " $nick\$z\$s " . $config->chatSeparator . $config->adminChatColor . $force . $text);
@@ -121,5 +127,4 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
     }
 
 }
-
 ?>
