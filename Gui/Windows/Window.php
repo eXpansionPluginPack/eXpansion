@@ -185,7 +185,7 @@ class Window extends \ManiaLive\Gui\Window {
                                     TitlebarText.Value = coords;
                                 }
                                  
-				TitlebarText.SetText( "X:" ^ LastDelta.X ^ "  Y:" ^ LastDelta.Y);
+				//TitlebarText.SetText( "X:" ^ LastDelta.X ^ "  Y:" ^ LastDelta.Y);
 				       
 				    
                                 if (MoveWindow) {                                                                                                    
