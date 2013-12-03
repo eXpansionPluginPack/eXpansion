@@ -33,16 +33,25 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         parent::exp_onLoad();
 
         $admingroup = AdminGroups::getInstance();
-        $cmd = $this->registerChatCommand("ta", "support_fastTa", -1, true, $admingroup->get());
-        $cmd->help = '/ta limit; Sets timelimit for TimeAttack';
-        $cmd = $this->registerChatCommand("laps", "support_fastLaps", -1, true, $admingroup->get());
-        $cmd->help = '/laps laps X; Sets Laps Limit';
-        $cmd = $this->registerChatCommand("rounds", "support_fastRounds", -1, true, $admingroup->get());
-        $cmd->help = '/rounds limit X; Sets PointLimit in Rounds';
-        $cmd = $this->registerChatCommand("cup", "support_fastCup", -1, true, $admingroup->get());
-        $cmd->help = '/cup limit X; Sets CupRoundsLimit for Winner';
-        $cmd = $this->registerChatCommand("team", "support_fastTeam", -1, true, $admingroup->get());
-        $cmd->help = '/team limit X; Sets Team PointLimit';
+        $cmd = AdminGroups::addAdminCommand('game ta', $this, 'support_fastTa', 'game_settings'); 
+        $cmd->setHelp('/ta limit; Sets timelimit for TimeAttack');
+        $admingroup->addShortAlias($cmd, 'ta');
+        
+        $cmd = AdminGroups::addAdminCommand('game laps', $this, 'support_fastLaps', 'game_settings'); 
+        $cmd->setHelp('/laps laps X; Sets Laps Limit');
+        $admingroup->addShortAlias($cmd, 'laps');
+
+        $cmd = AdminGroups::addAdminCommand('game rounds', $this, 'support_fastRounds', 'game_settings'); 
+        $cmd->setHelp('/rounds limit X; Sets PointLimit in Rounds');
+        $admingroup->addShortAlias($cmd, 'rounds');
+
+        $cmd = AdminGroups::addAdminCommand('game cup', $this, 'support_fastCup', 'game_settings'); 
+        $cmd->setHelp('/cup limit X; Sets CupRoundsLimit for Winner');
+        $admingroup->addShortAlias($cmd, 'cup');
+        
+        $cmd = AdminGroups::addAdminCommand('game team', $this, 'support_fastTeam', 'game_settings'); 
+        $cmd->setHelp('/team limit X; Sets Team PointLimit');
+        $admingroup->addShortAlias($cmd, 'team');
 
         /* 		
          * ******************* 
@@ -457,11 +466,10 @@ Other server might use the same blacklist file!!');
         new adapter\oliverde8HudMenu($this, $menu, $this->storage, $this->connection);
     }
 
-    function support_fastTa($fromLogin, $text) {
-        try {
-            $params = explode(" ", $text);
-            $command = array_shift($params);
+    function support_fastTa($fromLogin, $params) {
 
+        try {
+            $command = array_shift($params);
 
             switch (strtolower($command)) {
                 case "time":
@@ -487,9 +495,8 @@ Other server might use the same blacklist file!!');
         }
     }
 
-    function support_fastLaps($fromLogin, $text) {
+    function support_fastLaps($fromLogin, $params) {
         try {
-            $params = explode(" ", $text);
             $command = array_shift($params);
 
 
@@ -523,9 +530,8 @@ Other server might use the same blacklist file!!');
         }
     }
 
-    function support_fastRounds($fromLogin, $text) {
+    function support_fastRounds($fromLogin, $params) {
         try {
-            $params = explode(" ", $text);
             $command = array_shift($params);
 
             switch (strtolower($command)) {
@@ -554,9 +560,8 @@ Other server might use the same blacklist file!!');
         }
     }
 
-    function support_fastCup($fromLogin, $text) {
+    function support_fastCup($fromLogin, $params) {
         try {
-            $params = explode(" ", $text);
             $command = array_shift($params);
 
             switch (strtolower($command)) {
@@ -595,9 +600,8 @@ Other server might use the same blacklist file!!');
         }
     }
 
-    function support_fastTeam($fromLogin, $text) {
+    function support_fastTeam($fromLogin, $params) {
         try {
-            $params = explode(" ", $text);
             $command = array_shift($params);
 
             switch (strtolower($command)) {

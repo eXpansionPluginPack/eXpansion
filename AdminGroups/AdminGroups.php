@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
+use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
 use ManiaLive\Event\Dispatcher;
 
 /**
@@ -40,6 +41,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @var AdminCmd[]
      */
     static private $commands = array();
+    static private $shortCommands = array();
 
     /**
      * @var AdminCmd[] List of All commans
@@ -171,6 +173,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $cmd = $this->addAdminCommand('help', $this, "windowHelp", null);
         $cmd->setHelp("Show the list of all available admin commands and alliases.");
+        
+        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_CHAT);
     }
 
     public function test() {
@@ -527,6 +531,29 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::addCommand($adminCmd, $cmd);
         $adminCmd->addAlias($cmd);
     }
+    
+    public function addShortAlias(AdminCmd $adminCmd, $cmd){
+        $adminCmd->addAlias($cmd);
+        
+        //We explode the command to sub commands
+        $cmdArray = explode(" ", strtolower($cmd));
+        
+        //The first element is the main element
+        $ccmd = array_shift($cmdArray);
+        
+        $this->registerChatCommand($ccmd, "shortAdminCmd", -1, true);
+
+        
+        //If the command is new we set a value to it. We will change it later
+        if (!isset(self::$shortCommands[$ccmd]))
+            self::$shortCommands[$ccmd] = null;
+
+        //We apply the new command to the array
+        self::$shortCommands[$ccmd] = self::addRecursive(self::$shortCommands[$ccmd], $cmdArray, $adminCmd);
+
+        //We return the command object
+        return $adminCmd;
+    }
 
     /**
      * Adds the command
@@ -581,8 +608,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param string $login
      * @param string $params
      */
-    public function adminCmd($login, $params = "") {
-
+    public function adminCmd($login, $params = "", $cmds = array()) {
+        
+        if(empty($cmds)){
+            $cmds = self::$commands;
+        }
+        
         // $args = explode(" ", $params);
 
         $matches = array();
@@ -596,13 +627,13 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }, $matches[1], $matches[2]);
 
         //First lets check if player is an admin
-        if (!self::hasPermission($login, 'server_admin')) {
+        if (!isset(self::$admins[$login])) {
             $this->exp_chatSendServerMessage($this->msg_needBeAdmin, $login);
         } else {
             //Lets see if the command is correct
             $arg = strtolower(array_shift($args));
-            if (isset(self::$commands[$arg])) {
-                $this->doAdminCmd(self::$commands[$arg], $args, $login);
+            if (isset($cmds[$arg])) {
+                $this->doAdminCmd($cmds[$arg], $args, $login);
             } else {
                 $this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
             }
@@ -635,6 +666,19 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } else {
             $this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
         }
+    }
+    
+    public function shortAdminCmd($login, $params = ""){
+       
+    }
+    
+    function onPlayerChat($playerUid, $login, $text, $isRegistredCmd){
+		if(!$isRegistredCmd || strpos($text, "/admin") !== false || strpos($text, "/adm") !== false)
+			return;
+        
+        $text = substr($text, 1);
+        
+        $this->adminCmd($login, $text, self::$shortCommands);
     }
 
     /**
