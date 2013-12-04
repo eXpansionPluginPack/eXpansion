@@ -44,9 +44,8 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function send($login, $message, $icon = null, $callback = null, $pluginid = null) {
         if (is_callable($callback) || $callback === null) {
-            $item = new Message($login, $icon, $message, $callback);
             //$hash = spl_object_hash($item);
-            $this->messages[] = $item;
+            $this->messages[] = new Message($login, $icon, $message, $callback);
             $array = array_reverse($this->messages, true);
             $array = array_slice($array, 0, 50, true);
             $this->messages = array_reverse($array, true);

@@ -160,7 +160,6 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
                   $msg = call_user_func_array('sprintf', $args);
                   $this->exp_announce($msg);
                  */
-                $msg->setArgs($args);
                 $this->exp_multilangAnnounce($msg, $args);
             } else {
                 array_unshift($args, $msg, $login);
@@ -222,11 +221,14 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             $fromPlugin = explode("\\", $sender);
             $fromPlugin = str_replace("_", " ", end($fromPlugin));
 
+
             if (isset(self::$exp_chatRedirected[$sender])) {
+                $message = clone $msg;
+                $message->setArgs($args);
                 if (is_object(self::$exp_chatRedirected[$sender][0]))
-                    call_user_func_array(self::$exp_chatRedirected[$sender], array(null, $msg));
+                    call_user_func_array(self::$exp_chatRedirected[$sender], array(null, $message));
                 else {
-                    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array(null, $msg));
+                    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array(null, $message));
                 }
             } else {
                 $this->connection->chatSendServerMessageToLanguage($msg->getMultiLangArray($args));

@@ -6,8 +6,8 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 
 class Item extends \ManiaLive\Gui\Control {
 
-    private $label;
-    private $frame;
+    protected $label;
+    protected $frame;
 
     function __construct($string) {
         $this->sizeX = 100;
@@ -15,15 +15,19 @@ class Item extends \ManiaLive\Gui\Control {
         $this->setAlign("left", "top");
 
         // $action = \ManiaLive\Gui\ActionHandler::getInstance()->createAction($item->callback);
-        $label = new \ManiaLib\Gui\Elements\Label(100, 4);
-        $label->setText($string);
-        $label->setTextColor("fff");
-        $label->setStyle("TextRaceChat");
-        $this->addComponent($label);
+        $this->label = new \ManiaLib\Gui\Elements\Label(100, 4);
+        $this->label->setText($string);
+        $this->label->setTextColor("fff");
+        $this->label->setStyle("TextRaceChat");
+        $this->addComponent($this->label);
     }
 
     protected function onResize($oldX, $oldY) {
         $this->frame->setSize($this->sizeX, $this->sizeY);
+    }
+    
+    public function destroy() {
+        parent::destroy();
     }
 
 }
