@@ -8,7 +8,8 @@ use \ManiaLivePlugins\eXpansion\Notifications\Structures\Message;
 
 class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
-    private $messages = array();
+    private $publicMessages = array();
+    private $personalMessages = array(array());
 
     function exp_onInit() {
         $this->setPublicMethod("send");
@@ -45,10 +46,20 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function send($login, $message, $icon = null, $callback = null, $pluginid = null) {
         if (is_callable($callback) || $callback === null) {
             //$hash = spl_object_hash($item);
-            $this->messages[] = new Message($login, $icon, $message, $callback);
-            $array = array_reverse($this->messages, true);
-            $array = array_slice($array, 0, 50, true);
-            $this->messages = array_reverse($array, true);
+            if ($login == null)
+                array_unshift($this->publicMessages, new Message($login, $icon, $message, $callback));
+            else {
+                if (!array_key_exists($login, $this->personalMessages)) {
+                    $this->personalMessages[$login] = array();
+                }
+                array_unshift($this->personalMessages[$login], new Message($login, $icon, $message, $callback));
+            }
+            $this->publicMessages = array_slice($this->publicMessages, 0, 6, true);
+
+            foreach ($this->personalMessages as $login => $messages) {
+                $this->personalMessages[$login] = array_slice($this->personalMessages[$login], 0, 6, true);
+            }
+
             $this->reDraw();
         } else {
             \ManiaLive\Utilities\Console::println("Notification adding failed for plugin:" . $pluginid . " callback is not valid.");
@@ -59,11 +70,22 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //$this->onPlayerConnect(NotificationPanel::RECIPIENT_ALL, true);
         try {
             foreach (NotificationPanel::GetAll() as $window) {
-                $window->setMessages($this->messages);
+                $login = $window->getRecipient();
+                $personal = array();
+                if (array_key_exists($login, $this->personalMessages)) {
+                    $personal = $this->personalMessages[$login];
+                }
+
+                $messages = array_merge($personal, $this->publicMessages);
+                \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::sortDesc($messages, "timestamp");
+                $messages = array_slice($messages, 0, 6);
+                $messages = array_reverse($messages);
+               
+                $window->setMessages($messages);
                 $window->redraw();
             }
         } catch (\Exception $e) {
-            
+            \ManiaLive\Utilities\Console::println("error:" . $e->getMessage());
         }
     }
 
@@ -74,9 +96,13 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         NotificationPanel::Erase($login);
 
+        if (array_key_exists($login, $this->personalMessages)) {
+            unset($this->personalMessages[$login]);
+        }
+
         $info = NotificationPanel::Create($login, true);
         $info->setSize(100, 40);
-        $info->setMessages($this->messages);
+        $info->setMessages($this->publicMessages);
         $info->setPosition(40, -40);
         $info->show();
 

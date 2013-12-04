@@ -182,10 +182,11 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             $fromPlugin = str_replace("_", " ", end($fromPlugin));
 
             if (isset(self::$exp_chatRedirected[$sender])) {
+                $message = $msg;
                 if (is_object(self::$exp_chatRedirected[$sender][0]))
-                    call_user_func_array(self::$exp_chatRedirected[$sender], array($login, $this->exp_maxp->parseColors($msg)));
+                    call_user_func_array(self::$exp_chatRedirected[$sender], array($login, $this->exp_maxp->parseColors($message)));
                 else {
-                    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($login, $this->exp_maxp->parseColors($msg)));
+                    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($login, $this->exp_maxp->parseColors($message)));
                 }
             } else {
                 $this->connection->chatSendServerMessage($this->exp_maxp->parseColors($msg), $login);
@@ -206,10 +207,11 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             $fromPlugin = str_replace("_", " ", end($fromPlugin));
 
             if (isset(self::$exp_announceRedirected[$sender])) {
+                $message = clone $msg;
                 if (is_object(self::$exp_announceRedirected[$sender][0]))
-                    call_user_func_array(self::$exp_announceRedirected[$sender], array($this->exp_maxp->parseColors($msg), $icon, $callback, $pluginid));
+                    call_user_func_array(self::$exp_announceRedirected[$sender], array($this->exp_maxp->parseColors($message), $icon, $callback, $pluginid));
                 else {
-                    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($this->exp_maxp->parseColors($msg), $icon, $callback, $pluginid));
+                    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($this->exp_maxp->parseColors($message), $icon, $callback, $pluginid));
                 }
             } else {
                 $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->exp_maxp->parseColors($msg));

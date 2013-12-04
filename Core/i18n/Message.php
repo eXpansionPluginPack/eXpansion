@@ -88,6 +88,10 @@ class Message {
         }
     }
 
+    public function __toString() {
+        return "string: " . $this->originalMessage;
+    }
+
 }
 
 ?>
