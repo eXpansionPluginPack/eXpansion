@@ -102,6 +102,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     static public $txt_description;
     static public $txt_descMore;
     static public $txt_aliases;
+    static public $txt_noPermissionMsg;
     static public $txt_permissions = array();
 
     public function exp_onInit() {
@@ -133,6 +134,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_pRemoveFa = exp_getMessage('#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group');
         $this->msg_masterMasterE = exp_getMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
         $this->msg_removeMlAdmin = exp_getMessage('#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!');
+        self::$txt_noPermissionMsg = $this->msg_neeMorPerm;
         self::$txt_groupsTitle = exp_getMessage('Admin Groups');
         self::$txt_helpTitle = exp_getMessage('Admin Commands Help');
         self::$txt_permissionsTitle = exp_getMessage('Admin Group Permission - %1$s');
@@ -147,7 +149,6 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$txt_permissionList = exp_getMessage('Change Permissions');
         self::$txt_deletegroup = exp_getMessage('Delete Group');
         self::$txt_rmPlayer = exp_getMessage('Remove Player');
-
         self::$txt_command = exp_getMessage('Command');
         self::$txt_description = exp_getMessage('Description');
         self::$txt_descMore = exp_getMessage('More');
@@ -495,7 +496,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return string
      */
     static public function GetnoPermissionMsg() {
-        return $this->config->msg_noPermissionMsg;
+        return self::$txt_noPermissionMsg;
     }
 
     /**
@@ -644,7 +645,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $arg = strtolower(array_shift($args));
             if (isset($cmds[$arg])) {
                 $this->doAdminCmd($cmds[$arg], $args, $login);
-            } else if($errors){
+            } else if ($errors) {
                 $this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
             }
         }
