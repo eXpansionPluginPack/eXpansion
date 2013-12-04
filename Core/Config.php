@@ -20,7 +20,8 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $Colors_queue = '$8af';  // map queue messages
     public $Colors_dedirecord = '$69C'; // dedimania records
     public $Colors_donate = '$a0f'; // donate
-
+    public $Colors_personalmessage = '$0ff'; // personal messages
+    public $Colors_admingroup_chat = '$a00'; // personal messages
     public $Colors_player = '$z$s$29f';  // used in joinleave-messages
     public $Colors_music = '$f0a';       // music box
     public $Colors_quiz = '$z$s$3e3';    // quiz

@@ -18,9 +18,15 @@ class Message {
 
     /**
      * List of all the messages in different languages
-     * @var Array(String => String) 
+     * @var String[String]
      */
     private $lmessages = array();
+
+    /**
+     * List of all arguments passed for parsing
+     * @var String[String]
+     */
+    private $args = array();
 
     function __construct($orginalMessage) {
         $this->originalMessage = $orginalMessage;
@@ -30,11 +36,15 @@ class Message {
         $this->lmessages[$lang] = $message;
     }
 
+    public function setArgs(array $args) {
+        $this->args = $args;
+    }
+
     /**
      * getMultiLangArray()
-     * Returns a multilanguage messassage array to be used with Connection->ChatSendServerMessageToLanguage();
+     * Returns a multilanguage message array to be used with Connection->ChatSendServerMessageToLanguage();
      * @param Array $args 
-     * @return Array(String => String) 
+     * @return Strign[String] $out Array[] = array("Lang" => string, "Text" => string)
      */
     public function getMultiLangArray($args) {
         $temp = $this->lmessages;
@@ -50,6 +60,24 @@ class Message {
         return $out;
     }
 
+    /**
+     * getParsedMessage ($lang)
+     * 
+     * @param string $lang
+     * @return string 
+     */
+    public function getParsedMessage($lang = null) {
+        $arrgs = $this->args;
+        array_unshift($arrgs, $this->getMessage($lang));
+        $text = call_user_func_array('sprintf', $arrgs);
+        return \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text);
+    }
+
+    /**
+     *  getMessage
+     * @param string $lang language code
+     * @return string
+     */
     public function getMessage($lang = null) {
         if ($lang == null) {
             return isset($this->lmessages[self::$defaultLanguage]) ? $this->lmessages[self::$defaultLanguage] : $this->originalMessage;

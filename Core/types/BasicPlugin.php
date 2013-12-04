@@ -12,7 +12,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
      *
      * @author oliverde8
      */
-    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin implements \ManiaLive\PluginHandler\WaitingCompliant{
+    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin implements \ManiaLive\PluginHandler\WaitingCompliant {
 
         /**
          * The list of Plugin id's that may need to be started
@@ -54,14 +54,14 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
 
         public final function onInit() {
 
-            //Recovering the eXpansion pack tools
+//Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
 
             $this->exp_unloading = false;
             $this->relay = \ManiaLivePlugins\eXpansion\Core\RelayLink::getInstance();
             \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
 
-            //All plugins need the eXpansion Core to work properly
+//All plugins need the eXpansion Core to work properly
             if ($this->getId() != 'eXpansion\Core' && $this->getId() != 'eXpansion\AutoLoad')
                 $this->addDependency(new \ManiaLive\PluginHandler\Dependency('eXpansion\Core'));
 
@@ -160,7 +160,8 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
                   $msg = call_user_func_array('sprintf', $args);
                   $this->exp_announce($msg);
                  */
-                $this->exp_multilangAnnounce($msg->getMultiLangArray($args));
+                $msg->setArgs($args);
+                $this->exp_multilangAnnounce($msg, $args);
             } else {
                 array_unshift($args, $msg, $login);
                 $msgString = call_user_func_array('__', $args);
@@ -216,8 +217,20 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             }
         }
 
-        protected function exp_multilangAnnounce($msg) {
-            $this->connection->chatSendServerMessageToLanguage($msg);
+        protected function exp_multilangAnnounce(MultiLangMsg $msg, array $args) {
+            $sender = get_class($this);
+            $fromPlugin = explode("\\", $sender);
+            $fromPlugin = str_replace("_", " ", end($fromPlugin));
+
+            if (isset(self::$exp_chatRedirected[$sender])) {
+                if (is_object(self::$exp_chatRedirected[$sender][0]))
+                    call_user_func_array(self::$exp_chatRedirected[$sender], array(null, $msg));
+                else {
+                    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array(null, $msg));
+                }
+            } else {
+                $this->connection->chatSendServerMessageToLanguage($msg->getMultiLangArray($args));
+            }
         }
 
         /**
@@ -256,7 +269,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
                     return isset(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode]) ? self::$plugin_gameModeSupport[$class][$gameInfo->gameMode] : false;
                 }
             } else
-            //This plugin supports all GameModes
+//This plugin supports all GameModes
                 return true;
         }
 
@@ -287,7 +300,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
                 }
             }
 
-            //Unloading dependencies to prevent crash
+//Unloading dependencies to prevent crash
             /* $deps = $this->getDependencies();
               if(!empty($deps)){
               Console::println('[eXpension Pack] Unloading Dependencies of '.$this->getId().'');
@@ -295,7 +308,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
               $this->callPublicMethod($dep->getPluginId(), 'exp_unload');
               }
               } */
-            //Unloading it self
+//Unloading it self
             $this->exp_unloading = true;
             $pHandler->unload($this->getId());
             self::$plugins_onHold[] = $this->getId();

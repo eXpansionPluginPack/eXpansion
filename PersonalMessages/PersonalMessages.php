@@ -52,7 +52,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $this->message, $login);
             $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $this->message, $target);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('$f00$oError $z$s$fff' . $e->getMessage());
+            \ManiaLive\Utilities\Console::println("Error:" . $e->getMessage());
         }
     }
 
