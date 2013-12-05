@@ -131,9 +131,9 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
 //  print "times matches!";
 // if player exists on the list... see if he got better time
-            
+
             $player = $this->storage->getPlayerObject($login);
-            
+
             if (array_key_exists($login, $this->records)) {
 
 
@@ -227,7 +227,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
                  *  $record->checkpoints = $this->storage->getPlayerObject($login)->bestCheckpoints;
                  * and remove getting rankings for current player
                  */
-                $record->checkpoints = $player->bestCheckpoints;
+                $record->checkpoints = implode(",", $player->bestCheckpoints);
 
                 // add record
                 $newrecords[$record->login] = $record;

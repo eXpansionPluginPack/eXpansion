@@ -72,7 +72,7 @@ class MxWidget extends \ManiaLive\Gui\Window {
         $this->_minButton = new \ManiaLib\Gui\Elements\Quad(5, 5);
         $this->_minButton->setScriptEvents(true);
         $this->_minButton->setId("minimizeButton");
-        $this->_minButton->setImage($config->iconMx);
+        $this->_minButton->setImage($config->iconMx, true);
         $this->_minButton->setAlign("left", "bottom");
         $this->_windowFrame->addComponent($this->_minButton);
 

@@ -22,7 +22,7 @@ class Checkbox extends \ManiaLive\Gui\Control {
         $config = Config::getInstance();
         $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->button->setAlign('left', 'center2');
-        $this->button->setImage($config->checkbox);
+        $this->button->setImage($config->checkbox, true);
         $this->button->setAction($this->action);
         $this->button->setScriptEvents(true);
         $this->addComponent($this->button); 
@@ -76,15 +76,15 @@ class Checkbox extends \ManiaLive\Gui\Control {
 
         if($this->button->getAction() == -1){
             if ($this->active) {
-                $this->button->setImage($config->checkboxDisabledActive);
+                $this->button->setImage($config->checkboxDisabledActive, true);
             } else {
-               $this->button->setImage($config->checkboxDisabled);
+               $this->button->setImage($config->checkboxDisabled, true);
             }
         }else{
             if ($this->active) {
-                $this->button->setImage($config->checkboxActive);
+                $this->button->setImage($config->checkboxActive, true);
             } else {
-               $this->button->setImage($config->checkbox);
+               $this->button->setImage($config->checkbox, true);
             }
         }
     }

@@ -10,13 +10,13 @@ class Preloader extends \ManiaLive\Gui\Window {
 	parent::onConstruct();
 
 	$this->frame = new \ManiaLive\Gui\Controls\Frame(0, 0);
-	$this->frame->setAlign("left", "center");
-	$this->frame->setSize(320, 40);
+	$this->frame->setAlign("center", "center");
+	$this->frame->setSize(120, 40);
 	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow(240,40));
 	$this->addComponent($this->frame);
 
-	$this->setSize(320, 40);
-	$this->setPosition(900, 0);
+	$this->setSize(120, 40);
+	$this->setPosition(0,200);
 	$this->setAlign("center", "center");
     }
 

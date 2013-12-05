@@ -42,7 +42,7 @@ class QuitWindow {
         $server->setScale(1.5);
         $server->setText($this->storage->server->name);
         $server->setStyle("TextRaceMessageBig");
-        $server->save();
+        $frame->addComponent($server);
         
         $frame->save();
 
