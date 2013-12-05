@@ -131,7 +131,12 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
 //  print "times matches!";
 // if player exists on the list... see if he got better time
+            
+            $player = $this->storage->getPlayerObject($login);
+            
             if (array_key_exists($login, $this->records)) {
+
+
                 if ($this->records[$login]->time > $time) {
                     $oldRecord = $this->records[$login];
 
