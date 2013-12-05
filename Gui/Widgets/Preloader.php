@@ -22,7 +22,7 @@ class Preloader extends \ManiaLive\Gui\Window {
 
     function add($url) {
 	$elem = new \ManiaLib\Gui\Elements\Quad(6, 6);
-	$elem->setImage($url);
+	$elem->setImage($url, true);
 	$this->frame->addComponent($elem);
     }
 
