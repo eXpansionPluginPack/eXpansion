@@ -23,21 +23,21 @@ class Core extends types\ExpPlugin {
      * 
      */
     function exp_onInit() {
-	parent::exp_onInit();
+        parent::exp_onInit();
     }
 
     /**
      * 
      */
     function exp_onLoad() {
-	parent::exp_onLoad();
-	$this->connection->chatSendServerMessage('$fffStarting e$a00X$fffpansion v. ' . $this->getVersion());
-	$config = Config::getInstance();
-	i18n::getInstance()->start();
+        parent::exp_onLoad();
+        $this->connection->chatSendServerMessage('$fffStarting e$a00X$fffpansion v. ' . $this->getVersion());
+        $config = Config::getInstance();
+        i18n::getInstance()->start();
 
-	$this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_BEGIN_MAP);
+        $this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_BEGIN_MAP);
 
-	$expansion = <<<'EOT'
+        $expansion = <<<'EOT'
    
 --------------------------------------------------------------------------------   
                      __   __                      _             
@@ -53,60 +53,63 @@ class Core extends types\ExpPlugin {
 
 EOT;
 
-	Console::println($expansion);
-	$server = $this->connection->getVersion();
-	$d = (object) date_parse_from_format("Y-m-d_H_i", $server->build);
-	Console::println('Dedicated Server running for title: ' . $server->titleId);
-	Console::println('Dedicated Server build: ' . $d->year . "-" . $d->month . "-" . $d->day);
-	$this->connection->setApiVersion($config->API_Version); // For SM && TM
-	Console::println('Dedicated Server api version in use: ' . $config->API_Version);
-	Console::println('eXpansion version: ' . $this->getVersion());
+        Console::println($expansion);
+        $server = $this->connection->getVersion();
+        $d = (object) date_parse_from_format("Y-m-d_H_i", $server->build);
+        Console::println('Dedicated Server running for title: ' . $server->titleId);
+        Console::println('Dedicated Server build: ' . $d->year . "-" . $d->month . "-" . $d->day);
+        $this->connection->setApiVersion($config->API_Version); // For SM && TM
+        Console::println('Dedicated Server api version in use: ' . $config->API_Version);
+        Console::println('eXpansion version: ' . $this->getVersion());
 
 
-	$bExitApp = false;
+        $bExitApp = false;
 
-	if (version_compare(PHP_VERSION, '5.3.3') >= 0) {
-	    Console::println('Minimum PHP version 5.3.3: Pass (' . PHP_VERSION . ')');
-	} else {
-	    Console::println('Minimum PHP version 5.3.3: Fail (' . PHP_VERSION . ')');
-	    $bExitApp = true;
-	}
+        if (version_compare(PHP_VERSION, '5.3.3') >= 0) {
+            Console::println('Minimum PHP version 5.3.3: Pass (' . PHP_VERSION . ')');
+        } else {
+            Console::println('Minimum PHP version 5.3.3: Fail (' . PHP_VERSION . ')');
+            $bExitApp = true;
+        }
 
-	if (gc_enabled()) {
-	    Console::println('Garbage Collector enabled: Pass ');
-	} else {
-	    Console::println('Garbage Collector enabled: Fail )');
-	    $bExitApp = true;
-	}
-	Console::println('');
-	Console::println('Language support detected for: ' . implode(",", i18n::getInstance()->getSupportedLocales()) . '!');
-	Console::println('Enabling default locale: ' . $config->defaultLanguage . '');
-	i18n::getInstance()->setDefaultLanguage($config->defaultLanguage);
+        if (gc_enabled()) {
+            Console::println('Garbage Collector enabled: Pass ');
+        } else {
+            Console::println('Garbage Collector enabled: Fail )');
+            $bExitApp = true;
+        }
+        Console::println('');
+        Console::println('Language support detected for: ' . implode(",", i18n::getInstance()->getSupportedLocales()) . '!');
+        Console::println('Enabling default locale: ' . $config->defaultLanguage . '');
+        i18n::getInstance()->setDefaultLanguage($config->defaultLanguage);
 
-	Console::println('');
-	Console::println('-------------------------------------------------------------------------------');
-	Console::println('');
-	if (DEBUG) {
-	    Console::println('                        RUNNING IN DEVELOPMENT MODE  ');
-	    Console::println('');
-	    Console::println('-------------------------------------------------------------------------------');
-	    Console::println('');
-	}
+        Console::println('');
+        Console::println('-------------------------------------------------------------------------------');
+        Console::println('');
+        if (DEBUG) {
+            Console::println('                        RUNNING IN DEVELOPMENT MODE  ');
+            Console::println('');
+            Console::println('-------------------------------------------------------------------------------');
+            Console::println('');
+        }
 
-	if ($bExitApp) {
-	    $this->connection->chatSendServerMessage("Failed to init eXpansion, see consolelog for more info!");
-	    die();
-	}
+        if ($bExitApp) {
+            $this->connection->chatSendServerMessage("Failed to init eXpansion, see consolelog for more info!");
+            die();
+        }
 
-	$this->lastGameMode = \ManiaLive\Data\Storage::getInstance()->gameInfos->gameMode;
+        $this->lastGameMode = \ManiaLive\Data\Storage::getInstance()->gameInfos->gameMode;
     }
 
     /**
      * 
      */
     public function exp_onReady() {
-	$this->registerChatCommand("info", "showInfo", 0, true);	
-	$this->onBeginMap(null, null, null);
+        $this->registerChatCommand("info", "showInfo", 0, true);
+        $window = new Gui\Windows\QuitWindow();
+
+        $this->connection->customizeQuitDialog($window->getXml(), "", true, 2500);
+        $this->onBeginMap(null, null, null);
     }
 
     /**
@@ -116,13 +119,13 @@ EOT;
      * @param bool $matchContinuation
      */
     function onBeginMap($map, $warmUp, $matchContinuation) {
-	$newGameMode = \ManiaLive\Data\Storage::getInstance()->gameInfos->gameMode;
-	if ($newGameMode != $this->lastGameMode) {
-	    $this->lastGameMode = $newGameMode;
+        $newGameMode = \ManiaLive\Data\Storage::getInstance()->gameInfos->gameMode;
+        if ($newGameMode != $this->lastGameMode) {
+            $this->lastGameMode = $newGameMode;
 
-	    $this->checkLoadedPlugins();
-	    $this->checkPluginsOnHold();
-	}
+            $this->checkLoadedPlugins();
+            $this->checkPluginsOnHold();
+        }
     }
 
     private function checkLoadedPlugins() {
@@ -147,13 +150,13 @@ EOT;
     private function checkPluginsOnHold() {
         Console::println('#####################################################################');
         Console::println('[eXpension Pack] GameMode Changed Starting compatible plugins');
-        
+
         if (!empty(types\BasicPlugin::$plugins_onHold)) {
             $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
             foreach (types\BasicPlugin::$plugins_onHold as $plugin_id) {
                 $parts = explode("\\", $plugin_id);
-                $className = '\\ManiaLivePlugins\\' . $plugin_id . "\\".$parts[1];
-                if($className::exp_checkGameCompability()){
+                $className = '\\ManiaLivePlugins\\' . $plugin_id . "\\" . $parts[1];
+                if ($className::exp_checkGameCompability()) {
                     $pHandler->load($plugin_id);
                 }
             }
@@ -162,13 +165,11 @@ EOT;
     }
 
     public function showInfo($login) {
-	$info = Gui\Windows\InfoWindow::Create($login);
-	$info->setTitle("Server info");
-	$info->centerOnScreen();
-	$info->setSize(120,90);
-	$info->show();
-	
-	
+        $info = Gui\Windows\InfoWindow::Create($login);
+        $info->setTitle("Server info");
+        $info->centerOnScreen();
+        $info->setSize(120, 90);
+        $info->show();
     }
 
 }
