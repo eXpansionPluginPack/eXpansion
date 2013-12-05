@@ -193,12 +193,13 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
                 return;
             }
 
-
+            $message = $args['message'];
             $targetPlayer = $this->storage->getPlayerObject($target);
             $sourcePlayer = $this->storage->getPlayerObject($login);
             \ManiaLivePlugins\eXpansion\PersonalMessages\PersonalMessages::$reply[$login] = $target;
-            $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $args['message'], $login);
-            $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $args['message'], $target);
+            $color = '$z$s' . \ManiaLivePlugins\eXpansion\Core\Config::getInstance()->Colors_personalmessage;
+            $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $login);
+            $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $target);
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage('$f00$oError $z$s$fff' . $e->getMessage(), $login);
         }

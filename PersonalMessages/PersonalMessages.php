@@ -2,15 +2,37 @@
 
 namespace ManiaLivePlugins\eXpansion\PersonalMessages;
 
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\PersonalMessages\PersonalMessages;
+use ManiaLivePlugins\eXpansion\Core\Config;
+
 class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public static $reply = array();
-    private $message;
+    private $message = array();
+
+    /** @var \ManiaLivePlugins\eXpansion\Core\Config */
+    private $config;
+
+    /** @var \ManiaLivePlugins\eXpansion\Core\i18n\Message */
+    private $msg_noLogin, $msg_noMessage, $msg_noReply, $msg_self;
+
+    public function exp_onLoad() {
+        $this->msg_noLogin = exp_getMessage('#personalmessage#Player with login "%1$s" is not found at server!');
+        $this->msg_noMessage = exp_getMessage("#personalmessage#No message to send to!");
+        $this->msg_noReply = exp_getMessage("#personalmessage#No one to reply back!");
+        $this->msg_self = exp_getMessage("#personalmessage#You can't send a message to yourself.");
+    }
 
     public function exp_onReady() {
         $this->enableDedicatedEvents();
-        $this->registerChatCommand("pmx", "sendPersonalMessage", -1, true);
+        $this->registerChatCommand("pm", "chatSendPersonalMessage", -1, true);
         $this->registerChatCommand("r", "sendReply", -1, true);
+        $admingroup = AdminGroups::getInstance();
+        $cmd = AdminGroups::addAdminCommand("chat", $this, "adminChat", "admin_chatChannel");
+        $admingroup->addShortAlias($cmd, "a");
+
+        $this->config = Config::getInstance();
 
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
@@ -29,6 +51,8 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Erase($login);
         if (isset(self::$reply[$login]))
             unset(self::$reply[$login]);
+        if (isset($this->message[$login]))
+            unset($this->message[$login]);
     }
 
     public function sendPersonalMessage($login, $message = "") {
@@ -36,10 +60,39 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $window->setController($this);
         $window->setTitle(__('Select Player to send message'));
         $window->setMessage($message);
-        $this->message = $message;
+        $this->message[$login][$login] = $message;
         $window->setSize(120, 100);
         $window->centerOnScreen();
         $window->show();
+    }
+
+    function chatSendPersonalMessage($login, $params) {
+        $message = explode(" ", $params);
+        $target = array_shift($message);
+        $message = implode(" ", $message);
+
+        try {
+            $color = '$z$s' . $this->config->Colors_personalmessage;
+            \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Erase($login);
+
+            if (!array_key_exists($target, $this->storage->players) && !array_key_exists($target, $this->storage->spectators)) {
+                $this->exp_chatSendServerMessage($this->msg_noLogin, $login, array($target));
+                return;
+            }
+            if ($login == $target) {
+                $this->exp_chatSendServerMessage($this->msg_self, $login, array($target));
+                return;
+            }
+            $targetPlayer = $this->storage->getPlayerObject($target);
+            $sourcePlayer = $this->storage->getPlayerObject($login);
+            self::$reply[$login] = $target;
+
+
+            $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $login);
+            $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $target);
+        } catch (\Exception $e) {
+            \ManiaLive\Utilities\Console::println("Error:" . $e->getMessage());
+        }
     }
 
     function sendPm($login, $target) {
@@ -48,9 +101,30 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $targetPlayer = $this->storage->getPlayerObject($target);
             $sourcePlayer = $this->storage->getPlayerObject($login);
             self::$reply[$login] = $target;
+            $color = '$z$s' . $this->config->Colors_personalmessage;
 
-            $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $this->message, $login);
-            $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $this->message, $target);
+            $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $this->message[$login], $login);
+            $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $this->message[$login], $target);
+        } catch (\Exception $e) {
+            \ManiaLive\Utilities\Console::println("Error:" . $e->getMessage());
+        }
+    }
+
+    function adminChat($login, $message) {
+        $message = implode(" ", $message);
+
+        $sourcePlayer = $this->storage->getPlayerObject($login);
+        $color = '$z$s' . $this->config->Colors_admingroup_chat;
+
+        try {
+            foreach ($this->storage->players as $reciever => $player) {
+                if (AdminGroups::hasPermission($reciever, "admin_chatChannel"))
+                    $this->connection->chatSendServerMessage($color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message, $reciever);
+            }
+            foreach ($this->storage->spectators as $reciever => $player) {
+                if (AdminGroups::hasPermission($reciever, "admin_chatChannel"))
+                    $this->connection->chatSendServerMessage($color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message, $reciever);
+            }
         } catch (\Exception $e) {
             \ManiaLive\Utilities\Console::println("Error:" . $e->getMessage());
         }
@@ -58,16 +132,17 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
     public function sendReply($login, $message) {
         try {
-            if (!isset($message)) {
-                $this->connection->chatSendServerMessage('$4bfNo message to send to', $login);
+            if (empty($message)) {
+                $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
             }
-            if (isset(self::$reply[$login])) {
+            if (array_key_exists($login, self::$reply)) {
                 $targetPlayer = $this->storage->getPlayerObject(self::$reply[$login]);
                 $sourcePlayer = $this->storage->getPlayerObject($login);
-                $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $message, $login);
-                $this->connection->chatSendServerMessage('$4bf' . $sourcePlayer->nickName . '$z$s$4bf->' . $targetPlayer->nickName . '$z$s$4bf : ' . $message, self::$reply[$login]);
+                $color = '$z$s' . $this->config->Colors_personalmessage;
+                $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $login);
+                $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, self::$reply[$login]);
             } else {
-                $this->connection->chatSendServerMessage('$4bfNo one to whisper back', $login);
+                $this->exp_chatSendServerMessage($this->msg_noReply, $login);
             }
         } catch (\Exception $e) {
             \ManiaLive\Utilities\Console::println("Error sending a reply" . $e->getMessage());
