@@ -33,23 +33,23 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         parent::exp_onLoad();
 
         $admingroup = AdminGroups::getInstance();
-        $cmd = AdminGroups::addAdminCommand('game ta', $this, 'support_fastTa', 'game_settings'); 
+        $cmd = AdminGroups::addAdminCommand('game ta', $this, 'support_fastTa', 'game_settings');
         $cmd->setHelp('/ta limit; Sets timelimit for TimeAttack');
         $admingroup->addShortAlias($cmd, 'ta');
-        
-        $cmd = AdminGroups::addAdminCommand('game laps', $this, 'support_fastLaps', 'game_settings'); 
+
+        $cmd = AdminGroups::addAdminCommand('game laps', $this, 'support_fastLaps', 'game_settings');
         $cmd->setHelp('/laps laps X; Sets Laps Limit');
         $admingroup->addShortAlias($cmd, 'laps');
 
-        $cmd = AdminGroups::addAdminCommand('game rounds', $this, 'support_fastRounds', 'game_settings'); 
+        $cmd = AdminGroups::addAdminCommand('game rounds', $this, 'support_fastRounds', 'game_settings');
         $cmd->setHelp('/rounds limit X; Sets PointLimit in Rounds');
         $admingroup->addShortAlias($cmd, 'rounds');
 
-        $cmd = AdminGroups::addAdminCommand('game cup', $this, 'support_fastCup', 'game_settings'); 
+        $cmd = AdminGroups::addAdminCommand('game cup', $this, 'support_fastCup', 'game_settings');
         $cmd->setHelp('/cup limit X; Sets CupRoundsLimit for Winner');
         $admingroup->addShortAlias($cmd, 'cup');
-        
-        $cmd = AdminGroups::addAdminCommand('game team', $this, 'support_fastTeam', 'game_settings'); 
+
+        $cmd = AdminGroups::addAdminCommand('game team', $this, 'support_fastTeam', 'game_settings');
         $cmd->setHelp('/team limit X; Sets Team PointLimit');
         $admingroup->addShortAlias($cmd, 'team');
 
@@ -1376,12 +1376,23 @@ Other server might use the same blacklist file!!');
         if ($statusCode == 6 && $this->dynamicTime > 0 && $this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
             $map = $this->connection->getNextMapInfo();
             $laps = $map->nbLaps;
-            if ($map->nbLaps == -1 || $map->nbLaps == 0)
+            if ($map->nbLaps <= 1) {
                 $laps = 1;
-            $newLimit = floor((int) $map->authorTime * (int) $this->dynamicTime);
+            }
+
+            $newLimit = floor((intval($map->authorTime) / intval($laps)) * floatval($this->dynamicTime));
+
+            $max = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM(\ManiaLivePlugins\eXpansion\Core\Config::getInstance()->time_dynamic_max);
+            $min = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM(\ManiaLivePlugins\eXpansion\Core\Config::getInstance()->time_dynamic_min);
+            if ($newLimit > $max) {
+                $newLimit = $max;
+            }
+            if ($newLimit < $min) {
+                $newLimit = $min;
+            }
 
             $this->connection->setTimeAttackLimit(intval($newLimit));
-            $this->exp_chatSendServerMessage('#admin_action#Dynamic time limit set for the challenge: #variable#' . \ManiaLive\Utilities\Time::fromTM($newLimit));
+            $this->exp_chatSendServerMessage('#admin_action#Dynamic time limit set to: #variable#' . \ManiaLive\Utilities\Time::fromTM($newLimit), null);
         }
     }
 

@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\MapRatings;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\RatingsWidget;
 use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\EndMapRatings;
+use ManiaLivePlugins\eXpansion\MapRatings\Structures\PlayerVote;
 
 class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -104,6 +105,28 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $out = array();
         foreach ($ratings as $rating) {
             $out[$rating->uid] = new Structures\Rating($rating->rating, $rating->ratingTotal);
+        }
+        return $out;
+    }
+
+    /**
+     * 
+     * @param null|string|\DedicatedApi\Structures\Map $uId
+     * @return PlayerVote[]
+     */
+    public function getVotesForMap($uId = null) {
+        if ($uId == null)
+            $uId = $this->storage->currentMap->uId;
+
+        if ($uId instanceof \DedicatedApi\Structures\Map)
+            $uId = $uid->uId;
+
+        $ratings = $this->db->query("SELECT login, rating FROM exp_ratings WHERE `uid` = " . $this->db->quote($uId) . ";")->fetchArrayOfAssoc();
+
+        $out = array();
+        foreach ($ratings as $data) {
+            $vote = PlayerVote::fromArray($data);
+            $out[$vote->login] = $vote;
         }
         return $out;
     }
@@ -248,9 +271,12 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function onEndMatch($rankings, $winnerTeamOrMap) {
         if ($this->config->showPodiumWindow) {
+            $ratings = $this->getVotesForMap(null);
             foreach ($this->storage->players as $login => $player) {
-                $widget = EndMapRatings::Create($login, true);
-                $widget->show();
+                if (!array_key_exists($login, $ratings)) {
+                    $widget = EndMapRatings::Create($login, true);
+                    $widget->show();
+                }
             }
         }
     }

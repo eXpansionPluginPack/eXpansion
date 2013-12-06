@@ -771,8 +771,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->exp_chatSendServerMessage($this->msg_errMxId, $login);
             }
         }
-    }
-
+    } 
 }
 
 ?>

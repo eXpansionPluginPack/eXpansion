@@ -9,7 +9,6 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $defaultLanguage = null;
     public $Colors_admin_error = '$f44';  // error message color for admin
     public $Colors_error = '$f00';   // general error message color
-
     public $Colors_admin_action = '$0ae'; // admin actions color
     public $Colors_variable = '$eee'; // generic variable color
     public $Colors_record = '$6EF'; // all other local records
@@ -26,6 +25,9 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $Colors_music = '$f0a';       // music box
     public $Colors_quiz = '$z$s$3e3';    // quiz
     public $Colors_question = '$z$s$o$fa0';  // quiz answer
+    
+    public $time_dynamic_max = '7:00';  // dynamic timelimit max time for /ta dynamic <x>
+    public $time_dynamic_min = '4:00';  // dynamic timelimit min time for /ta dynamic <x>
     
     public $API_Version = '2013-05-16'; //ApiVersion can be 2011-10-06 for TM and 2013-04-16 for SM Add in config 
 
