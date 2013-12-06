@@ -19,7 +19,7 @@ class MxMap extends \ManiaLive\Gui\Control {
     private $isAdmin;
 
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map, $controller, $isAdmin, $sizeX) {
-        $sizeY = 4;
+        $sizeY = 5.5;
         $this->isAdmin = $isAdmin;
         $id = $map->trackID;
         if (property_exists($map, "mapID"))
@@ -43,17 +43,18 @@ class MxMap extends \ManiaLive\Gui\Control {
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setAlign("center", "center2");
-        $spacer->setStyle("Icons128x128_1");
-        $spacer->setSubStyle("United");
-        $this->frame->addComponent($spacer);
+        /*
+          $spacer = new \ManiaLib\Gui\Elements\Quad();
+          $spacer->setSize(4, 4);
+          $spacer->setAlign("center", "center2");
+          $spacer->setStyle("Icons128x128_1");
+          $spacer->setSubStyle("United");
+          $this->frame->addComponent($spacer);
 
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        //$this->frame->addComponent($spacer);
+          $spacer = new \ManiaLib\Gui\Elements\Quad();
+          $spacer->setSize(4, 4);
+          $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+          //$this->frame->addComponent($spacer); */
 
         $this->label = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->label->setAlign('left', 'center');
@@ -90,16 +91,18 @@ class MxMap extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($spacer);
         $config = \ManiaLivePlugins\eXpansion\ManiaExchange\Config::getInstance();
         if ($config->mxVote_enable) {
-            $this->queueButton = new MyButton(24, 5);
+            $this->queueButton = new myButton(24, 5);
             $this->queueButton->setScale(0.5);
             $this->queueButton->setText(__("Queue"));
+            $this->queueButton->colorize("0d0");
             $this->queueButton->setAction($this->queueAction);
             $this->frame->addComponent($this->queueButton);
         }
         if ($this->isAdmin) {
-            $this->addButton = new MyButton(24, 5);
+            $this->addButton = new myButton(24, 5);
             $this->addButton->setScale(0.5);
             $this->addButton->setText(__("Install"));
+            $this->addButton->colorize("0d0");
             $this->addButton->setAction($this->addAction);
             $this->frame->addComponent($this->addButton);
         }
@@ -119,9 +122,9 @@ class MxMap extends \ManiaLive\Gui\Control {
 
     // override destroy method not to destroy its contents on manialive 3.1 
     function destroy() {
-       
+        
     }
-    
+
     /**
      * custom function to destroy contents when needed.
      */
