@@ -3,7 +3,6 @@
 namespace ManiaLivePlugins\eXpansion\MusicBox;
 
 use ManiaLive\Utilities\Console;
-use ManiaLivePlugins\eXpansion\MusicBox\Gui\Windows\MusicBoxWindow;
 use ManiaLivePlugins\eXpansion\MusicBox\Gui\Windows\CurrentTrackWidget;
 use ManiaLivePlugins\eXpansion\MusicBox\Gui\Windows\MusicListWindow;
 
@@ -27,10 +26,10 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         CurrentTrackWidget::$musicBoxPlugin = $this;
         Gui\Windows\MusicListWindow::$musicPlugin = $this;
 
-        $command = $this->registerChatCommand("musicbox", "mbox", 0, true);
-        $command = $this->registerChatCommand("musicbox", "mbox", 1, true);
-        $command = $this->registerChatCommand("mbox", "mbox", 0, true);
-        $command = $this->registerChatCommand("mbox", "mbox", 1, true);
+        $command = $this->registerChatCommand("music", "mbox", 0, true);
+        $command = $this->registerChatCommand("music", "mbox", 1, true);
+        $command = $this->registerChatCommand("mlist", "mbox", 0, true); // xaseco
+        $command = $this->registerChatCommand("mlist", "mbox", 1, true); // xaseco
     }
 
     function onUnload() {
@@ -39,18 +38,60 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         parent::onUnload();
     }
 
-    private function getMusicCsv() {
-        $f = fopen($this->config->url . "/index.csv", "r");
-        $array = array();
-        $keys = fgetcsv($f, 0, ";");
-        while (!feof($f)) {
-            $array[] = array_combine($keys, array_map('trim', fgetcsv($f, 0, ";")));
+    function download($url) {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Manialive/eXpansion MusicBox [getter] ver 0.1");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $data = curl_exec($ch);
+        $status = curl_getinfo($ch);
+        curl_close($ch);
+
+        if ($data === false) {
+            echo "Server is down";
+            return false;
         }
-        fclose($f);
+
+        if ($status["http_code"] !== 200) {
+            if ($status["http_code"] == 301) {
+                echo "Moved.";
+                return false;
+            }
+
+            echo "Http statuscode: " . $status["http_code"];
+            return false;
+        }
+        return $data;
+    }
+
+    function getMusicCsv() {
+
+
+        $data = $this->download(rtrim($this->config->url, "/") . "/index.csv");
+        if (!$data) {
+            die("error");
+        }
+        $data = explode("\n", $data);
+
+        $x = 0;
+        $keys = array();
+        $array = array();
+
+        foreach ($data as $line) {
+            $x++;
+            if (empty($line))
+                continue;
+            if ($x == 1) {
+                $keys = array_map(function($input) {
+                    return ltrim($input, "\xEF\xBB\xBF");
+                }, str_getcsv($line, ";"));
+                continue;
+            }
+            $array[] = array_combine($keys, array_map('trim', str_getcsv($line, ";")));
+        }
         return $array;
     }
 
-    /*     * "
+    /*
      * onReady()
      * Function called when ManiaLive is ready loading.
      *
@@ -63,7 +104,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             foreach ($this->getMusicCsv() as $music)
                 $this->songs[] = Structures\Song::fromArray($music);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('%server%MusicBox $fff»» %error%' . utf8_encode($e->getMessage()));
+            $this->connection->exp_chatSendServerMessage('MusicBox $fff»» #error#' . utf8_encode($e->getMessage()));
             echo $e->getMessage();
             $this->enabled = false;
         }
@@ -110,10 +151,10 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             $this->connection->setForcedMusic(true, $url);
             if ($wish) {
-                $text = exp_getMessage('#variable# %1$s - %2$s $z$s#music# is been played next requested by %3$s #variable#');
+                $text = exp_getMessage('#variable# %1$s#music# by#variable#  %2$s #music# is been played next requested by #variable# %3$s ');
                 $this->exp_chatSendServerMessage($text, null, array($song->title, $song->artist, \ManiaLib\Utils\Formatting::stripCodes($wish->player->nickName, "wos")));
             } else {
-                $text = exp_getMessage('#music#Next song: $z$s#variable# %1$s - %2$s');
+                $text = exp_getMessage('#music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s');
                 $this->exp_chatSendServerMessage($text, null, array($song->title, $song->artist));
             }
         } catch (\Exception $e) {
@@ -212,7 +253,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
         if (!is_numeric($number)) {  // check for numeric value
 // show error
-            $text = '%server%MusicBox $fff»» %error%Invalid songnumber!';
+            $text = '#music#MusicBox $fff»» #error#Invalid song number!';
             $this->exp_chatSendServerMessage($text, $login);
             return;
         }
@@ -221,13 +262,13 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 
         if (sizeof($this->songs) == 0) {
-            $text = '%server%MusicBox $fff»» %error%No songs at music MusicBox!';
+            $text = '#music#MusicBox $fff»» #error#No songs at music MusicBox!';
             $this->exp_chatSendServerMessage($text, $login);
             return;
         }
 
         if (!array_key_exists($number, $this->songs)) {
-            $text = '%server%MusicBox $fff»» %error%Number entered is not in music list';
+            $text = '#music#MusicBox $fff»» #error#Number entered is not in music list';
             $this->exp_chatSendServerMessage($text, $player);
             return;
         }
@@ -237,18 +278,17 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($wish->player == $player) {
                 unset($this->wishes[$id]);
                 $this->wishes[] = new Structures\Wish($song, $player);
-                $text = 'Dropped last entry and  #variable#' . $song->title . "by " . $song->artist . ' $z$s#music# is added to the MusicBox by #variable#' . \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos") . '.';
+                $text = 'Dropped last entry and  #variable#' . $song->title . "#mucic# by #variable#" . $song->artist . ' $z$s#music# is added to the MusicBox by #variable#' . \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos") . '.';
                 $this->exp_chatSendServerMessage($text, null);
                 return;
             }
         }
         $this->wishes[] = new Structures\Wish($song, $player);
-        $text = '#variable#' . $song->title . "by " . $song->artist . ' $z$s#music# is added to the MusicBox by #variable#' . \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos") . '.';
+        $text = '#variable#' . $song->title . " #music# by #variable#" . $song->artist . '#music# is added to the MusicBox by #variable#' . \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos") . '.';
         $this->exp_chatSendServerMessage($text, null);
     }
 
     function musicList($login) {
-        echo "tere!\n";
         try {
             $info = Gui\Windows\MusicListWindow::Create($login);
             $info->setSize(180, 90);

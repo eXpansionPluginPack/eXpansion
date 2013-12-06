@@ -4,8 +4,8 @@ namespace ManiaLivePlugins\eXpansion\MusicBox;
 
 class Config extends \ManiaLib\Utils\Singleton
 {
-public $url = "http://127.0.0.1/music";
+public $url = "http://reaby.kapsi.fi/ml/musictest";
 public $override = true;
-public $widgetPosition = "0,77";
+public $widgetPosition = "0,70";
 }
 ?>
