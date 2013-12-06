@@ -80,6 +80,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_neeMorPerm;
     private $msg_aInGroup;
     private $msg_paddSuc;
+    private $msg_paddFai;
     private $msg_premoveSelf;
     private $msg_pRemoveSuc;
     private $msg_pRemoveFa;
@@ -129,6 +130,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_neeMorPerm = exp_getMessage('#admin_error#You don\'t have the permission to use that admin command');
         $this->msg_aInGroup = exp_getMessage('#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first');
         $this->msg_paddSuc = exp_getMessage('#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s');
+        $this->msg_paddFai = exp_getMessage('#admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s');
         $this->msg_premoveSelf = exp_getMessage('#admin_error#Your are #variable#%1$s #admin_error#You can\'t remove yourself from a group');
         $this->msg_pRemoveSuc = exp_getMessage('#admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s');
         $this->msg_pRemoveFa = exp_getMessage('#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group');
@@ -224,9 +226,16 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function reLoadAdmins() {
-        $time = filemtime("config/" . $this->storage->serverLogin . "_admins.ini");
+        $filename = "config/" . $this->storage->serverLogin . "_admins.ini";
 
-        if ($time > $this->readTime) {
+        if (file_exists($filename) && is_readable($filename)) {
+            $time = filemtime($filename);
+
+            if ($time > $this->readTime) {
+                $this->loadAdmins();
+            }
+        } else {
+            touch($filename);
             $this->loadAdmins();
         }
     }
@@ -290,7 +299,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 }
             }
         } catch (\Exception $e) {
-            // silent exception handling for failed read
+            \ManiaLive\Utilities\Console::println("Error while loading admins from file: " . $e->getMessage());
         }
 
 
@@ -428,9 +437,20 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     $string .= "login[] = '" . $value->getLogin() . "'\n";
             }
         }
-        $status = file_put_contents("config/" . $this->storage->serverLogin . "_admins.ini", $string, LOCK_EX);
-        if ($status === false)
-            throw new \Exception("Writing the admingroups file at config/" . $this->storage->serverLogin . "_admins.ini FAILED. perhaps not enough permissions for folder & file ?");
+        $file = "config/" . $this->storage->serverLogin . "_admins.ini";
+        if (!file_exists($file)) {
+            if (touch($file) == false) {
+                throw new \Exception("Writing the admingroups file at " . $file . " FAILED. perhaps not enough permissions for folder & file ?");
+            }
+        }
+        if (!is_writable($file)) {
+            throw new \Exception("Writing the admingroups file at " . $file . " FAILED. perhaps not enough permissions for folder & file ?");
+        }
+        $status = file_put_contents($file, $string, LOCK_EX);
+
+        if ($status === false) {
+            throw new \Exception("Writing the admingroups file at " . $file . " FAILED. perhaps not enough permissions for folder & file ?");
+        }
     }
 
     /**
@@ -705,14 +725,24 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->exp_chatSendServerMessage($this->msg_aInGroup, $login, array($login2, $group->getGroupName()));
         } else {
             $this->reLoadAdmins();
-            $admin = new Admin($login2, $group);
-            self::$admins[$login2] = $admin;
-            $group->addAdmin($admin);
 
-            Dispatcher::dispatch(new Events\Event(Events\Event::ON_ADMIN_NEW, $login2));
 
-            $this->exp_chatSendServerMessage($this->msg_paddSuc, null, array($login2, $group->getGroupName()));
-            $this->saveFile();
+            $success = false;
+            foreach (self::$groupList as $id => $groupp) {
+                if ($groupp->getGroupName() == $group->getGroupName()) {
+                    $admin = new Admin($login2, $groupp);
+                    $groupp->addAdmin($admin);
+                    self::$admins[$login2] = $admin;
+                    $this->saveFile();
+                    $success = true;
+                    Dispatcher::dispatch(new Events\Event(Events\Event::ON_ADMIN_NEW, $login2));
+                    $this->exp_chatSendServerMessage($this->msg_paddSuc, null, array($login2, $group->getGroupName()));
+                    break;
+                }
+            }
+            if ($success == false) {
+                $this->exp_chatSendServerMessage($this->msg_paddFai, null, array($login2, $group->getGroupName()));
+            }
         }
     }
 
