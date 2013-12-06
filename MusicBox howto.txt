@@ -1,0 +1,36 @@
+Adding music to your server couldn't be easier!
+
+1. Create new folder for musics to be added your trackmania server c:\tm_music\
+2. Place music what you want to hear at server (.ogg files) to the folder
+3. unzip the MusicBoxManager.zip
+4. Run MusicBoxManager 
+5. select [File] --> [Import] 
+6. select your music folder (c:\tm_music)
+7. select [File] --> [Save]
+8. Upload your music folder to web provider (ftp, sftp, scp, whatever)
+
+9. test that the music files and index.csv are accessible by visiting your uploaded music folder..
+   (or see example of the files at http://reaby.kapsi.fi/ml/musictest)
+
+10. edit manialive config.ini 
+11. add following lines:
+
+manialive.plugins[] = 'eXpansion\MusicBox';
+ManiaLivePlugins\eXpansion\MusicBox\Config.url = 'http://reaby.kapsi.fi/ml/musictest';
+
+^^ replace the address with your music url folder,
+but you can use this to test that the plugin works.
+
+12. restart manialive
+
+incase you don't have windows or dont' want to run musicmanager you can create the music index
+file manually, see example at http://reaby.kapsi.fi/ml/musictest/index.csv
+
+You can edit easily the file with excel or openoffice calc
+
+
+
+
+
+
+
