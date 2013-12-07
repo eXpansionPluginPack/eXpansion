@@ -108,7 +108,7 @@ EOT;
         $this->registerChatCommand("info", "showInfo", 0, true);
         $window = new Gui\Windows\QuitWindow();
 
-        $this->connection->customizeQuitDialog($window->getXml(), "", true, 2500);
+        $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
         $this->onBeginMap(null, null, null);
     }
 
