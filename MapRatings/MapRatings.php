@@ -155,11 +155,12 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->db->execute($query);
             }
             $this->reload();
-            $this->displayWidget(null);
 
             if ($this->displayWidget) {
-                $msg = exp_getMessage('#rank#$iVote Registered!!');
-                $this->exp_chatSendServerMessage($msg, $login);
+                $this->displayWidget(null);
+                /* reaby disabled, no need to show vote registered text :/
+                  $msg = exp_getMessage('#rank#$iVote Registered!!');
+                  $this->exp_chatSendServerMessage($msg, $login); */
                 $this->sendRatingMsg($login, $rating);
             }
         } catch (\Exception $e) {

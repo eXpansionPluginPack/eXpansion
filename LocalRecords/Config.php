@@ -5,9 +5,9 @@ namespace ManiaLivePlugins\eXpansion\LocalRecords;
 class Config extends \ManiaLib\Utils\Singleton {
 
 
-    public $sendBeginMapNotices = true;
-    public $sendRankingNotices = true;
-    public $recordsCount = 30;
+    public $sendBeginMapNotices = false;
+    public $sendRankingNotices = false;
+    public $recordsCount = 100;
 
     public $lapsModeCount1lap = true;
 

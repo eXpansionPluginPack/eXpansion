@@ -242,7 +242,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
 	    if ($diff > $time) {
 		$this->time->setTextColor('00aa');
 		if ($playAudio) {
-		    $this->audio->setData("http://reaby.kapsi.fi/ml/ding.ogg");
+		    $this->audio->setData("http://reaby.kapsi.fi/ml/ding.ogg", true);
 		    $this->audio->autoPlay();
 		}
 	    }
