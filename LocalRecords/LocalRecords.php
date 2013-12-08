@@ -89,8 +89,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * All the messages need to be sent;
      * @var Message
      */
-    private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, $msg_noPB, $msg_showRank, $msg_noRank, $msg_secure_top1, $msg_secure_top5, $msg_new_top1, $msg_new_top5, $msg_improved_top1, $msg_improved_top5;
-    public static $txt_rank, $txt_nick, $txt_score, $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
+    private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest, 
+            $msg_noPB, $msg_showRank, $msg_noRank, $msg_secure_top1, $msg_secure_top5, $msg_new_top1, 
+            $msg_new_top5, $msg_improved_top1, $msg_improved_top5;
+    public static $txt_rank, $txt_nick, $txt_score, $txt_sector, $txt_cp,
+            $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
     function exp_onInit() {
 	//Activating debug for records only
@@ -152,6 +155,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	self::$txt_rank = exp_getMessage("#");
 	self::$txt_nick = exp_getMessage("NickName");
 	self::$txt_score = exp_getMessage("Score");
+	self::$txt_sector = exp_getMessage("Sector");
+	self::$txt_cp = exp_getMessage("CheckPoint Times");
 	self::$txt_avgScore = exp_getMessage("Average Score");
 	self::$txt_nbFinish = exp_getMessage("Finishes");
 	self::$txt_wins = exp_getMessage("Nb Wins");
@@ -166,15 +171,25 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	//List of all records
 	$cmd = $this->registerChatCommand("recs", "showRecsWindow", 0, true);
 	$cmd->help = 'Show Records Window';
+    
 	//Top 100 ranked players
 	$cmd = $this->registerChatCommand("top100", "showRanksWindow", 0, true);
 	$cmd->help = 'Show Server Ranks Window';
+    
 	$cmd = $this->registerChatCommand("ranks", "showRanksWindow", 0, true);
 	$cmd->help = 'Show Server Ranks Window';
+    
 	$cmd = $this->registerChatCommand("rank", "chat_showRank", 0, true);
 	$cmd->help = 'Show Player Rank';
+    
 	$cmd = $this->registerChatCommand("pb", "chat_personalBest", 0, true);
 	$cmd->help = 'Show Player Personal Best';
+    
+    $cmd = $this->registerChatCommand("cps", "showCpWindow", 0, true);
+	$cmd->help = 'Show Checkpoint times';
+    
+    $cmd = $this->registerChatCommand("sectors", "showSectorWindow", 0, true);
+	$cmd->help = 'Show Players Best Sector times';
     }
 
     public function exp_onReady() {
@@ -1018,6 +1033,78 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$window->setSize(140, 100);
 	$window->show();
     }
+    
+    public function showCpWindow($login){
+        Gui\Windows\Ranks::Erase($login);
+
+        $window = Gui\Windows\Cps::Create($login);
+        $window->setTitle(__('CheckPoints on Map', $login));    
+        $window->setSize(200, 100);
+        $window->populateList($this->currentChallengeRecords, 100);
+        $window->centerOnScreen();
+        $window->show();
+    }
+    
+    public function showSectorWindow($login){
+        
+        $secs = array();
+        foreach($this->currentChallengeRecords as $rec){
+            for($i = 0; $i<sizeof($rec->ScoreCheckpoints)-1; $i++){
+                $secs[$i][] = array('sectorTime' => $rec->ScoreCheckpoints[$i+1] - $rec->ScoreCheckpoints[$i], 
+                                'recordObj' => $rec);
+            }
+        }
+        
+        $sectors = array();
+        $i = 0;
+        foreach($secs as $sec){
+            $sectors[$i] = $this->array_sort($sec, 'sectorTime');
+            $i++;
+        }
+        
+        $window = Gui\Windows\Sector::Create($login);
+        $window->setTitle(__('Sector Times on Map', $login));
+        $window->populateList($sectors, 100);
+        $window->setSize(160, 100);
+        $window->centerOnScreen();
+        $window->show();
+
+    }
+    
+    private function array_sort($array, $on, $order=SORT_ASC)
+    {
+        $new_array = array();
+        $sortable_array = array();
+
+        if (count($array) > 0) {
+            foreach ($array as $k => $v) {
+                if (is_array($v)) {
+                    foreach ($v as $k2 => $v2) {
+                        if ($k2 == $on) {
+                            $sortable_array[$k] = $v2;
+                        }
+                    }
+                } else {
+                    $sortable_array[$k] = $v;
+                }
+            }
+
+            switch ($order) {
+                case SORT_ASC:
+                    asort($sortable_array);
+                break;
+                case SORT_DESC:
+                    arsort($sortable_array);
+                break;
+            }
+
+            foreach ($sortable_array as $k => $v) {
+                $new_array[$k] = $array[$k];
+            }
+        }
+
+        return $new_array;
+}
 
     /**
      * Ranks of all players online on the server
