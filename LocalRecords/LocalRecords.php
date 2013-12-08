@@ -1061,8 +1061,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         
         $secs = array();
         foreach($this->currentChallengeRecords as $rec){
-            for($i = 0; $i<sizeof($rec->ScoreCheckpoints)-1; $i++){
-                $secs[$i][] = array('sectorTime' => $rec->ScoreCheckpoints[$i+1] - $rec->ScoreCheckpoints[$i], 
+            for($i = 0; $i<sizeof($rec->ScoreCheckpoints); $i++){
+                $old = $i == 0 ? 0 :  $rec->ScoreCheckpoints[$i-1];
+                $secs[$i][] = array('sectorTime' => $rec->ScoreCheckpoints[$i] - $rec->ScoreCheckpoints[$i-1], 
                                 'recordObj' => $rec);
             }
         }

@@ -64,9 +64,9 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function onShow() {
-        $this->label_sector->setText(__(LocalRecords::$txt_rank, $this->getRecipient()));
+        $this->label_sector->setText(__(LocalRecords::$txt_sector, $this->getRecipient()));
         for($i = 0; $i<self::$nbResult; $i++){
-            $this->label_pos[$i]->setText(__(LocalRecords::$txt_sector)."#".($i+1));
+            $this->label_pos[$i]->setText(__(LocalRecords::$txt_ptime)."#".($i+1));
         }
     }
 
