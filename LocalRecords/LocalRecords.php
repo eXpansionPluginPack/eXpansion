@@ -1070,7 +1070,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             
             $secs = array();
             
-            foreach ($this->currentChallangeSectorTimes as $rec)
+            foreach ($this->currentChallengePlayerRecords as $rec)
                 for($cpt = 0; $cpt < sizeof($this->currentChallangeSectorsCps); $cpt++){
                     $currentIndex = $this->currentChallangeSectorsCps[$cpt] - 1;
                     $prevIndex = $cpt == 0 ? -1 : $this->currentChallangeSectorsCps[$cpt-1] - 1;
