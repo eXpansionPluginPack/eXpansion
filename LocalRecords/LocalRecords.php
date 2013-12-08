@@ -1051,8 +1051,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $window = Gui\Windows\Cps::Create($login);
         $window->setTitle(__('CheckPoints on Map', $login));    
-        $window->setSize(200, 100);
         $window->populateList($this->currentChallengeRecords, 100);
+        $window->setSize(200, 100);
         $window->centerOnScreen();
         $window->show();
     }
