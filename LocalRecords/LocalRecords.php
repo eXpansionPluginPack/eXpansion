@@ -487,6 +487,18 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$button["plugin"] = $this;
 	$button["function"] = "showRanksWindow";
 	$menu->addButton($parent, "Local Ranks", $button);
+    
+    $button["style"] = "Icons128x128_1";
+	$button["substyle"] = "Race";
+	$button["plugin"] = $this;
+	$button["function"] = "showCpWindow";
+	$menu->addButton($parent, "Best CheckPoints", $button);
+    
+    $button["style"] = "Icons128x128_1";
+	$button["substyle"] = "Platform";
+	$button["plugin"] = $this;
+	$button["function"] = "showSectorWindow";
+	$menu->addButton($parent, "Best Sector Times", $button);
     }
 
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
