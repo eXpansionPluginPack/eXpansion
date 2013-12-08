@@ -86,8 +86,8 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         $login = $this->getRecipient();
 
-        while ($x < $limit && $x < sizeof($recs)) {
-            $this->items[$x] = new SecItem($x, $login, $recs[$x], $this->widths);
+        foreach($recs as $rec){
+            $this->items[$x] = new SecItem($x, $login, $rec, $this->widths);
             $this->pager->addItem($this->items[$x]);
             $x++;
         }

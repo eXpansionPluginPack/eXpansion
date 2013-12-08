@@ -35,16 +35,19 @@ class SecItem extends \ManiaLive\Gui\Control {
         $this->label_rank->setScale(0.8);
         $this->label_rank->setText(($indexNumber + 1) . ".");
         $this->frame->addComponent($this->label_rank);
-
-        for($i = 0; $i<  Sector::$nbResult; $i++){
+        
+        $i = 0;
+        foreach($rank as $sector){
             $this->label_nick[$i] = new \ManiaLib\Gui\Elements\Label(10., 4);
             $this->label_nick[$i]->setAlign('left', 'center');
             $this->label_nick[$i]->setScale(0.8);
-            if(isset($rank[$i])){
-                $time = \ManiaLive\Utilities\Time::fromTM($rank[$i]['sectorTime']);
-                $this->label_nick[$i]->setText('('.$time.')'. $rank[$i]['recordObj']->nickName.' ');
+            if($i <  Sector::$nbResult){
+                $time = \ManiaLive\Utilities\Time::fromTM($sector['sectorTime']);
+                $this->label_nick[$i]->setText('('.$time.')'. $sector['recordObj']->nickName.' ');
             }
             $this->frame->addComponent($this->label_nick[$i]);
+            $i++;
+            
         }
        
     }
@@ -55,7 +58,8 @@ class SecItem extends \ManiaLive\Gui\Control {
         $this->label_rank->setSizeX($scaledSizes[0]);
         
         for($i = 0; $i<  Sector::$nbResult; $i++){
-            $this->label_nick[$i]->setSizeX($scaledSizes[1]-2);
+            if(isset($this->label_nick[$i]))
+                $this->label_nick[$i]->setSizeX($scaledSizes[1]-2);
         }
         
     }
