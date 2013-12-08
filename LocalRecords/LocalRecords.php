@@ -1075,9 +1075,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     $currentIndex = $this->currentChallangeSectorsCps[$cpt] - 1;
                     $prevIndex = $cpt == 0 ? -1 : $this->currentChallangeSectorsCps[$cpt-1] - 1;
                     
-                    $old = ($prevIndex < 0) ? 0 : (isset($rec->ScoreCheckpoints[$prevIndex]) ? $rec->ScoreCheckpoints[$prevIndex] : 0);
-                    $secs[$cpt][] = array('sectorTime' => $rec->ScoreCheckpoints[$currentIndex] - $old, 
-                        'recordObj' => $rec);
+                    if(isset($rec->ScoreCheckpoints[$currentIndex])){
+                        $old = ($prevIndex < 0) ? 0 : (isset($rec->ScoreCheckpoints[$prevIndex]) ? $rec->ScoreCheckpoints[$prevIndex] : 0);
+                        $secs[$cpt][] = array('sectorTime' => $rec->ScoreCheckpoints[$currentIndex] - $old, 
+                            'recordObj' => $rec);
+                    }
                 }
 
             $i = 0;
