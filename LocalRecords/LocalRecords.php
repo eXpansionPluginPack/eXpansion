@@ -246,25 +246,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Records'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
         }
-        /* $maxTime = 60;
-          $minTime = 10;
-          $nbTime = 1000;
-          for($i=0; $i<$nbTime; $i++){
-          $mtime = microtime();
 
-          $time = ($maxTime-((($maxTime - $minTime)/$nbTime)*$i))*1000;
-
-          $this->addRecord('test_'.$i, $time, 1, array());
-
-          $mtime = (microtime() - $mtime);
-          echo "\nNEW RANK IN : ".$mtime."ms BAD?\n";
-          }
-
-          $this->addRecord('test_981', 31000, 1, array());
-          $this->addRecord('test_900', 32000, 1, array());
-          $this->addRecord('test_970', 31100, 1, array());
-          $this->addRecord('test_971', 31200, 1, array());
-          $this->addRecord('test_974', 30200, 1, array()); */
         $this->getRanks();
         $this->updateCurrentChallengeRecords();
     }
@@ -509,6 +491,31 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["plugin"] = $this;
         $button["function"] = "showSectorWindow";
         $menu->addButton($parent, "Best Sector Times", $button);
+        
+        $parent = $menu->findButton(array("admin", "Server Options"));
+        if (!$parent) {
+            $button["style"] = "Icons128x128_1";
+            $button["substyle"] = "Options";
+            $button["plugin"] = $this;
+            $parent = $menu->addButton("admin", "Server Options", $button);
+            unset($button["style"]);
+        }
+        
+        $parent2 = $menu->findButton(array("admin", "Server Options", "Other Options"));
+        if (!$parent2) {
+            $button["style"] = "Icons128x128_1";
+            $button["substyle"] = "Options";
+            $button["plugin"] = $this;
+            $parent2 = $menu->addButton($parent, "Other Options", $button);
+            unset($button["style"]);
+        }
+        
+        $button["style"] = "Icons64x64_1";
+        $button["substyle"] = "Save";
+        $button["plugin"] = $this;
+        $button["function"] = "chat_forceSave"; 
+        $button["permission"] = "records_save";
+        $menu->addButton($parent2, "Save Records", $button);
     }
 
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
