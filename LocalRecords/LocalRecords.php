@@ -4,10 +4,13 @@ namespace ManiaLivePlugins\eXpansion\LocalRecords;
 
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Utilities\Console;
+
 use ManiaLivePlugins\eXpansion\Core\i18n\Message;
 use \ManiaLivePlugins\eXpansion\LocalRecords\Config;
 use \ManiaLivePlugins\eXpansion\LocalRecords\Events\Event;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
+
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -94,7 +97,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest,
             $msg_noPB, $msg_showRank, $msg_noRank, $msg_secure_top1, $msg_secure_top5, $msg_new_top1,
-            $msg_new_top5, $msg_improved_top1, $msg_improved_top5;
+            $msg_new_top5, $msg_improved_top1, $msg_improved_top5, $msg_admin_savedRecs;
     public static $txt_rank, $txt_nick, $txt_score, $txt_sector, $txt_cp,
             $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
@@ -154,6 +157,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_noPB = exp_getMessage($this->config->msg_noPB);
         $this->msg_showRank = exp_getMessage($this->config->msg_showRank);
         $this->msg_noRank = exp_getMessage($this->config->msg_noRank);
+        $this->msg_admin_savedRecs = exp_getMessage('#admin_action#Records saved sucessfully into the database');
 
         self::$txt_rank = exp_getMessage("#");
         self::$txt_nick = exp_getMessage("NickName");
@@ -193,6 +197,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $cmd = $this->registerChatCommand("sectors", "showSectorWindow", 0, true);
         $cmd->help = 'Show Players Best Sector times';
+        
+        $cmd = AdminGroups::addAdminCommand("saverecs", $this, "chat_forceSave", "records_save");
+        $cmd->setHelp("Will force the save of the records changes in the Database");
     }
 
     public function exp_onReady() {
@@ -1398,6 +1405,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->exp_chatSendServerMessage($this->msg_personalBest, $login, array($time, $place, $avg, $record->nbFinish));
             }
         }
+    }
+    
+    public function chat_forceSave($login){
+        $this->onEndMatch(array(), array());
+        $this->exp_chatSendServerMessage($this->msg_admin_savedRecs, $login);
     }
 
     /**
