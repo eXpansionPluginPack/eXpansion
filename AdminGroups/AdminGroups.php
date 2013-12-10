@@ -760,8 +760,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->exp_chatSendServerMessage($this->msg_removeMlAdmin, $login, array($admin->getLogin()));
         } else if (isset(self::$admins[$login]) && $group->removeAdmin($admin->getLogin())) {
             $this->reLoadAdmins();
-
-            $group->removeAdmin($admin->getLogin());
+            
+            foreach (self::$groupList as $id => $groupp) {
+                if ($groupp->getGroupName() == $group->getGroupName()) {
+                    $groupp->removeAdmin($admin->getLogin());
+                }
+            }
             unset(self::$admins[$admin->getLogin()]);
             Dispatcher::dispatch(new Events\Event(Events\Event::ON_ADMIN_REMOVED, $admin->getLogin()));
             $this->exp_chatSendServerMessage($this->msg_pRemoveSuc, null, array($admin->getLogin(), $group->getGroupName()));
@@ -819,8 +823,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } else {
             $this->reLoadAdmins();
 
-            foreach ($newPermissions as $key => $val) {
-                $group->addPermission($key, $val);
+            foreach (self::$groupList as $id => $groupp) {
+                if ($groupp->getGroupName() == $group->getGroupName()) {
+                    foreach ($newPermissions as $key => $val) {
+                        $groupp->addPermission($key, $val);
+                    }
+                        }
             }
 
             $this->saveFile();
@@ -840,12 +848,14 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } else {
             $this->reLoadAdmins();
 
-            $group->resetInherits();
-
-            foreach ($newHeritances as $val) {
-                $group->addInherits($val);
+            foreach (self::$groupList as $id => $groupp) {
+                if ($groupp->getGroupName() == $group->getGroupName()) {
+                    $groupp->resetInherits();
+                    foreach ($newHeritances as $val) {
+                        $groupp->addInherits($val);
+                    }
+                }
             }
-
             $this->saveFile();
         }
     }
