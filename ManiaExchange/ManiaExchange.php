@@ -21,6 +21,9 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /** @var \ManiaLivePlugins\eXpansion\Core\i18n\Message */
     private $msg_add;
 
+    /** @var \ManiaLivePlugins\eXpansion\Core\DataAccess */
+    private $dataAccess;
+
     public function exp_onInit() {
         $this->config = Config::getInstance();
 
@@ -36,7 +39,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onReady() {
-
+        $this->dataAccess = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
         $this->registerChatCommand("mx", "chatMX", 2, true);
         $this->registerChatCommand("mx", "chatMX", 1, true);
 
@@ -159,23 +162,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
             return;
         }
-
-        try {
-            $file = $this->download($mxId, $login);
-            if ($file === false) {
-                throw new Exception("Map filename is empty!");
-            }
-
-            $this->connection->addMap($file);
-
-            $map = $this->connection->getMapInfo($file);
-            $this->exp_chatSendServerMessage($this->msg_add, null, array($map->name));
-            if ($this->config->juke_newmaps) {
-                $this->callPublicMethod("eXpansion\Maps", "queueMap", $login, $map, false);
-            }
-        } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
-        }
+        $this->download($mxId, $login, "xAddMapAdmin");
     }
 
     /**
@@ -185,7 +172,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return string
      * @throws Exception
      */
-    function download($mxId, $login) {
+    function download($mxId, $login, $redirect) {
         if (!is_numeric($mxId)) {
             $this->connection->chatSendServerMessage(__('"%s" is not a numeric value.', $login, $mxId), $login);
             return false;
@@ -207,27 +194,55 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } else {
             $query = 'http://tm.mania-exchange.com/tracks/download/' . $mxId;
         }
+        $this->exp_chatSendServerMessage("Download starting for: $mxId", $login);
+        $this->dataAccess->httpGet($query, array($this, $redirect), array($login, $mxId), "Manialive/eXpansion MXapi [getter] ver 0.1", "application/json");
+    }
 
-        $ch = curl_init($query);
-        curl_setopt($ch, CURLOPT_USERAGENT, "Manialive/eXpansion MXapi [getter] ver 0.1");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $data = curl_exec($ch);
-        $status = curl_getinfo($ch);
-        curl_close($ch);
-
-        if ($data === false) {
-            $this->connection->chatSendServerMessage(__('MX is down'), $login);
-            return false;
-        }
-
-        if ($status["http_code"] !== 200) {
-            if ($status["http_code"] == 301) {
-                $this->connection->chatSendServerMessage(__('Map not found for id %s', $login, $mxId), $login);
-                return false;
+    function xAddMapAdmin($data, $code, $login, $mxId) {
+        if ($code !== 200) {
+            if ($code == 302) {
+                $this->exp_chatSendServerMessage("Map author has declined the permission to download this map!", $login);
+                return;
             }
+            $this->exp_chatSendServerMessage("MX returned error code $code", $login);
+            return;
+        }
+        /** @var \DedicatedApi\Structures\Version */
+        $game = $this->connection->getVersion();
 
-            $this->connection->chatSendServerMessage(__('MX returned http error code: %s', $login, $status["http_code"]), $login);
-            return false;
+        $maps = $this->connection->getMapsDirectory();
+        $dir = $maps . "/Downloaded/" . $game->titleId;
+        $file = $dir . "/" . $mxId . ".Map.Gbx";
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0775);
+        }
+        if ($this->dataAccess->save($file, $data)) {
+
+            try {
+                $this->connection->addMap($file);
+
+                $map = $this->connection->getMapInfo($file);
+                $this->exp_chatSendServerMessage($this->msg_add, null, array($map->name));
+                if ($this->config->juke_newmaps) {
+                    $this->callPublicMethod("eXpansion\Maps", "queueMap", $login, $map, false);
+                }
+            } catch (\Exception $e) {
+                $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
+            }
+        } else {
+            $this->exp_chatSendServerMessage("Error while saving a map file.", $login);
+        }
+    }
+
+    function xQueue($data, $code, $login, $mxId) {
+        if ($code !== 200) {
+            if ($code == 302) {
+                $this->exp_chatSendServerMessage("Map author has declined the permission to download this map!", $login);
+                return;
+            }
+            $this->exp_chatSendServerMessage("MX returned error code $code", $login);
+            return;
         }
         /** @var \DedicatedApi\Structures\Version */
         $game = $this->connection->getVersion();
@@ -240,13 +255,9 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             mkdir($dir, 0775);
         }
 
-        if (!touch($file)) {
-            $this->connection->chatSendServerMessage(__("Couldn't create mapfile in maps folder, check folder permissions!"), $login);
-            return false;
+        if ($this->dataAccess->save($file, $data)) {
+            $this->callPublicMethod('eXpansion\\Maps', 'queueMxMap', $login, $file);
         }
-
-        file_put_contents($file, $data);
-        return $file;
     }
 
     function mxVote($login, $mxId) {
@@ -272,70 +283,64 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         }
 
-        try {
-            if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
+        if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
 
-                $query = "";
-                switch ($this->titleId) {
-                    case "SMStorm":
-                    case "SMStormCombo@nadeolabs":
-                    case "SMStormRoyal@nadeolabs":
-                    case "SMStormElite@nadeolabs":
-                    case "SMStormJoust@nadeolabs":
-                        $query = 'http://sm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
-                        break;
-                    default:
-                        $query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
-                        break;
-                }
-            } else {
-                $query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
+            $query = "";
+            switch ($this->titleId) {
+                case "SMStorm":
+                case "SMStormCombo@nadeolabs":
+                case "SMStormRoyal@nadeolabs":
+                case "SMStormElite@nadeolabs":
+                case "SMStormJoust@nadeolabs":
+                    $query = 'http://sm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
+                    break;
+                default:
+                    $query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
+                    break;
             }
-
-
-            $ch = curl_init($query);
-            curl_setopt($ch, CURLOPT_USERAGENT, "Manialive/eXpansion MXapi [getter] ver 0.1");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $data = curl_exec($ch);
-            $status = curl_getinfo($ch);
-            curl_close($ch);
-            $map = json_decode($data, true);
-
-            if (!$map) {
-                $this->connection->chatSendServerMessage(__('Unable to retrieve track info from MX..  wrong ID..?'), $login);
-                return;
-            }
-
-            $version = $this->connection->getVersion();
-
-            if (strtolower(substr($version->titleId, 2)) != strtolower($map['EnvironmentName'])) {
-                $this->connection->chatSendServerMessage(__('Wrong environment!'), $login);
-                return;
-            }
-
-            $this->vote = array();
-            $this->vote['login'] = $login;
-            $this->vote['mxId'] = $mxId;
-
-            $vote = new \DedicatedApi\Structures\Vote();
-            $vote->callerLogin = $login;
-            $vote->cmdName = '$0f0add $fff$o' . $map['Name'] . '$o$0f0 by $eee' . $map['Username'] . ' $0f0';
-            $vote->cmdParam = array('to the queue from MX?$3f3');
-            $this->connection->callVote($vote, $this->config->mxVote_ratio, ($this->config->mxVote_timeout * 1000), $this->config->mxVote_voters);
-        } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
+        } else {
+            $query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
         }
+
+        $access->httpGet($query, Array($this, "xVote"), array($login, $mxId), "Manialive/eXpansion MXapi [search] ver 0.1", "application/json");
+    }
+
+    function xVote($data, $code, $login, $mxId) {
+        if ($code !== 200) {
+            if ($code == 302) {
+                $this->exp_chatSendServerMessage("Map author has declined the permission to download this map!", $login);
+                return;
+            }
+            $this->exp_chatSendServerMessage("Mx error: $code", $login);
+            return;
+        }
+        $map = json_decode($data, true);
+
+        if (!$map) {
+            $this->connection->chatSendServerMessage(__('Unable to retrieve track info from MX..  wrong ID..?'), $login);
+            return;
+        }
+
+        $version = $this->connection->getVersion();
+
+        if (strtolower(substr($version->titleId, 2)) != strtolower($map['EnvironmentName'])) {
+            $this->connection->chatSendServerMessage(__('Wrong environment!'), $login);
+            return;
+        }
+
+        $this->vote = array();
+        $this->vote['login'] = $login;
+        $this->vote['mxId'] = $mxId;
+
+        $vote = new \DedicatedApi\Structures\Vote();
+        $vote->callerLogin = $login;
+        $vote->cmdName = '$0f0add $fff$o' . $map['Name'] . '$o$0f0 by $eee' . $map['Username'] . ' $0f0';
+        $vote->cmdParam = array('to the queue from MX?$3f3');
+        $this->connection->callVote($vote, $this->config->mxVote_ratio, ($this->config->mxVote_timeout * 1000), $this->config->mxVote_voters);
     }
 
     function mxQueue($login, $mxId) {
-        try {
-            $file = $this->download($mxId, $login);
-            if ($file !== false) {
-                $this->callPublicMethod('eXpansion\\Maps', 'queueMxMap', $login, $file);
-            }
-        } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
-        }
+        $this->download($mxId, $login, "xQueue");
     }
 
     function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {

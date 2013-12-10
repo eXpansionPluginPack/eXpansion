@@ -112,7 +112,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function search($login, $trackname = "", $author = "", $style = null, $length = null) {
-        
+
         if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
             $script = $this->connection->getModeScriptInfo();
             $query = "";
@@ -162,27 +162,36 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 $out = "";
             $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0&environments=' . $env . '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . $out . '&mtype=All&priord=2&limit=100&tracksearch&api=on&format=json';
         }
+        /*
+          $ch = curl_init($query);
+          curl_setopt($ch, CURLOPT_USERAGENT, "Manialive/eXpansion MXapi [search] ver 0.1");
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          $data = curl_exec($ch);
+          $status = curl_getinfo($ch);
+          curl_close($ch);
 
-        $ch = curl_init($query);
-        curl_setopt($ch, CURLOPT_USERAGENT, "Manialive/eXpansion MXapi [search] ver 0.1");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $data = curl_exec($ch);
-        $status = curl_getinfo($ch);
-        curl_close($ch);
+          if ($data === false) {
+          $this->connection->chatSendServerMessage('$f00$oError $z$s$fff MX is down', $login);
+          return;
+          }
 
-        if ($data === false) {
-            $this->connection->chatSendServerMessage('$f00$oError $z$s$fff MX is down', $login);
+          if ($status["http_code"] !== 200) {
+          $this->connection->chatSendServerMessage('$f00$oError $z$s$fff MX returned http error code:' . $status["http_code"], $login);
+          return;
+          }
+         */
+        $access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
+        $access->httpGet($query, Array($this, "xSearch"), null, "Manialive/eXpansion MXapi [search] ver 0.1", "application/json");
+        if ($length !== null)
+            $this->lenght->setSelected(intval($length) + 1);
+        if ($style !== null)
+            $this->style->setSelected(intval($style));
+        return;
+    }
+
+    function xSearch($data) {
+        if (!$data)
             return;
-        }
-
-        if ($status["http_code"] !== 200) {
-            $this->connection->chatSendServerMessage('$f00$oError $z$s$fff MX returned http error code:' . $status["http_code"], $login);
-            return;
-        }
-
-
-        //print_r(json_decode($json, true));
-
         $this->maps = Map::fromArrayOfArray(json_decode($data, true));
 
         foreach ($this->items as $item)
@@ -200,10 +209,6 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
-        if ($length !== null)
-            $this->lenght->setSelected(intval($length) + 1);
-        if ($style !== null)
-            $this->style->setSelected(intval($style));
 
         $this->redraw();
     }

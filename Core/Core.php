@@ -34,7 +34,7 @@ class Core extends types\ExpPlugin {
         $this->connection->chatSendServerMessage('$fffStarting e$a00X$fffpansion v. ' . $this->getVersion());
         $config = Config::getInstance();
         i18n::getInstance()->start();
-
+        DataAccess::getInstance()->start();
         $this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_BEGIN_MAP);
 
         $expansion = <<<'EOT'
