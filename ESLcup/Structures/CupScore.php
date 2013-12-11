@@ -13,7 +13,7 @@ class CupScore extends \DedicatedApi\Structures\AbstractStructure {
     public $player;
 
     /** @var string */
-    public $login, $nickname;
+    public $login, $nickName;
 
     /** @var integer */
     public $score, $playerId;
@@ -25,7 +25,7 @@ class CupScore extends \DedicatedApi\Structures\AbstractStructure {
     public function __construct($playerId, $login, $nickname, $score) {
         $this->playerId = $playerId;
         $this->login = $login;
-        $this->nickname = $nickname;
+        $this->nickName = $nickname;
         $this->score = $score;
     }
 

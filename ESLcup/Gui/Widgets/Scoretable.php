@@ -9,12 +9,22 @@ namespace ManiaLivePlugins\eXpansion\ESLcup\Gui\Widgets;
  */
 class Scoretable extends \ManiaLive\Gui\Window {
 
-    protected $background, $rankingslabel, $pointslimit, $gamemode;
+    protected $background, $rankingslabel, $pointslimit, $gamemode, $next, $prev;
     protected $frame;
+    private $page = 0;
+    private $itemsOnPage = 16;
+    private $scores = array();
+    private $limit = -1;
+    private $winners = array();
+    private $actionNext;
+    private $actionPrev;
 
     protected function onConstruct() {
         $this->sizeX = 165;
         $this->sizeY = 90;
+
+        $this->actionNext = $this->createAction(array($this, "next"));
+        $this->actionPrev = $this->createAction(array($this, "prev"));
 
         $this->background = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->background->setStyle("Bgs1InRace");
@@ -26,7 +36,7 @@ class Scoretable extends \ManiaLive\Gui\Window {
         $this->rankingslabel->setText(__("Score Rankings"));
         $this->rankingslabel->setTextColor("fff");
         $this->rankingslabel->setTextSize(4);
-        $this->rankingslabel->setPosition($this->sizeX / 2, 2);
+        $this->rankingslabel->setPosition($this->sizeX / 2, 3);
         $this->rankingslabel->setAlign("center");
         $this->addComponent($this->rankingslabel);
 
@@ -45,32 +55,83 @@ class Scoretable extends \ManiaLive\Gui\Window {
         $this->gamemode->setAlign("center");
         $this->addComponent($this->gamemode);
 
+        $this->next = new \ManiaLib\Gui\Elements\Quad(8, 8);
+        $this->next->setAction($this->actionNext);
+        $this->next->setStyle("Icons64x64_1");
+        $this->next->setSubStyle("ArrowNext");
+        $this->next->setPosition($this->sizeX - 9, 5);
+        $this->addComponent($this->next);
+
+        $this->prev = new \ManiaLib\Gui\Elements\Quad(8, 8);
+        $this->prev->setAction($this->actionPrev);
+        $this->prev->setStyle("Icons64x64_1");
+        $this->prev->setSubStyle("ArrowPrev");
+        $this->prev->setPosition($this->sizeX - 16, 5);
+        $this->addComponent($this->prev);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\VerticalFlow());
         $this->frame->setSize(120, 80);
-        $this->frame->setPosition(2, -2);
+        $this->frame->setPosition(2, -3);
         $this->addComponent($this->frame);
     }
 
-    public function populate($scores, $limit, $winners) {
-        $this->pointslimit->setText('$sPoints Limit: ' . $limit);
+    public function next($login) {
+
+        $newstart = ($this->page + 1) * $this->itemsOnPage;
+        if ($newstart < count($this->scores)) {
+            $this->page++;
+        }
+
+        $this->redraw($login);
+    }
+
+    public function prev($login) {
+        $this->page--;
+        if ($this->page < 0)
+            $this->page = 0;
+
+        $this->redraw($login);
+    }
+
+    protected function onDraw() {
+        $this->next->setHidden(false);
+        $this->prev->setHidden(false);
+
+        $newstart = ($this->page + 1) * $this->itemsOnPage;
+        if ($newstart > count($this->scores)) {
+            $this->next->setHidden(true);
+        }
+
+        if ($this->page == 0) {
+            $this->prev->setHidden(true);
+        }
+
+        $this->pointslimit->setText('$sPoints Limit: ' . $this->limit);
         $this->frame->clearComponents();
         $x = 1;
-        foreach ($scores as $scoreitem) {
-            if ($x > 16)
-                continue;
-            $place = -1;
-            $i = 1;
-            foreach ($winners as $winner) {
-                if ($winner->login == $scoreitem->login) {
-                    $place = $i;
+        foreach ($this->scores as $scoreitem) {
+            $start = $this->page * $this->itemsOnPage;
+            $limit = $start + $this->itemsOnPage + 1;
+            if ($x > $start && $x < $limit) {
+                $place = -1;
+                $i = 1;
+                foreach ($this->winners as $winner) {
+                    if ($winner->login == $scoreitem->login) {
+                        $place = $i;
+                    }
+                    $i++;
                 }
-                $i++;
+                $this->frame->addComponent(new \ManiaLivePlugins\eXpansion\ESLcup\Gui\Controls\CupScoreTableItem($x, $scoreitem, $place));
             }
-            $this->frame->addComponent(new \ManiaLivePlugins\eXpansion\ESLcup\Gui\Controls\CupScoreTableItem($x, $scoreitem, $place));
             $x++;
         }
+    }
+
+    public function setData($scores, $limit, $winners) {
+        $this->scores = $scores;
+        $this->limit = $limit;
+        $this->winners = $winners;
     }
 
 }

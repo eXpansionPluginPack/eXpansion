@@ -3,45 +3,99 @@
 namespace ManiaLivePlugins\eXpansion\ESLcup;
 
 /**
- * Description of ESLcup
+ * ESLcup
+ * 
+ * Purpose of this plugin is to enhance the native cupmode to comply with ESL rules
+ * 
  *
  * @author Reaby
  */
 class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
-    /** @var ManiaLivePlugins\eXpansion\ESLcup\Structures\CupScore[] */
+    /** @var ManiaLivePlugins\eXpansion\ESLcup\Structures\CupScore[] $cupScores holds the cup scores, sorted by greatest score */
     private $cupScores = array();
+
+    /** @var string $lastRoundWinner contains the login of last round winner */
     private $lastRoundWinner = "";
+
+    /** @var int $pointsLimit used to mark the pointslimit of the mode */
     private $pointsLimit = 100;
+
+    /** @var bool $resetData used to flag if scores needs to be reset at onBebinMap */
     private $resetData = false;
 
-    /** @var \DedicatedApi\Structures\Player */
+    /** @var bool $enabled used to flag if mode is enabled */
+    private $enabled = false;
+
+    /** @var \DedicatedApi\Structures\Player[] holds the players who finished this round in order of arrival */
     private $roundFinish = array();
 
-    /** @var ManiaLivePlugins\eXpansion\ESLcup\Structures\CupScore[] */
+    /** @var ManiaLivePlugins\eXpansion\ESLcup\Structures\CupScore[] holds winners in order of arrival */
     private $winners = array();
+
+    /**
+     * onload
+     */
+    public function exp_onInit() {
+        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
+    }
 
     public function exp_onLoad() {
         $this->enableDedicatedEvents();
         $this->setPublicMethod("syncScores");
-    }
-
-    public function exp_onReady() {
-        $this->syncScores();
-        $this->hideUI();
-        $this->scoreTable(true, "scorestable");
+        $this->registerChatCommand("test", "testData", 1, true);
 
         $admingroup = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
-        $cmd = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::addAdminCommand('game eslcup', $this, 'eslcup', 'game_settings');
+        $cmd = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::addAdminCommand('game eslcup', $this, 'chat_eslcup', 'game_settings');
         $admingroup->addShortAlias($cmd, 'eslcup');
     }
 
-    function eslcup($fromLogin, $params) {
+    /**
+     * onReady
+     * 
+     */
+    public function exp_onReady() {
+        if (!$this->enabled)
+            return;
+
+        $this->syncScores();
+        $this->hideUI();
+        $this->scoreTable(true, "scorestable");
+    }
+
+    function chat_eslcup($fromLogin, $params) {
 
         try {
             $command = array_shift($params);
 
             switch (strtolower($command)) {
+                case "start":
+                    $this->winners = array();
+                    $this->roundFinish = array();
+                    $this->lastRoundWinner = "";
+                    $this->enabled = true;
+                    $this->resetData = true;
+                    $params = $params[0];
+                    if (is_numeric($params)) {
+                        $this->pointsLimit = $params;
+                        $newlimit = (intval($params) * 2 ) + 100;
+                        $this->connection->setCupPointsLimit($newlimit);
+                    }
+                    $this->exp_chatSendServerMessage("Starting ESLcup with point limit: " . $this->pointsLimit);
+                    $this->connection->nextMap(false);
+                    break;
+                case "stop":
+                    $this->showUI();
+                    $this->cupScores = array();
+                    $this->winners = array();
+                    $this->roundFinish = array();
+                    $this->lastRoundWinner = "";
+                    $this->Scoretable(false);
+                    $this->enabled = false;
+                    $this->connection->setCupPointsLimit(100);
+                    $this->exp_chatSendServerMessage("ESLcup disabled, normal cup point limit set to 100");
+                    $this->connection->nextMap(false);
+                    break;
                 case "pointslimit":
                 case "limit":
                     $params = $params[0];
@@ -74,6 +128,8 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * SyncScores from player rankings
      */
     public function syncScores() {
+        if (!$this->enabled)
+            return;
         $this->cupScores = null;
         $ranking = $this->connection->getCurrentRanking(-1, 0);
         $this->cupScores = array();
@@ -92,30 +148,46 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
           $this->winners[1] = $this->cupScores["them"];
          */
 
-        // find finalist!
-        $finalists = array();
-        foreach ($this->cupScores as $login => $score) {
-            $this->cupScores[$score->login]->finalist = false;
-            if ($score->score >= $this->pointsLimit) {
-                if (!$this->cupScores[$score->login]->hasWin) {
-                    $finalists[$login] = $score;
-                }
-            }
-        }
-        if (sizeof($finalists) > 0) {
-            \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($finalists, "score");
-            reset($finalists);
-            $score = array_shift($finalists);
-            $this->cupScores[$score->login]->finalist = true;
-        }
+        // populate testData
 
-
-        \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->cupScores, "score");
+        $this->findFinalists();
 
         $this->Scoretable(true, "scorestable");
     }
 
+    function testData($login, $nb) {
+        if (!$this->enabled)
+            return;
+        $this->syncScores();
+
+        $this->cupScores["pilxi"]->hasWin = time();
+        $this->winners[0] = $this->cupScores["pilxi"];
+
+        for ($x = 0; $x < intval($nb); $x++) {
+            $player = new \DedicatedApi\Structures\Player();
+            $player->playerId = 0;
+            $player->login = "fakeplayer" . $x;
+            $player->nickName = "fakeplayer" . $x;
+            $player->score = rand(0, 80);
+            $this->cupScores[$player->login] = new Structures\CupScore($player->playerId, $player->login, $player->nickName, $player->score);
+        }
+
+        $this->findFinalists();
+
+        $nbWinners = 1;
+        if (count($this->cupScores) > 2) {
+            $nbWinners = 2;
+        }
+        if (count($this->cupScores) > 3) {
+            $nbWinners = 3;
+        }
+        echo "nbWinners: $nbWinners \n";
+        $this->Scoretable(true);
+    }
+
     public function onBeginRound() {
+        if (!$this->enabled)
+            return;
         $this->roundFinish = array();
 
         if ($this->resetData) {
@@ -129,6 +201,8 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerConnect($login, $isSpec) {
+        if (!$this->enabled)
+            return;
         $player = $this->storage->getPlayerObject($login);
         if (!array_key_exists($player->login, $this->cupScores)) {
             $this->cupScores[$player->login] = new Structures\CupScore($player->playerId, $player->login, $player->nickName, $player->score);
@@ -140,16 +214,29 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason = null) {
-        $player = $this->storage->getPlayerObject($login);
-        if (!array_key_exists($player->login, $this->cupScores)) {
-            $this->cupScores[$player->login]->isConnected = false;
+        if (!$this->enabled)
+            return;
+
+        if (!array_key_exists($login, $this->cupScores)) {
+            $this->cupScores[$login]->isConnected = false;
         }
         $this->Scoretable(true, "scorestable");
     }
 
+    /**
+     * 
+     * 
+     * @param int $playerUid
+     * @param string $login
+     * @param int $timeOrScore
+     * @return null
+     */
     public function onPlayerFinish($playerUid, $login, $timeOrScore) {
+        if (!$this->enabled)
+            return;
         if ($timeOrScore == 0)
             return;
+
         $player = new \DedicatedApi\Structures\Player();
         $player->playerId = $playerUid;
         $player->login = $login;
@@ -158,7 +245,13 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->roundFinish[] = $player;
     }
 
+    /**
+     * 
+     * @return null
+     */
     public function onEndRound() {
+        if (!$this->enabled)
+            return;
         $scores = $this->connection->getRoundCustomPoints();
 
         if (sizeof($scores) < 1) {
@@ -175,15 +268,34 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 }
                 $this->cupScores[$player->login]->score += $points;
 
-
+                // check for end conditions, so if player is finalist
                 if ($this->cupScores[$player->login]->finalist) {
+                    // and has won the last round 
                     if ($this->lastRoundWinner == $player->login) {
+                        // mark his as a winner
                         $this->cupScores[$player->login]->hasWin = time();
                         $this->winners[] = $this->cupScores[$player->login];
-                        $this->exp_chatSendServerMessage($player->nickName . ' $z$s takes the ' . count($this->winners) . ' place!');
-                        if (count($this->winners) >= 3) {
+                        // send message about win
+                        $this->exp_chatSendServerMessage($player->nickName . ' $z$s$fff takes the ' . count($this->winners) . ' place!');
+
+                        // check if there is need for more winners
+                        $nbWinners = 1;
+                        if (count($this->storage->players) > 2) {
+                            $nbWinners = 2;
+                        }
+                        if (count($this->storage->players) > 3) {
+                            $nbWinners = 3;
+                        }
+
+                        if (count($this->winners) >= $nbWinners) {
                             $this->scoreTable(true, "normal");
                             $this->resetData = true;
+                            $this->exp_chatSendServerMessage("          ESL CUP RESULTS         ");
+                            $this->exp_chatSendServerMessage("**********************************");
+                            foreach ($this->winners as $i => $winner) {
+                                $this->exp_chatSendServerMessage(($i + 1) . ". place " . $winner->nickName);
+                            }
+                            $this->exp_chatSendServerMessage("**********************************");
                             $this->connection->nextMap(false);
                             return;
                         }
@@ -196,6 +308,14 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         // find finalist!
+        $this->findFinalists();
+        $this->scoreTable(true, "normal");
+    }
+
+    public function findFinalists() {
+        if (!$this->enabled)
+            return;
+
         $finalists = array();
         foreach ($this->cupScores as $login => $score) {
             $this->cupScores[$score->login]->finalist = false;
@@ -207,27 +327,41 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
         if (sizeof($finalists) > 0) {
             \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($finalists, "score");
-            reset($finalists);
-            $score = array_shift($finalists);
-            $this->cupScores[$score->login]->finalist = true;
+            $highestScore = -1;
+            foreach ($finalists as $item) {
+                if ($highestScore == -1) {
+                    $highestScore = $item->score;
+                    $this->cupScores[$item->login]->finalist = true;
+                    continue;
+                }
+
+                if ($item->score == $highestScore) {
+                    $highestScore = $item->score;
+                    $this->cupScores[$item->login]->finalist = true;
+                }
+            }
         }
 
         \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->cupScores, "score");
-
-        $this->scoreTable(true, "normal");
     }
 
     /** at podium */
     public function onEndMatch($rankings, $winnerTeamOrMap) {
+        if (!$this->enabled)
+            return;
         $this->scoreTable(true, "normal");
     }
 
     /** when map changes */
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+        if (!$this->enabled)
+            return;
         $this->scoreTable(true, "normal");
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
+        if (!$this->enabled)
+            return;
         $this->scoreTable(false);
         $this->cupScores = null;
         if ($this->resetData) {
@@ -243,17 +377,42 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         \ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::SCORETABLE);
     }
 
+    public function showUI() {
+        \ManiaLive\Gui\CustomUI::ShowForAll(\ManiaLive\Gui\CustomUI::SCORETABLE);
+    }
+
     public function Scoretable($show, $layer = "scorestable") {
+        if (!$this->enabled)
+            return;
+        $this->hideUI();
         Gui\Widgets\Scoretable::EraseAll();
         if ($show) {
-            $win = Gui\Widgets\Scoretable::Create();
-            \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->cupScores, "score");
-            $win->populate($this->cupScores, $this->pointsLimit, $this->winners);
-            $win->setLayer($layer);
-            $win->centerOnScreen();
-            // $win->setPosY(30);
-            $win->show();
+            foreach ($this->storage->players as $login => $player) {
+                $this->showScoretable($login, $layer);
+            }
+            foreach ($this->storage->spectators as $login => $player) {
+                $this->showScoretable($login, $layer);
+            }
         }
+    }
+
+    public function showScoretable($login, $layer) {
+        if (!$this->enabled)
+            return;
+        $win = Gui\Widgets\Scoretable::Create($login);
+        \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->cupScores, "score");
+        $win->setData($this->cupScores, $this->pointsLimit, $this->winners);
+        $win->setLayer($layer);
+        $win->centerOnScreen();
+        $win->show();
+    }
+
+    public function exp_unload() {
+        $this->enabled = false;
+        $this->winners = array();
+        $this->roundFinish = array();
+        $this->lastRoundWinner = "";
+        $this->resetData = false;
     }
 
 }

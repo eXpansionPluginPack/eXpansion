@@ -29,7 +29,7 @@ class CupScoreTableItem extends \ManiaLive\Gui\Control {
             $this->bgg->setBgcolor("0f06");
         $this->addComponent($this->bgg);
 
-        
+
         $this->bg = new \ManiaLib\Gui\Elements\Quad(10, 10);
         $this->bg->setPosition(0, 0);
         $this->bg->setBgcolor("000");
@@ -62,7 +62,7 @@ class CupScoreTableItem extends \ManiaLive\Gui\Control {
         $this->nickname->setPosition(14, -2.5);
         $this->nickname->setTextColor("fff");
         $this->nickname->setTextSize(3);
-        $this->nickname->setText($score->nickname);
+        $this->nickname->setText($score->nickName);
         $this->addComponent($this->nickname);
 
         $this->score = new \ManiaLib\Gui\Elements\Label(10);

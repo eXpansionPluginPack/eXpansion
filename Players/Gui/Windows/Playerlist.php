@@ -122,13 +122,13 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 	    if ($player->forceSpectator == 0 || $player->isSpectator == false) {
 		$this->connection->forceSpectator($target, 1);
-		$this->connection->chatSendServerMessage(__('Admin has forced you to specate!', $login), $login);
+		$this->connection->chatSendServerMessage(__('Admin has forced you to specate!', $target), $target);
 		return;
 	    }
 	    if ($player->forceSpectator == 1 || $player->isSpectator == true) {
 		$this->connection->forceSpectator($target, 2);
 		$this->connection->forceSpectator($target, 0);
-		$this->connection->chatSendServerMessage(__("Admin has released you from specate to play.", $login), $login);
+		$this->connection->chatSendServerMessage(__("Admin has released you from specate to play.", $target), $target);
 		return;
 	    }
 	} catch (\Exception $e) {
