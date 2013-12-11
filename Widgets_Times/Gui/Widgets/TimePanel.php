@@ -25,41 +25,41 @@ class TimePanel extends \ManiaLive\Gui\Window {
     public static $dedirecords = array();
 
     protected function onConstruct() {
-	parent::onConstruct();
-	$login = $this->getRecipient();
-	$this->setAlign("center", "center");
-	$this->frame = new \ManiaLive\Gui\Controls\Frame();
-	$this->frame->setAlign("center", "center");
-	$this->frame->setSize(40,7);
-	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line(40,7));
-	$this->addComponent($this->frame);
-	
-	$this->checkpoint = new \ManiaLib\Gui\Elements\Label(12, 4);
-	$this->checkpoint->setTextColor("fff");
-	$this->checkpoint->setAlign("left", "center");
-	$this->frame->addComponent($this->checkpoint);
-	
-	$this->time = new \ManiaLib\Gui\Elements\Label(20, 4);
-	$this->time->setAlign("left", "center");
-	$this->time->setStyle("TextTitle2");
-	$this->frame->addComponent($this->time);
+        parent::onConstruct();
+        $login = $this->getRecipient();
+        $this->setAlign("center", "center");
+        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame->setAlign("center", "center");
+        $this->frame->setSize(40, 7);
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line(40, 7));
+        $this->addComponent($this->frame);
 
-	
+        $this->checkpoint = new \ManiaLib\Gui\Elements\Label(12, 4);
+        $this->checkpoint->setTextColor("fff");
+        $this->checkpoint->setAlign("left", "center");
+        $this->frame->addComponent($this->checkpoint);
 
-	$this->audio = new \ManiaLib\Gui\Elements\Audio();
-	$this->audio->setPosY(260);
-	$this->addComponent($this->audio);
-	
-	$move = new \ManiaLib\Gui\Elements\Quad(45, 7);
-	$move->setAlign("center", "center");
-	$move->setStyle("Icons128x128_Blink");
-	$move->setSubStyle("ShareBlink");
-	$move->setScriptEvents();
-	$move->setId("enableMove");
-	$this->addComponent($move);
+        $this->time = new \ManiaLib\Gui\Elements\Label(20, 4);
+        $this->time->setAlign("left", "center");
+        $this->time->setStyle("TextTitle2");
+        $this->frame->addComponent($this->time);
 
-	$this->xml = new \ManiaLive\Gui\Elements\Xml();
-	$this->xml->setContent('    
+
+
+        $this->audio = new \ManiaLib\Gui\Elements\Audio();
+        $this->audio->setPosY(260);
+        $this->addComponent($this->audio);
+
+        $move = new \ManiaLib\Gui\Elements\Quad(45, 7);
+        $move->setAlign("center", "center");
+        $move->setStyle("Icons128x128_Blink");
+        $move->setSubStyle("ShareBlink");
+        $move->setScriptEvents();
+        $move->setId("enableMove");
+        $this->addComponent($move);
+
+        $this->xml = new \ManiaLive\Gui\Elements\Xml();
+        $this->xml->setContent('    
         <script><!--
                
                        main () {     
@@ -144,126 +144,126 @@ class TimePanel extends \ManiaLive\Gui\Window {
                            }                  
                 } 
                 --></script>');
-	$this->addComponent($this->xml);
+        $this->addComponent($this->xml);
     }
 
     function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
+        parent::onResize($oldX, $oldY);
     }
 
     public function onCheckpoint($time, $cpIndex, $cpTotal, $mode, $playAudio) {
-	$this->currentRun[$cpIndex] = $time;
-	$this->checkpoint->setText("cp " . ($cpIndex + 1) . "/" . $cpTotal . "");
+        $this->currentRun[$cpIndex] = $time;
+        $this->checkpoint->setText("cp " . (($cpIndex % $cpTotal) + 1) . "/" . $cpTotal . "");
 
-	$dedicp = array();
-	$localcp = array();
-	$dediTotal = 0;
-	$localTotal = 0;
+        $dedicp = array();
+        $localcp = array();
+        $dediTotal = 0;
+        $localTotal = 0;
 
-	$this->time->setTextColor('fffa');
-	$this->time->setText(\ManiaLive\Utilities\Time::fromTM($time, false));
-
-
-	if ($mode == self::Mode_BestOfAll) {
-	    $dedicp = array();
-	    $localcp = array();
-	    if (isset(self::$dedirecords[0]))
-		if (array_key_exists('Checks', self::$dedirecords[0])) {
-		    $dedicp = explode(",", self::$dedirecords[0]['Checks']);
-		    $dediTotal = end($dedicp);
-		}
-	    if (isset(self::$localrecords[0])) {
-		$localcp = self::$localrecords[0]->ScoreCheckpoints;
-		$localTotal = self::$localrecords[0]->time;
-	    }
-	}
-
-	if ($mode == self::Mode_PersonalBest) {
-	    $dedicp = array();
-	    foreach (self::$dedirecords as $dedirec) {
-		if ($dedirec['Login'] == $this->getRecipient()) {
-		    if (array_key_exists('Checks', $dedirec)) {
-			$dedicp = explode(",", $dedirec['Checks']);
-			$dediTotal = end($dedicp);
-		    }
-		    break;
-		}
-	    }
-	    $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->getRecipient());
-	    $localcp = array();
-	    if ($record) {
-		$localcp = $record->ScoreCheckpoints;
-		$localTotal = $record->time;
-	    }
-	}
-
-	// determin whenever to use deditime or localtime from the checkpoints
-	$deditime = 0;
-	$localtime = 0;
-	$diff = null;
+        $this->time->setTextColor('fffa');
+        $this->time->setText(\ManiaLive\Utilities\Time::fromTM($time, false));
 
 
-	if (sizeof($dedicp) > 0) {
-	    if (array_key_exists($cpIndex, $dedicp)) {
-		$deditime = $dedicp[$cpIndex];
-	    }
-	}
+        if ($mode == self::Mode_BestOfAll) {
+            $dedicp = array();
+            $localcp = array();
+            if (isset(self::$dedirecords[0]))
+                if (array_key_exists('Checks', self::$dedirecords[0])) {
+                    $dedicp = explode(",", self::$dedirecords[0]['Checks']);
+                    $dediTotal = end($dedicp);
+                }
+            if (isset(self::$localrecords[0])) {
+                $localcp = self::$localrecords[0]->ScoreCheckpoints;
+                $localTotal = self::$localrecords[0]->time;
+            }
+        }
 
-	if (sizeof($localcp) > 0) {
-	    if (array_key_exists($cpIndex, $localcp)) {
-		$localtime = $localcp[$cpIndex];
-	    }
-	}
-	// use dedimania times in firstplace
-	if ($dediTotal != 0) {
-	    $diff = $deditime;
-	    // except if localrecord is set and is faster than dedimania time
-	    if (($localTotal != 0) && ($localTotal < $dediTotal)) {
-		$diff = $localtime;
-	    }
-	    // if no dedimania record, try local record instead
-	} elseif ($localTotal != 0) {
-	    $diff = $localtime;
-	}
+        if ($mode == self::Mode_PersonalBest) {
+            $dedicp = array();
+            foreach (self::$dedirecords as $dedirec) {
+                if ($dedirec['Login'] == $this->getRecipient()) {
+                    if (array_key_exists('Checks', $dedirec)) {
+                        $dedicp = explode(",", $dedirec['Checks']);
+                        $dediTotal = end($dedicp);
+                    }
+                    break;
+                }
+            }
+            $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->getRecipient());
+            $localcp = array();
+            if ($record) {
+                $localcp = $record->ScoreCheckpoints;
+                $localTotal = $record->time;
+            }
+        }
 
-	// if diff is still not set, check for this rounds best time
-	if ($diff === null) {
-	    if (isset($this->bestRun[$cpIndex])) {
-		$diff = $this->bestRun[$cpIndex];
-	    }
-	}
-	// set colors and play sound if diffenential is found
-	if ($diff !== null) {
-	    // if no records found for dedimania or local, fallback to personal best
-	    $this->time->setText(\ManiaLive\Utilities\Time::fromTM($time - $diff, true));
-	    $this->time->setTextColor('a00a');
-	    $this->audio->setData("");
+        // determin whenever to use deditime or localtime from the checkpoints
+        $deditime = 0;
+        $localtime = 0;
+        $diff = null;
 
-	    if ($diff > $time) {
-		$this->time->setTextColor('00aa');
-		if ($playAudio) {
-		    $this->audio->setData("http://reaby.kapsi.fi/ml/ding.ogg", true);
-		    $this->audio->autoPlay();
-		}
-	    }
-	}
+
+        if (sizeof($dedicp) > 0) {
+            if (array_key_exists($cpIndex, $dedicp)) {
+                $deditime = $dedicp[$cpIndex];
+            }
+        }
+
+        if (sizeof($localcp) > 0) {
+            if (array_key_exists($cpIndex, $localcp)) {
+                $localtime = $localcp[$cpIndex];
+            }
+        }
+        // use dedimania times in firstplace
+        if ($dediTotal != 0) {
+            $diff = $deditime;
+            // except if localrecord is set and is faster than dedimania time
+            if (($localTotal != 0) && ($localTotal < $dediTotal)) {
+                $diff = $localtime;
+            }
+            // if no dedimania record, try local record instead
+        } elseif ($localTotal != 0) {
+            $diff = $localtime;
+        }
+
+        // if diff is still not set, check for this rounds best time
+        if ($diff === null) {
+            if (isset($this->bestRun[$cpIndex])) {
+                $diff = $this->bestRun[$cpIndex];
+            }
+        }
+        // set colors and play sound if diffenential is found
+        if ($diff !== null) {
+            // if no records found for dedimania or local, fallback to personal best
+            $this->time->setText(\ManiaLive\Utilities\Time::fromTM($time - $diff, true));
+            $this->time->setTextColor('a00a');
+            $this->audio->setData("");
+
+            if ($diff > $time) {
+                $this->time->setTextColor('00aa');
+                if ($playAudio) {
+                    $this->audio->setData("http://reaby.kapsi.fi/ml/ding.ogg", true);
+                    $this->audio->autoPlay();
+                }
+            }
+        }
     }
 
     public function onFinish($time) {
-	if ($time < $this->lastFinish || $this->lastFinish == -1) {
-	    $this->lastFinish = $time;
-	    $this->bestRun = $this->currentRun;
-	    $this->counter++;
-	}
+        if ($time < $this->lastFinish || $this->lastFinish == -1) {
+            $this->lastFinish = $time;
+            $this->bestRun = $this->currentRun;
+            $this->counter++;
+        }
     }
 
     public function onStart() {
-	$this->currentRun = array();
+        $this->currentRun = array();
     }
 
     function destroy() {
-	$this->clearComponents();
-	parent::destroy();
+        $this->clearComponents();
+        parent::destroy();
     }
 
 }
