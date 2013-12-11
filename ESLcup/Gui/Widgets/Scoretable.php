@@ -110,25 +110,34 @@ class Scoretable extends \ManiaLive\Gui\Window {
         $this->pointslimit->setText('$sPoints Limit: ' . $this->limit);
         $this->frame->clearComponents();
         $x = 1;
+        $items = array();
+        $isWinner = array();
+
+        // add winners to top
+        foreach ($this->winners as $place => $winner) {
+            $isWinner[] = $winner->login;
+            $items[] = new \ManiaLivePlugins\eXpansion\ESLcup\Gui\Controls\CupScoreTableItem($x, $winner, $x);
+            $x++;
+        }
+        // add other players bottom
         foreach ($this->scores as $scoreitem) {
+            if (!in_array($scoreitem->login, $isWinner)) {
+                $items[] = new \ManiaLivePlugins\eXpansion\ESLcup\Gui\Controls\CupScoreTableItem($x, $scoreitem, -1);
+                $x++;
+            }
+        }
+
+        foreach ($items as $component) {
             $start = $this->page * $this->itemsOnPage;
             $limit = $start + $this->itemsOnPage + 1;
             if ($x > $start && $x < $limit) {
-                $place = -1;
-                $i = 1;
-                foreach ($this->winners as $winner) {
-                    if ($winner->login == $scoreitem->login) {
-                        $place = $i;
-                    }
-                    $i++;
-                }
-                $this->frame->addComponent(new \ManiaLivePlugins\eXpansion\ESLcup\Gui\Controls\CupScoreTableItem($x, $scoreitem, $place));
+                $this->frame->addComponent($component);
             }
-            $x++;
         }
     }
 
-    public function setData($scores, $limit, $winners) {
+    public
+            function setData($scores, $limit, $winners) {
         $this->scores = $scores;
         $this->limit = $limit;
         $this->winners = $winners;
