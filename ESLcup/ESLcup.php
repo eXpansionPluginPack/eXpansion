@@ -43,8 +43,8 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onLoad() {
         $this->enableDedicatedEvents();
         $this->setPublicMethod("syncScores");
-        $this->registerChatCommand("test", "testData", 1, true);
-        $this->registerChatCommand("specrel", "releaseSpec", 0, false);
+        //$this->registerChatCommand("test", "testData", 1, true);
+        //$this->registerChatCommand("specrel", "releaseSpec", 0, false);
 
         $admingroup = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
         $cmd = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::addAdminCommand('game eslcup', $this, 'chat_eslcup', 'game_settings');
@@ -204,6 +204,13 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->cupScores[$player->login]->isConnected = true;
         } else {
             $this->cupScores[$player->login]->isConnected = true;
+        }
+
+        foreach ($this->winners as $winner) {
+            if ($winner->login == $login) {
+                $this->connection->forceSpectator($login, 1);
+                break;
+            }
         }
         $this->Scoretable(true, "scorestable");
     }
