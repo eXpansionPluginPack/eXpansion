@@ -29,7 +29,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $time_dynamic_max = '7:00';  // dynamic timelimit max time for /ta dynamic <x>
     public $time_dynamic_min = '4:00';  // dynamic timelimit min time for /ta dynamic <x>
     
-    public $API_Version = '2013-05-16'; //ApiVersion can be 2011-10-06 for TM and 2013-04-16 for SM Add in config 
+    public $API_Version = '2011-10-06'; //ApiVersion can be 2011-10-06 for TM and 2013-04-16 for SM Add in config 
 
 }
 
