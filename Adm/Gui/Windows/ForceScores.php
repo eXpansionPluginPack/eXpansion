@@ -23,6 +23,7 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $cancel;
     private $actionOk;
     private $actionCancel;
+    public static $mainPlugin;
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -83,8 +84,9 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         foreach ($scores as $id => $val) {
             $outScores[] = array("PlayerId" => intval($id), "Score" => intval($val));
         }
-        
+
         $this->connection->forceScores($outScores, true);
+        self::$mainPlugin->forceScoresOk();
         $this->erase($login);
     }
 

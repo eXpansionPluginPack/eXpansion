@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania\Classes;
 
-require_once('Webaccess.php');
+//require_once('Webaccess.php');
 
 use \ManiaLive\Event\Dispatcher;
 use \ManiaLive\Application\Listener as AppListener;
@@ -15,6 +15,7 @@ use ManiaLivePlugins\eXpansion\Dedimania\Classes\Request as dediRequest;
 use ManiaLivePlugins\eXpansion\Dedimania\Config;
 use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as dediEvent;
 use \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediMap;
+use \ManiaLivePlugins\eXpansion\Core\Classes\Webaccess;
 
 class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickListener {
 
@@ -57,7 +58,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     function __construct() {
 	parent::__construct();
 
-	$this->webaccess = new \Webaccess();
+	$this->webaccess = new Webaccess();
 
 	// if you are developing change port to 8081, othervice use 8082
 	$this->url = "http://dedimania.net:8082/Dedimania";
