@@ -375,12 +375,9 @@ use ManiaLive\Event\Dispatcher;
         }
 
         public function onGameModeChange($oldGameMode, $newGameMode) {
-            echo "Game Mode Changed\n";
         }
 
         public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes) {
-            echo "Game Settings Changed\n";
-            print_r($changes);
         }
 
     }
