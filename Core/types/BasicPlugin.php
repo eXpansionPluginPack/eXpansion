@@ -6,13 +6,16 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Config;
 use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
+use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
+use ManiaLive\Event\Dispatcher;
 
     /**
      * Description of BasicPlugin
      *
      * @author oliverde8
      */
-    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin implements \ManiaLive\PluginHandler\WaitingCompliant {
+    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin implements \ManiaLive\PluginHandler\WaitingCompliant, 
+            \ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEventListener {
 
         /**
          * The list of Plugin id's that may need to be started
@@ -74,6 +77,8 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
             $this->setPublicMethod('exp_deactivateAnnounceRedirect');
 
             $this->exp_onInit();
+            
+            Dispatcher::register(GameSettingsEvent::getClass(), $this);
         }
 
         /**
@@ -367,6 +372,15 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
                 Console::println($info);
                 \ManiaLive\Utilities\Logger::log($message, true, "exp-debug.txt");
             }
+        }
+
+        public function onGameModeChange($oldGameMode, $newGameMode) {
+            echo "Game Mode Changed\n";
+        }
+
+        public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes) {
+            echo "Game Settings Changed\n";
+            print_r($changes);
         }
 
     }

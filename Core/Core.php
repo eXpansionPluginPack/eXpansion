@@ -5,6 +5,10 @@ namespace ManiaLivePlugins\eXpansion\Core;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Utilities\Console;
 
+use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
+use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
+
+
 /**
  * Description of Core
  *
@@ -18,6 +22,9 @@ class Core extends types\ExpPlugin {
      * @var \DedicatedApi\Structures\GameInfos
      */
     private $lastGameMode;
+    
+    private $lastGameSettings;
+    private $lastServerSettings;
 
     /**
      * 
@@ -119,13 +126,54 @@ EOT;
      * @param bool $matchContinuation
      */
     function onBeginMap($map, $warmUp, $matchContinuation) {
-        $newGameMode = \ManiaLive\Data\Storage::getInstance()->gameInfos->gameMode;
+        
+        $gameSettings = \ManiaLive\Data\Storage::getInstance()->gameInfos;
+        $newGameMode = $gameSettings->gameMode;
+        
         if ($newGameMode != $this->lastGameMode) {
+            Dispatcher::dispatch(new GameSettingsEvent(GameSettingsEvent::ON_GAME_MODE_CHANGE, $this->lastGameMode, $newGameMode));
+            
             $this->lastGameMode = $newGameMode;
-
+            $this->lastGameSettings = clone $gameSettings;
+            
             $this->checkLoadedPlugins();
             $this->checkPluginsOnHold();
+        }else{
+            //Detecting any changes in game Settings
+            if($this->lastGameSettings == null)
+                $this->lastGameSettings = clone $gameSettings;
+            else{
+                $difs = $this->compareObjects($gameSettings, $this->lastGameSettings, array("gameMode", "scriptName"));
+                if(!empty($difs)){
+                    Dispatcher::dispatch(new GameSettingsEvent(GameSettingsEvent::ON_GAME_SETTINGS_CHANGE, $this->lastGameSettings, $gameSettings, $difs));
+                    $this->lastGameSettings = clone $gameSettings;
+                }
+            }
         }
+        
+        //Detecting any changes in Server Settings
+        $serverSettings = \ManiaLive\Data\Storage::getInstance()->server;
+        if($this->lastServerSettings == null)
+            $this->lastServerSettings = clone $serverSettings;
+        else{
+            $difs = $this->compareObjects($serverSettings, $this->lastServerSettings);
+            if(!empty($difs)){
+                Dispatcher::dispatch(new ServerSettingsEvent(ServerSettingsEvent::ON_SERVER_SETTINGS_CHANGE, $this->lastServerSettings, $serverSettings, $difs));
+                $this->lastServerSettings = clone $serverSettings;
+            }
+        }
+    }
+    
+    protected function compareObjects($obj1, $obj2, $ingnoreList = array()){
+        
+        $difs = array();
+        
+        foreach($obj1 as $varName => $value){
+            if(!in_array($varName, $ingnoreList))
+                if(!isset($obj2->$varName) || $obj2->$varName != $value)
+                    $difs[$varName] = true;  
+        }
+        return $difs;
     }
 
     private function checkLoadedPlugins() {
