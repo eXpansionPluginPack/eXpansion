@@ -208,6 +208,9 @@ Can change referee password
 Permission_server_refmode
 Can change referee mode
 
+Permission_records_save
+Can change referee mode
+
 Inherits
 Inherits
 
