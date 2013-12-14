@@ -32,12 +32,16 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
     }
 
     public function start() {
-//Dispatcher::register(TickEvent::getClass(), $this);
-        Dispatcher::register(AppEvent::getClass(), $this);
+        Dispatcher::register(TickEvent::getClass(), $this);
+        //       Dispatcher::register(AppEvent::getClass(), $this);
     }
 
     public function onTick() {
-        
+        try {
+            $this->webaccess->select($this->read, $this->write, $this->except, 0, 0);
+        } catch (\Exception $e) {
+            Console::println("[DataAccess] OnTick Update failed: " . $e->getMessage() . "\n file " . $e->getFile() . ":" . $e->getLine());
+        }
     }
 
     function __destruct() {
@@ -62,8 +66,9 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
      * @throws Exception
      */
     final public function httpGet($url, $callback, $callparams = array(), $userAgent = "ManiaLive - eXpansionPluginPack", $mimeType = "text/html") {
-        if (!is_callable($callback))
-            throw new Exception("Invalid Callback!");
+        /* if (!is_callable($callback))
+          throw new \Exception("Invalid Callback!");
+         */
 
         $this->_get(new HttpQuery($url, $callback, $callparams, $userAgent, $mimeType));
     }
@@ -113,6 +118,10 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             \ManiaLive\Utilities\Console::println("[DataAccess Error] Callback-function is not valid!");
             return;
         }
+
+        if (array_key_exists("Error", $data))
+            return;
+
         if ($data['Code'] == 301) {
             Console::println("[DataAccess] webRequest to " . $query->baseurl . " is permanently moved.");
             $args = $query->callparams;
@@ -137,7 +146,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 // moved temporarily
         if ($data['Code'] == 302) {
             Console::println("[DataAccess] webRequest to " . $query->baseurl . " is temporarily moved.");
-            
+
             $args = $query->callparams;
             array_unshift($args, null, $data['Code']);
             call_user_func_array($query->callback, $args);

@@ -167,9 +167,9 @@ class Webaccess {
         $write = $this->_getWebaccessWriteSockets($write);
 //$except = $this->_getWebaccessReadSockets($except);
 //print_r($this->_WebaccessList);
-//print_r($read);
-//print_r($write);
-//print_r($except);
+//        print_r($read);
+//        print_r($write);
+//        print_r($except);
 // if no socket to select then return
         if (count($read) + count($write) + count($except) == 0) {
 // sleep the asked timeout...
@@ -240,11 +240,12 @@ class Webaccess {
 
     private function _getWebaccessWriteSockets($socks) {
         foreach ($this->_WebaccessList as $key => $wau) {
+
             if (isset($wau->_spool[0]['State']) &&
                     ($wau->_spool[0]['State'] == 'OPEN' ||
                     $wau->_spool[0]['State'] == 'BAD' ||
                     $wau->_spool[0]['State'] == 'SEND')) {
-
+//
                 if (($wau->_state == 'CLOSED' || $wau->_state == 'BAD') && !$wau->_socket)
                     $wau->_open();
 
@@ -373,9 +374,9 @@ class WebaccessUrl {
                 $this->_bad_timeout = $_web_access_retry_timeout;
             else
                 $this->_bad_timeout *= 2;
-        }else {
+        } else {
             if (isset($this->_spool[0]['State']))
-                $this->_spool[0]['State'] = 'OPEN';
+                $this->_spool[0]['State'] = 'CLOSED';
             $this->_state = 'CLOSED';
         }
         $this->_callCallback($this->_webaccess_str . $errstr);
@@ -820,7 +821,7 @@ class WebaccessUrl {
             else
                 $this->_bad('Closed by server when reading : re-open socket and re-send ! (' . strlen($this->_response) . ')', false);
 
-            $this->_spool[0]['Retries'] ++;
+            $this->_spool[0]['Retries']++;
             if ($this->_spool[0]['Retries'] > 2) {
 // 3 tries failed, remode entry from spool
                 print_r('*' . $this->_webaccess_str . " Failed {$this->_spool[0]['Retries']} times : skip current request.");

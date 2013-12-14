@@ -151,7 +151,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
         parent::onResize($oldX, $oldY);
     }
 
-    public function onCheckpoint($time, $cpIndex, $cpTotal, $mode, $playAudio) {
+    public function onCheckpoint($time, $cpIndex, $lap, $cpTotal, $mode, $playAudio) {
         $this->currentRun[$cpIndex] = $time;
         $this->checkpoint->setText("cp " . (($cpIndex % $cpTotal) + 1) . "/" . $cpTotal . "");
 

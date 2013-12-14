@@ -396,7 +396,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($rankings as $player) {
             $out[] = array("PlayerId" => intval($player->playerId), "Score" => 0);
         }
-        $this->connection->forceScores($out);
+        $this->connection->forceScores($out, true);
 
         foreach ($this->storage->spectators as $login => $player) {
             if ($player->forceSpectator) {
@@ -452,6 +452,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->cupScores, "score");
         $win->setData($this->cupScores, $this->pointsLimit, $this->winners);
         $win->setLayer($layer);
+        $win->setPosZ(180);
         $win->centerOnScreen();
         $win->show();
     }
