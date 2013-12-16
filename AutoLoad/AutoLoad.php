@@ -27,7 +27,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         , 'eXpansion\Players'
         , 'eXpansion\Votes'
         , 'eXpansion\Widgets_Clock'
-       // , 'eXpansion\Widgets_BestCheckpoints'
+        // , 'eXpansion\Widgets_BestCheckpoints'
         , 'eXpansion\Widgets_EndRankings'
         , 'eXpansion\Widgets_PersonalBest'
         , 'eXpansion\Widgets_Record'
@@ -62,11 +62,19 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function loadPlugins($list, \ManiaLive\PluginHandler\PluginHandler $pHandler) {
         $recheck = array();
+        $disabled = Config::getInstance()->disable;
+        if (!is_array($disabled))
+            $disabled = array($disabled);
+
 
         foreach ($list as $pname) {
             try {
                 if (!$pHandler->isLoaded($pname)) {
                     //Console::println("\n[eXpansion Pack]AutoLoading : Trying to Load $pname ... ");
+
+                    if (in_array($pname, $disabled))
+                        continue;
+
                     if (!$pHandler->load($pname)) {
                         Console::println("[" . $pname . "]..............................FAIL -> will retry");
                         $recheck[] = $pname;

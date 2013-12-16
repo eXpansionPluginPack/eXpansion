@@ -16,7 +16,11 @@ use ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Controls\BannedPlayeritem;
  */
 class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
+    /** @var integer $dynamicTime */
     private $dynamicTime = 0;
+
+    /** @var integer $teamGap */
+    private $teamGap = 0;
 
     public function exp_onInit() {
         parent::exp_onInit();
@@ -632,9 +636,56 @@ Other server might use the same blacklist file!!');
                 case "red":
                     $this->setTeamRed($fromLogin, $params);
                     break;
+                case "gap":
+                    $this->enableTeamGap($fromLogin, $params);
+                    break;
             }
         } catch (\Exception $e) {
             
+        }
+    }
+
+    public function enableTeamGap($login, $params) {
+        if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+            $this->exp_chatSendServerMessage("#admin_error#Not in teams mode!", $login);
+        }
+
+        if (sizeof($params) > 0 && is_numeric($params[0])) {
+            $this->teamGap = intval($params[0]);
+            $this->connection->setTeamPointsLimit($this->teamGap * 10);
+            $this->exp_chatSendServerMessage('#admin_action#Team gap set to #variable# %1$s!', $login, array($params[0]));
+            $this->connection->restartMap();
+        }
+    }
+
+    public function onBeginMatch() {
+        //  if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+        //      $this->connection->setTeamPointsLimit($this->teamGap * 10);
+        //  }
+    }
+
+    public function onEndMatch($rankings, $winnerTeamOrMap) {
+        //if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+        //     $this->connection->setTeamPointsLimit($this->teamGap);
+        //  }
+    }
+
+    public function onEndRound() {
+        $this->checkTeamGap();
+    }
+
+    public function onBeginRound() {
+        $this->checkTeamGap();
+    }
+
+    public function checkTeamGap() {
+        if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode = \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->teamUseNewRules) {
+            $ranking = $this->connection->getCurrentRanking(-1, 0);
+            $scoregap = abs($ranking[0]->score - $ranking[1]->score);
+            $scoremax = $ranking[0]->score > $ranking[1]->score ? $ranking[0]->score : $ranking[1]->score;
+            if ($scoremax >= $this->teamGap && $scoregap >= 2) {
+                $this->connection->nextMap(false);
+            }
         }
     }
 

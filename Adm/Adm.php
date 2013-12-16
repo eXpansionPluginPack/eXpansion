@@ -148,6 +148,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function forceScoresOk() {
+        $this->exp_chatSendServerMessage('Notice: Admin has altered the scores of current match!');
         if ($this->isPluginLoaded("eXpansion\ESLcup")) {
             $this->callPublicMethod("eXpansion\ESLcup", "syncScores");
         }
