@@ -238,7 +238,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
     }
 
-    public function nextMap($login) {
+    public function skipMap($login) {
         if ($this->isPluginLoaded("eXpansion\Chat_Admin")) {
             $this->callPublicMethod("eXpansion\Chat_Admin", "skipMap", $login);
         }

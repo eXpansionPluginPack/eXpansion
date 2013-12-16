@@ -173,7 +173,7 @@ class AdminPanel extends \ManiaLive\Gui\Window {
                     $this->cancelVote($login);
                     break;
                 case "nextMap":
-                    self::$mainPlugin->skipmap($login);
+                    self::$mainPlugin->skipMap($login);
                     break;
                 case "restartMap":
                     self::$mainPlugin->restartMap($login);
