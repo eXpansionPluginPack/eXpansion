@@ -23,6 +23,7 @@ class AdminPanel extends \ManiaLive\Gui\Window {
     private $actionCancelVote;
     private $actionSkip;
     private $actionRestart;
+    public static $mainPlugin;
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -172,12 +173,10 @@ class AdminPanel extends \ManiaLive\Gui\Window {
                     $this->cancelVote($login);
                     break;
                 case "nextMap":
-                    $this->connection->nextMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
-                    $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff skipped to next map!');
+                    self::$mainPlugin->skipmap($login);
                     break;
                 case "restartMap":
-                    $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
-                    $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff restarted the map');
+                    self::$mainPlugin->restartMap($login);
                     break;
             }
         } catch (\Exception $e) {

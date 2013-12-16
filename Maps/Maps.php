@@ -676,7 +676,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function replayMapInstant($login) {
-        $player = $this->storage->getPlayerObject($login);
         $this->instantReplay = true;
         foreach (NextMapWidget::getAll() as $widget) {
             $widget->setMap($this->storage->currentMap);

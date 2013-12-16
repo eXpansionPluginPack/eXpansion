@@ -55,6 +55,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         ServerControlMain::$mainPlugin = $this;
         Gui\Windows\RoundPoints::$plugin = $this;
         Gui\Windows\ForceScores::$mainPlugin = $this;
+        Gui\Windows\AdminPanel::$mainPlugin = $this;
 
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
@@ -224,6 +225,22 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             } else {
                 $this->exp_chatSendServerMessage($this->msg_databasePlugin, $login);
             }
+        }
+    }
+
+    public function restartMap($login) {
+        if ($this->isPluginLoaded("eXpansion\Chat_Admin")) {
+            $this->callPublicMethod("eXpansion\Chat_Admin", "restartMap", $login);
+            return;
+        }
+        $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
+        $admin = $this->storage->getPlayerObject($login);
+        $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
+    }
+
+    public function nextMap($login) {
+        if ($this->isPluginLoaded("eXpansion\Chat_Admin")) {
+            $this->callPublicMethod("eXpansion\Chat_Admin", "skipMap", $login);
         }
     }
 

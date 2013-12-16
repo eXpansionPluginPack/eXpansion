@@ -26,7 +26,8 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         parent::exp_onInit();
 
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency('eXpansion\AdminGroups'));
-
+        $this->setPublicMethod("restartMap");
+        $this->setPublicMethod("skipMap");
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
@@ -679,7 +680,7 @@ Other server might use the same blacklist file!!');
     }
 
     public function checkTeamGap() {
-        if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode = \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->teamUseNewRules) {
+        if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->teamUseNewRules) {
             $ranking = $this->connection->getCurrentRanking(-1, 0);
             $scoregap = abs($ranking[0]->score - $ranking[1]->score);
             $scoremax = $ranking[0]->score > $ranking[1]->score ? $ranking[0]->score : $ranking[1]->score;
@@ -1241,10 +1242,13 @@ Other server might use the same blacklist file!!');
 
     function restartMap($fromLogin, $params) {
         try {
-            $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            //Dispatcher::dispatch(new events\onMaxAdmin_Restart());
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
+            if ($this->isPluginLoaded("eXpansion\Maps")) {
+                $this->callPublicMethod("eXpansion\Maps", "replayMapInstant");
+                return;
+            }
+            $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
