@@ -14,8 +14,7 @@ use ManiaLive\Event\Dispatcher;
      *
      * @author oliverde8
      */
-    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin implements \ManiaLive\PluginHandler\WaitingCompliant, 
-            \ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEventListener {
+    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin implements \ManiaLive\PluginHandler\WaitingCompliant, \ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEventListener {
 
         /**
          * The list of Plugin id's that may need to be started
@@ -77,7 +76,7 @@ use ManiaLive\Event\Dispatcher;
             $this->setPublicMethod('exp_deactivateAnnounceRedirect');
 
             $this->exp_onInit();
-            
+
             Dispatcher::register(GameSettingsEvent::getClass(), $this);
         }
 
@@ -374,10 +373,30 @@ use ManiaLive\Event\Dispatcher;
             }
         }
 
+        /**
+         * Returns player object from given playerId
+         * @param integer $id
+         * @return \DedicatedApi\Structures\Player
+         */
+        public function getPlayerObjectById($id) {
+            if (!is_numeric($id))
+                throw new Exception("player id is not numeric");
+            foreach ($this->storage->players as $login => $player) {
+                if ($player->playerId == $id)
+                    return $player;
+            }
+            foreach ($this->storage->spectators as $login => $player) {
+                if ($player->playerId == $id)
+                    return $player;
+            }
+        }
+
         public function onGameModeChange($oldGameMode, $newGameMode) {
+            
         }
 
         public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes) {
+            
         }
 
     }

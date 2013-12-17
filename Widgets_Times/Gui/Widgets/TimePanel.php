@@ -151,7 +151,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
         parent::onResize($oldX, $oldY);
     }
 
-    public function onCheckpoint($time, $cpIndex, $lap, $cpTotal, $mode, $playAudio) {
+    public function onCheckpoint($login, $time, $cpIndex, $lap, $cpTotal, $mode, $playAudio) {
         $this->currentRun[$cpIndex] = $time;
         $this->checkpoint->setText("cp " . (($cpIndex % $cpTotal) + 1) . "/" . $cpTotal . "");
 
@@ -181,7 +181,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
         if ($mode == self::Mode_PersonalBest) {
             $dedicp = array();
             foreach (self::$dedirecords as $dedirec) {
-                if ($dedirec['Login'] == $this->getRecipient()) {
+                if ($dedirec['Login'] == $login) {
                     if (array_key_exists('Checks', $dedirec)) {
                         $dedicp = explode(",", $dedirec['Checks']);
                         $dediTotal = end($dedicp);
@@ -189,7 +189,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
                     break;
                 }
             }
-            $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->getRecipient());
+            $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $login);
             $localcp = array();
             if ($record) {
                 $localcp = $record->ScoreCheckpoints;

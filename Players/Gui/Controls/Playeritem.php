@@ -74,7 +74,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->icon->setSize(4, 4);
         $this->icon->setAlign("center", "center2");
 
-        if ($player->spectatorStatus >= 2550000) {
+        if ($player->spectator == 1) {
             $this->icon->setStyle("Icons64x64_1");
             $this->icon->setSubStyle("Camera");
         } else {
@@ -165,7 +165,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->nickname->setSizeX($this->widths[1]);
 
         if ($this->isAdmin) {
-            if ($this->player->spectatorStatus >= 2550000) {
+            if ($this->player->spectator == 1) {
                 $this->forceButton->setText(__("Release Spec", $this->recipient));
             } else {
                 $this->forceButton->setText(__("Force Spec", $this->recipient));

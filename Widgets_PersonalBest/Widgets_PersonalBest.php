@@ -15,48 +15,59 @@ use ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Gui\Widgets\PBPanel;
 class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onLoad() {
-	parent::exp_onLoad();
-	Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_PERSONAL_BEST);
-	Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
-	Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
+        parent::exp_onLoad();
+        Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_PERSONAL_BEST);
+        Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
+        Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
 
     public function exp_onReady() {
-	$this->enableDedicatedEvents();
-	foreach ($this->storage->players as $player)
-	    $this->onPlayerConnect($player->login, false);
-	foreach ($this->storage->spectators as $player)
-	    $this->onPlayerConnect($player->login, true);
+        $this->enableDedicatedEvents();
+        foreach ($this->storage->players as $player)
+            $this->onPlayerConnect($player->login, false);
+        foreach ($this->storage->spectators as $player)
+            $this->onPlayerConnect($player->login, true);
     }
 
     function onPlayerConnect($login, $isSpectator) {
-	$this->displayRecordWidget($login);
+        if (!$isSpectator) {
+            $this->displayRecordWidget($login);
+        }
+    }
+
+    public function onPlayerInfoChanged($playerInfo) {
+        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+        if ($player->spectator == 1) {
+            PBPanel::Erase($player->login);
+        } else {
+            $this->displayRecordWidget($player->login);
+        }
     }
 
     function onUpdateRecords($record) {
-	foreach ($this->storage->players as $player)
-	    $this->redrawWidget($player->login);
-	foreach ($this->storage->spectators as $player)
-	    $this->redrawWidget($player->login);
+        foreach ($this->storage->players as $player)
+            $this->redrawWidget($player->login);
+        foreach ($this->storage->spectators as $player)
+            $this->redrawWidget($player->login);
     }
 
     public function onPersonalBestRecord(Record $record) {
-	$this->redrawWidget($record->login, $record);
+        $this->redrawWidget($record->login, $record);
     }
 
     public function onNewRecord($records) {
-	foreach ($this->storage->players as $player)
-	    $this->redrawWidget($player->login);
-	foreach ($this->storage->spectators as $player)
-	    $this->redrawWidget($player->login);
+        foreach ($this->storage->players as $player)
+            $this->redrawWidget($player->login);
+        foreach ($this->storage->spectators as $player)
+            $this->redrawWidget($player->login);
     }
 
     public function redrawWidget($login = null) {
-	$record = null;
-	if ($login != null) {
-	    $record = $this->callPublicMethod('eXpansion\\LocalRecords', 'getCurrentChallangePlayerRecord', $login);
-	}
-	$this->displayRecordWidget($login, $record);
+        $record = null;
+        if ($login != null) {
+            $record = $this->callPublicMethod('eXpansion\\LocalRecords', 'getCurrentChallangePlayerRecord', $login);
+        }
+        $this->displayRecordWidget($login, $record);
     }
 
     /**
@@ -66,26 +77,26 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
      * @return 
      */
     function displayRecordWidget($login, $record = null) {
-	// PBPanel::Erase($login);
-	
-	if ($login == null)
-	    return;
+        //PBPanel::Erase($login);
 
-	if ($record == null)
-	    $record = $this->callPublicMethod('eXpansion\\LocalRecords', 'getCurrentChallangePlayerRecord', $login);
+        if ($login == null)
+            return;
 
-	$rank = $this->callPublicMethod('eXpansion\\LocalRecords', 'getPlayerRank', $login);
-	if ($rank == -1)
-	    $rank = '--';
-	if ($rank == -2)
-	    $rank = '';
-	$rankTotal = $this->callPublicMethod('eXpansion\\LocalRecords', 'getTotalRanked');
+        if ($record == null)
+            $record = $this->callPublicMethod('eXpansion\\LocalRecords', 'getCurrentChallangePlayerRecord', $login);
 
-	$info = PBPanel::Create($login);
-	$info->setRecord($record, $rank, $rankTotal);
-	$info->setSize(30, 6);
-	$info->setPosition(132, -76);
-	$info->show();
+        $rank = $this->callPublicMethod('eXpansion\\LocalRecords', 'getPlayerRank', $login);
+        if ($rank == -1)
+            $rank = '--';
+        if ($rank == -2)
+            $rank = '';
+        $rankTotal = $this->callPublicMethod('eXpansion\\LocalRecords', 'getTotalRanked');
+
+        $info = PBPanel::Create($login);
+        $info->setRecord($record, $rank, $rankTotal);
+        $info->setSize(30, 6);
+        $info->setPosition(132, -76);
+        $info->show();
     }
 
 }

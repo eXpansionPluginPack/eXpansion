@@ -128,7 +128,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 $this->connection->chatSendServerMessage(__('Admin has forced you to specate!', $target), $target);
                 return;
             }
-            if ($player->spectatorStatus >= 2550000) {
+            if ($player->spectator == 1) {
                 $this->connection->forceSpectator($target, 2);
                 $this->connection->forceSpectator($target, 0);
                 $this->connection->chatSendServerMessage(__("Admin has released you from specate to play.", $target), $target);

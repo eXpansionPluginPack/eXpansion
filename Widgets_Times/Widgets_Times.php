@@ -12,8 +12,11 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $modes = array();
     private $audio = array();
 
+    /** @var \DedicatedApi\Structures\Player[] */
+    private $spectatorTargets = array();
+
     function exp_onInit() {
-        //Important for all eXpansion plugins.
+//Important for all eXpansion plugins.
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK);
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM);
@@ -36,8 +39,18 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->onBeginMatch();
     }
 
-    public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
+    public function onPlayerInfoChanged($playerInfo) {
+        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+        if ($player->spectator == 1) {
+            $this->spectatorTargets[$player->login] = $player;
+        } else {
+            if (array_key_exists($player->login, $this->spectatorTargets)) {
+                unset($this->spectatorTargets[$player->login]);
+            }
+        }
+    }
 
+    public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
         $mode = TimePanel::Mode_PersonalBest;
         if (isset($this->modes[$login])) {
             if ($this->modes[$login] == TimePanel::Mode_None)
@@ -51,23 +64,53 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         $info = TimePanel::Create($login);
-        $info->onCheckpoint($timeOrScore, $checkpointIndex, $curLap, $this->storage->currentMap->nbCheckpoints, $mode, $playAudio);
+        $info->onCheckpoint($login, $timeOrScore, $checkpointIndex, $curLap, $this->storage->currentMap->nbCheckpoints, $mode, $playAudio);
         $info->setSize(30, 6);
         $info->setPosition(0, 40);
         $info->show();
+
+        //echo "spectators: " . count($this->spectatorTargets) . "\n";
+        foreach ($this->spectatorTargets as $tlogin => $pla) {
+            $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
+            // echo "should display to $tlogin\n";
+            //echo "observerd player:" . $observedPlayer->login . "  checkpoint:" . $login . " \n";
+            if ($login == $observedPlayer->login) {
+                $mode = $this->modes[$tlogin];
+                $info = TimePanel::Create($tlogin);
+                $info->onCheckpoint($login, $timeOrScore, $checkpointIndex, $curLap, $this->storage->currentMap->nbCheckpoints, $mode, $playAudio);
+                $info->setSize(30, 6);
+                $info->setPosition(0, 40);
+                $info->show();
+            }
+        }
     }
 
     public function onPlayerFinish($playerUid, $login, $timeOrScore) {
-        if ($timeOrScore != 0) {
-            $info = TimePanel::Create($login);
-            $info->onFinish($timeOrScore);
-            if (!$this->storage->currentMap->lapRace)
+
+        $info = TimePanel::Create($login);
+        $info->onFinish($timeOrScore);
+        if (!$this->storage->currentMap->lapRace)
+            $info->hide();
+
+        foreach ($this->spectatorTargets as $tlogin => $pla) {
+            $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
+            if ($login == $observedPlayer->login) {
+                $info = TimePanel::Create($tlogin);
                 $info->hide();
+            }
         }
+
         if ($timeOrScore == 0) {
             $info = TimePanel::Create($login);
             $info->onStart();
             $info->hide();
+            foreach ($this->spectatorTargets as $tlogin => $pla) {
+                $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
+                if ($login == $observedPlayer->login) {
+                    $info = TimePanel::Create($tlogin);
+                    $info->hide();
+                }
+            }
         }
     }
 
@@ -90,13 +133,17 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onBeginMatch() {
         foreach ($this->storage->players as $player)
-            $this->showPanel($player->login);
+            $this->showPanel($player->login, false);
 
         foreach ($this->storage->spectators as $player)
             $this->showPanel($player->login, true);
     }
 
-    function showPanel($login) {
+    function showPanel($login, $isSpectator = false) {
+        if ($isSpectator) {
+            $player = $this->storage->getPlayerObject($login);
+            $this->spectatorTargets[$login] = $player;
+        }
         $widget = TimeChooser::Create($login);
         $widget->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
         $widget->setSize(40, 6);
@@ -114,7 +161,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onPlayerConnect($login, $isSpectator) {
         $audiopreload = Gui\Widgets\AudioPreload::Create($login);
         $audiopreload->show();
-        $this->showPanel($login);
+        $this->showPanel($login, $isSpectator);
     }
 
     function onPlayerDisconnect($login, $reason = null) {
