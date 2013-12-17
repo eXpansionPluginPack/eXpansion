@@ -9,12 +9,15 @@ class TimePanel extends \ManiaLive\Gui\Window {
     const Mode_BestOfAll = 1;
     const Mode_PersonalBest = 2;
     const Mode_None = 3;
+    const Mode_All = 4;
 
     protected $checkpoint;
     protected $time;
     protected $audio;
     protected $xml;
     protected $frame;
+    protected $position;
+    protected $top1;
     private $bestRun = array();
     private $currentRun = array();
     private $lastFinish = -1;
@@ -34,7 +37,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line(40, 7));
         $this->addComponent($this->frame);
 
-        $this->checkpoint = new \ManiaLib\Gui\Elements\Label(12, 4);
+        $this->checkpoint = new \ManiaLib\Gui\Elements\Label(16, 4);
         $this->checkpoint->setTextColor("fff");
         $this->checkpoint->setAlign("left", "center");
         $this->frame->addComponent($this->checkpoint);
@@ -44,8 +47,18 @@ class TimePanel extends \ManiaLive\Gui\Window {
         $this->time->setStyle("TextTitle2");
         $this->frame->addComponent($this->time);
 
+        $this->position = new \ManiaLib\Gui\Elements\Label(40, 4);
+        $this->position->setAlign("left", "center");
+        $this->position->setStyle("TextTitle2");
+        $this->setPosX(-40);
+        $this->addComponent($this->position);
 
-
+        $this->top1 = new \ManiaLib\Gui\Elements\Label(40, 4);
+        $this->top1->setAlign("left", "center");
+        $this->top1->setStyle("TextTitle2");
+        $this->setPosX(-80);
+        $this->addComponent($this->top1);
+        
         $this->audio = new \ManiaLib\Gui\Elements\Audio();
         $this->audio->setPosY(260);
         $this->addComponent($this->audio);
@@ -163,6 +176,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
         $this->time->setTextColor('fffa');
         $this->time->setText(\ManiaLive\Utilities\Time::fromTM($time, false));
 
+        
 
         if ($mode == self::Mode_BestOfAll) {
             $dedicp = array();
