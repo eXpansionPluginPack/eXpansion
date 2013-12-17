@@ -8,25 +8,29 @@ use \ManiaLib\Utils\Formatting;
 
 class Playeritem extends \ManiaLive\Gui\Control {
 
-    private $bg;
-    private $forceButton;
-    private $ignoreButton;
-    private $kickButton;
-    private $banButton;
-    private $blacklistButton;
-    private $login;
-    private $nickname;
+    protected $bg;
+    protected $forceButton;
+    protected $ignoreButton;
+    protected $kickButton;
+    protected $banButton;
+    protected $blacklistButton;
+    protected $login;
+    protected $nickname;
     private $ignoreAction;
     private $kickAction;
     private $banAction;
     private $blacklistAction;
     private $forceAction;
-    private $frame;
+    protected $frame;
     private $recipient;
+    private $widths;
+    protected $team;
+    protected $icon;
+    private $toggleTeam = null;
 
-    function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin, $login, $sizeX) {
+    function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin, $login, $widths, $sizeX) {
         $this->recipient = $login;
-
+        $this->widths = \ManiaLivePlugins\eXpansion\Gui\Gui::getScaledSize($widths, $sizeX);
 
         $sizeY = 4;
         $this->isAdmin = $isAdmin;
@@ -37,6 +41,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
             $this->banAction = $this->createAction(array($controller, 'banPlayer'), $player->login);
             $this->blacklistAction = $this->createAction(array($controller, 'blacklistPlayer'), $player->login);
             $this->forceAction = $this->createAction(array($controller, 'toggleSpec'), $player->login);
+            $this->toggleTeam = $this->createAction(array($controller, 'toggleTeam'), $player->login);
         }
 
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
@@ -47,35 +52,55 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setAlign("center", "center2");
-        $spacer->setStyle("Icons64x64_1");
+        $this->team = new \ManiaLib\Gui\Elements\Quad();
+        $this->team->setSize(4, 4);
+        $this->team->setAlign("center", "center2");
+        $this->team->setStyle("Icons64x64_1");
+        $this->team->setSubStyle("Empty");
+        if ($player->teamId === 0) {
+            $this->team->setStyle("BgRaceScore2");
+            $this->team->setSubStyle("HandleBlue");
+            $this->team->setAction($this->toggleTeam);
+        }
+        if ($player->teamId === 1) {
+            $this->team->setStyle("BgRaceScore2");
+            $this->team->setSubStyle("HandleRed");
+            $this->team->setAction($this->toggleTeam);
+        }
 
-        if ($player->forceSpectator == 1 || $player->isSpectator)
-            $spacer->setSubStyle("Camera");
-        else
-            $spacer->setSubStyle("Buddy");
+        $this->frame->addComponent($this->team);
 
+        $this->icon = new \ManiaLib\Gui\Elements\Quad();
+        $this->icon->setSize(4, 4);
+        $this->icon->setAlign("center", "center2");
 
-        $this->frame->addComponent($spacer);
+        if ($player->spectatorStatus >= 2550000) {
+            $this->icon->setStyle("Icons64x64_1");
+            $this->icon->setSubStyle("Camera");
+        } else {
+            $this->icon->setStyle("Icons64x64_1");
+            $this->icon->setSubStyle("Buddy");
+        }
+
+        $this->frame->addComponent($this->icon);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(4, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
 //$this->frame->addComponent($spacer);
 
-        $this->login = new \ManiaLib\Gui\Elements\Label(30, 4);
-        $this->login->setAlign('left', 'center');
-        $this->login->setText($player->login);
-        $this->login->setScale(0.8);
-        $this->frame->addComponent($this->login);
 
         $this->nickname = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->nickname->setAlign('left', 'center');
         $this->nickname->setScale(0.8);
         $this->nickname->setText($player->nickName);
         $this->frame->addComponent($this->nickname);
+
+        $this->login = new \ManiaLib\Gui\Elements\Label(30, 4);
+        $this->login->setAlign('left', 'center');
+        $this->login->setText($player->login);
+        $this->login->setScale(0.8);
+        $this->frame->addComponent($this->login);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(4, 4);
@@ -136,8 +161,11 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(-2);
         $this->bg->setSize($this->sizeX, $this->sizeY);
+        $this->login->setSizeX($this->widths[0]);
+        $this->nickname->setSizeX($this->widths[1]);
+
         if ($this->isAdmin) {
-            if ($this->player->forceSpectator == 1 || $this->player->isSpectator) {
+            if ($this->player->spectatorStatus >= 2550000) {
                 $this->forceButton->setText(__("Release Spec", $this->recipient));
             } else {
                 $this->forceButton->setText(__("Force Spec", $this->recipient));
