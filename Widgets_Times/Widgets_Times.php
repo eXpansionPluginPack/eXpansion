@@ -167,6 +167,9 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onPlayerDisconnect($login, $reason = null) {
         TimePanel::Erase($login);
         TimeChooser::Erase($login);
+        if (array_key_exists($login, $this->spectatorTargets)) {
+            unset($this->spectatorTargets[$login]);
+        }
     }
 
     public function onUpdateRecords($data) {
