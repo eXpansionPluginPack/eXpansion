@@ -64,11 +64,6 @@ use ManiaLive\Event\Dispatcher;
 
             //Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
-
-            //Recovering the billManager if need.
-            if(self::$exp_billManager == null){
-                self::$exp_billManager = new \ManiaLivePlugins\eXpansion\Core\BillManager($this->connection);
-            }
             
             $this->exp_unloading = false;
             $this->relay = \ManiaLivePlugins\eXpansion\Core\RelayLink::getInstance();
@@ -117,7 +112,12 @@ use ManiaLive\Event\Dispatcher;
         }
 
         public final function onReady() {
-
+            $this->enableDatabase();
+            //Recovering the billManager if need.
+            if(self::$exp_billManager == null){
+                self::$exp_billManager = new \ManiaLivePlugins\eXpansion\Core\BillManager($this->connection, $this->db, $this);
+            }
+            
             if (!self::exp_checkGameCompability()) {
                 $this->exp_unload();
             } else {
@@ -374,10 +374,14 @@ use ManiaLive\Event\Dispatcher;
          * @param type $params The parameters to pass whith the calback
          * @return \ManiaLivePlugins\eXpansion\Core\types\Bill
          */
-        public function exp_startBill($source_login, $destination_login, int $amount, $msg, $callback = array(), $params = array()){
+        public function exp_startBill($source_login, $destination_login, $amount, $msg, $callback = array(), $params = array()){
             $bill = new Bill($source_login, $destination_login, $amount, $msg);
             self::$exp_billManager->sendBill($bill);
             $bill->setValidationCallback($callback, $params);
+            
+            $bill->setPluginName($this->getId());
+            $bill->setSubject($msg);
+            
             return $bill;
         }
         

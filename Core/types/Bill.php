@@ -16,12 +16,15 @@ class Bill {
     private $amount;
     private $msg;
     
+    private $pluginName = '';
+    private $subject = '';
+    
     private $callback = null;
     private $params = array();
     
     private $errorCallBack;
     
-    function __construct($source_login, $destination_login, int $amount, $msg) {
+    function __construct($source_login, $destination_login, $amount, $msg) {
         $this->source_login = $source_login;
         $this->destination_login = $destination_login;
         $this->amount = $amount;
@@ -68,12 +71,29 @@ class Bill {
         $this->msg = $msg;
     }
     
+    public function getPluginName() {
+        return $this->pluginName;
+    }
+
+    public function getSubject() {
+        return $this->subject;
+    }
+
+    public function setPluginName($pluginName) {
+        $this->pluginName = $pluginName;
+    }
+
+    public function setSubject($subject) {
+        $this->subject = $subject;
+    }
+
+        
     public function setValidationCallback($callback, $params) {
         $this->callback = $callback;
         $this->params = $params;
     }
     
-    public function setErrorCallback($errorNum, $callback, $params){
+    public function setErrorCallback($errorNum, $callback, $params=array()){
         $this->errorCallBack[$errorNum] = array($callback, $params);
     }
 
@@ -82,13 +102,14 @@ class Bill {
         if($this->callback != null){
             $params = $this->params;
             array_unshift($params, $this);
-            call_user_func($this->callback, $this->params);
+            call_user_func_array($this->callback, $params);
         }
     }
     
     public function error($erroNum, $stateName){
         if(isset($this->errorCallBack[$erroNum]))
-            call_user_func ($this->errorCallBack[$erroNum][0], $this->errorCallBack[$erroNum][1], array($this, $erroNum, $stateName));
+            call_user_func_array($this->errorCallBack[$erroNum][0],  array($this, $erroNum, $stateName));
+        
     }
     
 }

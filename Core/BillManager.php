@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Core;
 
 use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
+use ManiaLive\Database\Connection as DbConnection;
 
 /**
  * Description of BillManager
@@ -12,16 +13,35 @@ use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
 class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener {
 
     private static $instance = null;
-    
+    private $db = null;
     private $bills = array();
     private $connection;
+    private $aplugin;
 
-    function __construct(\DedicatedApi\Connection $connection) {
+    function __construct(\DedicatedApi\Connection $connection, DbConnection $dbcon, $plugin) {
+        
+        echo "Init Bill \n";
+        
         $this->connection = $connection;
         self::$instance = $this;
+        $this->db = $dbcon;
+
+        $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+
+        if (!$this->db->tableExists("exp_planet_transaction")) {
+            $q = "CREATE TABLE `exp_planet_transaction` (
+                    `transaction_id` MEDIUMINT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+                    `transaction_fromLogin` VARCHAR( 200 ) NOT NULL,
+                    `transaction_toLogin` VARCHAR( 200 ) NOT NULL,
+                    `transaction_plugin` VARCHAR( 200 ) NOT NULL DEFAULT 'unknown',
+                    `transaction_subject` VARCHAR( 200 ) NOT NULL DEFAULT 'unknown',
+                    `transaction_amount` MEDIUMINT( 4 ) DEFAULT '0'
+                ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = MYISAM ;";
+            $this->db->query($q);
+        }
     }
-    
-    public static function getInstance(){
+
+    public static function getInstance() {
         return self::$instance;
     }
 
@@ -42,67 +62,125 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener {
         if (isset($this->bills[$billId])) {
             $bill = $this->bills[$billId];
             if ($state == 4) {
+                //Sucess :D
+
+                $q = 'INSERT INTO `exp_planet_transaction` (`transaction_fromLogin`, `transaction_toLogin`, `transaction_plugin`
+                            ,`transaction_subject`, `transaction_amount`)
+                        VALUES(' . $this->db->quote($bill->getSource_login()) . ',
+                            ' . $this->db->quote($bill->getDestination_login()) . ',
+                            ' . $this->db->quote($bill->getPluginName()) . ',
+                            ' . $this->db->quote($bill->getSubject()) . ',
+                            ' . $this->db->quote($bill->getAmount()) . '
+                        )';
+                $this->db->query($q);
+                
                 $bill->validate();
                 unset($this->bills[$billId]);
-                
-            }elseif ($state == 5) { // No go
+            } elseif ($state == 5) { // No go
                 $bill->error(5, $stateName);
                 unset($this->bills[$billId]);
-                
-            }else if ($state == 6) {  // Error
+            } else if ($state == 6) {  // Error
                 $bill->error(6, $stateName);
                 unset($this->bills[$billId]);
             }
         }
     }
-    
-    public function onBeginMap($map, $warmUp, $matchContinuation) {}
 
-    public function onBeginMatch() {}
+    public function onBeginMap($map, $warmUp, $matchContinuation) {
+        
+    }
 
-    public function onBeginRound() {}
+    public function onBeginMatch() {
+        
+    }
 
-    public function onEcho($internal, $public) {}
+    public function onBeginRound() {
+        
+    }
 
-    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {}
+    public function onEcho($internal, $public) {
+        
+    }
 
-    public function onEndMatch($rankings, $winnerTeamOrMap) {}
+    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+        
+    }
 
-    public function onEndRound() {}
+    public function onEndMatch($rankings, $winnerTeamOrMap) {
+        
+    }
 
-    public function onManualFlowControlTransition($transition) {}
+    public function onEndRound() {
+        
+    }
 
-    public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {}
+    public function onManualFlowControlTransition($transition) {
+        
+    }
 
-    public function onModeScriptCallback($param1, $param2) {}
+    public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
+        
+    }
 
-    public function onPlayerAlliesChanged($login) {}
+    public function onModeScriptCallback($param1, $param2) {
+        
+    }
 
-    public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {}
+    public function onPlayerAlliesChanged($login) {
+        
+    }
 
-    public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {}
+    public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
+        
+    }
 
-    public function onPlayerConnect($login, $isSpectator) {}
+    public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
+        
+    }
 
-    public function onPlayerDisconnect($login, $disconnectionReason) {}
+    public function onPlayerConnect($login, $isSpectator) {
+        
+    }
 
-    public function onPlayerFinish($playerUid, $login, $timeOrScore) {}
+    public function onPlayerDisconnect($login, $disconnectionReason) {
+        
+    }
 
-    public function onPlayerIncoherence($playerUid, $login) {}
+    public function onPlayerFinish($playerUid, $login, $timeOrScore) {
+        
+    }
 
-    public function onPlayerInfoChanged($playerInfo) {}
+    public function onPlayerIncoherence($playerUid, $login) {
+        
+    }
 
-    public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries) {}
+    public function onPlayerInfoChanged($playerInfo) {
+        
+    }
 
-    public function onServerStart() {}
+    public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries) {
+        
+    }
 
-    public function onServerStop() {}
+    public function onServerStart() {
+        
+    }
 
-    public function onStatusChanged($statusCode, $statusName) {}
+    public function onServerStop() {
+        
+    }
 
-    public function onTunnelDataReceived($playerUid, $login, $data) {}
+    public function onStatusChanged($statusCode, $statusName) {
+        
+    }
 
-    public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {}
+    public function onTunnelDataReceived($playerUid, $login, $data) {
+        
+    }
+
+    public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {
+        
+    }
 
 }
 

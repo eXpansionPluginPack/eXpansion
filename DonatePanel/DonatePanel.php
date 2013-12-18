@@ -48,7 +48,7 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param mixed $transactionId
      * @return
      */
-    function onBillUpdated($billId, $state, $stateName, $transactionId) {
+    function onBillUpdated_deactivated($billId, $state, $stateName, $transactionId) {
 
         if (count(self::$billId) == 0)
             return;
@@ -133,12 +133,10 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (empty($this->config->toLogin))
             $toLogin = $this->storage->serverLogin;
 
-        $fromPlayer = $this->storage->getPlayerObject($login);
-
-        $bill = $this->exp_startBill($fromPlayer, $toLogin, $amount, 'Planets Donation', array($this, 'billSucess'));
-
-        $bill = $this->connection->sendBill($login, (int) $amount, 'Planets Donation', $toLogin);
-        //self::$billId[$bill] = array($bill, $login, $amount);
+        $bill = $this->exp_startBill($login, $toLogin, $amount, 'Planets Donation', array($this, 'billSucess'));
+        $bill->setErrorCallback(5, array($this, 'billFail'));
+        $bill->setErrorCallback(6, array($this, 'billFail'));
+        $bill->setSubject('server_donation');
     }
 
     public function billSucess(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill) {
@@ -158,11 +156,10 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         if ($state == 6) {  // Error
-            $login = $data[1];
+            $login = $bill->getDestination_login();
             $fromPlayer = $this->storage->getPlayerObject($bill->getSource_login());
             $this->exp_chatSendServerMessage('#error# There was error with player #variable#' . $fromPlayer->nickName . '$z$s#error# donation.');
             $this->exp_chatSendServerMessage('#error#' . $stateName, $bill->getSource_login());
-            unset(self::$billId[$data[0]]);
         }
     }
 
