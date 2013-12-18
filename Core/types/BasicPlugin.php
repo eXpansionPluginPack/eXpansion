@@ -33,6 +33,12 @@ use ManiaLive\Event\Dispatcher;
         private static $exp_chatRedirected = array();
 
         /**
+         *
+         * @var ManiaLivePlugins\eXpansion\Core\BillManager 
+         */
+        private static $exp_billManager = null;
+
+        /**
          * THe list of plugins that have their announcement redirected
          */
         private static $exp_announceRedirected = array();
@@ -56,14 +62,19 @@ use ManiaLive\Event\Dispatcher;
 
         public final function onInit() {
 
-//Recovering the eXpansion pack tools
+            //Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
 
+            //Recovering the billManager if need.
+            if(self::$exp_billManager == null){
+                self::$exp_billManager = new \ManiaLivePlugins\eXpansion\Core\BillManager($this->connection);
+            }
+            
             $this->exp_unloading = false;
             $this->relay = \ManiaLivePlugins\eXpansion\Core\RelayLink::getInstance();
             \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
 
-//All plugins need the eXpansion Core to work properly
+            //All plugins need the eXpansion Core to work properly
             if ($this->getId() != 'eXpansion\Core' && $this->getId() != 'eXpansion\AutoLoad')
                 $this->addDependency(new \ManiaLive\PluginHandler\Dependency('eXpansion\Core'));
 
