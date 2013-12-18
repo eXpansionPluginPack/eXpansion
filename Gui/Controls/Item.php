@@ -46,13 +46,13 @@ class Item extends \ManiaLive\Gui\Control {
     
     public function onResize($oldX, $oldY) {
         $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX()/.8) - 5);
-        $this->bg->setSizeX($this->getSizeX()/.8-5);
+        $this->bg->setSizeX($this->getSizeX()-5);
         $i = 0;
         foreach ($scaledSizes as $sizeX) {
             $this->labels[$i]->setSizeX($sizeX);
             $i++;
         }
-        $this->frame->setSizeX($this->getSizeX()/.8);
+        $this->frame->setSizeX($this->getSizeX());
     }
     // manialive 3.1 override to do nothing.
     function destroy() {

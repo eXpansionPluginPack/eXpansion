@@ -33,26 +33,34 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 . ' GROUP BY transaction_fromLogin, player_nickname'
                 . ' ORDER BY totalPlanets DESC'
                 . ' LIMIT 0, 100';         
+        
+        $datas = $this->getData($sql);
+        
+        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmount::Erase($login);
+        $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmount::Create($login);
+        $window->setTitle(__('Top Server Donators(Amount)', $login));
+        $window->centerOnScreen();
+        $window->populateList($datas);
+        $window->setSize(70, 100);
+        $window->show();
+    }
+    
+    public function getData($sql){
         $dbData = $this->db->query($sql);
 
         if ($dbData->recordCount() == 0) {
             return array();
         }
 
-        $i = 1;
         
+        $i = 0;
         $datas = array();
         while ($data = $dbData->fetchArray()) {
-            $datas[] = $data;
+            $datas[$i] = $data;
+            array_unshift($datas[$i], $i+1);
+            $i++;
         }
-        
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmount::Erase($login);
-        $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmount::Create($login);
-        $window->setSize(140, 100);
-        $window->setTitle(__('Top Server Donators(Amount)', $login));
-        $window->centerOnScreen();
-        $window->populateList($datas);
-        $window->show();
+        return $datas;
     }
    
 }

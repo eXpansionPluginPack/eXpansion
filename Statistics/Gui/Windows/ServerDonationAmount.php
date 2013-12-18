@@ -6,10 +6,10 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 class ServerDonationAmount extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
 
-    public static $labelTitles = array('NickName', 'Amount of Planets');
+    public static $labelTitles = array('#','NickName', 'Amount of Planets');
     
     protected function getKeys() {
-        return array('nickname', 'totalPlanets');
+        return array(0, 'nickname', 'totalPlanets');
     }
 
     protected function getLabel($i) {
@@ -17,7 +17,7 @@ class ServerDonationAmount extends \ManiaLivePlugins\eXpansion\Gui\Windows\Pager
     }
 
     protected function getWidths() {
-        return array(3, 2);
+        return array(1, 5, 3);
     }
 
 }
