@@ -363,6 +363,24 @@ use ManiaLive\Event\Dispatcher;
             unset(self::$exp_announceRedirected[get_class($this)]);
         }
 
+        /**
+         * Will start a billing process.
+         * 
+         * @param type $source_login The login to whom the planets will be taken from
+         * @param type $destination_login The login to whom the planets will be send
+         * @param int $amount The amoint of planets that wil be sent
+         * @param type $msg The label of the bill
+         * @param type $callback The callback in case of sucess
+         * @param type $params The parameters to pass whith the calback
+         * @return \ManiaLivePlugins\eXpansion\Core\types\Bill
+         */
+        public function exp_startBill($source_login, $destination_login, int $amount, $msg, $callback = array(), $params = array()){
+            $bill = new Bill($source_login, $destination_login, $amount, $msg);
+            self::$exp_billManager->sendBill($bill);
+            $bill->setValidationCallback($callback, $params);
+            return $bill;
+        }
+        
         final public function debug($message) {
             $config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
             if (!$config->debug)

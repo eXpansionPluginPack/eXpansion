@@ -30,7 +30,7 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, true);
 
         $cmd = $this->registerChatCommand("donate", "donate", 1, true);
-		$cmd->help = '/donate X where X is ammount of Planets';
+        $cmd->help = '/donate X where X is ammount of Planets';
     }
 
     function onUnload() {
@@ -100,8 +100,8 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onPlayerConnect($login, $isSpec) {
         $window = DonatePanelWindow::Create($login);
         $window->setScale(0.8);
-        $window->setPosition(44,-88);
-        
+        $window->setPosition(44, -88);
+
         $window->show();
     }
 
@@ -134,8 +134,36 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $toLogin = $this->storage->serverLogin;
 
         $fromPlayer = $this->storage->getPlayerObject($login);
+
+        $bill = $this->exp_startBill($fromPlayer, $toLogin, $amount, 'Planets Donation', array($this, 'billSucess'));
+
         $bill = $this->connection->sendBill($login, (int) $amount, 'Planets Donation', $toLogin);
-        self::$billId[$bill] = array($bill, $login, $amount);
+        //self::$billId[$bill] = array($bill, $login, $amount);
+    }
+
+    public function billSucess(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill) {
+        if ($bill->getAmount() < $this->config->donateAmountForGlobalMsg) {
+            $this->exp_chatSendServerMessage('#donate#You donated #variable#' . $bill->getAmount() . '#donate# Planets to the server.$z$s#donate#, Thank You.', $bill->getSource_login());
+        } else {
+            $fromPlayer = $this->storage->getPlayerObject($bill->getSource_login());
+            $this->exp_chatSendServerMessage('#donate#The server recieved a donation of #variable#' . $bill->getAmount() . '#donate# Planets from #variable#' . $fromPlayer->nickName . '$z$s#donate#, Thank You.', null);
+        }
+    }
+
+    public function billFail(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill, $state, $stateName) {
+        if ($state == 5) { // No go
+            $login = $bill->getSource_login();
+
+            $this->exp_chatSendServerMessage('#error#No Planets billed.', $login);
+        }
+
+        if ($state == 6) {  // Error
+            $login = $data[1];
+            $fromPlayer = $this->storage->getPlayerObject($bill->getSource_login());
+            $this->exp_chatSendServerMessage('#error# There was error with player #variable#' . $fromPlayer->nickName . '$z$s#error# donation.');
+            $this->exp_chatSendServerMessage('#error#' . $stateName, $bill->getSource_login());
+            unset(self::$billId[$data[0]]);
+        }
     }
 
 }

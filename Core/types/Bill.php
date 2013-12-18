@@ -79,13 +79,16 @@ class Bill {
 
     
     public function validate(){
-        if($this->callback != null)
+        if($this->callback != null){
+            $params = $this->params;
+            array_unshift($params, $this);
             call_user_func($this->callback, $this->params);
+        }
     }
     
-    public function error($erroNum){
+    public function error($erroNum, $stateName){
         if(isset($this->errorCallBack[$erroNum]))
-            call_user_func ($this->errorCallBack[$erroNum][0], $this->errorCallBack[$erroNum][1]);
+            call_user_func ($this->errorCallBack[$erroNum][0], $this->errorCallBack[$erroNum][1], array($this, $erroNum, $stateName));
     }
     
 }

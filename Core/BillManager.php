@@ -46,11 +46,11 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener {
                 unset($this->bills[$billId]);
                 
             }elseif ($state == 5) { // No go
-                $bill->error(5);
+                $bill->error(5, $stateName);
                 unset($this->bills[$billId]);
                 
             }else if ($state == 6) {  // Error
-                $bill->error(6);
+                $bill->error(6, $stateName);
                 unset($this->bills[$billId]);
             }
         }
