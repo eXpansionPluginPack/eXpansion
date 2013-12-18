@@ -80,8 +80,6 @@ class HudPanel extends \ManiaLive\Gui\Window {
 	$inputbox->setScriptEvents();
 	$this->addComponent($inputbox);
 
-
-
 	$this->_minButton = new \ManiaLib\Gui\Elements\Quad(5, 5);
 	$this->_minButton->setScriptEvents(true);
 	$this->_minButton->setAlign("left", "center");
@@ -111,7 +109,7 @@ class HudPanel extends \ManiaLive\Gui\Window {
                        
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");
                         declare mainWindow <=> Page.GetFirstChild("Frame");
-			declare CMlEntry widgetStatus <=> (Page.GetFirstChild("widgetStatus") as CMlEntry);
+                        declare CMlEntry widgetStatus <=> (Page.GetFirstChild("widgetStatus") as CMlEntry);
                         declare isMinimized = True;                                          
                         declare lastAction = Now;                           
                         declare autoCloseTimeout = 7500;

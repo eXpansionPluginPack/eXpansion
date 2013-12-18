@@ -389,6 +389,7 @@ use ManiaLive\Event\Dispatcher;
                 if ($player->playerId == $id)
                     return $player;
             }
+            return new \DedicatedApi\Structures\Player();
         }
 
         public function onGameModeChange($oldGameMode, $newGameMode) {

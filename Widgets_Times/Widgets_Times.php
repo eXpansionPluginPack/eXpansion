@@ -74,6 +74,8 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
             // echo "should display to $tlogin\n";
             //echo "observerd player:" . $observedPlayer->login . "  checkpoint:" . $login . " \n";
+            if (empty($observedPlayer->login))
+                return;
             if ($login == $observedPlayer->login) {
                 $mode = $this->modes[$tlogin];
                 $info = TimePanel::Create($tlogin);
@@ -94,6 +96,8 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         foreach ($this->spectatorTargets as $tlogin => $pla) {
             $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
+            if (empty($observedPlayer->login))
+                return;
             if ($login == $observedPlayer->login) {
                 $info = TimePanel::Create($tlogin);
                 $info->hide();
