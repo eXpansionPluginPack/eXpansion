@@ -653,7 +653,7 @@ Other server might use the same blacklist file!!');
 
         if (sizeof($params) > 0 && is_numeric($params[0])) {
             $this->teamGap = intval($params[0]);
-            $this->connection->setTeamPointsLimit($this->teamGap * 10);
+            
             $this->exp_chatSendServerMessage('#admin_action#Team gap set to #variable# %1$s!', $login, array($params[0]));
             $this->connection->restartMap();
         }
@@ -666,9 +666,9 @@ Other server might use the same blacklist file!!');
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
-        //if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
-        //     $this->connection->setTeamPointsLimit($this->teamGap);
-        //  }
+        if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+            $this->connection->setTeamPointsLimit($this->teamGap * 10);
+        }
     }
 
     public function onEndRound() {

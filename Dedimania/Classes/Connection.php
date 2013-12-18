@@ -151,9 +151,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 // disabled for relay server
 	if ($this->connection->isRelayServer())
 	    return;
-// cup mode disabled
-	if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP)
-	    return;
+
 // special rounds mode disabled          
 	if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_ROUNDS && (!isset($map->lapRace) || $map->lapRace) && $this->storage->gameInfos->roundsForcedLaps && $this->storage->gameInfos->roundsForcedLaps != 0) {
 	    Console::println("[Dedimania Warning] Special rounds mode with forced laps ignored!");
