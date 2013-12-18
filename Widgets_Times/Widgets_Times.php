@@ -15,6 +15,9 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /** @var \DedicatedApi\Structures\Player[] */
     private $spectatorTargets = array();
 
+    /** @var \DedicatedApi\Structures\Player[] */
+    private $checkpointPos = array();
+
     function exp_onInit() {
 //Important for all eXpansion plugins.
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -36,6 +39,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function exp_onReady() {
+        $this->checkpointPos = $this->connection->getCurrentRanking(-1, 0);
         $this->onBeginMatch();
     }
 
@@ -83,6 +87,12 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $info->setSize(30, 6);
                 $info->setPosition(0, 40);
                 $info->show();
+
+                $widget = Gui\Widgets\CheckpointWidget::Create($tlogin);
+                $widget->setData("1st)", \ManiaLive\Utilities\Time::fromTM($timeOrScore));
+                $widget->setSize(30, 6);
+                $widget->setPosition(0, 30);
+                $widget->show();
             }
         }
     }
@@ -101,6 +111,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($login == $observedPlayer->login) {
                 $info = TimePanel::Create($tlogin);
                 $info->hide();
+                Gui\Widgets\CheckpointWidget::EraseAll();
             }
         }
 
@@ -113,6 +124,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 if ($login == $observedPlayer->login) {
                     $info = TimePanel::Create($tlogin);
                     $info->hide();
+                    Gui\Widgets\CheckpointWidget::EraseAll();
                 }
             }
         }
