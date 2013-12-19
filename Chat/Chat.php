@@ -63,6 +63,8 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
 
     public function onPlayerDisconnect($login, $reason = null) {
         $player = $this->storage->getPlayerObject($login);
+        if (empty($player))
+            return;
         \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $player->iPAddress . ") [" . $login . "] Disconnected");
     }
 
@@ -115,7 +117,7 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
                 }
                 $nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);
 
-                \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $source_player->iPAddress . ") [" . $login . "] " . $nickLog . " - " . $text);
+                \ManiaLive\Utilities\Logger::getLog('chat')->write("[" . $login . "] " . $nickLog . " - " . $text);
             } catch (\Exception $e) {
                 Console::println(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()));
             }

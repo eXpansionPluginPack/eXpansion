@@ -7,6 +7,7 @@ use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Config;
 use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
+use \ManiaLivePlugins\eXpansion\Core\Events\PlayerEvent;
 use ManiaLive\Event\Dispatcher;
 
     /**
@@ -14,7 +15,7 @@ use ManiaLive\Event\Dispatcher;
      *
      * @author oliverde8
      */
-    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin implements \ManiaLive\PluginHandler\WaitingCompliant, \ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEventListener {
+    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin implements \ManiaLive\PluginHandler\WaitingCompliant, \ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEventListener, \ManiaLivePlugins\eXpansion\Core\Events\PlayerEventListener {
 
         /**
          * The list of Plugin id's that may need to be started
@@ -84,6 +85,7 @@ use ManiaLive\Event\Dispatcher;
             $this->exp_onInit();
 
             Dispatcher::register(GameSettingsEvent::getClass(), $this);
+            Dispatcher::register(PlayerEvent::getClass(), $this);
         }
 
         /**
@@ -422,6 +424,7 @@ use ManiaLive\Event\Dispatcher;
                 if ($player->playerId == $id)
                     return $player;
             }
+            return new \DedicatedApi\Structures\Player();
         }
 
         public function onGameModeChange($oldGameMode, $newGameMode) {
@@ -429,6 +432,23 @@ use ManiaLive\Event\Dispatcher;
         }
 
         public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes) {
+            
+        }
+
+        /**
+         * @param ExpPlayer $player player object of the player given up
+         */
+        public function onPlayerGiveup(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player) {
+            
+        }
+
+        /**
+         * 
+         * @param \ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player
+         * @param int $oldPos
+         * @param int $newPos
+         */
+        public function onPlayerPositionChange(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player, $oldPos, $newPos) {
             
         }
 
