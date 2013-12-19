@@ -12,6 +12,17 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
+    
+    function exp_onInit() {
+        //The Database plugin is needed. 
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
+
+        //Oliverde8 Menu
+        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
+        }
+    }
+    
     public function exp_onReady() {
         parent::exp_onReady();
         $this->enableDatabase();
@@ -53,6 +64,92 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd = $this->registerChatCommand("topcountry", 'showTopCountry', 0, true);
         $cmd->help = "Will  display the list of the countries which has the most players";
     }
+    
+     public function onOliverde8HudMenuReady($menu) {
+
+        $parent = $menu->findButton(array("menu", "Statistics"));
+        if (!$parent) {
+            $button["style"] = "Icons128x128_1";
+            $button["substyle"] = "Statistics";
+            $parent = $menu->addButton("menu", "Statistics", $button);
+        }
+
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "Vehicles";
+        $parent2 = $menu->addButton($parent, "Top Donators", $button);
+        
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "Lan";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopDonators";
+        $menu->addButton($parent2, "Server Donators(Amount)", $button);
+        
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "Multiplayer";
+        $button["plugin"] = $this;
+        $button["function"] = "showQTopDonators";
+        $menu->addButton($parent2, "Db Donators(Amount)", $button);
+        
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "Lan";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopDonatorsTotal";
+        $menu->addButton($parent2, "Server Donators(Nb)", $button);
+        
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "Multiplayer";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopQDonatorsTotal";
+        $menu->addButton($parent2, "DB Donators(Nb)", $button);
+        
+        $button["style"] = "Icons64x64_1";
+        $button["substyle"] = "OfficialRace";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopWinners";
+        $menu->addButton($parent, "Top Winners", $button);
+        
+        $button["style"] = "Icons128x32_1";
+        $button["substyle"] = "RT_TimeAttack";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopOnline";
+        $menu->addButton($parent, "Top Online Time", $button);
+        
+        $button["style"] = "Icons128x32_1";
+        $button["substyle"] = "RT_Laps";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopPlayTime";
+        $menu->addButton($parent, "Top Play Time", $button);
+        
+        $button["style"] = "Icons128x32_1";
+        $button["substyle"] = "RT_Rounds";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopFinish";
+        $menu->addButton($parent, "Top Finish", $button);
+        
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "Challenge";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopTrackPlay";
+         $menu->addButton($parent, "Top Map Played", $button);
+        
+        $button["style"] = "Icons128x32_1";
+        $button["substyle"] = "RT_TimeAttack";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopOnlineCountry";
+        $menu->addButton($parent, "Top Country Online", $button);
+        
+        $button["style"] = "Icons128x32_1";
+        $button["substyle"] = "RT_Rounds";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopFinishCountry";
+        $menu->addButton($parent, "Top Country Finish", $button);
+        
+        $button["style"] = "Icons128x32_1";
+        $button["substyle"] = "Nations";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopCountry";
+        $menu->addButton($parent, "Top Country", $button);
+     }
 
     public function showTopDonatorsTotal($login) {
 
