@@ -83,12 +83,16 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
     
     abstract protected function getKeys();
     
+    protected function getFormaters(){
+        return array();
+    }
+    
     public function populateList($data) {
         $x = 0;
         $login = $this->getRecipient();
 
         while ($x < sizeof($data)) {
-            $this->items[$x] = new Item($x, $login, $data[$x], $this->getWidths(), $this->getKeys());
+            $this->items[$x] = new Item($x, $login, $data[$x], $this->getWidths(), $this->getKeys(), $this->getFormaters());
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
