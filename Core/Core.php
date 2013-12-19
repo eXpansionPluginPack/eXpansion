@@ -311,10 +311,14 @@ EOT;
     public function onPlayerInfoChanged($playerInfo) {
         $this->update = true;
         $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
-        if ($player->spectator === 1) {
-            if (array_key_exists($login, $this->expPlayers)) {
-                $this->expPlayers[$login]->hasRetired = true;
-                unset($this->expPlayers[$login]);
+        if (array_key_exists($player->login, $this->expPlayers)) {
+            $this->expPlayers[$player->login]->teamId = $player->teamId;
+        }
+
+        if ($player->spectator == 1) {
+            if (array_key_exists($player->login, $this->expPlayers)) {
+                $this->expPlayers[$player->login]->hasRetired = true;
+                unset($this->expPlayers[$player->login]);
             }
         }
     }
@@ -413,8 +417,10 @@ EOT;
                 $cpindex = $current->curCpIndex;
                 if ($cpindex < 0)
                     $cpindex = 0;
-
-                $this->expPlayers[$login]->deltaTimeTop1 = $current->time - $first->checkpoints[$cpindex];
+                
+                $this->expPlayers[$login]->deltaTimeTop1 = -1;
+                if (isset($first->checkpoints[$cpindex]))
+                    $this->expPlayers[$login]->deltaTimeTop1 = $current->time - $first->checkpoints[$cpindex];
             }
             // reset flags
             $this->expPlayers[$login]->changeFlags = 0;

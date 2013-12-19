@@ -37,13 +37,13 @@ class PlayerItem extends \ManiaLive\Gui\Control {
 
         if ($player->teamId === 0 && $player->login == $login) {
             $color = "0bf";
-        }  
-        if ($player->teamId === 1  && $player->login == $login) {
+        }
+        if ($player->teamId === 1 && $player->login == $login) {
             $color = "f00";
         }
 
         if ($player->hasRetired)
-            $color = '090';
+            $color = '777';
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
@@ -58,7 +58,10 @@ class PlayerItem extends \ManiaLive\Gui\Control {
 
         $this->label_nickname = new \ManiaLib\Gui\Elements\Label(36, 4);
         $this->label_nickname->setAlign('left', 'center');
-        $this->label_nickname->setText(($player->nickName));
+        $nickname = ($player->nickName);
+        if ($player->hasRetired)
+            $nickname = Formatting::stripColors($player->nickName);
+        $this->label_nickname->setText($nickname);
         $this->label_nickname->setScale(0.8);
         $this->label_nickname->setTextColor($color);
         $this->frame->addComponent($this->label_nickname);
@@ -87,7 +90,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
 
         $this->label_diff = new \ManiaLib\Gui\Elements\Label(16, 4);
         $this->label_diff->setAlign('left', 'center');
-        $diff = \ManiaLive\Utilities\Time::fromTM(+$player->deltaTimeTop1);
+        $diff = \ManiaLive\Utilities\Time::fromTM($player->deltaTimeTop1);
         if (substr($diff, 0, 3) === "0:0") {
             $diff = substr($diff, 3);
         } else if (substr($diff, 0, 2) === "0:") {
@@ -98,6 +101,9 @@ class PlayerItem extends \ManiaLive\Gui\Control {
             $diff = "+" . $player->deltaCpCountTop1 . "cp";
         if ($player->hasRetired)
             $diff = "Out";
+        if ($player->deltaTimeTop1 == -1)
+            $diff = "Err";
+
         $this->label_diff->setText($diff);
         $this->label_diff->setScale(0.8);
         $this->label_diff->setTextColor($color);
