@@ -31,6 +31,9 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             foreach ($this->storage->players as $login => $player) {
                 $this->showWidget($login);
             }
+            foreach ($this->storage->spectators as $login => $player) {
+                $this->showWidget($login);
+            }
         }
     }
 
@@ -48,7 +51,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onPlayerFinish($playerUid, $login, $timeOrScore) {
         $this->update = true;
     }
-
+  
     public function onPlayerGiveup(ExpPlayer $player) {
         $this->update = true;
     }
