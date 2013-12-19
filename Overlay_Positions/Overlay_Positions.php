@@ -11,7 +11,7 @@ use \ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
  */
 class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
-    private $update = true;
+    private $update = false;
 
     function exp_onInit() {
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -22,6 +22,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function exp_onReady() {
         $this->enableDedicatedEvents();
+        $this->update = true;
         $this->enableTickerEvent();
     }
 
@@ -38,6 +39,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
+        $this->update = false;
         $this->hideWidget();
     }
 

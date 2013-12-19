@@ -256,12 +256,8 @@ EOT;
         $info->show();
     }
 
-    public function onStatusChanged($statusCode, $statusName) {
-        $this->serverStatus = $statusCode;
-    }
-
     public function onTick() {
-        if ($this->serverStatus == 4) {
+        if ($this->storage->serverStatus->code == 4) {
             $this->calculatePositions();
         }
     }
@@ -295,7 +291,7 @@ EOT;
     }
 
     public function onEndRound() {
-       
+
         $rankings = $this->connection->getCurrentRanking(-1, 0);
         if (count($rankings) > 0) {
             foreach ($rankings as $player) {

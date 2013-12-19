@@ -67,7 +67,9 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $this->label_time->setScale(0.8);
         $this->label_time->setTextColor($color);
         $this->frame->addComponent($this->label_time);
-
+        
+        $spacer = new \ManiaLib\Gui\Elements\Label(4, 4);
+        $this->frame->addComponent($spacer);
 
         $this->label_diff = new \ManiaLib\Gui\Elements\Label(16, 4);
         $this->label_diff->setAlign('left', 'center');
