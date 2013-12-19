@@ -62,6 +62,9 @@ class PositionPanel extends \ManiaLive\Gui\Window {
                 $this->label->setText('$f00Team Red is Winning');
             }
         }
+        else {
+             $this->label->setText("");
+        }
     }
 
 }
