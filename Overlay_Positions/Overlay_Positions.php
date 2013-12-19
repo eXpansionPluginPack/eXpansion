@@ -37,10 +37,19 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
+    public function onEndMatch($rankings, $winnerTeamOrMap) {
+        $this->hideWidget();
+    }
+
+    public function hideWidget() {
+        Gui\Widgets\PositionPanel::EraseAll();
+    }
+
     public function showWidget($login) {
         $pospanel = Gui\Widgets\PositionPanel::Create($login);
+        $pospanel->setSize(80, 90);
+        $pospanel->setPosition(-158, 20);
         $pospanel->setData(\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo);
-        $pospanel->setPosition(-158, 0);
         $pospanel->show();
     }
 
@@ -51,8 +60,12 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onPlayerFinish($playerUid, $login, $timeOrScore) {
         $this->update = true;
     }
-  
+
     public function onPlayerGiveup(ExpPlayer $player) {
+        $this->update = true;
+    }
+
+    public function onPlayerDisconnect($login, $disconnectionReason = null) {
         $this->update = true;
     }
 

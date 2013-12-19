@@ -17,6 +17,14 @@ class PlayerItem extends \ManiaLive\Gui\Control {
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player, $login, $sizeX) {
         $sizeY = 4.5;
 
+        $this->bg = new \ManiaLib\Gui\Elements\Quad();
+        $this->bg->setStyle(\ManiaLib\Gui\Elements\Bgs1::Bgs1InRace);
+        $this->bg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgCardList);
+        $this->bg->setAlign("left", "center");
+        $this->bg->setSize($sizeX, $sizeY);
+        $this->bg->setPosX(-3);
+        $this->addComponent($this->bg);
+
         $color = 'eee';
         if ($player->login == $login)
             $color = '5d5';
@@ -29,7 +37,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
 
         $this->label_index = new \ManiaLib\Gui\Elements\Label(8, 4);
         $this->label_index->setAlign('left', 'center');
-        $this->label_index->setText($player->position + 1);
+        $this->label_index->setText(($player->position + 1) . ".");
         $this->label_index->setScale(0.8);
         $this->label_index->setTextColor($color);
         $this->frame->addComponent($this->label_index);
@@ -44,7 +52,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $spacer = new \ManiaLib\Gui\Elements\Label(4, 4);
         $this->frame->addComponent($spacer);
 
-        $this->label_time = new \ManiaLib\Gui\Elements\Label(18, 4);
+        $this->label_time = new \ManiaLib\Gui\Elements\Label(16, 4);
         $this->label_time->setAlign('left', 'center');
         $time = \ManiaLive\Utilities\Time::fromTM($player->time);
         if ($player->hasRetired)
@@ -61,7 +69,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($this->label_time);
 
 
-        $this->label_diff = new \ManiaLib\Gui\Elements\Label(18, 4);
+        $this->label_diff = new \ManiaLib\Gui\Elements\Label(16, 4);
         $this->label_diff->setAlign('left', 'center');
         $diff = \ManiaLive\Utilities\Time::fromTM(+$player->deltaTimeTop1);
         if (substr($diff, 0, 3) === "0:0") {
@@ -69,6 +77,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         } else if (substr($diff, 0, 2) === "0:") {
             $diff = substr($diff, 2);
         }
+        $diff = "+" . $diff;
         if ($player->deltaCpCountTop1 > 0)
             $diff = "+" . $player->deltaCpCountTop1 . "cp";
         if ($player->hasRetired)
@@ -77,7 +86,6 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $this->label_diff->setScale(0.8);
         $this->label_diff->setTextColor($color);
         $this->frame->addComponent($this->label_diff);
-
         $this->setSize($sizeX, $sizeY);
     }
 

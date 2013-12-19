@@ -31,6 +31,8 @@ class PositionPanel extends \ManiaLive\Gui\Window {
         $this->frame->clearComponents();
         $x = 0;
         foreach ($expPlayer as $player) {
+            if ($x > 8)
+                break;
             $this->frame->addComponent(new \ManiaLivePlugins\eXpansion\Overlay_Positions\Gui\Controls\PlayerItem($x, $player, $this->getRecipient(), $this->getSizeX()));
             $x++;
         }

@@ -129,10 +129,10 @@ EOT;
      * 
      */
     public function exp_onReady() {
-        $rankings = $this->connection->getCurrentRanking(-1, 0);
-        foreach ($rankings as $player) {
-            $this->expPlayers[$player->login] = Structures\ExpPlayer::fromArray($player->toArray());
-        }
+        //  $rankings = $this->connection->getCurrentRanking(-1, 0);
+        //  foreach ($rankings as $player) {
+        //      $this->expPlayers[$player->login] = Structures\ExpPlayer::fromArray($player->toArray());
+        //  }
         $this->registerChatCommand("info", "showInfo", 0, true);
         $this->registerChatCommand("serverlogin", "serverlogin", 0, true);
         $window = new Gui\Windows\QuitWindow();
@@ -269,6 +269,7 @@ EOT;
     public function onPlayerDisconnect($login, $disconnectionReason) {
         if (array_key_exists($login, $this->expPlayers)) {
             $this->expPlayers[$login]->hasRetired = true;
+            unset($this->expPlayers[$login]);
         }
     }
 
@@ -294,11 +295,13 @@ EOT;
     }
 
     public function onEndRound() {
-        $this->resetExpPlayers();
+       
         $rankings = $this->connection->getCurrentRanking(-1, 0);
         if (count($rankings) > 0) {
             foreach ($rankings as $player) {
-                $this->expPlayers[$player->login]->matchScore += $player->score;
+                if (array_key_exists($player->login, $this->expPlayers)) {
+                    $this->expPlayers[$player->login]->matchScore += $player->score;
+                }
             }
         }
     }
