@@ -26,8 +26,22 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $this->addComponent($this->bg);
 
         $color = 'eee';
+        if ($player->teamId === 0) {
+            $color = '07b';
+        }
+        if ($player->teamId === 1) {
+            $color = 'a00';
+        }
         if ($player->login == $login)
             $color = '5d5';
+
+        if ($player->teamId === 0 && $player->login == $login) {
+            $color = "0bf";
+        }  
+        if ($player->teamId === 1  && $player->login == $login) {
+            $color = "f00";
+        }
+
         if ($player->hasRetired)
             $color = '090';
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
@@ -44,7 +58,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
 
         $this->label_nickname = new \ManiaLib\Gui\Elements\Label(36, 4);
         $this->label_nickname->setAlign('left', 'center');
-        $this->label_nickname->setText(Formatting::stripColors($player->nickName));
+        $this->label_nickname->setText(($player->nickName));
         $this->label_nickname->setScale(0.8);
         $this->label_nickname->setTextColor($color);
         $this->frame->addComponent($this->label_nickname);
@@ -67,7 +81,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $this->label_time->setScale(0.8);
         $this->label_time->setTextColor($color);
         $this->frame->addComponent($this->label_time);
-        
+
         $spacer = new \ManiaLib\Gui\Elements\Label(4, 4);
         $this->frame->addComponent($spacer);
 

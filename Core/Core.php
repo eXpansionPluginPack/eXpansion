@@ -42,6 +42,7 @@ class Core extends types\ExpPlugin {
     /** @var int */
     private $serverStatus = 0;
     private $giveupCount = 0;
+    private $update = true;
 
     /**
      * 
@@ -257,12 +258,15 @@ EOT;
     }
 
     public function onTick() {
-        if ($this->storage->serverStatus->code == 4) {
+        if ($this->storage->serverStatus->code == 4 && $this->update) {
+            $this->update = false;
             $this->calculatePositions();
         }
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason) {
+
+        $this->update = true;
         if (array_key_exists($login, $this->expPlayers)) {
             $this->expPlayers[$login]->hasRetired = true;
             unset($this->expPlayers[$login]);
@@ -270,7 +274,7 @@ EOT;
     }
 
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
-
+        $this->update = true;
         if (!array_key_exists($login, $this->expPlayers)) {
             $player = $this->storage->getPlayerObject($login);
             $this->expPlayers[$login] = Structures\ExpPlayer::fromArray($player->toArray());
@@ -283,10 +287,12 @@ EOT;
     }
 
     function onBeginMatch() {
+        $this->update = true;
         $this->resetExpPlayers();
     }
 
     public function onBeginRound() {
+        $this->update = true;
         $this->resetExpPlayers();
     }
 
@@ -298,6 +304,17 @@ EOT;
                 if (array_key_exists($player->login, $this->expPlayers)) {
                     $this->expPlayers[$player->login]->matchScore += $player->score;
                 }
+            }
+        }
+    }
+
+    public function onPlayerInfoChanged($playerInfo) {
+        $this->update = true;
+        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+        if ($player->spectator === 1) {
+            if (array_key_exists($login, $this->expPlayers)) {
+                $this->expPlayers[$login]->hasRetired = true;
+                unset($this->expPlayers[$login]);
             }
         }
     }
@@ -320,6 +337,7 @@ EOT;
 
     public function onPlayerFinish($playerUid, $login, $timeOrScore) {
         // handle onPlayerfinish @ start from server.
+        $this->update = true;
         if ($playerUid == 0)
             return;
         if (!array_key_exists($login, $this->expPlayers)) {
