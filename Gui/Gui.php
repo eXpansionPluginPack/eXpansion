@@ -25,12 +25,18 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    public function graph($login) {
+        $test = Windows\TestGraph::Create($login);
+        $test->setSize(100, 100);
+        $test->show();
+    }
+
     public function exp_onReady() {
         $this->enableDedicatedEvents();
 
         $this->registerChatCommand("hud", "showConfigWindow", 0, true);
         $this->registerChatCommand("hud", "hudCommands", 1, true);
-
+        $this->registerChatCommand("graph", "graph", 0, true);
 
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
