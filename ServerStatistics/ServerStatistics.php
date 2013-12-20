@@ -16,6 +16,9 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public $nbSpec = 0;
     private $lastInfo;
 
+    private $players = array();
+    private $spectators = array();
+    
     function exp_onInit() {
         //The Database plugin is needed. 
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
@@ -116,11 +119,22 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $version = $this->callPublicMethod('eXpansion\Database', 'getDatabaseVersion', 'exp_records');
         if (!$version) {
             $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_records', 1);
+        }        
+        
+        $this->nbPlayer = 0;
+        foreach($this->storage->players as $player){
+           if($player->isConnected){
+               $this->nbPlayer++;
+               $this->players[$player->login] = true;
+           }
         }
-
-        $this->nbSpec = sizeof($this->storage->spectators);
+        foreach($this->storage->spectators as $player){
+           if($player->isConnected){
+               $this->nbSpec++;
+               $this->spectators[$player->login] = true;
+           }
+        }
         $this->nbSpecMax = $this->nbSpec;
-        $this->nbPlayer = sizeof($this->storage->players);
         $this->nbPlayerMax = $this->nbPlayer;
     }
 
@@ -179,30 +193,25 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         else
             $this->nbPlayer--;
     }
-
-    public function onPlayerInfoChanged($playerInfo) {
-        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
-
-        if ($player->spectator == 1) {
-            $this->nbPlayer--;
-            $this->nbPlayerMax--;
-            $this->nbSpec++;
-            if ($this->nbSpec > $this->nbSpecMax)
-                $this->nbSpecMax = $this->nbSpec;
-        }if ($playerInfo['SpectatorStatus'] == 0) {
-            $this->nbSpec--;
-            $this->nbSpecMax--;
-            $this->nbPlayer++;
-            if ($this->nbPlayer > $this->nbPlayerMax)
-                $this->nbPlayerMax = $this->nbPlayer;
-        }
-    }
     
     public function onBeginMap($map, $warmUp, $matchContinuation) {
         parent::onBeginMap($map, $warmUp, $matchContinuation);
         
-        $this->nbPlayer = sizeof($this->storage->players);
-        $this->nbSpec = sizeof($this->storage->spectators);
+        $this->nbPlayer = 0;
+        foreach($this->storage->players as $player){
+           if($player->isConnected){
+               $this->nbPlayer++;
+               $this->players[$player->login] = true;
+           }
+        }
+        foreach($this->storage->spectators as $player){
+           if($player->isConnected){
+               $this->nbSpec++;
+               $this->spectators[$player->login] = true;
+           }
+        }
+        $this->nbSpecMax = $this->nbSpec;
+        $this->nbPlayerMax = $this->nbPlayer;
     }
 
     public function onOliverde8HudMenuReady($menu) {
