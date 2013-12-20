@@ -13,6 +13,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     private $update = false;
     private $retiredPlayers = array();
+    private $isPodium = false;
 
     function exp_onInit() {
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -30,6 +31,9 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onTick() {
         if ($this->update) {
             $this->update = false;
+            if ($this->isPodium)
+                return;
+            
             foreach ($this->retiredPlayers as $login => $player) {
                 $this->showWidget($login);
             }
@@ -40,8 +44,14 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
+        $this->isPodium = true;
         $this->update = false;
+        $this->retiredPlayers = array();
         Gui\Widgets\PositionPanel::EraseAll();
+    }
+
+    public function onBeginMap($map, $warmUp, $matchContinuation) {
+        $this->isPodium = false;
     }
 
     public function hideWidget($login) {
@@ -57,6 +67,8 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     public function onPlayerInfoChanged($playerInfo) {
+        if ($this->storage->serverStatus->code != 4)
+            return;
 
         $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
         // hide widget for players who change from spectate to play

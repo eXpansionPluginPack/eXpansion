@@ -36,7 +36,7 @@ class PositionPanel extends \ManiaLive\Gui\Window {
         $x = 0;
         $total = count($expPlayer);
         $teamPoints = array(0 => 0, 1 => 0);
-        $teamPointsDisplay = array(0 => 0, 1 => 0);
+        // $teamPointsDisplay = array(0 => 0, 1 => 0);
         $cpCount = 0;
         foreach ($expPlayer as $player) {
             $cpindex = $player->curCpIndex;
@@ -44,8 +44,8 @@ class PositionPanel extends \ManiaLive\Gui\Window {
                 $cpindex = 0;
             $cpCount += $cpindex;
             if ($player->teamId >= 0 && !$player->hasRetired) {
-                $teamPoints[$player->teamId] += $total - ($player->position + 1);
-                $teamPointsDisplay[$player->teamId] += ($total + 1) - ($player->position + 1);
+                $teamPoints[$player->teamId] += ($total + 1) - ($player->position + 1);
+                //   $teamPointsDisplay[$player->teamId] += ($total + 1) - ($player->position + 1);
             }
             if ($x < 8) {
                 $this->frame->addComponent(new \ManiaLivePlugins\eXpansion\Overlay_Positions\Gui\Controls\PlayerItem($x, $player, $this->getRecipient(), $this->getSizeX()));
@@ -57,13 +57,12 @@ class PositionPanel extends \ManiaLive\Gui\Window {
             if ($teamPoints[0] == $teamPoints[1] || $cpCount == 0) {
                 $this->label->setText('$fffTeams Score is Draw');
             } elseif ($teamPoints[1] < $teamPoints[0]) {
-                $this->label->setText('$00fTeam Blue is Winning');
+                $this->label->setText('$00fTeam Blue is Winning  $fff' . $teamPoints[0] . " vs " . $teamPoints[1]);
             } else {
-                $this->label->setText('$f00Team Red is Winning');
+                $this->label->setText('$f00Team Red is Winning $fff' . $teamPoints[1] . "vs" . $teamPoints[0]);
             }
-        }
-        else {
-             $this->label->setText("");
+        } else {
+            $this->label->setText("");
         }
     }
 
