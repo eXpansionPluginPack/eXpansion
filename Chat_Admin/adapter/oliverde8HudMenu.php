@@ -365,16 +365,19 @@ class oliverde8HudMenu {
         return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS;
     }
 
-    private function gameSettings_Cup($parent) {
+    private function gameSettings_Cup($parent2) {
         $menu = $this->menuPlugin;
 
-        $button["plugin"] = $this;
-        $button["style"] = 'Icons128x32_1';
-        $button["substyle"] = "RT_Cup";
-        $button['function'] = 'check_gameSettings_Cup';
-        $button["permission"] = "game_settings";
-        $button["checkFunction"] = "check_gameSettings_Cup";
-        $parent = $menu->addButton($parent, "Cup Settings", $button);
+        $parent = $menu->findButton(array("admin", "Game Options", "Cup Settings"));
+        if (!$parent) {
+            $button["plugin"] = $this;
+            $button["style"] = 'Icons128x32_1';
+            $button["substyle"] = "RT_Cup";
+            $button['function'] = 'check_gameSettings_Cup';
+            $button["permission"] = "game_settings";
+            $button["checkFunction"] = "check_gameSettings_Cup";
+            $parent = $menu->addButton($parent2, "Cup Settings", $button);
+         }
 
         $this->generate_GameSettings_WarmUp($parent);
         $this->generate_GameSettings_FinishTimeout($parent);
