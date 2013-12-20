@@ -14,7 +14,6 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public $nbPlayer = 0;
     public $nbSpecMax = 0;
     public $nbSpec = 0;
-    
     private $lastInfo;
 
     function exp_onInit() {
@@ -83,12 +82,17 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $this->os = determineOS();
         $this->settings = $settings;
     }
+    
+    public function exp_onLoad() {
+        parent::exp_onLoad();
+        $this->enableDedicatedEvents();
+    }
 
     public function exp_onReady() {
         parent::exp_onReady();
         $this->enableTickerEvent();
         $this->enableDatabase();
-        $this->enableDedicatedEvents();
+        
 
         if (!$this->db->tableExists("exp_server_stats")) {
             $q = "CREATE TABLE `exp_server_stats` (
@@ -113,7 +117,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         if (!$version) {
             $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_records', 1);
         }
-        
+
         $this->nbSpec = sizeof($this->storage->spectators);
         $this->nbSpecMax = $this->nbSpec;
         $this->nbPlayer = sizeof($this->storage->players);
@@ -127,10 +131,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $getter = parseSystem($this->os, $this->settings);
             $info = $getter->getAll();
 
-            $this->nbPlayerMax = $this->nbPlayer;
-            $this->nbSpecMax = $this->nbSpec;
-            
-              $q = 'INSERT INTO `exp_server_stats` (`server_login`, `server_game`, `server_nbPlayers`, server_nbSpec
+            $q = 'INSERT INTO `exp_server_stats` (`server_login`, `server_game`, `server_nbPlayers`, server_nbSpec
                             ,`server_mlRunTime`, `server_upTime`, `server_load`, `server_ramTotam`, `server_ramFree`
                             , `server_phpRamUsage`, `server_updateDate` )
                         VALUES(' . $this->db->quote($this->storage->serverLogin) . ',
@@ -139,33 +140,69 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
                             ' . $this->db->quote($this->nbSpecMax) . ',
                             ' . $this->db->quote(time() - $this->startTime) . ',
                             ' . $this->db->quote($info['UpTime']) . ',
-                            ' . $this->db->quote(str_replace('%','',$info['Load'])) . ',
+                            ' . $this->db->quote(str_replace('%', '', $info['Load'])) . ',
                             ' . $this->db->quote($info['RAM']['total']) . ',
                             ' . $this->db->quote($info['RAM']['free']) . ',
                             ' . $this->db->quote(memory_get_usage()) . ',
                             ' . $this->db->quote(time()) . '
                         )';
-              $this->lastInfo = $info;
-              $this->db->query($q);
+            $this->nbPlayerMax = $this->nbPlayer;
+            $this->nbSpecMax = $this->nbSpec;
+
+            $this->lastInfo = $info;
+            $this->db->query($q);
         }
+
         $this->ellapsed = ($this->ellapsed + 1) % 120;
     }
 
     public function onPlayerConnect($login, $isSpectator) {
         parent::onPlayerConnect($login, $isSpectator);
 
-        $this->nbSpec = sizeof($this->storage->spectators);
-        if ($this->nbSpec > $this->nbSpecMax)
-            $this->nbSpecMax = $this->nbSpec;
-
-        $this->nbPlayer = sizeof($this->storage->players);
-        if ($this->nbPlayer > $this->nbPlayerMax)
-            $this->nbPlayerMax = $this->nbPlayer;
+        if ($isSpectator) {
+            $this->nbSpec++;
+            if ($this->nbSpec > $this->nbSpecMax)
+                $this->nbSpecMax = $this->nbSpec;
+        }
+        else {
+            $this->nbPlayer++;
+            if ($this->nbPlayer > $this->nbPlayerMax)
+                $this->nbPlayerMax = $this->nbPlayer;
+        }
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason) {
-       $this->nbSpec = sizeof($this->storage->spectators);
+        $player = $this->storage->getPlayerObject($login);
+
+        if ($player->isSpectator)
+            $this->nbSpec--;
+        else
+            $this->nbPlayer--;
+    }
+
+    public function onPlayerInfoChanged($playerInfo) {
+        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+
+        if ($player->spectator == 1) {
+            $this->nbPlayer--;
+            $this->nbPlayerMax--;
+            $this->nbSpec++;
+            if ($this->nbSpec > $this->nbSpecMax)
+                $this->nbSpecMax = $this->nbSpec;
+        }if ($playerInfo['SpectatorStatus'] == 0) {
+            $this->nbSpec--;
+            $this->nbSpecMax--;
+            $this->nbPlayer++;
+            if ($this->nbPlayer > $this->nbPlayerMax)
+                $this->nbPlayerMax = $this->nbPlayer;
+        }
+    }
+    
+    public function onBeginMap($map, $warmUp, $matchContinuation) {
+        parent::onBeginMap($map, $warmUp, $matchContinuation);
+        
         $this->nbPlayer = sizeof($this->storage->players);
+        $this->nbSpec = sizeof($this->storage->spectators);
     }
 
     public function onOliverde8HudMenuReady($menu) {
