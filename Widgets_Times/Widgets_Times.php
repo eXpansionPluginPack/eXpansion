@@ -54,6 +54,12 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    public function onPlayerGiveup(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player) {
+        if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+            $this->spectatorTargets[$player->login] = $player;
+        }
+    }
+
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
         $mode = TimePanel::Mode_PersonalBest;
         if (isset($this->modes[$login])) {
@@ -78,7 +84,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
             // echo "should display to $tlogin\n";
             //echo "observerd player:" . $observedPlayer->login . "  checkpoint:" . $login . " \n";
-            if (empty($observedPlayer->login))
+            if (empty($observedPlayer->login) || $observedPlayer->login == $this->storage->server)
                 return;
             if ($login == $observedPlayer->login) {
                 $mode = $this->modes[$tlogin];
@@ -89,9 +95,13 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $info->show();
 
                 $widget = Gui\Widgets\CheckpointWidget::Create($tlogin);
-                $widget->setData("1st)", \ManiaLive\Utilities\Time::fromTM($timeOrScore));
+                $pos = "-1";
+                if (array_key_exists($login, \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo))
+                    $pos = \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo[$login]->position;
+                $widget->setData(($pos + 1) . ")", \ManiaLive\Utilities\Time::fromTM($timeOrScore));
                 $widget->setSize(30, 6);
                 $widget->setPosition(0, 30);
+                $widget->setTimeout(4);
                 $widget->show();
             }
         }
@@ -106,11 +116,10 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         foreach ($this->spectatorTargets as $tlogin => $pla) {
             $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
-            if (empty($observedPlayer->login))
+            if (empty($observedPlayer->login) || $observedPlayer->login == $this->storage->server)
                 return;
             if ($login == $observedPlayer->login) {
-                $info = TimePanel::Create($tlogin);
-                $info->hide();
+                TimePanel::Erase($tlogin);
                 Gui\Widgets\CheckpointWidget::EraseAll();
             }
         }
@@ -122,8 +131,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             foreach ($this->spectatorTargets as $tlogin => $pla) {
                 $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
                 if ($login == $observedPlayer->login) {
-                    $info = TimePanel::Create($tlogin);
-                    $info->hide();
+                    TimePanel::Erase($tlogin);
                     Gui\Widgets\CheckpointWidget::EraseAll();
                 }
             }

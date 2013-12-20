@@ -9,36 +9,35 @@ class Clock extends \ManiaLive\Gui\Window {
     protected $date;
 
     protected function onConstruct() {
-	parent::onConstruct();
-	$this->clock = new \ManiaLib\Gui\Elements\Label();
-	$this->clock->setId('clock');
-	$this->clock->setAlign("left", "top");
-	$this->clock->setPosition(0, -5);
-	$this->clock->setTextColor('fff');
-	$this->clock->setScale(0.8);
-	$this->clock->setStyle('TextCardScores2');
-	//$this->clock->setTextPrefix('$s');
-	$this->addComponent($this->clock);
+        parent::onConstruct();
+        $this->clock = new \ManiaLib\Gui\Elements\Label();
+        $this->clock->setId('clock');
+        $this->clock->setAlign("left", "top");
+        $this->clock->setPosition(0, -5);
+        $this->clock->setTextColor('fff');
+        $this->clock->setScale(0.8);
+        $this->clock->setStyle('TextCardScores2');
+        //$this->clock->setTextPrefix('$s');
+        $this->addComponent($this->clock);
 
-	$this->date = new \ManiaLib\Gui\Elements\Label(60, 6);
-	$this->date->setId('date');
-	$this->date->setAlign("left", "top");
-	$this->date->setPosition(0, 0);
-	$this->date->setTextColor('fff');
-	$this->date->setTextPrefix('$s');
-	$this->date->setText(\ManiaLive\Data\Storage::getInstance()->server->name);
-	$this->addComponent($this->date);
+        $this->date = new \ManiaLib\Gui\Elements\Label(60, 6);
+        $this->date->setId('date');
+        $this->date->setAlign("left", "top");
+        $this->date->setPosition(0, 0);
+        $this->date->setTextColor('fff');
+        $this->date->setTextPrefix('$s');
+        $this->addComponent($this->date);
 
-	$move = new \ManiaLib\Gui\Elements\Quad(60, 12);
-	$move->setStyle("Icons128x128_Blink");
-	$move->setSubStyle("ShareBlink");
-	$move->setScriptEvents();
-	$move->setId("enableMove");
-	$this->addComponent($move);
+        $move = new \ManiaLib\Gui\Elements\Quad(60, 12);
+        $move->setStyle("Icons128x128_Blink");
+        $move->setSubStyle("ShareBlink");
+        $move->setScriptEvents();
+        $move->setId("enableMove");
+        $this->addComponent($move);
 
-	$this->setAlign("left", "top");
-	$this->xml = new \ManiaLive\Gui\Elements\Xml();
-	$this->xml->setContent('    
+        $this->setAlign("left", "top");
+        $this->xml = new \ManiaLive\Gui\Elements\Xml();
+        $this->xml->setContent('    
         <script><!--
         #Include "TextLib" as TextLib
         
@@ -129,12 +128,16 @@ class Clock extends \ManiaLive\Gui\Window {
                   
                 } 
                 --></script>');
-	$this->addComponent($this->xml);
+        $this->addComponent($this->xml);
+    }
+
+    public function setServername($name) {
+        $this->date->setText($name);
     }
 
     function destroy() {
-	$this->clearComponents();
-	parent::destroy();
+        $this->clearComponents();
+        parent::destroy();
     }
 
 }

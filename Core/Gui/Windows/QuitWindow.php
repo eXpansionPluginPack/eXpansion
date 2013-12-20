@@ -24,7 +24,7 @@ class QuitWindow {
         $size = 120;
         $logo = new \ManiaLib\Gui\Elements\Quad($size, $size/4);
         $logo->setImage($logourl, true);
-        $logo->setUrl("http://exp.tm-teams.com");
+        $logo->setUrl("http://ml-expansion.com");
         $logo->setAlign("center", "top");
         $logo->setPosition(0, 50, -50);
         $frame->addComponent($logo);

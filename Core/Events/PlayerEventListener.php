@@ -33,16 +33,19 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
 interface PlayerEventListener {
 
     /**
-     * @param ExpPlayer $player player object of the changed info
-     * @param int $oldPos
-     * @param int $newPos
+     * @param  ExpPlayer $player $player player object of the changed info
+     * @param  int $oldPos old position
+     * @param  int $newPos new position
      */
     public function onPlayerPositionChange(ExpPlayer $player, $oldPos, $newPos);
 
     /**
-     * @param ExpPlayer $player array of logins
+     * @param  ExpPlayer[]  $player array of logins
      */
     public function onPlayerGiveup(ExpPlayer $player);
-}
 
+    /** @param ExpPlayer[] $playerPositions newly calculated playerPositions */
+    public function onPlayerNewPositions($playerPositions);
+}
 ?>
+

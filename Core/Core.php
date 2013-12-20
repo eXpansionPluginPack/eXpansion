@@ -40,9 +40,11 @@ class Core extends types\ExpPlugin {
     public static $checkpointOrder = array();
 
     /** @var int */
-    private $serverStatus = 0;
     private $giveupCount = 0;
+
+    /** @var bool $update flag to force calculate player positions */
     private $update = true;
+    private $loopTimer = 0;
 
     /**
      * 
@@ -55,12 +57,14 @@ class Core extends types\ExpPlugin {
      * 
      */
     function exp_onLoad() {
-        parent::exp_onLoad();
+
+        $this->enableDedicatedEvents();
+
         $this->connection->chatSendServerMessage('$fffStarting e$a00X$fffpansion v. ' . $this->getVersion());
         $config = Config::getInstance();
         i18n::getInstance()->start();
         DataAccess::getInstance()->start();
-        $this->enableDedicatedEvents();
+
 
         $expansion = <<<'EOT'
    
@@ -139,9 +143,8 @@ EOT;
         $window = new Gui\Windows\QuitWindow();
         $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
         $this->onBeginMap(null, null, null);
-
-        $this->serverStatus = $this->connection->getStatus()->code;
-        $this->enableTickerEvent();
+        $this->loopTimer = round(microtime(true));
+        $this->enableApplicationEvents(\ManiaLive\Application\Event::ON_POST_LOOP);
     }
 
     /**
@@ -150,11 +153,6 @@ EOT;
      */
     public function serverlogin($login) {
         
-    }
-
-    public function onGameSettingsChange(\DedicatedApi\Structures\GameInfos $oldSettings, \DedicatedApi\Structures\GameInfos $newSettings, $changes) {
-        $window = new Gui\Windows\QuitWindow();
-        $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
     }
 
     /**
@@ -257,18 +255,20 @@ EOT;
         $info->show();
     }
 
-    public function onTick() {
-        if ($this->storage->serverStatus->code == 4 && $this->update) {
+    public function onPostLoop() {
+
+        if ($this->storage->serverStatus->code == 4 && $this->update && (microtime(true) - $this->loopTimer) > 0.35) {
             $this->update = false;
+            $this->loopTimer = microtime(true);
             $this->calculatePositions();
         }
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason) {
-
         $this->update = true;
         if (array_key_exists($login, $this->expPlayers)) {
             $this->expPlayers[$login]->hasRetired = true;
+            $this->expPlayers[$login]->isPlaying = false;
             unset($this->expPlayers[$login]);
         }
     }
@@ -287,6 +287,9 @@ EOT;
     }
 
     function onBeginMatch() {
+        $window = new Gui\Windows\QuitWindow();
+        $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
+        
         $this->update = true;
         $this->resetExpPlayers();
     }
@@ -311,10 +314,18 @@ EOT;
     public function onPlayerInfoChanged($playerInfo) {
         $this->update = true;
         $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
-        if ($player->spectator === 1) {
-            if (array_key_exists($login, $this->expPlayers)) {
-                $this->expPlayers[$login]->hasRetired = true;
-                unset($this->expPlayers[$login]);
+        if (array_key_exists($player->login, $this->expPlayers)) {
+            $this->expPlayers[$player->login]->teamId = $player->teamId;
+        }
+
+        if ($player->spectator == 1) {
+            if (array_key_exists($player->login, $this->expPlayers)) {
+                $this->expPlayers[$player->login]->hasRetired = true;
+                $this->expPlayers[$player->login]->isPlaying = false;
+            }
+        } else {
+            if (array_key_exists($player->login, $this->expPlayers)) {
+                $this->expPlayers[$player->login]->isPlaying = true;
             }
         }
     }
@@ -323,6 +334,8 @@ EOT;
         self::$roundFinishOrder = array();
         self::$checkpointOrder = array();
         foreach ($this->storage->players as $login => $player) {
+            if ($player->spectator == 1)
+                continue;
             if (!isset($this->expPlayers[$login])) {
                 $this->expPlayers[$login] = Structures\ExpPlayer::fromArray($player->toArray());
             }
@@ -340,6 +353,7 @@ EOT;
         $this->update = true;
         if ($playerUid == 0)
             return;
+
         if (!array_key_exists($login, $this->expPlayers)) {
             $player = $this->storage->getPlayerObject($login);
             $this->expPlayers[$login] = Structures\ExpPlayer::fromArray($player->toArray());
@@ -375,6 +389,13 @@ EOT;
                 $player->time = end($player->checkpoints);
                 // $player->curCpIndex = key($player->checkpoints);
             }
+            // is player is not playing ie. has become spectator or disconnect, remove...
+            if (!$player->isPlaying) {
+                unset($this->expPlayers[$login]);
+                continue;
+            }
+
+
             if ($player->finalTime == 0) {
                 $giveupPlayers[] = $player;
                 $this->giveupCount++;
@@ -414,7 +435,9 @@ EOT;
                 if ($cpindex < 0)
                     $cpindex = 0;
 
-                $this->expPlayers[$login]->deltaTimeTop1 = $current->time - $first->checkpoints[$cpindex];
+                $this->expPlayers[$login]->deltaTimeTop1 = -1;
+                if (isset($first->checkpoints[$cpindex]))
+                    $this->expPlayers[$login]->deltaTimeTop1 = $current->time - $first->checkpoints[$cpindex];
             }
             // reset flags
             $this->expPlayers[$login]->changeFlags = 0;
@@ -440,7 +463,8 @@ EOT;
         } // end of foreach playerpositions;
         // export infos..
         self::$playerInfo = $this->expPlayers;
-        \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::sortAsc(self::$playerInfo, "position");
+        \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc(self::$playerInfo, "position");
+        Dispatcher::dispatch(new Events\PlayerEvent(Events\PlayerEvent::ON_PLAYER_POSITIONS_CALCULATED, self::$playerInfo));
     }
 
     /** converted from fast.. */
