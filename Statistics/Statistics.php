@@ -293,7 +293,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\OnlineTime::Erase($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\OnlineTime::Create($login);
-        $window->setTitle(__('Top Server Donators(Amount)', $login));
+        $window->setTitle(__('Top Play Time', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
         $window->setSize(70, 100);
