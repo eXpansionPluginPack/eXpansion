@@ -30,10 +30,10 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onTick() {
         if ($this->update) {
             $this->update = false;
-            foreach ($this->storage->spectators as $login => $player) {
+            foreach ($this->retiredPlayers as $login => $player) {
                 $this->showWidget($login);
             }
-            foreach ($this->retiredPlayers as $login => $player) {
+            foreach ($this->storage->spectators as $login => $player) {
                 $this->showWidget($login);
             }
         }
@@ -57,9 +57,24 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     public function onPlayerInfoChanged($playerInfo) {
+
         $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
         // hide widget for players who change from spectate to play
+        // on team mode, show infos when player is finished
+
+        if ($player->temporarySpectator == 1) {
+            $this->retiredPlayers[$player->login] = $this->storage->getPlayerObject($player->login);
+        } else {
+            if (array_key_exists($player->login, $this->retiredPlayers)) {
+                unset($this->retiredPlayers[$player->login]);
+            }
+        }
+
         $this->update = true;
+    }
+
+    public function onBeginRound() {
+        $this->retiredPlayers = array();
     }
 
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
@@ -70,19 +85,22 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         // on first thing when a round or match begins, onPlayerFinish is triggered for server login
         // so hide the widget for players
         if ($playerUid == 0) {
-            foreach ($this->storage->players as $login => $player) {
+            foreach ($this->retiredPlayers as $login => $player) {
                 $this->hideWidget($login);
             }
             $this->retiredPlayers = array();
-        }
 
-        // on team mode, show infos when player is finished
-        if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+            foreach ($this->storage->players as $login => $player) {
+                $this->hideWidget($login);
+            }
+        }
+        // display widget to finished player
+        if ($timeOrScore > 0) {
             $this->retiredPlayers[$login] = $this->storage->getPlayerObject($login);
         }
         $this->update = true;
     }
-    
+
     public function onPlayerGiveup(ExpPlayer $player) {
         $this->update = true;
         $this->retiredPlayers[$player->login] = $player;

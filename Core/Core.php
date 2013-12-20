@@ -273,6 +273,7 @@ EOT;
         $this->update = true;
         if (array_key_exists($login, $this->expPlayers)) {
             $this->expPlayers[$login]->hasRetired = true;
+            $this->expPlayers[$login]->isPlaying = false;
             unset($this->expPlayers[$login]);
         }
     }
@@ -322,7 +323,11 @@ EOT;
         if ($player->spectator == 1) {
             if (array_key_exists($player->login, $this->expPlayers)) {
                 $this->expPlayers[$player->login]->hasRetired = true;
-                unset($this->expPlayers[$player->login]);
+                $this->expPlayers[$player->login]->isPlaying = false;
+            }
+        } else {
+            if (array_key_exists($player->login, $this->expPlayers)) {
+                $this->expPlayers[$player->login]->isPlaying = true;
             }
         }
     }
@@ -350,6 +355,7 @@ EOT;
         $this->update = true;
         if ($playerUid == 0)
             return;
+
         if (!array_key_exists($login, $this->expPlayers)) {
             $player = $this->storage->getPlayerObject($login);
             $this->expPlayers[$login] = Structures\ExpPlayer::fromArray($player->toArray());
@@ -385,6 +391,13 @@ EOT;
                 $player->time = end($player->checkpoints);
                 // $player->curCpIndex = key($player->checkpoints);
             }
+            // is player is not playing ie. has become spectator or disconnect, remove...
+            if (!$player->isPlaying) {
+                unset($this->expPlayers[$login]);
+                continue;
+            }
+
+
             if ($player->finalTime == 0) {
                 $giveupPlayers[] = $player;
                 $this->giveupCount++;

@@ -43,6 +43,9 @@ class ExpPlayer extends \DedicatedApi\Structures\Player {
     /** @var int $changeFlags flag to indicate change */
     public $changeFlags = 0;
 
+    /** @var bool $isPlaying true if player is playing ie not spectator or disconnected currently */
+    public $isPlaying = true;
+
     static public function fromArray($array) {
         $object = parent::fromArray($array);
         $object->skins = null;
