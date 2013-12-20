@@ -43,7 +43,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         }
 
         if ($player->hasRetired)
-            $color = '777';
+            $color = '999';
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());

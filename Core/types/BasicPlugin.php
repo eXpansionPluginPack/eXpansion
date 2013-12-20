@@ -9,6 +9,7 @@ use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use \ManiaLivePlugins\eXpansion\Core\Events\PlayerEvent;
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
 
     /**
      * Description of BasicPlugin
@@ -65,7 +66,7 @@ use ManiaLive\Event\Dispatcher;
 
             //Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
-            
+
             $this->exp_unloading = false;
             $this->relay = \ManiaLivePlugins\eXpansion\Core\RelayLink::getInstance();
             \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
@@ -116,10 +117,10 @@ use ManiaLive\Event\Dispatcher;
         public final function onReady() {
             $this->enableDatabase();
             //Recovering the billManager if need.
-            if(self::$exp_billManager == null){
+            if (self::$exp_billManager == null) {
                 self::$exp_billManager = new \ManiaLivePlugins\eXpansion\Core\BillManager($this->connection, $this->db, $this);
             }
-            
+
             if (!self::exp_checkGameCompability()) {
                 $this->exp_unload();
             } else {
@@ -376,17 +377,17 @@ use ManiaLive\Event\Dispatcher;
          * @param type $params The parameters to pass whith the calback
          * @return \ManiaLivePlugins\eXpansion\Core\types\Bill
          */
-        public function exp_startBill($source_login, $destination_login, $amount, $msg, $callback = array(), $params = array()){
+        public function exp_startBill($source_login, $destination_login, $amount, $msg, $callback = array(), $params = array()) {
             $bill = new Bill($source_login, $destination_login, $amount, $msg);
             self::$exp_billManager->sendBill($bill);
             $bill->setValidationCallback($callback, $params);
-            
+
             $bill->setPluginName($this->getId());
             $bill->setSubject($msg);
-            
+
             return $bill;
         }
-        
+
         final public function debug($message) {
             $config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
             if (!$config->debug)
@@ -444,11 +445,18 @@ use ManiaLive\Event\Dispatcher;
 
         /**
          * 
-         * @param \ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player
-         * @param int $oldPos
-         * @param int $newPos
+         * @param ExpPlayer $player player object of the player
+         * @param int $oldPos old position
+         * @param int $newPos new position
          */
         public function onPlayerPositionChange(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player, $oldPos, $newPos) {
+            
+        }
+
+        /**
+         * @param ExpPlayer[] $playerPositions array(string => ExpPlayer);
+         */
+        public function onPlayerNewPositions($playerPositions) {
             
         }
 

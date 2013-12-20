@@ -6,6 +6,7 @@ class PlayerEvent extends \ManiaLive\Event\Event {
 
     const ON_PLAYER_POSITION_CHANGE = 1;
     const ON_PLAYER_GIVEUP = 2;
+    const ON_PLAYER_POSITIONS_CALCULATED = 4;
 
     protected $params;
 
@@ -24,6 +25,9 @@ class PlayerEvent extends \ManiaLive\Event\Event {
                 break;
             case self::ON_PLAYER_GIVEUP:
                 $listener->onPlayerGiveup($p[0]);
+                break;
+            case self::ON_PLAYER_POSITIONS_CALCULATED:
+                $listener->onPlayerNewPositions($p[0]);
                 break;
         }
     }
