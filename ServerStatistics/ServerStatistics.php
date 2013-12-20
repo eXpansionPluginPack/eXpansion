@@ -88,6 +88,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         parent::exp_onReady();
         $this->enableTickerEvent();
         $this->enableDatabase();
+        $this->enableDedicatedEvents();
 
         if (!$this->db->tableExists("exp_server_stats")) {
             $q = "CREATE TABLE `exp_server_stats` (
@@ -125,7 +126,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         if ($this->ellapsed % 120 == 0) {
             $getter = parseSystem($this->os, $this->settings);
             $info = $getter->getAll();
-            print_r($info);
+
             $this->nbPlayerMax = $this->nbPlayer;
             $this->nbSpecMax = $this->nbSpec;
             
