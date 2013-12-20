@@ -155,11 +155,6 @@ EOT;
         
     }
 
-    public function onGameSettingsChange(\DedicatedApi\Structures\GameInfos $oldSettings, \DedicatedApi\Structures\GameInfos $newSettings, $changes) {
-        $window = new Gui\Windows\QuitWindow();
-        $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
-    }
-
     /**
      * 
      * @param array $map
@@ -292,6 +287,9 @@ EOT;
     }
 
     function onBeginMatch() {
+        $window = new Gui\Windows\QuitWindow();
+        $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
+        
         $this->update = true;
         $this->resetExpPlayers();
     }
