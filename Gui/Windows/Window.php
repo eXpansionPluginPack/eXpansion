@@ -137,6 +137,8 @@ class Window extends \ManiaLive\Gui\Window {
 
         $this->xml->setContent('    
         <script><!--
+        #Include "MathLib" as MathLib
+        
                        main () {     
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");    
                         declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);

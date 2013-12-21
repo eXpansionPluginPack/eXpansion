@@ -16,6 +16,8 @@ class LinePlotter extends \ManiaLive\Gui\Control {
     private $plots = array();
     private $limits = array();
     private $colors = array();
+    private $sizes = array();
+    private $tickSize = 4;
 
     /**
      * Button
@@ -25,6 +27,7 @@ class LinePlotter extends \ManiaLive\Gui\Control {
      */
     function __construct($sizeX = 100, $sizeY = 100) {
         $this->plots = array();
+        $this->sizes = Array($sizeX, $sizeY);
 
         $this->colors = array();
         $this->graph = new Graph($sizeX, $sizeY);
@@ -35,20 +38,26 @@ class LinePlotter extends \ManiaLive\Gui\Control {
         $this->graph->setPosition(0, 0);
         $this->addComponent($this->graph);
 
-        $this->limits = array(0, 0, 300, 100);
+        $this->limits = array(0, 0, 100, 100);
         $this->setLineColor(0);
         $this->setLineColor(1);
         $this->setLineColor(2);
     }
 
     public function add($line = 0, $x = 0, $y = 0) {
-        if ($line > 2)
-            throw new Exception("line number too big");
         $this->plots[$line][] = array($x, $y);
     }
 
     public function setLimits($minX, $minY, $maxX, $maxY) {
         $this->limits = array($minX, $minY, $maxX, $maxY);
+    }
+
+    /**
+     * sets the step value for scale-lines
+     * @param float $step
+     */
+    public function setTickSize($step = 4) {
+        $this->tickSize = $step;
     }
 
     public function setLineColor($line, $color = "000") {
@@ -66,6 +75,9 @@ class LinePlotter extends \ManiaLive\Gui\Control {
     }
 
     public function getScript() {
+        $y = $this->getNumber($this->sizes[1]);
+        $x = $this->getNumber($this->sizes[0]);
+
         $val = '
 declare CMlGraph Graph = (Page.GetFirstChild("graph") as CMlGraph);
 log(Graph);
@@ -76,10 +88,12 @@ Graph.CoordsMax = <' . $this->getNumber($this->limits[2]) . ', ' . $this->getNum
 declare CMlGraphCurve[] Curves = [Graph.AddCurve(), Graph.AddCurve(), Graph.AddCurve()];
 declare CMlGraphCurve[] scaleX;
 ';
-        for ($u = 0; $u < sizeof($this->plots); $u++) {
-            for ($i = 0; $i < sizeof($this->plots[$u]); $i++) {
-                $val .= "Curves[" . $u . "].Points.add(<" . $this->getNumber($this->plots[$u][$i][0]) . "," . $this->getNumber($this->plots[$u][$i][1]) . ">);\n";
+        $index = 0;
+        foreach ($this->plots as $u => $plot) {
+            foreach ($plot as $i => $vals) {
+                $val .= "Curves[" . $index . "].Points.add(<" . $this->getNumber($this->plots[$u][$i][0]) . "," . $this->getNumber($this->plots[$u][$i][1]) . ">);\n";
             }
+            $index++;
         }
         $val .= '
             
@@ -87,11 +101,30 @@ declare CMlGraphCurve[] scaleX;
 Curves[0].Color = <' . $this->colors[0][0] . ', ' . $this->colors[0][1] . ', ' . $this->colors[0][2] . '>;
 Curves[1].Color = <' . $this->colors[1][0] . ', ' . $this->colors[1][1] . ', ' . $this->colors[1][2] . '>;
 Curves[2].Color = <' . $this->colors[2][0] . ', ' . $this->colors[2][1] . ', ' . $this->colors[2][2] . '>;
+    
+declare min = (Graph.CoordsMin[1]);
+declare max = (Graph.CoordsMax[1]);
+declare diff = Graph.CoordsMax[1] - Graph.CoordsMin[1];
+declare Real base = MathLib::Ln(diff)/2.303; 
+declare Real power =MathLib::ToReal(MathLib::NearestInteger(base));
+declare Real base_unit = MathLib::Pow(10.0,power);
+declare Real step = base_unit / ' . $this->getNumber($this->tickSize) . ';
 
+
+declare Real index = min;
+while (index < max) {
+    scaleX.add(Graph.AddCurve());
+    declare Integer i = scaleX.count-1;
+    scaleX[i].Points.add(<Graph.CoordsMin[0], index>);
+    scaleX[i].Points.add(<Graph.CoordsMax[0], index>);
+    scaleX[i].Color = <0.5, 0.5, 0.5>;
+    scaleX[i].Width = 0.5; 
+    log (index);
+    index = index + step;
+}
 ';
         return $val;
     }
 
 }
-
 ?>

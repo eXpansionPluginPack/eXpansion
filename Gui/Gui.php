@@ -42,6 +42,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
             $this->onPlayerConnect($player->login, true);
+        $this->graph(null);
     }
 
     public static function getScaledSize($sizes, $totalSize) {

@@ -168,7 +168,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function serverManagement($login) {
         if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_stopServer') || $this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_stopManialive')) {
             $window = Gui\Windows\ServerManagement::Create($login);
-            $window->setTitle(__('Server Management', $login));
+            $window->setTitle(__('Server Control', $login));
             $window->setSize(60, 20);
             $window->centerOnScreen();
             $window->show();
