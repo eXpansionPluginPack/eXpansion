@@ -27,7 +27,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function graph($login) {
         $test = Windows\TestGraph::Create($login);
-        $test->setSize(100, 100);
+        $test->setSize(160, 100);
         $test->show();
     }
 

@@ -19,7 +19,7 @@ class TestGraph extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     protected function onConstruct() {
         parent::onConstruct();
-        $this->plotter = new \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter(100, 100);
+        $this->plotter = new \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter(160, 100);
         $this->plotter->setLimits(0, 0, 100, 100);
         $this->addComponent($this->plotter);
         for ($x = 0; $x < 100; $x+=5) {
@@ -32,7 +32,7 @@ class TestGraph extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->plotter->setLineColor(1, "00f");
         $this->setTitle("testGraph");
     }
-
+    
     function destroy() {
         $this->clearComponents();
         parent::destroy();
