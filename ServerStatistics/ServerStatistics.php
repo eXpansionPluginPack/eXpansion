@@ -106,7 +106,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
           `server_mlRunTime` INT( 9 ) NOT NULL,
           `server_upTime` INT( 9 ) NOT NULL,
           `server_load` INT( 3 ) NOT NULL,
-          `server_ramTotam` BIGINT( 15 ) NOT NULL,
+          `server_ramTotal` BIGINT( 15 ) NOT NULL,
           `server_ramFree` BIGINT( 15 ) NOT NULL,
           `server_phpRamUsage` BIGINT( 15 ) NOT NULL,
           `server_updateDate` INT( 9 ) NOT NULL,
@@ -146,7 +146,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $info = $getter->getAll();
 
             $q = 'INSERT INTO `exp_server_stats` (`server_login`, `server_game`, `server_nbPlayers`, server_nbSpec
-                            ,`server_mlRunTime`, `server_upTime`, `server_load`, `server_ramTotam`, `server_ramFree`
+                            ,`server_mlRunTime`, `server_upTime`, `server_load`, `server_ramTotal`, `server_ramFree`
                             , `server_phpRamUsage`, `server_updateDate` )
                         VALUES(' . $this->db->quote($this->storage->serverLogin) . ',
                             ' . $this->db->quote($this->storage->gameInfos->gameMode) . ',
