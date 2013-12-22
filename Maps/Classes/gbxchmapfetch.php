@@ -21,7 +21,7 @@
 	{
 		echo $e->getMessage() . "\n";
 	}
-	print_r($gbx);
+	//print_r($gbx);
 	//file_put_contents('thumb.jpg', $gbx->thumbnail);
 
 //	$gbxdata = file_get_contents($filename);

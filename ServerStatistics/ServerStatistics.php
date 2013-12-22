@@ -15,10 +15,9 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public $nbSpecMax = 0;
     public $nbSpec = 0;
     private $lastInfo;
-
     private $players = array();
     private $spectators = array();
-    
+
     function exp_onInit() {
         //The Database plugin is needed. 
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
@@ -56,7 +55,8 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
         // This is essentially the only extension we need, so make sure we have it
         if (!extension_loaded('pcre') && !function_exists('preg_match') && !function_exists('preg_match_all')) {
-            echo AppName . ' needs the `pcre\' extension to be loaded. http://us2.php.net/manual/en/book.pcre.php';
+            $message = 'ServerStatistics needs the `pcre` extension to be loaded. http://us2.php.net/manual/en/book.pcre.php';
+            $this->dumpException($message, new \Exception('`pcre` is missing'));
             exit(1);
         }
 
@@ -85,7 +85,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $this->os = determineOS();
         $this->settings = $settings;
     }
-    
+
     public function exp_onLoad() {
         parent::exp_onLoad();
         $this->enableDedicatedEvents();
@@ -94,8 +94,12 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public function exp_onReady() {
         parent::exp_onReady();
         $this->enableTickerEvent();
-        $this->enableDatabase();
-        
+        try {
+            $this->enableDatabase();
+        } catch (\Exception $e) {
+            $this->dumpException("Error while establishing MySQL connection!", $e);
+            exit(1);
+        }
 
         if (!$this->db->tableExists("exp_server_stats")) {
             $q = "CREATE TABLE `exp_server_stats` (
@@ -119,20 +123,20 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $version = $this->callPublicMethod('eXpansion\Database', 'getDatabaseVersion', 'exp_records');
         if (!$version) {
             $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_records', 1);
-        }        
-        
-        $this->nbPlayer = 0;
-        foreach($this->storage->players as $player){
-           if($player->isConnected){
-               $this->nbPlayer++;
-               $this->players[$player->login] = true;
-           }
         }
-        foreach($this->storage->spectators as $player){
-           if($player->isConnected){
-               $this->nbSpec++;
-               $this->spectators[$player->login] = true;
-           }
+
+        $this->nbPlayer = 0;
+        foreach ($this->storage->players as $player) {
+            if ($player->isConnected) {
+                $this->nbPlayer++;
+                $this->players[$player->login] = true;
+            }
+        }
+        foreach ($this->storage->spectators as $player) {
+            if ($player->isConnected) {
+                $this->nbSpec++;
+                $this->spectators[$player->login] = true;
+            }
         }
         $this->nbSpecMax = $this->nbSpec;
         $this->nbPlayerMax = $this->nbPlayer;
@@ -193,22 +197,24 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         else
             $this->nbPlayer--;
     }
-    
+
     public function onBeginMap($map, $warmUp, $matchContinuation) {
         parent::onBeginMap($map, $warmUp, $matchContinuation);
-        
+
         $this->nbPlayer = 0;
-        foreach($this->storage->players as $player){
-           if($player->isConnected){
-               $this->nbPlayer++;
-               $this->players[$player->login] = true;
-           }
+        foreach ($this->storage->players as $player) {
+            if ($player->isConnected) {
+                $this->nbPlayer++;
+                $this->players[$player->login] = true;
+            }
         }
-        foreach($this->storage->spectators as $player){
-           if($player->isConnected){
-               $this->nbSpec++;
-               $this->spectators[$player->login] = true;
-           }
+
+        $this->nbSpec = 0;
+        foreach ($this->storage->spectators as $player) {
+            if ($player->isConnected) {
+                $this->nbSpec++;
+                $this->spectators[$player->login] = true;
+            }
         }
         $this->nbSpecMax = $this->nbSpec;
         $this->nbPlayerMax = $this->nbPlayer;

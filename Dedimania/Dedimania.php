@@ -40,13 +40,19 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     }
 
     public function exp_onLoad() {
-        if ($this->isPluginLoaded("Reaby\\Dedimania") || $this->isPluginLoaded("Flo\\Dedimania"))
-            die("[eXpansion] Please disable other dedimania plugins, you don't need multiple ones!");
-        $helpText = "\n please correct your config with these instructions: \n  edit and ADD following configuration lines to manialive config.ini\n\n ManiaLivePlugins\\eXpansion\\Dedimania\\Config.login = 'your_server_login_here' \n ManiaLivePlugins\\eXpansion\\Dedimania\\Config.code = 'your_server_code_here' \n visit http://dedimania.net/tm2stats/?do=register to get code for your server.\n\n";
-        if (empty($this->config->login))
-            die("[Dedimania] Server login is not configured!" . $helpText);
-        if (empty($this->config->code))
-            die("[Dedimania] Server code is not configured!" . $helpText);
+        if ($this->isPluginLoaded("Reaby\\Dedimania") || $this->isPluginLoaded("Flo\\Dedimania")) {
+            $this->dumpException('Please disable other dedimania plugins, you do not need multiple ones!', new \Exception("Multiple plugins detected."));
+            die();
+        }
+        $helpText = "\n\nPlease correct your config with these instructions: \nEdit and add following configuration lines to manialive config.ini\n\n ManiaLivePlugins\\eXpansion\\Dedimania\\Config.login = 'your_server_login_here' \n ManiaLivePlugins\\eXpansion\\Dedimania\\Config.code = 'your_server_code_here' \n\n Visit http://dedimania.net/tm2stats/?do=register to get code for your server.";
+        if (empty($this->config->login)) {
+            $this->dumpException("Server login is not configured for dedimania plugin!" . $helpText, new \Exception("Server login missing."));
+            die();
+        }
+        if (empty($this->config->code)) {
+            $this->dumpException("Server code is not configured for dedimania plugin!" . $helpText, new \Exception("Server code missing."));
+            die();
+        }
         Dispatcher::register(DediEvent::getClass(), $this);
         $this->dedimania = DediConnection::getInstance();
         $this->config->newRecordMsg = exp_getMessage($this->config->newRecordMsg);

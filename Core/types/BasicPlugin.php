@@ -10,6 +10,7 @@ use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use \ManiaLivePlugins\eXpansion\Core\Events\PlayerEvent;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
+use ManiaLivePlugins\eXpansion\Database\Database;
 
     /**
      * Description of BasicPlugin
@@ -63,7 +64,12 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
         private $_isReady = false;
 
         public final function onInit() {
-
+            try {
+                $this->enableDatabase();
+            } catch (\Exception $e) {
+                $this->dumpException('There seems be a problem while establishing a MySQL connection.', $e);
+                die();
+            }
             //Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
 
@@ -115,7 +121,7 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
         }
 
         public final function onReady() {
-            $this->enableDatabase();
+
             //Recovering the billManager if need.
             if (self::$exp_billManager == null) {
                 self::$exp_billManager = new \ManiaLivePlugins\eXpansion\Core\BillManager($this->connection, $this->db, $this);
@@ -407,6 +413,34 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
                 Console::println($info);
                 \ManiaLive\Utilities\Logger::log($message, true, "exp-debug.txt");
             }
+        }
+
+        final public function dumpException($message, \Exception $e) {
+            Console::printLn('                                ____                  _  ');
+            Console::printLn('                               / __ \                | |');
+            Console::printLn('                              | |  | | ___  _ __  ___| |');
+            Console::printLn('                              | |  | |/ _ \|  _ \/ __| |');
+            Console::printLn('                              | |__| | (_) | |_) \__ \_|');
+            Console::printLn('                               \____/ \___/| .__/|___(_)');
+            Console::printLn('                                           | | ');
+            Console::printLn('                                           |_| ');
+            Console::println('');
+
+            $fill = "";
+            $firstline = explode("\n", $message, 2);
+            if (!is_array($firstline))
+                $firstline = array($firstline);
+            for ($x = 0; $x < ((80 - strlen($firstline[0])) / 2); $x++) {
+                $fill .= " ";
+            }
+            Console::printLn($fill . $message);
+            Console::printLn('');
+            $file = explode(DIRECTORY_SEPARATOR, $e->getFile());
+            Console::println('Advanced details');
+            Console::printLn('File: ' . end($file));
+            Console::printLn('Line: ' . $e->getLine());
+            Console::printLn('Message: ' . $e->getMessage());
+            Console::printLn('');
         }
 
         /**
