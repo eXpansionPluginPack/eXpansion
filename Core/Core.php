@@ -289,7 +289,7 @@ EOT;
     function onBeginMatch() {
         $window = new Gui\Windows\QuitWindow();
         $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
-        
+
         $this->update = true;
         $this->resetExpPlayers();
     }
@@ -333,6 +333,7 @@ EOT;
     public function resetExpPlayers() {
         self::$roundFinishOrder = array();
         self::$checkpointOrder = array();
+        $this->expPlayers = array();
         foreach ($this->storage->players as $login => $player) {
             if ($player->spectator == 1)
                 continue;
@@ -547,4 +548,5 @@ EOT;
     }
 
 }
+
 ?>
