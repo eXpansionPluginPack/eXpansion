@@ -130,7 +130,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
           `server_nbSpec` INT( 3 ) NOT NULL,
           `server_mlRunTime` INT( 9 ) NOT NULL,
           `server_upTime` INT( 9 ) NOT NULL,
-          `server_load` INT( 3 ) NOT NULL,
+          `server_load` FLOAT(6,4) NOT NULL,
           `server_ramTotal` BIGINT( 15 ) NOT NULL,
           `server_ramFree` BIGINT( 15 ) NOT NULL,
           `server_phpRamUsage` BIGINT( 15 ) NOT NULL,
@@ -179,6 +179,10 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             }
             $uptime = strtotime($str) - time();
 
+            $load = $info['Load'];
+            if (is_array($info['Load']) && array_key_exists("now", $info['Load']))
+                $load = floatval($info['Load']['now']);
+            
             $q = 'INSERT INTO `exp_server_stats` (`server_login`, `server_gamemode`, `server_nbPlayers`, server_nbSpec
                             ,`server_mlRunTime`, `server_upTime`, `server_load`, `server_ramTotal`, `server_ramFree`
                             , `server_phpRamUsage`, `server_updateDate` )
@@ -188,7 +192,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
                             ' . $this->db->quote($this->nbSpecMax) . ',
                             ' . $this->db->quote(time() - $this->startTime) . ',
                             ' . $this->db->quote($uptime) . ',
-                            ' . $this->db->quote(str_replace('%', '', $info['Load'])) . ',
+                            ' . $this->db->quote(str_replace('%', '', $load)) . ',
                             ' . $this->db->quote($info['RAM']['total']) . ',
                             ' . $this->db->quote($info['RAM']['free']) . ',
                             ' . $this->db->quote(memory_get_usage()) . ',
