@@ -11,7 +11,7 @@ Skip Map
 Map überspringen
 
 Cancel Vote
-Abstimmung widerrufen
+Abstimmung abbrechen
 
 #variable#%1$s #rank#initiated restart map vote..
 #variable#%1$s #rank#hat eine Abstimmung zum Neustart der Map eingeleitet..
@@ -29,5 +29,5 @@ Abstimmung widerrufen
 #admin_error# $iAbstimmung abgelehnt!
 
 #admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
-#admin_action#Admin #variable#%1$s #admin_action# hat die Abstimmung storniert!
+#admin_action#Admin #variable#%1$s #admin_action# hat die Abstimmung abgebrochen!
 

@@ -1,0 +1,51 @@
+Question
+Frage
+
+Answer
+Antwort
+
+Apply
+Anwenden
+
+Cancel
+Schließen
+
+#quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2
+#quiz#Anzahl Fragen:#variable# %s$1 #quiz#    Fragesteller:#variable# %s$2
+
+#question#%s ?
+#question#%s ?
+
+#error#Question needs to be at the right format!
+#error#Fragen müssen im richtigen Format sein!
+
+#quiz#Quiz has been reset!
+#quiz#Quiz wurde zurückgesetzt
+
+Correct from
+Korrekt von
+
+#quiz#Right answers: $o#question#%s
+#quiz#Richtige Antworten: $o#question#%s
+
+#error#Aswer is missing from the question!
+#error#Antwort zur Frage fehlt!
+
+#error#Question is missing from the question!
+#translate# #error#Question is missing from the question!
+
+%s #quiz#cancels the question.
+%s #quiz#hat die Frage abgebrochen
+
+#quiz#Current point holders:
+#quiz#Aktuelle Punktehalter:
+
+#quiz#$oPoint added for #variable#%s
+#quiz#$oPunkt für #variable#%s
+
+#quiz#$oPoint removed from #variable#%s
+#quiz#$oPunkt abgezogen von #variable#%s
+
+New question
+Neue Frage
+

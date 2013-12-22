@@ -1,0 +1,9 @@
+#player#Player %s$1 #player# (#variable#%s$2#player#) from #variable#%s$3 #player# joins! #variable#%s$4
+#player#Spieler %s$1 #player# (#variable#%s$2#player#) aus #variable#%s$3 #player# ist dem Spiel beigetreten #variable#%s$4
+
+#player#Player %s$1 #player# (#variable#%s$2#player#) leaves!
+#player#Spieler %s$1 #player# (#variable#%s$2#player#) hat den Server verlassen
+
+#variable#[Info] Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.
+#variable#[Info] Einige widgets sind nicht direkt einsehbar. Drücke TAB um sie zu zeigen oder F8 um alle auszublenden
+
