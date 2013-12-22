@@ -19,6 +19,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     private $spectators = array();
 
     function exp_onInit() {
+        global $lang;
         //The Database plugin is needed. 
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
 
@@ -100,6 +101,8 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $settings['language'] = 'en';
         $settings['compress_content'] = false;
 
+        require_once LOCAL_PATH . 'lang/' . $settings['language'] . '.php';
+
         $this->os = determineOS();
         $this->settings = $settings;
     }
@@ -122,7 +125,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         if (!$this->db->tableExists("exp_server_stats")) {
             $q = "CREATE TABLE `exp_server_stats` (
           `server_login` VARCHAR( 30 ) NOT NULL,
-          `server_game` INT( 2 ) NOT NULL,
+          `server_gamemode` INT( 2 ) NOT NULL,
           `server_nbPlayers` INT( 3 ) NOT NULL,
           `server_nbSpec` INT( 3 ) NOT NULL,
           `server_mlRunTime` INT( 9 ) NOT NULL,
@@ -167,7 +170,16 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $getter = parseSystem($this->os, $this->settings);
             $info = $getter->getAll();
 
-            $q = 'INSERT INTO `exp_server_stats` (`server_login`, `server_game`, `server_nbPlayers`, server_nbSpec
+            // calculate uptime timestamp
+            $values = array();
+            preg_match_all('/([0-9]+) (years|months|days|hours|minutes|seconds)/', $info['UpTime'], $values);
+            $str = "";
+            foreach ($values[0] as $value) {
+                $str .= $value . " ";
+            }
+            $uptime = strtotime($str) - time();
+
+            $q = 'INSERT INTO `exp_server_stats` (`server_login`, `server_gamemode`, `server_nbPlayers`, server_nbSpec
                             ,`server_mlRunTime`, `server_upTime`, `server_load`, `server_ramTotal`, `server_ramFree`
                             , `server_phpRamUsage`, `server_updateDate` )
                         VALUES(' . $this->db->quote($this->storage->serverLogin) . ',
@@ -175,7 +187,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
                             ' . $this->db->quote($this->nbPlayerMax) . ',
                             ' . $this->db->quote($this->nbSpecMax) . ',
                             ' . $this->db->quote(time() - $this->startTime) . ',
-                            ' . $this->db->quote($info['UpTime']) . ',
+                            ' . $this->db->quote($uptime) . ',
                             ' . $this->db->quote(str_replace('%', '', $info['Load'])) . ',
                             ' . $this->db->quote($info['RAM']['total']) . ',
                             ' . $this->db->quote($info['RAM']['free']) . ',
