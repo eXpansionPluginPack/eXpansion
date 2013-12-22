@@ -1,0 +1,15 @@
+Top1
+Top1
+
+Personal Best
+Persönliche Bestzeit
+
+Off
+Aus
+
+Audio: off
+Ton: Aus
+
+Audio: on
+Ton: An
+

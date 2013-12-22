@@ -35,8 +35,8 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
 	$this->_mainWindow->setId("MainWindow");
 	$this->_mainWindow->setStyle("Bgs1");
-	$this->_mainWindow->setSubStyle("BgCard");
-	$this->_mainWindow->setBgcolor("eeef");
+	$this->_mainWindow->setSubStyle("BgWindow3");
+	// $this->_mainWindow->setBgcolor("eeef");
 	// $this->_mainWindow->setStyle("Bgs1InRace");
 	// $this->_mainWindow->setSubStyle("BgEmpty");
 	// $this->_mainWindow->setBgcolor("fff");
@@ -47,6 +47,7 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_titlebar->setId("Titlebar");
 	$this->_titlebar->setStyle("Bgs1");
 	$this->_titlebar->setSubStyle("ProgressBar");
+	$this->_titlebar->setPosX(-30);
 	// $this->_titlebar->setBgcolor("6bf");
 	//$this->_titlebar->setImage($config->windowTitlebar);
 	$this->_titlebar->setScriptEvents(true);

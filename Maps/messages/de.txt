@@ -38,13 +38,13 @@ Mapliste
 #variable#%1$s  #queue#wurde an die Warteschlange eingetragen von #variable#%3$s#queue#, an der #variable#%5$s #queue#. Position
 
 #queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
-#queue#Nächste Map: #variable#%1$s  #queue#von #variable#%2$s#queue#, angefordert durch #variable#%3$s
+#queue#Nächste Map: #variable#%1$s  #queue#von #variable#%2$s#queue#, gewünscht von #variable#%3$s
 
 #queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#
 #queue#Nächste Map: #variable#%1$s  #queue#von #variable#%2$s#queue#
 
-#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, angefordert durch #variable#%3$s
-#queue#Wechsel der Map zu #variable#%1$s  #queue#von #variable#%2$s#queue#, angefordert durch #variable#%3$s
+#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
+#queue#Wechsel der Map zu #variable#%1$s  #queue#von #variable#%2$s#queue#, gewünscht von #variable#%3$s
 
 Error: %s
 Fehler: %s
@@ -80,59 +80,59 @@ Fehler: %s
 #queue#Wiederholung vorgemerkt!
 
 Add
-#translate# Add
+Hinzufügen
 
 Delete
-#translate# Delete
+Löschen
 
 Drop
-#translate# Drop
+Entfernen
 
 Add all
-#translate# Add all
+Alle hinzufügen
 
 Map name
-#translate# Map name
+Map Name
 
 Author
-#translate# Author
+Autor
 
 Lenght
-#translate# Lenght
+Länge
 
 Records
 #translate# Records
 
 Ratings
-#translate# Ratings
+Bewertungen
 
 Actions
-#translate# Actions
+Aktionen
 
 adds a map via MX
-#translate# adds a map via MX
+fügt eine Map von MX hinzu
 
 Jukebox
-#translate# Jukebox
+Warteschlange
 
 #queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
-#translate# #queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
+#queue#Map wechselt zu #variable#%1$s  #queue#von #variable#%2$s#queue#, gewünscht von #variable#%3$s
 
 /jb uses next params: drop, reset and show
-#translate# /jb uses next params: drop, reset and show
+/jb braucht noch folgende Optionen: drop, reset oder show
 
 #admin_error#Error downloading, or MX is down!
-#translate# #admin_error#Error downloading, or MX is down!
+#admin_error#Kann nicht herunterladen, MX ist nicht erreichbar!
 
 #admin_error#The map is to large to be added to a server
-#translate# #admin_error#The map is to large to be added to a server
+#admin_error#Die Map ist zu groß, um zum Server hinzugefügt zu werden
 
 #admin_error#You must include a MX map ID!
-#translate# #admin_error#You must include a MX map ID!
+#admin_error#Du musst eine ManiaExchange ID angeben
 
 #admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s
-#translate# #admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s
+#admin_action#Map #variable# %1$s #admin_action#zur Mapliste hinzugefügt von #variable#%2$s
 
 #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
-#translate# #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
+#admin_action#Admin #variable#%1$s #admin_action#hat #variable#%3$s #admin_action# von der Mapliste entfernt und die Datei gelöscht!
 

@@ -41,5 +41,5 @@ Show Players
 Spieler zeigen
 
 Admin has released you from specate to play.
-#translate# Admin has released you from specate to play.
+Der Admin hat Dir erlaubt, am Spiel teilzunehmen.
 

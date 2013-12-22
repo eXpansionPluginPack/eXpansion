@@ -26,16 +26,16 @@ Error: %s
 Fehler: %s
 
 MX is down
-MX is außer Betrieb
+ManiaExchnage ist derzeit nicht erreichbar
 
 Couldn't create mapfile in maps folder, check folder permissions!
-Konnte Mapdatei nicht im Verzeichnis erstellen, bitte Schreibberechtigungen prüfen!
+Konnte Mapdatei im Verzeichnis nicht erstellen, bitte Schreibberechtigungen prüfen!
 
 #admin_error# $iYou already have a map in the queue...
-#admin_error# $iDu hast bereits eine Map in der Warteschlange...
+#admin_error# $iDu hast bereits eine Map in der Warteschlange
 
 Unable to retrieve track info from MX..  wrong ID..?
-Konnte keine Informationen über die Map von MX abfragen..  Falsche ID..?
+Konnte keine Informationen über die Map von MX abfragen. Falsche ID?
 
 Wrong environment!
 Falsche Umgebung/Titel!
@@ -47,8 +47,8 @@ Falsche Umgebung/Titel!
 #admin_error# $iiAbstimmung gescheitert!
 
 Error receving data from ManiaExchange!
-#translate# Error receving data from ManiaExchange!
+Kann die Daten von ManiaExchange nicht empfangen!
 
 Map %s $z$s$fff added from MX Succesfully
-#translate# Map %s $z$s$fff added from MX Succesfully
+Map %s $z$s$fff von MX erfolgreich hinzugefügt
 

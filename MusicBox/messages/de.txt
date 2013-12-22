@@ -5,5 +5,5 @@ Warteschlange
 #variable# %1$s - %2$s $z$s#music# wird als nächstes gespielt, gewünscht von %3$s #variable#
 
 #music#Next song: $z$s#variable# %1$s - %2$s
-#music#Nächstes Stück: $z$s#variable# %1$s - %2$s
+#music#Nächstes Lied: $z$s#variable# %1$s - %2$s
 
