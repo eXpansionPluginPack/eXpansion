@@ -51,7 +51,7 @@ class OS_Windows {
 		$this->error = LinfoError::Fledging();
 		
 		// Get WMI instance
-		$this->wmi = new COM('winmgmts:{impersonationLevel=impersonate}//./root/cimv2');
+		$this->wmi = new \COM('winmgmts:{impersonationLevel=impersonate}//./root/cimv2');
 		
 		if (!is_object($this->wmi)) {
 			throw new GetInfoException('This needs access to WMI. Please enable DCOM in php.ini and allow the current user to access the WMI DCOM object.');
