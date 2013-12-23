@@ -53,7 +53,14 @@ class Core extends types\ExpPlugin {
      * 
      */
     function exp_onInit() {
-        
+        $logFile = "manialive-" . $this->storage->serverLogin . ".console.log";
+        if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . "logs" . DIRECTORY_SEPARATOR . $logFile)) {
+            unlink(__DIR__ . DIRECTORY_SEPARATOR . "logs" . DIRECTORY_SEPARATOR . $logFile);
+        }
+        $logFile = "manialive-" . $this->storage->serverLogin . ".error.log";
+        if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . "logs" . DIRECTORY_SEPARATOR . $logFile)) {
+            unlink(__DIR__ . DIRECTORY_SEPARATOR . "logs" . DIRECTORY_SEPARATOR . $logFile);
+        }
     }
 
     /**
@@ -327,8 +334,9 @@ EOT;
         if (!array_key_exists($player->login, $this->expPlayers)) {
             $login = $player->login;
             $pla = $this->storage->getPlayerObject($player->login);
-            if (empty($pla))
+            if (empty($pla)) {
                 return;
+            }
             $this->expPlayers[$player->login] = Structures\ExpPlayer::fromArray($pla->toArray());
 
             if (array_key_exists($login, $this->teamScores))
@@ -350,9 +358,13 @@ EOT;
         if ($player->spectator == 1) {
             $this->expPlayers[$player->login]->isPlaying = false;
             $this->expPlayers[$player->login]->hasRetired = true;
+            $this->expPlayers[$player->login]->isWaiting = false;
         } else {
             $this->expPlayers[$player->login]->isPlaying = true;
             $this->expPlayers[$player->login]->hasRetired = true;
+            if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+                $this->expPlayers[$player->login]->isWaiting = true;
+            }
         }
     }
 
@@ -377,15 +389,14 @@ EOT;
             $this->expPlayers[$login]->position = -1;
             $this->expPlayers[$login]->time = -1;
             $this->expPlayers[$login]->curCpIndex = -1;
-            $this->expPlayers[$login]->score = 0;
+            $this->expPlayers[$player->login]->isWaiting = false;
         }
-        
-        if ($readRankings) {
-            $rankings = $this->connection->getCurrentRanking(-1, 0);
-            foreach ($rankings as $player) {
-                if (array_key_exists($player->login, $this->expPlayers)) {
-                    $this->expPlayers[$player->login]->score = $rankings->score;
-                }
+
+
+        $rankings = $this->connection->getCurrentRanking(-1, 0);
+        foreach ($rankings as $player) {
+            if (!empty($player->login) && array_key_exists($player->login, $this->expPlayers)) {
+                $this->expPlayers[$login]->score = $player->score;
             }
         }
     }
@@ -433,9 +444,9 @@ EOT;
                 if ($total > $maxpoints) {
                     $total = $maxpoints;
                 }
-                echo "team";
+
                 if (array_key_exists($login, $this->expPlayers)) {
-                    echo "login exists";
+
                     $player = $this->expPlayers[$login];
                     if ($player->isPlaying) {
                         $points = ($total + 1) - (count(self::$roundFinishOrder));
@@ -466,7 +477,7 @@ EOT;
         $giveupCount = 0;
         $giveupPlayers = array();
         foreach ($this->expPlayers as $login => $player) {
-            if ($player->isPlaying == false) {
+            if ($player->isPlaying == false || $player->isWaiting) {
                 unset($this->expPlayers[$login]);
                 continue;
             }

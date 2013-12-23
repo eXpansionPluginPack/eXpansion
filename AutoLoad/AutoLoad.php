@@ -30,7 +30,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         , 'eXpansion\Overlay_TeamScores'
         , 'eXpansion\Overlay_Positions'
         , 'eXpansion\Widgets_Clock'
-        // , 'eXpansion\Widgets_BestCheckpoints'
+// , 'eXpansion\Widgets_BestCheckpoints'
         , 'eXpansion\Widgets_EndRankings'
         , 'eXpansion\Widgets_PersonalBest'
         , 'eXpansion\Widgets_Record'
@@ -41,7 +41,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->console("[eXpansion] AutoLoading eXpansion pack ... ");
 
-        //We Need the plugin Handler
+//We Need the plugin Handler
         $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
         $recheck = array();
@@ -62,7 +62,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         }
     }
-
+    
     public function loadPlugins($list, \ManiaLive\PluginHandler\PluginHandler $pHandler) {
         $recheck = array();
         $disabled = Config::getInstance()->disable;
@@ -73,7 +73,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($list as $pname) {
             try {
                 if (!$pHandler->isLoaded($pname)) {
-                    //$this->console("\n[eXpansion Pack]AutoLoading : Trying to Load $pname ... ");
+//$this->console("\n[eXpansion Pack]AutoLoading : Trying to Load $pname ... ");
 
                     if (in_array($pname, $disabled)) {
                         $this->console("[" . $pname . "]..............................Disabled -> not loading");
@@ -87,7 +87,8 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     }
                 }
             } catch (\Exception $ex) {
-                $this->console("[Autoload ERROR]" . $ex->getMessage() . "\n");
+                print_r($ex->getMessage());
+                \ManiaLivePlugins\eXpansion\Core\types\ErrorHandler::displayAndLogError($ex);
                 $recheck[] = $pname;
             }
         }

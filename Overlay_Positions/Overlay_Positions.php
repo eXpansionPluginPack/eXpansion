@@ -24,8 +24,8 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function exp_onReady() {
         $this->enableDedicatedEvents();
-        $this->update = true;
         $this->enableTickerEvent();
+        $this->update = true;
     }
 
     public function onTick() {
@@ -33,7 +33,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->update = false;
             if ($this->isPodium)
                 return;
-            
+
             foreach ($this->retiredPlayers as $login => $player) {
                 $this->showWidget($login);
             }
@@ -121,7 +121,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onPlayerDisconnect($login, $disconnectionReason = null) {
         $this->update = true;
     }
-    
+
     public function onUnload() {
         $this->disableTickerEvent();
         parent::onUnload();

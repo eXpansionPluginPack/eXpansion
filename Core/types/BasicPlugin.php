@@ -64,7 +64,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
         private $_isReady = false;
 
         public final function onInit() {
-
+            ErrorHandler::$server = $this->storage->serverLogin;
             try {
                 $this->enableDatabase();
             } catch (\Exception $e) {
@@ -72,14 +72,14 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                 exit(1);
             }
 
-            //Recovering the eXpansion pack tools
+//Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
 
             $this->exp_unloading = false;
             $this->relay = \ManiaLivePlugins\eXpansion\Core\RelayLink::getInstance();
             \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
 
-            //All plugins need the eXpansion Core to work properly
+//All plugins need the eXpansion Core to work properly
             if ($this->getId() != 'eXpansion\Core' && $this->getId() != 'eXpansion\AutoLoad')
                 $this->addDependency(new \ManiaLive\PluginHandler\Dependency('eXpansion\Core'));
 
@@ -123,7 +123,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
 
         public final function onReady() {
 
-            //Recovering the billManager if need.
+//Recovering the billManager if need.
             if (self::$exp_billManager == null) {
                 self::$exp_billManager = new \ManiaLivePlugins\eXpansion\Core\BillManager($this->connection, $this->db, $this);
             }
@@ -134,7 +134,11 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             } else {
                 if (!$this->_isReady) {
                     $this->_isReady = true;
-                    $this->exp_onReady();
+                    try {
+                        $this->exp_onReady();
+                    } catch (\Exception $e) {
+                        throw new \Exception("onReadyError:\n" . $e->getFile() . ":" . $e->getLine() . "\n" . $e->getMessage(), 0, $e);
+                    }
                 }
             }
         }
@@ -191,7 +195,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                 array_unshift($args, $msg, $login);
                 $msgString = call_user_func_array('__', $args);
 
-                //Check if it needs to be redirected
+//Check if it needs to be redirected
                 $this->exp_redirectedChatSendServerMessage($msgString, $login, get_class($this));
             }
         }
@@ -338,7 +342,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             $deps = $this->getDependencies();
 
             if (!empty($deps)) {
-                // $this->console('[eXpansion] Unloading Dependencies of ' . $this->getId() . '');
+                $this->console('[eXpansion] Unloading Dependencies of ' . $this->getId() . '');
                 foreach ($deps as $dep) {
                     if ($dep->getPluginId() != "eXpansion\\Core")
                         $this->callPublicMethod($dep->getPluginId(), 'exp_unload');
@@ -479,19 +483,23 @@ use ManiaLivePlugins\eXpansion\Database\Database;
         }
 
         final public function console($message) {
+            $logFile = $this->storage->serverLogin . ".console.log";
+            /** @var \ManiaLive\Utilities\Logger */
+            $logger = \ManiaLive\Utilities\Logger::getLog("eXpansion");
+
             if (is_string($message)) {
                 Console::println($message);
-                \ManiaLive\Utilities\Logger::log($message, true, "exp-console.txt");
+                $logger::log($message, true, $logFile);
             }
             if (is_array($message)) {
                 $info = print_r($message, true);
                 Console::println($info);
-                \ManiaLive\Utilities\Logger::log($info, true, "exp-console.txt");
+                $logger::log($info, true, $logFile);
             }
             if (is_object($message)) {
                 $info = var_export($message, true);
                 Console::println($info);
-                \ManiaLive\Utilities\Logger::log($message, true, "exp-console.txt");
+                $logger::log($info, true, $logFile);
             }
         }
 
@@ -532,6 +540,11 @@ use ManiaLivePlugins\eXpansion\Database\Database;
 }
 
 namespace {
+// fix for  php 5.5.0
+    error_reporting(E_ALL ^ E_DEPRECATED);
+// do custom logging also
+
+    set_error_handler('\\ManiaLivePlugins\\eXpansion\\Core\\types\\ErrorHandler::createExceptionFromError');
 
     if (!defined("DEBUG")) {
         $config = ManiaLivePlugins\eXpansion\Core\Config::getInstance();
