@@ -64,12 +64,14 @@ use ManiaLivePlugins\eXpansion\Database\Database;
         private $_isReady = false;
 
         public final function onInit() {
+
             try {
                 $this->enableDatabase();
             } catch (\Exception $e) {
                 $this->dumpException('There seems be a problem while establishing a MySQL connection.', $e);
-                die();
+                exit(1);
             }
+
             //Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
 
@@ -104,7 +106,6 @@ use ManiaLivePlugins\eXpansion\Database\Database;
         }
 
         public final function onLoad() {
-
             try {
                 $this->exp_onLoad();
             } catch (\Exception $e) {
@@ -129,6 +130,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
 
             if (!self::exp_checkGameCompability()) {
                 $this->exp_unload();
+                return;
             } else {
                 if (!$this->_isReady) {
                     $this->_isReady = true;
@@ -306,14 +308,19 @@ use ManiaLivePlugins\eXpansion\Database\Database;
          * @abstract
          */
         public function exp_unload() {
-            Console::println('[eXpension Pack] ' . $this->getId() . ' Isn\'t compatible with this GameMode. UnLoading ...');
+            Console::println('[eXpansion] ' . $this->getId() . ' Isn\'t compatible with this GameMode. UnLoading ...');
             $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
             $plugins = $pHandler->getLoadedPluginsList();
+
             foreach ($plugins as $plugin) {
                 try {
                     if ($plugin != $this->getId()) {
-                        $deps = $this->callPublicMethod($plugin, 'getDependencies');
+                        $deps = null;
+                        if (method_exists($plugin, 'getDependencies')) {
+                            echo "Deps found!\n";
+                            $deps = $this->callPublicMethod($plugin, 'getDependencies');
+                        }
                         if (!empty($deps)) {
                             foreach ($deps as $dep) {
                                 if ($dep->getPluginId() == $this->getId()) {
@@ -324,22 +331,36 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                         }
                     }
                 } catch (\Exception $ex) {
-                    
+                    echo "Error:" . $ex->getFile() . ":" . $ex->getLine() . "\n" . $ex->getMessage();
                 }
             }
 
 //Unloading dependencies to prevent crash
-            /* $deps = $this->getDependencies();
-              if(!empty($deps)){
-              Console::println('[eXpension Pack] Unloading Dependencies of '.$this->getId().'');
-              foreach($deps as $dep){
-              $this->callPublicMethod($dep->getPluginId(), 'exp_unload');
-              }
-              } */
+            $deps = $this->getDependencies();
+
+            if (!empty($deps)) {
+                Console::println('[eXpansion] Unloading Dependencies of ' . $this->getId() . '');
+                foreach ($deps as $dep) {
+                    if ($dep->getPluginId() != "eXpansion\Core")
+                        $this->callPublicMethod($dep->getPluginId(), 'exp_unload');
+                }
+            }
+
+
 //Unloading it self
             $this->exp_unloading = true;
             $pHandler->unload($this->getId());
             self::$plugins_onHold[] = $this->getId();
+        }
+
+        public function onPluginUnloaded($pluginId) {
+            echo "unloaded: " . $pluginId . "\n";
+        }
+
+        public function onUnload() {
+            Dispatcher::unregister(GameSettingsEvent::getClass(), $this);
+            Dispatcher::unregister(PlayerEvent::getClass(), $this);
+            parent::onUnload();
         }
 
         /**

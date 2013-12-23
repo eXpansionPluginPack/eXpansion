@@ -15,7 +15,6 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_forceScore_error, $msg_scriptSettings, $msg_databasePlugin;
 
     public function exp_onInit() {
-        parent::exp_onInit();
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
@@ -23,7 +22,6 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onLoad() {
-
         $this->msg_forceScore_error = exp_getMessage("ForceScores can be used only with rounds or team mode");
         $this->msg_scriptSettings = exp_getMessage("ScriptSettings available only in script mode");
         $this->msg_databasePlugin = exp_getMessage("Database plugin not loaded!");
@@ -41,10 +39,6 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function exp_onReady() {
-        //    $methods = get_class_methods($this->connection);
-        if ($this->isPluginLoaded('Standard\Menubar'))
-            $this->buildStdMenu();
-
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Server Management'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Server Management'), null, array($this, 'serverControlMain'), true);
@@ -113,14 +107,6 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["function"] = "matchSettings";
         $button["permission"] = "game_match";
         $menu->addButton($parent, "Match Settings", $button);
-    }
-
-    public function buildStdMenu() {
-        $this->callPublicMethod('Standard\Menubar', 'initMenu', \ManiaLib\Gui\Elements\Icons128x128_1::Options);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', __('Server ControlPanel'), array($this, 'serverControlMain'), true);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', __('Server Options'), array($this, 'serverOptions'), true);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', __('Game Options'), array($this, 'gameOptions'), true);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', __('Match Settings'), array($this, 'matchSettings'), true);
     }
 
     public function serverOptions($login) {

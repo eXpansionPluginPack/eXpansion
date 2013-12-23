@@ -55,10 +55,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } while (!empty($recheck) && $lastSize != sizeof($recheck));
 
         if (!empty($recheck)) {
-            Console::println("[eXpansion Pack]AutoLoading eXpansion pack FAILED !! ");
-            Console::println("[eXpansion Pack]All required plugins couldn't be loaded : ");
+            $this->dumpException("Couldn't Autoload all required plugins", new \Maniaplanet\WebServices\Exception("Autoload failed."));
+            Console::println("Not all required plugins were loaded, list of not loaded plugins: ");
             foreach ($recheck as $pname) {
-                Console::println("[eXpansion Pack]...................." . $pname);
+                Console::println($pname);
             }
         }
     }
@@ -75,9 +75,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 if (!$pHandler->isLoaded($pname)) {
                     //Console::println("\n[eXpansion Pack]AutoLoading : Trying to Load $pname ... ");
 
-                    if (in_array($pname, $disabled))
+                    if (in_array($pname, $disabled)) {
+                        Console::println("[" . $pname . "]..............................Disabled -> not loading");
                         continue;
-
+                    }
                     if (!$pHandler->load($pname)) {
                         Console::println("[" . $pname . "]..............................FAIL -> will retry");
                         $recheck[] = $pname;

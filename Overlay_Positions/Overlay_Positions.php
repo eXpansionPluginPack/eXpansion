@@ -121,5 +121,10 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onPlayerDisconnect($login, $disconnectionReason = null) {
         $this->update = true;
     }
+    
+    public function onUnload() {
+        $this->disableTickerEvent();
+        parent::onUnload();
+    }
 
 }

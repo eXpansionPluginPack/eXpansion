@@ -53,7 +53,7 @@ class Core extends types\ExpPlugin {
      * 
      */
     function exp_onInit() {
-        parent::exp_onInit();
+        
     }
 
     /**
