@@ -23,11 +23,12 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function exp_onReady() {
-        $scores = $this->connection->getCurrentRanking(-1, 0);
+        $scores = $this->connection->getCurrentRanking(1, 0);
         $this->teams[0] = new Structures\Team($scores[0]->nickName);
-        $this->teams[1] = new Structures\Team($scores[1]->nickName);
         $this->teams[0]->score = $scores[0]->score;
-        $this->teams[1]->score = $scores[1]->score;
+        $scores = $this->connection->getCurrentRanking(1, 1);
+        $this->teams[1] = new Structures\Team($scores[0]->nickName);
+        $this->teams[1]->score = $scores[0]->score;
 
 
         Gui\Widgets\ScoresOverlay::$action = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, "setData0"));

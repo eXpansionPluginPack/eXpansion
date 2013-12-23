@@ -28,6 +28,9 @@ class Core extends types\ExpPlugin {
      * @var Structures\ExpPlayer[] */
     private $expPlayers = array();
 
+    /** @var array() */
+    private $teamScores = array();
+
     /**
      * public variable to export player infos 
      * @var Structures\ExpPlayer[] */
@@ -134,17 +137,26 @@ EOT;
      * 
      */
     public function exp_onReady() {
-        //  $rankings = $this->connection->getCurrentRanking(-1, 0);
-        //  foreach ($rankings as $player) {
-        //      $this->expPlayers[$player->login] = Structures\ExpPlayer::fromArray($player->toArray());
-        //  }
+//  $rankings = $this->connection->getCurrentRanking(-1, 0);
+//  foreach ($rankings as $player) {
+//      $this->expPlayers[$player->login] = Structures\ExpPlayer::fromArray($player->toArray());
+//  }
         $this->registerChatCommand("info", "showInfo", 0, true);
         $this->registerChatCommand("serverlogin", "serverlogin", 0, true);
+        $this->registerChatCommand("test", "test");
+
         $window = new Gui\Windows\QuitWindow();
         $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
         $this->onBeginMap(null, null, null);
+        $this->onBeginRound();
         $this->loopTimer = round(microtime(true));
         $this->enableApplicationEvents(\ManiaLive\Application\Event::ON_POST_LOOP);
+    }
+
+    public function test() {
+        foreach ($this->storage->players as $login => $player) {
+            $this->onPlayerFinish(2, $login, rand(5000, 500000));
+        }
     }
 
     /**
@@ -198,6 +210,7 @@ EOT;
                 $this->lastServerSettings = clone $serverSettings;
             }
         }
+        $this->teamScores = array();
     }
 
     protected function compareObjects($obj1, $obj2, $ingnoreList = array()) {
@@ -289,9 +302,6 @@ EOT;
     function onBeginMatch() {
         $window = new Gui\Windows\QuitWindow();
         $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
-
-        $this->update = true;
-        $this->resetExpPlayers();
     }
 
     public function onBeginRound() {
@@ -300,47 +310,58 @@ EOT;
     }
 
     public function onEndRound() {
-
-        $rankings = $this->connection->getCurrentRanking(-1, 0);
-        if (count($rankings) > 0) {
-            foreach ($rankings as $player) {
-                if (array_key_exists($player->login, $this->expPlayers)) {
-                    $this->expPlayers[$player->login]->matchScore += $player->score;
-                }
-            }
-        }
+        $this->update = true;
     }
 
     public function onPlayerInfoChanged($playerInfo) {
         $this->update = true;
         $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
-        if (array_key_exists($player->login, $this->expPlayers)) {
-            $this->expPlayers[$player->login]->teamId = $player->teamId;
+        if (!array_key_exists($player->login, $this->expPlayers)) {
+            $login = $player->login;
+            $pla = $this->storage->getPlayerObject($player->login);
+            $this->expPlayers[$player->login] = Structures\ExpPlayer::fromArray($pla->toArray());
+
+            if (array_key_exists($login, $this->teamScores))
+                $this->expPlayers[$login]->matchScore = $this->teamScores[$login];
+            $this->expPlayers[$login]->hasRetired = false;
+            $this->expPlayers[$login]->isPlaying = true;
+            $this->expPlayers[$login]->checkpoints = array(0 => 0);
+            $this->expPlayers[$login]->finalTime = -1;
+            $this->expPlayers[$login]->position = -1;
+            $this->expPlayers[$login]->time = -1;
+            $this->expPlayers[$login]->curCpIndex = -1;
         }
 
+        $this->expPlayers[$player->login]->teamId = $player->teamId;
+        $this->expPlayers[$player->login]->spectator = $player->spectator;
+        $this->expPlayers[$player->login]->temporarySpectator = $player->temporarySpectator;
+
+
         if ($player->spectator == 1) {
-            if (array_key_exists($player->login, $this->expPlayers)) {
-                $this->expPlayers[$player->login]->hasRetired = true;
-                $this->expPlayers[$player->login]->isPlaying = false;
-            }
+            $this->expPlayers[$player->login]->isPlaying = false;
+            $this->expPlayers[$player->login]->hasRetired = true;
         } else {
-            if (array_key_exists($player->login, $this->expPlayers)) {
-                $this->expPlayers[$player->login]->isPlaying = true;
-            }
+            $this->expPlayers[$player->login]->isPlaying = true;
+            $this->expPlayers[$player->login]->hasRetired = true;
         }
     }
 
     public function resetExpPlayers() {
         self::$roundFinishOrder = array();
         self::$checkpointOrder = array();
-        $this->expPlayers = array();
+
         foreach ($this->storage->players as $login => $player) {
-            if ($player->spectator == 1)
+            $this->expPlayers[$login] = Structures\ExpPlayer::fromArray($player->toArray());
+
+            if ($player->spectator == 1) {
+                $this->expPlayers[$login]->hasRetired = true;
+                $this->expPlayers[$login]->isPlaying = false;
                 continue;
-            if (!isset($this->expPlayers[$login])) {
-                $this->expPlayers[$login] = Structures\ExpPlayer::fromArray($player->toArray());
             }
+            if (array_key_exists($login, $this->teamScores))
+                $this->expPlayers[$login]->matchScore = $this->teamScores[$login];
             $this->expPlayers[$login]->hasRetired = false;
+            $this->expPlayers[$login]->isPlaying = true;
             $this->expPlayers[$login]->checkpoints = array(0 => 0);
             $this->expPlayers[$login]->finalTime = -1;
             $this->expPlayers[$login]->position = -1;
@@ -350,29 +371,68 @@ EOT;
     }
 
     public function onPlayerFinish($playerUid, $login, $timeOrScore) {
-        // handle onPlayerfinish @ start from server.
+// handle onPlayerfinish @ start from server.
         $this->update = true;
         if ($playerUid == 0)
             return;
 
-        if (!array_key_exists($login, $this->expPlayers)) {
-            $player = $this->storage->getPlayerObject($login);
-            $this->expPlayers[$login] = Structures\ExpPlayer::fromArray($player->toArray());
-        }
+        /* if (!array_key_exists($login, $this->expPlayers)) {
+          $player = $this->storage->getPlayerObject($login);
+          $this->expPlayers[$login] = Structures\ExpPlayer::fromArray($player->toArray());
+          } */
 
         if ($timeOrScore == 0) {
-            $this->expPlayers[$login]->finalTime = 0;
-            if ($this->storage->gameInfos->gameMode !== \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
-                $this->expPlayers[$login]->hasRetired = true;
-                Dispatcher::dispatch(new Events\PlayerEvent(Events\PlayerEvent::ON_PLAYER_GIVEUP, $this->expPlayers[$login]));
+            if (array_key_exists($login, $this->expPlayers)) {
+                $this->expPlayers[$login]->finalTime = 0;
+                if ($this->storage->gameInfos->gameMode !== \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+                    $this->expPlayers[$login]->hasRetired = true;
+                    Dispatcher::dispatch(new Events\PlayerEvent(Events\PlayerEvent::ON_PLAYER_GIVEUP, $this->expPlayers[$login]));
+                }
             }
             return;
         }
 
         if ($timeOrScore > 0) {
-            $this->expPlayers[$login]->finalTime = $timeOrScore;
-            if ($this->storage->gameInfos->gameMode !== \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
-                self::$roundFinishOrder[] = $login;
+            if (array_key_exists($login, $this->expPlayers)) {
+                $this->expPlayers[$login]->finalTime = $timeOrScore;
+                if ($this->storage->gameInfos->gameMode !== \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+                    self::$roundFinishOrder[] = $login;
+                }
+            }
+
+            // set points
+            if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+                $maxpoints = $this->storage->gameInfos->teamMaxPoints;
+                $total = 0;
+// get total number if players
+                foreach ($this->expPlayers as $player) {
+                    if ($player->isPlaying)
+                        $total++;
+                }
+// set max points
+                if ($total > $maxpoints) {
+                    $total = $maxpoints;
+                }
+                echo "team";
+                if (array_key_exists($login, $this->expPlayers)) {
+                    echo "login exists";
+                    $player = $this->expPlayers[$login];
+                    if ($player->isPlaying) {
+                        $points = ($total + 1) - (count(self::$roundFinishOrder));
+
+
+                        if ($points < 0)
+                            $points = 0;
+
+                        if (!array_key_exists($player->login, $this->teamScores)) {
+                            $this->teamScores[$player->login] = $points;
+                        } else {
+                            $this->teamScores[$player->login] += $points;
+                        }
+                        $this->expPlayers[$player->login]->matchScore = $this->teamScores[$player->login];
+                    }
+                }
+                self::$playerInfo = $this->expPlayers;
             }
         }
     }
@@ -386,15 +446,18 @@ EOT;
         $giveupCount = 0;
         $giveupPlayers = array();
         foreach ($this->expPlayers as $login => $player) {
-            if (isset($player->checkpoints[0])) {
-                $player->time = end($player->checkpoints);
-                // $player->curCpIndex = key($player->checkpoints);
-            }
-            // is player is not playing ie. has become spectator or disconnect, remove...
-            if (!$player->isPlaying) {
+            if ($player->isPlaying == false) {
                 unset($this->expPlayers[$login]);
                 continue;
             }
+
+            if (isset($player->checkpoints[0])) {
+                $player->time = end($player->checkpoints);
+// $player->curCpIndex = key($player->checkpoints);
+            }
+// is player is not playing ie. has become spectator or disconnect, remove...
+
+
 
 
             if ($player->finalTime == 0) {
@@ -417,9 +480,9 @@ EOT;
         foreach ($playerPositions as $pos => $current) {
             $dispatch = false;
             $login = $current->login;
-            // get old position
+// get old position
             $oldPos = $current->position;
-            // update new position
+// update new position
             $this->expPlayers[$login]->position = $pos;
             if ($firstPlayerLogin == null) {
                 $this->expPlayers[$login]->deltaCpCountTop1 = 0;
@@ -440,7 +503,7 @@ EOT;
                 if (isset($first->checkpoints[$cpindex]))
                     $this->expPlayers[$login]->deltaTimeTop1 = $current->time - $first->checkpoints[$cpindex];
             }
-            // reset flags
+// reset flags
             $this->expPlayers[$login]->changeFlags = 0;
 
             if ($pos != $oldPos) {
@@ -456,13 +519,13 @@ EOT;
             if ($dispatch) {
                 Dispatcher::dispatch(new Events\PlayerEvent(Events\PlayerEvent::ON_PLAYER_POSITION_CHANGE, $this->expPlayers[$login], $oldPos, $pos));
             }
-            // set previous player
+// set previous player
             if ($previousPlayerLogin == null) {
                 $previousPlayerLogin = $login;
                 $previous = $current;
             }
         } // end of foreach playerpositions;
-        // export infos..
+// export infos..
         self::$playerInfo = $this->expPlayers;
         \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc(self::$playerInfo, "position");
         Dispatcher::dispatch(new Events\PlayerEvent(Events\PlayerEvent::ON_PLAYER_POSITIONS_CALCULATED, self::$playerInfo));
@@ -472,43 +535,43 @@ EOT;
     function positionCompare(Structures\ExpPlayer $a, Structures\ExpPlayer $b) {
 // no cp
         if ($a->curCpIndex < 0 && $b->curCpIndex < 0) {
-            //      echo "no cp";
+//      echo "no cp";
             return strcmp($a->login, $b->login);
         }
 // 2nd have del
         if ($a->finalTime > 0 && $b->finalTime <= 0) {
-            //    echo "2nd have del";
+//    echo "2nd have del";
             return -1;
         }
 // 1st have del
         elseif ($a->finalTime <= 0 && $b->finalTime > 0) {
-            //  echo "1nd have del";
+//  echo "1nd have del";
             return 1;
         }
 // only 1st
         if ($b->curCpIndex < 0) {
-            //echo "1st";
+//echo "1st";
             return -1;
         }
 // only 2nd
         elseif ($a->curCpIndex < 0) {
-            //  echo "2nd";
+//  echo "2nd";
             return 1;
         }
 // both ok, so...
         elseif ($a->curCpIndex > $b->curCpIndex) {
-            //   echo "cp a";
+//   echo "cp a";
             return -1;
         } elseif ($a->curCpIndex < $b->curCpIndex) {
-            //       echo "cp b";
+//       echo "cp b";
             return 1;
         }
 // same check, so test time
         elseif ($a->time < $b->time) {
-            //        echo "time";
+//        echo "time";
             return -1;
         } elseif ($a->time > $b->time) {
-            //           echo "tiem";
+//           echo "tiem";
             return 1;
         }
 // same check check and time, so test general rank
@@ -524,10 +587,10 @@ EOT;
 
 // same check check, time and rank (only in team or beginning?), so test general scores
         elseif ($a->score > 0 && $b->score > 0 && $a->score > $b->score) {
-            // echo "score";
+// echo "score";
             return -1;
         } elseif ($a->score > 0 && $b->score > 0 && $a->score < $b->score) {
-            // echo "score";
+// echo "score";
             return 1;
         }
 // same check check, time, rank and general score, so test besttime
@@ -543,7 +606,7 @@ EOT;
                 return 1;
         }
 // really all same, use login  :p
-        //    echo "use login";
+//    echo "use login";
         return strcmp($a->login, $b->login);
     }
 
