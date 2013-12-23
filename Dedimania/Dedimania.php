@@ -306,13 +306,13 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
 // Dedimania doesn't allow times sent without validation relay. So, let's just stop here if there is none.
             if (empty($this->vReplay)) {
-                Console::println("[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent.");
+                $this->console("[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent.");
                 return;
             }
 
             $this->dedimania->setChallengeTimes($this->storage->currentMap, $this->rankings, $this->vReplay, $this->gReplay);
         } catch (\Exception $e) {
-            Console::println("[Dedimania] " . $e->getMessage());
+            $this->console("[Dedimania] " . $e->getMessage());
             $this->vReplay = "";
             $this->gReplay = "";
         }
@@ -385,7 +385,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
             $this->exp_chatSendServerMessage($this->config->newRecordMsg, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time));
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("Error: couldn't show dedimania message" . $e->getMessage());
+            $this->console("Error: couldn't show dedimania message" . $e->getMessage());
         }
     }
 
@@ -420,7 +420,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
             $this->exp_chatSendServerMessage($this->config->recordMsg, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time, $oldRecord->place, $diff));
             $this->debug("message sent.");
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("Error: couldn't show dedimania message");
+            $this->console("Error: couldn't show dedimania message");
         }
     }
 

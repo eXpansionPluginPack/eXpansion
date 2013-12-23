@@ -40,7 +40,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
         try {
             $this->webaccess->select($this->read, $this->write, $this->except, 0, 0);
         } catch (\Exception $e) {
-            Console::println("[DataAccess] OnTick Update failed: " . $e->getMessage() . "\n file " . $e->getFile() . ":" . $e->getLine());
+            $this->console("[DataAccess] OnTick Update failed: " . $e->getMessage() . "\n file " . $e->getFile() . ":" . $e->getLine());
         }
     }
 
@@ -91,7 +91,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             try {
                 return file_put_contents($filename, $data, LOCK_EX);
             } catch (\Exception $e) {
-                \ManiaLive\Utilities\Console::println("File write exception:" . $e->getMessage());
+                $this->console("File write exception:" . $e->getMessage());
                 return false;
             }
         }
@@ -107,7 +107,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             try {
                 return file_get_contents($filename);
             } catch (\Exception $e) {
-                \ManiaLive\Utilities\Console::println("File read exception:" . $e->getMessage());
+                $this->console("File read exception:" . $e->getMessage());
                 return false;
             }
         }
@@ -115,7 +115,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 
     public function _process($data, HttpQuery $query) {
         if (!is_callable($query->callback)) {
-            \ManiaLive\Utilities\Console::println("[DataAccess Error] Callback-function is not valid!");
+            $this->console("[DataAccess Error] Callback-function is not valid!");
             return;
         }
 
@@ -123,7 +123,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             return;
 
         if ($data['Code'] == 301) {
-            Console::println("[DataAccess] webRequest to " . $query->baseurl . " is permanently moved.");
+            $this->console("[DataAccess] webRequest to " . $query->baseurl . " is permanently moved.");
             $args = $query->callparams;
             array_unshift($args, null, $data['Code']);
             call_user_func_array($query->callback, $args);
@@ -136,16 +136,16 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             $query->redirectCount++;
 
             if ($query->redirectCount < 3) {
-                Console::println("[DataAccess] request redirection to " . $query->baseurl);
+                $this->console("[DataAccess] request redirection to " . $query->baseurl);
                 $this->_get($query);
             } else {
-                Console::println("[DataAccess] webRequest redirected more than 3 times, canceling request.");
+                $this->console("[DataAccess] webRequest redirected more than 3 times, canceling request.");
             }
             return;
         }
 // moved temporarily
         if ($data['Code'] == 302) {
-            Console::println("[DataAccess] webRequest to " . $query->baseurl . " is temporarily moved.");
+            $this->console("[DataAccess] webRequest to " . $query->baseurl . " is temporarily moved.");
 
             $args = $query->callparams;
             array_unshift($args, null, $data['Code']);
@@ -156,10 +156,10 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             $query->baseurl = $data['Headers']['location'][0];
             $query->redirectCount++;
             if ($query->redirectCount < 3) {
-                Console::println("[DataAccess] request redirection to " . $query->baseurl);
+                $this->console("[DataAccess] request redirection to " . $query->baseurl);
                 $this->_get($query);
             } else {
-                Console::println("[DataAccess] webRequest redirected more than 3 times, canceling request.");
+                $this->console("[DataAccess] webRequest redirected more than 3 times, canceling request.");
             }
             return;
         }
@@ -186,7 +186,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
         try {
             $this->webaccess->select($this->read, $this->write, $this->except, 0, 0);
         } catch (\Exception $e) {
-            Console::println("[DataAccess] OnTick Update failed: " . $e->getMessage() . "\n file " . $e->getFile() . ":" . $e->getLine());
+            $this->console("[DataAccess] OnTick Update failed: " . $e->getMessage() . "\n file " . $e->getFile() . ":" . $e->getLine());
         }
     }
 

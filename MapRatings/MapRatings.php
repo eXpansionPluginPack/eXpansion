@@ -164,7 +164,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->sendRatingMsg($login, $rating);
             }
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("Error in MapRating: " . $e->getMessage());
+           $this->console("Error in MapRating: " . $e->getMessage());
         }
     }
 

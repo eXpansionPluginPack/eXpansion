@@ -85,44 +85,44 @@ class Core extends types\ExpPlugin {
 
 EOT;
 
-        Console::println($expansion);
+        $this->console($expansion);
         $server = $this->connection->getVersion();
         $d = (object) date_parse_from_format("Y-m-d_H_i", $server->build);
-        Console::println('Dedicated Server running for title: ' . $server->titleId);
-        Console::println('Dedicated Server build: ' . $d->year . "-" . $d->month . "-" . $d->day);
+        $this->console('Dedicated Server running for title: ' . $server->titleId);
+        $this->console('Dedicated Server build: ' . $d->year . "-" . $d->month . "-" . $d->day);
         $this->connection->setApiVersion($config->API_Version); // For SM && TM
-        Console::println('Dedicated Server api version in use: ' . $config->API_Version);
-        Console::println('eXpansion version: ' . $this->getVersion());
+        $this->console('Dedicated Server api version in use: ' . $config->API_Version);
+        $this->console('eXpansion version: ' . $this->getVersion());
 
 
         $bExitApp = false;
 
         if (version_compare(PHP_VERSION, '5.3.3') >= 0) {
-            Console::println('Minimum PHP version 5.3.3: Pass (' . PHP_VERSION . ')');
+            $this->console('Minimum PHP version 5.3.3: Pass (' . PHP_VERSION . ')');
         } else {
-            Console::println('Minimum PHP version 5.3.3: Fail (' . PHP_VERSION . ')');
+            $this->console('Minimum PHP version 5.3.3: Fail (' . PHP_VERSION . ')');
             $bExitApp = true;
         }
 
         if (gc_enabled()) {
-            Console::println('Garbage Collector enabled: Pass ');
+            $this->console('Garbage Collector enabled: Pass ');
         } else {
-            Console::println('Garbage Collector enabled: Fail )');
+            $this->console('Garbage Collector enabled: Fail )');
             $bExitApp = true;
         }
-        Console::println('');
-        Console::println('Language support detected for: ' . implode(",", i18n::getInstance()->getSupportedLocales()) . '!');
-        Console::println('Enabling default locale: ' . $config->defaultLanguage . '');
+        $this->console('');
+        $this->console('Language support detected for: ' . implode(",", i18n::getInstance()->getSupportedLocales()) . '!');
+        $this->console('Enabling default locale: ' . $config->defaultLanguage . '');
         i18n::getInstance()->setDefaultLanguage($config->defaultLanguage);
 
-        Console::println('');
-        Console::println('-------------------------------------------------------------------------------');
-        Console::println('');
+        $this->console('');
+        $this->console('-------------------------------------------------------------------------------');
+        $this->console('');
         if (DEBUG) {
-            Console::println('                        RUNNING IN DEVELOPMENT MODE  ');
-            Console::println('');
-            Console::println('-------------------------------------------------------------------------------');
-            Console::println('');
+            $this->console('                        RUNNING IN DEVELOPMENT MODE  ');
+            $this->console('');
+            $this->console('-------------------------------------------------------------------------------');
+            $this->console('');
         }
 
         if ($bExitApp) {
@@ -151,12 +151,6 @@ EOT;
         $this->onBeginRound();
         $this->loopTimer = round(microtime(true));
         $this->enableApplicationEvents(\ManiaLive\Application\Event::ON_POST_LOOP);
-    }
-
-    public function test() {
-        foreach ($this->storage->players as $login => $player) {
-            $this->onPlayerFinish(2, $login, rand(5000, 500000));
-        }
     }
 
     /**
@@ -224,10 +218,30 @@ EOT;
         return $difs;
     }
 
+    public function onGameModeChange($oldGameMode, $newGameMode) {
+
+        $this->showNotice("GameMode Changed");
+    }
+
+    private function showNotice($message) {
+        $this->console('                         _   _       _   _          ');
+        $this->console('                        | \ | | ___ | |_(_) ___ ___ ');
+        $this->console('                        |  \| |/ _ \| __| |/ __/ _ \ ');
+        $this->console('                        | |\  | (_) | |_| | (_|  __/ ');
+        $this->console("                        |_| \_|\___/ \__|_|\___\___|");
+        $fill = "";
+        $firstline = explode("\n", $message, 2);
+        if (!is_array($firstline))
+            $firstline = array($firstline);
+        for ($x = 0; $x < ((80 - strlen($firstline[0])) / 2); $x++) {
+            $fill .= " ";
+        }
+        $this->console($fill . $message);
+    }
+
     private function checkLoadedPlugins() {
         $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
-        Console::println('#####################################################################');
-        Console::println('[eXpension Pack] GameMode Changed Shutting down uncompatible plugins');
+        $this->console('Shutting down uncompatible plugins');
 
         foreach ($this->exp_getGameModeCompability() as $plugin => $compability) {
             $parts = explode('\\', $plugin);
@@ -240,24 +254,21 @@ EOT;
                 }
             }
         }
-        Console::println('#####################################################################' . "\n");
     }
 
     private function checkPluginsOnHold() {
-        Console::println('#####################################################################');
-        Console::println('[eXpension Pack] GameMode Changed Starting compatible plugins');
+        $this->console('Starting compatible plugins');
 
         if (!empty(types\BasicPlugin::$plugins_onHold)) {
             $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
             foreach (types\BasicPlugin::$plugins_onHold as $plugin_id) {
                 $parts = explode("\\", $plugin_id);
-                $className = '\\ManiaLivePlugins\\' . $plugin_id . "\\" . $parts[1];
+                $className = '\\ManiaLivePlugins\\' . $plugin_id . '\\' . $parts[1];
                 if ($className::exp_checkGameCompability()) {
                     $pHandler->load($plugin_id);
                 }
             }
         }
-        Console::println('#####################################################################' . "\n");
     }
 
     public function showInfo($login) {

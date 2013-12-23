@@ -39,7 +39,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onLoad() {
 
-        Console::println("[eXpansion] AutoLoading eXpansion pack ... ");
+        $this->console("[eXpansion] AutoLoading eXpansion pack ... ");
 
         //We Need the plugin Handler
         $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
@@ -56,9 +56,9 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if (!empty($recheck)) {
             $this->dumpException("Couldn't Autoload all required plugins", new \Maniaplanet\WebServices\Exception("Autoload failed."));
-            Console::println("Not all required plugins were loaded, list of not loaded plugins: ");
+            $this->console("Not all required plugins were loaded, list of not loaded plugins: ");
             foreach ($recheck as $pname) {
-                Console::println($pname);
+                $this->console($pname);
             }
         }
     }
@@ -73,21 +73,21 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($list as $pname) {
             try {
                 if (!$pHandler->isLoaded($pname)) {
-                    //Console::println("\n[eXpansion Pack]AutoLoading : Trying to Load $pname ... ");
+                    //$this->console("\n[eXpansion Pack]AutoLoading : Trying to Load $pname ... ");
 
                     if (in_array($pname, $disabled)) {
-                        Console::println("[" . $pname . "]..............................Disabled -> not loading");
+                        $this->console("[" . $pname . "]..............................Disabled -> not loading");
                         continue;
                     }
                     if (!$pHandler->load($pname)) {
-                        Console::println("[" . $pname . "]..............................FAIL -> will retry");
+                        $this->console("[" . $pname . "]..............................FAIL -> will retry");
                         $recheck[] = $pname;
                     } else {
                         $this->debug("[" . $pname . "]..............................SUCCESS");
                     }
                 }
             } catch (\Exception $ex) {
-                Console::println("[Autoload ERROR]" . $ex->getMessage() . "\n");
+                $this->console("[Autoload ERROR]" . $ex->getMessage() . "\n");
                 $recheck[] = $pname;
             }
         }

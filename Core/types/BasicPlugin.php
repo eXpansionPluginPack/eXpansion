@@ -21,7 +21,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
 
         /**
          * The list of Plugin id's that may need to be started
-         * @var int 
+         * @var string[] 
          */
         public static $plugins_onHold = array();
 
@@ -176,7 +176,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
         public function exp_chatSendServerMessage($msg, $login = null, $args = array()) {
             if (!($msg instanceof MultiLangMsg)) {
                 if (DEBUG) {
-                    Console::println("#Plugin " . $this->getId() . " uses chatSendServerMessage in an unoptimized way!!");
+                    $this->console("#Plugin " . $this->getId() . " uses chatSendServerMessage in an unoptimized way!!");
                 }
                 $msg = exp_getMessage($msg);
             }
@@ -308,7 +308,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
          * @abstract
          */
         public function exp_unload() {
-            Console::println('[eXpansion] ' . $this->getId() . ' Isn\'t compatible with this GameMode. UnLoading ...');
+            $this->console('Unloading ' . $this->getId());
             $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
             $plugins = $pHandler->getLoadedPluginsList();
@@ -318,7 +318,6 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                     if ($plugin != $this->getId()) {
                         $deps = null;
                         if (method_exists($plugin, 'getDependencies')) {
-                            echo "Deps found!\n";
                             $deps = $this->callPublicMethod($plugin, 'getDependencies');
                         }
                         if (!empty($deps)) {
@@ -339,9 +338,9 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             $deps = $this->getDependencies();
 
             if (!empty($deps)) {
-                Console::println('[eXpansion] Unloading Dependencies of ' . $this->getId() . '');
+                // $this->console('[eXpansion] Unloading Dependencies of ' . $this->getId() . '');
                 foreach ($deps as $dep) {
-                    if ($dep->getPluginId() != "eXpansion\Core")
+                    if ($dep->getPluginId() != "eXpansion\\Core")
                         $this->callPublicMethod($dep->getPluginId(), 'exp_unload');
                 }
             }
@@ -350,11 +349,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
 //Unloading it self
             $this->exp_unloading = true;
             $pHandler->unload($this->getId());
-            self::$plugins_onHold[] = $this->getId();
-        }
-
-        public function onPluginUnloaded($pluginId) {
-            echo "unloaded: " . $pluginId . "\n";
+            self::$plugins_onHold[$this->getId()] = $this->getId();
         }
 
         public function onUnload() {
@@ -437,15 +432,15 @@ use ManiaLivePlugins\eXpansion\Database\Database;
         }
 
         final public function dumpException($message, \Exception $e) {
-            Console::printLn('                                ____                  _  ');
-            Console::printLn('                               / __ \                | |');
-            Console::printLn('                              | |  | | ___  _ __  ___| |');
-            Console::printLn('                              | |  | |/ _ \|  _ \/ __| |');
-            Console::printLn('                              | |__| | (_) | |_) \__ \_|');
-            Console::printLn('                               \____/ \___/| .__/|___(_)');
-            Console::printLn('                                           | | ');
-            Console::printLn('                                           |_| ');
-            Console::println('');
+            $this->console('                                ____                  _  ');
+            $this->console('                               / __ \                | |');
+            $this->console('                              | |  | | ___  _ __  ___| |');
+            $this->console('                              | |  | |/ _ \|  _ \/ __| |');
+            $this->console('                              | |__| | (_) | |_) \__ \_|');
+            $this->console('                               \____/ \___/| .__/|___(_)');
+            $this->console('                                           | | ');
+            $this->console('                                           |_| ');
+            $this->console('');
 
             $fill = "";
             $firstline = explode("\n", $message, 2);
@@ -454,14 +449,14 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             for ($x = 0; $x < ((80 - strlen($firstline[0])) / 2); $x++) {
                 $fill .= " ";
             }
-            Console::printLn($fill . $message);
-            Console::printLn('');
+            $this->console($fill . $message);
+            $this->console('');
             $file = explode(DIRECTORY_SEPARATOR, $e->getFile());
-            Console::println('Advanced details');
-            Console::printLn('File: ' . end($file));
-            Console::printLn('Line: ' . $e->getLine());
-            Console::printLn('Message: ' . $e->getMessage());
-            Console::printLn('');
+            $this->console('Advanced details');
+            $this->console('File: ' . end($file));
+            $this->console('Line: ' . $e->getLine());
+            $this->console('Message: ' . $e->getMessage());
+            $this->console('');
         }
 
         /**
@@ -481,6 +476,23 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                     return $player;
             }
             return new \DedicatedApi\Structures\Player();
+        }
+
+        final public function console($message) {
+            if (is_string($message)) {
+                Console::println($message);
+                \ManiaLive\Utilities\Logger::log($message, true, "exp-console.txt");
+            }
+            if (is_array($message)) {
+                $info = print_r($message, true);
+                Console::println($info);
+                \ManiaLive\Utilities\Logger::log($info, true, "exp-console.txt");
+            }
+            if (is_object($message)) {
+                $info = var_export($message, true);
+                Console::println($info);
+                \ManiaLive\Utilities\Logger::log($message, true, "exp-console.txt");
+            }
         }
 
         public function onGameModeChange($oldGameMode, $newGameMode) {

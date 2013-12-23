@@ -60,7 +60,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             }
         } catch (\Exception $e) {
             //   $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
-            Console::println("Error:" . $e->getMessage());
+            $this->console("Error:" . $e->getMessage());
         }
     }
 
@@ -78,7 +78,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             // $this->connection->sendNotice($this->storage->players, $player->nickName . '$z were kicked from the server by admin.');
         } catch (\Exception $e) {
             //$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
-            Console::println("Error:" . $e->getMessage());
+            $this->console("Error:" . $e->getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             //$this->connection->sendNotice($this->storage->players, $player->nickName . '$z has been banned from the server.');
         } catch (\Exception $e) {
             //$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
-            Console::println("Error:" . $e->getMessage());
+            $this->console("Error:" . $e->getMessage());
         }
     }
 
@@ -111,7 +111,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->connection->chatSendServerMessage(__('%s$z has been blacklisted from the server.', $login, $player->nickName));
         } catch (\Exception $e) {
             //  $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
-            Console::println("Error:" . $e->getMessage());
+            $this->console("Error:" . $e->getMessage());
         }
     }
 
@@ -135,7 +135,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 return;
             }
         } catch (\Exception $e) {
-            Console::println("Error:" . $e->getMessage());
+            $this->console("Error:" . $e->getMessage());
             //$this->connection->chatSendServerMessage(__("Error:".$login, $e->getMessage()), $login);
         }
     }
@@ -182,7 +182,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 $this->pager->addItem($this->items[$x]);
             }
         } catch (\Exception $e) {
-            Console::println("Error: " . $e->getMessage());
+            $this->console("Error: " . $e->getMessage());
         }
     }
 

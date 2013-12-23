@@ -43,7 +43,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->menuItems[$hash] = $item;
 	    $this->reDraw();
 	} else {
-	    \ManiaLive\Utilities\Console::println("Adding a button failed from plugin:" . $pluginid . " button callback is not valid.");
+	   $this->console("Adding a button failed from plugin:" . $pluginid . " button callback is not valid.");
 	}
     }
 

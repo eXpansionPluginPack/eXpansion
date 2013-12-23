@@ -153,8 +153,8 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
         foreach ($this->connection->getPlayerList(-1, 0, 3) as $spec) {
             if ($spec->isServer == true && $spec->spectatorStatus == 2551101
                     && $spec->login != $this->relayMaster && $spec->login != $this->storage->serverLogin) {
-                Console::println('[eXpansion Pack] Found a ManiaChannel: Login:		' . $spec->login . '');
-                Console::println('[eXpansion Pack] Found a ManiaChannel: ServerName:	' . $spec->nickName . '');
+                $this->console('[eXpansion Pack] Found a ManiaChannel: Login:		' . $spec->login . '');
+                $this->console('[eXpansion Pack] Found a ManiaChannel: ServerName:	' . $spec->nickName . '');
                 $this->connectedRelays[] = $spec->login;
             }
         }

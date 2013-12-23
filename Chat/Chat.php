@@ -39,7 +39,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $this->connection->chatEnableManualRouting(true);
         } catch (\Exception $e) {
-            Console::println(__("[eXpansion|Chat] Couldn't initialize chat. Error from server: %s", $e->getMessage()));
+            $this->console(__("[eXpansion|Chat] Couldn't initialize chat. Error from server: %s", $e->getMessage()));
             $this->enabled = false;
         }
         $this->config = Config::getInstance();
@@ -109,7 +109,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
                 \ManiaLive\Utilities\Logger::getLog('chat')->write("[" . $login . "] " . $nickLog . " - " . $text);
             } catch (\Exception $e) {
-                Console::println(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()));
+                $this->console(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()));
             }
         }
     }
