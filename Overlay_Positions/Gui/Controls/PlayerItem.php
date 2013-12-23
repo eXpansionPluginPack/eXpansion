@@ -113,9 +113,12 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $this->label_points->setAlign('left', 'center');
 
         $score = $player->score;
+
         if ($gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM)
             $score = $player->matchScore;
-        $this->label_points->setText($score." pts");
+        if (empty($score))
+            $score = 0;
+        $this->label_points->setText($score . " pts");
         $this->label_points->setScale(0.8);
         $this->label_points->setTextColor($color);
         $this->frame->addComponent($this->label_points);

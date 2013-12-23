@@ -137,10 +137,6 @@ EOT;
      * 
      */
     public function exp_onReady() {
-//  $rankings = $this->connection->getCurrentRanking(-1, 0);
-//  foreach ($rankings as $player) {
-//      $this->expPlayers[$player->login] = Structures\ExpPlayer::fromArray($player->toArray());
-//  }
         $this->registerChatCommand("info", "showInfo", 0, true);
         $this->registerChatCommand("serverlogin", "serverlogin", 0, true);
         $this->registerChatCommand("test", "test");
@@ -148,7 +144,8 @@ EOT;
         $window = new Gui\Windows\QuitWindow();
         $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
         $this->onBeginMap(null, null, null);
-        $this->onBeginRound();
+        $this->resetExpPlayers(true);
+        $this->update = true;
         $this->loopTimer = round(microtime(true));
         $this->enableApplicationEvents(\ManiaLive\Application\Event::ON_POST_LOOP);
     }
@@ -330,6 +327,8 @@ EOT;
         if (!array_key_exists($player->login, $this->expPlayers)) {
             $login = $player->login;
             $pla = $this->storage->getPlayerObject($player->login);
+            if (empty($pla))
+                return;
             $this->expPlayers[$player->login] = Structures\ExpPlayer::fromArray($pla->toArray());
 
             if (array_key_exists($login, $this->teamScores))
@@ -357,7 +356,7 @@ EOT;
         }
     }
 
-    public function resetExpPlayers() {
+    public function resetExpPlayers($readRankings = false) {
         self::$roundFinishOrder = array();
         self::$checkpointOrder = array();
 
@@ -378,6 +377,16 @@ EOT;
             $this->expPlayers[$login]->position = -1;
             $this->expPlayers[$login]->time = -1;
             $this->expPlayers[$login]->curCpIndex = -1;
+            $this->expPlayers[$login]->score = 0;
+        }
+        
+        if ($readRankings) {
+            $rankings = $this->connection->getCurrentRanking(-1, 0);
+            foreach ($rankings as $player) {
+                if (array_key_exists($player->login, $this->expPlayers)) {
+                    $this->expPlayers[$player->login]->score = $rankings->score;
+                }
+            }
         }
     }
 
