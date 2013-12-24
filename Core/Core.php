@@ -348,23 +348,28 @@ EOT;
             $this->expPlayers[$login]->position = -1;
             $this->expPlayers[$login]->time = -1;
             $this->expPlayers[$login]->curCpIndex = -1;
+            // in case player is joining to match in round, he needs to be marked as waiting
+            if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK)
+                $this->expPlayers[$login]->isWaiting = true;
         }
 
         $this->expPlayers[$player->login]->teamId = $player->teamId;
         $this->expPlayers[$player->login]->spectator = $player->spectator;
         $this->expPlayers[$player->login]->temporarySpectator = $player->temporarySpectator;
+        $this->expPlayers[$player->login]->pureSpectator = $player->pureSpectator;
 
-
-        if ($player->spectator == 1) {
+        // player just temp spectator
+        if ($player->temporarySpectator == true && $player->spectator == false) {
+            $this->expPlayers[$player->login]->hasRetired = true;
+            $this->expPlayers[$player->login]->isPlaying = true;
+            // player is spectator
+        } elseif ($player->spectator == true) {
             $this->expPlayers[$player->login]->isPlaying = false;
             $this->expPlayers[$player->login]->hasRetired = true;
-            $this->expPlayers[$player->login]->isWaiting = false;
         } else {
+            // player is not any spectator
             $this->expPlayers[$player->login]->isPlaying = true;
             $this->expPlayers[$player->login]->hasRetired = true;
-            if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
-                $this->expPlayers[$player->login]->isWaiting = true;
-            }
         }
     }
 
@@ -389,14 +394,14 @@ EOT;
             $this->expPlayers[$login]->position = -1;
             $this->expPlayers[$login]->time = -1;
             $this->expPlayers[$login]->curCpIndex = -1;
-            $this->expPlayers[$player->login]->isWaiting = false;
+            $this->expPlayers[$login]->isWaiting = false;
         }
 
 
         $rankings = $this->connection->getCurrentRanking(-1, 0);
         foreach ($rankings as $player) {
             if (!empty($player->login) && array_key_exists($player->login, $this->expPlayers)) {
-                $this->expPlayers[$login]->score = $player->score;
+                $this->expPlayers[$player->login]->score = $player->score;
             }
         }
     }
@@ -431,7 +436,7 @@ EOT;
                 }
             }
 
-            // set points
+// set points
             if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
                 $maxpoints = $this->storage->gameInfos->teamMaxPoints;
                 $total = 0;
@@ -477,6 +482,11 @@ EOT;
         $giveupCount = 0;
         $giveupPlayers = array();
         foreach ($this->expPlayers as $login => $player) {
+            if (empty($player)) {
+                unset($this->expPlayers[$login]);
+                continue;
+            }
+
             if ($player->isPlaying == false || $player->isWaiting) {
                 unset($this->expPlayers[$login]);
                 continue;
@@ -642,5 +652,4 @@ EOT;
     }
 
 }
-
 ?>
