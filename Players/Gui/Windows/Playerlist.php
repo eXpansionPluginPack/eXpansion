@@ -15,6 +15,9 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     protected $pager;
 
+    /** @var \ManiaLivePlugins\eXpansion\Players\Players */
+    public static $mainPlugin;
+
     /** @var \DedicatedApi\Connection */
     private $connection;
 
@@ -66,16 +69,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function kickPlayer($login, $target) {
         try {
-            $login = $this->getRecipient();
-            if (!AdminGroups::hasPermission($login, 'player_kick')) {
-                $this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!'), $login);
-            }
-            $player = $this->storage->getPlayerObject($target);
-            $admin = $this->storage->getPlayerObject($login);
-            $this->connection->kick($target, __("Please behave next time you visit the server!", $target));
-            $this->connection->chatSendServerMessage(__('$%sz was kicked from the server by admin.', $login, $player->nickName));
-            // can't use notice...since $this->storage->players too slow.
-            // $this->connection->sendNotice($this->storage->players, $player->nickName . '$z were kicked from the server by admin.');
+            AdminGroups::getInstance()->adminCmd($login, "kick " . $target);
         } catch (\Exception $e) {
             //$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
             $this->console("Error:" . $e->getMessage());
@@ -84,15 +78,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function banPlayer($login, $target) {
         try {
-            $login = $this->getRecipient();
-            if (!AdminGroups::hasPermission($login, 'player_ban')) {
-                $this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!'), $login);
-            }
-            $player = $this->storage->getPlayerObject($target);
-            $admin = $this->storage->getPlayerObject($login);
-            $this->connection->ban($target, __("You are now banned from the server."));
-            $this->connection->chatSendServerMessage(__('%s$z has been banned from the server.', $login, $player->nickName));
-            //$this->connection->sendNotice($this->storage->players, $player->nickName . '$z has been banned from the server.');
+            AdminGroups::getInstance()->adminCmd($login, "ban " . $target);
         } catch (\Exception $e) {
             //$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
             $this->console("Error:" . $e->getMessage());
@@ -101,14 +87,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function blacklistPlayer($login, $target) {
         try {
-            $login = $this->getRecipient();
-            if (!AdminGroups::hasPermission($login, 'player_black')) {
-                $this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!', $login), $login);
-            }
-            $player = $this->storage->getPlayerObject($target);
-            $admin = $this->storage->getPlayerObject($login);
-            $this->connection->banAndBlackList($target, __("You are now blacklisted from the server.", $target), true);
-            $this->connection->chatSendServerMessage(__('%s$z has been blacklisted from the server.', $login, $player->nickName));
+            AdminGroups::getInstance()->adminCmd($login, "black " . $target);
         } catch (\Exception $e) {
             //  $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
             $this->console("Error:" . $e->getMessage());

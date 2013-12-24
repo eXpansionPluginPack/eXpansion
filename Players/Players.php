@@ -11,9 +11,11 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onInit() {
         parent::exp_onInit();
         //Oliverde8 Menu
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\\Chat_Admin"));
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
+        Gui\Windows\Playerlist::$mainPlugin = $this;
     }
 
     public function exp_onLoad() {
@@ -26,9 +28,6 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand("plist", "showPlayerList", 0, true); // fast
         $this->registerChatCommand("play", "setPlay", 0, true); // fast
         $this->registerChatCommand("spec", "setSpec", 0, true); // fast
-
-        if ($this->isPluginLoaded('Standard\Menubar'))
-            $this->buildMenu();
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Players'), false);
@@ -108,12 +107,6 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function setSpec($login) {
         $this->connection->forceSpectator($login, 3);
-    }
-
-    public function buildMenu() {
-        $this->callPublicMethod('Standard\Menubar', 'initMenu', \ ManiaLib\Gui\Elements\ Icons64x64_1::Buddy);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', __('Players'), array
-            ($this, 'showPlayerList'), false);
     }
 
     public function announceBroadcasting($login) {

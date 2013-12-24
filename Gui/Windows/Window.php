@@ -22,6 +22,7 @@ class Window extends \ManiaLive\Gui\Window {
     private $dDeclares = "";
     private $dLoop = "";
     private $dIndex = 0;
+    private $_name = "window";
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -172,7 +173,7 @@ class Window extends \ManiaLive\Gui\Window {
                         declare Real lastMouseX = 0.0;
                         declare Real lastMouseY =0.0;         
                         declare active = False;
-                        declare Text id = "' . $this->_title->getText() . '";        
+                        declare Text id = "' . $this->_name . '";        
                         declare persistent Vec3[Text] windowLastPos;
                         declare persistent Vec3[Text] windowLastPosRel;
 			declare persistent Text windowActive = "";
@@ -301,8 +302,9 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_mainText->setText($text);
     }
 
-    function setTitle($text) {
-        $this->_title->setText($text);
+    function setTitle($text, $parameter = "") {
+        $this->_name = $text;
+        $this->_title->setText($text . " " . $parameter);
     }
 
     function closeWindow() {

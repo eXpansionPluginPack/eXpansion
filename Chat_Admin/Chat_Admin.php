@@ -24,8 +24,9 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onInit() {
         parent::exp_onInit();
-
+        Gui\Windows\ParameterDialog::$mainPlugin = $this;
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency('eXpansion\AdminGroups'));
+
         $this->setPublicMethod("restartMap");
         $this->setPublicMethod("skipMap");
         //Oliverde8 Menu
@@ -653,7 +654,7 @@ Other server might use the same blacklist file!!');
 
         if (sizeof($params) > 0 && is_numeric($params[0])) {
             $this->teamGap = intval($params[0]);
-            
+
             $this->exp_chatSendServerMessage('#admin_action#Team gap set to #variable# %1$s!', $login, array($params[0]));
             $this->connection->restartMap();
         }
@@ -772,7 +773,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         $player = $this->storage->getPlayerObject($params[0]);
         if ($player == null) {
-            $this->sendErrorChat($fromLogin, '#admin_action#Player #variable# %s #admin_action#doesn\' exist.', null, array($params[0]));
+            $this->exp_chatSendServerMessage('#admin_action#Player #variable# %s #admin_action#doesn\' exist.', null, array($params[0]));
             return;
         }
         /** @todo check which if red == 1 and blue == 0 */
@@ -894,7 +895,7 @@ Other server might use the same blacklist file!!');
 
         $player = $this->storage->getPlayerObject($params[0]);
         if ($player == null) {
-            $this->sendErrorChat($fromLogin, '#admin_action#Player #variable# %s #admin_action#doesn\' exist.', null, array($params[0]));
+            $this->exp_chatSendServerMessage('#admin_action#Player #variable# %s #admin_action#doesn\' exist.', $fromLogin, array($params[0]));
             return;
         }
 
@@ -1007,16 +1008,24 @@ Other server might use the same blacklist file!!');
     }
 
     function kick($fromLogin, $params) {
-
-        $player = $this->storage->getPlayerObject($params[0]);
+        $target = array_shift($params);
+        $reason = implode(" ", $params);
+        $reason = trim($reason);
+        $player = $this->storage->getPlayerObject($target);
         if ($player == null) {
-            $this->sendErrorChat($fromLogin, '#admin_action#Player #variable# %s doesn\' exist.', null, array($params[0]));
+            $this->exp_chatSendServerMessage('#admin_error#Player #variable# %s doesn\' exist.', $fromLogin, array($target));
             return;
         }
-
+        if (empty($reason)) {
+            $dialog = Gui\Windows\ParameterDialog::Create($fromLogin);
+            $dialog->setTitle(__("kick", $fromLogin), \ManiaLib\Utils\Formatting::stripStyles($player->nickName));
+            $dialog->setData("kick", $target);
+            $dialog->show($fromLogin);
+            return;
+        }
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
-            $this->connection->kick($player);
+            $this->connection->kick($player, $reason);
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#kicks the player#variable# %s', null, array($admin->nickName, $player->nickName));
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
@@ -1026,7 +1035,7 @@ Other server might use the same blacklist file!!');
     function forceSpec($fromLogin, $params) {
         $player = $this->storage->getPlayerObject($params[0]);
         if ($player == null) {
-            $this->sendErrorChat($fromLogin, '#admin_action#Player #variable# %s doesn\' exist.', null, array($params[0]));
+            $this->exp_chatSendServerMessage('#admin_action#Player #variable# %s doesn\' exist.', $fromLogin, array($params[0]));
             return;
         }
         try {
