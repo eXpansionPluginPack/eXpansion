@@ -299,7 +299,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 }
             }
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("Error while loading admins from file: " . $e->getMessage());
+           $this->console("Error while loading admins from file: " . $e->getMessage());
         }
 
 

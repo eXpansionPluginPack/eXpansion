@@ -11,10 +11,10 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
 class PlayerItem extends \ManiaLive\Gui\Control {
 
     protected $bg;
-    protected $label_index, $label_nickname, $label_time, $label_diff;
+    protected $label_index, $label_nickname, $label_time, $label_diff, $label_points;
     protected $frame;
 
-    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player, $login, $sizeX) {
+    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player, $login, $gamemode, $sizeX) {
         $sizeY = 4.5;
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad();
@@ -108,6 +108,21 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $this->label_diff->setScale(0.8);
         $this->label_diff->setTextColor($color);
         $this->frame->addComponent($this->label_diff);
+
+        $this->label_points = new \ManiaLib\Gui\Elements\Label(16, 4);
+        $this->label_points->setAlign('left', 'center');
+
+        $score = $player->score;
+        if ($gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM)
+            $score = $player->matchScore;
+        if (empty($score))
+            $score = 0;
+        $this->label_points->setText($score . " pts");
+        $this->label_points->setScale(0.8);
+        $this->label_points->setTextColor($color);
+        $this->frame->addComponent($this->label_points);
+
+
         $this->setSize($sizeX, $sizeY);
     }
 

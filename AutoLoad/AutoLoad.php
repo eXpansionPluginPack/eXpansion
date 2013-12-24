@@ -30,7 +30,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         , 'eXpansion\Overlay_TeamScores'
         , 'eXpansion\Overlay_Positions'
         , 'eXpansion\Widgets_Clock'
-        // , 'eXpansion\Widgets_BestCheckpoints'
+// , 'eXpansion\Widgets_BestCheckpoints'
         , 'eXpansion\Widgets_EndRankings'
         , 'eXpansion\Widgets_PersonalBest'
         , 'eXpansion\Widgets_Record'
@@ -39,9 +39,9 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onLoad() {
 
-        Console::println("[eXpansion] AutoLoading eXpansion pack ... ");
+        $this->console("[eXpansion] AutoLoading eXpansion pack ... ");
 
-        //We Need the plugin Handler
+//We Need the plugin Handler
         $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
         $recheck = array();
@@ -55,14 +55,14 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } while (!empty($recheck) && $lastSize != sizeof($recheck));
 
         if (!empty($recheck)) {
-            Console::println("[eXpansion Pack]AutoLoading eXpansion pack FAILED !! ");
-            Console::println("[eXpansion Pack]All required plugins couldn't be loaded : ");
+            $this->dumpException("Couldn't Autoload all required plugins", new \Maniaplanet\WebServices\Exception("Autoload failed."));
+            $this->console("Not all required plugins were loaded, list of not loaded plugins: ");
             foreach ($recheck as $pname) {
-                Console::println("[eXpansion Pack]...................." . $pname);
+                $this->console($pname);
             }
         }
     }
-
+    
     public function loadPlugins($list, \ManiaLive\PluginHandler\PluginHandler $pHandler) {
         $recheck = array();
         $disabled = Config::getInstance()->disable;
@@ -73,20 +73,22 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($list as $pname) {
             try {
                 if (!$pHandler->isLoaded($pname)) {
-                    //Console::println("\n[eXpansion Pack]AutoLoading : Trying to Load $pname ... ");
+//$this->console("\n[eXpansion Pack]AutoLoading : Trying to Load $pname ... ");
 
-                    if (in_array($pname, $disabled))
+                    if (in_array($pname, $disabled)) {
+                        $this->console("[" . $pname . "]..............................Disabled -> not loading");
                         continue;
-
+                    }
                     if (!$pHandler->load($pname)) {
-                        Console::println("[" . $pname . "]..............................FAIL -> will retry");
+                        $this->console("[" . $pname . "]..............................FAIL -> will retry");
                         $recheck[] = $pname;
                     } else {
                         $this->debug("[" . $pname . "]..............................SUCCESS");
                     }
                 }
             } catch (\Exception $ex) {
-                Console::println("[Autoload ERROR]" . $ex->getMessage() . "\n");
+                print_r($ex->getMessage());
+                \ManiaLivePlugins\eXpansion\Core\types\ErrorHandler::displayAndLogError($ex);
                 $recheck[] = $pname;
             }
         }

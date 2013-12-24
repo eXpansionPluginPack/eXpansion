@@ -60,12 +60,12 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $items = array("All", "Race", "Fullspeed", "Tech", "RPG", 'LOL', 'PressForward', 'SpeedTech', 'Multilap', 'Offroad');
         $this->style = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("style", $items);
-        $this->addDropdown("style", $items);
+
         $this->searchframe->addComponent($this->style);
 
         $items = array("All", "15sec", "30sec", "45sec", "1min");
         $this->lenght = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("length", $items);
-        $this->addDropdown("length", $items);
+
         $this->searchframe->addComponent($this->lenght);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
@@ -112,7 +112,15 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function search($login, $trackname = "", $author = "", $style = null, $length = null) {
+        foreach ($this->items as $item)
+            $item->erase();
 
+        $this->pager->clearItems();
+        $this->items = array();
+        $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Searching, please wait", $this->sizeX));
+        $this->redraw($this->getRecipient());
+        
+        
         if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
             $script = $this->connection->getModeScriptInfo();
             $query = "";
@@ -203,11 +211,14 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         $login = $this->getRecipient();
         $isadmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps');
-
-        foreach ($this->maps as $map) {
-            $this->items[$x] = new MxMap($x, $map, $this, $isadmin, $this->sizeX);
-            $this->pager->addItem($this->items[$x]);
-            $x++;
+        if (count($this->maps) == 0) {
+            $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "No maps found with this search terms.", $this->sizeX));
+        } else {
+            foreach ($this->maps as $map) {
+                $this->items[$x] = new MxMap($x, $map, $this, $isadmin, $this->sizeX);
+                $this->pager->addItem($this->items[$x]);
+                $x++;
+            }
         }
 
         $this->redraw();

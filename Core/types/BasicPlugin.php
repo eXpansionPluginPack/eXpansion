@@ -10,6 +10,7 @@ use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use \ManiaLivePlugins\eXpansion\Core\Events\PlayerEvent;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
+use ManiaLivePlugins\eXpansion\Database\Database;
 
     /**
      * Description of BasicPlugin
@@ -20,7 +21,7 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
 
         /**
          * The list of Plugin id's that may need to be started
-         * @var int 
+         * @var string[] 
          */
         public static $plugins_onHold = array();
 
@@ -63,15 +64,22 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
         private $_isReady = false;
 
         public final function onInit() {
+            ErrorHandler::$server = $this->storage->serverLogin;
+            try {
+                $this->enableDatabase();
+            } catch (\Exception $e) {
+                $this->dumpException('There seems be a problem while establishing a MySQL connection.', $e);
+                exit(1);
+            }
 
-            //Recovering the eXpansion pack tools
+//Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
 
             $this->exp_unloading = false;
             $this->relay = \ManiaLivePlugins\eXpansion\Core\RelayLink::getInstance();
             \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
 
-            //All plugins need the eXpansion Core to work properly
+//All plugins need the eXpansion Core to work properly
             if ($this->getId() != 'eXpansion\Core' && $this->getId() != 'eXpansion\AutoLoad')
                 $this->addDependency(new \ManiaLive\PluginHandler\Dependency('eXpansion\Core'));
 
@@ -98,7 +106,6 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
         }
 
         public final function onLoad() {
-
             try {
                 $this->exp_onLoad();
             } catch (\Exception $e) {
@@ -115,18 +122,23 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
         }
 
         public final function onReady() {
-            $this->enableDatabase();
-            //Recovering the billManager if need.
+
+//Recovering the billManager if need.
             if (self::$exp_billManager == null) {
                 self::$exp_billManager = new \ManiaLivePlugins\eXpansion\Core\BillManager($this->connection, $this->db, $this);
             }
 
             if (!self::exp_checkGameCompability()) {
                 $this->exp_unload();
+                return;
             } else {
                 if (!$this->_isReady) {
                     $this->_isReady = true;
-                    $this->exp_onReady();
+                    try {
+                        $this->exp_onReady();
+                    } catch (\Exception $e) {
+                        throw new \Exception("onReadyError:\n" . $e->getFile() . ":" . $e->getLine() . "\n" . $e->getMessage(), 0, $e);
+                    }
                 }
             }
         }
@@ -168,7 +180,7 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
         public function exp_chatSendServerMessage($msg, $login = null, $args = array()) {
             if (!($msg instanceof MultiLangMsg)) {
                 if (DEBUG) {
-                    Console::println("#Plugin " . $this->getId() . " uses chatSendServerMessage in an unoptimized way!!");
+                    $this->console("#Plugin " . $this->getId() . " uses chatSendServerMessage in an unoptimized way!!");
                 }
                 $msg = exp_getMessage($msg);
             }
@@ -183,7 +195,7 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
                 array_unshift($args, $msg, $login);
                 $msgString = call_user_func_array('__', $args);
 
-                //Check if it needs to be redirected
+//Check if it needs to be redirected
                 $this->exp_redirectedChatSendServerMessage($msgString, $login, get_class($this));
             }
         }
@@ -300,14 +312,18 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
          * @abstract
          */
         public function exp_unload() {
-            Console::println('[eXpension Pack] ' . $this->getId() . ' Isn\'t compatible with this GameMode. UnLoading ...');
+            $this->console('Unloading ' . $this->getId());
             $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
             $plugins = $pHandler->getLoadedPluginsList();
+
             foreach ($plugins as $plugin) {
                 try {
                     if ($plugin != $this->getId()) {
-                        $deps = $this->callPublicMethod($plugin, 'getDependencies');
+                        $deps = null;
+                        if (method_exists($plugin, 'getDependencies')) {
+                            $deps = $this->callPublicMethod($plugin, 'getDependencies');
+                        }
                         if (!empty($deps)) {
                             foreach ($deps as $dep) {
                                 if ($dep->getPluginId() == $this->getId()) {
@@ -318,22 +334,32 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
                         }
                     }
                 } catch (\Exception $ex) {
-                    
+                    echo "Error:" . $ex->getFile() . ":" . $ex->getLine() . "\n" . $ex->getMessage();
                 }
             }
 
 //Unloading dependencies to prevent crash
-            /* $deps = $this->getDependencies();
-              if(!empty($deps)){
-              Console::println('[eXpension Pack] Unloading Dependencies of '.$this->getId().'');
-              foreach($deps as $dep){
-              $this->callPublicMethod($dep->getPluginId(), 'exp_unload');
-              }
-              } */
+            $deps = $this->getDependencies();
+
+            if (!empty($deps)) {
+                $this->console('[eXpansion] Unloading Dependencies of ' . $this->getId() . '');
+                foreach ($deps as $dep) {
+                    if ($dep->getPluginId() != "eXpansion\\Core")
+                        $this->callPublicMethod($dep->getPluginId(), 'exp_unload');
+                }
+            }
+
+
 //Unloading it self
             $this->exp_unloading = true;
             $pHandler->unload($this->getId());
-            self::$plugins_onHold[] = $this->getId();
+            self::$plugins_onHold[$this->getId()] = $this->getId();
+        }
+
+        public function onUnload() {
+            Dispatcher::unregister(GameSettingsEvent::getClass(), $this);
+            Dispatcher::unregister(PlayerEvent::getClass(), $this);
+            parent::onUnload();
         }
 
         /**
@@ -409,6 +435,34 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
             }
         }
 
+        final public function dumpException($message, \Exception $e) {
+            $this->console('                                ____                  _  ');
+            $this->console('                               / __ \                | |');
+            $this->console('                              | |  | | ___  _ __  ___| |');
+            $this->console('                              | |  | |/ _ \|  _ \/ __| |');
+            $this->console('                              | |__| | (_) | |_) \__ \_|');
+            $this->console('                               \____/ \___/| .__/|___(_)');
+            $this->console('                                           | | ');
+            $this->console('                                           |_| ');
+            $this->console('');
+
+            $fill = "";
+            $firstline = explode("\n", $message, 2);
+            if (!is_array($firstline))
+                $firstline = array($firstline);
+            for ($x = 0; $x < ((80 - strlen($firstline[0])) / 2); $x++) {
+                $fill .= " ";
+            }
+            $this->console($fill . $message);
+            $this->console('');
+            $file = explode(DIRECTORY_SEPARATOR, $e->getFile());
+            $this->console('Advanced details');
+            $this->console('File: ' . end($file));
+            $this->console('Line: ' . $e->getLine());
+            $this->console('Message: ' . $e->getMessage());
+            $this->console('');
+        }
+
         /**
          * Returns player object from given playerId
          * @param integer $id
@@ -426,6 +480,27 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
                     return $player;
             }
             return new \DedicatedApi\Structures\Player();
+        }
+
+        final public function console($message) {
+            $logFile = $this->storage->serverLogin . ".console.log";
+            /** @var \ManiaLive\Utilities\Logger */
+            $logger = \ManiaLive\Utilities\Logger::getLog("eXpansion");
+
+            if (is_string($message)) {
+                Console::println($message);
+                $logger::log($message, true, $logFile);
+            }
+            if (is_array($message)) {
+                $info = print_r($message, true);
+                Console::println($info);
+                $logger::log($info, true, $logFile);
+            }
+            if (is_object($message)) {
+                $info = var_export($message, true);
+                Console::println($info);
+                $logger::log($info, true, $logFile);
+            }
         }
 
         public function onGameModeChange($oldGameMode, $newGameMode) {
@@ -465,6 +540,11 @@ use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
 }
 
 namespace {
+// fix for  php 5.5.0
+    error_reporting(E_ALL ^ E_DEPRECATED);
+// do custom logging also
+
+    set_error_handler('\\ManiaLivePlugins\\eXpansion\\Core\\types\\ErrorHandler::createExceptionFromError');
 
     if (!defined("DEBUG")) {
         $config = ManiaLivePlugins\eXpansion\Core\Config::getInstance();

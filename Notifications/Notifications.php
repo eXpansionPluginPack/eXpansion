@@ -62,7 +62,7 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             $this->reDraw();
         } else {
-            \ManiaLive\Utilities\Console::println("Notification adding failed for plugin:" . $pluginid . " callback is not valid.");
+           $this->console("Notification adding failed for plugin:" . $pluginid . " callback is not valid.");
         }
     }
 
@@ -85,7 +85,7 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $window->redraw();
             }
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("error:" . $e->getMessage());
+           $this->console("error:" . $e->getMessage());
         }
     }
 

@@ -32,11 +32,11 @@ class AdminPanel extends \ManiaLive\Gui\Window {
         $dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
-
-        $this->actionEndRound = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'actions'), "forceEndRound");
-        $this->actionCancelVote = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'actions'), "cancelVote");
-        $this->actionSkip = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'actions'), "nextMap");
-        $this->actionRestart = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'actions'), "restartMap");
+        
+        $this->actionEndRound = $this->createAction(array($this, 'actions'), "forceEndRound");
+        $this->actionCancelVote = $this->createAction(array($this, 'actions'), "cancelVote");
+        $this->actionSkip = $this->createAction(array($this, 'actions'), "nextMap");
+        $this->actionRestart = $this->createAction(array($this, 'actions'), "restartMap");
 
 
         $this->setScriptEvents(true);
@@ -201,10 +201,6 @@ class AdminPanel extends \ManiaLive\Gui\Window {
     }
 
     function destroy() {
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionCancelVote);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionEndRound);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionRestart);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionSkip);
         $this->connection = null;
         $this->storage = null;
         $this->clearComponents();
