@@ -20,8 +20,7 @@ class Dropdown extends \ManiaLive\Gui\Control {
             throw new \Exception("Dropdown constructor needs array of values");
         $this->values = $items;
         $this->name = $name;
-        $this->sizeX = $sizeX;
-        $this->sizeY = 6;
+        $this->setSize($sizeX, 10);
         $this->output = new \ManiaLib\Gui\Elements\Entry($sizeX, 6);
         $this->output->setName($name);
         $this->output->setTextColor('000');

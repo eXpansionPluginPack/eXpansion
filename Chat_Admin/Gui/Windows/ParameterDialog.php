@@ -11,7 +11,7 @@ use ManiaLive\Gui\ActionHandler;
 
 class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
-    protected $inputbox, $btn_ok, $btn_cancel, $frame;
+    protected $inputbox, $btn_ok, $btn_cancel, $frame, $frm, $compobox;
     private $action, $adminAction, $adminParams;
 
     /** @var \ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin */
@@ -21,11 +21,21 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onConstruct();
         $login = $this->getRecipient();
 
+        $this->frm = new \ManiaLive\Gui\Controls\Frame(2, -6);
+        $this->frm->setLayout(new \ManiaLib\Gui\Layouts\Column());
+        $this->addComponent($this->frm);
+
         $this->inputbox = new Inputbox("parameter", 100);
         $this->inputbox->setLabel("Give reason");
         $this->inputbox->setText("Bad Behavior");
-        $this->inputbox->setPosition(2, -6);
-        $this->addComponent($this->inputbox);
+        $this->inputbox->setAlign("left", "top");
+        $this->inputbox->setSize(100, 6);
+        $this->frm->addComponent($this->inputbox);
+
+        $items = array("30 seconds", "5 min", "10 min", "15 min", "30min", "1 hour", "1 day", "5 day", "week", "month", "permanent");
+        $this->compobox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("select", $items);
+        $this->compobox->setAlign("left", "top");
+
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
@@ -52,6 +62,12 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onResize($oldX, $oldY);
     }
 
+    protected function onShow() {
+        if ($this->adminAction != "kick") {
+            $this->frm->addComponent($this->compobox);
+        }
+    }
+
     function setData($action, $params) {
         $login = $this->getRecipient();
         $this->adminAction = $action;
@@ -60,7 +76,16 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function ok($login, $inputbox) {
-        $params = $this->adminAction . " " . $this->adminParams . " " . $inputbox['parameter'];
+        if ($this->adminAction == "kick") {
+            $params = $this->adminAction . " " . $this->adminParams . " " . $inputbox['parameter'];
+        } else {
+            if (empty($inputbox['select']))
+                $inputbox['select'] = 0;
+            $items = $this->compobox->getDropdownItems();
+            $params = $this->adminAction . " " . $this->adminParams . " " . $inputbox['parameter'] . ", duration: " . $items[$inputbox['select']];
+            $prms = explode(" ", $this->adminParams);
+            self::$mainPlugin->addActionDuration($prms[0], $this->adminAction, $items[$inputbox['select']]);
+        }
         \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->adminCmd($login, $params);
     }
 
