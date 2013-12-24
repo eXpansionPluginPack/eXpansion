@@ -21,7 +21,7 @@ class Window extends \ManiaLive\Gui\Window {
     protected $_windowFrame;
     private $dDeclares = "";
     private $dLoop = "";
-    private $dCount = 0;
+    private $dIndex = 0;
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -121,14 +121,29 @@ class Window extends \ManiaLive\Gui\Window {
         $this->mainFrame->setPosition(2, -2);
     }
 
-    protected function onDraw() {
-        foreach ($this->getComponents() as $index => $component) {
+    private function detectElements($components) {
+        foreach ($components as $index => $component) {
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter) {
                 $this->addScriptToMain($component->getScript());
             }
+
+            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown) {
+                $this->addScriptToMain($component->getScriptDeclares($this->dIndex));
+                $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));
+                $this->dIndex++;
+            }
+            if ($component instanceof \ManiaLive\Gui\Controls\Frame) {
+                $this->detectElements($component->getComponents());
+            }
         }
+    }
 
+    protected function onDraw() {
+        $this->dIndex = 0;
+        $this->dDeclares = "";
+        $this->dLoop = "";
 
+        $this->detectElements($this->getComponents());
 
         $this->removeComponent($this->xml);
         // fixes the window to be center of the screen for first open. 
@@ -270,7 +285,7 @@ class Window extends \ManiaLive\Gui\Window {
                         }
                   
                   
-                } 
+                }  //end of window 
                 --></script>');
         $this->addComponent($this->xml);
         parent::onDraw();
@@ -302,41 +317,6 @@ class Window extends \ManiaLive\Gui\Window {
         $this->dLoop .= $script;
     }
 
-    function addDropdown($name, $items) {
-
-
-        $this->dDeclares .= '           
-                            declare CMlFrame Frame' . $this->dCount . ' <=> (Page.GetFirstChild("' . $name . 'f") as CMlFrame);
-                            declare CMlLabel Label' . $this->dCount . ' <=> (Page.GetFirstChild("' . $name . 'l") as CMlLabel);
-                            declare CMlEntry Output' . $this->dCount . ' <=> (Page.GetFirstChild("' . $name . 'e") as CMlEntry);
-                            Frame' . $this->dCount . '.Hide();
-     ';
-
-
-        $this->dLoop .= ' 
-                            if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "' . $name . 'l") { 
-                                    Frame' . $this->dCount . '.Show();
-                           }
-            ';
-
-
-
-
-
-        $x = 0;
-        foreach ($items as $item) {
-            $this->dLoop .= '
-                             if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "' . $name . $x . '") {                           
-                                           Label' . $this->dCount . '.Value = "' . $item . '";
-                                           Output' . $this->dCount . '.Value = "' . $x . '";
-                                           Frame' . $this->dCount . '.Hide();
-                            }      
-                      ';
-            $x++;
-        }
-        $this->dCount++;
-    }
-
     function destroy() {
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->_closeAction);
         $this->_windowFrame->clearComponents();
@@ -349,5 +329,4 @@ class Window extends \ManiaLive\Gui\Window {
     }
 
 }
-
 ?>
