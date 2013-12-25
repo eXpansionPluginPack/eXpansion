@@ -19,9 +19,11 @@ class Window extends \ManiaLive\Gui\Window {
     protected $_closeAction;
     protected $_showCoords = 'False';
     protected $_windowFrame;
+    protected $bg;
     private $dDeclares = "";
     private $dLoop = "";
     private $dIndex = 0;
+    
     private $_name = "window";
 
     protected function onConstruct() {
@@ -36,13 +38,15 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_mainWindow->setId("MainWindow");
         $this->_mainWindow->setStyle("Bgs1");
-        $this->_mainWindow->setSubStyle("BgCard");
-        $this->_mainWindow->setBgcolor("eeef");
-        // $this->_mainWindow->setStyle("Bgs1InRace");
-        // $this->_mainWindow->setSubStyle("BgEmpty");
-        // $this->_mainWindow->setBgcolor("fff");
+        $this->_mainWindow->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgWindow2);
         $this->_mainWindow->setScriptEvents(true);
         $this->_windowFrame->addComponent($this->_mainWindow);
+
+        $this->bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
+        $this->bg->setStyle("Bgs1");
+        $this->bg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgWindow2);
+
+        $this->_windowFrame->addComponent($this->bg);
 
         $this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
         $this->_titlebar->setId("Titlebar");
@@ -101,9 +105,12 @@ class Window extends \ManiaLive\Gui\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
+        
         $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY + 2);
         $this->_mainWindow->setPosY(1);
-
+        $this->bg->setSize($this->sizeX + 0.6, $this->sizeY + 2);
+        $this->bg->setPosY(1);
+        
         $this->_title->setSize($this->sizeX, 4);
         $this->_title->setPosition(($this->_title->sizeX / 2), 3.5);
         $this->_title->setHalign("center");
@@ -331,4 +338,5 @@ class Window extends \ManiaLive\Gui\Window {
     }
 
 }
+
 ?>
