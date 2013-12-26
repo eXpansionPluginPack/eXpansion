@@ -68,8 +68,8 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->generatePlayerStatuses();
 
         // @todo remove this debug variable
-        self::$matchStatus->isMatchRunning = true;
-        self::$matchStatus->isActive = true;
+        ESportsManager::$matchStatus->isMatchRunning = true;
+        ESportsManager::$matchStatus->isActive = true;
 
         $cmd = AdminGroups::addAdminCommand('esports go', $this, 'doContinue', 'esports_admin');
         $cmd->setHelp('Force Continue');
@@ -121,14 +121,6 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function doContinue($login = null) {
-        if (!self::$matchStatus->isMatchActive) {
-            if ($login) {
-                $this->exp_chatSendServerMessage("no match is active, can't force continue.", $login);
-            } else {
-                $this->console("no match active, can't force continue (you should never see this)");
-            }
-            return;
-        }
 
         if (!self::$matchStatus->isAllPlayersReady) {
             self::$matchStatus->isAllPlayersReady = true;
@@ -136,6 +128,10 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (!self::$matchStatus->isMatchRunning) {
             self::$matchStatus->isMatchRunning = true;
         }
+        
+        Gui\Windows\HaltMatch::EraseAll();
+        Gui\Widgets\MatchReady::EraseAll();
+        
         if ($this->connection->manualFlowControlGetCurTransition() != '')
             $this->connection->manualFlowControlProceed();
     }
@@ -272,7 +268,6 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (isset($params[0])) {
             $reason = implode(" ", $params);
         }
-
 
         foreach ($this->storage->players as $login => $player) {
             $window = Gui\Windows\HaltMatch::Create($login);
