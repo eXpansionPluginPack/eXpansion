@@ -10,7 +10,7 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager\Structures;
 class MatchSetting extends \DedicatedApi\Structures\AbstractStructure {
    
     
-    public $matchTitle = "N/a";
+    public $matchTitle = "Not available";
     public $matchOrganizer = "";
     
     public $rulesText = "This is failsafe text";

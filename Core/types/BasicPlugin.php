@@ -17,7 +17,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
      *
      * @author oliverde8
      */
-    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin implements \ManiaLive\PluginHandler\WaitingCompliant, \ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEventListener, \ManiaLivePlugins\eXpansion\Core\Events\PlayerEventListener {
+    class BasicPlugin extends \ManiaLive\PluginHandler\Plugin implements \ManiaLive\PluginHandler\WaitingCompliant, \ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEventListener, \ManiaLivePlugins\eXpansion\Core\Events\PlayerEventListener, \ManiaLivePlugins\eXpansion\Core\Events\GlobalEventListener {
 
         /**
          * The list of Plugin id's that may need to be started
@@ -95,6 +95,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
 
             Dispatcher::register(GameSettingsEvent::getClass(), $this);
             Dispatcher::register(PlayerEvent::getClass(), $this);
+            Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent::getClass(), $this);
         }
 
         /**
@@ -532,6 +533,14 @@ use ManiaLivePlugins\eXpansion\Database\Database;
          * @param ExpPlayer[] $playerPositions array(string => ExpPlayer);
          */
         public function onPlayerNewPositions($playerPositions) {
+            
+        }
+
+        public function onMapRestart() {
+            
+        }
+
+        public function onMapSkip() {
             
         }
 

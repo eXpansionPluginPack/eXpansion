@@ -22,10 +22,10 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /** @var \ManiaLive\Gui\ActionHandler */
     private $aHandler;
 
-    /** @var Structures\MatchStatus */
+    /** @var MatchStatus */
     public static $matchStatus;
 
-    /** @var Structures\MatchSetting */
+    /** @var MatchSetting */
     public static $matchSettings;
 
     /** @var Structures\MatchCounter */
@@ -49,7 +49,6 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->aHandler = \ManiaLive\Gui\ActionHandler::getInstance();
         $admingroup = AdminGroups::getInstance();
 
-
         $cmd = AdminGroups::addAdminCommand('esports stop', $this, 'matchStop', 'esports_admin');
         $cmd->setHelp('Sends a "Stop Match" window to players');
         $cmd->setMinParam(0);
@@ -59,19 +58,20 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $cmd->setHelp('Asks if players are ready');
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "ready"); // xaseco & fast
-        // actions for matchReady widget
+// actions for matchReady widget
         $this->actions_matchReady["ready"] = $this->aHandler->createAction(array($this, "setReady"));
         $this->actions_matchReady["notReady"] = $this->aHandler->createAction(array($this, "setNotReady"));
+        $this->actions_matchReady["forceContinue"] = $this->aHandler->createAction(array($this, "chatDoContinue"));
 
         Gui\Widgets\MatchReady::$actions = $this->actions_matchReady;
 
         $this->generatePlayerStatuses();
 
-        // @todo remove this debug variable
-        ESportsManager::$matchStatus->isMatchRunning = true;
-        ESportsManager::$matchStatus->isActive = true;
+// @todo remove this debug variable
+        self::$matchStatus->isMatchRunning = true;
+        self::$matchStatus->isMatchActive = true;
 
-        $cmd = AdminGroups::addAdminCommand('esports go', $this, 'doContinue', 'esports_admin');
+        $cmd = AdminGroups::addAdminCommand('esports go', $this, 'chatDoContinue', 'esports_admin');
         $cmd->setHelp('Force Continue');
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "go"); // xaseco & fast
@@ -89,49 +89,63 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onManualFlowControlTransition($transition) {
-        if (self::$matchStatus->isMatchActive) {
+        if (self::$matchStatus->isMatchActive == false) {
             $this->connection->manualFlowControlProceed();
             return;
         }
-
+        echo $transition . "\n";
         switch ($transition) {
             case "Play -> Podium":
-                $this->doContinue();
+                $this->doContinue(null, false);
                 break;
             case "Podium -> Synchro":
-                $this->doContinue();
+                $this->doContinue(null, false);
                 break;
+            // on map start
             case "Synchro -> Play":
                 if (self::$matchStatus->isAllPlayersReady == false) {
                     $this->generatePlayerStatuses();
                     $this->matchAskReady(null);
                 } else {
-                    $this->doContinue();
+                    $this->doContinue(null, true);
                 }
                 break;
+            // on restart or match has stopped or new round
             case "Play -> Synchro":
                 if (self::$matchStatus->isAllPlayersReady == false) {
                     $this->generatePlayerStatuses();
                     $this->matchAskReady(null);
                 } else {
-                    $this->doContinue();
+                    $this->doContinue(null, true);
                 }
                 break;
         }
     }
 
-    public function doContinue($login = null) {
+    public function onMapRestart() {
+        self::$matchStatus->isAllPlayersReady = false;
+    }
 
-        if (!self::$matchStatus->isAllPlayersReady) {
-            self::$matchStatus->isAllPlayersReady = true;
+    public function onMapSkip() {
+        self::$matchStatus->isAllPlayersReady = false;
+    }
+
+    public function chatDoContinue($login) {
+        $this->doContinue($login, true);
+    }
+
+    public function doContinue($login = null, $clear = false) {
+        if ($clear) {
+            if (!self::$matchStatus->isAllPlayersReady) {
+                self::$matchStatus->isAllPlayersReady = true;
+            }
+            if (!self::$matchStatus->isMatchRunning) {
+                self::$matchStatus->isMatchRunning = true;
+            }
         }
-        if (!self::$matchStatus->isMatchRunning) {
-            self::$matchStatus->isMatchRunning = true;
-        }
-        
         Gui\Windows\HaltMatch::EraseAll();
         Gui\Widgets\MatchReady::EraseAll();
-        
+
         if ($this->connection->manualFlowControlGetCurTransition() != '')
             $this->connection->manualFlowControlProceed();
     }
@@ -140,9 +154,10 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      *  
      */
     private function checkPlayerStatuses() {
-        foreach ($this->storage->players as $login => $player) {
-            if (!array_key_exists($login, self::$playerStatuses)) {
-                self::$playerStatuses[$login] = new PlayerStatus($player);
+        foreach ($this->storage->players as $player) {
+            if (!array_key_exists($player->login, self::$playerStatuses)) {
+                echo "creating new playerstatus\n";
+                self::$playerStatuses[$player->login] = new PlayerStatus($player);
             }
         }
     }
@@ -157,11 +172,10 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function showReadyWidget($login) {
         Gui\Widgets\MatchReady::Erase($login);
-
         $widget = Gui\Widgets\MatchReady::Create($login);
-        $widget->centerOnScreen();
-        $widget->setSize(90, 60);
+        $widget->setGamemode($this->storage->gameInfos->gameMode);
         $widget->setPosition(0, 0);
+        $widget->setSize(160, 160);
         $widget->show();
     }
 
@@ -185,12 +199,25 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($player->spectator == true) {
             unset(self::$playerStatuses[$login]);
+        } else {
+            $this->checkPlayerStatuses();
+            self::$playerStatuses[$login]->player->teamId = $player->teamId;
         }
-        $this->checkPlayerStatuses();
-        self::$playerStatuses[$login]->player->teamId = $player->teamId;
 
+
+        // handle votes
         if (self::$matchStatus->voteRunning == MatchStatus::VOTE_READY) {
             Gui\Widgets\MatchReady::RedrawAll();
+        }
+    }
+
+    public function onPlayerConnect($login, $isSpectator) {
+        $this->checkPlayerStatuses();
+    }
+
+    public function onPlayerDisconnect($login, $disconnectionReason) {
+        if (array_key_exists($login, self::$playerStatuses)) {
+            unset(self::$playerStatuses[$login]);
         }
     }
 
@@ -199,8 +226,8 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($player == null)
             return;
         $this->checkPlayerStatuses();
-        ESportsManager::$playerStatuses[$login]->status = PlayerStatus::Ready;
-        ESportsManager::$playerStatuses[$login]->voteStartTime = time();
+        self::$playerStatuses[$login]->status = PlayerStatus::Ready;
+        self::$playerStatuses[$login]->voteStartTime = time();
         $this->showReadyWidgetToAll();
     }
 
@@ -209,8 +236,8 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($player == null)
             return;
         $this->checkPlayerStatuses();
-        ESportsManager::$playerStatuses[$login]->status = PlayerStatus::NotReady;
-        ESportsManager::$playerStatuses[$login]->voteStartTime = time();
+        self::$playerStatuses[$login]->status = PlayerStatus::NotReady;
+        self::$playerStatuses[$login]->voteStartTime = time();
         $this->showReadyWidgetToAll();
     }
 
@@ -228,8 +255,8 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $readyCount = 0;
         foreach (self::$playerStatuses as $login => $player) {
             if (($player->voteStartTime + $this->config->readyTimeout) < time()) {
-                ESportsManager::$playerStatuses[$login]->status = PlayerStatus::Timeout;
-                ESportsManager::$playerStatuses[$login]->voteStartTime = time();
+                self::$playerStatuses[$login]->status = PlayerStatus::Timeout;
+                self::$playerStatuses[$login]->voteStartTime = time();
                 $forceupdate = true;
             }
             if ($player->status == PlayerStatus::Ready)

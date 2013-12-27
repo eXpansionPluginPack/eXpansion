@@ -58,7 +58,7 @@ class PlayerStatusItem extends \ManiaLive\Gui\Control {
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         //$this->frame->addComponent($spacer);
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(50, 4);
+        $this->label = new \ManiaLib\Gui\Elements\Label(40, 4);
         $this->label->setAlign('left', 'center');
         $this->label->setText($player->nickName);
         $this->label->setScale(0.8);
@@ -89,10 +89,8 @@ class PlayerStatusItem extends \ManiaLive\Gui\Control {
         $this->status->setScale(0.8);
         $this->frame->addComponent($this->status);
 
+        $this->setAlign("center");
         $this->addComponent($this->frame);
-
-        $this->sizeX = $sizeX;
-        $this->sizeY = $sizeY;
         $this->setSize($sizeX, $sizeY);
     }
 

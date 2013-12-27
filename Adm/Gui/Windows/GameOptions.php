@@ -342,7 +342,6 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         // team            
         $gameInfos->teamPointsLimit = intval($options['teamPointsLimit']);
         $gameInfos->teamPointsLimitNewRules = intval($options['teamPointsLimitNewRules']);
-
         $gameInfos->teamMaxPoints = intval($options['teamMaxPoints']);
 
         // cup
