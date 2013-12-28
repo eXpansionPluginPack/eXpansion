@@ -12,7 +12,8 @@ use ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls\PlayerStatusItem;
  */
 class MatchReady extends \ManiaLive\Gui\Window {
 
-    protected $background, $lbl_nextMatch, $lbl_info, $btn_ready, $btn_wait, $btn_continue;
+    protected $background, $lbl_nextMatch, $lbl_info, $btn_ready, $btn_wait, $btn_continue, $btn_spec, $btn_play;
+    protected $btn_joinRed, $btn_joinBlue;
 
     /** @var \ManiaLive\Gui\Controls\Frame */
     protected $frame_team_blue, $frame_team_red, $frame_rounds;
@@ -79,6 +80,35 @@ class MatchReady extends \ManiaLive\Gui\Window {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "esports_admin")) {
             $this->addComponent($this->btn_continue);
         }
+
+
+        $this->btn_spec = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+        $this->btn_spec->setAction(self::$actions['spec']);
+        $this->btn_spec->setText(__("Specate", $login));
+        $this->btn_spec->setAlign("center");
+        $this->addComponent($this->btn_spec);
+
+        $this->btn_play = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+        $this->btn_play->setAction(self::$actions['play']);
+        $this->btn_play->setText(__("Play", $login));
+
+        $this->btn_play->setAlign("center");
+        $this->addComponent($this->btn_play);
+
+        $this->btn_joinBlue = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+        $this->btn_joinBlue->setAction(self::$actions['joinTeam0']);
+        $this->btn_joinBlue->setText(__("Join Blue", $login));
+        $this->btn_joinBlue->setAlign("center");
+        $this->btn_joinBlue->colorize("00d");
+        $this->addComponent($this->btn_joinBlue);
+
+        $this->btn_joinRed = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+        $this->btn_joinRed->setAction(self::$actions['joinTeam1']);
+        $this->btn_joinRed->setText(__("Join Red", $login));
+        $this->btn_joinRed->setAlign("center");
+        $this->btn_joinRed->colorize("d00");
+        $this->addComponent($this->btn_joinRed);
+
         $this->setAlign("center", "center");
     }
 
@@ -87,15 +117,17 @@ class MatchReady extends \ManiaLive\Gui\Window {
         $this->frame_team_red->clearComponents();
         $this->frame_rounds->clearComponents();
         $sizeX = 60;
-        $red = new \ManiaLib\Gui\Elements\Label($sizeX, 6);
-        $red->setText('$f00Red Team');
-        $red->setAlign("center", "center");
-        $blue = new \ManiaLib\Gui\Elements\Label($sizeX, 6);
-        $blue->setText('$00FBlue Team');
-        $blue->setAlign("center", "center");
+        if ($this->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+            $red = new \ManiaLib\Gui\Elements\Label($sizeX, 6);
+            $red->setText('$f00Red Team');
+            $red->setAlign("center", "center");
+            $blue = new \ManiaLib\Gui\Elements\Label($sizeX, 6);
+            $blue->setText('$00FBlue Team');
+            $blue->setAlign("center", "center");
 
-        $this->frame_team_blue->addComponent($blue);
-        $this->frame_team_red->addComponent($red);
+            $this->frame_team_blue->addComponent($blue);
+            $this->frame_team_red->addComponent($red);
+        }
 
         $x = 0;
         foreach (ESportsManager::$playerStatuses as $login => $player) {
@@ -107,7 +139,7 @@ class MatchReady extends \ManiaLive\Gui\Window {
                     $this->frame_team_blue->addComponent(new PlayerStatusItem($x, $player, $sizeX));
                 }
                 if ($player->player->teamId == 1) {
-                    $this->frame_teams_red->addComponent(new PlayerStatusItem($x, $player, $sizeX));
+                    $this->frame_team_red->addComponent(new PlayerStatusItem($x, $player, $sizeX));
                 }
             } else {
                 $this->frame_rounds->addComponent(new PlayerStatusItem($x, $player, $sizeX));
@@ -132,8 +164,14 @@ class MatchReady extends \ManiaLive\Gui\Window {
         $this->btn_continue->setPosition(($sX / 2), -$sY + 18);
         $this->btn_wait->setPosition(($sX / 2) + 30, -$sY + 18);
 
+        $this->btn_play->setPosition(($sX / 2) - 16, -$sY + 24);
+        $this->btn_spec->setPosition(($sX / 2) + 16, -$sY + 24);
+
         $this->frame_team_blue->setPosition(($sX / 2) - 60, -24);
         $this->frame_team_red->setPosition(($sX / 2) + 60, -24);
+        $this->btn_joinBlue->setPosition(($sX / 2) - 60, - 18);
+        $this->btn_joinRed->setPosition(($sX / 2) + 60, - 18);
+
         $this->frame_rounds->setPosition(($sX / 2), -24);
         parent::onResize($oldX, $oldY);
     }

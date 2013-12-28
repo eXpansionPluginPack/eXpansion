@@ -121,7 +121,7 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 } else {
                     $newVal = $this->parseValue($value);
                 }
-                var_dump($newVal);
+
                 if ($newVal !== null) {
                     $infos[$setting] = $newVal;
                 }
@@ -129,7 +129,6 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
 
         $out = \DedicatedApi\Structures\GameInfos::fromArray($infos);
-        print_r($out);
         return $out;
     }
 

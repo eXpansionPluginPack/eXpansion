@@ -42,12 +42,12 @@ class PlayerStatusItem extends \ManiaLive\Gui\Control {
             if ($player->player->teamId === 0) {
                 $this->team->setStyle("BgRaceScore2");
                 $this->team->setSubStyle("HandleBlue");
-                $this->team->setAction($this->toggleTeam);
+                $this->team->setAction(\ManiaLivePlugins\eXpansion\ESportsManager\Gui\Widgets\MatchReady::$actions['joinTeam1']);
             }
             if ($player->player->teamId === 1) {
                 $this->team->setStyle("BgRaceScore2");
                 $this->team->setSubStyle("HandleRed");
-                $this->team->setAction($this->toggleTeam);
+                $this->team->setAction(\ManiaLivePlugins\eXpansion\ESportsManager\Gui\Widgets\MatchReady::$actions['joinTeam0']);
             }
         }
         $this->frame->addComponent($this->team);

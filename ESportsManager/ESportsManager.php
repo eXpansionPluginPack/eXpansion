@@ -74,6 +74,10 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 // actions for matchReady widget
         $this->actions_matchReady["ready"] = $this->aHandler->createAction(array($this, "setReady"));
         $this->actions_matchReady["notReady"] = $this->aHandler->createAction(array($this, "setNotReady"));
+        $this->actions_matchReady["spec"] = $this->aHandler->createAction(array($this, "togglespec"), "spec");
+        $this->actions_matchReady["play"] = $this->aHandler->createAction(array($this, "togglespec"), "play");
+        $this->actions_matchReady["joinTeam0"] = $this->aHandler->createAction(array($this, "changeTeam"), 0);
+        $this->actions_matchReady["joinTeam1"] = $this->aHandler->createAction(array($this, "changeTeam"), 1);
         $this->actions_matchReady["forceContinue"] = $this->aHandler->createAction(array($this, "chatDoContinue"));
         $this->action_matchSelect = $this->aHandler->createAction(array($this, "matchSelect"));
         Gui\Widgets\MatchReady::$actions = $this->actions_matchReady;
@@ -90,6 +94,22 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         AdminGroups::addAlias($cmd, "go");
     }
 
+    public function togglespec($login, $status) {
+        switch ($status) {
+            case "play":
+                $this->connection->forceSpectator($login, 2);
+                $this->connection->forceSpectator($login, 0);
+                break;
+            case "spec":
+                $this->connection->forceSpectator($login, 3);
+                break;
+        }
+    }
+
+    public function changeTeam($login, $team) {
+        $this->connection->forcePlayerTeam($login, $team);
+    }
+
     /**
      * generates totally new playerStatuses objects 
      * @return \ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus[]
@@ -99,6 +119,10 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($this->storage->players as $login => $player) {
             self::$playerStatuses[$login] = new PlayerStatus($player);
         }
+    }
+
+    public function onBeginMap($map, $warmUp, $matchContinuation) {
+        self::$nextMatchSettings = null;
     }
 
     public function onManualFlowControlTransition($transition) {
@@ -118,6 +142,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 }
                 break;
             case "Podium -> Synchro":
+                self::$matchStatus->isAllPlayersReady = false;
                 $this->doContinue(null, false);
                 break;
             // on map start
@@ -143,7 +168,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function setNextMatchParameters() {
         self::$matchSettings = self::$nextMatchSettings;
-        var_dump(self::$nextMatchSettings->gameInfos);
+
         $this->connection->setGameInfos(self::$nextMatchSettings->gameInfos);
         $agroups = AdminGroups::getInstance();
         $login = $this->findAdmin();
@@ -159,7 +184,6 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } else {
             $this->exp_chatSendServerMessage("Didn't find admin on server, chat triggers not executed.");
         }
-        self::$nextMatchSettings = null;
     }
 
     private function findAdmin() {
