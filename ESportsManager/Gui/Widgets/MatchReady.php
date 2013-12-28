@@ -20,9 +20,15 @@ class MatchReady extends \ManiaLive\Gui\Window {
     private $gameMode;
     public static $actions;
 
+    /** @var  \DedicatedApi\Connection */
+    private $connection;
+
     public function onConstruct() {
         parent::onConstruct();
-        echo "ready window opened!\n";
+
+        $config = \ManiaLive\DedicatedApi\Config::getInstance();
+        $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
+
         $login = $this->getRecipient();
 
         $this->background = new \ManiaLib\Gui\Elements\Quad();
@@ -106,14 +112,15 @@ class MatchReady extends \ManiaLive\Gui\Window {
         $this->btn_joinRed->setAlign("center");
         $this->btn_joinRed->colorize("d00");
 
-        if ($this->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
-            $this->addComponent($this->btn_joinBlue);
-            $this->addComponent($this->btn_joinRed);
-        }
         $this->setAlign("center", "center");
     }
 
     public function onDraw() {
+        $login = $this->getRecipient();
+        $isAdmin = false;
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "esports_admin")) {
+            $isAdmin = true;
+        }
         $this->frame_team_blue->clearComponents();
         $this->frame_team_red->clearComponents();
         $this->frame_rounds->clearComponents();
@@ -128,6 +135,8 @@ class MatchReady extends \ManiaLive\Gui\Window {
 
             $this->frame_team_blue->addComponent($blue);
             $this->frame_team_red->addComponent($red);
+            $this->frame_team_blue->addComponent($this->btn_joinBlue);
+            $this->frame_team_red->addComponent($this->btn_joinRed);
         }
 
         $x = 0;
@@ -137,17 +146,22 @@ class MatchReady extends \ManiaLive\Gui\Window {
 
             if ($this->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
                 if ($player->player->teamId == 0) {
-                    $this->frame_team_blue->addComponent(new PlayerStatusItem($x, $player, $sizeX));
+                    $this->frame_team_blue->addComponent(new PlayerStatusItem($x, $player, $this, $this->gameMode, $isAdmin, $sizeX));
                 }
                 if ($player->player->teamId == 1) {
-                    $this->frame_team_red->addComponent(new PlayerStatusItem($x, $player, $sizeX));
+                    $this->frame_team_red->addComponent(new PlayerStatusItem($x, $player, $this, $this->gameMode, $isAdmin, $sizeX));
                 }
             } else {
-                $this->frame_rounds->addComponent(new PlayerStatusItem($x, $player, $sizeX));
+                $this->frame_rounds->addComponent(new PlayerStatusItem($x, $player, $this, $this->gameMode, $isAdmin, $sizeX));
             }
             $x++;
         }
         parent::onDraw();
+    }
+
+    public function forceSpec($login, $target) {
+        $this->connection->forceSpectator($target, 1);
+        $this->connection->forceSpectator($target, 0);
     }
 
     public function setGamemode($gamemode) {
@@ -170,8 +184,8 @@ class MatchReady extends \ManiaLive\Gui\Window {
 
         $this->frame_team_blue->setPosition(($sX / 2) - 60, -24);
         $this->frame_team_red->setPosition(($sX / 2) + 60, -24);
-        $this->btn_joinBlue->setPosition(($sX / 2) - 60, - 18);
-        $this->btn_joinRed->setPosition(($sX / 2) + 60, - 18);
+        //  $this->btn_joinBlue->setPosition(($sX / 2) - 60, - 18);
+        //   $this->btn_joinRed->setPosition(($sX / 2) + 60, - 18);
 
         $this->frame_rounds->setPosition(($sX / 2), -24);
         parent::onResize($oldX, $oldY);

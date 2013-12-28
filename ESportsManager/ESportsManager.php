@@ -202,7 +202,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($this->storage->players as $login => $player) {
             $window = Gui\Windows\MatchWait::Create($login);
             if (AdminGroups::hasPermission($login, "esports_admin")) {
-                $window->setAdminAction($this->action_matchSelect);
+                $window->setAdminAction($this->action_matchSelect, $this->actions_matchReady["forceContinue"]);
             }
             $window->setSize(90, 30);
             $window->show();
@@ -210,7 +210,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($this->storage->spectators as $login => $player) {
             $window = Gui\Windows\MatchWait::Create($login);
             if (AdminGroups::hasPermission($login, "esports_admin")) {
-                $window->setAdminAction($this->action_matchSelect);
+                $window->setAdminAction($this->action_matchSelect, $this->actions_matchReady["forceContinue"]);
             }
             $window->setSize(90, 30);
             $window->show();
@@ -240,7 +240,8 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
         Gui\Windows\HaltMatch::EraseAll();
         Gui\Widgets\MatchReady::EraseAll();
-
+        Gui\Windows\MatchWait::EraseAll();
+        Gui\Windows\MatchSelect::EraseAll();
         if ($this->connection->manualFlowControlGetCurTransition() != '')
             $this->connection->manualFlowControlProceed();
     }
@@ -251,8 +252,10 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private function checkPlayerStatuses() {
         foreach ($this->storage->players as $player) {
             if (!array_key_exists($player->login, self::$playerStatuses)) {
-                echo "creating new playerstatus\n";
-                self::$playerStatuses[$player->login] = new PlayerStatus($player);
+                if (!is_object(self::$playerStatuses[$player->login])) {
+                    echo "creating new playerstatus\n";
+                    self::$playerStatuses[$player->login] = new PlayerStatus($player);
+                }
             }
         }
     }
@@ -303,7 +306,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($player->spectator == true) {
             unset(self::$playerStatuses[$login]);
         } else {
-            $this->checkPlayerStatuses();
+            self::$playerStatuses[$login] = new PlayerStatus($player);
             self::$playerStatuses[$login]->player->teamId = $player->teamId;
         }
 

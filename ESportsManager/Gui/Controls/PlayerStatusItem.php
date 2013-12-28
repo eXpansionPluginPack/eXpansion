@@ -11,6 +11,7 @@ class PlayerStatusItem extends \ManiaLive\Gui\Control {
     protected $team;
     protected $status;
     protected $frame;
+    protected $forceSpec;
 
     /**
      * 
@@ -20,9 +21,9 @@ class PlayerStatusItem extends \ManiaLive\Gui\Control {
      * @param type $controller
      * @param int $sizeX
      */
-    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus $player, $sizeX) {
+    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus $player, $controller, $gameMode, $isAdmin, $sizeX) {
         $sizeY = 4;
-
+        $login = $player->login;
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
@@ -37,17 +38,19 @@ class PlayerStatusItem extends \ManiaLive\Gui\Control {
         $this->team->setAlign("center", "center2");
         $this->team->setStyle("Icons64x64_1");
         $this->team->setSubStyle("Empty");
-        if (\ManiaLivePlugins\eXpansion\ESportsManager\ESportsManager::$matchSettings->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+        if ($gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
 
             if ($player->player->teamId === 0) {
                 $this->team->setStyle("BgRaceScore2");
                 $this->team->setSubStyle("HandleBlue");
-                $this->team->setAction(\ManiaLivePlugins\eXpansion\ESportsManager\Gui\Widgets\MatchReady::$actions['joinTeam1']);
+                if ($isAdmin)
+                    $this->team->setAction(\ManiaLivePlugins\eXpansion\ESportsManager\Gui\Widgets\MatchReady::$actions['joinTeam1']);
             }
             if ($player->player->teamId === 1) {
                 $this->team->setStyle("BgRaceScore2");
                 $this->team->setSubStyle("HandleRed");
-                $this->team->setAction(\ManiaLivePlugins\eXpansion\ESportsManager\Gui\Widgets\MatchReady::$actions['joinTeam0']);
+                if ($isAdmin)
+                    $this->team->setAction(\ManiaLivePlugins\eXpansion\ESportsManager\Gui\Widgets\MatchReady::$actions['joinTeam0']);
             }
         }
         $this->frame->addComponent($this->team);
@@ -88,6 +91,14 @@ class PlayerStatusItem extends \ManiaLive\Gui\Control {
         $this->status->setAlign('left', 'center');
         $this->status->setScale(0.8);
         $this->frame->addComponent($this->status);
+
+        if ($isAdmin) {
+            $this->forceSpec = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(24,5);
+            $this->forceSpec->setText(__("Force Spec", $login));
+            $this->forceSpec->setTextColor("f00");
+            $this->forceSpec->setAction($this->createAction(array($controller, "forceSpec"), $login));
+            $this->frame->addComponent($this->forceSpec);
+        }
 
         $this->setAlign("center");
         $this->addComponent($this->frame);
