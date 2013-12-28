@@ -15,12 +15,13 @@ class Dropdown extends \ManiaLive\Gui\Control {
     private $values;
     private $name;
 
-    function __construct($name, $items, $selectedIndex = 0, $sizeX = 35) {
+    function __construct($name, $items = array("initial"), $selectedIndex = 0, $sizeX = 35) {
         if (!is_array($items))
             throw new \Exception("Dropdown constructor needs array of values");
-        $this->values = $items;
+        $this->values = array();
         $this->name = $name;
         $this->setSize($sizeX, 10);
+
         $this->output = new \ManiaLib\Gui\Elements\Entry($sizeX, 6);
         $this->output->setName($name);
         $this->output->setTextColor('000');
@@ -32,7 +33,6 @@ class Dropdown extends \ManiaLive\Gui\Control {
 
         $this->label = new \ManiaLib\Gui\Elements\Label($sizeX, 4);
         $this->label->setId($name . 'l');
-        $this->label->setText($this->values[$selectedIndex]);
         $this->label->setStyle("TextValueMedium");
         $this->label->setTextSize(1);
         $this->label->setAlign('left', 'center');
@@ -46,24 +46,36 @@ class Dropdown extends \ManiaLive\Gui\Control {
         $this->frame->setAlign("center", "center");
         $this->frame->setSizeY((sizeof($items) + 1) * 6);
         $this->frame->setScale(0.9);
-
-        $x = 0;
-        foreach ($this->values as $item) {
-            $obj = new \ManiaLib\Gui\Elements\Label($sizeX);
-            $obj->setText($item);
-            $obj->setAlign("left", "center");
-            $obj->setStyle("TextValueMedium");
-            $obj->setScriptEvents(true);
-            $obj->setTextSize(1);
-            $obj->setFocusAreaColor1('000');
-            $obj->setFocusAreaColor2('fff');
-            $obj->setId($name . $x);
-
-            $this->items[$x] = $obj;
-            $this->frame->addComponent($this->items[$x]);
-            $x++;
-        }
+        $this->values = array();
+        $this->addItems($items);
         $this->addComponent($this->frame);
+        $this->setSelected($selectedIndex);
+    }
+
+    function addItems($items) {
+        $x = 0;
+        $this->values = array();
+        $this->items = array();
+        foreach ($items as $item) {
+            $this->addEntry($item);
+        }
+    }
+
+    function addEntry($item) {
+        $x = count($this->items);
+        $obj = new \ManiaLib\Gui\Elements\Label($this->sizeX);
+        $obj->setText($item);
+        $obj->setAlign("left", "center");
+        $obj->setStyle("TextValueMedium");
+        $obj->setScriptEvents(true);
+        $obj->setTextSize(1);
+        $obj->setFocusAreaColor1('000');
+        $obj->setFocusAreaColor2('fff');
+        $obj->setId($this->name . $x);
+        $this->items[$x] = $obj;
+        $this->frame->addComponent($this->items[$x]);
+        $this->values[$x] = $item;
+        $x++;
     }
 
     function getScriptDeclares($dropdownIndex) {

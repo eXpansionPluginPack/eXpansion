@@ -16,7 +16,8 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager\Structures;
 class MatchStatus extends \DedicatedApi\Structures\AbstractStructure {
 
     const VOTE_NONE = 0;
-    const VOTE_READY = 1;
+    const VOTE_READY = 2;
+    const VOTE_SELECTMATCH = 4;
 
     public $isMatchActive = false;
     public $isMatchRunning = false;

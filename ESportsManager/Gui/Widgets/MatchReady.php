@@ -99,6 +99,9 @@ class MatchReady extends \ManiaLive\Gui\Window {
 
         $x = 0;
         foreach (ESportsManager::$playerStatuses as $login => $player) {
+            if ($player === null)
+                continue;
+
             if ($this->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
                 if ($player->player->teamId == 0) {
                     $this->frame_team_blue->addComponent(new PlayerStatusItem($x, $player, $sizeX));
