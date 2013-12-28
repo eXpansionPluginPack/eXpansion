@@ -94,21 +94,21 @@ class MatchReady extends \ManiaLive\Gui\Window {
 
         $this->btn_play->setAlign("center");
         $this->addComponent($this->btn_play);
+        if ($this->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+            $this->btn_joinBlue = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+            $this->btn_joinBlue->setAction(self::$actions['joinTeam0']);
+            $this->btn_joinBlue->setText(__("Join Blue", $login));
+            $this->btn_joinBlue->setAlign("center");
+            $this->btn_joinBlue->colorize("00d");
+            $this->addComponent($this->btn_joinBlue);
 
-        $this->btn_joinBlue = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-        $this->btn_joinBlue->setAction(self::$actions['joinTeam0']);
-        $this->btn_joinBlue->setText(__("Join Blue", $login));
-        $this->btn_joinBlue->setAlign("center");
-        $this->btn_joinBlue->colorize("00d");
-        $this->addComponent($this->btn_joinBlue);
-
-        $this->btn_joinRed = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-        $this->btn_joinRed->setAction(self::$actions['joinTeam1']);
-        $this->btn_joinRed->setText(__("Join Red", $login));
-        $this->btn_joinRed->setAlign("center");
-        $this->btn_joinRed->colorize("d00");
-        $this->addComponent($this->btn_joinRed);
-
+            $this->btn_joinRed = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+            $this->btn_joinRed->setAction(self::$actions['joinTeam1']);
+            $this->btn_joinRed->setText(__("Join Red", $login));
+            $this->btn_joinRed->setAlign("center");
+            $this->btn_joinRed->colorize("d00");
+            $this->addComponent($this->btn_joinRed);
+        }
         $this->setAlign("center", "center");
     }
 
