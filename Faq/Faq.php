@@ -24,8 +24,6 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 }
             }
         }
-
-        print_r(self::$availableLanguages);
     }
 
     public function onPlayerConnect($login, $isSpectator) {
