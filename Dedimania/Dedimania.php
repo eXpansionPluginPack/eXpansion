@@ -34,6 +34,9 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     /* @var integer $recordCount */
     private $recordCount = 30;
 
+    /* @var bool $warmup */
+    private $wasWarmup = false;
+
     public function exp_onInit() {
         $this->setVersion(0.1);
         $this->config = Config::getInstance();
@@ -78,6 +81,10 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 
     public function onPlayerDisconnect($login, $reason = null) {
         $this->dedimania->playerDisconnect($login);
+    }
+
+    public function onBeginRound() {
+        $this->wasWarmup = $this->connection->getWarmUp();
     }
 
     public function onBeginMatch() {
@@ -280,7 +287,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
      * @param type $restartMap
      */
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
-// $this->dedimania->updateServerPlayers($this->storage->currentMap); // optional
+        // $this->dedimania->updateServerPlayers($this->storage->currentMap); // optional
     }
 
     /**
@@ -290,6 +297,10 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
      * 
      */
     public function onEndMatch($rankings, $winnerTeamOrMap) {
+        if ($this->wasWarmup) {
+            $this->console("[Dedimania] the last round was warmup, deditimes not send for warmup!");
+            return;
+        }
         $this->rankings = $rankings;
 
         try {
@@ -452,5 +463,4 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     }
 
 }
-
 ?>

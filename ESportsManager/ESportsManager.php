@@ -123,6 +123,9 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
         self::$nextMatchSettings = null;
+        if ($warmUp) {
+            self::$matchStatus->warmUp = true;
+        }
     }
 
     public function onManualFlowControlTransition($transition) {
@@ -133,10 +136,14 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         echo $transition . "\n";
         switch ($transition) {
             case "Play -> Podium":
-                if (self::$nextMatchSettings === null) {
+                if (self::$matchStatus->warmUp == true) {
+                    self::$matchStatus->warmUp = false;
+                    $this->doContinue(null, true);
+                } elseif (self::$nextMatchSettings === null) {
                     self::$matchStatus->voteRunning = MatchStatus::VOTE_SELECTMATCH;
                     $this->sendSelectMatchWindow();
                 } else {
+                    self::$matchStatus->warmUp = false;
                     $this->setNextMatchParameters();
                     $this->doContinue(null, false);
                 }
@@ -147,7 +154,9 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 break;
             // on map start
             case "Synchro -> Play":
-                if (self::$matchStatus->isAllPlayersReady == false) {
+                if (self::$matchStatus->warmUp == true) {
+                    $this->doContinue(null, true);
+                } elseif (self::$matchStatus->isAllPlayersReady == false) {
                     $this->generatePlayerStatuses();
                     $this->matchAskReady(null);
                 } else {
@@ -319,6 +328,16 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onPlayerConnect($login, $isSpectator) {
         $this->checkPlayerStatuses();
+        if (self::$matchStatus->voteRunning) {
+            switch (self::$matchStatus->voteRunning) {
+                case MatchStatus::VOTE_READY:
+                    $this->showReadyWidget($login);
+                    break;
+                case MatchStatus::VOTE_SELECTMATCH:
+                    $this->sendSelectMatchWindow($login);
+                    break;
+            }
+        }
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason) {

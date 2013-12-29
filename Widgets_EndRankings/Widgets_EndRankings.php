@@ -4,6 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_EndRankings;
 
 class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
+    private $wasWarmup = false;
+
     function exp_onInit() {
         //Important for all eXpansion plugins.
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -38,7 +40,13 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         Gui\Widgets\RanksPanel::EraseAll();
     }
 
+    public function onBeginRound() {
+        $this->wasWarmup = $this->connection->getWarmUp();
+    }
+
     public function onEndMatch($rankings, $winnerTeamOrMap) {
+        if ($this->wasWarmup)
+            return;
         $this->displayWidget();
     }
 

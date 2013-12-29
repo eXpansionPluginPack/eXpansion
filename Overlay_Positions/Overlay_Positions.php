@@ -14,6 +14,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $update = false;
     private $retiredPlayers = array();
     private $isPodium = false;
+    private $wasWarmup = false;
 
     function exp_onInit() {
         $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -44,6 +45,9 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
+        if ($this->wasWarmup)
+            return;
+
         $this->isPodium = true;
         $this->update = false;
         $this->retiredPlayers = array();
@@ -87,6 +91,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onBeginRound() {
         $this->retiredPlayers = array();
+        $this->wasWarmup = $this->connection->getWarmUp();
     }
 
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {

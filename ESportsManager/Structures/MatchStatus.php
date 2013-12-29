@@ -22,6 +22,7 @@ class MatchStatus extends \DedicatedApi\Structures\AbstractStructure {
     public $isMatchActive = false;
     public $isMatchRunning = false;
     public $isAllPlayersReady = false;
+    public $warmUp = false;
     public $voteRunning = self::VOTE_NONE;
 
 }

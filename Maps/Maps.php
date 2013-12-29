@@ -31,6 +31,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_errDwld;
     private $msg_errMxId;
     private $msg_mapAdd;
+    private $wasWarmup = false;
 
     public function exp_onInit() {
 
@@ -268,8 +269,13 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    public function onEndMatch($rankings, $winnerTeamOrMap) {
+    public function onBeginRound() {
+        $this->wasWarmup = $this->connection->getWarmUp();
+    }
 
+    public function onEndMatch($rankings, $winnerTeamOrMap) {
+        if ($this->wasWarmup)
+            return;
         $this->atPodium = true;
 
         if (count($this->queue) > 0) {
@@ -598,7 +604,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    function dropQueue($login, $map) { 
+    function dropQueue($login, $map) {
         $i = 0;
         foreach ($this->queue as $queue) {
             if ($queue->map->uId == $map->uId) {
@@ -770,7 +776,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->exp_chatSendServerMessage($this->msg_errMxId, $login);
             }
         }
-    } 
+    }
+
 }
 
 ?>
