@@ -246,6 +246,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if (!self::$matchStatus->isMatchRunning) {
                 self::$matchStatus->isMatchRunning = true;
             }
+            self::$matchStatus->voteRunning = MatchStatus::VOTE_NONE;
         }
         Gui\Windows\HaltMatch::EraseAll();
         Gui\Widgets\MatchReady::EraseAll();

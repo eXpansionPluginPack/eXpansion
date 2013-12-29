@@ -42,7 +42,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
             $color = "f00";
         }
 
-        if ($player->hasRetired)
+        if ($player->hasRetired && !$player->isFinished)
             $color = '999';
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
@@ -72,7 +72,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $this->label_time = new \ManiaLib\Gui\Elements\Label(16, 4);
         $this->label_time->setAlign('left', 'center');
         $time = \ManiaLive\Utilities\Time::fromTM($player->time);
-        if ($player->hasRetired)
+        if ($player->hasRetired && !$player->isFinished)
             $time = "";
         if (substr($time, 0, 3) === "0:0") {
             $time = substr($time, 3);
@@ -99,7 +99,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $diff = "+" . $diff;
         if ($player->deltaCpCountTop1 > 0)
             $diff = "+" . $player->deltaCpCountTop1 . "cp";
-        if ($player->hasRetired)
+        if ($player->hasRetired && !$player->isFinished)
             $diff = "Out";
         if ($player->deltaTimeTop1 == -1)
             $diff = "Err";

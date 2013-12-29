@@ -331,6 +331,7 @@ EOT;
     public function onPlayerInfoChanged($playerInfo) {
         $this->update = true;
         $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+
         if (!array_key_exists($player->login, $this->expPlayers)) {
             $login = $player->login;
             $pla = $this->storage->getPlayerObject($player->login);
@@ -348,6 +349,7 @@ EOT;
             $this->expPlayers[$login]->position = -1;
             $this->expPlayers[$login]->time = -1;
             $this->expPlayers[$login]->curCpIndex = -1;
+            $this->expPlayers[$login]->isFinished = false;
             // in case player is joining to match in round, he needs to be marked as waiting
             if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK)
                 $this->expPlayers[$login]->isWaiting = true;
@@ -395,6 +397,7 @@ EOT;
             $this->expPlayers[$login]->time = -1;
             $this->expPlayers[$login]->curCpIndex = -1;
             $this->expPlayers[$login]->isWaiting = false;
+            $this->expPlayers[$login]->isFinished = false;
         }
 
 
@@ -431,6 +434,7 @@ EOT;
         if ($timeOrScore > 0) {
             if (array_key_exists($login, $this->expPlayers)) {
                 $this->expPlayers[$login]->finalTime = $timeOrScore;
+                $this->expPlayers[$login]->isFinished = true;
                 if ($this->storage->gameInfos->gameMode !== \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
                     self::$roundFinishOrder[] = $login;
                 }
@@ -652,4 +656,5 @@ EOT;
     }
 
 }
+
 ?>

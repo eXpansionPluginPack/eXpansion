@@ -12,7 +12,6 @@ use ManiaLive\Utilities\Console;
 class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     public static $mainPlugin;
-    private $availableLanguage = array();
     private $userLanguage = "en";
     protected $elements = array();
     protected $frame;
@@ -32,7 +31,7 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     public function setLanguage($language) {
         $this->userLanguage = "en";
-        if (in_array($language, $this->availableLanguage))
+        if (in_array($language, \ManiaLivePlugins\eXpansion\Faq\Faq::$availableLanguages))
             $this->userLanguage = $language;
     }
 

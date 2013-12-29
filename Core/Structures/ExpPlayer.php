@@ -48,6 +48,7 @@ class ExpPlayer extends \DedicatedApi\Structures\Player {
 
     /** @var bool $isWaiting true if player is coming from spectator and waiting for going playground */
     public $isWaiting = false;
+    public $isFinished = false;
 
     static public function fromArray($array) {
         $object = parent::fromArray($array);
