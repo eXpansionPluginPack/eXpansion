@@ -84,6 +84,11 @@ class MxMap extends \ManiaLive\Gui\Control {
         $info->setText($map->styleName);
         $this->frame->addComponent($info);
 
+        $info = new \ManiaLib\Gui\Elements\Label(16, 4);
+        $info->setAlign('left', 'center');
+        $info->setText($map->difficultyName);
+        $this->frame->addComponent($info);
+
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(4, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
