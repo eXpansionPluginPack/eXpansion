@@ -302,7 +302,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
         }
 
-        $access->httpGet($query, Array($this, "xVote"), array($login, $mxId), "Manialive/eXpansion MXapi [search] ver 0.1", "application/json");
+        $this->dataAccess->httpGet($query, Array($this, "xVote"), array($login, $mxId), "Manialive/eXpansion MXapi [search] ver 0.1", "application/json");
     }
 
     function xVote($data, $code, $login, $mxId) {

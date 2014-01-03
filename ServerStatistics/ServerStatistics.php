@@ -9,9 +9,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     private $startTime;
     private $ellapsed = 0;
     public $nbPlayerMax = 0;
-    public $nbPlayer = 0;
     public $nbSpecMax = 0;
-    public $nbSpec = 0;
     private $players = array();
     private $spectators = array();
 
@@ -103,18 +101,16 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $this->nbPlayer = 0;
         foreach ($this->storage->players as $player) {
             if ($player->isConnected) {
-                $this->nbPlayer++;
-                $this->players[$player->login] = true;
+                $this->players[$player->login] = $player->login;
             }
         }
         foreach ($this->storage->spectators as $player) {
             if ($player->isConnected) {
-                $this->nbSpec++;
-                $this->spectators[$player->login] = true;
+                $this->spectators[$player->login] = $player->login;
             }
         }
-        $this->nbSpecMax = $this->nbSpec;
-        $this->nbPlayerMax = $this->nbPlayer;
+        $this->nbSpecMax = sizeof($this->spectators);
+        $this->nbPlayerMax = sizeof($this->players);
     }
 
     public function onTick() {
@@ -137,8 +133,9 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
           ' . $this->db->quote(memory_get_usage()) . ',
           ' . $this->db->quote(time()) . '
           )';
-            $this->nbPlayerMax = $this->nbPlayer;
-            $this->nbSpecMax = $this->nbSpec;
+
+            $this->nbPlayerMax = sizeof($this->players);
+            $this->nbSpecMax = sizeof($this->spectators);
 
             $this->db->query($q);
         }
@@ -147,49 +144,60 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-        parent::onPlayerConnect($login, $isSpectator);
-
         if ($isSpectator) {
-            $this->nbSpec++;
-            if ($this->nbSpec > $this->nbSpecMax)
-                $this->nbSpecMax = $this->nbSpec;
+            $this->spectators[$login] = $login;
+            if (sizeof($this->spectators) > $this->nbSpecMax)
+                $this->nbSpecMax = sizeof($this->spectators);
         }
         else {
-            $this->nbPlayer++;
-            if ($this->nbPlayer > $this->nbPlayerMax)
-                $this->nbPlayerMax = $this->nbPlayer;
+            $this->players[$login] = $login;
+            if (sizeof($this->players) > $this->nbPlayerMax)
+                $this->nbPlayerMax = sizeof($this->players);
         }
     }
 
-    public function onPlayerDisconnect($login, $disconnectionReason) {
-        $player = $this->storage->getPlayerObject($login);
-
-        if ($player->isSpectator)
-            $this->nbSpec--;
-        else
-            $this->nbPlayer--;
+    public function onPlayerDisconnect($login, $disconnectionReason = null) {
+        $this->removePlayer($login);
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
-        parent::onBeginMap($map, $warmUp, $matchContinuation);
 
-        $this->nbPlayer = 0;
+        $this->players = array();
         foreach ($this->storage->players as $player) {
             if ($player->isConnected) {
                 $this->nbPlayer++;
-                $this->players[$player->login] = true;
+                $this->players[$player->login] = $player->login;
             }
         }
 
-        $this->nbSpec = 0;
+        $this->spectators = array();
         foreach ($this->storage->spectators as $player) {
             if ($player->isConnected) {
-                $this->nbSpec++;
-                $this->spectators[$player->login] = true;
+                $this->spectators[$player->login] = $player->login;
             }
         }
-        $this->nbSpecMax = $this->nbSpec;
-        $this->nbPlayerMax = $this->nbPlayer;
+        $this->nbPlayerMax = sizeof($this->players);
+        $this->nbSpecMax = sizeof($this->spectators);
+    }
+
+    private function removePlayer($login) {
+        if (array_key_exists($login, $this->spectators))
+            unset($this->spectators[$login]);
+        if (array_key_exists($login, $this->players))
+            unset($this->players[$login]);
+    }
+
+    public function onPlayerInfoChanged($playerInfo) {
+        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+        $login = $player->login;
+
+        $this->removePlayer($player->login);
+
+        if ($player->pureSpectator) {
+            $this->spectators[$login] = $login;
+        } else {
+            $this->players[$login] = $login;
+        }
     }
 
     public function onOliverde8HudMenuReady($menu) {
