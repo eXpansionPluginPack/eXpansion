@@ -208,6 +208,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function onPlayerConnect($login, $isSpectator) {
+        $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\CurrentMapWidget::Create($login);
+        $info->setPosition(153, 80);
+        $info->setMap($this->storage->currentMap);
+        $info->show();
+        
         if ($this->config->showNextMapWidget) {
             $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
             $info->setPosition(136, 74);
@@ -276,6 +281,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onEndMatch($rankings, $winnerTeamOrMap) {
         if ($this->wasWarmup)
             return;
+        
+        Gui\Widgets\CurrentMapWidget::EraseAll();
+        
         $this->atPodium = true;
 
         if (count($this->queue) > 0) {
