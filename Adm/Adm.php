@@ -83,7 +83,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["style"] = "Icons128x128_1";
         $button["substyle"] = "Options";
         $button["plugin"] = $this;
-        $button["function"] = "serverOptions";
+        $button["function"] = "serverControlMain";
         $menu->addButton($parent, "Server Window", $button);
 
         $parent = $menu->findButton(array('admin', 'Game Options'));

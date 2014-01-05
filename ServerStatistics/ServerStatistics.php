@@ -62,11 +62,13 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public function exp_onLoad() {
         parent::exp_onLoad();
         $this->enableDedicatedEvents();
+        Gui\Windows\StatsWindow::$mainPlugin = $this;
     }
 
     public function exp_onReady() {
         parent::exp_onReady();
         $this->enableTickerEvent();
+        $this->registerChatCommand("stat", "showStats", 0, true);
         try {
             $this->enableDatabase();
         } catch (\Exception $e) {
@@ -114,11 +116,10 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     public function onTick() {
-        parent::onTick();
 
         if ($this->ellapsed % 120 == 0) {
             $memory = $this->metrics->getFreeMemory();
-            $q = 'INSERT INTO `exp_server_stats` (`server_login`, `server_gamemode`, `server_nbPlayers`, server_nbSpec
+            $q = 'INSERT INTO `exp_server_stats` (`server_login`, `server_gamemode`, `server_nbPlayers`, `server_nbSpec`
           ,`server_mlRunTime`, `server_upTime`, `server_load`, `server_ramTotal`, `server_ramFree`
           , `server_phpRamUsage`, `server_updateDate` )
           VALUES(' . $this->db->quote($this->storage->serverLogin) . ',
@@ -154,6 +155,61 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             if (sizeof($this->players) > $this->nbPlayerMax)
                 $this->nbPlayerMax = sizeof($this->players);
         }
+    }
+
+    public function showStats($login) {
+        $win = Gui\Windows\StatsWindow::Create($login);
+        $win->setTitle(__("Statistics", $login));
+        $win->setSize(90, 30);
+        $win->show($login);
+    }
+
+    public function showPlayers($login) {
+        $win = Gui\Windows\PlotterWindow::Create($login);
+        $win->setTitle(__("Players", $login));
+        $win->setSize(160, 100);
+        $datas = $this->db->execute("SELECT `server_nbPlayers` as players, server_nbSpec as specs FROM exp_server_stats ORDER BY `server_updateDate` DESC LIMIT 0,100")->fetchArrayOfObject();
+        $win->setLineColor(0, "00f");
+        $win->setLineColor(1, "f00");
+        $out = array();
+        foreach ($datas as $data) {
+            $out[0][] = $data->players;
+            $out[1][] = $data->specs;
+        }
+        $win->setLimit(100, $this->storage->server->currentMaxPlayers);
+        $win->setDatas($out);
+        $win->show($login);
+    }
+
+    public function showMemory($login) {
+        $win = Gui\Windows\PlotterWindow::Create($login);
+        $win->setTitle(__("Memory usage", $login));
+        $win->setSize(160, 100);
+        $datas = $this->db->execute("SELECT `server_ramTotal` as total, `server_ramFree` as free, `server_phpRamUsage` as phpram FROM exp_server_stats ORDER BY `server_updateDate` DESC LIMIT 0,100")->fetchArrayOfObject();
+        $win->setLineColor(0, "f90");
+        $win->setLineColor(1, "f00");
+        $out = array();
+        foreach ($datas as $data) {
+            $out[0][] = ( ($data->total - $data->free) / $data->total) * 100;
+            $out[1][] = ( $data->phpram / $data->total) * 100;
+        }
+        $win->setDatas($out);
+        $win->show($login);
+    }
+
+    public function showCpu($login) {
+        $win = Gui\Windows\PlotterWindow::Create($login);
+        $win->setTitle(__("Cpu usage", $login));
+        $win->setSize(160, 100);
+        $datas = $this->db->execute("SELECT `server_load` as cpuload FROM exp_server_stats ORDER BY `server_updateDate` DESC LIMIT 0,100")->fetchArrayOfObject();
+        $out = array();
+        $win->setLineColor(0, "f00");
+        foreach ($datas as $data) {
+            $out[0][] = $data->cpuload;
+        }
+
+        $win->setDatas($out);
+        $win->show($login);
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason = null) {
