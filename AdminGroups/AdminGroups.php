@@ -30,10 +30,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         return self::$instance;
     }
 
-    /*
+    /**
      * List of all the admins(of any group)
+     * @var Admin[]
      */
-
     static private $admins = array();
 
     /**
@@ -299,7 +299,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 }
             }
         } catch (\Exception $e) {
-           $this->console("Error while loading admins from file: " . $e->getMessage());
+            $this->console("Error while loading admins from file: " . $e->getMessage());
         }
 
 
@@ -494,6 +494,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    /**
+     * 
+     * @param string $login
+     * @return Admin
+     */
     public static function getAdmin($login) {
         return isset(self::$admins[$login]) ? self::$admins[$login] : null;
     }
@@ -655,11 +660,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             preg_match_all('/(?!\\\\)"((?:\\\\"|[^"])+)"?|([^\s]+)/', $params, $matches);
             $args = array_map(
                     function($str, $word) {
-                $temp = str_replace('\"', '"', $str != '' ? $str : $word);
-                if ($temp == '""')
-                    return "";
-                return $temp;
-            }, $matches[1], $matches[2]);
+                        $temp = str_replace('\"', '"', $str != '' ? $str : $word);
+                        if ($temp == '""')
+                            return "";
+                        return $temp;
+                    }, $matches[1], $matches[2]);
 
             //Lets see if the command is correct
             $arg = strtolower(array_shift($args));
@@ -760,7 +765,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->exp_chatSendServerMessage($this->msg_removeMlAdmin, $login, array($admin->getLogin()));
         } else if (isset(self::$admins[$login]) && $group->removeAdmin($admin->getLogin())) {
             $this->reLoadAdmins();
-            
+
             foreach (self::$groupList as $id => $groupp) {
                 if ($groupp->getGroupName() == $group->getGroupName()) {
                     $groupp->removeAdmin($admin->getLogin());
@@ -828,7 +833,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     foreach ($newPermissions as $key => $val) {
                         $groupp->addPermission($key, $val);
                     }
-                        }
+                }
             }
 
             $this->saveFile();
