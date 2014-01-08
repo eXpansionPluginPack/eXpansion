@@ -47,7 +47,13 @@ class Core extends types\ExpPlugin {
 
     /** @var bool $update flag to force calculate player positions */
     private $update = true;
+
+    /** @var bool $enableCalculation marks if player positions should be calculated */
+    private $enableCalculation = true;
     private $loopTimer = 0;
+
+    /** @var Config */
+    private $config;
 
     /**
      * 
@@ -144,6 +150,7 @@ EOT;
      * 
      */
     public function exp_onReady() {
+        $this->config = Config::getInstance();
         $this->registerChatCommand("info", "showInfo", 0, true);
         $this->registerChatCommand("serverlogin", "serverlogin", 0, true);
         $this->registerChatCommand("test", "test");
@@ -154,7 +161,12 @@ EOT;
         $this->resetExpPlayers(true);
         $this->update = true;
         $this->loopTimer = round(microtime(true));
-        $this->enableApplicationEvents(\ManiaLive\Application\Event::ON_POST_LOOP);
+
+        if ($this->config->enableRanksCalc == true) {
+            $this->enableCalculation = false;
+        } else {
+            $this->enableApplicationEvents(\ManiaLive\Application\Event::ON_POST_LOOP);
+        }
     }
 
     /**
@@ -284,7 +296,9 @@ EOT;
     }
 
     public function onPostLoop() {
-
+        // check for update conditions
+        if ($this->enableCalculation == false)
+            return;
         if ($this->storage->serverStatus->code == 4 && $this->update && (microtime(true) - $this->loopTimer) > 0.35) {
             $this->update = false;
             $this->loopTimer = microtime(true);
@@ -302,6 +316,9 @@ EOT;
     }
 
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
+        if ($this->enableCalculation == false)
+            return;
+
         $this->update = true;
         if (!array_key_exists($login, $this->expPlayers)) {
             $player = $this->storage->getPlayerObject($login);
@@ -329,6 +346,9 @@ EOT;
     }
 
     public function onPlayerInfoChanged($playerInfo) {
+        if ($this->enableCalculation == false)
+            return;
+                
         $this->update = true;
         $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
 
@@ -410,7 +430,10 @@ EOT;
     }
 
     public function onPlayerFinish($playerUid, $login, $timeOrScore) {
-// handle onPlayerfinish @ start from server.
+        if ($this->enableCalculation == false)
+            return;
+
+// handle onPlayerfinish @ start from server. 
         $this->update = true;
         if ($playerUid == 0)
             return;
