@@ -2,7 +2,7 @@ This command expect at least one parameter
 Dieser Aufruf benötigt mindestens einen Parameter
 
 #admin_error#You need to be an Admin to use that command
-#admin_error#Diese Anweisung kann nur von Administratoren verwendet werden
+#admin_error#Dieser Befehl kann nur von Administratoren verwendet werden
 
 #admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
 #admin_error#Dies ist kein Admin-Befehl. Verwende #variable#/admin help #admin_error# um alle Befehle zu sehen
@@ -11,10 +11,10 @@ Dieser Aufruf benötigt mindestens einen Parameter
 #admin_error#Ungenügende Berechtigungen, um diesen Admin-Befehl zu verwenden.
 
 #admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first
-#admin_error#Der Spieler #variable#%1$s #admin_error#befindet sich bereits in einer Grupper #admin_error#%2$s. #admin_error#Den Spieler bitte vorher aus der anderen Gruppe entfernen
+#admin_error#Der Spieler #variable#%1$s #admin_error#befindet sich bereits in einer Gruppe #admin_error#%2$s. #admin_error#Den Spieler bitte vorher aus der anderen Gruppe entfernen
 
 #admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
-#admin_action#Der Spieler #variable# %1$s #admin_action#wurde zur Gruppe der Administratoren hinzugefügt #variable#%2$s
+#admin_action#Der Spieler #variable# %1$s #admin_action#wurde zu folgender Gruppe hinzugefügt: #variable#%2$s
 
 #admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
 #admin_error#Du bist #variable#%1$s #admin_error#Du kannst Dich nicht selber aus einer Gruppe entfernen
@@ -53,13 +53,13 @@ Group Name
 Gruppen-Name
 
 Nb Players
-Anzahl Spieler
+Anz Spieler
 
 Player List
 Spieler Liste
 
 Change Permissions
-Berechtigungen ändern
+Rechte ändern
 
 Delete Group
 Gruppe löschen
@@ -89,29 +89,29 @@ Login :
 Login : 
 
 #admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
-#translate# #admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
+#admin_error#Dieser Admin-Befehl existiert nicht. Verwende #variable#/admin help #admin_error#um eine Liste aller verfügbaren Befehlen zu sehen
 
 #admin_error#You don't have the permission to use that admin command
-#translate# #admin_error#You don't have the permission to use that admin command
+#admin_error#Du hast keine Berechtigung diesen Admin-Befehl zu nutzen
 
 #admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
-#translate# #admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
+#admin_error#Du bist #variable#%1$s #admin_error#Du kannst dich nicht selber aus einer Gruppe entfernen
 
 #admin_error#Player #variable#%1$s #admin_action#isn't in the group
-#translate# #admin_error#Player #variable#%1$s #admin_action#isn't in the group
+#admin_error#Spieler #variable#%1$s #admin_action#ist nicht in der Gruppe
 
 #admin_error#Master Admins has all rights. You can't change that!
-#translate# #admin_error#Master Admins has all rights. You can't change that!
+#admin_error#Master Admins haben alle Rechte, das kannst du nicht ändern!
 
 #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
-#translate# #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
+#admin_error#Master Admin #variable#%1$s wurde in der config.ini eingestellt und nicht durch eXpansion. Kann ihn nicht entfernen
 
 Inherits
-#translate# Inherits
+Erbt Rechte von
 
 Admin Group Inherits - %1$s
-#translate# Admin Group Inherits - %1$s
+Admin Gruppe erbt - %1$s
 
 Permission_
-#translate# Permission_
+Permission_
 

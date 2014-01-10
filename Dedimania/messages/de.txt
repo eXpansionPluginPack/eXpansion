@@ -1,11 +1,11 @@
 %1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  #rank#%2$s: #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)
-%1$s#dedirecord# hat den #rank#%2$s#dedirecord#. Dedimania Rekord bestätigt! #rank#%2$s: #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)
+%1$s#dedirecord# hat den #rank#%2$s#dedirecord#. Dedimania Rekord erreicht! #rank#%2$s: #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)
 
 %1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record! #time#%3$s
 %1$s#dedirecord# hat den #rank#%2$s#dedirecord#. Dedimania Rekord erreicht! #time#%3$s
 
 #dedirecord#Dedimania global ranking limited to top #rank#15#dedirecord# for basic accounts.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..
-#dedirecord#Die globale Dedimania rangliste ist auf Top #rank#15#dedirecord# für einfache Konten eingeschränkt.  $l[http://dedimania.net/tm2stats/?do=donation]Bitte hier klicken $l für mehr Informationen...
+#dedirecord#Die globale Dedimania Rangliste ist auf Top #rank#15#dedirecord# für einfache Konten eingeschränkt.  $l[http://dedimania.net/tm2stats/?do=donation]Bitte hier klicken $l für mehr Informationen...
 
 #dedirecord#Thank You for supporting Dedimania!  Your max record ranking is set at #rank#%s$1#dedirecord#.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..
 #dedirecord#Danke für die Unterstützung von Dedimania!  Dein maximaler Rang ist auf #rank#%s$1#dedirecord# festgesetzt.  $l[http://dedimania.net/tm2stats/?do=donation]Bitte hier klicken $l für mehr Informationen...

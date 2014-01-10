@@ -1,0 +1,11 @@
+Hud positions reset! Please reconnect to server :)
+HUD Positionen zurückgesetzt. Bitte den Server verlassen und wieder verbinden.
+
+Configure HUD
+HUD Einstellen
+
+Apply
+Anwenden
+
+Cancel
+Schließen
