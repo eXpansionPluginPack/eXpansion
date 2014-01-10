@@ -58,7 +58,7 @@ class Core extends types\ExpPlugin {
     /**
      * 
      */
-    function exp_onInit() {
+    function exp_onInit() {        
         $logFile = "manialive-" . $this->storage->serverLogin . ".console.log";
         if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . "logs" . DIRECTORY_SEPARATOR . $logFile)) {
             unlink(__DIR__ . DIRECTORY_SEPARATOR . "logs" . DIRECTORY_SEPARATOR . $logFile);

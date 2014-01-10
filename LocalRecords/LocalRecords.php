@@ -232,7 +232,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     `rank_nbLaps` INT( 3 ) NOT NULL,
                     KEY(`rank_challengeuid` ,  `rank_playerlogin` ,  `rank_nbLaps`)
                 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = MYISAM ;";
-            echo $q;
             $this->db->query($q);
             $this->resetRanks();
         }
@@ -242,7 +241,12 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Records'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
         }
-
+        
+        $time = microtime(true);
+        echo "Reseting Maps ...";
+        $this->resetRanks();
+        echo "Done in : ".(microtime(true) - $time)."\n\n";
+        
         $this->getRanks();
         $this->updateCurrentChallengeRecords();
     }
@@ -1191,18 +1195,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->ranks = array();
         $this->player_ranks = array();
 
-        $q = 'INSERT INTO exp_ranks 
-                SELECT record_playerlogin, 
-                        (SELECT Count(*) FROM exp_records r2
-                            WHERE r1.record_challengeuid = r2.record_challengeuid
-                                AND r1.record_nbLaps = r2.record_nbLaps
-                                AND r2.record_score < r1.record_score
-                                ORDER BY record_score ASC) as rank,
-                        record_challengeuid, record_nbLaps
-                FROM exp_records r1
-                WHERE record_challengeuid IN (' . $this->getUidSqlString() . ')
-                GROUP BY record_playerlogin, record_challengeuid, record_nbLaps';
-        $this->db->query($q);
+        foreach ($this->storage->maps as $map) {
+            $this->updateRanks($map->uId, 1);
+        }
     }
 
     private function updateRanks($challengeId, $nbLaps) {
@@ -1221,7 +1216,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 FROM exp_records r1
                 WHERE record_challengeuid = \'' . $challengeId . '\'
                                 AND record_nbLaps = ' . $nbLaps . '
-                GROUP BY record_playerlogin, record_challengeuid, record_nbLaps';
+                GROUP BY record_playerlogin, record_challengeuid, record_nbLaps
+                ORDER BY record_score ASC
+                LIMIT 0, 100';
         $this->db->query($q);
     }
 
