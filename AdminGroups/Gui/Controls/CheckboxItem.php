@@ -20,12 +20,17 @@ class CheckboxItem extends \ManiaLive\Gui\Control {
         $this->frame->setSize(68, 4);
         $this->frame->addComponent(new ListBackGround($counter, 68, 4));
         $this->frame->addComponent($permission);
-        if($inheritance != null){
+        if ($inheritance != null) {
             $this->frame->addComponent($inheritance);
             $inheritance->setPosX(54);
         }
         $this->addComponent($this->frame);
         $this->setSize(68, 4);
+    }
+
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->erase();
     }
 
     public function destroy() {

@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Chatlog\Gui\Controls;
+
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class Message extends \ManiaLive\Gui\Control {
@@ -10,19 +11,19 @@ class Message extends \ManiaLive\Gui\Control {
     protected $label_login;
     protected $frame;
     private $widths = array();
-    
+
     /**
      * 
      * @param int $indexNumber
      * @param \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message
      * @param int $sizeX
      */
-    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message, $widths ,$sizeX) {
+    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message, $widths, $sizeX) {
         $sizeY = 4;
         $this->widths = $widths;
-        
+
         $totalWidths = Gui::getScaledSize($widths, $sizeX);
-        
+
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
@@ -30,49 +31,54 @@ class Message extends \ManiaLive\Gui\Control {
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
         $this->addComponent($this->frame);
-        
+
         $this->label_time = new \ManiaLib\Gui\Elements\Label($totalWidths[0], 4);
         $this->label_time->setAlign('left', 'center');
         $this->label_time->setText(date("H:i", $message->time));
         $this->label_time->setScale(0.8);
         $this->frame->addComponent($this->label_time);
-        
+
         $this->label_nickname = new \ManiaLib\Gui\Elements\Label($totalWidths[1], 4);
         $this->label_nickname->setAlign('left', 'center');
         $this->label_nickname->setText($message->nickName);
         $this->label_nickname->setScale(0.8);
         $this->frame->addComponent($this->label_nickname);
-     
+
         $this->label_text = new \ManiaLib\Gui\Elements\Label($totalWidths[2], 4);
         $this->label_text->setAlign('left', 'center');
         $this->label_text->setText($message->text);
         $this->label_text->setScale(0.8);
         $this->frame->addComponent($this->label_text);
-        
+
         $this->setSize($sizeX, $sizeY);
     }
 
     protected function onResize($oldX, $oldY) {
         $this->bg->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(-2);
-    
+
         $this->frame->setSize($this->sizeX, $this->sizeY);
-        
+
         $totalWidths = Gui::getScaledSize($this->widths, $this->getSizeX());
         $this->label_time->setSizeX($totalWidths[0]);
         $this->label_nickname->setSizeX($totalWidths[1]);
         $this->label_text->setSizeX($totalWidths[2]);
     }
 
- 
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->erase();
+    }
+
 // manialive 3.1 override to do nothing.
     function destroy() {
         
-        
     }
+
     /*
      * custom function to remove contents.
      */
+
     function erase() {
         $this->frame->clearComponents();
         $this->frame->destroy();

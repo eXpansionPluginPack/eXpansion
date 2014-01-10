@@ -18,8 +18,8 @@ class Song extends \ManiaLive\Gui\Control {
 
     function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\MusicBox\Structures\Song $song, $controller, $sizeX) {
         $sizeY = 4;
-        
-        $this->queueSong = $this->createAction(array($controller, 'queueSong'), $indexNumber+1);
+
+        $this->queueSong = $this->createAction(array($controller, 'queueSong'), $indexNumber + 1);
         $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
@@ -69,7 +69,7 @@ class Song extends \ManiaLive\Gui\Control {
         $this->queueButton->colorize('2a2');
         $this->queueButton->setScale(0.5);
         $this->frame->addComponent($this->queueButton);
-        
+
         $this->addComponent($this->frame);
 
         $this->sizeX = $sizeX;
@@ -83,7 +83,12 @@ class Song extends \ManiaLive\Gui\Control {
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
 
-  // manialive 3.1 override to do nothing.
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->erase();
+    }
+
+    // manialive 3.1 override to do nothing.
     function destroy() {
         
     }
@@ -91,6 +96,7 @@ class Song extends \ManiaLive\Gui\Control {
     /*
      * custom function to remove contents.
      */
+
     function erase() {
         $this->queueButton->destroy();
         $this->clearComponents();

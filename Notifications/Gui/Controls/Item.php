@@ -25,7 +25,12 @@ class Item extends \ManiaLive\Gui\Control {
     protected function onResize($oldX, $oldY) {
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
-    
+
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->destroy();
+    }
+
     public function destroy() {
         parent::destroy();
     }

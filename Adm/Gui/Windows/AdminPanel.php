@@ -199,7 +199,7 @@ class AdminPanel extends \ManiaLive\Gui\Window {
     function onShow() {
         
     }
-
+    
     function destroy() {
         $this->connection = null;
         $this->storage = null;

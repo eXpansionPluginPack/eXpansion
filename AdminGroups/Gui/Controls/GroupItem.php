@@ -15,12 +15,10 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 class GroupItem extends \ManiaLive\Gui\Control {
 
     private $group;
-    
     private $action_changePermissions;
-    private $action_playerList;    
+    private $action_playerList;
     private $action_deleteGroup;
     private $action_inherticances;
-    
     private $plistButton;
     private $permiButton;
     private $deleteButton;
@@ -39,16 +37,16 @@ class GroupItem extends \ManiaLive\Gui\Control {
         $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setSize($sizeX, $sizeY);
         $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        
+
         $this->addComponent(new ListBackGround($indexNumber, $sizeX, $sizeY));
 
-        $gui_name = new \ManiaLib\Gui\Elements\Label(35*(0.8/0.6), 4);
+        $gui_name = new \ManiaLib\Gui\Elements\Label(35 * (0.8 / 0.6), 4);
         $gui_name->setAlign('left', 'center');
         $gui_name->setText($group->getGroupName());
         $gui_name->setScale(0.6);
         $frame->addComponent($gui_name);
 
-        $gui_nbPlayers = new \ManiaLib\Gui\Elements\Label(22*(0.8/0.6), 4);
+        $gui_nbPlayers = new \ManiaLib\Gui\Elements\Label(22 * (0.8 / 0.6), 4);
         $gui_nbPlayers->setAlign('center', 'center');
         $gui_nbPlayers->setText(sizeof($group->getGroupUsers()));
         $gui_nbPlayers->setScale(0.6);
@@ -59,7 +57,7 @@ class GroupItem extends \ManiaLive\Gui\Control {
         $this->plistButton->setText(__(AdminGroups::$txt_playerList, $login));
         $this->plistButton->setScale(0.4);
         $frame->addComponent($this->plistButton);
-        
+
         if (AdminGroups::hasPermission($login, 'group_admin') || (
                 AdminGroups::hasPermission($login, 'own_group') && AdminGroups::getAdmin($login)->getGroup()->getGroupName() == $group->getGroupName())) {
 
@@ -68,15 +66,15 @@ class GroupItem extends \ManiaLive\Gui\Control {
             $this->permiButton->setText(__(AdminGroups::$txt_permissionList, $login));
             $this->permiButton->setScale(0.4);
             $frame->addComponent($this->permiButton);
-            
+
             $this->deleteButton = new MyButton(40, 6);
             $this->deleteButton->setAction($this->action_deleteGroup);
             $this->deleteButton->setText(__(AdminGroups::$txt_deletegroup, $login));
             $this->deleteButton->setScale(0.4);
             $frame->addComponent($this->deleteButton);
         }
-        
-        if (AdminGroups::hasPermission($login, 'group_admin')){
+
+        if (AdminGroups::hasPermission($login, 'group_admin')) {
             $this->InheritButton = new MyButton(30, 6);
             $this->InheritButton->setAction($this->action_inherticances);
             $this->InheritButton->setText(__(AdminGroups::$txt_inherits, $login));
@@ -91,24 +89,30 @@ class GroupItem extends \ManiaLive\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-  // manialive 3.1 override to do nothing.
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->erase();
+    }
+
+    // manialive 3.1 override to do nothing.
     function destroy() {
         
-        
     }
+
     /*
      * custom function to remove contents.
      */
+
     public function erase() {
-        if($this->permiButton != null){
+        if ($this->permiButton != null) {
             $this->permiButton->destroy();
             $this->deleteButton->destroy();
         }
         $this->plistButton->destroy();
-        
-        $this->permiButton=null;
-        $this->plistButton=null;
-        $this->deleteButton=null;
+
+        $this->permiButton = null;
+        $this->plistButton = null;
+        $this->deleteButton = null;
         $this->clearComponents();
 
 

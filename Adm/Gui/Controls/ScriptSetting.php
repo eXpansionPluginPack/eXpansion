@@ -11,7 +11,7 @@ class ScriptSetting extends \ManiaLive\Gui\Control {
     public $checkBox = null;
     public $settingName;
     public $type = null;
-    
+
     /**
      * 
      * @param int $indexNumber
@@ -23,7 +23,7 @@ class ScriptSetting extends \ManiaLive\Gui\Control {
         $sizeY = 4;
         $this->settingName = $settingName;
         $this->type = gettype($value);
-        
+
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
@@ -60,7 +60,7 @@ class ScriptSetting extends \ManiaLive\Gui\Control {
         if (is_bool($value) === true) {
             $this->checkBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4);
             $this->checkBox->setStatus($value);
-        
+
             $this->frame->addComponent($this->checkBox);
         } else {
             $this->inputbox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox($settingName, 20);
@@ -79,9 +79,10 @@ class ScriptSetting extends \ManiaLive\Gui\Control {
         $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
-
-    function onDraw() {
-        
+    
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->destroy();
     }
 
     function destroy() {

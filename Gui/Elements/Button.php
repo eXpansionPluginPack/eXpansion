@@ -6,14 +6,13 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 
 class Button extends \ManiaLive\Gui\Control {
 
-    private $label;
-    private $button;
+    protected $label;
+    protected $button;
+    protected $activeFrame;
+    protected $quad;    
+    private $text;
     private $value;
     private $isActive = false;
-    private $activeFrame;
-    private $color = '$000';
-    private $text;
-    private $quad;
 
     /**
      * Button
@@ -90,17 +89,16 @@ class Button extends \ManiaLive\Gui\Control {
      * @param string $value 4-digit RGBa code
      */
     function colorize($value) {
-     /** @todo enable this when new manialive version is out && problem with maniascript elements are sorted out!  */
-    
+        /** @todo enable this when new manialive version is out && problem with maniascript elements are sorted out!  */
         /*
-        $outval = $value;
-        if (strlen($value) == 4) {
-            $val = substr($value, 3, 1);            
-            $this->quad->setOpacity(floatval(intval($val, 16)/16));
-            $outval = substr($value, 0, 3);
-        }
-        $this->quad->setModulateColor($outval); */
-        
+          $outval = $value;
+          if (strlen($value) == 4) {
+          $val = substr($value, 3, 1);
+          $this->quad->setOpacity(floatval(intval($val, 16)/16));
+          $outval = substr($value, 0, 3);
+          }
+          $this->quad->setModulateColor($outval); */
+
         $this->label->setFocusAreaColor1($value);
     }
 
@@ -118,6 +116,11 @@ class Button extends \ManiaLive\Gui\Control {
 
     function setAction($action) {
         $this->label->setAction($action);
+    }
+
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        parent::destroy();
     }
 
 }

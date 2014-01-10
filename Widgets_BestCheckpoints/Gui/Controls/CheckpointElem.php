@@ -43,6 +43,11 @@ class CheckpointElem extends \ManiaLive\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->destroy();
+    }
+
     public function destroy() {
         try {
             $this->clearComponents();

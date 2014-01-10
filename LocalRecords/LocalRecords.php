@@ -11,6 +11,7 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+
     //This numbers are important do not change. THey are using binarie thinking.
 
     const DEBUG_NONE = 0;     //00000
@@ -27,7 +28,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @var type int
      */
 
-    private $debug = 0;
+    private $debug = self::DEBUG_ALL;
 
     /**
      * List of the records for the current track
@@ -232,7 +233,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     `rank_nbLaps` INT( 3 ) NOT NULL,
                     KEY(`rank_challengeuid` ,  `rank_playerlogin` ,  `rank_nbLaps`)
                 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = MYISAM ;";
-            echo $q;
             $this->db->query($q);
             $this->resetRanks();
         }
@@ -242,9 +242,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Records'), true);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
         }
-
-        $this->getRanks();
-        $this->updateCurrentChallengeRecords();
+        
+        $this->getRanks();        
+        $this->updateCurrentChallengeRecords();        
     }
 
     public function showRecsMenuItem($login) {
@@ -1336,7 +1336,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                             SUM(record_nbFinish) as nbFinish,
                             Count(*) as nbRecords,
                             player_nickname,
-                            player_nicknameStripped,
                             player_updated,
                             player_wins,
                             player_timeplayed,
@@ -1350,7 +1349,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                         AND rank_challengeuid = r.record_challengeuid
                GROUP BY rank_playerlogin,
                             player_nickname,
-                            player_nicknameStripped,
                             player_updated,
                             player_wins,
                             player_timeplayed,

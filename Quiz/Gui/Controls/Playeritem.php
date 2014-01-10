@@ -17,7 +17,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
     private $frame;
     private $points;
     private $isAdmin;
-    
+
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Quiz\Structures\QuizPlayer $player, $controller, $isAdmin, $login, $sizeX) {
 
 
@@ -98,7 +98,12 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->bg->setSize($this->sizeX, $this->sizeY);
     }
 
- // manialive 3.1 override to do nothing.
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->erase();
+    }
+
+    // manialive 3.1 override to do nothing.
     function destroy() {
         
     }
@@ -106,12 +111,13 @@ class Playeritem extends \ManiaLive\Gui\Control {
     /*
      * custom function to remove contents.
      */
+
     function erase() {
         if (is_object($this->addpointButton))
             $this->addpointButton->destroy();
         if (is_object($this->removepointButton))
             $this->removepointButton->destroy();
-        
+
         $this->frame->clearComponents();
         $this->frame->destroy();
         $this->clearComponents();

@@ -121,6 +121,11 @@ class Dropdown extends \ManiaLive\Gui\Control {
         $this->label->setText($this->values[intval($index)]);
     }
 
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->destroy();
+    }
+
 }
 
 ?>

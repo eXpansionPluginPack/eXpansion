@@ -15,9 +15,9 @@ class Inputbox extends \ManiaLive\Gui\Control {
         $config = Config::getInstance();
         $this->sizeX = $sizeX;
         $this->name = $name;
-        
+
         $this->createButton($editable);
-        
+
         $this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
         $this->label->setAlign('left', 'center');
         $this->label->setTextSize(1);
@@ -31,14 +31,14 @@ class Inputbox extends \ManiaLive\Gui\Control {
         $this->label->setSize($this->sizeX, 3);
         $this->label->setPosition(0, 4);
     }
-    
-    protected function createButton($editable){
+
+    protected function createButton($editable) {
         $text = "";
-        if($this->button != null){
-            $this->removeComponent ($this->button);
+        if ($this->button != null) {
+            $this->removeComponent($this->button);
             $text = $this->getText();
         }
-        
+
         if ($editable) {
             $this->button = new \ManiaLib\Gui\Elements\Entry($this->getSizeX(), 6);
             $this->button->setName($this->name);
@@ -62,14 +62,14 @@ class Inputbox extends \ManiaLive\Gui\Control {
         
     }
 
-    public function setEditable($state){
-        if($state && $this->button instanceof \ManiaLib\Gui\Elements\Label){
+    public function setEditable($state) {
+        if ($state && $this->button instanceof \ManiaLib\Gui\Elements\Label) {
             $this->createButton($state);
-        }elseif(!$state && $this->button instanceof \ManiaLib\Gui\Elements\Entry){
+        } elseif (!$state && $this->button instanceof \ManiaLib\Gui\Elements\Entry) {
             $this->createButton($state);
         }
     }
-    
+
     function getLabel() {
         return $this->label->getText();
     }
@@ -99,6 +99,11 @@ class Inputbox extends \ManiaLive\Gui\Control {
 
     function setName($text) {
         $this->button->setName($name);
+    }
+
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        parent::destroy();
     }
 
 }

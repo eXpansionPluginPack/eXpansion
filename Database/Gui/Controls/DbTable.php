@@ -22,7 +22,7 @@ class DbTable extends \ManiaLive\Gui\Control {
     function __construct($indexNumber, $tableName, $sizeX) {
         $sizeY = 4;
         $this->tableName = $tableName;
-        
+
 
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
@@ -68,7 +68,12 @@ class DbTable extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-  // manialive 3.1 override to do nothing.
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->erase();
+    }
+
+    // manialive 3.1 override to do nothing.
     function destroy() {
         
     }
@@ -76,6 +81,7 @@ class DbTable extends \ManiaLive\Gui\Control {
     /*
      * custom function to remove contents.
      */
+
     function erase() {
 
         $this->checkBox->destroy();

@@ -19,7 +19,7 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->label->setPosition(0, 0);
         $this->label->setStyle("TextRaceChat");
         $this->label->setScale(0.75);
-        $this->label->setText($index+1);
+        $this->label->setText($index + 1);
         $this->label->setTextColor('fff');
         $this->addComponent($this->label);
 
@@ -32,7 +32,7 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->label->setTextColor('ff0');
         $this->addComponent($this->label);
 
-        
+
 
         $this->nick = new \ManiaLib\Gui\Elements\Label(30, 4);
         $this->nick->setPosition(8, 0);
@@ -51,6 +51,11 @@ class RankItem extends \ManiaLive\Gui\Control {
 
     function onDraw() {
         
+    }
+
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->destroy();
     }
 
     public function destroy() {

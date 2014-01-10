@@ -34,6 +34,10 @@ class ListBackGround extends \ManiaLive\Gui\Control {
         $this->bg->setSize($this->getSizeX()+(float)$this->config->style_list_sizeXOffset, $this->getSizeY()+(float)$this->config->style_list_sizeYOffset);
     }
     
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->destroy();
+    }
     public function destroy() {
         $this->config = null;
     }

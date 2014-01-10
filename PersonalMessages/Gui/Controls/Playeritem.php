@@ -15,11 +15,11 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
     function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller) {
         $sizeX = 120;
-        $sizeY = 4;        
+        $sizeY = 4;
         $this->player = $player;
 
         $this->sendAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'sendPm'), $player->login);
-        
+
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
@@ -58,7 +58,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->sendButton->setAction($this->sendAction);
         $this->sendButton->setScale(0.6);
         $this->sendButton->setText("Send");
-        
+
         $this->frame->addComponent($this->sendButton);
 
         $this->addComponent($this->frame);
@@ -75,7 +75,13 @@ class Playeritem extends \ManiaLive\Gui\Control {
     function onDraw() {
         
     }
-// manialive 3.1 override to do nothing.
+
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->erase();
+    }
+
+    // manialive 3.1 override to do nothing.
     function destroy() {
         
     }
@@ -83,10 +89,11 @@ class Playeritem extends \ManiaLive\Gui\Control {
     /*
      * custom function to remove contents.
      */
+
     function erase() {
-    parent::destroy();    
+        parent::destroy();
     }
-    
+
     function __destruct() {
         //       \ManiaLive\Gui\ActionHandler::getInstance()->removeAction($this->chooseNextMap);
     }

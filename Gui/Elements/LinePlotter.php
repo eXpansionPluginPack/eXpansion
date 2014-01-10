@@ -156,6 +156,12 @@ while (index < max) {
 ';
         return $val;
     }
+
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        parent::destroy();
+    }
+
 }
 
 ?>

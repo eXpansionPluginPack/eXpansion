@@ -27,7 +27,7 @@ class MxInfo extends \ManiaLive\Gui\Control {
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
-     
+
         $this->addComponent($this->frame);
 
         $info = new \ManiaLib\Gui\Elements\Label(120, 4);
@@ -37,7 +37,7 @@ class MxInfo extends \ManiaLive\Gui\Control {
         $info->setScriptEvents(true);
         $this->frame->addComponent($info);
 
-        
+
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;
     }
@@ -47,6 +47,11 @@ class MxInfo extends \ManiaLive\Gui\Control {
         $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY + 1);
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
+    }
+
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->erase();
     }
 
     // override destroy method not to destroy its contents on manialive 3.1 
