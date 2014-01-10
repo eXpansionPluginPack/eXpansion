@@ -62,13 +62,7 @@ class MxInfo extends \ManiaLive\Gui\Control {
     /**
      * custom function to destroy contents when needed.
      */
-    function erase() {
-        if (is_object($this->queueButton)) {
-            $this->queueButton->destroy();
-        }
-        if ($this->isAdmin) {
-            $this->addButton->destroy();
-        }
+    function erase() {        
         $this->frame->clearComponents();
         $this->frame->destroy();
         $this->clearComponents();
