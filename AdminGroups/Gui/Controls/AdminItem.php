@@ -61,10 +61,7 @@ class AdminItem extends \ManiaLive\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
+    
 
     // manialive 3.1 override to do nothing.
     function destroy() {

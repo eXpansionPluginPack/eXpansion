@@ -68,11 +68,6 @@ class DbTable extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
-
     // manialive 3.1 override to do nothing.
     function destroy() {
         
@@ -83,9 +78,7 @@ class DbTable extends \ManiaLive\Gui\Control {
      */
 
     function erase() {
-
         $this->checkBox->destroy();
-
         $this->frame->clearComponents();
         $this->frame->destroy();
         $this->clearComponents();

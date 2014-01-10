@@ -65,12 +65,7 @@ class Message extends \ManiaLive\Gui\Control {
         $this->label_text->setSizeX($totalWidths[2]);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
-
-// manialive 3.1 override to do nothing.
+    // manialive 3.1 override to do nothing.
     function destroy() {
         
     }

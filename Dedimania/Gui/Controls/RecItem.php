@@ -55,11 +55,6 @@ class RecItem extends \ManiaLive\Gui\Control {
         $this->label_nick->setSizeX($scaledSizes[2]);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
-
     // manialive 3.1 override to do nothing.
     function destroy() {
         

@@ -27,12 +27,7 @@ class CheckboxItem extends \ManiaLive\Gui\Control {
         $this->addComponent($this->frame);
         $this->setSize(68, 4);
     }
-
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
-
+    
     public function destroy() {
         
     }

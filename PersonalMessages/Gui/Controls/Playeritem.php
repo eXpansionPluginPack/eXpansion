@@ -76,11 +76,6 @@ class Playeritem extends \ManiaLive\Gui\Control {
         
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
-
     // manialive 3.1 override to do nothing.
     function destroy() {
         

@@ -28,11 +28,7 @@ class ConfigOption extends \ManiaLive\Gui\Control {
     public function getStatus() {
         return $this->cb_item->getStatus();
     }
-
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
+    
 
     public function destroy() {
         

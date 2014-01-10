@@ -63,10 +63,6 @@ class HelpItem extends \ManiaLive\Gui\Control {
         parent::destroy();
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
 
     public function cmdMore($login, $cmd) {
         \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\CmdMore::Erase($login);

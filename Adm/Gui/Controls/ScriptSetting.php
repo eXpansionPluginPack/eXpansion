@@ -80,10 +80,6 @@ class ScriptSetting extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
     
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->destroy();
-    }
 
     function destroy() {
         if (is_object($this->inputbox))

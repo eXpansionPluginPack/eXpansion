@@ -65,11 +65,6 @@ class Item extends \ManiaLive\Gui\Control {
         
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
-
     /*
      * custom function to remove contents.
      */

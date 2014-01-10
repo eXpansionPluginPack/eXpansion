@@ -102,11 +102,6 @@ class Wishitem extends \ManiaLive\Gui\Control {
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
-
 // manialive 3.1 override to do nothing.
     function destroy() {
         

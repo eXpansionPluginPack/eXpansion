@@ -23,11 +23,6 @@ class InfoLine extends \ManiaLive\Gui\Control {
         $this->addComponent($this->label);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
-
     public function destroy() {
         parent::destroy();
     }

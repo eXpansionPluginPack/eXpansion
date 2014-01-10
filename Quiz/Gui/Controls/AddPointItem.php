@@ -75,11 +75,6 @@ class AddPointItem extends \ManiaLive\Gui\Control {
         $this->bg->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->erase();
-    }
-
     // manialive 3.1 override to do nothing.
     function destroy() {
         
