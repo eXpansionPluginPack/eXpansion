@@ -234,7 +234,7 @@ class WebLink extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connectionFailed = false;
             return true;
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("connection problem.");
+           $this->console("connection problem.");
             $this->connectionFailed = true;
             return false;
         }
@@ -251,7 +251,7 @@ class WebLink extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connectionFailed = false;
             return true;
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("connection problem.");
+           $this->console("connection problem.");
             $this->connectionFailed = true;
             return false;
         }

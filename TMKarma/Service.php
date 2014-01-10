@@ -45,16 +45,16 @@ abstract class Service {
      */
     protected static function getCountryCode($long = false) {
 	if (!isset(self::$userCountryCode)) {
-	    Console::println("[TMKarma] Attempting to autodetect using http://api.hostip.info!");
+	    $this->console("[TMKarma] Attempting to autodetect using http://api.hostip.info!");
 	    $data = file_get_contents('http://api.hostip.info/get_json.php');
 	    $json = json_decode($data);
 	    if ($json === null) {
-		Console::println("[TMKarma] Autodetect failed, usign default location: Germany");
+		$this->console("[TMKarma] Autodetect failed, usign default location: Germany");
 		self::$userCountryCode = "DEU";
 	    } else {
 		self::$userCountryCode = \ManiaLivePlugins\eXpansion\Helpers\Countries::mapCountry(ucwords(strtolower($json->country_name)));
 		if (self::$userCountryCode == "OTH") {
-		    Console::println("[TMKarma] Autodetect failed, usign default location: Germany, Detected country was: ". ucwords(strtolower($json->country_name)));
+		    $this->console("[TMKarma] Autodetect failed, usign default location: Germany, Detected country was: ". ucwords(strtolower($json->country_name)));
 		    self::$userCountryCode = "DEU";
 		}
 	    }

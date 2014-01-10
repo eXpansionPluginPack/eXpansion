@@ -437,7 +437,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->addRecord($login, $timeOrScore, $gamemode, $this->checkpoints[$login]);
 
             if (($this->debug & self::DEBUG_RECPROCESSTIME) == self::DEBUG_RECPROCESSTIME)
-                \ManiaLive\Utilities\Console::println("[eXp][DEBUG][LocalRecords:RECS]#### NEW RANK IN : " . (microtime() - $time) . "s BAD?");
+               $this->console("[eXp][DEBUG][LocalRecords:RECS]#### NEW RANK IN : " . (microtime() - $time) . "s BAD?");
         }
         //We reset the checkPoints
         $this->checkpoints[$login] = array();
@@ -558,7 +558,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->currentChallengePlayerRecords[$login]->isNew = true;
             $force = true;
             if (($this->debug & self::DEBUG_RECS_SAVE) == self::DEBUG_RECS_SAVE)
-                \ManiaLive\Utilities\Console::println("[eXp][DEBUG][LocalRecords:RECS]$login just did his firs time of $score on this map");
+               $this->console("[eXp][DEBUG][LocalRecords:RECS]$login just did his firs time of $score on this map");
         } else {
             //We update the old records average time and nbFinish
             $this->currentChallengePlayerRecords[$login]->nbFinish++;
@@ -566,7 +566,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->currentChallengePlayerRecords[$login]->avgScore = $avgScore;
 
             if (($this->debug & self::DEBUG_RECS_SAVE) == self::DEBUG_RECS_SAVE)
-                \ManiaLive\Utilities\Console::println("[eXp][DEBUG][LocalRecords:RECS]$login just did a new time of $score. His current rank is " . $this->currentChallengePlayerRecords[$login]->place);
+               $this->console("[eXp][DEBUG][LocalRecords:RECS]$login just did a new time of $score. His current rank is " . $this->currentChallengePlayerRecords[$login]->place);
         }
 
         $nrecord = $this->currentChallengePlayerRecords[$login];
@@ -597,7 +597,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $i = $this->config->recordsCount - 1;
 
             if (($this->debug & self::DEBUG_RECS_FULL) == self::DEBUG_RECS_FULL)
-                \ManiaLive\Utilities\Console::println("[eXp][DEBUG][LocalRecords:RECS]Starting to look for the rank of $login 's record at rank $i+1");
+               $this->console("[eXp][DEBUG][LocalRecords:RECS]Starting to look for the rank of $login 's record at rank $i+1");
 
             $firstRecord = ($i < 0);
 
@@ -606,7 +606,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $record = $this->currentChallengeRecords[$i];
 
                 if (($this->debug & self::DEBUG_RECS_FULL) == self::DEBUG_RECS_FULL)
-                    \ManiaLive\Utilities\Console::println("[eXp][DEBUG][LocalRecords:RECS]$login is getting better : " . $nrecord->place . "=>" . ($nrecord->place - 1)
+                   $this->console("[eXp][DEBUG][LocalRecords:RECS]$login is getting better : " . $nrecord->place . "=>" . ($nrecord->place - 1)
                             . "And " . $record->login . " is getting worse" . $record->place . "=>" . ($record->place + 1));
 
                 //New record takes old recs place
@@ -625,7 +625,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
 
             if (($this->debug & self::DEBUG_RECS_SAVE) == self::DEBUG_RECS_SAVE)
-                \ManiaLive\Utilities\Console::println("[eXp][DEBUG][LocalRecords:RECS]$login new rec Rank found" . $nrecord->place . " Old was : " . $recordrank_old);
+               $this->console("[eXp][DEBUG][LocalRecords:RECS]$login new rec Rank found" . $nrecord->place . " Old was : " . $recordrank_old);
 
             /*
              * Found new Rank sending message

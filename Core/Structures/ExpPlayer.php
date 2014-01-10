@@ -46,6 +46,9 @@ class ExpPlayer extends \DedicatedApi\Structures\Player {
     /** @var bool $isPlaying true if player is playing ie not spectator or disconnected currently */
     public $isPlaying = true;
 
+    /** @var bool $isWaiting true if player is coming from spectator and waiting for going playground */
+    public $isWaiting = false;
+
     static public function fromArray($array) {
         $object = parent::fromArray($array);
         $object->skins = null;

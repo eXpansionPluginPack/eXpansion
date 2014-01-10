@@ -70,10 +70,10 @@ class ForceMod extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private function forceMods() {
         try {
-            Console::println("Enabling forced mods");
+            $this->console("Enabling forced mods");
             $this->connection->setForcedMods(true, $this->mods);
         } catch (\Exception $e) {
-            Console::println("[eXp\ForceMod] error while enabling the mod:" . $e->getMessage());
+            $this->console("[eXp\ForceMod] error while enabling the mod:" . $e->getMessage());
             return;
         }
     }

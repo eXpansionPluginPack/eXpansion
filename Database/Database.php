@@ -24,12 +24,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $this->enableDatabase();
         } catch (\Exception $e) {
-            Console::printLn('');
-            Console::printLn('Oops, there seems be a problem while establishing a MySQL connection.');
-            Console::printLn('');
-            Console::printLn('MySQL said:');
-            Console::printLn($e->getMessage());
-            Console::printLn('');
+            $this->dumpException("There seems be a problem while establishing a MySQL connection.", $e);
             die();
         }
         $this->enableDedicatedEvents();

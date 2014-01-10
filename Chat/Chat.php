@@ -19,7 +19,7 @@ use ManiaLive\Utilities\Console;
 use ManiaLive\Features\Admin\AdminGroup;
 use ManiaLivePlugins\eXpansion\Chat\Config;
 
-class Chat extends \ManiaLive\PluginHandler\Plugin {
+class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /** Is the redirection enabled or not ?
      * @type bool */
@@ -29,27 +29,17 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
     private $config;
 
     /**
-     * onInit()
-     *
-     * @return void
-     */
-    function onInit() {
-        $this->setVersion("0.1");
-    }
-
-    /**
      * onLoad()
      * Function called on loading of ManiaLive.
      *
      * @return void
      */
-    function onLoad() {
+    function exp_onLoad() {
         $this->enableDedicatedEvents();
         try {
             $this->connection->chatEnableManualRouting(true);
         } catch (\Exception $e) {
-
-            Console::println(__("[eXpansion|Chat] Couldn't initialize chat. Error from server: %s", $e->getMessage()));
+            $this->console(__("[eXpansion|Chat] Couldn't initialize chat. Error from server: %s", $e->getMessage()));
             $this->enabled = false;
         }
         $this->config = Config::getInstance();
@@ -119,7 +109,7 @@ class Chat extends \ManiaLive\PluginHandler\Plugin {
 
                 \ManiaLive\Utilities\Logger::getLog('chat')->write("[" . $login . "] " . $nickLog . " - " . $text);
             } catch (\Exception $e) {
-                Console::println(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()));
+                $this->console(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()));
             }
         }
     }

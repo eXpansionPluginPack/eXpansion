@@ -91,7 +91,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $login);
             $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $target);
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("Error:" . $e->getMessage());
+           $this->console("Error:" . $e->getMessage());
         }
     }
 
@@ -106,7 +106,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $this->message[$login], $login);
             $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $this->message[$login], $target);
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("Error:" . $e->getMessage());
+           $this->console("Error:" . $e->getMessage());
         }
     }
 
@@ -126,7 +126,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
                     $this->connection->chatSendServerMessage($color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message, $reciever);
             }
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("Error:" . $e->getMessage());
+           $this->console("Error:" . $e->getMessage());
         }
     }
 
@@ -145,7 +145,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
                 $this->exp_chatSendServerMessage($this->msg_noReply, $login);
             }
         } catch (\Exception $e) {
-            \ManiaLive\Utilities\Console::println("Error sending a reply" . $e->getMessage());
+           $this->console("Error sending a reply" . $e->getMessage());
         }
     }
 
