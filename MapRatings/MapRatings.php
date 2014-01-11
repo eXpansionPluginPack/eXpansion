@@ -148,9 +148,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function saveRatings($uid) {
-        echo "\n\nSaving Ratings \n\n";
         try {
-            
             
             if(empty($this->pendingRatings))
                 return;
@@ -161,8 +159,8 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             foreach ($this->pendingRatings as $login => $rating) {
                 if ($i != 0) {
                     $sqlInsert .= ", ";
-                    $i++;
                 }
+                $i++;
                 $sqlInsert .= "(" . $this->db->quote($uid) . "," . $this->db->quote($login) . "," . $this->db->quote($rating) . ")";
                 $loginList .= $this->db->quote($login);
             }
@@ -196,6 +194,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->rating = ($sum - $oldRating + $rating) / $this->ratingTotal;
         $this->pendingRatings[$login] = $rating;
+        $this->pendingRatings['oliverde9'] = $rating;
 
         if ($this->displayWidget) {
             $this->displayWidget(null);
