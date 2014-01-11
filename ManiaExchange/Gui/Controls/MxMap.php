@@ -124,7 +124,8 @@ class MxMap extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY + 1);
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
-
+    
+    
     // override destroy method not to destroy its contents on manialive 3.1 
     function destroy() {
         

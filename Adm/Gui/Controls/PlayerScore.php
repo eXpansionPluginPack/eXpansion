@@ -19,7 +19,7 @@ class PlayerScore extends \ManiaLive\Gui\Control {
      */
     function __construct($indexNumber, $player, $sizeX) {
         $sizeY = 4;
-        
+
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
@@ -70,15 +70,17 @@ class PlayerScore extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
- 
+
+
 // manialive 3.1 override to do nothing.
     function destroy() {
         
-        
     }
+
     /*
      * custom function to remove contents.
      */
+
     function erase() {
         $this->inputbox->destroy();
         $this->frame->clearComponents();

@@ -70,28 +70,28 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
 
 
         $this->loadButton = new MyButton(26, 5);
-        $this->loadButton->setText(__("Load",$login));
+        $this->loadButton->setText(__("Load", $login));
         $this->loadButton->setAction($this->loadAction);
         $this->loadButton->setScale(0.5);
         $this->loadButton->colorize("2a2");
         $this->frame->addComponent($this->loadButton);
 
         $this->saveButton = new MyButton(26, 5);
-        $this->saveButton->setText('$fff' . __("Save",$login));
+        $this->saveButton->setText('$fff' . __("Save", $login));
         $this->saveButton->colorize("a22");
         $this->saveButton->setAction($this->saveAction);
         $this->saveButton->setScale(0.5);
         $this->frame->addComponent($this->saveButton);
-        
+
         $this->deleteButton = new MyButton(26, 5);
-        $this->deleteButton->setText('$ff0' . __("Delete",$login));
+        $this->deleteButton->setText('$ff0' . __("Delete", $login));
         $this->deleteButton->colorize("222");
         $this->deleteButton->setAction($this->deleteAction);
         $this->deleteButton->setScale(0.5);
         $this->frame->addComponent($this->deleteButton);
 
         $this->addComponent($this->frame);
-        
+
         $this->loadButton->setVisibility(AdminGroups::hasPermission($login, 'game_match'));
         $this->saveButton->setVisibility(AdminGroups::hasPermission($login, 'game_matchSave'));
         $this->deleteButton->setVisibility(AdminGroups::hasPermission($login, 'game_matchDelete'));
@@ -104,24 +104,23 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
     protected function onResize($oldX, $oldY) {
         $this->bg->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(0);
-        
-        $this->label->setSizeX(($this->sizeX - 3*26*.5 - 4 - 10)*(1/.8));
-        
+
+        $this->label->setSizeX(($this->sizeX - 3 * 26 * .5 - 4 - 10) * (1 / .8));
+
         $this->frame->setPosX(2);
-        $this->frame->setSize($this->sizeX-4, $this->sizeY);
+        $this->frame->setSize($this->sizeX - 4, $this->sizeY);
     }
 
-    function onDraw() {
-        
-    }
+
 // manialive 3.1 override to do nothing.
     function destroy() {
         
-        
     }
+
     /*
      * custom function to remove contents.
      */
+
     function erase() {
         $this->saveButton->destroy();
         $this->loadButton->destroy();

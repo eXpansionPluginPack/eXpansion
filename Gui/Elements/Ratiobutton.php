@@ -79,6 +79,10 @@ class Ratiobutton extends \ManiaLive\Gui\Control {
         $this->button->setAction($action);
     }
 
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        parent::destroy();
+    }
 }
 
 ?>

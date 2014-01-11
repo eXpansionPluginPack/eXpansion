@@ -38,6 +38,11 @@ abstract class FaqControl extends \ManiaLive\Gui\Control {
         $this->label->setText($text);
     }
 
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->destroy();
+    }
+
     public function destroy() {
         parent::destroy();
     }

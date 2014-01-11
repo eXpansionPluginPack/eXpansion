@@ -6,44 +6,45 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 
 class RatingsWidget extends \ManiaLive\Gui\Window {
 
-    protected $xml, $frame, $starFrame, $move;
+    protected $xml, $frame, $starFrame, $move, $gauge;
+    protected $stars = array();
 
     protected function onConstruct() {
-	parent::onConstruct();
-	$this->frame = new \ManiaLive\Gui\Controls\Frame();
-	$this->frame->setAlign("left", "top");
-	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(20, 20));
-	$this->addComponent($this->frame);
+        parent::onConstruct();
+        $this->frame = new \ManiaLive\Gui\Controls\Frame(2,0);
+        $this->frame->setAlign("left", "top");
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(20, 20));
+        $this->addComponent($this->frame);
 
-	$this->starFrame = new \ManiaLive\Gui\Controls\Frame();
-	$this->starFrame->setLayout(new \ManiaLib\Gui\Layouts\Line(20, 4));
-	$this->starFrame->setAlign("left", "center");
-	$this->starFrame->setSize(40, 4);
-	$this->frame->addComponent($this->starFrame);
+        $this->starFrame = new \ManiaLive\Gui\Controls\Frame();
+        $this->starFrame->setAlign("left", "top");
+        $this->starFrame->setSize(40, 4);
+        $this->frame->addComponent($this->starFrame);
 
 
-	$this->move = new \ManiaLib\Gui\Elements\Quad(30, 14);
-	$this->move->setAlign("right", "center");
-	$this->move->setStyle("Icons128x128_Blink");
-	$this->move->setSubStyle("ShareBlink");
-	$this->move->setScriptEvents();
-	$this->move->setId("enableMove");
-	$this->move->setPosition(2, -3);
-	$this->addComponent($this->move);
+        $this->move = new \ManiaLib\Gui\Elements\Quad(30, 14);
+        $this->move->setAlign("right", "center");
+        $this->move->setStyle("Icons128x128_Blink");
+        $this->move->setSubStyle("ShareBlink");
+        $this->move->setScriptEvents();
+        $this->move->setId("enableMove");
+        $this->move->setPosition(2, -3);
+        $this->addComponent($this->move);
+        $this->gauge = new \ManiaLive\Gui\Elements\Xml();
 
-	$this->xml = new \ManiaLive\Gui\Elements\Xml();
-	$this->addComponent($this->xml);
-	$this->setAlign("center", "center");
+        $this->xml = new \ManiaLive\Gui\Elements\Xml();
+        $this->addComponent($this->xml);
+        $this->setAlign("center", "center");
     }
 
     function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
+        parent::onResize($oldX, $oldY);
     }
 
     function onDraw() {
 
-	$this->removeComponent($this->xml);
-	$this->xml->setContent('    
+        $this->removeComponent($this->xml);
+        $this->xml->setContent('    
         <script><!--
                
                        main () {     
@@ -128,41 +129,34 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
                   
                 } 
                 --></script>');
-	$this->addComponent($this->xml);
-	parent::onDraw();
+        $this->addComponent($this->xml);
+        parent::onDraw();
     }
 
     function destroy() {
-	parent::destroy();
+        parent::destroy();
     }
 
     function setStars($number, $total) {
-	$this->frame->clearComponents();
-	$this->starFrame->clearComponents();
+        $this->frame->clearComponents();       
+        $login = $this->getRecipient();        
+        
+        $this->gauge->setContent('<gauge scale="0.7" sizen="35 8" drawblockbg="0" rotation="180" grading="1" ratio="' . ($number/5) . '" centered="0" />');
+        $this->frame->addComponent($this->gauge);
 
-	$login = $this->getRecipient();
+        $score = ($number / 5) * 100;
+        $score = round($score);
 
-
-	for ($x = 1; $x <= round($number, 0); $x++) {
-	    $star = new \ManiaLib\Gui\Elements\Quad(3.5, 3.5);
-	    $star->setStyle("BgRaceScore2");
-	    $star->setSubStyle("Fame");
-	    $star->setPosX(-$x*3.5);
-	    $this->starFrame->addComponent($star);
-	}
-
-	$this->frame->addComponent($this->starFrame);
-
-	$score = ($number / 5) * 100;
-	$score = round($score);
-
-	$info = new \ManiaLib\Gui\Elements\Label();
-	$info->setTextSize(1);
-	$info->setTextColor('fff');
-	$info->setAlign("right");
-	$info->setText($score . "% (" . $total . " ". __("votes", $login) . ")");
-	$this->frame->addComponent($info);
-	$this->redraw();
+        $info = new \ManiaLib\Gui\Elements\Label();
+        $info->setTextSize(1);
+        $info->setTextColor('fff');
+        $info->setAlign("right");
+        $info->setTextEmboss();
+        $info->setText($score . "% (" . $total . " " . __("votes", $login) . ")");
+        $info->setScale(0.8);
+        $info->setPosY(-7);
+        $this->frame->addComponent($info);
+        $this->redraw();
     }
 
 }

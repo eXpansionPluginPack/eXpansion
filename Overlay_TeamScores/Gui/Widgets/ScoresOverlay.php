@@ -123,6 +123,15 @@ class ScoresOverlay extends \ManiaLive\Gui\Window {
         }
     }
 
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->destroy();
+    }
+    
+    function destroy() {
+        parent::destroy();
+    }
+
 }
 
 ?>

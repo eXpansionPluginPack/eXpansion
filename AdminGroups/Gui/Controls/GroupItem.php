@@ -94,7 +94,6 @@ class GroupItem extends \ManiaLive\Gui\Control {
   // manialive 3.1 override to do nothing.
     function destroy() {
         
-        
     }
     /*
      * custom function to remove contents.

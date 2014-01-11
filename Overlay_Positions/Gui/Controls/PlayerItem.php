@@ -126,8 +126,9 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY) {
-        
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->erase();
     }
 
 // manialive 3.1 override to do nothing.
@@ -140,7 +141,6 @@ class PlayerItem extends \ManiaLive\Gui\Control {
      */
 
     function erase() {
-
         $this->clearComponents();
         parent::destroy();
     }

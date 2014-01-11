@@ -75,10 +75,7 @@ class AddPointItem extends \ManiaLive\Gui\Control {
         $this->bg->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onDraw() {
-        
-    }
-// manialive 3.1 override to do nothing.
+    // manialive 3.1 override to do nothing.
     function destroy() {
         
     }
@@ -86,10 +83,11 @@ class AddPointItem extends \ManiaLive\Gui\Control {
     /*
      * custom function to remove contents.
      */
+
     function erase() {
         if (is_object($this->addpointButton))
             $this->addpointButton->destroy();
-        
+
         $this->frame->destroy();
         $this->clearComponents();
         parent::destroy();

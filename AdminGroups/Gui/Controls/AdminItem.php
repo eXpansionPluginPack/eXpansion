@@ -17,7 +17,7 @@ class AdminItem extends \ManiaLive\Gui\Control {
     private $admin;
     private $action_remove;
     private $plistButton;
-    
+
     function __construct($indexNumber, Admin $admin, $controller, $login) {
         $this->group = $admin;
         $sizeX = 75;
@@ -28,9 +28,9 @@ class AdminItem extends \ManiaLive\Gui\Control {
         $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setSize($sizeX, $sizeY);
         $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        
+
         $this->addComponent(new ListBackGround($indexNumber, $sizeX, $sizeY));
-        
+
         $gui_name = new \ManiaLib\Gui\Elements\Label(40, 4);
         $gui_name->setAlign('left', 'center');
         $gui_name->setText($admin->getLogin());
@@ -61,16 +61,19 @@ class AdminItem extends \ManiaLive\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
+    
+
     // manialive 3.1 override to do nothing.
     function destroy() {
         
-        
     }
+
     /*
      * custom function to remove contents.
      */
+
     public function erase() {
-        if($this->plistButton != null)
+        if ($this->plistButton != null)
             $this->plistButton->destroy();
         $this->plistButton = null;
         $this->clearComponents();

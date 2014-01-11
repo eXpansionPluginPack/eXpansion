@@ -74,6 +74,7 @@ class CustomPointctrl extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
+
 // manialive 3.1 override to do nothing.
     function destroy() {
         

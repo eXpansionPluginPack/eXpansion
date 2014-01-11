@@ -32,24 +32,24 @@ class Header extends \ManiaLive\Gui\Control {
 
         $this->label = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->label->setAlign('left', 'center');
-        $this->label->setText(__("Map name"));        
+        $this->label->setText(__("Map name"));
         $this->frame->addComponent($this->label);
 
         $info = new \ManiaLib\Gui\Elements\Label(25, 4);
-        $info->setAlign('left', 'center');       
+        $info->setAlign('left', 'center');
         $info->setText(__("Creators name"));
         $this->frame->addComponent($info);
 
         $this->time = new \ManiaLib\Gui\Elements\Label(20, 4);
-        $this->time->setAlign('left', 'center');        
+        $this->time->setAlign('left', 'center');
         $this->time->setText(__("Length"));
         $this->frame->addComponent($this->time);
 
-    
-        $spacer = new \ManiaLib\Gui\Elements\Quad(4,4);       
-        $spacer->setAlign('left', 'center');        
+
+        $spacer = new \ManiaLib\Gui\Elements\Quad(4, 4);
+        $spacer->setAlign('left', 'center');
         $spacer->setStyle("Icons64x64_1");
-        $spacer->setSubStyle("StateSuggested");        
+        $spacer->setSubStyle("StateSuggested");
         $this->frame->addComponent($spacer);
 
 
@@ -67,15 +67,16 @@ class Header extends \ManiaLive\Gui\Control {
 
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;
-        $this->setSize($sizeX,$sizeY);
+        $this->setSize($sizeX, $sizeY);
     }
 
     protected function onResize($oldX, $oldY) {
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onDraw() {
-        
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->destroy();
     }
 
     public function destroy() {
