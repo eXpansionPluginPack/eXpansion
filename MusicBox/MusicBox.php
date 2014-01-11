@@ -13,6 +13,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $enabled = true;
     private $wishes = array();
     private $nextSong = null;
+    private $music = null;
 
     /**
      * onLoad()
@@ -109,6 +110,8 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->enabled = false;
         }
 
+        $this->music = $this->connection->getForcedMusic();
+
         foreach ($this->storage->players as $login => $player) {
             $this->showWidget($login);
         }
@@ -117,15 +120,16 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    /**
-     * onBeginChallenge()
-     * Function called on begin of challenge.
-     *
-     * @param mixed $challenge
-     * @param mixed $warmUp
-     * @param mixed $matchContinuation
-     * @return void
-     */
+    public function onBeginMatch() {
+        $this->music = $this->connection->getForcedMusic();
+        foreach ($this->storage->players as $login => $player) {
+            $this->showWidget($login);
+        }
+        foreach ($this->storage->spectators as $login => $player) {
+            $this->showWidget($login);
+        }
+    }
+
     function onEndMatch($rankings, $winnerTeamOrMap) {
         if (!$this->enabled)
             return;
@@ -160,12 +164,6 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } catch (\Exception $e) {
             echo $e->getMessage() . " \n" . $e->getLine();
         }
-        foreach ($this->storage->players as $login => $player) {
-            $this->showWidget($login);
-        }
-        foreach ($this->storage->spectators as $login => $player) {
-            $this->showWidget($login);
-        }
     }
 
     public function exp_unload() {
@@ -188,8 +186,8 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function showWidget($login) {
         if (!$this->enabled)
             return;
-        $music = $this->connection->getForcedMusic();
 
+        $music = $this->music;
         $outsong = new Structures\Song();
         if (!empty($music->url)) {
             foreach ($this->songs as $id => $song) {
