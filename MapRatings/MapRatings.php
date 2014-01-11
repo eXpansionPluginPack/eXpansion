@@ -194,7 +194,6 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->rating = ($sum - $oldRating + $rating) / $this->ratingTotal;
         $this->pendingRatings[$login] = $rating;
-        $this->pendingRatings['oliverde9'] = $rating;
 
         if ($this->displayWidget) {
             $this->displayWidget(null);
