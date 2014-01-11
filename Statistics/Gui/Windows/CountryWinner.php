@@ -4,9 +4,9 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
 
-class Country extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
+class CountryWinner extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
 
-    public static $labelTitles = array('#','Country', 'nb Players');
+    public static $labelTitles = array('#','Country', 'nb Finish');
     
     protected function getKeys() {
         return array(0, 'nation', 'nb');

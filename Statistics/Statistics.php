@@ -60,6 +60,9 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $cmd = $this->registerChatCommand("topcountryonline", 'showTopOnlineCountry', 0, true);
         $cmd->help = "Will  display the list of the countries which has players who finished tracks most often";
+        
+        $cmd = $this->registerChatCommand("topcountrywinner", 'showTopWinnerCountry', 0, true);
+        $cmd->help = "Will  display the list of the countries which has players who winned on tracks most often";
 
         $cmd = $this->registerChatCommand("topcountry", 'showTopCountry', 0, true);
         $cmd->help = "Will  display the list of the countries which has the most players";
@@ -143,6 +146,12 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["plugin"] = $this;
         $button["function"] = "showTopFinishCountry";
         $menu->addButton($parent, "Top Country Finish", $button);
+
+        $button["style"] = "Icons128x32_1";
+        $button["substyle"] = "RT_Rounds";
+        $button["plugin"] = $this;
+        $button["function"] = "showTopWinnerCountry";
+        $menu->addButton($parent, "Top Country Winner", $button);
         
         $button["style"] = "Icons128x32_1";
         $button["substyle"] = "Nations";
@@ -383,6 +392,26 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->show();
     }
 
+    public function showTopWinnerCountry($login) {
+
+        $this->storage->serverLogin;
+        $sql = 'SELECT player_nation as nation, SUM(player_wins) as nb'
+                . ' FROM exp_players'
+                . ' GROUP BY player_nation'
+                . ' ORDER BY nb DESC'
+                . ' LIMIT 0, 100';
+
+        $datas = $this->getData($sql);
+
+        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryWinner::Erase($login);
+        $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Country::Create($login);
+        $window->setTitle(__('Most winning country', $login));
+        $window->centerOnScreen();
+        $window->populateList($datas);
+        $window->setSize(70, 100);
+        $window->show();
+    }
+    
     public function showTopCountry($login) {
 
         $this->storage->serverLogin;

@@ -17,7 +17,7 @@ Match Settings
 Wettkampf Einstellungen
 
 Script Settings
-Skript Einstellungen
+Script Einstellungen
 
 Load
 Laden
@@ -41,10 +41,10 @@ Rounds
 Rounds
 
 Cup
-Pokal
+Cup
 
 Laps
-Runden
+Laps
 
 Team
 Team
@@ -56,10 +56,10 @@ File '%s' deleted from filesystem!
 Datei '%s' wurde gelöscht!
 
 Saved MatchSettings to file: %s
-Speichere Wettkampfeinstellungen in Datei: %s
+Speichere Wettkampfeinstellungen (MatchSettings) in Datei: %s
 
 Loaded MatchSettings from file: %s
-Lade Wettkampfeinstellungen aus Datei: %s
+Lade Wettkampfeinstellungen (MatchSettings) aus Datei: %s
 
 Server management
 Server Verwaltung
@@ -77,7 +77,7 @@ Match settings
 Wettkampf Einstellungen
 
 ScriptMode settings
-Skkriptmodus Einstellungen
+Scriptmodus Einstellungen
 
 Database tools
 Datenbank Anwendungen
@@ -104,25 +104,25 @@ Spectators
 Zuschauer
 
 Ladderpoints minimum
-Ranglistenpunkte Minimum
+Ranglistenpunkte (LP) Minimum
 
 Ladderpoints Maximum
-Ranglistenpunkte Maximum
+Ranglistenpunkte (LP) Maximum
 
 Password for server
-Serverkennwort
+Serverpasswort
 
 Password for spectators
-Zuschauerkennwort
+Zuschauerpasswort
 
 Referee password
-Schiedsrichterkennwort
+Schiedsrichterpasswort
 
 Show Server in public server list
 Zeige Server in liste der öffentlichen Server
 
 Ladder server
-Ranglisten-Server
+LadderServer
 
 Allow map download using ingame menu
 Erlaube Herunterladen von Maps aus dem Spielmenü heraus
@@ -134,28 +134,28 @@ Allow Peer-2-Peer upload
 Erlaube P2P-Hochladen
 
 Allow changing validation seed
-Erlaube Änderung des Anfangswertes der Validierungsberechnung 
+Erlaube Änderung des validation seed
 
 Enable Referee-mode
 Schiedsrichter-Modus einschalten
 
 ForceScores can be used only with rounds or team mode
-#translate# ForceScores can be used only with rounds or team mode
+ForceScores kann nur im $iRounds$i oder $iTeam$i Modus verwendet werden
 
 ScriptSettings available only in script mode
-#translate# ScriptSettings available only in script mode
+ScriptSettings ist nur im Script Modus verfügbar
 
 Database plugin not loaded!
-#translate# Database plugin not loaded!
+Datenbank Plugin nicht geladen
 
 #admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
-#translate# #admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
+#admin_action#Admin %s $z$s#admin_action#setzt Rundenpunkte zu #variable#%s
 
 Podium Chat time
-#translate# Podium Chat time
+#translate# Podium Chat Zeit
 
-All Warmup Duration
-#translate# All Warmup Duration
+All Warmup duration
+#translate# All Warmup dauer
 
 finishTimeout
 #translate# finishTimeout
@@ -194,26 +194,26 @@ cupRoundsPerMap
 #translate# cupRoundsPerMap
 
 Choose Gamemode:
-#translate# Choose Gamemode:
+Spielmodus wählen:
 
 Additional Options:
-#translate# Additional Options:
+Weitere Optionen:
 
 Rounds: use new rules
-#translate# Rounds: use new rules
+Rounds: neue Regeln verwenden
 
 Team: use new rules
-#translate# Team: use new rules
+#translate# Team: neue Regeln verwenden
 
 Disable Respawn
-#translate# Disable Respawn
+Respawn verhindern
 
 Force Show All Opponents
-#translate# Force Show All Opponents
+Erzwinge das Anzeigen aller Gegner
 
 Save MatchSettings as
-#translate# Save MatchSettings as
+Spieleinstellungen (MatchSettings) Speichern als
 
 Round points
-#translate# Round points
+Runden Punkte
 
