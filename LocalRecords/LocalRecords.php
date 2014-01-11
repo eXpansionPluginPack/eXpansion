@@ -898,7 +898,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     WHERE `record_challengeuid` = " . $this->db->quote($challenge->uId) . " " . $cons . "
                         AND `exp_records`.`record_playerlogin` = `exp_players`.`player_login`
                         " . $cons . "
-                    ORDER BY `record_score` ASC
+                    ORDER BY `record_score` ASC, `record_date` ASC 
                     LIMIT 0, " . $this->config->recordsCount . ";";
 
         $dbData = $this->db->query($q);
