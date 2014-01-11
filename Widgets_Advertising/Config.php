@@ -1,14 +1,20 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Overlay_TeamScores;
+namespace ManiaLivePlugins\eXpansion\Widgets_Advertising;
 
 class Config extends \ManiaLib\Utils\Singleton {
+    
+    public $url = "http://www.ml-expansion.com";
+    public $imageUrl = "http://reaby.kapsi.fi/ml/exp_small.png";
+    public $imageFocusUrl = "http://reaby.kapsi.fi/ml/exp_small.png";
 
-    public $x = 0;
-    public $y = 90;
-    public $images = array();
-    public $scale = 1;
-
+    public $imageSizeX = 512; // image sizeX in px
+    public $imageSizeY = 128; // image sizeY in px
+    
+    public $size = 20;  // image width in maniaplanet display units
+    
+    public $x = 0;  // image position x in maniaplanet display units
+    public $y = 90; // image position y in maniaplanet display units
 }
 
 ?>
