@@ -243,12 +243,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
         }
         
-
-        $time = microtime(true);
-        echo "Reseting Maps ...";
-        $this->resetRanks();
-        echo "Done in : ".(microtime(true) - $time)."\n\n";
-        
         $this->getRanks();
         $this->updateCurrentChallengeRecords();      
 
@@ -1207,7 +1201,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->db->query('DELETE FROM exp_ranks 
                             WHERE rank_challengeuid = \'' . $challengeId . '\'
                                 AND rank_nbLaps = ' . $nbLaps);
-
+        
         $q = 'INSERT INTO exp_ranks 
                 SELECT record_playerlogin, 
                         (SELECT Count(*) FROM exp_records r2
@@ -1221,7 +1215,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                                 AND record_nbLaps = ' . $nbLaps . '
                 GROUP BY record_playerlogin, record_challengeuid, record_nbLaps
                 ORDER BY record_score ASC
-                LIMIT 0, 100';
+                LIMIT 0, '.$this->config->recordsCount;
+
         $this->db->query($q);
     }
 
