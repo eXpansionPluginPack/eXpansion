@@ -220,7 +220,12 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                     $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($login, $this->exp_maxp->parseColors($message)));
                 }
             } else {
-                $this->connection->chatSendServerMessage($this->exp_maxp->parseColors($msg), $login);
+
+                try {
+                    $this->connection->chatSendServerMessage($this->exp_maxp->parseColors($msg), $login);
+                } catch (\Exception $e) {
+                    $this->console("Error while sending chat message to '" . $login . "'\n Server said:" . $e->getMessage());
+                }
             }
         }
 
