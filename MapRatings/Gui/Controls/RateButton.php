@@ -61,12 +61,7 @@ class RateButton extends \ManiaLive\Gui\Control {
 
         parent::onResize($oldX, $oldY);
     }
-
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        parent::destroy();
-    }
-
+    
 }
 
 ?>
