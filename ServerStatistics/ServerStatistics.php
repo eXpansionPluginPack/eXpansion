@@ -228,16 +228,21 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $out = array();
         $i = 0;
         $memory_limit = ini_get('memory_limit');
-        if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches)) {
-            if ($matches[2] == 'M') {
-                $memory_limit = $matches[1] * 1024 * 1024; // nnnM -> nnn MB
-            } else if ($matches[2] == 'K') {
-                $memory_limit = $matches[1] * 1024; // nnnK -> nnn KB
+        if($memory_limit != -1){
+             if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches)) {
+                if ($matches[2] == 'M') {
+                    $memory_limit = $matches[1] * 1024 * 1024; // nnnM -> nnn MB
+                } else if ($matches[2] == 'K') {
+                    $memory_limit = $matches[1] * 1024; // nnnK -> nnn KB
+                }
             }
         }
 
         
         foreach ($datas as $data) {
+            if($memory_limit == -1){
+                $memory_limit = $data->total;
+            }
             while($startTime + ($i*120) - 60 < $data->date){        
                 $out[0][] = $memory_limit;
                 $out[1][] = 0;
