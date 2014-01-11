@@ -17,6 +17,9 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_rating;
     private $msg_noRating;
     private $displayWidget = true;
+    private $pendingRatings = array();
+    private $oldRatings = array();
+    private $previousUid = null;
 
     function exp_onInit() {
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
@@ -60,7 +63,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($this->storage->spectators as $login => $player)
             $this->onPlayerConnect($login, true);
 
-
+        $this->previousUid = $this->storage->currentMap->uId;
         // $this->onEndMatch("", "");
     }
 
@@ -132,40 +135,76 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function reload() {
-        $database = $this->db->query("SELECT avg(rating) AS rating, COUNT(rating) AS ratingTotal FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";")->fetchObject();
+        $database = $this->db->query("SELECT avg(rating) AS rating, COUNT(rating) AS ratingTotal"
+                        . " FROM exp_ratings"
+                        . " WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";")->fetchObject();
         $this->rating = 0;
         $this->ratingTotal = 0;
         if ($database !== false) {
             $this->rating = $database->rating;
             $this->ratingTotal = $database->ratingTotal;
+            $this->oldRatings = $this->getVotesForMap($this->storage->currentMap->uId);
+        }
+    }
+
+    public function saveRatings($uid) {
+        echo "\n\nSaving Ratings \n\n";
+        try {
+            
+            
+            if(empty($this->pendingRatings))
+                return;
+            
+            $sqlInsert = "INSERT INTO exp_ratings (`uid`, `login`, `rating`  ) VALUES ";
+            $loginList = "";
+            $i = 0;
+            foreach ($this->pendingRatings as $login => $rating) {
+                if ($i != 0) {
+                    $sqlInsert .= ", ";
+                    $i++;
+                }
+                $sqlInsert .= "(" . $this->db->quote($uid) . "," . $this->db->quote($login) . "," . $this->db->quote($rating) . ")";
+                $loginList .= $this->db->quote($login);
+            }
+
+            $this->db->query(
+                    "DELETE FROM exp_ratings "
+                    . " WHERE `uid`= " . $this->db->quote($uid) . " "
+                    . " AND `login` IN (" . $loginList . ")");
+
+            $this->db->query($sqlInsert);
+            $this->pendingRatings = array();
+            
+        } catch (\Exception $e) {
+            $this->console("Error in MapRating: " . $e->getMessage());
         }
     }
 
     public function saveRating($login, $rating) {
         EndMapRatings::Erase($login);
-        $uid = $this->db->quote($this->storage->currentMap->uId);
-        try {
-            $test = $this->db->query("SELECT * FROM exp_ratings WHERE `uid`= " . $uid . "  AND `login` = " . $this->db->quote($login) . " LIMIT 1;")->fetchObject();
 
-            if ($test === false) {
-                $query = "INSERT INTO exp_ratings (`uid`, `login`, `rating`  ) VALUES (" . $uid . "," . $this->db->quote($login) . "," . $this->db->quote($rating) . ") ON DUPLICATE KEY UPDATE `rating`=" . $this->db->quote($rating) . ";";
-                $this->db->execute($query);
-            } else {
-                $query = "UPDATE exp_ratings set `rating` = $rating WHERE `login` = " . $this->db->quote($login) . " AND `uid` = $uid;";
-                $this->db->execute($query);
-            }
-            $this->reload();
+        $oldRating = 0;
+        $sum = $this->rating * $this->ratingTotal;
 
-            if ($this->displayWidget) {
-                $this->displayWidget(null);
-                /* reaby disabled, no need to show vote registered text :/
-                  $msg = exp_getMessage('#rank#$iVote Registered!!');
-                  $this->exp_chatSendServerMessage($msg, $login); */
-                $this->sendRatingMsg($login, $rating);
-            }
-        } catch (\Exception $e) {
-           $this->console("Error in MapRating: " . $e->getMessage());
+        if (isset($this->pendingRatings[$login])) {
+            $oldRating = $this->pendingRatings[$login];
+        } else if (isset($this->oldRatings[$login])) {
+            $oldRating = $this->oldRatings[$login];
+        } else {
+            $this->ratingTotal++;
         }
+
+        $this->rating = ($sum - $oldRating + $rating) / $this->ratingTotal;
+        $this->pendingRatings[$login] = $rating;
+
+        if ($this->displayWidget) {
+            $this->displayWidget(null);
+            /* reaby disabled, no need to show vote registered text :/
+              $msg = exp_getMessage('#rank#$iVote Registered!!');
+              $this->exp_chatSendServerMessage($msg, $login); */
+            $this->sendRatingMsg($login, $rating);
+        }
+
     }
 
     function sendRatingMsg($login, $playerRating) {
@@ -251,8 +290,18 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+        
+    }
+    
     function onBeginMatch() {
+        if($this->previousUid != null)
+            $this->saveRatings($this->previousUid);
+        
+        $this->previousUid = $this->storage->currentMap->uId;
+        
         $this->reload();
+        
         EndMapRatings::EraseAll();
         $this->displayWidget();
         //send msg
@@ -269,12 +318,12 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         }
     }
-
+    
     function onEndMatch($rankings, $winnerTeamOrMap) {
         if ($this->config->showPodiumWindow) {
             $ratings = $this->getVotesForMap(null);
             foreach ($this->storage->players as $login => $player) {
-                if (!array_key_exists($login, $ratings)) {
+                if (!array_key_exists($login, $ratings) && !isset($this->pendingRatings[$login])) {
                     $widget = EndMapRatings::Create($login, true);
                     $widget->show();
                 }
