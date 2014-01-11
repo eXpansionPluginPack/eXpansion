@@ -68,7 +68,10 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public function exp_onReady() {
         parent::exp_onReady();
         $this->enableTickerEvent();
+        
         $this->registerChatCommand("stat", "showStats", 0, true);
+        $this->registerChatCommand("serverstat", "showStats", 0, true);
+        
         try {
             $this->enableDatabase();
         } catch (\Exception $e) {
@@ -113,6 +116,8 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         }
         $this->nbSpecMax = sizeof($this->spectators);
         $this->nbPlayerMax = sizeof($this->players);
+        
+        $this->showPlayers("oliverde8");
     }
 
     public function onTick() {
@@ -165,51 +170,135 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     public function showPlayers($login) {
+        $startTime = (time() - (24*60*60));
+        
         $win = Gui\Windows\PlotterWindow::Create($login);
         $win->setTitle(__("Players", $login));
-        $win->setSize(160, 100);
-        $datas = $this->db->execute("SELECT `server_nbPlayers` as players, server_nbSpec as specs FROM exp_server_stats ORDER BY `server_updateDate` DESC LIMIT 0,100")->fetchArrayOfObject();
+        $win->setSize(170, 110);
+        $datas = $this->db->execute("SELECT `server_nbPlayers` as players, server_nbSpec as specs, "
+                . " server_updateDate as date "
+                . " FROM exp_server_stats "
+                . " WHERE server_updateDate > ".$startTime
+                . "     AND server_login = ".$this->db->quote($this->storage->serverLogin)
+                . " ORDER BY `server_updateDate` ASC")->fetchArrayOfObject();
         $win->setLineColor(0, "00f");
         $win->setLineColor(1, "f00");
+        
+        $i = 0;
         $out = array();
+        $max = 0;
+        
         foreach ($datas as $data) {
+            while($startTime + ($i*120) - 60 < $data->date){        
+                $out[0][] = 0;
+                $out[1][] = 0;
+                $i++;
+            }
+            $i++;
             $out[0][] = $data->players;
             $out[1][] = $data->specs;
+            if($max < $data->players)
+                $max = $data->players;
+            if($max < $data->specs)
+                $max = $data->specs;
+                
         }
-        $win->setLimit(100, $this->storage->server->currentMaxPlayers);
+        $win->setLimit(12*60,  (((int)($max/5))+1)*5);
         $win->setDatas($out);
+        $win->setXLabels($this->getXDateLabels($startTime));
         $win->show($login);
     }
 
     public function showMemory($login) {
+        $startTime = (time() - (24*60*60));
+        
         $win = Gui\Windows\PlotterWindow::Create($login);
         $win->setTitle(__("Memory usage", $login));
-        $win->setSize(160, 100);
-        $datas = $this->db->execute("SELECT `server_ramTotal` as total, `server_ramFree` as free, `server_phpRamUsage` as phpram FROM exp_server_stats ORDER BY `server_updateDate` DESC LIMIT 0,100")->fetchArrayOfObject();
+        $win->setSize(170, 110);
+        $datas = $this->db->execute("SELECT `server_ramTotal` as total, "
+                    . "`server_ramFree` as free, "
+                    . "`server_phpRamUsage` as phpram, "
+                    . "server_updateDate as date "
+                . " FROM exp_server_stats "
+                . " WHERE server_updateDate > ".$startTime
+                . "     AND server_login = ".$this->db->quote($this->storage->serverLogin)
+                . " ORDER BY `server_updateDate` ASC")->fetchArrayOfObject();
+        
         $win->setLineColor(0, "f90");
         $win->setLineColor(1, "f00");
         $out = array();
-        foreach ($datas as $data) {
-            $out[0][] = ( ($data->total - $data->free) / $data->total) * 100;
-            $out[1][] = ( $data->phpram / $data->total) * 100;
+        $i = 0;
+        $memory_limit = ini_get('memory_limit');
+        if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches)) {
+            if ($matches[2] == 'M') {
+                $memory_limit = $matches[1] * 1024 * 1024; // nnnM -> nnn MB
+            } else if ($matches[2] == 'K') {
+                $memory_limit = $matches[1] * 1024; // nnnK -> nnn KB
+            }
         }
+
+        
+        foreach ($datas as $data) {
+            while($startTime + ($i*120) - 60 < $data->date){        
+                $out[0][] = $memory_limit;
+                $out[1][] = 0;
+                $i++;
+            }
+            $i++; 
+            $out[0][] = $memory_limit;
+            $out[1][] = $data->phpram;
+        }
+        
+        $win->setLimit(12*60, $memory_limit);
         $win->setDatas($out);
+        $win->setXLabels($this->getXDateLabels($startTime));
+        
+        $labels = array();
+        for($i=0; $i<5; $i++){
+            $labels[] = ((int)(($memory_limit - ($i*($memory_limit/5)))/(1024*1024)))."M";
+        }
+        $win->setYLabels($labels);
+        
         $win->show($login);
     }
 
     public function showCpu($login) {
+        $startTime = (time() - (24*60*60));
+        
         $win = Gui\Windows\PlotterWindow::Create($login);
         $win->setTitle(__("Cpu usage", $login));
-        $win->setSize(160, 100);
-        $datas = $this->db->execute("SELECT `server_load` as cpuload FROM exp_server_stats ORDER BY `server_updateDate` DESC LIMIT 0,100")->fetchArrayOfObject();
+        $win->setSize(170, 110);
+        $datas = $this->db->execute("SELECT `server_load` as cpuload, server_updateDate as date"
+                . " FROM exp_server_stats "
+                . " WHERE server_updateDate > ".$startTime
+                . "     AND server_login = ".$this->db->quote($this->storage->serverLogin)
+                . " ORDER BY `server_updateDate` ASC")->fetchArrayOfObject();
+        
         $out = array();
         $win->setLineColor(0, "f00");
+        $i = 0;
         foreach ($datas as $data) {
+            while($startTime + ($i*120) - 60 < $data->date){
+                $out[0][] = 0;
+                $i++;
+            }
+            $i++;            
             $out[0][] = $data->cpuload;
         }
 
-        $win->setDatas($out);
+        $win->setLimit(12*60, 100);
+        $win->setDatas($out);        
+        $win->setXLabels($this->getXDateLabels($startTime));
+        
         $win->show($login);
+    }
+    
+    private function getXDateLabels($startTime){
+        $labels = array();
+        for($i=0; $i<4; $i++){
+            $labels[] = date("Y-m-d H:i", $startTime + ($i* ((24*60*60)/3)));
+        }
+        return $labels;
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason = null) {
@@ -258,6 +347,34 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
     public function onOliverde8HudMenuReady($menu) {
         
+        $parent = $menu->findButton(array("menu", "Statistics"));
+        if (!$parent) {
+            $button["style"] = "Icons128x128_1";
+            $button["substyle"] = "Statistics";
+            $parent = $menu->addButton("menu", "Statistics", $button);
+        }
+        
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "ProfileAdvanced";
+        $parent = $menu->addButton($parent, "Server Stats", $button);
+        
+        $button["style"] = "Icons128x128_1";
+        $button["substyle"] = "Solo";
+        $button["plugin"] = $this;
+        $button["function"] = "showPlayers";
+        $menu->addButton($parent, "nb Player Graph", $button);
+        
+        $button["style"] = "UIConstructionSimple_Buttons";
+        $button["substyle"] = "Replay";
+        $button["plugin"] = $this;
+        $button["function"] = "showCpu";
+        $menu->addButton($parent, "Cpu usage", $button);
+        
+        $button["style"] = "UIConstructionSimple_Buttons";
+        $button["substyle"] = "Challenge";
+        $button["plugin"] = $this;
+        $button["function"] = "showMemory";
+        $menu->addButton($parent, "Memory usage", $button);
     }
 
 }

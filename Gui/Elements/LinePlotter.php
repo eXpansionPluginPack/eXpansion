@@ -8,8 +8,9 @@ class LinePlotter extends \ManiaLive\Gui\Control {
 
     protected $label_minX;
     protected $label_maxX;
-    protected $label_minY;
-    protected $label_maxY;
+    protected $labelsY = array();
+    protected $labelsX = array();
+    
     protected $label_graphtitle;
     protected $graph_element;
     protected $graph;
@@ -41,25 +42,19 @@ class LinePlotter extends \ManiaLive\Gui\Control {
         $this->limits = array(0, 0, 100, 100);
         $this->setLineColor(0);
 
-        $this->label_maxY = new \ManiaLib\Gui\Elements\Label();
-        $this->label_maxY->setPosition(0, 0);
-        $this->label_maxY->setAlign("top", "right");
-        $this->addComponent($this->label_maxY);
-
-        $this->label_minY = new \ManiaLib\Gui\Elements\Label();
-        $this->label_minY->setPosition(-2, -$sizeY);
-        $this->label_minY->setAlign("top", "left");
-        $this->addComponent($this->label_minY);
-
-        $this->label_maxX = new \ManiaLib\Gui\Elements\Label(8);
-        $this->label_maxX->setPosition($sizeX - 8, -$sizeY + 4);
-        $this->label_maxX->setAlign("top", "right");
-        $this->addComponent($this->label_maxX);
-
-        $this->label_minX = new \ManiaLib\Gui\Elements\Label();
-        $this->label_minX->setPosition(4, -$sizeY + 4);
-        $this->label_minX->setAlign("top", "right");
-        $this->addComponent($this->label_minX);
+        for($i = 0; $i < 5; $i++){
+            $this->labelsY[$i] =new \ManiaLib\Gui\Elements\Label(8);
+            $this->labelsY[$i]->setPosition(7, (-1 * $i*(($sizeY-5)/5)) +2);
+            $this->labelsY[$i]->setAlign("right", "right");
+            $this->addComponent($this->labelsY[$i]);
+        }
+        
+        for($i = 0; $i < 5; $i++){
+            $this->labelsX[$i] =new \ManiaLib\Gui\Elements\Label(8);
+            $this->labelsX[$i]->setPosition($sizeX - 8 - ($i * ($sizeX-8)/5), -$sizeY + 4);
+            $this->labelsX[$i]->setAlign("top", "right");
+            $this->addComponent($this->labelsX[$i]);
+        }
     }
 
     public function add($line = 0, $x = 0, $y = 0) {
@@ -68,10 +63,54 @@ class LinePlotter extends \ManiaLive\Gui\Control {
 
     public function setLimits($minX, $minY, $maxX, $maxY) {
         $this->limits = array($minX, $minY, $maxX, $maxY);
-        $this->label_maxX->setText($maxX);
-        $this->label_minX->setText($minX);
-        $this->label_maxY->setText($maxY);
-        $this->label_minY->setText($minY);
+        
+        for($i = 0; $i < 5; $i++){
+             $this->labelsY[$i]->setText((int)(5-$i)*(($maxY-$minY)/5));
+        } 
+        
+        for($i = 0; $i < 5; $i++){
+             $this->labelsX[$i]->setText((int)(5-$i)*(($maxX-$minX)/5));
+        }    
+    }
+    
+    public function setXLabels($labels){
+        $sizeX = $this->sizes[0];
+        $sizeY = $this->sizes[1];
+        foreach ($this->labelsX as $label) {
+            $this->removeComponent($label);
+        }
+        $this->labelsX = array();
+        
+        $size = sizeof($labels);
+        
+        for($i = 0; $i < $size; $i++){
+            $this->labelsX[$i] =new \ManiaLib\Gui\Elements\Label(15);
+            $this->labelsX[$i]->setPosition(($i * ($sizeX+35)/$size) + 5, -$sizeY + 4);
+            
+            $this->labelsX[$i]->setAlign("left", "right");
+            
+            $this->labelsX[$i]->setText($labels[$i]);
+            $this->addComponent($this->labelsX[$i]);
+        }
+    }
+    
+    public function setYLabels($labels){
+        $sizeX = $this->sizes[0];
+        $sizeY = $this->sizes[1];
+        foreach ($this->labelsY as $label) {
+            $this->removeComponent($label);
+        }
+        $this->labelsY = array();
+        
+        $size = sizeof($labels);
+        
+        for($i = 0; $i < $size; $i++){
+            $this->labelsY[$i] =new \ManiaLib\Gui\Elements\Label(8);
+            $this->labelsY[$i]->setPosition(7, (-1 * $i*(($sizeY-5)/$size)) +2);
+            $this->labelsY[$i]->setAlign("right", "right");
+            $this->labelsY[$i]->setText($labels[$i]);
+            $this->addComponent($this->labelsY[$i]);
+        }
     }
 
     /**
@@ -158,6 +197,8 @@ while (index < max) {
     }
 
     function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        $this->labelsY = array();
+        $this->labelsX = array();
         parent::onIsRemoved($target);
         parent::destroy();
     }

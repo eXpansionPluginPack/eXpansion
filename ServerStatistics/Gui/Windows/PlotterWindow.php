@@ -16,6 +16,8 @@ class PlotterWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected function onConstruct() {
         parent::onConstruct();
         $this->plotter = new \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter(160, 100);
+        $this->plotter->setPosY(-5);
+        $this->plotter->setPosX(5);
         $this->plotter->setLimits(0, 0, 100, 100);
         $this->addComponent($this->plotter);
         $this->plotter->setTickSize(5);
@@ -37,7 +39,15 @@ class PlotterWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function setLimit($x, $y) {
         $this->plotter->setLimits(0, 0, $x, $y);
     }
+    
+    function setXLabels($labels){
+        $this->plotter->setXLabels($labels);
+    }
 
+    function setYLabels($labels){
+        $this->plotter->setYLabels($labels);
+    }
+    
     private function getNumber($number) {
         return number_format((float) $number, 2, '.', '');
     }
