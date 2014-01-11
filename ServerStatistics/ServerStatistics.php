@@ -117,7 +117,6 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $this->nbSpecMax = sizeof($this->spectators);
         $this->nbPlayerMax = sizeof($this->players);
         
-        $this->showPlayers("oliverde8");
     }
 
     public function onTick() {
