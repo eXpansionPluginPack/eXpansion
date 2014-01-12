@@ -397,16 +397,15 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_jukebox') && $this->config->bufferSize > 0) {
                 $i = 0;
-                foreach ($this->history as $played) {
-                    $i++;
-                    if ($i <= $this->config->bufferSize) {
-                        if ($played->uId == $map->uId) {
+                
+                for($i = 0; $i <= $this->config->bufferSize; $i++){
+                    $cp = sizeof($this->history)-1-$i;
+                    if(isset($this->history[$cp])){
+                         if ($this->history[$cp]->uId == $map->uId) {
                             $msg = exp_getMessage('#admin_error# $iMap has been played too recently...');
                             $this->exp_chatSendServerMessage($msg, $login);
                             return;
                         }
-                    } else {
-                        break;
                     }
                 }
             }
