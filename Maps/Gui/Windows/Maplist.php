@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
 use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Mapitem;
+use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\MapitemCurrent;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Maps\Maps;
@@ -27,6 +28,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected $title_rating;
     protected $title_actions;
     private $actionRemoveAll;
+    private $currentMap = null;
 
     /** @var \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating[] */
     private $ratings = array();
@@ -253,7 +255,11 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             if (array_key_exists($sortableMap->map->uId, $this->history)) {
                 $isHistory = true;
             }
-            $this->items[$x] = new Mapitem($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
+            if ($sortableMap->map->uId == $this->currentMap->uId) {
+                $this->items[$x] = new MapitemCurrent($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
+            } else {
+                $this->items[$x] = new Mapitem($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
+            }
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
@@ -270,7 +276,11 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->history = array();
         foreach ($history as $map) {
             $this->history[$map->uId] = true;
-        }        
+        }
+    }
+
+    function setCurrentMap(\DedicatedApi\Structures\Map $map) {
+        $this->currentMap = $map;
     }
 
     function setRatings($ratings) {

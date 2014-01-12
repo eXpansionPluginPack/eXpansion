@@ -15,7 +15,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
     protected $goButton;
     protected $showRecsButton;
     protected $removeButton;
-    protected $label_map, $label_author, $label_authortime, $label_localrec, $label_rating;
+    public $label_map, $label_author, $label_authortime, $label_localrec, $label_rating;
     protected $frame;
     protected $actionsFrame;
     private $queueMapAction;

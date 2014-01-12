@@ -368,6 +368,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window = Gui\Windows\Maplist::Create($login);
         $window->setTitle(__('Maps on server', $login));
         $window->setHistory($this->history);
+        $window->setCurrentMap($this->storage->currentMap);
         if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
             $window->setRecords($this->callPublicMethod('eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
         }
