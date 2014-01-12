@@ -377,7 +377,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         $window->centerOnScreen();
-        $window->setSize(180, 120);
+        $window->setSize(180, 100);
 
         $window->updateList($login);
         $window->show();
@@ -396,7 +396,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         $window->centerOnScreen();
-        $wind6ow->setSize(180, 120);
+        $wind6ow->setSize(180, 100);
         $window->updateList($login, 'name', 'null', $this->history);
         $window->show();
     }

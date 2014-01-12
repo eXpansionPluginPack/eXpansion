@@ -45,13 +45,15 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
         $this->label_map = new \ManiaLib\Gui\Elements\Label($scaledSizes[0], 4);
         $this->label_map->setAlign('left', 'center');
-        $this->label_map->setText(Formatting::stripColors($sortableMap->name));
-        $this->label_map->setScale(0.8);
+        $this->label_map->setText($sortableMap->map->name);        
+        $this->label_map->setScale(0.8);        
+        $this->label_map->setTextPrefix('$s');
+        $this->label_map->setTextEmboss();
         $this->frame->addComponent($this->label_map);
 
         $this->label_author = new \ManiaLib\Gui\Elements\Label($scaledSizes[1], 4);
         $this->label_author->setAlign('left', 'center');
-        $this->label_author->setScale(0.8);
+        $this->label_author->setScale(0.8);        
         $this->label_author->setText($sortableMap->author);
         $this->frame->addComponent($this->label_author);
 
@@ -91,7 +93,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         if (Maplist::$localrecordsLoaded) {
             $this->showRecsButton = new MyButton(26, 5);
             $this->showRecsButton->setText(__("Recs", $login));
-            $this->showRecsButton->setAction($this->showRecsAction);            
+            $this->showRecsButton->setAction($this->showRecsAction);
             $this->showRecsButton->setScale(0.5);
             $this->actionsFrame->addComponent($this->showRecsButton);
         }
@@ -125,6 +127,15 @@ class Mapitem extends \ManiaLive\Gui\Control {
             $this->removeButton->colorize('a22');
             $this->removeButton->setScale(0.5);
             $this->actionsFrame->addComponent($this->removeButton);
+        }
+
+        if ($isHistory) {
+            $this->label_author->setTextPrefix('$aaa');
+            $this->label_map->setTextPrefix('$aaa');
+            $this->label_map->setText(Formatting::stripColors($sortableMap->name));
+            $this->label_rating->setTextPrefix('$aaa');
+            $this->label_authortime->setTextPrefix('$aaa');
+            $this->label_localrec->setTextPrefix('$aaa');
         }
 
         $this->addComponent($this->frame);
