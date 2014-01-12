@@ -40,7 +40,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $maps = array();
     private $sortMode = 0;
     private $column = "";
-
+    
     protected function onConstruct() {
         parent::onConstruct();
         $login = $this->getRecipient();
@@ -155,9 +155,9 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->getSizeX() - 12, 90);
+        $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY()-12);
         $this->pager->setPosition(0, -7);
-        $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / 0.8) - 12);
+        $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / 0.8));
         $this->title_mapName->setSizeX($scaledSizes[0]);
         $this->title_authorName->setSizeX($scaledSizes[1]);
         $this->title_goldTime->setSizeX($scaledSizes[2]);
@@ -187,8 +187,18 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    function updateList($login, $column = "name", $sortType = null) {
+    function updateList($login, $column = "name", $sortType = null, $maps = null) {
 
+        if($maps == null){
+            $maps = $this->storage->maps;
+        }else{
+             $this->title_mapName->setAction(null);
+             $this->title_authorName->setAction(null);
+             $this->title_rating->setAction(null);
+             $this->title_rank->setAction(null);
+             $this->title_goldTime->setAction(null);
+        }
+        
         foreach ($this->items as $item) {
             $item->erase();
         }
@@ -201,7 +211,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->maps = array();
 
-        foreach ($this->storage->maps as $map) {
+        foreach ($maps as $map) {
             $localrecord = "-";
             $rating = new \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating(-1, 0);
 

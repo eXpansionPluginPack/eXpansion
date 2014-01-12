@@ -77,6 +77,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->registerChatCommand('list', "showMapList", 0, true);
         $this->registerChatCommand('maps', "showMapList", 0, true);
+        $this->registerChatCommand('history', "showHistoryList", 0, true);
 
         $this->registerChatCommand('nextmap', "chat_nextMap", 0, true);
 
@@ -265,7 +266,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         array_unshift($this->history, $this->storage->currentMap);
-        if (count($this->history) > 10) {
+        if (count($this->history) > $this->config->historySize) {
             array_pop($this->history);
         }
 
@@ -368,6 +369,23 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->centerOnScreen();
         $window->setSize(180, 120);
         $window->updateList($login);
+        $window->show();
+    }
+    
+    public function showHistoryList($login){
+        Gui\Windows\Maplist::Erase($login);
+        $window = Gui\Windows\Maplist::Create($login);
+        $window->setTitle(__('History of Maps', $login));
+        if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
+            $window->setRecords($this->callPublicMethod('eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
+        }
+        if ($this->isPluginLoaded('eXpansion\MapRatings')) {
+            $window->setRatings($this->callPublicMethod('eXpansion\MapRatings', 'getRatings'));
+        }
+
+        $window->centerOnScreen();
+        $window->setSize(180, 120);
+        $window->updateList($login, 'name', 'null', $this->history);
         $window->show();
     }
 
@@ -561,8 +579,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $i = $currentMapIndex - 1;
         $this->history = array();
 
-        $endIndex = 9;
-        if (sizeof($mapList) < 9) {
+        $endIndex = $this->config->historySize-1;
+        if (sizeof($mapList) < $this->config->historySize-1) {
             $endIndex = sizeof($mapList);
         }
         for ($j = 0; $j < $endIndex; $j++) {
