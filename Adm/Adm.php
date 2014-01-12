@@ -38,7 +38,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_skipMax = exp_getMessage("#error#You have skipped to many maps already");
         $this->msg_prestart = exp_getMessage("#player#Player #variable# %s #player#restarts the challenge!");
         $this->msg_pskip = exp_getMessage('#player#Player#variable# %s #player#skips the challenge!');
-        
+
         $this->setPublicMethod('isPublicResIsActive');
         $this->setPublicMethod('isPublicSkipActive');
 
@@ -49,12 +49,12 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->config = Config::getInstance();
         $this->donateConfig = \ManiaLivePlugins\eXpansion\DonatePanel\Config::getInstance();
     }
-    
-    public function isPublicResIsActive(){
+
+    public function isPublicResIsActive() {
         return !(empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1);
     }
-    
-    public function isPublicSkipActive(){
+
+    public function isPublicSkipActive() {
         return !(empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1);
     }
 
@@ -276,7 +276,6 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $bill->setSubject('map_restart');
                 $bill->setErrorCallback(5, array($this, 'failRestartMap'));
                 $bill->setErrorCallback(6, array($this, 'failRestartMap'));
-                
             }else {
                 if (empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1) {
                     $this->exp_chatSendServerMessage($this->msg_resUnused, $login);
@@ -331,10 +330,24 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
+    public function cancelVote($login) {
+        if ($this->isPluginLoaded("eXpansion\Chat_Admin")) {
+            $this->callPublicMethod("eXpansion\Chat_Admin", "cancelVote", $login);
+            return;
+        }
+        $this->connection->cancelVote();
+    }
+
+    public function endRound($login) {
+        if ($this->isPluginLoaded("eXpansion\Chat_Admin")) {
+            $this->callPublicMethod("eXpansion\Chat_Admin", "forceEndRound", $login);
+            return;
+        }
+        $this->connection->forceEndRound();
+    }
+
     public function publicSkipMap(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill) {
-
         $this->skipActive = true;
-
         $this->connection->nextMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
         $player = $this->storage->getPlayerObject($bill->getSource_login());
         $this->exp_chatSendServerMessage($this->msg_pskip, null, array($player->nickName));

@@ -5,12 +5,14 @@ namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Mapitem;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
+use ManiaLivePlugins\eXpansion\Maps\Maps;
 
 class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     public $records = array();
     public static $mapsPlugin = null;
     public static $localrecordsLoaded = false;
+    private $history = array();
     private $ratingsLoaded = false;
     private $items = array();
 
@@ -38,9 +40,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap[] */
     private $maps = array();
-    private $sortMode = 0;
-    private $column = "";
-    
+
     protected function onConstruct() {
         parent::onConstruct();
         $login = $this->getRecipient();
@@ -119,6 +119,9 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
         $this->mainFrame->addComponent($this->pager);
 
+        if (array_key_exists($login, Maps::$playerSortModes) == false) {
+            Maps::$playerSortModes[$login] = new \ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode();
+        }
 
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps')) {
             $this->actionRemoveAll = $this->createAction(array($this, "removeAllMaps"));
@@ -155,7 +158,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY()-12);
+        $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 12);
         $this->pager->setPosition(0, -7);
         $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / 0.8));
         $this->title_mapName->setSizeX($scaledSizes[0]);
@@ -187,18 +190,18 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    function updateList($login, $column = "name", $sortType = null, $maps = null) {
+    function updateList($login, $column = null, $sortType = null, $maps = null) {
 
-        if($maps == null){
+        if ($maps == null) {
             $maps = $this->storage->maps;
-        }else{
-             $this->title_mapName->setAction(null);
-             $this->title_authorName->setAction(null);
-             $this->title_rating->setAction(null);
-             $this->title_rank->setAction(null);
-             $this->title_goldTime->setAction(null);
+        } else {
+            $this->title_mapName->setAction(null);
+            $this->title_authorName->setAction(null);
+            $this->title_rating->setAction(null);
+            $this->title_rank->setAction(null);
+            $this->title_goldTime->setAction(null);
         }
-        
+
         foreach ($this->items as $item) {
             $item->erase();
         }
@@ -227,34 +230,47 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $rating);
         }
 
-        if ($column != $this->column) {
-            $this->sortMode = 0;
-        } else {
-            $this->sortMode = ($this->sortMode + 1) % 3;
+        if ($column !== null) {
+            if ($column != Maps::$playerSortModes[$login]->column) {
+                Maps::$playerSortModes[$login]->sortMode = 0;
+                Maps::$playerSortModes[$login]->column = $column;
+            } else {
+                Maps::$playerSortModes[$login]->sortMode = (Maps::$playerSortModes[$login]->sortMode + 1) % 3;
+            }
         }
 
         // select sorttype and sort the list
-
-        if ($this->sortMode == 1)
-            \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc($this->maps, $column);
-        if ($this->sortMode == 2) {
-            \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->maps, $column);
+        if (Maps::$playerSortModes[$login]->sortMode == 1)
+            \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc($this->maps, Maps::$playerSortModes[$login]->column);
+        if (Maps::$playerSortModes[$login]->sortMode == 2) {
+            \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->maps, Maps::$playerSortModes[$login]->column);
         }
 
         // add items to display
         $x = 0;
         foreach ($this->maps as $sortableMap) {
-            $this->items[$x] = new Mapitem($x, $login, $sortableMap, $this, $isAdmin, $this->widths, $this->getSizeX());
+            $isHistory = false;
+            if (array_key_exists($sortableMap->map->uId, $this->history)) {
+                $isHistory = true;
+            }
+            $this->items[$x] = new Mapitem($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
-        $this->column = $column;
         $this->redraw($this->getRecipient());
     }
 
     function setRecords($records) {
         self::$localrecordsLoaded = true;
         $this->records = $records;
+    }
+
+    /** @param \DedicatedApi\Structures\Map[] $history */
+    function setHistory($history) {
+        $this->history = array();
+        foreach ($history as $map) {
+            $this->history[$map->uId] = true;
+        }        
     }
 
     function setRatings($ratings) {

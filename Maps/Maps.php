@@ -14,6 +14,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /** var MapWish[] */
     private $queue = array();
+
+    /** @var \DedicatedApi\Structures\Map[] */
     private $history = array();
     private $nextMap;
     private $tries = 0;
@@ -32,6 +34,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_errMxId;
     private $msg_mapAdd;
     private $wasWarmup = false;
+
+    /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode[] */
+    public static $playerSortModes = array();
 
     public function exp_onInit() {
 
@@ -213,7 +218,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $info->setPosition(153, 80);
         $info->setMap($this->storage->currentMap);
         $info->show();
-        
+
         if ($this->config->showNextMapWidget) {
             $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
             $info->setPosition(136, 74);
@@ -226,6 +231,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onPlayerDisconnect($login, $reason = null) {
         Gui\Windows\Maplist::Erase($login);
         Gui\Windows\AddMaps::Erase($login);
+        if (array_key_exists($login, self::$playerSortModes)) {
+            unset(self::$playerSortModes[$login]);
+        }
         if ($this->config->showNextMapWidget) {
             NextMapWidget::Erase($login);
         }
@@ -282,9 +290,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onEndMatch($rankings, $winnerTeamOrMap) {
         if ($this->wasWarmup)
             return;
-        
+
         Gui\Widgets\CurrentMapWidget::EraseAll();
-        
+
         $this->atPodium = true;
 
         if (count($this->queue) > 0) {
@@ -359,6 +367,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         Gui\Windows\Maplist::Erase($login);
         $window = Gui\Windows\Maplist::Create($login);
         $window->setTitle(__('Maps on server', $login));
+        $window->setHistory($this->history);
         if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
             $window->setRecords($this->callPublicMethod('eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
         }
@@ -368,13 +377,15 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $window->centerOnScreen();
         $window->setSize(180, 120);
+
         $window->updateList($login);
         $window->show();
     }
-    
-    public function showHistoryList($login){
+
+    public function showHistoryList($login) {
         Gui\Windows\Maplist::Erase($login);
         $window = Gui\Windows\Maplist::Create($login);
+        $window->setHistory($this->history);
         $window->setTitle(__('History of Maps', $login));
         if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
             $window->setRecords($this->callPublicMethod('eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
@@ -384,7 +395,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         $window->centerOnScreen();
-        $window->setSize(180, 120);
+        $wind6ow->setSize(180, 120);
         $window->updateList($login, 'name', 'null', $this->history);
         $window->show();
     }
@@ -415,11 +426,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_jukebox') && $this->config->bufferSize > 0) {
                 $i = 0;
-                
-                for($i = 0; $i <= $this->config->bufferSize; $i++){
-                    $cp = sizeof($this->history)-1-$i;
-                    if(isset($this->history[$cp])){
-                         if ($this->history[$cp]->uId == $map->uId) {
+
+                for ($i = 0; $i <= $this->config->bufferSize; $i++) {
+                    $cp = sizeof($this->history) - 1 - $i;
+                    if (isset($this->history[$cp])) {
+                        if ($this->history[$cp]->uId == $map->uId) {
                             $msg = exp_getMessage('#admin_error# $iMap has been played too recently...');
                             $this->exp_chatSendServerMessage($msg, $login);
                             return;
@@ -579,8 +590,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $i = $currentMapIndex - 1;
         $this->history = array();
 
-        $endIndex = $this->config->historySize-1;
-        if (sizeof($mapList) < $this->config->historySize-1) {
+        $endIndex = $this->config->historySize - 1;
+        if (sizeof($mapList) < $this->config->historySize - 1) {
             $endIndex = sizeof($mapList);
         }
         for ($j = 0; $j < $endIndex; $j++) {

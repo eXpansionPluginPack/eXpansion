@@ -24,20 +24,10 @@ class WidgetAd extends \ManiaLive\Gui\Window {
     }
 
     public function setImageSize($sizeX, $sizeY, $preferredSize) {
-        $x = 10;
-        $Y = 10;
-        if ($sizeX < $sizeY) {
-            $wantedAspectRatio = $sizeY / $sizeX;
-            $currentAspectRatio = 9 / 16;
-            $x = $preferredSize * ($currentAspectRatio / $wantedAspectRatio) * $wantedAspectRatio;
-            $y = $preferredSize * ($currentAspectRatio / $wantedAspectRatio);            
-        } else {
-            $wantedAspectRatio = $sizeX / $sizeY;
-            $currentAspectRatio = 16 / 9;
-            $x = $preferredSize * ($currentAspectRatio / $wantedAspectRatio);
-            $y = $preferredSize * ($currentAspectRatio / $wantedAspectRatio) * $wantedAspectRatio;
-        }
-        
+        $wantedAspectRatio = $sizeX / $sizeY;
+        $currentAspectRatio = 16 / 9;
+        $x = $preferredSize * ($currentAspectRatio / $wantedAspectRatio) * $wantedAspectRatio;
+        $y = $preferredSize * ($currentAspectRatio / $wantedAspectRatio);        
         $this->quad->setSize($x, $y);
     }
 

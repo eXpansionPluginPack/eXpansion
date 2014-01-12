@@ -24,10 +24,11 @@ class Mapitem extends \ManiaLive\Gui\Control {
     private $showRecsAction;
     private $widths;
 
-    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap $sortableMap, $controller, $isAdmin, $widths, $sizeX) {
+    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap $sortableMap, $controller, $isAdmin, $isHistory, $widths, $sizeX) {
         $sizeY = 5.5;
         $this->isAdmin = $isAdmin;
         $this->widths = $widths;
+        $this->isHistory = $isHistory;
 
         $scaledSizes = Gui::getScaledSize($this->widths, ($sizeX / .8) - 7);
 
@@ -83,18 +84,26 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($this->actionsFrame);
 
         $this->queueButton = new MyButton(26, 5);
-        $this->queueButton->setText(__("Queue", $login));
+        $this->queueButton->setText(__("Wish", $login));
         $this->queueButton->setAction($this->queueMapAction);
         $this->queueButton->colorize('2a2');
         $this->queueButton->setScale(0.5);
-        $this->actionsFrame->addComponent($this->queueButton);
         if (Maplist::$localrecordsLoaded) {
             $this->showRecsButton = new MyButton(26, 5);
             $this->showRecsButton->setText(__("Recs", $login));
-            $this->showRecsButton->setAction($this->showRecsAction);
-            $this->showRecsButton->colorize('2a2');
+            $this->showRecsButton->setAction($this->showRecsAction);            
             $this->showRecsButton->setScale(0.5);
             $this->actionsFrame->addComponent($this->showRecsButton);
+        }
+
+        // if not in history, add queue
+        if (!$isHistory) {
+            $this->actionsFrame->addComponent($this->queueButton);
+        } else {
+            // if in history and admin, add queue button
+            if ($isAdmin) {
+                $this->actionsFrame->addComponent($this->queueButton);
+            }
         }
         if ($this->isAdmin) {
             $this->goButton = new MyButton(26, 5);

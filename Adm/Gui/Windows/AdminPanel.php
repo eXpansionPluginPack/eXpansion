@@ -6,19 +6,14 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 
 class AdminPanel extends \ManiaLive\Gui\Window {
 
-    /**
-     * @var \DedicatedApi\Connection
-     */
-    private $connection;
-    private $storage;
-    private $_windowFrame;
-    private $_mainWindow;
-    private $_minButton;
-    private $servername;
-    private $btnEndRound;
-    private $btnCancelVote;
-    private $btnSkip;
-    private $btnRestart;
+    protected $_windowFrame;
+    protected $_mainWindow;
+    protected $_minButton;
+    protected $servername;
+    protected $btnEndRound;
+    protected $btnCancelVote;
+    protected $btnSkip;
+    protected $btnRestart;
     private $actionEndRound;
     private $actionCancelVote;
     private $actionSkip;
@@ -32,7 +27,7 @@ class AdminPanel extends \ManiaLive\Gui\Window {
         $dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
-        
+
         $this->actionEndRound = $this->createAction(array($this, 'actions'), "forceEndRound");
         $this->actionCancelVote = $this->createAction(array($this, 'actions'), "cancelVote");
         $this->actionSkip = $this->createAction(array($this, 'actions'), "nextMap");
@@ -166,11 +161,10 @@ class AdminPanel extends \ManiaLive\Gui\Window {
             $player = $this->storage->getPlayerObject($login);
             switch ($action) {
                 case "forceEndRound":
-                    $this->connection->forceEndRound();
-                    $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff forced the round to end');
+                    self::$mainPlugin->endRound($login);
                     break;
                 case "cancelVote":
-                    $this->cancelVote($login);
+                    self::$mainPlugin->cancelVote($login);
                     break;
                 case "nextMap":
                     self::$mainPlugin->skipMap($login);
@@ -183,24 +177,12 @@ class AdminPanel extends \ManiaLive\Gui\Window {
             $this->connection->chatSendServerMessage('Notice: ' . $e->getMessage(), $login);
         }
     }
-
-    function cancelVote($login) {
-        $player = $this->storage->getPlayerObject($login);
-        $vote = $this->connection->getCurrentCallVote();
-        if (!empty($vote->cmdName)) {
-            $this->connection->cancelVote();
-            $this->connection->chatSendServerMessage("Admin " . $player->nickName . '$z$s$fff cancels the vote');
-            return;
-        } else {
-            $this->connection->chatSendServerMessage('Notice: Can\'t cancel a vote, no vote in progress!', $player->login);
-        }
-    }
-
+    
     function onShow() {
         $this->btnEndRound->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), 'map_endRound'));
         $this->btnCancelVote->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), 'cancel_vote'));
     }
-    
+
     function destroy() {
         $this->connection = null;
         $this->storage = null;
