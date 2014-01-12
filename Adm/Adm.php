@@ -39,7 +39,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_prestart = exp_getMessage("#player#Player #variable# %s #player#restarts the challenge!");
         $this->msg_pskip = exp_getMessage('#player#Player#variable# %s #player#skips the challenge!');
         
-        
+        $this->setPublicMethod('isPublicResIsActive');
+        $this->setPublicMethod('isPublicSkipActive');
 
         if ($this->isPluginLoaded("eXpansion\AdminGroups")) {
             Dispatcher::register(\ManiaLivePlugins\eXpansion\AdminGroups\Events\Event::getClass(), $this);
@@ -47,6 +48,14 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->config = Config::getInstance();
         $this->donateConfig = \ManiaLivePlugins\eXpansion\DonatePanel\Config::getInstance();
+    }
+    
+    public function isPublicResIsActive(){
+        return !(empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1);
+    }
+    
+    public function isPublicSkipActive(){
+        return !(empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1);
     }
 
     function exp_admin_added($login) {
