@@ -197,7 +197,8 @@ class AdminPanel extends \ManiaLive\Gui\Window {
     }
 
     function onShow() {
-        
+        $this->btnEndRound->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), 'map_endRound'));
+        $this->btnCancelVote->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), 'cancel_vote'));
     }
     
     function destroy() {
