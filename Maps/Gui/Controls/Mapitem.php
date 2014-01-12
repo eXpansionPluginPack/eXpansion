@@ -102,6 +102,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         } else {
             // if in history and admin, add queue button
             if ($isAdmin) {
+                $this->queueButton->colorize('aaa');
                 $this->actionsFrame->addComponent($this->queueButton);
             }
         }
