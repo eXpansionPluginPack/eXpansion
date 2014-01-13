@@ -18,8 +18,10 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $config;
     private $donateConfig;
     private $lastMapUid = null;
-    private $resCount, $resActive;
-    private $skipCount, $skipActive;
+    private $resCount = 0;
+    private $resActive;
+    private $skipCount = 0;
+    private $skipActive;
     private $actions = array();
 
     public function exp_onInit() {
@@ -101,9 +103,37 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $info->setPosition(-160, -46);
             $info->show();
         }
+        $this->showResSkip($login);
+    }
+
+    public function showResSkip($login) {
         $widget = ResSkipButtons::Create($login);
         $widget->setSize(50, 10);
+
+        $nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
+        if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] != -1) {
+            $amount = $this->config->publicSkipAmount[$nbSkips];
+            $widget->setSkipAmount($amount);
+        } else {
+            if ($nbSkips >= count($this->config->publicSkipAmount)) {
+                $widget->setSkipAmount("max");
+            } else {
+                $widget->setSkipAmount("no");
+            }
+        }
+
+        if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] != -1) {
+            $amount = $this->config->publicResAmount[$this->resCount];
+            $widget->setResAmount($amount);
+        } else {
+            if ($this->resCount >= count($this->config->publicResAmount)) {
+                $widget->setResAmount("max");
+            } else {
+                $widget->setResAmount("no");
+            }
+        }
         $widget->setActions($this->actions['res'], $this->actions['skip']);
+
         $widget->setPosition(116.0, -65.0);
         $widget->show();
     }
@@ -274,7 +304,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($this->resActive) {
                 //Already restarted no need to do
                 $this->exp_chatSendServerMessage($this->msg_resOnProgress, $login);
-            } else if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] != -1) {
+            } else if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] != -1 && $this->resCount < count($this->config->publicResAmount)) {
                 $amount = $this->config->publicResAmount[$this->resCount];
                 $this->resActive = true;
 
@@ -302,7 +332,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_chatSendServerMessage($this->msg_prestart, null, array($player->nickName));
 
         if ($this->isPluginLoaded("eXpansion\Maps")) {
-            $this->callPublicMethod("eXpansion\Maps", "replayMapInstant");
+            $this->callPublicMethod("eXpansion\Maps", "replayMapInstant", $bill->getSource_login());
             return;
         }
         $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
@@ -321,7 +351,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         } else {
             $nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
 
-            if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] != -1) {
+            if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] != -1 && $nbSkips < count($this->config->publicSkipAmount)) {
                 $amount = $this->config->publicSkipAmount[$nbSkips];
 
                 if (!empty($this->donateConfig->toLogin))
@@ -331,7 +361,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
                 $bill = $this->exp_startBill($login, $toLogin, $amount, __("Are you sure you want to skip this map", $login), array($this, 'publicSkipMap'));
                 $bill->setSubject('map_skip');
-            }else {
+            } else {
                 if (empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1) {
                     $this->exp_chatSendServerMessage($this->msg_skipUnused, $login);
                 } else {
@@ -392,6 +422,12 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (!$this->skipActive) {
             $this->skipCount = array();
         }
+
+        ResSkipButtons::EraseAll();
+        foreach ($this->storage->players as $player)
+            $this->showResSkip($player->login);
+        foreach ($this->storage->spectators as $player)
+            $this->showResSkip($player->login);
     }
 
 }

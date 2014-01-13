@@ -13,18 +13,15 @@ class ResSkipButtons extends \ManiaLive\Gui\Window {
 
         $this->btn_res = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetButton();
         $this->btn_res->setAlign("left", "center2");
-        $this->btn_res->setText(array('$ff0Pay', '$fffto', '$ff0Restart'));        
         $this->addComponent($this->btn_res);
 
         $this->btn_skip = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetButton();
         $this->btn_skip->setAlign("left", "center2");
-        $this->btn_skip->setText(array('$ff0Pay', '$fffto', '$ff0Skip'));
-        $this->btn_skip->setPosX(16);
         $this->addComponent($this->btn_skip);
 
         $move = new \ManiaLib\Gui\Elements\Quad(36, 18);
         $move->setAlign("left", "top");
-        $move->setPosition(-10,6);
+        $move->setPosition(-10, 6);
         $move->setStyle("Icons128x128_Blink");
         $move->setSubStyle("ShareBlink");
         $move->setScriptEvents();
@@ -121,12 +118,42 @@ class ResSkipButtons extends \ManiaLive\Gui\Window {
                   
                 } 
                 --></script>');
-       $this->addComponent($this->xml);
+        $this->addComponent($this->xml);
     }
 
     public function setActions($res, $skip) {
         $this->btn_res->setAction($res);
         $this->btn_skip->setAction($skip);
+    }
+
+    public function setResAmount($amount) {
+        if ($amount == "no") {
+            $this->removeComponent($this->btn_res);
+            return;
+        }
+        if ($amount == "max") {
+            $this->btn_res->setText(array('$ff0Maximum', '$fffrestarts', '$ff0reached'));
+        } else {
+            $this->btn_res->setText(array('$ff0Pay ' . $amount, '$fffto', '$ff0Restart'));
+        }
+    }
+
+    public function onResize($oldX, $oldY) {
+        parent::onResize($oldX, $oldY);
+        $this->btn_res->setPosX(0);
+        $this->btn_skip->setPosX(16);
+    }
+
+    public function setSkipAmount($amount) {
+        if ($amount == "no") {
+            $this->removeComponent($this->btn_skip);
+            return;
+        }
+        if ($amount == "max") {
+            $this->btn_skip->setText(array('$ff0Maximum', '$fffskips', '$ff0reached'));
+        } else {
+            $this->btn_skip->setText(array('$ff0Pay ' . $amount, '$fffto', '$ff0Skip'));
+        }
     }
 
     function destroy() {
