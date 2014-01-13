@@ -9,6 +9,7 @@ use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerOptions;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\GameOptions;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\AdminPanel;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerControlMain;
+use ManiaLivePlugins\eXpansion\Adm\Gui\Widgets\ResSkipButtons;
 
 class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -19,6 +20,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $lastMapUid = null;
     private $resCount, $resActive;
     private $skipCount, $skipActive;
+    private $actions = array();
 
     public function exp_onInit() {
         //Oliverde8 Menu
@@ -36,8 +38,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_resMax = exp_getMessage("#error#The map has already been restarted. Limit reached!");
         $this->msg_skipUnused = exp_getMessage("#error#Player can't restart tracks on this server");
         $this->msg_skipMax = exp_getMessage("#error#You have skipped to many maps already");
-        $this->msg_prestart = exp_getMessage("#player#Player #variable# %s #player#restarts the challenge!");
-        $this->msg_pskip = exp_getMessage('#player#Player#variable# %s #player#skips the challenge!');
+        $this->msg_prestart = exp_getMessage("#player#Player #variable# %s #player#pays and restarts the challenge!");
+        $this->msg_pskip = exp_getMessage('#player#Player#variable# %s #player#pays and skips the challenge!');
 
         $this->setPublicMethod('isPublicResIsActive');
         $this->setPublicMethod('isPublicSkipActive');
@@ -48,6 +50,9 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->config = Config::getInstance();
         $this->donateConfig = \ManiaLivePlugins\eXpansion\DonatePanel\Config::getInstance();
+
+        $this->actions['skip'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
+        $this->actions['res'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
     }
 
     public function isPublicResIsActive() {
@@ -89,19 +94,25 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function onPlayerConnect($login, $isSpectator) {
 
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login) || !(empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1) || !(empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1)) {
-
+//        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login) || !(empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1) || !(empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1)) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
             $info = AdminPanel::Create($login);
             $info->setSize(50, 20);
             $info->setPosition(-160, -46);
             $info->show();
         }
+        $widget = ResSkipButtons::Create($login);
+        $widget->setSize(50, 10);
+        $widget->setActions($this->actions['res'], $this->actions['skip']);
+        $widget->setPosition(116.0, -65.0);
+        $widget->show();
     }
 
     public function onPlayerDisconnect($login, $reason = null) {
         if (isset($this->skipCount[$login]))
             unset($this->skipCount[$login]);
         AdminPanel::Erase($login);
+        ResSkipButtons::Erase($login);
     }
 
     public function onOliverde8HudMenuReady($menu) {
