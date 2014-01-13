@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
 
-class OnlineTime extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
+class OnlineTime extends StatsWindow {
 
     public static $labelTitles = array('#','NickName', 'Time Online');
     

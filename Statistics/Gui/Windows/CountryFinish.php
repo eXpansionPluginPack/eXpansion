@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
 
-class CountryFinish extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
+class CountryFinish extends \StatsWindow {
 
     public static $labelTitles = array('#','Country', 'nb Finish');
     

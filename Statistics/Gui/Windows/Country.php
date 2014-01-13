@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
 
-class Country extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
+class Country extends StatsWindow {
 
     public static $labelTitles = array('#','Country', 'nb Players');
     

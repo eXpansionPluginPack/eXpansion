@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
 
-class Winners extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
+class Winners extends StatsWindow {
 
     public static $labelTitles = array('#','NickName', 'nb Wins');
     

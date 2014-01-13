@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
 
-class CountryOnlineTime extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
+class CountryOnlineTime extends StatsWindow {
 
     public static $labelTitles = array('#','Country', 'Time Online');
     

@@ -25,55 +25,40 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onReady() {
         parent::exp_onReady();
         $this->enableDatabase();
+        $aHandler = \ManiaLive\Gui\ActionHandler::getInstance();
+        
+        $menu = new Gui\Controls\Menu();
+        $menu->setSize(70,100);
+        $menu->setScale(.8);
+        
+        $menu->addItem('Planets Related', -1, '2B2');
+        $menu->addItem('Top Income sources', $aHandler->createAction(array($this, 'showTopIncome')));
+        $menu->addItem('Top Donators', $aHandler->createAction(array($this, 'showTopDonators')));
+        $menu->addItem('Top Donators All servers', $aHandler->createAction(array($this, 'showTopDonatorsTotal')));
+        $menu->addItem('Top nb Donations', $aHandler->createAction(array($this, 'showQTopDonators')));
+        $menu->addItem('Top nb Donations', $aHandler->createAction(array($this, 'showQTopDonators')));
+        $menu->addItem('Top nb Donations All Servers', $aHandler->createAction(array($this, 'showTopQDonatorsTotal')));
+        
+        $menu->addItem('Players Related', -1, '2B2');
+        $menu->addItem('Top Winners', $aHandler->createAction(array($this, 'showTopWinners')));
+        $menu->addItem('Top Online Time', $aHandler->createAction(array($this, 'showTopOnline')));
+        $menu->addItem('Top Play Time', $aHandler->createAction(array($this, 'showTopPlayTime')));
+        $menu->addItem('Top nb Finish', $aHandler->createAction(array($this, 'showTopFinish')));
+        $menu->addItem('Top nb Map Played', $aHandler->createAction(array($this, 'showTopTrackPlay')));
+        
+        $menu->addItem('Country Related', -1, '2B2');
+        $menu->addItem('Top Country by Finish', $aHandler->createAction(array($this, 'showTopFinishCountry')));
+        $menu->addItem('Top Country Online', $aHandler->createAction(array($this, 'showTopOnlineCountry')));
+        $menu->addItem('Top Winning Country', $aHandler->createAction(array($this, 'showTopWinnerCountry')));
+        $menu->addItem('Top Country by nb Player', $aHandler->createAction(array($this, 'showTopCountry')));
 
-
-        $cmd = $this->registerChatCommand("topincome", 'showTopIncome', 0, true);
-        $cmd->help = "Will  display the list of extension and process that generates most income";
-
-        $cmd = $this->registerChatCommand("topdonators", 'showTopDonators', 0, true);
-        $cmd->help = "Will  display the list of the top donators to this server";
-
-        $cmd = $this->registerChatCommand("topdonatorst", 'showTopDonatorsTotal', 0, true);
-        $cmd->help = "Will  display the list of the top donators in the database(all servers)";
-
-        $cmd = $this->registerChatCommand("topdonatorsq", 'showQTopDonators', 0, true);
-        $cmd->help = "Will  display the list of the top donators of the server by number of donation instead of amount";
-
-        $cmd = $this->registerChatCommand("topdonatorsqt", 'showTopQDonatorsTotal', 0, true);
-        $cmd->help = "Will  display the list of the top donators of the database by number of donation instead of amount";
-
-        $cmd = $this->registerChatCommand("topwinners", 'showTopWinners', 0, true);
-        $cmd->help = "Will  display the list of the top winning players";
-
-        $cmd = $this->registerChatCommand("toponlinetime", 'showTopOnline', 0, true);
-        $cmd->help = "Will  display the list of the players who spent most their time on this server";
-
-        $cmd = $this->registerChatCommand("topplaytime", 'showTopPlayTime', 0, true);
-        $cmd->help = "Will  display the list of the players who spent most their time playing on this server";
-
-        $cmd = $this->registerChatCommand("topfinish", 'showTopFinish', 0, true);
-        $cmd->help = "Will  display the list of the players who finished tracks most often";
-
-        $cmd = $this->registerChatCommand("topmapplayed", 'showTopTrackPlay', 0, true);
-        $cmd->help = "Will  display the list of the players who played on most tracks";
-
-        $cmd = $this->registerChatCommand("topcountryfinish", 'showTopFinishCountry', 0, true);
-        $cmd->help = "Will  display the list of the countries which has players who finished tracks most often";
-
-        $cmd = $this->registerChatCommand("topcountryonline", 'showTopOnlineCountry', 0, true);
-        $cmd->help = "Will  display the list of the countries which has players who finished tracks most often";
-
-        $cmd = $this->registerChatCommand("topcountrywinner", 'showTopWinnerCountry', 0, true);
-        $cmd->help = "Will  display the list of the countries which has players who winned on tracks most often";
-
-        $cmd = $this->registerChatCommand("topcountry", 'showTopCountry', 0, true);
-        $cmd->help = "Will  display the list of the countries which has the most players";
-
-
-
+        Gui\Windows\StatsWindow::$menuFrame = $menu;
+        
         if ($this->isPluginLoaded("eXpansion\Adm")) {
             
         }
+        
+        $this->registerChatCommand("stats", "showTopWinners", 0, true);
     }
 
     public function onOliverde8HudMenuReady($menu) {
@@ -207,7 +192,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Top Planet Incomes', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -229,7 +214,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Top Donators(Amount)', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -252,7 +237,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Top Server Donators(Amount)', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -274,7 +259,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Top Donators(Amount)', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -297,7 +282,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Top Server Donators(Amount)', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -316,7 +301,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Top Server Winners', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -335,7 +320,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Top Online Time', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -356,7 +341,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Top Play Time', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -377,7 +362,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Top Number tracks played', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -398,7 +383,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Top Finish', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -419,7 +404,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Country with top Finish', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -439,7 +424,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Country with top Online Time', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -459,7 +444,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Most winning country', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 
@@ -479,7 +464,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Country with most players', $login));
         $window->centerOnScreen();
         $window->populateList($datas);
-        $window->setSize(70, 100);
+        $window->setSize(140, 100);
         $window->show();
     }
 

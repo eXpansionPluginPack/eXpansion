@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
 
-class TrackPlay extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
+class TrackPlay extends StatsWindow {
 
     public static $labelTitles = array('#','NickName', 'nb Maps');
     

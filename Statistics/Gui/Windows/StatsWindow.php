@@ -4,25 +4,18 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
 
-class Country extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
+abstract class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
 
-    public static $labelTitles = array('#','Country', 'nb Players');
+    public static $menuFrame = null;
     
-    protected function getKeys() {
-        return array(0, 'nation', 'nb');
+    protected function onConstruct() {
+        parent::onConstruct();
+        
+        $this->setPagerPosition(42, 0);
+        
+        $this->mainFrame->addComponent(self::$menuFrame);
     }
-
-    protected function getLabel($i) {
-        return isset(self::$labelTitles[$i]) ? self::$labelTitles[$i] : "";
-    }
-
-    protected function getWidths() {
-        return array(1, 5, 3);
-    }
-
-    protected function getFormaters() {
-        return array(null, \ManiaLivePlugins\eXpansion\Gui\Formaters\Country::getInstance(), null);
-    }
+  
 }
 
 ?>

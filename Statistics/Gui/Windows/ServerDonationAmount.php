@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
 
-class ServerDonationAmount extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow {
+class ServerDonationAmount extends StatsWindow {
 
     public static $labelTitles = array('#','NickName', 'Amount of Planets');
     
