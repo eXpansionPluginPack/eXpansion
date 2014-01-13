@@ -32,6 +32,9 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->setPublicMethod("restartMap");
         $this->setPublicMethod("skipMap");
+        $this->setPublicMethod("cancelVote");
+        $this->setPublicMethod("forceEndRound");
+
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
@@ -1357,6 +1360,22 @@ Other server might use the same blacklist file!!');
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
             return;
+        }
+    }
+
+    function cancelVote($fromLogin) {
+        $admin = $this->storage->getPlayerObject($fromLogin);
+        $vote = $this->connection->getCurrentCallVote();
+        if (!empty($vote->cmdName)) {
+            try {
+                $this->connection->cancelVote();
+                $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#set allow respawn to #variable# %s', null, array($admin->nickName));
+                return;
+            } catch (\Exception $e) {
+                $this->exp_chatSendServerMessage('#admin_error#Error: Server said %1$s', $admin->login, array($e->getMessage()));                
+            }
+        } else {
+            $this->exp_chatSendServerMessage('#admin_error#Can\'t cancel a vote, no vote in progress!', $admin->login);
         }
     }
 

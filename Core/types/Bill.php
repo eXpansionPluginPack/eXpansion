@@ -48,7 +48,7 @@ class Bill {
     }
 
     public function getAmount() {
-        return $this->amount;
+        return intval($this->amount);
     }
 
     public function getMsg() {

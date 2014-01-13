@@ -15,7 +15,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
     protected $goButton;
     protected $showRecsButton;
     protected $removeButton;
-    protected $label_map, $label_author, $label_authortime, $label_localrec, $label_rating;
+    public $label_map, $label_author, $label_authortime, $label_localrec, $label_rating;
     protected $frame;
     protected $actionsFrame;
     private $queueMapAction;
@@ -24,10 +24,11 @@ class Mapitem extends \ManiaLive\Gui\Control {
     private $showRecsAction;
     private $widths;
 
-    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap $sortableMap, $controller, $isAdmin, $widths, $sizeX) {
+    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap $sortableMap, $controller, $isAdmin, $isHistory, $widths, $sizeX) {
         $sizeY = 5.5;
         $this->isAdmin = $isAdmin;
         $this->widths = $widths;
+        $this->isHistory = $isHistory;
 
         $scaledSizes = Gui::getScaledSize($this->widths, ($sizeX / .8) - 7);
 
@@ -44,13 +45,15 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
         $this->label_map = new \ManiaLib\Gui\Elements\Label($scaledSizes[0], 4);
         $this->label_map->setAlign('left', 'center');
-        $this->label_map->setText(Formatting::stripColors($sortableMap->name));
-        $this->label_map->setScale(0.8);
+        $this->label_map->setText($sortableMap->map->name);        
+        $this->label_map->setScale(0.8);        
+        $this->label_map->setTextPrefix('$s');
+        $this->label_map->setTextEmboss();
         $this->frame->addComponent($this->label_map);
 
         $this->label_author = new \ManiaLib\Gui\Elements\Label($scaledSizes[1], 4);
         $this->label_author->setAlign('left', 'center');
-        $this->label_author->setScale(0.8);
+        $this->label_author->setScale(0.8);        
         $this->label_author->setText($sortableMap->author);
         $this->frame->addComponent($this->label_author);
 
@@ -83,18 +86,27 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($this->actionsFrame);
 
         $this->queueButton = new MyButton(26, 5);
-        $this->queueButton->setText(__("Queue", $login));
+        $this->queueButton->setText(__("Wish", $login));
         $this->queueButton->setAction($this->queueMapAction);
         $this->queueButton->colorize('2a2');
         $this->queueButton->setScale(0.5);
-        $this->actionsFrame->addComponent($this->queueButton);
         if (Maplist::$localrecordsLoaded) {
             $this->showRecsButton = new MyButton(26, 5);
             $this->showRecsButton->setText(__("Recs", $login));
             $this->showRecsButton->setAction($this->showRecsAction);
-            $this->showRecsButton->colorize('2a2');
             $this->showRecsButton->setScale(0.5);
             $this->actionsFrame->addComponent($this->showRecsButton);
+        }
+
+        // if not in history, add queue
+        if (!$isHistory) {
+            $this->actionsFrame->addComponent($this->queueButton);
+        } else {
+            // if in history and admin, add queue button
+            if ($isAdmin) {
+                $this->queueButton->colorize('aaa');
+                $this->actionsFrame->addComponent($this->queueButton);
+            }
         }
         if ($this->isAdmin) {
             $this->goButton = new MyButton(26, 5);
@@ -115,6 +127,15 @@ class Mapitem extends \ManiaLive\Gui\Control {
             $this->removeButton->colorize('a22');
             $this->removeButton->setScale(0.5);
             $this->actionsFrame->addComponent($this->removeButton);
+        }
+
+        if ($isHistory) {
+            $this->label_author->setTextPrefix('$aaa');
+            $this->label_map->setTextPrefix('$aaa');
+            $this->label_map->setText(Formatting::stripColors($sortableMap->name));
+            $this->label_rating->setTextPrefix('$aaa');
+            $this->label_authortime->setTextPrefix('$aaa');
+            $this->label_localrec->setTextPrefix('$aaa');
         }
 
         $this->addComponent($this->frame);
