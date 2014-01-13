@@ -187,7 +187,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (isset($this->pendingRatings[$login])) {
             $oldRating = $this->pendingRatings[$login];
         } else if (isset($this->oldRatings[$login])) {
-            $oldRating = $this->oldRatings[$login];
+            $oldRating = $this->oldRatings[$login]->vote;
         } else {
             $this->ratingTotal++;
         }
@@ -218,7 +218,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 } else {
                     $playerRating = $query->playerRating;
                 }
-            }
+            } 
 
             // $rating = (($this->rating - 1) / 4) * 100;
             $rating = ($this->rating / 5) * 100;
