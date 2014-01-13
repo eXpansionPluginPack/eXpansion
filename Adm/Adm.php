@@ -332,7 +332,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_chatSendServerMessage($this->msg_prestart, null, array($player->nickName));
 
         if ($this->isPluginLoaded("eXpansion\Maps")) {
-            $this->callPublicMethod("eXpansion\Maps", "replayMapInstant", $bill->getSource_login());
+            $this->callPublicMethod("eXpansion\Maps", "replayMap", $bill->getSource_login());
             return;
         }
         $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
