@@ -58,7 +58,7 @@ class Button extends \ManiaLive\Gui\Control {
 
     function onDraw() {
         $this->clearComponents();
-
+        
         if ($this->isActive)
             $this->addComponent($this->activeFrame);
 

@@ -43,19 +43,31 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
             $i++;
         }
     }
+    
+    public function setPagerPosition($posX, $posY){
+        $this->pager->setPosX($posX);
+        $this->pager->setPosY($posY-4);
+        
+        $this->frame->setPosX($posX);
+        $this->frame->setPosY($posY);
+        
+        $this->onResize($this->getSizeX(), $this->getSizeY());
+    }
 
     public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $scaledSizes = Gui::getScaledSize($this->getWidths(), ($this->getSizeX() / 0.8) - 5);
+        
+        $sizeX = $this->getSizeX() - $this->pager->getPosX();
+        $this->pager->setSize($sizeX, $this->getSizeY() - 15 - $this->pager->getPosY());
+        
+        $scaledSizes = Gui::getScaledSize($this->getWidths(), $sizeX);
         $i = 0;
-        foreach ($scaledSizes as $sizeX) {
-            $this->labels[$i]->setSizeX($sizeX);
+        foreach ($scaledSizes as $x) {
+            $this->labels[$i]->setSizeX($x);
             $i++;
-        }
-
-        $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 7);
+        }        
         foreach ($this->items as $item)
-            $item->setSizeX($this->getSizeX());
+            $item->setSizeX($sizeX);
     }
 
     public function onShow() {
