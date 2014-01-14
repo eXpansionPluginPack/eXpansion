@@ -13,24 +13,24 @@ Sauter la Map
 Cancel Vote
 Annuler le Vote
 
-#variable#%1$s #rank#initiated restart map vote..
-#variable#%1$s #rank#a initié un vote de redémarrage de map..
+#variable#%1$s #vote#initiated restart map vote..
+#variable#%1$s #vote#a initié un vote de redémarrage de map..
 
-#admin_error# $iMust run skip vote within first %1$s seconds of match start..
-#admin_error# $iLe vote de saut de map doit être effectué lors des premières %1$s secondes aprés le démarrage..
+#vote_failure# $iMust run skip vote within first %1$s seconds of match start..
+#vote_failure# $iLe vote de saut de map doit être effectué lors des premières %1$s secondes aprés le démarrage..
 
-#variable#%1$s #rank#initiated skip map vote..
-#variable#%1$s #rank#a initié un vote de saut de map..
+#variable#%1$s #vote#initiated skip map vote..
+#variable#%1$s #vote#a initié un vote de saut de map..
 
-#record# $iVote passed!
-#record# $iVote passe!
+#vote_success# $iVote passed!
+#vote_success# $iVote passe!
 
-#admin_error# $iLe vote a succédé!
-#admin_error# $iLe vote a échoué!
+#vote_failure# $iLe vote a succédé!
+#vote_failure# $iLe vote a échoué!
 
 #admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
 #admin_action#Admin #variable#%1$s #admin_action# a annulé le vote!
 
-#admin_error# $iVote failed!
-#translate# #admin_error# $iVote failed!
+#vote_failure# $iVote failed!
+#translate# #vote_failure# $iVote failed!
 

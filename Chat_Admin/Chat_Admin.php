@@ -600,7 +600,7 @@ Other server might use the same blacklist file!!');
                     $this->setFinishTimeout($fromLogin, $params);
                     break;
                 default:
-                   $msg = exp_getMessage("possible parameters: pointslimit, newrules, wu, fto, ftimeout");
+                    $msg = exp_getMessage("possible parameters: pointslimit, newrules, wu, fto, ftimeout");
                     $this->exp_chatSendServerMessage($msg, $fromLogin);
                     break;
             }
@@ -1376,9 +1376,9 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         $vote = $this->connection->getCurrentCallVote();
         if (!empty($vote->cmdName)) {
-            try {
+            try {                
                 $this->connection->cancelVote();
-                $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#set allow respawn to #variable# %s', null, array($admin->nickName));
+                $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#cancels the vote.', null, array($admin->nickName));
                 return;
             } catch (\Exception $e) {
                 $this->exp_chatSendServerMessage('#admin_error#Error: Server said %1$s', $admin->login, array($e->getMessage()));

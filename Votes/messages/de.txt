@@ -13,20 +13,20 @@ Map überspringen
 Cancel Vote
 Abstimmung abbrechen
 
-#variable#%1$s #rank#initiated restart map vote..
-#variable#%1$s #rank#hat eine Abstimmung zum Neustart der Map eingeleitet..
+#variable#%1$s #vote#initiated restart map vote..
+#variable#%1$s #vote#hat eine Abstimmung zum Neustart der Map eingeleitet..
 
-#admin_error# $iMust run skip vote within first %1$s seconds of match start..
-#admin_error# $iDie Abstimmung zum Überspringen der Map muss innerhalb von %1$s Sekunden nach dem Start erfolgen..
+#vote_failure# $iMust run skip vote within first %1$s seconds of match start..
+#vote_failure# $iDie Abstimmung zum Überspringen der Map muss innerhalb von %1$s Sekunden nach dem Start erfolgen..
 
-#variable#%1$s #rank#initiated skip map vote..
-#variable#%1$s #rank#hat eine Abstimmung zum Überspringen der Map eingeleitet..
+#variable#%1$s #vote#initiated skip map vote..
+#variable#%1$s #vote#hat eine Abstimmung zum Überspringen der Map eingeleitet..
 
-#record# $iVote passed!
-#record# $iAbstimmung erfolgreich!
+#vote_success# $iVote passed!
+#vote_success# $iAbstimmung erfolgreich!
 
-#admin_error# $iVote failed!
-#admin_error# $iAbstimmung abgelehnt!
+#vote_failure# $iVote failed!
+#vote_failure# $iAbstimmung abgelehnt!
 
 #admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
 #admin_action#Admin #variable#%1$s #admin_action# hat die Abstimmung abgebrochen!

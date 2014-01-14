@@ -4,11 +4,11 @@ namespace ManiaLivePlugins\eXpansion\Chat;
 
 class Config extends \ManiaLib\Utils\Singleton {
 
-    public $publicChatColor = '$ff0';
+    public $publicChatColor = '$fff';
     public $otherServerChatColor = '$0d0';
-    public $adminChatColor = '$ff0';
+    public $adminChatColor = '$fff';
     public $adminSign = "";
-    public $chatSeparator = '$w$0ff·$z$s ';
+    public $chatSeparator = '$2ef»$z$s ';
     public $allowMPcolors = true;
 
 }

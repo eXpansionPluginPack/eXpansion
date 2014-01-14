@@ -184,7 +184,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connection->callVote($vote, $this->config->restartVote_ratio, ($this->config->restartVote_timeout * 1000), $this->config->restartVote_voters);
 
             $player = $this->storage->getPlayerObject($login);
-            $msg = exp_getMessage('#variable#%1$s #rank#initiated restart map vote..');
+            $msg = exp_getMessage('#variable#%1$s #vote#initiated restart map vote..');
             $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage("[Notice] " . $e->getMessage(), $login);
@@ -202,7 +202,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connection->callVote($vote, $this->config->skipVote_ratio, ($this->config->skipVote_timeout * 1000), $this->config->skipVote_voters);
 
             $player = $this->storage->getPlayerObject($login);
-            $msg = exp_getMessage('#variable#%1$s #rank#initiated skip map vote..');
+            $msg = exp_getMessage('#variable#%1$s #vote#initiated skip map vote..');
             $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage("[Notice] " . $e->getMessage(), $login);
@@ -234,7 +234,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($cmdName != "Replay" && $cmdName != "Skip")
                 return;
 
-            $msg = exp_getMessage('#record# $iVote passed!');
+            $msg = exp_getMessage('#vote_success# $iVote passed!');
             $this->exp_chatSendServerMessage($msg, null);
             $voter = $this->voter;
             if ($cmdName == "Replay") {
@@ -252,7 +252,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($stateName == "VoteFailed") {
             if ($cmdName != "Replay" && $cmdName != "Skip")
                 return;
-            $msg = exp_getMessage('#admin_error# $iVote failed!');
+            $msg = exp_getMessage('#vote_failure# $iVote failed!');
             $this->exp_chatSendServerMessage($msg, null);
             $this->voter = null;
         }

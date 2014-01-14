@@ -13,20 +13,20 @@ Seuraava kartta
 Cancel Vote
 Peruuta äänestys
 
-#variable#%1$s #rank#initiated restart map vote..
-#variable#%1$s #rank#pyytää äänestämään: pelaataanko kartta uudelleen? F1 = kyllä, F2 = ei
+#variable#%1$s #vote#initiated restart map vote..
+#variable#%1$s #vote#pyytää äänestämään: pelaataanko kartta uudelleen? F1 = kyllä, F2 = ei
 
-#admin_error# $iMust run skip vote within first %1$s seconds of match start..
-#admin_error# $iMust run skip vote within first %1$s seconds of match start..
+#vote_failure# $iMust run skip vote within first %1$s seconds of match start..
+#vote_failure# $iMust run skip vote within first %1$s seconds of match start..
 
-#variable#%1$s #rank#initiated skip map vote..
-#variable#%1$s #rank#pyytää äänestämään: hyppää seuraavaan karttaan? F1 = kyllä, F2 = ei
+#variable#%1$s #vote#initiated skip map vote..
+#variable#%1$s #vote#pyytää äänestämään: hyppää seuraavaan karttaan? F1 = kyllä, F2 = ei
 
-#record# $iVote passed!
-#record# $iÄänestys onnistui!
+#vote_success# $iVote passed!
+#vote_success# $iÄänestys onnistui!
 
-#admin_error# $iVote failed!
-#admin_error# $iÄänestys ei onnistunut!
+#vote_failure# $iVote failed!
+#vote_failure# $iÄänestys ei onnistunut!
 
 #admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
 #admin_action#Admin #variable#%1$s #admin_action# hylkäsi äänestyksen!
