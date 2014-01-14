@@ -122,7 +122,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_nextQueue = exp_getMessage('#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s');  // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
         $this->msg_nextMap = exp_getMessage('#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#');  // '%1$s' = Map Name, '%2$s' = Map author
         $this->msg_queueNow = exp_getMessage('#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s');  // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
-        $this->msg_jukehelp = exp_getMessage('params: drop, reset and show');
+        $this->msg_jukehelp = exp_getMessage('#queue#/jb uses next params: drop, reset and show');
         $this->msg_errDwld = exp_getMessage('#admin_error#Error downloading, or MX is down!');
         $this->msg_errToLarge = exp_getMessage('#admin_error#The map is to large to be added to a server');
         $this->msg_errMxId = exp_getMessage("#admin_error#You must include a MX map ID!");

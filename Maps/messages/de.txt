@@ -118,8 +118,8 @@ Warteschlange
 #queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
 #queue#Map wechselt zu #variable#%1$s  #queue#von #variable#%2$s#queue#, gewünscht von #variable#%3$s
 
-/jb uses next params: drop, reset and show
-/jb braucht noch folgende Optionen: drop, reset oder show
+#queue#/jb uses next params: drop, reset and show
+#queue#/jb braucht noch folgende Optionen: drop, reset oder show
 
 #admin_error#Error downloading, or MX is down!
 #admin_error#Kann nicht herunterladen, MX ist nicht erreichbar!

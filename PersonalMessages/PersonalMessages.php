@@ -15,13 +15,14 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     private $config;
 
     /** @var \ManiaLivePlugins\eXpansion\Core\i18n\Message */
-    private $msg_noLogin, $msg_noMessage, $msg_noReply, $msg_self;
+    private $msg_noLogin, $msg_noMessage, $msg_noReply, $msg_self, $msg_help;
 
     public function exp_onLoad() {
         $this->msg_noLogin = exp_getMessage('#personalmessage#Player with login "%1$s" is not found at server!');
         $this->msg_noMessage = exp_getMessage("#personalmessage#No message to send to!");
         $this->msg_noReply = exp_getMessage("#personalmessage#No one to reply back!");
         $this->msg_self = exp_getMessage("#personalmessage#You can't send a message to yourself.");
+        $this->msg_help = exp_getMessage("#personalmessage#Usage /pm [login] your personal message here");
     }
 
     public function exp_onReady() {
@@ -66,7 +67,11 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $window->show();
     }
 
-    function chatSendPersonalMessage($login, $params) {
+    function chatSendPersonalMessage($login, $params = false) {
+        if ($params === false) {
+            $this->exp_chatSendServerMessage($this->msg_help, $login);
+            return;
+        }
         $message = explode(" ", $params);
         $target = array_shift($message);
         $message = implode(" ", $message);
@@ -91,7 +96,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $login);
             $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $target);
         } catch (\Exception $e) {
-           $this->console("Error:" . $e->getMessage());
+            $this->console("Error:" . $e->getMessage());
         }
     }
 
@@ -106,7 +111,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $this->message[$login], $login);
             $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $this->message[$login], $target);
         } catch (\Exception $e) {
-           $this->console("Error:" . $e->getMessage());
+            $this->console("Error:" . $e->getMessage());
         }
     }
 
@@ -126,7 +131,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
                     $this->connection->chatSendServerMessage($color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message, $reciever);
             }
         } catch (\Exception $e) {
-           $this->console("Error:" . $e->getMessage());
+            $this->console("Error:" . $e->getMessage());
         }
     }
 
@@ -145,7 +150,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
                 $this->exp_chatSendServerMessage($this->msg_noReply, $login);
             }
         } catch (\Exception $e) {
-           $this->console("Error sending a reply" . $e->getMessage());
+            $this->console("Error sending a reply" . $e->getMessage());
         }
     }
 
