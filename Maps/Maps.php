@@ -86,8 +86,10 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         // $this->registerChatCommand('history', "showHistoryList", 0, true);
 
         $this->registerChatCommand('nextmap', "chat_nextMap", 0, true);
-
+        
+        $this->registerChatCommand('jb', "jukebox", 0, true);
         $this->registerChatCommand('jb', "jukebox", 1, true);
+
 //$this->registerChatCommand('history', "chat_history", 0, true);
 //$this->registerChatCommand('queue', "chat_showQueue", 0, true);
 
@@ -120,12 +122,13 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_nextQueue = exp_getMessage('#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s');  // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
         $this->msg_nextMap = exp_getMessage('#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#');  // '%1$s' = Map Name, '%2$s' = Map author
         $this->msg_queueNow = exp_getMessage('#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s');  // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
-        $this->msg_jukehelp = exp_getMessage('/jb uses next params: drop, reset and show');
+        $this->msg_jukehelp = exp_getMessage('params: drop, reset and show');
         $this->msg_errDwld = exp_getMessage('#admin_error#Error downloading, or MX is down!');
         $this->msg_errToLarge = exp_getMessage('#admin_error#The map is to large to be added to a server');
         $this->msg_errMxId = exp_getMessage("#admin_error#You must include a MX map ID!");
         $this->msg_mapAdd = exp_getMessage('#admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s');
         $this->enableDedicatedEvents();
+        $this->console("jukeOnLoad");
     }
 
     /**
@@ -335,7 +338,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function jukebox($login, $args = "") {
-        echo $args;
         try {
             switch (strtolower($args)) {
                 case "drop":
@@ -354,7 +356,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     break;
             }
         } catch (\Exception $e) {
-            echo $e->getFile() . ":" . $e->getLine();
+            $this->console($e->getFile() . ":" . $e->getLine());
         }
     }
 

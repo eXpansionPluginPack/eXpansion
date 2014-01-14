@@ -42,6 +42,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->dataAccess = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
         $this->registerChatCommand("mx", "chatMX", 2, true);
         $this->registerChatCommand("mx", "chatMX", 1, true);
+        $this->registerChatCommand("mx", "chatMX", 0, true);
 
         $cmd = AdminGroups::addAdminCommand('add', $this, 'addMap', 'server_maps'); //
         $cmd->setHelp('Adds a map from ManiaExchange');
@@ -113,7 +114,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->callPublicMethod('Standard\Menubar', 'addButton', __('Search Maps'), array($this, 'mxSearch'), true);
     }
 
-    public function chatMX($login, $arg, $param = null) {
+    public function chatMX($login, $arg = "", $param = null) {
         switch ($arg) {
             case "add":
                 $this->addMap($login, $param);
@@ -129,7 +130,8 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 break;
             case "help":
             default:
-                $this->connection->chatSendServerMessage(__('Usage.. /mx queue [id] or /mx search "your search terms here"'), $login);
+                $msg = exp_getMessage("usage /mx add [id], /mx queue [id], /mx search \"terms here\"  \"authorname\" ,/mx author \"name\" ");  
+                $this->exp_chatSendServerMessage($msg, $login);
                 break;
         }
     }

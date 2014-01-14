@@ -27,8 +27,9 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
         $this->enableDedicatedEvents();       
+        $this->registerChatCommand("hud", "hudCommands", 0, true);
         $this->registerChatCommand("hud", "hudCommands", 1, true);
-
+        $this->msg_params = exp_getMessage("possible parameters: move, freeze, reset");
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
