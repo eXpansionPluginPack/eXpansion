@@ -83,7 +83,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->registerChatCommand('list', "showMapList", 0, true);
         $this->registerChatCommand('maps', "showMapList", 0, true);
-        $this->registerChatCommand('history', "showHistoryList", 0, true);
+        // $this->registerChatCommand('history', "showHistoryList", 0, true);
 
         $this->registerChatCommand('nextmap', "chat_nextMap", 0, true);
 
