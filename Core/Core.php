@@ -16,6 +16,7 @@ use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
  */
 class Core extends types\ExpPlugin {
 
+    const EXP_VERSION = "0.9";
     /**
      * Last used game mode
      * @var \DedicatedApi\Structures\GameInfos

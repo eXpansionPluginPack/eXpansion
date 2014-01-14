@@ -1,8 +1,9 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Core\types {
+    
 
-    use DedicatedApi\Structures\GameInfos;
+use DedicatedApi\Structures\GameInfos;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Config;
 use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
@@ -64,6 +65,8 @@ use ManiaLivePlugins\eXpansion\Database\Database;
         private $_isReady = false;
 
         public final function onInit() {
+            $this->setVersion(\ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
+
             ErrorHandler::$server = $this->storage->serverLogin;
             try {
                 $this->enableDatabase();

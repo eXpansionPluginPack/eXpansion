@@ -51,7 +51,7 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$line = new Infoline("Manialive version: " . \ManiaLiveApplication\Version);
 	$this->frame->addComponent($line);
 
-	$line = new Infoline("eXpansion version: " . \ManiaLivePlugins\eXpansion\Core\Core::getMaxVersion());
+	$line = new Infoline("eXpansion version: " . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
 	$this->frame->addComponent($line);
 
 	$line = new Infoline("");

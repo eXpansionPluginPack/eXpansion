@@ -10,25 +10,17 @@ use ManiaLive\Utilities\Console;
  * @author oliverde8
  */
 class ExpPlugin extends BasicPlugin {
-
-    /**
-     * The Version of the Expansion Pack
-     * @var type 
-     */
-    private static $version = '0.9';
-
+    
     /**
      * The actual Version of the Expansion Pack
      * @return type
      */
     public static function getMaxVersion() {
-        return self::$version;
+        return \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION;     
     }
 
-    public function exp_onInit() {
-        $this->setVersion(self::$version);
-        parent::exp_onInit();
-        //Setting up the global Version of the eXpansion plugin pack
+    public function exp_onInit() {        
+        
     }
 
 }
