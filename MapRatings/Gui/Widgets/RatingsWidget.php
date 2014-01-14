@@ -141,7 +141,7 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
         $this->frame->clearComponents();       
         $login = $this->getRecipient();        
         
-        $this->gauge->setContent('<gauge scale="0.7" sizen="35 8" drawblockbg="0" rotation="180" grading="1" ratio="' . ($number/5) . '" centered="0" />');
+        $this->gauge->setContent('<gauge scale="0.7" sizen="35 8" drawblockbg="0" rotation="0" posn="-24 0" grading="1" ratio="' . ($number/5) . '" centered="0" />');
         $this->frame->addComponent($this->gauge);
 
         $score = ($number / 5) * 100;
