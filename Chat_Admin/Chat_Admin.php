@@ -582,6 +582,7 @@ Other server might use the same blacklist file!!');
             $command = array_shift($params);
 
             switch (strtolower($command)) {
+                case "limit":
                 case "pointslimit":
                     $this->setRoundPointsLimit($fromLogin, $params);
                     break;
@@ -599,7 +600,8 @@ Other server might use the same blacklist file!!');
                     $this->setFinishTimeout($fromLogin, $params);
                     break;
                 default:
-                    $this->exp_chatSendServerMessage("command not found", $fromLogin);
+                   $msg = exp_getMessage("possible parameters: pointslimit, newrules, wu, fto, ftimeout");
+                    $this->exp_chatSendServerMessage($msg, $fromLogin);
                     break;
             }
         } catch (\Exception $e) {
