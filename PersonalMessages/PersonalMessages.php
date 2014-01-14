@@ -135,7 +135,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         }
     }
 
-    public function sendReply($login, $message) {
+    public function sendReply($login, $message = "") {
         try {
             if (empty($message)) {
                 $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
