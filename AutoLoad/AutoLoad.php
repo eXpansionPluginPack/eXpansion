@@ -56,13 +56,20 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if (!empty($recheck)) {
             $this->dumpException("Couldn't Autoload all required plugins", new \Maniaplanet\WebServices\Exception("Autoload failed."));
+            $this->connection->chatSendServerMessage("couldn't Autoload all required plugins, see console log for more details.");
             $this->console("Not all required plugins were loaded, list of not loaded plugins: ");
             foreach ($recheck as $pname) {
                 $this->console($pname);
             }
+        } else {
+            $this->connection->chatSendServerMessage("");
+            $this->connection->chatSendServerMessage('$fff$w$o$s e $0dfX $fffp a n s i o n');
+            $this->connection->chatSendServerMessage('$000$o$iPluginPack for ManiaLive');
+            $this->connection->chatSendServerMessage("");
+            $this->connection->chatSendServerMessage('$fffRunning with version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
         }
     }
-    
+
     public function loadPlugins($list, \ManiaLive\PluginHandler\PluginHandler $pHandler) {
         $recheck = array();
         $disabled = Config::getInstance()->disable;
@@ -81,14 +88,18 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     }
                     if (!$pHandler->load($pname)) {
                         $this->console("[" . $pname . "]..............................FAIL -> will retry");
+
+                        $this->connection->chatSendServerMessage('Starting ' . $pname . '........$f00 Failure');
                         $recheck[] = $pname;
                     } else {
                         $this->debug("[" . $pname . "]..............................SUCCESS");
+                        $this->connection->chatSendServerMessage('Starting ' . $pname . '........$0f0 Success');
                     }
                 }
             } catch (\Exception $ex) {
                 print_r($ex->getMessage());
                 \ManiaLivePlugins\eXpansion\Core\types\ErrorHandler::displayAndLogError($ex);
+                $this->connection->chatSendServerMessage("Error has occurred while loading plugins pack, see console for details.");
                 $recheck[] = $pname;
             }
         }

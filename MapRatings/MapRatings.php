@@ -338,8 +338,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $info->setSize(30, 6);
         // $info->setPosition(158, 81);
         $info->setStars($this->rating, $this->ratingTotal);
-        $info->show();
-        $this->sendRatingMsg($login, null);
+        $info->show();        
     }
 
     function onPlayerDisconnect($login, $reason = null) {

@@ -17,6 +17,7 @@ use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
 class Core extends types\ExpPlugin {
 
     const EXP_VERSION = "0.9";
+
     /**
      * Last used game mode
      * @var \DedicatedApi\Structures\GameInfos
@@ -59,7 +60,7 @@ class Core extends types\ExpPlugin {
     /**
      * 
      */
-    function exp_onInit() {        
+    function exp_onInit() {
         $logFile = "manialive-" . $this->storage->serverLogin . ".console.log";
         if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . "logs" . DIRECTORY_SEPARATOR . $logFile)) {
             unlink(__DIR__ . DIRECTORY_SEPARATOR . "logs" . DIRECTORY_SEPARATOR . $logFile);
@@ -76,8 +77,6 @@ class Core extends types\ExpPlugin {
     function exp_onLoad() {
 
         $this->enableDedicatedEvents();
-
-        $this->connection->chatSendServerMessage('$fffStarting e$a00X$fffpansion v. ' . $this->getVersion());
         $config = Config::getInstance();
         i18n::getInstance()->start();
         DataAccess::getInstance()->start();
@@ -145,6 +144,10 @@ EOT;
         }
 
         $this->lastGameMode = \ManiaLive\Data\Storage::getInstance()->gameInfos->gameMode;
+        
+        $this->connection->chatSendServerMessage('$fff$w$o$s e $0dfX $fffp a n s i o n');
+        $this->connection->chatSendServerMessage('$000$o$iPluginPack for ManiaLive');
+        $this->connection->chatSendServerMessage("");        
     }
 
     /**
@@ -153,7 +156,7 @@ EOT;
     public function exp_onReady() {
         $this->config = Config::getInstance();
         $this->registerChatCommand("info", "showInfo", 0, true);
-        $this->registerChatCommand("serverlogin", "serverlogin", 0, true);        
+        $this->registerChatCommand("serverlogin", "serverlogin", 0, true);
 
         $window = new Gui\Windows\QuitWindow();
         $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
@@ -348,7 +351,7 @@ EOT;
     public function onPlayerInfoChanged($playerInfo) {
         if ($this->enableCalculation == false)
             return;
-                
+
         $this->update = true;
         $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
 
@@ -679,5 +682,4 @@ EOT;
     }
 
 }
-
 ?>
