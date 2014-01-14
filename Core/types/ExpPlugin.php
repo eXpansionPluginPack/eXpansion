@@ -15,7 +15,7 @@ class ExpPlugin extends BasicPlugin {
      * The Version of the Expansion Pack
      * @var type 
      */
-    private static $version = '0.0.1';
+    private static $version = '0.9';
 
     /**
      * The actual Version of the Expansion Pack
