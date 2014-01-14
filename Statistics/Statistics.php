@@ -327,7 +327,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showTopPlayTime($login) {
 
         $this->storage->serverLogin;
-        $sql = 'SELECT player_login as login, player_nickname as nickname, SUM(record_nbFinish * record_avgScore) as time'
+        $sql = 'SELECT player_login as login, player_nickname as nickname, SUM(record_nbFinish * record_avgScore)/1000 as time'
                 . ' FROM exp_records, exp_players'
                 . ' WHERE record_playerlogin = player_login'
                 . ' GROUP BY player_login, player_nickname'
