@@ -532,7 +532,8 @@ Other server might use the same blacklist file!!');
                     $this->setAllWarmUpDuration($fromLogin, $params);
                     break;
                 default:
-                    $this->exp_chatSendServerMessage("command not found", $fromLogin);
+                    $msg = exp_getMessage("possible parameters: limit, dynamic, wu");
+                    $this->exp_chatSendServerMessage($msg, $fromLogin);
                     break;
             }
         } catch (\Exception $e) {
@@ -567,7 +568,8 @@ Other server might use the same blacklist file!!');
                     $this->setFinishTimeout($fromLogin, $params);
                     break;
                 default:
-                    $this->exp_chatSendServerMessage("command not found", $fromLogin);
+                    $msg = exp_getMessage("possible parameters: laps, limit, wu, fto, ftimeout");
+                    $this->exp_chatSendServerMessage($msg, $fromLogin);
                     break;
             }
         } catch (\Exception $e) {
@@ -637,7 +639,8 @@ Other server might use the same blacklist file!!');
                     $this->setFinishTimeout($fromLogin, $params);
                     break;
                 default:
-                    $this->exp_chatSendServerMessage("command not found", $fromLogin);
+                    $msg = exp_getMessage("possible parameters: limit, rounds, nbwin, wu, fto, ftimeout");
+                    $this->exp_chatSendServerMessage($msg, $fromLogin);
                     break;
             }
         } catch (\Exception $e) {
@@ -679,6 +682,10 @@ Other server might use the same blacklist file!!');
                     break;
                 case "gap":
                     $this->enableTeamGap($fromLogin, $params);
+                    break;
+                default:
+                    $msg = exp_getMessage("possible parameters: limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap");
+                    $this->exp_chatSendServerMessage($msg, $fromLogin);
                     break;
             }
         } catch (\Exception $e) {
@@ -1372,7 +1379,7 @@ Other server might use the same blacklist file!!');
                 $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#set allow respawn to #variable# %s', null, array($admin->nickName));
                 return;
             } catch (\Exception $e) {
-                $this->exp_chatSendServerMessage('#admin_error#Error: Server said %1$s', $admin->login, array($e->getMessage()));                
+                $this->exp_chatSendServerMessage('#admin_error#Error: Server said %1$s', $admin->login, array($e->getMessage()));
             }
         } else {
             $this->exp_chatSendServerMessage('#admin_error#Can\'t cancel a vote, no vote in progress!', $admin->login);
