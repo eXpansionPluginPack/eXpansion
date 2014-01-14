@@ -26,9 +26,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onReady() {
-        $this->enableDedicatedEvents();
-
-        $this->registerChatCommand("hud", "showConfigWindow", 0, true);
+        $this->enableDedicatedEvents();       
         $this->registerChatCommand("hud", "hudCommands", 1, true);
 
         foreach ($this->storage->players as $player)
