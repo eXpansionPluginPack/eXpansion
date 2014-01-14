@@ -391,8 +391,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //Remove all checkpoints data
         $this->checkpoints[$login] = array();
         unset($this->checkpoints[$login]);
-        //And rank data
-        unset($this->player_ranks[$login]);
+        
+        if(isset($this->player_ranks[$login]) && $this->player_ranks[$login] > 100){
+            //And rank data
+            unset($this->player_ranks[$login]);
+        }
     }
 
     /**
@@ -1226,9 +1229,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function getTotalRanked() {
         if ($this->total_ranks == -1 || ($this->map_count % $this->config->nbMap_rankProcess) == 0) {
-            $q = 'SELECT Count(DISTINCT rank_playerlogin) as nbRanked
+            $q = 'SELECT Count(*) as nbRanked
                     FROM exp_ranks
-                    WHERE rank_challengeuid IN (' . $this->getUidSqlString() . ');';
+                    WHERE rank_challengeuid IN (' . $this->getUidSqlString() . ')'
+                    . ' GROUP BY rank_playerlogin'
+                    . ' HAVING COUNT(*) > 5';
 
             $data = $this->db->query($q);
 
@@ -1236,7 +1241,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->total_ranks = -1;
             } else {
                 $vals = $data->fetchStdObject();
-                $this->total_ranks = $vals->nbRanked;
+                $this->total_ranks = $data->recordCount();
             }
         }
 
@@ -1249,7 +1254,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param $login
      * @return int
      */
-    public function getPlayerRank($login) {
+    public function getPlayerRank_old($login) {
         $id = -1;
         foreach ($this->ranks as $id => $class) {
             if (!property_exists($class, "rank_playerlogin"))
@@ -1267,19 +1272,19 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param $login
      * @return int
      */
-    public function getPlayerRank_old($login) {
+    public function getPlayerRank($login) {
 
-        if (!isset($this->player_ranks[$login]) || ($this->map_count % $this->config->nbMap_rankProcess) == 0) {
-
+        if (!isset($this->player_ranks[$login])) {
+            
             $nbTrack = sizeof($this->storage->maps);
             $uids = $this->getUidSqlString();
 
 
-            $q = 'SELECT ((SUM( rank_rank ) + (' . $nbTrack . ' - COUNT( * ) ) *' . $this->config->recordsCount . ')/' . $nbTrack . ') AS points
+            $q = 'SELECT ((SUM( rank_rank ) + (' . $nbTrack . ' - COUNT( * ) ) *' . $this->config->recordsCount . ')/' . $nbTrack . ') AS points, 
+                        COUNT(*) as nbFinish
                     FROM exp_ranks
-                    WHERE rank_playerlogin =  \'' . $login . '\'';
-
-            echo $q . "\n\n";
+                    WHERE rank_playerlogin =  \'' . $login . '\''
+                    . ' AND rank_challengeuid IN (' . $uids . ')';
 
             $data = $this->db->query($q);
 
@@ -1289,26 +1294,26 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             } else {
                 $vals = $data->fetchStdObject();
                 $points = $vals->points;
-                if (empty($points)) {
+
+                if (empty($points) || $vals->nbFinish < 5) {
                     $this->player_ranks[$login] = -1;
                     return -1;
                 }
             }
 
-            $q = 'SELECT count(*) as rank
+            $q = 'SELECT rank_playerlogin as betters
                     FROM exp_ranks
+                    WHERE rank_challengeuid IN (' . $uids . ')
                     GROUP BY rank_playerlogin
                     HAVING ((SUM(rank_rank) + (' . $nbTrack . ' - Count(*))*' . $this->config->recordsCount . ')/' . $nbTrack . ') < ' . $points . '';
 
-            echo $q;
-
             $data = $this->db->query($q);
-
+            
             if ($data->recordCount() == 0) {
                 $this->player_ranks[$login] = 1;
             } else {
                 $vals = $data->fetchStdObject();
-                $this->player_ranks[$login] = $vals->rank;
+                $this->player_ranks[$login] = $data->recordCount()+1;
             }
         }
         return $this->player_ranks[$login];
@@ -1348,9 +1353,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                             player_wins,
                             player_timeplayed,
                             player_nation
+                HAVING Count(*) > 5
                 ORDER BY tscore ASC
                 LIMIT 0, 100';
-
+            
 
             $dbData = $this->db->query($q);
 
@@ -1359,8 +1365,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             if ($dbData->recordCount() == 0)
                 return $this->ranks;
 
+            $i = 1;
             while ($data = $dbData->fetchStdObject()) {
                 $this->ranks[] = $data;
+                $this->player_ranks[$data->rank_playerlogin] = $i++;
             }
         }
         return $this->ranks;
