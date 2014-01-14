@@ -37,6 +37,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode[] */
     public static $playerSortModes = array();
+    public static $searchTerm = array();
 
     public function exp_onInit() {
 
@@ -233,6 +234,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         Gui\Windows\AddMaps::Erase($login);
         if (array_key_exists($login, self::$playerSortModes)) {
             unset(self::$playerSortModes[$login]);
+        }
+        if (array_key_exists($login, self::$searchTerm)) {
+            unset(self::$searchTerm[$login]);
         }
         if ($this->config->showNextMapWidget) {
             NextMapWidget::Erase($login);

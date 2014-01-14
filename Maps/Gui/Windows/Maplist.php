@@ -27,6 +27,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected $title_rank;
     protected $title_rating;
     protected $title_actions;
+    protected $searchBox, $searchframe;
+    protected $btn_search;
     private $actionRemoveAll;
     private $currentMap = null;
 
@@ -118,6 +120,21 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->title_actions->setStyle($textStyle);
         $this->frame->addComponent($this->title_actions);
 
+        $this->searchframe = new \ManiaLive\Gui\Controls\Frame();
+        $this->searchframe->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $this->searchframe->setAlign("right", "top");
+        $this->addComponent($this->searchframe);
+
+        $this->searchBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("searchbox");
+        $this->searchframe->addComponent($this->searchBox);
+
+        $this->btn_search = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+        $this->btn_search->setAction($this->createAction(array($this, "doSearch")));
+        $this->btn_search->setText(__("Search", $login));
+        $this->btn_search->colorize('0d0');
+        $this->searchframe->addComponent($this->btn_search);
+
+
         $this->pager = new \ManiaLive\Gui\Controls\Pager();
         $this->mainFrame->addComponent($this->pager);
 
@@ -160,7 +177,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 12);
+        $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 18);
         $this->pager->setPosition(0, -7);
         $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / 0.8));
         $this->title_mapName->setSizeX($scaledSizes[0]);
@@ -169,6 +186,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->title_rank->setSizeX($scaledSizes[3]);
         $this->title_rating->setSizeX($scaledSizes[4]);
         $this->title_actions->setSizeX($scaledSizes[5]);
+        $this->searchframe->setPosition($this->getSizeX() - 55, - $this->getSizeY() + 4);
 
         if (is_object($this->btnRemoveAll))
             $this->btnRemoveAll->setPosition(3, 4.5);
@@ -216,20 +234,21 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->maps = array();
 
+        $maxrec = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
+
         foreach ($maps as $map) {
             $localrecord = "-";
             $rating = new \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating(-1, 0);
-
-
-            $maxrec = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
-            if (array_key_exists($map->uId, $this->records)) {
-                if ($this->records[$map->uId] <= $maxrec)
-                    $localrecord = $this->records[$map->uId] . "/" . $maxrec;
+            if ($this->search($map) > 65) {
+                if (array_key_exists($map->uId, $this->records)) {
+                    if ($this->records[$map->uId] <= $maxrec)
+                        $localrecord = $this->records[$map->uId] . "/" . $maxrec;
+                }
+                if (array_key_exists($map->uId, $this->ratings)) {
+                    $rating = $this->ratings[$map->uId];
+                }
+                $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $rating);
             }
-            if (array_key_exists($map->uId, $this->ratings)) {
-                $rating = $this->ratings[$map->uId];
-            }
-            $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $rating);
         }
 
         if ($column !== null) {
@@ -298,6 +317,26 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->pager->destroy();
         $this->clearComponents();
         parent::destroy();
+    }
+
+    function doSearch($login, $entries) {
+        Maps::$searchTerm[$login] = $entries['searchbox'];        
+        $this->updateList($login);
+        $this->redraw($login);
+    }
+
+    /**
+     * 
+     * @param \DedicatedApi\Structures\Map $map
+     * @return int similarity percentage of the string
+     */
+    function search(\DedicatedApi\Structures\Map $map) {
+        $login = $this->getRecipient();
+        if (empty(Maps::$searchTerm[$login]))
+            return 100;
+
+        similar_text(Maps::$searchTerm[$login], \ManiaLib\Utils\Formatting::stripStyles($map->name), $percent);        
+        return $percent;
     }
 
 }
