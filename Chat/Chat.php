@@ -76,6 +76,9 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $nick = $source_player->nickName;
             $nick = str_ireplace('$w', '', $nick);
             $nick = str_ireplace('$z', '$z$s', $nick);
+            // fix for chat...
+            $nick = str_replace('$<', '', $nick);
+            $text = str_replace('$<', '', $text);
             /*
               $smileys = array("ッ", "ツ", "シ");
               $rnd = rand(0, sizeof($smileys) - 1);
