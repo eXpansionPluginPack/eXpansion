@@ -11,7 +11,7 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
 
     protected function onConstruct() {
         parent::onConstruct();
-        $this->frame = new \ManiaLive\Gui\Controls\Frame(2,0);
+        $this->frame = new \ManiaLive\Gui\Controls\Frame(2, 0);
         $this->frame->setAlign("left", "top");
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(20, 20));
         $this->addComponent($this->frame);
@@ -138,14 +138,24 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
     }
 
     function setStars($number, $total) {
-        $this->frame->clearComponents();       
-        $login = $this->getRecipient();        
-        
-        $this->gauge->setContent('<gauge scale="0.7" sizen="35 8" drawblockbg="0" rotation="0" posn="-24 0" grading="1" ratio="' . ($number/5) . '" centered="0" />');
+        $this->frame->clearComponents();
+        $login = $this->getRecipient();
+
+        $test = ($number / 6) * 100;
+        $color = "fff";
+        if ($test < 50)
+            $color = "f00";
+        if ($test >= 50)
+            $color = "ff0";
+        if ($test > 70)
+            $color = "0f0";
+
+        $this->gauge->setContent('<gauge scale="0.7" sizen="35 10" drawblockbg="1" color="' . $color . '" drawbg="0" rotation="0" posn="-24 0" grading="1" ratio="' . ($number / 5) . '" centered="0" />');
         $this->frame->addComponent($this->gauge);
 
-        $score = ($number / 5) * 100;
+        $score = ($number / 6) * 100;
         $score = round($score);
+
 
         $info = new \ManiaLib\Gui\Elements\Label();
         $info->setTextSize(1);
