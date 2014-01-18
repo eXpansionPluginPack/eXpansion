@@ -96,6 +96,7 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
     
     public function onDraw() {
+        parent::onDraw();
         $this->label_rank->setText(__(LocalRecords::$txt_rank,$this->getRecipient()));
         $this->label_nick->setText(__(LocalRecords::$txt_nick,$this->getRecipient()));
         $this->label_wins->setText(__(LocalRecords::$txt_wins,$this->getRecipient()));
