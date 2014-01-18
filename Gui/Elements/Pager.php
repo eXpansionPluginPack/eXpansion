@@ -22,7 +22,7 @@ class Pager extends \ManiaLive\Gui\Control {
         $this->scroll = new \ManiaLib\Gui\Elements\Quad(6, 20);
         $this->scroll->setAlign("top", "left");
         $this->scroll->setStyle("BgsPlayerCard");
-        $this->scroll->setSubStyle(\ManiaLib\Gui\Elements\BgsPlayerCard::BgRacePlayerName);
+        $this->scroll->setSubStyle(\ManiaLib\Gui\Elements\BgsPlayerCard::BgRacePlayerName);        
         $this->scroll->setId("ScrollBar");
         $this->scroll->setScriptEvents();
         $this->addComponent($this->scroll);
@@ -39,7 +39,6 @@ class Pager extends \ManiaLive\Gui\Control {
 
     public function addItem(\ManiaLib\Gui\Component $component) {
         $item = new \ManiaLive\Gui\Controls\Frame();
-        $item->setId("item" . count($this->items));
         $item->setScriptEvents();
         $item->addComponent($component);
         $hash = spl_object_hash($item);
@@ -97,13 +96,13 @@ EOD;
         if (moveScroll) {                                                                                                    
                     pagerDelta += MouseY - pagerMouseY;
                         
-                    declare max = -6.0 * itemsPerPage;
+                    declare max = (-6.0 * itemsPerPage)+40 ;
 
                     if (pagerDelta >= 0) {
                             pagerDelta = 0.0;                     
                             pagerMouseY = MouseY;
                     }
-                    if (pagerDelta <= max) {
+                    if (pagerDelta < max) {
                             pagerDelta = max;
                             pagerMouseY = MouseY;        
                     }
@@ -125,20 +124,21 @@ EOD;
                     }                                                  
                         pagerMouseY = MouseY;                         
                    }
-                                
+             
+   
+   
+   
+   
+            if (MouseLeftButton == True) {                   
                   foreach (Event in PendingEvents) {
                        if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "ScrollBar")  {
                               pagerMouseY = MouseY;                                            
-                              moveActive = True;
+                              moveScroll = True;
                       }                                   
-                  }                     
-               
-                              
-                if (MouseLeftButton == True) { 
-                      moveScroll = True;
-                      TitlebarText.SetText("true");                
+                  }                                                                                                                                    
                 } else {
-                        TitlebarText.SetText("none");
+                        
+                            moveScroll = False;
                 }
                 
 
