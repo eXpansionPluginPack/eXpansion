@@ -27,7 +27,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->gbx = new \GBXChallMapFetcher(true, false, false);
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
 
         $this->actionAddAll = $this->createAction(array($this, "addAllMaps"));

@@ -26,7 +26,7 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $sizeX = 100;
         $scaledSizes = Gui::getScaledSize($this->widths, $sizeX/.8);
         
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->pager->setPosX(0);
         $this->pager->setPosY(-4);
         $this->mainFrame->addComponent($this->pager);
@@ -96,6 +96,7 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
     
     public function onDraw() {
+        parent::onDraw();
         $this->label_rank->setText(__(LocalRecords::$txt_rank,$this->getRecipient()));
         $this->label_nick->setText(__(LocalRecords::$txt_nick,$this->getRecipient()));
         $this->label_wins->setText(__(LocalRecords::$txt_wins,$this->getRecipient()));

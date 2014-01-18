@@ -20,7 +20,7 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
     protected function onConstruct() {
         parent::onConstruct();
 
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->pager->setPosX(0);
         $this->pager->setPosY(-4);
         $this->mainFrame->addComponent($this->pager);

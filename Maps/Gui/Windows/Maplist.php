@@ -135,7 +135,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->searchframe->addComponent($this->btn_search);
 
 
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
 
         if (array_key_exists($login, Maps::$playerSortModes) == false) {

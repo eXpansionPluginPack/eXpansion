@@ -21,7 +21,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected function onConstruct() {
         parent::onConstruct();
 
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
 
         $this->group_add = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("group_name");

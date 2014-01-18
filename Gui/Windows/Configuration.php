@@ -22,7 +22,7 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	parent::onConstruct();
 	$login = $this->getRecipient();
 	$this->setTitle(__("Configure HUD", $login));
-	$this->pager = new \ManiaLive\Gui\Controls\Pager();
+	$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
 	$this->mainFrame->addComponent($this->pager);
 	$this->actionOk = $this->createAction(array($this, "Ok"));
 	$this->actionCancel = $this->createAction(array($this, "Cancel"));

@@ -21,7 +21,7 @@ class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected function onConstruct() {
         parent::onConstruct();
         $this->adminGroups = AdminGroups::getInstance();
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
         
         $frame = new \ManiaLive\Gui\Controls\Frame();

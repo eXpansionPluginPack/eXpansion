@@ -26,7 +26,7 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
 
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
 
         $this->button_ok = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);

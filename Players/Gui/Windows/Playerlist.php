@@ -33,7 +33,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
         $this->widths = array(4, 6, 7);
     }

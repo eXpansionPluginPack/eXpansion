@@ -55,7 +55,10 @@ class MxMap extends \ManiaLive\Gui\Control {
           $spacer->setSize(4, 4);
           $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
           //$this->frame->addComponent($spacer); */
-
+        $label =  new \ManiaLib\Gui\Elements\Label();
+        $label->setText($indexNumber);
+        $this->frame->addComponent($label);
+        
         $this->label = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->label->setAlign('left', 'center');
         $this->label->setText(Formatting::stripColors(Formatting::stripStyles($map->name)));

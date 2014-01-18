@@ -22,8 +22,8 @@ class Window extends \ManiaLive\Gui\Window {
     protected $bg;
     private $dDeclares = "";
     private $dLoop = "";
+    private $wLoop = "";
     private $dIndex = 0;
-    
     private $_name = "window";
 
     protected function onConstruct() {
@@ -105,12 +105,12 @@ class Window extends \ManiaLive\Gui\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
-        
+
         $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY + 2);
         $this->_mainWindow->setPosY(1);
         $this->bg->setSize($this->sizeX + 0.6, $this->sizeY + 2);
         $this->bg->setPosY(1);
-        
+
         $this->_title->setSize($this->sizeX, 4);
         $this->_title->setPosition(($this->_title->sizeX / 2), 3.5);
         $this->_title->setHalign("center");
@@ -134,7 +134,10 @@ class Window extends \ManiaLive\Gui\Window {
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter) {
                 $this->addScriptToMain($component->getScript());
             }
-
+            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Pager) {
+                $this->addScriptToMain($component->getScriptDeclares());
+                $this->addScriptToWhile($component->getScriptMainLoop());
+            }
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown) {
                 $this->addScriptToMain($component->getScriptDeclares($this->dIndex));
                 $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));
@@ -200,6 +203,9 @@ class Window extends \ManiaLive\Gui\Window {
                         windowActive = id;
 			
                         while(True) {                                                               
+                        '
+                . $this->wLoop .
+                '
                                if (windowActive == id) {
                                 declare temp = Window.RelativePosition;
                                 temp.Z = 20.0;
@@ -320,6 +326,10 @@ class Window extends \ManiaLive\Gui\Window {
 
     function addScriptToMain($script) {
         $this->dDeclares .= $script;
+    }
+
+    function addScriptToWhile($script) {
+        $this->wLoop .= $script;
     }
 
     function addScriptToLoop($script) {
