@@ -1228,7 +1228,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return int
      */
     public function getTotalRanked() {
-        if ($this->total_ranks == -1 || ($this->map_count % $this->config->nbMap_rankProcess) == 0) {
+        if ($this->total_ranks == -1) {
             $q = 'SELECT Count(*) as nbRanked
                     FROM exp_ranks
                     WHERE rank_challengeuid IN (' . $this->getUidSqlString() . ')'
@@ -1283,7 +1283,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $q = 'SELECT ((SUM( rank_rank ) + (' . $nbTrack . ' - COUNT( * ) ) *' . $this->config->recordsCount . ')/' . $nbTrack . ') AS points, 
                         COUNT(*) as nbFinish
                     FROM exp_ranks
-                    WHERE rank_playerlogin =  \'' . $login . '\''
+                    WHERE rank_playerlogin = ' . $this->db->quote($login)
                     . ' AND rank_challengeuid IN (' . $uids . ')';
 
             $data = $this->db->query($q);
@@ -1295,7 +1295,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $vals = $data->fetchStdObject();
                 $points = $vals->points;
 
-                if (empty($points) || $vals->nbFinish < 5) {
+                if (empty($points) || $vals->nbFinish <= 5) {
                     $this->player_ranks[$login] = -1;
                     return -1;
                 }
@@ -1305,7 +1305,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     FROM exp_ranks
                     WHERE rank_challengeuid IN (' . $uids . ')
                     GROUP BY rank_playerlogin
-                    HAVING ((SUM(rank_rank) + (' . $nbTrack . ' - Count(*))*' . $this->config->recordsCount . ')/' . $nbTrack . ') < ' . $points . '';
+                    HAVING ((SUM(rank_rank) + (' . $nbTrack . ' - Count(*))*' . $this->config->recordsCount . ')/' . $nbTrack . ') < ' . $points . ''
+                    . 'AND Count(*) > 5';
 
             $data = $this->db->query($q);
             
@@ -1327,6 +1328,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         // if ((empty($this->ranks) && $this->rank_updated) || (($this->map_count % $this->config->nbMap_rankProcess) == 0 && $this->rank_updated)) {
         if ((empty($this->ranks) && $this->rank_needUpdated)) {
             $this->rank_needUpdated = false;
+            $this->total_ranks = -1;
+            $this->getTotalRanked();
 
             $nbTrack = sizeof($this->storage->maps);
             $uids = $this->getUidSqlString();
