@@ -15,7 +15,7 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public function onConstruct() {
         parent::onConstruct();
         $this->setTitle("Music available at server");
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
     }
 

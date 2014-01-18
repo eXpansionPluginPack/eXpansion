@@ -16,7 +16,7 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onConstruct();
         $login = $this->getRecipient();
 
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
         $this->actionClose = $this->createAction(array($this, "Close"));
 

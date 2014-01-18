@@ -19,7 +19,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$sizeX = 100;
 	$scaledSizes = Gui::getScaledSize($this->widths, $sizeX / .8);
 
-	$this->pager = new \ManiaLive\Gui\Controls\Pager();
+	$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
 	$this->pager->setPosX(0);
 	$this->pager->setPosY(-4);
 	$this->mainFrame->addComponent($this->pager);

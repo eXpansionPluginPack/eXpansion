@@ -42,7 +42,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->mainFrame->addComponent($this->frame);
 
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
     }
 
