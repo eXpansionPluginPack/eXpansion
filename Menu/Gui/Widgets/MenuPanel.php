@@ -76,7 +76,7 @@ class MenuPanel extends \ManiaLive\Gui\Window {
                         declare mainWindow <=> Page.GetFirstChild("Frame");
                         declare isMinimized = True;
                         declare lastAction = Now;
-                        declare autoCloseTimeout = 5000;
+                        declare autoCloseTimeout = 2500;
                         declare isMouseOver = False;
                         declare positionMin = 4.0;
                         declare positionMax = -24.0;

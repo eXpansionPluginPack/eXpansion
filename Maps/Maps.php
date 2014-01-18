@@ -86,7 +86,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         // $this->registerChatCommand('history', "showHistoryList", 0, true);
 
         $this->registerChatCommand('nextmap', "chat_nextMap", 0, true);
-        
+
         $this->registerChatCommand('jb', "jukebox", 0, true);
         $this->registerChatCommand('jb', "jukebox", 1, true);
 
@@ -312,7 +312,10 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     $this->exp_chatSendServerMessage($this->msg_nextQueue, null, array(\ManiaLib\Utils\Formatting::stripCodes($queue->map->name, 'wosnm'), $queue->map->author, \ManiaLib\Utils\Formatting::stripCodes($queue->player->nickName, 'wosnm'), $queue->player->login));
                 }
             } catch (\Exception $e) {
-                $this->exp_chatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
+                $this->exp_chatSendServerMessage('Error: %s', $queue->player->login, $e->getMessage());                
+                $key = key($this->queue);
+                unset($this->queue[$key]);
+                $this->exp_chatSendServerMessage('Recovering from error, map removed from jukebox...', $queue->player->login);
             }
 //}
         } else {
