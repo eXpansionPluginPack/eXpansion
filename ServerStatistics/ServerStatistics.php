@@ -69,7 +69,6 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         parent::exp_onReady();
         $this->enableTickerEvent();
         
-        $this->registerChatCommand("stat", "showStats", 0, true);
         $this->registerChatCommand("serverstat", "showStats", 0, true);
         
         try {
