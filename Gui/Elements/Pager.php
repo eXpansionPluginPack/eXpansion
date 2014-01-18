@@ -71,7 +71,7 @@ class Pager extends \ManiaLive\Gui\Control {
                     declare CMlFrame Pager <=> (Page.GetFirstChild("Pager") as CMlFrame);
                     declare CMlQuad ScrollBar <=> (Page.GetFirstChild("ScrollBar") as CMlQuad);
                     declare Real itemSizeY = Pager.Size.Y / 6.0;
-                    declare Integer itemsPerPage = MathLib::NearestInteger(itemSizeY)-1;
+                    declare Integer itemsPerPage = MathLib::NearestInteger(itemSizeY)-4;
                     declare Real pagerMouseY;
                     declare Real pagerDelta;
                     declare moveScroll = False;
