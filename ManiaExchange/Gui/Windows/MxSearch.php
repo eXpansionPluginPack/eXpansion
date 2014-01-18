@@ -92,7 +92,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->header = new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\Header();
         $this->frame->addComponent($this->header);
 
-        $this->pager = new \ManiaLive\Gui\Controls\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->frame->addComponent($this->pager);
 
         $this->mainFrame->addComponent($this->frame);
@@ -119,8 +119,8 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->items = array();
         $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Searching, please wait", $this->sizeX));
         $this->redraw($this->getRecipient());
-        
-        
+
+
         if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
             $script = $this->connection->getModeScriptInfo();
             $query = "";

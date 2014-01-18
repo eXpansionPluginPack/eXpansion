@@ -134,7 +134,10 @@ class Window extends \ManiaLive\Gui\Window {
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter) {
                 $this->addScriptToMain($component->getScript());
             }
-
+            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Pager) {
+                $this->addScriptToMain($component->getScriptDeclares());
+                $this->addScriptToLoop($component->getScriptMainLoop());                
+            }
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown) {
                 $this->addScriptToMain($component->getScriptDeclares($this->dIndex));
                 $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));

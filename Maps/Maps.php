@@ -115,6 +115,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, true);
 
         $this->preloadHistory();
+        $this->showMapList("reaby");
     }
 
     public function exp_onLoad() {
