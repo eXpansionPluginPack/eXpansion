@@ -198,9 +198,9 @@ EOD;
                     
                foreach (Event in PendingEvents) {
                     if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {
-                        log("Desc_"^Event.ControlId);
+                        log("Mouse Over : "^Event.ControlId);
                         if(Page.GetFirstChild("Desc_"^Event.ControlId) != Null){
-                            log("VALID");
+                            log("Validated "^Event.ControlId);
                             if(currentButton != Null){
                                 currentButton.Hide();
                             }
@@ -221,14 +221,19 @@ EOD;
             return "";
         }
     }
-    public function getHideMainLoop() {
+    public function getHideMainLoop($min, $max) {
         if (!empty($this->description)) {
-            return ' Page.GetFirstChild("Desc_Icon_'.$this->buttonId.'").Hide(); '."\n";
+            return '//TEst
+            for(i, '.$min.',  '.$max.'){
+             if(Page.GetFirstChild("Desc_Icon_"^i) != Null){
+                 Page.GetFirstChild("Desc_Icon_"^i).Hide(); 
+             }
+            }';
         }else{
             return "";
         }
     }
-    
+  
     function getButtonId(){
         return $this->buttonId;
     }
