@@ -145,9 +145,12 @@ class Window extends \ManiaLive\Gui\Window {
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Button) {
                 
                 if($this->nbButton == 0){
-                    $this->addScriptToMain($component->getScriptDeclares());
+                    $decl = $component->getScriptDeclares();
+                    $this->addScriptToMain($decl);
+                    if(!empty($decl))
+                        $this->nbButton++;
                 }
-                $this->nbButton++;
+                
                 $this->addScriptToMain($component->getHideMainLoop());
 
                 $script = $component->getScriptMainLoop();
@@ -171,6 +174,7 @@ class Window extends \ManiaLive\Gui\Window {
     }
 
     protected function onDraw() {
+        $this->nbButton = 0;
         $this->dIndex = 0;
         $this->dDeclares = "";
         $this->dLoop = "";
