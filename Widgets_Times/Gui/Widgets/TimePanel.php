@@ -92,8 +92,7 @@ class TimePanel extends \ManiaLive\Gui\Window {
     function onDraw() {
         parent::onDraw();
         $login = $this->getRecipient();
-        $this->removeComponent($this->xml);
-        echo "draw";
+        $this->removeComponent($this->xml);        
         $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $login);
         $checkpoints = "[ -1 ]";
         if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record) {

@@ -40,8 +40,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onReady() {
         $this->checkpointPos = $this->connection->getCurrentRanking(-1, 0);
-        TimePanel::$localrecords = $this->callPublicMethod("eXpansion\LocalRecords", "getRecords");
-        print_r(TimePanel::$localrecords);
+        TimePanel::$localrecords = $this->callPublicMethod("eXpansion\LocalRecords", "getRecords");        
         $this->showToAll();
     }
 
