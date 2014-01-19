@@ -87,6 +87,7 @@ class HudPanel extends \ManiaLive\Gui\Window {
         $this->_minButton->setId("minimizeButton");
         $this->_minButton->setStyle("Icons128x32_1");
         $this->_minButton->setSubStyle("Settings");
+        $this->_minButton->setPosX(.8);
         $this->_minButton->setAlign("left", "bottom");
         $this->frame->addComponent($this->_minButton);
 

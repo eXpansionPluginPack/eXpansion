@@ -29,7 +29,7 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onPlayerConnect($login, $isSpectator) {
         $window = Gui\Windows\FaqWidget::Create($login, true);
         $window->setSize(50, 20);
-        $window->setPosition(-161, 68);
+        $window->setPosition(-161, 73);
         $window->show();
     }
 

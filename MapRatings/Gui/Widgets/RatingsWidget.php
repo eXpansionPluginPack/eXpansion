@@ -16,6 +16,18 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(20, 20));
         $this->addComponent($this->frame);
 
+        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(32, 15);
+        $bg->setPosition(-30, -7);
+        $this->addComponent($bg);
+        
+        $label = new \ManiaLib\Gui\Elements\Label(30);
+        $label->setText('$ddd' . __('Map Rating'));
+        $label->setTextEmboss(true);
+        $label->setAlign("right", "top");
+        $label->setPosX(2);
+        $label->setScale(.8);
+        $this->addComponent($label);
+        
         $this->starFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->starFrame->setAlign("left", "top");
         $this->starFrame->setSize(40, 4);
@@ -66,10 +78,10 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
 				 widgetVisible[id] =  True;
 			}                                                                       
                          if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <157.0, 52.0, 0.0>;
+                                windowLastPos[id] = <157.0, 64.0, 0.0>;
                                }
                          if (!windowLastPosRel.existskey(id)) {
-                                windowLastPosRel[id] = <157.0, 52.0, 0.0>;
+                                windowLastPosRel[id] = <157.0, 64.0, 0.0>;
                               }
                         Window.PosnX = windowLastPos[id][0];
                         Window.PosnY = windowLastPos[id][1];
@@ -150,7 +162,7 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
         if ($test > 70)
             $color = "0f0";
 
-        $this->gauge->setContent('<gauge scale="0.7" sizen="35 10" drawblockbg="1" color="' . $color . '" drawbg="0" rotation="0" posn="-24 0" grading="1" ratio="' . ($number / 5) . '" centered="0" />');
+        $this->gauge->setContent('<gauge scale="0.7" sizen="35 10" drawblockbg="1" color="' . $color . '" drawbg="0" rotation="0" posn="-24 -3" grading="1" ratio="' . ($number / 5) . '" centered="0" />');
         $this->frame->addComponent($this->gauge);
 
         $score = ($number / 6) * 100;
@@ -164,7 +176,7 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
         $info->setTextEmboss();
         $info->setText($score . "% (" . $total . " " . __("votes", $login) . ")");
         $info->setScale(0.8);
-        $info->setPosY(-7);
+        $info->setPosY(-10);
         $this->frame->addComponent($info);
         $this->redraw();
     }

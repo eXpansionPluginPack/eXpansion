@@ -225,7 +225,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if ($this->config->showNextMapWidget) {
             $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
-            $info->setPosition(136, 74);
+            $info->setPosition(136, 82);
             $info->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
             $info->setMap($this->nextMap);
             $info->show();

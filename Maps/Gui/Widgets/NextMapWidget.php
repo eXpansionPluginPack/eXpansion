@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Maps\Gui\Widgets;
 
 class NextMapWidget extends \ManiaLive\Gui\Window {
 
+    private $bg;
     private $mapName;
     private $mapAuthor;
     private $labelName;
@@ -19,7 +20,11 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 	// $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
 	$login = $this->getRecipient();
 
-	$label = new \ManiaLib\Gui\Elements\Label(50);
+    $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(52, 15);
+    $bg->setPosition(-50, -7);
+    $this->addComponent($bg);
+    
+	$label = new \ManiaLib\Gui\Elements\Label(30);
 	$label->setText('$ddd' . __('Next map', $login));
 	$label->setTextEmboss(true);
 	$label->setAlign("right", "top");
@@ -27,32 +32,34 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 	$this->addComponent($label);
 
 	$row = new \ManiaLive\Gui\Controls\Frame(0, -4);
-	$this->labelName = new \ManiaLib\Gui\Elements\Label(60, 7);
+	$this->labelName = new \ManiaLib\Gui\Elements\Label(33, 7);
 	$this->labelName->setText('$ddd' . $this->mapName);
 	$this->labelName->setAlign("right", "top");
-	$this->labelName->setPosX(-6);
+	$this->labelName->setPosX(-4);
+	$this->labelName->setPosY(-1);
 	$row->addComponent($this->labelName);
 
 	$icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
 	$icon->setStyle("UIConstructionSimple_Buttons");
 	$icon->setSubStyle("Challenge");
 	$icon->setAlign("left", "top");
-	$icon->setPosX(-6);
+	$icon->setPosX(-4);
 	$row->addComponent($icon);
 	$frame->addComponent($row);
 
 	$row = new \ManiaLive\Gui\Controls\Frame(0, -8);
-	$this->labelAuthor = new \ManiaLib\Gui\Elements\Label(60, 7);
+	$this->labelAuthor = new \ManiaLib\Gui\Elements\Label(33, 7);
 	$this->labelAuthor->setText('$ddd' . $this->mapAuthor);
 	$this->labelAuthor->setAlign("right", "top");
-	$this->labelAuthor->setPosX(-6);
+	$this->labelAuthor->setPosX(-4);
+	$this->labelAuthor->setPosY(-1);
 	$row->addComponent($this->labelAuthor);
 
 	$icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
 	$icon->setStyle("UIConstructionSimple_Buttons");
 	$icon->setSubStyle("Author");
 	$icon->setAlign("left", "top");
-	$icon->setPosX(-6);
+	$icon->setPosX(-4);
 	$row->addComponent($icon);
 	$frame->addComponent($row);
 
@@ -104,10 +111,10 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 				 widgetVisible[id] =  True;
 			    }                                          
                          if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <158.0, 74.0, 0.0>;
+                                windowLastPos[id] = <158.0, 76.0, 0.0>;
                                }
                          if (!windowLastPosRel.existskey(id)) {
-                                windowLastPosRel[id] = <158.0, 74.0, 0.0>;
+                                windowLastPosRel[id] = <158.0, 76.0, 0.0>;
                               }
                         Window.PosnX = windowLastPos[id][0];
                         Window.PosnY = windowLastPos[id][1];

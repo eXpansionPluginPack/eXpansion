@@ -6,24 +6,37 @@ class Clock extends \ManiaLive\Gui\Window {
 
     protected $xml;
     protected $clock;
+    protected $clockBg;
+    
     protected $date;
+    protected $nameBg;
 
     protected function onConstruct() {
         parent::onConstruct();
+        
+        $this->clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(22, 5);
+        $this->addComponent($this->clockBg);
+        $this->clockBg->setPosition(-6, -6);
+        
         $this->clock = new \ManiaLib\Gui\Elements\Label();
         $this->clock->setId('clock');
         $this->clock->setAlign("left", "top");
-        $this->clock->setPosition(0, -5);
+        $this->clock->setPosition(0, -4);
         $this->clock->setTextColor('fff');
         $this->clock->setScale(0.8);
         $this->clock->setStyle('TextCardScores2');
         //$this->clock->setTextPrefix('$s');
         $this->addComponent($this->clock);
 
-        $this->date = new \ManiaLib\Gui\Elements\Label(60, 6);
+        
+        $this->nameBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(57, 5);
+        $this->addComponent($this->nameBg);
+        $this->nameBg->setPosition(-6, -1);
+        
+        $this->date = new \ManiaLib\Gui\Elements\Label(50, 6);
         $this->date->setId('date');
         $this->date->setAlign("left", "top");
-        $this->date->setPosition(0, 0);
+        $this->date->setPosition(0, 1);
         $this->date->setTextColor('fff');
         $this->date->setTextPrefix('$s');
         $this->addComponent($this->date);
