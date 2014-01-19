@@ -86,7 +86,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($this->actionsFrame);
 
         $this->queueButton = new MyButton(5, 5);
-        $this->queueButton->setDescription(__("Wish", $login));
+        $this->queueButton->setDescription(__('Add %1$s $zto wish list', $login, $sortableMap->map->name), 100);
         $this->queueButton->setAction($this->queueMapAction);
         $this->queueButton->colorize('2a2');
         $this->queueButton->setScale(0.8);

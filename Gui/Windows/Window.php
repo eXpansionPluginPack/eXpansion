@@ -129,7 +129,9 @@ class Window extends \ManiaLive\Gui\Window {
         $this->mainFrame->setPosition(2, -2);
     }
 
+    private $nbButton = 0;
     private function detectElements($components) {
+        $buttonScript = "";
         foreach ($components as $index => $component) {            
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter) {
                 $this->addScriptToMain($component->getScript());
@@ -141,11 +143,18 @@ class Window extends \ManiaLive\Gui\Window {
             }
 
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Button) {
-                $this->addScriptToMain($component->getScriptDeclares());
-                $this->addScriptToWhile($component->getScriptMainLoop());
+                
+                if($this->nbButton == 0){
+                    $this->addScriptToMain($component->getScriptDeclares());
+                }
+                $this->nbButton++;
+                $this->addScriptToMain($component->getHideMainLoop());
+
+                $script = $component->getScriptMainLoop();
+                $buttonScript = empty($script) ? $buttonScript : $script;
             }
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown) {
-                $this->addScriptToMain($component->getScriptDeclares($this->dIndex));
+                //$this->addScriptToMain($component->getScriptDeclares($this->dIndex));
                 $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));
                 $this->dIndex++;
             }
@@ -154,9 +163,11 @@ class Window extends \ManiaLive\Gui\Window {
             // }
                        
             if ($component instanceof \ManiaLive\Gui\Container) {
-                $this->detectElements($component->getComponents());
+                $new =  $this->detectElements($component->getComponents());
+                $buttonScript = empty($buttonScript) ? $new : $buttonScript;
             }
         }
+        return $buttonScript;
     }
 
     protected function onDraw() {
@@ -164,7 +175,7 @@ class Window extends \ManiaLive\Gui\Window {
         $this->dDeclares = "";
         $this->dLoop = "";
 
-        $this->detectElements($this->getComponents());
+        $this->addScriptToWhile($this->detectElements($this->getComponents()));
 
         $this->removeComponent($this->xml);
         // fixes the window to be center of the screen for first open. 

@@ -18,6 +18,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $windowClosebuttonActive = "http://reaby.kapsi.fi/ml/close_on2.png";
     public $windowMinbutton = "http://reaby.kapsi.fi/ml/min_off.png";
     public $windowMinbuttonActive = "http://reaby.kapsi.fi/ml/min_on.png";
+    
     public $style_list_bgColor = array('eee4', '7774');
     public $style_list_bgStyle = array('BgsPlayerCard', 'BgsPlayerCard');
     public $style_list_bgSubStyle = array('BgRacePlayerName', 'BgMediaTracker');
@@ -32,7 +33,12 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $style_title_sizeXOffset = 2;
     public $style_title_posYOffset = 0;
     public $style_title_sizeYOffset = 0;
-
+    
+    public $style_widget_bgColor = '';
+    public $style_widget_bgStyle = 'Bgs1';
+    public $style_widget_bgSubStyle = 'BgCardList';
+    public $style_widget_bgXOffset = 0;
+    public $style_widget_bgYOffset = 0;
 }
 
 ?>

@@ -11,12 +11,15 @@ class Button extends \ManiaLive\Gui\Control {
     protected $labelDesc;
     protected $activeFrame;
     protected $backGround;
+    protected $backGroundDesc;
+    protected $frameDescription;
     protected $icon;
     private $buttonId;
     private $text;
     private $description;
     private $value;
     private $isActive = false;
+    private $action = 0;
 
     /**
      * Button
@@ -51,11 +54,24 @@ class Button extends \ManiaLive\Gui\Control {
         $this->label->setFocusAreaColor1("bbba");
         $this->label->setFocusAreaColor2("fffa");
 
+        $this->frameDescription = new \ManiaLib\Gui\Elements\Frame();
+        $this->frameDescription->setId("Desc_Icon_" . $this->buttonId);
+        $this->frameDescription->setPositionZ(10);
+        $this->frameDescription->setAttribute('hidden', 'true');
+        
         $this->labelDesc = new \ManiaLib\Gui\Elements\Label(20, 6);
         $this->labelDesc->setAlign('left', 'center2');
-        $this->labelDesc->setPosition(8, -6);
-        $this->labelDesc->setId("Desc_" . $this->buttonId);
-        $this->labelDesc->setScriptEvents();
+        $this->labelDesc->setPosition(7, 3);
+        $this->labelDesc->setPositionZ(5);
+        $this->frameDescription->add($this->labelDesc);
+        
+        $this->backGroundDesc= new \ManiaLib\Gui\Elements\Quad(32, 6);
+        $this->backGroundDesc->setAlign('left', 'center2');
+        $this->backGroundDesc->setStyle('Bgs1');
+        $this->backGroundDesc->setSubStyle('BgCardPlayer');
+        $this->backGroundDesc->setPosition(5, 3);
+        $this->backGroundDesc->setPositionZ(1);
+        $this->frameDescription->add($this->backGroundDesc);
 
         $this->sizeX = $sizeX + 2;
         $this->sizeY = $sizeY + 2;
@@ -88,7 +104,7 @@ class Button extends \ManiaLive\Gui\Control {
         }
 
         if (!empty($this->description)) {
-            $this->addComponent($this->labelDesc);
+            $this->addComponent($this->frameDescription);
             $this->labelDesc->setText($this->description);
         }
 
@@ -104,8 +120,10 @@ class Button extends \ManiaLive\Gui\Control {
         $this->text = $text;
     }
 
-    function setDescription($description) {
+    function setDescription($description, $sizeX=30) {
         $this->description = "$000" . $description;
+        $this->labelDesc->setSizeX($sizeX);
+        $this->backGroundDesc->setSizeX($sizeX+2);
     }
 
     function setActive($bool = true) {
@@ -139,6 +157,9 @@ class Button extends \ManiaLive\Gui\Control {
     function setAction($action) {
         $this->label->setAction($action);
         $this->backGround->setAction($action);
+        $this->action = $action;
+        if($this->icon != null)
+            $this->icon->setAction($action);
     }
 
     public function setIcon($style, $subStyle = null) {
@@ -152,6 +173,7 @@ class Button extends \ManiaLive\Gui\Control {
             $this->icon->setImage($style);
         }
         $this->icon->setId("Icon_" . $this->buttonId);
+        $this->icon->setAction($this->action);
         $this->addComponent($this->icon);
 
         $this->label->setPosX((($this->sizeX - 2) / 2) + ($this->getSizeY() - 1));
@@ -161,10 +183,7 @@ class Button extends \ManiaLive\Gui\Control {
     public function getScriptDeclares() {
         if (!empty($this->description)) {
             $script = <<<EOD
-
-                declare CMlQuad Icon$this->buttonId <=> (Page.GetFirstChild("Icon_$this->buttonId") as CMlQuad);
-                declare CMlLabel Desc$this->buttonId <=> (Page.GetFirstChild("Desc_$this->buttonId") as CMlLabel);
-                Desc$this->buttonId.Hide();                
+                declare CMlFrame currentButton <=> Null;                      
 EOD;
              
             return $script;
@@ -172,24 +191,46 @@ EOD;
             return "";
         }
     }
-
+    
     public function getScriptMainLoop() {
         if (!empty($this->description)) {
             $script = <<<EOD
                     
-                    foreach (Event in PendingEvents) {
-                    if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId == "Icon_$this->buttonId")  {                           
-                           Desc$this->buttonId.Show();
-                    } else {
-                         Desc$this->buttonId.Hide();
+               foreach (Event in PendingEvents) {
+                    if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {
+                        log("Desc_"^Event.ControlId);
+                        if(Page.GetFirstChild("Desc_"^Event.ControlId) != Null){
+                            log("VALID");
+                            if(currentButton != Null){
+                                currentButton.Hide();
+                            }
+                            currentButton = (Page.GetFirstChild("Desc_"^Event.ControlId) as CMlFrame);
+                            currentButton.Show();
+                        }else{
+                             if(currentButton != Null){
+                                currentButton.Hide();
+                                currentButton = Null;
+                            }
+                        }
                     }
-               }  
+               }
 EOD;
             
             return $script;
         } else {
             return "";
         }
+    }
+    public function getHideMainLoop() {
+        if (!empty($this->description)) {
+            return ' Page.GetFirstChild("Desc_Icon_'.$this->buttonId.'").Hide(); '."\n";
+        }else{
+            return "";
+        }
+    }
+    
+    function getButtonId(){
+        return $this->buttonId;
     }
 
     function onIsRemoved(\ManiaLive\Gui\Container $target) {
