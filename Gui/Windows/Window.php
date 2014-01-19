@@ -157,7 +157,7 @@ class Window extends \ManiaLive\Gui\Window {
                 $buttonScript = empty($script) ? $buttonScript : $script;
             }
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown) {
-                //$this->addScriptToMain($component->getScriptDeclares($this->dIndex));
+                $this->addScriptToMain($component->getScriptDeclares($this->dIndex));
                 $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));
                 $this->dIndex++;
             }
