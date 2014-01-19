@@ -12,7 +12,6 @@ class Button extends \ManiaLive\Gui\Control {
     protected $activeFrame;
     protected $backGround;
     protected $icon;
-    
     private $buttonId;
     private $text;
     private $description;
@@ -51,11 +50,11 @@ class Button extends \ManiaLive\Gui\Control {
         $this->label->setTextSize(3);
         $this->label->setFocusAreaColor1("bbba");
         $this->label->setFocusAreaColor2("fffa");
-        
+
         $this->labelDesc = new \ManiaLib\Gui\Elements\Label(20, 6);
         $this->labelDesc->setAlign('left', 'center2');
-        $this->labelDesc->setPosition(6,6);
-        $this->labelDesc->setId("Desc_$this->buttonId");
+        $this->labelDesc->setPosition(8, -6);
+        $this->labelDesc->setId("Desc_" . $this->buttonId);
         $this->labelDesc->setScriptEvents();
 
         $this->sizeX = $sizeX + 2;
@@ -87,7 +86,7 @@ class Button extends \ManiaLive\Gui\Control {
             $this->addComponent($this->label);
             $this->label->setText($this->text);
         }
-        
+
         if (!empty($this->description)) {
             $this->addComponent($this->labelDesc);
             $this->labelDesc->setText($this->description);
@@ -106,7 +105,7 @@ class Button extends \ManiaLive\Gui\Control {
     }
 
     function setDescription($description) {
-        $this->description = $description;
+        $this->description = "$000" . $description;
     }
 
     function setActive($bool = true) {
@@ -164,36 +163,31 @@ class Button extends \ManiaLive\Gui\Control {
             $script = <<<EOD
 
                 declare CMlQuad Icon$this->buttonId <=> (Page.GetFirstChild("Icon_$this->buttonId") as CMlQuad);
-                declare CMlQuad Desc$this->buttonId <=> (Page.GetFirstChild("Desc_$this->buttonId") as CMlQuad);
-                Desc$this->buttonId.Hide();
-                declare mouseOver$this->buttonId = False;   
+                declare CMlLabel Desc$this->buttonId <=> (Page.GetFirstChild("Desc_$this->buttonId") as CMlLabel);
+                Desc$this->buttonId.Hide();                
 EOD;
-            echo $script;
+             
             return $script;
-        }else{
+        } else {
             return "";
         }
-        
     }
 
     public function getScriptMainLoop() {
         if (!empty($this->description)) {
             $script = <<<EOD
-                if (mouseOver$this->buttonId) {                                                                                               
-                         Desc$this->buttonId.Show();
-                }else{
+                    
+                    foreach (Event in PendingEvents) {
+                    if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId == "Icon_$this->buttonId")  {                           
+                           Desc$this->buttonId.Show();
+                    } else {
                          Desc$this->buttonId.Hide();
-                }
-
-                MouseOver
-                foreach (Event in PendingEvents) {
-                    if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId == "Icon_$this->buttonId")  {
-                           mouseOver$this->buttonId = true;
-                   }                                   
+                    }
                }  
 EOD;
+            
             return $script;
-        }else{
+        } else {
             return "";
         }
     }

@@ -130,11 +130,17 @@ class Window extends \ManiaLive\Gui\Window {
     }
 
     private function detectElements($components) {
-        foreach ($components as $index => $component) {
+        foreach ($components as $index => $component) {            
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter) {
                 $this->addScriptToMain($component->getScript());
             }
+
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Pager) {
+                $this->addScriptToMain($component->getScriptDeclares());
+                $this->addScriptToWhile($component->getScriptMainLoop());
+            }
+
+            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Button) {
                 $this->addScriptToMain($component->getScriptDeclares());
                 $this->addScriptToWhile($component->getScriptMainLoop());
             }
@@ -143,7 +149,11 @@ class Window extends \ManiaLive\Gui\Window {
                 $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));
                 $this->dIndex++;
             }
-            if ($component instanceof \ManiaLive\Gui\Controls\Frame) {
+            //if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Pager) {
+            //    $this->detectElements($component->getComponents());
+            // }
+                       
+            if ($component instanceof \ManiaLive\Gui\Container) {
                 $this->detectElements($component->getComponents());
             }
         }
