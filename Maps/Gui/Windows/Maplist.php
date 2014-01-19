@@ -40,7 +40,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     /** @var  \ManiaLive\Data\Storage */
     private $storage;
-    private $widths = array(8, 4, 3, 2, 2, 2, 6);
+    private $widths = array(10, 4, 3, 2, 2, 2, 1);
 
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap[] */
     private $maps = array();
@@ -127,11 +127,13 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->searchBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("searchbox");
         $this->searchframe->addComponent($this->searchBox);
+        $this->searchBox->setPosX(-5);
 
         $this->btn_search = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
         $this->btn_search->setAction($this->createAction(array($this, "doSearch")));
         $this->btn_search->setText(__("Search", $login));
         $this->btn_search->colorize('0d0');
+        $this->btn_search->setPosX(-5);
         $this->searchframe->addComponent($this->btn_search);
 
 
@@ -177,6 +179,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
+        
         $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 18);
         $this->pager->setPosition(0, -7);
         $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / 0.8));
@@ -187,7 +190,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->title_rating->setSizeX($scaledSizes[4]);
         $this->title_actions->setSizeX($scaledSizes[5]);
         $this->searchframe->setPosition($this->getSizeX() - 55, - $this->getSizeY() + 4);
-
+        
         if (is_object($this->btnRemoveAll))
             $this->btnRemoveAll->setPosition(3, 4.5);
     }

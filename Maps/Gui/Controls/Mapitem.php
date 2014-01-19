@@ -85,16 +85,18 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->actionsFrame->setLayout(new \ManiaLib\Gui\Layouts\Line());
         $this->frame->addComponent($this->actionsFrame);
 
-        $this->queueButton = new MyButton(26, 5);
-        $this->queueButton->setText(__("Wish", $login));
+        $this->queueButton = new MyButton(5, 5);
+        $this->queueButton->setDescription(__("Wish", $login));
         $this->queueButton->setAction($this->queueMapAction);
         $this->queueButton->colorize('2a2');
-        $this->queueButton->setScale(0.5);
+        $this->queueButton->setScale(0.8);
+        $this->queueButton->setIcon('Icons128x128_1', 'Race');
         if (Maplist::$localrecordsLoaded) {
-            $this->showRecsButton = new MyButton(26, 5);
-            $this->showRecsButton->setText(__("Recs", $login));
+            $this->showRecsButton = new MyButton(5, 5);
+            $this->showRecsButton->setDescription(__("Recs", $login));
             $this->showRecsButton->setAction($this->showRecsAction);
-            $this->showRecsButton->setScale(0.5);
+            $this->showRecsButton->setIcon('Icons128x128_1', 'Replay');
+            $this->showRecsButton->setScale(0.8);
             $this->actionsFrame->addComponent($this->showRecsButton);
         }
 
@@ -109,11 +111,12 @@ class Mapitem extends \ManiaLive\Gui\Control {
             }
         }
         if ($this->isAdmin) {
-            $this->goButton = new MyButton(26, 5);
-            $this->goButton->setText(__("Go now", $login));
+            $this->goButton = new MyButton(5, 5);
+            $this->goButton->setDescription(__("Go now", $login));
             $this->goButton->setAction($this->gotoMapAction);
             $this->goButton->colorize('aa2');
-            $this->goButton->setScale(0.5);
+            $this->goButton->setIcon('UIConstructionSimple_Buttons', 'Right');
+            $this->goButton->setScale(0.8);
             //  $this->actionsFrame->addComponent($this->goButton);
 
             $spacer = new \ManiaLib\Gui\Elements\Quad();
@@ -121,11 +124,12 @@ class Mapitem extends \ManiaLive\Gui\Control {
             $spacer->setSize(2, 4);
             $this->actionsFrame->addComponent($spacer);
 
-            $this->removeButton = new MyButton(26, 5);
-            $this->removeButton->setText('$fff' . __("Remove", $login));
+            $this->removeButton = new MyButton(5, 5);
+            $this->removeButton->setDescription('$fff' . __("Remove", $login));
             $this->removeButton->setAction($this->removeMapAction);
             $this->removeButton->colorize('a22');
-            $this->removeButton->setScale(0.5);
+            $this->removeButton->setIcon('Icons64x64_1', 'Close');
+            $this->removeButton->setScale(0.8);
             $this->actionsFrame->addComponent($this->removeButton);
         }
 
