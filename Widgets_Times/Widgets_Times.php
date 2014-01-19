@@ -40,7 +40,9 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onReady() {
         $this->checkpointPos = $this->connection->getCurrentRanking(-1, 0);
-        $this->onBeginMatch();
+        TimePanel::$localrecords = $this->callPublicMethod("eXpansion\LocalRecords", "getRecords");
+        print_r(TimePanel::$localrecords);
+        $this->showToAll();
     }
 
     public function onPlayerInfoChanged($playerInfo) {
@@ -60,83 +62,83 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
-        $mode = TimePanel::Mode_PersonalBest;
-        if (isset($this->modes[$login])) {
-            if ($this->modes[$login] == TimePanel::Mode_None)
-                return;
-            $mode = $this->modes[$login];
-        }
+    /* public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
+      $mode = TimePanel::Mode_PersonalBest;
+      if (isset($this->modes[$login])) {
+      if ($this->modes[$login] == TimePanel::Mode_None)
+      return;
+      $mode = $this->modes[$login];
+      }
 
-        $playAudio = false;
-        if (isset($this->audio[$login])) {
-            $playAudio = $this->audio[$login];
-        }
+      $playAudio = false;
+      if (isset($this->audio[$login])) {
+      $playAudio = $this->audio[$login];
+      }
 
-        $info = TimePanel::Create($login);
-        $info->onCheckpoint($login, $timeOrScore, $checkpointIndex, $curLap, $this->storage->currentMap->nbCheckpoints, $mode, $playAudio);
-        $info->setSize(30, 6);
-        $info->setPosition(0, 40);
-        $info->show();
+      $info = TimePanel::Create($login);
+      $info->onCheckpoint($login, $timeOrScore, $checkpointIndex, $curLap, $this->storage->currentMap->nbCheckpoints, $mode, $playAudio);
+      $info->setSize(30, 6);
+      $info->setPosition(0, 40);
+      $info->show();
 
-        //echo "spectators: " . count($this->spectatorTargets) . "\n";
-        foreach ($this->spectatorTargets as $tlogin => $pla) {
-            $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
-            // echo "should display to $tlogin\n";
-            //echo "observerd player:" . $observedPlayer->login . "  checkpoint:" . $login . " \n";
-            if (empty($observedPlayer->login) || $observedPlayer->login == $this->storage->server)
-                return;
-            if ($login == $observedPlayer->login) {
-                $mode = $this->modes[$tlogin];
-                $info = TimePanel::Create($tlogin);
-                $info->onCheckpoint($login, $timeOrScore, $checkpointIndex, $curLap, $this->storage->currentMap->nbCheckpoints, $mode, $playAudio);
-                $info->setSize(30, 6);
-                $info->setPosition(0, 40);
-                $info->show();
+      //echo "spectators: " . count($this->spectatorTargets) . "\n";
+      foreach ($this->spectatorTargets as $tlogin => $pla) {
+      $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
+      // echo "should display to $tlogin\n";
+      //echo "observerd player:" . $observedPlayer->login . "  checkpoint:" . $login . " \n";
+      if (empty($observedPlayer->login) || $observedPlayer->login == $this->storage->server)
+      return;
+      if ($login == $observedPlayer->login) {
+      $mode = $this->modes[$tlogin];
+      $info = TimePanel::Create($tlogin);
+      $info->onCheckpoint($login, $timeOrScore, $checkpointIndex, $curLap, $this->storage->currentMap->nbCheckpoints, $mode, $playAudio);
+      $info->setSize(30, 6);
+      $info->setPosition(0, 40);
+      $info->show();
 
-                $widget = Gui\Widgets\CheckpointWidget::Create($tlogin);
-                $pos = "-1";
-                if (array_key_exists($login, \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo))
-                    $pos = \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo[$login]->position;
-                $widget->setData(($pos + 1) . ")", \ManiaLive\Utilities\Time::fromTM($timeOrScore));
-                $widget->setSize(30, 6);
-                $widget->setPosition(0, 30);
-                $widget->setTimeout(4);
-                $widget->show();
-            }
-        }
-    }
+      $widget = Gui\Widgets\CheckpointWidget::Create($tlogin);
+      $pos = "-1";
+      if (array_key_exists($login, \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo))
+      $pos = \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo[$login]->position;
+      $widget->setData(($pos + 1) . ")", \ManiaLive\Utilities\Time::fromTM($timeOrScore));
+      $widget->setSize(30, 6);
+      $widget->setPosition(0, 30);
+      $widget->setTimeout(4);
+      $widget->show();
+      }
+      }
+      } */
 
-    public function onPlayerFinish($playerUid, $login, $timeOrScore) {
+    /* public function onPlayerFinish($playerUid, $login, $timeOrScore) {
 
-        $info = TimePanel::Create($login);
-        $info->onFinish($timeOrScore);
-        if (!$this->storage->currentMap->lapRace)
-            $info->hide();
+      $info = TimePanel::Create($login);
+      $info->onFinish($timeOrScore);
+      if (!$this->storage->currentMap->lapRace)
+      $info->hide();
 
-        foreach ($this->spectatorTargets as $tlogin => $pla) {
-            $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
-            if (empty($observedPlayer->login) || $observedPlayer->login == $this->storage->server)
-                return;
-            if ($login == $observedPlayer->login) {
-                TimePanel::Erase($tlogin);
-                Gui\Widgets\CheckpointWidget::EraseAll();
-            }
-        }
+      foreach ($this->spectatorTargets as $tlogin => $pla) {
+      $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
+      if (empty($observedPlayer->login) || $observedPlayer->login == $this->storage->server)
+      return;
+      if ($login == $observedPlayer->login) {
+      TimePanel::Erase($tlogin);
+      Gui\Widgets\CheckpointWidget::EraseAll();
+      }
+      }
 
-        if ($timeOrScore == 0) {
-            $info = TimePanel::Create($login);
-            $info->onStart();
-            $info->hide();
-            foreach ($this->spectatorTargets as $tlogin => $pla) {
-                $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
-                if ($login == $observedPlayer->login) {
-                    TimePanel::Erase($tlogin);
-                    Gui\Widgets\CheckpointWidget::EraseAll();
-                }
-            }
-        }
-    }
+      if ($timeOrScore == 0) {
+      $info = TimePanel::Create($login);
+      $info->onStart();
+      $info->hide();
+      foreach ($this->spectatorTargets as $tlogin => $pla) {
+      $observedPlayer = $this->getPlayerObjectById($pla->currentTargetId);
+      if ($login == $observedPlayer->login) {
+      TimePanel::Erase($tlogin);
+      Gui\Widgets\CheckpointWidget::EraseAll();
+      }
+      }
+      }
+      } */
 
     public function setMode($login, $mode) {
         $this->modes[$login] = $mode;
@@ -155,7 +157,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         TimeChooser::EraseAll();
     }
 
-    public function onBeginMatch() {
+    public function showToAll() {
         foreach ($this->storage->players as $player)
             $this->showPanel($player->login, false);
 
@@ -180,6 +182,12 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $widget->setPosition(14, -78);
         $widget->show();
+
+        $info = TimePanel::Create($login);
+        $info->setSize(30, 6);
+        $info->setPosition(0, 40);
+        $info->setMapInfo($this->storage->currentMap);
+        $info->show();
     }
 
     function onPlayerConnect($login, $isSpectator) {
@@ -198,6 +206,8 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onUpdateRecords($data) {
         TimePanel::$localrecords = $data;
+        echo "new records \n";
+        $this->showToAll();
     }
 
     public function onDedimaniaUpdateRecords($data) {
