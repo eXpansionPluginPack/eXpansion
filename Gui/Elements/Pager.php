@@ -20,26 +20,26 @@ class Pager extends \ManiaLive\Gui\Control {
         $this->pager->setScriptEvents();
         $this->addComponent($this->pager);
 
-        $this->scrollBg = new \ManiaLib\Gui\Elements\Quad(6, 80);
+        $this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 80);
         $this->scrollBg->setAlign("center", "top");
         $this->scrollBg->setStyle("Bgs1");
         $this->scrollBg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgCardSystem);
         $this->addComponent($this->scrollBg);
 
 
-        $this->scrollUp = new \ManiaLib\Gui\Elements\Quad(8, 8);        
+        $this->scrollUp = new \ManiaLib\Gui\Elements\Quad(6, 6);
         $this->scrollUp->setAlign("center", "top");
         $this->scrollUp->setStyle("Icons64x64_1");
         $this->scrollUp->setSubStyle(\ManiaLib\Gui\Elements\Icons64x64_1::ArrowUp);
         $this->addComponent($this->scrollUp);
 
-        $this->scrollDown = new \ManiaLib\Gui\Elements\Quad(8, 8);        
+        $this->scrollDown = new \ManiaLib\Gui\Elements\Quad(6, 6);
         $this->scrollDown->setAlign("center", "top");
         $this->scrollDown->setStyle("Icons64x64_1");
         $this->scrollDown->setSubStyle(\ManiaLib\Gui\Elements\Icons64x64_1::ArrowDown);
         $this->addComponent($this->scrollDown);
 
-        $this->scroll = new \ManiaLib\Gui\Elements\Quad(5, 20);
+        $this->scroll = new \ManiaLib\Gui\Elements\Quad(3, 20);
         $this->scroll->setAlign("center", "top");
         $this->scroll->setStyle("Bgs1");
         $this->scroll->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgCard1);
@@ -49,12 +49,15 @@ class Pager extends \ManiaLive\Gui\Control {
     }
 
     public function onResize($oldX, $oldY) {
-        $this->pager->setSize($this->sizeX, $this->sizeY);
-         $this->scroll->setPosX($this->sizeX);
-        $this->scrollBg->setPosition($this->sizeX, 5.5);
-        $this->scrollBg->setSizeY($this->sizeY + 10);
-        $this->scrollUp->setPosition($this->sizeX, 6);
-        $this->scrollDown->setPosition($this->sizeX, -$this->sizeY+4);
+        parent::onResize($oldX, $oldY);
+        $this->pager->setSize($this->sizeX - 6, $this->sizeY);
+        $this->scroll->setPosition($this->sizeX - 3, -6);
+
+        $this->scrollBg->setPosition($this->sizeX - 3);
+        $this->scrollBg->setSizeY($this->sizeY);
+
+        $this->scrollUp->setPosition($this->sizeX - 3);
+        $this->scrollDown->setPosition($this->sizeX - 3, -$this->sizeY);
     }
 
     public function setStretchContentX($value) {
@@ -62,7 +65,10 @@ class Pager extends \ManiaLive\Gui\Control {
     }
 
     public function addItem(\ManiaLib\Gui\Component $component) {
+        $component->setSizeX($this->sizeX - 4);
+        $component->setAlign("left", "top");
         $item = new \ManiaLive\Gui\Controls\Frame();
+        $item->setAlign("left", "top");
         $item->setScriptEvents();
         $item->addComponent($component);
         $hash = spl_object_hash($item);
@@ -86,22 +92,36 @@ class Pager extends \ManiaLive\Gui\Control {
     }
 
     public function destroy() {
+        $this->clearItems();
+        $this->pager->destroy();
         parent::destroy();
     }
 
+    private function getNumber($number) {
+        return number_format((float) $number, 2, '.', '');
+    }
+
     public function getScriptDeclares() {
-        $script = <<<EOD
+        $sizeY = 6;
+        if (count($this->items) < 0) {
+            reset($this->items);
+            $sizeY = current($this->items)->getSizeY();
+        }
+
+        $script = 'declare Real itemSizeY = ' . $this->getNumber($sizeY) . ';';
+
+        $script .= <<<EOD
                     
                     declare CMlFrame Pager <=> (Page.GetFirstChild("Pager") as CMlFrame);
                     declare CMlQuad ScrollBar <=> (Page.GetFirstChild("ScrollBar") as CMlQuad);
-                    declare Real itemSizeY = Pager.Size.Y / 6.0;
-                    declare Integer itemsPerPage = MathLib::NearestInteger(itemSizeY)-4;
-                    declare Real pagerMouseY;
-                    declare Real pagerDelta;
+                    declare Real itemCount = Pager.Size.Y / itemSizeY;
+                    declare Integer itemsPerPage = MathLib::NearestInteger(itemCount) - 4;
+                    declare Real pagerMouseY;                    
                     declare moveScroll = False;
-                    declare moveActive = False;
+                    declare Real pagerStartPos = ScrollBar.RelativePosition.Y;
+                    declare Real pagerDelta = 0.0;
                     declare CMlFrame item;
-                    declare Real nb = 0.0;
+                    declare Real nb = 1.0;
                     foreach (item in Pager.Controls) {                        
                     item.RelativePosition.Y = -6.0 * nb;                    
                         if(item.RelativePosition.Y < -6.0 * itemsPerPage) { 
@@ -109,6 +129,10 @@ class Pager extends \ManiaLive\Gui\Control {
                         }
                     nb +=1;
                     }
+                    if (Pager.Controls.count < itemsPerPage) {
+                        ScrollBar.Hide();
+                    }
+                
                 
                 
 EOD;
@@ -120,10 +144,10 @@ EOD;
         if (moveScroll) {                                                                                                    
                     pagerDelta += MouseY - pagerMouseY;
                         
-                    declare max = (-6.0 * itemsPerPage)+20 ;
+                    declare max = (-6.0 * itemsPerPage) + 20 ;
 
-                    if (pagerDelta >= 0) {
-                            pagerDelta = 0.0;                     
+                    if (pagerDelta >= 0.0) {
+                            pagerDelta = 0.0;
                             pagerMouseY = MouseY;
                     }
                     if (pagerDelta < max) {
@@ -132,13 +156,11 @@ EOD;
                     }
                 
                     ScrollBar.RelativePosition.Y = pagerDelta;            
-                    declare Real percent = 1 - (MathLib::Abs(max) - MathLib::Abs(pagerDelta)) / MathLib::Abs(max);
-                    log (percent);
-                
-                    nb = 0.0;                    
+                    declare Real percent = 1 - (MathLib::Abs(max) - MathLib::Abs(pagerDelta)) / MathLib::Abs(max);               
+                    nb = 1.0;                    
                     foreach (item in Pager.Controls) {
-                        item.RelativePosition.Y = (-6.0 * nb) - percent * (-6.0 * Pager.Controls.count);
-                        if(item.RelativePosition.Y > 0 || item.RelativePosition.Y < -6.0 * itemsPerPage) { 
+                        item.RelativePosition.Y = (-6.0 * nb) - percent * (-6.0 * (Pager.Controls.count - itemsPerPage));
+                        if(item.RelativePosition.Y > -3.0 || item.RelativePosition.Y < -6.0 * itemsPerPage) { 
                           item.Hide();
                         }
                         else {
@@ -168,6 +190,11 @@ EOD;
 
 EOD;
         return $script;
+    }
+
+    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+        parent::onIsRemoved($target);
+        $this->destroy();
     }
 
 }
