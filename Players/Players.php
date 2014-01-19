@@ -119,7 +119,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window = \ManiaLivePlugins\eXpansion\Players\Gui\ Windows\Playerlist::Create($login);
         $window->setTitle('Players');
 
-        $window->setSize(160, 100);
+        $window->setSize(120, 100);
         $window->centerOnScreen();
         $window->show();
     }
