@@ -13,6 +13,7 @@ class Pager extends \ManiaLive\Gui\Control {
     private $items = array();
     private $scroll;
     private $scrollBg, $scrollUp, $scrollDown;
+    private $itemSizeY = null;
 
     public function __construct() {
         $this->pager = new \ManiaLive\Gui\Controls\Frame();
@@ -20,26 +21,15 @@ class Pager extends \ManiaLive\Gui\Control {
         $this->pager->setScriptEvents();
         $this->addComponent($this->pager);
 
-        $this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 80);
+        $this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 40);
         $this->scrollBg->setAlign("center", "top");
         $this->scrollBg->setStyle("Bgs1");
         $this->scrollBg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgCardSystem);
+        $this->scrollBg->setId("ScrollBg");
+        $this->scrollBg->setScriptEvents();
         $this->addComponent($this->scrollBg);
 
-
-        $this->scrollUp = new \ManiaLib\Gui\Elements\Quad(6, 6);
-        $this->scrollUp->setAlign("center", "top");
-        $this->scrollUp->setStyle("Icons64x64_1");
-        $this->scrollUp->setSubStyle(\ManiaLib\Gui\Elements\Icons64x64_1::ArrowUp);
-        $this->addComponent($this->scrollUp);
-
-        $this->scrollDown = new \ManiaLib\Gui\Elements\Quad(6, 6);
-        $this->scrollDown->setAlign("center", "top");
-        $this->scrollDown->setStyle("Icons64x64_1");
-        $this->scrollDown->setSubStyle(\ManiaLib\Gui\Elements\Icons64x64_1::ArrowDown);
-        $this->addComponent($this->scrollDown);
-
-        $this->scroll = new \ManiaLib\Gui\Elements\Quad(3, 20);
+        $this->scroll = new \ManiaLib\Gui\Elements\Quad(3, 15);
         $this->scroll->setAlign("center", "top");
         $this->scroll->setStyle("Bgs1");
         $this->scroll->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgCard1);
@@ -51,13 +41,10 @@ class Pager extends \ManiaLive\Gui\Control {
     public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 6, $this->sizeY);
-        $this->scroll->setPosition($this->sizeX - 3, -6);
+        $this->scroll->setPosition($this->sizeX - 3, 0);
 
         $this->scrollBg->setPosition($this->sizeX - 3);
         $this->scrollBg->setSizeY($this->sizeY);
-
-        $this->scrollUp->setPosition($this->sizeX - 3);
-        $this->scrollDown->setPosition($this->sizeX - 3, -$this->sizeY);
     }
 
     public function setStretchContentX($value) {
@@ -67,6 +54,9 @@ class Pager extends \ManiaLive\Gui\Control {
     public function addItem(\ManiaLib\Gui\Component $component) {
         $component->setSizeX($this->sizeX - 4);
         $component->setAlign("left", "top");
+        if ($component->getSizeY() > 0) {
+            $this->itemSizeY = $component->getSizeY();
+        }
         $item = new \ManiaLive\Gui\Controls\Frame();
         $item->setAlign("left", "top");
         $item->setScriptEvents();
@@ -102,11 +92,7 @@ class Pager extends \ManiaLive\Gui\Control {
     }
 
     public function getScriptDeclares() {
-        $sizeY = 6;
-        if (count($this->items) < 0) {
-            reset($this->items);
-            $sizeY = current($this->items)->getSizeY();
-        }
+        $sizeY = $this->itemSizeY;
 
         $script = 'declare Real itemSizeY = ' . $this->getNumber($sizeY) . ';';
 
@@ -114,6 +100,7 @@ class Pager extends \ManiaLive\Gui\Control {
                     
                     declare CMlFrame Pager <=> (Page.GetFirstChild("Pager") as CMlFrame);
                     declare CMlQuad ScrollBar <=> (Page.GetFirstChild("ScrollBar") as CMlQuad);
+                    declare CMlQuad ScrollBg <=> (Page.GetFirstChild("ScrollBg") as CMlQuad);
                     declare Real itemCount = Pager.Size.Y / itemSizeY;
                     declare Integer itemsPerPage = MathLib::NearestInteger(itemCount) - 4;
                     declare Real pagerMouseY;                    
@@ -123,14 +110,15 @@ class Pager extends \ManiaLive\Gui\Control {
                     declare CMlFrame item;
                     declare Real nb = 1.0;
                     foreach (item in Pager.Controls) {                        
-                    item.RelativePosition.Y = -6.0 * nb;                    
-                        if(item.RelativePosition.Y < -6.0 * itemsPerPage) { 
+                    item.RelativePosition.Y = -itemSizeY * nb;                    
+                        if(item.RelativePosition.Y < -itemSizeY * itemsPerPage) { 
                            item.Hide();                            
                         }
                     nb +=1;
                     }
                     if (Pager.Controls.count < itemsPerPage) {
                         ScrollBar.Hide();
+                        ScrollBg.Hide();
                     }
                 
                 
@@ -144,7 +132,7 @@ EOD;
         if (moveScroll) {                                                                                                    
                     pagerDelta += MouseY - pagerMouseY;
                         
-                    declare max = (-6.0 * itemsPerPage) + 20 ;
+                    declare max = (-itemSizeY * itemsPerPage) + 13 ;
 
                     if (pagerDelta >= 0.0) {
                             pagerDelta = 0.0;
@@ -159,8 +147,8 @@ EOD;
                     declare Real percent = 1 - (MathLib::Abs(max) - MathLib::Abs(pagerDelta)) / MathLib::Abs(max);               
                     nb = 1.0;                    
                     foreach (item in Pager.Controls) {
-                        item.RelativePosition.Y = (-6.0 * nb) - percent * (-6.0 * (Pager.Controls.count - itemsPerPage));
-                        if(item.RelativePosition.Y > -3.0 || item.RelativePosition.Y < -6.0 * itemsPerPage) { 
+                        item.RelativePosition.Y = (-itemSizeY * nb) - percent * (-itemSizeY * (Pager.Controls.count - itemsPerPage));
+                        if(item.RelativePosition.Y > -3.0 || item.RelativePosition.Y < -itemSizeY * itemsPerPage) { 
                           item.Hide();
                         }
                         else {
