@@ -40,7 +40,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     /** @var  \ManiaLive\Data\Storage */
     private $storage;
-    private $widths = array(10, 4, 3, 2, 2, 2, 1);
+    private $widths = array(15, 6, 4, 3, 3, 3, .7);
 
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap[] */
     private $maps = array();
@@ -180,9 +180,9 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         
-        $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 18);
-        $this->pager->setPosition(0, -7);
-        $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / 0.8));
+        $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 8);
+        $this->pager->setPosition(0, -4);
+        $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / 0.8)-15);
         $this->title_mapName->setSizeX($scaledSizes[0]);
         $this->title_authorName->setSizeX($scaledSizes[1]);
         $this->title_goldTime->setSizeX($scaledSizes[2]);
