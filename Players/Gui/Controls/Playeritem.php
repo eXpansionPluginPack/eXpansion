@@ -113,7 +113,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
             if(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'player_ignore')){
                 $this->ignoreButton = new MyButton(7, 5);
-                $this->ignoreButton->setDescription(__('Ignore player %1$s ', $login, $login), 50);
+                $this->ignoreButton->setDescription(__('Ignore player %1$s ', $login, $player->login), 50);
                 $this->ignoreButton->setTextColor("fff");
                 $this->ignoreButton->colorize("a22");
                 $this->ignoreButton->setScale(0.7);
@@ -124,7 +124,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
             if(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'player_kick')){
                 $this->kickButton = new MyButton(7, 5);
-                $this->kickButton->setDescription(__('Kick player %1$s ', $login, $login), 50);
+                $this->kickButton->setDescription(__('Kick player %1$s ', $login, $player->login), 50);
                 $this->kickButton->setTextColor("fff");
                 $this->kickButton->setAction($this->kickAction);
                 $this->kickButton->colorize("a22");
@@ -135,7 +135,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
             if(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'player_ban')){
                 $this->banButton = new MyButton(7, 5);
-                $this->banButton->setDescription(__('Ban player %1$s ', $login, $login), 50);
+                $this->banButton->setDescription(__('Ban player %1$s ', $login, $player->login), 50);
                 $this->banButton->setTextColor("fff");
                 $this->banButton->colorize("a22");
                 $this->banButton->setAction($this->banAction);
@@ -146,7 +146,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
             if(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'player_black')){
                 $this->blacklistButton = new MyButton(7, 5);
-                $this->blacklistButton->setDescription(__('Blacklist player %1$s ', $login, $login), 50);
+                $this->blacklistButton->setDescription(__('Blacklist player %1$s ', $login, $player->login), 50);
                 $this->blacklistButton->setTextColor("fff");
                 $this->blacklistButton->colorize("a22");
                 $this->blacklistButton->setAction($this->blacklistAction);
