@@ -13,7 +13,7 @@ class Pager extends \ManiaLive\Gui\Control {
     private $items = array();
     private $scroll;
     private $scrollBg, $scrollUp, $scrollDown;
-    private $itemSizeY = null;
+    private $itemSizeY = 6;
 
     public function __construct() {
         $this->pager = new \ManiaLive\Gui\Controls\Frame();
@@ -24,7 +24,7 @@ class Pager extends \ManiaLive\Gui\Control {
         $this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 40);
         $this->scrollBg->setAlign("center", "top");
         $this->scrollBg->setStyle("Bgs1");
-        $this->scrollBg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgCardSystem);
+        $this->scrollBg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitle3_3);
         $this->scrollBg->setId("ScrollBg");
         $this->scrollBg->setScriptEvents();
         $this->addComponent($this->scrollBg);
