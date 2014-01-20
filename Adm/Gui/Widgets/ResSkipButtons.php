@@ -13,10 +13,12 @@ class ResSkipButtons extends \ManiaLive\Gui\Window {
 
         $this->btn_res = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetButton();
         $this->btn_res->setAlign("left", "center2");
+        $this->btn_res->setPositionZ(-1);
         $this->addComponent($this->btn_res);
 
         $this->btn_skip = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetButton();
         $this->btn_skip->setAlign("left", "center2");
+        $this->btn_skip->setPositionZ(-1);
         $this->addComponent($this->btn_skip);
 
         $move = new \ManiaLib\Gui\Elements\Quad(36, 18);
@@ -39,8 +41,8 @@ class ResSkipButtons extends \ManiaLive\Gui\Window {
                         declare Window <=> Page.GetFirstChild("' . $this->getId() . '");                 
                         declare MoveWindow = False;                        
                         declare CMlQuad  quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);      
-                        declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
-                        declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
+                        declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, -1.0>;
+                        declare Vec3 DeltaPos = <0.0, 0.0, -1.0>;
                         declare Real lastMouseX = 0.0;
                         declare Real lastMouseY = 0.0;                           
                         declare Text id = "Skip and Res Buttons";      
@@ -55,10 +57,10 @@ class ResSkipButtons extends \ManiaLive\Gui\Window {
 			    }
 			 
                          if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <116.0, -65.0, 0.0>;
+                                windowLastPos[id] = <90.0, 86.0, -1.0>;
                                }
                          if (!windowLastPosRel.existskey(id)) {
-                                windowLastPosRel[id] = <116.0, -65.0, 0.0>;
+                                windowLastPosRel[id] = <90.0, 86.0, -1.0>;
                               }
                         //Window.PosnX = windowLastPos[id][0];
                         //Window.PosnY = windowLastPos[id][1];
@@ -103,7 +105,7 @@ class ResSkipButtons extends \ManiaLive\Gui\Window {
                                     DeltaPos.Y = MouseY - lastMouseY;
                                                                       
                                     LastDelta += DeltaPos;
-                                    LastDelta.Z = 3.0;
+                                    LastDelta.Z = -1.0;
                                     Window.RelativePosition = LastDelta;
                                     windowLastPos[id] = Window.AbsolutePosition;
                                     windowLastPosRel[id] = Window.RelativePosition;

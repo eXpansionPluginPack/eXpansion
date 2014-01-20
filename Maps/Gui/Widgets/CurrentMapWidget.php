@@ -8,8 +8,8 @@ class CurrentMapWidget extends \ManiaLive\Gui\Window {
     protected $authorTime, $logo;
 
     protected function onConstruct() {
-        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(45, 13);
-        $bg->setPosition(-35, 3);
+        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(54, 13);
+        $bg->setPosition(-44, 3);
         $this->addComponent($bg);
         
         $icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
