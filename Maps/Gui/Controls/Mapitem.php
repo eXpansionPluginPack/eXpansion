@@ -66,7 +66,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->label_localrec = new \ManiaLib\Gui\Elements\Label($scaledSizes[3], 4);
         $this->label_localrec->setAlign('center', 'center');
         $this->label_localrec->setScale(0.8);
-        $this->label_localrec->setText($sortableMap->localrecord);
+        $this->label_localrec->setText($sortableMap->localrecord . " / ". $sortableMap->localmax );
         $this->frame->addComponent($this->label_localrec);
 
         $this->label_rating = new \ManiaLib\Gui\Elements\Label($scaledSizes[4], 4);

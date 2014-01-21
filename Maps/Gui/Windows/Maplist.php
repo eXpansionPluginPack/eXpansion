@@ -245,12 +245,12 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             if ($this->search($map) > 65) {
                 if (array_key_exists($map->uId, $this->records)) {
                     if ($this->records[$map->uId] <= $maxrec)
-                        $localrecord = $this->records[$map->uId] . "/" . $maxrec;
+                        $localrecord = $this->records[$map->uId];
                 }
                 if (array_key_exists($map->uId, $this->ratings)) {
                     $rating = $this->ratings[$map->uId];
                 }
-                $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $rating);
+                $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $maxrec, $rating);
             }
         }
 
@@ -264,6 +264,18 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
 
         // select sorttype and sort the list
+        $sortmode = SORT_STRING;
+       switch (Maps::$playerSortModes[$login]->column) {
+           case "rating": 
+           case "localrecord": 
+           case "goldTime": 
+               $sortmode = SORT_NUMERIC;
+               break;
+
+       }
+       
+        
+        
         if (Maps::$playerSortModes[$login]->sortMode == 1)
             \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc($this->maps, Maps::$playerSortModes[$login]->column);
         if (Maps::$playerSortModes[$login]->sortMode == 2) {

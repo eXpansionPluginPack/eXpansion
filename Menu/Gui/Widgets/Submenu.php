@@ -44,8 +44,7 @@ class Submenu extends \ManiaLive\Gui\Window {
             }
             if ($snb) {
                 $this->item[$nb]->setId("sub_" . $snb . "_item_" . $nb);
-                $this->item[$nb]->setFocusAreaColor2("fff8");
-                echo "$text -> $action \n";
+                $this->item[$nb]->setFocusAreaColor2("fff8");                
                 $this->item[$nb]->setAction($action);
             } else {
                 $this->item[$nb]->setId("item_" . $nb);
