@@ -97,8 +97,7 @@ class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     }
 
     function actions($login, $action) {
-        try {
-            $player = $this->storage->getPlayerObject($login);
+        try {            
             switch ($action) {
                 case "forceEndRound":
                     self::$mainPlugin->endRound($login);
@@ -114,7 +113,7 @@ class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
                     break;
             }
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('Notice: ' . $e->getMessage(), $login);
+            echo 'Notice: ' . $e->getMessage();
         }
     }
 
@@ -173,9 +172,7 @@ class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->addScriptToWhile($loop);
     }
 
-    function destroy() {
-        $this->connection = null;
-        $this->storage = null;
+    function destroy() {   
         $this->clearComponents();
         parent::destroy();
     }
