@@ -53,24 +53,7 @@ class Widget extends \ManiaLive\Gui\Window {
                 $this->addScriptToWhile($component->getScriptMainLoop());
             }
 
-            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Button) {
-
-                $decl = $component->getScriptDeclares();
-                if ($this->nbButton == 0) {
-                    if (!empty($decl)) {
-                        $this->addScriptToMain($decl);
-                        $this->addScriptToWhile($component->getScriptMainLoop());
-                        $this->nbButton++;
-                        $this->aButton = $component;
-                    }
-                }
-                if (!empty($decl)) {
-                    if ($this->maxIdButton < $component->getButtonId())
-                        $this->maxIdButton = $component->getButtonId();
-                    if ($this->minIdButton > $component->getButtonId())
-                        $this->minIdButton = $component->getButtonId();
-                }
-            }
+            
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown) {
                 $this->addScriptToMain($component->getScriptDeclares($this->dIndex));
                 $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));

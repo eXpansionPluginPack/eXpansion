@@ -128,12 +128,9 @@ class Window extends \ManiaLive\Gui\Window {
         $this->mainFrame->setSize($this->sizeX - 4, $this->sizeY - 8);
         $this->mainFrame->setPosition(2, -2);
     }
-    
-	private $nbButton = 0;
-    private $minIdButton = 999999;
-    private $maxIdButton = 0;
-    private $aButton = null;
 
+    private $calledScripts = array();
+    
     private function detectElements($components) {
         $buttonScript = null;
         foreach ($components as $index => $component) {            
@@ -146,29 +143,28 @@ class Window extends \ManiaLive\Gui\Window {
                 $this->addScriptToWhile($component->getScriptMainLoop());
             }
 
-            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Button) {
-                
-                $decl = $component->getScriptDeclares();
-                if($this->nbButton == 0){  
-                    if(!empty($decl)){
-                        $this->addScriptToMain($decl);
-                        $this->addScriptToWhile($component->getScriptMainLoop());
-                        $this->nbButton++;
-                        $this->aButton = $component;
-                    }
-                }
-                if(!empty($decl)){
-                    if($this->maxIdButton < $component->getButtonId())
-                        $this->maxIdButton = $component->getButtonId();
-                    if($this->minIdButton > $component->getButtonId())
-                        $this->minIdButton = $component->getButtonId();
-                }
-            }
+
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown) {
                 $this->addScriptToMain($component->getScriptDeclares($this->dIndex));
                 $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));
                 $this->dIndex++;
             }
+            
+            if($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer){
+                $script = $component->getScript();
+                echo "\n\nScripted Container FOUND \n";
+                if(!isset($this->calledScripts[$script->getRelPath()]) || $script->multiply()){
+                    echo "Scripted Container Executed \n";
+                    $this->calledScripts[$script->getRelPath()] = $script;
+                    
+                    $dec = $script->getDeclarationScript($this->id, $component);
+                    echo $dec;
+                    $this->addScriptToMain($dec);
+                    $this->addScriptToLoop($script->getMainLoopScript($this->id, $component));
+                    $this->addScriptToWhile($script->getWhileLoopScript($this->id, $component));
+                }
+            }
+            
             //if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Pager) {
             //    $this->detectElements($component->getComponents());
             // }
@@ -184,11 +180,15 @@ class Window extends \ManiaLive\Gui\Window {
         $this->dIndex = 0;
         $this->dDeclares = "";
         $this->dLoop = "";
+        $this->calledScripts = array();
         
         $this->detectElements($this->getComponents());
-        if($this->aButton != null){
-            $this->addScriptToMain($this->aButton->getHideMainLoop($this->minIdButton, $this->maxIdButton));
+
+        foreach($this->calledScripts as $script){
+            $script->getEndScript();
         }
+        
+        $this->calledScripts = array();
 
         $this->removeComponent($this->xml);
         // fixes the window to be center of the screen for first open. 

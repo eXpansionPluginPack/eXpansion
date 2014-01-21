@@ -4,9 +4,12 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class Button extends \ManiaLive\Gui\Control {
+class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer{
 
     private static $counter = 0;
+    
+    private static $script = null;
+    
     protected $label;
     protected $labelDesc;
     protected $activeFrame;
@@ -28,6 +31,11 @@ class Button extends \ManiaLive\Gui\Control {
      * @param intt $sizeY = 6
      */
     function __construct($sizeX = 24, $sizeY = 6) {
+        
+        if(self::$script == null){
+            self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\ButtonScript();
+        }
+        
         $config = Config::getInstance();
         $this->buttonId = self::$counter++;
         if (self::$counter > 100000)
@@ -93,6 +101,7 @@ class Button extends \ManiaLive\Gui\Control {
     }
 
     function onDraw() {
+        self::$script->reset();
         $this->clearComponents();
 
         if ($this->isActive)
@@ -124,6 +133,10 @@ class Button extends \ManiaLive\Gui\Control {
         $this->description = "$000" . $description;
         $this->labelDesc->setSizeX($sizeX);
         $this->backGroundDesc->setSizeX($sizeX+2);
+    }
+    
+    public function getDescription(){
+        return $this->description;
     }
 
     function setActive($bool = true) {
@@ -179,60 +192,6 @@ class Button extends \ManiaLive\Gui\Control {
         $this->label->setPosX((($this->sizeX - 2) / 2) + ($this->getSizeY() - 1));
         $this->label->setSizeX($this->getSizeX() - ($this->getSizeY() + 1));
     }
-
-    public function getScriptDeclares() {
-        if (!empty($this->description)) {
-            $script = <<<EOD
-                declare CMlFrame currentButton <=> Null;                      
-EOD;
-             
-            return $script;
-        } else {
-            return "";
-        }
-    }
-    
-    public function getScriptMainLoop() {
-        if (!empty($this->description)) {
-            $script = <<<EOD
-                    
-               foreach (Event in PendingEvents) {
-                    if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {
-                        log("Mouse Over : "^Event.ControlId);
-                        if(Page.GetFirstChild("Desc_"^Event.ControlId) != Null){
-                            log("Validated "^Event.ControlId);
-                            if(currentButton != Null){
-                                currentButton.Hide();
-                            }
-                            currentButton = (Page.GetFirstChild("Desc_"^Event.ControlId) as CMlFrame);
-                            currentButton.Show();
-                        }else{
-                             if(currentButton != Null){
-                                currentButton.Hide();
-                                currentButton = Null;
-                            }
-                        }
-                    }
-               }
-EOD;
-            
-            return $script;
-        } else {
-            return "";
-        }
-    }
-    public function getHideMainLoop($min, $max) {
-        if (!empty($this->description)) {
-            return '//TEst
-            for(i, '.$min.',  '.$max.'){
-             if(Page.GetFirstChild("Desc_Icon_"^i) != Null){
-                 Page.GetFirstChild("Desc_Icon_"^i).Hide(); 
-             }
-            }';
-        }else{
-            return "";
-        }
-    }
   
     function getButtonId(){
         return $this->buttonId;
@@ -241,6 +200,10 @@ EOD;
     function onIsRemoved(\ManiaLive\Gui\Container $target) {
         parent::onIsRemoved($target);
         parent::destroy();
+    }
+
+    public function getScript() {
+        return self::$script;
     }
 
 }
