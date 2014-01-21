@@ -31,6 +31,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->actions['admres'] = $actionHandler->createAction(array($this, "actions"), "admres");
         $this->actions['admskip'] = $actionHandler->createAction(array($this, "actions"), "admskip");
         $this->actions['admer'] = $actionHandler->createAction(array($this, "actions"), "admer");
+        $this->actions['admcancel'] = $actionHandler->createAction(array($this, "actions"), "admcancel");
         $this->actions['quit'] = $actionHandler->createAction(array($this, "actions"), "quit");
     }
 
@@ -62,6 +63,11 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             case "admer":
                 $adminGrp->adminCmd($login, "er");
                 break;
+            case "admcancel":
+                $adminGrp->adminCmd($login, "cancel");
+                break;
+            
+            
         }
     }
 
@@ -123,7 +129,10 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $submenu->addItem("Vote Skip", $this->actions['voteskip']);
         }
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_endround")) {
-            $submenu->addItem("Adm End Round", $this->actions['admer']);
+            $submenu->addItem("End Round", $this->actions['admer']);
+        }
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_cancelvote")) {
+            $submenu->addItem("Cancel Vote", $this->actions['admcancel']);
         }
         $submenu->addItem("", null);
         $submenu->addItem("Leave Server", $this->actions['quit']);
