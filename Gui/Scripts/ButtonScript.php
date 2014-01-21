@@ -9,8 +9,12 @@ namespace ManiaLivePlugins\eXpansion\Gui\Scripts;
  */
 class ButtonScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script{
     
-    private $min = 999999;
-    private $max = 0;
+    public $min = 999999;
+    public $max = 0;
+    
+    private $dec = false;
+    private $loop = false;
+    private $while = false;
     
     function __construct() {
         parent::__construct("Gui/Scripts/Button");
@@ -25,13 +29,39 @@ class ButtonScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script{
             if($this->min > $component->getButtonId())
                 $this->min = $component->getButtonId();
         }
-        
-        return parent::getDeclarationScript($id, $component);
+        if(!$this->dec){
+            $this->dec = true;
+            return parent::getDeclarationScript($id, $component);
+        }else
+            return "";
+    }
+    
+    public function getWhileLoopScript($id, $component){ 
+        if(!$this->while){
+            $this->while = true;
+            return parent::getWhileLoopScript($id, $component);
+        }else
+            return "";
+    }
+    
+    public function getMainLoopScript($id, $component){ 
+        if(!$this->loop){
+            $this->loop = true;
+            return parent::getMainLoopScript($id, $component);
+        }else
+            return "";
     }
     
     public function reset(){
         $this->min = 999999;
         $this->max = 0;
+        $this->dec = false;
+        $this->loop = false;
+        $this->while = false;
+    }
+    
+    public function multiply() {
+        return true;
     }
 }
 

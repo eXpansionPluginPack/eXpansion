@@ -158,7 +158,6 @@ class Window extends \ManiaLive\Gui\Window {
                     $this->calledScripts[$script->getRelPath()] = $script;
                     
                     $dec = $script->getDeclarationScript($this->id, $component);
-                    echo $dec;
                     $this->addScriptToMain($dec);
                     $this->addScriptToLoop($script->getMainLoopScript($this->id, $component));
                     $this->addScriptToWhile($script->getWhileLoopScript($this->id, $component));
@@ -185,7 +184,7 @@ class Window extends \ManiaLive\Gui\Window {
         $this->detectElements($this->getComponents());
 
         foreach($this->calledScripts as $script){
-            $script->getEndScript();
+            $this->addScriptToMain($script->getEndScript());
         }
         
         $this->calledScripts = array();
