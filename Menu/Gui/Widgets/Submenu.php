@@ -45,12 +45,7 @@ class Submenu extends \ManiaLive\Gui\Window {
         $this->menu->setScriptEvents();
         $this->menu->setAttribute("hidden", "true");
         $this->addComponent($this->menu);
-       
-        $this->debug = new \ManiaLib\Gui\Elements\Label();
-        $this->debug->setId("debug");
-        $this->debug->setPosY(6);
-        $this->debug->setText('$fffdebug');
-
+        
         $this->debug->setScriptEvents();
         $this->addComponent($this->debug);        
 
