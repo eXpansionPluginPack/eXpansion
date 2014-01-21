@@ -99,7 +99,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 //        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login) || !(empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1) || !(empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1)) {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
             $info = AdminPanel::Create($login);
-            $info->setSize(50, 20);
+            $info->setSize(60, 8);
             $info->setPosition(-160, -46);
             $info->show();
         }

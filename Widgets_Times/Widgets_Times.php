@@ -169,7 +169,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $player = $this->storage->getPlayerObject($login);
             $this->spectatorTargets[$login] = $player;
         }
-        $widget = TimeChooser::Create($login);
+        /*$widget = TimeChooser::Create($login);
         $widget->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
         $widget->setSize(40, 6);
         if (!isset($this->modes[$login]))
@@ -180,7 +180,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $widget->updatePanelMode($this->modes[$login], $this->audio[$login]);
 
         $widget->setPosition(14, -78);
-        $widget->show();
+        $widget->show(); */
 
         $info = TimePanel::Create($login);
         $info->setSize(30, 6);

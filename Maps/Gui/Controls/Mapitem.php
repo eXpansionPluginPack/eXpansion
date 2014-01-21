@@ -87,7 +87,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
         $this->queueButton = new MyButton(5, 5);
         
-        $this->queueButton->setDescription(__('Add %1$s $zto wish list', $login, $sortableMap->map->name), 100);
+        //$this->queueButton->setDescription(__('Add %1$s $zto wish list', $login, $sortableMap->map->name), 100);
         $this->queueButton->setAction($this->queueMapAction);
         $this->queueButton->colorize('2a2');
         $this->queueButton->setScale(0.8);
@@ -95,7 +95,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->queueButton->setIcon('Icons128x128_1', 'Race');
         if (Maplist::$localrecordsLoaded) {
             $this->showRecsButton = new MyButton(5, 5);
-            $this->showRecsButton->setDescription(__('Show Recs of %1$s', $login, $sortableMap->map->name), 100);
+          //  $this->showRecsButton->setDescription(__('Show Recs of %1$s', $login, $sortableMap->map->name), 100);
             $this->showRecsButton->setAction($this->showRecsAction);
             $this->showRecsButton->setIcon('BgRaceScore2', 'ScoreLink');
             $this->showRecsButton->setScale(0.8);
@@ -127,7 +127,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
             $this->actionsFrame->addComponent($spacer);
 
             $this->removeButton = new MyButton(5, 5);
-            $this->removeButton->setDescription(__('$F22Remove %1$s $zfrom server', $login, $sortableMap->map->name), 100);
+          //  $this->removeButton->setDescription(__('$F22Remove %1$s $zfrom server', $login, $sortableMap->map->name), 100);
             $this->removeButton->setAction($this->removeMapAction);
             $this->removeButton->colorize('a22');
             $this->removeButton->setIcon('Icons64x64_1', 'Close');

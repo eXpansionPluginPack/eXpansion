@@ -4,30 +4,28 @@ namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class AdminPanel extends \ManiaLive\Gui\Window {
+class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     protected $_windowFrame;
     protected $_mainWindow;
     protected $_minButton;
     protected $servername;
+    
     protected $btnEndRound;
     protected $btnCancelVote;
     protected $btnSkip;
     protected $btnRestart;
+    
     private $actionEndRound;
     private $actionCancelVote;
     private $actionSkip;
     private $actionRestart;
+    
     public static $mainPlugin;
 
     protected function onConstruct() {
-        parent::onConstruct();
-        $config = Config::getInstance();
-
-        $dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \DedicatedApi\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
-
+        parent::onConstruct();        
+        
         $this->actionEndRound = $this->createAction(array($this, 'actions'), "forceEndRound");
         $this->actionCancelVote = $this->createAction(array($this, 'actions'), "cancelVote");
         $this->actionSkip = $this->createAction(array($this, 'actions'), "nextMap");
@@ -52,32 +50,31 @@ class AdminPanel extends \ManiaLive\Gui\Window {
         $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setAlign("left", "top");
         $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        $frame->setPosition(6, 4);
+        $frame->setPosition(6, 0);
 
-        $this->btnEndRound = new \ManiaLib\Gui\Elements\Quad(7, 7);
+        $this->btnEndRound = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(7,7);
         $this->btnEndRound->setAction($this->actionEndRound);
-        $this->btnEndRound->setStyle("Icons128x32_1");
-        $this->btnEndRound->setSubStyle("RT_Rounds");
-
+        $this->btnEndRound->setIcon("Icons128x32_1", "RT_Rounds");
+        $this->btnEndRound->setDescription("Force end round");
         $frame->addComponent($this->btnEndRound);
 
 
-        $this->btnCancelVote = new \ManiaLib\Gui\Elements\Quad(7, 7);
+        $this->btnCancelVote = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(7,7);
         $this->btnCancelVote->setAction($this->actionCancelVote);
-        $this->btnCancelVote->setStyle("UIConstructionSimple_Buttons");
-        $this->btnCancelVote->setSubStyle("Add");
+        $this->btnCancelVote->setIcon("UIConstructionSimple_Buttons","Add");
+        $this->btnCancelVote->setDescription('Cancel the vote');
         $frame->addComponent($this->btnCancelVote);
 
-        $this->btnRestart = new \ManiaLib\Gui\Elements\Quad(7, 7);
+        $this->btnRestart = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(7,7);
         $this->btnRestart->setAction($this->actionRestart);
-        $this->btnRestart->setStyle("Icons128x32_1");
-        $this->btnRestart->setSubStyle("RT_Laps");
+        $this->btnRestart->setIcon("Icons128x32_1","RT_Laps");
+        $this->btnRestart->setDescription('Restarts the map');
         $frame->addComponent($this->btnRestart);
 
-        $this->btnSkip = new \ManiaLib\Gui\Elements\Quad(7, 7);
+        $this->btnSkip = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(7,7);
         $this->btnSkip->setAction($this->actionSkip);
-        $this->btnSkip->setStyle("UIConstructionSimple_Buttons");
-        $this->btnSkip->setSubStyle("Right");
+        $this->btnSkip->setIcon("UIConstructionSimple_Buttons", "Right");
+        $this->btnSkip->setDescription("Skips the map");
         $frame->addComponent($this->btnSkip);
 
         $this->_windowFrame->addComponent($frame);
@@ -93,13 +90,8 @@ class AdminPanel extends \ManiaLive\Gui\Window {
 
         $this->addComponent($this->_windowFrame);
 
-        $xml = new \ManiaLive\Gui\Elements\Xml();
-        $xml->setContent('
-        <timeout>0</timeout>            
-        <script><!--
-                     main () {
-                       
-                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");
+        
+        $declares = '                                             
                         declare mainWindow <=> Page.GetFirstChild("Frame");
                         declare isMinimized = True;                                          
                         declare lastAction = Now;
@@ -108,8 +100,8 @@ class AdminPanel extends \ManiaLive\Gui\Window {
                         declare positionMax = -4.0;
                         mainWindow.PosnX = -50.0;                        
                                               
-                        while(True) {
-                                
+                      ';
+        $loop = '
                                 if (isMinimized)
                                 {
                                      if (mainWindow.PosnX >= positionMin) {                                          
@@ -141,12 +133,16 @@ class AdminPanel extends \ManiaLive\Gui\Window {
                                            lastAction = Now;                                           
                                     }                                       
                                 }
-                                yield;                        
-                        }  
+                                
                         
-                }
-                --></script>');
-        $this->addComponent($xml);
+                        
+         ';
+        
+        $this->addScriptToMain($declares);
+        $this->addScriptToWhile($loop);
+        $this->setName("Admin Panel");        
+        $this->setDisableAxis("x");           
+        
     }
 
     function onResize($oldX, $oldY) {
@@ -177,8 +173,9 @@ class AdminPanel extends \ManiaLive\Gui\Window {
             $this->connection->chatSendServerMessage('Notice: ' . $e->getMessage(), $login);
         }
     }
-    
+
     function onShow() {
+        parent::onShow();
         $this->btnEndRound->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), 'map_endRound'));
         $this->btnCancelVote->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), 'cancel_vote'));
     }
