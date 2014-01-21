@@ -57,6 +57,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod("replayMap");
         $this->setPublicMethod("replayMapInstant");
         $this->setPublicMethod("returnQueue");
+        $this->setPublicMethod("showMapList");
     }
 
     public function exp_onReady() {

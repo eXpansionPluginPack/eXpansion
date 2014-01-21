@@ -29,6 +29,8 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand("play", "setPlay", 0, true); // fast
         $this->registerChatCommand("spec", "setSpec", 0, true); // fast
 
+        $this->setPublicMethod("showPlayerList");
+
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Players'), false);
             $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Show Players'), null, array($this, 'showPlayerList'), false);
