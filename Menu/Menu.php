@@ -24,31 +24,45 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $actionHandler = \ManiaLive\Gui\ActionHandler::getInstance();
 
-        $this->actions['playerlist'] = $actionHandler->createAction(array($this, "showPlayers"));
-        $this->actions['maplist'] = $actionHandler->createAction(array($this, "showMapList"));
-        $this->actions['voteres'] = $actionHandler->createAction(array($this, "vote_res"));
-        $this->actions['voteskip'] = $actionHandler->createAction(array($this, "vote_skip"));
-        $this->actions['quit'] = $actionHandler->createAction(array($this, "quit"));
+        $this->actions['playerlist'] = $actionHandler->createAction(array($this, "actions"), "playerlist");
+        $this->actions['maplist'] = $actionHandler->createAction(array($this, "actions"), "maplist");
+        $this->actions['voteres'] = $actionHandler->createAction(array($this, "actions"), "voteres");
+        $this->actions['voteskip'] = $actionHandler->createAction(array($this, "actions"), "voteskip");
+        $this->actions['admres'] = $actionHandler->createAction(array($this, "actions"), "admres");
+        $this->actions['admskip'] = $actionHandler->createAction(array($this, "actions"), "admskip");
+        $this->actions['admer'] = $actionHandler->createAction(array($this, "actions"), "admer");
+        $this->actions['quit'] = $actionHandler->createAction(array($this, "actions"), "quit");
     }
 
-    function showMapList($login) {
-        $this->callPublicMethod("eXpansion\Maps", "showMapList", $login);
-    }
+    function actions($login, $action) {
+        $adminGrp = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
 
-    function quit($login) {
-        $this->connection->kick($login, "Thanks for visiting, and welcome back soon :)");
-    }
-
-    function showPlayers($login) {
-        $this->callPublicMethod("eXpansion\Players", "showPlayerList", $login);
-    }
-
-    function vote_res($login) {
-        $this->callPublicMethod("eXpansion\Votes", "vote_restart",  $login);
-    }
-
-    function vote_skip($login) {
-        $this->callPublicMethod("eXpansion\Votes", "vote_skip", $login);
+        switch ($action) {
+            case "playerlist":
+                $this->callPublicMethod("eXpansion\Players", "showPlayerList", $login);
+                break;
+            case "maplist":
+                $this->callPublicMethod("eXpansion\Maps", "showMapList", $login);
+                break;
+            case "voteres":
+                $this->callPublicMethod("eXpansion\Votes", "vote_restart", $login);
+                break;
+            case "voteskip":
+                $this->callPublicMethod("eXpansion\Votes", "vote_skip", $login);
+                break;
+            case "quit":
+                $this->connection->kick($login, "Thanks for visiting, and welcome back soon :)");
+                break;
+            case "admres":
+                $adminGrp->adminCmd($login, "restart");
+                break;
+            case "admskip":
+                $adminGrp->adminCmd($login, "skip");
+                break;
+            case "admer":
+                $adminGrp->adminCmd($login, "er");
+                break;
+        }
     }
 
     function exp_admin_added($login) {
@@ -98,8 +112,19 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $submenu->addItem("Maps List", $this->actions['maplist']);
         $submenu->addItem("Players  List", $this->actions['playerlist']);
         $submenu->addItem("", null);
-        $submenu->addItem("Vote Restart", $this->actions['voteres']);
-        $submenu->addItem("Vote Skip", $this->actions['voteskip']);
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_restart")) {
+            $submenu->addItem("Adm Restart", $this->actions['admres']);
+        } else {
+            $submenu->addItem("Vote Restart", $this->actions['voteres']);
+        }
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_skip")) {
+            $submenu->addItem("Adm Skip", $this->actions['admskip']);
+        } else {
+            $submenu->addItem("Vote Skip", $this->actions['voteskip']);
+        }
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_endround")) {
+            $submenu->addItem("Adm End Round", $this->actions['admer']);
+        }
         $submenu->addItem("", null);
         $submenu->addItem("Leave Server", $this->actions['quit']);
         $submenu->show();

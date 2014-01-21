@@ -14,14 +14,14 @@ class Submenu extends \ManiaLive\Gui\Window {
         $item->setAlign("left", "center");
         $item->setSize(25, 4.5);
 
-        $item->setFocusAreaColor1("fff");
-        $item->setFocusAreaColor2("fff");
+        $item->setFocusAreaColor1("0006");
+        $item->setFocusAreaColor2("0006");
         if (!empty($action)) {
-            $item->setFocusAreaColor2("4ef");
+            $item->setFocusAreaColor2("fff8");
             $item->setAction($action);
         }
         $item->setText($text);
-        $item->setTextColor('000');
+        $item->setTextColor('fff');
         $item->setTextSize(1.75);
         $item->setPosZ(30);
         $item->setId("item_" . $this->itemNb);
