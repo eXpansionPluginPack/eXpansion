@@ -27,7 +27,9 @@ class Playeritem extends \ManiaLive\Gui\Control {
     protected $team;
     protected $icon;
     private $toggleTeam = null;
-
+    
+    /** @var \DedicatedApi\Structures\Player */
+    private $player;
     function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin, $login, $widths, $sizeX) {
         $this->recipient = $login;
         $this->widths = \ManiaLivePlugins\eXpansion\Gui\Gui::getScaledSize($widths, $sizeX);
@@ -161,7 +163,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
                 $this->forceButton->setScale(0.7);
                 $this->forceButton->colorize("2f2");
                 $this->forceButton->setIcon('Icons64x64_1', 'Opponents');
-                 $this->forceButton->setDescription(__('Force %1$s to play', $this->recipient, $this->recipient),50);
+                 $this->forceButton->setDescription(__('Force %1$s to play', $login, $player->login),50);
                 $this->frame->addComponent($this->forceButton);
                 }
         }
@@ -183,10 +185,10 @@ class Playeritem extends \ManiaLive\Gui\Control {
         if ($this->forceButton != null) {
             if ($this->player->spectator == 1) {
                 $this->forceButton->setIcon('Icons64x64_1', 'Opponents');
-                $this->forceButton->setDescription(__('Force %1$s to play', $this->recipient, $this->recipient),50);
+                $this->forceButton->setDescription(__('Force %1$s to play', $this->recipient, $this->player->login),50);
             } else {
                  $this->forceButton->setIcon('BgRaceScore2', 'Spectator');
-                $this->forceButton->setDescription(__('Force %1$s to spectate', $this->recipient, $this->recipient),50);
+                $this->forceButton->setDescription(__('Force %1$s to spectate', $this->recipient, $this->player->login),50);
             }
         }
     }
