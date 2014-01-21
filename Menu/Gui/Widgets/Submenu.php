@@ -46,9 +46,6 @@ class Submenu extends \ManiaLive\Gui\Window {
         $this->menu->setAttribute("hidden", "true");
         $this->addComponent($this->menu);
         
-        $this->debug->setScriptEvents();
-        $this->addComponent($this->debug);        
-
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
 
         $script = <<<EOD
