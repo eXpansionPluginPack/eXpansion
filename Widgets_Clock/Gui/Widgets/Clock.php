@@ -39,6 +39,7 @@ class Clock extends \ManiaLive\Gui\Window {
         $this->date->setPosition(0, 1);
         $this->date->setTextColor('fff');
         $this->date->setTextPrefix('$s');
+        $this->date->setAction(\ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics::$serverStatAction);
         $this->addComponent($this->date);
 
         $move = new \ManiaLib\Gui\Elements\Quad(60, 12);

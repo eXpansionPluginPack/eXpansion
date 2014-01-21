@@ -20,8 +20,8 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 	// $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
 	$login = $this->getRecipient();
 
-    $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(52, 15);
-    $bg->setPosition(-50, -7);
+    $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(42, 15);
+    $bg->setPosition(-38, -7);
     $this->addComponent($bg);
     
 	$label = new \ManiaLib\Gui\Elements\Label(30);
@@ -32,7 +32,7 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 	$this->addComponent($label);
 
 	$row = new \ManiaLive\Gui\Controls\Frame(0, -4);
-	$this->labelName = new \ManiaLib\Gui\Elements\Label(33, 7);
+	$this->labelName = new \ManiaLib\Gui\Elements\Label(23, 7);
 	$this->labelName->setText('$ddd' . $this->mapName);
 	$this->labelName->setAlign("right", "top");
 	$this->labelName->setPosX(-4);
@@ -48,7 +48,7 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 	$frame->addComponent($row);
 
 	$row = new \ManiaLive\Gui\Controls\Frame(0, -8);
-	$this->labelAuthor = new \ManiaLib\Gui\Elements\Label(33, 7);
+	$this->labelAuthor = new \ManiaLib\Gui\Elements\Label(23, 7);
 	$this->labelAuthor->setText('$ddd' . $this->mapAuthor);
 	$this->labelAuthor->setAlign("right", "top");
 	$this->labelAuthor->setPosX(-4);
@@ -111,10 +111,10 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 				 widgetVisible[id] =  True;
 			    }                                          
                          if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <158.0, 76.0, 0.0>;
+                                windowLastPos[id] = <158.0, 62.0, 0.0>;
                                }
                          if (!windowLastPosRel.existskey(id)) {
-                                windowLastPosRel[id] = <158.0, 76.0, 0.0>;
+                                windowLastPosRel[id] = <158.0, 62.0, 0.0>;
                               }
                         Window.PosnX = windowLastPos[id][0];
                         Window.PosnY = windowLastPos[id][1];

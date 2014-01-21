@@ -78,10 +78,10 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
 				 widgetVisible[id] =  True;
 			}                                                                       
                          if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <157.0, 64.0, 0.0>;
+                                windowLastPos[id] = <157.0, 76.0, 0.0>;
                                }
                          if (!windowLastPosRel.existskey(id)) {
-                                windowLastPosRel[id] = <157.0, 64.0, 0.0>;
+                                windowLastPosRel[id] = <157.0, 76.0, 0.0>;
                               }
                         Window.PosnX = windowLastPos[id][0];
                         Window.PosnY = windowLastPos[id][1];

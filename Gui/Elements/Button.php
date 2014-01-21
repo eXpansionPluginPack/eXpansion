@@ -170,7 +170,7 @@ class Button extends \ManiaLive\Gui\Control {
             $this->icon->setStyle($style);
             $this->icon->setSubStyle($subStyle);
         } else {
-            $this->icon->setImage($style);
+            $this->icon->setImage($style, true);
         }
         $this->icon->setId("Icon_" . $this->buttonId);
         $this->icon->setAction($this->action);
