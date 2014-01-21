@@ -229,8 +229,7 @@ class Widget extends \ManiaLive\Gui\Window {
         $this->dLoop .= $script;
     }
 
-    function destroy() {
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->_closeAction);
+    function destroy() {        
         $this->clearComponents();
         parent::destroy();
     }

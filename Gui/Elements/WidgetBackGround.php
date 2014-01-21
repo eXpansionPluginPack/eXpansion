@@ -37,6 +37,10 @@ class WidgetBackGround extends \ManiaLive\Gui\Control {
         $this->bg->setSize($this->getSizeX()+(float)$this->config->style_list_sizeXOffset, $this->getSizeY()+(float)$this->config->style_list_sizeYOffset);
     }
     
+    public function setAction($action) {
+        $this->bg->setAction($action);        
+    }
+    
     function onIsRemoved(\ManiaLive\Gui\Container $target) {
         parent::onIsRemoved($target);
         $this->destroy();

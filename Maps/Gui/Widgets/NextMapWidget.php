@@ -15,79 +15,79 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
     private $map;
 
     protected function onConstruct() {
-	$frame = new \ManiaLive\Gui\Controls\Frame();
-	$frame->setPosY(0);
-	// $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
-	$login = $this->getRecipient();
+        $frame = new \ManiaLive\Gui\Controls\Frame();
+        $frame->setPosY(0);
+        // $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
+        $login = $this->getRecipient();
 
-    $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(42, 15);
-    $bg->setPosition(-38, -7);
-    $this->addComponent($bg);
-    
-	$label = new \ManiaLib\Gui\Elements\Label(30);
-	$label->setText('$ddd' . __('Next map', $login));
-	$label->setTextEmboss(true);
-	$label->setAlign("right", "top");
-	$label->setPosX(0);
-	$this->addComponent($label);
+        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(42, 15);
+        $this->bg->setPosition(-38, -7);
+        $this->addComponent($this->bg);
 
-	$row = new \ManiaLive\Gui\Controls\Frame(0, -4);
-	$this->labelName = new \ManiaLib\Gui\Elements\Label(23, 7);
-	$this->labelName->setText('$ddd' . $this->mapName);
-	$this->labelName->setAlign("right", "top");
-	$this->labelName->setPosX(-4);
-	$this->labelName->setPosY(-1);
-	$row->addComponent($this->labelName);
+        $label = new \ManiaLib\Gui\Elements\Label(30);
+        $label->setText('$ddd' . __('Next map', $login));
+        $label->setTextEmboss(true);
+        $label->setAlign("right", "top");
+        $label->setPosX(0);
+        $this->addComponent($label);
 
-	$icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
-	$icon->setStyle("UIConstructionSimple_Buttons");
-	$icon->setSubStyle("Challenge");
-	$icon->setAlign("left", "top");
-	$icon->setPosX(-4);
-	$row->addComponent($icon);
-	$frame->addComponent($row);
+        $row = new \ManiaLive\Gui\Controls\Frame(0, -4);
+        $this->labelName = new \ManiaLib\Gui\Elements\Label(23, 7);
+        $this->labelName->setText('$ddd' . $this->mapName);
+        $this->labelName->setAlign("right", "top");
+        $this->labelName->setPosX(-4);
+        $this->labelName->setPosY(-1);
+        $row->addComponent($this->labelName);
 
-	$row = new \ManiaLive\Gui\Controls\Frame(0, -8);
-	$this->labelAuthor = new \ManiaLib\Gui\Elements\Label(23, 7);
-	$this->labelAuthor->setText('$ddd' . $this->mapAuthor);
-	$this->labelAuthor->setAlign("right", "top");
-	$this->labelAuthor->setPosX(-4);
-	$this->labelAuthor->setPosY(-1);
-	$row->addComponent($this->labelAuthor);
+        $icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
+        $icon->setStyle("UIConstructionSimple_Buttons");
+        $icon->setSubStyle("Challenge");
+        $icon->setAlign("left", "top");
+        $icon->setPosX(-4);
+        $row->addComponent($icon);
+        $frame->addComponent($row);
 
-	$icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
-	$icon->setStyle("UIConstructionSimple_Buttons");
-	$icon->setSubStyle("Author");
-	$icon->setAlign("left", "top");
-	$icon->setPosX(-4);
-	$row->addComponent($icon);
-	$frame->addComponent($row);
+        $row = new \ManiaLive\Gui\Controls\Frame(0, -8);
+        $this->labelAuthor = new \ManiaLib\Gui\Elements\Label(23, 7);
+        $this->labelAuthor->setText('$ddd' . $this->mapAuthor);
+        $this->labelAuthor->setAlign("right", "top");
+        $this->labelAuthor->setPosX(-4);
+        $this->labelAuthor->setPosY(-1);
+        $row->addComponent($this->labelAuthor);
 
-	$this->addComponent($frame);
+        $icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
+        $icon->setStyle("UIConstructionSimple_Buttons");
+        $icon->setSubStyle("Author");
+        $icon->setAlign("left", "top");
+        $icon->setPosX(-4);
+        $row->addComponent($icon);
+        $frame->addComponent($row);
 
-	$move = new \ManiaLib\Gui\Elements\Quad(60, 14);
-	$move->setAlign("right", "top");
-	$move->setStyle("Icons128x128_Blink");
-	$move->setSubStyle("ShareBlink");
-	$move->setScriptEvents();
-	$move->setId("enableMove");
-	$this->addComponent($move);
+        $this->addComponent($frame);
 
-	$this->setScale(0.8);
-	$this->xml = new \ManiaLive\Gui\Elements\Xml();
+        $move = new \ManiaLib\Gui\Elements\Quad(60, 14);
+        $move->setAlign("right", "top");
+        $move->setStyle("Icons128x128_Blink");
+        $move->setSubStyle("ShareBlink");
+        $move->setScriptEvents();
+        $move->setId("enableMove");
+        $this->addComponent($move);
+
+        $this->setScale(0.8);
+        $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
     function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
+        parent::onResize($oldX, $oldY);
     }
 
     function onShow() {
-	
+        
     }
 
     public function onDraw() {
-	$this->removeComponent($this->xml);
-	$this->xml->setContent('    
+        $this->removeComponent($this->xml);
+        $this->xml->setContent('    
         <script><!--
                
                        main () {     
@@ -173,19 +173,23 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
                   
                 } 
                 --></script>');
-	$this->addComponent($this->xml);
-	parent::onDraw();
+        $this->addComponent($this->xml);
+        parent::onDraw();
+    }
+
+    function setAction($action) {
+        $this->bg->setAction($action);
     }
 
     function setMap(\DedicatedApi\Structures\Map $map) {
-	$this->map = $map;
-	$this->labelName->setText('$ddd' . $this->map->name);
-	$this->labelAuthor->setText('$ddd' . $this->map->author);
+        $this->map = $map;
+        $this->labelName->setText('$ddd' . $this->map->name);
+        $this->labelAuthor->setText('$ddd' . $this->map->author);
     }
 
     function destroy() {
-	$this->clearComponents();
-	parent::destroy();
+        $this->clearComponents();
+        parent::destroy();
     }
 
 }

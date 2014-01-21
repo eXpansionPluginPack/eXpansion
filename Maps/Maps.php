@@ -34,7 +34,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_errMxId;
     private $msg_mapAdd;
     private $wasWarmup = false;
-
+    private $actionShowMapList;
+    
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode[] */
     public static $playerSortModes = array();
     public static $searchTerm = array();
@@ -108,7 +109,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         Gui\Windows\Maplist::Initialize($this);
         Gui\Windows\Jukelist::$mainPlugin = $this;
-
+        /** @var \ManiaLive\Gui\ActionHandler */
+        $action =  \ManiaLive\Gui\ActionHandler::getInstance();
+        $this->actionShowMapList = $action->createAction(array($this, "showMapList"));
+        
+        
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
@@ -227,6 +232,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
             $info->setPosition(136, 82);
             $info->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+            $info->setAction($this->actionShowMapList);
             $info->setMap($this->nextMap);
             $info->show();
         }
