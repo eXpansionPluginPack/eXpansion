@@ -198,9 +198,9 @@ EOD;
                     
                foreach (Event in PendingEvents) {
                     if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {
-                        log("Mouse Over : "^Event.ControlId);
+                       // log("Mouse Over : "^Event.ControlId);
                         if(Page.GetFirstChild("Desc_"^Event.ControlId) != Null){
-                            log("Validated "^Event.ControlId);
+                        //    log("Validated "^Event.ControlId);
                             if(currentButton != Null){
                                 currentButton.Hide();
                             }
