@@ -23,7 +23,6 @@ class Widget extends \ManiaLive\Gui\Window {
 
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WidgetScript");
         $this->move = new \ManiaLib\Gui\Elements\Quad(45, 7);
-        $this->move->setAlign("left", "center");
         $this->move->setStyle("Icons128x128_Blink");
         $this->move->setSubStyle("ShareBlink");
         $this->move->setScriptEvents();
@@ -36,7 +35,7 @@ class Widget extends \ManiaLive\Gui\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->move->setSize($this->sizeX, $this->sizeY);
-        $this->move->setPosZ(20);
+        $this->move->setPosZ(-10);
     }
 
     private $calledScripts = array();
