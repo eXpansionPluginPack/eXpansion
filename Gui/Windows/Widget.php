@@ -16,6 +16,7 @@ class Widget extends \ManiaLive\Gui\Window {
     private $move;
     private $axisDisabled = "";
     private $script;
+    private $scripts = array();
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -87,11 +88,20 @@ class Widget extends \ManiaLive\Gui\Window {
     protected function onDraw() {
         $this->nbButton = 0;
         $this->dIndex = 0;
+        $this->scriptLib = "";
         $this->dDeclares = "";
         $this->dLoop = "";
 
         $this->calledScripts = array();
-
+        
+        foreach($this->scripts as $script){
+            $dec = $script->getDeclarationScript($this, $this);
+            $this->addScriptToMain($dec);
+            $this->addScriptToLib($script->getlibScript($this, $this));
+            $this->addScriptToWhile($script->getWhileLoopScript($this, $this));
+            $this->addScriptToMain($script->getEndScript($this));
+        }
+        
         $this->detectElements($this->getComponents());
         foreach ($this->calledScripts as $script) {
             $this->addScriptToMain($script->getEndScript($this));
@@ -107,9 +117,8 @@ class Widget extends \ManiaLive\Gui\Window {
 
         $this->removeComponent($this->xml);
 
-        if ($this->axisDisabled == "x")
-            if ($this->axisDisabled == "y")
-                $this->xml->setContent();
+        $this->xml->setContent($this->script->getDeclarationScript($this, $this));
+            
         $this->addComponent($this->xml);
         parent::onDraw();
     }
@@ -141,6 +150,10 @@ class Widget extends \ManiaLive\Gui\Window {
 
     function setDisableAxis($axis) {
         $this->axisDisabled = $axis;
+    }
+    
+    public function registerScript($script){
+        $this->scripts[] = $script;
     }
 
 }
