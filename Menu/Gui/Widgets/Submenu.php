@@ -16,22 +16,22 @@ class Submenu extends \ManiaLive\Gui\Window {
         $this->item[$nb]->setStyle("TextChallengeNameMedium");
         $this->item[$nb]->setAlign("left", "center");
         $this->item[$nb]->setSize(25, 4.5);
-        $this->item[$nb]->setFocusAreaColor1("fff6");
-        $this->item[$nb]->setFocusAreaColor2("fff6");
+        $this->item[$nb]->setFocusAreaColor1("5af9");
+        $this->item[$nb]->setFocusAreaColor2("5af9");
 
         if (!empty($action)) {
-            $this->item[$nb]->setFocusAreaColor2("fffa");
+            $this->item[$nb]->setFocusAreaColor2("fffb");
             $this->item[$nb]->setAction($action);
         }
 
         $this->item[$nb]->setText("  " . $text);
-        $this->item[$nb]->setTextColor('000');
+        $this->item[$nb]->setTextColor('ffff');
         $this->item[$nb]->setTextSize(1.75);
-        $this->item[$nb]->setPosZ(30);
+        $this->item[$nb]->setPosZ(40);
 
         if ($submenuNb !== false) {
             $this->item[$nb]->setId("sub_" . $submenuNb);
-            $this->item[$nb]->setFocusAreaColor2("fffa");
+            $this->item[$nb]->setFocusAreaColor2("fffb");
         } else {
 
             $snb = false;
@@ -43,7 +43,7 @@ class Submenu extends \ManiaLive\Gui\Window {
             }
             if ($snb) {
                 $this->item[$nb]->setId("sub_" . $snb . "_item_" . $nb);
-                $this->item[$nb]->setFocusAreaColor2("fffa");
+                $this->item[$nb]->setFocusAreaColor2("fffb");
                 $this->item[$nb]->setAction($action);
             } else {
                 $this->item[$nb]->setId("item_" . $nb);
@@ -120,7 +120,7 @@ class Submenu extends \ManiaLive\Gui\Window {
                                 toggleSubmenu = True;
                                 Menu.PosnX = MouseX-1;
                                 Menu.PosnY = MouseY+.5;  
-                                
+                                Menu.PosnZ = 40.0;
                                     
                             } // mouseRightButton
                 

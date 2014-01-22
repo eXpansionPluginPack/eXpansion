@@ -16,19 +16,22 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
         // $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(20, 20));
         $this->addComponent($this->frame);
 
-        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(32, 11);
-        $bg->setPosition(-30, -8);
+        $bg = new \ManiaLib\Gui\Elements\Quad(34, 11);
+        $bg->setAlign("left", "center");
+        $bg->setStyle("Bgs1InRace");
+        $bg->setSubStyle("NavButtonBlink");
+        $bg->setPosition(-30, -7);
         $this->addComponent($bg);
-        
+
         $label = new \ManiaLib\Gui\Elements\Label(30);
-        $label->setText(__('Map Rating'));     
-        $label->setTextColor("fffd");
+        $label->setText('$s' . __('Map Rating'));
+        $label->setTextColor("ffff");
         $label->setStyle("TextRaceMessage");
         $label->setAlign("center", "top");
-        $label->setPosition(-12,-3.5);        
+        $label->setPosition(-12, -3.5);
         $label->setTextSize(1.5);
         $this->addComponent($label);
-        
+
         $this->starFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->starFrame->setAlign("left", "top");
         $this->starFrame->setSize(40, 4);
@@ -142,7 +145,7 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
                   
                 } 
                 --></script>');
-        $this->addComponent($this->xml);        
+        $this->addComponent($this->xml);
     }
 
     function destroy() {
@@ -155,14 +158,14 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
 
         $test = ($number / 6) * 100;
         $color = "fff";
-        if ($test < 50)
-            $color = "f00";
-        if ($test >= 50)
-            $color = "ff0";
-        if ($test > 70)
-            $color = "0f0";
+        if ($test < 30)
+            $color = "0ad";
+        if ($test >= 30)
+            $color = "2af";
+        if ($test > 60)
+            $color = "0cf";
 
-        $this->gauge->setContent('<gauge scale="0.7" sizen="45 15" drawblockbg="1" color="' . $color . '" drawbg="0" rotation="0" posn="-30 -3" grading="1" ratio="' . ($number / 5) . '" centered="0" />');
+        $this->gauge->setContent('<gauge scale="0.7" sizen="45 15" drawblockbg="1" color="' . $color . '" drawbg="0" rotation="0" posn="-29 -3" grading="1" ratio="' . ($number / 5) . '" centered="0" />');
         $this->frame->addComponent($this->gauge);
 
         $score = ($number / 5) * 100;
@@ -174,7 +177,7 @@ class RatingsWidget extends \ManiaLive\Gui\Window {
         $info->setTextColor('fff');
         $info->setAlign("center", "center");
         $info->setTextEmboss();
-        $info->setText($score . "% (" . $total . ")");        
+        $info->setText($score . "% (" . $total . ")");
         $info->setPosition(-12, -8.5);
         $this->frame->addComponent($info);
         $this->redraw();
