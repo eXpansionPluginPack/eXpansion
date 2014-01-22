@@ -14,7 +14,7 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
         $this->joinMsg = exp_getMessage('#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s');
         $this->leaveMsg = exp_getMessage('#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) leaves!');
-        $this->tabNoticeMsg = exp_getMessage('#variable#[#error#Info#variable#] #variable#Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.');
+        $this->tabNoticeMsg = exp_getMessage('#variable#[#error#Info#variable#] #variable#Press TAB to show records widget, use right mouse button for quick menu access.');
     }
 
     public function exp_unload() {
@@ -27,7 +27,9 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
             $nick = $player->nickName;
             $country = str_replace("World|", "", $player->path);
-
+            $country = explode("|", $country);
+            $country = $country[1];
+            
             $spec = "";
             if ($player->isSpectator)
                 $spec = __("\$n(Spectator)", $login);

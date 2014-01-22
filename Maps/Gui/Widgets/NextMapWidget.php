@@ -20,16 +20,15 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
         // $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
         $login = $this->getRecipient();
 
-        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(42, 15);
-        $this->bg->setPosition(-38, -7);
+        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(42, 13);
+        $this->bg->setPosition(-38, -9);
         $this->addComponent($this->bg);
 
         $label = new \ManiaLib\Gui\Elements\Label(30);
-        $label->setText('$ddd' . __('Next map', $login));
-        $label->setTextEmboss(true);
+        $label->setText('$ddd' . __('Next', $login));        
         $label->setAlign("right", "top");
         $label->setPosX(0);
-        $this->addComponent($label);
+        // $this->addComponent($label);
 
         $row = new \ManiaLive\Gui\Controls\Frame(0, -4);
         $this->labelName = new \ManiaLib\Gui\Elements\Label(23, 7);

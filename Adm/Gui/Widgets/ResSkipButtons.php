@@ -136,7 +136,7 @@ class ResSkipButtons extends \ManiaLive\Gui\Window {
         if ($amount == "max") {
             $this->btn_res->setText(array('$ff0Maximum', '$fffrestarts', '$ff0reached'));
         } else {
-            $this->btn_res->setText(array('$ff0Pay ' . $amount, '$fffto', '$ff0Restart'));
+            $this->btn_res->setText(array('$fffPay $ff0' . $amount, '$fffto', '$ff0Restart'));
         }
     }
 
@@ -152,9 +152,9 @@ class ResSkipButtons extends \ManiaLive\Gui\Window {
             return;
         }
         if ($amount == "max") {
-            $this->btn_skip->setText(array('$ff0Maximum', '$fffskips', '$ff0reached'));
+            $this->btn_skip->setText(array('$ff0fMaximum', '$fffskips', '$ff0reached'));
         } else {
-            $this->btn_skip->setText(array('$ff0Pay ' . $amount, '$fffto', '$ff0Skip'));
+            $this->btn_skip->setText(array('$fffPay $ff0' . $amount, '$fffto', '$ff0Skip'));
         }
     }
 

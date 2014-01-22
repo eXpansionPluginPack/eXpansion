@@ -20,7 +20,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     /** @var \ManiaLive\Gui\Controls\Pager */
     protected $pager;
     protected $btnRemoveAll;
-    protected $frame;
+    private $frame;
     protected $title_mapName;
     protected $title_authorName;
     protected $title_goldTime;
@@ -31,6 +31,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected $btn_search;
     private $actionRemoveAll;
     private $currentMap = null;
+    private $titlebg;
 
     /** @var \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating[] */
     private $ratings = array();
@@ -40,7 +41,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     /** @var  \ManiaLive\Data\Storage */
     private $storage;
-    private $widths = array(15, 6, 4, 3, 3, 3, .7);
+    private $widths = array(5, 15, 5, 3, 3, 3, .7);
 
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap[] */
     private $maps = array();
@@ -49,72 +50,74 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onConstruct();
         $login = $this->getRecipient();
         $sizeX = 100;
-        $scaledSizes = Gui::getScaledSize($this->widths, $sizeX / .8);
+        $scaledSizes = Gui::getScaledSize($this->widths, $sizeX);
 
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
+        $this->titlebg = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround($sizeX, 6);
+        $this->mainFrame->addComponent($this->titlebg);
+
+
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, 4);
-        $this->frame->setPosY(0);
+        $this->frame->setAlign("left", "top");
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
         $this->mainFrame->addComponent($this->frame);
 
         $textStyle = "TextCardRaceRank";
         $textColor = "000";
-        $textSize = 2.5;
-        $this->title_mapName = new \ManiaLib\Gui\Elements\Label();
-        $this->title_mapName->setText(__("Map name", $login));
-        $this->title_mapName->setStyle($textStyle);
-        $this->title_mapName->setTextColor($textColor);
-        $this->title_mapName->setAction($this->createAction(array($this, "updateList"), "name"));
-        $this->title_mapName->setTextSize($textSize);
-        $this->title_mapName->setScale(0.8);
-
-        $this->frame->addComponent($this->title_mapName);
+        $textSize = "1.5";
 
         $this->title_authorName = new \ManiaLib\Gui\Elements\Label();
         $this->title_authorName->setText(__("Author", $login));
         $this->title_authorName->setStyle($textStyle);
         $this->title_authorName->setTextColor($textColor);
         $this->title_authorName->setAction($this->createAction(array($this, "updateList"), "author"));
-        $this->title_authorName->setScale(0.8);
         $this->title_authorName->setTextSize($textSize);
         $this->frame->addComponent($this->title_authorName);
 
+        $this->title_mapName = new \ManiaLib\Gui\Elements\Label();
+        $this->title_mapName->setText(__("Map name", $login));
+        $this->title_mapName->setStyle($textStyle);
+        $this->title_mapName->setTextColor($textColor);
+        $this->title_mapName->setAction($this->createAction(array($this, "updateList"), "name"));
+        $this->title_mapName->setTextSize($textSize);
+
+
+        $this->frame->addComponent($this->title_mapName);
+
         $this->title_goldTime = new \ManiaLib\Gui\Elements\Label();
-        $this->title_goldTime->setText(__("Lenght", $login));
+        $this->title_goldTime->setText(__("Length", $login));
         $this->title_goldTime->setStyle($textStyle);
         $this->title_goldTime->setTextColor($textColor);
         $this->title_goldTime->setAction($this->createAction(array($this, "updateList"), "goldTime"));
-        $this->title_goldTime->setScale(0.8);
         $this->title_goldTime->setTextSize($textSize);
         $this->frame->addComponent($this->title_goldTime);
 
         $this->title_rank = new \ManiaLib\Gui\Elements\Label();
-        $this->title_rank->setText(__("Records", $login));
+        $this->title_rank->setText(__("Record", $login));
         $this->title_rank->setAlign("center");
         $this->title_rank->setStyle($textStyle);
         $this->title_rank->setTextColor($textColor);
         $this->title_rank->setAction($this->createAction(array($this, "updateList"), "localrecord"));
-        $this->title_rank->setScale(0.8);
         $this->title_rank->setTextSize($textSize);
         $this->frame->addComponent($this->title_rank);
 
         $this->title_rating = new \ManiaLib\Gui\Elements\Label();
-        $this->title_rating->setText(__("Ratings", $login));
+        $this->title_rating->setText(__("Rating", $login));
         $this->title_rating->setAlign("center");
         $this->title_rating->setStyle($textStyle);
         $this->title_rating->setTextColor($textColor);
         $this->title_rating->setAction($this->createAction(array($this, "updateList"), "rating"));
-        $this->title_rating->setScale(0.8);
+
         $this->title_rating->setTextSize($textSize);
         $this->frame->addComponent($this->title_rating);
 
         $this->title_actions = new \ManiaLib\Gui\Elements\Label();
         $this->title_actions->setText(__("Actions", $login));
-        $this->title_actions->setScale(0.8);
+
         $this->title_actions->setTextSize($textSize);
         $this->title_actions->setTextColor($textColor);
         $this->title_actions->setStyle($textStyle);
@@ -126,14 +129,17 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->addComponent($this->searchframe);
 
         $this->searchBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("searchbox");
+        $this->searchBox->setLabel(__("Search maps", $login));
         $this->searchframe->addComponent($this->searchBox);
-        $this->searchBox->setPosX(-5);
 
-        $this->btn_search = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+        $spacer = new \ManiaLib\Gui\Elements\Spacer(3, 4);
+        $this->searchframe->addComponent($spacer);
+
+        $this->btn_search = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(40);
         $this->btn_search->setAction($this->createAction(array($this, "doSearch")));
         $this->btn_search->setText(__("Search", $login));
         $this->btn_search->colorize('0d0');
-        $this->btn_search->setPosX(-5);
+
         $this->searchframe->addComponent($this->btn_search);
 
 
@@ -146,11 +152,10 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps')) {
             $this->actionRemoveAll = $this->createAction(array($this, "removeAllMaps"));
-            $this->btnRemoveAll = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+            $this->btnRemoveAll = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(35);
             $this->btnRemoveAll->setAction($this->actionRemoveAll);
-            $this->btnRemoveAll->setText(__('$fff' . "Clear Maplist", $login));
+            $this->btnRemoveAll->setText('$d00' . __("Clear Maplist", $login));
             $this->btnRemoveAll->setScale(0.5);
-            $this->btnRemoveAll->colorize("d00");
             $this->mainFrame->addComponent($this->btnRemoveAll);
         }
     }
@@ -179,18 +184,31 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        
-        $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 8);
-        $this->pager->setPosition(0, -4);
-        $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / 0.8)-15);
-        $this->title_mapName->setSizeX($scaledSizes[0]);
-        $this->title_authorName->setSizeX($scaledSizes[1]);
+
+
+
+        $this->searchframe->setPosition(12, -5);
+
+        $this->pager->setSize($this->getSizeX() - 6, $this->getSizeY() - 20);
+
+        $this->pager->setPosition(3, -10);
+
+        $this->titlebg->setPosition(3, -9.5);
+        $this->titlebg->setSize($this->getSizeX() - 6, 6.5);
+        $this->frame->setPosition(3, -8.25);
+
+        $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() - 10));
+
+
+        $this->title_authorName->setSizeX($scaledSizes[0]);
+        $this->title_mapName->setSizeX($scaledSizes[1]);
         $this->title_goldTime->setSizeX($scaledSizes[2]);
         $this->title_rank->setSizeX($scaledSizes[3]);
         $this->title_rating->setSizeX($scaledSizes[4]);
         $this->title_actions->setSizeX($scaledSizes[5]);
-        $this->searchframe->setPosition($this->getSizeX() - 55, - $this->getSizeY() + 4);
-        
+
+
+
         if (is_object($this->btnRemoveAll))
             $this->btnRemoveAll->setPosition(3, 4.5);
     }
@@ -245,18 +263,18 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             if ($this->search($map) > 65) {
                 if (array_key_exists($map->uId, $this->records)) {
                     if ($this->records[$map->uId] <= $maxrec)
-                        $localrecord = $this->records[$map->uId] . "/" . $maxrec;
+                        $localrecord = $this->records[$map->uId];
                 }
                 if (array_key_exists($map->uId, $this->ratings)) {
                     $rating = $this->ratings[$map->uId];
                 }
-                $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $rating);
+                $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $maxrec, $rating);
             }
         }
 
         if ($column !== null) {
             if ($column != Maps::$playerSortModes[$login]->column) {
-                Maps::$playerSortModes[$login]->sortMode = 0;
+                Maps::$playerSortModes[$login]->sortMode = 1;
                 Maps::$playerSortModes[$login]->column = $column;
             } else {
                 Maps::$playerSortModes[$login]->sortMode = (Maps::$playerSortModes[$login]->sortMode + 1) % 3;
@@ -264,6 +282,17 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
 
         // select sorttype and sort the list
+        $sortmode = SORT_STRING;
+        switch (Maps::$playerSortModes[$login]->column) {
+            case "rating":
+            case "localrecord":
+            case "goldTime":
+                $sortmode = SORT_NUMERIC;
+                break;
+        }
+
+
+
         if (Maps::$playerSortModes[$login]->sortMode == 1)
             \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc($this->maps, Maps::$playerSortModes[$login]->column);
         if (Maps::$playerSortModes[$login]->sortMode == 2) {
@@ -323,7 +352,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function doSearch($login, $entries) {
-        Maps::$searchTerm[$login] = $entries['searchbox'];        
+        Maps::$searchTerm[$login] = $entries['searchbox'];
         $this->updateList($login);
         $this->redraw($login);
     }
@@ -338,7 +367,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         if (empty(Maps::$searchTerm[$login]))
             return 100;
 
-        similar_text(Maps::$searchTerm[$login], \ManiaLib\Utils\Formatting::stripStyles($map->name), $percent);        
+        similar_text(Maps::$searchTerm[$login], \ManiaLib\Utils\Formatting::stripStyles($map->name), $percent);
         return $percent;
     }
 

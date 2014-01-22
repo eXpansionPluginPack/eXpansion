@@ -158,7 +158,7 @@ EOT;
         $this->config = Config::getInstance();
         $this->registerChatCommand("info", "showInfo", 0, true);
         $this->registerChatCommand("serverlogin", "serverlogin", 0, true);
-
+        $this->setPublicMethod("showInfo");
         $window = new Gui\Windows\QuitWindow();
         $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
         $this->onBeginMap(null, null, null);

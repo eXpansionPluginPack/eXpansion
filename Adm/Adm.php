@@ -45,6 +45,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->setPublicMethod('isPublicResIsActive');
         $this->setPublicMethod('isPublicSkipActive');
+        $this->setPublicMethod('serverControlMain');
 
         if ($this->isPluginLoaded("eXpansion\AdminGroups")) {
             Dispatcher::register(\ManiaLivePlugins\eXpansion\AdminGroups\Events\Event::getClass(), $this);

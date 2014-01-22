@@ -10,6 +10,8 @@ class Inputbox extends \ManiaLive\Gui\Control {
     private $button;
     private $buttonSize;
     private $name;
+    private $border;
+    private $mysizeX;
 
     function __construct($name, $sizeX = 35, $editable = true) {
         $config = Config::getInstance();
@@ -23,13 +25,25 @@ class Inputbox extends \ManiaLive\Gui\Control {
         $this->label->setTextSize(1);
         $this->label->setStyle("TextStaticSmall");
         $this->addComponent($this->label);
-        $this->setSize($sizeX, 10);
+
+        $this->border = new \ManiaLib\Gui\Elements\Quad();
+        $this->border->setSize($sizeX + 2, 6);
+        $this->border->setPosX(-1);
+        $this->border->setAlign("left", "center");
+        $this->border->setStyle("Bgs1");
+        $this->border->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitleShadow);
+        $this->addComponent($this->border);
+
+
+        $this->setSize($sizeX + 2, 12);
     }
 
     protected function onResize($oldX, $oldY) {
-        $this->button->setSize($this->sizeX, 4);
-        $this->label->setSize($this->sizeX, 3);
-        $this->label->setPosition(0, 4);
+        // parent::onResize($oldX, $oldY);
+        $this->button->setSize($this->getSizeX(), 4);
+        $this->border->setSize($this->getSizeX() + 2, 6);
+        $this->label->setSize($this->getSizeX(), 3);
+        $this->label->setPosition(0, 4);        
     }
 
     protected function createButton($editable) {
@@ -40,26 +54,23 @@ class Inputbox extends \ManiaLive\Gui\Control {
         }
 
         if ($editable) {
-            $this->button = new \ManiaLib\Gui\Elements\Entry($this->getSizeX(), 6);
+            $this->button = new \ManiaLib\Gui\Elements\Entry($this->sizeX, 4.5);
             $this->button->setName($this->name);
             $this->button->setId($this->name);
             $this->button->setDefault($text);
             $this->button->setScriptEvents(true);
-            $this->button->setFocusAreaColor1("7773");
-            $this->button->setFocusAreaColor2("7773");
+            $this->button->setStyle("TextValueMedium");
+            $this->button->setFocusAreaColor1("0004");
+            $this->button->setFocusAreaColor2("2af6");
         } else {
-            $this->button = new \ManiaLib\Gui\Elements\Label($this->getSizeX(), 6);
+            $this->button = new \ManiaLib\Gui\Elements\Label($this->sizeX, 5);
             $this->button->setText($text);
         }
 
         $this->button->setAlign('left', 'center');
-        $this->button->setTextColor('000');
-        $this->button->setTextSize(1);
+        $this->button->setTextColor('fff');
+        $this->button->setTextSize(1.5);
         $this->addComponent($this->button);
-    }
-
-    function onDraw() {
-        
     }
 
     public function setEditable($state) {

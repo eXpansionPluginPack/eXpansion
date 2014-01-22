@@ -35,7 +35,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_mapAdd;
     private $wasWarmup = false;
     private $actionShowMapList;
-    
+
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode[] */
     public static $playerSortModes = array();
     public static $searchTerm = array();
@@ -111,16 +111,16 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         Gui\Windows\Maplist::Initialize($this);
         Gui\Windows\Jukelist::$mainPlugin = $this;
         /** @var \ManiaLive\Gui\ActionHandler */
-        $action =  \ManiaLive\Gui\ActionHandler::getInstance();
+        $action = \ManiaLive\Gui\ActionHandler::getInstance();
         $this->actionShowMapList = $action->createAction(array($this, "showMapList"));
-        
-        
+
+
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
             $this->onPlayerConnect($player->login, true);
 
-        $this->preloadHistory();        
+        $this->preloadHistory();
     }
 
     public function exp_onLoad() {
@@ -228,15 +228,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $info->setPosition(153, 80);
         $info->setMap($this->storage->currentMap);
         $info->show();
-
-        if ($this->config->showNextMapWidget) {
-            $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
-            $info->setPosition(136, 82);
-            $info->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-            $info->setAction($this->actionShowMapList);
-            $info->setMap($this->nextMap);
-            $info->show();
-        }
     }
 
     public function onPlayerDisconnect($login, $reason = null) {
@@ -256,6 +247,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 // changed from onBeginMap -> it doesn't trigger if map was replayed.    
     function onBeginMatch() {
         $this->atPodium = false;
+
 
         if (count($this->queue) > 0) {
             reset($this->queue);
@@ -292,13 +284,27 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             array_pop($this->history);
         }
 
-        if ($this->config->showNextMapWidget) {
-            $this->redrawNextMapWidget();
-        }
+        foreach ($this->storage->players as $player)
+            $this->onPlayerConnect($player->login, false);
+        foreach ($this->storage->spectators as $player)
+            $this->onPlayerConnect($player->login, true);
+
+        NextMapWidget::EraseAll();
     }
 
     public function onBeginRound() {
         $this->wasWarmup = $this->connection->getWarmUp();
+    }
+
+    public function showNextMapWidget($login) {
+        if ($this->config->showNextMapWidget) {
+            $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
+            $info->setPosition(136, 82);
+            $info->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+            $info->setAction($this->actionShowMapList);
+            $info->setMap($this->nextMap);
+            $info->show();
+        }
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
@@ -308,6 +314,12 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         Gui\Widgets\CurrentMapWidget::EraseAll();
 
         $this->atPodium = true;
+
+        foreach ($this->storage->players as $player)
+            $this->redrawNextMapWidget($player->login, false);
+        foreach ($this->storage->spectators as $player)
+            $this->redrawNextMapWidget($player->login, true);
+
 
         if (count($this->queue) > 0) {
             reset($this->queue);
@@ -319,7 +331,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     $this->exp_chatSendServerMessage($this->msg_nextQueue, null, array(\ManiaLib\Utils\Formatting::stripCodes($queue->map->name, 'wosnm'), $queue->map->author, \ManiaLib\Utils\Formatting::stripCodes($queue->player->nickName, 'wosnm'), $queue->player->login));
                 }
             } catch (\Exception $e) {
-                $this->exp_chatSendServerMessage('Error: %s', $queue->player->login, $e->getMessage());                
+                $this->exp_chatSendServerMessage('Error: %s', $queue->player->login, $e->getMessage());
                 $key = key($this->queue);
                 unset($this->queue[$key]);
                 $this->exp_chatSendServerMessage('Recovering from error, map removed from jukebox...', $queue->player->login);
@@ -478,9 +490,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function redrawNextMapWidget() {
         foreach ($this->storage->players as $player)
-            $this->onPlayerConnect($player->login, false);
+            $this->showNextMapWidget($player->login, false);
         foreach ($this->storage->spectators as $player)
-            $this->onPlayerConnect($player->login, true);
+            $this->showNextMapWidget($player->login, true);
     }
 
     public function queueMxMap($login, $file) {
