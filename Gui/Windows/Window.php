@@ -9,8 +9,8 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  */
 class Window extends \ManiaLive\Gui\Window {
 
-    protected $_titlebar;
-    protected $_title;
+    protected $_titlebar, $_titlebar2;
+    protected $_title, $title2;
     protected $_mainWindow;
     protected $mainFrame;
     protected $_mainText;
@@ -38,32 +38,42 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_mainWindow->setId("MainWindow");
         $this->_mainWindow->setStyle("Bgs1");
-        $this->_mainWindow->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgWindow2);
+        $this->_mainWindow->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitlePage);
         $this->_mainWindow->setScriptEvents(true);
         $this->_windowFrame->addComponent($this->_mainWindow);
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
-        $this->bg->setStyle("Bgs1");
-        $this->bg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgWindow2);
-
+        $this->bg->setStyle("Bgs1InRace");
+        $this->bg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1InRace::BgTitleGlow);
         $this->_windowFrame->addComponent($this->bg);
+
+        $this->_titlebar2 = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
+        $this->_titlebar2->setStyle("Bgs1");
+        $this->_titlebar2->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::NavButtonBlink);
+        $this->_windowFrame->addComponent($this->_titlebar2);
 
         $this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
         $this->_titlebar->setId("Titlebar");
-        $this->_titlebar->setStyle("Bgs1");
-        $this->_titlebar->setSubStyle("ProgressBar");
-        // $this->_titlebar->setBgcolor("6bf");
-        //$this->_titlebar->setImage($config->windowTitlebar);
+        $this->_titlebar->setStyle("Bgs1InRace");
+        $this->_titlebar->setSubStyle("ProgressBarSmall");
         $this->_titlebar->setScriptEvents(true);
         $this->_windowFrame->addComponent($this->_titlebar);
 
 
+
         $this->_title = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->_title->setId("TitlebarText");
-        $this->_title->setStyle("TextStaticSmall");
-        $this->_title->setTextColor('000');
-        $this->_title->setTextSize(1);
+        $this->_title->setStyle("TextRankingsBig");
+        $this->_title->setTextColor('fff8');
+        $this->_title->setTextSize(1);                
         $this->_windowFrame->addComponent($this->_title);
+        
+        $this->_title2 = new \ManiaLib\Gui\Elements\Label(60, 4);        
+        $this->_title2->setId("TitlebarText");
+        $this->_title2->setStyle("TextRankingsBig");
+        $this->_title2->setTextColor('fffd');
+        $this->_title2->setTextSize(1);        
+        //$this->_windowFrame->addComponent($this->_title2);
 
         $this->_closebutton = new \ManiaLib\Gui\Elements\Quad(7, 3);
         $this->_closebutton->setAlign('center', 'top');
@@ -106,18 +116,25 @@ class Window extends \ManiaLive\Gui\Window {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
 
-        $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY + 2);
-        $this->_mainWindow->setPosY(1);
-        $this->bg->setSize($this->sizeX + 0.6, $this->sizeY + 2);
-        $this->bg->setPosY(1);
+        $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY + 6);
+        $this->_mainWindow->setPosY(5.5);
+        $this->bg->setSize($this->sizeX + 0.6, $this->sizeY + 6);
+        $this->bg->setPosY(5.5);
 
         $this->_title->setSize($this->sizeX, 4);
-        $this->_title->setPosition(($this->_title->sizeX / 2), 3.5);
+        $this->_title->setPosition(($this->_title->sizeX / 2), 4.5);
         $this->_title->setHalign("center");
+        
+        $this->_title2->setSize($this->sizeX, 4);
+        $this->_title2->setPosition(($this->_title->sizeX / 2), 4.5);
+        $this->_title2->setHalign("center");
 
-        $this->_titlebar->setPosX(-4);
-        $this->_titlebar->setPosY(6);
-        $this->_titlebar->setSize($this->sizeX + 8, 7);
+        $this->_titlebar->setPosY(5.5);
+        $this->_titlebar->setSize($this->sizeX + 0.5, 5.5);
+
+        $this->_titlebar2->setPosY(5.5);
+        $this->_titlebar2->setSize($this->sizeX + 0.5, 5.5);
+
 
         $this->_closebutton->setSize(5, 5);
         $this->_closebutton->setPosition($this->sizeX - 3, 5.5);
@@ -128,15 +145,15 @@ class Window extends \ManiaLive\Gui\Window {
         $this->mainFrame->setSize($this->sizeX - 4, $this->sizeY - 8);
         $this->mainFrame->setPosition(2, -2);
     }
-    
-	private $nbButton = 0;
+
+    private $nbButton = 0;
     private $minIdButton = 999999;
     private $maxIdButton = 0;
     private $aButton = null;
 
     private function detectElements($components) {
         $buttonScript = null;
-        foreach ($components as $index => $component) {            
+        foreach ($components as $index => $component) {
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter) {
                 $this->addScriptToMain($component->getScript());
             }
@@ -147,20 +164,20 @@ class Window extends \ManiaLive\Gui\Window {
             }
 
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Button) {
-                
+
                 $decl = $component->getScriptDeclares();
-                if($this->nbButton == 0){  
-                    if(!empty($decl)){
+                if ($this->nbButton == 0) {
+                    if (!empty($decl)) {
                         $this->addScriptToMain($decl);
                         $this->addScriptToWhile($component->getScriptMainLoop());
                         $this->nbButton++;
                         $this->aButton = $component;
                     }
                 }
-                if(!empty($decl)){
-                    if($this->maxIdButton < $component->getButtonId())
+                if (!empty($decl)) {
+                    if ($this->maxIdButton < $component->getButtonId())
                         $this->maxIdButton = $component->getButtonId();
-                    if($this->minIdButton > $component->getButtonId())
+                    if ($this->minIdButton > $component->getButtonId())
                         $this->minIdButton = $component->getButtonId();
                 }
             }
@@ -172,9 +189,9 @@ class Window extends \ManiaLive\Gui\Window {
             //if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Pager) {
             //    $this->detectElements($component->getComponents());
             // }
-                       
+
             if ($component instanceof \ManiaLive\Gui\Container) {
-                 $this->detectElements($component->getComponents());
+                $this->detectElements($component->getComponents());
             }
         }
     }
@@ -184,9 +201,9 @@ class Window extends \ManiaLive\Gui\Window {
         $this->dIndex = 0;
         $this->dDeclares = "";
         $this->dLoop = "";
-        
+
         $this->detectElements($this->getComponents());
-        if($this->aButton != null){
+        if ($this->aButton != null) {
             $this->addScriptToMain($this->aButton->getHideMainLoop($this->minIdButton, $this->maxIdButton));
         }
 
@@ -352,6 +369,7 @@ class Window extends \ManiaLive\Gui\Window {
     function setTitle($text, $parameter = "") {
         $this->_name = $text;
         $this->_title->setText($text . " " . $parameter);
+        // $this->_title2->setText($text . " " . $parameter);
     }
 
     function closeWindow() {

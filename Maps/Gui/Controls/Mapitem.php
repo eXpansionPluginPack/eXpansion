@@ -25,7 +25,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
     private $widths;
 
     function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap $sortableMap, $controller, $isAdmin, $isHistory, $widths, $sizeX) {
-        $sizeY = 5.5;
+        $sizeY = 7.5;
         $this->isAdmin = $isAdmin;
         $this->widths = $widths;
         $this->isHistory = $isHistory;

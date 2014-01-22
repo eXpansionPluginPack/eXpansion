@@ -5,8 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 class Config extends \ManiaLib\Utils\Singleton {
 
     public $logo = "http://reaby.kapsi.fi/ml/exp.png";
-    public $button = "http://reaby.kapsi.fi/ml/button4.png";
-    public $buttonActive = "http://reaby.kapsi.fi/ml/button3_active.png";
+    public $button = "http://reaby.kapsi.fi/ml/button2.png";
+    public $buttonActive = "http://reaby.kapsi.fi/ml/button2_active.png";
     public $checkbox = "http://reaby.kapsi.fi/ml/checkbox_off.png";
     public $checkboxActive = "http://reaby.kapsi.fi/ml/checkbox_on.png";
     public $checkboxDisabled = "http://reaby.kapsi.fi/ml/checkbox_disabled_off.png";
@@ -19,9 +19,9 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $windowMinbutton = "http://reaby.kapsi.fi/ml/min_off.png";
     public $windowMinbuttonActive = "http://reaby.kapsi.fi/ml/min_on.png";
     
-    public $style_list_bgColor = array('eee4', '7774');
-    public $style_list_bgStyle = array('BgsPlayerCard', 'BgsPlayerCard');
-    public $style_list_bgSubStyle = array('BgRacePlayerName', 'BgMediaTracker');
+    public $style_list_bgColor = array('0006', '2226');
+    public $style_list_bgStyle = array('Bgs1', 'Bgs1');
+    public $style_list_bgSubStyle = array('BgCardList', 'BgCardList');
     public $style_list_posXOffset = -1;
     public $style_list_sizeXOffset = 2;
     public $style_list_posYOffset = 0;
