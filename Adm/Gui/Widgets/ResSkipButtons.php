@@ -42,9 +42,9 @@ class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->btn_res->setPosX(8);
-        $this->btn_res->setPosY(3);
+        $this->btn_res->setPosY(-5);
         $this->btn_skip->setPosX(22);
-        $this->btn_skip->setPosY(3);
+        $this->btn_skip->setPosY(-5);
     }
 
     public function setSkipAmount($amount) {

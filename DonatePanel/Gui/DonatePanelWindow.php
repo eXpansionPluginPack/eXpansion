@@ -16,8 +16,7 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->setSize(80, 9);
 
         $bg = new \ManiaLib\Gui\Elements\Quad(77, 5);
-        $bg->setAlign("left", "center");
-        $bg->setPosition(0, 1.5);
+        $bg->setPosition(0, -1.5);
         $bg->setStyle("Bgs1InRace");
         $bg->setSubStyle("BgList");
         $this->addComponent($bg);
@@ -26,6 +25,7 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->container = new \ManiaLive\Gui\Controls\Frame(3, 0);
         $this->container->setLayout(new \ManiaLib\Gui\Layouts\Line(100, 3));
         $this->container->setPosX(19);
+        $this->container->setPosY(-4);
         $this->addComponent($this->container);
 
 
@@ -33,6 +33,7 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $ui->setAlign('right', 'bottom');
         //$ui->setScale();
         $ui->setPosX(17);
+        $ui->setPosY(-5);
         $ui->setText('Donate');
         $ui->setStyle('TextStaticVerySmall');
         $ui->setTextColor('fff');
@@ -44,7 +45,6 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
             $this->items[$x] = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(25, 6);
             $this->items[$x]->setText($text);
             $this->items[$x]->setScale(0.4);
-            $this->items[$x]->setAlign('left', 'center');
             $this->items[$x]->setAction($this->createAction(array($this, "Donate"), $text));
             $this->container->addComponent($this->items[$x]);
         }
