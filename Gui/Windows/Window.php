@@ -157,13 +157,15 @@ class Window extends \ManiaLive\Gui\Window {
             if($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer){
                 $script = $component->getScript();
 
-                if(!isset($this->calledScripts[$script->getRelPath()]) || $script->multiply()){
+                $isset = !isset($this->calledScripts[$script->getRelPath()]);
+                
+                if($isset || $script->multiply()){
                     $this->calledScripts[$script->getRelPath()] = $script;
                     
-                    $dec = $script->getDeclarationScript($this->id, $component);
+                    $dec = $script->getDeclarationScript($this, $component);
                     $this->addScriptToMain($dec);
-                    $this->addScriptToLoop($script->getMainLoopScript($this->id, $component));
-                    $this->addScriptToWhile($script->getWhileLoopScript($this->id, $component));
+                    $this->addScriptToLib($script->getlibScript($this, $component));
+                    $this->addScriptToWhile($script->getWhileLoopScript($this, $component));
                 }
             }
                        
@@ -183,11 +185,17 @@ class Window extends \ManiaLive\Gui\Window {
         $this->detectElements($this->getComponents());
 
         foreach($this->calledScripts as $script){
-            $this->addScriptToMain($script->getEndScript());
+            $this->addScriptToMain($script->getEndScript($this));
         }
         
         $this->calledScripts = array();
 
+        $this->script->setParam("showCoords", $this->_showCoords);
+        $this->script->setParam("name", $this->_name);
+        $this->script->setParam("dDeclares", $this->dDeclares);
+        $this->script->setParam("scriptLib", $this->scriptLib);
+        $this->script->setParam("wLoop", $this->wLoop);
+        
         $this->removeComponent($this->xml);
         $this->xml->setContent($this->script->getDeclarationScript($this, $this->xml));
         

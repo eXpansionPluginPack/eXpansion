@@ -28,22 +28,22 @@ class Script {
     }
     
     public function getDeclarationScript($win, $component){
-        return $this->getScript($this->_relPath.'/declarationScript.php');
+        return $this->getScript($this->_relPath.'/declarationScript.php', $win, $component);
     }
     
     public function getlibScript($win, $component){
-        return $this->getScript($this->_relPath.'/libScript.php');
+        return $this->getScript($this->_relPath.'/libScript.php', $win, $component);
     }
     
     public function getWhileLoopScript($win, $component){
-       return $this->getScript($this->_relPath.'/whileLoopScript.php');
+       return $this->getScript($this->_relPath.'/whileLoopScript.php', $win, $component);
     }
     
-    public function getEndScript(){
-        return $this->getScript($this->_relPath.'/endDeclarationScript.php');
+    public function getEndScript($win){
+        return $this->getScript($this->_relPath.'/endDeclarationScript.php', $win, null);
     }
     
-    final protected function getScript($path){
+    final protected function getScript($path, $win, $component){
          if(file_exists($path)){
             ob_start();
             
