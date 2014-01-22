@@ -35,10 +35,19 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->actions['admcancel'] = $actionHandler->createAction(array($this, "actions"), "admcancel");
         $this->actions['admremovemap'] = $actionHandler->createAction(array($this, "actions"), "admremovemap");
         $this->actions['admtrashmap'] = $actionHandler->createAction(array($this, "actions"), "admtrashmap");
+        $this->actions['admmx'] = $actionHandler->createAction(array($this, "actions"), "admmx");
+        $this->actions['admcontrol'] = $actionHandler->createAction(array($this, "actions"), "admcontrol");
         $this->actions['quit'] = $actionHandler->createAction(array($this, "actions"), "quit");
+        $this->actions['help'] = $actionHandler->createAction(array($this, "actions"), "help");
+        $this->actions['hudMove'] = $actionHandler->createAction(array($this, "actions"), "hudMove");
+        $this->actions['hudLock'] = $actionHandler->createAction(array($this, "actions"), "hudLock");
+        $this->actions['hudConfig'] = $actionHandler->createAction(array($this, "actions"), "hudConfig");
+        $this->actions['hudReset'] = $actionHandler->createAction(array($this, "actions"), "hudReset");
+        $this->actions['stats'] = $actionHandler->createAction(array($this, "actions"), "stats");
+        $this->actions['serverinfo'] = $actionHandler->createAction(array($this, "actions"), "serverinfo");
     }
 
-    function actions($login, $action) {
+    function actions($login, $action, $entries) {
         $adminGrp = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
 
         switch ($action) {
@@ -58,7 +67,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->callPublicMethod("eXpansion\Votes", "vote_skip", $login);
                 break;
             case "quit":
-                $this->connection->kick($login, "Thanks for visiting, and welcome back soon :)");
+                $this->connection->kick($login, "Thanks for visiting and welcome back");
                 break;
             case "admres":
                 $adminGrp->adminCmd($login, "restart");
@@ -77,6 +86,33 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 break;
             case "admtrashmap":
                 $adminGrp->adminCmd($login, "trash this");
+                break;
+            case "admmx":
+                $this->callPublicMethod("eXpansion\ManiaExchange", "mxSearch", $login, "", "");
+                break;
+            case "admcontrol":
+                $this->callPublicMethod("eXpansion\Adm", "serverControlMain", $login);
+                break;
+            case "help":
+                $this->callPublicMethod("eXpansion\Faq", "showFaq", $login, "toc", null);
+                break;
+            case "hudMove":
+                $this->callPublicMethod("eXpansion\Gui", "hudCommands", $login, "move");
+                break;
+            case "hudLock":
+                $this->callPublicMethod("eXpansion\Gui", "hudCommands", $login, "lock");
+                break;
+            case "hudConfig":
+                $this->callPublicMethod("eXpansion\Gui", "showConfigWindow", $login, $entries);
+                break;
+            case "hudReset":
+                $this->callPublicMethod("eXpansion\Gui", "hudCommands", $login, "reset");
+                break;
+            case "stats":
+                $this->callPublicMethod("eXpansion\Statistics", "showTopWinners", $login);
+                break;
+            case "serverinfo":
+                $this->callPublicMethod("eXpansion\Core", "showInfo", $login);
                 break;
         }
     }
@@ -122,25 +158,46 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $info->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
         $info->setItems($this->menuItems);
         $info->setScale(0.8);
-        $info->show();
+        //   $info->show();
 
         $submenu = Gui\Widgets\Submenu::Create($login);
         $menu = $submenu->getMenu();
 
+        $submenu->addItem($menu, __("Help...", $login), $this->actions['help']);
+
         $maps = $submenu->addSubMenu($menu, __("Map", $login));
-
-        $submenu->addItem($maps, __("List all maps", $login), $this->actions['maplist']);
-        $submenu->addItem($maps, __("Show Records", $login), $this->actions['maprecords']);
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "map_remove")) {
-            $submenu->addItem($maps, "", null);
-            $submenu->addItem($maps, __("Remove this map", $login), $this->actions['admremovemap']);
-            $submenu->addItem($maps, __("Trash this map", $login), $this->actions['admtrashmap']);
+        $submenu->addItem($maps, __("List Maps...", $login), $this->actions['maplist']);        
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "map_add")) {
+            $submenu->addItem($maps, __("Mania-Exchange...", $login), $this->actions['admmx']);
         }
-        $submenu->addItem($menu, __("Players List", $login), $this->actions['playerlist']);
-        $submenu->addItem($menu, "", null);
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "map_remove")) {
+            $submenu->addItem($maps, __("Remove this", $login), $this->actions['admremovemap']);
+            $submenu->addItem($maps, __("Trash this", $login), $this->actions['admtrashmap']);
+        }
+        
+        $stats = $submenu->addSubMenu($menu, __("Stats", $login));
+        $submenu->addItem($stats, __("Show Records...", $login), $this->actions['maprecords']);
+        $submenu->addItem($stats, __("Statistics...", $login), $this->actions['stats']);
+        $submenu->addItem($stats, __("Server info...", $login), $this->actions['serverinfo']);
+        
+        $player = $submenu->addSubMenu($menu, __("Players", $login));
+        $submenu->addItem($player, __("List Players...", $login), $this->actions['playerlist']);
+        $submenu->addItem($player, "" , null );
+        $submenu->addItem($player, __("Rage Quit...", $login), $this->actions['quit']);
+        
+        $hud = $submenu->addSubMenu($menu, __("Hud", $login));
+        $submenu->addItem($hud, __("Move Positions", $login), $this->actions['hudMove']);
+        $submenu->addItem($hud, __("Lock Positions", $login), $this->actions['hudLock']);
+        $submenu->addItem($hud, __("Show/Hide elements...", $login), $this->actions['hudConfig']);
+        $submenu->addItem($hud, __("Reset Positions", $login), $this->actions['hudReset']);
 
-        $adm = $submenu->addSubMenu($menu, __("Admin", $login));
-
+        $votes = $submenu->addSubMenu($menu, __("Votes", $login));
+        $submenu->addItem($votes, __("Vote Restart", $login), $this->actions['voteres']);
+        $submenu->addItem($votes, __("Vote Skip", $login), $this->actions['voteskip']);                       
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_cancelvote"))
+            $submenu->addItem($votes, __("Cancel Vote", $login), $this->actions['admcancel']);
+        
+        $adm = $submenu->addSubMenu($menu, __("Fast Admin", $login));
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_restart"))
             $submenu->addItem($adm, __("Restart", $login), $this->actions['admres']);
 
@@ -149,18 +206,11 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_endround"))
             $submenu->addItem($adm, __("End Round", $login), $this->actions['admer']);
+        
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "server_admin")) {
+            $submenu->addItem($adm, __("Control Panel...", $login), $this->actions['admcontrol']);
+        }
 
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_cancelvote"))
-            $submenu->addItem($adm, __("Cancel Vote", $login), $this->actions['admcancel']);
-
-        $votes = $submenu->addSubMenu($menu, __("Votes", $login));
-        $submenu->addItem($votes, __("Vote Restart", $login), $this->actions['voteres']);
-        $submenu->addItem($votes, __("Vote Skip", $login), $this->actions['voteskip']);
-
-
-
-        $submenu->addItem($menu, "", null);
-        $submenu->addItem($menu, __("Leave Server", $login), $this->actions['quit']);
         $submenu->show();
     }
 

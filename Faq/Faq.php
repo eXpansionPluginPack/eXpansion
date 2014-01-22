@@ -11,8 +11,8 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableDedicatedEvents();
         $this->msg_admin_redirect = exp_getMessage('Notice: a help page is displayed by an admin!');
         $this->msg_admin_info = exp_getMessage('Notice: Displaying a help page "%1$s" to "%2$s"');
-
-
+        $this->setPublicMethod("showFaq");
+                
         $langs = new \DirectoryIterator(__DIR__ . DIRECTORY_SEPARATOR . "Topics");
 
         foreach ($langs as $lang) {

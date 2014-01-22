@@ -53,11 +53,8 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $menu->addItem('Top Country by nb Player', $aHandler->createAction(array($this, 'showTopCountry')));
 
         Gui\Windows\StatsWindow::$menuFrame = $menu;
-        
-        if ($this->isPluginLoaded("eXpansion\Adm")) {
-            
-        }
-        
+
+        $this->setPublicMethod("showTopWinners");
         $this->registerChatCommand("stats", "showTopWinners", 0, true);
     }
 

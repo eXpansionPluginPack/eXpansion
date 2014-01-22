@@ -16,16 +16,15 @@ class Submenu extends \ManiaLive\Gui\Window {
         $this->item[$nb]->setStyle("TextChallengeNameMedium");
         $this->item[$nb]->setAlign("left", "center");
         $this->item[$nb]->setSize(25, 4.5);
-
-        $this->item[$nb]->setFocusAreaColor1("0006");
-        $this->item[$nb]->setFocusAreaColor2("0006");
+        $this->item[$nb]->setFocusAreaColor1("0008");
+        $this->item[$nb]->setFocusAreaColor2("0008");
 
         if (!empty($action)) {
             $this->item[$nb]->setFocusAreaColor2("fff8");
             $this->item[$nb]->setAction($action);
         }
 
-        $this->item[$nb]->setText($text);
+        $this->item[$nb]->setText("  " . $text);
         $this->item[$nb]->setTextColor('fff');
         $this->item[$nb]->setTextSize(1.75);
         $this->item[$nb]->setPosZ(30);
@@ -44,7 +43,7 @@ class Submenu extends \ManiaLive\Gui\Window {
             }
             if ($snb) {
                 $this->item[$nb]->setId("sub_" . $snb . "_item_" . $nb);
-                $this->item[$nb]->setFocusAreaColor2("fff8");                
+                $this->item[$nb]->setFocusAreaColor2("fff8");
                 $this->item[$nb]->setAction($action);
             } else {
                 $this->item[$nb]->setId("item_" . $nb);
@@ -61,7 +60,7 @@ class Submenu extends \ManiaLive\Gui\Window {
         $this->submenu[$mb]->setId("submenu_" . $mb);
         $this->submenu[$mb]->setScriptEvents();
         // add item to menu
-        $this->addItem($menu, $text . "...", null, $mb);
+        $this->addItem($menu, $text . " » ", null, $mb);
         // add component to menu
         $menu->addComponent($this->submenu[$mb]);
 
@@ -79,7 +78,13 @@ class Submenu extends \ManiaLive\Gui\Window {
         $this->menu->setId("Submenu");
         $this->menu->setScriptEvents();
         $this->addComponent($this->menu);
-
+        
+        $inputbox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("widgetStatus");
+        $inputbox->setPosition(900, 900);
+        $inputbox->setScriptEvents();
+        $this->addComponent($inputbox);
+        
+        
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
@@ -94,11 +99,14 @@ class Submenu extends \ManiaLive\Gui\Window {
                         #Include "TextLib" as TextLib
                  
                         main() {                        
-                        declare CMlFrame Menu <=> (Page.GetFirstChild("Submenu") as CMlFrame);               
+                        declare CMlFrame Menu <=> (Page.GetFirstChild("Submenu") as CMlFrame);   
+                        declare CMlEntry widgetStatus <=> (Page.GetFirstChild("widgetStatus") as CMlEntry);
+                        declare Text outText = "";
                         declare Boolean toggleSubmenu = False;
                         declare CMlFrame currentButton = Null; 
                         declare CMlFrame previousButton = Null; 
-                            
+                        declare persistent Boolean[Text] widgetVisible;    
+                
                         for(i, 1, $count) {
                                     Page.GetFirstChild("submenu_"^i).Hide();
                                 }
@@ -117,7 +125,22 @@ class Submenu extends \ManiaLive\Gui\Window {
                             } // mouseRightButton
                 
                             if (toggleSubmenu) {
-                                 Menu.Show();                                                
+                                 Menu.Show();     
+                                     outText = "";					   
+					   if (widgetVisible.count > 0) {
+					   foreach (id => status in widgetVisible) {
+						
+			    			    declare Text bool = "0";
+						    if (status == True) {
+							bool = "1";
+						    }
+						outText = outText ^ id ^ ":" ^ bool ^ "|";
+											    
+					    }
+			
+					   widgetStatus.Value = outText;
+					  }
+                
                                     foreach (Event in PendingEvents) {
                                         if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {
                                             if(Page.GetFirstChild("submenu_"^ TextLib::SubText(Event.ControlId,4,1)) != Null ) {                                                                                            
