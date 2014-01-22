@@ -20,7 +20,10 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
         // $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
         $login = $this->getRecipient();
 
-        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(42, 13);
+        $this->bg = new \ManiaLib\Gui\Elements\Quad(42, 13);
+        $this->bg->setAlign("left", "center");
+        $this->bg->setStyle("Bgs1InRace");
+        $this->bg->setSubStyle("NavButtonBlink");
         $this->bg->setPosition(-38, -9);
         $this->addComponent($this->bg);
 
