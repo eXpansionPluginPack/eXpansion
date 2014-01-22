@@ -25,7 +25,8 @@ class Window extends \ManiaLive\Gui\Window {
     private $wLoop = "";
     private $dIndex = 0;
     private $_name = "window";
-
+    private $style;
+    
     protected function onConstruct() {
         parent::onConstruct();
         $config = Config::getInstance();
@@ -35,6 +36,15 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_windowFrame->setScriptEvents(true);
         $this->_windowFrame->setAlign("left", "top");
 
+        $this->style = new \ManiaLib\Gui\Elements\Format();
+        $this->style->setStyle("TextCardRaceRank");
+        $this->style->setTextSize("1");
+        $this->style->setTextColor("222");
+        $this->style->setAttribute("FocusAreaColor1", "000");
+        $this->style->setAttribute("FocusAreaColor2", "0af");
+        
+        $this->addComponent($this->style);
+        
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_mainWindow->setId("MainWindow");
         $this->_mainWindow->setStyle("Bgs1");
