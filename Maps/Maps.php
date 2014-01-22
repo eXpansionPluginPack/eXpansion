@@ -300,7 +300,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showNextMapWidget($login) {
         if ($this->config->showNextMapWidget) {
             $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
-            $info->setPosition(120, 70);
+            $info->setPosition(125, 64);
             $info->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
             $info->setAction($this->actionShowMapList);
             $info->setMap($this->nextMap);

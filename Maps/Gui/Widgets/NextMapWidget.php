@@ -16,13 +16,13 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     protected function onConstruct() {
         parent::onConstruct();
         $frame = new \ManiaLive\Gui\Controls\Frame();
-        $frame->setPosY(-1);
+        $frame->setPosY(1);
         $this->setSize(44,15);
         // $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
         $login = $this->getRecipient();
 
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(42, 13);
-        $this->bg->setPosition(1, -9);
+        $this->bg->setPosition(2, -8);
         $this->addComponent($this->bg);
 
         $label = new \ManiaLib\Gui\Elements\Label(30);
@@ -49,7 +49,7 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $frame->addComponent($row);
 
         $row = new \ManiaLive\Gui\Controls\Frame(0, -8);
-        $this->labelAuthor = new \ManiaLib\Gui\Elements\Label(23, 7);
+        $this->labelAuthor = new \ManiaLib\Gui\Elements\Label(28, 7);
         $this->labelAuthor->setText('$ddd' . $this->mapAuthor);
         $this->labelAuthor->setAlign("right", "top");
         $this->labelAuthor->setPosX(36);
