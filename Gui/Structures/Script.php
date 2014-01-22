@@ -27,15 +27,15 @@ class Script {
         $this->$name = $value;
     }
     
-    public function getDeclarationScript($id, $component){
+    public function getDeclarationScript($win, $component){
         return $this->getScript($this->_relPath.'/declarationScript.php');
     }
     
-    public function getMainLoopScript($id, $component){
-        return $this->getScript($this->_relPath.'/mainLoopScript.php');
+    public function getlibScript($win, $component){
+        return $this->getScript($this->_relPath.'/libScript.php');
     }
     
-    public function getWhileLoopScript($id, $component){
+    public function getWhileLoopScript($win, $component){
        return $this->getScript($this->_relPath.'/whileLoopScript.php');
     }
     
@@ -52,8 +52,6 @@ class Script {
             $script = ob_get_contents();
             ob_end_clean();
             return $script;
-        }else{
-            echo "File not found : $path\n";
         }
     }
     

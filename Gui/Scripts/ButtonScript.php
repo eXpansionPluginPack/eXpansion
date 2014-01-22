@@ -21,7 +21,7 @@ class ButtonScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script{
     }
 
     
-    public function getDeclarationScript($id, $component){  
+    public function getDeclarationScript($win, $component){  
         $decl = $component->getDescription();
         if(!empty($decl)){
             if($this->max < $component->getButtonId())
@@ -31,23 +31,23 @@ class ButtonScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script{
         }
         if(!$this->dec){
             $this->dec = true;
-            return parent::getDeclarationScript($id, $component);
+            return parent::getDeclarationScript($win, $component);
         }else
             return "";
     }
     
-    public function getWhileLoopScript($id, $component){ 
+    public function getWhileLoopScript($win, $component){ 
         if(!$this->while){
             $this->while = true;
-            return parent::getWhileLoopScript($id, $component);
+            return parent::getWhileLoopScript($win, $component);
         }else
             return "";
     }
     
-    public function getMainLoopScript($id, $component){ 
+    public function getlibScript($win, $component){ 
         if(!$this->loop){
             $this->loop = true;
-            return parent::getMainLoopScript($id, $component);
+            return parent::getlibScript($win, $component);
         }else
             return "";
     }

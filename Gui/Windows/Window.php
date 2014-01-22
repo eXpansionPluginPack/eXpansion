@@ -19,9 +19,11 @@ class Window extends \ManiaLive\Gui\Window {
     protected $_closeAction;
     protected $_showCoords = 'False';
     protected $_windowFrame;
+    private $script;
     protected $bg;
+    
     private $dDeclares = "";
-    private $dLoop = "";
+    private $scriptLib = "";
     private $wLoop = "";
     private $dIndex = 0;
     private $_name = "window";
@@ -31,6 +33,8 @@ class Window extends \ManiaLive\Gui\Window {
         $config = Config::getInstance();
         $this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
 
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WindowScript");
+        
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setScriptEvents(true);
         $this->_windowFrame->setAlign("left", "top");
@@ -152,9 +156,8 @@ class Window extends \ManiaLive\Gui\Window {
             
             if($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer){
                 $script = $component->getScript();
-                echo "\n\nScripted Container FOUND \n";
+
                 if(!isset($this->calledScripts[$script->getRelPath()]) || $script->multiply()){
-                    echo "Scripted Container Executed \n";
                     $this->calledScripts[$script->getRelPath()] = $script;
                     
                     $dec = $script->getDeclarationScript($this->id, $component);
@@ -163,10 +166,6 @@ class Window extends \ManiaLive\Gui\Window {
                     $this->addScriptToWhile($script->getWhileLoopScript($this->id, $component));
                 }
             }
-            
-            //if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Pager) {
-            //    $this->detectElements($component->getComponents());
-            // }
                        
             if ($component instanceof \ManiaLive\Gui\Container) {
                  $this->detectElements($component->getComponents());
@@ -178,7 +177,7 @@ class Window extends \ManiaLive\Gui\Window {
         $this->nbButton = 0;
         $this->dIndex = 0;
         $this->dDeclares = "";
-        $this->dLoop = "";
+        $this->scriptLib = "";
         $this->calledScripts = array();
         
         $this->detectElements($this->getComponents());
@@ -190,150 +189,8 @@ class Window extends \ManiaLive\Gui\Window {
         $this->calledScripts = array();
 
         $this->removeComponent($this->xml);
-        // fixes the window to be center of the screen for first open. 
-        $startPosX = (-1 * intval($this->getSizeX() / 2)) . ".0";
-        $startPosY = intval($this->getSizeY() / 2) . ".0";
-
-        $this->xml->setContent('    
-        <script><!--
-        #Include "MathLib" as MathLib
+        $this->xml->setContent($this->script->getDeclarationScript($this, $this->xml));
         
-                       main () {     
-                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");    
-                        declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);
-                        declare showCoords = ' . $this->_showCoords . ';
-                        
-                        declare MoveWindow = False;
-                        declare Scroll = False;
-                        declare CloseWindow = False;   
-                        declare isMinimized = False;   
-                        declare Real CloseCounter = 1.0;
-                        declare Real OpenCounter = 0.0;                        
-                        declare CenterWindow = False;                      
-                        
-                        declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
-                        declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
-                        declare Real lastMouseX = 0.0;
-                        declare Real lastMouseY =0.0;         
-                        declare active = False;
-                        declare Text id = "' . $this->_name . '";        
-                        declare persistent Vec3[Text] windowLastPos;
-                        declare persistent Vec3[Text] windowLastPosRel;
-			declare persistent Text windowActive = "";
-			
-                        ' . $this->dDeclares . '                          
-                        
-                         if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <' . $startPosX . ', ' . $startPosY . ', 0.0>;
-                                }
-                         if (!windowLastPosRel.existskey(id)) {
-                               windowLastPosRel[id] = <' . $startPosX . ', ' . $startPosY . ', 0.0>;
-                                }
-                        Window.PosnX = windowLastPos[id][0];
-                        Window.PosnY = windowLastPos[id][1];
-                        LastDelta = windowLastPosRel[id];
-                        Window.RelativePosition = windowLastPosRel[id];                                                
-                        windowActive = id;
-			
-                        while(True) {                                                               
-                        '
-                . $this->wLoop .
-                '
-                               if (windowActive == id) {
-                                declare temp = Window.RelativePosition;
-                                temp.Z = 20.0;
-                                Window.RelativePosition = temp;
-                            //    TitlebarText.SetText("true");
-                                } else {
-                                declare temp = Window.RelativePosition;
-                                temp.Z = -50.0;
-                                Window.RelativePosition = temp;				
-                              //  TitlebarText.SetText("false");
-                                }
-                                
-                               if (showCoords) {                               
-                                    declare coords = "$fffX:" ^ (MouseX - Window.PosnX) ^ " Y:" ^ (MouseY - Window.PosnY + 3 );                                   
-                                    TitlebarText.Value = coords;
-                                }
-                                 
-				//TitlebarText.SetText( "X:" ^ LastDelta.X ^ "  Y:" ^ LastDelta.Y);
-				       
-				    
-                                if (MoveWindow) {                                                                                                    
-                                    DeltaPos.X = MouseX - lastMouseX;
-                                    DeltaPos.Y = MouseY - lastMouseY;
-                                   
-				    if (Window.PosnX < -140.0) {                                    
-					LastDelta.X = -140.0;	
-					
-				    } 
-                                    if (Window.PosnX > 110.0) {                
-					LastDelta.X = 110.0;
-				       
-                                    }
-                                    if (Window.PosnY > 78.0) {                
-				        LastDelta.Y = 78.0;
-					
-                                    }
-				    if (Window.PosnY < -80.0) {                               
-					LastDelta.Y = -80.0;
-					
-                                    }                          
-				    
-                                    LastDelta += DeltaPos;         
-				     if (windowActive == id) {
-					    LastDelta.Z = 20.0; 
-				    }
-                                    Window.RelativePosition = LastDelta;                                
-                                    windowLastPos[id] = Window.AbsolutePosition;
-                                    windowLastPosRel[id] = Window.RelativePosition;
-                                    
-                                    lastMouseX = MouseX;
-                                    lastMouseY = MouseY; 
-				    yield;
-                                    }
-				    
-				   
-                                                          
-                                                  
-                               if (MouseLeftButton == True) {
-                                     
-                       
-                                        foreach (Event in PendingEvents) {
-                                                
-                                               
-                                                       if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Titlebar")  {                                                          
-                                                            lastMouseX = MouseX;
-                                                            lastMouseY = MouseY;   
-                                                            MoveWindow = True;                                                      
-							    windowActive = id;
-                                                        } 
-
-                                           
-                                                        if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close") {
-                                                          Window.Hide();
-                                                        }                                                             
-                                                        
-							if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "MainWindow") {                                            
-                                                             isMinimized = False;   
-							      windowActive = id;
-                                                         }                                  
-                                     ' . $this->dLoop . ' 
-                                         
-                                                }
-                                        }
-                                        
-                                else {
-                                        MoveWindow = False;                                      
-                                } 
-                                
-                                
-                                yield;                        
-                        }
-                  
-                  
-                }  //end of window 
-                --></script>');
         $this->addComponent($this->xml);
         parent::onDraw();
     }
@@ -365,8 +222,8 @@ class Window extends \ManiaLive\Gui\Window {
         $this->wLoop .= $script;
     }
 
-    function addScriptToLoop($script) {
-        $this->dLoop .= $script;
+    function addScriptToLib($script) {
+        $this->scriptLib .= $script;
     }
 
     function destroy() {
