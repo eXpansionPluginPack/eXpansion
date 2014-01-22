@@ -12,11 +12,11 @@ class CurrentMapWidget extends \ManiaLive\Gui\Window {
         $bg->setPosition(-44, 3);
         $this->addComponent($bg);
         
-        $icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
+        $icon = new \ManiaLib\Gui\Elements\Quad(4.5, 4.5);
         $icon->setStyle("UIConstructionSimple_Buttons");
         $icon->setSubStyle("AuthorTime");
         $icon->setAlign("right", "center2");
-        $icon->setPosition(5,-1);
+        $icon->setPosition(5.2,-1);
         $this->addComponent($icon);
 
         $this->authorTime = new \ManiaLib\Gui\Elements\Label();
