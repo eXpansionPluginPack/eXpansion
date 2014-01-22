@@ -21,34 +21,33 @@ class Window extends \ManiaLive\Gui\Window {
     protected $_windowFrame;
     private $script;
     protected $bg;
-    
     private $dDeclares = "";
     private $scriptLib = "";
     private $wLoop = "";
     private $dIndex = 0;
     private $_name = "window";
     private $style;
-    
+
     protected function onConstruct() {
         parent::onConstruct();
         $config = Config::getInstance();
         $this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
 
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WindowScript");
-        
+
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setScriptEvents(true);
         $this->_windowFrame->setAlign("left", "top");
 
         $this->style = new \ManiaLib\Gui\Elements\Format();
         $this->style->setStyle("TextCardRaceRank");
-        $this->style->setTextSize("1");
+        $this->style->setTextSize(0.9);
         $this->style->setTextColor("222");
         $this->style->setAttribute("FocusAreaColor1", "000");
         $this->style->setAttribute("FocusAreaColor2", "0af");
-        
+
         $this->addComponent($this->style);
-        
+
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_mainWindow->setId("MainWindow");
         $this->_mainWindow->setStyle("Bgs1");
@@ -63,13 +62,13 @@ class Window extends \ManiaLive\Gui\Window {
 
         $this->_titlebar2 = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
         $this->_titlebar2->setStyle("Bgs1");
-        $this->_titlebar2->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::NavButtonBlink);
+        $this->_titlebar2->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitleGlow);
         $this->_windowFrame->addComponent($this->_titlebar2);
 
         $this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
         $this->_titlebar->setId("Titlebar");
         $this->_titlebar->setStyle("Bgs1InRace");
-        $this->_titlebar->setSubStyle("ProgressBarSmall");
+        $this->_titlebar->setSubStyle(\ManiaLib\Gui\Elements\Bgs1InRace::BgPager);
         $this->_titlebar->setScriptEvents(true);
         $this->_windowFrame->addComponent($this->_titlebar);
 
@@ -77,22 +76,24 @@ class Window extends \ManiaLive\Gui\Window {
 
         $this->_title = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->_title->setId("TitlebarText");
-        $this->_title->setStyle("TextRankingsBig");
-        $this->_title->setTextColor('fff8');
-        $this->_title->setTextSize(1);                
-        $this->_windowFrame->addComponent($this->_title);
+        $this->_title->setStyle("TextRaceMessage");
+        $this->_title->setTextColor('3af');
+        $this->_title->setTextSize(1);
+        $this->_title->setTextEmboss();
         
-        $this->_title2 = new \ManiaLib\Gui\Elements\Label(60, 4);        
+        $this->_windowFrame->addComponent($this->_title);
+
+        $this->_title2 = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->_title2->setId("TitlebarText");
-        $this->_title2->setStyle("TextRankingsBig");
+        //$this->_title2->setStyle("TextRankingsBig");
         $this->_title2->setTextColor('fffd');
-        $this->_title2->setTextSize(1);        
+        $this->_title2->setTextSize(2);        
         //$this->_windowFrame->addComponent($this->_title2);
 
-        $this->_closebutton = new \ManiaLib\Gui\Elements\Quad(7, 3);
-        $this->_closebutton->setAlign('center', 'top');
+        $this->_closebutton = new \ManiaLib\Gui\Elements\Quad(5, 4);
+        $this->_closebutton->setAlign('center', 'center2');
         $this->_closebutton->setStyle("Icons64x64_1");
-        $this->_closebutton->setSubStyle("Close");
+        $this->_closebutton->setSubStyle("QuitRace");
 
         /*   $this->_closebutton->setStyle("TextChallengeNameMedium");
           $this->_closebutton->setScriptEvents(true);
@@ -132,26 +133,27 @@ class Window extends \ManiaLive\Gui\Window {
 
         $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY + 6);
         $this->_mainWindow->setPosY(5.5);
+        
         $this->bg->setSize($this->sizeX + 0.6, $this->sizeY + 6);
         $this->bg->setPosY(5.5);
 
-        $this->_title->setSize($this->sizeX, 4);
+        $this->_title->setSize($this->sizeX, 3.5);
         $this->_title->setPosition(($this->_title->sizeX / 2), 4.5);
         $this->_title->setHalign("center");
-        
+
         $this->_title2->setSize($this->sizeX, 4);
         $this->_title2->setPosition(($this->_title->sizeX / 2), 4.5);
         $this->_title2->setHalign("center");
 
         $this->_titlebar->setPosY(5.5);
-        $this->_titlebar->setSize($this->sizeX + 0.5, 5.5);
+        $this->_titlebar->setSize($this->sizeX + 0.5, 4.5);
 
         $this->_titlebar2->setPosY(5.5);
-        $this->_titlebar2->setSize($this->sizeX + 0.5, 5.5);
+        $this->_titlebar2->setSize($this->sizeX + 0.5, 4.5);
 
 
         $this->_closebutton->setSize(5, 5);
-        $this->_closebutton->setPosition($this->sizeX - 3, 5.5);
+        $this->_closebutton->setPosition($this->sizeX - 2, 3.2);
 
         $this->_minbutton->setSize(5, 5);
         $this->_minbutton->setPosition($this->sizeX - 8, 5);
@@ -160,9 +162,8 @@ class Window extends \ManiaLive\Gui\Window {
         $this->mainFrame->setPosition(2, -2);
     }
 
-
     private $calledScripts = array();
-    
+
     private function detectElements($components) {
         $buttonScript = null;
         foreach ($components as $index => $component) {
@@ -181,22 +182,22 @@ class Window extends \ManiaLive\Gui\Window {
                 $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));
                 $this->dIndex++;
             }
-            
-            if($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer){
+
+            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer) {
                 $script = $component->getScript();
 
                 $isset = !isset($this->calledScripts[$script->getRelPath()]);
-                
-                if($isset || $script->multiply()){
+
+                if ($isset || $script->multiply()) {
                     $this->calledScripts[$script->getRelPath()] = $script;
-                    
+
                     $dec = $script->getDeclarationScript($this, $component);
                     $this->addScriptToMain($dec);
                     $this->addScriptToLib($script->getlibScript($this, $component));
                     $this->addScriptToWhile($script->getWhileLoopScript($this, $component));
                 }
             }
-                       
+
             if ($component instanceof \ManiaLive\Gui\Container) {
                 $this->detectElements($component->getComponents());
             }
@@ -210,13 +211,13 @@ class Window extends \ManiaLive\Gui\Window {
 
         $this->scriptLib = "";
         $this->calledScripts = array();
-        
+
         $this->detectElements($this->getComponents());
 
-        foreach($this->calledScripts as $script){
+        foreach ($this->calledScripts as $script) {
             $this->addScriptToMain($script->getEndScript($this));
         }
-        
+
         $this->calledScripts = array();
 
         $this->script->setParam("showCoords", $this->_showCoords);
@@ -224,10 +225,10 @@ class Window extends \ManiaLive\Gui\Window {
         $this->script->setParam("dDeclares", $this->dDeclares);
         $this->script->setParam("scriptLib", $this->scriptLib);
         $this->script->setParam("wLoop", $this->wLoop);
-        
+
         $this->removeComponent($this->xml);
         $this->xml->setContent($this->script->getDeclarationScript($this, $this->xml));
-        
+
         $this->addComponent($this->xml);
         parent::onDraw();
     }
