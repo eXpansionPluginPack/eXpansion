@@ -58,6 +58,11 @@ class Script {
     public function multiply(){
         return false;
     }
+    
+    
+    function getNumber($number) {
+        return number_format((float) $number, 2, '.', '');
+    }
 }
 
 ?>

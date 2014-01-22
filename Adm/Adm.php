@@ -109,7 +109,6 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function showResSkip($login) {
         $widget = ResSkipButtons::Create($login);
-        $widget->setSize(50, 10);
 
         $nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
         if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] != -1) {
@@ -135,7 +134,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
         $widget->setActions($this->actions['res'], $this->actions['skip']);
 
-        $widget->setPosition(116.0, -65.0);
+        $widget->setPosition(79.0, 83.0);
         $widget->show();
     }
 

@@ -1,9 +1,5 @@
-<?php
+<?php       
 
-    function getNumber($number) {
-        return number_format((float) $number, 2, '.', '');
-    }
-    
     $deltaX = "DeltaPos.X = MouseX - lastMouseX;";
     $deltaY = "DeltaPos.Y = MouseY - lastMouseY;";
 
@@ -12,7 +8,9 @@
     if ($this->axisDisabled == "y")
         $deltaY = "";
 
-?><script><!--
+?>
+
+<script><!--
 #Include "MathLib" as MathLib
 
 //Function definitions
@@ -42,10 +40,10 @@ main () {
         widgetVisible[id] =  True;
     }
      if (!windowLastPos.existskey(id)) {
-        windowLastPos[id] = < <?= getNumber($win->getPosX()) ?>, <?= getNumber($win->getPosY()) ?>, 0.0>;
+        windowLastPos[id] = < <?= $this->getNumber($win->getPosX()) ?>, <?= $this->getNumber($win->getPosY()) ?>, 0.0>;
     }
     if (!windowLastPosRel.existskey(id)) {
-        windowLastPosRel[id] = < <?= getNumber($win->getPosX()) ?>, <?= getNumber($win->getPosY()) ?>, 0.0>;
+        windowLastPosRel[id] = < <?= $this->getNumber($win->getPosX()) ?>, <?= $this->getNumber($win->getPosY()) ?>, 0.0>;
     }
 
     Window.PosnX = windowLastPos[id][0];
