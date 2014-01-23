@@ -29,7 +29,7 @@ class ResetHud extends \ManiaLive\Gui\Window {
                         exp_windowLastPosRel[version].clear();
                         exp_widgetLastPos[version].clear();
                         exp_widgetLastPosRel[version].clear();
-			exp_widgetVisible[version].clear();
+                        exp_widgetVisible[version].clear();
                        
                        }
                 --></script>');

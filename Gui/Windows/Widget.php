@@ -35,7 +35,7 @@ class Widget extends \ManiaLive\Gui\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->move->setSize($this->sizeX, $this->sizeY);
-        $this->move->setPosZ(-10);
+        $this->move->setPosZ(10);
     }
 
     private $calledScripts = array();

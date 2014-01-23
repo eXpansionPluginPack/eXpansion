@@ -11,6 +11,7 @@
 ?>
 
 <script><!--
+#Include "TextLib" as TextLib
 #Include "MathLib" as MathLib
 
 //Function definitions
@@ -51,6 +52,7 @@ main () {
     if (!exp_widgetLastPos[version].existskey(id) || forceReset) {
         exp_widgetLastPos[version][id] = < <?= $this->getNumber($win->getPosX()) ?>, <?= $this->getNumber($win->getPosY()) ?>, 0.0>;
     }
+    
     if (!exp_widgetLastPosRel.existskey(version)) {
         exp_widgetLastPosRel[version] = Vec3[Text];
     }

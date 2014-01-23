@@ -1,0 +1,1 @@
+declare CMlFrame currentButton <=> Null; 
