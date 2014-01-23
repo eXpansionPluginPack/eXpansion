@@ -11,7 +11,7 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $enabled = true;
     private $show;
     private $config;
-
+       
     /**
      * onLoad()
      * Function called on loading of ManiaLive.
@@ -23,14 +23,16 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->config = Config::getInstance();
         DonatePanelWindow::$donatePlugin = $this;
 
+        $cmd = $this->registerChatCommand("donate", "donate", 1, true);
+        $cmd->help = '/donate X where X is ammount of Planets';
+    }
+
+    public function exp_onReady() {
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
 
         foreach ($this->storage->spectators as $player)
             $this->onPlayerConnect($player->login, true);
-
-        $cmd = $this->registerChatCommand("donate", "donate", 1, true);
-        $cmd->help = '/donate X where X is ammount of Planets';
     }
 
     function onUnload() {
@@ -48,9 +50,8 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     function onPlayerConnect($login, $isSpec) {
         $window = DonatePanelWindow::Create($login);
-        $window->setScale(0.8);
-        $window->setPosition(50, -85);
-
+        $window->setSize(70,7);
+        $window->setPosition(-158, 67);
         $window->show();
     }
 

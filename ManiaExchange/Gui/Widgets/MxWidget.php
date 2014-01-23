@@ -65,7 +65,7 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
         $this->btnAward = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(6,6);
         $this->btnAward->setIcon("Icons64x64_1", "OfficialRace");        
-        $this->btnAward->setDescription(__("Grant an Mania-exchange award to this map", $login), 80);       
+        $this->btnAward->setDescription(__("Grant a Mania-exchange award to this map", $login), 80);       
         $this->btnAward->setAction($this->actionAward);        
         $frame->addComponent($this->btnAward);
         

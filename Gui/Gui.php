@@ -66,7 +66,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $info = HudPanel::Create($login);
         $info->setSize(75, 7);
-        $info->setPosition(-160, -49);
+        $info->setPosition(-160, -50);
         $info->show();
 
         try {

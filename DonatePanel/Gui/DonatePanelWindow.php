@@ -6,70 +6,81 @@ use ManiaLivePlugins\eXpansion\DonatePanel\DonatePanel;
 
 class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
-    private $connection;
+    private $_windowFrame;
+    private $_mainWindow;
+    private $_minButton;
     private $container;
     public static $donatePlugin;
     private $items = array();
 
     protected function onConstruct() {
         parent::onConstruct();
-        $this->setSize(80, 9);
         $this->setName("Donate Panel");
+
+        $login = $this->getRecipient();
+        $this->setScriptEvents();
+
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
+        $script->setParam('isMinimized', 'True');
+        $script->setParam('autoCloseTimeout', '10500');
+        $script->setParam('posXMin', -64);
+        $script->setParam('posX', -64);
+        $script->setParam('posXMax', -5);
+        $this->registerScript($script);
+
+        $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
+        $this->_windowFrame->setId("Frame");
+        $this->_windowFrame->setScriptEvents(true);
+        $this->addComponent($this->_windowFrame);
+
+        $this->_mainWindow = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(70, 6);
+        $this->_mainWindow->setId("MainWindow");
+        $this->_windowFrame->addComponent($this->_mainWindow);
+
+        $frame = new \ManiaLive\Gui\Controls\Frame();
+        $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $frame->setPosition(5, 0);
         
-        $bg = new \ManiaLib\Gui\Elements\Quad(77, 5);
-        $bg->setPosition(0, -1.5);
-        $bg->setStyle("Bgs1InRace");
-        $bg->setSubStyle("BgList");
-        $this->addComponent($bg);
+        $text = new \ManiaLib\Gui\Elements\Label(11, 6);
+        $text->setText('$fff' . __("Donate:", $login));
+        $text->setTextSize(1);
+        $text->setAlign("left", "center2");
+        $frame->addComponent($text);
 
-
-        $this->container = new \ManiaLive\Gui\Controls\Frame(3, 0);
-        $this->container->setLayout(new \ManiaLib\Gui\Layouts\Line(100, 3));
-        $this->container->setPosX(19);
-        $this->container->setPosY(-4);
-        $this->addComponent($this->container);
-
-
-        $ui = new \ManiaLib\Gui\Elements\Label(13, 2);
-        $ui->setAlign('right', 'bottom');
-        //$ui->setScale();
-        $ui->setPosX(17);
-        $ui->setPosY(-5);
-        $ui->setText('Donate');
-        $ui->setStyle('TextStaticVerySmall');
-        $ui->setTextColor('fff');
-        $this->addComponent($ui);
-        
-        
         $donations = array(50, 100, 500, 1000, 2000);
         $x = 0;
         foreach ($donations as $text) {
-            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(25, 6);
-            $this->items[$x]->setText($text);
-            $this->items[$x]->setScale(0.4);
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(18, 6);
+            $this->items[$x]->setText($text . "p");
+            $this->items[$x]->setScale(0.5);
             $this->items[$x]->setAction($this->createAction(array($this, "Donate"), $text));
-            $this->container->addComponent($this->items[$x]);
+            $frame->addComponent($this->items[$x]);
         }
 
-        
+        $this->_windowFrame->addComponent($frame);
+
+        $this->_minButton = new \ManiaLib\Gui\Elements\Quad(5, 5);
+        $this->_minButton->setScriptEvents(true);
+        $this->_minButton->setAlign("left", "center");
+
+        $this->_minButton->setId("minimizeButton");
+        $this->_minButton->setStyle("ManiaPlanetLogos");
+        $this->_minButton->setSubStyle("IconPlanetsSmall");
+        $this->_windowFrame->addComponent($this->_minButton);
     }
 
     function Donate($login, $amount) {
         self::$donatePlugin->Donate($login, $amount);
     }
 
-    protected function onShow() {
-        parent::onShow();
-
-        $this->container->setSize($this->getSizeX(), $this->getSizeX());
+    function onResize($oldX, $oldY) {
+        parent::onResize($oldX, $oldY);
+        $this->_minButton->setPosition(70 - 4, 0);
     }
 
     function destroy() {
         foreach ($this->items as $item)
             $item->destroy();
-
-        $this->container->destroy();
-        $this->connection = null;
         parent::destroy();
     }
 
