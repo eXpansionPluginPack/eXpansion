@@ -43,7 +43,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand("mx", "chatMX", 2, true);
         $this->registerChatCommand("mx", "chatMX", 1, true);
         $this->registerChatCommand("mx", "chatMX", 0, true);
-
+        $this->setPublicMethod("mxSearch");
         $cmd = AdminGroups::addAdminCommand('add', $this, 'addMap', 'server_maps'); //
         $cmd->setHelp('Adds a map from ManiaExchange');
         $cmd->setHelpMore('$w/admin add #id$z will add a map with id fron ManiaExchange');
@@ -76,7 +76,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onPlayerConnect($login, $isSpectator) {
         $widget = Gui\Widgets\MxWidget::Create($login);
         $widget->setSize(60, 20);
-        $widget->setPosition(-160, 76);
+        $widget->setPosition(-160, 79);
         $widget->show();
     }
 
@@ -108,12 +108,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         Gui\Windows\MxSearch::Erase($login);
         Gui\Widgets\MxWidget::Erase($login);
     }
-
-    public function buildMenu() {
-        $this->callPublicMethod('Standard\Menubar', 'initMenu', \ManiaLib\Gui\Elements\Icons128x128_1::Download);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', __('Search Maps'), array($this, 'mxSearch'), true);
-    }
-
+    
     public function chatMX($login, $arg = "", $param = null) {
         switch ($arg) {
             case "add":

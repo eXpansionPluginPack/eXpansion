@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class AdminPanel extends \ManiaLive\Gui\Window {
+class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     protected $_windowFrame;
     protected $_mainWindow;
@@ -19,65 +19,64 @@ class AdminPanel extends \ManiaLive\Gui\Window {
     private $actionSkip;
     private $actionRestart;
     public static $mainPlugin;
-
+    
     protected function onConstruct() {
         parent::onConstruct();
-        $config = Config::getInstance();
-
-        $dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
-
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
+        $script->setParam('isMinimized', 'True');
+        $script->setParam('autoCloseTimeout', '7500');
+        $script->setParam('posXMin',-50);
+        $script->setParam('posX', -50);
+        $script->setParam('posXMax', -4);
+        $this->registerScript($script);
+        
         $this->actionEndRound = $this->createAction(array($this, 'actions'), "forceEndRound");
         $this->actionCancelVote = $this->createAction(array($this, 'actions'), "cancelVote");
         $this->actionSkip = $this->createAction(array($this, 'actions'), "nextMap");
         $this->actionRestart = $this->createAction(array($this, 'actions'), "restartMap");
-
-
+        
         $this->setScriptEvents(true);
         $this->setAlign("left", "top");
 
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
-        $this->_windowFrame->setAlign("left", "top");
         $this->_windowFrame->setId("Frame");
         $this->_windowFrame->setScriptEvents(true);
+        $this->addComponent($this->_windowFrame);
 
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad(60, 10);
         $this->_mainWindow->setId("MainWindow");
         $this->_mainWindow->setStyle("Bgs1InRace");
         $this->_mainWindow->setSubStyle("BgList");
-        $this->_mainWindow->setAlign("left", "center");
         $this->_windowFrame->addComponent($this->_mainWindow);
 
         $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setAlign("left", "top");
         $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        $frame->setPosition(6, 4);
+        $frame->setPosition(6, -3.5);
 
-        $this->btnEndRound = new \ManiaLib\Gui\Elements\Quad(7, 7);
+        $this->btnEndRound = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(7, 7);
         $this->btnEndRound->setAction($this->actionEndRound);
-        $this->btnEndRound->setStyle("Icons128x32_1");
-        $this->btnEndRound->setSubStyle("RT_Rounds");
-
+        $this->btnEndRound->setIcon("Icons128x32_1", "RT_Rounds");
+        $this->btnEndRound->setDescription("Force end round");
         $frame->addComponent($this->btnEndRound);
 
 
-        $this->btnCancelVote = new \ManiaLib\Gui\Elements\Quad(7, 7);
+        $this->btnCancelVote = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(7, 7);
         $this->btnCancelVote->setAction($this->actionCancelVote);
-        $this->btnCancelVote->setStyle("UIConstructionSimple_Buttons");
-        $this->btnCancelVote->setSubStyle("Add");
+        $this->btnCancelVote->setIcon("UIConstructionSimple_Buttons", "Add");
+        $this->btnCancelVote->setDescription('Cancel the vote');
         $frame->addComponent($this->btnCancelVote);
 
-        $this->btnRestart = new \ManiaLib\Gui\Elements\Quad(7, 7);
+        $this->btnRestart = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(7, 7);
         $this->btnRestart->setAction($this->actionRestart);
-        $this->btnRestart->setStyle("Icons128x32_1");
-        $this->btnRestart->setSubStyle("RT_Laps");
+        $this->btnRestart->setIcon("Icons128x32_1", "RT_Laps");
+        $this->btnRestart->setDescription('Restarts the map');
         $frame->addComponent($this->btnRestart);
 
-        $this->btnSkip = new \ManiaLib\Gui\Elements\Quad(7, 7);
+        $this->btnSkip = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(7, 7);
         $this->btnSkip->setAction($this->actionSkip);
-        $this->btnSkip->setStyle("UIConstructionSimple_Buttons");
-        $this->btnSkip->setSubStyle("Right");
+        $this->btnSkip->setIcon("UIConstructionSimple_Buttons", "Right");
+        $this->btnSkip->setDescription("Skips the map");
         $frame->addComponent($this->btnSkip);
 
         $this->_windowFrame->addComponent($frame);
@@ -91,74 +90,19 @@ class AdminPanel extends \ManiaLive\Gui\Window {
 
         $this->_windowFrame->addComponent($this->_minButton);
 
-        $this->addComponent($this->_windowFrame);
-
-        $xml = new \ManiaLive\Gui\Elements\Xml();
-        $xml->setContent('
-        <timeout>0</timeout>            
-        <script><!--
-                     main () {
-                       
-                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");
-                        declare mainWindow <=> Page.GetFirstChild("Frame");
-                        declare isMinimized = True;                                          
-                        declare lastAction = Now;
-                        declare autoCloseTimeout = 7500;
-                        declare positionMin = -50.0;
-                        declare positionMax = -4.0;
-                        mainWindow.PosnX = -50.0;                        
-                                              
-                        while(True) {
-                                
-                                if (isMinimized)
-                                {
-                                     if (mainWindow.PosnX >= positionMin) {                                          
-                                          mainWindow.PosnX -= 4;                                          
-                                    }
-                                }
-
-                                if (!isMinimized)
-                                {         
-                                    if (Now-lastAction > autoCloseTimeout) {                                          
-                                        if (mainWindow.PosnX <= positionMin) {                                                 
-                                                mainWindow.PosnX -= 4;                                      
-                                        } 
-                                        if (mainWindow.PosnX >= positionMin)  {
-                                                isMinimized = True;
-                                        }
-                                    }
-                                    
-                                    else {
-                                        if ( mainWindow.PosnX <= positionMax) {                                                      
-                                                  mainWindow.PosnX += 4;
-                                        }                                                                                                                                             
-                                    }
-                                }
-                                    
-                                foreach (Event in PendingEvents) {                                                
-                                    if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "myWindow" || Event.ControlId == "minimizeButton" )) {
-                                           isMinimized = !isMinimized;    
-                                           lastAction = Now;                                           
-                                    }                                       
-                                }
-                                yield;                        
-                        }  
-                        
-                }
-                --></script>');
-        $this->addComponent($xml);
+        $this->setName("Admin Panel");
+        $this->setDisableAxis("x");
     }
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize(60, 12);
         $this->_mainWindow->setSize(60, 6);
-        $this->_minButton->setPosition(60 - 6, -2.5);
+        $this->_minButton->setPosition(60 - 6, -6);
     }
 
     function actions($login, $action) {
-        try {
-            $player = $this->storage->getPlayerObject($login);
+        try {            
             switch ($action) {
                 case "forceEndRound":
                     self::$mainPlugin->endRound($login);
@@ -174,22 +118,20 @@ class AdminPanel extends \ManiaLive\Gui\Window {
                     break;
             }
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('Notice: ' . $e->getMessage(), $login);
+            echo 'Notice: ' . $e->getMessage();
         }
     }
-    
+
     function onShow() {
+        parent::onShow();
         $this->btnEndRound->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), 'map_endRound'));
-        $this->btnCancelVote->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), 'cancel_vote'));
+        $this->btnCancelVote->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), 'cancel_vote'));   
     }
 
-    function destroy() {
-        $this->connection = null;
-        $this->storage = null;
+    function destroy() {   
         $this->clearComponents();
         parent::destroy();
     }
-
 }
 
 ?>

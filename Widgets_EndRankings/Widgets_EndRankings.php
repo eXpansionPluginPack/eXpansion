@@ -29,7 +29,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
      */
     function displayWidget($login = null) {
         $info = Gui\Widgets\RanksPanel::Create(null);
-        $info->setData($this->callPublicMethod("eXpansion\LocalRecords", "getRanks"));
+        $info->setData($this->callPublicMethod("ManiaLivePlugins\LocalRecords\LocalRecords", "getRanks"));
         $info->setSize(38, 95);
         $info->setPosition(-160, 60);
 

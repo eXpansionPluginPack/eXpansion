@@ -61,13 +61,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             foreach ($recheck as $pname) {
                 $this->console($pname);
             }
-        } else {
-            $this->connection->chatSendServerMessage("");
-            $this->connection->chatSendServerMessage('$fff$w$o$s e $0dfX $fffp a n s i o n');
-            $this->connection->chatSendServerMessage('$000$o$iPluginPack for ManiaLive');
-            $this->connection->chatSendServerMessage("");
-            $this->connection->chatSendServerMessage('$fffRunning with version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
-        }
+        } 
     }
 
     public function loadPlugins($list, \ManiaLive\PluginHandler\PluginHandler $pHandler) {
@@ -93,7 +87,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                         $recheck[] = $pname;
                     } else {
                         $this->debug("[" . $pname . "]..............................SUCCESS");
-                        $this->connection->chatSendServerMessage('Starting ' . $pname . '........$0f0 Success');
+                     //   $this->connection->chatSendServerMessage('Starting ' . $pname . '........$0f0 Success');
                     }
                 }
             } catch (\Exception $ex) {

@@ -29,6 +29,8 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand("play", "setPlay", 0, true); // fast
         $this->registerChatCommand("spec", "setSpec", 0, true); // fast
 
+        $this->setPublicMethod("showPlayerList");
+
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Players'), false);
             $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Show Players'), null, array($this, 'showPlayerList'), false);
@@ -119,7 +121,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window = \ManiaLivePlugins\eXpansion\Players\Gui\ Windows\Playerlist::Create($login);
         $window->setTitle('Players');
 
-        $window->setSize(160, 100);
+        $window->setSize(120, 100);
         $window->centerOnScreen();
         $window->show();
     }

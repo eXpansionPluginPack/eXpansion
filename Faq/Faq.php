@@ -11,8 +11,8 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableDedicatedEvents();
         $this->msg_admin_redirect = exp_getMessage('Notice: a help page is displayed by an admin!');
         $this->msg_admin_info = exp_getMessage('Notice: Displaying a help page "%1$s" to "%2$s"');
-
-
+        $this->setPublicMethod("showFaq");
+                
         $langs = new \DirectoryIterator(__DIR__ . DIRECTORY_SEPARATOR . "Topics");
 
         foreach ($langs as $lang) {
@@ -28,8 +28,8 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onPlayerConnect($login, $isSpectator) {
         $window = Gui\Windows\FaqWidget::Create($login, true);
-        $window->setSize(50, 20);
-        $window->setPosition(-161, 68);
+        $window->setSize(7, 7);
+        $window->setPosition(-161, 76);
         $window->show();
     }
 

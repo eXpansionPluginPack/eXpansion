@@ -25,14 +25,14 @@ class HudSetVisibility extends \ManiaLive\Gui\Window {
 	$this->removeComponent($this->xml);
 	$content = '<script><!--
                        main () {     
-                        declare persistent Boolean[Text] widgetVisible;
+                        declare persistent Boolean[Text][Text] widgetVisible;
 			';
 	foreach ($this->data as $item) {
 	    $bool = "False";
 	    if ($item->value)
 		$bool = "True";
 
-	    $content .= "widgetVisible[\"" . $item->id . "\"] = " . $bool . "; \n";
+	    $content .= "widgetVisible[\"".\ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION."\"][\"" . $item->id . "\"] = " . $bool . "; \n";
 	}
 
 	$content .='

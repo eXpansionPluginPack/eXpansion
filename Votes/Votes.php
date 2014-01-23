@@ -66,6 +66,8 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         parent::exp_onReady();
 
         $this->timer = time();
+        $this->setPublicMethod("vote_restart");
+        $this->setPublicMethod("vote_skip");
 
         if ($this->isPluginLoaded('eXpansion\Maps') && $this->config->restartVote_useQueue) {
             $this->useQueue = true;
@@ -88,7 +90,6 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
           } */
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
-
             $this->debug("[exp\Votes] Building eXp\Menu buttons..");
             if ($this->config->restartVote_enable || $this->config->skipVote_enable) {
                 $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Votes'), false);
@@ -100,13 +101,6 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Skip Map'), null, array($this, 'vote_Skip'), false);
             }
             $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Cancel Vote'), null, array($this, 'cancelVote'), true);
-        }
-
-        if ($this->isPluginLoaded('Standard\Menubar')) {
-            $this->debug("[exp\Votes] Building Standard Menubar buttons..");
-            $this->callPublicMethod('Standard\Menubar', 'addButton', 'Restart Map Vote', array($this, 'vote_Restart'), false);
-            $this->callPublicMethod('Standard\Menubar', 'addButton', 'Skip Map Vote', array($this, 'vote_Skip'), false);
-            $this->callPublicMethod('Standard\Menubar', 'addButton', 'Cancel Vote', array($this, 'cancelVote'), true);
         }
     }
 

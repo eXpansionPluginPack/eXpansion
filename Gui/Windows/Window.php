@@ -9,8 +9,8 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  */
 class Window extends \ManiaLive\Gui\Window {
 
-    protected $_titlebar;
-    protected $_title;
+    protected $_titlebar, $_titlebar2;
+    protected $_title, $title2;
     protected $_mainWindow;
     protected $mainFrame;
     protected $_mainText;
@@ -19,56 +19,81 @@ class Window extends \ManiaLive\Gui\Window {
     protected $_closeAction;
     protected $_showCoords = 'False';
     protected $_windowFrame;
+    private $script;
     protected $bg;
     private $dDeclares = "";
-    private $dLoop = "";
+    private $scriptLib = "";
     private $wLoop = "";
     private $dIndex = 0;
     private $_name = "window";
+    private $style;
 
     protected function onConstruct() {
         parent::onConstruct();
         $config = Config::getInstance();
         $this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
 
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WindowScript");
+
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setScriptEvents(true);
         $this->_windowFrame->setAlign("left", "top");
 
+        $this->style = new \ManiaLib\Gui\Elements\Format();   
+        $this->style->setAttribute("textsize","0.9");    
+        $this->style->setAttribute("style","TextCardRaceRank");    
+        $this->style->setAttribute("textcolor","f00");    
+        $this->style->setAttribute("focusareacolor1", "09a");
+        $this->style->setAttribute("focusareacolor2", "fff"); 
+       // $this->addComponent($this->style); 
+
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_mainWindow->setId("MainWindow");
         $this->_mainWindow->setStyle("Bgs1");
-        $this->_mainWindow->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgWindow2);
+        $this->_mainWindow->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitlePage);
         $this->_mainWindow->setScriptEvents(true);
         $this->_windowFrame->addComponent($this->_mainWindow);
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
-        $this->bg->setStyle("Bgs1");
-        $this->bg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgWindow2);
-
+        $this->bg->setStyle("Bgs1InRace");
+        $this->bg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1InRace::BgTitleGlow);
         $this->_windowFrame->addComponent($this->bg);
+
+        $this->_titlebar2 = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
+        $this->_titlebar2->setStyle("Bgs1");
+        $this->_titlebar2->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitleGlow);
+        $this->_windowFrame->addComponent($this->_titlebar2);
 
         $this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
         $this->_titlebar->setId("Titlebar");
-        $this->_titlebar->setStyle("Bgs1");
-        $this->_titlebar->setSubStyle("ProgressBar");
-        // $this->_titlebar->setBgcolor("6bf");
-        //$this->_titlebar->setImage($config->windowTitlebar);
+        $this->_titlebar->setStyle("Bgs1InRace");
+        $this->_titlebar->setSubStyle(\ManiaLib\Gui\Elements\Bgs1InRace::BgPager);
         $this->_titlebar->setScriptEvents(true);
         $this->_windowFrame->addComponent($this->_titlebar);
 
 
+
         $this->_title = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->_title->setId("TitlebarText");
-        $this->_title->setStyle("TextStaticSmall");
-        $this->_title->setTextColor('000');
+        $this->_title->setStyle("TextRaceMessage");
+        $this->_title->setTextColor('3af');
         $this->_title->setTextSize(1);
+        $this->_title->setTextEmboss();
+        
         $this->_windowFrame->addComponent($this->_title);
 
-        $this->_closebutton = new \ManiaLib\Gui\Elements\Quad(7, 3);
-        $this->_closebutton->setAlign('center', 'top');
+        $this->_title2 = new \ManiaLib\Gui\Elements\Label(60, 4);
+        $this->_title2->setId("TitlebarText");
+        //$this->_title2->setStyle("TextRankingsBig");
+        $this->_title2->setTextColor('fffd');
+        $this->_title2->setTextSize(2);        
+        //$this->_windowFrame->addComponent($this->_title2);
+
+        $this->_closebutton = new \ManiaLib\Gui\Elements\Quad(5, 4);
+        $this->_closebutton->setId("Close");
+        $this->_closebutton->setAlign('center', 'center2');
         $this->_closebutton->setStyle("Icons64x64_1");
-        $this->_closebutton->setSubStyle("Close");
+        $this->_closebutton->setSubStyle("QuitRace");
 
         /*   $this->_closebutton->setStyle("TextChallengeNameMedium");
           $this->_closebutton->setScriptEvents(true);
@@ -106,21 +131,29 @@ class Window extends \ManiaLive\Gui\Window {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
 
-        $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY + 2);
-        $this->_mainWindow->setPosY(1);
-        $this->bg->setSize($this->sizeX + 0.6, $this->sizeY + 2);
-        $this->bg->setPosY(1);
+        $this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY + 6);
+        $this->_mainWindow->setPosY(5.5);
+        
+        $this->bg->setSize($this->sizeX + 0.6, $this->sizeY + 6);
+        $this->bg->setPosY(5.5);
 
-        $this->_title->setSize($this->sizeX, 4);
-        $this->_title->setPosition(($this->_title->sizeX / 2), 3.5);
+        $this->_title->setSize($this->sizeX, 3.5);
+        $this->_title->setPosition(($this->_title->sizeX / 2), 4.5);
         $this->_title->setHalign("center");
 
-        $this->_titlebar->setPosX(-4);
-        $this->_titlebar->setPosY(6);
-        $this->_titlebar->setSize($this->sizeX + 8, 7);
+        $this->_title2->setSize($this->sizeX, 4);
+        $this->_title2->setPosition(($this->_title->sizeX / 2), 4.5);
+        $this->_title2->setHalign("center");
+
+        $this->_titlebar->setPosY(5.5);
+        $this->_titlebar->setSize($this->sizeX + 0.5, 4.5);
+
+        $this->_titlebar2->setPosY(5.5);
+        $this->_titlebar2->setSize($this->sizeX + 0.5, 4.5);
+
 
         $this->_closebutton->setSize(5, 5);
-        $this->_closebutton->setPosition($this->sizeX - 3, 5.5);
+        $this->_closebutton->setPosition($this->sizeX - 2, 3.2);
 
         $this->_minbutton->setSize(5, 5);
         $this->_minbutton->setPosition($this->sizeX - 8, 5);
@@ -129,186 +162,73 @@ class Window extends \ManiaLive\Gui\Window {
         $this->mainFrame->setPosition(2, -2);
     }
 
+    private $calledScripts = array();
+
     private function detectElements($components) {
+        $buttonScript = null;
         foreach ($components as $index => $component) {
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter) {
                 $this->addScriptToMain($component->getScript());
             }
-            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Pager) {
-                $this->addScriptToMain($component->getScriptDeclares());
-                $this->addScriptToWhile($component->getScriptMainLoop());
+
+            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer) {
+                $script = $component->getScript();
+
+                $isset = !isset($this->calledScripts[$script->getRelPath()]);
+
+                if($isset){
+                    $this->addScriptToLib($script->getlibScript($this, $component));
+                }
+                
+                if ($isset || $script->multiply()) {
+                    $this->calledScripts[$script->getRelPath()] = $script;
+
+                    $dec = $script->getDeclarationScript($this, $component);
+                    $this->addScriptToMain($dec);
+                    $this->addScriptToWhile($script->getWhileLoopScript($this, $component));
+                }
             }
-            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown) {
-                $this->addScriptToMain($component->getScriptDeclares($this->dIndex));
-                $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));
-                $this->dIndex++;
-            }
-            if ($component instanceof \ManiaLive\Gui\Controls\Frame) {
+
+            if ($component instanceof \ManiaLive\Gui\Container) {
                 $this->detectElements($component->getComponents());
             }
         }
     }
 
     protected function onDraw() {
+        $this->nbButton = 0;
         $this->dIndex = 0;
         $this->dDeclares = "";
-        $this->dLoop = "";
+
+        $this->scriptLib = "";
+        $this->calledScripts = array();
 
         $this->detectElements($this->getComponents());
 
-        $this->removeComponent($this->xml);
-        // fixes the window to be center of the screen for first open. 
-        $startPosX = (-1 * intval($this->getSizeX() / 2)) . ".0";
-        $startPosY = intval($this->getSizeY() / 2) . ".0";
+        foreach ($this->calledScripts as $script) {
+            $this->addScriptToMain($script->getEndScript($this));
+            $script->reset();
+        }
 
-        $this->xml->setContent('    
-        <script><!--
-        #Include "MathLib" as MathLib
+        $this->calledScripts = array();
         
-                       main () {     
-                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");    
-                        declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);
-                        declare showCoords = ' . $this->_showCoords . ';
-                        
-                        declare MoveWindow = False;
-                        declare Scroll = False;
-                        declare CloseWindow = False;   
-                        declare isMinimized = False;   
-                        declare Real CloseCounter = 1.0;
-                        declare Real OpenCounter = 0.0;                        
-                        declare CenterWindow = False;                      
-                        
-                        declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
-                        declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
-                        declare Real lastMouseX = 0.0;
-                        declare Real lastMouseY =0.0;         
-                        declare active = False;
-                        declare Text id = "' . $this->_name . '";        
-                        declare persistent Vec3[Text] windowLastPos;
-                        declare persistent Vec3[Text] windowLastPosRel;
-			declare persistent Text windowActive = "";
-			
-                        ' . $this->dDeclares . '                          
-                        
-                         if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <' . $startPosX . ', ' . $startPosY . ', 0.0>;
-                                }
-                         if (!windowLastPosRel.existskey(id)) {
-                               windowLastPosRel[id] = <' . $startPosX . ', ' . $startPosY . ', 0.0>;
-                                }
-                        Window.PosnX = windowLastPos[id][0];
-                        Window.PosnY = windowLastPos[id][1];
-                        LastDelta = windowLastPosRel[id];
-                        Window.RelativePosition = windowLastPosRel[id];                                                
-                        windowActive = id;
-			
-                        while(True) {                                                               
-                        '
-                . $this->wLoop .
-                '
-                               if (windowActive == id) {
-                                declare temp = Window.RelativePosition;
-                                temp.Z = 20.0;
-                                Window.RelativePosition = temp;
-                            //    TitlebarText.SetText("true");
-                                } else {
-                                declare temp = Window.RelativePosition;
-                                temp.Z = -50.0;
-                                Window.RelativePosition = temp;				
-                              //  TitlebarText.SetText("false");
-                                }
-                                
-                               if (showCoords) {                               
-                                    declare coords = "$fffX:" ^ (MouseX - Window.PosnX) ^ " Y:" ^ (MouseY - Window.PosnY + 3 );                                   
-                                    TitlebarText.Value = coords;
-                                }
-                                 
-				//TitlebarText.SetText( "X:" ^ LastDelta.X ^ "  Y:" ^ LastDelta.Y);
-				       
-				    
-                                if (MoveWindow) {                                                                                                    
-                                    DeltaPos.X = MouseX - lastMouseX;
-                                    DeltaPos.Y = MouseY - lastMouseY;
-                                   
-				    if (Window.PosnX < -140.0) {                                    
-					LastDelta.X = -140.0;	
-					
-				    } 
-                                    if (Window.PosnX > 110.0) {                
-					LastDelta.X = 110.0;
-				       
-                                    }
-                                    if (Window.PosnY > 78.0) {                
-				        LastDelta.Y = 78.0;
-					
-                                    }
-				    if (Window.PosnY < -80.0) {                               
-					LastDelta.Y = -80.0;
-					
-                                    }                          
-				    
-                                    LastDelta += DeltaPos;         
-				     if (windowActive == id) {
-					    LastDelta.Z = 20.0; 
-				    }
-                                    Window.RelativePosition = LastDelta;                                
-                                    windowLastPos[id] = Window.AbsolutePosition;
-                                    windowLastPosRel[id] = Window.RelativePosition;
-                                    
-                                    lastMouseX = MouseX;
-                                    lastMouseY = MouseY; 
-				    yield;
-                                    }
-				    
-				   
-                                                          
-                                                  
-                               if (MouseLeftButton == True) {
-                                     
-                       
-                                        foreach (Event in PendingEvents) {
-                                                
-                                               
-                                                       if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Titlebar")  {                                                          
-                                                            lastMouseX = MouseX;
-                                                            lastMouseY = MouseY;   
-                                                            MoveWindow = True;                                                      
-							    windowActive = id;
-                                                        } 
+        $this->script->setParam("name", $this->_name);
+        $this->script->setParam("dDeclares", $this->dDeclares);
+        $this->script->setParam("scriptLib", $this->scriptLib);
+        $this->script->setParam("wLoop", $this->wLoop);
+        $this->script->setParam("version", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
+        $reset = "False";
+        if (DEBUG)
+            $reset = "True";
+            
+        $this->script->setParam("forceReset", $reset);
+        
 
-                                           
-                                                        if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close") {
-                                                          Window.Hide();
-                                                        }                                                             
-                                                        
-							if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "MainWindow") {                                            
-                                                             isMinimized = False;   
-							      windowActive = id;
-                                                         }                                  
-                                     ' . $this->dLoop . ' 
-                                         
-                                                }
-                                        }
-                                        
-                                else {
-                                        MoveWindow = False;                                      
-                                } 
-                                
-                                
-                                yield;                        
-                        }
-                  
-                  
-                }  //end of window 
-                --></script>');
+        $this->removeComponent($this->xml);
+        $this->xml->setContent($this->script->getDeclarationScript($this, $this->xml));
+
         $this->addComponent($this->xml);
         parent::onDraw();
-    }
-
-    function setDebug($bool) {
-        if ($bool) {
-            $this->_showCoords = 'True';
-        }
     }
 
     function setText($text) {
@@ -318,6 +238,7 @@ class Window extends \ManiaLive\Gui\Window {
     function setTitle($text, $parameter = "") {
         $this->_name = $text;
         $this->_title->setText($text . " " . $parameter);
+        // $this->_title2->setText($text . " " . $parameter);
     }
 
     function closeWindow() {
@@ -332,8 +253,8 @@ class Window extends \ManiaLive\Gui\Window {
         $this->wLoop .= $script;
     }
 
-    function addScriptToLoop($script) {
-        $this->dLoop .= $script;
+    function addScriptToLib($script) {
+        $this->scriptLib .= $script;
     }
 
     function destroy() {

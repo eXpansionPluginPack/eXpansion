@@ -335,8 +335,8 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         RatingsWidget::Erase($login);
         $info = RatingsWidget::Create($login);
-        $info->setSize(30, 6);
-        // $info->setPosition(158, 81);
+        $info->setSize(34, 12);
+        $info->setPosition(128, 76);
         $info->setStars($this->rating, $this->ratingTotal);
         $info->show();        
     }

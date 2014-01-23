@@ -86,7 +86,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onBeginMatch() {
-	self::$localrecords = $this->callPublicMethod("eXpansion\\LocalRecords", "getRecords");
+	self::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
 	foreach ($this->storage->players as $player)
 	    $this->onPlayerConnect($player->login, false); // create panel for everybody
 	foreach ($this->storage->spectators as $player)

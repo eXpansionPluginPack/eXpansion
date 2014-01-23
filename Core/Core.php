@@ -148,6 +148,7 @@ EOT;
         $this->connection->chatSendServerMessage('$fff$w$o$s e $0dfX $fffp a n s i o n');
         $this->connection->chatSendServerMessage('$000$o$iPluginPack for ManiaLive');
         $this->connection->chatSendServerMessage("");        
+        $this->connection->chatSendServerMessage('$fffRunning with version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
     }
 
     /**
@@ -157,7 +158,7 @@ EOT;
         $this->config = Config::getInstance();
         $this->registerChatCommand("info", "showInfo", 0, true);
         $this->registerChatCommand("serverlogin", "serverlogin", 0, true);
-
+        $this->setPublicMethod("showInfo");
         $window = new Gui\Windows\QuitWindow();
         $this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
         $this->onBeginMap(null, null, null);

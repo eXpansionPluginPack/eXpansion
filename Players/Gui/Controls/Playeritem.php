@@ -28,6 +28,9 @@ class Playeritem extends \ManiaLive\Gui\Control {
     protected $icon;
     private $toggleTeam = null;
 
+    /** @var \Maniaplanet\DedicatedServer\Structures\Player */
+    private $player;
+
     function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $isAdmin, $login, $widths, $sizeX) {
         $this->recipient = $login;
         $this->widths = \ManiaLivePlugins\eXpansion\Gui\Gui::getScaledSize($widths, $sizeX);
@@ -111,43 +114,59 @@ class Playeritem extends \ManiaLive\Gui\Control {
 // admin additions
         if ($this->isAdmin) {
 
-            $this->ignoreButton = new MyButton(24, 5);
-            $this->ignoreButton->setText(__("Ignore", $login));
-            $this->ignoreButton->setTextColor("fff");
-            $this->ignoreButton->colorize("a22");
-            $this->ignoreButton->setScale(0.5);
-            $this->ignoreButton->setAction($this->ignoreAction);
-            $this->frame->addComponent($this->ignoreButton);
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'player_ignore')) {
+                $this->ignoreButton = new MyButton(7, 5);
+                $this->ignoreButton->setDescription(__('Ignore player %1$s ', $login, $player->login), 50);
+                $this->ignoreButton->setTextColor("fff");
+                $this->ignoreButton->colorize("a22");
+                $this->ignoreButton->setScale(0.7);
+                $this->ignoreButton->setAction($this->ignoreAction);
+                $this->ignoreButton->setIcon('Icons128x128_1', 'Easy');
+                $this->frame->addComponent($this->ignoreButton);
+            }
 
-            $this->kickButton = new MyButton(24, 5);
-            $this->kickButton->setText(__("Kick", $login));
-            $this->kickButton->setTextColor("fff");
-            $this->kickButton->setAction($this->kickAction);
-            $this->kickButton->colorize("a22");
-            $this->kickButton->setScale(0.5);
-            $this->frame->addComponent($this->kickButton);
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'player_kick')) {
+                $this->kickButton = new MyButton(7, 5);
+                $this->kickButton->setDescription(__('Kick player %1$s ', $login, $player->login), 50);
+                $this->kickButton->setTextColor("fff");
+                $this->kickButton->setAction($this->kickAction);
+                $this->kickButton->colorize("a22");
+                $this->kickButton->setScale(0.7);
+                $this->kickButton->setIcon('Icons128x128_1', 'Medium');
+                $this->frame->addComponent($this->kickButton);
+            }
 
-            $this->banButton = new MyButton(24, 5);
-            $this->banButton->setText(__("Ban", $login));
-            $this->banButton->setTextColor("fff");
-            $this->banButton->colorize("a22");
-            $this->banButton->setAction($this->banAction);
-            $this->banButton->setScale(0.5);
-            $this->frame->addComponent($this->banButton);
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'player_ban')) {
+                $this->banButton = new MyButton(7, 5);
+                $this->banButton->setDescription(__('Ban player %1$s ', $login, $player->login), 50);
+                $this->banButton->setTextColor("fff");
+                $this->banButton->colorize("a22");
+                $this->banButton->setAction($this->banAction);
+                $this->banButton->setScale(0.7);
+                $this->banButton->setIcon('Icons128x128_1', 'Hard');
+                $this->frame->addComponent($this->banButton);
+            }
 
-            $this->blacklistButton = new MyButton(24, 5);
-            $this->blacklistButton->setText(__("Blacklist", $login));
-            $this->blacklistButton->setTextColor("fff");
-            $this->blacklistButton->colorize("a22");
-            $this->blacklistButton->setAction($this->blacklistAction);
-            $this->blacklistButton->setScale(0.5);
-            $this->frame->addComponent($this->blacklistButton);
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'player_black')) {
+                $this->blacklistButton = new MyButton(7, 5);
+                $this->blacklistButton->setDescription(__('Blacklist player %1$s ', $login, $player->login), 50);
+                $this->blacklistButton->setTextColor("fff");
+                $this->blacklistButton->colorize("a22");
+                $this->blacklistButton->setAction($this->blacklistAction);
+                $this->blacklistButton->setScale(0.7);
+                $this->blacklistButton->setIcon('Icons128x128_1', 'Extreme');
+                $this->frame->addComponent($this->blacklistButton);
+            }
 
-            $this->forceButton = new MyButton(24, 5);
-            $this->forceButton->setAction($this->forceAction);
-            $this->forceButton->setScale(0.5);
-            $this->forceButton->colorize("2f2");
-            $this->frame->addComponent($this->forceButton);
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'player_spec')) {
+                $this->forceButton = new MyButton(6, 5);
+                $this->forceButton->setAction($this->forceAction);
+                $this->forceButton->setScale(0.7);
+                $this->forceButton->colorize("2f2");
+                $this->forceButton->setIcon('Icons64x64_1', 'Opponents');
+                $this->forceButton->setDescription(__('Force %1$s to play', $login, $player->login), 50);
+                $this->frame->addComponent($this->forceButton);
+            }
         }
 
         $this->addComponent($this->frame);
@@ -161,14 +180,16 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(-2);
         $this->bg->setSize($this->sizeX, $this->sizeY);
-        $this->login->setSizeX($this->widths[0]);
-        $this->nickname->setSizeX($this->widths[1]);
+        $this->login->setSizeX($this->widths[1]);
+        $this->nickname->setSizeX($this->widths[2]);
 
-        if ($this->isAdmin) {
+        if ($this->forceButton != null) {
             if ($this->player->spectator == 1) {
-                $this->forceButton->setText(__("Release Spec", $this->recipient));
+                $this->forceButton->setIcon('Icons64x64_1', 'Opponents');
+                $this->forceButton->setDescription(__('Force %1$s to play', $this->recipient, $this->player->login), 50);
             } else {
-                $this->forceButton->setText(__("Force Spec", $this->recipient));
+                $this->forceButton->setIcon('BgRaceScore2', 'Spectator');
+                $this->forceButton->setDescription(__('Force %1$s to spectate', $this->recipient, $this->player->login), 50);
             }
         }
     }

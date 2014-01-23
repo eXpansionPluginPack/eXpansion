@@ -73,7 +73,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 
 	$pmanager = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
-	if ($pmanager->isLoaded('eXpansion\Dedimania') && $pmanager->isLoaded('eXpansion\LocalRecords')) {
+	if ($pmanager->isLoaded('eXpansion\Dedimania') && $pmanager->isLoaded('ManiaLivePlugins\LocalRecords\LocalRecords')) {
 	    $this->actionDedi = $this->createAction(array($this, "setPanel"), self::SHOW_DEDIMANIA);
 	    $this->actionLocal = $this->createAction(array($this, "setPanel"), self::SHOW_LOCALRECORDS);
 
@@ -93,7 +93,7 @@ class RecordsPanel extends \ManiaLive\Gui\Window {
 	$this->minButton->setAlign("center", "center");
 	$this->_windowFrame->addComponent($this->minButton);
 
-	if ($pmanager->isLoaded('eXpansion\LocalRecords')) {
+	if ($pmanager->isLoaded('ManiaLivePlugins\LocalRecords\LocalRecords')) {
 	    $this->showpanel = self::SHOW_LOCALRECORDS;
 	}
 	if ($pmanager->isLoaded('eXpansion\Dedimania')) {

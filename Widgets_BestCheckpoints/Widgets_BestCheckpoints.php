@@ -32,8 +32,8 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
      */
     function displayWidget($login = null) {
         $info = BestCpPanel::Create($login);
-        $info->setSize(220, 20);
-        $info->setPosition(0, 88);
+        $info->setSize(190, 7);
+        $info->setPosition(-112, 90);
         $info->setAlign("center", "top");
         $info->show();
     }

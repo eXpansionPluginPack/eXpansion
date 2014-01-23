@@ -21,10 +21,17 @@ class WidgetButton extends \ManiaLive\Gui\Control {
     function __construct($sizeX = 12, $sizeY = 12) {
         $this->quad = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->quad->setAlign('center', 'center2');
-        $this->quad->setStyle("BgsPlayerCard");
-        $this->quad->setSubStyle("BgCardSystem");
+        $this->quad->setStyle("Bgs1InRace");
+        $this->quad->setSubStyle("NavButtonBlink");
         $this->quad->setPosY(-3);
         $this->addComponent($this->quad);
+
+        $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+        $this->button->setAlign('center', 'center2');
+        $this->button->setPosY(-3);
+        $this->button->setBgcolor("0000");
+        $this->button->setBgcolorFocus("6af8");
+        $this->addComponent($this->button);
 
         $this->sizeX = $sizeX + 2;
         $this->sizeY = $sizeY + 2;
@@ -33,7 +40,7 @@ class WidgetButton extends \ManiaLive\Gui\Control {
 
     protected function onResize($oldX, $oldY) {
         $this->quad->setSize($this->sizeX, $this->sizeY);
-        $this->quad->setPosZ($this->posZ - 1);        
+        $this->quad->setPosZ($this->posZ - 1);
     }
 
     function getText() {
@@ -79,7 +86,7 @@ class WidgetButton extends \ManiaLive\Gui\Control {
     }
 
     function setAction($action) {
-        $this->quad->setAction($action);
+        $this->button->setAction($action);
     }
 
     function onIsRemoved(\ManiaLive\Gui\Container $target) {

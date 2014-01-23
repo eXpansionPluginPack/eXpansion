@@ -44,6 +44,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     
     public $enableRanksCalc = true;  // enable calculation of player ranks on checkpoints
     
+    public $contact = "YOUR@EMAIL.COM";
 }
 
 ?>

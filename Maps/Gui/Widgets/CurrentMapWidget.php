@@ -4,14 +4,23 @@ namespace ManiaLivePlugins\eXpansion\Maps\Gui\Widgets;
 
 class CurrentMapWidget extends \ManiaLive\Gui\Window {
 
+    protected $bg;
     protected $authorTime, $logo;
 
     protected function onConstruct() {
-        $icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
+
+        $bg = new \ManiaLib\Gui\Elements\Quad(54, 13);
+        $bg->setAlign("left", "center");
+        $bg->setStyle("Bgs1InRace");
+        $bg->setSubStyle("NavButtonBlink");
+        $bg->setPosition(-44, 3);
+        $this->addComponent($bg);
+
+        $icon = new \ManiaLib\Gui\Elements\Quad(4.5, 4.5);
         $icon->setStyle("UIConstructionSimple_Buttons");
         $icon->setSubStyle("AuthorTime");
         $icon->setAlign("right", "center2");
-        $icon->setPosition(5,-1);
+        $icon->setPosition(5.2, -1);
         $this->addComponent($icon);
 
         $this->authorTime = new \ManiaLib\Gui\Elements\Label();

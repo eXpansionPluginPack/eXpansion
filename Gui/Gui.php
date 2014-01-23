@@ -29,7 +29,9 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableDedicatedEvents();       
         $this->registerChatCommand("hud", "hudCommands", 0, true);
         $this->registerChatCommand("hud", "hudCommands", 1, true);
-        $this->msg_params = exp_getMessage("possible parameters: move, freeze, reset");
+        $this->setPublicMethod("hudCommands");
+        $this->setPublicMethod("showConfigWindow");
+        $this->msg_params = exp_getMessage("possible parameters: move, lock, reset");
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
@@ -63,8 +65,8 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $preloader->show();
 
         $info = HudPanel::Create($login);
-        $info->setSize(60, 20);
-        $info->setPosition(-160, -40);
+        $info->setSize(75, 7);
+        $info->setPosition(-160, -49);
         $info->show();
 
         try {
@@ -89,9 +91,9 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             case "move":
                 $this->enableHudMove($login);
                 break;
-            case "freeze":
+            case "lock":
                 $this->disableHudMove($login);
-                break;
+                break;                                        
             default:
                 $this->exp_chatSendServerMessage($this->msg_params, $login);
                 break;

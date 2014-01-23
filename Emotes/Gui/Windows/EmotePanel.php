@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Emotes\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\Emotes\Config;
 
-class EmotePanel extends \ManiaLive\Gui\Window {
+class EmotePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     private $connection;
     private $storage;
@@ -26,20 +26,20 @@ class EmotePanel extends \ManiaLive\Gui\Window {
 
     protected function onConstruct() {
         parent::onConstruct();
+        
         $config = Config::getInstance();
 
+        $this->setName("Emote Panel");
+        $this->setDisableAxis("x");
+        
         $dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
-        $this->actionGG = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'actions'), "GG");
-        $this->actionBG = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'actions'), "BG");
-        $this->actionAfk = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'actions'), "Afk");
-        $this->actionLol = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'actions'), "Lol");
-        
-
-        $this->setScriptEvents(true);
-        $this->setAlign("left", "top");
+        $this->actionGG = \ManiaLivePlugins\eXpansion\Emotes\Emotes::$action_GG;
+        $this->actionBG = \ManiaLivePlugins\eXpansion\Emotes\Emotes::$action_Bg;
+        $this->actionAfk = \ManiaLivePlugins\eXpansion\Emotes\Emotes::$action_Afk;
+        $this->actionLol = \ManiaLivePlugins\eXpansion\Emotes\Emotes::$action_Lol;
 
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setAlign("left", "top");
@@ -89,86 +89,14 @@ class EmotePanel extends \ManiaLive\Gui\Window {
 
         $this->addComponent($this->_windowFrame);
 
-        $xml = new \ManiaLive\Gui\Elements\Xml();
-        $xml->setContent('
-        <timeout>0</timeout>            
-        <script><!--
-                      main () {
-                       
-                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");
-                        declare mainWindow <=> Page.GetFirstChild("Frame");
-                        declare isMinimized = True;                                          
-                        declare lastAction = Now;
-                        declare autoCloseTimeout = 3500;
-                        declare positionMin = -50.0;
-                        declare positionMax = -4.0;
-                        mainWindow.PosnX = -50.0;                        
-                        declare blink = True;
-                        declare blinkDuration = 2000;
-                        declare blinkStartTime = Now;
-                        declare isMouseOver = False;
-                            
-                      
-
-                        while(True) {
-                              /*
-                              // Blink cannot be implemented since CMlControl doesnt have opacity :(((
-                              if (blink) {
-                                     if (Now-blinkStartTime < blinkDuration) {
-                                     declare seed =(Now-blinkStartTime)/1000;
-                                     Window.O
-                                     
-                                    } else {
-                                    blink = False;
-                                    }                                        
-                                } */
-                                
-                                if (isMinimized)
-                                {
-                                     if (mainWindow.PosnX >= positionMin) {                                          
-                                          mainWindow.PosnX -= 4;                                          
-                                    }
-                                }
-
-                            
-                                if (!isMinimized)
-                                {         
-                                    if (!isMouseOver && Now-lastAction > autoCloseTimeout) {                                          
-                                        if (mainWindow.PosnX <= positionMin) {                                                 
-                                                mainWindow.PosnX -= 4;                                      
-                                        } 
-                                        if (mainWindow.PosnX >= positionMin)  {
-                                                isMinimized = True;
-                                        }
-                                    }
-                                    
-                                    else {
-                                        if ( mainWindow.PosnX <= positionMax) {                                                      
-                                                  mainWindow.PosnX += 4;
-                                        }                                                                                                                                             
-                                    }
-                                }
-                                    
-                                foreach (Event in PendingEvents) {                                                
-                                    if (Event.Type == CMlEvent::Type::MouseOver && (Event.ControlId == "myWindow" || Event.ControlId == "minimizeButton" )) {
-                                           isMinimized = False;
-                                           isMouseOver = True;
-                                           lastAction = Now;
-                                    }
-                                    if (Event.Type == CMlEvent::Type::MouseOut) {
-                                        isMouseOver = False;
-                                    }
-                                    
-                                    if (!isMinimized && Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "myWindow" || Event.ControlId == "minimizeButton" )) {
-                                        isMinimized = True;
-                                    }
-                                }
-                                yield;                        
-                        }  
-                        
-                }
-                --></script>');
-        $this->addComponent($xml);
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
+        $script->setParam('isMinimized', 'True');
+        $script->setParam('autoCloseTimeout', '3500');
+        $script->setParam('posXMin',-50);
+        $script->setParam('posX', -50);
+        $script->setParam('posXMax', -4);
+        $this->registerScript($script);
+        
     }
 
     function onResize($oldX, $oldY) {
@@ -179,19 +107,7 @@ class EmotePanel extends \ManiaLive\Gui\Window {
         
     }
 
-    function actions($login, $action) {
-      self::$emotePlugin->sendEmote($login, $action);
-    }
-
-    function onShow() {
-        
-    }
-
     function destroy() {
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionAfk);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionGG);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionBG);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionLOL);  
         $this->clearComponents();
         parent::destroy();
     }

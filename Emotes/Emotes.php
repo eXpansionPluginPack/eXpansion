@@ -9,11 +9,20 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $timeStamps = array();
 
+    public static $action_GG;
+    public static $action_Afk;
+    public static $action_Lol;
+    public static $action_Bg;
+    
     function exp_onInit() {
         parent::exp_onInit();
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
+        self::$action_GG = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'sendEmote'), "GG");
+        self::$action_Afk = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'sendEmote'), "Afk");
+        self::$action_Lol = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'sendEmote'), "Lol");
+        self::$action_Bg = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'sendEmote'), "BF");
     }
 
     function exp_onLoad() {
@@ -78,8 +87,8 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             return;
 
         $info = EmotePanel::Create($login);
-        $info->setSize(60, 20);
-        $info->setPosition(-160, -52);
+        $info->setSize(60, 8);
+        $info->setPosition(-160, -40);
         $info->show();
     }
 

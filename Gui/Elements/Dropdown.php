@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class Dropdown extends \ManiaLive\Gui\Control {
+class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     private $items = array();
     private $dropdown;
@@ -50,6 +50,8 @@ class Dropdown extends \ManiaLive\Gui\Control {
         $this->addItems($items);
         $this->addComponent($this->frame);
         $this->setSelected($selectedIndex);
+        
+        $this->registerScript(new \ManiaLivePlugins\eXpansion\Gui\Scripts\DropDownScript());
     }
 
     function addItems($items) {
@@ -76,41 +78,6 @@ class Dropdown extends \ManiaLive\Gui\Control {
         $this->frame->addComponent($this->items[$x]);
         $this->values[$x] = $item;
         $x++;
-    }
-
-    function getScriptDeclares($dropdownIndex) {
-        return '           
-                            declare CMlFrame Frame' . $dropdownIndex . ' <=> (Page.GetFirstChild("' . $this->name . 'f") as CMlFrame);
-                            declare CMlLabel Label' . $dropdownIndex . ' <=> (Page.GetFirstChild("' . $this->name . 'l") as CMlLabel);
-                            declare CMlEntry Output' . $dropdownIndex . ' <=> (Page.GetFirstChild("' . $this->name . 'e") as CMlEntry);
-                            Frame' . $dropdownIndex . '.Hide();
-     ';
-    }
-
-    function getScriptMainLoop($dropdownIndex) {
-        $loop = ' 
-                            if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "' . $this->name . 'l") { 
-                                    Frame' . $dropdownIndex . '.Show();
-                           } else {
-                                   if (Event.Type == CMlEvent::Type::MouseClick) {
-                                        Frame' . $dropdownIndex . '.Hide();
-                                   }
-                            }
-            ';
-
-        $x = 0;
-        foreach ($this->values as $item) {
-            $loop .= '
-                             if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "' . $this->name . $x . '") {                           
-                                           Label' . $dropdownIndex . '.Value = "' . $item . '";
-                                           Output' . $dropdownIndex . '.Value = "' . $x . '";
-                                           Frame' . $dropdownIndex . '.Hide();
-                            } 
-                      ';
-            $x++;
-        }
-
-        return $loop;
     }
 
     public function getDropdownItems() {
