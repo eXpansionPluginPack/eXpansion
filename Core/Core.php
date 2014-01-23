@@ -144,10 +144,10 @@ EOT;
         }
 
         $this->lastGameMode = \ManiaLive\Data\Storage::getInstance()->gameInfos->gameMode;
-        
+
         $this->connection->chatSendServerMessage('$fff$w$o$s e $0dfX $fffp a n s i o n');
         $this->connection->chatSendServerMessage('$000$o$iPluginPack for ManiaLive');
-        $this->connection->chatSendServerMessage("");        
+        $this->connection->chatSendServerMessage("");
         $this->connection->chatSendServerMessage('$fffRunning with version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
     }
 
@@ -282,8 +282,9 @@ EOT;
         if (!empty(types\BasicPlugin::$plugins_onHold)) {
             $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
             foreach (types\BasicPlugin::$plugins_onHold as $plugin_id) {
-                $parts = explode("\\", $plugin_id);
-                $className = '\\ManiaLivePlugins\\' . $plugin_id . '\\' . $parts[1];
+                //$parts = explode("\\", $plugin_id);
+                //$className = '\\ManiaLivePlugins\\' . $plugin_id . '\\' . $parts[1];
+                $className = $plugin_id;
                 if ($className::exp_checkGameCompability()) {
                     $pHandler->load($plugin_id);
                 }
@@ -683,4 +684,5 @@ EOT;
     }
 
 }
+
 ?>

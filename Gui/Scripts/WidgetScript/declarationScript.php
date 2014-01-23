@@ -38,12 +38,12 @@ main () {
      // external declares
      <?= $this->dDeclares ?>
      // external declares ends
-    if (!exp_widgetVisible.existskey(version)) {
+    if (!exp_widgetVisible.existskey(version) ) {
         exp_widgetVisible[version] = Boolean[Text];
     }
     
     if ( !exp_widgetVisible[version].existskey(id) || forceReset) {
-        exp_widgetVisible[version][id] =  True;
+        exp_widgetVisible[version][id] = True;
     }
     if (!exp_widgetLastPos.existskey(version)) {
         exp_widgetLastPos[version] = Vec3[Text];
@@ -71,13 +71,16 @@ main () {
         // external loop stuff
         <?=  $this->wLoop ?>
         // external loop ends
-
+        if (!exp_widgetVisible.existskey(version) ) {
+            exp_widgetVisible[version] = Boolean[Text];
+        }
         if (!exp_widgetVisible[version].existskey(id)) {
             exp_widgetVisible[version][id] = True;
         }
+        
         if (exp_widgetVisible[version][id] == True) {
             Window.Show();
-        }else {
+        } else {
             Window.Hide();
         }
 

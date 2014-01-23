@@ -48,7 +48,7 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$line = new Infoline("Server Titlepack: " . $version->titleId);
 	$this->frame->addComponent($line);
 
-	$line = new Infoline("Manialive version: " . \ManiaLiveApplication\Version);
+        $line = new Infoline("Manialive version: " . \ManiaLive\Application\VERSION);
 	$this->frame->addComponent($line);
 
 	$line = new Infoline("eXpansion version: " . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);

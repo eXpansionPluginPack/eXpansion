@@ -20,14 +20,15 @@ class SortableMap {
 
     /** @var \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating */
     public $rating;
-
+    
+    public $maxrec;
     /**
      * 
      * @param \Maniaplanet\DedicatedServer\Structures\Map $map
      * @param int $localrec
      * @param \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating $rating
      */
-    public function __construct(\Maniaplanet\DedicatedServer\Structures\Map $map, $localrec, \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating $rating) {
+    public function __construct(\Maniaplanet\DedicatedServer\Structures\Map $map, $localrec, $maxrec, \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating $rating) {
         $this->map = $map;
         $this->name = \ManiaLib\Utils\Formatting::stripStyles($map->name);
         $this->author = $map->author;
@@ -35,6 +36,7 @@ class SortableMap {
         $this->style = $map->mapStyle; // for future use
         $this->localrecord = $localrec;
         $this->rating = $rating;
+        $this->maxrec = $maxrec;
     }
 
 }

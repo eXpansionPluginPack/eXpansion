@@ -14,7 +14,8 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     protected function onConstruct() {
         parent::onConstruct();
         $this->setSize(80, 9);
-
+        $this->setName("Donate Panel");
+        
         $bg = new \ManiaLib\Gui\Elements\Quad(77, 5);
         $bg->setPosition(0, -1.5);
         $bg->setStyle("Bgs1InRace");
@@ -38,7 +39,8 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $ui->setStyle('TextStaticVerySmall');
         $ui->setTextColor('fff');
         $this->addComponent($ui);
-
+        
+        
         $donations = array(50, 100, 500, 1000, 2000);
         $x = 0;
         foreach ($donations as $text) {
@@ -49,7 +51,7 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
             $this->container->addComponent($this->items[$x]);
         }
 
-        $this->setName("Donate Panel");
+        
     }
 
     function Donate($login, $amount) {

@@ -199,7 +199,7 @@ abstract class Service {
      */
     static function sendRequest($url) {
 	$agent = '';
-	$agent .= 'ManiaLive-eXp/' . \ManiaLiveApplication\Version;
+	$agent .= 'ManiaLive-eXp/' . \ManiaLive\Application\Version;
 	$agent .= ' TMKarma/0.0.1';
 	$agent .= '';
 

@@ -142,7 +142,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return boolean
      */
     public function isLocalRecordsLoaded() {
-        return $this->isPluginLoaded('ManiaLivePlugins\LocalRecords\LocalRecords');
+        return $this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords');
     }
 
     /**
@@ -151,7 +151,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param \Maniaplanet\DedicatedServer\Structures\Map $map
      */
     public function showRec($login, $map) {
-        $this->callPublicMethod("ManiaLivePlugins\LocalRecords\LocalRecords", "showRecsWindow", $login, $map);
+        $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, $map);
     }
 
     public function onOliverde8HudMenuReady($menu) {
@@ -398,11 +398,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->setTitle(__('Maps on server', $login));
         $window->setHistory($this->history);
         $window->setCurrentMap($this->storage->currentMap);
-        if ($this->isPluginLoaded('ManiaLivePlugins\LocalRecords\LocalRecords')) {
-            $window->setRecords($this->callPublicMethod('ManiaLivePlugins\eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
+        if ($this->isPluginLoaded('ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
+            $window->setRecords($this->callPublicMethod('ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
         }
-        if ($this->isPluginLoaded('eXpansion\MapRatings')) {
-            $window->setRatings($this->callPublicMethod('ManiaLivePlugins\eXpansion\MapRatings', 'getRatings'));
+        if ($this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings')) {
+            $window->setRatings($this->callPublicMethod('ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings', 'getRatings'));
         }
 
         $window->centerOnScreen();
@@ -417,7 +417,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window = Gui\Windows\Maplist::Create($login);
         $window->setHistory($this->history);
         $window->setTitle(__('History of Maps', $login));
-        if ($this->isPluginLoaded('ManiaLivePlugins\LocalRecords\LocalRecords')) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
             $window->setRecords($this->callPublicMethod('ManiaLivePlugins\eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
         }
         if ($this->isPluginLoaded('eXpansion\MapRatings')) {

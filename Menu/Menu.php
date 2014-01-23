@@ -59,7 +59,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Maps\\Maps", "showMapList", $login);
                 break;
             case "maprecords":
-                $this->callPublicMethod("ManiaLivePlugins\\LocalRecords\\LocalRecords", "showRecsWindow", $login, Null);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, Null);
                 break;
             case "voteres":
                 $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Votes\Votes", "vote_restart", $login);

@@ -92,7 +92,7 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 	$apply = HudSetVisibility::Create($login, false);
 	$apply->setData($outValues);
-	$apply->setTimeout(2);
+	//$apply->setTimeout(2);
 	$apply->show();
 	$this->Erase($login);
     }

@@ -93,6 +93,7 @@ class Submenu extends \ManiaLive\Gui\Window {
 
         $this->removeComponent($this->xml);
         $count = count($this->submenu);
+        $version = \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION;
         $script = <<<EOD
                        <script><!--      
                         #Include "MathLib" as MathLib
@@ -105,8 +106,8 @@ class Submenu extends \ManiaLive\Gui\Window {
                         declare Boolean toggleSubmenu = False;
                         declare CMlFrame currentButton = Null; 
                         declare CMlFrame previousButton = Null; 
-                        declare persistent Boolean[Text] widgetVisible;    
-                
+                        declare persistent Boolean[Text][Text] exp_widgetVisible;    
+                        declare Text version = "$version";
                         for(i, 1, $count) {
                                     Page.GetFirstChild("submenu_"^i).Hide();
                                 }
@@ -127,8 +128,8 @@ class Submenu extends \ManiaLive\Gui\Window {
                             if (toggleSubmenu) {
                                  Menu.Show();     
                                      outText = "";					   
-					   if (widgetVisible.count > 0) {
-					   foreach (id => status in widgetVisible) {
+					   if (exp_widgetVisible[version].count > 0) {
+					   foreach (id => status in exp_widgetVisible[version]) {
 						
 			    			    declare Text bool = "0";
 						    if (status == True) {
