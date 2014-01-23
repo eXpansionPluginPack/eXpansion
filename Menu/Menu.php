@@ -18,7 +18,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onReady() {
         $this->enableDedicatedEvents();
-        if ($this->isPluginLoaded("eXpansion\AdminGroups")) {
+        if ($this->isPluginLoaded("ManiaLivePlugins\\eXpansion\\AdminGroups\\AdminGroups")) {
             Dispatcher::register(\ManiaLivePlugins\eXpansion\AdminGroups\Events\Event::getClass(), $this);
         }
 
@@ -45,6 +45,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->actions['hudReset'] = $actionHandler->createAction(array($this, "actions"), "hudReset");
         $this->actions['stats'] = $actionHandler->createAction(array($this, "actions"), "stats");
         $this->actions['serverinfo'] = $actionHandler->createAction(array($this, "actions"), "serverinfo");
+        $this->reDraw();
     }
 
     function actions($login, $action, $entries) {
@@ -52,19 +53,19 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         switch ($action) {
             case "playerlist":
-                $this->callPublicMethod("eXpansion\Players", "showPlayerList", $login);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\Players\\Players", "showPlayerList", $login);
                 break;
             case "maplist":
-                $this->callPublicMethod("eXpansion\Maps", "showMapList", $login);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Maps\\Maps", "showMapList", $login);
                 break;
             case "maprecords":
-                $this->callPublicMethod("ManiaLivePlugins\LocalRecords\LocalRecords", "showRecsWindow", $login, Null);
+                $this->callPublicMethod("ManiaLivePlugins\\LocalRecords\\LocalRecords", "showRecsWindow", $login, Null);
                 break;
             case "voteres":
-                $this->callPublicMethod("eXpansion\Votes", "vote_restart", $login);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Votes\Votes", "vote_restart", $login);
                 break;
             case "voteskip":
-                $this->callPublicMethod("eXpansion\Votes", "vote_skip", $login);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Votes\\Votes", "vote_skip", $login);
                 break;
             case "quit":
                 $this->connection->kick($login, "Thanks for visiting and welcome back");
@@ -88,31 +89,31 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $adminGrp->adminCmd($login, "trash this");
                 break;
             case "admmx":
-                $this->callPublicMethod("eXpansion\ManiaExchange", "mxSearch", $login, "", "");
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\ManiaExchange\\ManiaExchange", "mxSearch", $login, "", "");
                 break;
             case "admcontrol":
-                $this->callPublicMethod("eXpansion\Adm", "serverControlMain", $login);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Adm\\Adm", "serverControlMain", $login);
                 break;
             case "help":
-                $this->callPublicMethod("eXpansion\Faq", "showFaq", $login, "toc", null);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Faq\\Faq", "showFaq", $login, "toc", null);
                 break;
             case "hudMove":
-                $this->callPublicMethod("eXpansion\Gui", "hudCommands", $login, "move");
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "move");
                 break;
             case "hudLock":
-                $this->callPublicMethod("eXpansion\Gui", "hudCommands", $login, "lock");
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "lock");
                 break;
             case "hudConfig":
-                $this->callPublicMethod("eXpansion\Gui", "showConfigWindow", $login, $entries);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Gui\\Gui", "showConfigWindow", $login, $entries);
                 break;
             case "hudReset":
-                $this->callPublicMethod("eXpansion\Gui", "hudCommands", $login, "reset");
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "reset");
                 break;
             case "stats":
-                $this->callPublicMethod("eXpansion\Statistics", "showTopWinners", $login);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Statistics\\Statistics", "showTopWinners", $login);
                 break;
             case "serverinfo":
-                $this->callPublicMethod("eXpansion\Core", "showInfo", $login);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Core\\Core", "showInfo", $login);
                 break;
         }
     }
@@ -160,13 +161,15 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $info->setScale(0.8);
         //   $info->show();
 
+        echo "\n Creating Submenu.... \n";
+
         $submenu = Gui\Widgets\Submenu::Create($login);
         $menu = $submenu->getMenu();
 
         $submenu->addItem($menu, __("Help...", $login), $this->actions['help']);
 
         $maps = $submenu->addSubMenu($menu, __("Map", $login));
-        $submenu->addItem($maps, __("List Maps...", $login), $this->actions['maplist']);        
+        $submenu->addItem($maps, __("List Maps...", $login), $this->actions['maplist']);
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "map_add")) {
             $submenu->addItem($maps, __("Mania-Exchange...", $login), $this->actions['admmx']);
         }
@@ -174,17 +177,17 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $submenu->addItem($maps, __("Remove this", $login), $this->actions['admremovemap']);
             $submenu->addItem($maps, __("Trash this", $login), $this->actions['admtrashmap']);
         }
-        
+
         $stats = $submenu->addSubMenu($menu, __("Stats", $login));
         $submenu->addItem($stats, __("Show Records...", $login), $this->actions['maprecords']);
         $submenu->addItem($stats, __("Statistics...", $login), $this->actions['stats']);
         $submenu->addItem($stats, __("Server info...", $login), $this->actions['serverinfo']);
-        
+
         $player = $submenu->addSubMenu($menu, __("Players", $login));
         $submenu->addItem($player, __("List Players...", $login), $this->actions['playerlist']);
-        $submenu->addItem($player, "" , null );
+        $submenu->addItem($player, "", null);
         $submenu->addItem($player, __("Rage Quit...", $login), $this->actions['quit']);
-        
+
         $hud = $submenu->addSubMenu($menu, __("Hud", $login));
         $submenu->addItem($hud, __("Move Positions", $login), $this->actions['hudMove']);
         $submenu->addItem($hud, __("Lock Positions", $login), $this->actions['hudLock']);
@@ -193,10 +196,10 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $votes = $submenu->addSubMenu($menu, __("Votes", $login));
         $submenu->addItem($votes, __("Vote Restart", $login), $this->actions['voteres']);
-        $submenu->addItem($votes, __("Vote Skip", $login), $this->actions['voteskip']);                       
+        $submenu->addItem($votes, __("Vote Skip", $login), $this->actions['voteskip']);
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_cancelvote"))
             $submenu->addItem($votes, __("Cancel Vote", $login), $this->actions['admcancel']);
-        
+
         $adm = $submenu->addSubMenu($menu, __("Fast Admin", $login));
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_restart"))
             $submenu->addItem($adm, __("Restart", $login), $this->actions['admres']);
@@ -206,7 +209,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_endround"))
             $submenu->addItem($adm, __("End Round", $login), $this->actions['admer']);
-        
+
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "server_admin")) {
             $submenu->addItem($adm, __("Control Panel...", $login), $this->actions['admcontrol']);
         }
