@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Widgets;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 
-class MessagesPanel extends \ManiaLive\Gui\Window {
+class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     /** @var \DedicatedApi\Connection */
     private $connection;
@@ -26,7 +26,6 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
 
     /** @var \DedicatedApi\Structures\Player */
     private $targetPlayer = false;
-    private $xml;
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -45,6 +44,7 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setAlign("left", "top");
         $this->_windowFrame->setId("Frame");
+        $this->_windowFrame->setPosY(-2);
         $this->_windowFrame->setScriptEvents(true);
 
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad(100, 10);
@@ -99,9 +99,14 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
         $this->_windowFrame->addComponent($this->_minButton);
 
         $this->addComponent($this->_windowFrame);
-
-        $this->xml = new \ManiaLive\Gui\Elements\Xml();
-        $this->addComponent($this->xml);
+        $this->setName("Personal Chat Widget");
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
+        $script->setParam('isMinimized', $this->status);
+        $script->setParam('autoCloseTimeout', '7500');
+        $script->setParam('posXMin',-90);
+        $script->setParam('posX', -90);
+        $script->setParam('posXMax', -4);
+        $this->registerScript($script);
     }
 
     function onResize($oldX, $oldY) {
@@ -110,55 +115,7 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
         $this->_mainWindow->setSize(100, 6);
         $this->_minButton->setPosition(100 - 6, -2.5);
         $this->removeComponent($this->xml);
-        $this->xml->setContent('
-        <timeout>0</timeout>            
-        <script><!--
-                     main () {
-                       
-                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");
-                        declare mainWindow <=> Page.GetFirstChild("Frame");                        
-                        declare isMinimized = ' . $this->status . ';                                          
-                        declare lastAction = Now;
-                        declare positionMin = -90.0;
-                        declare positionMax = -4.0;
-                        if (isMinimized)  {
-                        mainWindow.PosnX = -90.0;                        
-                        }   
-                        else {
-                        mainWindow.PosnX = -3.9;                        
-                        }
-                        while(True) {
-                                
-                                if (isMinimized)
-                                {
-                                     if (mainWindow.PosnX >= positionMin) {                                          
-                                          mainWindow.PosnX -= 4;                                          
-                                    }
-                                }
-
-                                if (!isMinimized)
-                                {         
-                                     if ( mainWindow.PosnX <= positionMax) {                                                      
-                                            mainWindow.PosnX += 4;
-                                  }
-                                }
-                                        
-                                foreach (Event in PendingEvents) {                                                
-                                    if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "myWindow" || Event.ControlId == "minimizeButton" )) {
-                                           isMinimized = !isMinimized;                                      
-                                           lastAction = Now;                                           
-                                    }                                       
-                                }
-                                yield;                        
-                        }  
-                        
-                }
-                --></script>');
-        $this->addComponent($this->xml);
-    }
-
-    function onShow() {
-        
+ 
     }
 
     function sendPm($login, $target) {
