@@ -8,13 +8,12 @@ class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     public $btn_skip;
 
     protected function onConstruct() {
-        parent::onConstruct();
-        echo "Started Buidling\n";
-        $this->btn_res = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetButton();
+        parent::onConstruct();        
+        $this->btn_res = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetButton(10,10);
         $this->btn_res->setPositionZ(-1);
         $this->addComponent($this->btn_res);
 
-        $this->btn_skip = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetButton();
+        $this->btn_skip = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetButton(10,10);
         $this->btn_skip->setPositionZ(-1);
         $this->addComponent($this->btn_skip);
 
@@ -35,7 +34,7 @@ class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         if ($amount == "max") {
             $this->btn_res->setText(array('$ff0Maximum', '$fffrestarts', '$ff0reached'));
         } else {
-            $this->btn_res->setText(array('$fffPay $ff0' . $amount, '$fffto', '$ff0Restart'));
+            $this->btn_res->setText(array('$fffBuy','$fffRestart', '$fff' . $amount.'p' ));
         }
     }
 
@@ -43,7 +42,7 @@ class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         parent::onResize($oldX, $oldY);
         $this->btn_res->setPosX(8);
         $this->btn_res->setPosY(-5);
-        $this->btn_skip->setPosX(22);
+        $this->btn_skip->setPosX(21);
         $this->btn_skip->setPosY(-5);
     }
 
@@ -55,7 +54,7 @@ class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         if ($amount == "max") {
             $this->btn_skip->setText(array('$ff0fMaximum', '$fffskips', '$ff0reached'));
         } else {
-            $this->btn_skip->setText(array('$fffPay $ff0' . $amount, '$fffto', '$ff0Skip'));
+            $this->btn_skip->setText(array('$fffBuy', '$fffSkip', '$fff' . $amount . 'p'));
         }
     }
 

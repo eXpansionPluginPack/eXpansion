@@ -22,9 +22,7 @@ class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->actionDisableMove = $this->createAction(array(self::$mainPlugin, 'disableHudMove'));
         $this->actionOpenConfig = $this->createAction(array(self::$mainPlugin, 'showConfigWindow'));
         $this->actionReset = $this->createAction(array(self::$mainPlugin, 'resetHud'));
-
-        $this->setScriptEvents();
-        $this->setAlign("left", "top");
+        $this->setScriptEvents();        
 
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setId("Frame");
@@ -32,15 +30,13 @@ class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->_windowFrame->setScriptEvents(true);
         $this->addComponent($this->_windowFrame);
 
-        $this->background = new \ManiaLib\Gui\Elements\Quad(70, 6);
-        $this->background->setId("MainWindow");
-        $this->background->setStyle("Bgs1InRace");
-        $this->background->setSubStyle("BgList");
+        $this->background = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(74, 10);
+        $this->background->setId("MainWindow");        
+        $this->background->setAlign("left");
         $this->_windowFrame->addComponent($this->background);
 
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame(0, -5.5);
-        $this->frame->setSize(90, 6);
+        $this->frame = new \ManiaLive\Gui\Controls\Frame();        
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
         $this->_windowFrame->addComponent($this->frame);
 
@@ -48,29 +44,25 @@ class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $btn->setAction($this->actionReset);
         $btn->setText("Reset HUD");
         $btn->colorize("a00");
-        $btn->setTextColor("ff0");
-        $btn->setAlign("left", "center");
+        $btn->setTextColor("ff0");        
         $this->frame->addComponent($btn);
 
         $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(22, 5);
         $btn->setAction($this->actionEnableMove);
         $btn->setText("Unlock HUD");
-        $btn->colorize("0a0");
-        $btn->setAlign("left", "center");
+        $btn->colorize("0a0");        
         $this->frame->addComponent($btn);
 
         $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(22, 5);
         $btn->setAction($this->actionDisableMove);
         $btn->setText("Lock HUD");
-        $btn->colorize("aa0");
-        $btn->setAlign("left", "center");
+        $btn->colorize("aa0");        
         $this->frame->addComponent($btn);
 
 
         $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(22, 5);
         $btn->setAction($this->actionOpenConfig);
-        $btn->setText(__("Configure HUD", $login));
-        $btn->setAlign("left", "center");
+        $btn->setText(__("Configure HUD", $login));        
         $this->frame->addComponent($btn);
 
         $inputbox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("widgetStatus");
@@ -83,30 +75,28 @@ class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->_minButton->setAlign("left", "center");
         $this->_minButton->setId("minimizeButton");
         $this->_minButton->setStyle("Icons128x32_1");
-        $this->_minButton->setSubStyle("Settings");
-        $this->_minButton->setPosX(.8);
-        $this->_minButton->setAlign("left", "bottom");
-        $this->frame->addComponent($this->_minButton);
+        $this->_minButton->setSubStyle("Settings");        
+        $this->_windowFrame->addComponent($this->_minButton);
 
-        $this->setSizeX(90);
+        $this->setSizeX(72);
         
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
         $script->setParam('isMinimized', 'True');
         $script->setParam('autoCloseTimeout', '7500');
-        $script->setParam('posXMin',-64);
-        $script->setParam('posX', -64);
+        $script->setParam('posXMin',-66);
+        $script->setParam('posX', -66);
         $script->setParam('posXMax', 0);
-        $this->registerScript($script);
-        
-        $this->setName("Hud Panel");
+        $this->registerScript($script);        
+        $this->setName("Hud Configure Panel");
         $this->setDisableAxis("x");
     }
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->_windowFrame->setSize(90, 6);
-        $this->background->setSize(94, 6);
-        $this->background->setPosX(-20);
+        $this->_windowFrame->setSize(80, 7);
+        $this->background->setSize(80, 7);        
+        $this->background->setPosX(-6);
+        $this->_minButton->setPosX(70);
     }
 
 

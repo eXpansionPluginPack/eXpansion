@@ -210,7 +210,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
         $this->label->setPosX((($this->sizeX - 2) / 2) + ($this->getSizeY() - 1));
         $this->label->setSizeX($this->getSizeX() - ($this->getSizeY() + 1));
     }
-
+        
     function getButtonId() {
         return $this->buttonId;
     }

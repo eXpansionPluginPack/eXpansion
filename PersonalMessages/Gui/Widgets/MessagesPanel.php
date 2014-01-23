@@ -47,15 +47,11 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->_windowFrame->setPosY(-2);
         $this->_windowFrame->setScriptEvents(true);
 
-        $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad(100, 10);
-        $this->_mainWindow->setId("MainWindow");
-        $this->_mainWindow->setStyle("Bgs1InRace");
-        $this->_mainWindow->setSubStyle("BgList");
-        $this->_mainWindow->setAlign("left", "center");
+        $this->_mainWindow = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(100, 10);
+        $this->_mainWindow->setId("MainWindow");                
         $this->_windowFrame->addComponent($this->_mainWindow);
 
-        $frame = new \ManiaLive\Gui\Controls\Frame();
-        $frame->setAlign("left", "top");
+        $frame = new \ManiaLive\Gui\Controls\Frame();        
         $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
         $frame->setPosition(6, 4);
 
@@ -102,9 +98,9 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->setName("Personal Chat Widget");
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
         $script->setParam('isMinimized', $this->status);
-        $script->setParam('autoCloseTimeout', '7500');
-        $script->setParam('posXMin',-90);
-        $script->setParam('posX', -90);
+        $script->setParam('autoCloseTimeout', '30000');
+        $script->setParam('posXMin',-92);
+        $script->setParam('posX', -92);
         $script->setParam('posXMax', -4);
         $this->registerScript($script);
     }
@@ -113,7 +109,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize(100, 6);
         $this->_mainWindow->setSize(100, 6);
-        $this->_minButton->setPosition(100 - 6, -2.5);
+        $this->_minButton->setPosition(100 - 4, -2.5);
         $this->removeComponent($this->xml);
  
     }

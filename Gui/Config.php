@@ -36,7 +36,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     
     public $style_widget_bgColor = '';
     public $style_widget_bgStyle = 'Bgs1InRace';
-    public $style_widget_bgSubStyle = 'BgList';
+    public $style_widget_bgSubStyle = 'NavButtonBlink';
     public $style_widget_bgXOffset = 0;
     public $style_widget_bgYOffset = 0;
 }
