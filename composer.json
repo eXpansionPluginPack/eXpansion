@@ -25,6 +25,6 @@
         "ext-json": "*"
     },
      "require": {
-        "maniaplanet/manialive": "~4.0"
+        "maniaplanet/manialive": "dev-master"
     }
 }
