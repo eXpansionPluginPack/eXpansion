@@ -1,0 +1,31 @@
+{
+    "name": "ml_eXpansion/manialive",
+    "type": "library",
+    "description": "Plugin pack for manialive server controler",
+    "keywords": ["maniaplanet", "shootmania", "trackmania", "application", "xml-rpc", "socket"],
+    "homepage": "http://www.ml-expansion.com/",
+    "license": "LGPL-3.0",
+    "authors": [
+        {
+            "name": "Reaby",
+            "email": "contact@nadeo.com",
+            "homepage": "http://www.nadeo.com/"
+        },
+        {
+            "name": "Oliverde8",
+            "email": "oliverde8@tm-teams.com",
+            "homepage": "http://www.oliver-decramer.com"
+        }
+    ],
+        "support": {
+        "forum": "https://github.com/eXpansionPluginPack/eXpansion"
+    },
+    "require": {
+        "php": ">=5.4",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+     "require": {
+        "maniaplanet/manialive": "~4.0"
+    }
+}
