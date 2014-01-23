@@ -59,6 +59,8 @@ class Script {
         return false;
     }
     
+    public function reset(){ }
+    
     
     function getNumber($number) {
         return number_format((float) $number, 2, '.', '');

@@ -171,29 +171,20 @@ class Window extends \ManiaLive\Gui\Window {
                 $this->addScriptToMain($component->getScript());
             }
 
-            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Pager) {
-                $this->addScriptToMain($component->getScriptDeclares());
-                $this->addScriptToWhile($component->getScriptMainLoop());
-            }
-
-
-            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown) {
-                $this->addScriptToMain($component->getScriptDeclares($this->dIndex));
-                $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));
-                $this->dIndex++;
-            }
-
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer) {
                 $script = $component->getScript();
 
                 $isset = !isset($this->calledScripts[$script->getRelPath()]);
 
+                if($isset){
+                    $this->addScriptToLib($script->getlibScript($this, $component));
+                }
+                
                 if ($isset || $script->multiply()) {
                     $this->calledScripts[$script->getRelPath()] = $script;
 
                     $dec = $script->getDeclarationScript($this, $component);
                     $this->addScriptToMain($dec);
-                    $this->addScriptToLib($script->getlibScript($this, $component));
                     $this->addScriptToWhile($script->getWhileLoopScript($this, $component));
                 }
             }
@@ -216,6 +207,7 @@ class Window extends \ManiaLive\Gui\Window {
 
         foreach ($this->calledScripts as $script) {
             $this->addScriptToMain($script->getEndScript($this));
+            $script->reset();
         }
 
         $this->calledScripts = array();
