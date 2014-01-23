@@ -1,5 +1,5 @@
 {
-    "name": "ml_eXpansion/manialive",
+    "name": "ml-expansion/manialive",
     "type": "library",
     "description": "Plugin pack for manialive server controler",
     "keywords": ["maniaplanet", "shootmania", "trackmania", "application", "xml-rpc", "socket"],
