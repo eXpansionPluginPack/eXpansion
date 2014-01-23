@@ -39,57 +39,6 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * onBillUpdated()
-     * Function called when a bill is updated.
-     *
-     * @param mixed $billId
-     * @param mixed $state
-     * @param mixed $stateName
-     * @param mixed $transactionId
-     * @return
-     */
-    function onBillUpdated_deactivated($billId, $state, $stateName, $transactionId) {
-
-        if (count(self::$billId) == 0)
-            return;
-
-        foreach (self::$billId as $data) {
-            if ($billId == $data[0]) {
-                if ($state == 4) {  // Success
-                    $login = $data[1];
-                    $amount = $data[2];
-                    $fromPlayer = $this->storage->getPlayerObject($login);
-                    if ($amount < $this->config->donateAmountForGlobalMsg) {
-                        $this->exp_chatSendServerMessage('#donate#You donated #variable#' . $amount . '#donate# Planets to the server.$z$s#donate#, Thank You.', $login);
-                    } else {
-                        $this->exp_chatSendServerMessage('#donate#The server recieved a donation of #variable#' . $amount . '#donate# Planets from #variable#' . $fromPlayer->nickName . '$z$s#donate#, Thank You.', null);
-                    }
-                    unset(self::$billId[$data[0]]);
-                    break;
-                }
-
-                if ($state == 5) { // No go
-                    $login = $data[1];
-                    $amount = $data[2];
-
-                    $this->exp_chatSendServerMessage('#error#No Planets billed.', $login);
-                    unset(self::$billId[$data[0]]);
-                    break;
-                }
-
-                if ($state == 6) {  // Error
-                    $login = $data[1];
-                    $fromPlayer = $this->storage->getPlayerObject($login);
-                    $this->exp_chatSendServerMessage('#error# There was error with player #variable#' . $fromPlayer->nickName . '$z$s#error# donation.');
-                    $this->exp_chatSendServerMessage('#error#' . $stateName, $login);
-                    unset(self::$billId[$data[0]]);
-                    break;
-                }
-            }
-        }
-    }
-
-    /**
      * onPlayerConnect()
      * Function called when a player connects.
      *
@@ -100,7 +49,7 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onPlayerConnect($login, $isSpec) {
         $window = DonatePanelWindow::Create($login);
         $window->setScale(0.8);
-        $window->setPosition(44, -88);
+        $window->setPosition(50, -85);
 
         $window->show();
     }

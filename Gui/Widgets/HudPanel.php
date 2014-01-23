@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Widgets;
 
-class HudPanel extends \ManiaLive\Gui\Window {
+class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     protected $_windowFrame;
     protected $background;
@@ -27,7 +27,6 @@ class HudPanel extends \ManiaLive\Gui\Window {
         $this->setAlign("left", "top");
 
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
-        $this->_windowFrame->setAlign("left", "top");
         $this->_windowFrame->setId("Frame");
         $this->_windowFrame->setSize(90, 6);
         $this->_windowFrame->setScriptEvents(true);
@@ -37,12 +36,10 @@ class HudPanel extends \ManiaLive\Gui\Window {
         $this->background->setId("MainWindow");
         $this->background->setStyle("Bgs1InRace");
         $this->background->setSubStyle("BgList");
-        $this->background->setAlign("left", "center");
         $this->_windowFrame->addComponent($this->background);
 
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame(0, -5.5);
-        $this->frame->setAlign("left", "center");
         $this->frame->setSize(90, 6);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
         $this->_windowFrame->addComponent($this->frame);
@@ -91,8 +88,18 @@ class HudPanel extends \ManiaLive\Gui\Window {
         $this->_minButton->setAlign("left", "bottom");
         $this->frame->addComponent($this->_minButton);
 
-        $this->xml = new \ManiaLive\Gui\Elements\Xml();
         $this->setSizeX(90);
+        
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
+        $script->setParam('isMinimized', 'True');
+        $script->setParam('autoCloseTimeout', '7500');
+        $script->setParam('posXMin',-64);
+        $script->setParam('posX', -64);
+        $script->setParam('posXMax', 0);
+        $this->registerScript($script);
+        
+        $this->setName("Hud Panel");
+        $this->setDisableAxis("x");
     }
 
     function onResize($oldX, $oldY) {
@@ -102,82 +109,6 @@ class HudPanel extends \ManiaLive\Gui\Window {
         $this->background->setPosX(-20);
     }
 
-    function onShow() {
-        $this->removeComponent($this->xml);
-        $this->xml->setContent('           
-        <script><!--
-	    
-		    main () {
-                       
-                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");
-                        declare mainWindow <=> Page.GetFirstChild("Frame");
-                        declare CMlEntry widgetStatus <=> (Page.GetFirstChild("widgetStatus") as CMlEntry);
-                        declare isMinimized = True;                                          
-                        declare lastAction = Now;                           
-                        declare autoCloseTimeout = 7500;
-                        declare positionMin = -64.0;
-                        declare positionMax = 0.0;
-                    	declare Text outText = "";
-                        mainWindow.PosnX = -64.0;  
-                    	declare persistent Boolean[Text] widgetVisible;
-
-
-                        while(True) {
-                                
-                                if (isMinimized)
-                                {
-                                     if (mainWindow.PosnX >= positionMin) {                                          
-                                          mainWindow.PosnX -= 4;                                          
-                                    }
-                                }
-
-                                if (!isMinimized)
-                                {         
-                                    if (Now-lastAction > autoCloseTimeout) {                                          
-                                        if (mainWindow.PosnX <= positionMin) {                                                 
-                                                mainWindow.PosnX -= 4;                                      
-                                        } 
-                                        if (mainWindow.PosnX >= positionMin)  {
-                                                isMinimized = True;
-                                        }
-                                    }
-                                    
-                                    else {
-                                        if ( mainWindow.PosnX <= positionMax) {                                                      
-                                                  mainWindow.PosnX += 4;
-                                        }                                                                                                                                             
-                                    }
-                                }
-                                    
-                                foreach (Event in PendingEvents) {                                                
-                                    if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "myWindow" || Event.ControlId == "minimizeButton" )) {
-                                           isMinimized = !isMinimized;    
-                                           lastAction = Now;
-                                    }                                       
-                                }
-				
-				outText = "";					   
-					   if (widgetVisible.count > 0) {
-					   foreach (id => status in widgetVisible) {
-						
-			    			    declare Text bool = "0";
-						    if (status == True) {
-							bool = "1";
-						    }
-						outText = outText ^ id ^ ":" ^ bool ^ "|";
-											    
-					    }
-			
-					   widgetStatus.Value = outText;
-					  }
-                                yield;                        
-                        }  
-                        
-                }
-                --></script>');
-
-        $this->addComponent($this->xml);
-    }
 
     function destroy() {
         $this->frame->clearComponents();

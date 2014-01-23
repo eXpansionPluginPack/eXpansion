@@ -10,21 +10,23 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class Widget extends \ManiaLive\Gui\Window {
 
     private $dDeclares = "";
-    private $dLoop = "";
+    private $scriptLib = "";
     private $wLoop = "";
     private $_name = "widget";
     private $move;
     private $axisDisabled = "";
+    private $script;
+    private $scripts = array();
 
     protected function onConstruct() {
         parent::onConstruct();
 
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WidgetScript");
         $this->move = new \ManiaLib\Gui\Elements\Quad(45, 7);
-        $this->move->setAlign("left", "center");
         $this->move->setStyle("Icons128x128_Blink");
         $this->move->setSubStyle("ShareBlink");
         $this->move->setScriptEvents();
-        $this->move->setId("enableMove");        
+        $this->move->setId("enableMove");
         $this->addComponent($this->move);
 
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
@@ -33,13 +35,10 @@ class Widget extends \ManiaLive\Gui\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->move->setSize($this->sizeX, $this->sizeY);
-        $this->move->setPosZ(20);
+        $this->move->setPosZ(10);
     }
 
-    private $nbButton = 0;
-    private $minIdButton = 999999;
-    private $maxIdButton = 0;
-    private $aButton = null;
+    private $calledScripts = array();
 
     private function detectElements($components) {
         $buttonScript = null;
@@ -48,37 +47,26 @@ class Widget extends \ManiaLive\Gui\Window {
                 $this->addScriptToMain($component->getScript());
             }
 
-            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Pager) {
-                $this->addScriptToMain($component->getScriptDeclares());
-                $this->addScriptToWhile($component->getScriptMainLoop());
-            }
-
-            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Button) {
-
-                $decl = $component->getScriptDeclares();
-                if ($this->nbButton == 0) {
-                    if (!empty($decl)) {
-                        $this->addScriptToMain($decl);
-                        $this->addScriptToWhile($component->getScriptMainLoop());
-                        $this->nbButton++;
-                        $this->aButton = $component;
-                    }
-                }
-                if (!empty($decl)) {
-                    if ($this->maxIdButton < $component->getButtonId())
-                        $this->maxIdButton = $component->getButtonId();
-                    if ($this->minIdButton > $component->getButtonId())
-                        $this->minIdButton = $component->getButtonId();
-                }
-            }
-            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown) {
-                $this->addScriptToMain($component->getScriptDeclares($this->dIndex));
-                $this->addScriptToLoop($component->getScriptMainLoop($this->dIndex));
-                $this->dIndex++;
-            }
-
             if ($component instanceof \ManiaLive\Gui\Container) {
                 $this->detectElements($component->getComponents());
+            }
+
+           if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer) {
+                $script = $component->getScript();
+
+                $isset = !isset($this->calledScripts[$script->getRelPath()]);
+
+                if($isset){
+                    $this->addScriptToLib($script->getlibScript($this, $component));
+                }
+                
+                if ($isset || $script->multiply()) {
+                    $this->calledScripts[$script->getRelPath()] = $script;
+
+                    $dec = $script->getDeclarationScript($this, $component);
+                    $this->addScriptToMain($dec);
+                    $this->addScriptToWhile($script->getWhileLoopScript($this, $component));
+                }
             }
         }
     }
@@ -90,121 +78,44 @@ class Widget extends \ManiaLive\Gui\Window {
     protected function onDraw() {
         $this->nbButton = 0;
         $this->dIndex = 0;
-        //$this->dDeclares = "";
-        //$this->dLoop = "";
+        $this->scriptLib = "";
+        $this->dDeclares = "";
+        $this->dLoop = "";
 
-        $this->detectElements($this->getComponents());
-        if ($this->aButton != null) {
-            $this->addScriptToMain($this->aButton->getHideMainLoop($this->minIdButton, $this->maxIdButton));
+        $this->calledScripts = array();
+
+        foreach ($this->scripts as $script) {
+            $dec = $script->getDeclarationScript($this, $this);
+            $this->addScriptToMain($dec);
+            $this->addScriptToLib($script->getlibScript($this, $this));
+            $this->addScriptToWhile($script->getWhileLoopScript($this, $this));
+            $this->addScriptToMain($script->getEndScript($this));
         }
 
+        $this->detectElements($this->getComponents());
+       foreach ($this->calledScripts as $script) {
+            $this->addScriptToMain($script->getEndScript($this));
+            $script->reset();
+        }
+        $this->calledScripts = array();
+
+
+        $this->script->setParam("name", $this->_name);
+
+        $this->script->setParam("axisDisabled", $this->axisDisabled);
+        $this->script->setParam("dDeclares", $this->dDeclares);
+        $this->script->setParam("scriptLib", $this->scriptLib);
+        $this->script->setParam("wLoop", $this->wLoop);
+        $this->script->setParam("version", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
+        $reset = "False";
+        if (DEBUG)
+            $reset = "True";
+
+        $this->script->setParam("forceReset", $reset);
         $this->removeComponent($this->xml);
-        $deltaX = "DeltaPos.X = MouseX - lastMouseX;";
-        $deltaY = "DeltaPos.Y = MouseY - lastMouseY;";
 
-        if ($this->axisDisabled == "x")
-            $deltaX = "";
-        if ($this->axisDisabled == "y")
-            $deltaY = "";
+        $this->xml->setContent($this->script->getDeclarationScript($this, $this));
 
-
-        $this->xml->setContent('    
-        <script><!--
-        #Include "MathLib" as MathLib
-        
-                       main () {     
-                        declare Window <=> Page.GetFirstChild("' . $this->getId() . '");                 
-                        declare MoveWindow = False;                      
-                        declare CMlQuad  quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);      
-                        declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
-                        declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
-                        declare Real lastMouseX = 0.0;
-                        declare Real lastMouseY =0.0;                                                   
-                        
-                        declare persistent Boolean exp_enableHudMove = False;
-                        declare persistent Vec3[Text] windowLastPos;
-                        declare persistent Vec3[Text] windowLastPosRel;			
-			declare persistent Boolean[Text] widgetVisible;      
-                        
-                        declare Text id = "' . $this->_name . '";        
-                        
-                        // external declares
-                        ' . $this->dDeclares . '    
-                        // external declares ends
-
-                        if (!widgetVisible.existskey(id)) {
-				 widgetVisible[id] =  True;
-			}            
-                        if (!windowLastPos.existskey(id)) {
-                                windowLastPos[id] = <' . $this->getNumber($this->getPosX()) . ', ' . $this->getNumber($this->getPosY()) . ', 0.0>;
-                               }
-                        if (!windowLastPosRel.existskey(id)) {
-                                windowLastPosRel[id] = <' . $this->getNumber($this->getPosX()) . ', ' . $this->getNumber($this->getPosY()) . ', 0.0>;
-                        }
-                        Window.PosnX = windowLastPos[id][0];
-                        Window.PosnY = windowLastPos[id][1];
-                        LastDelta = windowLastPosRel[id];
-                        Window.RelativePosition = windowLastPosRel[id];    
-                        
-                                              
-			
-                        while(True) {                                                               
-                        yield;
-
-                        // external loop stuff
-                        '
-                . $this->wLoop .
-                '
-                        // external loop ends
-                        
-                        if (!widgetVisible.existskey(id)) {
-				 widgetVisible[id] =  True;
-			    }   
-			    if (widgetVisible[id] == True) {
-				Window.Show();
-			    }
-			    else {
-			        Window.Hide();
-			    }
-			    
-                        if (exp_enableHudMove == True) {
-                                quad.Show();  
-                            }
-                        else {
-                            quad.Hide();    
-			   
-                        }		    			    			    
-                        if (exp_enableHudMove == True && MouseLeftButton == True) {
-                                     
-                                foreach (Event in PendingEvents) {
-                                        if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "enableMove")  {
-                                            lastMouseX = MouseX;
-                                            lastMouseY = MouseY;                                                            
-                                            MoveWindow = True;                                                           
-                                       }                                                                                                  
-                               }
-                        }
-                        else {
-                            MoveWindow = False;                                                                          
-                        }
-                                        
-                        if (MoveWindow) {                            
-                            ' . $deltaX . "\n" . $deltaY . '                                           
-                            LastDelta += DeltaPos;
-                            LastDelta.Z = 3.0;
-                            Window.RelativePosition = LastDelta;
-                            windowLastPos[id] = Window.AbsolutePosition;
-                            windowLastPosRel[id] = Window.RelativePosition;
-
-                            lastMouseX = MouseX;
-                            lastMouseY = MouseY;                            
-                       }
-                  }        
-
-
-           }
-                        
-                --></script>');
         $this->addComponent($this->xml);
         parent::onDraw();
     }
@@ -225,17 +136,21 @@ class Widget extends \ManiaLive\Gui\Window {
         $this->wLoop .= $script;
     }
 
-    function addScriptToLoop($script) {
-        $this->dLoop .= $script;
+    function addScriptToLib($script) {
+        $this->scriptLib .= $script;
     }
 
-    function destroy() {        
+    function destroy() {
         $this->clearComponents();
         parent::destroy();
     }
 
     function setDisableAxis($axis) {
         $this->axisDisabled = $axis;
+    }
+
+    public function registerScript($script) {
+        $this->scripts[] = $script;
     }
 
 }

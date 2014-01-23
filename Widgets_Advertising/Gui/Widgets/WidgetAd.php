@@ -7,13 +7,13 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Advertising\Gui\Widgets;
  *
  * @author Petri
  */
-class WidgetAd extends \ManiaLive\Gui\Window {
-
+class WidgetAd extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+    
     protected $quad;
 
     protected function onConstruct() {
+        parent::onConstruct();
         $this->quad = new \ManiaLib\Gui\Elements\Quad();
-        $this->quad->setAlign("center", "top");
         $this->addComponent($this->quad);
     }
 
@@ -27,7 +27,8 @@ class WidgetAd extends \ManiaLive\Gui\Window {
         $wantedAspectRatio = $sizeX / $sizeY;
         $currentAspectRatio = 16 / 9;
         $x = $preferredSize * ($currentAspectRatio / $wantedAspectRatio) * $wantedAspectRatio;
-        $y = $preferredSize * ($currentAspectRatio / $wantedAspectRatio);        
+        $y = $preferredSize * ($currentAspectRatio / $wantedAspectRatio);      
+        $this->setSize($x, $y);
         $this->quad->setSize($x, $y);
     }
 

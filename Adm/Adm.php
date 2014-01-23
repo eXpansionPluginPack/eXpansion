@@ -100,8 +100,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 //        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login) || !(empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1) || !(empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1)) {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
             $info = AdminPanel::Create($login);
-            $info->setSize(60, 8);
-            $info->setPosition(-160, -46);
+            $info->setSize(60, 7);
+            $info->setPosition(-160, -43);
             $info->show();
         }
         $this->showResSkip($login);
@@ -109,7 +109,6 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function showResSkip($login) {
         $widget = ResSkipButtons::Create($login);
-        $widget->setSize(50, 10);
 
         $nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
         if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] != -1) {
@@ -135,7 +134,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
         $widget->setActions($this->actions['res'], $this->actions['skip']);
 
-        $widget->setPosition(116.0, -65.0);
+        $widget->setPosition(79.0, 91.0);
         $widget->show();
     }
 

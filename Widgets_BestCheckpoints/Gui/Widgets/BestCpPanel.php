@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Widgets;
 use \ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint;
 use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Controls\CheckpointElem;
 
-class BestCpPanel extends \ManiaLive\Gui\Window {
+class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     private $cps = array();
 
@@ -18,10 +18,13 @@ class BestCpPanel extends \ManiaLive\Gui\Window {
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow(220, 20));
         $this->frame->setSize(220, 20);
+        $this->frame->setPosY(-2);
         $this->addComponent($this->frame);
+        $this->setName("Best CheckPoints Widget");
     }
 
     function onDraw() {
+        parent::onDraw();
         foreach ($this->cps as $cp) {
             $cp->destroy();
         }
@@ -39,6 +42,7 @@ class BestCpPanel extends \ManiaLive\Gui\Window {
     }
 
     function destroy() {
+        parent::destroy();
         foreach ($this->cps as $cp) {
             $cp->destroy();
         }
