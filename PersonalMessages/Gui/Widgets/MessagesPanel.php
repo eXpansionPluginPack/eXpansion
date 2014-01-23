@@ -7,7 +7,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 
 class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
-    /** @var \DedicatedApi\Connection */
+    /** @var \Maniaplanet\DedicatedServer\Connection */
     private $connection;
 
     /** @var \ManiaLive\Data\Storage */
@@ -35,7 +35,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->setAlign("left", "top");
 
         $dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \DedicatedApi\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
+        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
         $this->actionPlayers = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'players'));

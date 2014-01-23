@@ -15,7 +15,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     /** @var \ManiaLive\Gui\Controls\Pager */
     private $pager;
 
-    /** @var  \DedicatedApi\Connection */
+    /** @var  \Maniaplanet\DedicatedServer\Connection */
     private $connection;
 
     /** @var  \ManiaLive\Data\Storage */
@@ -37,7 +37,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onConstruct();
 
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
+        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
         $this->searchframe = new \ManiaLive\Gui\Controls\Frame();

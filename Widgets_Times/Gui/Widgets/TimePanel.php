@@ -86,7 +86,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         parent::onResize($oldX, $oldY);
     }
 
-    function setMapInfo(\DedicatedApi\Structures\Map $map) {
+    function setMapInfo(\Maniaplanet\DedicatedServer\Structures\Map $map) {
         $this->totalCp = $map->nbCheckpoints;
     }
 

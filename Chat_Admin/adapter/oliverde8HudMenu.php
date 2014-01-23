@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Chat_Admin\adapter;
 
 use ManiaLive\Utilities\Time;
-use DedicatedApi\Connection;
+use Maniaplanet\DedicatedServer\Connection;
 /**
  * Description of oliverde8HudMenu
  *

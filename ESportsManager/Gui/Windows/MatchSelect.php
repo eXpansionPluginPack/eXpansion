@@ -15,7 +15,7 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $rulesDir, $dir;
     private $settingsFile = "";
 
-    /** @var  \DedicatedApi\Connection */
+    /** @var  \Maniaplanet\DedicatedServer\Connection */
     private $connection;
 
     /** @var \ManiaLive\Data\Storage */
@@ -29,7 +29,7 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $login = $this->getRecipient();
 
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
+        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
         $this->rulesDir = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "rules" . DIRECTORY_SEPARATOR;

@@ -10,7 +10,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     private $pager;
 
-    /** @var  \DedicatedApi\Connection */
+    /** @var  \Maniaplanet\DedicatedServer\Connection */
     private $connection;
 
     /** @var  \ManiaLive\Data\Storage */
@@ -24,7 +24,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
+        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->gbx = new \GBXChallMapFetcher(true, false, false);
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
