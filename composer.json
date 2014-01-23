@@ -26,5 +26,10 @@
     },
      "require": {
         "maniaplanet/manialive": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "ManiaLivePlugins\\eXpansion\\": "."
+        }
     }
 }
