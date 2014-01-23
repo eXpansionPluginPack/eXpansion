@@ -15,8 +15,7 @@ $startPosY = intval($win->getSizeY() / 2) . ".0";
 //Main Function
 main () {
     declare Window <=> Page.GetFirstChild("<?= $win->getId() ?>");
-    declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);
-    declare showCoords = <?= $this->showCoords ?>;
+    declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);    
 
     declare MoveWindow = False;
     declare Scroll = False;
@@ -29,32 +28,45 @@ main () {
     declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
     declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
     declare Real lastMouseX = 0.0;
-    declare Real lastMouseY =0.0;
+    declare Real lastMouseY = 0.0;
     declare active = False;
     declare Text id = "<?= $this->name ?>";
-    declare persistent Vec3[Text] windowLastPos;
-    declare persistent Vec3[Text] windowLastPosRel;
-    declare persistent Text windowActive = "";
+    declare Boolean forceReset = <?= $this->forceReset; ?>;
+    declare Text version = "<?= $this->version; ?>";
+    declare persistent Vec3[Text][Text] exp_windowLastPos;
+    declare persistent Vec3[Text][Text] exp_windowLastPosRel;
+    declare persistent Text[Text] exp_windowActive;
 
     //Declarations by containers included in this window
     <?= $this->dDeclares ?>
-
-    if (!windowLastPos.existskey(id)) {
-        windowLastPos[id] = < <?= $startPosX ?>, <?=  $startPosY ?>, 0.0>;
+    if (!exp_windowActive.existskey(version)) {
+        exp_windowActive[version] = Text;    
     }
-    if (!windowLastPosRel.existskey(id)) {
-        windowLastPosRel[id] = < <?= $startPosX ?>, <?=  $startPosY ?>, 0.0>;
+    
+    if (!exp_windowLastPos.existskey(version)) {
+        exp_windowLastPos[version] = Vec3[Text];
     }
-    Window.PosnX = windowLastPos[id][0];
-    Window.PosnY = windowLastPos[id][1];
-    LastDelta = windowLastPosRel[id];
-    Window.RelativePosition = windowLastPosRel[id];
-    windowActive = id;
+    if (!exp_windowLastPos[version].existskey(id) || forceReset) {
+        exp_windowLastPos[version][id] = < <?= $startPosX ?>, <?=  $startPosY ?>, 0.0>;
+    }
+    if (!exp_windowLastPosRel.existskey(version)) {
+         exp_windowLastPosRel[version] = Vec3[Text];
+    }
+    if ( !exp_windowLastPosRel[version].existskey(id) || forceReset) {
+        exp_windowLastPosRel[version][id] = < <?= $startPosX ?>, <?=  $startPosY ?>, 0.0>;
+    }
+    Window.PosnX = exp_windowLastPos[version][id][0];
+    Window.PosnY = exp_windowLastPos[version][id][1];
+    LastDelta = exp_windowLastPosRel[version][id];
+    Window.RelativePosition = exp_windowLastPosRel[version][id];
+    
+    exp_windowActive[version] = id;
 
     while(True) {
+        yield;
          <?= $this->wLoop ?>
 
-        if (windowActive == id) {
+        if (exp_windowActive[version] == id) {
             declare temp = Window.RelativePosition;
             temp.Z = 20.0;
             Window.RelativePosition = temp;
@@ -63,12 +75,6 @@ main () {
             temp.Z = -50.0;
             Window.RelativePosition = temp;				
         }
-
-        if (showCoords) {
-            declare coords = "$fffX:" ^ (MouseX - Window.PosnX) ^ " Y:" ^ (MouseY - Window.PosnY + 3 );
-            TitlebarText.Value = coords;
-        }
-
 
         if (MoveWindow) {
             DeltaPos.X = MouseX - lastMouseX;
@@ -89,12 +95,12 @@ main () {
             }
 
             LastDelta += DeltaPos;
-            if (windowActive == id) {
+            if (exp_windowActive[version] == id) {
                LastDelta.Z = 20.0;
             }
             Window.RelativePosition = LastDelta;
-            windowLastPos[id] = Window.AbsolutePosition;
-            windowLastPosRel[id] = Window.RelativePosition;
+            exp_windowLastPos[version][id] = Window.AbsolutePosition;
+            exp_windowLastPosRel[version][id] = Window.RelativePosition;
 
             lastMouseX = MouseX;
             lastMouseY = MouseY;
@@ -110,7 +116,7 @@ main () {
                     lastMouseX = MouseX;
                     lastMouseY = MouseY;
                     MoveWindow = True;
-                    windowActive = id;
+                    exp_windowActive[version] = id;
                  }
 
 
@@ -120,13 +126,12 @@ main () {
 
                 if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "MainWindow") {
                     isMinimized = False;
-                    windowActive = id;
+                    exp_windowActive[version] = id;
                 }
             }
          } else {
             MoveWindow = False;
-         }
-        yield;
+         }        
     }
 
 

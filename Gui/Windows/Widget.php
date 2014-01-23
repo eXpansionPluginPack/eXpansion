@@ -92,15 +92,15 @@ class Widget extends \ManiaLive\Gui\Window {
         $this->dLoop = "";
 
         $this->calledScripts = array();
-        
-        foreach($this->scripts as $script){
+
+        foreach ($this->scripts as $script) {
             $dec = $script->getDeclarationScript($this, $this);
             $this->addScriptToMain($dec);
             $this->addScriptToLib($script->getlibScript($this, $this));
             $this->addScriptToWhile($script->getWhileLoopScript($this, $this));
             $this->addScriptToMain($script->getEndScript($this));
         }
-        
+
         $this->detectElements($this->getComponents());
         foreach ($this->calledScripts as $script) {
             $this->addScriptToMain($script->getEndScript($this));
@@ -109,15 +109,21 @@ class Widget extends \ManiaLive\Gui\Window {
 
 
         $this->script->setParam("name", $this->_name);
+
         $this->script->setParam("axisDisabled", $this->axisDisabled);
         $this->script->setParam("dDeclares", $this->dDeclares);
         $this->script->setParam("scriptLib", $this->scriptLib);
         $this->script->setParam("wLoop", $this->wLoop);
+        $this->script->setParam("version", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
+        $reset = "False";
+        if (DEBUG)
+            $reset = "True";
 
+        $this->script->setParam("forceReset", $reset);
         $this->removeComponent($this->xml);
 
         $this->xml->setContent($this->script->getDeclarationScript($this, $this));
-            
+
         $this->addComponent($this->xml);
         parent::onDraw();
     }
@@ -129,7 +135,7 @@ class Widget extends \ManiaLive\Gui\Window {
     function closeWindow() {
         $this->erase($this->getRecipient());
     }
-    
+
     function addScriptToMain($script) {
         $this->dDeclares .= $script;
     }
@@ -150,8 +156,8 @@ class Widget extends \ManiaLive\Gui\Window {
     function setDisableAxis($axis) {
         $this->axisDisabled = $axis;
     }
-    
-    public function registerScript($script){
+
+    public function registerScript($script) {
         $this->scripts[] = $script;
     }
 

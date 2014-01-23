@@ -23,7 +23,7 @@ class Inputbox extends \ManiaLive\Gui\Control {
         $this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
         $this->label->setAlign('left', 'center');
         $this->label->setTextSize(1);
-        $this->label->setStyle("TextStaticSmall");
+        $this->label->setStyle("TextValueMedium");
         $this->addComponent($this->label);
 
         $this->border = new \ManiaLib\Gui\Elements\Quad();
@@ -62,6 +62,7 @@ class Inputbox extends \ManiaLive\Gui\Control {
             $this->button->setStyle("TextValueMedium");
             $this->button->setFocusAreaColor1("0004");
             $this->button->setFocusAreaColor2("2af6");
+            $this->button->setTextEmboss();
         } else {
             $this->button = new \ManiaLib\Gui\Elements\Label($this->sizeX, 5);
             $this->button->setText($text);

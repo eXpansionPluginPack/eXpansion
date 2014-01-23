@@ -39,14 +39,13 @@ class Window extends \ManiaLive\Gui\Window {
         $this->_windowFrame->setScriptEvents(true);
         $this->_windowFrame->setAlign("left", "top");
 
-        $this->style = new \ManiaLib\Gui\Elements\Format();
-        $this->style->setStyle("TextCardRaceRank");
-        $this->style->setTextSize(0.9);
-        $this->style->setTextColor("222");
-        $this->style->setAttribute("FocusAreaColor1", "000");
-        $this->style->setAttribute("FocusAreaColor2", "0af");
-
-        $this->addComponent($this->style);
+        $this->style = new \ManiaLib\Gui\Elements\Format();   
+        $this->style->setAttribute("textsize","0.9");    
+        $this->style->setAttribute("style","TextCardRaceRank");    
+        $this->style->setAttribute("textcolor","f00");    
+        $this->style->setAttribute("focusareacolor1", "09a");
+        $this->style->setAttribute("focusareacolor2", "fff"); 
+       // $this->addComponent($this->style); 
 
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_mainWindow->setId("MainWindow");
@@ -91,6 +90,7 @@ class Window extends \ManiaLive\Gui\Window {
         //$this->_windowFrame->addComponent($this->_title2);
 
         $this->_closebutton = new \ManiaLib\Gui\Elements\Quad(5, 4);
+        $this->_closebutton->setId("Close");
         $this->_closebutton->setAlign('center', 'center2');
         $this->_closebutton->setStyle("Icons64x64_1");
         $this->_closebutton->setSubStyle("QuitRace");
@@ -219,24 +219,24 @@ class Window extends \ManiaLive\Gui\Window {
         }
 
         $this->calledScripts = array();
-
-        $this->script->setParam("showCoords", $this->_showCoords);
+        
         $this->script->setParam("name", $this->_name);
         $this->script->setParam("dDeclares", $this->dDeclares);
         $this->script->setParam("scriptLib", $this->scriptLib);
         $this->script->setParam("wLoop", $this->wLoop);
+        $this->script->setParam("version", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
+        $reset = "False";
+        if (DEBUG)
+            $reset = "True";
+            
+        $this->script->setParam("forceReset", $reset);
+        
 
         $this->removeComponent($this->xml);
         $this->xml->setContent($this->script->getDeclarationScript($this, $this->xml));
 
         $this->addComponent($this->xml);
         parent::onDraw();
-    }
-
-    function setDebug($bool) {
-        if ($bool) {
-            $this->_showCoords = 'True';
-        }
     }
 
     function setText($text) {

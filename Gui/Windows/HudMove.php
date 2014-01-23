@@ -24,8 +24,7 @@ class HudMove extends \ManiaLive\Gui\Window {
         $this->xml->setContent('    
         <script><!--
                        main () {     
-                        declare persistent Boolean exp_enableHudMove = False;                        
-                        
+                        declare persistent Boolean exp_enableHudMove = False;                                                
                         exp_enableHudMove = True;                        
                        }
                 --></script>');
@@ -35,8 +34,7 @@ class HudMove extends \ManiaLive\Gui\Window {
         $this->xml->setContent('    
         <script><!--
                        main () {
-                        declare persistent Boolean exp_enableHudMove = False;                        
-                        
+                        declare persistent Boolean exp_enableHudMove = False;                                                
                         exp_enableHudMove = False;                        
                        }
                 --></script>');
