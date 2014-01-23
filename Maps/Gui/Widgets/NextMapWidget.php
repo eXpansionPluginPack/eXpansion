@@ -79,8 +79,8 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     function setMap(\DedicatedApi\Structures\Map $map) {
         $this->map = $map;
-        $this->labelName->setText('$ddd__________' . $this->map->name);
-        $this->labelAuthor->setText('$ddd_____________' . $this->map->author);
+        $this->labelName->setText('$ddd' . $this->map->name);
+        $this->labelAuthor->setText('$ddd_' . $this->map->author);
     }
 
     function destroy() {
