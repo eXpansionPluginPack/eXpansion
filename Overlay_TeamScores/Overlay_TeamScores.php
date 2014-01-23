@@ -7,14 +7,14 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     /** @var Structures\Team[] */
     private $teams = array();
 
-    /** @var DedicatedApi\Structures\Status */
+    /** @var Maniaplanet\DedicatedServer\Structures\Status */
     private $status;
     private $action, $action2;
     private $access;
     private $clublinks = array("", "");
 
     public function exp_onInit() {
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
     }
 
     public function exp_onLoad() {
@@ -36,7 +36,7 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         Gui\Widgets\ScoresOverlay::$resetAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, "reset"));
         Gui\Widgets\ScoresOverlay::$toggleAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, "toggle"));
 
-        if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+        if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
             foreach ($this->storage->spectators as $player) {
                 $this->showWidget($player->login);
             }
@@ -99,7 +99,7 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function showWidget($login = null) {
-        if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM)
+        if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM)
             return;
         if ($login == null) {
             /* foreach ($this->storage->players as $login => $player) {
@@ -130,16 +130,16 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-        if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM)
+        if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM)
             return;
         if ($isSpectator)
             $this->showWidget($login);
     }
 
     public function onPlayerInfoChanged($playerInfo) {
-        if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM)
+        if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM)
             return;
-        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+        $player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
 
         if ($player->spectator == 1)
             $this->showWidget($player->login);
@@ -160,7 +160,7 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function syncRanking() {
-        if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM)
+        if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM)
             return;
         $scores = $this->connection->getCurrentRanking(2, 0);
         $this->teams[0]->score = $scores[0]->score;

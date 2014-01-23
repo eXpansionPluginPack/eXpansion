@@ -16,7 +16,7 @@ class PlayerStatusItem extends \ManiaLive\Gui\Control {
     /**
      * 
      * @param int $indexNumber
-     * @param \DedicatedApi\Structures\Player $player
+     * @param \Maniaplanet\DedicatedServer\Structures\Player $player
      * @param int $score
      * @param type $controller
      * @param int $sizeX
@@ -38,7 +38,7 @@ class PlayerStatusItem extends \ManiaLive\Gui\Control {
         $this->team->setAlign("center", "center2");
         $this->team->setStyle("Icons64x64_1");
         $this->team->setSubStyle("Empty");
-        if ($gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+        if ($gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
 
             if ($player->player->teamId === 0) {
                 $this->team->setStyle("BgRaceScore2");

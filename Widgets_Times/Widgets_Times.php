@@ -12,28 +12,28 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $modes = array();
     private $audio = array();
 
-    /** @var \DedicatedApi\Structures\Player[] */
+    /** @var \Maniaplanet\DedicatedServer\Structures\Player[] */
     private $spectatorTargets = array();
 
-    /** @var \DedicatedApi\Structures\Player[] */
+    /** @var \Maniaplanet\DedicatedServer\Structures\Player[] */
     private $checkpointPos = array();
 
     function exp_onInit() {
 //Important for all eXpansion plugins.
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK);
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM);
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS);
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
         TimeChooser::$plugin = $this;
     }
 
     function exp_onLoad() {
         $this->enableDedicatedEvents();
-        if ($this->isPluginLoaded('eXpansion\Dedimania')) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\eXpansion\Dedimania\Dedimania')) {
             Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
         }
-        if ($this->isPluginLoaded('eXpansion\LocalRecords')) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
             Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
         }
     }
@@ -44,7 +44,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerInfoChanged($playerInfo) {
-        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+        $player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
         if ($player->spectator == 1) {
             $this->spectatorTargets[$player->login] = $player;
         } else {
@@ -55,7 +55,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerGiveup(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player) {
-        if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+        if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
             $this->spectatorTargets[$player->login] = $player;
         }
     }

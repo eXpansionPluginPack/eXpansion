@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Structures;
 
-class ExpPlayer extends \DedicatedApi\Structures\Player {
+class ExpPlayer extends \Maniaplanet\DedicatedServer\Structures\Player {
 
     const Player_rank_position_change = 1;
     const Player_cp_position_change = 2;

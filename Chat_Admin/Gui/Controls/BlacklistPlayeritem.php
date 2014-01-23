@@ -13,7 +13,7 @@ class BlacklistPlayeritem extends \ManiaLive\Gui\Control {
     private $unbanAction;
     private $frame;
 
-    function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller) {
+    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller) {
         $sizeX = 120;
         $sizeY = 4;        
         $this->player = $player;

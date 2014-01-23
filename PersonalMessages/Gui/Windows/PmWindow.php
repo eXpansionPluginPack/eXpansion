@@ -23,7 +23,7 @@ class PmWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
+        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();

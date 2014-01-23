@@ -128,33 +128,33 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             }
         }
 
-        $out = \DedicatedApi\Structures\GameInfos::fromArray($infos);
+        $out = \Maniaplanet\DedicatedServer\Structures\GameInfos::fromArray($infos);
         return $out;
     }
 
     public function parseGameMode($var) {
         switch (strtolower($var)) {
             case "team":
-                return \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM;
+                return \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM;
                 break;
             case "ta":
             case "timeattack":
-                return \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK;
+                return \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK;
                 break;
             case "rounds":
-                return \DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS;
+                return \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS;
                 break;
             case "laps":
-                return \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS;
+                return \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS;
                 break;
             case "cup":
-                return \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP;
+                return \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP;
                 break;
             case "stunts":
-                return \DedicatedApi\Structures\GameInfos::GAMEMODE_STUNTS;
+                return \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_STUNTS;
                 break;
             case "script":
-                return \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT;
+                return \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT;
                 break;
         }
         return null;

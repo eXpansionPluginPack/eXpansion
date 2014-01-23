@@ -3,13 +3,14 @@
 namespace ManiaLivePlugins\eXpansion\Adm;
 
 use ManiaLive\Event\Dispatcher;
-use DedicatedApi\Structures\GameInfos;
+use Maniaplanet\DedicatedServer\Structures\GameInfos;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerOptions;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\GameOptions;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\AdminPanel;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerControlMain;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Widgets\ResSkipButtons;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -74,12 +75,6 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function exp_onReady() {
-        if ($this->isPluginLoaded('eXpansion\Menu')) {
-            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Server Management'), true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Server Management'), null, array($this, 'serverControlMain'), true);
-            //  $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Force Scores'), null, array($this, 'forceScores'), true);
-        }
-
         $this->enableDedicatedEvents();
         ServerControlMain::$mainPlugin = $this;
         Gui\Windows\RoundPoints::$plugin = $this;
@@ -195,7 +190,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function forceScores($login) {
-        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
+        if (AdminGroups::hasPermission($login,  'game_settings')) {
             $gamemode = $this->storage->gameInfos->gameMode;
             if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM || GameInfos::GAMEMODE_CUP) {
                 $window = Gui\Windows\ForceScores::Create($login);
@@ -212,12 +207,12 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function forceScoresOk() {
         $this->exp_chatSendServerMessage('Notice: Admin has altered the scores of current match!');
         if ($this->isPluginLoaded("eXpansion\ESLcup")) {
-            $this->callPublicMethod("eXpansion\ESLcup", "syncScores");
+            $this->callPublicMethod("ManiaLivePlugins\\eXpansion\ESLcup", "syncScores");
         }
     }
 
     public function gameOptions($login) {
-        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
+        if (AdminGroups::hasPermission($login,  'game_settings')) {
             $window = GameOptions::Create($login);
             $window->setTitle(__('Game Options', $login));
             $window->setSize(160, 80);
@@ -227,7 +222,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function serverManagement($login) {
-        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_stopServer') || $this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_stopManialive')) {
+        if (AdminGroups::hasPermission($login,  'server_stopServer') || AdminGroups::hasPermission($login,  'server_stopManialive')) {
             $window = Gui\Windows\ServerManagement::Create($login);
             $window->setTitle(__('Server Control', $login));
             $window->setSize(60, 20);
@@ -237,7 +232,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function roundPoints($login) {
-        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+        if (AdminGroups::hasPermission($login,  'server_admin')) {
             $window = Gui\Windows\RoundPoints::Create($login);
             $window->setTitle(__('Custom Round Points', $login));
             $window->setSize(160, 70);
@@ -247,7 +242,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function serverControlMain($login) {
-        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+        if (AdminGroups::hasPermission($login,  'server_admin')) {
             $window = Gui\Windows\ServerControlMain::Create($login);
             $window->setTitle(__('Server Management', $login));
             $window->setSize(120, 20);
@@ -256,7 +251,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function matchSettings($login) {
-        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_matchSave') || $this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_matchDelete') || $this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_match')) {
+        if (AdminGroups::hasPermission($login,  'game_matchSave') || AdminGroups::hasPermission($login,  'game_matchDelete') || AdminGroups::hasPermission($login,  'game_match')) {
             $window = Gui\Windows\MatchSettings::Create($login);
             $window->setTitle(__('Match Settings', $login));
             $window->centerOnScreen();
@@ -266,7 +261,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function scriptSettings($login) {
-        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'game_settings')) {
+        if (AdminGroups::hasPermission($login,  'game_settings')) {
             if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                 $window = Gui\Windows\ScriptSettings::Create($login);
                 $window->setTitle(__('Script Settings', $login));
@@ -280,9 +275,9 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function dbTools($login) {
-        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'db_maintainance')) {
+        if (AdminGroups::hasPermission($login,  'db_maintainance')) {
             if ($this->isPluginLoaded("eXpansion\Database")) {
-                $this->callPublicMethod("eXpansion\Database", "showDbMaintainance", $login);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\Database", "showDbMaintainance", $login);
             } else {
                 $this->exp_chatSendServerMessage($this->msg_databasePlugin, $login);
             }
@@ -293,10 +288,10 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_res')) {
             if ($this->isPluginLoaded("eXpansion\Chat_Admin")) {
-                $this->callPublicMethod("eXpansion\Chat_Admin", "restartMap", $login);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\Chat_Admin", "restartMap", $login);
                 return;
             }
-            $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
+            $this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
             $admin = $this->storage->getPlayerObject($login);
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
         } else {
@@ -332,10 +327,10 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_chatSendServerMessage($this->msg_prestart, null, array($player->nickName));
 
         if ($this->isPluginLoaded("eXpansion\Maps")) {
-            $this->callPublicMethod("eXpansion\Maps", "replayMap", $bill->getSource_login());
+            $this->callPublicMethod("ManiaLivePlugins\\eXpansion\Maps", "replayMap", $bill->getSource_login());
             return;
         }
-        $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
+        $this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
     }
 
     public function failRestartMap(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill, $state, $stateName) {
@@ -346,7 +341,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_skip')) {
             if ($this->isPluginLoaded("eXpansion\Chat_Admin")) {
-                $this->callPublicMethod("eXpansion\Chat_Admin", "skipMap", $login);
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\Chat_Admin", "skipMap", $login);
             }
         } else {
             $nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
@@ -373,7 +368,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function cancelVote($login) {
         if ($this->isPluginLoaded("eXpansion\Chat_Admin")) {
-            $this->callPublicMethod("eXpansion\Chat_Admin", "cancelVote", $login);
+            $this->callPublicMethod("ManiaLivePlugins\\eXpansion\Chat_Admin", "cancelVote", $login);
             return;
         }
         $this->connection->cancelVote();
@@ -381,7 +376,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function endRound($login) {
         if ($this->isPluginLoaded("eXpansion\Chat_Admin")) {
-            $this->callPublicMethod("eXpansion\Chat_Admin", "forceEndRound", $login);
+            $this->callPublicMethod("ManiaLivePlugins\\eXpansion\Chat_Admin", "forceEndRound", $login);
             return;
         }
         $this->connection->forceEndRound();
@@ -389,7 +384,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function publicSkipMap(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill) {
         $this->skipActive = true;
-        $this->connection->nextMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
+        $this->connection->nextMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
         $player = $this->storage->getPlayerObject($bill->getSource_login());
         $this->exp_chatSendServerMessage($this->msg_pskip, null, array($player->nickName));
     }

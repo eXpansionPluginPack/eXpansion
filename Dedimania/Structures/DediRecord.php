@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania\Structures;
 
-class DediRecord extends \DedicatedApi\Structures\AbstractStructure {
+class DediRecord extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     /** @var string */
     public $login;

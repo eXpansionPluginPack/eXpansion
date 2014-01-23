@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\MapRatings\Structures;
 
-class PlayerVote extends \DedicatedApi\Structures\AbstractStructure {
+class PlayerVote extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $login;
     public $vote;

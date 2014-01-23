@@ -157,21 +157,21 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         self::$mapsPlugin = $mapsPlugin;
     }
 
-    function gotoMap($login, \DedicatedApi\Structures\Map $map) {
+    function gotoMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map) {
         self::$mapsPlugin->gotoMap($login, $map);
         $this->Erase($this->getRecipient());
     }
 
-    function removeMap($login, \DedicatedApi\Structures\Map $map) {
+    function removeMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map) {
         self::$mapsPlugin->removeMap($login, $map);
         $this->RedrawAll();
     }
 
-    function queueMap($login, \DedicatedApi\Structures\Map $map) {
+    function queueMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map) {
         self::$mapsPlugin->queueMap($login, $map, false);
     }
 
-    function showRec($login, \DedicatedApi\Structures\Map $map) {
+    function showRec($login, \Maniaplanet\DedicatedServer\Structures\Map $map) {
         self::$mapsPlugin->showRec($login, $map);
     }
 
@@ -290,7 +290,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->records = $records;
     }
 
-    /** @param \DedicatedApi\Structures\Map[] $history */
+    /** @param \Maniaplanet\DedicatedServer\Structures\Map[] $history */
     function setHistory($history) {
         $this->history = array();
         foreach ($history as $map) {
@@ -298,7 +298,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    function setCurrentMap(\DedicatedApi\Structures\Map $map) {
+    function setCurrentMap(\Maniaplanet\DedicatedServer\Structures\Map $map) {
         $this->currentMap = $map;
     }
 
@@ -327,10 +327,10 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     /**
      * 
-     * @param \DedicatedApi\Structures\Map $map
+     * @param \Maniaplanet\DedicatedServer\Structures\Map $map
      * @return int similarity percentage of the string
      */
-    function search(\DedicatedApi\Structures\Map $map) {
+    function search(\Maniaplanet\DedicatedServer\Structures\Map $map) {
         $login = $this->getRecipient();
         if (empty(Maps::$searchTerm[$login]))
             return 100;

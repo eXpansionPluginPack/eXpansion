@@ -29,7 +29,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /** @var bool $enabled used to flag if mode is enabled */
     private $enabled = false;
 
-    /** @var \DedicatedApi\Structures\Player[] holds the players who finished this round in order of arrival */
+    /** @var \Maniaplanet\DedicatedServer\Structures\Player[] holds the players who finished this round in order of arrival */
     private $roundFinish = array();
 
     /** @var ManiaLivePlugins\eXpansion\ESLcup\Structures\CupScore[] holds winners in order of arrival */
@@ -39,7 +39,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * onload
      */
     public function exp_onInit() {
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
 
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
@@ -125,7 +125,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function check_gameSettings_Cup() {
-        return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP;
+        return $this->connection->getNextGameInfo()->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP;
     }
 
     public function check_eslCup() {
@@ -235,7 +235,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->winners[0] = $this->cupScores[$nb];
         }
         /* for ($x = 0; $x < intval($nb); $x++) {
-          $player = new \DedicatedApi\Structures\Player();
+          $player = new \Maniaplanet\DedicatedServer\Structures\Player();
           $player->playerId = 0;
           $player->login = "fakeplayer" . $x;
           $player->nickName = "fakeplayer" . $x;
@@ -307,7 +307,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($timeOrScore == 0)
             return;
 
-        $player = new \DedicatedApi\Structures\Player();
+        $player = new \Maniaplanet\DedicatedServer\Structures\Player();
         $player->playerId = $playerUid;
         $player->login = $login;
         $player->nickName = $this->storage->getPlayerObject($login)->nickName;

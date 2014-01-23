@@ -17,7 +17,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $config;
 
     public function exp_onInit() {
-	$this->addDependency(new \ManiaLive\PluginHandler\Dependency('eXpansion\LocalRecords'));
+	$this->addDependency(new \ManiaLive\PluginHandler\Dependency('ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords'));
     }
 
     public function exp_onLoad() {
@@ -36,7 +36,7 @@ class Widgets_Record extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->onPlayerConnect($player->login, true); // create panel for everybody
 
 	$this->lastUpdate = time();
-	self::$localrecords = $this->callPublicMethod("eXpansion\\LocalRecords", "getRecords");
+	self::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
 	$this->enableTickerEvent();
 	$this->forceUpdate = true;
     }

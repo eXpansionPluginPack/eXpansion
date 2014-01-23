@@ -103,11 +103,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->debug = self::DEBUG_NONE;
 
         //Listing the compatible Games
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK);
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM);
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
         $this->config = Config::getInstance();
 
         $this->setPublicMethod("getCurrentChallangePlayerRecord");
@@ -119,7 +119,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod("showRecsWindow");
 
         //The Database plugin is needed. 
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("ManiaLivePlugins\\eXpansion\Database\Database"));
 
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {
@@ -220,9 +220,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         //Checking the version if the table
-        $version = $this->callPublicMethod('eXpansion\Database', 'getDatabaseVersion', 'exp_records');
+        $version = $this->callPublicMethod('ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_records');
         if (!$version) {
-            $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_records', 1);
+            $version = $this->callPublicMethod('ManiaLivePlugins\eXpansion\Database\Database', 'setDatabaseVersion', 'exp_records', 1);
         }
 
         if (!$this->db->tableExists("exp_ranks")) {
@@ -239,8 +239,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $this->onBeginMap("", "", "");
         if ($this->isPluginLoaded('eXpansion\Menu')) {
-            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Records'), true);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
+            $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Records'), true);
+            $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
         }
         
         $this->getRanks();
@@ -429,7 +429,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $gamemode = $this->storage->gameInfos->gameMode;
 
             //If laps mode we need to ignore. Laps has it's own end map event(end finish lap)
-            if ($gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS && $this->config->lapsModeCount1lap)//Laps mode has it own on Player finish event
+            if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS && $this->config->lapsModeCount1lap)//Laps mode has it own on Player finish event
                 return;
 
             $time = microtime();
@@ -447,7 +447,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->config->lapsModeCount1lap && isset($this->storage->players[$player->login]) && $time > 0) {
             $gamemode = $this->storage->gameInfos->gameMode;
 
-            if ($gamemode != \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS) //Laps mode has it own on Player finish event
+            if ($gamemode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) //Laps mode has it own on Player finish event
                 return;
 
             $this->addRecord($player->login, $time, $gamemode, $this->checkpoints[$player->login]);
@@ -855,11 +855,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /**
      * deleteRecord()
      * deletes a record from database for map.
-     * @param \DedicatedApi\Structures\Map $challenge
+     * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
      * @param string $login
      * @return boolean
      */
-    private function deleteRecord(\DedicatedApi\Structures\Map $challenge, $login) {
+    private function deleteRecord(\Maniaplanet\DedicatedServer\Structures\Map $challenge, $login) {
 
         $q = "DELETE FROM `exp_records` WHERE `exp_records`.`record_challengeuid` = " . $this->db->quote($challenge->uId) . " and " .
                 "`exp_records`.`record_playerlogin` = " . $this->db->quote($recordLogin) . ";";
@@ -1002,7 +1002,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (!$this->config->lapsModeCount1lap) {
             $gamemode = $this->storage->gameInfos->gameMode;
 
-            if ($gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK || $gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS || $gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS || $gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP) {
+            if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK || $gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS || $gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS || $gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP) {
                 $nbLaps = $this->getNbOfLaps();
                 if ($nbLaps > 1) {
                     return $this->storage->currentMap->lapRace;
@@ -1020,18 +1020,18 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function getNbOfLaps() {
         switch ($this->storage->gameInfos->gameMode) {
-            case \DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS:
+            case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS:
                 if ($this->storage->gameInfos->roundsForcedLaps == 0)
                     return $this->storage->currentMap->nbLaps;
                 else
                     return $this->storage->gameInfos->roundsForcedLaps;
 
-            case \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM:
-            case \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP:
+            case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM:
+            case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP:
                 return $this->storage->currentMap->nbLaps;
                 break;
 
-            case \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS:
+            case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS:
                 return $this->storage->gameInfos->lapsNbLaps;
                 break;
 
@@ -1045,7 +1045,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * 
      * Display a window for a login with best times
      * @param type $login
-     * @param \DedicatedApi\Structures\Map $map (optional)
+     * @param \Maniaplanet\DedicatedServer\Structures\Map $map (optional)
      */
     public function showRecsWindow($login, $map = NULL) {
         Gui\Windows\Records::Erase($login);

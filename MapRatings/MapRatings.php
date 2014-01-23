@@ -114,14 +114,14 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * 
-     * @param null|string|\DedicatedApi\Structures\Map $uId
+     * @param null|string|\Maniaplanet\DedicatedServer\Structures\Map $uId
      * @return PlayerVote[]
      */
     public function getVotesForMap($uId = null) {
         if ($uId == null)
             $uId = $this->storage->currentMap->uId;
 
-        if ($uId instanceof \DedicatedApi\Structures\Map)
+        if ($uId instanceof \Maniaplanet\DedicatedServer\Structures\Map)
             $uId = $uid->uId;
 
         $ratings = $this->db->query("SELECT login, rating FROM exp_ratings WHERE `uid` = " . $this->db->quote($uId) . ";")->fetchArrayOfAssoc();

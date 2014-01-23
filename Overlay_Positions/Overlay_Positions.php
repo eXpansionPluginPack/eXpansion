@@ -17,10 +17,10 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $wasWarmup = false;
 
     function exp_onInit() {
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS);
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM);
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS);
-        $this->exp_addGameModeCompability(\DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
     }
 
     public function exp_onReady() {
@@ -74,7 +74,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($this->storage->serverStatus->code != 4)
             return;
 
-        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+        $player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
         // hide widget for players who change from spectate to play
         // on team mode, show infos when player is finished
 

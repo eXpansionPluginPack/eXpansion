@@ -7,9 +7,9 @@ namespace ManiaLivePlugins\eXpansion\ESLcup\Structures;
  *
  * @author Reaby
  */
-class CupScore extends \DedicatedApi\Structures\AbstractStructure {
+class CupScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
-    /** @var \DedicatedApi\Structures\Player */
+    /** @var \Maniaplanet\DedicatedServer\Structures\Player */
     public $player;
 
     /** @var string */

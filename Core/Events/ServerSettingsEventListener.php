@@ -23,7 +23,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Events;
 
-use DedicatedApi\Structures\ServerOptions;
+use Maniaplanet\DedicatedServer\Structures\ServerOptions;
 
 /**
  * Description of GameSettingsEventListener

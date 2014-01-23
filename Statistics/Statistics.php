@@ -14,7 +14,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onInit() {
         //The Database plugin is needed. 
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("ManiaLivePlugins\\eXpansion\\Database\\Database"));
 
         //Oliverde8 Menu
         if ($this->isPluginLoaded('oliverde8\HudMenu')) {

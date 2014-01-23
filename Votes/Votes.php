@@ -91,15 +91,15 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
             $this->debug("[exp\Votes] Building eXp\Menu buttons..");
             if ($this->config->restartVote_enable || $this->config->skipVote_enable) {
-                $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('Votes'), false);
+                $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Votes'), false);
             }
             if ($this->config->restartVote_enable) {
-                $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Restart Map'), null, array($this, 'vote_Restart'), false);
+                $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Restart Map'), null, array($this, 'vote_Restart'), false);
             }
             if ($this->config->skipVote_enable) {
-                $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Skip Map'), null, array($this, 'vote_Skip'), false);
+                $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Skip Map'), null, array($this, 'vote_Skip'), false);
             }
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Cancel Vote'), null, array($this, 'cancelVote'), true);
+            $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Cancel Vote'), null, array($this, 'cancelVote'), true);
         }
 
         if ($this->isPluginLoaded('Standard\Menubar')) {
@@ -177,7 +177,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 
             $this->debug("[exp\Votes] Calling Restart (queue) vote..");
-            $vote = new \DedicatedApi\Structures\Vote();
+            $vote = new \Maniaplanet\DedicatedServer\Structures\Vote();
             $vote->callerLogin = $this->voter;
             $vote->cmdName = "Replay";
             $vote->cmdParam = array("the current map");
@@ -195,7 +195,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
             $this->voter = $login;
             $this->debug("[exp\Votes] Calling skip vote..");
-            $vote = new \DedicatedApi\Structures\Vote();
+            $vote = new \Maniaplanet\DedicatedServer\Structures\Vote();
             $vote->callerLogin = $this->voter;
             $vote->cmdName = "Skip";
             $vote->cmdParam = array("the current map");
@@ -239,9 +239,9 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $voter = $this->voter;
             if ($cmdName == "Replay") {
                 if (sizeof($this->storage->players) == 1) {
-                    $this->callPublicMethod('eXpansion\\Maps', 'replayMapInstant', $voter);
+                    $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps', 'replayMapInstant', $voter);
                 } else {
-                    $this->callPublicMethod('eXpansion\\Maps', 'replayMap', $voter);
+                    $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps', 'replayMap', $voter);
                 }
             }
             if ($cmdName == "Skip") {

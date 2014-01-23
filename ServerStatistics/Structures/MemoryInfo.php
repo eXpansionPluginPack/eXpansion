@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\ServerStatistics\Structures;
  *
  * @author Reaby
  */
-class MemoryInfo extends \DedicatedApi\Structures\AbstractStructure {
+class MemoryInfo extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $total;
     public $free;

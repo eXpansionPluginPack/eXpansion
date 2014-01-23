@@ -39,7 +39,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     // Generate all inputboxes
     private function inputboxes() {
         
-        /** @var \DedicatedApi\Structures\ServerOptions */        
+        /** @var \Maniaplanet\DedicatedServer\Structures\ServerOptions */        
         $server = $this->connection->getServerOptions();
                 
         $this->frameInputbox = new \ManiaLive\Gui\Controls\Frame();

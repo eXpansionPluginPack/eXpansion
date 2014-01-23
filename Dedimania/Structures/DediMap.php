@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania\Structures;
 
-class DediMap extends \DedicatedApi\Structures\AbstractStructure {
+class DediMap extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     /** @var string|null */
     public $uId = null;

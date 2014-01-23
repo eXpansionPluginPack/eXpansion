@@ -21,7 +21,7 @@ class MenuPanel extends \ManiaLive\Gui\Window {
 	/*    $config = Config::getInstance();
 
 	  $dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
-	  $this->connection = \DedicatedApi\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
+	  $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
 	  $this->storage = \ManiaLive\Data\Storage::getInstance(); */
 
 	$this->setScriptEvents(true);

@@ -137,8 +137,8 @@ abstract class Service {
 
     /**
      * Retrieves the challenge's karma from the webservice.
-     * @param \DedicatedApi\Structures\Map $challenge
-     * @param \DedicatedApi\Structures\Player[] $players
+     * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
+     * @param \Maniaplanet\DedicatedServer\Structures\Player[] $players
      * @return \ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma
      */
     static function GetChallengeKarma($challenge, $players) {
@@ -168,10 +168,10 @@ abstract class Service {
     /**
      * 
      * SendVotes()
-     * @param \DedicatedApi\Structures\Map $challenge     
+     * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge     
      * @param Structures\Vote[] $votes
      */
-    static function SendVotes(\DedicatedApi\Structures\Map $challenge, $votes) {
+    static function SendVotes(\Maniaplanet\DedicatedServer\Structures\Map $challenge, $votes) {
 	if (!self::$authCode) {
 	    throw new NotAuthenticatedException('You need to authenticate at the tm-karma webservice first!');
 	}

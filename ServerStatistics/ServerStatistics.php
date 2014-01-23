@@ -97,9 +97,9 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         }
 
         //Checking the version if the table
-        $version = $this->callPublicMethod('eXpansion\Database', 'getDatabaseVersion', 'exp_records');
+        $version = $this->callPublicMethod('ManiaLivePlugins\eXpansion\Database', 'getDatabaseVersion', 'exp_records');
         if (!$version) {
-            $version = $this->callPublicMethod('eXpansion\Database', 'setDatabaseVersion', 'exp_records', 1);
+            $version = $this->callPublicMethod('ManiaLivePlugins\eXpansion\Database', 'setDatabaseVersion', 'exp_records', 1);
         }
 
         $this->nbPlayer = 0;
@@ -336,7 +336,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     public function onPlayerInfoChanged($playerInfo) {
-        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+        $player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
         $login = $player->login;
 
         $this->removePlayer($player->login);

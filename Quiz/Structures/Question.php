@@ -14,7 +14,7 @@ class Question {
     /** @var Answer[] answer */
     public $answer = array();
 
-    /** @var \DedicatedApi\Structures\Player */
+    /** @var \Maniaplanet\DedicatedServer\Structures\Player */
     public $asker;
 
     /** var float */
@@ -23,7 +23,7 @@ class Question {
     /** @var bool */
     public $multipart = false;
 
-    public function __construct(\DedicatedApi\Structures\Player $player, $question) {
+    public function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player, $question) {
         $this->asker = $player;
         $this->question = $question;
         return $this;

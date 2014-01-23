@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania\Structures;
 
-class DediPlayer extends \DedicatedApi\Structures\AbstractStructure {
+class DediPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     /** @var string */
     public $login;

@@ -6,7 +6,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
-use \DedicatedApi\Structures\GameInfos;
+use \Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 

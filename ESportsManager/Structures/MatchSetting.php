@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager\Structures;
  *
  * @author Reaby
  */
-class MatchSetting extends \DedicatedApi\Structures\AbstractStructure {
+class MatchSetting extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $matchTitle = '';
     public $matchOrganizer = '';
@@ -15,7 +15,7 @@ class MatchSetting extends \DedicatedApi\Structures\AbstractStructure {
     public $rulesUrl = '';
     public $gameMode = -1;
 
-    /** @var DedicatedApi\Structures\GameInfos */
+    /** @var Maniaplanet\DedicatedServer\Structures\GameInfos */
     public $gameInfos = array();
     public $adminCommands = array();
 

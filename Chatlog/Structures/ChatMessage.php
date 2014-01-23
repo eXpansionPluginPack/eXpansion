@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Chatlog\Structures;
  *
  * @author Reaby
  */
-class ChatMessage extends \DedicatedApi\Structures\AbstractStructure {
+class ChatMessage extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     /** @var long */
     public $time;

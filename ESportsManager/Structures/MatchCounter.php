@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager\Structures;
  *
  * @author Reaby
  */
-class MatchCounter extends \DedicatedApi\Structures\AbstractStructure {
+class MatchCounter extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
     
     
     

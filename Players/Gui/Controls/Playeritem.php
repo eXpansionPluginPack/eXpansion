@@ -28,7 +28,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
     protected $icon;
     private $toggleTeam = null;
 
-    function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller, $isAdmin, $login, $widths, $sizeX) {
+    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $isAdmin, $login, $widths, $sizeX) {
         $this->recipient = $login;
         $this->widths = \ManiaLivePlugins\eXpansion\Gui\Gui::getScaledSize($widths, $sizeX);
 

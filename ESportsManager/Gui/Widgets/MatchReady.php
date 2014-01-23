@@ -125,7 +125,7 @@ class MatchReady extends \ManiaLive\Gui\Window {
         $this->frame_team_red->clearComponents();
         $this->frame_rounds->clearComponents();
         $sizeX = 60;
-        if ($this->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+        if ($this->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
             $red = new \ManiaLib\Gui\Elements\Label($sizeX, 6);
             $red->setText('$f00Red Team');
             $red->setAlign("center", "center");
@@ -144,7 +144,7 @@ class MatchReady extends \ManiaLive\Gui\Window {
             if ($player === null)
                 continue;
 
-            if ($this->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+            if ($this->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
                 if ($player->player->teamId == 0) {
                     $this->frame_team_blue->addComponent(new PlayerStatusItem($x, $player, $this, $this->gameMode, $isAdmin, $sizeX));
                 }

@@ -9,10 +9,10 @@ namespace ManiaLivePlugins\eXpansion\Maps\Structures;
  */
 class MapWish {
 
-    /** @var \DedicatedApi\Structures\Map */
+    /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     public $map;
 
-    /** @var \DedicatedApi\Structures\Player */
+    /** @var \Maniaplanet\DedicatedServer\Structures\Player */
     public $player;
 
     /** @bool - For temporary additions */
@@ -20,11 +20,11 @@ class MapWish {
 
     /**
      * MapWish($player, $map, $isTemp);
-     * @param \DedicatedApi\Structures\Player $player
-     * @param \DedicatedApi\Structures\Map $map
+     * @param \Maniaplanet\DedicatedServer\Structures\Player $player
+     * @param \Maniaplanet\DedicatedServer\Structures\Map $map
      * @param bool $isTemp
      */
-    public function __construct(\DedicatedApi\Structures\Player $player, \DedicatedApi\Structures\Map $map, $isTemp = false) {
+    public function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player, \Maniaplanet\DedicatedServer\Structures\Map $map, $isTemp = false) {
         $this->map = $map;
         $this->player = $player;
         $this->isTemp = $isTemp;

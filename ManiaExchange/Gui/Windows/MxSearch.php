@@ -121,7 +121,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->redraw($this->getRecipient());
 
 
-        if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
+        if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
             $script = $this->connection->getModeScriptInfo();
             $query = "";
 

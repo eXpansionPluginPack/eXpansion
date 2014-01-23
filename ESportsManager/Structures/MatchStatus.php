@@ -13,7 +13,7 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager\Structures;
  *
  * @author Reaby
  */
-class MatchStatus extends \DedicatedApi\Structures\AbstractStructure {
+class MatchStatus extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     const VOTE_NONE = 0;
     const VOTE_READY = 2;

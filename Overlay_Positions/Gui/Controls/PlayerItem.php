@@ -113,7 +113,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
         $this->label_points->setAlign('left', 'center');
 
         $score = $player->score;
-        if ($gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM)
+        if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM)
             $score = $player->matchScore;
         if (empty($score))
             $score = 0;

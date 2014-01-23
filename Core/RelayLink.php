@@ -12,10 +12,10 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
 
     public static $started = false;
 
-    /** @var  \DedicatedApi\Connection */
+    /** @var  \Maniaplanet\DedicatedServer\Connection */
     private $connection;
 
-    /** @var  \ManiaLive\Data\Storage */
+    /** @var \ManiaLive\Data\Storage */
     private $storage;
     private $connectedRelays = array();
     private $relayMaster = null;
@@ -30,7 +30,7 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
 
     public function __construct() {
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \DedicatedApi\Connection::factory($config->host, $config->port);
+        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         Dispatcher::register(dediEvent::getClass(), $this);
         $this->relayMaster = $this->connection->getMainServerPlayerInfo()->login;
@@ -74,11 +74,11 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
         return $this->storage->nextMap;
     }
 
-    private function xSyncMap(\DedicatedApi\Structures\Map $map) {
+    private function xSyncMap(\Maniaplanet\DedicatedServer\Structures\Map $map) {
         $this->storage->currentMap = $map;
     }
 
-    private function xSyncMapNext(\DedicatedApi\Structures\Map $map) {
+    private function xSyncMapNext(\Maniaplanet\DedicatedServer\Structures\Map $map) {
         $this->storage->nextMap = $map;
     }
 

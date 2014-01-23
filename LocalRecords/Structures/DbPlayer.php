@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Structures;
 
-class DbPlayer extends \DedicatedApi\Structures\AbstractStructure {
+class DbPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $login = "";
     public $nickname = "";
@@ -13,7 +13,7 @@ class DbPlayer extends \DedicatedApi\Structures\AbstractStructure {
         
     }
 
-    function fromPlayerObj(\DedicatedApi\Structures\Player $player) {
+    function fromPlayerObj(\Maniaplanet\DedicatedServer\Structures\Player $player) {
         $this->nickname = $player->nickName;
         $this->login = $player->login;
         $this->nation = $player->path;                

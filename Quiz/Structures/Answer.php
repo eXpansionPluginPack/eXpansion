@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Quiz\Structures;
 
-class Answer extends \DedicatedApi\Structures\AbstractStructure {
+class Answer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $answer = null;
     public $value = 1.0;

@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
 class MxWidget extends \ManiaLive\Gui\Window {
 
     /**
-     * @var \DedicatedApi\Connection
+     * @var \Maniaplanet\DedicatedServer\Connection
      */
     private $connection;
 
@@ -27,7 +27,7 @@ class MxWidget extends \ManiaLive\Gui\Window {
         $config = Config::getInstance();
 
         $dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \DedicatedApi\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
+        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
 
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 

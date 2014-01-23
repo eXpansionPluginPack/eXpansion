@@ -10,7 +10,7 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
     private $labelAuthor;
     private $xml;
 
-    /** @var \DedicatedApi\Structures\Map */
+    /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     private $map;
 
     protected function onConstruct() {
@@ -170,7 +170,7 @@ class NextMapWidget extends \ManiaLive\Gui\Window {
 	parent::onDraw();
     }
 
-    function setMap(\DedicatedApi\Structures\Map $map) {
+    function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map) {
 	$this->map = $map;
 	$this->labelName->setText('$ddd' . $this->map->name);
 	$this->labelAuthor->setText('$ddd' . $this->map->author);

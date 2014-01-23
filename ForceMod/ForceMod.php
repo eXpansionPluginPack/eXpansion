@@ -101,7 +101,7 @@ class ForceMod extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             foreach ($this->config->mods as $entry) {
                 if (empty($entry))
                     continue;
-                $mod = new \DedicatedApi\Structures\Mod();
+                $mod = new \Maniaplanet\DedicatedServer\Structures\Mod();
                 $mod->url = $entry;
                 $mod->env = $env;
                 //$mod->env = $env->titleId;

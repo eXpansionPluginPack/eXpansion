@@ -13,7 +13,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
     private $sendAction;
     private $frame;
 
-    function __construct($indexNumber, \DedicatedApi\Structures\Player $player, $controller) {
+    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller) {
         $sizeX = 120;
         $sizeY = 4;
         $this->player = $player;

@@ -28,7 +28,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onInit() {
         parent::exp_onInit();
         Gui\Windows\ParameterDialog::$mainPlugin = $this;
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency('eXpansion\AdminGroups'));
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency('ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups'));
 
         $this->setPublicMethod("restartMap");
         $this->setPublicMethod("skipMap");
@@ -696,7 +696,7 @@ Other server might use the same blacklist file!!');
     }
 
     public function enableTeamGap($login, $params) {
-        if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+        if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
             $this->exp_chatSendServerMessage("#admin_error#Not in teams mode!", $login);
         }
 
@@ -709,13 +709,13 @@ Other server might use the same blacklist file!!');
     }
 
     public function onBeginMatch() {
-        //  if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+        //  if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
         //      $this->connection->setTeamPointsLimit($this->teamGap * 10);
         //  }
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
-        if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+        if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
             $this->connection->setTeamPointsLimit($this->teamGap * 10);
         }
     }
@@ -729,7 +729,7 @@ Other server might use the same blacklist file!!');
     }
 
     public function checkTeamGap() {
-        if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->teamUseNewRules) {
+        if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->teamUseNewRules) {
             $ranking = $this->connection->getCurrentRanking(-1, 0);
             $scoregap = abs($ranking[0]->score - $ranking[1]->score);
             $scoremax = $ranking[0]->score > $ranking[1]->score ? $ranking[0]->score : $ranking[1]->score;
@@ -1302,7 +1302,7 @@ Other server might use the same blacklist file!!');
 
     function skipMap($fromLogin, $params) {
         try {
-            $this->connection->nextMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
+            $this->connection->nextMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
             $admin = $this->storage->getPlayerObject($fromLogin);
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#skips the challenge!', null, array($admin->nickName));
         } catch (\Exception $e) {
@@ -1318,7 +1318,7 @@ Other server might use the same blacklist file!!');
                 $this->callPublicMethod("eXpansion\Maps", "replayMapInstant");
                 return;
             }
-            $this->connection->restartMap($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP);
+            $this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
         } catch (\Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1332,19 +1332,19 @@ Other server might use the same blacklist file!!');
         } else {
             $param1 = $params[0];
             if (strtolower($param1) == "script")
-                $gamemode = \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT;
+                $gamemode = \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT;
             if (strtolower($param1) == "rounds")
-                $gamemode = \DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS;
+                $gamemode = \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS;
             if (strtolower($param1) == "timeattack" || strtolower($param1) == "ta")
-                $gamemode = \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK;
+                $gamemode = \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK;
             if (strtolower($param1) == "team")
-                $gamemode = \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM;
+                $gamemode = \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM;
             if (strtolower($param1) == "laps")
-                $gamemode = \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS;
+                $gamemode = \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS;
             if (strtolower($param1) == "stunts")
-                $gamemode = \DedicatedApi\Structures\GameInfos::GAMEMODE_STUNTS;
+                $gamemode = \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_STUNTS;
             if (strtolower($param1) == "cup")
-                $gamemode = \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP;
+                $gamemode = \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP;
             if ($gamemode === NULL) {
                 $this->sendErrorChat($fromLogin, 'Invalid parameter. Valid parameteres are: script,team,timeattack,ta,rounds,laps,stunts,cup.');
                 return;
@@ -1421,7 +1421,7 @@ Other server might use the same blacklist file!!');
             $items = array();
 
             /**
-             * @var \DedicatedApi\Structures\Player 
+             * @var \Maniaplanet\DedicatedServer\Structures\Player 
              */
             foreach ($this->connection->getBanList(-1, 0) as $player) {
                 $items[] = new BannedPlayeritem($indexNumber, $player, $this);
@@ -1445,7 +1445,7 @@ Other server might use the same blacklist file!!');
             $items = array();
 
             /**
-             * @var \DedicatedApi\Structures\Player 
+             * @var \Maniaplanet\DedicatedServer\Structures\Player 
              */
             foreach ($this->connection->getBlackList(-1, 0) as $player) {
                 $items[] = new BlacklistPlayeritem($indexNumber, $player, $this);
@@ -1469,7 +1469,7 @@ Other server might use the same blacklist file!!');
             $items = array();
 
             /**
-             * @var \DedicatedApi\Structures\Player 
+             * @var \Maniaplanet\DedicatedServer\Structures\Player 
              */
             foreach ($this->connection->getGuestList(-1, 0) as $player) {
                 $items[] = new GuestPlayeritem($indexNumber, $player, $this);
@@ -1493,7 +1493,7 @@ Other server might use the same blacklist file!!');
             $items = array();
 
             /**
-             * @var \DedicatedApi\Structures\Player 
+             * @var \Maniaplanet\DedicatedServer\Structures\Player 
              */
             foreach ($this->connection->getIgnoreList(-1, 0) as $player) {
                 $items[] = new IgnoredPlayeritem($indexNumber, $player, $this);
@@ -1514,7 +1514,7 @@ Other server might use the same blacklist file!!');
     }
 
     public function onStatusChanged($statusCode, $statusName) {
-        if ($statusCode == 6 && $this->dynamicTime > 0 && $this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+        if ($statusCode == 6 && $this->dynamicTime > 0 && $this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
             $map = $this->connection->getNextMapInfo();
             $laps = $map->nbLaps;
             if ($map->nbLaps <= 1) {

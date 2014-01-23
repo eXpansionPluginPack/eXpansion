@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Overlay_TeamScores\Structures;
 
-class Team extends \DedicatedApi\Structures\AbstractStructure {
+class Team extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $name = "";
     public $leader = null;

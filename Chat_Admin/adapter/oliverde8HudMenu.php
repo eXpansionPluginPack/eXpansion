@@ -295,11 +295,11 @@ class oliverde8HudMenu {
     }
 
     public function check_gameSettings_NoTimeAttack() {
-        return $this->connection->getCurrentGameInfo()->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK;
+        return $this->connection->getCurrentGameInfo()->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK;
     }
 
     public function check_gameSettings_TimeAttack() {
-        return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK;
+        return $this->connection->getNextGameInfo()->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK;
     }
 
     private function gameSettings_Rounds($parent) {
@@ -321,7 +321,7 @@ class oliverde8HudMenu {
     }
 
     public function check_gameSettings_Rounds() {
-        return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS;
+        return $this->connection->getNextGameInfo()->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS;
     }
 
     private function gameSettings_Team($parent) {
@@ -341,7 +341,7 @@ class oliverde8HudMenu {
     }
 
     public function check_gameSettings_Team() {
-        return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM;
+        return $this->connection->getNextGameInfo()->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM;
     }
 
     private function gameSettings_Laps($parent) {
@@ -362,7 +362,7 @@ class oliverde8HudMenu {
     }
 
     public function check_gameSettings_Laps() {
-        return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS;
+        return $this->connection->getNextGameInfo()->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS;
     }
 
     private function gameSettings_Cup($parent2) {
@@ -387,7 +387,7 @@ class oliverde8HudMenu {
     }
 
     public function check_gameSettings_Cup() {
-        return $this->connection->getNextGameInfo()->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP;
+        return $this->connection->getNextGameInfo()->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP;
     }
 
     private function generate_GameSettings_CupRoundsPerChallenge($parent) {

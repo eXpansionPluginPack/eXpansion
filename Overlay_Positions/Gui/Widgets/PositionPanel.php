@@ -68,7 +68,7 @@ class PositionPanel extends \ManiaLive\Gui\Window {
                 }
                 $x++;
             }
-            if ($gamemode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+            if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
 
                 if ($teamPoints[0] == $teamPoints[1] || $cpCount == 0) {
                     $this->label->setText('$fffTeams Score is Draw');

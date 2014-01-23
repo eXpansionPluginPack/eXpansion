@@ -13,7 +13,7 @@ namespace ManiaLivePlugins\eXpansion\Chat_Admin\Structures;
  *
  * @author Reaby
  */
-class ActionDuration extends \DedicatedApi\Structures\AbstractStructure {
+class ActionDuration extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $login;
     public $action;

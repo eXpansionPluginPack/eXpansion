@@ -13,7 +13,7 @@ class PlayerObj {
      * Parses spectatorinfos from numeric value
      * 
      * @param mixed|integer $spectatorInfo
-     * @return \DedicatedApi\Structures\Player
+     * @return \Maniaplanet\DedicatedServer\Structures\Player
      */
     public static function parseSpecStatus($spectatorInfo) {
         $number = 00000;
@@ -21,7 +21,7 @@ class PlayerObj {
             $number = $spectatorInfo->spectatorStatus;
         if (is_numeric($spectatorInfo))
             $number = $spectatorInfo;
-        $obj = new \DedicatedApi\Structures\Player();
+        $obj = new \Maniaplanet\DedicatedServer\Structures\Player();
         $obj->currentTargetId = floor($number / 10000);
         $obj->autoTarget = intval(substr($number, -4, 1));
         $obj->pureSpectator = intval(substr($number, -3, 1));

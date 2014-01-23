@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Structures;
 
-class CustomPoint extends \DedicatedApi\Structures\AbstractStructure {
+class CustomPoint extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $name;
     public $points;

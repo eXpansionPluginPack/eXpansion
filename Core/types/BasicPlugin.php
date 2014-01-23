@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Core\types {
     
 
-use DedicatedApi\Structures\GameInfos;
+use Maniaplanet\DedicatedServer\Structures\GameInfos;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Config;
 use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
@@ -75,16 +75,16 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                 exit(1);
             }
 
-//Recovering the eXpansion pack tools
+            //Recovering the eXpansion pack tools
             $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
 
             $this->exp_unloading = false;
             $this->relay = \ManiaLivePlugins\eXpansion\Core\RelayLink::getInstance();
             \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
 
-//All plugins need the eXpansion Core to work properly
-            if ($this->getId() != 'eXpansion\Core' && $this->getId() != 'eXpansion\AutoLoad')
-                $this->addDependency(new \ManiaLive\PluginHandler\Dependency('eXpansion\Core'));
+            //All plugins need the eXpansion Core to work properly
+            if ($this->getId() != 'ManiaLivePlugins\eXpansion\Core' && $this->getId() != 'ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad')
+                $this->addDependency(new \ManiaLive\PluginHandler\Dependency('ManiaLivePlugins\eXpansion\Core\Core'));
 
             $this->setPublicMethod('exp_unload');
             $this->setPublicMethod('getDependencies');
@@ -335,7 +335,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                         }
                         if (!empty($deps)) {
                             foreach ($deps as $dep) {
-                                if ($dep->getPluginId() == $this->getId()) {
+                                if ($dep->getPluginId() == $this->getId()) {                                    
                                     $this->callPublicMethod($plugin, 'exp_unload');
                                     break;
                                 }
@@ -353,7 +353,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             if (!empty($deps)) {
                 $this->console('[eXpansion] Unloading Dependencies of ' . $this->getId() . '');
                 foreach ($deps as $dep) {
-                    if ($dep->getPluginId() != "eXpansion\\Core")
+                    if ($dep->getPluginId() != "ManiaLivePlugins\\eXpansion\\Core\\Core")
                         $this->callPublicMethod($dep->getPluginId(), 'exp_unload');
                 }
             }
@@ -475,7 +475,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
         /**
          * Returns player object from given playerId
          * @param integer $id
-         * @return \DedicatedApi\Structures\Player
+         * @return \Maniaplanet\DedicatedServer\Structures\Player
          */
         public function getPlayerObjectById($id) {
             if (!is_numeric($id))
@@ -488,7 +488,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                 if ($player->playerId == $id)
                     return $player;
             }
-            return new \DedicatedApi\Structures\Player();
+            return new \Maniaplanet\DedicatedServer\Structures\Player();
         }
 
         final public function console($message) {

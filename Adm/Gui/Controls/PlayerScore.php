@@ -12,7 +12,7 @@ class PlayerScore extends \ManiaLive\Gui\Control {
     /**
      * 
      * @param int $indexNumber
-     * @param \DedicatedApi\Structures\Player $player
+     * @param \Maniaplanet\DedicatedServer\Structures\Player $player
      * @param int $score
      * @param type $controller
      * @param int $sizeX

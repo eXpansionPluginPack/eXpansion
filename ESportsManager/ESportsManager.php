@@ -307,7 +307,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerInfoChanged($playerInfo) {
-        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+        $player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
         $login = $player->login;
 
         if ($player->playerId == 0)

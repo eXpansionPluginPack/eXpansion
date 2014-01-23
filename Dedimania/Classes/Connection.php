@@ -8,7 +8,7 @@ use \ManiaLive\Event\Dispatcher;
 use \ManiaLive\Application\Listener as AppListener;
 use \ManiaLive\Features\Tick\Listener as TickListener;
 use \ManiaLive\Features\Tick\Event as TickEvent;
-use \DedicatedApi\Structures\GameInfos;
+use \Maniaplanet\DedicatedServer\Structures\GameInfos;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediPlayer;
 use ManiaLivePlugins\eXpansion\Dedimania\Classes\Request as dediRequest;
@@ -146,7 +146,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
      * @param array $ranking from dedicated server
      * 
      */
-    public function setChallengeTimes(\DedicatedApi\Structures\Map $map, $rankings, $vreplay, $greplay) {
+    public function setChallengeTimes(\Maniaplanet\DedicatedServer\Structures\Map $map, $rankings, $vreplay, $greplay) {
 
 // disabled for relay server
         if ($this->connection->isRelayServer())
@@ -232,7 +232,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     function _getMapInfo($map = null) {
         if ($map == null)
             $map = $this->storage->currentMap;
-        if ($map instanceof \DedicatedApi\Structures\Map) {
+        if ($map instanceof \Maniaplanet\DedicatedServer\Structures\Map) {
             $mapInfo = array(
                 "UId" => $map->uId,
                 "Name" => $map->name,
@@ -290,10 +290,10 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     /**
      * PlayerConnect
      * 
-     * @param \DedicatedApi\Structures\Player $player
+     * @param \Maniaplanet\DedicatedServer\Structures\Player $player
      * @param bool $isSpec     
      */
-    function playerConnect(\DedicatedApi\Structures\Player $player, $isSpec) {
+    function playerConnect(\Maniaplanet\DedicatedServer\Structures\Player $player, $isSpec) {
 
         if ($this->sessionId === null) {
             $this->console("[Dedimania] Error: Session ID is null!");
@@ -320,7 +320,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     /**
      * playerMultiConnect
      * 
-     * @param \DedicatedApi\Structures\Player $player
+     * @param \Maniaplanet\DedicatedServer\Structures\Player $player
      * @param bool $isSpec     
      */
     function playerMultiConnect($players) {
@@ -337,7 +337,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
         foreach ($players as $player) {
 
-            if (is_a($player[0], "\DedicatedApi\Structures\Player")) {
+            if (is_a($player[0], "\Maniaplanet\DedicatedServer\Structures\Player")) {
 
                 if ($player[0]->login == $this->storage->serverLogin) {
                     $this->debug("[Dedimania Warning] Tried to send server login.");
@@ -386,7 +386,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
      * UpdateServerPlayers
      * Should be called Every 3 minutes + onEndChallenge.
      * 
-     * @param array,\DedicatedApi\Structures\Map $map
+     * @param array,\Maniaplanet\DedicatedServer\Structures\Map $map
      * @return type
      */
     function updateServerPlayers($map) {
@@ -424,25 +424,25 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function _getGameMode() {
         switch ($this->storage->gameInfos->gameMode) {
-            case \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT:
+            case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT:
                 $gamemode = "";
                 break;
-            case \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK:
+            case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK:
                 $gamemode = "TA";
                 break;
-            case \DedicatedApi\Structures\GameInfos::GAMEMODE_LAPS:
+            case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS:
                 $gamemode = "TA";
                 break;
-            case \DedicatedApi\Structures\GameInfos::GAMEMODE_ROUNDS:
+            case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS:
                 $gamemode = "Rounds";
                 break;
-            case \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM:
+            case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM:
                 $gamemode = "Rounds";
                 break;
-            case \DedicatedApi\Structures\GameInfos::GAMEMODE_CUP:
+            case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP:
                 $gamemode = "Rounds";
                 break;
-            case \DedicatedApi\Structures\GameInfos::GAMEMODE_STUNTS:
+            case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_STUNTS:
                 $gamemode = "";
                 break;
             default:

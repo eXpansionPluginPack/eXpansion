@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures;
 
-class Checkpoint extends \DedicatedApi\Structures\AbstractStructure {
+class Checkpoint extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $time = 0;
     public $nickname = "";

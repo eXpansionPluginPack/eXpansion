@@ -9,7 +9,7 @@ namespace ManiaLivePlugins\eXpansion\Maps\Structures;
  */
 class SortableMap {
 
-    /** @var \DedicatedApi\Structures\Map */
+    /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     public $map;
 
     /** @var string */
@@ -23,11 +23,11 @@ class SortableMap {
 
     /**
      * 
-     * @param \DedicatedApi\Structures\Map $map
+     * @param \Maniaplanet\DedicatedServer\Structures\Map $map
      * @param int $localrec
      * @param \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating $rating
      */
-    public function __construct(\DedicatedApi\Structures\Map $map, $localrec, \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating $rating) {
+    public function __construct(\Maniaplanet\DedicatedServer\Structures\Map $map, $localrec, \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating $rating) {
 	$this->map = $map;
 	$this->name = \ManiaLib\Utils\Formatting::stripStyles($map->name);
 	$this->author = $map->author;

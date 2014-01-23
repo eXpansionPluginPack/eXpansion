@@ -70,7 +70,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $login = $this->getRecipient();
 
-        /** @var \DedicatedApi\Structures\Version */
+        /** @var \Maniaplanet\DedicatedServer\Structures\Version */
         $game = $this->connection->getVersion();
         $path = $this->connection->getMapsDirectory() . "/Downloaded/" . $game->titleId . "/*.Map.Gbx";
 

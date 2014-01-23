@@ -20,7 +20,7 @@ class Core extends types\ExpPlugin {
 
     /**
      * Last used game mode
-     * @var \DedicatedApi\Structures\GameInfos
+     * @var \Maniaplanet\DedicatedServer\Structures\GameInfos
      */
     private $lastGameMode;
     private $lastGameSettings;
@@ -353,7 +353,7 @@ EOT;
             return;
 
         $this->update = true;
-        $player = \DedicatedApi\Structures\Player::fromArray($playerInfo);
+        $player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
 
         if (!array_key_exists($player->login, $this->expPlayers)) {
             $login = $player->login;
@@ -374,7 +374,7 @@ EOT;
             $this->expPlayers[$login]->curCpIndex = -1;
             $this->expPlayers[$login]->isFinished = false;
             // in case player is joining to match in round, he needs to be marked as waiting
-            if ($this->storage->gameInfos->gameMode != \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK)
+            if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK)
                 $this->expPlayers[$login]->isWaiting = true;
         }
 
@@ -449,7 +449,7 @@ EOT;
         if ($timeOrScore == 0) {
             if (array_key_exists($login, $this->expPlayers)) {
                 $this->expPlayers[$login]->finalTime = 0;
-                if ($this->storage->gameInfos->gameMode !== \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+                if ($this->storage->gameInfos->gameMode !== \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
                     $this->expPlayers[$login]->hasRetired = true;
                     Dispatcher::dispatch(new Events\PlayerEvent(Events\PlayerEvent::ON_PLAYER_GIVEUP, $this->expPlayers[$login]));
                 }
@@ -461,13 +461,13 @@ EOT;
             if (array_key_exists($login, $this->expPlayers)) {
                 $this->expPlayers[$login]->finalTime = $timeOrScore;
                 $this->expPlayers[$login]->isFinished = true;
-                if ($this->storage->gameInfos->gameMode !== \DedicatedApi\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+                if ($this->storage->gameInfos->gameMode !== \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
                     self::$roundFinishOrder[] = $login;
                 }
             }
 
 // set points
-            if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_TEAM) {
+            if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
                 $maxpoints = $this->storage->gameInfos->teamMaxPoints;
                 $total = 0;
 // get total number if players

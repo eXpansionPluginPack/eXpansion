@@ -337,7 +337,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function showDbMaintainance($login) {
-        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+        if ($this->callPublicMethod('ManiaLivePlugins\eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             $window = Gui\Windows\Maintainance::Create($login);
             $window->init($this->db);
             $window->setTitle(__('Database Maintainance'));
@@ -349,7 +349,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function showBackupRestore($login) {
-        if ($this->callPublicMethod('eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
+        if ($this->callPublicMethod('ManiaLivePlugins\eXpansion\AdminGroups', 'getPermission', $login, 'server_admin')) {
             $window = Gui\Windows\BackupRestore::Create($login);
             $window->init($this->db);
             $window->setTitle(__('Database Backup and Restore'));

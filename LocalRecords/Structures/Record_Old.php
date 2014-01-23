@@ -1,7 +1,7 @@
 <?php
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Structures;
 
-class Record2 extends \DedicatedApi\Structures\AbstractStructure {
+class Record2 extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
     
     public $login;
     public $time;

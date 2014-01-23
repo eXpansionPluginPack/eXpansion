@@ -22,7 +22,7 @@ class CurrentMapWidget extends \ManiaLive\Gui\Window {
         $this->addComponent($this->authorTime);
     }
 
-    function setMap(\DedicatedApi\Structures\Map $map) {
+    function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map) {
         $this->authorTime->setText(\ManiaLive\Utilities\Time::fromTM($map->authorTime));
     }
 

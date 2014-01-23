@@ -24,7 +24,7 @@ class MessagesPanel extends \ManiaLive\Gui\Window {
     private $status = "True";
     private $minMaxAction;
 
-    /** @var \DedicatedApi\Structures\Player */
+    /** @var \Maniaplanet\DedicatedServer\Structures\Player */
     private $targetPlayer = false;
     private $xml;
 

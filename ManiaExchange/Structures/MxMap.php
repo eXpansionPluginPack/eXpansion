@@ -39,7 +39,7 @@
 
 namespace ManiaLivePlugins\eXpansion\ManiaExchange\Structures;
 
-class MxMap extends \DedicatedApi\Structures\AbstractStructure {
+class MxMap extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
          public $trackID;
          public $userID;
          public $username;

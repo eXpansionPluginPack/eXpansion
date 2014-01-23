@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\ManiaExchange;
 
 use ManiaLive\Event\Dispatcher;
-use DedicatedApi\Structures\Map;
+use Maniaplanet\DedicatedServer\Structures\Map;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
@@ -12,7 +12,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /** @var Config * */
     private $config;
 
-    /** @var \DedicatedApi\Structures\Vote */
+    /** @var \Maniaplanet\DedicatedServer\Structures\Vote */
     private $vote;
 
     /** @var string */
@@ -59,8 +59,8 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
-            $this->callPublicMethod('eXpansion\Menu', 'addSeparator', __('ManiaExchange'), false);
-            $this->callPublicMethod('eXpansion\Menu', 'addItem', __('Search Maps'), null, array($this, 'mxSearch'), false);
+            $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('ManiaExchange'), false);
+            $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Search Maps'), null, array($this, 'mxSearch'), false);
         }
 
         $version = $this->connection->getVersion();
@@ -179,7 +179,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connection->chatSendServerMessage(__('"%s" is not a numeric value.', $login, $mxId), $login);
             return false;
         }
-        if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
+        if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
             $query = "";
             switch ($this->titleId) {
                 case "SMStorm":
@@ -209,7 +209,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->exp_chatSendServerMessage("MX returned error code $code", $login);
             return;
         }
-        /** @var \DedicatedApi\Structures\Version */
+        /** @var \Maniaplanet\DedicatedServer\Structures\Version */
         $game = $this->connection->getVersion();
 
         $maps = $this->connection->getMapsDirectory();
@@ -246,7 +246,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->exp_chatSendServerMessage("MX returned error code $code", $login);
             return;
         }
-        /** @var \DedicatedApi\Structures\Version */
+        /** @var \Maniaplanet\DedicatedServer\Structures\Version */
         $game = $this->connection->getVersion();
 
         $maps = $this->connection->getMapsDirectory();
@@ -258,7 +258,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         if ($this->dataAccess->save($file, $data)) {
-            $this->callPublicMethod('eXpansion\\Maps', 'queueMxMap', $login, $file);
+            $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps', 'queueMxMap', $login, $file);
         }
     }
 
@@ -276,7 +276,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             return;
         }
 
-        $queue = $this->callPublicMethod('eXpansion\\Maps', 'returnQueue');
+        $queue = $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps', 'returnQueue');
         foreach ($queue as $q) {
             if ($q->player->login == $login) {
                 $msg = exp_getMessage('#admin_error# $iYou already have a map in the queue...');
@@ -285,7 +285,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         }
 
-        if ($this->storage->gameInfos->gameMode == \DedicatedApi\Structures\GameInfos::GAMEMODE_SCRIPT) {
+        if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
 
             $query = "";
             switch ($this->titleId) {
@@ -334,7 +334,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->vote['login'] = $login;
         $this->vote['mxId'] = $mxId;
 
-        $vote = new \DedicatedApi\Structures\Vote();
+        $vote = new \Maniaplanet\DedicatedServer\Structures\Vote();
         $vote->callerLogin = $login;
         $vote->cmdName = '$0f0add $fff$o' . $map['Name'] . '$o$0f0 by $eee' . $map['Username'] . ' $0f0';
         $vote->cmdParam = array('to the queue from MX?$3f3');

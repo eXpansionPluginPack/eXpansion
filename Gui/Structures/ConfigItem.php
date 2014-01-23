@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Structures;
  *
  * @author Reaby
  */
-class ConfigItem extends \DedicatedApi\Structures\AbstractStructure {
+class ConfigItem extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     /** @var string $id */
     public $id;

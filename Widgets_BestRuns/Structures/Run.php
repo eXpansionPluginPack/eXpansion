@@ -2,14 +2,14 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_BestRuns\Structures;
 
-class Run extends \DedicatedApi\Structures\AbstractStructure {
+class Run extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $totalTime = 0;
     public $nickname = "";
     public $player;
     public $checkpoints = array();
 
-    function __construct(\DedicatedApi\Structures\Player $player) {
+    function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player) {
 	$this->player = $player;
 	$this->totalTime = $player->bestTime;
 	$this->nickname = $player->nickName;

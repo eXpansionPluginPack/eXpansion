@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Core\Structures;
  *
  * @author Reaby
  */
-class HttpQuery extends \DedicatedApi\Structures\AbstractStructure {
+class HttpQuery extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $url;
     public $callback;

@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Quiz\Structures;
 
-class QuizPlayer extends \DedicatedApi\Structures\AbstractStructure {
+class QuizPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
 
     public $nickName;
     public $login;
