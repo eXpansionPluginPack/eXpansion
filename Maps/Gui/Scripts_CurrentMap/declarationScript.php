@@ -9,4 +9,6 @@ authorName.SetText(Map.AuthorNickName);
         authorZone.ChangeImageUrl(Map.AuthorZoneIconUrl);
     }
 authorTime.SetText(Map.ObjectiveTextAuthor);
-log(Map.AuthorZonePath);
+
+log("icon: " ^ Map.AuthorZoneIconUrl);
+log("Mapzone: " ^Map.AuthorZonePath);
