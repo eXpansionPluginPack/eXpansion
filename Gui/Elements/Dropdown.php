@@ -15,16 +15,15 @@ class Dropdown extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpan
     private $values;
     private $name;
     /** @var \ManiaLivePlugins\eXpansion\Gui\Structures\Script */
-    private static $script = null;
+    private $script = null;
     
     function __construct($name, $items = array("initial"), $selectedIndex = 0, $sizeX = 35) {
         if (!is_array($items))
             throw new \Exception("Dropdown constructor needs array of values");
         
-        if (self::$script == null) {
-            self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\DropDownScript();
-            self::$script->setParam("name", $name);            
-        }        
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\DropDownScript();
+        $this->script->setParam("name", $name);            
+       
         
         $this->values = array();
         $this->name = $name;
@@ -56,7 +55,8 @@ class Dropdown extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpan
         $this->frame->setScale(0.9);
         $this->values = array();
         $this->addItems($items);
-        self::$script->setParam("values", $this->values);
+        $this->script->setParam("values", $this->values);
+        $this->script->setParam("values", $this->values);
         $this->addComponent($this->frame);
         $this->setSelected($selectedIndex);        
     }
@@ -101,7 +101,7 @@ class Dropdown extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpan
     }
 
     public function getScript() {
-        return self::$script;
+        return $this->script;
     }
 
 }
