@@ -30,10 +30,10 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onLoad() {
         $this->enableDedicatedEvents();
-        if ($this->isPluginLoaded('ManiaLivePlugins\eXpansion\Dedimania\Dedimania')) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania')) {
             Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
         }
-        if ($this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\LocalRecords')) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords')) {
             Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
         }
     }
