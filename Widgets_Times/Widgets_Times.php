@@ -25,7 +25,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
-        TimeChooser::$plugin = $this;
+      //  TimeChooser::$plugin = $this;
     }
 
     function exp_onLoad() {
@@ -39,7 +39,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function exp_onReady() {
-        $this->checkpointPos = $this->connection->getCurrentRanking(-1, 0);
+      //  $this->checkpointPos = $this->connection->getCurrentRanking(-1, 0);
         TimePanel::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");        
         $this->showToAll();
     }
@@ -153,7 +153,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
         TimePanel::EraseAll();
-        TimeChooser::EraseAll();
+        // TimeChooser::EraseAll();
     }
 
     public function showToAll() {
@@ -197,7 +197,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function onPlayerDisconnect($login, $reason = null) {
         TimePanel::Erase($login);
-        TimeChooser::Erase($login);
+        // TimeChooser::Erase($login);
         if (array_key_exists($login, $this->spectatorTargets)) {
             unset($this->spectatorTargets[$login]);
         }

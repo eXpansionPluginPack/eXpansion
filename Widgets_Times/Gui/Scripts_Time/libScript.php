@@ -15,7 +15,7 @@
 }
 
 
-Text TimeToText(Integer intime, Boolean test) {
+Text TimeToText(Integer intime) {
             declare time = MathLib::Abs(intime);
             declare Integer cent = time % 1000;                           
             time = time / 1000;

@@ -1,5 +1,5 @@
 foreach (Player in Players) {
-    if (Player.Login == InputPlayer.Login) {
+    if (Player.Login == GuiPlayer.Login) {
         // log(Player.RaceState);
 
         declare PrevCheckpointCount for Player = -1;
@@ -11,13 +11,13 @@ foreach (Player in Players) {
 				if (Checkpoints.count > curCp && Checkpoints[curCp] != -1) {
 					declare Integer diff = (Player.CurRace.Checkpoints[curCp-1] - Checkpoints[curCp-1]);
 					log(diff);
-					declare Text color = "$f00";
+					declare Text color = "$f00$s";
 					 if (diff <= 0) {
-						color = "$00f";
+						color = "$00f$s";
 					}
-					Label.SetText(color ^ TimeToText(diff, True));
+					Label.SetText(color ^ TimeToText(diff));
 				}else {                                               
-					Label.SetText("$fff$s" ^ TimeToText(Player.CurRace.Checkpoints[curCp-1], True));
+					Label.SetText("$fff$s" ^ TimeToText(Player.CurRace.Checkpoints[curCp-1]));
 				}
 				
 				Cp.SetText(curCp ^ "/" ^ totalCp);
