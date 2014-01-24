@@ -87,7 +87,7 @@ class RecordsPanelTab extends \ManiaLive\Gui\Window {
 	$this->frame_dedi->setLayout(new \ManiaLib\Gui\Layouts\Column(-1));
 	$this->container_dedi->addComponent($this->frame_dedi);
 
-	if ($pmanager->isLoaded('eXpansion\Dedimania')) {
+	if ($pmanager->isLoaded('ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania')) {
 	    $this->isDediLoaded = true;
 	    $this->addComponent($this->container_dedi);
 	}
