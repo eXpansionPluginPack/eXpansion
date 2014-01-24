@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_EndRankings\Gui\Widgets;
 
-class RanksPanel extends \ManiaLive\Gui\Window {
+class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     private $frame;
     private $items = array();
@@ -12,11 +12,8 @@ class RanksPanel extends \ManiaLive\Gui\Window {
 
     protected function onConstruct() {
         parent::onConstruct();
-        $this->bg = new \ManiaLib\Gui\Elements\Quad();
-        $this->bg->setStyle("Bgs1InRace");
-        $this->bg->setSubStyle("BgList");
-        $this->bg->setId("MainWindow");
-        $this->bg->setScriptEvents(true);
+        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(20,20);       
+        $this->bg->setAlign("left", "top");
         $this->addComponent($this->bg);
 
         $this->lbl = new \ManiaLib\Gui\Elements\Label(30, 6);
@@ -24,34 +21,33 @@ class RanksPanel extends \ManiaLive\Gui\Window {
         $this->lbl->setStyle("TextStaticVerySmall");
         $this->lbl->setText(__('Server ranks'));        
         $this->lbl->setAlign("center", "center");
+        $this->lbl->setTextColor('fff');
+        $this->lbl->setTextEmboss();
+        
         $this->addComponent($this->lbl);
 
-        $this->quad = new \ManiaLib\Gui\Elements\Quad(30, 8);
-        $this->quad->setStyle("Bgs1InRace");
-        $this->quad->setSubStyle("BgTitle3_3");
+        
+        /* $this->quad = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(30, 4);       
         $this->quad->setAlign("left", "center");
-        $this->addComponent($this->quad);
+        $this->addComponent($this->quad);  */
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame(3, -4);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(-1));
         $this->addComponent($this->frame);
-    }
-
-    function onDraw() {
         
+        $this->setName("Server Ranks");
     }
+    
 
     function onResize($oldX, $oldY) {
-        $this->bg->setSize($this->sizeX + 16, $this->sizeY);
-        $this->bg->setPosX(-16);
-        $this->lbl->setPosX($this->sizeX / 2);
-        $this->lbl->setPosY(1);
-        $this->quad->setSizeX($this->sizeX + 22);
-        $this->quad->setPosX(-16);
-        $this->quad->setPosY(1);
-
-
         parent::onResize($oldX, $oldY);
+        $this->bg->setSize($this->sizeX-1, $this->sizeY+3);        
+        $this->bg->setPosition(0,-44);
+        $this->lbl->setPosX($this->sizeX / 2);
+        $this->lbl->setPosY(3);
+        /* $this->quad->setSizeX($this->sizeX);
+        $this->quad->setPosX($this->sizeX / 2); 
+        $this->quad->setPosY(1); */
     }
 
     function setData($ranks) {

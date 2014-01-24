@@ -18,11 +18,8 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
     function exp_onLoad() {
         $this->enableDedicatedEvents();
     }
-
-    function exp_onReady() {
-        // $this->displayWidget();
-    }
-
+    
+    
     /**
      * displayWidget(string $login)
      * @param string $login

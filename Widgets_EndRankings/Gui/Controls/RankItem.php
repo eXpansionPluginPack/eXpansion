@@ -49,21 +49,13 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->sizeY = $sizeY;
     }
 
-    function onDraw() {
-        
-    }
-
     function onIsRemoved(\ManiaLive\Gui\Container $target) {
         parent::onIsRemoved($target);
         $this->destroy();
     }
 
     public function destroy() {
-        try {
-            $this->clearComponents();
-        } catch (\Exception $e) {
-            
-        }
+        $this->clearComponents();
         parent::destroy();
     }
 
