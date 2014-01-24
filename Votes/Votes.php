@@ -69,7 +69,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod("vote_restart");
         $this->setPublicMethod("vote_skip");
 
-        if ($this->isPluginLoaded('eXpansion\Maps') && $this->config->restartVote_useQueue) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\Maps\\Maps') && $this->config->restartVote_useQueue) {
             $this->useQueue = true;
             $this->debug("[exp\Votes] Restart votes set to queue");
         } else {
@@ -233,9 +233,9 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $voter = $this->voter;
             if ($cmdName == "Replay") {
                 if (sizeof($this->storage->players) == 1) {
-                    $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps', 'replayMapInstant', $voter);
+                    $this->callPublicMethod('ManiaLivePlugins\\eXpansion\\Maps\\Maps', 'replayMapInstant', $voter);
                 } else {
-                    $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps', 'replayMap', $voter);
+                    $this->callPublicMethod('ManiaLivePlugins\\eXpansion\\Maps\\Maps', 'replayMap', $voter);
                 }
             }
             if ($cmdName == "Skip") {
