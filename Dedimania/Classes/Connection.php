@@ -454,7 +454,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function _process($dedires, $callback) {
         try {
-            $msg = new \DedicatedApi\Xmlrpc\Message($dedires['Message']);
+            $msg = new \Maniaplanet\DedicatedServer\Xmlrpc\Message($dedires['Message']);
             $msg->parse();
             $errors = end($msg->params[0]);
 
