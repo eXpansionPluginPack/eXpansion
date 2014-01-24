@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class Dropdown extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer {
 
     private $items = array();
     private $dropdown;
@@ -14,10 +14,18 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     private $xml;
     private $values;
     private $name;
-
+    /** @var \ManiaLivePlugins\eXpansion\Gui\Structures\Script */
+    private static $script = null;
+    
     function __construct($name, $items = array("initial"), $selectedIndex = 0, $sizeX = 35) {
         if (!is_array($items))
             throw new \Exception("Dropdown constructor needs array of values");
+        
+        if (self::$script == null) {
+            self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\DropDownScript();
+            self::$script->setParam("name", $name);            
+        }        
+        
         $this->values = array();
         $this->name = $name;
         $this->setSize($sizeX, 10);
@@ -48,10 +56,9 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->frame->setScale(0.9);
         $this->values = array();
         $this->addItems($items);
+        self::$script->setParam("values", $this->values);
         $this->addComponent($this->frame);
-        $this->setSelected($selectedIndex);
-        
-        $this->registerScript(new \ManiaLivePlugins\eXpansion\Gui\Scripts\DropDownScript());
+        $this->setSelected($selectedIndex);        
     }
 
     function addItems($items) {
@@ -91,6 +98,10 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     function onIsRemoved(\ManiaLive\Gui\Container $target) {
         parent::onIsRemoved($target);
         $this->destroy();
+    }
+
+    public function getScript() {
+        return self::$script;
     }
 
 }

@@ -60,7 +60,6 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $items = array("All", "Race", "Fullspeed", "Tech", "RPG", 'LOL', 'PressForward', 'SpeedTech', 'Multilap', 'Offroad');
         $this->style = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("style", $items);
-
         $this->searchframe->addComponent($this->style);
 
         $items = array("All", "15sec", "30sec", "45sec", "1min");
@@ -78,7 +77,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->buttonSearch = new OkButton(24, 6);
         $this->buttonSearch->setText("Search");
-        $this->buttonSearch->colorize('0f0');
+        $this->buttonSearch->colorize('0a0');
         $this->buttonSearch->setScale(0.6);
         $this->buttonSearch->setAction($this->actionSearch);
 
