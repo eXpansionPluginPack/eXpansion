@@ -16,7 +16,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     
     function exp_onInit() {
         parent::exp_onInit();
-        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
         self::$action_GG = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'sendEmote'), "GG");
