@@ -109,9 +109,9 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         }
 
         //Checking the version if the table
-        $version = $this->callPublicMethod('ManiaLivePlugins\eXpansion\Database', 'getDatabaseVersion', 'exp_records');
+        $version = $this->callPublicMethod('ManiaLivePlugins\\eXpansion\\Database\\Database', 'getDatabaseVersion', 'exp_records');
         if (!$version) {
-            $version = $this->callPublicMethod('ManiaLivePlugins\eXpansion\Database', 'setDatabaseVersion', 'exp_records', 1);
+            $version = $this->callPublicMethod('ManiaLivePlugins\\eXpansion\\Database\\Database', 'setDatabaseVersion', 'exp_records', 1);
         }
 
         $this->nbPlayer = 0;
