@@ -25,7 +25,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     function exp_onInit() {
         global $lang;
         //The Database plugin is needed. 
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("eXpansion\Database"));
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("ManiaLivePlguins\\eXpansion\\Database\\Database"));
 
         // Make sure pcre and php_com_dotnet are loaded :)
         if (!extension_loaded('pcre') && !function_exists('preg_match') && !function_exists('preg_match_all')) {
