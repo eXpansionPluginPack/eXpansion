@@ -222,7 +222,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $map = $this->connection->getMapInfo($file);
                 $this->exp_chatSendServerMessage($this->msg_add, null, array($map->name));
                 if ($this->config->juke_newmaps) {
-                    $this->callPublicMethod("ManiaLivePlugins\eXpansion\Maps\Maps", "queueMap", $login, $map, false);
+                    $this->callPublicMethod('ManiaLivePlugins\eXpansion\Maps\Maps', "queueMap", $login, $map, false);
                 }
             } catch (\Exception $e) {
                 $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);

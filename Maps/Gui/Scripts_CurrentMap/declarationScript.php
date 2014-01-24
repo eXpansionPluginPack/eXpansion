@@ -8,7 +8,4 @@ authorName.SetText(Map.AuthorNickName);
     if (Map.AuthorZoneIconUrl != "") {
         authorZone.ChangeImageUrl(Map.AuthorZoneIconUrl);
     }
-authorTime.SetText(Map.ObjectiveTextAuthor);
-
-log("icon: " ^ Map.AuthorZoneIconUrl);
-log("Mapzone: " ^Map.AuthorZonePath);
+authorTime.SetText(TimeToText(Map.TMObjective_AuthorTime));

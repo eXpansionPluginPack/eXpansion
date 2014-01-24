@@ -1314,8 +1314,8 @@ Other server might use the same blacklist file!!');
         try {
             $admin = $this->storage->getPlayerObject($fromLogin);
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
-            if ($this->isPluginLoaded("ManiaLivePlugins\eXpansion\Maps\Maps")) {
-                $this->callPublicMethod("ManiaLivePlugins\eXpansion\Maps\Maps", "replayMapInstant");
+            if ($this->isPluginLoaded('ManiaLivePlugins\eXpansion\Maps\Maps')) {
+                $this->callPublicMethod('ManiaLivePlugins\eXpansion\Maps\Maps', "replayMapInstant");
                 return;
             }
             $this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);

@@ -35,6 +35,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_mapAdd;
     private $wasWarmup = false;
     private $actionShowMapList;
+    private $actionShowJukeList;
 
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode[] */
     public static $playerSortModes = array();
@@ -113,6 +114,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         /** @var \ManiaLive\Gui\ActionHandler */
         $action = \ManiaLive\Gui\ActionHandler::getInstance();
         $this->actionShowMapList = $action->createAction(array($this, "showMapList"));
+        $this->actionShowJukeList = $action->createAction(array($this, "showJukeList"));
 
 
         foreach ($this->storage->players as $player)
@@ -227,8 +229,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         \ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::CHALLENGE_INFO);
         
         $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\CurrentMapWidget::Create($login);
-        $info->setPosition(153, 80);
-        $info->setMap($this->storage->currentMap);
+        $info->setPosition(144, 83.5);
+        $info->setAction($this->actionShowMapList);
         $info->show();
         $this->showNextMapWidget($login);
     }
@@ -304,7 +306,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
             $info->setPosition(125, 64);
             $info->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-            $info->setAction($this->actionShowMapList);
+            $info->setAction($this->actionShowJukeList);
             $info->setMap($this->nextMap);
             $info->show();
         }

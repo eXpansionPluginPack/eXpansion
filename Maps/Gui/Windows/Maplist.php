@@ -265,9 +265,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                     if ($this->records[$map->uId] <= $maxrec)
                         $localrecord = $this->records[$map->uId];
                 }
-                if (array_key_exists($map->uId, $this->ratings)) {
-                    print_r($this->ratings[$map->uId]);
-                    
+                if (array_key_exists($map->uId, $this->ratings)) {                                        
                     $rating = $this->ratings[$map->uId];
                 }
                 $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $maxrec, $rating);

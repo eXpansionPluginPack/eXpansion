@@ -16,10 +16,8 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         // $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(20, 20));
         $this->addComponent($this->frame);
 
-        $bg = new \ManiaLib\Gui\Elements\Quad(34, 11);
-        $bg->setStyle("Bgs1InRace");
-        $bg->setSubStyle("NavButtonBlink");
-        $bg->setPosition(0, 0);
+        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(34, 12);    
+        $bg->setPosition(0,-6);
         $this->addComponent($bg);
 
         $label = new \ManiaLib\Gui\Elements\Label(34);

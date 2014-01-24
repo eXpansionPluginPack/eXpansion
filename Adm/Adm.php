@@ -326,7 +326,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $player = $this->storage->getPlayerObject($bill->getSource_login());
         $this->exp_chatSendServerMessage($this->msg_prestart, null, array($player->nickName));
 
-        if ($this->isPluginLoaded("ManiaLivePlugins\eXpansion\Maps\Maps")) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\eXpansion\Maps\Maps')) {
             $this->callPublicMethod("ManiaLivePlugins\\eXpansion\Maps", "replayMap", $bill->getSource_login());
             return;
         }
