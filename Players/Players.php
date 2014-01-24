@@ -12,7 +12,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         parent::exp_onInit();
         //Oliverde8 Menu
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin"));
-        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
         Gui\Windows\Playerlist::$mainPlugin = $this;

@@ -22,7 +22,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $previousUid = null;
 
     function exp_onInit() {
-        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
         EndMapRatings::$parentPlugin = $this;

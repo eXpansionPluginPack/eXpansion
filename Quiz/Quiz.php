@@ -38,7 +38,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function exp_onInit() {
         //Oliverde8 Menu
-        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
     }

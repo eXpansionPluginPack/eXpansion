@@ -33,7 +33,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->config->restartVote_ratio == -1)
             $this->config->restartVote_ratio = 1;
 //Oliverde8 Menu
-        if ($this->isPluginLoaded('oliverde8\HudMenu'))
+        if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu'))
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
     }
 

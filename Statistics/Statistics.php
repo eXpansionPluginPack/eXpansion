@@ -17,7 +17,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("ManiaLivePlugins\\eXpansion\\Database\\Database"));
 
         //Oliverde8 Menu
-        if ($this->isPluginLoaded('oliverde8\HudMenu')) {
+        if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
     }
