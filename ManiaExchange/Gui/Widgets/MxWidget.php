@@ -55,7 +55,7 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
         $frame = new \ManiaLive\Gui\Controls\Frame();        
         $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        $frame->setPosition(6, 0);
+        $this->_windowFrame->setPosition(0, -9);
 
         $this->btnVisit = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(6,6);        
         $this->btnVisit->setIcon("Icons64x64_1", "TrackInfo");        

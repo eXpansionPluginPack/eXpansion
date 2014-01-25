@@ -44,7 +44,7 @@ class Widget extends EmptyWidget {
         $reset = "False";
         if (DEBUG)
             $reset = "True";
-        $this->script->setParam("forceReset", $reset);
+        $this->script->setParam("forceReset", "True");
 		
         parent::onDraw();
     }
