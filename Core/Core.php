@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Core;
 
+define('eXp', True);
+
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
