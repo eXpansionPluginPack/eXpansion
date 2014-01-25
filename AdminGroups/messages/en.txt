@@ -167,15 +167,9 @@ Permission_server_public
 Can make server public or private
 
 Permission_map_skip
-Can skip map so many times
-
-Permission_map_skip_unlimited
 Can skip map
 
 Permission_map_res
-Can restart map so many times
-
-Permission_map_res_limited
 Can restart map
 
 Permission_map_jukebox_free

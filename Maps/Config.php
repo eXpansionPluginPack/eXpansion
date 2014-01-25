@@ -10,7 +10,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $showNextMapWidget = true;
     public $showEndMatchNotices = true;
 	
-	public $publicQueuAmount = array(1,100,300);
+	public $publicQueuAmount = array(20,25,30,50,75,100,150,200);
     
 }
 ?>
