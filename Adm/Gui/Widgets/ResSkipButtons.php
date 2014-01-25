@@ -18,7 +18,6 @@ class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->addComponent($this->btn_skip);
 
         $this->setName("Skip and Res Buttons");
-        $this->setSize(30,17);
     }
 
     public function setActions($res, $skip) {

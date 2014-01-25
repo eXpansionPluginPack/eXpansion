@@ -27,6 +27,7 @@ class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setId("Frame");
         $this->_windowFrame->setSize(90, 6);
+        $this->_windowFrame->setPosY(-3);
         $this->_windowFrame->setScriptEvents(true);
         $this->addComponent($this->_windowFrame);
 

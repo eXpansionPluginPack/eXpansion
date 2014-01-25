@@ -40,6 +40,7 @@ class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setId("Frame");
         $this->_windowFrame->setScriptEvents(true);
+        $this->_windowFrame->setPosY(-3);
         $this->addComponent($this->_windowFrame);
 
         $this->_mainWindow = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60,10);

@@ -44,10 +44,15 @@ class Widget extends EmptyWidget {
         $reset = "False";
         if (DEBUG)
             $reset = "True";
-        $this->script->setParam("forceReset", "True");
+        $this->script->setParam("forceReset", $reset);
 		
         parent::onDraw();
     }
+	
+	public function onResize($oldX, $oldY) {
+		parent::onResize($oldX, $oldY);
+		$this->move->setSize($this->getSizeX(), $this->getSizeY());
+	}
 
     function setName($text, $parameter = "") {
         $this->_name = $text;

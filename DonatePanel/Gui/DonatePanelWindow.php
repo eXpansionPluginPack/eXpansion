@@ -23,14 +23,15 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
         $script->setParam('isMinimized', 'True');
         $script->setParam('autoCloseTimeout', '10500');
-        $script->setParam('posXMin', -64);
-        $script->setParam('posX', -64);
-        $script->setParam('posXMax', -5);
+        $script->setParam('posXMin', -62);
+        $script->setParam('posX', -62);
+        $script->setParam('posXMax', -2);
         $this->registerScript($script);
 
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setId("Frame");
         $this->_windowFrame->setScriptEvents(true);
+        $this->_windowFrame->setPosY(-3);
         $this->addComponent($this->_windowFrame);
 
         $this->_mainWindow = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(70, 6);

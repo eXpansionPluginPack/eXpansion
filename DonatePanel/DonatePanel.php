@@ -51,7 +51,7 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onPlayerConnect($login, $isSpec) {
         $window = DonatePanelWindow::Create($login);
         $window->setSize(70,7);
-        $window->setPosition(-158, 67);
+        $window->setPosition(-160, 70);
         $window->show();
     }
 

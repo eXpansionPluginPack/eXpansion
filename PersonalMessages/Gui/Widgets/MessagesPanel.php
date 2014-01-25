@@ -44,7 +44,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setAlign("left", "top");
         $this->_windowFrame->setId("Frame");
-        $this->_windowFrame->setPosY(-2);
+        $this->_windowFrame->setPosY(-3);
         $this->_windowFrame->setScriptEvents(true);
 
         $this->_mainWindow = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(100, 10);

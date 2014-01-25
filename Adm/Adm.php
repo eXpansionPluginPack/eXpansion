@@ -95,8 +95,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 //        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login) || !(empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1) || !(empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1)) {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
             $info = AdminPanel::Create($login);
-            $info->setSize(40, 7);
-            $info->setPosition(-160, -43);
+            $info->setSize(40, 6);
+            $info->setPosition(-160, -44);
             $info->show();
         }
         $this->showResSkip($login);
@@ -130,6 +130,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $widget->setActions($this->actions['res'], $this->actions['skip']);
 
         $widget->setPosition(100.0, 78.0);
+        $widget->setSize(28.0, 15.0);
         $widget->show();
     }
 
