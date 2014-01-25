@@ -143,7 +143,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->searchframe->addComponent($this->btn_search);
 
 
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager();        
         $this->mainFrame->addComponent($this->pager);
 
         if (array_key_exists($login, Maps::$playerSortModes) == false) {
@@ -184,8 +184,6 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-
-
 
         $this->searchframe->setPosition(12, -5);
 

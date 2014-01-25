@@ -8,6 +8,7 @@ $startPosY = intval($win->getSizeY() / 2) . ".0";
 
 <script><!--
 #Include "MathLib" as MathLib
+#Include "TextLib" as TextLib
 
 //Function definitions
 <?= $this->scriptLib ?>

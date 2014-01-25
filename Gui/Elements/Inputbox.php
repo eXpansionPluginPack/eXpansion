@@ -43,7 +43,7 @@ class Inputbox extends \ManiaLive\Gui\Control {
         $this->button->setSize($this->getSizeX(), 4);
         $this->border->setSize($this->getSizeX() + 2, 6);
         $this->label->setSize($this->getSizeX(), 3);
-        $this->label->setPosition(0, 4);        
+        $this->label->setPosition(0, 4);
     }
 
     protected function createButton($editable) {
@@ -111,6 +111,11 @@ class Inputbox extends \ManiaLive\Gui\Control {
 
     function setName($text) {
         $this->button->setName($name);
+    }
+
+    function setId($id) {
+        $this->button->setId($id);
+        $this->button->setScriptEvents();
     }
 
     function onIsRemoved(\ManiaLive\Gui\Container $target) {
