@@ -175,7 +175,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function queueMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map) {
-        self::$mapsPlugin->queueMap($login, $map, false);
+        self::$mapsPlugin->playerQueueMap($login, $map, false);
     }
 
     function showRec($login, \Maniaplanet\DedicatedServer\Structures\Map $map) {
