@@ -24,6 +24,7 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     protected function onConstruct() {
         parent::onConstruct();
+		$this->setName("ManiaExchange Panel");
         $config = Config::getInstance();
         $login = $this->getRecipient();
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
@@ -55,6 +56,7 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
         $frame = new \ManiaLive\Gui\Controls\Frame();        
         $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $frame->setPosX(5);
         $this->_windowFrame->setPosition(0, -9);
 
         $this->btnVisit = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(6,6);        
