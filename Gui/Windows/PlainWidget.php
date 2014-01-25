@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  *
  * @author De Cramer Oliver
  */
-class EmptyWidget extends \ManiaLive\Gui\Window {
+class PlainWidget extends \ManiaLive\Gui\Window {
 	
 	private $dDeclares = "";
     private $scriptLib = "";
@@ -20,7 +20,7 @@ class EmptyWidget extends \ManiaLive\Gui\Window {
     protected function onConstruct() {
         parent::onConstruct();
 
-        $this->_script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\EmptyWidgetScript");
+        $this->_script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\PlainWidgetScript");
 
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }

@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 /**
  * @abstract
  */
-class Widget extends EmptyWidget {
+class Widget extends PlainWidget {
 
     private $_name = "widget";
     private $move;
