@@ -67,7 +67,7 @@ class PlainWidget extends \ManiaLive\Gui\Window {
         $this->dIndex = 0;
         $this->scriptLib = "";
         $this->dDeclares = "";
-        $this->dLoop = "";
+        $this->wLoop = "";
 
         $this->calledScripts = array();
 
