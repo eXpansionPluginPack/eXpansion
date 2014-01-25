@@ -1,6 +1,8 @@
 //Test
 declare mainWindow <=> Page.GetFirstChild("Frame");
 declare isMinimized = <?= $this->isMinimized ?>;                                          
+declare isAnimation = False;                                          
+
 declare lastAction = Now;
 declare autoCloseTimeout = <?= $this->autoCloseTimeout ?>;
 declare positionMin = <?= $this->posXMin ?>.0;

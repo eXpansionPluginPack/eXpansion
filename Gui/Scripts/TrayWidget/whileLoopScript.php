@@ -3,29 +3,22 @@ if (isMinimized)
      if (mainWindow.PosnX >= positionMin) {                                          
           mainWindow.PosnX -= 4;                                          
     }
-}
+}else if (!isMinimized){
 
-if (!isMinimized)
-{         
-    if (Now-lastAction > autoCloseTimeout) {                                          
-        if (mainWindow.PosnX <= positionMin) {                                                 
-                mainWindow.PosnX -= 4;                                      
-        } 
-        if (mainWindow.PosnX >= positionMin)  {
-                isMinimized = True;
-        }
-    }
+	if (Now-lastAction > autoCloseTimeout) {
+		isMinimized = True;
+	}
 
-    else {
-        if ( mainWindow.PosnX <= positionMax) {                                                      
-                  mainWindow.PosnX += 4;
-        }                                                                                                                                             
-    }
+	if ( mainWindow.PosnX <= positionMax) {                                                      
+			  mainWindow.PosnX += 4;
+	}                                                                                                                                             
+    
 }
 
 foreach (Event in PendingEvents) {                                                
     if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "myWindow" || Event.ControlId == "minimizeButton" )) {
+		if(lastAction != Now)
            isMinimized = !isMinimized;    
-           lastAction = Now;                                           
+        lastAction = Now;                                           
     }                                       
 }
