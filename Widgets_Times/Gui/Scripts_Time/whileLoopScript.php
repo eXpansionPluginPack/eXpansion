@@ -1,5 +1,5 @@
 foreach (Player in Players) {
-    if (Player.Login == GuiPlayer.Login) {
+    if (Player.Login == GUIPlayer.Login) {
         // log(Player.RaceState);
 
         declare PrevCheckpointCount for Player = -1;
