@@ -58,7 +58,7 @@
     
        foreach (Event in PendingEvents) {
             if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {                    
-                    if (Event.Control.HasClass("label"))) {
+                    if (Event.Control.HasClass("label")) {
                     //declare CMlLabel item <=> (Event.Control as CMlLabel);                    
                     //entry.Value = data[item.Value];
                     declare id = TextLib::Split("_", Event.ControlId);
