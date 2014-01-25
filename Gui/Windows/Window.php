@@ -199,8 +199,8 @@ class Window extends \ManiaLive\Gui\Window {
         $this->nbButton = 0;
         $this->dIndex = 0;
         $this->dDeclares = "";
-
         $this->scriptLib = "";
+        $this->wLoop = "";
         $this->calledScripts = array();
 
         $this->detectElements($this->getComponents());
