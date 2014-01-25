@@ -486,9 +486,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 			\Maniaplanet\DedicatedServer\Structures\Map $map, $isTemp = false) {
 		
 		$amount = $this->getQueuAmount();
-		echo "Teste : $amount\n";
 		
-		if ($amount == 0)
+		if ($amount == 0 || AdminGroups::hasPermission($login, 'map_jukebox_free'))
 			$this->queueMap($login, $map, $isTemp);
 		else if ($amount != -1) {
 			if ($this->checkQueuMap($login, $map, true)) {
