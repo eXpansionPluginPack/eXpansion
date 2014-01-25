@@ -417,11 +417,19 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             self::$exp_billManager->sendBill($bill);
             $bill->setValidationCallback($callback, $params);
 
-            $bill->setPluginName($this->getId());
+            $bill->setPluginName($this->exp_getOldId());
             $bill->setSubject($msg);
 
             return $bill;
         }
+		
+		final public function exp_getOldId($id = null){
+			if($id == null){
+				$id = $this->getId();
+			}
+			$e = explode("\\", $id);
+			return $e[1]."\\".$e[2];
+		}
 
         final public function debug($message) {
             $config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
