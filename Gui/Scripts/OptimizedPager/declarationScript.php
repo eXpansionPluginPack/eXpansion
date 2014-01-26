@@ -22,6 +22,9 @@ declare Integer columnNumber = <?= $this->columnNumber;  ?>;
 declare Integer itemsPerRow = <?= $this->itemsPerRow; ?>;
 declare Integer itemNumber;
 
+declare Integer oldIndex = 0;
+declare Integer nbEventsCounted = 0;
+
 declare Integer nb = 0;
 
 

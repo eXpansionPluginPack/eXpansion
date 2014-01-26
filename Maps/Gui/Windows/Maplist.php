@@ -299,19 +299,35 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         // add items to display
         $x = 0;
-        foreach ($this->maps as $sortableMap) {
-            $isHistory = false;
-            if (array_key_exists($sortableMap->map->uId, $this->history)) {
-                $isHistory = true;
-            }
-            if ($sortableMap->map->uId == $this->currentMap->uId) {
-                $this->items[$x] = new MapitemCurrent($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
-            } else {
-                $this->items[$x] = new Mapitem($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
-            }
-            $this->pager->addItem($this->items[$x]);
-            $x++;
-        }
+		echo sizeof($this->maps)."\n\n";
+		for($cpt = 0; $cpt < 10; $cpt++){
+			foreach ($this->maps as $sortableMap) {
+				$isHistory = false;
+				if (array_key_exists($sortableMap->map->uId, $this->history)) {
+					$isHistory = true;
+				}
+
+				$queueMapAction = $this->createAction(array($this, 'queueMap'), $sortableMap->map);
+				$gotoMapAction = $this->createAction(array($this, 'gotoMap'), $sortableMap->map);
+				$removeMapAction = $this->createAction(array($this, 'removeMap'), $sortableMap->map);
+				$showRecsAction = $this->createAction(array($this, 'showRec'), $sortableMap->map);
+
+				$this->pager->addSimpleItems(array($sortableMap->map->name => $queueMapAction,
+						$sortableMap->map->author => -1,
+						$sortableMap->goldTime => -1,
+						$sortableMap->localrecord => -1
+					));
+
+				/*if ($sortableMap->map->uId == $this->currentMap->uId) {
+					$this->items[$x] = new MapitemCurrent($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
+				} else {
+					$this->items[$x] = new Mapitem($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
+				}
+				$this->pager->addItem($this->items[$x]);*/
+				$x++;
+			}
+		}
+		
         $this->redraw($this->getRecipient());
     }
 

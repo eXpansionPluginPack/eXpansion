@@ -126,7 +126,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, true);
 
         $this->preloadHistory();
-        $this->showMapList("reaby");
+        $this->showMapList("oliverde8");
     }
 
     public function exp_onLoad() {
@@ -401,6 +401,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function showMapList($login) {
+		print "Before Maps Memory Usage: " . memory_get_usage() / 1024 . "Mb\n";
         Gui\Windows\Maplist::Erase($login);
         $window = Gui\Windows\Maplist::Create($login);
         $window->setTitle(__('Maps on server', $login));
@@ -419,6 +420,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 
         $window->show();
+		print "After Maps Memory Usage: " . memory_get_usage() / 1024 . "Mb\n";
     }
 
     public function showHistoryList($login) {
