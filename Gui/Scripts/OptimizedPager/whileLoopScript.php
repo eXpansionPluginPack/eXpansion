@@ -15,29 +15,31 @@
 		ScrollBar.RelativePosition.Y = pagerDelta;            
 
 		declare percent = 1 - (MathLib::Abs(max) -  MathLib::Abs(pagerDelta)) / MathLib::Abs(max);      
-		declare test = MathLib::NearestInteger(percent * (desc.count - 1 - columnNumber));
-		declare index = (test / itemsPerRow) * itemsPerRow;
+		declare test = MathLib::NearestInteger(percent * (totalRows - 1 - rowsPerPage));
+		//declare index = (test / itemsPerRow) * itemsPerRow;
 		
 		//log(index);
-		log("Update? : "^nbEventsCounted);
+		//log("Update? : "^nbEventsCounted);
 		
-		if(nbEventsCounted == -1 || nbEventsCounted == 0 || desc.count < 400){			
-			log("Update? : DONE!!");
+		if(nbEventsCounted == -1 || nbEventsCounted == 0 ){						
+                        log(test ^ "/" ^ totalRows );
 			nb = 0;                    
-			for(r, 0, itemsPerRow) {
-				for(i, 0, rowsPerPage) {
+			for(i, 0, rowsPerPage) {                   
+                            for(r, 0, itemsPerRow-1) { 
 					declare CMlLabel item <=> (Page.GetFirstChild("column_"^nb) as CMlLabel);
 
 					if (item != Null) {     
-						if (desc.count >  index+nb) {
-							item.SetText(desc[index+nb]);  
-
-							if (!tempData.existskey(nb)) {
-								tempData.add(data[index+nb]);
+						if (desc.count >  nb) {
+							item.SetText(desc[i+test][r]);  
+                                                        
+							/*                                                     
+                                                        if (!tempData.existskey(nb)) {
+								tempData.add(data[test+nb]);
 							}
 							else  {
-								tempData[nb] = data[index+nb];
-							}
+								tempData[nb] = data[test+nb];
+							} */
+                                                        
 						}
 					}
 					nb += 1;
@@ -50,7 +52,7 @@
 			nbEventsCounted == 0;
 		else{
 			declare Integer i = 3;
-			log(i);
+			// log(i);
 			if(nbEventsCounted >= i)
 				nbEventsCounted = 0;
 			else
@@ -78,15 +80,17 @@
     
    foreach (Event in PendingEvents) {
 		if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {                    
-			if (Event.Control.HasClass("label")) {
-				//declare CMlLabel item <=> (Event.Control as CMlLabel);                    
+			 if (Event.Control.HasClass("label")) {
+			 	//declare CMlLabel item <=> (Event.Control as CMlLabel);                    
 				//entry.Value = data[item.Value];
 				declare id = TextLib::Split("_", Event.ControlId);
 				declare Integer index = TextLib::ToInteger(id[1]);   
-				if (tempData.existskey(index)) {
+				
+                                /* if (tempData.existskey(index)) {
 					log(" " ^ tempData[index]);
 					entry.Value = " " ^ tempData[index];
-				}
+				}  */
+                                
 			 }
 			 else {
 				entry.Value = "";
