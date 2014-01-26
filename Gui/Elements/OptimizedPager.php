@@ -20,8 +20,9 @@ class OptimizedPager extends \ManiaLive\Gui\Control
 	private $scroll, $bg, $scrollBg;
 	private $myScript;
 	private $quadNb;
-	private $buildLayout = true;
-	private $itemLayout = array();
+	
+	private $layoutItem = array();
+	private $layout;
 
 	function __construct() {
 
@@ -92,7 +93,10 @@ class OptimizedPager extends \ManiaLive\Gui\Control
 			}
 		}
 
-		$this->buildLayout = false;
+	}
+	
+	public function setLayout($className){
+		$this->layout = $className;
 	}
 
 	function setSize() {
@@ -102,10 +106,19 @@ class OptimizedPager extends \ManiaLive\Gui\Control
 		$this->update();
 	}
 
-	private function update() {
+	private function update($login) {
+		
 		$this->frame->clearComponents();
 		echo "update\n";
-		$columnNumber = 0;
+		
+		for ($x = 0; $x < 15; $x++) {
+			
+			$className = $this->layout;
+			$layout = new $className($x, $login);
+			$this->frame->addComponent($layout);
+		}
+		
+		/*$columnNumber = 0;
 		for ($x = 0; $x < 15; $x++) {
 			$itemframe = new \ManiaLive\Gui\Controls\Frame();
 			$itemframe->setSize($this->getSizeX(), 6);
@@ -139,7 +152,8 @@ class OptimizedPager extends \ManiaLive\Gui\Control
 			$itemframe->addComponent($itemContainer);
 
 			$this->frame->addComponent($itemframe);
-		}
+		}*/
+		
 		$this->myScript->setParam("columnNumber", $columnNumber);
 		$this->myScript->setParam("itemsPerRow", count($this->itemLayout));
 
