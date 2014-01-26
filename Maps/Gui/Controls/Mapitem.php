@@ -10,6 +10,8 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class Mapitem extends \ManiaLive\Gui\Control {
 
+	public static $ColumnWidths;
+	
     protected $bg;
     protected $queueButton;
     protected $goButton;
@@ -18,24 +20,13 @@ class Mapitem extends \ManiaLive\Gui\Control {
     public $label_map, $label_author, $label_authortime, $label_localrec, $label_rating;
     protected $frame;
     protected $actionsFrame;
-    private $queueMapAction;
-    private $gotoMapAction;
-    private $removeMapAction;
-    private $showRecsAction;
-    private $widths;
 
-    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap $sortableMap, $controller, $isAdmin, $isHistory, $widths, $sizeX) {
+    function __construct($indexNumber, $login, $action) {
         $sizeY = 6.5;
-        $this->isAdmin = $isAdmin;
-        $this->widths = $widths;
-        $this->isHistory = $isHistory;
+        $sizeX = 170;
+		
+        $scaledSizes = Gui::getScaledSize(self::$ColumnWidths, ($sizeX) - 7);
 
-        $scaledSizes = Gui::getScaledSize($this->widths, ($sizeX) - 7);
-
-        $this->queueMapAction = $this->createAction(array($controller, 'queueMap'), $sortableMap->map);
-        $this->gotoMapAction = $this->createAction(array($controller, 'gotoMap'), $sortableMap->map);
-        $this->removeMapAction = $this->createAction(array($controller, 'removeMap'), $sortableMap->map);
-        $this->showRecsAction = $this->createAction(array($controller, 'showRec'), $sortableMap->map);
         $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
@@ -45,7 +36,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
         $this->label_author = new \ManiaLib\Gui\Elements\Label($scaledSizes[1], 4);
         $this->label_author->setAlign('left', 'center');
-        $this->label_author->setText($sortableMap->author);
+		$this->label_author->setId('column_'.$indexNumber.'_1');
         $this->frame->addComponent($this->label_author);
 
         $this->label_map = new \ManiaLib\Gui\Elements\Label($scaledSizes[0], 4);
@@ -53,29 +44,26 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->label_map->setStyle('TextValueSmall');
         $this->label_map->setFocusAreaColor1('0000');
         $this->label_map->setFocusAreaColor2('2af6');
-        $this->label_map->setText($sortableMap->map->name);
         $this->label_map->setTextPrefix('$s');
+		$this->label_map->setId('column_'.$indexNumber.'_0');
+		$this->label_map->setAction($action);
+		$this->label_map->setAttribute("class", "hasAction");
+		$this->label_map->setScriptEvents(1);
         $this->frame->addComponent($this->label_map);
 
         $this->label_authortime = new \ManiaLib\Gui\Elements\Label($scaledSizes[2], 4);
         $this->label_authortime->setAlign('left', 'center');
-        $this->label_authortime->setText(\ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime));
+		$this->label_authortime->setId('column_'.$indexNumber.'_2');
         $this->frame->addComponent($this->label_authortime);
 
         $this->label_localrec = new \ManiaLib\Gui\Elements\Label($scaledSizes[3], 4);
         $this->label_localrec->setAlign('center', 'center');
-        $this->label_localrec->setText($sortableMap->localrecord);
+		$this->label_localrec->setId('column_'.$indexNumber.'_3');
         $this->frame->addComponent($this->label_localrec);
 
         $this->label_rating = new \ManiaLib\Gui\Elements\Label($scaledSizes[4], 4);
         $this->label_rating->setAlign('center', 'center');
-
-
-        $rate = ($sortableMap->rating->rating / 5) * 100;
-        $rate = round($rate) . "%";
-        if ($sortableMap->rating->rating == -1)
-            $rate = "-";
-        $this->label_rating->setText($rate);
+		$this->label_rating->setId('column_'.$indexNumber.'_4');
         $this->frame->addComponent($this->label_rating);
 
         $this->actionsFrame = new \ManiaLive\Gui\Controls\Frame();
@@ -83,41 +71,26 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->actionsFrame->setLayout(new \ManiaLib\Gui\Layouts\Line());
         $this->frame->addComponent($this->actionsFrame);
 
-        $this->queueButton = new MyButton(5, 5);
+        /*$this->queueButton = new MyButton(5, 5);
 
         //$this->queueButton->setDescription(__('Add %1$s $zto wish list', $login, $sortableMap->map->name), 100);
         $this->queueButton->setAction($this->queueMapAction);
         $this->queueButton->colorize('2a2');
         $this->queueButton->setPositionX(2);
-        $this->queueButton->setIcon('Icons128x128_1', 'Race');
+        $this->queueButton->setIcon('Icons128x128_1', 'Race');*/
+		
         if (Maplist::$localrecordsLoaded) {
             $this->showRecsButton = new MyButton(5, 5);
             $this->showRecsButton->setDescription(__('Show Records', $login), 40);
-            $this->showRecsButton->setAction($this->showRecsAction);
+            $this->showRecsButton->setAction($action);
             $this->showRecsButton->setIcon('BgRaceScore2', 'ScoreLink');
+			$this->showRecsButton->setId('column_'.$indexNumber.'_5');
+			$this->showRecsButton->setAttribute("class", "hasAction");
             $this->actionsFrame->addComponent($this->showRecsButton);
         }
 
-        // if not in history, add queue
-        if (!$isHistory) {
-            //   $this->actionsFrame->addComponent($this->queueButton);
-            $this->label_map->setAction($this->queueMapAction);
-        } else {
-            // if in history and admin, add queue button
-            if ($isAdmin) {
-                // $this->queueButton->colorize('aaa');                
-                // $this->actionsFrame->addComponent($this->queueButton);
-                $this->label_map->setAction($this->queueMapAction);
-            }
-        }
-        if ($this->isAdmin) {
-            /* $this->goButton = new MyButton(5, 5);
-              $this->goButton->setDescription(__("Go now", $login));
-              $this->goButton->setAction($this->gotoMapAction);
-              $this->goButton->colorize('aa2');
-              $this->goButton->setIcon('UIConstructionSimple_Buttons', 'Right');
-              $this->goButton->setScale(0.8); */
-            //  $this->actionsFrame->addComponent($this->goButton);
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login,
+						'map_remove')) {
 
             $spacer = new \ManiaLib\Gui\Elements\Quad();
             $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
@@ -125,20 +98,13 @@ class Mapitem extends \ManiaLive\Gui\Control {
             $this->actionsFrame->addComponent($spacer);
 
             $this->removeButton = new MyButton(5, 5);
-            //  $this->removeButton->setDescription(__('$F22Remove %1$s $zfrom server', $login, $sortableMap->map->name), 100);
-            $this->removeButton->setAction($this->removeMapAction);
+            $this->removeButton->setDescription(__('$F22Remove this map from server', $login), 70);
+            $this->removeButton->setAction($action);
             $this->removeButton->colorize('a22');
             $this->removeButton->setIcon('Icons64x64_1', 'Close');
+			$this->removeButton->setId('column_'.$indexNumber.'_6');
+			$this->removeButton->setAttribute("class", "hasAction");
             $this->actionsFrame->addComponent($this->removeButton);
-        }
-
-        if ($isHistory) {
-            $this->label_author->setTextPrefix('$aaa');
-            $this->label_map->setTextPrefix('$aaa');
-            $this->label_map->setText(Formatting::stripColors($sortableMap->name));
-            $this->label_rating->setTextPrefix('$aaa');
-            $this->label_authortime->setTextPrefix('$aaa');
-            $this->label_localrec->setTextPrefix('$aaa');
         }
 
         $this->addComponent($this->frame);
@@ -147,7 +113,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
 
     protected function onResize($oldX, $oldY) {
         $this->bg->setSize($this->getSizeX() - 5, $this->getSizeY());
-        $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX()));
+        $scaledSizes = Gui::getScaledSize(self::$ColumnWidths, ($this->getSizeX()));
         $this->label_author->setSizeX($scaledSizes[0]);
         $this->label_map->setSizeX($scaledSizes[1]);
         $this->label_authortime->setSizeX($scaledSizes[2]);

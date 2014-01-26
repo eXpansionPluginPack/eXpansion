@@ -189,7 +189,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->pager->setSize($this->getSizeX() - 6, $this->getSizeY() - 20);
 
-        $this->pager->setPosition(3, -10);
+        $this->pager->setPosition(3, -17);
 
         $this->titlebg->setPosition(3, -9.5);
         $this->titlebg->setSize($this->getSizeX() - 6, 6.5);
@@ -300,7 +300,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         // add items to display
         $x = 0;
 		echo sizeof($this->maps)."\n\n";
-		for($cpt = 0; $cpt < 10; $cpt++){
+		for($cpt = 0; $cpt < 1; $cpt++){
 			foreach ($this->maps as $sortableMap) {
 				$isHistory = false;
 				if (array_key_exists($sortableMap->map->uId, $this->history)) {
@@ -308,14 +308,16 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 				}
 
 				$queueMapAction = $this->createAction(array($this, 'queueMap'), $sortableMap->map);
-				$gotoMapAction = $this->createAction(array($this, 'gotoMap'), $sortableMap->map);
 				$removeMapAction = $this->createAction(array($this, 'removeMap'), $sortableMap->map);
 				$showRecsAction = $this->createAction(array($this, 'showRec'), $sortableMap->map);
 
 				$this->pager->addSimpleItems(array($sortableMap->map->name => $queueMapAction,
 						$sortableMap->map->author => -1,
 						$sortableMap->goldTime => -1,
-						$sortableMap->localrecord => -1
+						$sortableMap->localrecord => -1,
+						$sortableMap->rating->rating => -1,
+						"Recs" => $showRecsAction,
+						"remove" => $removeMapAction
 					));
 
 				/*if ($sortableMap->map->uId == $this->currentMap->uId) {
@@ -327,7 +329,9 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 				$x++;
 			}
 		}
-		
+		Mapitem::$ColumnWidths = $this->widths;
+		$this->pager->setContentLayout('\ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Mapitem');
+		$this->pager->update($this->getRecipient());
         $this->redraw($this->getRecipient());
     }
 

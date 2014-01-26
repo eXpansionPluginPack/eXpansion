@@ -223,7 +223,6 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
     public function getScript() {
         return self::$script;
     }
-
 }
 
 ?>

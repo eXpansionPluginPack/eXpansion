@@ -12,40 +12,28 @@ declare moveScroll = False;
 declare Real pagerStartPos = ScrollBar.RelativePosition.Y;
 declare Real pagerDelta = 0.0;
 
-declare Text[] desc = <?= $this->items;  ?>;
-declare Text[] data = <?= $this->data;  ?>;
-
-declare Text[] tempData;
+declare Text[][Integer] desc = <?= $this->items;  ?>;
+declare Text[][Integer] data = <?= $this->data;  ?>;
 
 declare Integer rowsPerPage = 14;
-declare Integer columnNumber = <?= $this->columnNumber;  ?>;
 declare Integer itemsPerRow = <?= $this->itemsPerRow; ?>;
+declare Integer totalRows = <?= $this->totalRows; ?>;
+
 declare Integer itemNumber;
 
-declare Integer oldIndex = 0;
+declare Integer currentIndex = 0;
 declare Integer nbEventsCounted = 0;
 
 declare Integer nb = 0;
 
 
 nb = 0;                    
-for(r, 0, itemsPerRow) {                 
-    for(i, 0, rowsPerPage) {                   
-        declare CMlLabel item <=> (Page.GetFirstChild("column_"^nb) as CMlLabel);
-
-        if (item != Null) {     
-               if (desc.count >  nb) {
-                  item.SetText(desc[nb]);  
-
-                  if (!tempData.existskey(nb)) {
-                    tempData.add(data[nb]);
-                  }
-                  else  {
-                  tempData[nb] = data[nb];
-                  }
-        }     
-      }        
-       nb += 1; 
+for(i, 0, rowsPerPage) {                   
+    for(r, 0, itemsPerRow-1) {        
+		log("column_"^i^"_"^r);
+		declare CMlLabel item <=> (Page.GetFirstChild("column_"^i^"_"^r) as CMlLabel);    
+        if (item != Null) {                    
+			item.SetText(desc[i][r]);    
+		}        
     }
 }
-  nb = 0;
