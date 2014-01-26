@@ -25,15 +25,24 @@ declare Integer itemNumber;
 declare Integer nb = 0;
 
 
-/*for(i, 0, columnNumber) {
-        
-        if (desc.count > i) {            
-            declare test <=> Page.GetFirstChild("column_"^i) ;                                                                        
-            if (test.HasClass("label")) {
-            declare CMlLabel item <=> (Page.GetFirstChild("column_"^i) as CMlLabel);                                                                        
-                item.SetText(desc[temp+i]);  
-            }
-        }
-} */                                   
+nb = 0;                    
+for(r, 0, itemsPerRow) {                 
+    for(i, 0, rowsPerPage) {                   
+        declare CMlLabel item <=> (Page.GetFirstChild("column_"^nb) as CMlLabel);
 
+        if (item != Null) {     
+               if (desc.count >  nb) {
+                  item.SetText(desc[nb]);  
 
+                  if (!tempData.existskey(nb)) {
+                    tempData.add(data[nb]);
+                  }
+                  else  {
+                  tempData[nb] = data[nb];
+                  }
+        }     
+      }        
+       nb += 1; 
+    }
+}
+  nb = 0;

@@ -110,7 +110,7 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 
             foreach ($this->itemLayout as $elem) {
                 if ($elem instanceof \ManiaLib\Gui\Elements\Label) {
-                    $newelem = new \ManiaLib\Gui\Elements\Label($elem->getSizeX(), $elem->getSizeY());
+                    $newelem = new \ManiaLib\Gui\Elements\Label(25,6);
                     $newelem->setText("column_" . $columnNumber);
                     $newelem->setAttribute("class", "label");
                     $newelem->setId("column_" . $columnNumber);
