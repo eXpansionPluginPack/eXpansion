@@ -48,7 +48,7 @@ class Mapitem extends Control implements OptimizedPagerElement{
         $this->label_map->setTextPrefix('$s');
 		$this->label_map->setId('column_'.$indexNumber.'_0');
 		$this->label_map->setAction($action);
-		$this->label_map->setAttribute("class", "hasAction");
+		$this->label_map->setAttribute("class", "eXpOptimizedPagerAction");
 		$this->label_map->setScriptEvents(1);
         $this->frame->addComponent($this->label_map);
 
@@ -78,7 +78,7 @@ class Mapitem extends Control implements OptimizedPagerElement{
             $this->showRecsButton->setAction($action);
             $this->showRecsButton->setIcon('BgRaceScore2', 'ScoreLink');
 			$this->showRecsButton->setId('column_'.$indexNumber.'_5');
-			$this->showRecsButton->setAttribute("class", "hasAction");
+			$this->showRecsButton->setClass("eXpOptimizedPagerAction");
             $this->actionsFrame->addComponent($this->showRecsButton);
         }
 
@@ -95,7 +95,7 @@ class Mapitem extends Control implements OptimizedPagerElement{
             $this->removeButton->colorize('a22');
             $this->removeButton->setIcon('Icons64x64_1', 'Close');
 			$this->removeButton->setId('column_'.$indexNumber.'_6');
-			$this->removeButton->setAttribute("class", "hasAction");
+			$this->removeButton->setClass("eXpOptimizedPagerAction");
             $this->actionsFrame->addComponent($this->removeButton);
         }
 

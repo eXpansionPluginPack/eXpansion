@@ -71,22 +71,27 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
         $this->label->setFocusAreaColor2("ffff");
 
         $this->frameDescription = new \ManiaLib\Gui\Elements\Frame();
-        $this->frameDescription->setId("Desc_Icon_" . $this->buttonId);
+        //$this->frameDescription->setId("Desc_Icon_" . $this->buttonId);
         $this->frameDescription->setPositionZ(10);
-        $this->frameDescription->setAttribute('hidden', 'true');
+        $this->frameDescription->setHidden(true);
+        $this->frameDescription->setAttribute('class', 'exp_button');
 
         $this->labelDesc = new \ManiaLib\Gui\Elements\Label(20, 6);
         $this->labelDesc->setAlign('left', 'center2');
+		$this->labelDesc->setId("eXp_ButtonDescText_Icon_" . $this->buttonId);
         $this->labelDesc->setPosition(7, 3);
         $this->labelDesc->setPositionZ(5);
+        $this->labelDesc->setAttribute('hidden', '1');
         $this->frameDescription->add($this->labelDesc);
 
         $this->backGroundDesc = new \ManiaLib\Gui\Elements\Quad(32, 6);
         $this->backGroundDesc->setAlign('left', 'center2');
         $this->backGroundDesc->setStyle('Bgs1');
+        $this->backGroundDesc->setId("eXp_ButtonDescBg_Icon_" . $this->buttonId);
         $this->backGroundDesc->setSubStyle('BgCardPlayer');
         $this->backGroundDesc->setPosition(5, 3);
         $this->backGroundDesc->setPositionZ(1);
+		$this->backGroundDesc->setAttribute('hidden', '1');
         $this->frameDescription->add($this->backGroundDesc);
 
         $this->sizeX = $sizeX + 2;
@@ -210,7 +215,21 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
         $this->label->setPosX((($this->sizeX - 2) / 2) + ($this->getSizeY() - 1));
         $this->label->setSizeX($this->getSizeX() - ($this->getSizeY() + 1));
     }
-        
+    
+	public function setId($id) {
+		parent::setId($id);
+		$this->buttonId = $id;
+		if($this->icon != null)
+			 $this->icon->setId($this->buttonId);
+		$this->labelDesc->setId("eXp_ButtonDescText_" . $this->buttonId);
+		$this->backGroundDesc->setId("eXp_ButtonDescBg_" . $this->buttonId);
+	}
+	
+	public function setClass($class){
+		if($this->icon != null)
+			$this->icon->setAttribute('class', $class);
+	}
+	
     function getButtonId() {
         return $this->buttonId;
     }

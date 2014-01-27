@@ -67,7 +67,7 @@
 
    
 		 if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {    
-			 if (Event.Control.HasClass("hasAction")) {
+			 if (Event.Control.HasClass("eXpOptimizedPagerAction")) {
 				declare id = TextLib::Split("_", Event.ControlId);
 				declare Integer row = TextLib::ToInteger(id[1]) + currentIndex;   
 				declare Integer col = TextLib::ToInteger(id[2]);   
