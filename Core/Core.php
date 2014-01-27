@@ -169,9 +169,9 @@ EOT;
         $this->loopTimer = round(microtime(true));
 
         if ($this->config->enableRanksCalc == true) {
-            $this->enableCalculation = false;
-        } else {
             $this->enableApplicationEvents(\ManiaLive\Application\Event::ON_POST_LOOP);
+        } else {
+            $this->enableCalculation = false;
         }
     }
 
@@ -286,11 +286,11 @@ EOT;
                 //$className = '\\ManiaLivePlugins\\' . $plugin_id . '\\' . $parts[1];
                 $className = $plugin_id;
                 if ($className::exp_checkGameCompability() && !$this->isPluginLoaded($plugin_id)) {
-					try{
-						$pHandler->load($plugin_id);
-					} catch (Exception $ex) {
-						$this->console('Plugin : '.$plugin_id.' Maybe already loaded');
-					}
+                    try {
+                        $pHandler->load($plugin_id);
+                    } catch (Exception $ex) {
+                        $this->console('Plugin : ' . $plugin_id . ' Maybe already loaded');
+                    }
                 }
             }
         }
