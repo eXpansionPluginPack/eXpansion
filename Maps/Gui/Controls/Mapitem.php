@@ -5,10 +5,11 @@ namespace ManiaLivePlugins\eXpansion\Maps\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
-use \ManiaLib\Utils\Formatting;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
+use \ManiaLivePlugins\eXpansion\Gui\Structures\OptimizedPagerElement;
+use \ManiaLive\Gui\Control;
 
-class Mapitem extends \ManiaLive\Gui\Control {
+class Mapitem extends Control implements OptimizedPagerElement{
 
 	public static $ColumnWidths;
 	
@@ -70,14 +71,6 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->actionsFrame->setSize($scaledSizes[5], 4);
         $this->actionsFrame->setLayout(new \ManiaLib\Gui\Layouts\Line());
         $this->frame->addComponent($this->actionsFrame);
-
-        /*$this->queueButton = new MyButton(5, 5);
-
-        //$this->queueButton->setDescription(__('Add %1$s $zto wish list', $login, $sortableMap->map->name), 100);
-        $this->queueButton->setAction($this->queueMapAction);
-        $this->queueButton->colorize('2a2');
-        $this->queueButton->setPositionX(2);
-        $this->queueButton->setIcon('Icons128x128_1', 'Race');*/
 		
         if (Maplist::$localrecordsLoaded) {
             $this->showRecsButton = new MyButton(5, 5);
@@ -89,8 +82,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
             $this->actionsFrame->addComponent($this->showRecsButton);
         }
 
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login,
-						'map_remove')) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_remove')) {
 
             $spacer = new \ManiaLib\Gui\Elements\Quad();
             $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
@@ -123,7 +115,7 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->frame->setSize($this->getSizeX() - 5, $this->getSizeY());
     }
 
-// manialive 3.1 override to do nothing.
+	// manialive 3.1 override to do nothing.
     function destroy() {
         
     }
@@ -145,6 +137,10 @@ class Mapitem extends \ManiaLive\Gui\Control {
         $this->clearComponents();
         parent::destroy();
     }
+
+	public function getNbTextColumns() {
+		return 5;
+	}
 
 }
 ?>

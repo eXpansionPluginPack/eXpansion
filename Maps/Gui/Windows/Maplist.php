@@ -208,7 +208,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 
         if (is_object($this->btnRemoveAll))
-            $this->btnRemoveAll->setPosition(3, 4.5);
+            $this->btnRemoveAll->setPosition($this->getSizeX() - 25, 0);
     }
 
     function removeAllMaps($login) {
@@ -311,11 +311,16 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 				$removeMapAction = $this->createAction(array($this, 'removeMap'), $sortableMap->map);
 				$showRecsAction = $this->createAction(array($this, 'showRec'), $sortableMap->map);
 
+				$rate = ($sortableMap->rating->rating / 5) * 100;
+				$rate = round($rate) . "%";
+				if ($sortableMap->rating->rating == -1)
+					$rate = " - ";
+				
 				$this->pager->addSimpleItems(array($sortableMap->map->name => $queueMapAction,
 						$sortableMap->map->author => -1,
-						$sortableMap->goldTime => -1,
+						\ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime) => -1,
 						$sortableMap->localrecord => -1,
-						$sortableMap->rating->rating => -1,
+						$rate => -1,
 						"Recs" => $showRecsAction,
 						"remove" => $removeMapAction
 					));
