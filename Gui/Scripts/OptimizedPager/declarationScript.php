@@ -12,8 +12,9 @@ declare moveScroll = False;
 declare Real pagerStartPos = ScrollBar.RelativePosition.Y;
 declare Real pagerDelta = 0.0;
 
-declare Text[][Integer] desc = <?= $this->items;  ?>;
+declare Text[][Integer] textData = <?= $this->items;  ?>;
 declare Text[][Integer] data = <?= $this->data;  ?>;
+declare CMlLabel[Integer][Integer] labels;
 
 declare Integer rowsPerPage = 14;
 declare Integer itemsPerRow = <?= $this->itemsPerRow; ?>;
@@ -28,12 +29,16 @@ declare Integer nb = 0;
 
 
 nb = 0;                    
-for(i, 0, rowsPerPage) {                   
-    for(r, 0, itemsPerRow-1) {        
-		log("column_"^i^"_"^r);
-		declare CMlLabel item <=> (Page.GetFirstChild("column_"^i^"_"^r) as CMlLabel);    
+for(i, 0, rowsPerPage) {
+
+	labels[i] = CMlLabel[Integer];
+
+    for(r, 0, itemsPerRow-1) {
+		declare CMlLabel item <=> (Page.GetFirstChild("column_"^i^"_"^r) as CMlLabel);
+		labels[i][r] = item;
+		
         if (item != Null) {                    
-			item.SetText(desc[i][r]);    
+			item.SetText(textData[i][r]);    
 		}        
     }
 }

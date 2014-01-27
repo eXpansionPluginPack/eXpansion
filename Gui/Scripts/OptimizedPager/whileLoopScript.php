@@ -18,24 +18,22 @@
 		declare test = MathLib::NearestInteger(percent * (totalRows - 1 - rowsPerPage));
 		//declare index = (test / itemsPerRow) * itemsPerRow;
 		
-
-		
-		if(nbEventsCounted == -1 || nbEventsCounted == 0 ){						
-			nb = 0;
+		if( (nbEventsCounted == -1 || nbEventsCounted == 0) && currentIndex != test){		
+			log("update"^pagerDelta);
 			currentIndex = test;
 			for(i, 0, rowsPerPage) {                   
                  for(r, 0, itemsPerRow-1) { 
-					declare CMlLabel item <=> (Page.GetFirstChild("column_"^i^"_"^r) as CMlLabel);
+					declare CMlLabel item = labels[i][r];
 
 					if (item != Null) {     
-						if (desc.count >  nb) {
-							item.SetText(desc[i+test][r]);                                                          
+						if (textData.count >  nb) {
+							item.SetText(textData[i+test][r]);                                                          
 						}
 					}
-					nb += 1;
 				}  
 			}                                                                               
 		}
+		
 		pagerMouseY = MouseY;  
 		
 		if(nbEventsCounted == -1)
@@ -57,8 +55,14 @@
    foreach (Event in PendingEvents) {
 
 		if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "ScrollBar")  {
-			   pagerMouseY = MouseY;                                            
-			   moveScroll = True;
+			
+			pagerDelta += MouseY - pagerMouseY;
+			if(pagerDelta>4 || pagerDelta <-4){
+				nbEventsCounted = 1;
+			}
+		
+			pagerMouseY = MouseY;                                            
+			moveScroll = True;
 	   }                                   
 
    
