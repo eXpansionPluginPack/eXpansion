@@ -7,17 +7,16 @@ use \ManiaLive\DedicatedApi\Callback\Event;
 class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer {
 
     private $frame;
-    private $xml;
     private $clickAction;
+	
     private $iitems = array();
     private $data = array();
+	
     private $scroll, $bg, $scrollBg;
     private $myScript;
-    private $quadNb;
-    private $buildLayout = true;
-    
-	private $itemLayout = array();
+
 	private $ContentLayout;
+	private $nbElemParColumn;
     
 	private $index = 0;
     function __construct() {
@@ -70,26 +69,11 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
         }
     }
 
-    /** add items */
-    public function addItem(\ManiaLib\Gui\Component $component) {
-        // first detect what items inside
-        $this->detect($component);
-
-        $this->index++;
-        $this->buildLayout = false;
-    }
-
     public function addSimpleItems($items) {
         foreach ($items as $text => $action) {
             $this->iitems[$this->index][] = '"' . $text . '"';
             $this->data[$this->index][] = '"' . $action . '"';
-            if ($this->buildLayout) {
-                $label = new \ManiaLib\Gui\Elements\Label();
-                $this->itemLayout[] = $label;
-            }
         }
-
-        $this->buildLayout = false;
         $this->index++;
     }
 
@@ -109,40 +93,19 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
     public function update($login) {
 		
 		$this->frame->clearComponents();
-		
-		for ($x = 0; $x < 12; $x++) {
-			
+		$layout = null;
+		for ($x = 0; $x < 12; $x++) {		
 			$className = $this->ContentLayout;
 			$layout = new $className($x, $login, $this->clickAction);
 			$this->frame->addComponent($layout);
 		}
-		$columnNumber = 4;
+		$this->nbElemParColumn = $layout->getNbTextColumns();
 	}
 
-
-    public function detect($component) {
-        foreach ($component->getComponents() as $item) {
-
-            if ($item instanceof \ManiaLive\Gui\Controls\Frame) {
-                $this->detect($item);
-            }
-
-            if ($item instanceof \ManiaLib\Gui\Elements\Label) {
-                if ($this->buildLayout) {
-                    $label = new \ManiaLib\Gui\Elements\Label();
-                    $this->itemLayout[] = $label;
-                }
-                /** @var \ManiaLib\Gui\Elements\Label $item */
-                $this->iitems[$this->index][] = '"' . $item->getText() . '"';
-                $this->data[$this->index][] = '"' . $item->getAction() . '"';
-            }
-        }
-    }
-
-    public function clearItems() {
-        
-    }
-
+	public function clearItems(){
+		
+	}
+	
     public function destroy() {
         $this->clearItems();
         //  $this->pager->destroy();
@@ -171,7 +134,7 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
         $data = "[" . trim($data, ",") . "]";       
 
         $this->myScript->setParam("data", $data);
-        $this->myScript->setParam("itemsPerRow", 5);
+        $this->myScript->setParam("itemsPerRow", $this->nbElemParColumn);
         $this->myScript->setParam("totalRows", $totalRows);
         
 
