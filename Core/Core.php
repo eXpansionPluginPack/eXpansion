@@ -158,7 +158,7 @@ EOT;
      */
     public function exp_onReady() {
         $this->config = Config::getInstance();
-        $this->registerChatCommand("info", "showInfo", 0, true);
+        $this->registerChatCommand("server", "showInfo", 0, true);
         $this->registerChatCommand("serverlogin", "serverlogin", 0, true);
         $this->setPublicMethod("showInfo");
         $window = new Gui\Windows\QuitWindow();
