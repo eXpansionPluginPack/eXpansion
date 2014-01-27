@@ -266,11 +266,9 @@ EOT;
         $this->console('Shutting down uncompatible plugins');
 
         foreach ($this->exp_getGameModeCompability() as $plugin => $compability) {
-            $parts = explode('\\', $plugin);
-            $plugin_id = $parts[1] . '\\' . $parts[2];
             if (!$plugin::exp_checkGameCompability()) {
                 try {
-                    $this->callPublicMethod($plugin_id, 'exp_unload');
+                    $this->callPublicMethod($plugin, 'exp_unload');
                 } catch (\Exception $ex) {
                     
                 }
@@ -287,8 +285,12 @@ EOT;
                 //$parts = explode("\\", $plugin_id);
                 //$className = '\\ManiaLivePlugins\\' . $plugin_id . '\\' . $parts[1];
                 $className = $plugin_id;
-                if ($className::exp_checkGameCompability()) {
-                    $pHandler->load($plugin_id);
+                if ($className::exp_checkGameCompability() && !$this->isPluginLoaded($plugin_id)) {
+					try{
+						$pHandler->load($plugin_id);
+					} catch (Exception $ex) {
+						$this->console('Plugin : '.$plugin_id.' Maybe already loaded');
+					}
                 }
             }
         }
