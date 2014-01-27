@@ -94,8 +94,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
                 $highlite = true;
             if (array_key_exists($record->login, $this->storage->spectators))
                 $highlite = true;
-            $this->items[$index - 1] = new Recorditem($index, $record, $this->getRecipient(), $highlite);
-            echo "record item added \n";
+            $this->items[$index - 1] = new Recorditem($index, $record, $this->getRecipient(), $highlite);            
             $this->frame->addComponent($this->items[$index - 1]);
             $index++;
         }
