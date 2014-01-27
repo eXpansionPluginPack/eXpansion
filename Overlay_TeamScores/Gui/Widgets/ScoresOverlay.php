@@ -19,7 +19,7 @@ class ScoresOverlay extends \ManiaLive\Gui\Window {
     public static $action, $action2;
 
     protected function onConstruct() {
-        $this->setPosition(0, 86);
+        $this->setPosition(0, 80);
         $this->setAlign("center", "top");
 
         $this->background = new \ManiaLib\Gui\Elements\Quad();

@@ -27,10 +27,10 @@ class PlayerItem extends \ManiaLive\Gui\Control {
 
         $color = 'eee';
         if ($player->teamId === 0) {
-            $color = '07b';
+            $color = '2cf';
         }
         if ($player->teamId === 1) {
-            $color = 'a00';
+            $color = 'f22';
         }
         if ($player->login == $login)
             $color = '5d5';

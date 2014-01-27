@@ -67,6 +67,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $pospanel->setSize(80, 90);
         $pospanel->setPosition(-158, 20);
         $pospanel->setData(\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo, $this->storage->gameInfos->gameMode, $this->storage->gameInfos->teamMaxPoints);
+        $pospanel->setScale(1.1);
         $pospanel->show();
     }
 
