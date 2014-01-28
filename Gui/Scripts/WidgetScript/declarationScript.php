@@ -12,20 +12,31 @@ declare persistent Boolean exp_enableHudMove = False;
 declare persistent Vec3[Text][Text] exp_widgetLastPos;
 declare persistent Vec3[Text][Text] exp_widgetLastPosRel;			
 declare persistent Boolean[Text][Text] exp_widgetVisible;
+declare persistent Text[Text][Text] exp_widgetLayers;  // layer can be "normal" or "scorestable" or some other for future usage
 
 declare Text version = "<?= $this->version ?>";
 declare Text id = "<?= $this->name ?>";
 declare Boolean forceReset = <?= $this->forceReset ?>;
+declare Text activeLayer = "<?= $win->getLayer() ?>";
 
 if (!exp_widgetVisible.existskey(version) ) {
 	exp_widgetVisible[version] = Boolean[Text];
 }
 
+if (!exp_widgetLayers.existskey(version) ) {
+	exp_widgetLayers[version] = Text[Text];
+}
+
 if ( !exp_widgetVisible[version].existskey(id) || forceReset) {
 	exp_widgetVisible[version][id] = True;
 }
+
 if (!exp_widgetLastPos.existskey(version)) {
 	exp_widgetLastPos[version] = Vec3[Text];
+}
+
+if (!exp_widgetLayers[version].existskey(id) || forceReset) { 
+    exp_widgetLayers[version][id] = "normal";
 }
 
 if (!exp_widgetLastPos[version].existskey(id) || forceReset) {

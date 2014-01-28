@@ -16,7 +16,7 @@ if (!exp_widgetVisible[version].existskey(id)) {
 	exp_widgetVisible[version][id] = True;
 }
 
-if (exp_widgetVisible[version][id] == True) {
+if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer) {
 	Window.Show();
 } else {
 	Window.Hide();

@@ -24,12 +24,15 @@ class ResetHud extends \ManiaLive\Gui\Window {
                         declare persistent Vec3[Text][Text] exp_widgetLastPos;
                         declare persistent Vec3[Text][Text] exp_widgetLastPosRel;
                         declare persistent Boolean[Text][Text] exp_widgetVisible;
+			declare persistent Text[Text][Text] exp_widgetLayers;
+			
                         declare Text version = "' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . '";
                         exp_windowLastPos[version].clear();
                         exp_windowLastPosRel[version].clear();
                         exp_widgetLastPos[version].clear();
                         exp_widgetLastPosRel[version].clear();
                         exp_widgetVisible[version].clear();
+			exp_widgetLayers[version].clear();
                        
                        }
                 --></script>');

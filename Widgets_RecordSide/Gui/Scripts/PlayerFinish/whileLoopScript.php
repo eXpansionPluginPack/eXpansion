@@ -35,6 +35,16 @@ foreach (Player in Players) {
 	}
 }
 
+foreach (Event in PendingEvents) {
+	if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer")  {
+	    log("click");
+	    if (exp_widgetLayers[version][id] == "normal") {
+		 exp_widgetLayers[version][id] = "scorestable";
+	    } else {
+		exp_widgetLayers[version][id] = "normal"; 
+	    }
+	}
+}
 if(needUpdate){	
 	playerTimes = playerTimes.sort();
 	needUpdate = False;
