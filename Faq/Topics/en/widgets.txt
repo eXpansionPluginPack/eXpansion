@@ -1,9 +1,0 @@
-﻿Faq: widgets help 
-!toc|Back to index
-#User Interface: The Widgets
-
-!menu|The Menu 
-!widgets_record|The combined Localrecords and Dedimania widget
-!widgets_times|The checkpoint widget at center of screen
-
-

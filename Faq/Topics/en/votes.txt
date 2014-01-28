@@ -15,6 +15,6 @@
 		3. Select one of the "Callvote"-actions.
 
 	$othe eXpansion-menu:
-		1. Hover mouse to center of the right screen edge
-		2. See menu appearing from the right
-
+                1. Right click anywhere at game window
+                2. Hover to Votes --> 
+                3. Click on either Skip or Restart
