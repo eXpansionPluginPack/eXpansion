@@ -14,6 +14,6 @@ There is 3 ways to access a maplisting of the server.
 		4. You see a listing with actions to interact with the server
 
 	$othe eXpansion-menu:
-		1. Hover mouse to center of the right edge of screen
- 		2. Menu appears from the right
-		3. Select "List Maps"
+		1. Use mouse and right click at game area
+ 		2. Menu appears 
+		3. Select "Maps" -> "List Maps..."

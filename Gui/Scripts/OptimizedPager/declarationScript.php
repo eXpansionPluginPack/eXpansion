@@ -42,3 +42,8 @@ for(i, 0, rowsPerPage) {
 		}        
     }
 }
+
+if (textData.count <= rowsPerPage) {
+    ScrollBar.Hide();
+    ScrollBg.Hide();    
+}

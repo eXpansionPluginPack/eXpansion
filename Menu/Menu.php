@@ -46,7 +46,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->actions['hudReset'] = $actionHandler->createAction(array($this, "actions"), "hudReset");
         $this->actions['stats'] = $actionHandler->createAction(array($this, "actions"), "stats");
         $this->actions['serverinfo'] = $actionHandler->createAction(array($this, "actions"), "serverinfo");
-        
+
         $this->reDraw();
     }
 
@@ -178,9 +178,8 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "map_add")) {
             $submenu->addItem($maps, __("Add local map...", $login), $this->actions['addMaps']);
             $submenu->addItem($maps, __("Mania-Exchange...", $login), $this->actions['admmx']);
-            
         }
-        
+
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "map_remove")) {
             $submenu->addItem($maps, __("Remove this", $login), $this->actions['admremovemap']);
             $submenu->addItem($maps, __("Trash this", $login), $this->actions['admtrashmap']);
@@ -208,20 +207,21 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_cancelvote"))
             $submenu->addItem($votes, __("Cancel Vote", $login), $this->actions['admcancel']);
 
-        $adm = $submenu->addSubMenu($menu, __("Fast Admin", $login));
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_restart"))
-            $submenu->addItem($adm, __("Restart", $login), $this->actions['admres']);
-
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_skip"))
-            $submenu->addItem($adm, __("Skip", $login), $this->actions['admskip']);
-
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_endround"))
-            $submenu->addItem($adm, __("End Round", $login), $this->actions['admer']);
-
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "server_admin")) {
-            $submenu->addItem($adm, __("Control Panel...", $login), $this->actions['admcontrol']);
-        }
+            $adm = $submenu->addSubMenu($menu, __("Admin", $login));
 
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_restart"))
+                $submenu->addItem($adm, __("Restart", $login), $this->actions['admres']);
+
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_skip"))
+                $submenu->addItem($adm, __("Skip", $login), $this->actions['admskip']);
+
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_endround"))
+                $submenu->addItem($adm, __("End Round", $login), $this->actions['admer']);
+
+
+            $submenu->addItem($menu, __("Server Controls", $login), $this->actions['admcontrol']);
+        }
         $submenu->show();
     }
 
