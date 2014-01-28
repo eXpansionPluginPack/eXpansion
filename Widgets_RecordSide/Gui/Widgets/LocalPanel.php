@@ -18,21 +18,28 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     /** @var \ManiaLive\Data\Storage */
     public $storage;
+	public $timeScript;
 
     protected function onConstruct() {
         parent::onConstruct();
         $sizeX = 46;
         $sizeY = 95;
         $this->setName("LocalRecords Panel");
-                
-        /* $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
+        $this->storage = \ManiaLive\Data\Storage::getInstance(); 
+        /*$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui/Scripts/TrayWidget");
           $script->setParam('isMinimized', 'True');
           $script->setParam('autoCloseTimeout', '3500');
           $script->setParam('posXMin', -32);
           $script->setParam('posX', -32);
           $script->setParam('posXMax', -6);
           $this->registerScript($script); */
-
+		
+		$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/PlayerFinish");
+		$this->timeScript = $script;
+		$this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
+		$this->timeScript->setParam("playerTimes", "[]");
+		$this->registerScript($script);
+		
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
@@ -75,7 +82,6 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     function update() {
         $login = $this->getRecipient();
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
         foreach ($this->items as $item)
             $item->destroy();
         $this->items = array();
@@ -85,7 +91,9 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
         $this->lbl_title->setText(__('Local Records', $login));
 
-
+		
+		$recsData = "";
+		
         foreach (Widgets_RecordSide::$localrecords as $record) {
             if ($index > 30)
                 return;
@@ -94,10 +102,16 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
                 $highlite = true;
             if (array_key_exists($record->login, $this->storage->spectators))
                 $highlite = true;
+			if($index >1)
+				$recsData .= ', ';
+			$recsData .= '"'.$record->login .'"=>'. $record->time;
+			
             $this->items[$index - 1] = new Recorditem($index, $record, $this->getRecipient(), $highlite);            
             $this->frame->addComponent($this->items[$index - 1]);
             $index++;
         }
+		$this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
+		$this->timeScript->setParam("playerTimes", "[".$recsData."]");
     }
 
     function destroy() {

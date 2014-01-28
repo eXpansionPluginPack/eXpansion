@@ -96,30 +96,30 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function onUpdateRecords($data) {
         self::$localrecords = $data;
-        $this->needUpdate = self::Localrecords;
+        //$this->needUpdate = self::Localrecords;
     }
 
     public function onDedimaniaUpdateRecords($data) {
         self::$dedirecords = $data['Records'];
-        $this->needUpdate = self::Dedimania;
+        //$this->needUpdate = self::Dedimania;
     }
 
     public function onDedimaniaGetRecords($data) {
         self::$dedirecords = $data['Records'];
-        $this->needUpdate = self::Dedimania;
+       //$this->needUpdate = self::Dedimania;
     }
 
     public function onPlayerConnect($login, $isSpectator) {
         $panel = Gui\Widgets\LocalPanel::Create($login);
+		$panel->update();
         $panel->setPosition(118, 50);
         $panel->setSize(40, 95);
-        $panel->update();
         $panel->show();
 
         $panel = Gui\Widgets\DediPanel::Create($login);
+		$panel->update();
         $panel->setPosition(-160, 60);
         $panel->setSize(40, 95);
-        $panel->update();
         $panel->show();
     }
 
