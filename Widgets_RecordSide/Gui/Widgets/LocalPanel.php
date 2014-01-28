@@ -74,7 +74,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
         $this->bg->setSize($this->sizeX, $this->sizeY+6);
         $this->bg->setPosition(0, -($this->sizeY / 2));
-        $this->frame->setPosition(($this->sizeX / 2)+1, -3);
+        $this->frame->setPosition(($this->sizeX / 2)+1, -6);
         $this->lbl_title->setPosition(($this->sizeX / 2), 0);
 
         //  $this->bg_title->setPosition($this->sizeX / 2, 0);
@@ -93,7 +93,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
 		
 		$recsData = "";
-		
+		$nickData = "";
 		
 		for($index = 1; $index <= 30; $index++){			
 			$this->items[$index - 1] = new Recorditem($index, false);            
@@ -102,22 +102,26 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 		
 		$index = 1;
         foreach (Widgets_RecordSide::$localrecords as $record) {
-			if($index > 1)
+			if($index > 1){
 				$recsData .= ', ';
+				$nickData .= ', ';
+			}
 			$recsData .= '"'.$record->login .'"=>'. $record->time;
+			$nickData .= '"'.$record->login .'"=>"'. $record->nickName.'"';
 			$index++;
         }
 		$this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
 		
 		if(empty($recsData)){
 			$recsData = 'Integer[Text]';
+			$nickData = 'Text[Text]';
 		}else{
 			$recsData = '['.$recsData.']';
+			$nickData = '['.$nickData.']';
 		}
 		
-		echo $recsData;
-		
 		$this->timeScript->setParam("playerTimes", $recsData);
+		$this->timeScript->setParam("playerNicks", $nickData);
     }
 
     function destroy() {

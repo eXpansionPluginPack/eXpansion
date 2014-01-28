@@ -16,16 +16,16 @@
 
 
 Text TimeToText(Integer intime) {
-            declare time = MathLib::Abs(intime);
-            declare Integer cent = time % 1000;                           
-            time = time / 1000;
-            declare Integer sec = time % 60;
-            declare Integer min = time / 60;
-            declare Text sign = "";
-            if (intime < 0)  {
-                sign = "-";
-            }
-            return sign ^ pad(min,2) ^ ":" ^ pad(sec,2) ^ "." ^ pad(cent,3);                                                         
+	declare time = MathLib::Abs(intime);
+	declare Integer cent = time % 1000;                           
+	time = time / 1000;
+	declare Integer sec = time % 60;
+	declare Integer min = time / 60;
+	declare Text sign = "";
+	if (intime < 0)  {
+		sign = "-";
+	}
+	return sign ^ pad(min,2) ^ ":" ^ pad(sec,2) ^ "." ^ pad(cent,3);                                                         
 }   
 
 

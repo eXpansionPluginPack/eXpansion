@@ -19,27 +19,27 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $sizeY = 3;
 
 
-        if ($highlite) {
-            $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-            /* $this->bg->setStyle("Bgs1InRace");
-              $this->bg->setStyle("NavButtonBlink"); */
-            $this->bg->setAlign('left', 'center');
-            $this->bg->setBgcolor('6af5');
-            $this->addComponent($this->bg);
-        }
+		$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+		/* $this->bg->setStyle("Bgs1InRace");
+		  $this->bg->setStyle("NavButtonBlink"); */
+		$this->bg->setAlign('left', 'center');
+		$this->bg->setBgcolor('6af5');
+		$this->bg->setHidden(1);
+		$this->bg->setId("RecBg_".$index);
+		$this->addComponent($this->bg);
+        
 
         $this->label = new \ManiaLib\Gui\Elements\Label(4, 4);
         $this->label->setAlign('right', 'center');
         $this->label->setPosition(3, 0);
         $this->label->setStyle("TextRaceChat");
+		$this->label->setId("RecRank_".$index);
         $this->label->setScale(0.75);
         $this->label->setTextSize(1);
-
-        $this->label->setText($index);
         $this->label->setTextColor('ff0');
         $this->addComponent($this->label);
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(14, 5);
+        $this->label = new \ManiaLib\Gui\Elements\Label(11, 5);
         $this->label->setPosX(3.7);
         $this->label->setAlign('left', 'center');
         $this->label->setStyle("TextRaceChat");

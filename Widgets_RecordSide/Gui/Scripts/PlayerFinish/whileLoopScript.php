@@ -1,8 +1,13 @@
 foreach (Player in Players) {
-	//If first checkpoint time or new checkpoint tile
+	//If first checkpoint time or new checkpoint time
 	if (!playerCheckPoint.existskey(Player.Login)){
 		playerCheckPoint[Player.Login] = -1;
 	}
+	//First encounter get nicknamed
+	if(!playerNickName.existskey(Player.Login)){
+		playerNickName[Player.Login] = Player.Name;
+	}
+	
 	if(playerCheckPoint[Player.Login] != Player.CurRace.Checkpoints.count) {
 		
 		//Update the current checkpoint of this user
@@ -32,22 +37,75 @@ foreach (Player in Players) {
 
 if(needUpdate){	
 	playerTimes = playerTimes.sort();
-	log(playerTimes);
 	needUpdate = False;
 	
 	declare i = 1;
+	declare nbRec = 1;
+	declare showed = False;
 	
+	declare myRank = -1;
+	declare start = -1;
+	declare end = -1;
+	declare recCount = -1;
+	
+	if(playerTimes.count > nbShow){
+		recCount = nbShow;
+	}else{
+		recCount = playerTimes.count;
+	}
+	
+	i = 1;
+	foreach (Login => Score in playerTimes) {
+		if(Login == InputPlayer.Login){
+			myRank = i;
+			break;
+		}
+		i += 1;
+	}
+	
+	if(myRank != -1){
+		start = myRank - ((nbFields - nbFirstFields)/2);
+		
+		if(start <= nbFirstFields){
+			start = nbFirstFields;
+			end = start + (nbFields - nbFirstFields);
+		}else{
+			end = start + (nbFields - nbFirstFields);
+			if(end > recCount){
+				end = recCount;
+				start = end - (nbFields - nbFirstFields);
+			}
+		}
+	}else{
+		start = nbFirstFields;
+		end = start + (nbFields - nbFirstFields);
+	}
+	
+	i = 1;
+	nbRec = 1;
 	foreach (Login => Score in playerTimes) {
         
-		declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
-		declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
-		
-		if(nickLabel != Null){
-			nickLabel.SetText(Login);
-			timeLabel.SetText(TimeToText(Score));
+		if((nbRec <= nbFirstFields || (nbRec > start && nbRec <= end) ) && nbRec <= nbShow && i <= nbFields){
+	
+			declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
+			declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
+
+			if(nickLabel != Null){
+			
+				putRecordTo(i, nbRec, Score, Login,  playerNickName[Login], Login == InputPlayer.Login);
+				
+				if(Login == InputPlayer.Login){
+					showed = True;
+				}
+			}
+			i += 1;
 		}		
-		i += 1;
-		if(i >= nbFields)
-			break;
+		nbRec += 1;		
+		
+		if(nbRec > nbShow){
+		
+		}
 	}
+	
+	
 }

@@ -10,7 +10,7 @@ foreach (Player in Players) {
 			if (curCp > 0 && curCp != totalCp) {
 				if (Checkpoints.count > curCp && Checkpoints[curCp] != -1) {
 					declare Integer diff = (Player.CurRace.Checkpoints[curCp-1] - Checkpoints[curCp-1]);
-					log(diff);
+					//log(diff);
 					declare Text color = "$f00$s";
 					 if (diff <= 0) {
 						color = "$00f$s";
