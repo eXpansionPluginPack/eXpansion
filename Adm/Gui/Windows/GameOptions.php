@@ -20,7 +20,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $nextGameInfo;
     protected $actionOK, $actionCancel, $actionTA, $actionRounds, $actionLaps, $actionCup, $actionTeam;
     protected $btn_ta, $btn_rounds, $btn_cup, $btn_team, $btn_laps, $buttonOK, $buttonCancel;
-    protected $frameGameMode, $frameGeneral, $frameCup, $frameTa, $frameRounds, $frameContainer;
+    protected $frameGameMode, $frameGeneral, $frameCup, $frameTa, $frameRounds, $frameLaps, $frameContainer;
     private $e = array();
     private $nextMode = null;
 
@@ -88,9 +88,14 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameCup->setLayout(new \ManiaLib\Gui\Layouts\Line());
         $this->frameCup->setSize(160, 8);
 
+        $this->frameLaps = new \ManiaLive\Gui\Controls\Frame();
+        $this->frameLaps->setAlign("left", "top");
+        $this->frameLaps->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $this->frameLaps->setSize(160, 8);
+
         $this->e['ChatTime'] = new Inputbox("ChatTime");
         $this->e['ChatTime']->setText(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->chatTime));
-        $this->e['ChatTime']->setLabel(__("Podium Chat time", $login));
+        $this->e['ChatTime']->setLabel(__("Podium: Chat Time", $login));
         $this->frameGeneral->addComponent($this->e['ChatTime']);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad(4, 4);
@@ -98,7 +103,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameGeneral->addComponent($spacer);
 
         $this->e['AllWUduration'] = new Inputbox("AllWarmupDuration");
-        $this->e['AllWUduration']->setLabel(__("All Warmup Duration", $login));
+        $this->e['AllWUduration']->setLabel(__("All: Warmup Duration", $login));
         $this->e['AllWUduration']->setText($this->nextGameInfo->allWarmUpDuration);
         $this->frameGeneral->addComponent($this->e['AllWUduration']);
 
@@ -107,7 +112,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameGeneral->addComponent($spacer);
 
         $this->e['finishTimeout'] = new Inputbox("finishTimeOut");
-        $this->e['finishTimeout']->setLabel(__("finishTimeout", $login));
+        $this->e['finishTimeout']->setLabel(__("All: Finish Timeout", $login));
         $this->e['finishTimeout']->setText(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->finishTimeout));
         $this->frameGeneral->addComponent($this->e['finishTimeout']);
 
@@ -116,7 +121,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         // ta
 
         $this->e['timeAttackLimit'] = new Inputbox("timeAttackLimit");
-        $this->e['timeAttackLimit']->setLabel(__("timeAttackLimit", $login));
+        $this->e['timeAttackLimit']->setLabel(__("TimeAttack: Time Limit", $login));
         $this->e['timeAttackLimit']->setText(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->timeAttackLimit));
         $this->frameTa->addComponent($this->e['timeAttackLimit']);
 
@@ -125,7 +130,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameTa->addComponent($spacer);
 
         $this->e['timeAttackSynchStartPeriod'] = new Inputbox("timeAttackSynchStartPeriod");
-        $this->e['timeAttackSynchStartPeriod']->setLabel(__("timeAttackSynchStartPeriod", $login));
+        $this->e['timeAttackSynchStartPeriod']->setLabel(__("TimeAttack: Synch Start Period", $login));
         $this->e['timeAttackSynchStartPeriod']->setText($this->nextGameInfo->timeAttackSynchStartPeriod);
         $this->frameTa->addComponent($this->e['timeAttackSynchStartPeriod']);
 
@@ -133,7 +138,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         // rounds
         $this->e['roundsPointsLimit'] = new Inputbox("roundsPointsLimit");
-        $this->e['roundsPointsLimit']->setLabel(__("roundsPointsLimit", $login));
+        $this->e['roundsPointsLimit']->setLabel(__("Rounds: Points Limit", $login));
         $this->e['roundsPointsLimit']->setText($this->nextGameInfo->roundsPointsLimit);
         $this->frameRounds->addComponent($this->e['roundsPointsLimit']);
 
@@ -142,7 +147,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameRounds->addComponent($spacer);
 
         $this->e['roundsForcedLaps'] = new Inputbox("roundsForcedLaps");
-        $this->e['roundsForcedLaps']->setLabel(__("roundsForcedLaps", $login));
+        $this->e['roundsForcedLaps']->setLabel(__("Rounds: Set Number of Forced Laps", $login));
         $this->e['roundsForcedLaps']->setText($this->nextGameInfo->roundsForcedLaps);
         $this->frameRounds->addComponent($this->e['roundsForcedLaps']);
 
@@ -151,7 +156,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameRounds->addComponent($spacer);
 
         $this->e['roundsPointsLimitNewRules'] = new Inputbox("roundsPointsLimitNewRules");
-        $this->e['roundsPointsLimitNewRules']->setLabel(__("roundsPointsLimitNewRules", $login));
+        $this->e['roundsPointsLimitNewRules']->setLabel(__("Rounds: Points Limit (NewRules)", $login));
         $this->e['roundsPointsLimitNewRules']->setText($this->nextGameInfo->roundsPointsLimitNewRules);
         $this->frameRounds->addComponent($this->e['roundsPointsLimitNewRules']);
 
@@ -160,7 +165,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         // Team
 
         $this->e['teamPointsLimit'] = new Inputbox("teamPointsLimit");
-        $this->e['teamPointsLimit']->setLabel(__("teamPointsLimit", $login));
+        $this->e['teamPointsLimit']->setLabel(__("Team: Points Limit", $login));
         $this->e['teamPointsLimit']->setText($this->nextGameInfo->teamPointsLimit);
         $this->frameTeam->addComponent($this->e['teamPointsLimit']);
 
@@ -169,7 +174,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameTeam->addComponent($spacer);
 
         $this->e['teamMaxPoints'] = new Inputbox("teamMaxPoints");
-        $this->e['teamMaxPoints']->setLabel(__("teamMaxPoints", $login));
+        $this->e['teamMaxPoints']->setLabel(__("Team: Max Points For a Round", $login));
         $this->e['teamMaxPoints']->setText($this->nextGameInfo->teamMaxPoints);
         $this->frameTeam->addComponent($this->e['teamMaxPoints']);
 
@@ -178,13 +183,13 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameTeam->addComponent($spacer);
 
         $this->e['teamPointsLimitNewRules'] = new Inputbox("teamPointsLimitNewRules");
-        $this->e['teamPointsLimitNewRules']->setLabel(__("teamPointsLimitNewRules", $login));
+        $this->e['teamPointsLimitNewRules']->setLabel(__("Team: Points Limit (NewRules)", $login));
         $this->e['teamPointsLimitNewRules']->setText($this->nextGameInfo->teamPointsLimitNewRules);
         $this->frameTeam->addComponent($this->e['teamPointsLimitNewRules']);
         $this->frameContainer->addComponent($this->frameTeam);
 
         $this->e['cupPointsLimit'] = new Inputbox("cupPointsLimit");
-        $this->e['cupPointsLimit']->setLabel(__("cupPointsLimit", $login));
+        $this->e['cupPointsLimit']->setLabel(__("Cup: Points Limit", $login));
         $this->e['cupPointsLimit']->setText($this->nextGameInfo->cupPointsLimit);
         $this->frameCup->addComponent($this->e['cupPointsLimit']);
 
@@ -194,7 +199,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameCup->addComponent($spacer);
 
         $this->e['cupNbWinners'] = new Inputbox("cupNbWinners");
-        $this->e['cupNbWinners']->setLabel(__("cupNbWinners", $login));
+        $this->e['cupNbWinners']->setLabel(__("Cup: Number of Winners", $login));
         $this->e['cupNbWinners']->setText($this->nextGameInfo->cupNbWinners);
         $this->frameCup->addComponent($this->e['cupNbWinners']);
 
@@ -203,12 +208,26 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameCup->addComponent($spacer);
 
         $this->e['cupRoundsPerMap'] = new Inputbox("cupRoundsPerMap");
-        $this->e['cupRoundsPerMap']->setLabel(__("cupRoundsPerMap", $login));
+        $this->e['cupRoundsPerMap']->setLabel(__("cup Rounds Per Map", $login));
         $this->e['cupRoundsPerMap']->setText($this->nextGameInfo->cupRoundsPerMap);
         $this->frameCup->addComponent($this->e['cupRoundsPerMap']);
-
         $this->frameContainer->addComponent($this->frameCup);
 
+        $this->e['lapsNbLaps'] = new Inputbox("lapsNbLaps");
+        $this->e['lapsNbLaps']->setLabel(__("Laps: Number of Laps", $login));
+        $this->e['lapsNbLaps']->setText($this->nextGameInfo->lapsNbLaps);
+        $this->frameLaps->addComponent($this->e['lapsNbLaps']);
+
+        $spacer = new \ManiaLib\Gui\Elements\Quad(4, 4);
+        $spacer->setStyle(\ManiaLib\Gui\Elements\Bgs1InRace::BgEmpty);
+        $this->frameLaps->addComponent($spacer);
+
+        $this->e['lapsTimeLimit'] = new Inputbox("lapsTimeLimit");
+        $this->e['lapsTimeLimit']->setLabel(__("Laps: Time Limit", $login));
+        $this->e['lapsTimeLimit']->setText(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->lapsTimeLimit));
+        $this->frameLaps->addComponent($this->e['lapsTimeLimit']);
+
+        $this->frameContainer->addComponent($this->frameLaps);
 
         $this->mainFrame->addComponent($this->frameContainer);
     }
@@ -345,10 +364,13 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $gameInfos->teamMaxPoints = intval($options['teamMaxPoints']);
 
         // cup
-
         $gameInfos->cupNbWinners = intval($options['cupNbWinners']);
         $gameInfos->cupPointsLimit = intval($options['cupPointsLimit']);
         $gameInfos->cupRoundsPerMap = intval($options['cupRoundsPerMap']);
+
+        //laps
+        $gameInfos->lapsNbLaps = intval($options['lapsNbLaps']);
+        $gameInfos->lapsTimeLimit = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['lapsTimeLimit']);
 
         $this->connection->setGameInfos($gameInfos);
         $this->Erase($login);
