@@ -143,7 +143,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->searchframe->addComponent($this->btn_search);
 
 
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager();        
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager();
         $this->mainFrame->addComponent($this->pager);
 
         if (array_key_exists($login, Maps::$playerSortModes) == false) {
@@ -245,7 +245,6 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $item->erase();
         }
 
-        $this->pager->clearItems();
         $this->items = array();
 
 
@@ -258,14 +257,23 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         foreach ($maps as $map) {
             $localrecord = "-";
             $rating = new \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating(-1, 0);
-            if ($this->search($map) > 65) {
-                if (array_key_exists($map->uId, $this->records)) {
-                    if ($this->records[$map->uId] <= $maxrec)
-                        $localrecord = $this->records[$map->uId];
+            if (array_key_exists($map->uId, $this->records)) {
+                if ($this->records[$map->uId] <= $maxrec)
+                    $localrecord = $this->records[$map->uId];
+            }
+            if (array_key_exists($map->uId, $this->ratings)) {
+                $rating = $this->ratings[$map->uId];
+            }
+
+            if (!empty(Maps::$searchTerm[$login])) {
+                $substring = $this->shortest_edit_substring(Maps::$searchTerm[$login], \ManiaLib\Utils\Formatting::stripStyles($map->name));
+                $dist = $this->edit_distance(Maps::$searchTerm[$login], $substring);
+                if (!empty($substring) && $dist < 2) {
+                    echo "adding search map: " . \ManiaLib\Utils\Formatting::stripStyles($map->name) . "\n";
+                    $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $maxrec, $rating);
                 }
-                if (array_key_exists($map->uId, $this->ratings)) {                                        
-                    $rating = $this->ratings[$map->uId];
-                }
+            } else {
+                echo "adding default map \n";
                 $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $maxrec, $rating);
             }
         }
@@ -299,44 +307,45 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         // add items to display
         $x = 0;
-		echo sizeof($this->maps)."\n\n";
-		for($cpt = 0; $cpt < 1; $cpt++){
-			foreach ($this->maps as $sortableMap) {
-				$isHistory = false;
-				if (array_key_exists($sortableMap->map->uId, $this->history)) {
-					$isHistory = true;
-				}
+        echo sizeof($this->maps) . "\n\n";
 
-				$queueMapAction = $this->createAction(array($this, 'queueMap'), $sortableMap->map);
-				$removeMapAction = $this->createAction(array($this, 'removeMap'), $sortableMap->map);
-				$showRecsAction = $this->createAction(array($this, 'showRec'), $sortableMap->map);
 
-				$rate = ($sortableMap->rating->rating / 5) * 100;
-				$rate = round($rate) . "%";
-				if ($sortableMap->rating->rating == -1)
-					$rate = " - ";
-				
-				$this->pager->addSimpleItems(array($sortableMap->map->name => $queueMapAction,
-						$sortableMap->map->author => -1,
-						\ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime) => -1,
-						$sortableMap->localrecord => -1,
-						$rate => -1,
-						"Recs" => $showRecsAction,
-						"remove" => $removeMapAction
-					));
+        foreach ($this->maps as $sortableMap) {
+            $isHistory = false;
+            if (array_key_exists($sortableMap->map->uId, $this->history)) {
+                $isHistory = true;
+            }
 
-				/*if ($sortableMap->map->uId == $this->currentMap->uId) {
-					$this->items[$x] = new MapitemCurrent($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
-				} else {
-					$this->items[$x] = new Mapitem($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
-				}
-				$this->pager->addItem($this->items[$x]);*/
-				$x++;
-			}
-		}
-		Mapitem::$ColumnWidths = $this->widths;
-		$this->pager->setContentLayout('\ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Mapitem');
-		$this->pager->update($this->getRecipient());
+            $queueMapAction = $this->createAction(array($this, 'queueMap'), $sortableMap->map);
+            $removeMapAction = $this->createAction(array($this, 'removeMap'), $sortableMap->map);
+            $showRecsAction = $this->createAction(array($this, 'showRec'), $sortableMap->map);
+
+            $rate = ($sortableMap->rating->rating / 5) * 100;
+            $rate = round($rate) . "%";
+            if ($sortableMap->rating->rating == -1)
+                $rate = " - ";
+
+            $this->pager->addSimpleItems(array($sortableMap->map->name => $queueMapAction,
+                $sortableMap->map->author => -1,
+                \ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime) => -1,
+                $sortableMap->localrecord => -1,
+                $rate => -1,
+                "Recs" => $showRecsAction,
+                "remove" => $removeMapAction
+            ));
+
+            /* if ($sortableMap->map->uId == $this->currentMap->uId) {
+              $this->items[$x] = new MapitemCurrent($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
+              } else {
+              $this->items[$x] = new Mapitem($x, $login, $sortableMap, $this, $isAdmin, $isHistory, $this->widths, $this->getSizeX());
+              }
+              $this->pager->addItem($this->items[$x]); */
+            $x++;
+        }
+
+        Mapitem::$ColumnWidths = $this->widths;
+        $this->pager->setContentLayout('\ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Mapitem');
+        $this->pager->update($this->getRecipient());
         $this->redraw($this->getRecipient());
     }
 
@@ -380,18 +389,115 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->redraw($login);
     }
 
-    /**
-     * 
-     * @param \Maniaplanet\DedicatedServer\Structures\Map $map
-     * @return int similarity percentage of the string
-     */
-    function search(\Maniaplanet\DedicatedServer\Structures\Map $map) {
-        $login = $this->getRecipient();
-        if (empty(Maps::$searchTerm[$login]))
-            return 100;
+    // utility function - returns the key of the array minimum
+    function array_min_key($arr) {
+        $min_key = null;
+        $min = PHP_INT_MAX;
+        foreach ($arr as $k => $v) {
+            if ($v < $min) {
+                $min = $v;
+                $min_key = $k;
+            }
+        }
+        return $min_key;
+    }
 
-        similar_text(Maps::$searchTerm[$login], \ManiaLib\Utils\Formatting::stripStyles($map->name), $percent);
-        return $percent;
+    /*
+      Following code is from experts-exchange answer:
+     */
+
+    // Calculate the edit distance between two strings
+    function edit_distance($string1, $string2) {
+        $m = strlen($string1);
+        $n = strlen($string2);
+        $d = array();
+
+        // the distance from '' to substr(string,$i)
+        for ($i = 0; $i <= $m; $i++)
+            $d[$i][0] = $i;
+        for ($i = 0; $i <= $n; $i++)
+            $d[0][$i] = $i;
+
+        // fill-in the edit distance matrix
+        for ($j = 1; $j <= $n; $j++) {
+            for ($i = 1; $i <= $m; $i++) {
+                // Using, for example, the levenshtein distance as edit distance
+                list($p_i, $p_j, $cost) = $this->levenshtein_weighting($i, $j, $d, $string1, $string2);
+                $d[$i][$j] = $d[$p_i][$p_j] + $cost;
+            }
+        }
+
+        return $d[$m][$n];
+    }
+
+// Helper function for edit_distance()
+    function levenshtein_weighting($i, $j, $d, $string1, $string2) {
+        // if the two letters are equal, cost is 0
+        if ($string1[$i - 1] === $string2[$j - 1]) {
+            return array($i - 1, $j - 1, 0);
+        }
+
+        // cost we assign each operation
+        $cost['delete'] = 1;
+        $cost['insert'] = 1;
+        $cost['substitute'] = 1;
+
+        // cost of operation + cost to get to the substring we perform it on
+        $total_cost['delete'] = $d[$i - 1][$j] + $cost['delete'];
+        $total_cost['insert'] = $d[$i][$j - 1] + $cost['insert'];
+        $total_cost['substitute'] = $d[$i - 1][$j - 1] + $cost['substitute'];
+
+        // return the parent array keys of $d and the operation's cost
+        $min_key = $this->array_min_key($total_cost);
+        if ($min_key == 'delete') {
+            return array($i - 1, $j, $cost['delete']);
+        } elseif ($min_key == 'insert') {
+            return array($i, $j - 1, $cost['insert']);
+        } else {
+            return array($i - 1, $j - 1, $cost['substitute']);
+        }
+    }
+
+// attempt to find the substring of $haystack most closely matching $needle
+    function shortest_edit_substring($needle, $haystack) {
+        // initialize edit distance matrix
+        $m = strlen($needle);
+        $n = strlen($haystack);
+        $d = array();
+        for ($i = 0; $i <= $m; $i++) {
+            $d[$i][0] = $i;
+            $backtrace[$i][0] = null;
+        }
+        // instead of strlen, we initialize the top row to all 0's
+        for ($i = 0; $i <= $n; $i++) {
+            $d[0][$i] = 0;
+            $backtrace[0][$i] = null;
+        }
+
+        // same as the edit_distance calculation, but keep track of how we got there
+        for ($j = 1; $j <= $n; $j++) {
+            for ($i = 1; $i <= $m; $i++) {
+                list($p_i, $p_j, $cost) = $this->levenshtein_weighting($i, $j, $d, $needle, $haystack);
+                $d[$i][$j] = $d[$p_i][$p_j] + $cost;
+                $backtrace[$i][$j] = array($p_i, $p_j);
+            }
+        }
+
+        // now find the minimum at the bottom row
+        $min_key = $this->array_min_key($d[$m]);
+        $current = array($m, $min_key);
+        $parent = $backtrace[$m][$min_key];
+
+        // trace up path to the top row
+        while (!is_null($parent)) {
+            $current = $parent;
+            $parent = $backtrace[$current[0]][$current[1]];
+        }
+
+        // and take a substring based on those results
+        $start = $current[1];
+        $end = $min_key;
+        return substr($haystack, $start, $end - $start);
     }
 
 }

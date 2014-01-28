@@ -15,7 +15,7 @@
 		ScrollBar.RelativePosition.Y = pagerDelta;            
 
 		declare percent = 1 - (MathLib::Abs(max) -  MathLib::Abs(pagerDelta)) / MathLib::Abs(max);      
-		declare test = MathLib::NearestInteger(percent * (totalRows - 1 - rowsPerPage));
+		declare test = MathLib::NearestInteger(percent * (totalRows - rowsPerPage + 2));
 		//declare index = (test / itemsPerRow) * itemsPerRow;
 		
 		if( (nbEventsCounted == -1 || nbEventsCounted == 0) && currentIndex != test){		

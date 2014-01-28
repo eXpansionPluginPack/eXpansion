@@ -62,6 +62,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod("replayMapInstant");
         $this->setPublicMethod("returnQueue");
         $this->setPublicMethod("showMapList");
+        $this->setPublicMethod("addMaps");
     }
 
     public function exp_onReady() {
@@ -126,7 +127,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, true);
 
         $this->preloadHistory();
-        $this->showMapList("oliverde8");
+        //$this->showMapList("oliverde8");
     }
 
     public function exp_onLoad() {

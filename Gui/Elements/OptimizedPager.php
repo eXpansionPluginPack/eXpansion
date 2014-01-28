@@ -8,17 +8,14 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 
     private $frame;
     private $clickAction;
-	
     private $iitems = array();
     private $data = array();
-	
     private $scroll, $bg, $scrollBg;
     private $myScript;
+    private $ContentLayout;
+    private $nbElemParColumn;
+    private $index = 0;
 
-	private $ContentLayout;
-	private $nbElemParColumn;
-    
-	private $index = 0;
     function __construct() {
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad();
@@ -55,7 +52,7 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
         $entry = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("item");
         $entry->setId("entry");
         $entry->setScriptEvents();
-        $entry->setPosition(0, 0);
+        $entry->setPosition(900, 900);
         $this->addComponent($entry);
 
         $this->myScript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\OptimizedPager");
@@ -67,6 +64,12 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
             $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($login);
             \ManiaLive\Gui\ActionHandler::getInstance()->onPlayerManialinkPageAnswer(intval($player->playerId), $login, intval($entries['item']), array());
         }
+    }
+
+    function clearItems() {
+        $this->iitems = array();
+        $this->data = array();
+        $this->index = 0;
     }
 
     public function addSimpleItems($items) {
@@ -81,31 +84,27 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
         $args = func_get_args();
         $this->sizeX = $args[0];
         $this->sizeY = $args[1];
-		$this->scroll->setPosition($this->sizeX - 3, 0);
-		$this->scrollBg->setPosition($this->sizeX - 3);
-		$this->scrollBg->setSizeY($this->sizeY);
+        $this->scroll->setPosition($this->sizeX - 3, 0);
+        $this->scrollBg->setPosition($this->sizeX - 3);
+        $this->scrollBg->setSizeY($this->sizeY);
     }
-	
-	public function setContentLayout($className){
-		$this->ContentLayout = $className;
-	}
+
+    public function setContentLayout($className) {
+        $this->ContentLayout = $className;
+    }
 
     public function update($login) {
-		
-		$this->frame->clearComponents();
-		$layout = null;
-		for ($x = 0; $x < 12; $x++) {		
-			$className = $this->ContentLayout;
-			$layout = new $className($x, $login, $this->clickAction);
-			$this->frame->addComponent($layout);
-		}
-		$this->nbElemParColumn = $layout->getNbTextColumns();
-	}
 
-	public function clearItems(){
-		
-	}
-	
+        $this->frame->clearComponents();
+        $layout = null;
+        for ($x = 0; $x < 12; $x++) {
+            $className = $this->ContentLayout;
+            $layout = new $className($x, $login, $this->clickAction);
+            $this->frame->addComponent($layout);
+        }
+        $this->nbElemParColumn = $layout->getNbTextColumns();
+    }
+
     public function destroy() {
         $this->clearItems();
         //  $this->pager->destroy();
@@ -118,25 +117,26 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
     }
 
     public function getScript() {
+        echo "getScript:" . count($this->iitems) . "\n";
         $totalRows = 0;
         $items = "";
-        foreach ($this->iitems as $row => $elem) {            
+        foreach ($this->iitems as $row => $elem) {
             $totalRows++;
             $items .= $row . ' => [ ' . implode(",", $elem) . '],';
         }
-        $items = "[" . trim($items, ",") . "]";       
+        $items = "[" . trim($items, ",") . "]";
         $this->myScript->setParam("items", $items);
-        
+
         $data = "";
         foreach ($this->data as $row => $elem) {
             $data .= $row . ' => [ ' . implode(",", $elem) . '],';
         }
-        $data = "[" . trim($data, ",") . "]";       
+        $data = "[" . trim($data, ",") . "]";
 
         $this->myScript->setParam("data", $data);
         $this->myScript->setParam("itemsPerRow", $this->nbElemParColumn);
         $this->myScript->setParam("totalRows", $totalRows);
-        
+
 
         return $this->myScript;
     }

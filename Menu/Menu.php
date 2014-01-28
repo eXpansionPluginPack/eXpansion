@@ -27,6 +27,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->actions['playerlist'] = $actionHandler->createAction(array($this, "actions"), "playerlist");
         $this->actions['maplist'] = $actionHandler->createAction(array($this, "actions"), "maplist");
         $this->actions['maprecords'] = $actionHandler->createAction(array($this, "actions"), "maprecords");
+        $this->actions['addMaps'] = $actionHandler->createAction(array($this, "actions"), "addMaps");
         $this->actions['voteres'] = $actionHandler->createAction(array($this, "actions"), "voteres");
         $this->actions['voteskip'] = $actionHandler->createAction(array($this, "actions"), "voteskip");
         $this->actions['admres'] = $actionHandler->createAction(array($this, "actions"), "admres");
@@ -45,6 +46,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->actions['hudReset'] = $actionHandler->createAction(array($this, "actions"), "hudReset");
         $this->actions['stats'] = $actionHandler->createAction(array($this, "actions"), "stats");
         $this->actions['serverinfo'] = $actionHandler->createAction(array($this, "actions"), "serverinfo");
+        
         $this->reDraw();
     }
 
@@ -57,6 +59,9 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 break;
             case "maplist":
                 $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Maps\\Maps", "showMapList", $login);
+                break;
+            case "addMaps":
+                $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Maps\\Maps", "addMaps", $login);
                 break;
             case "maprecords":
                 $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, Null);
@@ -171,8 +176,11 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $maps = $submenu->addSubMenu($menu, __("Map", $login));
         $submenu->addItem($maps, __("List Maps...", $login), $this->actions['maplist']);
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "map_add")) {
+            $submenu->addItem($maps, __("Add local map...", $login), $this->actions['addMaps']);
             $submenu->addItem($maps, __("Mania-Exchange...", $login), $this->actions['admmx']);
+            
         }
+        
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "map_remove")) {
             $submenu->addItem($maps, __("Remove this", $login), $this->actions['admremovemap']);
             $submenu->addItem($maps, __("Trash this", $login), $this->actions['admtrashmap']);
