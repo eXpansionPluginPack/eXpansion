@@ -14,7 +14,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
     private $time;
     private $frame;
 
-    function __construct($index, \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record, $login, $highlite) {
+    function __construct($index, $highlite) {
         $sizeX = 40;
         $sizeY = 3;
 
@@ -37,11 +37,6 @@ class Recorditem extends \ManiaLive\Gui\Control {
 
         $this->label->setText($index);
         $this->label->setTextColor('ff0');
-        if ($record->login == $login) {
-            $this->label->setStyle("TextTitle2Blink");
-            $this->label->setScale(0.67);
-            $this->label->setTextColor('09f');
-        }
         $this->addComponent($this->label);
 
         $this->label = new \ManiaLib\Gui\Elements\Label(14, 5);
@@ -50,14 +45,8 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $this->label->setStyle("TextRaceChat");
         $this->label->setScale(0.75);
         $this->label->setTextSize(1);
-        $this->label->setText(\ManiaLive\Utilities\Time::fromTM($record->time));
+        $this->label->setId("RecTime_".$index);
         $this->label->setTextColor('fff');
-        if ($record->login == $login) {
-            $this->label->setStyle("TextTitle2Blink");
-            $this->label->setTextSize(1);
-            $this->label->setScale(0.67);
-            $this->label->setTextColor('0ff');
-        }
         $this->addComponent($this->label);
 
         $this->nick = new \ManiaLib\Gui\Elements\Label(30, 4);
@@ -67,14 +56,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
         $this->nick->setScale(0.75);
         $this->nick->setTextSize(1);
         $this->nick->setTextColor('fff');
-        if ($record->login == $login) {
-            $this->nick->setStyle("TextTitle2Blink");
-            $this->nick->setScale(0.67);
-            $this->nick->setTextColor('09f');
-        }
-
-        $nickname = $record->nickName;
-        $this->nick->setText($nickname);
+		$this->nick->setId("RecNick_".$index);
         $this->addComponent($this->nick);
 
         // $this->addComponent($this->frame);

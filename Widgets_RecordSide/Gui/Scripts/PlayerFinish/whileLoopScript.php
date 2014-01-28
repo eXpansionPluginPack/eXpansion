@@ -33,6 +33,21 @@ foreach (Player in Players) {
 if(needUpdate){	
 	playerTimes = playerTimes.sort();
 	log(playerTimes);
-	
 	needUpdate = False;
+	
+	declare i = 1;
+	
+	foreach (Login => Score in playerTimes) {
+        
+		declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
+		declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
+		
+		if(nickLabel != Null){
+			nickLabel.SetText(Login);
+			timeLabel.SetText(TimeToText(Score));
+		}		
+		i += 1;
+		if(i >= nbFields)
+			break;
+	}
 }

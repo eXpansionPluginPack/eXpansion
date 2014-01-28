@@ -203,7 +203,10 @@ class Window extends \ManiaLive\Gui\Window {
         $this->scriptLib = "";
         $this->wLoop = "";
         $this->calledScripts = array();
-
+			
+		
+		echo "Redraw ...\n\n\n";
+		
         $this->detectElements($this->getComponents());
 
         foreach ($this->calledScripts as $script) {

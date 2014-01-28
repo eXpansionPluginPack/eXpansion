@@ -56,7 +56,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         
         if ((time() - $this->lastUpdate) > 5 && $this->needUpdate !== false || $this->forceUpdate == true) {
             
-             if ( ($this->needUpdate & self::Dedimania) == self::Dedimania || $this->forceUpdate) {
+            /* if ( ($this->needUpdate & self::Dedimania) == self::Dedimania || $this->forceUpdate) {
                 foreach (Gui\Widgets\DediPanel::GetAll() as $panel) {
                     try {
                         $panel->update();
@@ -65,7 +65,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                     }
                 }
                 Gui\Widgets\DediPanel::RedrawAll();
-            }         
+            }         */
             
             if ( ($this->needUpdate & self::Localrecords) == self::Localrecords || $this->forceUpdate) {
                 echo "update!";
@@ -116,11 +116,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $panel->setSize(40, 95);
         $panel->show();
 
-        $panel = Gui\Widgets\DediPanel::Create($login);
+        /*$panel = Gui\Widgets\DediPanel::Create($login);
 		$panel->update();
         $panel->setPosition(-160, 60);
         $panel->setSize(40, 95);
-        $panel->show();
+        $panel->show();*/
     }
 
     public function onPlayerDisconnect($login, $reason = null) {

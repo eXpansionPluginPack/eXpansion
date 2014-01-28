@@ -37,7 +37,7 @@ for(i, 0, rowsPerPage) {
 		declare CMlLabel item <=> (Page.GetFirstChild("column_"^i^"_"^r) as CMlLabel);
 		labels[i][r] = item;
 		
-        if (item != Null) {                    
+        if (item != Null && textData.existskey(i)) {                    
 			item.SetText(textData[i][r]);    
 		}        
     }

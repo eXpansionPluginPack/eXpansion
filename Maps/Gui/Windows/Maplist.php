@@ -231,6 +231,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function updateList($login, $column = null, $sortType = null, $maps = null) {
 
+		$this->pager->clearItems();
+		
         if ($maps == null) {
             $maps = $this->storage->maps;
         } else {

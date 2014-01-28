@@ -26,7 +26,7 @@
 					declare CMlLabel item = labels[i][r];
 
 					if (item != Null) {     
-						if (textData.count >  nb) {
+						if (textData.count >  i+test && i+test >= 0) {
 							item.SetText(textData[i+test][r]);                                                          
 						}
 					}

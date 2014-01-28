@@ -94,24 +94,30 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 		
 		$recsData = "";
 		
+		
+		for($index = 1; $index <= 30; $index++){			
+			$this->items[$index - 1] = new Recorditem($index, false);            
+            $this->frame->addComponent($this->items[$index - 1]);
+		}
+		
+		$index = 1;
         foreach (Widgets_RecordSide::$localrecords as $record) {
-            if ($index > 30)
-                return;
-            $highlite = false;
-            if (array_key_exists($record->login, $this->storage->players))
-                $highlite = true;
-            if (array_key_exists($record->login, $this->storage->spectators))
-                $highlite = true;
-			if($index >1)
+			if($index > 1)
 				$recsData .= ', ';
 			$recsData .= '"'.$record->login .'"=>'. $record->time;
-			
-            $this->items[$index - 1] = new Recorditem($index, $record, $this->getRecipient(), $highlite);            
-            $this->frame->addComponent($this->items[$index - 1]);
-            $index++;
+			$index++;
         }
 		$this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
-		$this->timeScript->setParam("playerTimes", "[".$recsData."]");
+		
+		if(empty($recsData)){
+			$recsData = 'Integer[Text]';
+		}else{
+			$recsData = '['.$recsData.']';
+		}
+		
+		echo $recsData;
+		
+		$this->timeScript->setParam("playerTimes", $recsData);
     }
 
     function destroy() {
