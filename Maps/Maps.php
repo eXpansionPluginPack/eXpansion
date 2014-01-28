@@ -42,6 +42,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode[] */
     public static $playerSortModes = array();
     public static $searchTerm = array();
+    public static $searchField = array();
 
     public function exp_onInit() {
 
@@ -249,6 +250,10 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if (array_key_exists($login, self::$searchTerm)) {
             unset(self::$searchTerm[$login]);
         }
+        if (array_key_exists($login, self::$searchField)) {
+            unset(self::$searchField[$login]);
+        }
+        
         if ($this->config->showNextMapWidget) {
             NextMapWidget::Erase($login);
         }
@@ -404,7 +409,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showMapList($login) {
 		print "Before Maps Memory Usage: " . memory_get_usage() / 1024 . "Mb\n";
         Gui\Windows\Maplist::Erase($login);
-        $window = Gui\Windows\Maplist::Create($login);
+        self::$searchField[$login] = "name";
+        
+        $window = Gui\Windows\Maplist::Create($login);        
         $window->setTitle(__('Maps on server', $login));
         $window->setHistory($this->history);
         $window->setCurrentMap($this->storage->currentMap);

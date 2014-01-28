@@ -28,7 +28,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected $title_rating;
     protected $title_actions;
     protected $searchBox, $searchframe;
-    protected $btn_search;
+    protected $btn_search,  $btn_search2;
     private $actionRemoveAll;
     private $currentMap = null;
     private $titlebg;
@@ -136,12 +136,16 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->searchframe->addComponent($spacer);
 
         $this->btn_search = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(40);
-        $this->btn_search->setAction($this->createAction(array($this, "doSearch")));
-        $this->btn_search->setText(__("Search", $login));
-        $this->btn_search->colorize('0d0');
-
+        $this->btn_search->setAction($this->createAction(array($this, "doSearchMap")));
+        $this->btn_search->setText(__("Search Map", $login));
+        $this->btn_search->colorize('0a0');
         $this->searchframe->addComponent($this->btn_search);
-
+        
+        $this->btn_search2 = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(40);
+        $this->btn_search2->setAction($this->createAction(array($this, "doSearchAuthor")));
+        $this->btn_search2->setText(__("Search Author", $login));
+        $this->btn_search2->colorize('0a0');
+        $this->searchframe->addComponent($this->btn_search2);
 
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager();
         $this->mainFrame->addComponent($this->pager);
@@ -231,8 +235,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function updateList($login, $column = null, $sortType = null, $maps = null) {
 
-		$this->pager->clearItems();
-		
+        $this->pager->clearItems();
+
         if ($maps == null) {
             $maps = $this->storage->maps;
         } else {
@@ -268,14 +272,13 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             }
 
             if (!empty(Maps::$searchTerm[$login])) {
-                $substring = $this->shortest_edit_substring(Maps::$searchTerm[$login], \ManiaLib\Utils\Formatting::stripStyles($map->name));
+                $field = Maps::$searchField[$login];
+                $substring = $this->shortest_edit_substring(Maps::$searchTerm[$login], \ManiaLib\Utils\Formatting::stripStyles($map->{$field}));
                 $dist = $this->edit_distance(Maps::$searchTerm[$login], $substring);
                 if (!empty($substring) && $dist < 2) {
-                    echo "adding search map: " . \ManiaLib\Utils\Formatting::stripStyles($map->name) . "\n";
                     $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $maxrec, $rating);
                 }
             } else {
-                echo "adding default map \n";
                 $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $maxrec, $rating);
             }
         }
@@ -385,12 +388,20 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::destroy();
     }
 
-    function doSearch($login, $entries) {
+    function doSearchMap($login, $entries) {
         Maps::$searchTerm[$login] = $entries['searchbox'];
+        Maps::$searchField[$login]= "name";
         $this->updateList($login);
         $this->redraw($login);
     }
 
+    function doSearchAuthor($login, $entries) {
+        Maps::$searchTerm[$login] = $entries['searchbox'];
+        Maps::$searchField[$login]= "author";
+        $this->updateList($login);
+        $this->redraw($login);
+    }
+    
     // utility function - returns the key of the array minimum
     function array_min_key($arr) {
         $min_key = null;
