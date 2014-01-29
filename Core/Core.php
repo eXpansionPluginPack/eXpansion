@@ -231,8 +231,7 @@ EOT;
 	else {
 	    $difs = $this->compareObjects($serverSettings, $this->lastServerSettings);
 	    if (!empty($difs)) {
-		Dispatcher::dispatch(new ServerSettingsEvent(ServerSettingsEvent::ON_SERVER_SETTINGS_CHANGE, $this->lastServerSettings, $serverSettings, $difs));
-		$this->updateServerSettings($difs);
+		Dispatcher::dispatch(new ServerSettingsEvent(ServerSettingsEvent::ON_SERVER_SETTINGS_CHANGE, $this->lastServerSettings, $serverSettings, $difs));		
 		$this->lastServerSettings = clone $serverSettings;
 	    }
 	}
