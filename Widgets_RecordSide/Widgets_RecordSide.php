@@ -120,8 +120,6 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-	Gui\Widgets\LocalPanel::EraseAll();
-	Gui\Widgets\DediPanel::EraseAll();
 
 	$panel = Gui\Widgets\LocalPanel::Create($login, false);
 	$panel->update();

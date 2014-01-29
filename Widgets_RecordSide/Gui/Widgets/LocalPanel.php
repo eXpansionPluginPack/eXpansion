@@ -67,10 +67,10 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->frame->setAlign("left", "top");
 	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(-1));
 	$this->_windowFrame->addComponent($this->frame);
-	
-	$this->layer = new \ManiaLib\Gui\Elements\Quad(5,5);
+
+	$this->layer = new \ManiaLib\Gui\Elements\Quad(5, 5);
 	$this->layer->setStyle("Icons128x32_1");
-	$this->layer->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::ManiaLinkSwitch);	
+	$this->layer->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::ManiaLinkSwitch);
 	$this->layer->setId("setLayer");
 	$this->layer->setScriptEvents();
 	$this->addComponent($this->layer);
@@ -114,7 +114,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 		$nickData .= ', ';
 	    }
 	    $recsData .= '"' . $record->login . '"=>' . $record->time;
-	    $nickData .= '"' . $record->login . '"=>"' . $record->nickName . '"';
+	    $nickData .= '"' . $record->login . '"=>"' . $this->fixHyphens($record->nickName) . '"';
 	    $index++;
 	}
 	$this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
@@ -141,6 +141,12 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->frame->destroy();
 	$this->clearComponents();
 	parent::destroy();
+    }
+
+    function fixHyphens($string) {
+	$out = str_replace('"', "'", $string);
+	$out = str_replace("\'", "'", $out);
+	return $out;
     }
 
 }
