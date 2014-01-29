@@ -256,13 +256,13 @@ EOT;
 
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
 	if ($isListModified) {
-	 $this->saveMatchSettings();   
+	    $this->saveMatchSettings();
 	}
     }
 
     public function saveMatchSettings() {
-	if (!empty($this->config->defaultMatchSettingsFile)) {	    
-	    $this->connection->saveMatchSettings($this->config->defaultMatchSettingsFile);
+	if (!empty($this->config->defaultMatchSettingsFile)) {
+	    $this->connection->saveMatchSettings("MatchSettings" . DIRECTORY_SEPARATOR . $this->config->defaultMatchSettingsFile);
 	}
     }
 
