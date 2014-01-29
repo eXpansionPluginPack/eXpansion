@@ -22,7 +22,7 @@ class Widget_Netstat extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->storage = \ManiaLive\Data\Storage::getInstance();
 
 	$this->frame = new \ManiaLive\Gui\Controls\Frame(0, -3);
-	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
+	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(60,4));
 	$this->addComponent($this->frame);
 
 	$label = new \ManiaLib\Gui\Elements\Label(60);
@@ -32,8 +32,9 @@ class Widget_Netstat extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->addComponent($label);
 
 	foreach (Core::$netStat as $login => $stat) {
-	    if ($stat->updateLatency >= 150 || $stat->updatePeriod >= 400) {
+	    if ($stat->updateLatency >= 160 || $stat->updatePeriod >= 400) {
 		$frame = new \ManiaLive\Gui\Controls\Frame();
+		$frame->setSize(120,5);
 		$frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
 		$player = new \ManiaLib\Gui\Elements\Label(35, 6);
