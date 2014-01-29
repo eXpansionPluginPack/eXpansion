@@ -59,6 +59,7 @@ class Core extends types\ExpPlugin {
     private $enableCalculation = true;
     private $loopTimer = 0;
     private $lastTick = 0;
+
     /** @var Config */
     private $config;
 
@@ -231,6 +232,7 @@ EOT;
 	    $difs = $this->compareObjects($serverSettings, $this->lastServerSettings);
 	    if (!empty($difs)) {
 		Dispatcher::dispatch(new ServerSettingsEvent(ServerSettingsEvent::ON_SERVER_SETTINGS_CHANGE, $this->lastServerSettings, $serverSettings, $difs));
+		$this->updateServerSettings($difs);
 		$this->lastServerSettings = clone $serverSettings;
 	    }
 	}
@@ -248,8 +250,23 @@ EOT;
 	return $difs;
     }
 
-    public function onGameModeChange($oldGameMode, $newGameMode) {
+    public function onGameSettingsChange(\Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings, \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings, $changes) {
+	$this->saveMatchSettings();
+    }
 
+    public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
+	if ($isListModified) {
+	 $this->saveMatchSettings();   
+	}
+    }
+
+    public function saveMatchSettings() {
+	if (!empty($this->config->defaultMatchSettingsFile)) {	    
+	    $this->connection->saveMatchSettings($this->config->defaultMatchSettingsFile);
+	}
+    }
+
+    public function onGameModeChange($oldGameMode, $newGameMode) {
 	$this->showNotice("GameMode Changed");
     }
 
@@ -315,7 +332,7 @@ EOT;
     public function onTick() {
 	$stats = $this->connection->getNetworkStats();
 	$showNotice = false;
-	if (time() - $this->lastTick > 5) {	    
+	if (time() - $this->lastTick > 5) {
 	    $this->lastTick = time();
 	    foreach ($stats->playerNetInfos as $player) {
 		$stat = new Structures\NetStat($player);

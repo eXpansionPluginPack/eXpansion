@@ -44,6 +44,9 @@ class Config extends \ManiaLib\Utils\Singleton {
     
     public $enableRanksCalc = true;  // enable calculation of player ranks on checkpoints
     
+    public $defaultMatchSettingsFile = "eXpansion_autosave.txt";
+    public $dedicatedConfigFile = "dedicated_cfg.txt";
+    
     public $contact = "YOUR@EMAIL.COM";
 }
 
