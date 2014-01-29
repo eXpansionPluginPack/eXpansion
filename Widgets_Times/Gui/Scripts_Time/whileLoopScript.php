@@ -9,7 +9,13 @@ foreach (Player in Players) {
 
 			if (curCp > 0 && curCp != totalCp) {
 				if (Checkpoints.count > curCp && Checkpoints[curCp] != -1) {
-					declare Integer diff = (Player.CurRace.Checkpoints[curCp-1] - Checkpoints[curCp-1]);
+					declare Integer diff = 0;
+					if (lapRace) {
+					    diff = (Player.CurLap.Checkpoints[(curCp % totalCp)-1] - Checkpoints[(curCp % totalCp)-1]);
+					}
+					else {
+					    diff =(Player.CurRace.Checkpoints[curCp-1] - Checkpoints[curCp-1]);
+					}
 					//log(diff);
 					declare Text color = "$f00$s";
 					 if (diff <= 0) {

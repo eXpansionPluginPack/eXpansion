@@ -184,7 +184,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $info = TimePanel::Create($login);
         $info->setSize(30, 6);
-        $info->setPosition(-20, 42);
+        $info->setPosition(-16, 46);
         $info->setMapInfo($this->storage->currentMap);
         $info->show();
     }
