@@ -315,8 +315,7 @@ EOT;
     public function onTick() {
 	$stats = $this->connection->getNetworkStats();
 	$showNotice = false;
-	if (time() - $this->lastTick > 5) {
-	    echo "tick.";
+	if (time() - $this->lastTick > 5) {	    
 	    $this->lastTick = time();
 	    foreach ($stats->playerNetInfos as $player) {
 		$stat = new Structures\NetStat($player);

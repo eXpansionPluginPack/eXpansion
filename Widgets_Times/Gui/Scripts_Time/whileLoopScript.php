@@ -18,9 +18,8 @@ foreach (Player in Players) {
 					Label.SetText(color ^ TimeToText(diff));
 				}else {                                               
 					Label.SetText("$fff$s" ^ TimeToText(Player.CurRace.Checkpoints[curCp-1]));
-				}
-				
-				Cp.SetText(curCp ^ "/" ^ totalCp);
+				}				
+				Cp.SetText((curCp % totalCp) ^ "/" ^ totalCp);
 			} else {
 				Label.SetText("");
 				Cp.SetText("");

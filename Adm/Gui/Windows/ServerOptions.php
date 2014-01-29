@@ -281,7 +281,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->serverSpecPass->setSizeX(($this->sizeX - 8) / 2);
         $this->refereePass->setSizeX(($this->sizeX - 8) / 2);
         $this->frameInputbox->setPosition(0, -4);
-        $this->frameCb->setPosition($this->sizeX / 2 + 20, -$this->sizeY / 2);
+        $this->frameCb->setPosition($this->sizeX / 2 + 20, -25);
         $this->buttonOK->setPosition($this->sizeX - $this->buttonCancel->sizeX - $this->buttonOK->sizeX, -$this->sizeY + 6);
         $this->buttonCancel->setPosition($this->sizeX - $this->buttonCancel->sizeX, -$this->sizeY + 6);
     }
