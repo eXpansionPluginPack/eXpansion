@@ -309,7 +309,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->e['ForceShowAllOpponents']->setText(__("Force Show All Opponents", $login));
         $this->frameGameMode->addComponent($this->e['ForceShowAllOpponents']);
-
+	
         $this->mainFrame->addComponent($this->frameGameMode);
     }
 
@@ -373,7 +373,9 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $gameInfos->lapsTimeLimit = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['lapsTimeLimit']);
 
         $this->connection->setGameInfos($gameInfos);
-        $this->Erase($login);
+	
+	
+	$this->Erase($login);
     }
 
     public function Cancel($login) {

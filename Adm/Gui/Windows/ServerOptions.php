@@ -19,6 +19,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $buttonOK, $buttonCancel;
     private $connection;
     private $actionOK, $actionCancel;
+    private $e = array();
 
     function onConstruct() {
         parent::onConstruct();
@@ -121,7 +122,9 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 // Generate all checkboxes
     private function checkboxes() {
-        $server = \ManiaLive\Data\Storage::getInstance()->server;
+	/** @var \Maniaplanet\DedicatedServer\Structures\ServerOptions */        
+        $server = $this->connection->getServerOptions();
+	$login = $this->getRecipient();
 
         $this->frameCb = new \ManiaLive\Gui\Controls\Frame();
         $this->frameCb->setAlign("left", "top");
@@ -171,7 +174,28 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->cbReferee->setStatus($server->refereeMode);
         $this->cbReferee->setText(__("Enable Referee-mode",$this->getRecipient()));
         $this->frameCb->addComponent($this->cbReferee);
+	
+	$this->e['DisableHorns'] = new Checkbox();	
+        $this->e['DisableHorns']->setStatus($server->disableHorns);
+        $this->e['DisableHorns']->setText(__("Disable Horns", $login));
+        $this->frameCb->addComponent($this->e['DisableHorns']);
+	
+	$this->e['DisableAnnounces'] = new Checkbox();        
+        $this->e['DisableAnnounces']->setStatus($server->disableServiceAnnounces);
+        $this->e['DisableAnnounces']->setText(__("Disable Announces", $login));
+        $this->frameCb->addComponent($this->e['DisableAnnounces']);
+	
+	$this->e['AutosaveReplays'] = new Checkbox();
+        $this->e['AutosaveReplays']->setStatus($server->autoSaveReplays);
+        $this->e['AutosaveReplays']->setText(__("Autosave All Replays", $login));
+        $this->frameCb->addComponent($this->e['AutosaveReplays']);
+	
+	$this->e['AutosaveValidation'] = new Checkbox();        
+        $this->e['AutosaveValidation']->setStatus($server->autoSaveValidationReplays);
+        $this->e['AutosaveValidation']->setText(__("Autosave Validation Replays", $login));
+        $this->frameCb->addComponent($this->e['AutosaveValidation']);
 
+	
         // spacer
         $quad = new \ManiaLib\Gui\Elements\Quad(20, 16);
         $quad->setStyle(\ManiaLib\Gui\Elements\Bgs1::BgEmpty);
@@ -279,7 +303,12 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             "AllowMapDownload" => !AdminGroups::hasPermission($login, 'server_map') ? $server->allowMapDownload : $this->cbAllowMapDl->getStatus(),
             "NextMaxPlayer" => !AdminGroups::hasPermission($login, 'server_maxplayer') ? $server->nextMaxPlayers : $args['maxPlayers'],
             "NextMaxSpectator" => !AdminGroups::hasPermission($login, 'server_maxspec') ? $server->nextMaxSpectators : $args['maxSpec'],
-            "RefereeMode" => !AdminGroups::hasPermission($login, 'server_refmode') ? $server->refereeMode : $this->cbReferee->getStatus()
+            "RefereeMode" => !AdminGroups::hasPermission($login, 'server_refmode') ? $server->refereeMode : $this->cbReferee->getStatus(),
+	    "AutoSaveReplays" => $this->e['AutosaveReplays']->getStatus(),
+	    "AutoSaveValidationReplays" => $this->e['AutosaveValidation']->getStatus(),
+	    "DisableHorns" => $this->e['DisableHorns']->getStatus(),
+	    "DisableServiceAnnounces" => $this->e['DisableAnnounces']->getStatus(),
+	    "KeepPlayerSlots" => true,
         );
         $this->connection->setServerOptions($serverOptions);
         $this->Erase($this->getRecipient());
