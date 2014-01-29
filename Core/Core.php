@@ -331,6 +331,8 @@ EOT;
 	    $info = Gui\Widgets\Widget_Netstat::Create(\ManiaLive\Gui\Window::RECIPIENT_ALL);
 	    $info->setPosition(-110,60);
 	    $info->show();	    
+	} else {
+	    Gui\Widgets\Widget_Netstat::EraseAll();
 	}
 	
 	
