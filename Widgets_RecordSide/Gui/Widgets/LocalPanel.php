@@ -85,7 +85,8 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     public function setNbFields($nb) {
         $this->timeScript->setParam("nbFields", $nb);
-        $this->setPosY(6 + 4 * $nb);
+	
+  //      $this->setPosY(6 + 4 * $nb);
         $this->nbFields = $nb;
     }
 

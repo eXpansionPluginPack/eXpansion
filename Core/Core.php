@@ -231,7 +231,7 @@ EOT;
 	else {
 	    $difs = $this->compareObjects($serverSettings, $this->lastServerSettings);
 	    if (!empty($difs)) {
-		Dispatcher::dispatch(new ServerSettingsEvent(ServerSettingsEvent::ON_SERVER_SETTINGS_CHANGE, $this->lastServerSettings, $serverSettings, $difs));		
+		Dispatcher::dispatch(new ServerSettingsEvent(ServerSettingsEvent::ON_SERVER_SETTINGS_CHANGE, $this->lastServerSettings, $serverSettings, $difs));
 		$this->lastServerSettings = clone $serverSettings;
 	    }
 	}
@@ -344,15 +344,14 @@ EOT;
 		    $showNotice = true;
 		}
 	    }
-	}
-
-	if ($showNotice) {
-	    Gui\Widgets\Widget_Netstat::EraseAll();
-	    $info = Gui\Widgets\Widget_Netstat::Create(\ManiaLive\Gui\Window::RECIPIENT_ALL);
-	    $info->setPosition(-110, 60);
-	    $info->show();
-	} else {
-	    Gui\Widgets\Widget_Netstat::EraseAll();
+	    if ($showNotice) {
+		Gui\Widgets\Widget_Netstat::EraseAll();
+		$info = Gui\Widgets\Widget_Netstat::Create(\ManiaLive\Gui\Window::RECIPIENT_ALL);
+		$info->setPosition(-110, 60);
+		$info->show();
+	    } else {
+		Gui\Widgets\Widget_Netstat::EraseAll();
+	    }
 	}
     }
 

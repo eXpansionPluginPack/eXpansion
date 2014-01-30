@@ -8,7 +8,7 @@ use ManiaLivePlugins\eXpansion\Helpers\Countries;
 
 class Recorditem extends \ManiaLive\Gui\Control {
 
-    private $bg;
+    private $bg, $bg2;
     private $nick;
     private $label;
     private $time;
@@ -29,15 +29,15 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	$this->bg->setId("RecBgBlink_" . $index);
 	$this->addComponent($this->bg);
 
-	$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX+2, $sizeY+1);
-	$this->bg->setStyle("Bgs1");
-	$this->bg->setSubStyle("NavButtonBlink"); 
-	$this->bg->setAlign('left', 'center');
+	$this->bg2 = new \ManiaLib\Gui\Elements\Quad($sizeX+2, $sizeY+1);
+	$this->bg2->setStyle("Bgs1");
+	$this->bg2->setSubStyle("NavButtonBlink"); 
+	$this->bg2->setAlign('left', 'center');
 	//$this->bg->setBgcolor('6af5');
-	$this->bg->setHidden(1);
-	$this->bg->setPosX(-1);
-	$this->bg->setId("RecBg_" . $index);
-	$this->addComponent($this->bg);
+	$this->bg2->setHidden(1);
+	$this->bg2->setPosX(-1);
+	$this->bg2->setId("RecBg_" . $index);
+	$this->addComponent($this->bg2);
 
 	
 	

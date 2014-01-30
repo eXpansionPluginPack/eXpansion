@@ -17,7 +17,7 @@ foreach (Player in Players) {
 		curCp = Player.CurRace.Checkpoints.count;
 
 		//If finish
-		if (curCp > 0 && (curCp%totalCp) == totalCp) {
+		if (curCp > 0 && curCp == totalCp) {
 			
 			//If first finish or better time		
 			if(!playerTimes.existskey(Player.Login)){

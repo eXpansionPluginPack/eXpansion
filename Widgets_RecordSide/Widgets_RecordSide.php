@@ -127,7 +127,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	}
 
 	public function onPlayerConnect($login, $isSpectator) {
-
+		Gui\Widgets\LocalPanel::Erase($login);
+		Gui\Widgets\DediPanel::Erase($login);
+		
 		$panel = Gui\Widgets\LocalPanel::Create($login, false);		
 		$panel->setPosition(118, 50);
 		$panel->setSize(40, 95);
@@ -167,6 +169,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 	public function onPlayerDisconnect($login, $reason = null) {
 		Gui\Widgets\LocalPanel::Erase($login);
+		Gui\Widgets\DediPanel::Erase($login);
 	}
 
 	public function onDedimaniaOpenSession() {

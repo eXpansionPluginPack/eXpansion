@@ -11,6 +11,8 @@ foreach (Player in Players) {
 				if (Checkpoints.count > curCp && Checkpoints[curCp] != -1) {
 					declare Integer diff = 0;
 					if (lapRace) {
+					    log("curlap Time: " ^ Player.CurLap.Time  ^ "     currace time: " ^Player.CurRace.Time);
+					
 					    diff = (Player.CurLap.Checkpoints[(curCp % totalCp)-1] - Checkpoints[(curCp % totalCp)-1]);
 					}
 					else {
