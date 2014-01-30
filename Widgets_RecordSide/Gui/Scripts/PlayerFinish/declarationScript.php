@@ -1,8 +1,8 @@
-declare Integer nbShow = 100;
+declare Integer nbShow = <?= $this->nbRecord ?>;
 declare Integer curCp = 0;
 declare Integer totalCp = <?= $this->totalCp ?>;
-declare Integer nbFields = 30;
-declare Integer nbFirstFields = 5;
+declare Integer nbFields =  <?= $this->nbFields ?>;
+declare Integer nbFirstFields =  <?= $this->nbFirstFields ?>;
 
 //Ranks of the players
 declare playerTimes = <?= $this->playerTimes ?>;
@@ -19,6 +19,8 @@ foreach (Player in Players) {
 		playerNickName[Player.Login] = Player.Name;
 	}
 }
+
+<?php
 /*
 //Dump players to test stu
 playerNickName["player1"] = "player1"; 
@@ -123,3 +125,4 @@ playerNickName["player48"] = "player48";
 playerTimes["player48"] = 66800; 
 playerNickName["player49"] = "player49"; 
 playerTimes["player49"] = 66900; */
+?>

@@ -13,9 +13,9 @@ foreach (Player in Players) {
 		//Update the current checkpoint of this user
 		playerCheckPoint[Player.Login] = Player.CurRace.Checkpoints.count;
 		curCp = Player.CurRace.Checkpoints.count;
-		
+
 		//If finish
-		if (curCp > 0 && curCp == totalCp) {
+		if (curCp > 0 && (curCp%totalCp) == totalCp) {
 			
 			//If first finish or better time		
 			if(!playerTimes.existskey(Player.Login)){
