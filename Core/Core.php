@@ -37,11 +37,12 @@ class Core extends types\ExpPlugin {
      * public variable to export player infos 
      * @var Structures\ExpPlayer[] */
     public static $playerInfo = array();
-    /**     
+
+    /**
      * @var Structures\NetStat[] 
      */
     public static $netStat = array();
-       
+
     /** @var string[int] */
     public static $roundFinishOrder = array();
 
@@ -57,6 +58,7 @@ class Core extends types\ExpPlugin {
     /** @var bool $enableCalculation marks if player positions should be calculated */
     private $enableCalculation = true;
     private $loopTimer = 0;
+    private $lastTick = 0;
 
     /** @var Config */
     private $config;
@@ -159,6 +161,7 @@ EOT;
      * 
      */
     public function exp_onReady() {
+	$this->lastTick = time();
 	$this->config = Config::getInstance();
 	$this->registerChatCommand("server", "showInfo", 0, true);
 	$this->registerChatCommand("serverlogin", "serverlogin", 0, true);
@@ -228,7 +231,7 @@ EOT;
 	else {
 	    $difs = $this->compareObjects($serverSettings, $this->lastServerSettings);
 	    if (!empty($difs)) {
-		Dispatcher::dispatch(new ServerSettingsEvent(ServerSettingsEvent::ON_SERVER_SETTINGS_CHANGE, $this->lastServerSettings, $serverSettings, $difs));
+		Dispatcher::dispatch(new ServerSettingsEvent(ServerSettingsEvent::ON_SERVER_SETTINGS_CHANGE, $this->lastServerSettings, $serverSettings, $difs));		
 		$this->lastServerSettings = clone $serverSettings;
 	    }
 	}
@@ -246,8 +249,23 @@ EOT;
 	return $difs;
     }
 
-    public function onGameModeChange($oldGameMode, $newGameMode) {
+    public function onGameSettingsChange(\Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings, \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings, $changes) {
+	$this->saveMatchSettings();
+    }
 
+    public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
+	if ($isListModified) {
+	    $this->saveMatchSettings();
+	}
+    }
+
+    public function saveMatchSettings() {
+	if (!empty($this->config->defaultMatchSettingsFile)) {
+	    $this->connection->saveMatchSettings("MatchSettings" . DIRECTORY_SEPARATOR . $this->config->defaultMatchSettingsFile);
+	}
+    }
+
+    public function onGameModeChange($oldGameMode, $newGameMode) {
 	$this->showNotice("GameMode Changed");
     }
 
@@ -311,33 +329,31 @@ EOT;
     }
 
     public function onTick() {
-	$stats = $this->connection->getNetworkStats();	
+	$stats = $this->connection->getNetworkStats();
 	$showNotice = false;
-	foreach ($stats->playerNetInfos as $player) {
-	    $stat = new Structures\NetStat($player);
-	    self::$netStat[$player->login] = $stat;
-	    	    
-	    if ($stat->updateLatency >= 150) {
-		$showNotice = true;
+	if (time() - $this->lastTick > 5) {
+	    $this->lastTick = time();
+	    foreach ($stats->playerNetInfos as $player) {
+		$stat = new Structures\NetStat($player);
+		self::$netStat[$player->login] = $stat;
+
+		if ($stat->updateLatency >= 160) {
+		    $showNotice = true;
+		}
+		if ($stat->updatePeriod >= 600) {
+		    $showNotice = true;
+		}
 	    }
-	    if ($stat->updatePeriod >= 600) {
-		$showNotice = true;
-	    }	    
-	    
 	}
-	
+
 	if ($showNotice) {
 	    Gui\Widgets\Widget_Netstat::EraseAll();
 	    $info = Gui\Widgets\Widget_Netstat::Create(\ManiaLive\Gui\Window::RECIPIENT_ALL);
-	    $info->setPosition(-110,60);
-	    $info->show();	    
+	    $info->setPosition(-110, 60);
+	    $info->show();
 	} else {
 	    Gui\Widgets\Widget_Netstat::EraseAll();
 	}
-	
-	
-	
-	
     }
 
     public function onPostLoop() {
@@ -350,7 +366,7 @@ EOT;
 	    $this->calculatePositions();
 	}
     }
-       
+
     public function onPlayerDisconnect($login, $disconnectionReason) {
 	$this->update = true;
 	if (array_key_exists($login, self::$netStat)) {

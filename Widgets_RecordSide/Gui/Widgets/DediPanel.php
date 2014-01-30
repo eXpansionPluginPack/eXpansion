@@ -29,7 +29,7 @@ class DediPanel extends LocalPanel {
 	$recsData = "";
 	$nickData = "";
 
-	for ($index = 1; $index <= 30; $index++) {
+	for ($index = 1; $index <= $this->nbFields; $index++) {
 	    $this->items[$index - 1] = new Recorditem($index, false);
 	    $this->frame->addComponent($this->items[$index - 1]);
 	}

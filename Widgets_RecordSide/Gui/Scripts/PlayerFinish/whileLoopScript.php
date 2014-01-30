@@ -1,5 +1,6 @@
 foreach (Player in Players) {
-	//If first checkpoint time or new checkpoint time
+
+//If first checkpoint time or new checkpoint time
 	if (!playerCheckPoint.existskey(Player.Login)){
 		playerCheckPoint[Player.Login] = -1;
 	}
@@ -7,6 +8,7 @@ foreach (Player in Players) {
 	if(!playerNickName.existskey(Player.Login)){
 		playerNickName[Player.Login] = Player.Name;
 	}
+		
 	
 	if(playerCheckPoint[Player.Login] != Player.CurRace.Checkpoints.count) {
 		
@@ -26,7 +28,7 @@ foreach (Player in Players) {
 				playerTimes[Player.Login] = Player.CurRace.Checkpoints[curCp-1];
 				needUpdate = True;
 			}else{
-				log("Worse Time, no update");
+				// log("Worse Time, no update");
 			}
 		
 		} else {
@@ -45,6 +47,7 @@ foreach (Event in PendingEvents) {
 	    }
 	}
 }
+
 if(needUpdate){	
 	playerTimes = playerTimes.sort();
 	needUpdate = False;
@@ -58,6 +61,11 @@ if(needUpdate){
 	declare end = -1;
 	declare recCount = -1;
 	
+	playersOnServer.clear();	
+	foreach (Player in Players) {
+	    playersOnServer[Player.Login] = Player.Name;
+	}
+
 	if(playerTimes.count > nbShow){
 		recCount = nbShow;
 	}else{
@@ -65,6 +73,7 @@ if(needUpdate){
 	}
 	
 	i = 1;
+
 	foreach (Login => Score in playerTimes) {
 		if(Login == InputPlayer.Login){
 			myRank = i;
@@ -99,7 +108,16 @@ if(needUpdate){
 	
 			declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
 			declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
-
+			declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
+			
+			if(highliteQuad != Null){			    
+			    if (playersOnServer.existskey(Login) && i != myRank) {
+				highliteQuad.Show();				
+			    } else {
+				highliteQuad.Hide();				
+			    }
+			}
+			
 			if(nickLabel != Null){
 			
 				putRecordTo(i, nbRec, Score, Login,  playerNickName[Login], Login == InputPlayer.Login);
@@ -108,6 +126,8 @@ if(needUpdate){
 					showed = True;
 				}
 			}
+			
+		
 			i += 1;
 		}		
 		nbRec += 1;		

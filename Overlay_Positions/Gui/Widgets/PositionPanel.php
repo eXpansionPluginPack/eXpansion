@@ -27,7 +27,7 @@ class PositionPanel extends \ManiaLive\Gui\Window {
         $this->bg->setStyle(\ManiaLib\Gui\Elements\Bgs1::Bgs1InRace);
         $this->bg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgCardList);
         $this->bg->setAlign("left", "center");
-        $this->bg->setSize($sizeX, $sizeY);
+        $this->bg->setSize(40, 6);
         $this->bg->setPosX(-3);
         $this->addComponent($this->bg);
         

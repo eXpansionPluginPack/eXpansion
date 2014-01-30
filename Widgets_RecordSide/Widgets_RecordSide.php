@@ -151,6 +151,8 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		$panel->update();
 		$panel->setPosition(-160, 60);
 		$panel->setSize(40, 95);
+        $panel->setNbFields(20);
+		$panel->setNbFirstFields(5);
 		$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 		$panel->show();
 
@@ -158,6 +160,8 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		$panel->update();
 		$panel->setPosition(-160, 60);
 		$panel->setSize(40, 95);
+        $panel->setNbFields(20);
+		$panel->setNbFirstFields(5);
 		$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 		$panel->show();
 	}

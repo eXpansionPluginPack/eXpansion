@@ -22,7 +22,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     private $currentRun = array();
     private $lastFinish = -1;
     private $counter = 1;
-    
+    private $lapRace = false;
     private $nScript;
 
     /** @var \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record[] */
@@ -88,6 +88,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     function setMapInfo(\Maniaplanet\DedicatedServer\Structures\Map $map) {
         $this->totalCp = $map->nbCheckpoints;
+	$this->lapRace = $map->lapRace;
     }
 
     function onDraw() {
@@ -98,9 +99,13 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
             $checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . "]";
         }
         
+	$bool = "False";
+	if ($this->lapRace)
+	    $bool = "True";
+	
         $this->nScript->setParam('checkpoints', $checkpoints);
         $this->nScript->setParam('totalCp', $this->totalCp);
-        
+        $this->nScript->setParam('lapRace', $bool);
         parent::onDraw();
     }
 
