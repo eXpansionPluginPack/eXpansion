@@ -45,8 +45,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 			$this->onPlayerConnect($player->login, true); // create panel for everybody
 
 		$this->lastUpdate = time();
-		self::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords",
-				"getRecords");
+		self::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
 		$this->enableTickerEvent();
 		$this->needUpdate = self::Localrecords;
 		// $this->forceUpdate = true;
@@ -129,39 +128,39 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 	public function onPlayerConnect($login, $isSpectator) {
 
-		$panel = Gui\Widgets\LocalPanel::Create($login, false);
-		$panel->update();
+		$panel = Gui\Widgets\LocalPanel::Create($login, false);		
 		$panel->setPosition(118, 50);
 		$panel->setSize(40, 95);
 		$panel->setNbFields(20);
 		$panel->setNbFirstFields(5);
+		$panel->update();
 		$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 		$panel->show();
 
 		$panel = Gui\Widgets\LocalPanel::Create($login, false);
-		$panel->update();
 		$panel->setPosition(118, 50);
 		$panel->setSize(40, 95);
 		$panel->setNbFields(20);
 		$panel->setNbFirstFields(5);
+		$panel->update();				
 		$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 		$panel->show();
 
-		$panel = Gui\Widgets\DediPanel::Create($login, false);
-		$panel->update();
+		$panel = Gui\Widgets\DediPanel::Create($login, false);		
 		$panel->setPosition(-160, 60);
 		$panel->setSize(40, 95);
-        $panel->setNbFields(20);
+		$panel->setNbFields(20);
 		$panel->setNbFirstFields(5);
+		$panel->update();
 		$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 		$panel->show();
 
-		$panel = Gui\Widgets\DediPanel::Create($login, false);
-		$panel->update();
+		$panel = Gui\Widgets\DediPanel::Create($login, false);		
 		$panel->setPosition(-160, 60);
 		$panel->setSize(40, 95);
-        $panel->setNbFields(20);
+		$panel->setNbFields(20);
 		$panel->setNbFirstFields(5);
+		$panel->update();
 		$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 		$panel->show();
 	}
