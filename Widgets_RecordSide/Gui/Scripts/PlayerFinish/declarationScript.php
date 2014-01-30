@@ -21,6 +21,7 @@ foreach (Player in Players) {
 	}
 }
 
+/*
 //Dump players to test stu
 playerNickName["player1"] = "player1"; 
 playerTimes["player1"] = 12100; 
@@ -123,4 +124,5 @@ playerTimes["player47"] = 66700;
 playerNickName["player48"] = "player48"; 
 playerTimes["player48"] = 66800; 
 playerNickName["player49"] = "player49"; 
-playerTimes["player49"] = 66900; 
+playerTimes["player49"] = 66900;  
+*/
