@@ -15,66 +15,76 @@ class Recorditem extends \ManiaLive\Gui\Control {
     private $frame;
 
     function __construct($index, $highlite) {
-        $sizeX = 40;
-        $sizeY = 3;
+	$sizeX = 40;
+	$sizeY = 4;
 
 
-		$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-		/* $this->bg->setStyle("Bgs1InRace");
-		  $this->bg->setStyle("NavButtonBlink"); */
-		$this->bg->setAlign('left', 'center');
-		$this->bg->setBgcolor('6af5');
-		$this->bg->setHidden(1);
-		$this->bg->setId("RecBg_".$index);
-		$this->addComponent($this->bg);
-        
+	$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX+2, $sizeY);
+	$this->bg->setStyle("Icons128x128_Blink");
+	$this->bg->setSubStyle(\ManiaLib\Gui\Elements\Icons128x128_Blink::ShareBlink); 
+	$this->bg->setAlign('left', 'center');
+	//$this->bg->setBgcolor('6af5');
+	$this->bg->setHidden(1);
+	$this->bg->setPosX(-1);
+	$this->bg->setId("RecBgBlink_" . $index);
+	$this->addComponent($this->bg);
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(4, 4);
-        $this->label->setAlign('right', 'center');
-        $this->label->setPosition(3, 0);
-        $this->label->setStyle("TextRaceChat");
-		$this->label->setId("RecRank_".$index);
-        $this->label->setScale(0.75);
-        $this->label->setTextSize(1);
-        $this->label->setTextColor('ff0');
-        $this->addComponent($this->label);
+	$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX+2, $sizeY+1);
+	$this->bg->setStyle("Bgs1");
+	$this->bg->setSubStyle("NavButtonBlink"); 
+	$this->bg->setAlign('left', 'center');
+	//$this->bg->setBgcolor('6af5');
+	$this->bg->setHidden(1);
+	$this->bg->setPosX(-1);
+	$this->bg->setId("RecBg_" . $index);
+	$this->addComponent($this->bg);
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(11, 5);
-        $this->label->setPosX(3.7);
-        $this->label->setAlign('left', 'center');
-        $this->label->setStyle("TextRaceChat");
-        $this->label->setScale(0.75);
-        $this->label->setTextSize(1);
-        $this->label->setId("RecTime_".$index);
-        $this->label->setTextColor('fff');
-        $this->addComponent($this->label);
+	
+	
+	
+	$this->label = new \ManiaLib\Gui\Elements\Label(4, 4);
+	$this->label->setAlign('right', 'center');
+	$this->label->setPosition(3, 0);
+	$this->label->setStyle("TextRaceChat");
+	$this->label->setId("RecRank_" . $index);
+	$this->label->setTextSize(1);
+	$this->label->setTextColor('ff0');
+	$this->addComponent($this->label);
 
-        $this->nick = new \ManiaLib\Gui\Elements\Label(30, 4);
-        $this->nick->setPosition(12.5, 0);
-        $this->nick->setAlign('left', 'center');
-        $this->nick->setStyle("TextRaceChat");
-        $this->nick->setScale(0.75);
-        $this->nick->setTextSize(1);
-        $this->nick->setTextColor('fff');
-		$this->nick->setId("RecNick_".$index);
-        $this->addComponent($this->nick);
+	$this->label = new \ManiaLib\Gui\Elements\Label(11, 5);
+	$this->label->setPosition(3.7, 0);
+	$this->label->setAlign('left', 'center');
+	$this->label->setStyle("TextRaceChat");
+	$this->label->setTextSize(1);
+	$this->label->setId("RecTime_" . $index);
+	$this->label->setTextColor('fff');
+	$this->addComponent($this->label);
 
-        // $this->addComponent($this->frame);
+	$this->nick = new \ManiaLib\Gui\Elements\Label(30, 4);
+	$this->nick->setPosition(15.5, 0);
+	$this->nick->setAlign('left', 'center');
+	$this->nick->setStyle("TextRaceChat");
+	$this->nick->setTextSize(1);
+	$this->nick->setTextColor('fff');
+	$this->nick->setId("RecNick_" . $index);
+	$this->addComponent($this->nick);
 
-        $this->setSize($sizeX, $sizeY);
-        $this->setAlign("center", "top");
+	// $this->addComponent($this->frame);
+
+	$this->setSize($sizeX, $sizeY);
+	$this->setAlign("center", "top");
     }
 
     function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->destroy();
+	parent::onIsRemoved($target);
+	$this->destroy();
     }
 
     public function destroy() {
-        // $this->frame->clearComponents();
-        // $this->frame->destroy();
-        $this->clearComponents();
-        parent::destroy();
+	// $this->frame->clearComponents();
+	// $this->frame->destroy();
+	$this->clearComponents();
+	parent::destroy();
     }
 
 }

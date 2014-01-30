@@ -1,7 +1,7 @@
 declare Integer nbShow = 100;
 declare Integer curCp = 0;
 declare Integer totalCp = <?= $this->totalCp ?>;
-declare Integer nbFields = 30;
+declare Integer nbFields = 20;
 declare Integer nbFirstFields = 5;
 
 //Ranks of the players
@@ -9,6 +9,7 @@ declare playerTimes = <?= $this->playerTimes ?>;
 //The latest chackpoint the player past
 declare playerCheckPoint = Integer[Text];
 declare playerNickName = <?= $this->playerNicks ?>;
+declare playersOnServer = Text[Text];
 
 declare Boolean needUpdate = True;
 
@@ -19,7 +20,7 @@ foreach (Player in Players) {
 		playerNickName[Player.Login] = Player.Name;
 	}
 }
-/*
+
 //Dump players to test stu
 playerNickName["player1"] = "player1"; 
 playerTimes["player1"] = 12100; 
@@ -122,4 +123,4 @@ playerTimes["player47"] = 66700;
 playerNickName["player48"] = "player48"; 
 playerTimes["player48"] = 66800; 
 playerNickName["player49"] = "player49"; 
-playerTimes["player49"] = 66900; */
+playerTimes["player49"] = 66900; 

@@ -79,11 +79,11 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     function onResize($oldX, $oldY) {
 	parent::onResize($oldX, $oldY);
 	$this->_windowFrame->setSize($this->sizeX, $this->sizeY);
-	$this->bg->setSize($this->sizeX, $this->sizeY + 6);
-	$this->bg->setPosition(0, -($this->sizeY / 2));
+	$this->bg->setSize($this->sizeX, 6);
+	$this->bg->setPosition(0, -1.5);
 	$this->frame->setPosition(($this->sizeX / 2) + 1, -6);
-	$this->lbl_title->setPosition(($this->sizeX / 2), 0);
-	$this->layer->setPosition($this->sizeX - 5, 0);
+	$this->lbl_title->setPosition(($this->sizeX / 2), -1);
+	$this->layer->setPosition($this->sizeX - 4, 1);
 	//  $this->bg_title->setPosition($this->sizeX / 2, 0);
     }
 
