@@ -17,15 +17,16 @@ foreach (Player in Players) {
 		curCp = Player.CurRace.Checkpoints.count;
 
 		//If finish
-		if (curCp > 0 && curCp == totalCp) {
-			
+		if (curCp > 0 && curCp%(totalCp+1) == totalCp) {
+			declare Integer cpIndex = curCp%(totalCp+1) - 1;
+            
 			//If first finish or better time		
 			if(!playerTimes.existskey(Player.Login)){
 				playerTimes[Player.Login] = -1;
 			}
 			
-			if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[curCp-1]){
-				playerTimes[Player.Login] = Player.CurRace.Checkpoints[curCp-1];
+			if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[cpIndex]){
+				playerTimes[Player.Login] = Player.CurRace.Checkpoints[cpIndex];
 				needUpdate = True;
 			}else{
 				// log("Worse Time, no update");
@@ -39,11 +40,10 @@ foreach (Player in Players) {
 
 foreach (Event in PendingEvents) {
 	if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer")  {
-	    log("click");
 	    if (exp_widgetLayers[version][id] == "normal") {
-		 exp_widgetLayers[version][id] = "scorestable";
+            exp_widgetLayers[version][id] = "scorestable";
 	    } else {
-		exp_widgetLayers[version][id] = "normal"; 
+            exp_widgetLayers[version][id] = "normal"; 
 	    }
 	}
 }
@@ -136,6 +136,4 @@ if(needUpdate){
 		
 		}
 	}
-	
-	
 }
