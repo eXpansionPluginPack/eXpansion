@@ -60,8 +60,7 @@ class DediPanel extends LocalPanel {
 
     function fixHyphens($string) {
 	$out = str_replace('"', "'", $string);
-	$out = str_replace("\'", "'", $out);
-	$out = str_replace('\\', '\\\\', $string);
+	$out = str_replace('\\', '\\\\', $out);
 	
 	
 	return $out;
