@@ -74,8 +74,7 @@ if(needUpdate) {
 		inRank += 1;
 	}
 	
-	if (!isNewRecord) {
-	    log("reverting playerTimes");
+	if (!isNewRecord) {	   
 	    playerTimes = origPlayerTimes;	        
 	}
 	

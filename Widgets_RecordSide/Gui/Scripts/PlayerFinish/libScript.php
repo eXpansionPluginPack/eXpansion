@@ -1,16 +1,16 @@
 Text pad(Integer number, Integer pad) {
     declare Text out = "";
     out = "" ^ number;
+     if (number < 100 && pad == 3) {
+            out = "0" ^ number;
+            }
     if (number < 10 && pad == 3) {
             out = "00" ^ number;
             }
     if (number < 10 && pad == 2) {
             out = "0" ^ number;
-            }
-    if (number < 100 && pad == 3) {
-            out = "0" ^ number;
-            }
-
+            }   
+	    
     return out;
 }
 

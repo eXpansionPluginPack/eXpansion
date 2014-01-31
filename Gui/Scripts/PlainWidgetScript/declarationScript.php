@@ -11,11 +11,11 @@ main () {
 			 
      // external declares ends
      while(True) {
-        yield;
+        
 
         // external loop stuff
         <?=  $this->wLoop ?>
-
+	yield;
     }
 }
 --></script>

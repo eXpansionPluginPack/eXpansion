@@ -534,7 +534,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
         $this->dediUid = $data[0]['UId'];
         $this->dediRecords = $data[0];
-        self::$serverMaxRank = $data[0]['ServerMaxRank'];
+        self::$serverMaxRank = intval($data[0]['ServerMaxRank']);
         $maplimit = intval($data[0]['ServerMaxRank']);
 
         if (count($data[0]['Records']) > 0) {
