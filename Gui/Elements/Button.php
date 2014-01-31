@@ -201,7 +201,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
     public function setIcon($style, $subStyle = null) {
         $this->icon = new \ManiaLib\Gui\Elements\Quad($this->getSizeY(), $this->getSizeY());
         $this->icon->setAlign('left', 'center');
-        $this->icon->setScriptEvents();
+        $this->icon->setScriptEvents(1);
         if ($subStyle != null) {
             $this->icon->setStyle($style);
             $this->icon->setSubStyle($subStyle);
@@ -209,7 +209,8 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
             $this->icon->setImage($style, true);
         }
         $this->icon->setId("Icon_" . $this->buttonId);
-        $this->icon->setAction($this->action);
+        if($this->action != 0)
+            $this->icon->setAction($this->action);
         $this->addComponent($this->icon);
 
         $this->label->setPosX((($this->sizeX - 2) / 2) + ($this->getSizeY() - 1));

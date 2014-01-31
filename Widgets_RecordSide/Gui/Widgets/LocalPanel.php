@@ -43,10 +43,10 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
         $this->timeScript->setParam("playerTimes", "[]");
         $this->timeScript->setParam("nbRecord", $recCount );
-	$this->timeScript->setParam("acceptMaxServerRank", $recCount);
-	$this->timeScript->setParam("acceptMaxPlayerRank", "Integer[Text]") ;
-	$this->timeScript->setParam("useMaxPlayerRank", "False");
-	$this->timeScript->setParam("acceptMinCp", 0);
+        $this->timeScript->setParam("acceptMaxServerRank", $recCount);
+        $this->timeScript->setParam("acceptMaxPlayerRank", "Integer[Text]") ;
+        $this->timeScript->setParam("useMaxPlayerRank", "False");
+        $this->timeScript->setParam("acceptMinCp", 0);
         $this->timeScript->setParam("nbFields", 20);
         $this->timeScript->setParam("nbFirstFields", 5);
         $this->registerScript($script);
@@ -60,6 +60,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->addComponent($this->_windowFrame);
 
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround($sizeX, $sizeY);
+        $this->bg->setScriptEvents(1);
         $this->bgFirst = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround($sizeX, $sizeY);
         $this->_windowFrame->addComponent($this->bg);
         $this->_windowFrame->addComponent($this->bgFirst);
@@ -81,17 +82,22 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(-1));
         $this->_windowFrame->addComponent($this->frame);
 
-        $this->layer = new \ManiaLib\Gui\Elements\Quad(5, 5);
+        $this->layer = new myButton(5, 5);
+        $this->layer->setIcon("Icons128x32_1", "ManiaLinkSwitch");
+        $this->layer->setId("setLayer");
+        $this->layer->setDescription("Switch from Race view to Score View(Visible on Tab)", 75);
+        $this->addComponent($this->layer);
+        
+        /*$this->layer = new \ManiaLib\Gui\Elements\Quad(5, 5);
         $this->layer->setStyle("Icons128x32_1");
         $this->layer->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::ManiaLinkSwitch);
         $this->layer->setId("setLayer");
         $this->layer->setScriptEvents();
-        $this->addComponent($this->layer);
+        $this->addComponent($this->layer);*/
     }
 
     public function setNbFields($nb) {
         $this->timeScript->setParam("nbFields", $nb);
-	
   //      $this->setPosY(6 + 4 * $nb);
         $this->nbFields = $nb;
     }
@@ -113,7 +119,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->bg->setPosition(0, -1.5);
         $this->frame->setPosition(($this->sizeX / 2) + 1, -6);
         $this->lbl_title->setPosition(($this->sizeX / 2), -1);
-        $this->layer->setPosition($this->sizeX - 4, 1);
+        $this->layer->setPosition($this->sizeX - 4, -1);
         //  $this->bg_title->setPosition($this->sizeX / 2, 0);
     }
 
