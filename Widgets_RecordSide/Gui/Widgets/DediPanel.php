@@ -10,12 +10,14 @@ use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
 class DediPanel extends LocalPanel {
 
     function onConstruct() {
-        parent::onConstruct();
-        $this->setName("Dedimania Panel");
+	parent::onConstruct();
+	$this->setName("Dedimania Panel");
+	$this->timeScript->setParam("acceptMinCp", 2);
+	$this->timeScript->setParam("acceptMaxPlayerRank", \ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection::$serverMaxRank);
     }
-    
+
     function update() {
-       	$login = $this->getRecipient();
+	$login = $this->getRecipient();
 	foreach ($this->items as $item)
 	    $item->destroy();
 	$this->items = array();
@@ -56,16 +58,27 @@ class DediPanel extends LocalPanel {
 
 	$this->timeScript->setParam("playerTimes", $recsData);
 	$this->timeScript->setParam("playerNicks", $nickData);
+	$this->timeScript->setParam("acceptMaxPlayerRank", "Integer[Text]");
+	$this->timeScript->setParam("useMaxPlayerRank", "True");
+	if (count(\ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection::$players) > 0) {
+	    $out = "[";
+	    foreach (\ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection::$players as $dediplayer) {
+		$out .= '"' . $dediplayer->login . '" => ' . $dediplayer->maxRank . ',';
+	    }
+	    $out = trim($out, ",");
+	    $out = $out . "]";
+
+	    $this->timeScript->setParam("acceptMaxPlayerRank", $out);
+	}
     }
 
     function fixHyphens($string) {
 	$out = str_replace('"', "'", $string);
 	$out = str_replace('\\', '\\\\', $out);
-	
-	
+
+
 	return $out;
-	
     }
+
 }
- 
 ?>

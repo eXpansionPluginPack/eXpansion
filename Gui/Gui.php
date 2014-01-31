@@ -36,6 +36,8 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $player)
             $this->onPlayerConnect($player->login, true);
+	$action = \ManiaLive\Gui\ActionHandler::getInstance();
+	
     }
 
     public static function getScaledSize($sizes, $totalSize) {
@@ -54,7 +56,11 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         return $nsize;
     }
 
+
     function onPlayerConnect($login, $isSpectator) {
+	// remove f8 for hiding ui
+	\ManiaLive\Gui\Windows\Shortkey::Erase($login);
+	
         $preloader = Widgets\Preloader::Create($login);
         foreach (Config::getInstance() as $property => $value) {
             if (is_string($value) && substr($value, 0, 7) == "http://" && substr($value, -4) == ".png") {

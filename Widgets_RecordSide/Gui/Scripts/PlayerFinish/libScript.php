@@ -1,4 +1,4 @@
- Text pad(Integer number, Integer pad) {
+Text pad(Integer number, Integer pad) {
     declare Text out = "";
     out = "" ^ number;
     if (number < 10 && pad == 3) {

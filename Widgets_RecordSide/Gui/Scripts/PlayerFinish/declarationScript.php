@@ -4,12 +4,22 @@ declare Integer totalCp = <?= $this->totalCp ?>;
 declare Integer nbFields =  <?= $this->nbFields ?>;
 declare Integer nbFirstFields =  <?= $this->nbFirstFields ?>;
 
+declare Integer maxServerRank = <?= $this->acceptMaxServerRank ?>;
+declare Integer[Text] maxPlayerRank = <?= $this->acceptMaxPlayerRank ?>;
+
+declare useMaxPlayerRank = <?= $this->useMaxPlayerRank ?>;
+
+declare Integer acceptMinCp = <?= $this->acceptMinCp ?>;
+
 //Ranks of the players
 declare playerTimes = <?= $this->playerTimes ?>;
+declare origPlayerTimes = playerTimes;
+
 //The latest chackpoint the player past
 declare playerCheckPoint = Integer[Text];
 declare playerNickName = <?= $this->playerNicks ?>;
 declare playersOnServer = Text[Text];
+declare recordLogin = "";
 
 declare Boolean needUpdate = True;
 

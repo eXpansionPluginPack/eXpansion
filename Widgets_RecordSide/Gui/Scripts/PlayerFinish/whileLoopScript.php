@@ -17,7 +17,7 @@ foreach (Player in Players) {
 		curCp = Player.CurRace.Checkpoints.count;
 
 		//If finish
-		if (curCp > 0 && curCp%(totalCp+1) == totalCp) {
+		if (curCp > 0 && curCp%(totalCp+1) == totalCp && totalCp > acceptMinCp) {
 			declare Integer cpIndex = curCp%(totalCp+1) - 1;
             
 			//If first finish or better time		
@@ -26,7 +26,9 @@ foreach (Player in Players) {
 			}
 			
 			if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[cpIndex]){
+				origPlayerTimes = playerTimes;
 				playerTimes[Player.Login] = Player.CurRace.Checkpoints[cpIndex];
+				recordLogin = Player.Login;
 				needUpdate = True;
 			}else{
 				// log("Worse Time, no update");
@@ -48,8 +50,37 @@ foreach (Event in PendingEvents) {
 	}
 }
 
-if(needUpdate){	
-	playerTimes = playerTimes.sort();
+if(needUpdate) { 
+	declare Integer inRank = 1;	
+	declare Boolean isNewRecord = False;	
+	playerTimes.sort();
+	
+	foreach (Login => Score in playerTimes) {
+		if(Login == recordLogin){			
+			if (inRank < maxServerRank ) {
+			    log("inrank");
+			    if (useMaxPlayerRank) {
+				log("use max players");
+				if (inRank < maxPlayerRank[Login] ) {
+				    log("adding record");
+				    isNewRecord = True;
+				    break;
+				}
+			    }
+			} else {			    
+			    isNewRecord = True;
+			}
+		}
+		inRank += 1;
+	}
+	
+	if (!isNewRecord) {
+	    log("reverting playerTimes");
+	    playerTimes = origPlayerTimes;	        
+	}
+	
+
+	playerTimes.sort();	
 	needUpdate = False;
 	
 	declare i = 1;
@@ -119,9 +150,7 @@ if(needUpdate){
 			}
 			
 			if(nickLabel != Null){
-			
-				putRecordTo(i, nbRec, Score, Login,  playerNickName[Login], Login == InputPlayer.Login);
-				
+			    putRecordTo(i, nbRec, Score, Login,  playerNickName[Login], Login == InputPlayer.Login);			
 				if(Login == InputPlayer.Login){
 					showed = True;
 				}

@@ -37,10 +37,16 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
           $this->registerScript($script); */
 
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/PlayerFinish");
+	$recCount = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
+	
         $this->timeScript = $script;
         $this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
         $this->timeScript->setParam("playerTimes", "[]");
-        $this->timeScript->setParam("nbRecord", 100);
+        $this->timeScript->setParam("nbRecord", $recCount );
+	$this->timeScript->setParam("acceptMaxServerRank", $recCount);
+	$this->timeScript->setParam("acceptMaxPlayerRank", "Integer[Text]") ;
+	$this->timeScript->setParam("useMaxPlayerRank", "False");
+	$this->timeScript->setParam("acceptMinCp", 0);
         $this->timeScript->setParam("nbFields", 20);
         $this->timeScript->setParam("nbFirstFields", 5);
         $this->registerScript($script);

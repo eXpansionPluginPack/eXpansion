@@ -10,10 +10,10 @@ use \ManiaLive\Features\Tick\Listener as TickListener;
 use \ManiaLive\Features\Tick\Event as TickEvent;
 use \Maniaplanet\DedicatedServer\Structures\GameInfos;
 use ManiaLive\Utilities\Console;
-use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediPlayer;
-use ManiaLivePlugins\eXpansion\Dedimania\Classes\Request as dediRequest;
-use ManiaLivePlugins\eXpansion\Dedimania\Config;
-use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as dediEvent;
+use \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediPlayer;
+use \ManiaLivePlugins\eXpansion\Dedimania\Classes\Request as dediRequest;
+use \ManiaLivePlugins\eXpansion\Dedimania\Config;
+use \ManiaLivePlugins\eXpansion\Dedimania\Events\Event as dediEvent;
 use \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediMap;
 use \ManiaLivePlugins\eXpansion\Core\Classes\Webaccess;
 
@@ -28,7 +28,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     /** @var \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediMap */
     public static $dediMap = null;
 
-    /** @var DediPlayer[] Cached players from dedimania */
+    /** @var \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediPlayer[] Cached players from dedimania */
     public static $players = array();
 
     /** @var \Webaccess */
