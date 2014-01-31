@@ -59,7 +59,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function onPlayerConnect($login, $isSpectator) {
 	// remove f8 for hiding ui
-	\ManiaLive\Gui\Windows\Shortkey::Erase($login);
+	// 	\ManiaLive\Gui\Windows\Shortkey::Erase($login);
 	
         $preloader = Widgets\Preloader::Create($login);
         foreach (Config::getInstance() as $property => $value) {
