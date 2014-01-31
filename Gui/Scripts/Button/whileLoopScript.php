@@ -1,7 +1,8 @@
 foreach (Event in PendingEvents) {
     if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {
-        log("Mouse Over : "^Event.ControlId);
-		
+
+		declare CMlQuad eXp_Button <=> (Page.GetFirstChild(Event.ControlId) as CMlQuad);
+        
         if(Page.GetFirstChild("eXp_ButtonDescBg_"^Event.ControlId) != Null){
 		
             log("Validated "^Event.ControlId);
@@ -14,10 +15,23 @@ foreach (Event in PendingEvents) {
 			
             eXp_ButtonCurrentBg = (Page.GetFirstChild("eXp_ButtonDescBg_"^Event.ControlId) as CMlQuad);
             eXp_ButtonCurrentLb = (Page.GetFirstChild("eXp_ButtonDescText_"^Event.ControlId) as CMlLabel);
+            
+            //Checking position
+            if(eXp_Button.AbsolutePosition.X + eXp_ButtonCurrentBg.Size.X > 160){
+                //Left open
+                eXp_ButtonCurrentBg.PosnX = eXp_Button.AbsolutePosition.X - eXp_ButtonCurrentBg.Size.X;
+                eXp_ButtonCurrentLb.PosnX = eXp_Button.AbsolutePosition.X - eXp_ButtonCurrentBg.Size.X + 1;
+            }else{
+                //Open right
+                eXp_ButtonCurrentBg.PosnX = eXp_Button.PosnX + eXp_Button.Size.X;
+                eXp_ButtonCurrentLb.PosnX = eXp_Button.PosnX + eXp_Button.Size.X + 1;
+            }
+            
             eXp_ButtonCurrentBg.Show();
             eXp_ButtonCurrentLb.Show();
+            
         }else{
-              if(eXp_ButtonCurrentBg != Null){
+             if(eXp_ButtonCurrentBg != Null){
                 eXp_ButtonCurrentBg.Hide();
                 eXp_ButtonCurrentBg = Null;
             }
