@@ -60,21 +60,22 @@ if(needUpdate) {
 			if (inRank < maxServerRank ) {
 			    log("inrank");
 			    if (useMaxPlayerRank) {
-				log("use max players");
-				if (inRank < maxPlayerRank[Login] ) {
-				    log("adding record");
-				    isNewRecord = True;
-				    break;
-				}
+					log("use max players");
+					if (inRank < maxPlayerRank[Login] ) {
+						log("adding record");
+						isNewRecord = True;
+						break;
+					}
 			    }
-			} else {			    
-			    isNewRecord = True;
-			}
+				else {			    
+					isNewRecord = True;
+				}	
+			} 
 		}
 		inRank += 1;
 	}
 	
-	if (!isNewRecord) {	   
+	if (!isNewRecord) {		    
 	    playerTimes = origPlayerTimes;	        
 	}
 	

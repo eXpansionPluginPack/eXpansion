@@ -70,10 +70,11 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
         $preloader->show();
 
-        $info = HudPanel::Create($login);
+        /* reaby disabled this, no need anymore :)
+	$info = HudPanel::Create($login);
         $info->setSize(75, 6);
         $info->setPosition(-160, -50);
-        $info->show();
+        $info->show(); */
 
         try {
             $SMstorm = array("SMStorm", "SMStormCombo@nadeolabs", "SMStormRoyal@nadeolabs", "SMStormElite@nadeolabs", "SMStormJoust@nadeolabs");
