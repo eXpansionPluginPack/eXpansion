@@ -36,7 +36,7 @@ class MumbleInfo extends \ManiaLive\Gui\Window {
     protected function onConstruct() {
         parent::onConstruct();
 		
-		$this->frame = new \ManiaLib\Gui\Elements\Frame();
+		$this->frame = new \ManiaLive\Gui\Controls\Frame();
 		$this->frame->setPosition(-20, 20, 1);
 		$this->addComponent($this->frame);
 		

@@ -56,10 +56,6 @@ class PanelItem extends \ManiaLive\Gui\Control {
         $this->addComponent($label);
     }
 
-    function onDraw() {
-        
-    }
-
     function onIsRemoved(\ManiaLive\Gui\Container $target) {
         parent::onIsRemoved($target);
         $this->destroy();

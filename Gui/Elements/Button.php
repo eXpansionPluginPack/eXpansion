@@ -70,7 +70,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
         $this->label->setFocusAreaColor1("000f");
         $this->label->setFocusAreaColor2("ffff");
 
-        $this->frameDescription = new \ManiaLib\Gui\Elements\Frame();
+        $this->frameDescription = new \ManiaLive\Gui\Controls\Frame();
         //$this->frameDescription->setId("Desc_Icon_" . $this->buttonId);
         $this->frameDescription->setPositionZ(10);
         $this->frameDescription->setHidden(true);
@@ -82,7 +82,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
         $this->labelDesc->setPosition(7, 3);
         $this->labelDesc->setPositionZ(5);
         $this->labelDesc->setAttribute('hidden', '1');
-        $this->frameDescription->add($this->labelDesc);
+        $this->frameDescription->addComponent($this->labelDesc);
 
         $this->backGroundDesc = new \ManiaLib\Gui\Elements\Quad(32, 6);
         $this->backGroundDesc->setAlign('left', 'center2');
@@ -92,7 +92,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
         $this->backGroundDesc->setPosition(5, 3);
         $this->backGroundDesc->setPositionZ(1);
 		$this->backGroundDesc->setAttribute('hidden', '1');
-        $this->frameDescription->add($this->backGroundDesc);
+        $this->frameDescription->addComponent($this->backGroundDesc);
 
         $this->sizeX = $sizeX + 2;
         $this->sizeY = $sizeY + 2;
@@ -116,8 +116,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
     }
 
     function onDraw() {
-        self::$script->reset();
-        parent::onDraw();
+        self::$script->reset();        
         $this->clearComponents();
 
         if ($this->isActive)

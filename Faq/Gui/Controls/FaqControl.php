@@ -47,8 +47,7 @@ abstract class FaqControl extends \ManiaLive\Gui\Control {
         parent::destroy();
     }
 
-    protected function onDraw() {
-        parent::onDraw();
+    protected function onDraw() {        
         $this->clearComponents();
         $this->addComponent($this->label);
     }

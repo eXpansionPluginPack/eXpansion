@@ -24,10 +24,6 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->addComponent($this->frame);
     }
 
-    /*   protected function onDraw() {
-      parent::onDraw();
-      f
-      } */
 
     public function setLanguage($language) {
         $this->userLanguage = "en";
