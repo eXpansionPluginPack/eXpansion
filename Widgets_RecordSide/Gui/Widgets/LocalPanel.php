@@ -27,6 +27,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $sizeX = 46;
         $sizeY = 95;
         $this->setName("LocalRecords Panel");
+	$this->setScriptEvents();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         /* $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui/Scripts/TrayWidget");
           $script->setParam('isMinimized', 'True');
@@ -165,6 +166,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
         $this->timeScript->setParam("playerTimes", $recsData);
         $this->timeScript->setParam("playerNicks", $nickData);
+	$this->setScriptEvents();
     }
 
     function destroy() {

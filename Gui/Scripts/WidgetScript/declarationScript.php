@@ -27,6 +27,7 @@ declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 
 declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
 declare Real lastMouseX = 0.0;
 declare Real lastMouseY = 0.0;
+declare CMlControl element;
 
 declare persistent Boolean exp_enableHudMove = False;
 declare persistent Vec3[Text][Text] exp_widgetLastPos;

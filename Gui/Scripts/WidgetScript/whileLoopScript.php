@@ -35,10 +35,24 @@ if (exp_enableHudMove == True && MouseLeftButton == True) {
 			lastMouseY = MouseY;
 			MoveWindow = True;
 		}
+		
 	}
 }else {
 	MoveWindow = False;
 }
+foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::MouseOver ) {
+	if(Event.Control != Null ){
+	   element = Event.Control;
+	   element.Scale = 1.3;	   
+	}	
+    }
+    else {
+	  if (element != Null){ 	   	    
+	    element.Scale = 1.0;	  
+	  }
+    }
+}		  
 
 if (MoveWindow) {
 	<?= $deltaX ?>

@@ -18,7 +18,7 @@ class WidgetButton extends \ManiaLive\Gui\Control {
      * @param int $sizeX = 24
      * @param intt $sizeY = 6
      */
-    function __construct($sizeX = 12, $sizeY = 12) {
+    function __construct($sizeX = 12, $sizeY = 12) {	
         $this->quad = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->quad->setAlign('center', 'center2');
         $this->quad->setStyle("Bgs1InRace");
@@ -30,7 +30,7 @@ class WidgetButton extends \ManiaLive\Gui\Control {
         $this->button->setAlign('center', 'center2');
         $this->button->setPosY(-3);
         $this->button->setBgcolor("0000");
-        $this->button->setBgcolorFocus("6af8");
+        $this->button->setBgcolorFocus("6af8");	
         $this->addComponent($this->button);
 
         $this->sizeX = $sizeX + 2;

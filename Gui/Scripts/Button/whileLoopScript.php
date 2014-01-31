@@ -46,7 +46,7 @@ foreach (Event in PendingEvents) {
                 eXp_ButtonCurrentBg.Hide();
                 eXp_ButtonCurrentBg = Null;
             }
-			if(eXp_ButtonCurrentLb != Null){
+	if(eXp_ButtonCurrentLb != Null){
                 eXp_ButtonCurrentLb.Hide();
                 eXp_ButtonCurrentLb = Null;
             }
