@@ -46,7 +46,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->actions['hudReset'] = $actionHandler->createAction(array($this, "actions"), "hudReset");
         $this->actions['stats'] = $actionHandler->createAction(array($this, "actions"), "stats");
         $this->actions['serverinfo'] = $actionHandler->createAction(array($this, "actions"), "serverinfo");
-
+	$this->actions['admreplay'] = $actionHandler->createAction(array($this, "actions"), "admreplay"); 
         $this->reDraw();
     }
 
@@ -119,6 +119,9 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 break;
             case "serverinfo":
                 $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Core\\Core", "showInfo", $login);
+                break;
+	    case "admreplay":
+                $adminGrp->adminCmd($login, "replay");
                 break;
         }
     }
@@ -211,7 +214,10 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $adm = $submenu->addSubMenu($menu, __("Admin", $login));
 
             if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_restart"))
-                $submenu->addItem($adm, __("Restart", $login), $this->actions['admres']);
+                $submenu->addItem($adm, __("Instant Restart", $login), $this->actions['admres']);
+	    
+	    if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_restart"))
+                $submenu->addItem($adm, __("Replay", $login), $this->actions['admreplay']);
 
             if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin_skip"))
                 $submenu->addItem($adm, __("Skip", $login), $this->actions['admskip']);

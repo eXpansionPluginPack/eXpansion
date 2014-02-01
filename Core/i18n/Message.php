@@ -56,7 +56,7 @@ class Message {
             array_unshift($arrgs, $msg);
             $text = call_user_func_array('sprintf', $arrgs);
             $out[] = array("Lang" => lcfirst($lang), "Text" => \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text));
-        }
+        }			
         return $out;
     }
 

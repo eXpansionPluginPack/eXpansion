@@ -132,7 +132,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function showLocalPanel($login) {
 	Gui\Widgets\LocalPanel::Erase($login);
 
-	$panel = Gui\Widgets\LocalPanel::Create($login, false);
+	$panel = Gui\Widgets\LocalPanel::Create($login);
 	$panel->setPosition(118, 50);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
@@ -141,7 +141,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 	$panel->show();
 
-	$panel = Gui\Widgets\LocalPanel::Create($login, false);
+	$panel = Gui\Widgets\LocalPanel::Create($login);
 	$panel->setPosition(118, 50);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
@@ -153,7 +153,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function showDediPanel($login) {
 	Gui\Widgets\DediPanel::Erase($login);
-	$panel = Gui\Widgets\DediPanel::Create($login, false);
+	$panel = Gui\Widgets\DediPanel::Create($login);
 	$panel->setPosition(-160, 60);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
@@ -162,7 +162,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 	$panel->show();
 
-	$panel = Gui\Widgets\DediPanel::Create($login, false);
+	$panel = Gui\Widgets\DediPanel::Create($login);
 	$panel->setPosition(-160, 60);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
