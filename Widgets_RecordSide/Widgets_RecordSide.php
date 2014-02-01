@@ -62,15 +62,14 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	if ((time() - $this->lastUpdate) > 1 && $this->needUpdate !== false || $this->forceUpdate == true) {
 
 	    if (($this->needUpdate & self::Dedimania) == self::Dedimania || $this->forceUpdate || ($this->needUpdate & self::Dedimania_force) == self::Dedimania_force) {
-		if ($this->dedi || $this->needUpdate == self::Dedimania_force) {
-		    echo "dedimania widget update!\n";
+		if ($this->dedi || $this->needUpdate == self::Dedimania_force) {		    
 		    $this->updateDediPanel();
 		    $this->dedi = false;
 		}
 	    }
 
 	    if (($this->needUpdate & self::Localrecords) == self::Localrecords || $this->forceUpdate) {
-		if ($this->local) {
+		if ($this->local) {		    
 		    $this->updateLocalPanel();
 		    $this->local = false;
 		}
@@ -106,13 +105,13 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onDedimaniaUpdateRecords($data) {
-	self::$dedirecords = $data['Records'];
-	$this->needUpdate = self::Dedimania;
+	//self::$dedirecords = $data['Records'];
+	//$this->needUpdate = self::Dedimania;
     }
 
     public function onDedimaniaGetRecords($data) {
 	self::$dedirecords = $data['Records'];
-	$this->needUpdate = self::Dedimania;
+	$this->needUpdate = self::Dedimania_force;
     }
 
     public function updateDediPanel() {
@@ -132,7 +131,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function showLocalPanel($login) {
 	Gui\Widgets\LocalPanel::Erase($login);
 
-	$panel = Gui\Widgets\LocalPanel::Create($login);
+	$panel = Gui\Widgets\LocalPanel::Create($login, false);
 	$panel->setPosition(118, 50);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
@@ -141,7 +140,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 	$panel->show();
 
-	$panel = Gui\Widgets\LocalPanel::Create($login);
+	$panel = Gui\Widgets\LocalPanel::Create($login, false);
 	$panel->setPosition(118, 50);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
@@ -153,7 +152,8 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function showDediPanel($login) {
 	Gui\Widgets\DediPanel::Erase($login);
-	$panel = Gui\Widgets\DediPanel::Create($login);
+	
+	$panel = Gui\Widgets\DediPanel::Create($login, false);
 	$panel->setPosition(-160, 60);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
@@ -162,7 +162,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 	$panel->show();
 
-	$panel = Gui\Widgets\DediPanel::Create($login);
+	$panel = Gui\Widgets\DediPanel::Create($login, false);
 	$panel->setPosition(-160, 60);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
@@ -195,8 +195,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onDedimaniaPlayerConnect($data) {
-	if (count(self::$dedirecords) > 0) {
-	    echo "count: " . count(self::$dedirecords). "\n";
+	if (count(self::$dedirecords) > 0) {	    
 	    $this->needUpdate = self::Dedimania_force;
 	}
     }

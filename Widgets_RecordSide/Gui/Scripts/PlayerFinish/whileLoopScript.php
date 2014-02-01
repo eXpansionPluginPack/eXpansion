@@ -22,12 +22,18 @@ foreach (Player in Players) {
             
 			//If first finish or better time		
 			if(!playerTimes.existskey(Player.Login)){
+				//origPlayerTimes.clear();				
+				origPlayerTimes = playerTimes;
 				playerTimes[Player.Login] = -1;
 			}
 			
-			if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[cpIndex]){
-				origPlayerTimes = playerTimes;
-				playerTimes[Player.Login] = Player.CurRace.Checkpoints[cpIndex];
+			if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[cpIndex]){				
+				origPlayerTimes = Integer[Text];
+				
+				if (playerTimes[Player.Login] != -1) {
+				    origPlayerTimes = playerTimes;
+				}
+				playerTimes[Player.Login] = Player.CurRace.Checkpoints[cpIndex];				
 				recordLogin = Player.Login;
 				needUpdate = True;
 			}else{
@@ -51,37 +57,37 @@ foreach (Event in PendingEvents) {
 }
 
 if(needUpdate) { 
+	needUpdate = False;
 	declare Integer inRank = 1;	
-	declare Boolean isNewRecord = False;	
-	playerTimes.sort();
+	declare Boolean isNewRecord = False;		
+	
+	playerTimes = playerTimes.sort();	
 	
 	foreach (Login => Score in playerTimes) {
-		if(Login == recordLogin){			
-			if (inRank < maxServerRank ) {
-			    log("inrank");
+		if(Login == recordLogin) {
+			if (inRank < maxServerRank ) {			    
 			    if (useMaxPlayerRank) {
-					log("use max players");
-					if (inRank < maxPlayerRank[Login] ) {
-						log("adding record");
-						isNewRecord = True;
-						break;
+				if  (maxPlayerRank.existskey(Login)) {
+					if (inRank < maxPlayerRank[Login] ) {						
+						isNewRecord = True;						
 					}
+				}
 			    }
-				else {			    
-					isNewRecord = True;
-				}	
+			    else {			    				
+				isNewRecord = True;
+			    }	
 			} 
 		}
 		inRank += 1;
 	}
 	
-	if (!isNewRecord) {		    
-	    playerTimes = origPlayerTimes;	        
+	inRank = 1;
+	if (!isNewRecord) {	    
+	    playerTimes.clear();
+	    playerTimes = origPlayerTimes;	        	    
 	}
 	
-
-	playerTimes.sort();	
-	needUpdate = False;
+	playerTimes = playerTimes.sort();
 	
 	declare i = 1;
 	declare nbRec = 1;
@@ -99,18 +105,20 @@ if(needUpdate) {
 
 	if(playerTimes.count > nbShow){
 		recCount = nbShow;
-	}else{
+	} else {
 		recCount = playerTimes.count;
 	}
 	
 	i = 1;
 
-	foreach (Login => Score in playerTimes) {
-		if(Login == InputPlayer.Login){
-			myRank = i;
-			break;
-		}
-		i += 1;
+	foreach (Login => Score in playerTimes) {		
+	    if (LocalUser != Null) {
+			if(Login == LocalUser.Login){
+				myRank = i;
+				break;
+			}
+	    }
+	    i += 1;
 	}
 	
 	if(myRank != -1){
@@ -142,21 +150,19 @@ if(needUpdate) {
 			declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
 			
 			if(highliteQuad != Null){			    
-			    if (playersOnServer.existskey(Login) && i != myRank) {
-				highliteQuad.Show();				
-			    } else {
-				highliteQuad.Hide();				
-			    }
-			}
-			
-			if(nickLabel != Null){
-			    putRecordTo(i, nbRec, Score, Login,  playerNickName[Login], Login == InputPlayer.Login);			
-				if(Login == InputPlayer.Login){
-					showed = True;
+				if (playersOnServer.existskey(Login) && i != myRank) {
+					highliteQuad.Show();				
+				} else {
+					highliteQuad.Hide();				
 				}
 			}
 			
-		
+			if(nickLabel != Null){				    			    
+			    putRecordTo(i, nbRec, Score, Login, playerNickName[Login], Login == LocalUser.Login);			
+				if(Login == LocalUser.Login){
+					showed = True;
+				}
+			}			
 			i += 1;
 		}		
 		nbRec += 1;		
@@ -165,4 +171,5 @@ if(needUpdate) {
 		
 		}
 	}
+	recordLogin = "";
 }
