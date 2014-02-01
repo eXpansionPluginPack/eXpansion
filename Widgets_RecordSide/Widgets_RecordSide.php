@@ -83,20 +83,10 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function onBeginMatch() {
 	$this->dedi = true;
-	$this->local = true;
-	self::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
-	foreach ($this->storage->players as $player)
-	    $this->onPlayerConnect($player->login, false); // create panel for everybody
-	foreach ($this->storage->spectators as $player)
-	    $this->onPlayerConnect($player->login, true); // create panel for everybody
-
-
-
-
-
-
-	    
-// $this->forceUpdate = true;
+	$this->local = true;	
+	$this->forceUpdate = true; 	
+	$this->updateDediPanel();
+	$this->updateLocalPanel();	
     }
 
     public function onUpdateRecords($data) {
@@ -111,6 +101,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function onDedimaniaGetRecords($data) {
 	self::$dedirecords = $data['Records'];
+	$this->dedi = True;
 	$this->needUpdate = self::Dedimania_force;
     }
 
@@ -130,8 +121,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function showLocalPanel($login) {
 	Gui\Widgets\LocalPanel::Erase($login);
+	Gui\Widgets\LocalPanel2::Erase($login);
 
-	$panel = Gui\Widgets\LocalPanel::Create($login, false);
+	$panel = Gui\Widgets\LocalPanel::Create($login);
 	$panel->setPosition(118, 50);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
@@ -140,7 +132,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 	$panel->show();
 
-	$panel = Gui\Widgets\LocalPanel::Create($login, false);
+	$panel = Gui\Widgets\LocalPanel2::Create($login);
 	$panel->setPosition(118, 50);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
@@ -152,8 +144,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function showDediPanel($login) {
 	Gui\Widgets\DediPanel::Erase($login);
+	Gui\Widgets\DediPanel2::Erase($login);
 	
-	$panel = Gui\Widgets\DediPanel::Create($login, false);
+	$panel = Gui\Widgets\DediPanel::Create($login);
 	$panel->setPosition(-160, 60);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
@@ -162,7 +155,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 	$panel->show();
 
-	$panel = Gui\Widgets\DediPanel::Create($login, false);
+	$panel = Gui\Widgets\DediPanel2::Create($login);
 	$panel->setPosition(-160, 60);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(20);
@@ -180,6 +173,8 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function onPlayerDisconnect($login, $reason = null) {
 	Gui\Widgets\LocalPanel::Erase($login);
 	Gui\Widgets\DediPanel::Erase($login);
+	Gui\Widgets\LocalPanel2::Erase($login);
+	Gui\Widgets\DediPanel2::Erase($login);
     }
 
     public function onDedimaniaOpenSession() {

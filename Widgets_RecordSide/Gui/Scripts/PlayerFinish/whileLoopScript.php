@@ -22,17 +22,18 @@ foreach (Player in Players) {
             
 			//If first finish or better time		
 			if(!playerTimes.existskey(Player.Login)){
-				//origPlayerTimes.clear();				
+				origPlayerTimes.clear();				
 				origPlayerTimes = playerTimes;
 				playerTimes[Player.Login] = -1;
 			}
 			
-			if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[cpIndex]){				
-				origPlayerTimes = Integer[Text];
-				
-				if (playerTimes[Player.Login] != -1) {
+			if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[cpIndex]){
+			
+				if (playerTimes[Player.Login] != -1) {				    
+				    origPlayerTimes.clear();
 				    origPlayerTimes = playerTimes;
 				}
+				
 				playerTimes[Player.Login] = Player.CurRace.Checkpoints[cpIndex];				
 				recordLogin = Player.Login;
 				needUpdate = True;
@@ -82,12 +83,13 @@ if(needUpdate) {
 	}
 	
 	inRank = 1;
+	
 	if (!isNewRecord) {	    
 	    playerTimes.clear();
-	    playerTimes = origPlayerTimes;	        	    
+	    playerTimes = origPlayerTimes.sort();
 	}
 	
-	playerTimes = playerTimes.sort();
+	
 	
 	declare i = 1;
 	declare nbRec = 1;
