@@ -62,14 +62,14 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	if ((time() - $this->lastUpdate) > 1 && $this->needUpdate !== false || $this->forceUpdate == true) {
 
 	    if (($this->needUpdate & self::Dedimania) == self::Dedimania || $this->forceUpdate || ($this->needUpdate & self::Dedimania_force) == self::Dedimania_force) {
-		if ($this->dedi || $this->needUpdate == self::Dedimania_force) {		    
+		if ($this->dedi || $this->needUpdate == self::Dedimania_force) {
 		    $this->updateDediPanel();
 		    $this->dedi = false;
 		}
 	    }
 
 	    if (($this->needUpdate & self::Localrecords) == self::Localrecords || $this->forceUpdate) {
-		if ($this->local) {		    
+		if ($this->local) {
 		    $this->updateLocalPanel();
 		    $this->local = false;
 		}
@@ -83,10 +83,10 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function onBeginMatch() {
 	$this->dedi = true;
-	$this->local = true;	
-	$this->forceUpdate = true; 	
+	$this->local = true;
+	$this->forceUpdate = true;
 	$this->updateDediPanel();
-	$this->updateLocalPanel();	
+	$this->updateLocalPanel();
     }
 
     public function onUpdateRecords($data) {
@@ -95,8 +95,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onDedimaniaUpdateRecords($data) {
-	//self::$dedirecords = $data['Records'];
-	//$this->needUpdate = self::Dedimania;
+	self::$dedirecords = $data['Records'];
+	$this->dedi = True;
+	$this->needUpdate = self::Dedimania_force;
     }
 
     public function onDedimaniaGetRecords($data) {
@@ -120,8 +121,8 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function showLocalPanel($login) {
-	Gui\Widgets\LocalPanel::Erase($login);
-	Gui\Widgets\LocalPanel2::Erase($login);
+	//Gui\Widgets\LocalPanel::Erase($login);
+	//Gui\Widgets\LocalPanel2::Erase($login);
 
 	$panel = Gui\Widgets\LocalPanel::Create($login);
 	$panel->setPosition(118, 50);
@@ -143,9 +144,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function showDediPanel($login) {
-	Gui\Widgets\DediPanel::Erase($login);
-	Gui\Widgets\DediPanel2::Erase($login);
-	
+	//Gui\Widgets\DediPanel::Erase($login);
+	//Gui\Widgets\DediPanel2::Erase($login);
+
 	$panel = Gui\Widgets\DediPanel::Create($login);
 	$panel->setPosition(-160, 60);
 	$panel->setSize(40, 95);
@@ -190,7 +191,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onDedimaniaPlayerConnect($data) {
-	if (count(self::$dedirecords) > 0) {	    
+	if (count(self::$dedirecords) > 0) {
 	    $this->needUpdate = self::Dedimania_force;
 	}
     }
