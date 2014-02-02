@@ -214,6 +214,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public function showPlayers($login) {
         $startTime = (time() - (24 * 60 * 60));
 
+        Gui\Windows\PlotterWindow::Erase($login);
         $win = Gui\Windows\PlotterWindow::Create($login);
         $win->setTitle(__("Players", $login));
         $win->setSize(170, 110);
@@ -253,6 +254,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public function showMemory($login) {
         $startTime = (time() - (24 * 60 * 60));
 
+        Gui\Windows\PlotterWindow::Erase($login);
         $win = Gui\Windows\PlotterWindow::Create($login);
         $win->setTitle(__("Memory usage", $login));
         $win->setSize(170, 110);
@@ -311,6 +313,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public function showCpu($login) {
         $startTime = (time() - (24 * 60 * 60));
 
+        Gui\Windows\PlotterWindow::Erase($login);
         $win = Gui\Windows\PlotterWindow::Create($login);
         $win->setTitle(__("Cpu usage", $login));
         $win->setSize(170, 110);
