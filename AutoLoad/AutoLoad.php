@@ -16,7 +16,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         , 'ManiaLivePlugins\eXpansion\Database\Database'
         , 'ManiaLivePlugins\eXpansion\Emotes\Emotes'
         , 'ManiaLivePlugins\eXpansion\DonatePanel\DonatePanel'
-        , 'ManiaLivePlugins\eXpansion\Faq\Faq'
+        , 'ManiaLivePlugins\eXpansion\Faq\Faq'	
         , 'ManiaLivePlugins\eXpansion\Gui\Gui'
         , 'ManiaLivePlugins\eXpansion\JoinLeaveMessage\JoinLeaveMessage'
         , 'ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords'
@@ -35,6 +35,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         , 'ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Widgets_PersonalBest'
         , 'ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide'
         , 'ManiaLivePlugins\eXpansion\Widgets_Times\Widgets_Times'
+	, 'ManiaLivePlugins\eXpansion\Tutorial\Tutorial'
     );
 
     public function exp_onLoad() {

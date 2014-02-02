@@ -117,8 +117,11 @@ class PlainWidget extends \ManiaLive\Gui\Window {
         $this->clearComponents();
         parent::destroy();
     }
-
-    public function registerScript($script) {
+    /**
+     * Registers a script to widget instance
+     * @param \ManiaLivePlugins\eXpansion\Gui\Structures\Script $script
+     */
+    public function registerScript(\ManiaLivePlugins\eXpansion\Gui\Structures\Script $script) {
         $this->_scripts[] = $script;
     }
 

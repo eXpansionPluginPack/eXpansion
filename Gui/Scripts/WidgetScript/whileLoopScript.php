@@ -16,6 +16,10 @@ if (!exp_widgetVisible[version].existskey(id)) {
 	exp_widgetVisible[version][id] = True;
 }
 
+if (!exp_widgetLayers[version].existskey(id)) {
+    exp_widgetLayers[version][id] = "normal";
+}
+
 if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer) {
 	Window.Show();
 } else {
