@@ -106,7 +106,7 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         foreach ($this->permissions as $key => $val) {
             $inheritance = $val[1];            
             $permission = $val[0];            
-            
+
             if($inheritance == null){
                 $newPermissions[$key] = $permission->getStatus() == false ? AdminGroups::unknownPermission : AdminGroups::havePermission;
             }else{
@@ -117,6 +117,7 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 }
             }
         }
+        
         $adminGroups = AdminGroups::getInstance();
         $adminGroups->changePermissionOfGroup($login, $this->group, $newPermissions);
         $this->Erase($login);
