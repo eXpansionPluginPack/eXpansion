@@ -165,8 +165,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         }
 
         $this->timeScript->setParam("playerTimes", $recsData);
-        $this->timeScript->setParam("playerNicks", $nickData);
-	$this->setScriptEvents();
+        $this->timeScript->setParam("playerNicks", $nickData);	
     }
 
     function destroy() {

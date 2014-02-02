@@ -29,7 +29,7 @@ Text TimeToText(Integer intime) {
 }   
 
 
-Void putRecordTo(Integer i, Integer Rank, Integer Score, Text Login,  Text nick, Boolean mine){
+Void putRecordTo(Integer i, Integer Rank, Integer Score, Text Login, Text nick, Boolean mine){
 
 	declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
 	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);

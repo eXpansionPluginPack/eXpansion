@@ -48,9 +48,9 @@ class i18n extends \ManiaLib\Utils\Singleton {
     }
 
     protected function readFiles($dir) {
-        if (is_dir($dir . "/messages/")) {
+        if (is_dir($dir . "/messages")) {
 
-            $langFiles = glob($dir . "/messages/*.txt", GLOB_MARK);
+            $langFiles = glob($dir . "/messages/*.txt", GLOB_MARK);	    
             foreach ($langFiles as $file) {                
                 $language = explode("/", $file);
                 $language = end($language);

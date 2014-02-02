@@ -29,10 +29,10 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showLog($login) {
 	$window = Gui\Windows\ChatlogWindow::Create($login);
 	$window->setTitle(__('Chatlog', $login));
-	$window->centerOnScreen();
-
-	$window->populateList(array_reverse($this->log));
+	
 	$window->setSize(140, 100);
+	$window->populateList(array_reverse($this->log));
+	$window->centerOnScreen();
 	$window->show();
     }
 

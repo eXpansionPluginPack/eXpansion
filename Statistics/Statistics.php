@@ -168,6 +168,25 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $parent2 = $menu->addButton($parent, "Top Income Source", $button);
     }
 
+    public function closeAllWindows($login){
+        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerTopIncome::Erase($login);
+        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmount::Erase($login);
+        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmountTotal::Erase($login);
+        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationCountTotal::Erase($login);
+        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationCountTotal::Erase($login);
+		\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationCount::Erase($login);
+		\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Winners::Erase($login);
+		\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\OnlineTime::Erase($login);
+		\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\OnlineTime::Erase($login);
+		\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\TrackPlay::Erase($login);
+		\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Finish::Erase($login);
+		\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryFinish::Erase($login);
+		\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryOnlineTime::Erase($login);
+		\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryWinner::Erase($login);
+		\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Country::Erase($login);
+    }
+
+
     public function showTopIncome($login) {
 
         if (!empty($this->donateConfig->toLogin))
@@ -184,7 +203,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerTopIncome::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerTopIncome::Create($login);
         $window->setTitle(__('Top Planet Incomes', $login));
         $window->centerOnScreen();
@@ -206,7 +225,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmountTotal::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmountTotal::Create($login);
         $window->setTitle(__('Top Donators(Amount)', $login));
         $window->centerOnScreen();
@@ -229,7 +248,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmount::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmount::Create($login);
         $window->setTitle(__('Top Server Donators(Amount)', $login));
         $window->centerOnScreen();
@@ -251,7 +270,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationCountTotal::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationCountTotal::Create($login);
         $window->setTitle(__('Top Donators(Amount)', $login));
         $window->centerOnScreen();
@@ -273,8 +292,8 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 . ' LIMIT 0, 100';
 
         $datas = $this->getData($sql);
-
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationCount::Erase($login);
+        
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationCount::Create($login);
         $window->setTitle(__('Top Server Donators(Amount)', $login));
         $window->centerOnScreen();
@@ -293,7 +312,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Winners::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Winners::Create($login);
         $window->setTitle(__('Top Server Winners', $login));
         $window->centerOnScreen();
@@ -312,7 +331,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\OnlineTime::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\OnlineTime::Create($login);
         $window->setTitle(__('Top Online Time', $login));
         $window->centerOnScreen();
@@ -333,7 +352,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\OnlineTime::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\OnlineTime::Create($login);
         $window->setTitle(__('Top Play Time', $login));
         $window->centerOnScreen();
@@ -354,7 +373,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\TrackPlay::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\TrackPlay::Create($login);
         $window->setTitle(__('Top Number tracks played', $login));
         $window->centerOnScreen();
@@ -375,7 +394,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Finish::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Finish::Create($login);
         $window->setTitle(__('Top Finish', $login));
         $window->centerOnScreen();
@@ -396,7 +415,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryFinish::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryFinish::Create($login);
         $window->setTitle(__('Country with top Finish', $login));
         $window->centerOnScreen();
@@ -416,7 +435,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryOnlineTime::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryOnlineTime::Create($login);
         $window->setTitle(__('Country with top Online Time', $login));
         $window->centerOnScreen();
@@ -436,7 +455,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryWinner::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Country::Create($login);
         $window->setTitle(__('Most winning country', $login));
         $window->centerOnScreen();
@@ -456,7 +475,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
         $datas = $this->getData($sql);
 
-        \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Country::Erase($login);
+        $this->closeAllWindows($login);
         $window = \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Country::Create($login);
         $window->setTitle(__('Country with most players', $login));
         $window->centerOnScreen();

@@ -67,8 +67,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	$this->nick->setStyle("TextRaceChat");
 	$this->nick->setTextSize(1);
 	$this->nick->setTextColor('fff');
-	$this->nick->setId("RecNick_" . $index);
-	$this->nick->setScriptEvents();
+	$this->nick->setId("RecNick_" . $index);	
 	$this->addComponent($this->nick);
 
 	// $this->addComponent($this->frame);

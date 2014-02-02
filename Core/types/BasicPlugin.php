@@ -158,7 +158,13 @@ use ManiaLivePlugins\eXpansion\Database\Database;
         private function exp_getdir() {
             if ($this->exp_dir == null) {
                 $exploded = explode("\\", get_class($this));
-                $this->exp_dir = "libraries/";
+		$trim = false;
+		$this->exp_dir = "libraries/";
+		if (is_dir("vendor/ml-expansion")) 
+		{
+		$trim = true;
+		$this->exp_dir = "vendor/ml-expansion/";
+		}
                 $i = 0;
                 while ($i < sizeof($exploded) - 2) {
                     $this->exp_dir .= $exploded[$i] . "/";
@@ -166,6 +172,11 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                 }
                 $this->exp_dir .= $exploded[$i];
             }
+	    if ($trim) {
+	    $this->exp_dir = str_replace("ManiaLivePlugins/", "", $this->exp_dir);
+	    $this->exp_dir = str_replace("eXpansion", "expansion", $this->exp_dir);
+	    }
+	    echo "directory:" . $this->exp_dir . "\n";
             return $this->exp_dir;
         }
 
