@@ -226,8 +226,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function reLoadAdmins() {
-        $filename = "config/" . $this->storage->serverLogin . "_admins.ini";
-
+        if($this->config->fileName == null)
+            $filename = "config/" . $this->storage->serverLogin . "_admins.ini";
+        else 
+             $filename = "config/".$this->config->fileName;
+        
         if (file_exists($filename) && is_readable($filename)) {
             $time = filemtime($filename);
 
@@ -250,7 +253,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //self::$permissionList = array();
         //Recovering the admin groups
         try {
-            $values = \parse_ini_file("config/" . $this->storage->serverLogin . "_admins.ini", true);
+            if($this->config->fileName == null)
+                $filename = "config/" . $this->storage->serverLogin . "_admins.ini";
+            else 
+                 $filename = "config/".$this->config->fileName;
+            
+            $values = \parse_ini_file($filename, true);
 
             //Save the read Time
             $this->readTime = time();
@@ -294,7 +302,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                         }
                     }
 
-                    if ($inheritedGroup != null && !$inheritedGroup->isMaster())
+                    if ($inheritedGroup != null)
                         $mainGroup->addInherits($inheritedGroup);
                 }
             }
@@ -437,7 +445,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     $string .= "login[] = '" . $value->getLogin() . "'\n";
             }
         }
-        $file = "config/" . $this->storage->serverLogin . "_admins.ini";
+        if($this->config->fileName == null)
+            $file = "config/" . $this->storage->serverLogin . "_admins.ini";
+        else 
+             $file = "config/".$this->config->fileName;
+        
         if (!file_exists($file)) {
             if (touch($file) == false) {
                 throw new \Exception("Writing the admingroups file at " . $file . " FAILED. perhaps not enough permissions for folder & file ?");
@@ -783,7 +795,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function addGroup($login2, $groupName) {
         $this->reLoadAdmins();
-        self::$groupList[] = new Group($groupName, false);
+        self::$groupList[] = new Group($this->escapeSpecials($groupName), false);
         $this->saveFile();
     }
 
@@ -953,6 +965,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         self::$commandsList = array();
         self::$groupList = array();
         self::$permissionList = array();
+    }
+    
+    public function escapeSpecials($text){
+        $text = str_replace("'", "", $text);
+        $text = str_replace('"', "", $text);
+        return $text;
     }
 
 }

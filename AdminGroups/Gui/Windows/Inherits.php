@@ -78,7 +78,7 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         foreach ($adminGroups->getGroupList() as $i => $group) {
             $nh = $group->getInherits();
             
-            if($this->group != $group && !$group->isMaster() && !isset($nh[$this->group->getGroupName()])){
+            if($this->group != $group && !isset($nh[$this->group->getGroupName()])){
                 
                 $cInherit = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 38);
                 $cInherit->setText($group->getGroupName());
@@ -105,7 +105,7 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         
         foreach ($this->inherits as $i => $cbox) {
             $nh = $groups[$i]->getInherits();
-            if($cbox->getStatus() && !$groups[$i]->isMaster() && !isset($nh[$this->group->getGroupName()])){
+            if($cbox->getStatus() && !isset($nh[$this->group->getGroupName()])){
                 $newInheritances[] = $groups[$i];
             }
         }

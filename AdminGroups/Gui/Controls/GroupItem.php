@@ -48,8 +48,8 @@ class GroupItem extends \ManiaLive\Gui\Control {
         $gui_name->setScale(0.6);
         $frame->addComponent($gui_name);
 
-        $gui_nbPlayers = new \ManiaLib\Gui\Elements\Label(22*(0.8/0.6), 4);
-        $gui_nbPlayers->setAlign('center', 'center');
+        $gui_nbPlayers = new \ManiaLib\Gui\Elements\Label(15*(0.8/0.6), 4);
+        $gui_nbPlayers->setAlign('left', 'center');
         $gui_nbPlayers->setText(sizeof($group->getGroupUsers()));
         $gui_nbPlayers->setScale(0.6);
         $frame->addComponent($gui_nbPlayers);
