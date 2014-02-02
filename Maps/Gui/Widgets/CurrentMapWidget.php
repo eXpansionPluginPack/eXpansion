@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Widgets;
+use ManiaLivePlugins\eXpansion\Gui\Config;
 
 class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
@@ -10,10 +11,18 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     protected function onConstruct() {
         parent::onConstruct();
+	$config = Config::getInstance();
+		
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 15);
         $this->bg->setPosition(-42, 0);
         $this->addComponent($this->bg);
-
+	
+	$this->logo = new \ManiaLib\Gui\Elements\Quad(32,8);
+	$this->logo->setPosition(-17, 1.5);
+	$this->logo->setOpacity(0.4);
+	$this->logo->setImage($config->logo, true);
+	$this->addComponent($this->logo);	
+	
         $this->frame = new \ManiaLive\Gui\Controls\Frame(-34, 4);
         $column = new \ManiaLib\Gui\Layouts\Column();        
         $this->frame->setLayout($column);        
