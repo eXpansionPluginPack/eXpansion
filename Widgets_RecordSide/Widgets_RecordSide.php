@@ -25,188 +25,189 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     private $config;
 
     public function exp_onInit() {
-	$this->addDependency(new \ManiaLive\PluginHandler\Dependency('ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords'));
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency('ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
     public function exp_onLoad() {
-	if ($this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania'))
-	    Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
+        if ($this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania'))
+            Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
 
-	Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
-	$this->config = Config::getInstance();
+        Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
+        $this->config = Config::getInstance();
     }
 
     public function exp_onReady() {
-	$this->enableDedicatedEvents();
-	foreach ($this->storage->players as $player)
-	    $this->onPlayerConnect($player->login, false); // create panel for everybody
-	foreach ($this->storage->spectators as $player)
-	    $this->onPlayerConnect($player->login, true); // create panel for everybody
+        $this->enableDedicatedEvents();
+        foreach ($this->storage->players as $player)
+            $this->onPlayerConnect($player->login, false); // create panel for everybody
+        foreach ($this->storage->spectators as $player)
+            $this->onPlayerConnect($player->login, true); // create panel for everybody
 
-	$this->lastUpdate = time();
-	self::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
-	$this->enableTickerEvent();
-	$this->needUpdate = self::Localrecords;
-	// $this->forceUpdate = true;
+        $this->lastUpdate = time();
+        self::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
+        $this->enableTickerEvent();
+        $this->needUpdate = self::Localrecords;
+        // $this->forceUpdate = true;
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
-	self::$dedirecords = array(); // reset 
-	self::$localrecords = array(); //  reset
-	Gui\Widgets\LocalPanel::EraseAll();
-	Gui\Widgets\DediPanel::EraseAll();
+        self::$dedirecords = array(); // reset 
+        self::$localrecords = array(); //  reset
+        Gui\Widgets\LocalPanel::EraseAll();
+        Gui\Widgets\DediPanel::EraseAll();
     }
 
     public function onTick() {
 
-	if ((time() - $this->lastUpdate) > 1 && $this->needUpdate !== false || $this->forceUpdate == true) {
+        if ((time() - $this->lastUpdate) > 1 && $this->needUpdate !== false || $this->forceUpdate == true) {
 
-	    if (($this->needUpdate & self::Dedimania) == self::Dedimania || $this->forceUpdate || ($this->needUpdate & self::Dedimania_force) == self::Dedimania_force) {
-		if ($this->dedi || $this->needUpdate == self::Dedimania_force) {
-		    echo "dedimania widget update!\n";
-		    $this->updateDediPanel();
-		    $this->dedi = false;
-		}
-	    }
+            if (($this->needUpdate & self::Dedimania) == self::Dedimania || $this->forceUpdate || ($this->needUpdate & self::Dedimania_force) == self::Dedimania_force) {
+                if ($this->dedi || $this->needUpdate == self::Dedimania_force) {
+                    echo "dedimania widget update!\n";
+                    $this->updateDediPanel();
+                    $this->dedi = false;
+                }
+            }
 
-	    if (($this->needUpdate & self::Localrecords) == self::Localrecords || $this->forceUpdate) {
-		if ($this->local) {
-		    $this->updateLocalPanel();
-		    $this->local = false;
-		}
-	    }
+            if (($this->needUpdate & self::Localrecords) == self::Localrecords || $this->forceUpdate) {
+                if ($this->local) {
+                    $this->updateLocalPanel();
+                    $this->local = false;
+                }
+            }
 
-	    $this->lastUpdate = time();
-	    $this->forceUpdate = false;
-	    $this->needUpdate = false;
-	}
+            $this->lastUpdate = time();
+            $this->forceUpdate = false;
+            $this->needUpdate = false;
+        }
     }
 
     public function onBeginMatch() {
-	$this->dedi = true;
-	$this->local = true;
-	self::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
-	foreach ($this->storage->players as $player)
-	    $this->onPlayerConnect($player->login, false); // create panel for everybody
-	foreach ($this->storage->spectators as $player)
-	    $this->onPlayerConnect($player->login, true); // create panel for everybody
+        $this->dedi = true;
+        $this->local = true;
+        self::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
+        foreach ($this->storage->players as $player)
+            $this->onPlayerConnect($player->login, false); // create panel for everybody
+        foreach ($this->storage->spectators as $player)
+            $this->onPlayerConnect($player->login, true); // create panel for everybody
 
 
 
 
 
 
-	    
+
+            
 // $this->forceUpdate = true;
     }
 
     public function onUpdateRecords($data) {
-	self::$localrecords = $data;
-	$this->needUpdate = self::Localrecords;
+        self::$localrecords = $data;
+        $this->needUpdate = self::Localrecords;
     }
 
     public function onDedimaniaUpdateRecords($data) {
-	self::$dedirecords = $data['Records'];
-	$this->needUpdate = self::Dedimania;
+        self::$dedirecords = $data['Records'];
+        $this->needUpdate = self::Dedimania;
     }
 
     public function onDedimaniaGetRecords($data) {
-	self::$dedirecords = $data['Records'];
-	$this->needUpdate = self::Dedimania;
+        self::$dedirecords = $data['Records'];
+        $this->needUpdate = self::Dedimania;
     }
 
     public function updateDediPanel() {
-	foreach ($this->storage->players as $player)
-	    $this->showDediPanel($player->login); // create panel for everybody
-	foreach ($this->storage->spectators as $player)
-	    $this->showDediPanel($player->login); // create panel for everybody
+        foreach ($this->storage->players as $player)
+            $this->showDediPanel($player->login); // create panel for everybody
+        foreach ($this->storage->spectators as $player)
+            $this->showDediPanel($player->login); // create panel for everybody
     }
 
     public function updateLocalPanel() {
-	foreach ($this->storage->players as $player)
-	    $this->showLocalPanel($player->login); // create panel for everybody
-	foreach ($this->storage->spectators as $player)
-	    $this->showLocalPanel($player->login); // create panel for everybody
+        foreach ($this->storage->players as $player)
+            $this->showLocalPanel($player->login); // create panel for everybody
+        foreach ($this->storage->spectators as $player)
+            $this->showLocalPanel($player->login); // create panel for everybody
     }
 
     public function showLocalPanel($login) {
-	Gui\Widgets\LocalPanel::Erase($login);
+        Gui\Widgets\LocalPanel::Erase($login);
 
-	$panel = Gui\Widgets\LocalPanel::Create($login, false);
-	$panel->setPosition(118, 50);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(20);
-	$panel->setNbFirstFields(5);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-	$panel->show();
+        $panel = Gui\Widgets\LocalPanel::Create($login, false);
+        $panel->setPosition(118, 50);
+        $panel->setSize(40, 95);
+        $panel->setNbFields(20);
+        $panel->setNbFirstFields(5);
+        $panel->update();
+        $panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+        $panel->show();
 
-	$panel = Gui\Widgets\LocalPanel::Create($login, false);
-	$panel->setPosition(118, 50);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(20);
-	$panel->setNbFirstFields(5);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	$panel->show();
+        $panel = Gui\Widgets\LocalPanel::Create($login, false);
+        $panel->setPosition(118, 50);
+        $panel->setSize(40, 95);
+        $panel->setNbFields(20);
+        $panel->setNbFirstFields(5);
+        $panel->update();
+        $panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+        $panel->show();
     }
 
     public function showDediPanel($login) {
-	Gui\Widgets\DediPanel::Erase($login);
-	$panel = Gui\Widgets\DediPanel::Create($login, false);
-	$panel->setPosition(-160, 60);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(20);
-	$panel->setNbFirstFields(5);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-	$panel->show();
+        Gui\Widgets\DediPanel::Erase($login);
+        $panel = Gui\Widgets\DediPanel::Create($login, false);
+        $panel->setPosition(-160, 60);
+        $panel->setSize(40, 95);
+        $panel->setNbFields(20);
+        $panel->setNbFirstFields(5);
+        $panel->update();
+        $panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+        $panel->show();
 
-	$panel = Gui\Widgets\DediPanel::Create($login, false);
-	$panel->setPosition(-160, 60);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(20);
-	$panel->setNbFirstFields(5);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	$panel->show();
+        $panel = Gui\Widgets\DediPanel::Create($login, false);
+        $panel->setPosition(-160, 60);
+        $panel->setSize(40, 95);
+        $panel->setNbFields(20);
+        $panel->setNbFirstFields(5);
+        $panel->update();
+        $panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+        $panel->show();
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-	$this->showLocalPanel($login);
-	$this->showDediPanel($login);
+        $this->showLocalPanel($login);
+        $this->showDediPanel($login);
     }
 
     public function onPlayerDisconnect($login, $reason = null) {
-	Gui\Widgets\LocalPanel::Erase($login);
-	Gui\Widgets\DediPanel::Erase($login);
+        Gui\Widgets\LocalPanel::Erase($login);
+        Gui\Widgets\DediPanel::Erase($login);
     }
 
     public function onDedimaniaOpenSession() {
-	
+        
     }
 
     public function onNewRecord($data) {
-	
+        
     }
 
     public function onDedimaniaNewRecord($data) {
-	
+        
     }
 
     public function onDedimaniaPlayerConnect($data) {
-	if (count(self::$dedirecords) > 0) {
-	    echo "count: " . count(self::$dedirecords). "\n";
-	    $this->needUpdate = self::Dedimania_force;
-	}
+        if (count(self::$dedirecords) > 0) {
+            echo "count: " . count(self::$dedirecords) . "\n";
+            $this->needUpdate = self::Dedimania_force;
+        }
     }
 
     public function onDedimaniaPlayerDisconnect() {
-	
+        
     }
 
     public function onDedimaniaRecord($record, $oldrecord) {
-	
+        
     }
 
 }
