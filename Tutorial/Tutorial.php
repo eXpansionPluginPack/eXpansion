@@ -27,9 +27,11 @@ class Tutorial extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->onPlayerConnect($login, false);
 	foreach ($this->storage->spectators as $login => $player)
 	    $this->onPlayerConnect($login, true);
+	$this->enableDedicatedEvents();
+	
     }
 
-    public function onPlayerConnect($login, $isSpectator) {
+    public function onPlayerConnect($login, $isSpectator) {	
 	$window = Gui\Windows\TutorialWindow::Create($login);
 	$window->setSize(160, 80);
 	$window->show();
