@@ -90,9 +90,8 @@ class TutorialWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->button = $button;
 	//$this->button->setAction($this->createAction(array($this, "close")));
 	$this->addComponent($this->button);
-	
+
 	$this->mScript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Tutorial\Gui\Scripts");	
-	echo $this->mScript->getDeclarationScript($this, $this);
 	$this->registerScript($this->mScript);
     }
 
