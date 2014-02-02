@@ -253,7 +253,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         if ($this->dataAccess->save($file, $data)) {
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps', 'queueMxMap', $login, $file);
+            $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps\\Maps', 'queueMxMap', $login, $file);
         }
     }
 
@@ -271,7 +271,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             return;
         }
 
-        $queue = $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps', 'returnQueue');
+        $queue = $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps\\Maps', 'returnQueue');
         foreach ($queue as $q) {
             if ($q->player->login == $login) {
                 $msg = exp_getMessage('#admin_error# $iYou already have a map in the queue...');

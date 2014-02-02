@@ -103,6 +103,11 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $script->setParam('posX', -92);
         $script->setParam('posXMax', -4);
         $this->registerScript($script);
+	
+	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("PersonalMessages\Gui\Script");
+	$script->setParam("sendAction", $this->actionSend);
+	$this->registerScript($script);
+	
     }
 
     function onResize($oldX, $oldY) {
