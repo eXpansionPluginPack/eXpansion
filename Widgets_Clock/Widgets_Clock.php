@@ -27,11 +27,11 @@ class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-	$this->displayWidget($login);
+	$this->displayWidget($login);	
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason = null) {
-	Gui\Widgets\Clock::Erase($login);
+	Gui\Widgets\Clock::Erase($login);	
     }
 
     public function onBeginMatch() {
