@@ -16,7 +16,7 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         // $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(20, 20));
         $this->addComponent($this->frame);
 
-        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(34, 12);    
+        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(34, 13);    
         $bg->setPosition(0,-6);
         $this->addComponent($bg);
 
@@ -24,9 +24,9 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $label->setText('$s' . __('Map Rating'));
         $label->setTextColor("ffff");
         $label->setHalign("center");
-        $label->setStyle("TextRaceMessage");
-        $label->setPosition(17, -1);
-        $label->setTextSize(1.5);
+        $label->setStyle("TextValueSmallSm");
+        $label->setPosition(17, -2.5);
+        $label->setTextSize(1);
         $this->addComponent($label);
 
         $this->starFrame = new \ManiaLive\Gui\Controls\Frame();
@@ -59,7 +59,7 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         if ($test > 60)
             $color = "0cf";
 
-        $this->gauge->setContent('<gauge scale="0.7" sizen="45 15" drawblockbg="1" color="' . $color . '" drawbg="0" rotation="0" posn="0 -3" grading="1" ratio="' . ($number / 5) . '" centered="0" />');
+        $this->gauge->setContent('<gauge scale="0.7" sizen="45 15" drawblockbg="1" color="' . $color . '" drawbg="0" rotation="0" posn="0 -2" grading="1" ratio="' . ($number / 5) . '" centered="0" />');
         $this->frame->addComponent($this->gauge);
 
         $score = ($number / 5) * 100;
@@ -72,7 +72,7 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $info->setAlign("center", "center");
         $info->setTextEmboss();
         $info->setText($score . "% (" . $total . ")");
-        $info->setPosition(17, -8.5);
+        $info->setPosition(17, -7.5);
         $this->frame->addComponent($info);
         $this->redraw();
     }

@@ -13,7 +13,7 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         parent::onConstruct();
 	$config = Config::getInstance();
 		
-        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 15);
+        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 20);
         $this->bg->setPosition(-42, 0);
         $this->addComponent($this->bg);
 	
