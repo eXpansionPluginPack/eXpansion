@@ -17,6 +17,8 @@ use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
 class Core extends types\ExpPlugin {
 
     const EXP_VERSION = "0.9";
+    const EXP_REQUIRE_MANIALIVE = "4.0.0";
+    const EXP_REQUIRE_DEDIATED = "2013.7.30";
 
     /**
      * Last used game mode
@@ -90,31 +92,38 @@ class Core extends types\ExpPlugin {
 
 	$expansion = <<<'EOT'
    
---------------------------------------------------------------------------------   
+   
+
                      __   __                      _             
                      \ \ / /                     (_)            
-                  ___ \ V / _ __   __ _ _ __  ___ _  ___  _ __  
+                  ___ \ ' / _ __   __ _ _ __  ___ _  ___  _ __  
                  / _ \ > < | '_ \ / _` | '_ \/ __| |/ _ \| '_ \ 
                 |  __// . \| |_) | (_| | | | \__ \ | (_) | | | |
                  \___/_/ \_\ .__/ \__,_|_| |_|___/_|\___/|_| |_|
-                           | |         Plugin Pack for Manialive    
-                           |_|                                                              
-
--------------------------------------------------------------------------------
-
+...........................| |.........Plugin Pack for Manialive...............
+                           |_|                                                  
 EOT;
 
 	$this->console($expansion);
 	$server = $this->connection->getVersion();
 	$d = (object) date_parse_from_format("Y-m-d_H_i", $server->build);
 	$this->console('Dedicated Server running for title: ' . $server->titleId);
-	$this->console('Dedicated Server build: ' . $d->year . "-" . $d->month . "-" . $d->day);
+
 	$this->connection->setApiVersion($config->API_Version); // For SM && TM
 	$this->console('Dedicated Server api version in use: ' . $config->API_Version);
 	$this->console('eXpansion version: ' . $this->getVersion());
 
-
 	$bExitApp = false;
+	$dedicatedVersion = $d->year . "." . $d->month . "." . $d->day;
+	if (version_compare($dedicatedVersion, self::EXP_REQUIRE_DEDIATED, "lt")) {
+	    $this->console('Dedicated Server: ' . $d->year . "-" . $d->month . "-" . $d->day);
+	    $this->console('Minimum Dedicated version ' . self::EXP_REQUIRE_DEDIATED . ': Fail (' . $dedicatedVersion . ')');
+	    $bExitApp = true;
+	} else {
+	    $this->console('Minimum Dedicated version ' . self::EXP_REQUIRE_DEDIATED . ': Pass (' . $dedicatedVersion . ')');
+	}
+
+
 
 	if (version_compare(PHP_VERSION, '5.3.3') >= 0) {
 	    $this->console('Minimum PHP version 5.3.3: Pass (' . PHP_VERSION . ')');

@@ -55,18 +55,20 @@ use ManiaLivePlugins\eXpansion\Database\Database;
         private $exp_dir = null;
 
         /**
-         * The Expansion Pack tools
-         * @var \ManiaLivePlugins\eXpansion\Core\eXpansion Expansion tools
+         * The colorparser
+         * @var \ManiaLivePlugins\eXpansion\Core\ColorParser 
          */
-        protected $exp_maxp;
+        protected $colorParser;
 
         /* @var \ManiaLivePlugins\eXpansion\Core\RelayLink Relay connector */
         protected $relay;
+	
         private $_isReady = false;
 
         public final function onInit() {
+	    $this->checkVersion();
+	    
             $this->setVersion(\ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
-
             ErrorHandler::$server = $this->storage->serverLogin;
             try {
                 $this->enableDatabase();
@@ -76,7 +78,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             }
 
             //Recovering the eXpansion pack tools
-            $this->exp_maxp = \ManiaLivePlugins\eXpansion\Core\eXpansion::getInstance();
+            $this->colorParser = \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance();
 
             $this->exp_unloading = false;
             $this->relay = \ManiaLivePlugins\eXpansion\Core\RelayLink::getInstance();
@@ -154,7 +156,14 @@ use ManiaLivePlugins\eXpansion\Database\Database;
         public function exp_onReady() {
             
         }
-
+	private function checkVersion() {
+	    if (version_compare(\ManiaLive\Application\VERSION, \ManiaLivePlugins\eXpansion\Core\Core::EXP_REQUIRE_MANIALIVE, 'lt')) {
+		$this->dumpException("Looks like your ManiaLive is too old to run this version of eXpansion.\n"
+			. "Your ManiaLive version: ".\ManiaLive\Application\VERSION.", (required ".\ManiaLivePlugins\eXpansion\Core\Core::EXP_REQUIRE_MANIALIVE.")\n"
+			. "Please update your manialive version in order to continue.", New \ManiaLive\PluginHandler\Exception("ManiaLive version is too old!"));
+		exit();
+	    }
+	}
         private function exp_getdir() {
             if ($this->exp_dir == null) {
                 $exploded = explode("\\", get_class($this));
@@ -229,14 +238,14 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             if (isset(self::$exp_chatRedirected[$sender])) {
                 $message = $msg;
                 if (is_object(self::$exp_chatRedirected[$sender][0]))
-                    call_user_func_array(self::$exp_chatRedirected[$sender], array($login, $this->exp_maxp->parseColors($message)));
+                    call_user_func_array(self::$exp_chatRedirected[$sender], array($login, $this->colorParser->parseColors($message)));
                 else {
-                    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($login, $this->exp_maxp->parseColors($message)));
+                    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($login, $this->colorParser->parseColors($message)));
                 }
             } else {
 
                 try {
-                    $this->connection->chatSendServerMessage($this->exp_maxp->parseColors($msg), $login);
+                    $this->connection->chatSendServerMessage($this->colorParser->parseColors($msg), $login);
                 } catch (\Exception $e) {
                     $this->console("Error while sending chat message to '" . $login . "'\n Server said:" . $e->getMessage());
                 }
@@ -259,12 +268,12 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             if (isset(self::$exp_announceRedirected[$sender])) {
                 $message = clone $msg;
                 if (is_object(self::$exp_announceRedirected[$sender][0]))
-                    call_user_func_array(self::$exp_announceRedirected[$sender], array($this->exp_maxp->parseColors($message), $icon, $callback, $pluginid));
+                    call_user_func_array(self::$exp_announceRedirected[$sender], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid));
                 else {
-                    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($this->exp_maxp->parseColors($message), $icon, $callback, $pluginid));
+                    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid));
                 }
             } else {
-                $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->exp_maxp->parseColors($msg));
+                $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg));
             }
         }
 
@@ -287,6 +296,9 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             }
         }
 
+	
+	
+	
         /**
          * Will force the plugin to be checked if it is compatible with the Game Mode
          * If it isn't the plugin will be unloaded From ManiaLive

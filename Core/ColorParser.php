@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Core;
+use ManiaLivePlugins\eXpansion\Core\Config;
 
 /**
  * ColorParser - Singleton
@@ -28,6 +29,22 @@ class ColorParser extends \ManiaLib\Utils\Singleton {
         return $message;
     }
 
+    /**
+     * LoadColors()
+     * Loads the colors to colorparser class
+     * 
+     * @return void 
+     */
+   public function __construct() {
+	foreach (Config::getInstance() as $name => $value) {
+	    $names = explode("_", $name);
+	    $name = array_shift($names);
+	    if ($name == "Colors") {
+		$this->registerCode(implode("_", $names), $value);
+	    }
+	}
+    }
+    
     /**
      *
      * @param string $token
