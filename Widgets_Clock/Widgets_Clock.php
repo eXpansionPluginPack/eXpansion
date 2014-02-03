@@ -22,7 +22,8 @@ class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$info->setPosition(-161, 90.5);
 	$info->setScale(0.8);
 	$info->setPlayersCount(count($this->storage->players), count($this->storage->spectators));
-	$info->show();
+	$info->setServerName($this->storage->server->name);
+	$info->show();	
     }
 
     public function onPlayerConnect($login, $isSpectator) {

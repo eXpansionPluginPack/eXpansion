@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Clock\Gui\Widgets;
 class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     protected $clockBg;
-    private $frame, $players, $specs;
+    private $frame, $players, $specs, $server;
 
     protected function onConstruct() {
 	parent::onConstruct();
@@ -14,16 +14,16 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$clockBg->setPosition(0,-6);
 	$this->addComponent($clockBg);
 
-	$servername = new \ManiaLib\Gui\Elements\Label(50, 6);
-	$servername->setId('serverName');
-	$servername->setAlign("left", "top");
-	$servername->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
-	$servername->setTextSize(0.8);
-	$servername->setPosition(2, -1);
-	$servername->setTextColor('fff');
-	$servername->setTextPrefix('$s');
-	$servername->setAction(\ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics::$serverStatAction);
-	$this->addComponent($servername);
+	$this->server = new \ManiaLib\Gui\Elements\Label(50, 6);
+	$this->server->setId('serverName');
+	$this->server->setAlign("left", "top");
+	$this->server->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
+	$this->server->setTextSize(0.8);
+	$this->server->setPosition(2, -1);
+	$this->server->setTextColor('fff');
+	$this->server->setTextPrefix('$s');	
+	$this->server->setAction(\ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics::$serverStatAction);
+	$this->addComponent($this->server);
 
 
 
@@ -97,6 +97,10 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->specs->setText($specs);
     }
 
+    public function setServerName($name) {
+	$this->server->setText($name);
+    }
+    
     function destroy() {
 	$this->clearComponents();
 	parent::destroy();
