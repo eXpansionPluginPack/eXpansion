@@ -19,7 +19,6 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     /** @var \ManiaLive\Data\Storage */
     public $storage;
     public $timeScript;
-    
     protected $nbFields;
 
     protected function onConstruct() {
@@ -27,7 +26,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $sizeX = 46;
         $sizeY = 95;
         $this->setName("LocalRecords Panel");
-	$this->setScriptEvents();
+        $this->setScriptEvents();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         /* $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui/Scripts/TrayWidget");
           $script->setParam('isMinimized', 'True');
@@ -37,20 +36,8 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
           $script->setParam('posXMax', -6);
           $this->registerScript($script); */
 
-        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/PlayerFinish");
-	$recCount = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
-	
-        $this->timeScript = $script;
-        $this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
-        $this->timeScript->setParam("playerTimes", "[]");
-        $this->timeScript->setParam("nbRecord", $recCount );
-        $this->timeScript->setParam("acceptMaxServerRank", $recCount);
-        $this->timeScript->setParam("acceptMaxPlayerRank", "Integer[Text]") ;
-        $this->timeScript->setParam("useMaxPlayerRank", "False");
-        $this->timeScript->setParam("acceptMinCp", 0);
-        $this->timeScript->setParam("nbFields", 20);
-        $this->timeScript->setParam("nbFirstFields", 5);
-        $this->registerScript($script);
+        
+        $this->registerScript($this->getScript());
 
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
@@ -88,28 +75,44 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->layer->setId("setLayer");
         $this->layer->setDescription("Switch from Race view to Score View(Visible on Tab)", 75);
         $this->addComponent($this->layer);
-        
-        /*$this->layer = new \ManiaLib\Gui\Elements\Quad(5, 5);
-        $this->layer->setStyle("Icons128x32_1");
-        $this->layer->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::ManiaLinkSwitch);
-        $this->layer->setId("setLayer");
-        $this->layer->setScriptEvents();
-        $this->addComponent($this->layer);*/
+
+        /* $this->layer = new \ManiaLib\Gui\Elements\Quad(5, 5);
+          $this->layer->setStyle("Icons128x32_1");
+          $this->layer->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::ManiaLinkSwitch);
+          $this->layer->setId("setLayer");
+          $this->layer->setScriptEvents();
+          $this->addComponent($this->layer); */
+    }
+    
+    protected function getScript(){
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/PlayerFinish");
+        $recCount = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
+        $this->timeScript = $script;
+        $this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
+        $this->timeScript->setParam("playerTimes", "[]");
+        $this->timeScript->setParam("nbRecord", $recCount);
+        $this->timeScript->setParam("acceptMaxServerRank", $recCount);
+        $this->timeScript->setParam("acceptMaxPlayerRank", "Integer[Text]");
+        $this->timeScript->setParam("useMaxPlayerRank", "False");
+        $this->timeScript->setParam("acceptMinCp", 0);
+        $this->timeScript->setParam("nbFields", 20);
+        $this->timeScript->setParam("nbFirstFields", 5);
+        return $script;
     }
 
     public function setNbFields($nb) {
         $this->timeScript->setParam("nbFields", $nb);
-  //      $this->setPosY(6 + 4 * $nb);
+        //      $this->setPosY(6 + 4 * $nb);
         $this->nbFields = $nb;
     }
 
     public function setNbFirstFields($nb) {
         $this->timeScript->setParam("nbFirstFields", $nb);
-        /*$this->bgFirst->setSizeY(4 * $nb);
-        $this->bgFirst->setPosY((-2 * $nb) -4);*/
-        
+        /* $this->bgFirst->setSizeY(4 * $nb);
+          $this->bgFirst->setPosY((-2 * $nb) -4); */
+
         $this->bgFirst->setSizeY(2);
-        $this->bgFirst->setPosY((-4 * $nb) -4);
+        $this->bgFirst->setPosY((-4 * $nb) - 4);
     }
 
     function onResize($oldX, $oldY) {
@@ -165,7 +168,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         }
 
         $this->timeScript->setParam("playerTimes", $recsData);
-        $this->timeScript->setParam("playerNicks", $nickData);	
+        $this->timeScript->setParam("playerNicks", $nickData);
     }
 
     function destroy() {
@@ -180,10 +183,10 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         parent::destroy();
     }
 
-    function fixHyphens($string) {
-	$out = str_replace('"', "'", $string);
-	$out = str_replace('\\', '\\\\', $out);
-	return $out;
+    protected function fixHyphens($string) {
+        $out = str_replace('"', "'", $string);
+        $out = str_replace('\\', '\\\\', $out);
+        return $out;
     }
 
 }
