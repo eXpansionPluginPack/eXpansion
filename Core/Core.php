@@ -175,7 +175,7 @@ EOT;
 	$this->resetExpPlayers(true);
 	$this->update = true;
 	$this->loopTimer = round(microtime(true));
-	$this->enableTickerEvent();
+	// $this->enableTickerEvent();
 
 	if ($this->config->enableRanksCalc == true) {
 	    $this->enableApplicationEvents(\ManiaLive\Application\Event::ON_POST_LOOP);
