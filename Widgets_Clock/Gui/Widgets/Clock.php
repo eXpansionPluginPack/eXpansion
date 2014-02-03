@@ -10,7 +10,7 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     protected function onConstruct() {
 	parent::onConstruct();
 
-	$clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 18);
+	$clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(52, 11.5);
 	$clockBg->setPosition(0,-6);
 	$this->addComponent($clockBg);
 
@@ -19,7 +19,7 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->server->setAlign("left", "top");
 	$this->server->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
 	$this->server->setTextSize(0.8);
-	$this->server->setPosition(4, -1);
+	$this->server->setPosition(2, -1);
 	$this->server->setTextColor('fff');
 	$this->server->setTextPrefix('$s');	
 	$this->server->setAction(\ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics::$serverStatAction);
@@ -32,7 +32,7 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	  $this->addComponent($this->nameBg);
 	  $this->nameBg->setPosition(0, -3); */
 
-	$line = new \ManiaLive\Gui\Controls\Frame(4, -8.5);
+	$line = new \ManiaLive\Gui\Controls\Frame(2, -8.5);
 	$layout = new \ManiaLib\Gui\Layouts\Line();
 	$layout->setMargin(1);
 	$line->setLayout($layout);
