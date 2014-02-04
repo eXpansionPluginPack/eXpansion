@@ -25,6 +25,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     private $config;
 
     public function exp_onInit() {
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
+        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency('ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
@@ -81,7 +86,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         Gui\Widgets\DediPanel::EraseAll();
         $this->hideLivePanel();
     }
-    
+
     public function onBeginMatch() {
         $this->dedi = true;
         $this->local = true;
@@ -121,9 +126,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         foreach ($this->storage->spectators as $player)
             $this->showLocalPanel($player->login); // create panel for everybody
     }
-    
-    public function updateLivePanel(){
-         foreach ($this->storage->players as $player)
+
+    public function updateLivePanel() {
+        foreach ($this->storage->players as $player)
             $this->showLivePanel($player->login); // create panel for everybody
         foreach ($this->storage->spectators as $player)
             $this->showLivePanel($player->login); // create panel for everybody
@@ -134,7 +139,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         //Gui\Widgets\LocalPanel2::Erase($login);
 
         $panel = Gui\Widgets\LocalPanel::Create($login);
-        $panel->setPosition(118, 53);
+        $panel->setPosition(118, 52);
         $panel->setSize(40, 95);
         $panel->setNbFields(15);
         $panel->setNbFirstFields(5);
@@ -143,9 +148,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $panel->show();
 
         $panel = Gui\Widgets\LocalPanel2::Create($login);
-        $panel->setPosition(118, 50);
+        $panel->setPosition(118, 52);
         $panel->setSize(40, 95);
-        $panel->setNbFields(20);
+        $panel->setNbFields(15);
         $panel->setNbFirstFields(5);
         $panel->update();
         $panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
@@ -174,23 +179,32 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
         $panel->show();
     }
-    
-    public function showLivePanel($login){
+
+    public function showLivePanel($login) {
         //if($this->storage->serverStatus->code == \Maniaplanet\DedicatedServer\Structures\Status::PLAY){
-            $panel = Gui\Widgets\LivePanel::Create($login);
-            $panel->setPosition(118, -12);
-            $panel->setSize(40, 95);
-            $panel->setNbFields(8);
-            $panel->setNbFirstFields(3);
-            $panel->update();
-            $panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-            $panel->show();
+        $panel = Gui\Widgets\LivePanel::Create($login);
+        $panel->setPosition(118, -12);
+        $panel->setSize(40, 95);
+        $panel->setNbFields(8);
+        $panel->setNbFirstFields(3);
+        $panel->update();
+        $panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+        $panel->show();
+        
+        $panel = Gui\Widgets\LivePanel2::Create($login);
+        $panel->setPosition(118, -12);
+        $panel->setSize(40, 95);
+        $panel->setNbFields(8);
+        $panel->setNbFirstFields(3);
+        $panel->update();
+        $panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+        $panel->show();
         //}
     }
-    
-    public function hideLivePanel(){
-        echo "Destroy ALLLLLL";
+
+    public function hideLivePanel() {
         Gui\Widgets\LivePanel::EraseAll();
+        Gui\Widgets\LivePanel2::EraseAll();
     }
 
     public function onPlayerConnect($login, $isSpectator) {
@@ -204,7 +218,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         Gui\Widgets\DediPanel::Erase($login);
         Gui\Widgets\LocalPanel2::Erase($login);
         Gui\Widgets\DediPanel2::Erase($login);
-        
+
         Gui\Widgets\LivePanel::Erase($login);
     }
 
