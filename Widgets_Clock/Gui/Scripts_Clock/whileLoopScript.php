@@ -5,11 +5,11 @@ declare nbPlayer = 0;
 foreach (Player in Players) {
     if(Player.Login != serverLogin){
         if(!Player.RequestsSpectate){
-            log(Player.Login^"Is Player");
-            nbPlayer += nbPlayer+1;
+            //log(Player.Login^"Is Player");
+            nbPlayer += 1;
         }else{
-            log(Player.Login^"Is Spec");
-            nbSpec += nbSpec+1;
+            //log(Player.Login^"Is Spec");
+            nbSpec += 1;
         }
     }
 }

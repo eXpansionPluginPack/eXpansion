@@ -101,7 +101,7 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
 	if ($playerUid != 0 && substr($text, 0, 1) != "/") {
 	    $nick = $this->storage->getPlayerObject($login);
 	    $nick = $nick->nickName;
-	    $message = \ManiaLib\Utils\Formatting::stripStyles($nick) . ":" . \ManiaLib\Utils\Formatting::stripStyles($text);
+	    $message = \ManiaLib\Utils\Formatting::stripStyles($nick) . ": " . \ManiaLib\Utils\Formatting::stripStyles($text);
 	    $this->irc->sendChat($message);
 	}
     }
