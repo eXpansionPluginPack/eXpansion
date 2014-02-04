@@ -48,6 +48,7 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->players->setTextColor('fff');
 	$this->players->setScale(0.8);
 	$this->players->setStyle('TextCardScores2');
+	$this->players->setId("nbPlayer");
 	//$this->players->setTextPrefix('$s');
 	$line->addComponent($this->players);
 
@@ -65,6 +66,7 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->specs->setTextColor('fff');
 	$this->specs->setScale(0.8);
 	$this->specs->setStyle('TextCardScores2');
+	$this->specs->setId("nbSpec");
 	//$this->specs->setTextPrefix('$s');
 	$line->addComponent($this->specs);
 
@@ -88,6 +90,7 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->addComponent($this->frame);
 	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Clock\Gui\Scripts_Clock");
 	$this->registerScript($script);
+    $script->setParam("serverLogin", \ManiaLive\Data\Storage::getInstance()->serverLogin);
 
 	$this->setName("Clock & Server Name Widget");
     }
