@@ -27,7 +27,7 @@ foreach (Player in Players) {
 				playerTimes[Player.Login] = -1;
 			}
 			
-			if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[cpIndex]){
+			if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[curCp-1]){
 			
 				if (playerTimes[Player.Login] != -1) {				    
 				    origPlayerTimes.clear();
