@@ -41,7 +41,7 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
     public function onBeginMatch() {
         $this->bestCps = new \SplFixedArray($this->storage->currentMap->nbCheckpoints);
         for ($x = 0; $x < $this->storage->currentMap->nbCheckpoints; $x++) {
-            $this->bestCps[$x] = new Checkpoint($x, "", 0);
+            $this->bestCps[$x] = new Checkpoint($x, "","", 0);
         }
         BestCpPanel::$bestTimes = $this->bestCps;
 
@@ -61,8 +61,8 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
          */
 
         if ($this->bestCps[$checkpointIndex]->time > $timeOrScore || $this->bestCps[$checkpointIndex]->time == 0) {
-            $this->bestCps[$checkpointIndex] = new Checkpoint($checkpointIndex, $this->storage->getPlayerObject($login)->nickName, $timeOrScore);
-            BestCpPanel::RedrawAll();
+            $this->bestCps[$checkpointIndex] = new Checkpoint($checkpointIndex, $login, $this->storage->getPlayerObject($login)->nickName, $timeOrScore);
+            //BestCpPanel::RedrawAll();
         }
     }
 
