@@ -55,6 +55,7 @@ class AdminPrivateTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Ir
 	$to = $this->irc->getIrcNick($nick);
 	if (!in_array($connection->getIrcNick($nick), $this->allowedLogins)) {
 	    $this->irc->sendPrivateMessage($to, "You are not allowed to use this interface. go away.");
+	    return;
 	}
 	$params = explode(" ", $message);
 	$command = array_shift($params);
