@@ -28,10 +28,10 @@ class IrcConfig extends \Maniaplanet\DedicatedServer\Structures\AbstractStructur
     
     public $server = "";
     public $port = 6667;
+    public $serverPass = "";
     public $nickname = "";
     public $realname = "";    
     public $channel = "";
     public $channelKey = "";
-    
-           
+               
 }

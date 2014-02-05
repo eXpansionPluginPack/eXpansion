@@ -23,8 +23,9 @@ namespace ManiaLivePlugins\eXpansion\Irc\Classes;
  */
 
 interface IrcListener {
-    function irc_onPublicChat($connection, $channel, $nick, $message);    
-    function irc_onPrivateMessage($connection, $nick, $message);
+              
+    function irc_onPublicChat($connection, $channel, $host, $message);    
+    function irc_onPrivateMessage($connection, $host, $message);
     function irc_onConnect($connection);
     function irc_onDisconnect();    
 }

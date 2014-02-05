@@ -59,11 +59,18 @@ class IrcBot {
 	$this->connected = socket_connect($this->socket, $config->server, $config->port);
 	if ($this->connected === false)
 	    $this->throwError();
-//$this->sendCommand("PASS", "");
+	
+	if (!empty($this->config->serverPass)) {
+	    $this->sendCommand("PASS", $this->config->serverPass);
+	}
 	$this->sendCommand("NICK", $this->config->nickname);
 	$this->sendCommand("USER", $this->config->nickname . " 8 * :" . $this->config->realname);
     }
 
+    /**
+     * this should be called on main loop to work right
+     * @return boolean
+     */
     final public function onTick() {
 
 	if ($this->connected === false)
@@ -89,10 +96,18 @@ class IrcBot {
 	}
     }
 
+    /**
+     * returns status of the connectiton
+     * @return boolean
+     */
     final public function isConnected() {
 	return $this->connected;
     }
 
+    /**
+     * Registers a class to send callbacks, must be compliant to IrcListener
+     * @param Object $class
+     */
     final public function registerCallbackClass($class) {
 	$this->callbackClasses[] = $class;
     }
@@ -109,7 +124,7 @@ class IrcBot {
 	    return true;
 	}
 
-	echo "irc: " . $data . "\n";
+	//echo "irc: " . $data . "\n";
 
 	$needle = "/^(?:[:](\S+) )?(\S+)(?: (?!:)(.+?))?(?: [:](.+))?$/";
 	preg_match($needle, $data, $messages);

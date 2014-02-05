@@ -46,7 +46,7 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $this->exp_chatSendServerMessage($this->joinMsg, null, array($nick, $login, $country, $spec, $grpName));
             $this->exp_chatSendServerMessage($this->tabNoticeMsg, $login);
         } catch (\Exception $e) {
-            echo $e->getLine() . ":" . $e->getMessage();
+            $this->console($e->getLine() . ":" . $e->getMessage());
         }
     }
 

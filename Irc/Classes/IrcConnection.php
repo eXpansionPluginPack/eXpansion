@@ -32,9 +32,7 @@ class IrcConnection extends \ManiaLib\Utils\Singleton {
      * @param \ManiaLivePlugins\eXpansion\IRC\Classes\IrcConfig $config
      */
     public function connect(IrcConfig $config) {
-	$this->irc = new IrcBot($config);
-	$this->registerCallbackClass(new Plugins\AdminPublicTriggers());
-	$this->registerCallbackClass(new Plugins\AdminPrivateTriggers());
+	$this->irc = new IrcBot($config);	
     }
 
     public function registerCallbackClass($class) {

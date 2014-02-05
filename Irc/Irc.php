@@ -47,10 +47,23 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
 	$ircConfig->channel = $this->config->channel;
 	$ircConfig->nickname = $this->config->nickname;
 	$ircConfig->realname = $this->config->realname;
+	$ircConfig->serverPass = $this->config->serverPass;
 
 	try {
+	    $this->exp_chatSendServerMessage("Connecting to irc...");
 	    $this->irc->connect($ircConfig);
 	    $this->irc->registerCallbackClass($this);
+	    foreach ($this->config->plugins as $plugin) {
+		$load = "\\ManiaLivePlugins\\eXpansion\\Irc\\Classes\\Plugins\\" . $plugin;
+		try {
+		    $this->irc->registerCallbackClass(new $load);
+		} catch (\Exception $ex) {
+		    echo "Error:" . $ex->getMessage() . "\n";
+		    $msg = "Failed to load IrcBot plugin: " . $plugin . ", plugin not found.";
+		    $this->console($msg);
+		    $this->exp_chatSendServerMessage($msg);
+		}
+	    }
 	} catch (\Exception $e) {
 	    $this->dumpException("An error has occurred while connecting to Irc", $e);
 	}
@@ -66,11 +79,11 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
     }
 
     public function irc_onConnect($connection) {
-	
+	$this->exp_chatSendServerMessage('Irc connection $0f0success$fff. Server is now linked to ' . $this->config->channel);
     }
 
     public function irc_onDisconnect() {
-	
+	$this->exp_chatSendServerMessage('Irc has been unexpectedly $f00disconnected$fff.');
     }
 
     public function irc_onPrivateMessage($connection, $nick, $message) {
@@ -84,17 +97,26 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-	$player = $this->storage->getPlayerObject($login);
-	$nick = $player->nickName;
-	$message = "Player " . \ManiaLib\Utils\Formatting::stripStyles($nick) . " (" . $login . ") Connected from " . $player->path;
-	$this->irc->sendChat($message);
+	try {
+	    $player = $this->storage->getPlayerObject($login);
+	    $nick = $player->nickName;
+	    $country = explode("|", $player->path);
+	    $message = "Player " . \ManiaLib\Utils\Formatting::stripStyles($nick) . " (" . $login . ") Connected from " . $country[2];
+	    $this->irc->sendChat($message);
+	} catch (\Exception $e) {
+	    $this->console("irc onplayerdisconnect:" . $e->getMessage());
+	}
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason = null) {
-	$player = $this->storage->getPlayerObject($login);
-	$nick = $player->nickName;
-	$message = "Player " . \ManiaLib\Utils\Formatting::stripStyles($nick) . " (" . $login . ") Leaves the server.";
-	$this->irc->sendChat($message);
+	try {
+	    $player = $this->storage->getPlayerObject($login);
+	    $nick = $player->nickName;
+	    $message = "Player " . \ManiaLib\Utils\Formatting::stripStyles($nick) . " (" . $login . ") Leaves the server.";
+	    $this->irc->sendChat($message);
+	} catch (\Exception $e) {
+	    $this->console("irc onplayerdisconnect:" . $e->getMessage());
+	}
     }
 
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {

@@ -29,14 +29,15 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $hostname = 0;
     public $server = "fi.quakenet.org";
     public $port = 6667;
+    public $serverPass = "";
     public $realname = 'ManiaPlanet bot';
     public $nickname = 'driftbot';
     public $ident = 'driftbot';
     public $channel = "#driftstation";
     public $channelKey = "";
     
-    public $authmethod = '';
-    public $authpass = '';        
+    
+    public $plugins = array("AdminPrivateTriggers", "AdminPublicTriggers");
     
 
 }
