@@ -1,51 +1,56 @@
 foreach (Player in Players) {
 
-//If first checkpoint time or new checkpoint time
-	if (!playerCheckPoint.existskey(Player.Login)){
-		playerCheckPoint[Player.Login] = -1;
-	}
-	//First encounter get nicknamed
-	if(!playerNickName.existskey(Player.Login)){
-		playerNickName[Player.Login] = Player.Name;
-	}
-		
-	
-	if(playerCheckPoint[Player.Login] != Player.CurRace.Checkpoints.count) {
-		
-		//Update the current checkpoint of this user
-		playerCheckPoint[Player.Login] = Player.CurRace.Checkpoints.count;
-		curCp = Player.CurRace.Checkpoints.count;
+	if(nbCount % 5 == 0){
 
-		//If finish
-		if (curCp > 0 && curCp%(totalCp+1) == totalCp && totalCp > acceptMinCp) {
-			declare Integer cpIndex = curCp%(totalCp+1) - 1;
-            
-			//If first finish or better time		
-			if(!playerTimes.existskey(Player.Login)){
-				origPlayerTimes.clear();				
-				origPlayerTimes = playerTimes;
-				playerTimes[Player.Login] = -1;
-			}
-			
-			if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[curCp-1]){
-			
-				if (playerTimes[Player.Login] != -1) {				    
-				    origPlayerTimes.clear();
-				    origPlayerTimes = playerTimes;
+	//If first checkpoint time or new checkpoint time
+		if (!playerCheckPoint.existskey(Player.Login)){
+			playerCheckPoint[Player.Login] = -1;
+		}
+		//First encounter get nicknamed
+		if(!playerNickName.existskey(Player.Login)){
+			playerNickName[Player.Login] = Player.Name;
+		}
+
+
+		if(playerCheckPoint[Player.Login] != Player.CurRace.Checkpoints.count) {
+
+			//Update the current checkpoint of this user
+			playerCheckPoint[Player.Login] = Player.CurRace.Checkpoints.count;
+			curCp = Player.CurRace.Checkpoints.count;
+
+			//If finish
+			if (curCp > 0 && curCp%(totalCp+1) == totalCp && totalCp > acceptMinCp) {
+				declare Integer cpIndex = curCp%(totalCp+1) - 1;
+
+				//If first finish or better time		
+				if(!playerTimes.existskey(Player.Login)){
+					origPlayerTimes.clear();				
+					origPlayerTimes = playerTimes;
+					playerTimes[Player.Login] = -1;
 				}
-				
-				playerTimes[Player.Login] = Player.CurRace.Checkpoints[cpIndex];				
-				recordLogin = Player.Login;
-				needUpdate = True;
-			}else{
-				// log("Worse Time, no update");
+
+				if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[curCp-1]){
+
+					if (playerTimes[Player.Login] != -1) {				    
+						origPlayerTimes.clear();
+						origPlayerTimes = playerTimes;
+					}
+
+					playerTimes[Player.Login] = Player.CurRace.Checkpoints[cpIndex];				
+					recordLogin = Player.Login;
+					needUpdate = True;
+				}else{
+					// log("Worse Time, no update");
+				}
+
+			} else {
+
 			}
-		
-		} else {
-			
 		}
 	}
 }
+
+nbCount += 1;
 
 foreach (Event in PendingEvents) {
 	if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer")  {

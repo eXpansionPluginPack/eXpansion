@@ -20,6 +20,7 @@ declare playerCheckPoint = Integer[Text];
 declare playerNickName = <?= $this->playerNicks ?>;
 declare playersOnServer = Text[Text];
 declare recordLogin = "";
+declare nbCount = 0;
 
 declare Boolean needUpdate = True;
 

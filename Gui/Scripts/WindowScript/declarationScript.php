@@ -64,7 +64,7 @@ main () {
     exp_windowActive[version] = id;
 
     while(True) {
-        yield;
+		
          <?= $this->wLoop ?>
 
         if (exp_windowActive[version] == id) {
@@ -132,7 +132,8 @@ main () {
             }
          } else {
             MoveWindow = False;
-         }        
+         } 
+		 yield;
     }
 
 

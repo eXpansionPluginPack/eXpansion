@@ -19,3 +19,5 @@ declare specLabel = (Page.GetFirstChild("nbSpec") as CMlLabel);
 
 playerLabel.SetText(""^nbPlayer);
 specLabel.SetText(""^nbSpec);
+
+sleep(1000);
