@@ -136,7 +136,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
         $index = 1;
 
-        $this->lbl_title->setText(__('Local Records', $login));
+        $this->lbl_title->setText('Local Records');
 
 
         $recsData = "";

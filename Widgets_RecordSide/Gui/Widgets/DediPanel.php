@@ -17,7 +17,8 @@ class DediPanel extends LocalPanel {
     }
 
     function update() {
-	$login = $this->getRecipient();
+	$login = $this->getRecipient();   
+	
 	foreach ($this->items as $item)
 	    $item->destroy();
 	$this->items = array();
@@ -25,7 +26,7 @@ class DediPanel extends LocalPanel {
 
 	$index = 1;
 
-	$this->lbl_title->setText(__('Dedimania Records', $login));
+	$this->lbl_title->setText('Dedimania Records');
 
 
 	$recsData = "";

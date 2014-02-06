@@ -25,7 +25,7 @@ class LivePanel extends LocalPanel {
 
         $index = 1;
 
-        $this->lbl_title->setText(__('Live Rankings', $login));
+        $this->lbl_title->setText('Live Rankings');
 
 
         $recsData = "";
