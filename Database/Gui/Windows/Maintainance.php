@@ -92,7 +92,7 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         $dbconfig = \ManiaLive\Database\Config::getInstance();
         $dbName = $dbconfig->database;
-        $tables = $this->db->query("SHOW TABLES in " . $dbName . ";")->fetchArrayOfRow();
+        $tables = $this->db->execute("SHOW TABLES in " . $dbName . ";")->fetchArrayOfRow();
 
         foreach ($tables as $table) {
             $this->items[$x] = new \ManiaLivePlugins\eXpansion\Database\Gui\Controls\DbTable($x, $table[0], $this->sizeX);
@@ -122,7 +122,7 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             // if checkbox checked
             if ($item->checkBox->getStatus()) {
                 // repair table
-                $status = $this->db->query("REPAIR TABLE " . $item->tableName . ";")->fetchObject();
+                $status = $this->db->execute("REPAIR TABLE " . $item->tableName . ";")->fetchObject();
                 $this->connection->chatSendServerMessage("Table " . $status->Table . " repaired with " . $status->Msg_type . ":" . $status->Msg_text, $login);
             }
         }
@@ -135,7 +135,7 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             // if checkbox checked
             if ($item->checkBox->getStatus()) {
                 // repair table
-                $status = $this->db->query("OPTIMIZE TABLE " . $item->tableName . ";")->fetchObject();
+                $status = $this->db->execute("OPTIMIZE TABLE " . $item->tableName . ";")->fetchObject();
                 $this->connection->chatSendServerMessage("Table " . $status->Table . " Optimized with " . $status->Msg_type . ":" . $status->Msg_text, $login);
             }
         }

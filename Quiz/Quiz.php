@@ -53,7 +53,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->enableDedicatedEvents();
         $this->enableDatabase();
 
-        $this->db->query("CREATE TABLE IF NOT EXISTS `quiz_questions` (
+        $this->db->execute("CREATE TABLE IF NOT EXISTS `quiz_questions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `question` text COLLATE utf8_bin NOT NULL,
   `answers` text COLLATE utf8_bin NOT NULL,
@@ -62,7 +62,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 ) ENGINE=MYISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
 
 
-        $this->db->query("CREATE TABLE IF NOT EXISTS `quiz_points` (
+        $this->db->execute("CREATE TABLE IF NOT EXISTS `quiz_points` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `score` int(11) NOT NULL DEFAULT '1',
   `login` text COLLATE utf8_bin NOT NULL,  
@@ -121,7 +121,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         Gui\Windows\Playerlist::$mainPlugin = $this;
         Gui\Windows\AddPoint::$mainPlugin = $this;
 
-        $data = $this->db->query("SELECT * FROM `quiz_points` order by score desc;")->fetchArrayOfObject();
+        $data = $this->db->execute("SELECT * FROM `quiz_points` order by score desc;")->fetchArrayOfObject();
         foreach ($data as $player) {
             $this->players[$player->login] = new Structures\QuizPlayer($player->login, $player->nickName, (int) $player->score);
         }
@@ -202,7 +202,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             foreach ($question->answer as $answer)
                 $dbanswer .= $answer->answer . ", ";
             $dbanswer = trim($dbanswer, ", ");
-            $this->db->query("INSERT INTO `quiz_questions` (question, answers, asker) VALUES (" . $this->db->quote($question->question) . ", " . $this->db->quote($dbanswer) . ", " . $this->db->quote($question->asker->login) . ");");
+            $this->db->execute("INSERT INTO `quiz_questions` (question, answers, asker) VALUES (" . $this->db->quote($question->question) . ", " . $this->db->quote($dbanswer) . ", " . $this->db->quote($question->asker->login) . ");");
         } catch (\Exception $e) {
             // silent exception
         }
@@ -266,7 +266,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->questionDb = array();
         $this->currentQuestion = null;
         $this->questionCounter = 0;
-        $this->db->query('TRUNCATE TABLE`quiz_points`;');
+        $this->db->execute('TRUNCATE TABLE`quiz_points`;');
         $this->exp_chatSendServerMessage($this->msg_reset);
     }
 
@@ -316,11 +316,11 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->players[$target]->points++;
                 $this->showPoints();
             }
-            $count = $this->db->query("SELECT * FROM `quiz_points` where login = " . $this->db->quote($target) . " LIMIT 1;")->recordCount();
+            $count = $this->db->execute("SELECT * FROM `quiz_points` where login = " . $this->db->quote($target) . " LIMIT 1;")->recordCount();
             if ($count) {
-                $this->db->query("UPDATE `quiz_points` SET `score` = " . $this->db->quote($this->players[$target]->points) . " where `login` = " . $this->db->quote($target) . ";");
+                $this->db->execute("UPDATE `quiz_points` SET `score` = " . $this->db->quote($this->players[$target]->points) . " where `login` = " . $this->db->quote($target) . ";");
             } else {
-                $this->db->query("INSERT INTO `quiz_points` (login,nickName,score) values(" . $this->db->quote($target) . ", " . $this->db->quote($this->storage->getPlayerObject($target)->nickName) . ", " . $this->db->quote($this->players[$target]->points) . ");");
+                $this->db->execute("INSERT INTO `quiz_points` (login,nickName,score) values(" . $this->db->quote($target) . ", " . $this->db->quote($this->storage->getPlayerObject($target)->nickName) . ", " . $this->db->quote($this->players[$target]->points) . ");");
             }
         }
     }
@@ -333,11 +333,11 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
             if (isset($this->players[$target])) {
                 $this->players[$target]->points--;
-                $count = $this->db->query("SELECT * FROM `quiz_points` where login = " . $this->db->quote($target) . " LIMIT 1;")->recordCount();
+                $count = $this->db->execute("SELECT * FROM `quiz_points` where login = " . $this->db->quote($target) . " LIMIT 1;")->recordCount();
                 if ($count) {
-                    $this->db->query("UPDATE `quiz_points` SET `score` = " . $this->db->quote($this->players[$target]->points) . " where `login` = " . $this->db->quote($target) . ";");
+                    $this->db->execute("UPDATE `quiz_points` SET `score` = " . $this->db->quote($this->players[$target]->points) . " where `login` = " . $this->db->quote($target) . ";");
                 } else {
-                    $this->db->query("INSERT INTO `quiz_points` (login,nickName,score) values(" . $this->db->quote($target) . ", " . $this->db->quote($this->storage->getPlayerObject($target)->nickName) . ", " . $this->db->quote($this->players[$target]->points) . ");");
+                    $this->db->execute("INSERT INTO `quiz_points` (login,nickName,score) values(" . $this->db->quote($target) . ", " . $this->db->quote($this->storage->getPlayerObject($target)->nickName) . ", " . $this->db->quote($this->players[$target]->points) . ");");
                 }
                 $this->showPoints();
             }

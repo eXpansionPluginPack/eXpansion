@@ -104,7 +104,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function getRatings() {
-        $ratings = $this->db->query("SELECT uid, avg(rating) AS rating, COUNT(rating) AS ratingTotal FROM exp_ratings GROUP BY uid;")->fetchArrayOfObject();
+        $ratings = $this->db->execute("SELECT uid, avg(rating) AS rating, COUNT(rating) AS ratingTotal FROM exp_ratings GROUP BY uid;")->fetchArrayOfObject();
         $out = array();
         foreach ($ratings as $rating) {
             $out[$rating->uid] = new Structures\Rating($rating->rating, $rating->ratingTotal);
@@ -124,7 +124,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($uId instanceof \Maniaplanet\DedicatedServer\Structures\Map)
             $uId = $uid->uId;
 
-        $ratings = $this->db->query("SELECT login, rating FROM exp_ratings WHERE `uid` = " . $this->db->quote($uId) . ";")->fetchArrayOfAssoc();
+        $ratings = $this->db->execute("SELECT login, rating FROM exp_ratings WHERE `uid` = " . $this->db->quote($uId) . ";")->fetchArrayOfAssoc();
 
         $out = array();
         foreach ($ratings as $data) {
@@ -135,7 +135,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function reload() {
-        $database = $this->db->query("SELECT avg(rating) AS rating, COUNT(rating) AS ratingTotal"
+        $database = $this->db->execute("SELECT avg(rating) AS rating, COUNT(rating) AS ratingTotal"
                         . " FROM exp_ratings"
                         . " WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";")->fetchObject();
         $this->rating = 0;
@@ -165,12 +165,12 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $loginList .= $this->db->quote($login);
             }
 
-            $this->db->query(
+            $this->db->execute(
                     "DELETE FROM exp_ratings "
                     . " WHERE `uid`= " . $this->db->quote($uid) . " "
                     . " AND `login` IN (" . $loginList . ")");
 
-            $this->db->query($sqlInsert);
+            $this->db->execute($sqlInsert);
             $this->pendingRatings = array();
             
         } catch (\Exception $e) {
@@ -212,7 +212,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 return;
             }
             if ($playerRating === null) {
-                $query = $this->db->query("SELECT rating AS playerRating FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . " AND `login`=" . $this->db->quote($login) . ";")->fetchObject();
+                $query = $this->db->execute("SELECT rating AS playerRating FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . " AND `login`=" . $this->db->quote($login) . ";")->fetchObject();
                 if ($query === false) {
                     $playerRating = '-';
                 } else {

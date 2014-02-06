@@ -127,9 +127,9 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->connection->chatSendServerMessage("Creating database backup...", $login);
         $dbconfig = \ManiaLive\Database\Config::getInstance();
         $dbName = $dbconfig->database;
-        $tables = $this->db->query("SHOW TABLES in " . $dbName . ";")->fetchArrayOfRow();
+        $tables = $this->db->execute("SHOW TABLES in " . $dbName . ";")->fetchArrayOfRow();
         foreach ($tables as $table) {
-            $create = $this->db->query("SHOW CREATE TABLE `" . $table[0] . "`;")->fetchAssoc();
+            $create = $this->db->execute("SHOW CREATE TABLE `" . $table[0] . "`;")->fetchAssoc();
 
             $this->write("-- --------------------------------------------------------\n\n");
             $this->write("--\n-- Table structure for table `" . $table[0] . "`\n--\n\n");
@@ -137,7 +137,7 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->write($create['Create Table'] . ";\n\n");
 
             $this->write("--\n-- Dumping data for table `" . $table[0] . "`\n--\n\n");
-            $data = $this->db->query("SELECT * FROM `" . $table[0] . "`;")->fetchArrayOfRow();
+            $data = $this->db->execute("SELECT * FROM `" . $table[0] . "`;")->fetchArrayOfRow();
             foreach ($data as $row) {
                 $vals = array();
                 foreach ($row as $val) {

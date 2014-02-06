@@ -105,7 +105,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
           `server_updateDate` INT( 9 ) NOT NULL,
           KEY(`server_login`)
           ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = MYISAM ;";
-            $this->db->query($q);
+            $this->db->execute($q);
         }
 
         //Checking the version if the table
@@ -153,7 +153,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $this->nbPlayerMax = sizeof($this->players);
             $this->nbSpecMax = sizeof($this->spectators);
 
-            $this->db->query($q);
+            $this->db->execute($q);
         }
 
         $this->ellapsed = ($this->ellapsed + 1) % 120;
@@ -196,7 +196,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         $data['nbNation'] = 'unknown';
         $sql = 'SELECT COUNT(*) as nbPlayer, COUNT(DISTINCT player_nation) as nbNation'
                 . ' FROM exp_players';
-        $result = $this->db->query($sql)->fetchArrayOfObject();
+        $result = $this->db->execute($sql)->fetchArrayOfObject();
         foreach ($result as $r) {
             $data['nbPlayer'] = $r->nbPlayer;
             $data['nbNation'] = $r->nbNation;

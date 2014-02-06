@@ -37,7 +37,7 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener {
                     `transaction_subject` VARCHAR( 200 ) NOT NULL DEFAULT 'unknown',
                     `transaction_amount` MEDIUMINT( 4 ) DEFAULT '0'
                 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = MYISAM ;";
-            $this->db->query($q);
+            $this->db->execute($q);
         }
     }
 
@@ -72,7 +72,7 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener {
                             ' . $this->db->quote($bill->getSubject()) . ',
                             ' . $this->db->quote($bill->getAmount()) . '
                         )';
-                $this->db->query($q);
+                $this->db->execute($q);
                 
                 $bill->validate();
                 unset($this->bills[$billId]);

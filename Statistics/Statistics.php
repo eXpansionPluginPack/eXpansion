@@ -485,7 +485,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function getData($sql) {
-        $dbData = $this->db->query($sql);
+        $dbData = $this->db->execute($sql);
 
         if ($dbData->recordCount() == 0) {
             return array();
