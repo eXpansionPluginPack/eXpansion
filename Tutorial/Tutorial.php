@@ -23,16 +23,7 @@ namespace ManiaLivePlugins\eXpansion\Tutorial;
 class Tutorial extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
-	foreach ($this->storage->players as $login => $player)
-	    $this->onPlayerConnect($login, false);
-	foreach ($this->storage->spectators as $login => $player)
-	    $this->onPlayerConnect($login, true);
-	$this->enableDedicatedEvents();
-	
-    }
-
-    public function onPlayerConnect($login, $isSpectator) {	
-	$window = Gui\Windows\TutorialWindow::Create($login);
+	$window = Gui\Windows\TutorialWindow::Create(null);
 	$window->setSize(160, 80);
 	$window->show();
     }

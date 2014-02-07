@@ -45,10 +45,7 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
         }
         BestCpPanel::$bestTimes = $this->bestCps;
 
-        foreach ($this->storage->players as $player)
-            $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $player)
-            $this->onPlayerConnect($player->login, true);
+       $this->displayWidget(null);
     }
 
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
@@ -75,15 +72,7 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
         BestCpPanel::$bestTimes = array();
         $this->bestCps = array();
     }
-
-    function onPlayerConnect($login, $isSpectator) {
-        $this->displayWidget($login);
-    }
-
-    function onPlayerDisconnect($login, $reason = null) {
-        BestCpPanel::Erase($login);
-    }
-
+    
 }
 ?>
 

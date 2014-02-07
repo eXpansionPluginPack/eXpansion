@@ -141,9 +141,10 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                 if (!$this->_isReady) {
                     $this->_isReady = true;
                     try {
+			
                         $this->exp_onReady();
                     } catch (\Exception $e) {
-                        throw new \Exception("onReadyError:\n" . $e->getFile() . ":" . $e->getLine() . "\n" . $e->getMessage(), 0, $e);
+                        throw new \Exception("onReadyError at" .  get_class() .":\n" . $e->getFile() . ":" . $e->getLine() . "\n" . $e->getMessage(), 0, $e);
                     }
                 }
             }

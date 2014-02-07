@@ -25,29 +25,19 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         }
     }
-
-    public function onPlayerConnect($login, $isSpectator) {
-        $window = Gui\Windows\FaqWidget::Create($login, true);
-        $window->setSize(7, 7);
-        $window->setPosition(-161, 76);
-        $window->show();
-    }
-
-    public function onPlayerDisconnect($login, $disconnectionReason = null) {
-        Gui\Windows\FaqWidget::Erase($login);
-    }
-
+    
     public function exp_onReady() {
         $this->registerChatCommand("faq", "showFaq", 0, true);
         $this->registerChatCommand("faq", "showFaq", 1, true);
         $this->registerChatCommand("faq", "showFaq", 2, true);
         Gui\Windows\FaqWindow::$mainPlugin = $this;
         Gui\Windows\FaqWidget::$mainPlugin = $this;
-
-        foreach ($this->storage->players as $login => $player)
-            $this->onPlayerConnect($login, false);
-        foreach ($this->storage->spectators as $login => $player)
-            $this->onPlayerConnect($login, true);
+	
+        $window = Gui\Windows\FaqWidget::Create(null);
+        $window->setSize(7, 7);
+        $window->setPosition(-161, 76);
+        $window->show();
+      
     }
 
     public function showFaq($login, $topic = "toc", $recipient = null) {

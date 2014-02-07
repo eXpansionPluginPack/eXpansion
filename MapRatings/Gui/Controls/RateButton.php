@@ -14,7 +14,7 @@ class RateButton extends \ManiaLive\Gui\Control {
      * @param int $sizeX = 24
      * @param intt $sizeY = 6
      */
-    function __construct($login, $plugin, $number) {
+    function __construct($plugin, $number) {
         $sizeX = 22;
         $sizeY = 8;
         $this->setAlign("left");

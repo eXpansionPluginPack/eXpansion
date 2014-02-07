@@ -54,10 +54,6 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 //  $this->registerChatCommand('mxqueue', "mxVote", 1, true);
 //}
 
-        if ($this->isPluginLoaded('Standard\Menubar')) {
-            $this->buildMenu();
-        }
-
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('ManiaExchange'), false);
             $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Search Maps'), null, array($this, 'mxSearch'), false);
@@ -67,18 +63,14 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->titleId = $version->titleId;
         $this->enableDedicatedEvents();
 
-        foreach ($this->storage->players as $player)
-            $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $player)
-            $this->onPlayerConnect($player->login, true);
-    }
-
-    public function onPlayerConnect($login, $isSpectator) {
-        $widget = Gui\Widgets\MxWidget::Create($login);
+	$widget = Gui\Widgets\MxWidget::Create(null);
         $widget->setSize(60, 7);
         $widget->setPosition(-160, 82);
         $widget->show();
+
+	
     }
+
 
     public function onOliverde8HudMenuReady($menu) {
 

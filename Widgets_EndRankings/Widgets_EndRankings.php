@@ -29,7 +29,6 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $info->setData($this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRanks"));
         $info->setSize(38, 95);
         $info->setPosition(-160, 60);
-
         $info->show();
     }
 

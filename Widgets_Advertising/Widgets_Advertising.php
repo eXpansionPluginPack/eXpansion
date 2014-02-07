@@ -14,19 +14,10 @@ class Widgets_Advertising extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 
     public function exp_onReady() {
         $this->config = Config::GetInstance();
-        foreach ($this->storage->players as $login => $player)
-            $this->displayWidget($login);
-        foreach ($this->storage->spectators as $login => $player)
-            $this->displayWidget($login);
+	$this->displayWidget(null);
     }
 
-    public function onPlayerConnect($login, $isSpectator) {
-        $this->displayWidget($login);
-    }
-
-    public function onPlayerDisconnect($login, $disconnectionReason) {
-        Gui\Widgets\WidgetAd::Erase($login);
-    }
+    
 
     public function displayWidget($login) {
         $widget = Gui\Widgets\WidgetAd::Create($login);

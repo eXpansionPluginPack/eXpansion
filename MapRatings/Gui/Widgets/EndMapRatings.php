@@ -14,9 +14,6 @@ class EndMapRatings extends \ManiaLive\Gui\Window {
     protected function onConstruct() {
 	parent::onConstruct();
 
-	$login = $this->getRecipient();
-	
-	
 	$this->xml = new \ManiaLive\Gui\Elements\Xml();
 	$this->addComponent($this->xml);
 
@@ -24,7 +21,7 @@ class EndMapRatings extends \ManiaLive\Gui\Window {
 	$this->label = new \ManiaLib\Gui\Elements\Label(70, 9);
 	$this->label->setStyle("TextRankingsBig");
 	$this->label->setTextEmboss();
-	$this->label->setText(__("Please rate the map!", $login));
+	$this->label->setText("Please rate the map!");
 	$this->label->setAlign("center", "top");
 	$this->label->setPosY(9);
 	$this->addComponent($this->label);
@@ -35,22 +32,22 @@ class EndMapRatings extends \ManiaLive\Gui\Window {
 	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 	$this->addComponent($this->frame);
 
-	$this->b0 = new RateButton($login, self::$parentPlugin, 0);
+	$this->b0 = new RateButton(self::$parentPlugin, 0);
 	$this->frame->addComponent($this->b0);
 
-	$this->b1 = new RateButton($login, self::$parentPlugin, 1);
+	$this->b1 = new RateButton(self::$parentPlugin, 1);
 	$this->frame->addComponent($this->b1);
 
-	$this->b2 = new RateButton($login, self::$parentPlugin, 2);
+	$this->b2 = new RateButton(self::$parentPlugin, 2);
 	$this->frame->addComponent($this->b2);
 
-	$this->b3 = new RateButton($login, self::$parentPlugin, 3);
+	$this->b3 = new RateButton(self::$parentPlugin, 3);
 	$this->frame->addComponent($this->b3);
 
-	$this->b4 = new RateButton($login, self::$parentPlugin, 4);
+	$this->b4 = new RateButton(self::$parentPlugin, 4);
 	$this->frame->addComponent($this->b4);
 
-	$this->b5 = new RateButton($login, self::$parentPlugin, 5);
+	$this->b5 = new RateButton(self::$parentPlugin, 5);
 	$this->frame->addComponent($this->b5);
 
 	$move = new \ManiaLib\Gui\Elements\Quad(140, 24);
@@ -73,6 +70,7 @@ class EndMapRatings extends \ManiaLive\Gui\Window {
     }
 
     function onDraw() {
+	parent::onDraw();
 	$this->removeComponent($this->xml);
 	$this->xml->setContent('    
         <script><!--
@@ -158,8 +156,7 @@ class EndMapRatings extends \ManiaLive\Gui\Window {
                   
                 } 
                 --></script>');
-	$this->addComponent($this->xml);
-	parent::onDraw();
+	$this->addComponent($this->xml);	
     }
 
     function destroy() {

@@ -108,10 +108,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Add map'), null, array($this, 'addMaps'), true);
 	}
 
-	if ($this->isPluginLoaded('Standard\Menubar')) {
-	    $this->buildMenu();
-	}
-
 	$this->nextMap = $this->storage->nextMap;
 
 	Gui\Windows\Maplist::Initialize($this);
@@ -120,13 +116,18 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$action = \ManiaLive\Gui\ActionHandler::getInstance();
 	$this->actionShowMapList = $action->createAction(array($this, "showMapList"));
 	$this->actionShowJukeList = $action->createAction(array($this, "showJukeList"));
-
-
-	foreach ($this->storage->players as $player)
-	    $this->onPlayerConnect($player->login, false);
-	foreach ($this->storage->spectators as $player)
-	    $this->onPlayerConnect($player->login, true);
-
+	
+	
+	
+	\ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::CHALLENGE_INFO);
+	$info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\CurrentMapWidget::Create(null);
+	$info->setPosition(144, 83.5);
+	$info->setAction($this->actionShowMapList);
+	$info->show();
+	
+	
+	
+	
 	$this->preloadHistory();
 	//$this->showMapList("oliverde8");
     }
@@ -231,16 +232,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$menu->addButton($parent, "Replay Map", $button);
     }
 
-    function onPlayerConnect($login, $isSpectator) {
-	\ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::CHALLENGE_INFO);
-
-	$info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\CurrentMapWidget::Create($login);
-	$info->setPosition(144, 83.5);
-	$info->setAction($this->actionShowMapList);
-	$info->show();
-	$this->showNextMapWidget($login);
-    }
-
     public function onPlayerDisconnect($login, $reason = null) {
 	Gui\Windows\Maplist::Erase($login);
 	Gui\Windows\AddMaps::Erase($login);
@@ -329,12 +320,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	Gui\Widgets\CurrentMapWidget::EraseAll();
 
 	$this->atPodium = true;
-
-	foreach ($this->storage->players as $player)
-	    $this->redrawNextMapWidget($player->login, false);
-	foreach ($this->storage->spectators as $player)
-	    $this->redrawNextMapWidget($player->login, true);
-
+	$this->redrawNextMapWidget();
 
 	if (count($this->queue) > 0) {
 	    reset($this->queue);
@@ -586,10 +572,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function redrawNextMapWidget() {
-	foreach ($this->storage->players as $player)
-	    $this->showNextMapWidget($player->login, false);
-	foreach ($this->storage->spectators as $player)
-	    $this->showNextMapWidget($player->login, true);
+	    $this->showNextMapWidget(null);	
     }
 
     public function queueMxMap($login, $file) {

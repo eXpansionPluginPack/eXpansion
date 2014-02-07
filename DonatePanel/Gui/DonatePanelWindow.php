@@ -43,7 +43,7 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $frame->setPosition(5, 0);
         
         $text = new \ManiaLib\Gui\Elements\Label(11, 6);
-        $text->setText('$fff' . __("Donate:", $login));
+        $text->setText('$fff' . "Donate:");
         $text->setTextSize(1);
         $text->setAlign("left", "center2");
         $frame->addComponent($text);

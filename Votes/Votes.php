@@ -63,8 +63,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onReady() {
-        parent::exp_onReady();
-
+      
         $this->timer = time();
         $this->setPublicMethod("vote_restart");
         $this->setPublicMethod("vote_skip");

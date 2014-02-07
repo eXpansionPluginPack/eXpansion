@@ -19,7 +19,7 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->lbl = new \ManiaLib\Gui\Elements\Label(30, 6);
         $this->lbl->setTextSize(1);
         $this->lbl->setStyle("TextStaticVerySmall");
-        $this->lbl->setText(__('Server ranks'));        
+        $this->lbl->setText('Server ranks');        
         $this->lbl->setAlign("center", "center");
         $this->lbl->setTextColor('fff');
         $this->lbl->setTextEmboss();

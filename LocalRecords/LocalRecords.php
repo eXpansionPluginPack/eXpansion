@@ -199,8 +199,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$cmd->setHelp("Will force the save of the records changes in the Database");
     }
 
-    public function exp_onReady() {
-	parent::exp_onReady();
+    public function exp_onReady() {	
 
 	//Creating the records table
 	if (!$this->db->tableExists("exp_records")) {
@@ -252,8 +251,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
 	}
 
-	$this->getRanks();
-	$this->updateCurrentChallengeRecords();
+	$this->getRanks();	
     }
 
     public function showRecsMenuItem($login) {

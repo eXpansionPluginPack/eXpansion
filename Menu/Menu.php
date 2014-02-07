@@ -47,7 +47,15 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->actions['stats'] = $actionHandler->createAction(array($this, "actions"), "stats");
         $this->actions['serverinfo'] = $actionHandler->createAction(array($this, "actions"), "serverinfo");
 	$this->actions['admreplay'] = $actionHandler->createAction(array($this, "actions"), "admreplay"); 
-        $this->reDraw();
+        
+	foreach ($this->storage->players as $login => $player) {
+	    $this->onPlayerConnect($login, null);
+	}
+	foreach ($this->storage->spectators as $login => $player) {
+	    $this->onPlayerConnect($login, null);
+	}
+	
+	
     }
 
     function actions($login, $action, $entries) {
@@ -135,42 +143,27 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function addSeparator($title, $isAdmin, $pluginId = null) {
-        $item = new Structures\Menuitem($title, null, null, $isAdmin, true);
+        /*$item = new Structures\Menuitem($title, null, null, $isAdmin, true);
         $hash = spl_object_hash($item);
-        $this->menuItems[$hash] = $item;
+        $this->menuItems[$hash] = $item; */
     }
 
     function addItem($title, $icon, array $callback, $isAdmin, $pluginid = null) {
-        if (is_callable($callback)) {
+        /*if (is_callable($callback)) {
             $item = new Structures\Menuitem($title, $icon, $callback, $isAdmin);
             $hash = spl_object_hash($item);
-            $this->menuItems[$hash] = $item;
-            $this->reDraw();
+            $this->menuItems[$hash] = $item;            
         } else {
             $this->console("Adding a button failed from plugin:" . $pluginid . " button callback is not valid.");
-        }
+        } */
     }
 
     function reDraw() {
-        foreach ($this->storage->players as $player)
-            $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $player)
-            $this->onPlayerConnect($player->login, true);
+	
     }
 
-    function onPlayerConnect($login, $isSpectator) {
-        MenuPanel::Erase($login);
-        Gui\Widgets\Submenu::Erase($login);
-        $info = MenuPanel::Create($login);
-        $info->setSize(60, 90);
-        $info->setPosition(150, 35);
-        $info->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-        $info->setItems($this->menuItems);
-        $info->setScale(0.8);
-        //   $info->show();
-
-        echo "\n Creating Submenu.... \n";
-
+    function onPlayerConnect($login, $isSpectator) {                                
+	
         $submenu = Gui\Widgets\Submenu::Create($login);
         $menu = $submenu->getMenu();
 
@@ -230,11 +223,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
         $submenu->show();
     }
-
-    public function onPlayerDisconnect($login, $reason = null) {
-        MenuPanel::Erase($login);
-    }
-
+    
 }
 
 ?>

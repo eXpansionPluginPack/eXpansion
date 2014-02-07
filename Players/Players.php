@@ -34,16 +34,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Players'), false);
             $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Show Players'), null, array($this, 'showPlayerList'), false);
-        }
-
-        foreach ($this->storage->players as $player) {
-            if ($player->isBroadcasting)
-                $this->announceBroadcasting($player->login);
-        }
-        foreach ($this->storage->spectators as $player) {
-            if ($player->isBroadcasting)
-                $this->announceBroadcasting($player->login);
-        }
+        }  
     }
 
     public function onOliverde8HudMenuReady($menu) {

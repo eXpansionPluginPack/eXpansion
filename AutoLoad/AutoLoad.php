@@ -35,7 +35,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         , 'ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Widgets_PersonalBest'
         , 'ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide'
         , 'ManiaLivePlugins\eXpansion\Widgets_Times\Widgets_Times'
-	, 'ManiaLivePlugins\eXpansion\Tutorial\Tutorial'
+	//, 'ManiaLivePlugins\eXpansion\Tutorial\Tutorial'
     );
 
     public function exp_onLoad() {

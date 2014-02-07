@@ -132,7 +132,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->status = "False";
         $window = \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Create($this->getRecipient());
         $window->setController($this);
-        $window->setTitle(__('Select Player to send message'));
+        $window->setTitle('Select Player to send message');
         $window->setSize(120, 100);
         $window->centerOnScreen();
         $window->show();

@@ -19,7 +19,7 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $frame->setPosY(1);
         $this->setSize(44,15);
         // $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
-        $login = $this->getRecipient();
+        // $login = $this->getRecipient();
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad(42, 13);
         $this->bg->setAlign("left", "center");
@@ -28,12 +28,12 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->bg->setPosition(4, -8);
         $this->addComponent($this->bg);
 
-        $label = new \ManiaLib\Gui\Elements\Label(30);
-        $label->setText('$ddd' . __('Next', $login));        
+        /*$label = new \ManiaLib\Gui\Elements\Label(30);
+        $label->setText('$ddd' . 'Next', $login));        
         $label->setAlign("right", "top");
         $label->setPosX(-8);
         $label->setPosY(1);
-        // $this->addComponent($label);
+        // $this->addComponent($label); */
 
         $row = new \ManiaLive\Gui\Controls\Frame(0, -4);
         $this->labelName = new \ManiaLib\Gui\Elements\Label(30, 7);

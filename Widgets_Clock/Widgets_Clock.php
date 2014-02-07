@@ -5,11 +5,11 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Clock;
 class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onLoad() {
-        $this->enableDedicatedEvents();
+        // $this->enableDedicatedEvents();
     }
 
     function exp_onReady() {
-        $this->updateWidget();
+        $this->displayWidget(null);
     }
 
     /**
@@ -17,7 +17,7 @@ class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param string $login
      */
     function displayWidget($login) {
-        $info = Gui\Widgets\Clock::Create($login);
+        $info = Gui\Widgets\Clock::Create(null);
         $info->setSize(58, 11);
         $info->setPosition(-161, 90.5);
         $info->setScale(0.8);
@@ -26,13 +26,9 @@ class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $info->show();
     }
 
-    public function onPlayerConnect($login, $isSpectator) {
-        $this->displayWidget($login);
-    }
 
-    public function onPlayerDisconnect($login, $disconnectionReason = null) {
-        Gui\Widgets\Clock::Erase($login);
-    }
+
+  
 
     public function onBeginMatch() {
         //$this->updateWidget();
@@ -42,12 +38,7 @@ class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //$this->updateWidget();
     }
 
-    public function updateWidget() {
-        foreach ($this->storage->players as $login => $player)
-            $this->displayWidget($login);
-        foreach ($this->storage->spectators as $login => $player)
-            $this->displayWidget($login);
-    }
+
 
 }
 ?>

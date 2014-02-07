@@ -88,6 +88,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->onPlayerConnect($player->login, true);
 
         $this->onBeginMap(null, null, null);
+	$this->showResSkip(null);
     }
 
     function onPlayerConnect($login, $isSpectator) {
@@ -99,7 +100,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $info->setPosition(-160, -44);
             $info->show();
         }
-        $this->showResSkip($login);
+      
     }
 
     public function showResSkip($login) {
@@ -405,6 +406,10 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connection->chatSendServerMessage(__('#error#Error: %s', $login, $e->getMessage()), $login);
         }
     }
+    
+    public function onEndMatch($rankings, $winnerTeamOrMap) {
+	ResSkipButtons::EraseAll();
+    }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
         if ($this->storage->currentMap->uId == $this->lastMapUid)
@@ -419,11 +424,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->skipCount = array();
         }
 
-        ResSkipButtons::EraseAll();
-        foreach ($this->storage->players as $player)
-            $this->showResSkip($player->login);
-        foreach ($this->storage->spectators as $player)
-            $this->showResSkip($player->login);
+        $this->showResSkip(null);        
     }
 
 }
