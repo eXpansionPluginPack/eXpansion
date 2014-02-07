@@ -9,6 +9,7 @@ if (atStart == True) {
 atStart = False;
 }
 
+	
 if(nbCount % 60 == 0) {
     nbCount = 0;        
     foreach (Player in Players) {			
