@@ -19,7 +19,7 @@ class Widget extends PlainWidget {
         parent::onConstruct();
 
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WidgetScript");
-		$this->registerScript($this->script);
+	$this->registerScript($this->script);
 		
         $this->move = new \ManiaLib\Gui\Elements\Quad(45, 7);
         $this->move->setStyle("Icons128x128_Blink");

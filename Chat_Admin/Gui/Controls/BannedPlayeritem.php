@@ -58,11 +58,7 @@ class BannedPlayeritem extends \ManiaLive\Gui\Control {
     protected function onResize($oldX, $oldY) {
         
     }
-
-    function onDraw() {
-        
-    }
-
+   
     function __destruct() {
         ActionHandler::getInstance()->deleteAction($this->unbanAction);
     }

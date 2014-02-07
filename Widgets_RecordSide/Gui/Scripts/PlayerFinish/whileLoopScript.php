@@ -1,6 +1,6 @@
 foreach (Player in Players) {
 
-	if(nbCount % 5 == 0){
+	if(nbCount % 5 == 0) {
 
 	//If first checkpoint time or new checkpoint time
 		if (!playerCheckPoint.existskey(Player.Login)){
@@ -39,6 +39,7 @@ foreach (Player in Players) {
 					playerTimes[Player.Login] = Player.CurRace.Checkpoints[cpIndex];				
 					recordLogin = Player.Login;
 					needUpdate = True;
+					break;
 				}else{
 					// log("Worse Time, no update");
 				}

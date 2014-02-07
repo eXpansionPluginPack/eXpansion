@@ -11,10 +11,15 @@ main () {
 			 
      // external declares ends
      while(True) {
+	
+	if (!PageIsVisible || InputPlayer == Null) {
+	    yield;
+	    continue;
+	}
         // external loop stuff
         <?=  $this->wLoop ?>
 				
-		yield;
+	yield;	
     }
 }
 --></script>

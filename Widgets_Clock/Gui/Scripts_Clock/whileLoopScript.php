@@ -12,7 +12,7 @@ foreach (Player in Players) {
             nbSpec += 1;
         }
     }
-}
+} 
 
 declare playerLabel = (Page.GetFirstChild("nbPlayer") as CMlLabel);
 declare specLabel = (Page.GetFirstChild("nbSpec") as CMlLabel);

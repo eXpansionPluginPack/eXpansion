@@ -161,10 +161,6 @@ class MenuPanel extends \ManiaLive\Gui\Window {
 //   $this->_minButton->setPosition(-2, -8);
     }
 
-    function onShow() {
-	
-    }
-
     function setItems(array $menuItems) {
 	$this->frame = new \ManiaLive\Gui\Controls\Frame();
 	$this->frame->setAlign("left", "top");
