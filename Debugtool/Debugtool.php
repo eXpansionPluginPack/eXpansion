@@ -29,12 +29,12 @@ namespace ManiaLivePlugins\eXpansion\Debugtool;
 class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
-	$this->registerChatCommand("connect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-	$this->registerChatCommand("disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+	$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
+	$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
     }
 
-    function connect($login) {
-	for ($x = 0; $x < 150; $x++) {
+    function connect($login, $playercount) {
+	for ($x = 0; $x < $playercount; $x++) {
 	    $this->connection->connectFakePlayer();
 	}
     }
