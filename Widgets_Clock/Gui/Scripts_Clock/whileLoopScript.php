@@ -14,9 +14,6 @@ foreach (Player in Players) {
     }
 } 
 
-declare playerLabel = (Page.GetFirstChild("nbPlayer") as CMlLabel);
-declare specLabel = (Page.GetFirstChild("nbSpec") as CMlLabel);
-
 playerLabel.SetText(""^nbPlayer);
 specLabel.SetText(""^nbSpec);
 

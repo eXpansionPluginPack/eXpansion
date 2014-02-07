@@ -22,15 +22,10 @@ declare playersOnServer = Text[Text];
 declare recordLogin = "";
 declare nbCount = 0;
 
+// test
+declare Player = Null;
 declare Boolean needUpdate = True;
-
-//Putting Checkpoint count to zero
-foreach (Player in Players) {
-	playerCheckPoint[Player.Login] = -1;
-	if(!playerNickName.existskey(Player.Login)){
-		playerNickName[Player.Login] = Player.Name;
-	}
-}
+declare Boolean atStart = True;
 
 <?php
 /*

@@ -127,8 +127,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         //  $this->bg_title->setPosition($this->sizeX / 2, 0);
     }
 
-    function update() {
-        $login = $this->getRecipient();
+    function update() {        
         foreach ($this->items as $item)
             $item->destroy();
         $this->items = array();

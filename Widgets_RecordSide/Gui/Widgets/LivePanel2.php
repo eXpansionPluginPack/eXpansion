@@ -9,6 +9,12 @@ use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
 
 class LivePanel2 extends LivePanel {
 
+    
+     function onConstruct() {
+        parent::onConstruct();
+        $this->setName("Live Rankings Panel (tab-layer)");
+    }
+    
 }
 
 ?>

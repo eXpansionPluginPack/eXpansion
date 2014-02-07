@@ -1,8 +1,18 @@
-foreach (Player in Players) {
+//Putting Checkpoint count to zero
+if (atStart == True) {
+    foreach (Player in Players) {
+	    playerCheckPoint[Player.Login] = -1;
+	    if(!playerNickName.existskey(Player.Login)){
+		    playerNickName[Player.Login] = Player.Name;
+	    }
+    }
+atStart = False;
+}
 
-	if(nbCount % 5 == 0) {
-
-	//If first checkpoint time or new checkpoint time
+if(nbCount % 60 == 0) {
+    nbCount = 0;        
+    foreach (Player in Players) {			
+		//If first checkpoint time or new checkpoint time
 		if (!playerCheckPoint.existskey(Player.Login)){
 			playerCheckPoint[Player.Login] = -1;
 		}
@@ -11,15 +21,14 @@ foreach (Player in Players) {
 			playerNickName[Player.Login] = Player.Name;
 		}
 
-
-		if(playerCheckPoint[Player.Login] != Player.CurRace.Checkpoints.count) {
-
+		if(playerCheckPoint[Player.Login] != Player.CurRace.Checkpoints.count) {			
 			//Update the current checkpoint of this user
 			playerCheckPoint[Player.Login] = Player.CurRace.Checkpoints.count;
 			curCp = Player.CurRace.Checkpoints.count;
 
 			//If finish
 			if (curCp > 0 && curCp%(totalCp+1) == totalCp && totalCp > acceptMinCp) {
+				log ("finish");
 				declare Integer cpIndex = curCp%(totalCp+1) - 1;
 
 				//If first finish or better time		
@@ -29,8 +38,8 @@ foreach (Player in Players) {
 					playerTimes[Player.Login] = -1;
 				}
 
-				if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[curCp-1]){
-
+				if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[curCp-1]) {
+					
 					if (playerTimes[Player.Login] != -1) {				    
 						origPlayerTimes.clear();
 						origPlayerTimes = playerTimes;
@@ -40,20 +49,17 @@ foreach (Player in Players) {
 					recordLogin = Player.Login;
 					needUpdate = True;
 					break;
-				}else{
-					// log("Worse Time, no update");
-				}
-
-			} else {
-
-			}
-		}
-	}
+				}	
+			} 
+			
+		} 		
+		
+	} 
 }
+	nbCount += 1;
 
-nbCount += 1;
 
-foreach (Event in PendingEvents) {
+foreach (Event in PendingEvents) {	
 	if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer")  {
 	    if (exp_widgetLayers[version][id] == "normal") {
             exp_widgetLayers[version][id] = "scorestable";
@@ -63,7 +69,7 @@ foreach (Event in PendingEvents) {
 	}
 }
 
-if(needUpdate) { 
+if(needUpdate) { 	
 	needUpdate = False;
 	declare Integer inRank = 1;	
 	declare Boolean isNewRecord = False;		

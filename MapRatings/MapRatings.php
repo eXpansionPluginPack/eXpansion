@@ -58,7 +58,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->displayWidget = false;
 	}
 
-	if ($this->displayWidget) {	    
+	if ($this->displayWidget) {
 	    $info = RatingsWidget::Create(null);
 	    $info->setSize(34, 12);
 	    $info->setPosition(128, 76);
@@ -288,7 +288,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    // do silent exception;
 	}
     }
- 
+
     function onBeginMatch() {
 	if ($this->previousUid != null)
 	    $this->saveRatings($this->previousUid);
@@ -317,15 +317,17 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function onEndMatch($rankings, $winnerTeamOrMap) {
 	if ($this->config->showPodiumWindow) {
 	    $ratings = $this->getVotesForMap(null);
+	    $logins = array();
 	    foreach ($this->storage->players as $login => $player) {
 		if (!array_key_exists($login, $ratings) && !isset($this->pendingRatings[$login])) {
 		    $logins[] = $login;
 		}
 	    }
-	    
-	    $group = \ManiaLive\Gui\Group::Create("mapratings", $logins);	    
-	    $widget = EndMapRatings::Create($group);
-	    $widget->show();
+	    if (sizeof($logins) > 0) {
+		$group = \ManiaLive\Gui\Group::Create("mapratings", $logins);
+		$widget = EndMapRatings::Create($group);
+		$widget->show();
+	    }
 	}
     }
 

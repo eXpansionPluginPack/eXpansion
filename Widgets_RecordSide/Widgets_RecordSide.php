@@ -170,7 +170,10 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	  $this->showLivePanel($player->login); // create panel for everybody
 	  foreach ($this->storage->spectators as $player)
 	  $this->showLivePanel($player->login); // create panel for everybody */
+	
+	/*
 	$panel = Gui\Widgets\LivePanel::Create(null);
+	 
 	$panel->setPosition(118, -12);
 	$panel->setSize(40, 95);
 	$panel->setNbFields(8);
@@ -187,6 +190,8 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->update();
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 	$panel->show();
+	 * 
+	 */
     }
 
     public function showLocalPanel($login) {
