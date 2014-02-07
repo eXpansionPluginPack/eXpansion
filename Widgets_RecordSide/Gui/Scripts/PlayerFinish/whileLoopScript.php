@@ -69,7 +69,9 @@ foreach (Event in PendingEvents) {
 	}
 }
 
-if(needUpdate) { 	
+if(needUpdate && (Now - lastUpdateTime) > 500) { 	
+	lastUpdateTime = Now;
+	
 	needUpdate = False;
 	declare Integer inRank = 1;	
 	declare Boolean isNewRecord = False;		
@@ -93,6 +95,7 @@ if(needUpdate) {
 		}
 		inRank += 1;
 	}
+	yield;
 	
 	inRank = 1;
 	
@@ -116,6 +119,8 @@ if(needUpdate) {
 	foreach (Player in Players) {
 	    playersOnServer[Player.Login] = Player.Name;
 	}
+	
+	yield;
 
 	if(playerTimes.count > nbShow){
 		recCount = nbShow;
@@ -134,6 +139,8 @@ if(needUpdate) {
 	    }
 	    i += 1;
 	}
+	
+	yield;
 	
 	if(myRank != -1){
 		start = myRank - ((nbFields - nbFirstFields)/2);

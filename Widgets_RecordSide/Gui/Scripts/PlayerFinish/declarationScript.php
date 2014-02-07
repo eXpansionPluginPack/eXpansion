@@ -26,6 +26,7 @@ declare nbCount = 0;
 declare Player = Null;
 declare Boolean needUpdate = True;
 declare Boolean atStart = True;
+declare lastUpdateTime = Now;
 
 <?php
 /*
