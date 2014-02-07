@@ -6,10 +6,9 @@ declare Integer nbFirstFields =  <?= $this->nbFirstFields ?>;
 
 declare Integer maxServerRank = <?= $this->acceptMaxServerRank ?>;
 declare Integer[Text] maxPlayerRank = <?= $this->acceptMaxPlayerRank ?>;
-
 declare useMaxPlayerRank = <?= $this->useMaxPlayerRank ?>;
-
 declare Integer acceptMinCp = <?= $this->acceptMinCp ?>;
+
 
 //Ranks of the players
 declare playerTimes = <?= $this->playerTimes ?>;

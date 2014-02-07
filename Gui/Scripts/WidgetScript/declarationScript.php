@@ -39,7 +39,8 @@ declare Text version = "<?= $this->version ?>";
 declare Text id = "<?= $this->name ?>";
 declare Boolean forceReset = <?= $this->forceReset ?>;
 declare Text activeLayer = "<?= $win->getLayer() ?>";
-
+declare Boolean exp_widgetCurrentVisible = False;
+declare Boolean exp_widgetVisibilityChanged = False;
 
 if (!exp_widgetVisible.existskey(version) ) {
 	exp_widgetVisible[version] = Boolean[Text];
@@ -76,3 +77,5 @@ Window.PosnX = exp_widgetLastPos[version][id][0];
 Window.PosnY = exp_widgetLastPos[version][id][1];
 LastDelta = exp_widgetLastPosRel[version][id];
 Window.RelativePosition = exp_widgetLastPosRel[version][id];
+
+exp_widgetCurrentVisible = exp_widgetVisible[version][id];

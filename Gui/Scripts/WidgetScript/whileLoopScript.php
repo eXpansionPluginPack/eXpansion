@@ -9,6 +9,9 @@
         $deltaY = "";
 
 ?>
+
+exp_widgetVisibilityChanged = False;
+
 if (!exp_widgetVisible.existskey(version) ) {
 	exp_widgetVisible[version] = Boolean[Text];
 }
@@ -20,10 +23,14 @@ if (!exp_widgetLayers[version].existskey(id)) {
     exp_widgetLayers[version][id] = "normal";
 }
 
-if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer) {
+if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer
+		&& exp_widgetCurrentVisible != exp_widgetVisible[version][id]) {
 	Window.Show();
-} else {
+	exp_widgetVisibilityChanged = True;
+	exp_widgetCurrentVisible = True;
+} else if(exp_widgetCurrentVisible != exp_widgetVisible[version][id] || exp_widgetLayers[version][id] != activeLayer) {
 	Window.Hide();
+	exp_widgetCurrentVisible = False;
 }
 
 if (exp_enableHudMove == True) {

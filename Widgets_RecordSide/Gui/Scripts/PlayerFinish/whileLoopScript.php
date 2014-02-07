@@ -11,7 +11,8 @@ atStart = False;
 
 	
 if(nbCount % 60 == 0) {
-    nbCount = 0;        
+    nbCount = 0;
+	playersOnServer.clear();
     foreach (Player in Players) {			
 		//If first checkpoint time or new checkpoint time
 		if (!playerCheckPoint.existskey(Player.Login)){
@@ -21,6 +22,8 @@ if(nbCount % 60 == 0) {
 		if(!playerNickName.existskey(Player.Login)){
 			playerNickName[Player.Login] = Player.Name;
 		}
+		//Checking up online players
+		playersOnServer[Player.Login] = Player.Name;
 
 		if(playerCheckPoint[Player.Login] != Player.CurRace.Checkpoints.count) {			
 			//Update the current checkpoint of this user
@@ -70,7 +73,7 @@ foreach (Event in PendingEvents) {
 	}
 }
 
-if(needUpdate && (Now - lastUpdateTime) > 500) { 	
+if(needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisible[version][id]) || exp_widgetVisibilityChanged)) { 	
 	lastUpdateTime = Now;
 	
 	needUpdate = False;
@@ -116,13 +119,6 @@ if(needUpdate && (Now - lastUpdateTime) > 500) {
 	declare end = -1;
 	declare recCount = -1;
 	
-	playersOnServer.clear();	
-	foreach (Player in Players) {
-	    playersOnServer[Player.Login] = Player.Name;
-	}
-	
-	yield;
-
 	if(playerTimes.count > nbShow){
 		recCount = nbShow;
 	} else {
