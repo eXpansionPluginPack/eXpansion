@@ -10,12 +10,7 @@ main () {
      <?= $this->dDeclares ?>
 			 
      // external declares ends
-     while(True) {
-	
-	if (!PageIsVisible || InputPlayer == Null) {
-	    yield;
-	    continue;
-	}
+     while(True) {		
         // external loop stuff
         <?=  $this->wLoop ?>
 				

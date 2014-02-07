@@ -43,20 +43,22 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function exp_onReady() {
 	$this->enableDedicatedEvents();
-	
-	/*foreach ($this->storage->players as $player)
-	    $this->onPlayerConnect($player->login, false); // create panel for everybody
-	foreach ($this->storage->spectators as $player)
-	    $this->onPlayerConnect($player->login, true); // create panel for everybody */
-	$this->updateDediPanel();
-	$this->updateLocalPanel();
-	$this->updateLivePanel();
+
+	/* foreach ($this->storage->players as $player)
+	  $this->onPlayerConnect($player->login, false); // create panel for everybody
+	  foreach ($this->storage->spectators as $player)
+	  $this->onPlayerConnect($player->login, true); // create panel for everybody */
+
 
 	$this->lastUpdate = time();
 	self::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
 	$this->enableTickerEvent();
 	$this->needUpdate = self::Localrecords;
 	// $this->forceUpdate = true;
+	
+	$this->updateDediPanel();
+	$this->updateLocalPanel();
+	$this->updateLivePanel();
     }
 
     public function onTick() {
@@ -87,7 +89,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	self::$dedirecords = array(); // reset 
 	self::$localrecords = array(); //  reset
 	Gui\Widgets\LocalPanel::EraseAll();
+	Gui\Widgets\LocalPanel2::EraseAll();
 	Gui\Widgets\DediPanel::EraseAll();
+	Gui\Widgets\DediPanel2::EraseAll();
 	$this->hideLivePanel();
     }
 
@@ -170,26 +174,26 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	  $this->showLivePanel($player->login); // create panel for everybody
 	  foreach ($this->storage->spectators as $player)
 	  $this->showLivePanel($player->login); // create panel for everybody */
-	
-	/*
-	$panel = Gui\Widgets\LivePanel::Create(null);
-	 
-	$panel->setPosition(118, -12);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(8);
-	$panel->setNbFirstFields(3);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-	$panel->show();
 
-	$panel = Gui\Widgets\LivePanel2::Create(null);
-	$panel->setPosition(118, -12);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(8);
-	$panel->setNbFirstFields(3);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	$panel->show();
+	/*
+	  $panel = Gui\Widgets\LivePanel::Create(null);
+
+	  $panel->setPosition(118, -12);
+	  $panel->setSize(40, 95);
+	  $panel->setNbFields(8);
+	  $panel->setNbFirstFields(3);
+	  $panel->update();
+	  $panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+	  $panel->show();
+
+	  $panel = Gui\Widgets\LivePanel2::Create(null);
+	  $panel->setPosition(118, -12);
+	  $panel->setSize(40, 95);
+	  $panel->setNbFields(8);
+	  $panel->setNbFirstFields(3);
+	  $panel->update();
+	  $panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+	  $panel->show();
 	 * 
 	 */
     }
@@ -269,8 +273,8 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function onPlayerConnect($login, $isSpectator) {
 	/* $this->showLocalPanel($login);
-	$this->showDediPanel($login);
-	$this->showLivePanel($login); */
+	  $this->showDediPanel($login);
+	  $this->showLivePanel($login); */
     }
 
     public function onPlayerDisconnect($login, $reason = null) {
