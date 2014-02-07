@@ -2,10 +2,10 @@
 
 namespace ManiaLivePlugins\eXpansion\Menu\Gui\Widgets;
 
-class Submenu extends \ManiaLive\Gui\Window {
+class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Windows\PlainWidget {
 
     private $menu, $debug, $bg;
-    public $xml;
+    public $myscript;
     private $item = array();
     private $submenu = array();
 
@@ -78,108 +78,23 @@ class Submenu extends \ManiaLive\Gui\Window {
         $this->menu->setId("Submenu");
         $this->menu->setScriptEvents();
         $this->addComponent($this->menu);
-        
+
         $inputbox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("widgetStatus");
         $inputbox->setPosition(900, 900);
         $inputbox->setScriptEvents();
         $this->addComponent($inputbox);
-        
-        
+
+        $this->myscript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Menu\Gui\SCripts");
+        $this->registerScript($this->myscript);
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
     protected function onDraw() {
-        parent::onDraw();
-
-        $this->removeComponent($this->xml);
         $count = count($this->submenu);
         $version = \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION;
-        $script = <<<EOD
-                       <script><!--      
-                        #Include "MathLib" as MathLib
-                        #Include "TextLib" as TextLib
-                 
-                        main() {                        
-                        declare CMlFrame Menu <=> (Page.GetFirstChild("Submenu") as CMlFrame);   
-                        declare CMlEntry widgetStatus <=> (Page.GetFirstChild("widgetStatus") as CMlEntry);
-                        declare Text outText = "";
-                        declare Boolean toggleSubmenu = False;
-                        declare CMlFrame currentButton = Null; 
-                        declare CMlFrame previousButton = Null; 
-                        declare persistent Boolean[Text][Text] exp_widgetVisible;    
-                        declare Text version = "$version";
-                        for(i, 1, $count) {
-                                    Page.GetFirstChild("submenu_"^i).Hide();
-                                }
-                
-                        Menu.RelativePosition.Z = 30.0;                                        
-                          while (True) {                                  
-                            yield;                           
-                
-                            if (MouseRightButton && !IsKeyPressed(8060928) )
-                            {
-                                toggleSubmenu = True;
-                                Menu.PosnX = MouseX-1;
-                                Menu.PosnY = MouseY+.5;  
-                                Menu.PosnZ = 40.0;
-                                    
-                            } // mouseRightButton
-                
-                            if (toggleSubmenu) {
-                                 Menu.Show();     
-                                     outText = "";					   
-					   if (exp_widgetVisible[version].count > 0) {
-					   foreach (id => status in exp_widgetVisible[version]) {
-						
-			    			    declare Text bool = "0";
-						    if (status == True) {
-							bool = "1";
-						    }
-						outText = outText ^ id ^ ":" ^ bool ^ "|";
-											    
-					    }
-			
-					   widgetStatus.Value = outText;
-					  }
-                
-                                    foreach (Event in PendingEvents) {
-                                        if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {
-                                            if(Page.GetFirstChild("submenu_"^ TextLib::SubText(Event.ControlId,4,1)) != Null ) {                                                                                            
-                                                    if (currentButton != Null && currentButton.ControlId != "submenu_"^ TextLib::SubText(Event.ControlId,4,1)) {        
-                                                        log ("ControlId changed");
-                                                        currentButton.Hide();
-                                                    } 
-                                            log ("hovering: submenu_"^ TextLib::SubText(Event.ControlId,4,1));
-                                            currentButton = (Page.GetFirstChild("submenu_"^ TextLib::SubText(Event.ControlId,4,1)) as CMlFrame);
-                                            currentButton.Show();                                                                                                                                                              
-                                        } else {                            
-                                            if (currentButton != Null) {                
-                                                log ("hiding:" ^ currentButton.ControlId);
-                                                currentButton.Hide();        
-                                                currentButton = Null;
-                                            }
-                                       }                                                  
-                                    } 
-                                }
-                            }
-                            else { 
-                                Menu.Hide();
-                            }
-                
-                           if (MouseLeftButton) {                           
-                                 toggleSubmenu = False;
-                            }   
-                
-                           } // while
-                        
-                       } // main
-                        
-                        --></script>
-EOD;
-
-
-        $this->xml->setContent($script);
-        $this->addComponent($this->xml);
+        $this->myscript->setParam("version", $version);
+        $this->myscript->setParam("count", $count);
+        parent::onDraw();
     }
 
     protected function onResize($oldX, $oldY) {
