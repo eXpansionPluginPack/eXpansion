@@ -94,7 +94,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     private $msg_secure, $msg_new, $msg_improved, $msg_BeginMap, $msg_newMap, $msg_personalBest,
 	    $msg_noPB, $msg_showRank, $msg_noRank, $msg_secure_top1, $msg_secure_top5, $msg_new_top1,
-	    $msg_new_top5, $msg_improved_top1, $msg_improved_top5, $msg_admin_savedRecs;
+	    $msg_new_top5, $msg_improved_top1, $msg_improved_top5, $msg_admin_savedRecs, $msg_equals, $msg_equals_top5, $msg_equals_top1;
     public static $txt_rank, $txt_nick, $txt_score, $txt_sector, $txt_cp,
 	    $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
