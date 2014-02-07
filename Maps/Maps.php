@@ -116,18 +116,18 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$action = \ManiaLive\Gui\ActionHandler::getInstance();
 	$this->actionShowMapList = $action->createAction(array($this, "showMapList"));
 	$this->actionShowJukeList = $action->createAction(array($this, "showJukeList"));
-	
-	
-	
+
+
+
 	\ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::CHALLENGE_INFO);
 	$info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\CurrentMapWidget::Create(null);
 	$info->setPosition(144, 83.5);
 	$info->setAction($this->actionShowMapList);
 	$info->show();
-	
-	
-	
-	
+
+
+
+
 	$this->preloadHistory();
 	//$this->showMapList("oliverde8");
     }
@@ -289,13 +289,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if (count($this->history) > $this->config->historySize) {
 	    array_pop($this->history);
 	}
-
-	foreach ($this->storage->players as $player)
-	    $this->onPlayerConnect($player->login, false);
-	foreach ($this->storage->spectators as $player)
-	    $this->onPlayerConnect($player->login, true);
-
-	NextMapWidget::EraseAll();
+	
+	$info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\CurrentMapWidget::Create(null);
+	$info->setPosition(144, 83.5);
+	$info->setAction($this->actionShowMapList);
+	$info->show();
     }
 
     public function onBeginRound() {
@@ -572,7 +570,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function redrawNextMapWidget() {
-	    $this->showNextMapWidget(null);	
+	$this->showNextMapWidget(null);
     }
 
     public function queueMxMap($login, $file) {

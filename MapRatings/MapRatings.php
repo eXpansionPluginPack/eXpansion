@@ -319,10 +319,13 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $ratings = $this->getVotesForMap(null);
 	    foreach ($this->storage->players as $login => $player) {
 		if (!array_key_exists($login, $ratings) && !isset($this->pendingRatings[$login])) {
-		    $widget = EndMapRatings::Create($login, true);
-		    $widget->show();
+		    $logins[] = $login;
 		}
 	    }
+	    
+	    $group = \ManiaLive\Gui\Group::Create("mapratings", $logins);	    
+	    $widget = EndMapRatings::Create($group);
+	    $widget->show();
 	}
     }
 
