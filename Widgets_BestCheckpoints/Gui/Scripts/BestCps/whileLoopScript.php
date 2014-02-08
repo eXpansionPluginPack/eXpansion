@@ -10,21 +10,29 @@ foreach (Player in Players) {
         
 		//Update the current checkpoint of this user
 		playerCheckPoint[Player.Login] = Player.CurRace.Checkpoints.count;
-		declare curCp = (Player.CurRace.Checkpoints.count%(totalCp+1))-1;
-		declare cpIndex = Player.CurRace.Checkpoints.count-1;
+		declare curCp = Player.CurRace.Checkpoints.count;
+		declare cpIndex = (curCp % totalCp)-1;
+        declare Integer lastCpIndex = totalCp - 1;
+        declare time = 0;
+        
+         if(curCp > totalCp){
+            time = Player.CurRace.Checkpoints[curCp-1] - Player.CurRace.Checkpoints[lastCpIndex];
+        }else if(curCp > 0){
+            time = Player.CurRace.Checkpoints[curCp-1];
+        }
         
 		//Check if better
-        if(curCp >= 0 && (cpTimes[curCp] > Player.CurRace.Checkpoints[cpIndex] || cpTimes[curCp] == 0)){
+        if(cpIndex >= 0 && (cpTimes[cpIndex] > time || cpTimes[cpIndex] == 0)){
             needUpdate = True;
-            cpTimes[curCp] = Player.CurRace.Checkpoints[cpIndex];
+            cpTimes[cpIndex] = time;
             
-            declare nickLabel = (Page.GetFirstChild("CpNick_"^curCp) as CMlLabel);
-			declare timeLabel = (Page.GetFirstChild("CpTime"^curCp) as CMlLabel);
+            declare nickLabel = (Page.GetFirstChild("CpNick_"^cpIndex) as CMlLabel);
+			declare timeLabel = (Page.GetFirstChild("CpTime"^cpIndex) as CMlLabel);
             
             
 			if(nickLabel != Null){		
 			    nickLabel.SetText(Player.Name);
-			    timeLabel.SetText("$ff0" ^ (curCp + 1 ) ^ " $fff" ^ TimeToText(cpTimes[curCp]) );
+			    timeLabel.SetText("$ff0" ^ (cpIndex + 1 ) ^ " $fff" ^ TimeToText(cpTimes[cpIndex]) );
 			}
         }
 	}
