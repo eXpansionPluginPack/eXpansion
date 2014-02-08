@@ -33,7 +33,9 @@ declare persistent Boolean exp_enableHudMove = False;
 declare persistent Vec3[Text][Text] exp_widgetLastPos;
 declare persistent Vec3[Text][Text] exp_widgetLastPosRel;			
 declare persistent Boolean[Text][Text] exp_widgetVisible;
+declare persistent Boolean exp_widgetVisibleBuffered;
 declare persistent Text[Text][Text] exp_widgetLayers;  // layer can be "normal" or "scorestable" or some other for future usage
+declare persistent Text exp_widgetLayersBuffered;  
 
 declare Text version = "<?= $this->version ?>";
 declare Text id = "<?= $this->name ?>";
@@ -41,6 +43,7 @@ declare Boolean forceReset = <?= $this->forceReset ?>;
 declare Text activeLayer = "<?= $win->getLayer() ?>";
 declare Boolean exp_widgetCurrentVisible = False;
 declare Boolean exp_widgetVisibilityChanged = False;
+declare Integer eXp_lastWidgetCheck = 0;
 
 if (!exp_widgetVisible.existskey(version) ) {
 	exp_widgetVisible[version] = Boolean[Text];
@@ -79,3 +82,4 @@ LastDelta = exp_widgetLastPosRel[version][id];
 Window.RelativePosition = exp_widgetLastPosRel[version][id];
 
 exp_widgetCurrentVisible = exp_widgetVisible[version][id];
+exp_widgetVisibleBuffered = exp_widgetVisible[version][id];

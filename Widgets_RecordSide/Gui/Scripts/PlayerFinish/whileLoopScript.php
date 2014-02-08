@@ -69,7 +69,7 @@ foreach (Event in PendingEvents) {
 	}
 }
 
-if(needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisible[version][id] && exp_widgetLayers[version][id] == activeLayer) || exp_widgetVisibilityChanged)) { 	
+if(needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered && exp_widgetLayersBuffered == activeLayer) || exp_widgetVisibilityChanged)) { 	
 	lastUpdateTime = Now;
 	log("Updating");
 	needUpdate = False;

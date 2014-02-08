@@ -10,36 +10,47 @@
 
 ?>
 
-exp_widgetVisibilityChanged = False;
+if(InputPlayer == Null){
+    yield;
+    continue;
+}
 
-if (!exp_widgetVisible.existskey(version) ) {
+if((Now - eXp_lastWidgetCheck) > 500){
+    eXp_lastWidgetCheck = Now;
+    if (!exp_widgetVisible.existskey(version) ) {
 	exp_widgetVisible[version] = Boolean[Text];
-}
-if (!exp_widgetVisible[version].existskey(id)) {
-	exp_widgetVisible[version][id] = True;
+     }
+
+     if (!exp_widgetVisible[version].existskey(id)) {
+	    exp_widgetVisible[version][id] = True;
 }
 
-if (!exp_widgetLayers[version].existskey(id)) {
-    exp_widgetLayers[version][id] = "normal";
-}
+    if (!exp_widgetLayers[version].existskey(id)) {
+	exp_widgetLayers[version][id] = "normal";
+    }
 
-if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer
-		&& exp_widgetCurrentVisible != exp_widgetVisible[version][id]) {
+    if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer && exp_widgetCurrentVisible != exp_widgetVisible[version][id]) {
 	Window.Show();
+	log("Window SHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW");
 	exp_widgetVisibilityChanged = True;
 	exp_widgetCurrentVisible = True;
-} else if(exp_widgetCurrentVisible != exp_widgetVisible[version][id] || exp_widgetLayers[version][id] != activeLayer) {
+    } else if(exp_widgetCurrentVisible != exp_widgetVisible[version][id] || exp_widgetLayers[version][id] != activeLayer) {
 	Window.Hide();
 	exp_widgetCurrentVisible = False;
+    }
+
+
+    if (exp_enableHudMove == True) {
+	    quad.Show();
+    }else {
+	    quad.Hide();
+    }
+    exp_widgetLayersBuffered = exp_widgetLayers[version][id];
+    exp_widgetVisibleBuffered = exp_widgetVisible[version][id];
 }
 
-if (exp_enableHudMove == True) {
-	quad.Show();
-}else {
-	quad.Hide();
-}		    			    			
-if (exp_enableHudMove == True && MouseLeftButton == True) {
 
+if (exp_enableHudMove == True && MouseLeftButton == True) {
 	foreach (Event in PendingEvents) {
 		if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "enableMove")  {
 			lastMouseX = MouseX;
