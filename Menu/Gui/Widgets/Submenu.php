@@ -84,7 +84,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Windows\PlainWidget {
         $inputbox->setScriptEvents();
         $this->addComponent($inputbox);
 
-        $this->myscript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Menu\Gui\SCripts");
+        $this->myscript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Menu\Gui\Scripts");
         $this->registerScript($this->myscript);
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
