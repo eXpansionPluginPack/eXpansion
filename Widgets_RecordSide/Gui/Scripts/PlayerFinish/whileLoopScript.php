@@ -29,11 +29,19 @@ if(nbCount % 60 == 0) {
 			//Update the current checkpoint of this user
 			playerCheckPoint[Player.Login] = Player.CurRace.Checkpoints.count;
 			curCp = Player.CurRace.Checkpoints.count;
-
+            
 			//If finish
-			if (curCp > 0 && curCp%(totalCp+1) == totalCp && totalCp > acceptMinCp) {
+			if (curCp > 0 && curCp%(totalCp) == 0 && totalCp > acceptMinCp) {
 				log ("finish");
-				declare Integer cpIndex = curCp%(totalCp+1) - 1;
+				declare Integer cpIndex = totalCp - 1;
+                declare Integer lastCpIndex = curCp - totalCp - 1;
+                declare time = 0;
+                
+                if(lastCpIndex > 0){
+                    time = Player.CurRace.Checkpoints[curCp-1] - Player.CurRace.Checkpoints[lastCpIndex];
+                }else{
+                    time = Player.CurRace.Checkpoints[curCp-1];
+                }
 
 				//If first finish or better time		
 				if(!playerTimes.existskey(Player.Login)){
@@ -41,15 +49,14 @@ if(nbCount % 60 == 0) {
 					origPlayerTimes = playerTimes;
 					playerTimes[Player.Login] = -1;
 				}
-
-				if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > Player.CurRace.Checkpoints[curCp-1]) {
+				if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > time) {
 					
 					if (playerTimes[Player.Login] != -1) {				    
 						origPlayerTimes.clear();
 						origPlayerTimes = playerTimes;
 					}
 
-					playerTimes[Player.Login] = Player.CurRace.Checkpoints[cpIndex];				
+					playerTimes[Player.Login] = time;				
 					recordLogin = Player.Login;
 					needUpdate = True;
 					break;
