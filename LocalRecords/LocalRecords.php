@@ -793,9 +793,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	foreach ($this->storage->spectators as $login => $player) { // get spectators
 	    $this->getFromDbPlayerRecord($login, $uid);
 	}
-
+    echo "Dispatching Event\n";
 	//Dispatch event
-	\ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_UPDATE_RECORDS, $this->currentChallengeRecords));
+	\ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_RECORDS_LOADED, $this->currentChallengeRecords));
 	//\ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->currentChallengeRecords));
     }
 

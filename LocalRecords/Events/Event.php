@@ -7,6 +7,7 @@ class Event extends \ManiaLive\Event\Event {
     const ON_NEW_RECORD = 1;
     const ON_UPDATE_RECORDS = 2;
     const ON_PERSONAL_BEST = 4;
+    const ON_RECORDS_LOADED = 8;
 
     protected $params;
 
@@ -25,6 +26,8 @@ class Event extends \ManiaLive\Event\Event {
             case self::ON_UPDATE_RECORDS: $listener->onUpdateRecords($p[0]);
                 break;
             case self::ON_PERSONAL_BEST: $listener->onPersonalBestRecord($p[0]);
+                break;
+            case self::ON_RECORDS_LOADED: $listener->onRecordsLoaded($p[0]);
                 break;
         }
     }
