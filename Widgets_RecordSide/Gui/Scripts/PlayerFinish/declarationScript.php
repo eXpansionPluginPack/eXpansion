@@ -24,7 +24,7 @@ declare nbCount = 0;
 // test
 declare Player = Null;
 declare Boolean needUpdate = True;
-declare lastUpdateTime = Now;
+declare lastUpdateTime = 0;
 
 //Updating currently connected players
 foreach (Player in Players) {
