@@ -23,7 +23,7 @@ if((Now - eXp_lastWidgetCheck) > 500){
 
      if (!exp_widgetVisible[version].existskey(id)) {
 	    exp_widgetVisible[version][id] = True;
-}
+    }
 
     if (!exp_widgetLayers[version].existskey(id)) {
 	exp_widgetLayers[version][id] = "normal";
@@ -31,7 +31,6 @@ if((Now - eXp_lastWidgetCheck) > 500){
 
     if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer && exp_widgetCurrentVisible != exp_widgetVisible[version][id]) {
 	Window.Show();
-	log("Window SHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW");
 	exp_widgetVisibilityChanged = True;
 	exp_widgetCurrentVisible = True;
     } else if(exp_widgetCurrentVisible != exp_widgetVisible[version][id] || exp_widgetLayers[version][id] != activeLayer) {
@@ -47,6 +46,9 @@ if((Now - eXp_lastWidgetCheck) > 500){
     }
     exp_widgetLayersBuffered = exp_widgetLayers[version][id];
     exp_widgetVisibleBuffered = exp_widgetVisible[version][id];
+}else if(PageIsVisible == False){
+    yield;
+    continue;
 }
 
 
