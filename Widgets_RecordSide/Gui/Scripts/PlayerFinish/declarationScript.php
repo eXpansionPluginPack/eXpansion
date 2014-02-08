@@ -24,8 +24,17 @@ declare nbCount = 0;
 // test
 declare Player = Null;
 declare Boolean needUpdate = True;
-declare Boolean atStart = True;
 declare lastUpdateTime = Now;
+
+//Updating currently connected players
+foreach (Player in Players) {
+    playersOnServer[Player.Login] = Player.Name;
+    playerCheckPoint[Player.Login] = -1;
+    if(!playerNickName.existskey(Player.Login)){
+        playerNickName[Player.Login] = Player.Name;
+    }
+}
+  
 
 <?php
 /*

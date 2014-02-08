@@ -1,14 +1,3 @@
-//Putting Checkpoint count to zero
-if (atStart == True) {
-    foreach (Player in Players) {
-	    playerCheckPoint[Player.Login] = -1;
-	    if(!playerNickName.existskey(Player.Login)){
-		    playerNickName[Player.Login] = Player.Name;
-	    }
-    }
-atStart = False;
-}
-
 	
 if(nbCount % 60 == 0) {
     nbCount = 0;
@@ -82,7 +71,7 @@ foreach (Event in PendingEvents) {
 
 if(needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisible[version][id] && exp_widgetLayers[version][id] == activeLayer) || exp_widgetVisibilityChanged)) { 	
 	lastUpdateTime = Now;
-	
+	log("Updating");
 	needUpdate = False;
 	declare Integer inRank = 1;	
 	declare Boolean isNewRecord = False;		
@@ -106,7 +95,6 @@ if(needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisible[version][id
 		}
 		inRank += 1;
 	}
-	yield;
 	
 	inRank = 1;
 	
@@ -143,8 +131,6 @@ if(needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisible[version][id
 	    }
 	    i += 1;
 	}
-	
-	yield;
 	
 	if(myRank != -1){
 		start = myRank - ((nbFields - nbFirstFields)/2);
