@@ -117,7 +117,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
 	    $score = $player->matchScore;
 	if (empty($score))
 	    $score = 0;
-	if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
+	if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) {
 	    $this->label_points->setText($player->curLap . " lap");
 	} else {
 	    $this->label_points->setText($score . " pts");

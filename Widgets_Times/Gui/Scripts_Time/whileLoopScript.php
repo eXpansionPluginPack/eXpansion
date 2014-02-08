@@ -28,7 +28,7 @@ foreach (Player in Players) {
 					Label.SetText("$fff$s" ^ TimeToText(Player.CurRace.Checkpoints[curCp-1]));
 				}	
 				if (lapRace) {
-				    Cp.SetText("Lap:" ^ CurrentNbLaps ^ " Cp:" ^ (curCp % totalCp) ^ "/" ^ totalCp);
+				    Cp.SetText("Lap:" ^ Player.CurrentNbLaps ^ " Cp:" ^ (curCp % totalCp) ^ "/" ^ totalCp);
 				} else {
 				    Cp.SetText((curCp % totalCp) ^ "/" ^ totalCp);
 				}
