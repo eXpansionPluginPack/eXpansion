@@ -71,7 +71,7 @@ class PositionPanel extends \ManiaLive\Gui\Window {
 
                     //   $teamPointsDisplay[$player->teamId] += ($total + 1) - ($player->position + 1);
                 }
-                if ($x < 8) {
+                if ($x < 15) {
                     $this->frame->addComponent(new \ManiaLivePlugins\eXpansion\Overlay_Positions\Gui\Controls\PlayerItem($x, $player, $this->getRecipient(), $gamemode, $this->getSizeX()));
                 }
                 $x++;
