@@ -30,12 +30,16 @@ declare Real lastMouseY = 0.0;
 declare CMlControl element;
 
 declare persistent Boolean exp_enableHudMove = False;
+declare persistent Boolean exp_enableHudMoveBuffered = False;
+
 declare persistent Vec3[Text][Text] exp_widgetLastPos;
 declare persistent Vec3[Text][Text] exp_widgetLastPosRel;			
+
 declare persistent Boolean[Text][Text] exp_widgetVisible;
-declare persistent Boolean exp_widgetVisibleBuffered;
+declare Boolean exp_widgetVisibleBuffered;
+
 declare persistent Text[Text][Text] exp_widgetLayers;  // layer can be "normal" or "scorestable" or some other for future usage
-declare persistent Text exp_widgetLayersBuffered;  
+declare Text exp_widgetLayersBuffered;  
 
 declare Text version = "<?= $this->version ?>";
 declare Text id = "<?= $this->name ?>";

@@ -15,7 +15,9 @@ if(InputPlayer == Null){
     continue;
 }
 
-if((Now - eXp_lastWidgetCheck) > 500){
+if((Now - eXp_lastWidgetCheck) > (500) ){
+    
+    
     eXp_lastWidgetCheck = Now;
     if (!exp_widgetVisible.existskey(version) ) {
 	exp_widgetVisible[version] = Boolean[Text];
@@ -40,8 +42,10 @@ if((Now - eXp_lastWidgetCheck) > 500){
 
 
     if (exp_enableHudMove == True) {
+	    exp_enableHudMoveBuffered = True;
 	    quad.Show();
     }else {
+	    exp_enableHudMoveBuffered = False;
 	    quad.Hide();
     }
     exp_widgetLayersBuffered = exp_widgetLayers[version][id];
@@ -52,7 +56,7 @@ if((Now - eXp_lastWidgetCheck) > 500){
 }
 
 
-if (exp_enableHudMove == True && MouseLeftButton == True) {
+if (exp_enableHudMoveBuffered == True && MouseLeftButton == True) {
 	foreach (Event in PendingEvents) {
 		if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "enableMove")  {
 			lastMouseX = MouseX;
