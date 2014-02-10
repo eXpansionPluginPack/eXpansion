@@ -38,7 +38,7 @@ foreach (Player in Players) {
 
 declare persistent Integer[Text] eXp_DebugCounter;
 
-if ( !exp_widgetVisible[version].existskey(id) || forceReset) {
+if ( !eXp_DebugCounter[version].existskey(id) || forceReset) {
 		eXp_DebugCounter[id] = 0;
 }
 
