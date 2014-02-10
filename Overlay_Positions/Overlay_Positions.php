@@ -112,7 +112,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$this->hideWidget($login);
 	    }
 	}
-	
+
 	if (!$this->storage->currentMap->lapRace) {
 	    // display widget to finished player
 	    if ($timeOrScore > 0) {

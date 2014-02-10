@@ -62,11 +62,7 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
             //BestCpPanel::RedrawAll();
         }
     }
-
-    public function onPlayerFinish($playerUid, $login, $timeOrScore) {
-        
-    }
-
+    
     public function onEndMatch($rankings, $winnerTeamOrMap) {
         BestCpPanel::EraseAll();
         BestCpPanel::$bestTimes = array();

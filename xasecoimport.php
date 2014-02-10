@@ -41,7 +41,7 @@ class Ximporter {
 	if (!$this->conn) {
 	    die('Could not connect: ' . mysql_error());
 	}
-	mysql_set_charset("utf8", $this->conn);	
+	mysql_set_charset("utf8", $this->conn);
 	$this->c(' Connected successfully');
     }
 
@@ -70,7 +70,7 @@ class Ximporter {
 
 
 
-	$this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);	
+	$this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);
 
 	$records = $this->query("Select
 p.Login as record_playerlogin, c.Uid as record_challengeuid,
@@ -81,7 +81,7 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
 	while ($xaseco_recs[] = mysql_fetch_object($records));
 	unset($records);
 	$this->query("USE " . $this->config['exp_db'] . ";", $this->conn);
-	
+
 
 	$mplayers = $this->query("SELECT * FROM exp_players p;", $this->conn);
 	while ($exp_players[] = mysql_fetch_assoc($mplayers));
@@ -94,12 +94,12 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
 	foreach ($xaseco_recs as $data) {
 	    if (empty($data))
 		continue;
-	    // do query every 50 values
+// do query every 50 values
 	    if ($y % 100 == 0 && $y > 0) {
 		$buffer = trim($buffer, ",");
 		$this->query("INSERT INTO exp_records (`record_challengeuid`, `record_playerlogin`, `record_nbLaps`, `record_score`, `record_nbFinish`, `record_avgScore`, `record_checkpoints`, `record_date`) VALUES $buffer;", $this->conn);
 		$buffer = "";
-		// for pretty output to user :)
+// for pretty output to user :)
 		$percentage = round(($x / $total) * 100, 0);
 		$this->c($percentage . "%...");
 	    }
@@ -108,7 +108,7 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
 	    $x++;
 	    $y++;
 	}
-	// if buffer had some values, write them..
+// if buffer had some values, write them..
 	$buffer = trim($buffer, ",");
 	$this->query("INSERT INTO exp_records (`record_challengeuid`, `record_playerlogin`, `record_nbLaps`, `record_score`, `record_nbFinish`, `record_avgScore`, `record_checkpoints`, `record_date`) VALUES $buffer;", $this->conn);
 	$buffer = "";
@@ -116,22 +116,22 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
 
 	unset($xaseco_recs);
 
-	$this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);	
-	
+	$this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);
+
 
 	$xplayers = $this->query("SELECT Login as player_login, NickName as player_nickname, UNIX_TIMESTAMP(UpdatedAt) as player_updated, Wins as player_wins, TimePlayed as player_timeplayed FROM players p;", $this->conn);
 
 	while ($xaseco_players[] = mysql_fetch_object($xplayers));
 	unset($xplayer);
 
-	$this->query("USE " . $this->config['exp_db'] . ";", $this->conn);	
+	$this->query("USE " . $this->config['exp_db'] . ";", $this->conn);
 
 	$this->c("* Migrating Players *", true);
 	$total = count($xaseco_players);
 	$x = 1;
 	$y = 0;
 	$buffer = "";
-	// do the players sort
+// do the players sort
 	foreach ($xaseco_players as $data) {
 	    if (empty($data))
 		continue;
@@ -139,7 +139,7 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
 		$buffer = trim($buffer, ",");
 		$this->query("INSERT INTO exp_players (`player_login`, `player_nickname`, `player_updated`, `player_wins`, `player_timeplayed`) VALUES $buffer;", $this->conn);
 		$buffer = "";
-		// for pretty output to user :)
+// for pretty output to user :)
 		$percentage = round(($x / $total) * 100, 0);
 		$this->c($percentage . "%...");
 	    }
@@ -154,11 +154,11 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
 	$buffer = "";
 	$this->c($percentage . "Done.");
 
-	//do double encoded utf-8 from latin-1 back to proper utf-8
-	//$this->query("SET NAMES latin1;", $this->conn);
-	//$this->query("ALTER TABLE exp_players MODIFY COLUMN player_nickname TEXT CHARACTER SET latin1; ", $this->conn);
-	//$this->query("ALTER TABLE exp_players MODIFY COLUMN player_nickname blob; ", $this->conn);
-	//$this->query("ALTER TABLE exp_players MODIFY COLUMN player_nickname VARCHAR(100) CHARACTER SET utf8; ", $this->conn);
+//do double encoded utf-8 from latin-1 back to proper utf-8
+//$this->query("SET NAMES latin1;", $this->conn);
+//$this->query("ALTER TABLE exp_players MODIFY COLUMN player_nickname TEXT CHARACTER SET latin1; ", $this->conn);
+//$this->query("ALTER TABLE exp_players MODIFY COLUMN player_nickname blob; ", $this->conn);
+//$this->query("ALTER TABLE exp_players MODIFY COLUMN player_nickname VARCHAR(100) CHARACTER SET utf8; ", $this->conn);
 
 
 	$this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);
@@ -166,8 +166,8 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
 	$xkarma = $this->query("SELECT p.login as login, Score as rating, c.uid as uid FROM maps c, players p, rs_karma r where r.Playerid = p.id and r.MapId = c.id;", $this->conn);
 	while ($xaseco_karma[] = mysql_fetch_object($xkarma));
 	unset($xkarma);
-	$this->query("USE " . $this->config['exp_db'] . ";", $this->conn);	
-	
+	$this->query("USE " . $this->config['exp_db'] . ";", $this->conn);
+
 	$total = count($xaseco_karma);
 	$x = 1;
 	$y = 0;
@@ -215,6 +215,45 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
 	$this->query("INSERT INTO exp_ratings (`login`, `uid`, `rating`) VALUES $buffer;", $this->conn);
 	$buffer = "";
 	$this->c("done.");
+
+
+///////////////////////////
+/// DONATIONS MIGRATION ///
+///////////////////////////
+	$this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);
+	$xdons = $this->query("SELECT p.login AS transaction_fromLogin, Donations AS transaction_amount
+FROM players p, players_extra r
+WHERE r.Playerid = p.id
+AND Donations >0;", $this->conn);
+	while ($xaseco_dons[] = mysql_fetch_object($xdons));
+	unset($xdons);
+	$this->query("USE " . $this->config['exp_db'] . ";", $this->conn);
+	$total = count($xaseco_dons);
+	$x = 1;
+	$y = 0;
+	$buffer = "";
+	$this->c("* Migrating donations *", true);
+	foreach ($xaseco_dons as $data) {
+	    if (empty($data))
+		continue;
+
+	    if ($y % 100 == 0 && $y > 0) {
+		$buffer = trim($buffer, ",");
+		$this->query("INSERT INTO exp_planet_transaction (`transaction_fromLogin`, `transaction_toLogin`, `transaction_plugin`, `transaction_subject`, `transaction_amount`) VALUES $buffer;", $this->conn);
+		$buffer = "";
+		// for pretty output to user :)
+		$percentage = round(($x / $total) * 100, 0);
+		$this->c($percentage . "%...");
+	    }
+	    $buffer .="('" . mysql_escape_string($data->transaction_fromLogin) . "','" . mysql_escape_string($this->config['transaction_toLogin']) . "','eXpansion\DonatePanel','server_donation','" . mysql_escape_string($data->transaction_amount) . "'),";
+
+	    $x++;
+	    $y++;
+	}
+	$buffer = trim($buffer, ",");
+	$this->query("INSERT INTO exp_planet_transaction (`transaction_fromLogin`, `transaction_toLogin`, `transaction_plugin`, `transaction_subject`, `transaction_amount`) VALUES $buffer;", $this->conn);
+	$buffer = "";
+	$this->c("done.");
     }
 
     function query($query, $link) {
@@ -250,5 +289,4 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
     }
 
 }
-
 ?>
