@@ -36,14 +36,6 @@ foreach (Player in Players) {
     }
 }
 
-declare persistent Integer[Text] eXp_DebugCounter;
-
-if ( !eXp_DebugCounter[version].existskey(id) || forceReset) {
-		eXp_DebugCounter[id] = 0;
-}
-
-log(id^" is Here : "^eXp_DebugCounter[id]);
-
 <?php
 
 //Dump players to test stu
