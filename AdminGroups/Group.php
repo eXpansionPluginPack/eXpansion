@@ -74,9 +74,10 @@ class Group {
                 
                 return $this->hasInheritancePermission($name);
             }return $this->permissions[$name]  == AdminGroups::havePermission;
+        }else {
+            $this->permissions[$name] = AdminGroups::unknownPermission;
+            return $this->hasInheritancePermission($name);
         }
-        else 
-            return false;
     }
     
     private function hasInheritancePermission($name){
