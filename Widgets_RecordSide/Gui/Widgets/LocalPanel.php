@@ -185,6 +185,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     protected function fixHyphens($string) {
         $out = str_replace('"', "'", $string);
         $out = str_replace('\\', '\\\\', $out);
+        $out = str_replace('-', '–', $out);	
         return $out;
     }
 
