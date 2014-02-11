@@ -312,7 +312,6 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         // add items to display
         $x = 0;
-        echo sizeof($this->maps) . "\n\n";
 
 
         foreach ($this->maps as $sortableMap) {

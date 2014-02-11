@@ -391,7 +391,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function showMapList($login) {
-	print "Before Maps Memory Usage: " . memory_get_usage() / 1024 . "Mb\n";
+	//print "Before Maps Memory Usage: " . memory_get_usage() / 1024 . "Mb\n";
 	Gui\Windows\Maplist::Erase($login);
 	self::$searchField[$login] = "name";
 
@@ -412,7 +412,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 
 	$window->show();
-	print "After Maps Memory Usage: " . memory_get_usage() / 1024 . "Mb\n";
+	//print "After Maps Memory Usage: " . memory_get_usage() / 1024 . "Mb\n";
     }
 
     public function showHistoryList($login) {
