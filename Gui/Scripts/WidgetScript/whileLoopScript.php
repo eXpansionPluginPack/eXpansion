@@ -15,41 +15,49 @@ if(InputPlayer == Null){
     continue;
 }
 
-if((Now - eXp_lastWidgetCheck) > (500) ){
-    
-    
+if((Now - eXp_lastWidgetCheck) > (2000) ){
     eXp_lastWidgetCheck = Now;
-    if (!exp_widgetVisible.existskey(version) ) {
-	exp_widgetVisible[version] = Boolean[Text];
-     }
+    
+    if(exp_needToCheckPersistentVars){
+	exp_multipleCheckCount += 1;
+	if(exp_multipleCheckCount > 10){
+	    exp_needToCheckPersistentVars = False;
+	}
+	
+	if (!exp_widgetVisible.existskey(version) ) {
+	    exp_widgetVisible[version] = Boolean[Text];
+	 }
 
-     if (!exp_widgetVisible[version].existskey(id)) {
-	    exp_widgetVisible[version][id] = True;
+	 if (!exp_widgetVisible[version].existskey(id)) {
+		exp_widgetVisible[version][id] = True;
+	}
+
+	if (!exp_widgetLayers[version].existskey(id)) {
+	    exp_widgetLayers[version][id] = "normal";
+	}
+
+	if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer && exp_widgetCurrentVisible != exp_widgetVisible[version][id]) {
+	    Window.Show();
+	    exp_widgetVisibilityChanged = True;
+	    exp_widgetCurrentVisible = True;
+	} else if(exp_widgetCurrentVisible != exp_widgetVisible[version][id] || exp_widgetLayers[version][id] != activeLayer) {
+	    Window.Hide();
+	    exp_widgetCurrentVisible = False;
+	}
+
+
+	if (exp_enableHudMove == True) {
+		exp_enableHudMoveBuffered = True;
+		quad.Show();
+	}else {
+		exp_enableHudMoveBuffered = False;
+		quad.Hide();
+	}
+	exp_widgetLayersBuffered = exp_widgetLayers[version][id];
+	exp_widgetVisibleBuffered = exp_widgetVisible[version][id];
+    }else{
+	exp_multipleCheckCount = 0;
     }
-
-    if (!exp_widgetLayers[version].existskey(id)) {
-	exp_widgetLayers[version][id] = "normal";
-    }
-
-    if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer && exp_widgetCurrentVisible != exp_widgetVisible[version][id]) {
-	Window.Show();
-	exp_widgetVisibilityChanged = True;
-	exp_widgetCurrentVisible = True;
-    } else if(exp_widgetCurrentVisible != exp_widgetVisible[version][id] || exp_widgetLayers[version][id] != activeLayer) {
-	Window.Hide();
-	exp_widgetCurrentVisible = False;
-    }
-
-
-    if (exp_enableHudMove == True) {
-	    exp_enableHudMoveBuffered = True;
-	    quad.Show();
-    }else {
-	    exp_enableHudMoveBuffered = False;
-	    quad.Hide();
-    }
-    exp_widgetLayersBuffered = exp_widgetLayers[version][id];
-    exp_widgetVisibleBuffered = exp_widgetVisible[version][id];
 }else if(PageIsVisible == False){
     yield;
     continue;

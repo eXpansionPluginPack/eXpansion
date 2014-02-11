@@ -29,6 +29,9 @@ declare Real lastMouseX = 0.0;
 declare Real lastMouseY = 0.0;
 declare CMlControl element;
 
+declare persistent Boolean exp_needToCheckPersistentVars = False;
+declare Integer exp_multipleCheckCount = 0;
+
 declare persistent Boolean exp_enableHudMove = False;
 declare persistent Boolean exp_enableHudMoveBuffered = False;
 
@@ -87,3 +90,11 @@ Window.RelativePosition = exp_widgetLastPosRel[version][id];
 
 exp_widgetCurrentVisible = exp_widgetVisible[version][id];
 exp_widgetVisibleBuffered = exp_widgetVisible[version][id];
+
+if (exp_enableHudMove == True) {
+	exp_enableHudMoveBuffered = True;
+	quad.Show();
+}else {
+	exp_enableHudMoveBuffered = False;
+	quad.Hide();
+}

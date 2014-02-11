@@ -24,7 +24,8 @@ class HudSetVisibility extends \ManiaLive\Gui\Window {
     public function onDraw() {
 	$this->removeComponent($this->xml);
 	$content = '<script><!--
-                       main () {     
+                       main () {
+			declare persistent Boolean exp_needToCheckPersistentVars = False;
                         declare persistent Boolean[Text][Text] exp_widgetVisible;
 			';
 	foreach ($this->data as $item) {
@@ -35,8 +36,10 @@ class HudSetVisibility extends \ManiaLive\Gui\Window {
 	    $content .= "exp_widgetVisible[\"".\ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION."\"][\"" . $item->id . "\"] = " . $bool . "; \n";
 	}
 
-	$content .='
+	$content .=' 
+	    exp_needToCheckPersistentVars = True; 
                        }
+		
                 --></script>';
 	$this->xml->setContent($content);
 	$this->addComponent($this->xml);
