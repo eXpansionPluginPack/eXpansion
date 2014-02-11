@@ -17,4 +17,4 @@ main () {
 	yield;	
     }
 }
---></script>
+// --> </script>
