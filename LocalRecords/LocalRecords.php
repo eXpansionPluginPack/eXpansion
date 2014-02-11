@@ -1086,7 +1086,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$window->setTitle(__('Server Ranks', $login));
 	$window->centerOnScreen();
 	$window->populateList($this->getRanks(), 100);
-	$window->setSize(140, 100);
+	$window->setSize(150, 100);
 	$window->show();
     }
 
