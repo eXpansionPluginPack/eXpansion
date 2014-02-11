@@ -88,6 +88,11 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 		$this->exp_chatSendServerMessage($this->msg_self, $login, array($target));
 		return;
 	    }
+
+	    if (empty($message)) {
+		$this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+		return;
+	    }
 	    $targetPlayer = $this->storage->getPlayerObject($target);
 	    $sourcePlayer = $this->storage->getPlayerObject($login);
 	    self::$reply[$login] = $target;
@@ -102,6 +107,21 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
     function sendPm($login, $target) {
 	try {
+
+	    if (!array_key_exists($target, $this->storage->players) && !array_key_exists($target, $this->storage->spectators)) {
+		$this->exp_chatSendServerMessage($this->msg_noLogin, $login, array($target));
+		return;
+	    }
+	    if ($login == $target) {
+		$this->exp_chatSendServerMessage($this->msg_self, $login, array($target));
+		return;
+	    }
+	    
+	    if (empty($message)) {
+		$this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+		return;
+	    }
+	    
 	    \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Erase($login);
 	    $targetPlayer = $this->storage->getPlayerObject($target);
 	    $sourcePlayer = $this->storage->getPlayerObject($login);
@@ -121,6 +141,11 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$sourcePlayer = $this->storage->getPlayerObject($login);
 	$color = '$z$s' . $this->config->Colors_admingroup_chat;
 
+	if (empty($message)) {
+	    $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+	    return;
+	}
+
 	try {
 	    foreach ($this->storage->players as $reciever => $player) {
 		if (AdminGroups::hasPermission($reciever, "admin_chatChannel"))
@@ -139,6 +164,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	try {
 	    if (empty($message)) {
 		$this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+		return;
 	    }
 	    if (array_key_exists($login, self::$reply)) {
 		$targetPlayer = $this->storage->getPlayerObject(self::$reply[$login]);
