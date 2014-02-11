@@ -1,15 +1,19 @@
-if(MouseRightButton && !eXp_mouseRightState){
-    eXp_mouseRightTime = Now;
-    eXp_mouseRightState = True;
+if(MouseRightButton && !eXp_mouseRightState) {        
+	eXp_mouseRightTime = Now;
+	eXp_mouseRightState = True;    
+} else if(!MouseRightButton && eXp_mouseRightState) {
+    eXp_mouseRightState = False;    
     
-}else if(!MouseRightButton && eXp_mouseRightState){
-    eXp_mouseRightState = False;
-    if((Now - eXp_mouseRightTime) < 200){
-        toggleSubmenu = True;
-        Menu.PosnX = MouseX-1;
-        Menu.PosnY = MouseY+.5;  
-        Menu.PosnZ = 40.0;
-    }
+	if((Now - eXp_mouseRightTime) < 200) {
+	    toggleSubmenu = True;
+	    Menu.PosnX = MouseX-1;
+	    Menu.PosnY = MouseY+.5;  
+	    Menu.PosnZ = 40.0;
+	}   
+    
+}
+if (IsSpectatorMode) { 	
+    toggleSubmenu = False;
 }
 
 if (toggleSubmenu) {
@@ -53,4 +57,3 @@ else {
 if (MouseLeftButton) {                           
 	toggleSubmenu = False;
 }   
-              

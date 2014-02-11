@@ -13,7 +13,7 @@ declare Real pagerStartPos = ScrollBar.RelativePosition.Y;
 declare Real pagerDelta = 0.0;
 
 declare Text[][Integer] textData = <?= $this->items;  ?>;
-declare Text[][Integer] data = <?= $this->data;  ?>;
+declare Text[][Integer] data <?= $this->data;  ?>;
 declare CMlLabel[Integer][Integer] labels;
 
 declare Integer rowsPerPage = 14;

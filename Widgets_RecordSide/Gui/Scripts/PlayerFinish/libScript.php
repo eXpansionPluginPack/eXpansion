@@ -23,7 +23,7 @@ Text TimeToText(Integer intime) {
 	declare Integer min = time / 60;
 	declare Text sign = "";
 	if (intime < 0)  {
-		sign = "-";
+		sign = "";
 	}
 	return sign ^ pad(min,2) ^ ":" ^ pad(sec,2) ^ "." ^ pad(cent,3);                                                         
 }   
