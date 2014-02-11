@@ -117,6 +117,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->setPublicMethod("getPlayerRank");
 	$this->setPublicMethod("getTotalRanked");
 	$this->setPublicMethod("showRecsWindow");
+	$this->setPublicMethod("showRanksWindow");
 
 	//The Database plugin is needed. 
 	$this->addDependency(new \ManiaLive\PluginHandler\Dependency("ManiaLivePlugins\\eXpansion\Database\Database"));
