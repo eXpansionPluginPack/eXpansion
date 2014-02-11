@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
 
-class CountryWinner extends StatsWindow {
+class CountryWinner extends Country {
 
     public static $labelTitles = array('#','Country', 'nb Finish');
     

@@ -36,12 +36,16 @@ class Item extends \ManiaLive\Gui\Control {
             $label->setAlign('left', 'center');
             $label->setScale(0.8);
             $text = "";
-            if (isset($datas[$dataKey])) {
-                if (isset($formaters[$i]) && $formaters[$i] != null)
-                    $text = $formaters[$i]->format($datas[$dataKey]);
-                else
-                    $text = $datas[$dataKey];
-            }
+	    if($dataKey == null){
+		$text = $indexNumber+1;
+	    }else{
+		if (isset($datas[$dataKey])) {
+		    if (isset($formaters[$i]) && $formaters[$i] != null)
+			$text = $formaters[$i]->format($datas[$dataKey]);
+		    else
+			$text = $datas[$dataKey];
+		}
+	    }
             $label->setText($text);
             $this->frame->addComponent($label);
             $this->labels[$i] = $label;

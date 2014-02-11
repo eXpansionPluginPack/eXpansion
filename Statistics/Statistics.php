@@ -307,6 +307,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->storage->serverLogin;
         $sql = 'SELECT player_login as login, player_nickname as nickname, player_wins as wins'
                 . ' FROM exp_players'
+		. ' WHERE player_wins > 0'
                 . ' ORDER BY wins DESC'
                 . ' LIMIT 0, 100';
 
@@ -346,6 +347,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $sql = 'SELECT player_login as login, player_nickname as nickname, SUM(record_nbFinish * record_avgScore)/1000 as time'
                 . ' FROM exp_records, exp_players'
                 . ' WHERE record_playerlogin = player_login'
+		. '	AND record_nbFinish > 0'
                 . ' GROUP BY player_login, player_nickname'
                 . ' ORDER BY time DESC'
                 . ' LIMIT 0, 100';
@@ -368,6 +370,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 . ' FROM exp_records, exp_players'
                 . ' WHERE record_playerlogin = player_login'
                 . ' GROUP BY player_login, player_nickname'
+		. ' HAVING count(*) > 0'
                 . ' ORDER BY nb DESC'
                 . ' LIMIT 0, 100';
 
@@ -389,6 +392,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 . ' FROM exp_records, exp_players'
                 . ' WHERE record_playerlogin = player_login'
                 . ' GROUP BY player_login, player_nickname'
+		. ' HAVING SUM(record_nbFinish) > 0'
                 . ' ORDER BY nb DESC'
                 . ' LIMIT 0, 100';
 
@@ -410,6 +414,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 . ' FROM exp_records, exp_players'
                 . ' WHERE record_playerlogin = player_login'
                 . ' GROUP BY player_nation'
+		. ' HAVING SUM(record_nbFinish) > 0'
                 . ' ORDER BY nb DESC'
                 . ' LIMIT 0, 100';
 
@@ -450,6 +455,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $sql = 'SELECT player_nation as nation, SUM(player_wins) as nb'
                 . ' FROM exp_players'
                 . ' GROUP BY player_nation'
+		. ' HAVING SUM(player_wins) > 0'
                 . ' ORDER BY nb DESC'
                 . ' LIMIT 0, 100';
 
