@@ -62,16 +62,19 @@ if(nbCount % 60 == 0) {
 foreach (Event in PendingEvents) {	
 	if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer")  {
 	    if (exp_widgetLayers[version][id] == "normal") {
+	    exp_needToCheckPersistentVars = True;
             exp_widgetLayers[version][id] = "scorestable";
 	    } else {
+	    exp_needToCheckPersistentVars = True;
             exp_widgetLayers[version][id] = "normal"; 
 	    }
 	}
 }
 
 if(needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered && exp_widgetLayersBuffered == activeLayer) || exp_widgetVisibilityChanged)) { 	
+
 	lastUpdateTime = Now;
-	log("Updating");
+
 	needUpdate = False;
 	declare Integer inRank = 1;	
 	declare Boolean isNewRecord = False;		

@@ -90,6 +90,7 @@ Window.RelativePosition = exp_widgetLastPosRel[version][id];
 
 exp_widgetCurrentVisible = exp_widgetVisible[version][id];
 exp_widgetVisibleBuffered = exp_widgetVisible[version][id];
+exp_widgetLayersBuffered = exp_widgetLayers[version][id];
 
 if (exp_enableHudMove == True) {
 	exp_enableHudMoveBuffered = True;
