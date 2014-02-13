@@ -1,3 +1,4 @@
+
 declare Integer nbShow = <?= $this->nbRecord ?>;
 declare Integer curCp = 0;
 declare Integer totalCp = <?= $this->totalCp ?>;

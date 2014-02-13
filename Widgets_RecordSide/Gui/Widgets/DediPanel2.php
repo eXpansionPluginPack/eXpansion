@@ -8,6 +8,7 @@ class DediPanel2 extends DediPanel {
 
 	$this->setName("Dedimania Panel (Tab-layer)");
 	parent::onConstruct();
+	$this->timeScript->setParam('varName','DediTime2');
      }
 }
 ?>

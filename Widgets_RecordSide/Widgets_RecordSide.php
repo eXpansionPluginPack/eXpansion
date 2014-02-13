@@ -85,109 +85,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	}
     }
 
-    public function updateDediPanel() {
-	/*        foreach ($this->storage->players as $player)
-	  $this->showDediPanel($player->login); // create panel for everybody
-	  foreach ($this->storage->spectators as $player)
-	  $this->showDediPanel($player->login); // create panel for everybody */
-	$panel = Gui\Widgets\DediPanel::Create(null);
-	$panel->setPosition(-160, 60);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(20);
-	$panel->setNbFirstFields(5);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-	$panel->show();
-
-	$panel = Gui\Widgets\DediPanel2::Create(null);
-	$panel->setPosition(-160, 60);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(20);
-	$panel->setNbFirstFields(5);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	$panel->show();
-    }
-
-    public function updateLocalPanel() {
-	/*        foreach ($this->storage->players as $player)
-	  $this->showLocalPanel($player->login); // create panel for everybody
-	  foreach ($this->storage->spectators as $player)
-	  $this->showLocalPanel($player->login); // create panel for everybody */
-	$panel = Gui\Widgets\LocalPanel::Create(null);
-	$panel->setPosition(118, 52);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(15);
-	$panel->setNbFirstFields(5);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-	$panel->show();
-
-	$panel = Gui\Widgets\LocalPanel2::Create(null);
-	$panel->setPosition(118, 52);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(15);
-	$panel->setNbFirstFields(5);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	$panel->show();
-    }
-
-    public function updateLivePanel() {
-	/*   foreach ($this->storage->players as $player)
-	  $this->showLivePanel($player->login); // create panel for everybody
-	  foreach ($this->storage->spectators as $player)
-	  $this->showLivePanel($player->login); // create panel for everybody */
-
-	
-	  $panel = Gui\Widgets\LivePanel::Create(null);
-
-	  $panel->setPosition(118, -12);
-	  $panel->setSize(40, 95);
-	  $panel->setNbFields(8);
-	  $panel->setNbFirstFields(3);
-	  $panel->update();
-	  $panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-	  $panel->show();
-
-	  $panel = Gui\Widgets\LivePanel2::Create(null);
-	  $panel->setPosition(118, -12);
-	  $panel->setSize(40, 95);
-	  $panel->setNbFields(8);
-	  $panel->setNbFirstFields(3);
-	  $panel->update();
-	  $panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	  $panel->show();
-	 
-	 
-    }
-
-    public function showLocalPanel($login) {
-	//Gui\Widgets\LocalPanel::Erase($login);
-	//Gui\Widgets\LocalPanel2::Erase($login);
-
-	$panel = Gui\Widgets\LocalPanel::Create($login);
-	$panel->setPosition(118, 52);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(15);
-	$panel->setNbFirstFields(5);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-	$panel->show();
-
-	$panel = Gui\Widgets\LocalPanel2::Create($login);
-	$panel->setPosition(118, 52);
-	$panel->setSize(40, 95);
-	$panel->setNbFields(15);
-	$panel->setNbFirstFields(5);
-	$panel->update();
-	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	$panel->show();
-    }
-
-    public function showDediPanel($login) {
-	//Gui\Widgets\DediPanel::Erase($login);
-	//Gui\Widgets\DediPanel2::Erase($login);
+    public function updateDediPanel($login = NULL) {
 
 	$panel = Gui\Widgets\DediPanel::Create($login);
 	$panel->setPosition(-160, 60);
@@ -208,8 +106,33 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->show();
     }
 
-    public function showLivePanel($login) {
-	//if($this->storage->serverStatus->code == \Maniaplanet\DedicatedServer\Structures\Status::PLAY){
+    public function updateLocalPanel($login = null) {
+	$panel = Gui\Widgets\LocalPanel::Create($login);
+	$panel->setPosition(118, 52);
+	$panel->setSize(40, 95);
+	$panel->setNbFields(15);
+	$panel->setNbFirstFields(5);
+	$panel->update();
+	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+	$panel->show();
+
+	$panel = Gui\Widgets\LocalPanel2::Create($login);
+	$panel->setPosition(118, 52);
+	$panel->setSize(40, 95);
+	$panel->setNbFields(15);
+	$panel->setNbFirstFields(5);
+	$panel->update();
+	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+	$panel->show();
+    }
+
+    public function updateLivePanel($login = null) {
+	/*   foreach ($this->storage->players as $player)
+	  $this->showLivePanel($player->login); // create panel for everybody
+	  foreach ($this->storage->spectators as $player)
+	  $this->showLivePanel($player->login); // create panel for everybody */
+
+
 	$panel = Gui\Widgets\LivePanel::Create($login);
 	$panel->setPosition(118, -12);
 	$panel->setSize(40, 95);
@@ -227,7 +150,18 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->update();
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 	$panel->show();
-	//}
+    }
+
+    public function showLocalPanel($login) {
+	$this->updateLocalPanel($login);
+    }
+
+    public function showDediPanel($login) {
+	$this->updateDediPanel($login);
+    }
+
+    public function showLivePanel($login) {
+	$this->updateLivePanel($login);
     }
 
     public function hideLivePanel() {
@@ -271,9 +205,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-	/* $this->showLocalPanel($login);
-	  $this->showDediPanel($login);
-	  $this->showLivePanel($login); */
+	$this->showLocalPanel($login);
+	$this->showDediPanel($login);
+	$this->showLivePanel($login);
     }
 
     public function onPlayerDisconnect($login, $reason = null) {

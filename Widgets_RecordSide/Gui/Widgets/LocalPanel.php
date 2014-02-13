@@ -97,6 +97,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->timeScript->setParam("acceptMinCp", 0);
         $this->timeScript->setParam("nbFields", 20);
         $this->timeScript->setParam("nbFirstFields", 5);
+	$this->timeScript->setParam('varName','LocalTime1');
         return $script;
     }
 

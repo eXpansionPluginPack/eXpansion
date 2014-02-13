@@ -12,6 +12,7 @@ class LivePanel extends LocalPanel {
     function onConstruct() {
         parent::onConstruct();
         $this->setName("Live Rankings Panel");
+	$this->timeScript->setParam('varName','LiveTime1');
     }
 
     function update() {

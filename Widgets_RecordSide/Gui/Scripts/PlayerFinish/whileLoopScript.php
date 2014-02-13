@@ -1,189 +1,183 @@
-	
-if(nbCount % 60 == 0) {
-    nbCount = 0;
-	playersOnServer.clear();
-    foreach (Player in Players) {			
-		//If first checkpoint time or new checkpoint time
-		if (!playerCheckPoint.existskey(Player.Login)){
-			playerCheckPoint[Player.Login] = -1;
-		}
-		//First encounter get nicknamed
-		if(!playerNickName.existskey(Player.Login)){
-			playerNickName[Player.Login] = Player.Name;
-		}
-		//Checking up online players
-		playersOnServer[Player.Login] = Player.Name;
 
-		if(playerCheckPoint[Player.Login] != Player.CurRace.Checkpoints.count) {			
-			//Update the current checkpoint of this user
-			playerCheckPoint[Player.Login] = Player.CurRace.Checkpoints.count;
-			curCp = Player.CurRace.Checkpoints.count;
-            
-			//If finish
-			if (curCp > 0 && curCp%(totalCp) == 0 && totalCp > acceptMinCp) {
-				log ("finish");
-				declare Integer cpIndex = totalCp - 1;
-                declare Integer lastCpIndex = curCp - totalCp - 1;
-                declare time = 0;
-                
-                if(lastCpIndex > 0){
-                    time = Player.CurRace.Checkpoints[curCp-1] - Player.CurRace.Checkpoints[lastCpIndex];
-                }else{
-                    time = Player.CurRace.Checkpoints[curCp-1];
-                }
+foreach (Player in Players) {
 
-				//If first finish or better time		
-				if(!playerTimes.existskey(Player.Login)){
-					origPlayerTimes.clear();				
-					origPlayerTimes = playerTimes;
-					playerTimes[Player.Login] = -1;
-				}
-				if(playerTimes[Player.Login] == -1 || playerTimes[Player.Login] > time) {
-					
-					if (playerTimes[Player.Login] != -1) {				    
-						origPlayerTimes.clear();
-						origPlayerTimes = playerTimes;
-					}
+    declare <?= $this->varName ?> for Player = -1;
 
-					playerTimes[Player.Login] = time;				
-					recordLogin = Player.Login;
-					needUpdate = True;
-					break;
-				}	
-			} 
-			
-		} 		
-		
-	} 
-}
-	nbCount += 1;
+    if (<?= $this->varName ?> != Player.CurRace.Checkpoints.count) {
+	//Update the current checkpoint of this user
+	<?= $this->varName ?> = Player.CurRace.Checkpoints.count;
+	curCp = Player.CurRace.Checkpoints.count;
 
+	//If finish
+	if (curCp > 0 && curCp % (totalCp) == 0 && totalCp > acceptMinCp) {
 
-foreach (Event in PendingEvents) {	
-	if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer")  {
-	    if (exp_widgetLayers[version][id] == "normal") {
-	    exp_needToCheckPersistentVars = True;
-            exp_widgetLayers[version][id] = "scorestable";
+	    declare Integer cpIndex = totalCp - 1;
+	    declare Integer lastCpIndex = curCp - totalCp - 1;
+	    declare time = 0;
+
+	    if (lastCpIndex > 0) {
+		time = Player.CurRace.Checkpoints[curCp - 1] - Player.CurRace.Checkpoints[lastCpIndex];
 	    } else {
-	    exp_needToCheckPersistentVars = True;
-            exp_widgetLayers[version][id] = "normal"; 
+		time = Player.CurRace.Checkpoints[curCp - 1];
+	    }
+	    
+	    //This player start's to be interesting. 
+	    declare firstFinish for Player = True;
+	    declare playerTime for Player = -1;
+	    if(firstFinish){
+		//If first finish or better time		
+		if (!playerTimes.existskey(Player.Login)) {
+		    origPlayerTimes.clear();
+		    origPlayerTimes = playerTimes;
+		    playerTimes[Player.Login] = -1;
+		    playerNickName[Player.Login] = Player.Name;
+		}
+		playerTime = playerTimes[Player.Login];
+	    }
+
+	    if (playerTime == -1 || playerTime > time) {
+
+		if (playerTime != -1) {
+		    origPlayerTimes.clear();
+		    origPlayerTimes = playerTimes;
+		}
+
+		playerTimes[Player.Login] = time;
+		playerTime = time;
+		
+		recordLogin = Player.Login;
+		needUpdate = True;
 	    }
 	}
+    }
 }
 
-if(needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered && exp_widgetLayersBuffered == activeLayer) || exp_widgetVisibilityChanged)) { 	
 
-	lastUpdateTime = Now;
 
-	needUpdate = False;
-	declare Integer inRank = 1;	
-	declare Boolean isNewRecord = False;		
-	
-	playerTimes = playerTimes.sort();	
-	
-	foreach (Login => Score in playerTimes) {
-		if(Login == recordLogin) {
-			if (inRank < maxServerRank ) {			    
-			    if (useMaxPlayerRank) {
-				if  (maxPlayerRank.existskey(Login)) {
-					if (inRank < maxPlayerRank[Login] ) {						
-						isNewRecord = True;						
-					}
-				}
-			    }
-			    else {			    				
-				isNewRecord = True;
-			    }	
-			} 
-		}
-		inRank += 1;
-	}
-	
-	inRank = 1;
-	
-	if (!isNewRecord) {	    
-	    playerTimes.clear();
-	    playerTimes = origPlayerTimes.sort();
-	}
-	
-	
-	
-	declare i = 1;
-	declare nbRec = 1;
-	declare showed = False;
-	
-	declare myRank = -1;
-	declare start = -1;
-	declare end = -1;
-	declare recCount = -1;
-	
-	if(playerTimes.count > nbShow){
-		recCount = nbShow;
+foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer") {
+	if (exp_widgetLayers[version][id] == "normal") {
+	    exp_needToCheckPersistentVars = True;
+	    exp_widgetLayers[version][id] = "scorestable";
 	} else {
-		recCount = playerTimes.count;
+	    exp_needToCheckPersistentVars = True;
+	    exp_widgetLayers[version][id] = "normal";
 	}
-	
-	i = 1;
+    }
+}
 
-	foreach (Login => Score in playerTimes) {		
-	    if (LocalUser != Null) {
-			if(Login == LocalUser.Login){
-				myRank = i;
-				break;
+if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered && exp_widgetLayersBuffered == activeLayer) || exp_widgetVisibilityChanged)) {
+    log("Update");
+    lastUpdateTime = Now;
+
+    needUpdate = False;
+    declare Integer inRank = 1;
+    declare Boolean isNewRecord = False;
+
+    playerTimes = playerTimes.sort();
+
+    foreach (Login => Score in playerTimes) {
+	if (Login == recordLogin) {
+	    if (inRank < maxServerRank) {
+		if (useMaxPlayerRank) {
+		    if (maxPlayerRank.existskey(Login)) {
+			if (inRank < maxPlayerRank[Login]) {
+			    isNewRecord = True;
 			}
+		    }
+		} else {
+		    isNewRecord = True;
+		}
+	    }
+	}
+	inRank += 1;
+    }
+
+    inRank = 1;
+
+    if (!isNewRecord) {
+	playerTimes.clear();
+	playerTimes = origPlayerTimes.sort();
+    }
+
+
+
+    declare i = 1;
+    declare nbRec = 1;
+    declare showed = False;
+
+    declare myRank = -1;
+    declare start = -1;
+    declare end = -1;
+    declare recCount = -1;
+
+    if (playerTimes.count > nbShow) {
+	recCount = nbShow;
+    } else {
+	recCount = playerTimes.count;
+    }
+
+    i = 1;
+
+    foreach (Login => Score in playerTimes) {
+	if (LocalUser != Null) {
+	    if (Login == LocalUser.Login) {
+		myRank = i;
+		break;
+	    }
+	}
+	i += 1;
+    }
+
+    if (myRank != -1) {
+	start = myRank - ((nbFields - nbFirstFields) / 2);
+
+	if (start <= nbFirstFields) {
+	    start = nbFirstFields;
+	    end = start + (nbFields - nbFirstFields);
+	} else {
+	    end = start + (nbFields - nbFirstFields);
+	    if (end > recCount) {
+		end = recCount;
+		start = end - (nbFields - nbFirstFields);
+	    }
+	}
+    } else {
+	start = nbFirstFields;
+	end = start + (nbFields - nbFirstFields);
+    }
+
+    i = 1;
+    nbRec = 1;
+    foreach (Login => Score in playerTimes) {
+
+	if ((nbRec <= nbFirstFields || (nbRec > start && nbRec <= end) ) && nbRec <= nbShow && i <= nbFields) {
+
+	    declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
+	    declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
+	    declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
+
+	    if (highliteQuad != Null) {
+		if (playersOnServer.existskey(Login) && i != myRank) {
+		    highliteQuad.Show();
+		} else {
+		    highliteQuad.Hide();
+		}
+	    }
+
+	    if (nickLabel != Null) {
+		putRecordTo(i, nbRec, Score, Login, playerNickName[Login], Login == LocalUser.Login);
+		if (Login == LocalUser.Login) {
+		    showed = True;
+		}
 	    }
 	    i += 1;
 	}
-	
-	if(myRank != -1){
-		start = myRank - ((nbFields - nbFirstFields)/2);
-		
-		if(start <= nbFirstFields){
-			start = nbFirstFields;
-			end = start + (nbFields - nbFirstFields);
-		}else{
-			end = start + (nbFields - nbFirstFields);
-			if(end > recCount){
-				end = recCount;
-				start = end - (nbFields - nbFirstFields);
-			}
-		}
-	}else{
-		start = nbFirstFields;
-		end = start + (nbFields - nbFirstFields);
+	nbRec += 1;
+
+	if (nbRec > nbShow) {
+	    
 	}
-	
-	i = 1;
-	nbRec = 1;
-	foreach (Login => Score in playerTimes) {
-        
-		if((nbRec <= nbFirstFields || (nbRec > start && nbRec <= end) ) && nbRec <= nbShow && i <= nbFields){
-	
-			declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
-			declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
-			declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
-			
-			if(highliteQuad != Null){			    
-				if (playersOnServer.existskey(Login) && i != myRank) {
-					highliteQuad.Show();				
-				} else {
-					highliteQuad.Hide();				
-				}
-			}
-			
-			if(nickLabel != Null){				    			    
-			    putRecordTo(i, nbRec, Score, Login, playerNickName[Login], Login == LocalUser.Login);			
-				if(Login == LocalUser.Login){
-					showed = True;
-				}
-			}			
-			i += 1;
-		}		
-		nbRec += 1;		
-		
-		if(nbRec > nbShow){
-		
-		}
-	}
-	recordLogin = "";
+    }
+    recordLogin = "";
 }

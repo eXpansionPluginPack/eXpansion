@@ -8,6 +8,7 @@ class LocalPanel2 extends LocalPanel {
 	
 	$this->setName("LocalRecords Panel (Tab-layer)");
 	parent::onConstruct();
+	$this->timeScript->setParam('varName','LocalTime2');
     }
 }
 
