@@ -10,11 +10,11 @@ main () {
      <?= $this->dDeclares ?>
 			 
      // external declares ends
-     while(True) {		
-        // external loop stuff
-        <?=  $this->wLoop ?>
-				
+     while(True) {
 	yield;	
+        
+	// external loop stuff
+        <?=  $this->wLoop ?>
     }
 }
 //--> </script>

@@ -64,8 +64,8 @@ main () {
     exp_windowActive[version] = id;
 
     while(True) {
-		
-         <?= $this->wLoop ?>
+	yield;
+        <?= $this->wLoop ?>
 
         if (exp_windowActive[version] == id) {
             declare temp = Window.RelativePosition;
@@ -133,7 +133,6 @@ main () {
          } else {
             MoveWindow = False;
          } 
-		 yield;
     }
 
 

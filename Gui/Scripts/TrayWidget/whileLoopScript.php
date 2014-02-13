@@ -1,24 +1,24 @@
 <?php
-	if(isset($this->specilaCase))
-		$smaller = '>';
-	else
-		$smaller = '>=';
+    if(isset($this->specilaCase))
+	    $smaller = '>';
+    else
+	    $smaller = '>=';
 ?>
 
 if (isMinimized)
 {
-     if (mainWindow.PosnX <?= $smaller ?> positionMin) {                                          
-          mainWindow.PosnX -= 4;                                          
+    if (mainWindow.PosnX <?= $smaller ?> positionMin) {
+	mainWindow.PosnX -= 4;
     }
 }else if (!isMinimized){
 
-	if (Now-lastAction > autoCloseTimeout) {
-		isMinimized = True;
-	}
+    if (Now-lastAction > autoCloseTimeout) {
+	isMinimized = True;
+    }
 
-	if ( mainWindow.PosnX <= positionMax) {                                                      
-			  mainWindow.PosnX += 4;
-	}                                                                                                                                             
+    if ( mainWindow.PosnX <= positionMax) {
+	mainWindow.PosnX += 4;
+    }                                                                                                                                             
     
 }
 

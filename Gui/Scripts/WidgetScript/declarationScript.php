@@ -29,11 +29,11 @@ declare Real lastMouseX = 0.0;
 declare Real lastMouseY = 0.0;
 declare CMlControl element;
 
-declare persistent Boolean exp_needToCheckPersistentVars = False;
+declare Boolean exp_needToCheckPersistentVars for UI = False;
 declare Integer exp_multipleCheckCount = 0;
 
-declare persistent Boolean exp_enableHudMove = False;
-declare persistent Boolean exp_enableHudMoveBuffered = False;
+declare Boolean exp_enableHudMove for UI = False;
+exp_enableHudMove = False;
 
 declare persistent Vec3[Text][Text] exp_widgetLastPos;
 declare persistent Vec3[Text][Text] exp_widgetLastPosRel;			
@@ -51,6 +51,7 @@ declare Text activeLayer = "<?= $win->getLayer() ?>";
 declare Boolean exp_widgetCurrentVisible = False;
 declare Boolean exp_widgetVisibilityChanged = False;
 declare Integer eXp_lastWidgetCheck = 0;
+declare Boolean eXp_firstPersistentCheckDone = False;
 
 if (!exp_widgetVisible.existskey(version) ) {
 	exp_widgetVisible[version] = Boolean[Text];
@@ -93,9 +94,7 @@ exp_widgetVisibleBuffered = exp_widgetVisible[version][id];
 exp_widgetLayersBuffered = exp_widgetLayers[version][id];
 
 if (exp_enableHudMove == True) {
-	exp_enableHudMoveBuffered = True;
 	quad.Show();
 }else {
-	exp_enableHudMoveBuffered = False;
 	quad.Hide();
 }

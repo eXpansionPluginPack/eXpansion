@@ -25,7 +25,7 @@ class HudSetVisibility extends \ManiaLive\Gui\Window {
 	$this->removeComponent($this->xml);
 	$content = '<script><!--
                        main () {
-			declare persistent Boolean exp_needToCheckPersistentVars = False;
+			declare Boolean exp_needToCheckPersistentVars for UI = False;
                         declare persistent Boolean[Text][Text] exp_widgetVisible;
 			';
 	foreach ($this->data as $item) {

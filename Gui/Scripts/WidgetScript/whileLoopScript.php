@@ -18,8 +18,10 @@ if(InputPlayer == Null){
 if((Now - eXp_lastWidgetCheck) > (2000) ){
     eXp_lastWidgetCheck = Now;
     
-    if(exp_needToCheckPersistentVars){
+    if(exp_needToCheckPersistentVars || !eXp_firstPersistentCheckDone){
 	exp_multipleCheckCount += 1;
+	eXp_firstPersistentCheckDone = True;
+	
 	if(exp_multipleCheckCount > 10){
 	    exp_needToCheckPersistentVars = False;
 	}
@@ -47,10 +49,8 @@ if((Now - eXp_lastWidgetCheck) > (2000) ){
 
 
 	if (exp_enableHudMove == True) {
-		exp_enableHudMoveBuffered = True;
 		quad.Show();
 	}else {
-		exp_enableHudMoveBuffered = False;
 		quad.Hide();
 	}
 	exp_widgetLayersBuffered = exp_widgetLayers[version][id];
@@ -63,8 +63,7 @@ if((Now - eXp_lastWidgetCheck) > (2000) ){
     continue;
 }
 
-
-if (exp_enableHudMoveBuffered == True && MouseLeftButton == True) {
+if (exp_enableHudMove == True && MouseLeftButton == True) {
 	foreach (Event in PendingEvents) {
 		if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "enableMove")  {
 			lastMouseX = MouseX;
