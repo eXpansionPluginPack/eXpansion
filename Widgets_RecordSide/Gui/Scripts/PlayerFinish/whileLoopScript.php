@@ -4,13 +4,15 @@ foreach (Player in Players) {
     declare <?= $this->varName ?> for Player = -1;
 
     if (<?= $this->varName ?> != Player.CurRace.Checkpoints.count) {
+	log("New CP count "^Player.Login);
 	//Update the current checkpoint of this user
 	<?= $this->varName ?> = Player.CurRace.Checkpoints.count;
 	curCp = Player.CurRace.Checkpoints.count;
 
 	//If finish
 	if (curCp > 0 && curCp % (totalCp) == 0 && totalCp > acceptMinCp) {
-
+	    log("Finish : "^Player.Login);
+	    
 	    declare Integer cpIndex = totalCp - 1;
 	    declare Integer lastCpIndex = curCp - totalCp - 1;
 	    declare time = 0;
@@ -22,9 +24,10 @@ foreach (Player in Players) {
 	    }
 	    
 	    //This player start's to be interesting. 
-	    declare firstFinish for Player = True;
-	    declare playerTime for Player = -1;
-	    if(firstFinish){
+	    declare firstFinish<?= $this->varName ?> for Player = True;
+	    declare playerTime<?= $this->varName ?> for Player = -1;
+	    
+	    //if(firstFinish<?= $this->varName ?>){
 		//If first finish or better time		
 		if (!playerTimes.existskey(Player.Login)) {
 		    origPlayerTimes.clear();
@@ -32,18 +35,19 @@ foreach (Player in Players) {
 		    playerTimes[Player.Login] = -1;
 		    playerNickName[Player.Login] = Player.Name;
 		}
-		playerTime = playerTimes[Player.Login];
-	    }
+		playerTime<?= $this->varName ?> = playerTimes[Player.Login];
+		firstFinish<?= $this->varName ?> = False;
+	    //}
 
-	    if (playerTime == -1 || playerTime > time) {
-
-		if (playerTime != -1) {
+	    if (playerTime<?= $this->varName ?> == -1 || playerTime<?= $this->varName ?> > time) {
+		log("Better Time: "^Player.Login);
+		if (playerTime<?= $this->varName ?> != -1) {
 		    origPlayerTimes.clear();
 		    origPlayerTimes = playerTimes;
 		}
 
 		playerTimes[Player.Login] = time;
-		playerTime = time;
+		playerTime<?= $this->varName ?> = time;
 		
 		recordLogin = Player.Login;
 		needUpdate = True;

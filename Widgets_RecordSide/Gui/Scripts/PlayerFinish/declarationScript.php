@@ -17,7 +17,6 @@ declare playerTimes = <?= $this->playerTimes ?>;
 declare origPlayerTimes = playerTimes;
 
 //The latest chackpoint the player past
-declare playerCheckPoint = Integer[Text];
 declare playerNickName = <?= $this->playerNicks ?>;
 declare playersOnServer = Text[Text];
 declare recordLogin = "";
@@ -30,8 +29,14 @@ declare lastUpdateTime = 0;
 
 //Updating currently connected players
 foreach (Player in Players) {
+    declare <?= $this->varName ?> for Player = -1;
+    <?= $this->varName ?> = -1;
+    declare firstFinish<?= $this->varName ?> for Player = True;
+    firstFinish<?= $this->varName ?>  = True;
+    declare playerTime<?= $this->varName ?> for Player = -1;
+    playerTime<?= $this->varName ?> = -1;
+    
     playersOnServer[Player.Login] = Player.Name;
-    playerCheckPoint[Player.Login] = -1;
     if(!playerNickName.existskey(Player.Login)){
         playerNickName[Player.Login] = Player.Name;
     }
