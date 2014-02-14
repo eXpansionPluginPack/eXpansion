@@ -29,7 +29,7 @@ declare Boolean needUpdate = True;
 declare lastUpdateTime = 0;
 
 if(getCurrentTimes){
-    sleep(1000);
+    //sleep(1000);
 }
 
 //Updating currently connected players
