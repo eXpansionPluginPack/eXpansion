@@ -98,6 +98,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->timeScript->setParam("nbFields", 20);
         $this->timeScript->setParam("nbFirstFields", 5);
 	$this->timeScript->setParam('varName','LocalTime1');
+	$this->timeScript->setParam('getCurrentTimes','False');
         return $script;
     }
 

@@ -72,7 +72,6 @@ if(!needUpdate){
 }
 
 if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered && exp_widgetLayersBuffered == activeLayer) || exp_widgetVisibilityChanged)) {
-    log("Update");
     lastUpdateTime = Now;
 
     needUpdate = False;
