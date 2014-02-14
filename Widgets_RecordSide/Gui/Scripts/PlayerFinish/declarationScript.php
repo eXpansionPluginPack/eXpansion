@@ -38,7 +38,8 @@ foreach (Player in Players) {
     <?= $this->varName ?> = -1;
     
     if(getCurrentTimes && Player.CurRace.Time != -1){
-	playerTimes[Player.Login] = Player.CurRace.Time;
+	//log("Getting Current Times for "^Player.Login^" Time : "^Player.CurRace.Time);
+	//playerTimes[Player.Login] = Player.CurRace.Time;
     }
     
     playersOnServer[Player.Login] = Player.Name;

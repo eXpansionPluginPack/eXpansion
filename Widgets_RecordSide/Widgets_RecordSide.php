@@ -15,11 +15,15 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public static $dedirecords = array();
     public static $localrecords = array();
+    public static $secondMap = false;
+    
     private $lastUpdate;
     private $forceUpdate = false;
     private $needUpdate = false;
     private $dedi = true;
     private $local = true;
+    
+    private $widgetIds = array();
 
     /** @var Config */
     private $config;
@@ -94,6 +98,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setNbFirstFields(5);
 	$panel->update();
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+	if($login == Null){
+	    $this->widgetIds["DediPanel"] = $panel->getId();
+	}else if(isset($this->widgetIds["DediPanel"])){
+	    $panel->setId($this->widgetIds["DediPanel"]);
+	}
 	$panel->show();
 
 	$panel = Gui\Widgets\DediPanel2::Create($login);
@@ -103,6 +112,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setNbFirstFields(5);
 	$panel->update();
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+	if($login == Null){
+	    $this->widgetIds["DediPanel"] = $panel->getId();
+	}else if(isset($this->widgetIds["DediPanel"])){
+	    $panel->setId($this->widgetIds["DediPanel"]);
+	}
 	$panel->show();
     }
 
@@ -114,6 +128,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setNbFirstFields(5);
 	$panel->update();
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+	if($login == Null){
+	    $this->widgetIds["LocalPanel"] = $panel->getId();
+	}else if(isset($this->widgetIds["LocalPanel"])){
+	    $panel->setId($this->widgetIds["LocalPanel"]);
+	}
 	$panel->show();
 
 	$panel = Gui\Widgets\LocalPanel2::Create($login);
@@ -123,6 +142,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setNbFirstFields(5);
 	$panel->update();
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+	if($login == Null){
+	    $this->widgetIds["LocalPanel2"] = $panel->getId();
+	}else if(isset($this->widgetIds["LocalPanel2"])){
+	    $panel->setId($this->widgetIds["LocalPanel2"]);
+	}
 	$panel->show();
     }
 
@@ -131,8 +155,8 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	  $this->showLivePanel($player->login); // create panel for everybody
 	  foreach ($this->storage->spectators as $player)
 	  $this->showLivePanel($player->login); // create panel for everybody */
-
-
+	Gui\Widgets\LivePanel::$connection = $this->connection;
+	
 	$panel = Gui\Widgets\LivePanel::Create($login);
 	$panel->setPosition(118, -12);
 	$panel->setSize(40, 95);
@@ -140,6 +164,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setNbFirstFields(3);
 	$panel->update();
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+	if($login == Null){
+	    $this->widgetIds["LivePanel"] = $panel->getId();
+	}else if(isset($this->widgetIds["LivePanel"])){
+	    $panel->setId($this->widgetIds["LivePanel"]);
+	}
 	$panel->show();
 
 	$panel = Gui\Widgets\LivePanel2::Create($login);
@@ -149,6 +178,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setNbFirstFields(3);
 	$panel->update();
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+	if($login == Null){
+	    $this->widgetIds["LivePanel2"] = $panel->getId();
+	}else if(isset($this->widgetIds["LivePanel2"])){
+	    $panel->setId($this->widgetIds["LivePanel2"]);
+	}
 	$panel->show();
     }
 
@@ -186,6 +220,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$this->updateDediPanel();
 	$this->updateLocalPanel();
 	$this->updateLivePanel();
+	self::$secondMap = true;
     }
 
     public function onRecordsLoaded($data) {
@@ -205,9 +240,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-	/*$this->showLocalPanel($login);
+	$this->showLocalPanel($login);
 	$this->showDediPanel($login);
-	$this->showLivePanel($login);*/
+	$this->showLivePanel($login);
     }
 
     public function onPlayerDisconnect($login, $reason = null) {
