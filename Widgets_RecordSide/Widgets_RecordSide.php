@@ -205,9 +205,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-	$this->showLocalPanel($login);
+	/*$this->showLocalPanel($login);
 	$this->showDediPanel($login);
-	$this->showLivePanel($login);
+	$this->showLivePanel($login);*/
     }
 
     public function onPlayerDisconnect($login, $reason = null) {
