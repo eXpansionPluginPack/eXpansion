@@ -15,50 +15,51 @@ if(InputPlayer == Null){
     continue;
 }
 
-if((Now - eXp_lastWidgetCheck) > (2000) ){
-    eXp_lastWidgetCheck = Now;
-    
-    if(exp_needToCheckPersistentVars || !eXp_firstPersistentCheckDone){
-	exp_multipleCheckCount += 1;
-	eXp_firstPersistentCheckDone = True;
-	
-	if(exp_multipleCheckCount > 10){
-	    exp_needToCheckPersistentVars = False;
-	}
-	
-	if (!exp_widgetVisible.existskey(version) ) {
-	    exp_widgetVisible[version] = Boolean[Text];
-	 }
+//Check if persistent variables needs to be checked, or first loop
+if(exp_needToCheckPersistentVars || !eXp_firstPersistentCheckDone){
+    exp_multipleCheckCount += 1;
+    eXp_firstPersistentCheckDone = True;
 
-	 if (!exp_widgetVisible[version].existskey(id)) {
-		exp_widgetVisible[version][id] = True;
-	}
-
-	if (!exp_widgetLayers[version].existskey(id)) {
-	    exp_widgetLayers[version][id] = "normal";
-	}
-
-	if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer && exp_widgetCurrentVisible != exp_widgetVisible[version][id]) {
-	    Window.Show();
-	    exp_widgetVisibilityChanged = True;
-	    exp_widgetCurrentVisible = True;
-	} else if(exp_widgetCurrentVisible != exp_widgetVisible[version][id] || exp_widgetLayers[version][id] != activeLayer) {
-	    Window.Hide();
-	    exp_widgetCurrentVisible = False;
-	}
-
-
-	if (exp_enableHudMove == True) {
-		quad.Show();
-	}else {
-		quad.Hide();
-	}
-	exp_widgetLayersBuffered = exp_widgetLayers[version][id];
-	exp_widgetVisibleBuffered = exp_widgetVisible[version][id];
-    }else{
+    if(exp_multipleCheckCount > 10){
+	exp_needToCheckPersistentVars = False;
 	exp_multipleCheckCount = 0;
     }
-}else if(PageIsVisible == False){
+
+    if (!exp_widgetVisible.existskey(version) ) {
+	exp_widgetVisible[version] = Boolean[Text];
+     }
+
+     if (!exp_widgetVisible[version].existskey(id)) {
+	    exp_widgetVisible[version][id] = True;
+    }
+
+    if (!exp_widgetLayers[version].existskey(id)) {
+	exp_widgetLayers[version][id] = "normal";
+    }
+
+    if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer && exp_widgetCurrentVisible != exp_widgetVisible[version][id]) {
+	Window.Show();
+	exp_widgetVisibilityChanged = True;
+	exp_widgetCurrentVisible = True;
+    } else if(exp_widgetCurrentVisible != exp_widgetVisible[version][id] || exp_widgetLayers[version][id] != activeLayer) {
+	Window.Hide();
+	exp_widgetCurrentVisible = False;
+    }
+
+    if (exp_enableHudMove == True) {
+	    quad.Show();
+    }else {
+	    quad.Hide();
+    }
+    
+    exp_widgetLayersBuffered = exp_widgetLayers[version][id];
+    exp_widgetVisibleBuffered = exp_widgetVisible[version][id];
+    
+}else{
+    exp_multipleCheckCount = 0;
+}
+    
+if(PageIsVisible == False){
     yield;
     continue;
 }
