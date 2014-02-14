@@ -31,10 +31,6 @@ declare lastUpdateTime = 0;
 foreach (Player in Players) {
     declare <?= $this->varName ?> for Player = -1;
     <?= $this->varName ?> = -1;
-    declare firstFinish<?= $this->varName ?> for Player = True;
-    firstFinish<?= $this->varName ?>  = True;
-    declare playerTime<?= $this->varName ?> for Player = -1;
-    playerTime<?= $this->varName ?> = -1;
     
     playersOnServer[Player.Login] = Player.Name;
     if(!playerNickName.existskey(Player.Login)){

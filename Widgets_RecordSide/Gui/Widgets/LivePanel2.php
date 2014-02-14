@@ -11,8 +11,8 @@ class LivePanel2 extends LivePanel {
 
     
      function onConstruct() {
-        parent::onConstruct();
         $this->setName("Live Rankings Panel (tab-layer)");
+	parent::onConstruct();
 	$this->timeScript->setParam('varName','LiveTime2');
     }
     
