@@ -5,8 +5,8 @@ declare Integer nbFirstFields =  <?= $this->nbFirstFields ?>;
 
 //Ranks of the players
 declare nbPlayersCp	= Integer[Integer];
-declare playerTimes	= Integer[Integer][Integer];
-declare playerNickNames	= Text[Integer][Integer];
+declare playerTimes	= Integer[Text][Integer];
+declare playerNickNames	= Text[Text][Integer];
 
 //The latest chackpoint the player past
 declare playersOnServer = Text[Text];

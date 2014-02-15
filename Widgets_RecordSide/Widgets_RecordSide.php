@@ -155,7 +155,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	  $this->showLivePanel($player->login); // create panel for everybody
 	  foreach ($this->storage->spectators as $player)
 	  $this->showLivePanel($player->login); // create panel for everybody */
-	Gui\Widgets\LivePanel::$connection = $this->connection;
+	/*Gui\Widgets\LivePanel::$connection = $this->connection;
 	
 	$panel = Gui\Widgets\LivePanel::Create($login);
 	$panel->setPosition(118, -12);
@@ -183,7 +183,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	}else if(isset($this->widgetIds["LivePanel2"])){
 	    $panel->setId($this->widgetIds["LivePanel2"]);
 	}
-	$panel->show();
+	$panel->show();*/
     }
 
     public function showLocalPanel($login) {

@@ -3,11 +3,12 @@ foreach (Player in Players) {
 
     declare <?= $this->varName ?> for Player = -1;
 
-    if (<?= $this->varName ?> != Player.CurRace.Checkpoints.count) {
+    if (<?= $this->varName ?> != Player.CurRace.Checkpoints.count) {	
 	
 	//Update the current checkpoint of this user
-	<?= $this->varName ?> = Player.CurRace.Checkpoints.count;
-	declare curCp = <?= $this->varName ?> -1 ;
+	declare curCp = Player.CurRace.Checkpoints.count -1 ;	
+	<?= $this->varName ?> = curCp+1;
+	
 	
 	//Check if valid checkpoint
 	if(curCp >= 0){
@@ -20,31 +21,27 @@ foreach (Player in Players) {
 	    declare <?= $this->varName ?>_cpPosition for Player = -1;
 	    declare newCpPosition = 0;
 	    
-	    log("New CP Time : CpPosition = "^<?= $this->varName ?>_cpPosition^" CurCP = " ^ curCp);
+	    
+	    
+	    
 	    //Register Checkpoint time
 	    if(!playerTimes.existskey(curCp)){
 		//Is it first player throught this checkpoint?
-		newCpPosition = 0;
 		nbPlayersCp[curCp] = 0;
-		playerTimes[curCp] = Integer[Integer];
-		playerNickNames[curCp] = Text[Integer];
-		playerTimes[curCp][0] = Player.CurRace.Checkpoints[curCp];
-		playerNickNames[curCp][0] = Player.Name;
-	    }else{
-		newCpPosition = nbPlayersCp[curCp];
-		nbPlayersCp[curCp] += 1;
-		playerTimes[curCp][newCpPosition] = Player.CurRace.Checkpoints[curCp];
-		playerNickNames[curCp][newCpPosition] = Player.Name;
+		playerTimes[curCp] = Integer[Text];
+		playerNickNames[curCp] = Text[Text];
 	    }
+	    playerTimes[curCp][Player.Login] = Player.CurRace.Checkpoints[curCp];
+	    playerNickNames[curCp][Player.Login] = Player.Name;
+	    
+	    nbPlayersCp[curCp] += 1;
 	    
 	    //Remove from older checkpoint
-	    if(<?= $this->varName ?>_cpPosition >= 0 && curCp > 0){
-		log("Remove Old : "^<?= $this->varName ?>_cpPosition);
-		playerTimes[curCp-1].removekey(<?= $this->varName ?>_cpPosition);
-		playerNickNames[curCp-1].removekey(<?= $this->varName ?>_cpPosition);
+	    if(curCp > 0){
+		playerTimes[curCp-1].removekey(Player.Login);
+		playerNickNames[curCp-1].removekey(Player.Login);
 		nbPlayersCp[curCp-1] -= 1;
 	    }
-	    <?= $this->varName ?>_cpPosition = newCpPosition;
 	}
     }
 }
@@ -82,9 +79,11 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     declare recCount = -1;
 
     i = 1;
-
-    foreach (cpIndex => Players in playerTimes) {
-	foreach(p => Score in Players){
+    
+    declare cpIndex = maxCp -1;
+    while(cpIndex >= 0){
+	declare Players2 = playerTimes[cpIndex];
+	foreach(p => Score in Players2){
 	    if (LocalUser != Null) {
 		if (playerNickNames[cpIndex][p] == LocalUser.Name) {
 		    myRank = i;
@@ -99,6 +98,7 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 	 if(myRank != -1 && i > myRank + (nbFields - nbFirstFields)){
 	    break;
 	}
+	cpIndex -= 1;
     }
     recCount = i;
 
@@ -123,9 +123,11 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     i = 1;
     nbRec = 1;
     declare firstOfCp = True;
-    foreach (cpIndex => Players in playerTimes) {
+    cpIndex = maxCp -1;
+    while(cpIndex >= 0){
 	declare bestCp = 0;
-	foreach(p => Score in Players){
+	declare Players2 = playerTimes[cpIndex];
+	foreach(p => Score in Players2){
 	    if(firstOfCp){
 		bestCp = Score;
 	    }
@@ -146,13 +148,17 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 		if (playerNickNames[cpIndex][p] == LocalUser.Name) {
 		    showed = True;
 		}
-
-		nickLabel.SetText(playerNickNames[cpIndex][p]);
+		
+		if((maxCp - cpIndex - 1) > 0){
+		    nickLabel.SetText((maxCp - cpIndex - 1)^"Cp "^playerNickNames[cpIndex][p]);
+		}else{
+		     nickLabel.SetText(playerNickNames[cpIndex][p]);
+		}
 		
 		if(nbRec == 1){
 		    timeLabel.SetText(TimeToText(Score));
 		}else if(firstOfCp){
-		    timeLabel.SetText("+"^(maxCp - cpIndex)^"Cp^");
+		    timeLabel.SetText(TimeToText(Score));
 		}else{
 		    timeLabel.SetText("+"^TimeToText(Score - bestCp));
 		}
@@ -176,5 +182,6 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 	    firstOfCp = False;
 	}
 	firstOfCp = True;
+	cpIndex -= 1;
     }
 }
