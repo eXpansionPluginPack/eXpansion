@@ -33,13 +33,7 @@ class LivePanel extends LocalPanel {
     }
     
     function update() {
-	if($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK)
-	    $this->taUpdate ();
-	else
-	    $this->cpUpdate();
-    }
-
-    protected function taUpdate(){
+	
 	$login = $this->getRecipient();
         foreach ($this->items as $item)
             $item->destroy();
@@ -59,6 +53,14 @@ class LivePanel extends LocalPanel {
             $this->items[$index - 1] = new Recorditem($index, false);
             $this->frame->addComponent($this->items[$index - 1]);
         }
+	
+	if($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK)
+	    $this->taUpdate ();
+	else
+	    $this->cpUpdate();
+    }
+
+    protected function taUpdate(){
 
         $index = 1;
 	$players = self::$connection->getCurrentRanking(100,0);

@@ -25,14 +25,16 @@ foreach (Player in Players) {
 	    if(!playerTimes.existskey(curCp)){
 		//Is it first player throught this checkpoint?
 		newCpPosition = 0;
+		nbPlayersCp[curCp] = 0;
 		playerTimes[curCp] = Integer[Integer];
 		playerNickNames[curCp] = Text[Integer];
 		playerTimes[curCp][0] = Player.CurRace.Checkpoints[curCp];
 		playerNickNames[curCp][0] = Player.Name;
 	    }else{
-		newCpPosition = playerTimes[curCp].count;
-		playerTimes[curCp][0] = Player.CurRace.Checkpoints[curCp];
-		playerNickNames[curCp][0] = Player.Name;
+		newCpPosition = nbPlayersCp[curCp];
+		nbPlayersCp[curCp] += 1;
+		playerTimes[curCp][newCpPosition] = Player.CurRace.Checkpoints[curCp];
+		playerNickNames[curCp][newCpPosition] = Player.Name;
 	    }
 	    
 	    //Remove from older checkpoint
@@ -40,6 +42,7 @@ foreach (Player in Players) {
 		log("Remove Old : "^<?= $this->varName ?>_cpPosition);
 		playerTimes[curCp-1].removekey(<?= $this->varName ?>_cpPosition);
 		playerNickNames[curCp-1].removekey(<?= $this->varName ?>_cpPosition);
+		nbPlayersCp[curCp-1] -= 1;
 	    }
 	    <?= $this->varName ?>_cpPosition = newCpPosition;
 	}

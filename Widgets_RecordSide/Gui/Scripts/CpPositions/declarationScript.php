@@ -4,6 +4,7 @@ declare Integer nbFields =  <?= $this->nbFields ?>;
 declare Integer nbFirstFields =  <?= $this->nbFirstFields ?>;
 
 //Ranks of the players
+declare nbPlayersCp	= Integer[Integer];
 declare playerTimes	= Integer[Integer][Integer];
 declare playerNickNames	= Text[Integer][Integer];
 
