@@ -28,6 +28,9 @@ class LivePanel extends LocalPanel {
 	    $this->timeScript->setParam("nbFields", 20);
 	    $this->timeScript->setParam("nbFirstFields", 5);
 	    $this->timeScript->setParam('varName','LiveTime1');
+	    $this->timeScript->setParam("playerTimes", 'Integer[Text][Integer]');
+	    $this->timeScript->setParam("nickNames", 'Text[Text][Integer]');
+	    $this->timeScript->setParam("maxCp", -1);
 	    return $script;
 	}
     }
@@ -98,6 +101,72 @@ class LivePanel extends LocalPanel {
     
     protected function cpUpdate(){
 	
+	$nbCheckpoints = array();
+	$playerCps = array();
+	$playerNickNames = array();
+	$biggestCp = -1;
+	
+	foreach(\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo as $login => $player){
+	    $lastCpIndex = count($player->checkpoints)-1;
+	    if($lastCpIndex >= 0){
+		
+		if($lastCpIndex > $biggestCp)
+		    $biggestCp = $lastCpIndex;
+		
+		$lastCpTime = $player->checkpoints[$lastCpIndex];
+		$player = $this->storage->getPlayerObject($login);
+		$playerCps[$lastCpIndex][$login] = $lastCpTime;
+		$playerNickNames[$lastCpIndex][$player->login] = $player->nickName;
+	    }
+	}
+	
+	$newPlayerCps = array();
+	foreach($playerCps as $coIndex => $cpsTimes){
+	    arsort($cpsTimes);
+	    $newPlayerCps[$coIndex] = $cpsTimes;
+	}
+	
+	$playerTimes = "[";
+	$NickNames = "[";
+	
+	$cpCount = 0;
+	foreach($newPlayerCps as $cpIndex => $cpTimes){
+	   if($cpCount != 0){
+		$playerTimes .= ", ";
+		$NickNames .= ", ";
+	    }
+	    $playerTimes .= $cpIndex."=>[";
+	    $NickNames .= $cpIndex."=>[";
+	    
+	    $cCount = 0;
+	    $nbCheckpoints[$cpIndex] = 0;
+	    foreach($cpTimes as $login => $score){
+		if($cCount != 0){
+		    $playerTimes .= ", ";
+		    $NickNames .= ", ";
+		}
+		$playerTimes .= '"'.$login."\"=>".$score;
+		$NickNames .= '"'.$login."\"=>\"".$this->fixHyphens($playerNickNames[$cpIndex][$login])."\"";
+		$nbCheckpoints[$cpIndex]++;
+		$cCount++;
+	    }
+	    
+	    $playerTimes .="]";
+	    $NickNames .="]";
+	    $cpCount++;
+	}
+	$playerTimes .="]";
+	$NickNames .="]";
+	
+	if(!empty($newPlayerCps)){
+	    $this->timeScript->setParam("playerTimes", $playerTimes);
+	    $this->timeScript->setParam("nickNames", $NickNames);
+	    $this->timeScript->setParam("maxCp", $biggestCp+1);
+	}else{
+	    $this->timeScript->setParam("playerTimes", 'Integer[Text][Integer]');
+	    $this->timeScript->setParam("nickNames", 'Text[Text][Integer]');
+	    $this->timeScript->setParam("maxCp", -1);
+	}
 	
     }
     
