@@ -39,6 +39,7 @@ foreach (Player in Players) {
 	    if(<?= $this->varName ?>_cpPosition >= 0 && curCp > 0){
 		log("Remove Old : "^<?= $this->varName ?>_cpPosition);
 		playerTimes[curCp-1].removekey(<?= $this->varName ?>_cpPosition);
+		playerNickNames[curCp-1].removekey(<?= $this->varName ?>_cpPosition);
 	    }
 	    <?= $this->varName ?>_cpPosition = newCpPosition;
 	}
