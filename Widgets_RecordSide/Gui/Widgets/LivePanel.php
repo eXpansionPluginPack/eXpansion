@@ -18,9 +18,29 @@ class LivePanel extends LocalPanel {
 	$this->timeScript->setParam('getCurrentTimes','True');
     }
 
+    protected function getScript() {
+	if($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK)
+	    return parent::getScript();
+	else{
+	    $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/CpPositions");
+	    $this->timeScript = $script;
+	    $this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
+	    $this->timeScript->setParam("nbFields", 20);
+	    $this->timeScript->setParam("nbFirstFields", 5);
+	    $this->timeScript->setParam('varName','LiveTime1');
+	    return $script;
+	}
+    }
+    
     function update() {
+	if($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK)
+	    $this->taUpdate ();
+	else
+	    $this->cpUpdate();
+    }
 
-        $login = $this->getRecipient();
+    protected function taUpdate(){
+	$login = $this->getRecipient();
         foreach ($this->items as $item)
             $item->destroy();
 
@@ -73,7 +93,12 @@ class LivePanel extends LocalPanel {
         $this->timeScript->setParam("playerTimes", $recsData);
         $this->timeScript->setParam("playerNicks", $nickData);
     }
-
+    
+    protected function cpUpdate(){
+	
+	
+    }
+    
 }
 
 ?>

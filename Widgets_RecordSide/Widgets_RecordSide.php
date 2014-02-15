@@ -222,6 +222,17 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$this->updateLivePanel();
 	self::$secondMap = true;
     }
+    
+    public function onEndRound() {
+	//@TOdo remove it is good to have it to keep track of other players
+	$this->hideLivePanel();
+    }
+    
+    public function onBeginRound() {
+	//We need to reset the panel for next Round
+	$this->hideLivePanel();
+	$this->updateLivePanel();
+    }
 
     public function onRecordsLoaded($data) {
 	self::$localrecords = $data;
