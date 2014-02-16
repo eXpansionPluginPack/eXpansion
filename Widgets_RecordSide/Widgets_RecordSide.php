@@ -24,6 +24,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     private $local = true;
     
     private $widgetIds = array();
+    public static $raceOn;
 
     /** @var Config */
     private $config;
@@ -200,6 +201,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
+	self::$raceOn = false;
 	self::$dedirecords = array(); // reset 
 	self::$localrecords = array(); //  reset
 	Gui\Widgets\LocalPanel::EraseAll();
@@ -217,6 +219,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$this->updateLocalPanel();
 	$this->updateLivePanel();
 	self::$secondMap = true;
+	self::$raceOn = true;
     }
     
     public function onEndRound() {
