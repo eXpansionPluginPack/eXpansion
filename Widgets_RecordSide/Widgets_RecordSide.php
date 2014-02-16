@@ -158,7 +158,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$panel->setSize(40, 95);
 	$panel->setNbFields(8);
 	$panel->setNbFirstFields(3);
-	$panel->update();
+	$panel->update();	
 	$panel->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 	if($login == Null){
 	    $this->widgetIds["LivePanel"] = $panel->getId();

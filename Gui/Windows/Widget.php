@@ -114,7 +114,7 @@ class Widget extends PlainWidget {
      * @param string $gameMode
      * @param bool $value
      */
-    function setWidgetVisible($gameMode, $value) {
+    function setVisibilityForGamemode($gameMode, $value) {
 	$this->widgetVisible[$gameMode] = $value;
     }
 
