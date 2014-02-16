@@ -6,6 +6,7 @@ use ManiaLive\Event\Dispatcher;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
+use \Maniaplanet\DedicatedServer\Structures\ServerOptions;
 
 /**
  * Description of Core
@@ -24,6 +25,7 @@ class Core extends types\ExpPlugin {
      * Last used game mode
      * @var \Maniaplanet\DedicatedServer\Structures\GameInfos
      */
+
     private $lastGameMode;
     private $lastGameSettings;
     private $lastServerSettings;
@@ -77,6 +79,8 @@ class Core extends types\ExpPlugin {
 	if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . "logs" . DIRECTORY_SEPARATOR . $logFile)) {
 	    unlink(__DIR__ . DIRECTORY_SEPARATOR . "logs" . DIRECTORY_SEPARATOR . $logFile);
 	}
+
+	Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent::getClass(), $this);
     }
 
     /**
@@ -191,6 +195,7 @@ EOT;
 	} else {
 	    $this->enableCalculation = false;
 	}
+	$this->lastServerSettings = clone $this->storage->server;
     }
 
     /**
@@ -238,7 +243,7 @@ EOT;
 	if ($this->lastServerSettings == null)
 	    $this->lastServerSettings = clone $serverSettings;
 	else {
-	    $difs = $this->compareObjects($serverSettings, $this->lastServerSettings);
+	    $difs = $this->compareObjects($serverSettings, $this->lastServerSettings, array('useChangingValidationSeed'));
 	    if (!empty($difs)) {
 		Dispatcher::dispatch(new ServerSettingsEvent(ServerSettingsEvent::ON_SERVER_SETTINGS_CHANGE, $this->lastServerSettings, $serverSettings, $difs));
 		$this->lastServerSettings = clone $serverSettings;
@@ -251,15 +256,121 @@ EOT;
 	$difs = array();
 
 	foreach ($obj1 as $varName => $value) {
-	    if (!in_array($varName, $ingnoreList))
-		if (!isset($obj2->$varName) || $obj2->$varName != $value)
+	    if (!in_array($varName, $ingnoreList)){
+		if(is_object($value)){
+		    if (!isset($obj2->$varName)){
+			$difs[$varName] = true;
+		    }else{
+			$newDisf = $this->compareObjects($value, $obj2->$varName, $ingnoreList);
+			if(!empty($newDisf))
+			    $difs[$varName] = $newDisf;
+		    }
+		}
+		else if (!isset($obj2->$varName) || $obj2->$varName != $value){
+		    echo $varName ." : ".$obj2->$varName." -> ".$value;
 		    $difs[$varName] = true;
+		}
+	    }
 	}
 	return $difs;
     }
 
     public function onGameSettingsChange(\Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings, \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings, $changes) {
 	$this->saveMatchSettings();
+    }
+
+    public function onServerSettingsChange(ServerOptions $old, ServerOptions $new, $diff) {
+	
+	$dediConfig = \ManiaLive\DedicatedApi\Config::getInstance();
+
+	$path = $this->connection->getMapsDirectory() . "/../Config/" . $this->config->dedicatedConfigFile;
+	if (file_exists($path)) {
+	    $oldXml = simplexml_load_file($path);
+	    
+	    $xml = '<?xml version="1.0" encoding="utf-8" ?>
+<dedicated>
+		'.$oldXml->authorization_levels->asXml().'
+	
+ 	<masterserver_account>
+		<login>' . $this->storage->serverLogin . '</login>
+		<password>' . $oldXml->masterserver_account->password . '</password>
+		<validation_key>' . $oldXml->masterserver_account->validation_key . '</validation_key>
+	</masterserver_account>
+	
+	<server_options>
+		<name>' . $new->name . '</name>
+		<comment>' . $new->comment . '</comment>
+		<hide_server>' . ($new->hideServer ? 1 : 0) . '</hide_server>					<!-- value is 0 (always shown), 1 (always hidden), 2 (hidden from nations) -->
+
+		<max_players>' . $new->nextMaxPlayers . '</max_players>
+		<password>' . $new->password . '</password>
+		
+		<max_spectators>' . $new->nextMaxSpectators . '</max_spectators>
+		<password_spectator>' . $new->passwordForSpectator . '</password_spectator>
+	
+		<keep_player_slots>' . ($new->keepPlayerSlots ? 'True' : 'False') . '</keep_player_slots>			<!-- when a player changes to spectator, hould the server keep if player slots/scores etc.. or not. --> 	
+		<ladder_mode>' . $new->nextLadderMode . '</ladder_mode>				<!-- value between \'inactive\', \'forced\' (or \'0\', \'1\') -->
+		
+		<enable_p2p_upload>' . ($new->isP2PUpload ? 'True' : 'False') . '</enable_p2p_upload>
+		<enable_p2p_download>' . ($new->isP2PDownload ? 'True' : 'False') . '</enable_p2p_download>
+		
+		<callvote_timeout>' . $new->nextCallVoteTimeOut . '</callvote_timeout>
+		<callvote_ratio>' . $new->callVoteRatio . '</callvote_ratio>				<!-- default ratio. value in [0..1], or -1 to forbid. -->
+
+		' . $oldXml->server_options->callvote_ratios->asXml() . '
+
+		<allow_map_download>' . ($new->allowMapDownload ? 'True' : 'False') . '</allow_map_download>
+		<autosave_replays>' . ($new->autoSaveReplays ? 'True' : 'False') . '</autosave_replays>
+		<autosave_validation_replays>' . ($new->autoSaveValidationReplays ? 'True' : 'False') . '</autosave_validation_replays>
+
+		<referee_password>' . $new->refereePassword . '</referee_password>
+		<referee_validation_mode>' . $new->refereeMode . '</referee_validation_mode>		<!-- value is 0 (only validate top3 players),  1 (validate all players) -->
+
+		<use_changing_validation_seed>' . ($new->useChangingValidationSeed ? 'True' : 'False') . '</use_changing_validation_seed>
+
+		<disable_horns>' . ($new->disableHorns ? 'True' : 'False') . '</disable_horns>
+		<clientinputs_maxlatency>' . ($new->clientInputsMaxLatency ? 'True' : 'False') . '</clientinputs_maxlatency>		<!-- 0 mean automatic adjustement -->
+	</server_options>
+	
+	<system_config>
+		<connection_uploadrate>' . $oldXml->system_config->connection_uploadrate . '</connection_uploadrate>		<!-- Kbits per second -->
+		<connection_downloadrate>' . $oldXml->system_config->connection_downloadrate . '</connection_downloadrate>		<!-- Kbits per second -->
+
+		<allow_spectator_relays>' . $oldXml->system_config->allow_spectator_relays . '</allow_spectator_relays>
+
+		<p2p_cache_size>' . $oldXml->system_config->p2p_cache_size . '</p2p_cache_size>
+
+		<force_ip_address' . $oldXml->system_config->force_ip_address . '></force_ip_address>
+		<server_port>' . $oldXml->system_config->server_port . '</server_port>
+		<server_p2p_port>' . $oldXml->system_config->server_p2p_port . '</server_p2p_port>
+		<client_port>' . $oldXml->system_config->client_port . '</client_port>
+		<bind_ip_address>' . $oldXml->system_config->bind_ip_address . '</bind_ip_address>
+		<use_nat_upnp>' . $oldXml->system_config->use_nat_upnp . '</use_nat_upnp>
+
+		<gsp_name>' . $oldXml->system_config->gsp_name . '</gsp_name>						<!-- Game Server Provider name and info url -->
+		<gsp_url>' . $oldXml->system_config->gsp_url . '</gsp_url>						<!-- If you\'re a server hoster, you can use this to advertise your services -->
+
+		<xmlrpc_port>' . $oldXml->system_config->xmlrpc_port . '</xmlrpc_port>
+		<xmlrpc_allowremote>' . $oldXml->system_config->xmlrpc_allowremote . '</xmlrpc_allowremote>			<!-- If you specify an ip adress here, it\'ll be the only accepted adress. this will improve security. -->
+		
+		<blacklist_url>' . $oldXml->system_config->blacklist_url . '</blacklist_url>
+		<guestlist_filename>' . $oldXml->system_config->guestlist_filename . '</guestlist_filename>
+		<blacklist_filename>' . $oldXml->system_config->blacklist_filename . '</blacklist_filename>
+		
+		<title>' . $this->connection->getVersion()->titleId . '</title>		<!-- SMStorm, TMCanyon, ... -->
+
+		<minimum_client_build>' . $oldXml->system_config->minimum_client_build . '</minimum_client_build>			<!-- Only accept updated client to a specific version. ex: 2011-10-06 -->
+
+		<disable_coherence_checks>' . $oldXml->system_config->disable_coherence_checks . '</disable_coherence_checks>	<!-- disable internal checks to detect issues/cheats, and reject race times -->
+
+		<use_proxy>' . $oldXml->system_config->use_proxy . '</use_proxy>
+		<proxy_login>' . $oldXml->system_config->proxy_login . '</proxy_login>
+		<proxy_password>' . $oldXml->system_config->proxy_password . '</proxy_password>
+	</system_config>
+</dedicated>
+';	
+	    file_put_contents($path, $xml);
+	}
     }
 
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
