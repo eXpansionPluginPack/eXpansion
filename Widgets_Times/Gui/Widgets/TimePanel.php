@@ -18,12 +18,11 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     protected $position;
     protected $top1;
     private $totalCp = 0;
-    private $bestRun = array();
-    private $currentRun = array();
-    private $lastFinish = -1;
-    private $counter = 1;
+
     private $lapRace = false;
     private $nScript;
+    private $target;
+    
 
     /** @var \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record[] */
     public static $localrecords = array();
@@ -86,6 +85,10 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         parent::onResize($oldX, $oldY);
     }
 
+    function setTarget($login) {
+	$this->specTarget = $login;
+	
+    }
     function setMapInfo(\Maniaplanet\DedicatedServer\Structures\Map $map) {
         $this->totalCp = $map->nbCheckpoints;
 	$this->lapRace = $map->lapRace;
@@ -93,7 +96,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     function onDraw() {
         $login = $this->getRecipient();
-        $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $login);
+        $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->specTarget);
         $checkpoints = "[ -1 ]";
         if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record) {
             $checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . "]";
@@ -105,6 +108,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	
         $this->nScript->setParam('checkpoints', $checkpoints);
         $this->nScript->setParam('totalCp', $this->totalCp);
+	$this->nScript->setParam('target', $this->specTarget);
         $this->nScript->setParam('lapRace', $bool);
         parent::onDraw();
     }

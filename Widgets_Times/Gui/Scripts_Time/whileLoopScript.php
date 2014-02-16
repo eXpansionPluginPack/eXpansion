@@ -1,5 +1,5 @@
 foreach (Player in Players) {
-    if (Player.Login == GUIPlayer.Login) {
+    if (Player.Login == target) {
     
         declare PrevCheckpointCount for Player = -1;
         if (PrevCheckpointCount != Player.CurRace.Checkpoints.count) {
