@@ -21,7 +21,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     private $lapRace = false;
     private $nScript;
-    private $target;
+    private $target = "";
     
 
     /** @var \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record[] */
@@ -96,7 +96,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     function onDraw() {
         $login = $this->getRecipient();
-        $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->specTarget);
+        $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->target);
         $checkpoints = "[ -1 ]";
         if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record) {
             $checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . "]";
