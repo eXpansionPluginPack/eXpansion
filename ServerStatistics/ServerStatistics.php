@@ -179,17 +179,15 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         //Statistics
         $data['avgPlayer'] = 'unknown';
         $data['avgSpec'] = 'unknown';
-        if ($this->isPluginLoaded('eXpansion\Statistics')) {
-            $sql = 'SELECT AVG(server_nbPlayers) as avgPlayer, AVG(server_nbSpec) as avgSpec'
-                    . ' FROM exp_server_stats'
-                    . ' WHERE server_login = ' . $this->db->quote($this->storage->serverLogin);
-            $result = $this->db->execute($sql)->fetchArrayOfObject();
+	$sql = 'SELECT AVG(server_nbPlayers) as avgPlayer, AVG(server_nbSpec) as avgSpec'
+		. ' FROM exp_server_stats'
+		. ' WHERE server_login = ' . $this->db->quote($this->storage->serverLogin);
+	$result = $this->db->execute($sql)->fetchArrayOfObject();
 
-            foreach ($result as $r) {
-                $data['avgPlayer'] = $r->avgPlayer;
-                $data['avgSpec'] = $r->avgSpec;
-            }
-        }
+	foreach ($result as $r) {
+	    $data['avgPlayer'] = $r->avgPlayer;
+	    $data['avgSpec'] = $r->avgSpec;
+	}
         
         //NbPlayers & Nations
         $data['nbPlayer'] = 'unknown';
