@@ -13,3 +13,4 @@ declare maxCp = <?= $this->maxCp ?>;
 
 declare Boolean needUpdate = True;
 declare lastUpdateTime = 0;
+declare lastTimeDiff = 0;

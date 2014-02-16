@@ -53,7 +53,7 @@ class LivePanel extends LocalPanel {
         $nickData = "";
 
         for ($index = 1; $index <= $this->nbFields; $index++) {
-            $this->items[$index - 1] = new Recorditem($index, false);
+            $this->items[$index - 1] = new Recorditem($index, false, $this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
             $this->frame->addComponent($this->items[$index - 1]);
         }
 	
@@ -110,7 +110,7 @@ class LivePanel extends LocalPanel {
 	
 	foreach(\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo as $login => $player){
 	    $lastCpIndex = count($player->checkpoints)-1;
-	    if($lastCpIndex >= 0){
+	    if($lastCpIndex >= 0 && $player->checkpoints[$lastCpIndex] > 0){
 		
 		if($lastCpIndex > $biggestCp)
 		    $biggestCp = $lastCpIndex;

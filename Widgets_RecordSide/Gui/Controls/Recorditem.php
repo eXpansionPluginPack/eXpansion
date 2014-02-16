@@ -14,7 +14,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
     private $time;
     private $frame;
 
-    function __construct($index, $highlite) {
+    function __construct($index, $highlite, $moreInfo=false) {
 	$sizeX = 40;
 	$sizeY = 4;
 
@@ -70,6 +70,51 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	$this->nick->setId("RecNick_" . $index);	
 	$this->addComponent($this->nick);
 
+	if($moreInfo){
+	    $this->label = new \ManiaLib\Gui\Elements\Label(6, 4);
+	    $this->label->setAlign('right', 'center');
+	    $this->label->setPosition(59, 0);
+	    $this->label->setStyle("TextRaceChat");
+	    $this->label->setId("RecCp2_" . $index);
+	    $this->label->setTextSize(1);
+	    $this->label->setTextColor('ff0');
+	    //$this->label->setText("+1Cp");
+	    $this->addComponent($this->label);
+
+	    $this->label = new \ManiaLib\Gui\Elements\Label(6, 4);
+	    $this->label->setPosition(-18, 0);
+	    $this->label->setAlign('left', 'center');
+	    $this->label->setStyle("TextRaceChat");
+	    $this->label->setTextSize(1);
+	    $this->label->setId("RecCp1_" . $index);
+	    $this->label->setTextColor('ff0');
+	    //$this->label->setText("+1Cp");
+	    $this->addComponent($this->label);
+
+	    $this->label = new \ManiaLib\Gui\Elements\Label(11, 4);
+	    $this->label->setAlign('right', 'center');
+	    $this->label->setPosition(53, 0);
+	    $this->label->setStyle("TextRaceChat");
+	    $this->label->setId("RecInfo2_" . $index);
+	    $this->label->setTextSize(1);
+	    $this->label->setTextColor('fff');
+	    //$this->label->setText("+00:00:00");
+	    $this->addComponent($this->label);
+
+	    $this->label = new \ManiaLib\Gui\Elements\Label(11, 4);
+	    $this->label->setPosition(-12, 0);
+	    $this->label->setAlign('left', 'center');
+	    $this->label->setStyle("TextRaceChat");
+	    $this->label->setTextSize(1);
+	    $this->label->setId("RecInfo1_" . $index);
+	    $this->label->setTextColor('fff');
+	    //$this->label->setText("+00:00:00");
+	    $this->addComponent($this->label);
+	    
+	    $this->bg->setPosX(-19);
+	    $this->bg->setSizeX($sizeX+2+37);
+	}
+	
 	// $this->addComponent($this->frame);
 
 	$this->setSize($sizeX, $sizeY);
