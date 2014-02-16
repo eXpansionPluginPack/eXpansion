@@ -68,6 +68,9 @@ class LivePanel extends LocalPanel {
         $index = 1;
 	$players = self::$connection->getCurrentRanking(100,0);
 	
+	$recsData = "";
+        $nickData = "";
+	
         foreach($players as $player){
             if(!empty($player->bestTime) && $player->bestTime > 0){
                  if ($index > 1) {

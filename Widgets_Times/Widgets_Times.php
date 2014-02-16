@@ -162,8 +162,11 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$spectatorTarget = $login;
 	if ($isSpectator) {
 	    $player = $this->storage->getPlayerObject($login);
-	    $this->spectatorTargets[$login] = $player;
-	    $spectatorTarget = $this->getPlayerObjectById($player->currentTargetId)->login;
+	    if ($player !== null) {
+		$this->spectatorTargets[$login] = $player;
+		$spec = $this->getPlayerObjectById($player->currentTargetId);
+		$spectatorTarget = $spec->login;
+	    }
 	}
 
 
