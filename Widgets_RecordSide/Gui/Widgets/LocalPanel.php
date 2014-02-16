@@ -85,6 +85,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     public function setNbFields($nb) {
         $this->timeScript->setParam("nbFields", $nb);       
         $this->nbFields = $nb;
+	$this->setSizeY(4+$nb*4);
     }
 
     public function setNbFirstFields($nb) {
@@ -97,7 +98,6 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
         $this->bg->setSize($this->sizeX, 6);
-        $this->bgFirst->setSizeX($this->sizeX);
         $this->bg->setPosition(0, -1.5);
         $this->frame->setPosition(($this->sizeX / 2) + 1, -6);
         $this->lbl_title->setPosition(($this->sizeX / 2), -1);

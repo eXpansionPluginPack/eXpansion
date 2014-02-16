@@ -92,7 +92,7 @@ foreach (Event in PendingEvents) {
     if (Event.Type == CMlEvent::Type::MouseOver ) {
 	if(Event.Control != Null ){
 	   element = Event.Control;
-	   element.Scale = 1.3;	   
+	   element.Scale = 1.1;	   
 	}	
     }
     else {
