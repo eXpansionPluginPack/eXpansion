@@ -25,23 +25,35 @@ if(exp_needToCheckPersistentVars || !eXp_firstPersistentCheckDone){
 	exp_multipleCheckCount = 0;
     }
 
-    if (!exp_widgetVisible.existskey(version) ) {
-	exp_widgetVisible[version] = Boolean[Text];
-     }
-
-     if (!exp_widgetVisible[version].existskey(id)) {
-	    exp_widgetVisible[version][id] = True;
+    if (!eXp_widgetVisible.existskey(version) ) {
+	eXp_widgetVisible[version] = Boolean[Text][Text];
     }
 
-    if (!exp_widgetLayers[version].existskey(id)) {
-	exp_widgetLayers[version][id] = "normal";
+    if ( !eXp_widgetVisible[version].existskey(id)) {
+	eXp_widgetVisible[version][id] = Boolean[Text];
     }
 
-    if (exp_widgetVisible[version][id] == True && exp_widgetLayers[version][id] == activeLayer && exp_widgetCurrentVisible != exp_widgetVisible[version][id]) {
+    if ( !eXp_widgetVisible[version][id].existskey(gameMode) ) {
+	eXp_widgetVisible[version][id][gameMode] = True;
+    }
+
+    if (!eXp_widgetLayers.existskey(version) ) {
+	eXp_widgetLayers[version] = Text[Text][Text];
+    }
+
+    if (!eXp_widgetLayers[version].existskey(id)) { 
+	eXp_widgetLayers[version][id] = Text[Text];
+    }
+
+    if (!eXp_widgetLayers[version][id].existskey(gameMode)) { 
+	eXp_widgetLayers[version][id][gameMode] = "normal"; 
+    }
+
+    if (eXp_widgetVisible[version][id][gameMode] == True && eXp_widgetLayers[version][id][gameMode] == activeLayer && exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode]) {
 	Window.Show();
 	exp_widgetVisibilityChanged = True;
 	exp_widgetCurrentVisible = True;
-    } else if(exp_widgetCurrentVisible != exp_widgetVisible[version][id] || exp_widgetLayers[version][id] != activeLayer) {
+    } else if(exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode] || eXp_widgetLayers[version][id][gameMode] != activeLayer) {
 	Window.Hide();
 	exp_widgetCurrentVisible = False;
     }
@@ -52,8 +64,8 @@ if(exp_needToCheckPersistentVars || !eXp_firstPersistentCheckDone){
 	    quad.Hide();
     }
     
-    exp_widgetLayersBuffered = exp_widgetLayers[version][id];
-    exp_widgetVisibleBuffered = exp_widgetVisible[version][id];
+    exp_widgetLayersBuffered = eXp_widgetLayers[version][id][gameMode];
+    exp_widgetVisibleBuffered = eXp_widgetVisible[version][id][gameMode];
     
 }else{
     exp_multipleCheckCount = 0;
@@ -96,8 +108,8 @@ if (MoveWindow) {
 	LastDelta += DeltaPos;
 	LastDelta.Z = 3.0;
 	Window.RelativePosition = LastDelta;
-	exp_widgetLastPos[version][id] = Window.AbsolutePosition;
-	exp_widgetLastPosRel[version][id] = Window.RelativePosition;
+	eXp_widgetLastPos[version][id][gameMode] = Window.AbsolutePosition;
+	eXp_widgetLastPosRel[version][id][gameMode] = Window.RelativePosition;
 
 	lastMouseX = MouseX;
 	lastMouseY = MouseY;

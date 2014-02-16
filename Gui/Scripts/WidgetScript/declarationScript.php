@@ -35,17 +35,18 @@ declare Integer exp_multipleCheckCount = 0;
 declare Boolean exp_enableHudMove for UI = False;
 exp_enableHudMove = False;
 
-declare persistent Vec3[Text][Text] exp_widgetLastPos;
-declare persistent Vec3[Text][Text] exp_widgetLastPosRel;			
+declare persistent Vec3[Text][Text][Text] eXp_widgetLastPos = Vec3[Text][Text][Text];
+declare persistent Vec3[Text][Text][Text] eXp_widgetLastPosRel =  Vec3[Text][Text][Text];	
 
-declare persistent Boolean[Text][Text] exp_widgetVisible;
+declare persistent Boolean[Text][Text][Text] eXp_widgetVisible = Boolean[Text][Text][Text];
 declare Boolean exp_widgetVisibleBuffered;
 
-declare persistent Text[Text][Text] exp_widgetLayers;  // layer can be "normal" or "scorestable" or some other for future usage
+declare persistent Text[Text][Text][Text] eXp_widgetLayers = Text[Text][Text][Text];  // layer can be "normal" or "scorestable" or some other for future usage
 declare Text exp_widgetLayersBuffered;  
 
 declare Text version = "<?= $this->version ?>";
 declare Text id = "<?= $this->name ?>";
+declare Text gameMode = "<?= $this->gameMode; ?>";
 declare Boolean forceReset = <?= $this->forceReset ?>;
 declare Text activeLayer = "<?= $win->getLayer() ?>";
 declare Boolean exp_widgetCurrentVisible = False;
@@ -53,45 +54,61 @@ declare Boolean exp_widgetVisibilityChanged = False;
 declare Integer eXp_lastWidgetCheck = 0;
 declare Boolean eXp_firstPersistentCheckDone = False;
 
-if (!exp_widgetVisible.existskey(version) ) {
-	exp_widgetVisible[version] = Boolean[Text];
+if (!eXp_widgetVisible.existskey(version) ) {
+	eXp_widgetVisible[version] = Boolean[Text][Text];
 }
 
-if ( !exp_widgetVisible[version].existskey(id) || forceReset) {
-	exp_widgetVisible[version][id] = True;
+if ( !eXp_widgetVisible[version].existskey(id) || forceReset) {
+	eXp_widgetVisible[version][id] = Boolean[Text];
 }
 
-if (!exp_widgetLayers.existskey(version) ) {
-	exp_widgetLayers[version] = Text[Text];
+if ( !eXp_widgetVisible[version][id].existskey(gameMode) ) {
+	eXp_widgetVisible[version][id][gameMode] = <?= $win->getWidgetVisible(); ?>;
 }
 
-if (!exp_widgetLayers[version].existskey(id) || forceReset) { 
-    exp_widgetLayers[version][id] = "normal";
+if (!eXp_widgetLayers.existskey(version) ) {
+	eXp_widgetLayers[version] = Text[Text][Text];
 }
 
-if (!exp_widgetLastPos.existskey(version)) {
-	exp_widgetLastPos[version] = Vec3[Text];
+if (!eXp_widgetLayers[version].existskey(id) || forceReset) { 
+	eXp_widgetLayers[version][id] = Text[Text];
 }
 
-if (!exp_widgetLastPos[version].existskey(id) || forceReset) {
-	exp_widgetLastPos[version][id] = < <?= $this->getNumber($win->getPosX()) ?>, <?= $this->getNumber($win->getPosY()) ?>, 0.0>;
+if (!eXp_widgetLayers[version][id].existskey(gameMode)) { 
+	eXp_widgetLayers[version][id][gameMode] = "normal"; 
 }
 
-if (!exp_widgetLastPosRel.existskey(version)) {
-	exp_widgetLastPosRel[version] = Vec3[Text];
-}
-if (!exp_widgetLastPosRel[version].existskey(id) || forceReset) {
-	exp_widgetLastPosRel[version][id] = < <?= $this->getNumber($win->getPosX()) ?>, <?= $this->getNumber($win->getPosY()) ?>, 0.0>;
+if (!eXp_widgetLastPos.existskey(version)) {
+	eXp_widgetLastPos[version] = Vec3[Text][Text];
 }
 
-Window.PosnX = exp_widgetLastPos[version][id][0];
-Window.PosnY = exp_widgetLastPos[version][id][1];
-LastDelta = exp_widgetLastPosRel[version][id];
-Window.RelativePosition = exp_widgetLastPosRel[version][id];
+if (!eXp_widgetLastPos[version].existskey(id) || forceReset) {
+	eXp_widgetLastPos[version][id] = Vec3[Text];
+}
+if (!eXp_widgetLastPos[version][id].existskey(gameMode) ) {
+	eXp_widgetLastPos[version][id][gameMode] = < <?= $this->getNumber($win->getPosX()) ?>, <?= $this->getNumber($win->getPosY()) ?>, 0.0>;
+}
 
-exp_widgetCurrentVisible = exp_widgetVisible[version][id];
-exp_widgetVisibleBuffered = exp_widgetVisible[version][id];
-exp_widgetLayersBuffered = exp_widgetLayers[version][id];
+if (!eXp_widgetLastPosRel.existskey(version)) {
+	eXp_widgetLastPosRel[version] = Vec3[Text][Text];
+} 
+
+if (!eXp_widgetLastPosRel[version].existskey(id) || forceReset) {
+    eXp_widgetLastPosRel[version][id] = Vec3[Text];
+}
+
+if (!eXp_widgetLastPosRel[version][id].existskey(gameMode)) {
+	eXp_widgetLastPosRel[version][id][gameMode] = < <?= $this->getNumber($win->getPosX()) ?>, <?= $this->getNumber($win->getPosY()) ?>, 0.0>;
+}
+
+Window.PosnX = eXp_widgetLastPos[version][id][gameMode][0];
+Window.PosnY = eXp_widgetLastPos[version][id][gameMode][1];
+LastDelta = eXp_widgetLastPosRel[version][id][gameMode];
+Window.RelativePosition = eXp_widgetLastPosRel[version][id][gameMode];
+
+exp_widgetCurrentVisible = eXp_widgetVisible[version][id][gameMode];
+exp_widgetVisibleBuffered = eXp_widgetVisible[version][id][gameMode];
+exp_widgetLayersBuffered = eXp_widgetLayers[version][id][gameMode];
 
 if (exp_enableHudMove == True) {
 	quad.Show();

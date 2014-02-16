@@ -122,7 +122,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function updateLocalPanel($login = null) {
 	$panel = Gui\Widgets\LocalPanel::Create($login);
-	$panel->setPosition(118, 52);
+	$panel->setPosition(118, 52);	
 	$panel->setSize(40, 95);
 	$panel->setNbFields(15);
 	$panel->setNbFirstFields(5);
@@ -151,10 +151,6 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function updateLivePanel($login = null) {
-	/*   foreach ($this->storage->players as $player)
-	  $this->showLivePanel($player->login); // create panel for everybody
-	  foreach ($this->storage->spectators as $player)
-	  $this->showLivePanel($player->login); // create panel for everybody */
 	Gui\Widgets\LivePanel::$connection = $this->connection;
 	
 	$panel = Gui\Widgets\LivePanel::Create($login);

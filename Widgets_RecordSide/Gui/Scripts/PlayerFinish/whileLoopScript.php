@@ -57,12 +57,12 @@ foreach (Player in Players) {
 
 foreach (Event in PendingEvents) {
     if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer") {
-	if (exp_widgetLayers[version][id] == "normal") {
+	if (eXp_widgetLayers[version][id][gameMode] == "normal") {
 	    exp_needToCheckPersistentVars = True;
-	    exp_widgetLayers[version][id] = "scorestable";
+	    eXp_widgetLayers[version][id][gameMode] = "scorestable";
 	} else {
 	    exp_needToCheckPersistentVars = True;
-	    exp_widgetLayers[version][id] = "normal";
+	    eXp_widgetLayers[version][id][gameMode] = "normal";
 	}
     }
 }

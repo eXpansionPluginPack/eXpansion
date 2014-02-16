@@ -78,8 +78,7 @@ class LivePanel extends LocalPanel {
                 $nickData .= '"'.$player->login. '"=>"'.$this->fixHyphens($player->nickName).'"';
                 $index++;
             }
-        }
-	echo $recsData."\n";
+        }	
 
         $this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
 

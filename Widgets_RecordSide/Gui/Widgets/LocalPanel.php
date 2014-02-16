@@ -27,15 +27,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $sizeY = 95;
         $this->setName("LocalRecords Panel");
         $this->setScriptEvents();
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
-        /* $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui/Scripts/TrayWidget");
-          $script->setParam('isMinimized', 'True');
-          $script->setParam('autoCloseTimeout', '3500');
-          $script->setParam('posXMin', -32);
-          $script->setParam('posX', -32);
-          $script->setParam('posXMax', -6);
-          $this->registerScript($script); */
-
+        $this->storage = \ManiaLive\Data\Storage::getInstance();    
         
         $this->registerScript($this->getScript());
 
@@ -59,12 +51,6 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->lbl_title->setAlign("center", "center");
         $this->_windowFrame->addComponent($this->lbl_title);
 
-        /* $this->bg_title = new \ManiaLib\Gui\Elements\Quad(,5);
-          $this->bg_title->setStyle("BgsPlayerCard");
-          $this->bg_title->setSubStyle(\ManiaLib\Gui\Elements\BgsPlayerCard::BgRacePlayerName);
-          $this->bg_title->setAlign("center", "center");
-          $this->_windowFrame->addComponent($this->bg_title); */
-
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setAlign("left", "top");
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(-1));
@@ -76,12 +62,6 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->layer->setDescription("Switch from Race view to Score View(Visible on Tab)", 75);
         $this->addComponent($this->layer);
 
-        /* $this->layer = new \ManiaLib\Gui\Elements\Quad(5, 5);
-          $this->layer->setStyle("Icons128x32_1");
-          $this->layer->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::ManiaLinkSwitch);
-          $this->layer->setId("setLayer");
-          $this->layer->setScriptEvents();
-          $this->addComponent($this->layer); */
     }
     
     protected function getScript(){
@@ -103,16 +83,12 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     }
 
     public function setNbFields($nb) {
-        $this->timeScript->setParam("nbFields", $nb);
-        //      $this->setPosY(6 + 4 * $nb);
+        $this->timeScript->setParam("nbFields", $nb);       
         $this->nbFields = $nb;
     }
 
     public function setNbFirstFields($nb) {
         $this->timeScript->setParam("nbFirstFields", $nb);
-        /* $this->bgFirst->setSizeY(4 * $nb);
-          $this->bgFirst->setPosY((-2 * $nb) -4); */
-
         $this->bgFirst->setSizeY(2);
         $this->bgFirst->setPosY((-4 * $nb) - 4);
     }
@@ -126,7 +102,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->frame->setPosition(($this->sizeX / 2) + 1, -6);
         $this->lbl_title->setPosition(($this->sizeX / 2), -1);
         $this->layer->setPosition($this->sizeX - 4, -1);
-        //  $this->bg_title->setPosition($this->sizeX / 2, 0);
+        
     }
 
     function update() {        
