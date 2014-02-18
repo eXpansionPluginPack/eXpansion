@@ -47,7 +47,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onInit() {
 
 //Oliverde8 Menu
-	if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
+	if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
 	    Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
 	}
 
@@ -102,10 +102,10 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 //$this->registerChatCommand('queue', "chat_showQueue", 0, true);
 
 	if ($this->isPluginLoaded('eXpansion\Menu')) {
-	    $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Maps'), false);
-	    $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('List maps'), null, array($this, 'showMapList'), false);
-	    $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Jukebox'), null, array($this, 'showJukeList'), false);
-	    $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Add map'), null, array($this, 'addMaps'), true);
+	    $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Maps'), false);
+	    $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('List maps'), null, array($this, 'showMapList'), false);
+	    $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Jukebox'), null, array($this, 'showJukeList'), false);
+	    $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Add map'), null, array($this, 'addMaps'), true);
 	}
 
 	$this->nextMap = $this->storage->nextMap;
@@ -151,7 +151,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return boolean
      */
     public function isLocalRecordsLoaded() {
-	return $this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords');
+	return $this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords');
     }
 
     /**
@@ -160,7 +160,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param \Maniaplanet\DedicatedServer\Structures\Map $map
      */
     public function showRec($login, $map) {
-	$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, $map);
+	$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, $map);
     }
 
     public function onOliverde8HudMenuReady($menu) {
@@ -399,11 +399,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$window->setTitle(__('Maps on server', $login));
 	$window->setHistory($this->history);
 	$window->setCurrentMap($this->storage->currentMap);
-	if ($this->isPluginLoaded('ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
-	    $window->setRecords($this->callPublicMethod('ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
+	if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
+	    $window->setRecords($this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
 	}
-	if ($this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings')) {
-	    $window->setRatings($this->callPublicMethod('ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings', 'getRatings'));
+	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings')) {
+	    $window->setRatings($this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings', 'getRatings'));
 	}
 
 	$window->centerOnScreen();
@@ -420,11 +420,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$window = Gui\Windows\Maplist::Create($login);
 	$window->setHistory($this->history);
 	$window->setTitle(__('History of Maps', $login));
-	if ($this->isPluginLoaded('ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
-	    $window->setRecords($this->callPublicMethod('ManiaLivePlugins\eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
+	if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
+	    $window->setRecords($this->callPublicMethod('\ManiaLivePlugins\eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
 	}
 	if ($this->isPluginLoaded('eXpansion\MapRatings')) {
-	    $window->setRatings($this->callPublicMethod('ManiaLivePlugins\eXpansion\MapRatings', 'getRatings'));
+	    $window->setRatings($this->callPublicMethod('\ManiaLivePlugins\eXpansion\MapRatings', 'getRatings'));
 	}
 
 	$window->centerOnScreen();

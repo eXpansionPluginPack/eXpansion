@@ -23,19 +23,19 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
          * Redirecting The Announcements of the Admin Groups plugin
          */
         if ($this->isPluginLoaded('eXpansion\\Chat_Admin'))
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Chat_Admin', 'exp_activateChatRedirect', array($this, 'send'));
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\Chat_Admin', 'exp_activateChatRedirect', array($this, 'send'));
 
         if ($this->isPluginLoaded('eXpansion\\Dedimania'))
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Dedimania', 'exp_activateChatRedirect', array($this, 'send'));
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\Dedimania', 'exp_activateChatRedirect', array($this, 'send'));
 
         if ($this->isPluginLoaded('eXpansion\\LocalRecords'))
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\\LocalRecords', 'exp_activateChatRedirect', array($this, 'send'));
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\LocalRecords', 'exp_activateChatRedirect', array($this, 'send'));
 
         if ($this->isPluginLoaded('eXpansion\\Database'))
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Database', 'exp_activateChatRedirect', array($this, 'send'));
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\Database', 'exp_activateChatRedirect', array($this, 'send'));
 
         if ($this->isPluginLoaded('eXpansion\\Maps'))
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Database', 'exp_activateChatRedirect', array($this, 'send'));
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\Database', 'exp_activateChatRedirect', array($this, 'send'));
 
         foreach ($this->storage->players as $login => $player)
             $this->onPlayerConnect($login, false); // force update...        

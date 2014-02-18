@@ -35,11 +35,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
-	$this->addDependency(new \ManiaLive\PluginHandler\Dependency('ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords'));
+	$this->addDependency(new \ManiaLive\PluginHandler\Dependency('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
     public function exp_onLoad() {
-	if ($this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania'))
+	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania'))
 	    Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
 
 	Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
@@ -56,7 +56,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 
 	$this->lastUpdate = time();
-	self::$localrecords = $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
+	self::$localrecords = $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
 	$this->enableTickerEvent();
 	$this->needUpdate = self::Localrecords;
 	// $this->forceUpdate = true;

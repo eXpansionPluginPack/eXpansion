@@ -27,7 +27,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onInit() {
 	//Oliverde8 Menu
-	if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
+	if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
 	    Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
 	}
     }
@@ -215,7 +215,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function forceScoresOk() {
 	$this->exp_chatSendServerMessage('Notice: Admin has altered the scores of current match!');
 	if ($this->isPluginLoaded("eXpansion\ESLcup")) {
-	    $this->callPublicMethod("ManiaLivePlugins\\eXpansion\ESLcup\\ESLcup", "syncScores");
+	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\ESLcup\\ESLcup", "syncScores");
 	}
     }
 
@@ -284,8 +284,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function dbTools($login) {
 	if (AdminGroups::hasPermission($login, 'db_maintainance')) {
-	    if ($this->isPluginLoaded("ManiaLivePlugins\\eXpansion\\Database\\Database")) {
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Database\\Database", "showDbMaintainance", $login);
+	    if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Database\\Database")) {
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Database\\Database", "showDbMaintainance", $login);
 	    } else {
 		$this->exp_chatSendServerMessage($this->msg_databasePlugin, $login);
 	    }
@@ -295,8 +295,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function restartMap($login) {
 
 	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_res')) {
-	    if ($this->isPluginLoaded("ManiaLivePlugins\\eXpansion\Chat_Admin\\Chat_Admin")) {
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\Chat_Admin\\Chat_Admin", "restartMap", $login);
+	    if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\Chat_Admin\\Chat_Admin")) {
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Chat_Admin\\Chat_Admin", "restartMap", $login);
 		return;
 	    }
 	    $this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
@@ -334,8 +334,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$player = $this->storage->getPlayerObject($bill->getSource_login());
 	$this->exp_chatSendServerMessage($this->msg_prestart, null, array($player->nickName));
 
-	if ($this->isPluginLoaded('ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
-	    $this->callPublicMethod("ManiaLivePlugins\\eXpansion\Maps\\Maps", "replayMap", $bill->getSource_login());
+	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
+	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Maps\\Maps", "replayMap", $bill->getSource_login());
 	    return;
 	}
 	$this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
@@ -348,8 +348,8 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function skipMap($login) {
 
 	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_skip')) {
-	    if ($this->isPluginLoaded("ManiaLivePlugins\\eXpansion\Chat_Admin\Chat_Admin")) {
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\Chat_Admin\Chat_Admin", "skipMap", $login);
+	    if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\Chat_Admin\Chat_Admin")) {
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Chat_Admin\Chat_Admin", "skipMap", $login);
 	    }
 	} else {
 	    $nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
@@ -375,16 +375,16 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function cancelVote($login) {
-	if ($this->isPluginLoaded("ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin")) {
-	    $this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin", "cancelVote", $login);
+	if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin")) {
+	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin", "cancelVote", $login);
 	    return;
 	}
 	$this->connection->cancelVote();
     }
 
     public function endRound($login) {
-	if ($this->isPluginLoaded("ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin")) {
-	    $this->callPublicMethod("ManiaLivePlugins\\eXpansion\Chat_Admin\\Chat_Admin", "forceEndRound", $login);
+	if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin")) {
+	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Chat_Admin\\Chat_Admin", "forceEndRound", $login);
 	    return;
 	}
 	$this->connection->forceEndRound();

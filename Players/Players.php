@@ -11,8 +11,8 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onInit() {
         parent::exp_onInit();
         //Oliverde8 Menu
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin"));
-        if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin"));
+        if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
         Gui\Windows\Playerlist::$mainPlugin = $this;
@@ -32,8 +32,8 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod("showPlayerList");
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Players'), false);
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Show Players'), null, array($this, 'showPlayerList'), false);
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Players'), false);
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Show Players'), null, array($this, 'showPlayerList'), false);
         }  
     }
 

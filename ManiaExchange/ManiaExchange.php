@@ -28,7 +28,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->config = Config::getInstance();
 
 //Oliverde8 Menu
-        if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
+        if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
     }
@@ -55,8 +55,8 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 //}
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('ManiaExchange'), false);
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Search Maps'), null, array($this, 'mxSearch'), false);
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('ManiaExchange'), false);
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Search Maps'), null, array($this, 'mxSearch'), false);
         }
 
         $version = $this->connection->getVersion();
@@ -214,7 +214,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $map = $this->connection->getMapInfo($file);
                 $this->exp_chatSendServerMessage($this->msg_add, null, array($map->name));
                 if ($this->config->juke_newmaps) {
-                    $this->callPublicMethod('ManiaLivePlugins\eXpansion\Maps\Maps', "queueMap", $login, $map, false);
+                    $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Maps\Maps', "queueMap", $login, $map, false);
                 }
             } catch (\Exception $e) {
                 $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
@@ -245,7 +245,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
 
         if ($this->dataAccess->save($file, $data)) {
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps\\Maps', 'queueMxMap', $login, $file);
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\Maps\\Maps', 'queueMxMap', $login, $file);
         }
     }
 
@@ -263,7 +263,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             return;
         }
 
-        $queue = $this->callPublicMethod('ManiaLivePlugins\eXpansion\\Maps\\Maps', 'returnQueue');
+        $queue = $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\Maps\\Maps', 'returnQueue');
         foreach ($queue as $q) {
             if ($q->player->login == $login) {
                 $msg = exp_getMessage('#admin_error# $iYou already have a map in the queue...');

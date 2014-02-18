@@ -85,8 +85,8 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
 
             //All plugins need the eXpansion Core to work properly
-            if ($this->getId() != 'ManiaLivePlugins\eXpansion\Core' && $this->getId() != 'ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad')
-                $this->addDependency(new \ManiaLive\PluginHandler\Dependency('ManiaLivePlugins\eXpansion\Core\Core'));
+            if ($this->getId() != '\ManiaLivePlugins\eXpansion\Core' && $this->getId() != '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad')
+                $this->addDependency(new \ManiaLive\PluginHandler\Dependency('\ManiaLivePlugins\eXpansion\Core\Core'));
 
             $this->setPublicMethod('exp_unload');
             $this->setPublicMethod('getDependencies');
@@ -183,10 +183,10 @@ use ManiaLivePlugins\eXpansion\Database\Database;
                 $this->exp_dir .= $exploded[$i];
             }
 	    if ($trim) {
-	    $this->exp_dir = str_replace("ManiaLivePlugins/", "", $this->exp_dir);
+	    $this->exp_dir = str_replace("\\ManiaLivePlugins/", "", $this->exp_dir);
 	    $this->exp_dir = str_replace("eXpansion", "expansion", $this->exp_dir);
 	    }
-	    echo "directory:" . $this->exp_dir . "\n";
+	    // echo "directory:" . $this->exp_dir . "\n";
             return $this->exp_dir;
         }
 
@@ -377,7 +377,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
             if (!empty($deps)) {
                 $this->console('[eXpansion] Unloading Dependencies of ' . $this->getId() . '');
                 foreach ($deps as $dep) {
-                    if ($dep->getPluginId() != "ManiaLivePlugins\\eXpansion\\Core\\Core")
+                    if ($dep->getPluginId() != "\\ManiaLivePlugins\\eXpansion\\Core\\Core")
                         $this->callPublicMethod($dep->getPluginId(), 'exp_unload');
                 }
             }

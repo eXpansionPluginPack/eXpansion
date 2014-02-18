@@ -33,7 +33,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->config->restartVote_ratio == -1)
             $this->config->restartVote_ratio = 1;
 //Oliverde8 Menu
-        if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu'))
+        if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu'))
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
     }
 
@@ -68,7 +68,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod("vote_restart");
         $this->setPublicMethod("vote_skip");
 
-        if ($this->isPluginLoaded('ManiaLivePlugins\\eXpansion\\Maps\\Maps') && $this->config->restartVote_useQueue) {
+        if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Maps\\Maps') && $this->config->restartVote_useQueue) {
             $this->useQueue = true;
             $this->debug("[exp\Votes] Restart votes set to queue");
         } else {
@@ -91,15 +91,15 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->debug("[exp\Votes] Building eXp\Menu buttons..");
             if ($this->config->restartVote_enable || $this->config->skipVote_enable) {
-                $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Votes'), false);
+                $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Votes'), false);
             }
             if ($this->config->restartVote_enable) {
-                $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Restart Map'), null, array($this, 'vote_Restart'), false);
+                $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Restart Map'), null, array($this, 'vote_Restart'), false);
             }
             if ($this->config->skipVote_enable) {
-                $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Skip Map'), null, array($this, 'vote_Skip'), false);
+                $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Skip Map'), null, array($this, 'vote_Skip'), false);
             }
-            $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Cancel Vote'), null, array($this, 'cancelVote'), true);
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Cancel Vote'), null, array($this, 'cancelVote'), true);
         }
     }
 
@@ -232,9 +232,9 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $voter = $this->voter;
             if ($cmdName == "Replay") {
                 if (sizeof($this->storage->players) == 1) {
-                    $this->callPublicMethod('ManiaLivePlugins\\eXpansion\\Maps\\Maps', 'replayMapInstant', $voter);
+                    $this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\Maps\\Maps', 'replayMapInstant', $voter);
                 } else {
-                    $this->callPublicMethod('ManiaLivePlugins\\eXpansion\\Maps\\Maps', 'replayMap', $voter);
+                    $this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\Maps\\Maps', 'replayMap', $voter);
                 }
             }
             if ($cmdName == "Skip") {
