@@ -186,7 +186,7 @@ use ManiaLivePlugins\eXpansion\Database\Database;
 	    $this->exp_dir = str_replace("\\ManiaLivePlugins/", "", $this->exp_dir);
 	    $this->exp_dir = str_replace("eXpansion", "expansion", $this->exp_dir);
 	    }
-	    echo "directory:" . $this->exp_dir . "\n";
+	    // echo "directory:" . $this->exp_dir . "\n";
             return $this->exp_dir;
         }
 

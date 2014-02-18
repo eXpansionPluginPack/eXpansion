@@ -97,7 +97,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     function onDraw() {
         $login = $this->getRecipient();
         $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->target);
-	var_dump($record);
+	//var_dump($record);
         $checkpoints = "[ -1 ]";
         if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record) {
             $checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . "]";

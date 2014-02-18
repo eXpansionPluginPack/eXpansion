@@ -24,7 +24,7 @@ class AutoTageXpansion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	
 	function exp_onReady() {
 	$data = $this->connection->getServerTags();
-	var_dump($data);
+	//var_dump($data);
 	}
 	
 
