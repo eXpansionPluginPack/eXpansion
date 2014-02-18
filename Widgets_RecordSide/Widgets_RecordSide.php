@@ -212,6 +212,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onBeginMatch() {
+	self::$raceOn = false;
 	$this->dedi = true;
 	$this->local = true;
 	$this->forceUpdate = true;

@@ -147,11 +147,8 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 			showed = True;
 		    }
 
-		    if((maxCp - cpIndex - 1) > 0){
-			nickLabel.SetText((maxCp - cpIndex - 1)^"Cp "^playerNickNames[cpIndex][p]);
-		    }else{
-			 nickLabel.SetText(playerNickNames[cpIndex][p]);
-		    }
+		    nickLabel.SetText(playerNickNames[cpIndex][p]);
+		    
 		    
 		    timeLabel.SetText(TimeToText(Score));
 		    
@@ -159,17 +156,17 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 		    declare labelInfo2 = (Page.GetFirstChild("RecInfo2_"^i) as CMlLabel);
 		    
 		    if(nbRec == 1){
-			labelInfo1.SetText(TimeToText(0));
-			labelInfo2.SetText(TimeToText(0));
+			labelInfo1.SetText("-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
+			labelInfo2.SetText("-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
 		    }else if(firstOfCp){
-			labelInfo1.SetText("$00F"^TimeToText(0));
-			labelInfo2.SetText("$00F"^TimeToText(0));
+			labelInfo1.SetText("$00F"^"-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
+			labelInfo2.SetText("$00F"^"-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
 		    }else{
 			declare diff = Score - bestCp;
-			if(lastTimeDiff > diff && showed){
+			if(lastTimeDiff > diff && playerNickNames[cpIndex][p] == LocalUser.Name){
 			    labelInfo1.SetText("$F00+"^TimeToText(Score - bestCp));
 			    labelInfo2.SetText("$F00+"^TimeToText(Score - bestCp));
-			}else if(lastTimeDiff < diff && showed){
+			}else if(lastTimeDiff < diff && playerNickNames[cpIndex][p] == LocalUser.Name){
 			    labelInfo1.SetText("$0F0+"^TimeToText(Score - bestCp));
 			    labelInfo2.SetText("$0F0+"^TimeToText(Score - bestCp));
 			}else{

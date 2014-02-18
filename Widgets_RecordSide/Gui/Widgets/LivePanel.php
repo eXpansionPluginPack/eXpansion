@@ -103,8 +103,12 @@ class LivePanel extends LocalPanel {
     }
 
     protected function cpUpdate() {
-	if (!Widgets_RecordSide::$raceOn)
+	if (!Widgets_RecordSide::$raceOn){
+	    echo "RACE OF";
 	    return;
+	}
+
+	
 	$nbCheckpoints = array();
 	$playerCps = array();
 	$playerNickNames = array();
