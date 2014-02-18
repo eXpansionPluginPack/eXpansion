@@ -18,7 +18,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onReady() {
 	$this->enableDedicatedEvents();
-	if ($this->isPluginLoaded("ManiaLivePlugins\\eXpansion\\AdminGroups\\AdminGroups")) {
+	if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\AdminGroups\\AdminGroups")) {
 	    Dispatcher::register(\ManiaLivePlugins\eXpansion\AdminGroups\Events\Event::getClass(), $this);
 	}
 
@@ -62,22 +62,22 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	switch ($action) {
 	    case "playerlist":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\Players\\Players", "showPlayerList", $login);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Players\\Players", "showPlayerList", $login);
 		break;
 	    case "maplist":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Maps\\Maps", "showMapList", $login);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps", "showMapList", $login);
 		break;
 	    case "addMaps":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Maps\\Maps", "addMaps", $login);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps", "addMaps", $login);
 		break;
 	    case "maprecords":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, Null);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, Null);
 		break;
 	    case "voteres":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Votes\Votes", "vote_restart", $login);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Votes\Votes", "vote_restart", $login);
 		break;
 	    case "voteskip":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Votes\\Votes", "vote_skip", $login);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Votes\\Votes", "vote_skip", $login);
 		break;
 	    case "quit":
 		$this->connection->kick($login, "Thanks for visiting and welcome back");
@@ -101,34 +101,34 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$adminGrp->adminCmd($login, "trash this");
 		break;
 	    case "admmx":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\ManiaExchange\\ManiaExchange", "mxSearch", $login, "", "");
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\ManiaExchange\\ManiaExchange", "mxSearch", $login, "", "");
 		break;
 	    case "admcontrol":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Adm\\Adm", "serverControlMain", $login);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Adm\\Adm", "serverControlMain", $login);
 		break;
 	    case "help":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Faq\\Faq", "showFaq", $login, "toc", null);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Faq\\Faq", "showFaq", $login, "toc", null);
 		break;
 	    case "hudMove":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "move");
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "move");
 		break;
 	    case "hudLock":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "lock");
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "lock");
 		break;
 	    case "hudConfig":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Gui\\Gui", "showConfigWindow", $login, $entries);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Gui\\Gui", "showConfigWindow", $login, $entries);
 		break;
 	    case "hudReset":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "reset");
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "reset");
 		break;
 	    case "stats":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Statistics\\Statistics", "showTopWinners", $login);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Statistics\\Statistics", "showTopWinners", $login);
 		break;
 	    case "serverinfo":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\Core\\Core", "showInfo", $login);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Core\\Core", "showInfo", $login);
 		break;
 	    case "serverranks":
-		$this->callPublicMethod("ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRanksWindow", $login);
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRanksWindow", $login);
 		break;
 	    case "admreplay":
 		$adminGrp->adminCmd($login, "replay");

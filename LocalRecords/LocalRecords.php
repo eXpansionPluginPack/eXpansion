@@ -120,10 +120,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->setPublicMethod("showRanksWindow");
 
 	//The Database plugin is needed. 
-	$this->addDependency(new \ManiaLive\PluginHandler\Dependency("ManiaLivePlugins\\eXpansion\Database\Database"));
+	$this->addDependency(new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\Database\Database"));
 
 	//Oliverde8 Menu
-	if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
+	if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
 	    Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
 	}
     }
@@ -220,17 +220,17 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	}
 
 	//Checking the version if the table
-	$version = $this->callPublicMethod('ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_records');
+	$version = $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_records');
 	if (!$version) {
-	    $version = $this->callPublicMethod('ManiaLivePlugins\eXpansion\Database\Database', 'setDatabaseVersion', 'exp_records', 1);
+	    $version = $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Database\Database', 'setDatabaseVersion', 'exp_records', 1);
 	}
 
-	$version = $this->callPublicMethod('ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_records');
+	$version = $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_records');
 	// update for version2 
 	if ($version == 1) {
 	    $q = "ALTER TABLE `exp_records` CHANGE `record_date` `record_date` INT( 12 ) NOT NULL;";
 	    $this->db->execute($q);
-	    $this->callPublicMethod('ManiaLivePlugins\eXpansion\Database\Database', 'setDatabaseVersion', 'exp_records', 2);
+	    $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Database\Database', 'setDatabaseVersion', 'exp_records', 2);
 	}
 
 
@@ -248,8 +248,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	$this->onBeginMap("", "", "");
 	if ($this->isPluginLoaded('eXpansion\Menu')) {
-	    $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Records'), true);
-	    $this->callPublicMethod('ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
+	    $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Records'), true);
+	    $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Map Records'), null, array($this, 'showRecsMenuItem'), false);
 	}
 
 	$this->getRanks();	

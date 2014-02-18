@@ -28,7 +28,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function exp_onInit() {
         parent::exp_onInit();
         Gui\Windows\ParameterDialog::$mainPlugin = $this;
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency('ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups'));
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency('\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups'));
 
         $this->setPublicMethod("restartMap");
         $this->setPublicMethod("skipMap");
@@ -36,7 +36,7 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->setPublicMethod("forceEndRound");
 
         //Oliverde8 Menu
-        if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
+        if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
     }
@@ -1314,8 +1314,8 @@ Other server might use the same blacklist file!!');
         try {
             $admin = $this->storage->getPlayerObject($fromLogin);
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
-            if ($this->isPluginLoaded('ManiaLivePlugins\eXpansion\Maps\Maps')) {
-                $this->callPublicMethod('ManiaLivePlugins\eXpansion\Maps\Maps', "replayMapInstant");
+            if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Maps\Maps')) {
+                $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Maps\Maps', "replayMapInstant");
                 return;
             }
             $this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);

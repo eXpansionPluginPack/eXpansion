@@ -25,7 +25,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     function exp_onInit() {
         global $lang;
         //The Database plugin is needed. 
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("ManiaLivePlugins\\eXpansion\\Database\\Database"));
+        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Database\\Database"));
 
         // Make sure pcre and php_com_dotnet are loaded :)
         if (!extension_loaded('pcre') && !function_exists('preg_match') && !function_exists('preg_match_all')) {
@@ -58,7 +58,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
             $this->metrics = new Stats\StatsLinux();
         }
         //liverde8 Menu
-        if ($this->isPluginLoaded('ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
+        if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
             Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
         }
 
@@ -109,9 +109,9 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         }
 
         //Checking the version if the table
-        $version = $this->callPublicMethod('ManiaLivePlugins\\eXpansion\\Database\\Database', 'getDatabaseVersion', 'exp_records');
+        $version = $this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\Database\\Database', 'getDatabaseVersion', 'exp_records');
         if (!$version) {
-            $version = $this->callPublicMethod('ManiaLivePlugins\\eXpansion\\Database\\Database', 'setDatabaseVersion', 'exp_records', 1);
+            $version = $this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\Database\\Database', 'setDatabaseVersion', 'exp_records', 1);
         }
 
         $this->nbPlayer = 0;
