@@ -103,8 +103,8 @@ foreach (Event in PendingEvents) {
 }		  
 
 if (MoveWindow) {
-	<?= $deltaX ?>
-	<?= $deltaY ?>
+	<?php echo $deltaX ?>
+	<?php echo $deltaY ?>
 	LastDelta += DeltaPos;
 	LastDelta.Z = 3.0;
 	Window.RelativePosition = LastDelta;

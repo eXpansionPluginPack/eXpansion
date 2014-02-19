@@ -20,7 +20,7 @@
  *  along with this program.  If not, see {http://www.gnu.org/licenses/}.
  */
 
-declare Window <=> Page.GetFirstChild("<?= $win->getId() ?>");
+declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");
 declare MoveWindow = False;
 declare CMlQuad  quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);
 declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
@@ -44,11 +44,11 @@ declare Boolean exp_widgetVisibleBuffered;
 declare persistent Text[Text][Text][Text] eXp_widgetLayers = Text[Text][Text][Text];  // layer can be "normal" or "scorestable" or some other for future usage
 declare Text exp_widgetLayersBuffered;  
 
-declare Text version = "<?= $this->version ?>";
-declare Text id = "<?= $this->name ?>";
-declare Text gameMode = "<?= $this->gameMode; ?>";
-declare Boolean forceReset = <?= $this->forceReset ?>;
-declare Text activeLayer = "<?= $win->getLayer() ?>";
+declare Text version = "<?php echo $this->version ?>";
+declare Text id = "<?php echo $this->name ?>";
+declare Text gameMode = "<?php echo $this->gameMode; ?>";
+declare Boolean forceReset = <?php echo $this->forceReset ?>;
+declare Text activeLayer = "<?php echo $win->getLayer() ?>";
 declare Boolean exp_widgetCurrentVisible = False;
 declare Boolean exp_widgetVisibilityChanged = False;
 declare Integer eXp_lastWidgetCheck = 0;
@@ -63,7 +63,7 @@ if ( !eXp_widgetVisible[version].existskey(id) || forceReset) {
 }
 
 if ( !eXp_widgetVisible[version][id].existskey(gameMode) ) {
-	eXp_widgetVisible[version][id][gameMode] = <?= $win->getWidgetVisible(); ?>;
+	eXp_widgetVisible[version][id][gameMode] = <?php echo $win->getWidgetVisible(); ?>;
 }
 
 if (!eXp_widgetLayers.existskey(version) ) {
@@ -86,7 +86,7 @@ if (!eXp_widgetLastPos[version].existskey(id) || forceReset) {
 	eXp_widgetLastPos[version][id] = Vec3[Text];
 }
 if (!eXp_widgetLastPos[version][id].existskey(gameMode) ) {
-	eXp_widgetLastPos[version][id][gameMode] = < <?= $this->getNumber($win->getPosX()) ?>, <?= $this->getNumber($win->getPosY()) ?>, 0.0>;
+	eXp_widgetLastPos[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, 0.0>;
 }
 
 if (!eXp_widgetLastPosRel.existskey(version)) {
@@ -98,7 +98,7 @@ if (!eXp_widgetLastPosRel[version].existskey(id) || forceReset) {
 }
 
 if (!eXp_widgetLastPosRel[version][id].existskey(gameMode)) {
-	eXp_widgetLastPosRel[version][id][gameMode] = < <?= $this->getNumber($win->getPosX()) ?>, <?= $this->getNumber($win->getPosY()) ?>, 0.0>;
+	eXp_widgetLastPosRel[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, 0.0>;
 }
 
 Window.PosnX = eXp_widgetLastPos[version][id][gameMode][0];

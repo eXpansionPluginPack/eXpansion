@@ -1,11 +1,11 @@
 
 foreach (Player in Players) {
 
-    declare <?= $this->varName ?> for Player = -1;
+    declare <?php echo $this->varName ?> for Player = -1;
 
-    if (<?= $this->varName ?> != Player.CurRace.Checkpoints.count) {
+    if (<?php echo $this->varName ?> != Player.CurRace.Checkpoints.count) {
 	//Update the current checkpoint of this user
-	<?= $this->varName ?> = Player.CurRace.Checkpoints.count;
+	<?php echo $this->varName ?> = Player.CurRace.Checkpoints.count;
 	curCp = Player.CurRace.Checkpoints.count;
 
 	//If finish
@@ -47,8 +47,8 @@ foreach (Player in Players) {
 	    }
 	}
 	//Work around for 0 CP tracks
-	if(<?= $this->varName ?>  == 1){
-	    <?= $this->varName ?> = -1;
+	if(<?php echo $this->varName ?>  == 1){
+	    <?php echo $this->varName ?> = -1;
 	}
     }
 }

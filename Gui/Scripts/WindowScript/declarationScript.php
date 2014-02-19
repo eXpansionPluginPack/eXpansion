@@ -11,11 +11,11 @@ $startPosY = intval($win->getSizeY() / 2) . ".0";
 #Include "TextLib" as TextLib
 
 //Function definitions
-<?= $this->scriptLib ?>
+<?php echo $this->scriptLib ?>
 
 //Main Function
 main () {
-    declare Window <=> Page.GetFirstChild("<?= $win->getId() ?>");
+    declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");
     declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);    
 
     declare MoveWindow = False;
@@ -31,15 +31,15 @@ main () {
     declare Real lastMouseX = 0.0;
     declare Real lastMouseY = 0.0;
     declare active = False;
-    declare Text id = "<?= $this->name ?>";
-    declare Boolean forceReset = <?= $this->forceReset; ?>;
-    declare Text version = "<?= $this->version; ?>";
+    declare Text id = "<?php echo $this->name ?>";
+    declare Boolean forceReset = <?php echo $this->forceReset; ?>;
+    declare Text version = "<?php echo $this->version; ?>";
     declare persistent Vec3[Text][Text] exp_windowLastPos;
     declare persistent Vec3[Text][Text] exp_windowLastPosRel;
     declare persistent Text[Text] exp_windowActive;
 
     //Declarations by containers included in this window
-    <?= $this->dDeclares ?>
+    <?php echo $this->dDeclares ?>
     if (!exp_windowActive.existskey(version)) {
         exp_windowActive[version] = Text;    
     }
@@ -48,13 +48,13 @@ main () {
         exp_windowLastPos[version] = Vec3[Text];
     }
     if (!exp_windowLastPos[version].existskey(id) || forceReset) {
-        exp_windowLastPos[version][id] = < <?= $startPosX ?>, <?=  $startPosY ?>, 0.0>;
+        exp_windowLastPos[version][id] = < <?php echo $startPosX ?>, <?php echo  $startPosY ?>, 0.0>;
     }
     if (!exp_windowLastPosRel.existskey(version)) {
          exp_windowLastPosRel[version] = Vec3[Text];
     }
     if ( !exp_windowLastPosRel[version].existskey(id) || forceReset) {
-        exp_windowLastPosRel[version][id] = < <?= $startPosX ?>, <?=  $startPosY ?>, 0.0>;
+        exp_windowLastPosRel[version][id] = < <?php echo $startPosX ?>, <?php echo  $startPosY ?>, 0.0>;
     }
     Window.PosnX = exp_windowLastPos[version][id][0];
     Window.PosnY = exp_windowLastPos[version][id][1];
@@ -65,7 +65,7 @@ main () {
 
     while(True) {
 	yield;
-        <?= $this->wLoop ?>
+        <?php echo $this->wLoop ?>
 
         if (exp_windowActive[version] == id) {
             declare temp = Window.RelativePosition;

@@ -1,13 +1,13 @@
 
 foreach (Player in Players) {
 
-    declare <?= $this->varName ?> for Player = -1;
+    declare <?php echo $this->varName ?> for Player = -1;
 
-    if (<?= $this->varName ?> != Player.CurRace.Checkpoints.count) {	
+    if (<?php echo $this->varName ?> != Player.CurRace.Checkpoints.count) {	
 	
 	//Update the current checkpoint of this user
 	declare curCp = Player.CurRace.Checkpoints.count -1 ;	
-	<?= $this->varName ?> = curCp+1;
+	<?php echo $this->varName ?> = curCp+1;
 	
 	
 	//Check if valid checkpoint
@@ -21,7 +21,7 @@ foreach (Player in Players) {
 		maxCp = curCp+1;
 	    }
 
-	    declare <?= $this->varName ?>_cpPosition for Player = -1;
+	    declare <?php echo $this->varName ?>_cpPosition for Player = -1;
 	    declare newCpPosition = 0;
 	    
 	    playersTeam[Player.Login] = Player.RequestedClan;

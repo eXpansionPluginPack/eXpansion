@@ -7,7 +7,7 @@
 
 if (isMinimized)
 {
-    if (mainWindow.PosnX <?= $smaller ?> positionMin) {
+    if (mainWindow.PosnX <?php echo $smaller ?> positionMin) {
 	mainWindow.PosnX -= 4;
     }
 }else if (!isMinimized){

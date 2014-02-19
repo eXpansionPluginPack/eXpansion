@@ -1,1 +1,1 @@
-declare Integer sendAction = <?= $this->sendAction ?>;
+declare Integer sendAction = <?php echo $this->sendAction ?>;

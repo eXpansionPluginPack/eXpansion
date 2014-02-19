@@ -3,18 +3,18 @@
 #Include "MathLib" as MathLib
 
 //Function definitions
-<?= $this->scriptLib ?>
+<?php echo $this->scriptLib ?>
 
 main () {
      // external declares
-     <?= $this->dDeclares ?>
+     <?php echo $this->dDeclares ?>
 			 
      // external declares ends
      while(True) {
 	yield;	
         
 	// external loop stuff
-        <?=  $this->wLoop ?>
+        <?php echo  $this->wLoop ?>
     }
 }
 //--> </script>

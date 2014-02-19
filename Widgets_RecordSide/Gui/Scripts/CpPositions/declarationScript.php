@@ -9,8 +9,8 @@ declare playerNickNames	= <?php echo $this->nickNames ?>;
 
 //The latest chackpoint the player past
 declare playersOnServer = Text[Text];
-declare playersTeam = <?= $this->playerTeams ?>;
-declare maxCp = <?= $this->maxCp ?>;
+declare playersTeam = <?php echo $this->playerTeams ?>;
+declare maxCp = <?php echo $this->maxCp ?>;
 
 declare Boolean needUpdate = True;
 declare lastUpdateTime = 0;

@@ -1,4 +1,4 @@
-declare Real itemSizeY = <?= $this->getNumber($this->sizeY) ?>;
+declare Real itemSizeY = <?php echo $this->getNumber($this->sizeY) ?>;
 declare CMlFrame Pager <=> (Page.GetFirstChild("Pager") as CMlFrame);
 declare CMlQuad ScrollBar <=> (Page.GetFirstChild("ScrollBar") as CMlQuad);
 declare CMlQuad ScrollBg <=> (Page.GetFirstChild("ScrollBg") as CMlQuad);

@@ -12,13 +12,13 @@ declare moveScroll = False;
 declare Real pagerStartPos = ScrollBar.RelativePosition.Y;
 declare Real pagerDelta = 0.0;
 
-declare Text[][Integer] textData = <?= $this->items;  ?>;
-declare Text[][Integer] data <?= $this->data;  ?>;
+declare Text[][Integer] textData = <?php echo $this->items;  ?>;
+declare Text[][Integer] data <?php echo $this->data;  ?>;
 declare CMlLabel[Integer][Integer] labels;
 
 declare Integer rowsPerPage = 14;
-declare Integer itemsPerRow = <?= $this->itemsPerRow; ?>;
-declare Integer totalRows = <?= $this->totalRows; ?>;
+declare Integer itemsPerRow = <?php echo $this->itemsPerRow; ?>;
+declare Integer totalRows = <?php echo $this->totalRows; ?>;
 
 declare Integer itemNumber;
 
