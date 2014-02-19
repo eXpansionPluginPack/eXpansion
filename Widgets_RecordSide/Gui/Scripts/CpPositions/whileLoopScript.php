@@ -12,6 +12,9 @@ foreach (Player in Players) {
 	
 	//Check if valid checkpoint
 	if(curCp >= 0){
+	    if((curCp+1) == totalCp*nbLaps && givePoints){
+		nbFinish += 1;
+	    }
 	    needUpdate = True;
 	    //Check if max Checkpoint
 	    if(maxCp <= curCp){
@@ -21,8 +24,7 @@ foreach (Player in Players) {
 	    declare <?= $this->varName ?>_cpPosition for Player = -1;
 	    declare newCpPosition = 0;
 	    
-	    
-	    
+	    playersTeam[Player.Login] = Player.RequestedClan;
 	    
 	    //Register Checkpoint time
 	    if(!playerTimes.existskey(curCp)){
@@ -75,7 +77,7 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     declare start = -1;
     declare end = -1;
     declare recCount = -1;
-
+    
     i = 1;
     
     declare cpIndex = maxCp -1;
@@ -86,7 +88,6 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 		if (LocalUser != Null) {
 		    if (playerNickNames[cpIndex][p] == LocalUser.Name) {
 			myRank = i;
-			break;
 		    }
 		}
 		i += 1;
@@ -101,6 +102,10 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 	cpIndex -= 1;
     }
     recCount = i;
+    
+    if(LocalUser.RequestsSpectate && givePoints){
+	myRank = nbFinish;
+    }
 
     if (myRank != -1) {
 	start = myRank - ((nbFields - nbFirstFields) / 2);
@@ -124,6 +129,10 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     nbRec = 1;
     declare firstOfCp = True;
     cpIndex = maxCp -1;
+    
+    declare teamRedScore = 0;
+    declare teamBlueScore = 0;
+    
     while(cpIndex >= 0){
 	declare bestCp = 0;
 	if(playerTimes.existskey(cpIndex)){
@@ -134,7 +143,9 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 		    declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
 		    declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
 		    declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
-
+		    declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
+		   
+		    
 		    /*if (highliteQuad != Null) {
 			if (playersOnServer.existskey(Login) && i != myRank) {
 			    highliteQuad.Show();
@@ -149,15 +160,31 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 
 		    nickLabel.SetText(playerNickNames[cpIndex][p]);
 		    
-		    
-		    timeLabel.SetText(TimeToText(Score));
+		    if(isTeam){
+			if(playersTeam[p] == 1){
+			    timeLabel.SetText("$00F"^TimeToText(Score));
+			    rank.SetText("$00F"^i);
+			    if(points.existskey(nbRec-1)){
+				teamBlueScore += points[nbRec-1];
+			    }
+			}else{
+			    timeLabel.SetText("$F00"^TimeToText(Score));
+			    rank.SetText("$F00"^i);
+			    if(points.existskey(nbRec-1)){
+				teamRedScore += points[nbRec-1];
+			    }
+			}
+		    }else{
+			timeLabel.SetText(TimeToText(Score));
+			rank.SetText(""^i);
+		    }
 		    
 		    declare labelInfo1 = (Page.GetFirstChild("RecInfo1_"^i) as CMlLabel);
 		    declare labelInfo2 = (Page.GetFirstChild("RecInfo2_"^i) as CMlLabel);
 		    
 		    if(nbRec == 1){
-			labelInfo1.SetText("-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
-			labelInfo2.SetText("-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
+			labelInfo1.SetText("   -"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
+			labelInfo2.SetText("   -"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
 		    }else if(firstOfCp){
 			labelInfo1.SetText("$00F"^"-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
 			labelInfo2.SetText("$00F"^"-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
@@ -178,31 +205,41 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 			}
 		    }
 
-		    declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
-		    rank.SetText(""^i);
+
 
 		    declare labelCp1 = (Page.GetFirstChild("RecCp1_"^i) as CMlLabel);
 		    declare labelCp2 = (Page.GetFirstChild("RecCp2_"^i) as CMlLabel);
-		    if(nbRec == 1){
-			 declare lap = 0;
-			 lap = cpIndex/totalCp;
-			 if(lap > 0){
-			    labelCp1.SetText("Lap"^lap);
-			    labelCp2.SetText("Lap"^lap);
-			 }else{
-			    labelCp1.SetText("Cp"^(cpIndex+1));
-			    labelCp2.SetText("Cp"^(cpIndex+1));
-			 }
-		    }else{
-			declare diff = maxCp - cpIndex - 1;
-			if(diff > 0){
-			    labelCp1.SetText("+"^diff^"Cp");
-			    labelCp2.SetText("+"^diff^"Cp");
+		    
+		    if((cpIndex+1) == totalCp*nbLaps && givePoints){
+			if(points.existskey(nbRec-1)){
+			    labelCp1.SetText("$2A2"^points[nbRec-1]^" pts");
+			    labelCp2.SetText("$2C2"^points[nbRec-1]^" pts");
 			}else{
-			    labelCp1.SetText("");
-			    labelCp2.SetText("");
+			    labelCp1.SetText("$2A20P");
+			    labelCp2.SetText("$2A20P");
 			}
-		    }	    
+		    }else{
+			if(nbRec == 1){
+			     declare lap = 0;
+			     lap = cpIndex/totalCp;
+			     if(lap > 0 && isLaps){
+				labelCp1.SetText("Lap"^lap);
+				labelCp2.SetText("Lap"^lap);
+			     }else{
+				labelCp1.SetText("Cp"^(cpIndex+1));
+				labelCp2.SetText("Cp"^(cpIndex+1));
+			     }
+			}else{
+			    declare diff = maxCp - cpIndex - 1;
+			    if(diff > 0){
+				labelCp1.SetText("+"^diff^" cp");
+				labelCp2.SetText("+"^diff^" cp");
+			    }else{
+				labelCp1.SetText("");
+				labelCp2.SetText("");
+			    }
+			}
+		    }
 		    
 		    declare bg = (Page.GetFirstChild("RecBgBlink_"^i) as CMlQuad);
 
@@ -223,5 +260,13 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 	    firstOfCp = True;
 	}
 	cpIndex -= 1;
+    }
+    
+    if(isTeam){
+	declare blueLabel = (Page.GetFirstChild("bluePoints") as CMlLabel);
+	blueLabel.SetText(""^teamBlueScore);
+	
+	declare redLabel = (Page.GetFirstChild("redPoints") as CMlLabel);
+	redLabel.SetText(""^teamRedScore);
     }
 }

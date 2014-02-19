@@ -5,7 +5,10 @@ namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Widgets;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\Recorditem;
+use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\TeamItem;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
+
+use \Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class LivePanel extends LocalPanel {
 
@@ -19,7 +22,7 @@ class LivePanel extends LocalPanel {
     }
 
     protected function getScript() {
-	if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK)
+	if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TIMEATTACK)
 	    return parent::getScript();
 	else {
 	    $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/CpPositions");
@@ -31,10 +34,51 @@ class LivePanel extends LocalPanel {
 	    $this->timeScript->setParam("playerTimes", 'Integer[Text][Integer]');
 	    $this->timeScript->setParam("nickNames", 'Text[Text][Integer]');
 	    $this->timeScript->setParam("maxCp", -1);
+	    
+	    $this->timeScript->setParam("givePoints", "True");
+	    $this->timeScript->setParam("points", "Integer[Integer]");
+	    $this->timeScript->setParam("nbLaps",1);
+	    $this->timeScript->setParam("isLaps", "False");
+	    $this->timeScript->setParam("isTeam", "False");
+	    $this->timeScript->setParam("playerTeams", "Integer[Text]");
+	    
+	    if( $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_LAPS){
+		$this->timeScript->setParam("isLaps", "True");
+		$this->timeScript->setParam("nbLaps", $this->storage->gameInfos->lapsNbLaps);
+	    }else if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_ROUNDS && $this->storage->gameInfos->roundsForcedLaps > 0){
+		$this->timeScript->setParam("isLaps", "True");
+		$this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
+	    }else if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->roundsForcedLaps > 0){
+		$this->timeScript->setParam("isLaps", "True");
+		$this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
+	    }else if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP && $this->storage->gameInfos->roundsForcedLaps > 0){
+		$this->timeScript->setParam("isLaps", "True");
+		$this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
+	    }
+	    
+	    if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_LAPS){
+		$this->timeScript->setParam("givePoints", "False");
+	    }
+	    
+	    if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM){
+		$this->timeScript->setParam("isTeam", "True");
+	    }
+	    
+	    if(!empty(Widgets_RecordSide::$roundPoints)){
+		$this->timeScript->setParam("points", "[". implode (",", Widgets_RecordSide::$roundPoints )."]");
+	    }
+	    
 	    return $script;
 	}
     }
 
+    public function setNbFields($nb) {
+	if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM)
+	    parent::setNbFields($nb-1);
+	else
+	    parent::setNbFields($nb);
+    }
+    
     function update() {
 
 	$login = $this->getRecipient();
@@ -54,6 +98,11 @@ class LivePanel extends LocalPanel {
 
 	for ($index = 1; $index <= $this->nbFields; $index++) {
 	    $this->items[$index - 1] = new Recorditem($index, false, $this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
+	    $this->frame->addComponent($this->items[$index - 1]);
+	}
+	
+	if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM){
+	    $this->items[$index - 1] = new TeamItem();
 	    $this->frame->addComponent($this->items[$index - 1]);
 	}
 
@@ -104,7 +153,6 @@ class LivePanel extends LocalPanel {
 
     protected function cpUpdate() {
 	if (!Widgets_RecordSide::$raceOn){
-	    echo "RACE OF";
 	    return;
 	}
 
@@ -117,7 +165,7 @@ class LivePanel extends LocalPanel {
 	foreach (\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo as $login => $player) {
 	    $lastCpIndex = count($player->checkpoints) - 1;
 	    if ($player->isPlaying && $lastCpIndex >= 0 && $player->checkpoints[$lastCpIndex] > 0) {
-
+		
 		if ($lastCpIndex > $biggestCp)
 		    $biggestCp = $lastCpIndex;
 
@@ -125,6 +173,7 @@ class LivePanel extends LocalPanel {
 		$player = $this->storage->getPlayerObject($login);
 		$playerCps[$lastCpIndex][$login] = $lastCpTime;
 		$playerNickNames[$lastCpIndex][$player->login] = $player->nickName;
+		$playerTeams[$login] = $player->teamId;
 	    }
 	}
 
@@ -136,6 +185,7 @@ class LivePanel extends LocalPanel {
 
 	$playerTimes = "[";
 	$NickNames = "[";
+	$teams = "[";
 
 	$cpCount = 0;
 	foreach ($newPlayerCps as $cpIndex => $cpTimes) {
@@ -152,9 +202,11 @@ class LivePanel extends LocalPanel {
 		if ($cCount != 0) {
 		    $playerTimes .= ", ";
 		    $NickNames .= ", ";
+		    $teams .= ", ";
 		}
 		$playerTimes .= '"' . $login . "\"=>" . $score;
 		$NickNames .= '"' . $login . "\"=>\"" . $this->fixHyphens($playerNickNames[$cpIndex][$login]) . "\"";
+		$teams .= '"' . $login . "\"=>" . ($playerTeams[$login] == 1 ? 0 : 1);
 		$nbCheckpoints[$cpIndex] ++;
 		$cCount++;
 	    }
@@ -165,7 +217,10 @@ class LivePanel extends LocalPanel {
 	}
 	$playerTimes .="]";
 	$NickNames .="]";
+	$teams .="]";
 
+	$this->timeScript->setParam("playerTeams", $teams);
+	
 	if (!empty($newPlayerCps)) {
 	    $this->timeScript->setParam("playerTimes", $playerTimes);
 	    $this->timeScript->setParam("nickNames", $NickNames);
