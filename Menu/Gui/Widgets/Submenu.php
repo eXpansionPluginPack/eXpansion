@@ -16,11 +16,11 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Windows\PlainWidget {
         $this->item[$nb]->setStyle("TextChallengeNameMedium");
         $this->item[$nb]->setAlign("left", "center");
         $this->item[$nb]->setSize(25, 4.5);
-        $this->item[$nb]->setFocusAreaColor1("5af9");
-        $this->item[$nb]->setFocusAreaColor2("5af9");
+        $this->item[$nb]->setFocusAreaColor1("0009");
+        $this->item[$nb]->setFocusAreaColor2("0009");
 
         if (!empty($action)) {
-            $this->item[$nb]->setFocusAreaColor2("fffb");
+            $this->item[$nb]->setFocusAreaColor2("fff9");
             $this->item[$nb]->setAction($action);
         }
 

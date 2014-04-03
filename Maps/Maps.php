@@ -125,9 +125,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$info->setAction($this->actionShowMapList);
 	$info->show();
 
-
-
-
+	$this->showNextMapWidget(null);
+	
 	$this->preloadHistory();
 	//$this->showMapList("oliverde8");
     }

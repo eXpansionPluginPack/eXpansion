@@ -24,7 +24,7 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->bg = new \ManiaLib\Gui\Elements\Quad(42, 13);
         $this->bg->setAlign("left", "center");
         $this->bg->setStyle("Bgs1InRace");
-        $this->bg->setSubStyle("NavButtonBlink");
+        $this->bg->setSubStyle("BgList");
         $this->bg->setPosition(4, -8);
         $this->addComponent($this->bg);
 

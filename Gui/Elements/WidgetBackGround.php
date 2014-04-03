@@ -19,6 +19,7 @@ class WidgetBackGround extends \ManiaLive\Gui\Control {
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->bg->setAlign('left', 'center');
         $this->bg->setBgcolor($config->style_widget_bgColor);
+        $this->bg->setOpacity($config->style_widget_bgOpacity);
         
         if(!empty($config->style_widget_bgSubStyle)){
             $this->bg->setStyle($config->style_widget_bgStyle);

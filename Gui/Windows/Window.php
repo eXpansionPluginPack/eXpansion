@@ -51,7 +51,8 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
 	$this->_mainWindow->setId("MainWindow");
 	$this->_mainWindow->setStyle("Bgs1");
-	$this->_mainWindow->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitlePage);
+	$this->_mainWindow->setSubStyle("BgWindow4");
+	$this->_mainWindow->setOpacity(0.95);
 	$this->_mainWindow->setScriptEvents(true);
 	$this->_windowFrame->addComponent($this->_mainWindow);
 
@@ -59,7 +60,8 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->bg->setStyle("Bgs1InRace");
 	$this->bg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1InRace::BgTitleGlow);
 	$this->_windowFrame->addComponent($this->bg);
-
+	
+	
 	$this->_titlebar2 = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
 	$this->_titlebar2->setStyle("Bgs1");
 	$this->_titlebar2->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitleGlow);
