@@ -4,7 +4,7 @@ declare Text outText = "";
 declare Boolean toggleSubmenu = False;
 declare CMlFrame currentButton = Null; 
 declare CMlFrame previousButton = Null; 
-declare persistent Boolean[Text][Text] exp_widgetVisible;    
+declare persistent Boolean[Text][Text] eXp_widgetVisible;    
 declare Text version = "<?php echo $this->version ?>";
 declare Boolean eXp_mouseRightState = False;
 declare eXp_mouseRightTime = 0;

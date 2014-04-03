@@ -19,8 +19,8 @@ if (IsSpectatorMode) {
 if (toggleSubmenu) {
 	Menu.Show();     
 	outText = "";					   
-	if (exp_widgetVisible[version].count > 0) {
-		foreach (id => status in exp_widgetVisible[version]) {
+	if (eXp_widgetVisible[version].count > 0) {
+		foreach (id => status in eXp_widgetVisible[version]) {
 			declare Text bool = "0";
 			if (status == True) {
 				bool = "1";

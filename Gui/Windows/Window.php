@@ -52,7 +52,9 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_mainWindow->setId("MainWindow");
 	$this->_mainWindow->setStyle("Bgs1");
 	$this->_mainWindow->setSubStyle("BgWindow4");
-	$this->_mainWindow->setOpacity(0.95);
+	$this->_mainWindow->setOpacity(1);
+	$this->_mainWindow->setBgColor("fffe");
+	
 	$this->_mainWindow->setScriptEvents(true);
 	$this->_windowFrame->addComponent($this->_mainWindow);
 
