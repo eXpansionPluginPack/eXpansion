@@ -15,23 +15,25 @@ class Recorditem extends \ManiaLive\Gui\Control {
     private $frame;
 
     function __construct($index, $highlite, $moreInfo=false) {
-	$sizeX = 40;
+	$sizeX = 38;
 	$sizeY = 4;
 
 
 	$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX+2, $sizeY);
-	$this->bg->setStyle("Icons128x128_Blink");
-	$this->bg->setSubStyle(\ManiaLib\Gui\Elements\Icons128x128_Blink::ShareBlink); 
+	$this->bg->setStyle("Icons128x128_1");
+	$this->bg->setSubStyle("ShareBlink"); 
 	$this->bg->setAlign('left', 'center');
 	//$this->bg->setBgcolor('6af5');
 	$this->bg->setHidden(1);
-	$this->bg->setPosX(-1);
+	$this->bg->setPosition(-1.4, 0);
+	$this->bg->setOpacity(0.8);
 	$this->bg->setId("RecBgBlink_" . $index);
 	$this->addComponent($this->bg);
 
 	$this->bg2 = new \ManiaLib\Gui\Elements\Quad($sizeX+2, $sizeY+1);
-	$this->bg2->setStyle("Bgs1");
-	$this->bg2->setSubStyle("NavButtonBlink"); 
+	$this->bg2->setStyle("BgsPlayerCard");
+	$this->bg2->setSubStyle("BgRacePlayerName"); 
+	$this->bg2->setOpacity(0.8);
 	$this->bg2->setAlign('left', 'center');
 	//$this->bg->setBgcolor('6af5');
 	$this->bg2->setHidden(1);
@@ -39,13 +41,10 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	$this->bg2->setId("RecBg_" . $index);
 	$this->addComponent($this->bg2);
 
-	
-	
-	
 	$this->label = new \ManiaLib\Gui\Elements\Label(4, 4);
 	$this->label->setAlign('right', 'center');
 	$this->label->setPosition(3, 0);
-	$this->label->setStyle("TextRaceChat");
+	$this->label->setStyle("TextCardSmallScores2");
 	$this->label->setId("RecRank_" . $index);
 	$this->label->setTextSize(1);
 	//$this->label->setText($index);
@@ -55,7 +54,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	$this->label = new \ManiaLib\Gui\Elements\Label(11, 5);
 	$this->label->setPosition(3.7, 0);
 	$this->label->setAlign('left', 'center');
-	$this->label->setStyle("TextRaceChat");
+	$this->label->setStyle("TextCardSmallScores2");
 	$this->label->setTextSize(1);
 	$this->label->setId("RecTime_" . $index);
 	$this->label->setTextColor('fff');		
@@ -64,7 +63,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	$this->nick = new \ManiaLib\Gui\Elements\Label(25, 4);
 	$this->nick->setPosition(15.5, 0);
 	$this->nick->setAlign('left', 'center');
-	$this->nick->setStyle("TextRaceChat");
+	$this->nick->setStyle("TextCardSmallScores2");
 	$this->nick->setTextSize(1);
 	$this->nick->setTextColor('fff');
 	$this->nick->setId("RecNick_" . $index);	
@@ -75,7 +74,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	    $this->label = new \ManiaLib\Gui\Elements\Label(6, 4);
 	    $this->label->setAlign('right', 'center');
 	    $this->label->setPosition(59, 0);
-	    $this->label->setStyle("TextRaceChat");
+	    $this->label->setStyle("TextCardSmallScores2");
 	    $this->label->setId("RecCp2_" . $index);
 	    $this->label->setTextSize(1);
 	    $this->label->setTextColor('ff0');
@@ -85,7 +84,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	    $this->label = new \ManiaLib\Gui\Elements\Label(6, 4);
 	    $this->label->setPosition(-18, 0);
 	    $this->label->setAlign('left', 'center');
-	    $this->label->setStyle("TextRaceChat");
+	    $this->label->setStyle("TextCardSmallScores2");
 	    $this->label->setTextSize(1);
 	    $this->label->setId("RecCp1_" . $index);
 	    $this->label->setTextColor('ff0');
@@ -95,7 +94,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	    $this->label = new \ManiaLib\Gui\Elements\Label(11, 4);
 	    $this->label->setAlign('right', 'center');
 	    $this->label->setPosition(53, 0);
-	    $this->label->setStyle("TextRaceChat");
+	    $this->label->setStyle("TextCardSmallScores2");
 	    $this->label->setId("RecInfo2_" . $index);
 	    $this->label->setTextSize(1);
 	    $this->label->setTextColor('fff');
@@ -105,7 +104,7 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	    $this->label = new \ManiaLib\Gui\Elements\Label(11, 4);
 	    $this->label->setPosition(-12, 0);
 	    $this->label->setAlign('left', 'center');
-	    $this->label->setStyle("TextRaceChat");
+	    $this->label->setStyle("TextCardSmallScores2");
 	    $this->label->setTextSize(1);
 	    $this->label->setId("RecInfo1_" . $index);
 	    $this->label->setTextColor('fff');
