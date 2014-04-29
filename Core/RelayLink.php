@@ -49,7 +49,7 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
 	if (!$this->isMaster())
 	    return;
 
-	print_r($data);
+	//print_r($data);
 
 	$data = gzdeflate(serialize($data));
 	$this->connection->tunnelSendDataFromString($this->relayMaster, $data);
@@ -165,7 +165,7 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
 
 	$this->connectedRelays = array();
 	foreach ($this->connection->getPlayerList(-1, 0, 3) as $spec) {
-	    print_r($spec);
+	  //  print_r($spec);
 
 	    // if ($spec->isServer == true && $spec->spectatorStatus == 2551101 && $spec->login != $this->relayMaster && $spec->login != $this->storage->serverLogin) {
 	    if ($spec->isServer == true && $spec->login != $this->relayMaster && $spec->login != $this->storage->serverLogin) {

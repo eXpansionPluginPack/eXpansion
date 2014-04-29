@@ -14,8 +14,6 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	$config = Config::getInstance();
 	
-	print_r($config->plugins);
-	
 	$this->plugins = $config->plugins;
 	
 //We Need the plugin Handler
