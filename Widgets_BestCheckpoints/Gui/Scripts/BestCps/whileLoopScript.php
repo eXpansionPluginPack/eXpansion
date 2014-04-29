@@ -12,24 +12,25 @@ foreach (Player in Players) {
 	declare Integer lastCpIndex = totalCp - 1;
 	declare time = 0;
 
-	 if(curCp > totalCp){
+	 if( curCp > totalCp){
 	    time = Player.CurRace.Checkpoints[curCp-1] - Player.CurRace.Checkpoints[lastCpIndex];
-	}else if(curCp > 0){
+	} else if(curCp > 0){
 	    time = Player.CurRace.Checkpoints[curCp-1];
 	}
 
-		//Check if better
-	if(cpIndex >= 0 && (cpTimes[cpIndex] > time || cpTimes[cpIndex] == 0)){
+	//Check if better
+	if(cpIndex >= 0 && cpIndex < maxCpIndex && (cpTimes[cpIndex] > time || cpTimes[cpIndex] == 0)){
 	    needUpdate = True;
 	    cpTimes[cpIndex] = time;
 
 	    declare nickLabel = (Page.GetFirstChild("CpNick_"^cpIndex) as CMlLabel);
 	    declare timeLabel = (Page.GetFirstChild("CpTime"^cpIndex) as CMlLabel);
-
+	    declare background = (Page.GetFirstChild("Bg"^cpIndex) as CMlQuad);
 
 	    if(nickLabel != Null){		
 		nickLabel.SetText(Player.Name);
 		timeLabel.SetText("$ff0" ^ (cpIndex + 1 ) ^ " $fff" ^ TimeToText(cpTimes[cpIndex]) );
+		background.Show();
 	    }
 	}
     }

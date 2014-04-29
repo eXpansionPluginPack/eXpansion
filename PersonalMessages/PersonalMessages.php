@@ -44,7 +44,6 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     function onPlayerConnect($login, $isSpectator) {
 	$info = Gui\Widgets\MessagesPanel::Create($login);
 	$info->setSize(100, 6);
-	$info->setPosition(-160, -56);
 	$info->show();
     }
 

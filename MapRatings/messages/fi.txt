@@ -1,4 +1,4 @@
-#rank#$iVote Registered!!
+﻿#rank#$iVote Registered!!
 #rank#$iArvio rekisteröity!!
 
 #rank# $iUsage /rate #, where number is 1-5..
@@ -15,3 +15,21 @@ Arvioi edellinen kartta!
 
 votes
 Ääntä
+
+Map Rating
+Kartan arvio
+Remove
+#translate# Remove
+
+Close
+#translate# Close
+
+#rank#$iVote Registered!!
+#translate# #rank#$iVote Registered!!
+
+Maps with bad rating removed successfully.
+#translate# Maps with bad rating removed successfully.
+
+Ratings Manager
+#translate# Ratings Manager
+

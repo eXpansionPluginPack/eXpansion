@@ -14,30 +14,39 @@ class Recorditem extends \ManiaLive\Gui\Control {
     private $time;
     private $frame;
 
-    function __construct($index, $highlite, $moreInfo=false) {
+    function __construct($index, $highlite, $moreInfo = false) {
 	$sizeX = 38;
 	$sizeY = 4;
 
-
-	$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX+2, $sizeY);
-	$this->bg->setStyle("Icons128x128_1");
-	$this->bg->setSubStyle("ShareBlink"); 
-	$this->bg->setAlign('left', 'center');
+	// hilight own record
+	$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeY, $sizeX * 1.2);
+	$this->bg->setStyle("BgsPlayerCard");
+	$this->bg->setSubStyle("BgRacePlayerLine");
+	$this->bg->setColorize("0f0");
+	$this->bg->setAlign('left', 'top');
 	//$this->bg->setBgcolor('6af5');
 	$this->bg->setHidden(1);
-	$this->bg->setPosition(-1.4, 0);
-	$this->bg->setOpacity(0.8);
+	$this->bg->setPosY(1.5);
+	$this->bg->setOpacity(0.75);
+	$this->bg->setAttribute("rot", 90);
 	$this->bg->setId("RecBgBlink_" . $index);
+	$this->bg->setPosX($sizeX);
 	$this->addComponent($this->bg);
 
-	$this->bg2 = new \ManiaLib\Gui\Elements\Quad($sizeX+2, $sizeY+1);
+	// hilight of server record
+	$this->bg2 = new \ManiaLib\Gui\Elements\Quad($sizeY, $sizeX * 1.5);
 	$this->bg2->setStyle("BgsPlayerCard");
-	$this->bg2->setSubStyle("BgRacePlayerName"); 
-	$this->bg2->setOpacity(0.8);
-	$this->bg2->setAlign('left', 'center');
+	$this->bg2->setSubStyle("BgRacePlayerLine");
+	$this->bg2->setOpacity(0.75);
+	$this->bg2->setColorize("3af");
+	$this->bg2->setAttribute("rot", 270);
+	$this->bg2->setAlign('left', 'top');
 	//$this->bg->setBgcolor('6af5');
 	$this->bg2->setHidden(1);
-	$this->bg2->setPosX(-1);
+	//$this->bg2->setPosX(-1);
+	$this->bg2->setPosY(-2.25);
+	//$this->bg2->setPosX($sizeX);
+
 	$this->bg2->setId("RecBg_" . $index);
 	$this->addComponent($this->bg2);
 
@@ -57,20 +66,20 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	$this->label->setStyle("TextCardSmallScores2");
 	$this->label->setTextSize(1);
 	$this->label->setId("RecTime_" . $index);
-	$this->label->setTextColor('fff');		
+	$this->label->setTextColor('fff');
 	$this->addComponent($this->label);
 
-	$this->nick = new \ManiaLib\Gui\Elements\Label(25, 4);
+	$this->nick = new \ManiaLib\Gui\Elements\Label(22, 4);
 	$this->nick->setPosition(15.5, 0);
 	$this->nick->setAlign('left', 'center');
 	$this->nick->setStyle("TextCardSmallScores2");
 	$this->nick->setTextSize(1);
 	$this->nick->setTextColor('fff');
-	$this->nick->setId("RecNick_" . $index);	
-	//$this->nick->setText("____________________________________________");
+	$this->nick->setId("RecNick_" . $index);
+	//$this->nick->setText("#######################################################");
 	$this->addComponent($this->nick);
 
-	if($moreInfo){
+	if ($moreInfo) {
 	    $this->label = new \ManiaLib\Gui\Elements\Label(6, 4);
 	    $this->label->setAlign('right', 'center');
 	    $this->label->setPosition(59, 0);
@@ -111,10 +120,10 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	    //$this->label->setText("+00:00:00");
 	    $this->addComponent($this->label);
 	    
-	    $this->bg->setPosX(-19);
-	    $this->bg->setSizeX($sizeX+2+37);
+	    /*    $this->bg->setPosX($sizeX -19);
+	      $this->bg->setSizeY($sizeY + 2 + 37); */
 	}
-	
+
 	// $this->addComponent($this->frame);
 
 	$this->setSize($sizeX, $sizeY);
@@ -134,5 +143,5 @@ class Recorditem extends \ManiaLive\Gui\Control {
     }
 
 }
-?>
 
+?>

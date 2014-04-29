@@ -9,13 +9,12 @@ use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
 
 class LivePanel2 extends LivePanel {
 
-    
-     function onConstruct() {
-        $this->setName("Live Rankings Panel (tab-layer)");
-	parent::onConstruct();
-	$this->timeScript->setParam('varName','LiveTime2');
+    function exp_onBeginConstruct() {
+	parent::exp_onBeginConstruct();
+	// $this->setName("Live Rankings Panel (Tab-layer)");
+	$this->timeScript->setParam('varName', 'LiveTime2');
     }
-    
+
 }
 
 ?>

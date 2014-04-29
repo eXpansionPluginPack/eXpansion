@@ -9,17 +9,17 @@ use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
 
 class DediPanel extends LocalPanel {
 
-    function onConstruct() {
-	parent::onConstruct();
+    function exp_onBeginConstruct() {
+	parent::exp_onBeginConstruct();
 	$this->setName("Dedimania Panel");
 	$this->timeScript->setParam("acceptMinCp", 2);
 	$this->timeScript->setParam("acceptMaxPlayerRank", \ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection::$serverMaxRank);
-	$this->timeScript->setParam('varName','DediTime1');
+	$this->timeScript->setParam('varName', 'DediTime1');
     }
 
     function update() {
-	$login = $this->getRecipient();   
-	
+	$login = $this->getRecipient();
+
 	foreach ($this->items as $item)
 	    $item->destroy();
 	$this->items = array();
@@ -44,8 +44,8 @@ class DediPanel extends LocalPanel {
 		$recsData .= ', ';
 		$nickData .= ', ';
 	    }
-	    $recsData .= '"' . $record['Login'] . '"=> ' . $record['Best'];
-	    $nickData .= '"' . $record['Login'] . '"=>"' . $this->fixHyphens($record['NickName']) . '"';
+	    $recsData .= '"' . $this->fixDashes($record['Login']) . '"=> ' . $record['Best'];
+	    $nickData .= '"' . $this->fixDashes($record['Login']) . '"=>"' . $this->fixHyphens($record['NickName']) . '"';
 	    $index++;
 	}
 	$this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
@@ -74,12 +74,18 @@ class DediPanel extends LocalPanel {
 	}
     }
 
+    function fixDashes($string) {
+	$out = str_replace('--', '––', $string);
+	return $out;
+    }
+
     function fixHyphens($string) {
 	$out = str_replace('"', "'", $string);
-	$out = str_replace('\\', '\\\\', $out);	
-	$out = str_replace('-', '–', $out);	 
+	$out = str_replace('\\', '\\\\', $out);
+	$out = str_replace('-', '–', $out);
 	return $out;
     }
 
 }
+
 ?>

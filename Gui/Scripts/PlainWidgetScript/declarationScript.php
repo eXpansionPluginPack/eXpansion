@@ -17,5 +17,5 @@ main () {
         <?php echo  $this->wLoop ?>
     }
 }
-//--> </script>
+--></script>
 

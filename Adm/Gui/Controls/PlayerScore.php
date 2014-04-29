@@ -18,12 +18,11 @@ class PlayerScore extends \ManiaLive\Gui\Control {
      * @param int $sizeX
      */
     function __construct($indexNumber, $player, $sizeX) {
-        $sizeY = 4;
-
+        $sizeY = 6;
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame = new \ManiaLive\Gui\Controls\Frame(4,0);
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
@@ -63,15 +62,7 @@ class PlayerScore extends \ManiaLive\Gui\Control {
         $this->sizeY = $sizeY;
         $this->setSize($sizeX, $sizeY);
     }
-
-    protected function onResize($oldX, $oldY) {
-        $this->bg->setSize($this->sizeX, $this->sizeY);
-        $this->bg->setPosX(-2);
-        $this->frame->setSize($this->sizeX, $this->sizeY);
-    }
-
-
-
+    
 // manialive 3.1 override to do nothing.
     function destroy() {
         

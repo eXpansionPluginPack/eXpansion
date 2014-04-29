@@ -73,6 +73,8 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($playerUid != 0 && substr($text, 0, 1) != "/" && $this->enabled) {
             $config = $this->config;
             $source_player = $this->storage->getPlayerObject($login);
+	    if($source_player == null)
+		return;
             $nick = $source_player->nickName;
             $nick = str_ireplace('$w', '', $nick);
             $nick = str_ireplace('$z', '$z$s', $nick);
@@ -123,9 +125,8 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      *
      * @return void
      */
-    function onUnload() {
+    function exp_Unload() {
         $this->connection->chatEnableManualRouting(false);
-        parent::onUnload();
     }
 
 }

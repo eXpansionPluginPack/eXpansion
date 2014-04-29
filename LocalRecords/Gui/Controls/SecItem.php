@@ -14,14 +14,14 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  */
 class SecItem extends \ManiaLive\Gui\Control {
 
-    private $label_rank, $label_nick;
+    private $label_rank, $label_nick, $label_time, $frames;
     private $bg;
     private $widths;
 
     function __construct($indexNumber, $login, $rank, $widths) {
         $this->widths = $widths;
-        $this->sizeY = 4;
-        $this->bg = new ListBackGround($indexNumber, 100, 4);
+        $this->sizeY = 8;
+        $this->bg = new ListBackGround($indexNumber, 100, 8);
         $this->addComponent($this->bg);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
@@ -38,16 +38,31 @@ class SecItem extends \ManiaLive\Gui\Control {
         
         $i = 0;
         foreach($rank as $sector){
+	    $frame = new \ManiaLive\Gui\Controls\Frame();
+	    $frame->setScale(0.8);
+	    $frame->setSize(10,8);
+	    $frame->setPosY(3);
+	    
             $this->label_nick[$i] = new \ManiaLib\Gui\Elements\Label(10., 4);
-            $this->label_nick[$i]->setAlign('left', 'center');
-            $this->label_nick[$i]->setScale(0.8);
+            $this->label_nick[$i]->setAlign('center', 'top');
+            //$this->label_nick[$i]->setScale(0.8);
+	    $this->label_nick[$i]->setText($sector['recordObj']->nickName);
+	    
+	    $this->label_time[$i] = new \ManiaLib\Gui\Elements\Label(10, 4);
+	    $this->label_time[$i]->setAlign('center', 'top');
+            //$this->label_time[$i]->setScale(0.8);
+	    $this->label_time[$i]->setPosY(-4);
+	    
             if($i <  Sector::$nbResult){
                 $time = \ManiaLive\Utilities\Time::fromTM($sector['sectorTime']);
-                $this->label_nick[$i]->setText('('.$time.')'. $sector['recordObj']->nickName.' ');
+                $this->label_time[$i]->setText($time);
+		
+		$frame->addComponent($this->label_nick[$i]);
+		$frame->addComponent($this->label_time[$i]);
+		$this->frames[$i] = $frame;
+		$this->frame->addComponent($frame);
             }
-            $this->frame->addComponent($this->label_nick[$i]);
             $i++;
-            
         }
        
     }
@@ -60,6 +75,12 @@ class SecItem extends \ManiaLive\Gui\Control {
         for($i = 0; $i<  Sector::$nbResult; $i++){
             if(isset($this->label_nick[$i]))
                 $this->label_nick[$i]->setSizeX($scaledSizes[1]-2);
+                $this->label_time[$i]->setSizeX($scaledSizes[1]-2);
+		
+		$this->label_nick[$i]->setPosX(($scaledSizes[1]-2)/2+1);
+                $this->label_time[$i]->setPosX(($scaledSizes[1]-2)/2+1);
+		
+                $this->frames[$i]->setSizeX($scaledSizes[1]);
         }
         
     }

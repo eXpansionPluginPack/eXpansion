@@ -140,80 +140,187 @@ Enable Referee-mode
 Permettre arbitrage
 
 ForceScores can be used only with rounds or team mode
-#translate# ForceScores can be used only with rounds or team mode
+ForceScores peut seulment etre utilisé en mode rounds ou equipe(team)
 
 ScriptSettings available only in script mode
-#translate# ScriptSettings available only in script mode
+Les reglages ScriptSettings sont disponible uniquement end mode script
 
 Database plugin not loaded!
-#translate# Database plugin not loaded!
+L'extension Database n'est pas chargée!
 
 #admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
-#translate# #admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
+#admin_action#Admin %s $z$s#admin_action# definie les point custom de rounds point a #variable#%s
 
 Podium Chat time
-#translate# Podium Chat time
+Temps de Chat au Podium
 
 All Warmup Duration
-#translate# All Warmup Duration
+Durée de tous les échauffements 
 
 finishTimeout
-#translate# finishTimeout
+finishTimeout
 
 timeAttackLimit
-#translate# timeAttackLimit
+timeAttackLimit
 
 timeAttackSynchStartPeriod
-#translate# timeAttackSynchStartPeriod
+timeAttackSynchStartPeriod
 
 roundsPointsLimit
-#translate# roundsPointsLimit
+roundsPointsLimit
 
 roundsForcedLaps
-#translate# roundsForcedLaps
+ roundsForcedLaps
 
 roundsPointsLimitNewRules
-#translate# roundsPointsLimitNewRules
+roundsPointsLimitNewRules
 
 teamPointsLimit
-#translate# teamPointsLimit
+teamPointsLimit
 
 teamMaxPoints
-#translate# teamMaxPoints
+teamMaxPoints
 
 teamPointsLimitNewRules
-#translate# teamPointsLimitNewRules
+teamPointsLimitNewRules
 
 cupPointsLimit
-#translate# cupPointsLimit
+cupPointsLimit
 
 cupNbWinners
-#translate# cupNbWinners
+cupNbWinners
 
 cupRoundsPerMap
-#translate# cupRoundsPerMap
+cupRoundsPerMap
 
 Choose Gamemode:
-#translate# Choose Gamemode:
+Choose Gamemode:
 
 Additional Options:
-#translate# Additional Options:
+Option Additionnelle:
 
 Rounds: use new rules
-#translate# Rounds: use new rules
+Rounds: utiliser les nouvelles règles
 
 Team: use new rules
-#translate# Team: use new rules
+Equipe: utiliser les nouvelles règles
 
 Disable Respawn
-#translate# Disable Respawn
+Désactiver le Respawn
 
 Force Show All Opponents
-#translate# Force Show All Opponents
+Forcer la visibilité de tous les adversaires
 
 Save MatchSettings as
-#translate# Save MatchSettings as
+Sauvegarder les réglages du jeu sous
 
 Round points
-#translate# Round points
+Point de Rounds
 
+The restart of this track is in progress!
+Le redémarrage du circuit est en progrès!
+
+#error#Player can't restart tracks on this server
+#error#Les joueurs ne peuvent pas redémarrer le circuit sur ce serveur.
+
+#error#The map has already been restarted. Limit reached!7
+#error#Le circuit a déjà été redémarré. Limité atteinte!
+
+#error#You can't skip tracks on this server.
+#error#Vous ne pouvez pas passer des circuits sur ce serveur.
+
+#error#You have skipped to many maps already!
+#error#Vous avez déjà passer trop de circuits!
+
+#player#Player #variable# %s #player#pays and restarts the challenge!
+#player#Le jouer #variable# %s #player#paie est redémarre le circuit!
+
+#player#Player#variable# %s #player#pays and skips the challenge!
+#player#Le joeur#variable# %s #player#paie and passe le circuit!
+
+Are you sure you want to restart this map
+Eté vous sur de vouloir redémarrer cet circuit
+
+Are you sure you want to skip this map
+Eté vous sure de vouloir passer cette map
+
+Podium: Chat Time
+Podium: Temps de Chat
+
+All: Warmup Duration
+Tout : durée d'echaufement
+
+All: Finish Timeout
+Tout: Finish Timeout
+
+All: Finish Timeout
+Tout: Finish Timeout
+
+TimeAttack: Time Limit
+TimeAttack: Limité du temps
+
+TimeAttack: Synch Start Period
+TimeAttack: Synch Start Period
+
+Rounds: Points Limit
+Rounds: Limite des points
+
+Rounds: Set Number of Forced Laps
+Rounds: nombre de tour forcé
+
+Rounds: Points Limit (NewRules)
+Rounds: Limite des points (Nouvelles regles)
+
+Team: Points Limit
+Equipe: Limite des points
+
+Team: Max Points For a Round
+Equipe: Points maximum pour un Round
+
+Team: Points Limit (NewRules)
+Equipe: Limite des points (Nouvelles regles)
+
+Cup: Points Limit
+Cup: Limite des points
+
+Cup: Number of Winners
+Cup: Nombre de gagnant
+
+cup Rounds Per Map
+Cup: Nombre de Rounds par circuit
+
+Laps: Number of Laps
+Tour: Nombre de Tour
+
+Tour: Time Limit
+Tour: Limite de Temps
+
+Deciated Control
+Serveur Dédié
+
+Disable Horns
+Désactiver les Claxon
+
+Disable Announces
+Désactiver les annonces
+
+Autosave All Replays
+Sauvegardé automatiquement des Replays
+
+Autosave Validation Replays
+Sauvegardé automatiquement des Replays de validation
+
+Laps: Time Limit
+Laps: Time Limit
+
+#error#The map has already been restarted. Limit reached!
+#error#Le circuit a déjà été redémarrer. Limite atteinte!
+
+Laps: Time Limit
+Laps: Time Limit
+
+#error#The map has already been restarted. Limit reached!
+#translate# #error# Le circuit a déjà été redémarrer. Limite atteinte!
+
+Laps: Time Limit
+#translate# Laps: Time Limit

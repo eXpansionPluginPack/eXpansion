@@ -14,7 +14,7 @@ class RankItem_old extends \ManiaLive\Gui\Control {
 
     function __construct($indexNumber, $nickname, $nbrec) {
         $sizeX = 120;
-        $sizeY = 4;
+        $sizeY = 6;
 
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);

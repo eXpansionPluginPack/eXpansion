@@ -7,17 +7,17 @@
 
 if (isMinimized)
 {
-    if (mainWindow.PosnX <?php echo $smaller ?> positionMin) {
-	mainWindow.PosnX -= 4;
+    if (mainWindow.RelativePosition.X <?php echo $smaller ?> positionMin) {
+	mainWindow.RelativePosition.X -= 4;
     }
 }else if (!isMinimized){
 
-    if (Now-lastAction > autoCloseTimeout) {
+    if (!disableAutoClose && Now-lastAction > autoCloseTimeout) {
 	isMinimized = True;
     }
 
-    if ( mainWindow.PosnX <= positionMax) {
-	mainWindow.PosnX += 4;
+    if ( mainWindow.RelativePosition.X <= positionMax) {
+	mainWindow.RelativePosition.X += 4;
     }                                                                                                                                             
     
 }

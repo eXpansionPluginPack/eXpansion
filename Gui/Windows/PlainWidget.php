@@ -114,6 +114,7 @@ class PlainWidget extends \ManiaLive\Gui\Window {
     }
 
     function destroy() {
+	unset($this->_scripts);
         $this->clearComponents();
         parent::destroy();
     }

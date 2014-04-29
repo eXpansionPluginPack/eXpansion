@@ -6,9 +6,10 @@ class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     public $btn_res;
     public $btn_skip;
-
-    protected function onConstruct() {
-        parent::onConstruct();        
+    public $btn_fav;
+    
+    protected function exp_onBeginConstruct() {
+        parent::exp_onBeginConstruct();        
         $this->btn_res = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetButton(10,10);
         $this->btn_res->setPositionZ(-1);
         $this->addComponent($this->btn_res);
@@ -17,6 +18,11 @@ class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->btn_skip->setPositionZ(-1);
         $this->addComponent($this->btn_skip);
 
+	$this->btn_fav = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetButton(10,10);	
+        $this->btn_fav->setPositionZ(-1);	
+	$this->btn_fav->setText(array('$s$fffAdd', '$s$fffto','$s$fffFav\'s'));
+        $this->addComponent($this->btn_fav);
+	
         $this->setName("Skip and Res Buttons");
     }
 
@@ -39,9 +45,11 @@ class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->btn_res->setPosX(8);
+        $this->btn_fav->setPosX(8);
+        $this->btn_fav->setPosY(-5);		
+	$this->btn_res->setPosX(20);
         $this->btn_res->setPosY(-5);
-        $this->btn_skip->setPosX(21);
+        $this->btn_skip->setPosX(32);
         $this->btn_skip->setPosY(-5);
     }
 
@@ -55,6 +63,11 @@ class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         } else {
             $this->btn_skip->setText(array('$fffBuy', '$fffSkip', '$fff' . $amount . 'p'));
         }
+    }
+    
+    public function setServerInfo($login) {	
+	$url = 'http://reaby.kapsi.fi/ml/addfavourite.php?login='.rawurldecode($login);	
+	$this->btn_fav->setManialink($url);
     }
 
     function destroy() {

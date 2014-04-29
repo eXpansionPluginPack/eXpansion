@@ -7,3 +7,8 @@ File d'attente
 #music#Next song: $z$s#variable# %1$s - %2$s
 #music#Prochain morceau: $z$s#variable# %1$s - %2$s
 
+#variable# %1$s#music# by#variable#  %2$s #music# is been played next requested by #variable# %3$s 
+#variable# %1$s#music# by#variable#  %2$s #music# va être joué prochainement, demande par #variable# %3$s 
+
+#music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s
+#music#Prochaine chanson: $z$s#variable# %1$s #music#by#variable# %2$s

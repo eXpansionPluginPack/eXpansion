@@ -13,15 +13,15 @@ class Header extends \ManiaLive\Gui\Control {
 
     public function __construct() {
         $sizeX = 120;
-        $sizeY = 4;
+        $sizeY = 6;
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setAlign("center", "center2");
+        $spacer->setSize(18, 4);
+        $spacer->setAlign("left", "center2");
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         $this->frame->addComponent($spacer);
 
@@ -37,7 +37,7 @@ class Header extends \ManiaLive\Gui\Control {
 
         $info = new \ManiaLib\Gui\Elements\Label(25, 4);
         $info->setAlign('left', 'center');
-        $info->setText(__("Creators name"));
+        $info->setText(__("Author"));
         $this->frame->addComponent($info);
 
         $this->time = new \ManiaLib\Gui\Elements\Label(20, 4);

@@ -13,6 +13,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\AdminItem;
  */
 class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
+    private $adminGroups;
     protected $pager;
     protected $group;
     protected $button_add;
@@ -43,18 +44,21 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public function setGroup($g) {
         $this->group = $g;
     }
+    
+    public function getGroup() {
+        return $this->group;
+    }
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX - 4, $this->sizeY - 12);
-        $this->pager->setStretchContentX($this->sizeX);
+        $this->pager->setSize($this->sizeX - 4, $this->sizeY - 12);   
         $this->pager->setPosition(0, -7);
 
-        $this->login_add->setSize($this->sizeX * (1 / 0.8) - 20, 7);
+        $this->login_add->setSize($this->sizeX * (1 / 0.8) - 30, 7);
         $this->login_add->setPosition(0, -3);
 
         $this->button_add->setSize(30, 5);
-        $this->button_add->setPosition($this->sizeX * (1 / 0.8) - 45 * (1 / 0.8), -3);
+        $this->button_add->setPosition($this->sizeX * (1 / 0.8) - 35 * (1 / 0.8), -3);
     }
 
     function onShow() {
@@ -83,31 +87,28 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         if ($login != "") {
             $adminGroups->addToGroup($login2, $this->group, $login);
         }
-
-        $this->login_add->setText("");
-        $this->onShow();
-        $this->redraw($login2);
-
-        $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Players::GetAll();
+	
+	$windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
         foreach ($windows as $window) {
             $login = $window->getRecipient();
             $window->onShow();
             $window->redraw($login);
+	    $window->refreshAll();
         }
     }
+    
 
     function click_remove($login, $admin) {
         $adminGroups = AdminGroups::getInstance();
         $adminGroups->removeFromGroup($login, $this->group, $admin);
-        $this->onShow();
-        $this->redraw();
-
-        $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Players::GetAll();
-
+	
+	
+	$windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
         foreach ($windows as $window) {
             $login = $window->getRecipient();
             $window->onShow();
             $window->redraw($login);
+	    $window->refreshAll();
         }
     }
 

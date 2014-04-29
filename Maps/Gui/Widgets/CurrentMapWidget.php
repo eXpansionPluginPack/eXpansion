@@ -97,11 +97,6 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     function setAction($action) {
         $this->bg->setAction($action);
     }
-
-    function destroy() {
-        parent::destroy();
-    }
-
 }
 
 ?>

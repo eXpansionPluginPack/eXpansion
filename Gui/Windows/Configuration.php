@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted as Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
 use ManiaLive\Gui\ActionHandler;
@@ -17,6 +17,7 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected $cancel;
     private $actionOk;
     private $actionCancel;
+    private $gameMode;
 
     protected function onConstruct() {
 	parent::onConstruct();
@@ -58,13 +59,19 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$statuses = $this->parseData($data);
 	$x = 0;
 	foreach ($statuses as $status) {
-	    $this->items[$x] = new \ManiaLivePlugins\eXpansion\Gui\Controls\ConfigOption($x, $status, $login, $this->sizeX);
+	    $this->items[$x] = new \ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted(4,4,50);
+	    $this->items[$x]->setText($status->id);
+	    $this->items[$x]->setStatus($status->value);
 	    $this->pager->addItem($this->items[$x]);
 	    $x++;
 	}
     }
 
     /**
+     * data is following format:
+     * 
+     * widgetname ^ ":" ^ gameMode ^ ":" ^ bool ^ "|";
+     * you can assume only one gamemode is sent at a time, so multiple gamemodes are not mixed
      * 
      * @param array $data
      * @return \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem
@@ -78,21 +85,27 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	foreach ($entries as $entry) {
 	    if (empty($entry))
 		continue;
-	    $val = explode(":", $entry, 2);
-	    $items[] = new \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem($val[0], $val[1]);
+	    $val = explode(":", $entry, 3);
+	    $this->gameMode = $val[1];
+	    $items[] = new \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem($val[0], $val[1], $val[2]);
 	}
+	
 	return $items;
     }
 
-    function Ok($login) {
+    function Ok($login, $options) {
 	$outValues = array();
-	foreach ($this->items as $item) {
-	    $outValues[] = new \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem($item->getText(), $item->getStatus());
-	}
 
-	$apply = HudSetVisibility::Create($login, false);
+	foreach ($this->items as $component) {
+	    if ($component instanceof Checkbox) {
+		$component->setArgs($options);
+		$outValues[] = new \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem($component->getText(), $this->gameMode, $component->getStatus());
+	    }
+	}
+	
+	$apply = HudSetVisibility::Create($login);
 	$apply->setData($outValues);
-	//$apply->setTimeout(2);
+	$apply->setTimeout(5);
 	$apply->show();
 	$this->Erase($login);
     }
@@ -103,7 +116,7 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function destroy() {
 	foreach ($this->items as $item)
-	    $item->erase();
+	    $item->destroy();
 
 	$this->items = array();
 	$this->pager->destroy();

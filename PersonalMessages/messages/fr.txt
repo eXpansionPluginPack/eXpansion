@@ -1,0 +1,17 @@
+Select Player to send message
+Sélectionner un jouer pour envoyer un message
+
+#personalmessage#Player with login "%1$s" is not found at server!
+#personalmessage#Le jouer avec le login "%1$s" n'a pas été trouve sur le serveur!
+
+#personalmessage#No message to send to!
+#personalmessage#Pas de message a envoyer!
+
+#personalmessage#No one to reply back!
+#personalmessage#No one to reply back!
+
+#personalmessage#You can't send a message to yourself.
+#personalmessage#Vous ne pouvez vous pas envoyer un message a vous même!
+
+#personalmessage#Usage /pm [login] your personal message here
+#personalmessage#Utilisation /pm [login] votre message personnalisé

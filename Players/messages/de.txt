@@ -11,10 +11,10 @@ Blacklist
 Sperrliste
 
 Release Spec
-Zuschauer entlassen
+Aus dem Zuschauermodus entlassen
 
 Force Spec
-Zuschauer erzwingen
+In den Zuschauermodus zwingen
 
 $ff3$iYou are not allowed to do that!
 $ff3$iDu hast keine Erlaubnis dazu!
@@ -42,4 +42,16 @@ Spieler zeigen
 
 Admin has released you from specate to play.
 Der Admin hat Dir erlaubt, am Spiel teilzunehmen.
+
+NickName
+Nickname
+
+Login
+Login
+
+Error:
+Fehler:
+
+%s$1 $z$s$fff is $f00broadcasting$fff at $lwww.twitch.tv$l, say hello to all the viewers :)
+%s$1 $z$s$fff $f00streamt$fff auf $lwww.twitch.tv$l, sagt Hallo an alle Zuschauer :)
 

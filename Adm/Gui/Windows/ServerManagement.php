@@ -34,8 +34,11 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->actions = new \stdClass();
         $this->actions->close = ActionHandler::getInstance()->createAction(array($this, "close"));
-        $this->actions->stopServer = ActionHandler::getInstance()->createAction(array($this, "stopServer"));
-        $this->actions->stopManialive = ActionHandler::getInstance()->createAction(array($this, "stopManialive"));
+	
+        $this->actions->stopServerf =  ActionHandler::getInstance()->createAction(array($this, "stopServer"));
+        $this->actions->stopServer = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions->stopServerf);
+        $this->actions->stopManialivef = ActionHandler::getInstance()->createAction(array($this, "stopManialive"));
+        $this->actions->stopManialive = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions->stopManialivef);
 
         $this->btn1 = new myButton(40, 6);
         $this->btn1->setText(__("Stop Server", $this->getRecipient()));
@@ -71,7 +74,9 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function stopManialive($login) {
-        die();
+	$this->connection->chatSendServerMessage("[Notice] Stopping eXpansion...");
+	$this->connection->sendHideManialinkPage();       
+	\ManiaLive\Application\Application::getInstance()->kill();	
     }
 
     function close() {
@@ -80,14 +85,16 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->frame->setPosition(0, -8);
+        $this->frame->setPosition(2, -6);
         $this->closeButton->setPosition($this->sizeX - 28, -($this->sizeY - 6));
     }
 
     function destroy() {
         ActionHandler::getInstance()->deleteAction($this->actions->close);
         ActionHandler::getInstance()->deleteAction($this->actions->stopServer);
+        ActionHandler::getInstance()->deleteAction($this->actions->stopServerf);
         ActionHandler::getInstance()->deleteAction($this->actions->stopManialive);
+        ActionHandler::getInstance()->deleteAction($this->actions->stopManialivef);
         $this->closeButton->destroy();
         $this->btn1->destroy();
         $this->btn2->destroy();

@@ -48,15 +48,18 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->setPublicMethod('isPublicSkipActive');
 	$this->setPublicMethod('serverControlMain');
 
-	if ($this->isPluginLoaded("eXpansion\AdminGroups")) {
+	if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups')) {
 	    Dispatcher::register(\ManiaLivePlugins\eXpansion\AdminGroups\Events\Event::getClass(), $this);
 	}
 
 	$this->config = Config::getInstance();
+	
 	$this->donateConfig = \ManiaLivePlugins\eXpansion\DonatePanel\Config::getInstance();
 
-	$this->actions['skip'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
-	$this->actions['res'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
+	$this->actions['skip_final'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
+	$this->actions['skip'] = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions['skip_final']);
+	$this->actions['res_final'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
+	$this->actions['res'] = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions['res_final']);
     }
 
     public function isPublicResIsActive() {
@@ -77,6 +80,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onReady() {
 	$this->enableDedicatedEvents();
+
 	ServerControlMain::$mainPlugin = $this;
 	Gui\Windows\RoundPoints::$plugin = $this;
 	Gui\Windows\ForceScores::$mainPlugin = $this;
@@ -84,10 +88,9 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 
 	$cmd = AdminGroups::addAdminCommand('server control', $this, 'serverControlMain', 'server_admin');
-	$cmd->setHelp('Displays the main control panel for the server');	
+	$cmd->setHelp('Displays the main control panel for the server');
 	$cmd->setMinParam(0);
 	AdminGroups::addAlias($cmd, "server");
-	
 
 	foreach ($this->storage->players as $player)
 	    $this->onPlayerConnect($player->login, false);
@@ -99,17 +102,19 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function onPlayerConnect($login, $isSpectator) {
-
+	if ($this->exp_isRelay())
+	    return;
 //        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login) || !(empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1) || !(empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1)) {
 	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
 	    $info = AdminPanel::Create($login);
 	    $info->setSize(40, 6);
-	    $info->setPosition(-160, -44);
 	    $info->show();
 	}
     }
 
     public function showResSkip($login) {
+	if ($this->exp_isRelay())
+	    return;
 	$widget = ResSkipButtons::Create($login);
 
 	$nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
@@ -134,10 +139,13 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$widget->setResAmount("no");
 	    }
 	}
+	
+	
+	
 	$widget->setActions($this->actions['res'], $this->actions['skip']);
-
-	$widget->setPosition(100.0, 78.0);
-	$widget->setSize(28.0, 15.0);
+	$widget->setServerInfo($this->storage->serverLogin);
+	
+	$widget->setSize(40.0, 15.0);
 	$widget->show();
     }
 
@@ -163,6 +171,9 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$button["plugin"] = $this;
 	$button["function"] = "serverControlMain";
 	$menu->addButton($parent, "Server Window", $button);
+
+	if ($this->exp_isRelay())
+	    return;
 
 	$parent = $menu->findButton(array('admin', 'Game Options'));
 	if (!$parent) {
@@ -214,7 +225,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function forceScoresOk() {
 	$this->exp_chatSendServerMessage('Notice: Admin has altered the scores of current match!');
-	if ($this->isPluginLoaded("eXpansion\ESLcup")) {
+	if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\ESLcup\\ESLcup")) {
 	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\ESLcup\\ESLcup", "syncScores");
 	}
     }
@@ -223,7 +234,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if (AdminGroups::hasPermission($login, 'game_settings')) {
 	    $window = GameOptions::Create($login);
 	    $window->setTitle(__('Game Options', $login));
-	    $window->setSize(160, 80);
+	    $window->setSize(160, 65);
 	    $window->centerOnScreen();
 	    $window->show();
 	}
@@ -243,7 +254,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if (AdminGroups::hasPermission($login, 'server_admin')) {
 	    $window = Gui\Windows\RoundPoints::Create($login);
 	    $window->setTitle(__('Custom Round Points', $login));
-	    $window->setSize(160, 70);
+	    $window->setSize(160, 90);
 	    $window->centerOnScreen();
 	    $window->show();
 	}
@@ -283,7 +294,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function dbTools($login) {
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'db_maintainance')) {
+	if (AdminGroups::hasPermission($login, 'db_maintainance')) {
 	    if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Database\\Database")) {
 		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Database\\Database", "showDbMaintainance", $login);
 	    } else {
@@ -418,6 +429,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
+	//print_r($this->storage->currentMap);
 	if ($this->storage->currentMap->uId == $this->lastMapUid)
 	    $this->resCount++;
 	else {

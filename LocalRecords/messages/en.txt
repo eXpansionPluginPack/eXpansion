@@ -75,3 +75,13 @@ Records
 
 Map Records
 Map Records
+
+#admin_action#Records saved sucessfully into the database
+#admin_action#Records saved sucessfully into the database
+
+Sector
+Sector
+
+CheckPoint Times
+CheckPoint Times
+

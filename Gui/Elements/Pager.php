@@ -12,7 +12,7 @@ class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansio
     private $pager;
     private $items = array();
     private $scroll;
-    private $scrollBg, $scrollUp, $scrollDown;
+    private $scrollBg, $scrollUp, $scrollDown, $barFrame;
     private $itemSizeY = 6;
 
     private $myScript;
@@ -23,32 +23,59 @@ class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansio
         $this->pager->setScriptEvents();
         $this->addComponent($this->pager);
 
-        $this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 40);
-        $this->scrollBg->setAlign("center", "top");
-        $this->scrollBg->setStyle("Bgs1");
-        $this->scrollBg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitle3_3);
-        $this->scrollBg->setId("ScrollBg");
-        $this->scrollBg->setScriptEvents();
-        $this->addComponent($this->scrollBg);
+	$this->barFrame = new \ManiaLive\Gui\Controls\Frame(0,-5);
+	$this->addComponent($this->barFrame);
+	
+	$this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 40);
+	$this->scrollBg->setAlign("center", "top");
+	$this->scrollBg->setStyle("Bgs1");
+	$this->scrollBg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitle3_3);
+	$this->scrollBg->setId("ScrollBg");
+	$this->scrollBg->setScriptEvents();
+	$this->barFrame->addComponent($this->scrollBg);
 
-        $this->scroll = new \ManiaLib\Gui\Elements\Quad(3, 15);
-        $this->scroll->setAlign("center", "top");
-        $this->scroll->setStyle("Bgs1");
-        $this->scroll->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgCard1);
-        $this->scroll->setId("ScrollBar");
-        $this->scroll->setScriptEvents();
-        $this->addComponent($this->scroll);
+	$this->scroll = new \ManiaLib\Gui\Elements\Quad(3, 15);
+	$this->scroll->setAlign("center", "top");
+	$this->scroll->setStyle("Bgs1");
+	$this->scroll->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgCard1);
+	$this->scroll->setId("ScrollBar");
+	$this->scroll->setScriptEvents();
+	$this->barFrame->addComponent($this->scroll);
+
+	$this->scrollDown = new \ManiaLib\Gui\Elements\Quad(5, 5);
+	$this->scrollDown->setAlign("center", "top");
+	$this->scrollDown->setStyle("Icons128x128_1");
+	$this->scrollDown->setSubStyle('Back');
+	$this->scrollDown->setId("ScrollDown");
+	$this->scrollDown->setScriptEvents();
+	$this->scrollDown->setAttribute("rot", 270);
+	$this->barFrame->addComponent($this->scrollDown);
+
+	$this->scrollUp = new \ManiaLib\Gui\Elements\Quad(5, 5);
+	$this->scrollUp->setAlign("center", "top");
+	$this->scrollUp->setStyle("Icons128x128_1");
+	$this->scrollUp->setSubStyle('Back');
+	$this->scrollUp->setId("ScrollUp");
+	$this->scrollUp->setAttribute("rot", 90);
+	$this->scrollUp->setScriptEvents();
+	$this->barFrame->addComponent($this->scrollUp);
         
         $this->myScript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\Pager");
     }
 
     public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX - 6, $this->sizeY);
-        $this->scroll->setPosition($this->sizeX - 3, 0);
-
-        $this->scrollBg->setPosition($this->sizeX - 3);
-        $this->scrollBg->setSizeY($this->sizeY);
+        
+	$this->pager->setSize($this->sizeX - 6, $this->sizeY);	
+	
+	$this->myScript->setParam("pagerSizeY", $this->sizeY);
+        
+	$this->scroll->setPosition($this->sizeX - 3, 0);
+	$this->scrollBg->setPosition($this->sizeX - 3);
+	$this->scrollBg->setSizeY($this->sizeY - 4);
+	
+	$this->scrollDown->setPosition($this->sizeX - 5.5, -$this->sizeY + 3);
+	$this->scrollUp->setPosition($this->sizeX - 0.5, 1);
     }
 
     public function setStretchContentX($value) {
@@ -99,6 +126,7 @@ class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansio
 
     public function getScript() {
         $this->myScript->setParam("sizeY", $this->itemSizeY);
+	
         return $this->myScript;
     }
 

@@ -1,0 +1,50 @@
+Question
+Question
+
+Answer
+Réponse
+
+Apply
+Appliquer
+
+Cancel
+Annuler
+
+#quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2
+#quiz#Numéro de la question: #variable# %s$1 #quiz#    Demandeur:#variable# %s$2
+
+#question#%s ?
+#question#%s ?
+
+#error#Question needs to be at the right format!
+#error#La question doit être au bon format!
+
+#quiz#Quiz has been reset!
+#quiz#Le quiz a été mis a zéro!
+
+Correct from
+Correct from
+
+#quiz#Right answers: $o#question#%s
+#quiz#Bonne réponse: $o#question#%s
+
+#error#Aswer is missing from the question!
+#error#La question n'a pas de reponse!
+
+#error#Question is missing from the question!
+#error#Il manque la question de la question :D!
+
+%s #quiz#cancels the question.
+%s #quiz#annule le quiz
+
+#quiz#Current point holders:
+#quiz#Les teneurs courent des point:
+
+#quiz#$oPoint added for #variable#%s
+#quiz#$oPoint a été ajoute à#variable#%s
+
+#quiz#$oPoint removed from #variable#%s
+#quiz#$oPoint à été enlevé à# variable#%s
+
+New question
+Nouvelle Question

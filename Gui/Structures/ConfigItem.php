@@ -15,8 +15,11 @@ class ConfigItem extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
     /** @var bool $value */
     public $value = true;
 
-    public function __construct($id, $value) {
+    public $gameMode = "";
+    
+    public function __construct($id, $gamemode, $value) {
 	$this->id = $id;
+	$this->gameMode = $gamemode;
 	$outval = true;
 	if ($value == "0")
 	    $outval = false;

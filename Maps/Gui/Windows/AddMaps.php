@@ -9,6 +9,7 @@ use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Additem;
 class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     private $pager;
+    public static $mapsPlugin = null;
 
     /** @var  \Maniaplanet\DedicatedServer\Connection */
     private $connection;

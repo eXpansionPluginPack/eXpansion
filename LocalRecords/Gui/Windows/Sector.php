@@ -15,7 +15,7 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     
     public static $nbResult = 5;
     private $label_sector, $label_pos;
-    private $widths = array(2, 7, 7, 7, 7, 7);
+    private $widths = array(3, 7, 7, 7, 7, 7);
     private $pager;
     private $items = array();
 
@@ -26,7 +26,7 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->pager->setPosX(0);
-        $this->pager->setPosY(-4);
+        $this->pager->setPosY(2);
         $this->mainFrame->addComponent($this->pager);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
@@ -42,7 +42,7 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         for($i = 0; $i<self::$nbResult; $i++){
             $this->label_pos[$i] = new \ManiaLib\Gui\Elements\Label($scaledSizes[1], 4);
-            $this->label_pos[$i]->setAlign('left', 'center');
+            $this->label_pos[$i]->setAlign('center', 'center');
             $this->label_pos[$i]->setScale(0.8);
             $this->frame->addComponent($this->label_pos[$i]);
         }
@@ -56,6 +56,7 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         
         for($i = 0; $i<self::$nbResult; $i++){
             $this->label_pos[$i]->setSizeX($scaledSizes[1]);
+            $this->label_pos[$i]->setPosX(($scaledSizes[1]/2)*.8);
         }
 
         $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 7);

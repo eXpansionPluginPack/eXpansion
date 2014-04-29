@@ -11,7 +11,22 @@
 #rating#Évaluation de l'approbation de Map: #variable#%2$s#rating# (#variable#%3$s #rating# votes).  Votre évaluation: #variable#%4$s#rating# / #variable#5
 
 Please rate the map!
-#translate# Please rate the map!
+S'il vous plaît noter le circuit!
 
 votes
-#translate# votes
+votes
+
+Map Rating
+Note de la carte
+Remove
+#translate# Remove
+
+Close
+#translate# Close
+
+Maps with bad rating removed successfully.
+#translate# Maps with bad rating removed successfully.
+
+Ratings Manager
+#translate# Ratings Manager
+

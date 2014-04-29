@@ -1,5 +1,5 @@
 #rank#Congratulations to #variable#%1$s#rank# for their #variable#%2$s#rank# win!
-#rank#Félicitations to #variable#%1$s#rank# pour leur #variable#%2$s#rank# victoire!
+#rank#Félicitation à #variable#%1$s#rank# pour leur #variable#%2$s#rank# victoire!
 
 #rank#Congratulations for your #variable#%1$s#rank# win!
 #rank#Félicitations pour ta #variable#%1$s#rank# victoire!

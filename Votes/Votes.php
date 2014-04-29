@@ -264,8 +264,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
     }
 
-    public function onUnload() {
-        parent::onUnload();
+    public function exp_onUnload() {
 
         /* if ($this->config->defaultVotes_disable) {
           if ($this->debug) echo "[exp\Votes] Resetting CallVote Timeout (".$this->defTimeOut.")... ";

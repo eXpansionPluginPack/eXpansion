@@ -12,7 +12,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     /** @var \ManiaLive\Gui\Controls\Frame */
     protected $frame;
     protected $items = array();
-    protected $bgborder, $bg, $bgTitle, $bgFirst, $layer;
+    private $bgborder, $bg, $bgTitle, $bgFirst, $layer;
     protected $lbl_title, $bg_title;
     protected $_windowFrame;
 
@@ -21,14 +21,12 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     public $timeScript;
     protected $nbFields;
 
-    protected function onConstruct() {
-	parent::onConstruct();
+    protected function exp_onBeginConstruct() {
 	$sizeX = 46;
 	$sizeY = 95;
-	$this->setName("LocalRecords Panel");
 	$this->setScriptEvents();
 	$this->storage = \ManiaLive\Data\Storage::getInstance();
-
+	$this->setName("LocalRecords Panel");
 	$this->registerScript($this->getScript());
 
 	$this->storage = \ManiaLive\Data\Storage::getInstance();
@@ -42,26 +40,27 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->bgborder = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
 	$this->bgborder->setStyle("Bgs1InRace");
 	$this->bgborder->setSubStyle("BgTitleShadow");
-	$this->_windowFrame->addComponent($this->bgborder);
+	//$this->_windowFrame->addComponent($this->bgborder);
 
-	$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-	$this->bg->setStyle("Bgs1InRace");
-	$this->bg->setSubStyle("BgList");
+	$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround($sizeX, $sizeY);
 	$this->_windowFrame->addComponent($this->bg);
 
-	$this->bgTitle = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-	$this->bgTitle->setStyle("BgsPlayerCard");
-	$this->bgTitle->setSubStyle("BgRacePlayerName");
+	$this->bgTitle = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY+2);
+	$this->bgTitle->setStyle("UiSMSpectatorScoreBig");
+	$this->bgTitle->setSubStyle("PlayerSlotCenter");
+	$this->bgTitle->setColorize("3af");
 	$this->_windowFrame->addComponent($this->bgTitle);
 
-	$this->bgFirst = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround($sizeX, $sizeY);
+	$this->bgFirst = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+	$this->bgFirst->setBgcolor("aaa5");
+	$this->bgFirst->setAlign("center", "top");
 	$this->_windowFrame->addComponent($this->bgFirst);
 
 	$this->lbl_title = new \ManiaLib\Gui\Elements\Label(30, 5);
 	$this->lbl_title->setTextSize(1);
 	$this->lbl_title->setTextColor("fff");
 	$this->lbl_title->setStyle("TextCardScores2");
-	
+
 	$this->lbl_title->setAlign("center", "center");
 	$this->_windowFrame->addComponent($this->lbl_title);
 
@@ -71,14 +70,21 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->_windowFrame->addComponent($this->frame);
 
 	$this->layer = new myButton(5, 5);
-	$this->layer->setIcon("Icons128x32_1", "ManiaLinkSwitch");
+	$this->layer->setIcon("UIConstruction_Buttons", "Down");
 	$this->layer->setId("setLayer");
 	$this->layer->setDescription("Switch from Race view to Score View(Visible on Tab)", 75);
 	$this->addComponent($this->layer);
+	
+	parent::exp_onBeginConstruct();
     }
 
     protected function getScript() {
-	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/PlayerFinish");
+	if($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT){
+	    $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/PlayerFinish_Optimized");
+	}else{
+	    $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/PlayerFinish");
+	}
+	
 	$recCount = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
 	$this->timeScript = $script;
 	$this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
@@ -94,37 +100,49 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->timeScript->setParam('getCurrentTimes', Widgets_RecordSide::$secondMap ? "True" : "False");
 	return $script;
     }
+    
+    protected function autoSetPositions() {
+	parent::autoSetPositions();
+	$nbFields = $this->getParameter('nbFields');
+	$nbFieldsFirst = $this->getParameter('nbFirstFields');
+	if($nbFields != null && $nbFieldsFirst != null){
+	    $this->setNbFields($nbFields);
+	    $this->setNbFirstFields($nbFieldsFirst);
+	}
+    }
 
     public function setNbFields($nb) {
 	$this->timeScript->setParam("nbFields", $nb);
 	$this->nbFields = $nb;
-	$this->setSizeY(4 + $nb * 4);
+	$this->setSizeY(3 + $nb * 4);
     }
 
     public function setNbFirstFields($nb) {
 	$this->timeScript->setParam("nbFirstFields", $nb);
-	$this->bgFirst->setSize($this->sizeX-0.7, 1.3);
-	$this->bgFirst->setPosY((-4 * $nb) - 4);
+	$this->bgFirst->setSize($this->sizeX / 1.5, 0.3);
+	$this->bgFirst->setPosY((-4 * $nb) - 3);
     }
 
     function onResize($oldX, $oldY) {
 	parent::onResize($oldX, $oldY);
 	$this->_windowFrame->setSize($this->sizeX, $this->sizeY);
 
-	$this->bgborder->setSize($this->sizeX + 1.5, $this->sizeY + 2.5);
+	$this->bgborder->setSize($this->sizeX+20, $this->sizeY + 2.25);
 	$this->bgborder->setPosition(0, 1.5);
 
-	$this->bg->setSize($this->sizeX + 0.5, $this->sizeY + 1.5);
-	$this->bg->setPosition(0.5, 1);
-
-	$this->bgTitle->setSize($this->sizeX-0.5, 3.7);
-	$this->bgTitle->setPosition(1, 0.5);
+	$this->bgFirst->setPosX(($this->sizeX / 2) + 1 );
 	
-	$this->frame->setPosition(($this->sizeX / 2) + 1, -6);
-	$this->lbl_title->setPosition(($this->sizeX / 2), -1);
-	$this->layer->setPosition($this->sizeX - 4, -1);
-    }
+	$this->bg->setSize($this->sizeX, $this->sizeY + 1);
+	$this->bg->setPosition(0, -($this->bg->getSizeY() / 2) + 1);
 
+	$this->bgTitle->setSize($this->sizeX, 4.2);	
+	$this->bgTitle->setPosition(0, 0.75);
+
+	$this->frame->setPosition(($this->sizeX / 2) + 1, -5);
+	$this->lbl_title->setPosition(($this->sizeX / 2), -1);
+	$this->layer->setPosition($this->sizeX - 5, -1.5);
+    }
+    
     function update() {
 	foreach ($this->items as $item)
 	    $item->destroy();
@@ -150,8 +168,8 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 		$recsData .= ', ';
 		$nickData .= ', ';
 	    }
-	    $recsData .= '"' . $record->login . '"=>' . $record->time;
-	    $nickData .= '"' . $record->login . '"=>"' . $this->fixHyphens($record->nickName) . '"';
+	    $recsData .= '"' . $this->fixDashes($record->login) . '"=>' . $record->time;
+	    $nickData .= '"' . $this->fixDashes($record->login) . '"=>"' . $this->fixHyphens($record->nickName) . '"';
 	    $index++;
 	}
 	$this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
@@ -179,7 +197,12 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->clearComponents();
 	parent::destroy();
     }
-
+    
+    function fixDashes($string) {
+	$out = str_replace('--', '––', $string);
+	return $out;
+    }
+    
     protected function fixHyphens($string) {
 	$out = str_replace('"', "'", $string);
 	$out = str_replace('\\', '\\\\', $out);

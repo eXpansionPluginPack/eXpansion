@@ -18,6 +18,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $widths = array(1, 5, 3, 3, 2);
     private $pager;
     private $items = array();
+    private $button_sectors;
 
     protected function onConstruct() {
         parent::onConstruct();
@@ -26,7 +27,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->pager->setPosX(0);
-        $this->pager->setPosY(-4);
+        $this->pager->setPosY(0);
         $this->mainFrame->addComponent($this->pager);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
@@ -59,6 +60,11 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->label_nbFinish->setAlign('left', 'center');
         $this->label_nbFinish->setScale(0.8);
         $this->frame->addComponent($this->label_nbFinish);
+	
+	$this->button_sectors = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(30, 5);
+	$this->button_sectors->setText("Sector Times");
+	$this->button_sectors->setAction(LocalRecords::$openSectorsAction);
+	$this->mainFrame->addComponent($this->button_sectors);
     }
 
     public function onResize($oldX, $oldY) {
@@ -73,6 +79,8 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 7);
         foreach ($this->items as $item)
             $item->setSizeX($this->getSizeX());
+	
+	$this->button_sectors->setPosition($this->getSizeX() - 27, -$this->getSizeY() + 6);
     }
 
     public function onShow() {
@@ -93,10 +101,10 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::destroy();
     }
 
-    public function populateList($recs, $limit) {
-        $x = 0;
+    public function populateList($recs, $limit, $currentMap) {
+	$this->button_sectors->setVisibility($currentMap);
         $login = $this->getRecipient();
-
+	$x = 0;
         while ($x < $limit && $x < sizeof($recs)) {
             $this->items[$x] = new RecItem($x, $login, $recs[$x], $this->widths);
             $this->pager->addItem($this->items[$x]);

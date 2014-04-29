@@ -11,14 +11,14 @@ class CustomPointctrl extends \ManiaLive\Gui\Control {
     private $action;
 
     function __construct($indexNumber, $point, $plugin, $login, $sizeX) {
-        $sizeY = 4;
+        $sizeY = 6;
 
         $this->action = $this->createAction(array($plugin, "setPoints"), $point->points);
-        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
+        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX -8, $sizeY);
         $this->addComponent($this->bg);
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
-        $this->frame->setSize($sizeX, $sizeY);
+        $this->frame = new \ManiaLive\Gui\Controls\Frame(2,0);
+        $this->frame->setSize($sizeX -8, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
 
@@ -47,7 +47,7 @@ class CustomPointctrl extends \ManiaLive\Gui\Control {
 
         $this->frame->addComponent($spacer);
 
-        $this->label2 = new \ManiaLib\Gui\Elements\Label(100, 3);
+        $this->label2 = new \ManiaLib\Gui\Elements\Label(90, 3);
         $this->label2->setAlign("left", "center");
         $this->label2->setTextSize(1);
         $this->label2->setText(implode(",", $point->points));
@@ -56,9 +56,9 @@ class CustomPointctrl extends \ManiaLive\Gui\Control {
         $this->addComponent($this->frame);
 
         $this->button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-        $this->button->setText(__("Load", $login));
-        $this->button->setScale(0.5);
+        $this->button->setText(__("Set", $login));        
         $this->button->setAction($this->action);
+	$this->button->setScale(0.6);
         $this->frame->addComponent($this->button);
 
         $this->addComponent($this->frame);
@@ -69,9 +69,7 @@ class CustomPointctrl extends \ManiaLive\Gui\Control {
     }
 
     protected function onResize($oldX, $oldY) {
-        $this->bg->setSize($this->sizeX, $this->sizeY);
-        $this->bg->setPosX(-2);
-        $this->frame->setSize($this->sizeX, $this->sizeY);
+         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
 

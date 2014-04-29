@@ -12,21 +12,18 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
 	$clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(52, 11.5);
 	$clockBg->setPosition(0,-6);
+	$clockBg->setAction(\ManiaLivePlugins\eXpansion\Core\Core::$action_serverInfo);
 	$this->addComponent($clockBg);
 
 	$this->server = new \ManiaLib\Gui\Elements\Label(50, 6);
 	$this->server->setId('serverName');
 	$this->server->setAlign("left", "top");
 	$this->server->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
-	$this->server->setTextSize(0.8);
+	$this->server->setTextSize(2);
 	$this->server->setPosition(2, -1);
 	$this->server->setTextColor('fff');
-	$this->server->setTextPrefix('$s');	
-	$this->server->setAction(\ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics::$serverStatAction);
+	$this->server->setTextPrefix('$s');		
 	$this->addComponent($this->server);
-
-
-
 
 	/* $this->nameBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(57, 5);
 	  $this->addComponent($this->nameBg);
@@ -90,7 +87,7 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->addComponent($this->frame);
 	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Clock\Gui\Scripts_Clock");
 	$this->registerScript($script);
-    $script->setParam("serverLogin", \ManiaLive\Data\Storage::getInstance()->serverLogin);
+	$script->setParam("serverLogin", \ManiaLive\Data\Storage::getInstance()->serverLogin);
 
 	$this->setName("Clock & Server Name Widget");
     }

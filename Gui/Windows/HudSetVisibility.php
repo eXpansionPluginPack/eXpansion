@@ -26,19 +26,18 @@ class HudSetVisibility extends \ManiaLive\Gui\Window {
 	$content = '<script><!--
                        main () {
 			declare Boolean exp_needToCheckPersistentVars for UI = False;
-                        declare persistent Boolean[Text][Text] exp_widgetVisible;
+                        declare persistent Boolean[Text][Text][Text] eXp_widgetVisible;
 			';
-	foreach ($this->data as $item) {
+	foreach ($this->data as $item) {	    
 	    $bool = "False";
 	    if ($item->value)
 		$bool = "True";
-
-	    $content .= "exp_widgetVisible[\"".\ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION."\"][\"" . $item->id . "\"] = " . $bool . "; \n";
+	    $content .= "eXp_widgetVisible[\"".\ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION."\"][\"" . $item->id . "\"][\"" . $item->gameMode . "\"] = " . $bool . "; \n";
 	}
 
-	$content .=' 
-	    exp_needToCheckPersistentVars = True; 
-                       }
+	$content .='
+	    exp_needToCheckPersistentVars = True;               
+	    }
 		
                 --></script>';
 	$this->xml->setContent($content);

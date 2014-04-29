@@ -43,11 +43,11 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->pager->setStretchContentX($this->sizeX);
         $this->pager->setPosition(0, -7);
 
-        $this->group_add->setSize($this->sizeX * (1 / 0.8) - 20, 7);
+        $this->group_add->setSize($this->sizeX * (1 / 0.8) - 30, 7);
         $this->group_add->setPosition(0, -3);
 
         $this->button_add->setSize(30, 5);
-        $this->button_add->setPosition($this->sizeX * (1 / 0.8) - 45 * (1 / 0.8), -3);
+        $this->button_add->setPosition($this->sizeX * (1 / 0.8) - 40 * (1 / 0.8), -3);
     }
 
     function onShow() {
@@ -129,7 +129,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Players::Create($login);
         $window->setGroup($group);
         $window->setTitle(__(AdminGroups::$txt_playersTitle, $login, $group->getGroupName()));
-        $window->setSize(80, 100);
+        $window->setSize(85, 100);
         $window->centerOnScreen();
         $window->show();
     }
@@ -151,8 +151,33 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->redraw($login);
 
         $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
-
         foreach ($windows as $window) {
+            $login = $window->getRecipient();
+            $window->onShow();
+            $window->redraw($login);
+        }
+    }
+    
+    public function refreshAll(){
+	$windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Players::GetAll();
+        foreach ($windows as $window) {
+	    $window->setGroup(AdminGroups::getInstance()->getGroup($window->getGroup()->getGroupName()));
+            $login = $window->getRecipient();
+            $window->onShow();
+            $window->redraw($login);
+        }
+	
+	$windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Inherits::GetAll();
+        foreach ($windows as $window) {
+	    $window->setGroup(AdminGroups::getInstance()->getGroup($window->getGroup()->getGroupName()));
+            $login = $window->getRecipient();
+            $window->onShow();
+            $window->redraw($login);
+        }
+	
+	$windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Permissions::GetAll();
+        foreach ($windows as $window) {
+	    $window->setGroup(AdminGroups::getInstance()->getGroup($window->getGroup()->getGroupName()));
             $login = $window->getRecipient();
             $window->onShow();
             $window->redraw($login);

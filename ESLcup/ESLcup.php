@@ -39,6 +39,8 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * onload
      */
     public function exp_onInit() {
+	$this->exp_addTitleSupport("TM");
+	$this->exp_addTitleSupport("Trackmania");
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
 
         //Oliverde8 Menu

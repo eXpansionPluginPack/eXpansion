@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
+use \ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted as Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use \ManiaLive\Gui\Controls\Pager;
@@ -175,22 +175,22 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->cbReferee->setText(__("Enable Referee-mode",$this->getRecipient()));
         $this->frameCb->addComponent($this->cbReferee);
 	
-	$this->e['DisableHorns'] = new Checkbox();	
+	$this->e['DisableHorns'] = new Checkbox(4, 4, 50);	
         $this->e['DisableHorns']->setStatus($server->disableHorns);
         $this->e['DisableHorns']->setText(__("Disable Horns", $login));
         $this->frameCb->addComponent($this->e['DisableHorns']);
 	
-	$this->e['DisableAnnounces'] = new Checkbox();        
+	$this->e['DisableAnnounces'] = new Checkbox(4, 4, 50);        
         $this->e['DisableAnnounces']->setStatus($server->disableServiceAnnounces);
         $this->e['DisableAnnounces']->setText(__("Disable Announces", $login));
         $this->frameCb->addComponent($this->e['DisableAnnounces']);
 	
-	$this->e['AutosaveReplays'] = new Checkbox();
+	$this->e['AutosaveReplays'] = new Checkbox(4, 4, 50);
         $this->e['AutosaveReplays']->setStatus($server->autoSaveReplays);
         $this->e['AutosaveReplays']->setText(__("Autosave All Replays", $login));
         $this->frameCb->addComponent($this->e['AutosaveReplays']);
 	
-	$this->e['AutosaveValidation'] = new Checkbox();        
+	$this->e['AutosaveValidation'] = new Checkbox(4, 4, 50);        
         $this->e['AutosaveValidation']->setStatus($server->autoSaveValidationReplays);
         $this->e['AutosaveValidation']->setText(__("Autosave Validation Replays", $login));
         $this->frameCb->addComponent($this->e['AutosaveValidation']);
@@ -290,6 +290,12 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         
         $server = \ManiaLive\Data\Storage::getInstance()->server;
 
+	foreach($this->frameCb->getComponents()  as $component){
+	    if($component instanceof Checkbox){
+		$component->setArgs($args);
+	    }
+	}
+	
         $serverOptions = Array(
             "Name" => !AdminGroups::hasPermission($login, 'server_name') ? $server->name : $args['serverName'],
             "Comment" => !AdminGroups::hasPermission($login, 'server_comment') ? $server->comment : $args['serverComment'],

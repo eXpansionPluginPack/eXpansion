@@ -16,3 +16,18 @@ Bitte bewerte die Map
 votes
 Berwertungen
 
+Map Rating
+Bewertung aufgenommen
+
+Remove
+#translate# Remove
+
+Close
+#translate# Close
+
+Maps with bad rating removed successfully.
+#translate# Maps with bad rating removed successfully.
+
+Ratings Manager
+#translate# Ratings Manager
+

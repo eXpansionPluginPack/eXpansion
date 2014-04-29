@@ -19,7 +19,7 @@ class BannedPlayeritem extends \ManiaLive\Gui\Control {
 
     function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller) {
         $sizeX = 120;
-        $sizeY = 4;        
+        $sizeY = 6;        
         $this->player = $player;
         
         $this->unbanAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'unban'), $player->login);

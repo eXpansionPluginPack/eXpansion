@@ -13,3 +13,33 @@ Fjern
 unIgnore
 Fjern ignorering
 
+possible parameters: limit, dynamic, wu
+#translate# possible parameters: limit, dynamic, wu
+
+possible parameters: laps, limit, wu, fto, ftimeout
+#translate# possible parameters: laps, limit, wu, fto, ftimeout
+
+possible parameters: pointslimit, newrules, wu, fto, ftimeout
+#translate# possible parameters: pointslimit, newrules, wu, fto, ftimeout
+
+possible parameters: limit, rounds, nbwin, wu, fto, ftimeout
+#translate# possible parameters: limit, rounds, nbwin, wu, fto, ftimeout
+
+possible parameters: limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap
+#translate# possible parameters: limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap
+
+blacklist
+#translate# blacklist
+
+ban
+#translate# ban
+
+kick
+#translate# kick
+
+Ok
+#translate# Ok
+
+Cancel
+#translate# Cancel
+

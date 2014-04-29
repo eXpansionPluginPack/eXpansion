@@ -11,10 +11,12 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
     private $iitems = array();
     private $data = array();
     private $scroll, $bg, $scrollBg;
+    private $scrollDown, $scrollUp;
     private $myScript;
     private $ContentLayout;
     private $nbElemParColumn;
     private $index = 0;
+    private $rowPerPage = 1;
 
     function __construct() {
 
@@ -47,6 +49,24 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 	$this->scroll->setScriptEvents();
 	$this->addComponent($this->scroll);
 
+	$this->scrollDown = new \ManiaLib\Gui\Elements\Quad(5, 5);
+	$this->scrollDown->setAlign("center", "top");
+	$this->scrollDown->setStyle("Icons128x128_1");
+	$this->scrollDown->setSubStyle('Back');
+	$this->scrollDown->setId("ScrollDown");
+	$this->scrollDown->setScriptEvents();
+	$this->scrollDown->setAttribute("rot", 270);
+	$this->addComponent($this->scrollDown);
+
+	$this->scrollUp = new \ManiaLib\Gui\Elements\Quad(5, 5);
+	$this->scrollUp->setAlign("center", "top");
+	$this->scrollUp->setStyle("Icons128x128_1");
+	$this->scrollUp->setSubStyle('Back');
+	$this->scrollUp->setId("ScrollUp");
+	$this->scrollUp->setAttribute("rot", 90);
+	$this->scrollUp->setScriptEvents();
+	$this->addComponent($this->scrollUp);
+
 	$this->xml = new \ManiaLive\Gui\Elements\Xml();
 
 	$entry = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("item");
@@ -74,8 +94,8 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 
     public function addSimpleItems($items) {
 	foreach ($items as $text => $action) {
-	    $this->iitems[$this->index][] = '"' . $text . '"';
-	    $this->data[$this->index][] = '"' . $action . '"';
+	    $this->iitems[$this->index][] = '"' . $this->fixHyphens($text) . '"';
+	    $this->data[$this->index][] = '"' . $this->fixHyphens($action) . '"';
 	}
 	$this->index++;
     }
@@ -86,7 +106,10 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 	$this->sizeY = $args[1];
 	$this->scroll->setPosition($this->sizeX - 3, 0);
 	$this->scrollBg->setPosition($this->sizeX - 3);
-	$this->scrollBg->setSizeY($this->sizeY);
+	$this->scrollBg->setSizeY($this->sizeY - 2);
+
+	$this->scrollDown->setPosition($this->sizeX - 5.5, -$this->sizeY + 1);
+	$this->scrollUp->setPosition($this->sizeX - 0.5, 1);
     }
 
     public function setContentLayout($className) {
@@ -95,13 +118,23 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 
     public function update($login) {
 
+	$className = $this->ContentLayout;
+	$layout = new $className(0, $login, $this->clickAction);
+
+	$sizeY = $layout->getSizeY() * ($layout->getScale() == 0.0 ? 1 : $layout->getScale());
+	
 	$this->frame->clearComponents();
 	$layout = null;
-	for ($x = 0; $x < 12; $x++) {
+	
+	$limit = (int)($this->getSizeY()/$sizeY);
+	
+	for ($x = 0; $x <  $limit; $x++) {
 	    $className = $this->ContentLayout;
 	    $layout = new $className($x, $login, $this->clickAction);
 	    $this->frame->addComponent($layout);
 	}
+	$this->rowPerPage = $limit;
+	
 	$this->nbElemParColumn = $layout->getNbTextColumns();
     }
 
@@ -139,9 +172,17 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 	$this->myScript->setParam("data", $data);
 	$this->myScript->setParam("itemsPerRow", $this->nbElemParColumn);
 	$this->myScript->setParam("totalRows", $totalRows);
+	$this->myScript->setParam("rowPerPage", $this->rowPerPage);
 
 
 	return $this->myScript;
+    }
+
+    protected function fixHyphens($string) {
+	$out = str_replace('"', "'", $string);
+	$out = str_replace('\\', '\\\\', $out);
+	$out = str_replace('-', '–', $out);
+	return $out;
     }
 
 }

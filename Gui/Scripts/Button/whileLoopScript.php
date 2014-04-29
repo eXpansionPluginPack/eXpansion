@@ -19,12 +19,12 @@ foreach (Event in PendingEvents) {
                 //Checking position
                 if(eXp_Button.AbsolutePosition.X + eXp_ButtonCurrentBg.Size.X > 160){
                     //Left open
-                    eXp_ButtonCurrentBg.PosnX = - eXp_ButtonCurrentBg.Size.X;
-                    eXp_ButtonCurrentLb.PosnX = - eXp_ButtonCurrentBg.Size.X + 1;
+                    eXp_ButtonCurrentBg.RelativePosition.X = - eXp_ButtonCurrentBg.Size.X;
+                    eXp_ButtonCurrentLb.RelativePosition.X = - eXp_ButtonCurrentBg.Size.X + 1;
                 }else{
                     //Open right
-                    eXp_ButtonCurrentBg.PosnX = 5.0;
-                    eXp_ButtonCurrentLb.PosnX = 6.0;
+                    eXp_ButtonCurrentBg.RelativePosition.X = 5.0;
+                    eXp_ButtonCurrentLb.RelativePosition.X = 6.0;
                 }
 
                 eXp_ButtonCurrentBg.Show();

@@ -2,7 +2,7 @@ Server Management
 Server Verwaltung
 
 Force Scores
-Spielstände überarbeiten
+Punktestand bearbeiten
 
 Server ControlPanel
 Server Systemsteuerung
@@ -14,7 +14,7 @@ Game Options
 Spiel Optionen
 
 Match Settings
-Wettkampf Einstellungen
+Match Einstellungen
 
 Script Settings
 Script Einstellungen
@@ -56,10 +56,10 @@ File '%s' deleted from filesystem!
 Datei '%s' wurde gelöscht!
 
 Saved MatchSettings to file: %s
-Speichere Wettkampfeinstellungen (MatchSettings) in Datei: %s
+Speichere MatchSettings in Datei: %s
 
 Loaded MatchSettings from file: %s
-Lade Wettkampfeinstellungen (MatchSettings) aus Datei: %s
+Lade MatchSettings von Datei: %s
 
 Server management
 Server Verwaltung
@@ -74,13 +74,13 @@ Admin Groups
 Admin Gruppen
 
 Match settings
-Wettkampf Einstellungen
+Match Einstellungen
 
 ScriptMode settings
 Scriptmodus Einstellungen
 
 Database tools
-Datenbank Anwendungen
+Datenbankanwendungen
 
 Close
 Schließen
@@ -119,13 +119,13 @@ Referee password
 Schiedsrichterpasswort
 
 Show Server in public server list
-Zeige Server in liste der öffentlichen Server
+Zeige Server in Liste der öffentlichen Server
 
 Ladder server
 LadderServer
 
 Allow map download using ingame menu
-Erlaube Herunterladen von Maps aus dem Spielmenü heraus
+Erlaube Herunterladen von Maps im Spielmenü
 
 Allow Peer-2-Peer download
 Erlaube P2P-Herunterladen
@@ -155,43 +155,43 @@ Podium Chat time
 #translate# Podium Chat Zeit
 
 All Warmup duration
-#translate# All Warmup dauer
+Allgemeine Aufwärmdauer
 
 finishTimeout
-#translate# finishTimeout
+Ziel-Timeout
 
 timeAttackLimit
-#translate# timeAttackLimit
+TimeAttack - Zeitlimit
 
 timeAttackSynchStartPeriod
-#translate# timeAttackSynchStartPeriod
+TimeAttack - Synchr. Startperiode
 
 roundsPointsLimit
-#translate# roundsPointsLimit
+Rounds - Punktelimit
 
 roundsForcedLaps
-#translate# roundsForcedLaps
+Rounds - feste Rundenzahl
 
 roundsPointsLimitNewRules
-#translate# roundsPointsLimitNewRules
+Rounds - Punktelimit (neue Regeln)
 
 teamPointsLimit
-#translate# teamPointsLimit
+Team - Punktelimit
 
 teamMaxPoints
-#translate# teamMaxPoints
+Team - max. Punkte
 
 teamPointsLimitNewRules
-#translate# teamPointsLimitNewRules
+Team - Punktelimit (neue Regeln)
 
 cupPointsLimit
-#translate# cupPointsLimit
+Cup - Punktelimit
 
 cupNbWinners
-#translate# cupNbWinners
+Cup - Anzahl der Sieger
 
 cupRoundsPerMap
-#translate# cupRoundsPerMap
+Cup - Runden pro Strecke
 
 Choose Gamemode:
 Spielmodus wählen:
@@ -203,17 +203,107 @@ Rounds: use new rules
 Rounds: neue Regeln verwenden
 
 Team: use new rules
-#translate# Team: neue Regeln verwenden
+Team: neue Regeln verwenden
 
 Disable Respawn
-Respawn verhindern
+Zurücksetzen deaktivieren
 
 Force Show All Opponents
 Erzwinge das Anzeigen aller Gegner
 
 Save MatchSettings as
-Spieleinstellungen (MatchSettings) Speichern als
+MatchSettings - Speichern als
 
 Round points
-Runden Punkte
+Punkte pro Runde
+
+The restart of this track is in progress!
+Diese Strecke wird neugestartet!
+
+#error#Player can't restart tracks on this server
+#error#Spieler kann Strecken auf diesem Server nicht neustarten
+
+#error#The map has already been restarted. Limit reached!
+#error#Diese Strecke wurde schon neugestartet. Limit erreicht!
+
+#error#You can't skip tracks on this server.
+#error#Du kannst auf diesem Server keine Strecken überspringen.
+
+#error#You have skipped to many maps already!
+#error#Du hast schon zu viele Strecken übersprungen!
+
+#player#Player #variable# %s #player#pays and restarts the challenge!
+#player#Spieler #variable# %s #player#zahlt und startet die Strecke neu!
+
+#player#Player#variable# %s #player#pays and skips the challenge!
+#player#Spieler#variable# %s #player#zahlt und überspringt die Strecke!
+
+Are you sure you want to restart this map
+Bist du dir sicher, dass du diese Strecke neustarten willst
+
+Are you sure you want to skip this map
+Bist du dir sicher, dass du diese Strecke überspringen willst
+
+Podium: Chat Time
+Podium: Chatzeit
+
+All: Warmup Duration
+Alle Modi: Aufwärmzeit
+
+All: Finish Timeout
+Alle Modi: Zieltimeout
+
+TimeAttack: Time Limit
+TimeAttack: Zeitlimit
+
+TimeAttack: Synch Start Period
+TimeAttack: Synchr. Startperiode
+
+Rounds: Points Limit
+#translate# Rounds: Points Limit
+
+Rounds: Set Number of Forced Laps
+Rounds: Lege die Rundenanzahl fest 
+
+Rounds: Points Limit (NewRules)
+Rounds: Punktelimit (neue Regeln)
+
+Team: Points Limit
+Team: Punktelimit
+
+Team: Max Points For a Round
+Team: Max. Punkte pro Runde
+
+Team: Points Limit (NewRules)
+Team: Punktelimit (neue Regeln)
+
+Cup: Points Limit
+Cup: Punktelimit
+
+Cup: Number of Winners
+Cup: Anzahl der Sieger
+
+cup Rounds Per Map
+Cup: Runden pro Strecke
+
+Laps: Number of Laps
+Laps: Anzahl der Runden
+
+Laps: Time Limit
+Laps: Zeitlimit
+
+Deciated Control
+Dedi Server - Einstellungen
+
+Disable Horns
+Hupen deaktivieren
+
+Disable Announces
+Ankündigungen deaktivieren
+
+Autosave All Replays
+Alle Replays automatisch speichern
+
+Autosave Validation Replays
+Validierungs-Replays automatisch speichern
 

@@ -17,15 +17,12 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public static $dedirecords = array();
     public static $localrecords = array();
     public static $secondMap = false;
-    
     private $lastUpdate;
     private $forceUpdate = false;
     private $needUpdate = false;
     private $dedi = true;
     private $local = true;
-    
     private $widgetIds = array();
-    
     public static $raceOn;
     public static $roundPoints;
 
@@ -33,19 +30,24 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     private $config;
 
     public function exp_onInit() {
+	$this->exp_addTitleSupport("TM");
+	$this->exp_addTitleSupport("Trackmania");
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, 'TeamAttack.Script.txt');
 	$this->addDependency(new \ManiaLive\PluginHandler\Dependency('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
     public function exp_onLoad() {
-	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania'))
+	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania') || $this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script'))
 	    Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
 
 	Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
+	Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
+	Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
 	$this->config = Config::getInstance();
     }
 
@@ -62,7 +64,6 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	self::$localrecords = $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
 	$this->enableTickerEvent();
 	$this->needUpdate = self::Localrecords;
-	// $this->forceUpdate = true;
 
 	$this->getRoundsPoints();
 	$this->updateDediPanel();
@@ -96,148 +97,100 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function updateDediPanel($login = NULL) {
 
-	$panelMain = Gui\Widgets\DediPanel::Create($login);
-	$panelMain->setPosition(-160, 63);
-	$panelMain->setSize(40, 95);
-	$panelMain->setNbFields(20);
-	$panelMain->setNbFirstFields(5);
-	$panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-	if($login == Null){
-	    $this->widgetIds["DediPanel"] = $panelMain->getId();
-	}else if(isset($this->widgetIds["DediPanel"])){
-	    $panelMain->setId($this->widgetIds["DediPanel"]);
+	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania') || $this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script')) {
+
+	    if ($login == Null) {
+		$panelMain = Gui\Widgets\DediPanel::Create($login);
+		$panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+		$panelMain->setSizeX(40);
+
+		$this->widgetIds["DediPanel"] = $panelMain;
+	    } else if (isset($this->widgetIds["DediPanel"])) {
+		$this->widgetIds["DediPanel"]->update();
+		$this->widgetIds["DediPanel"]->show($login);
+	    }
+
+	    if ($login == Null) {
+		$panelScore = Gui\Widgets\DediPanel2::Create($login);
+		$panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+		$panelScore->setVisibleLayer("scorestable");
+		$panelScore->setSizeX(40);
+		$this->widgetIds["DediPanel2"] = $panelScore;
+
+
+		$panelScore->update();
+		$panelMain->update();
+		$panelMain->show();
+		$panelScore->show();
+	    } else if (isset($this->widgetIds["DediPanel"])) {
+		$this->widgetIds["DediPanel2"]->update();
+		$this->widgetIds["DediPanel2"]->show($login);
+	    }
 	}
-	
-	$panelScore = Gui\Widgets\DediPanel2::Create($login);
-	$panelScore->setPosition(-160, 63);
-	$panelScore->setSize(40, 95);
-	$panelScore->setNbFields(25);
-	$panelScore->setNbFirstFields(8);
-	$panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	if($login == Null){
-	    $this->widgetIds["DediPanel"] = $panelScore->getId();
-	}else if(isset($this->widgetIds["DediPanel"])){
-	    $panelScore->setId($this->widgetIds["DediPanel"]);
-	}
-	
-	if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_ROUNDS
-		|| $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM
-		|| $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_LAPS
-		|| $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP){
-	    
-	    $panelMain->setPosition(-161, 63);		
-	    $panelMain->setNbFields(12);
-	    $panelMain->setNbFirstFields(5);
-	    
-	    $panelScore->setPosition(-161, 63);	
-	    $panelScore->setNbFields(12);
-	    $panelScore->setNbFirstFields(5);
-	}
-	
-	$panelScore->update();
-	$panelMain->update();
-	$panelMain->show();
-	$panelScore->show();
     }
 
     public function updateLocalPanel($login = null) {
-	$panelMain = Gui\Widgets\LocalPanel::Create($login);
-	$panelMain->setPosition(118, 52);	
-	$panelMain->setSize(40, 95);
-	$panelMain->setNbFields(15);
-	$panelMain->setNbFirstFields(5);
-	$panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-	if($login == Null){
-	    $this->widgetIds["LocalPanel"] = $panelMain->getId();
-	}else if(isset($this->widgetIds["LocalPanel"])){
-	    $panelMain->setId($this->widgetIds["LocalPanel"]);
-	}
-	
 
-	$panelScore = Gui\Widgets\LocalPanel2::Create($login);
-	$panelScore->setPosition(118, 52);
-	$panelScore->setSize(40, 95);
-	$panelScore->setNbFields(15);
-	$panelScore->setNbFirstFields(5);
-	$panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	if($login == Null){
-	    $this->widgetIds["LocalPanel2"] = $panelScore->getId();
-	}else if(isset($this->widgetIds["LocalPanel2"])){
-	    $panelScore->setId($this->widgetIds["LocalPanel2"]);
+	if ($login == Null) {
+	    $panelMain = Gui\Widgets\LocalPanel::Create($login);
+	    $panelMain->setSizeX(40);
+	    $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+	    $this->widgetIds["LocalPanel"] = $panelMain;
+	} else if (isset($this->widgetIds["LocalPanel"])) {
+	    $this->widgetIds["LocalPanel"]->update();
+	    $this->widgetIds["LocalPanel"]->show($login);
 	}
-	
-	if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_ROUNDS
-		|| $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM
-		|| $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_LAPS
-		|| $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP){
-	    
-	    $panelMain->setPosition(-161, 9);	
-	    $panelMain->setNbFields(12);
-	    $panelMain->setNbFirstFields(3);
-	    
-	    $panelScore->setPosition(-161, 9);	
-	    $panelScore->setNbFields(12);
-	    $panelScore->setNbFirstFields(3);
+
+	if ($login == Null) {
+	    $panelScore = Gui\Widgets\LocalPanel2::Create($login);
+	    $panelScore->setSizeX(40);
+	    $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+	    $panelScore->setVisibleLayer("scorestable");
+
+	    $this->widgetIds["LocalPanel2"] = $panelScore;
+
+	    $panelScore->update();
+	    $panelMain->update();
+	    $panelMain->show();
+	    $panelScore->show();
+	} else if (isset($this->widgetIds["LocalPanel2"])) {
+	    $this->widgetIds["LocalPanel2"]->update();
+	    $this->widgetIds["LocalPanel2"]->show($login);
 	}
-	
-	$panelScore->update();
-	$panelMain->update();
-	$panelMain->show();
-	$panelScore->show();
     }
 
     public function updateLivePanel($login = null) {
 	Gui\Widgets\LivePanel::$connection = $this->connection;
-	
-	$panelMain = Gui\Widgets\LivePanel::Create($login);
-	$panelMain->setPosition(118, -12);
-	$panelMain->setSize(40, 95);
-	$panelMain->setNbFields(8);
-	$panelMain->setNbFirstFields(3);	
-	$panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-	if($login == Null){
-	    $this->widgetIds["LivePanel"] = $panelMain->getId();
-	}else if(isset($this->widgetIds["LivePanel"])){
-	    $panelMain->setId($this->widgetIds["LivePanel"]);
-	}
-	
 
-	$panelScore = Gui\Widgets\LivePanel2::Create($login);
-	$panelScore->setPosition(118, -12);
-	$panelScore->setSize(40, 95);
-	$panelScore->setNbFields(8);
-	$panelScore->setNbFirstFields(3);
-	$panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	if($login == Null){
-	    $this->widgetIds["LivePanel2"] = $panelScore->getId();
-	}else if(isset($this->widgetIds["LivePanel2"])){
-	    $panelScore->setId($this->widgetIds["LivePanel2"]);
+	if ($login == Null) {
+	    $panelMain = Gui\Widgets\LivePanel::Create($login);
+	    $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+	    $panelMain->setSizeX(40);
+	    $this->widgetIds["LivePanel"] = $panelMain;
+	} else if (isset($this->widgetIds["LivePanel"])) {
+	    $this->widgetIds["LivePanel"]->update();
+	    $this->widgetIds["LivePanel"]->show($login);
 	}
-	
-	if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_ROUNDS
-		|| $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM
-		|| $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP){
+
+	if ($login == Null) {
+	    $panelScore = Gui\Widgets\LivePanel2::Create($login);
+	    $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+	    $panelScore->setVisibleLayer("scorestable");
+	    $panelScore->setSizeX(40);
+	    $this->widgetIds["LivePanel2"] = $panelScore;
+	    $panelScore->update();
+	    $panelMain->update();
+	    $panelMain->show();
+	    $panelScore->show();
+	} else if (isset($this->widgetIds["LivePanel2"])) {
+	    $this->widgetIds["LivePanel2"]->update();
+	    $this->widgetIds["LivePanel2"]->show($login);
+	}
+
+	$gamemode = self::exp_getCurrentCompatibilityGameMode();
+	if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM || $gamemode == GameInfos::GAMEMODE_CUP) {
 	    \ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::ROUND_SCORES);
 	}
-	
-	if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_ROUNDS
-		|| $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM
-		|| $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_LAPS
-		|| $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP){
-	    
-	    $panelMain->setPosition(118, 42);	
-	    $panelMain->setNbFields(22);
-	    $panelMain->setNbFirstFields(15);
-	    
-	    $panelScore->setPosition(118, 42);	
-	    $panelScore->setNbFields(22);
-	    $panelScore->setNbFirstFields(15);
-	}
-	
-	$panelScore->update();
-	$panelMain->update();
-	$panelMain->show();
-	$panelScore->show();
     }
 
     public function showLocalPanel($login) {
@@ -258,10 +211,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
-	
+
 	self::$raceOn = false;
-	self::$dedirecords = array(); // reset 
-	self::$localrecords = array(); //  reset
+		$this->widgetIds = array();
 	Gui\Widgets\LocalPanel::EraseAll();
 	Gui\Widgets\LocalPanel2::EraseAll();
 	Gui\Widgets\DediPanel::EraseAll();
@@ -269,26 +221,47 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$this->hideLivePanel();
     }
 
-    public function getRoundsPoints(){
-	$points = $this->connection->getRoundCustomPoints();
-	if(empty($points)){
-	    $maxPoints = 10;
-
-	    self::$roundPoints = array();
-	    for($i = $maxPoints; $i > 0; $i--){
-		self::$roundPoints[] = $i;
-	    }
-	}else {
-	    self::$roundPoints = $points;
+    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+	if($wasWarmUp){
+	    self::$raceOn = false;
+	    $this->forceUpdate = true;
+	    $this->updateDediPanel();
+	    $this->updateLocalPanel();
+	    $this->updateLivePanel();
+	    self::$secondMap = true;
+	    self::$raceOn = true;
+	}else{
+	    self::$dedirecords = array(); // reset 
+	    self::$localrecords = array(); //  reset
 	}
     }
-    
-    public function onBeginMatch() {
-	$this->getRoundsPoints();	
-	
+
+    public function getRoundsPoints() {
+	if ($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_SCRIPT) {
+	    $points = $this->connection->getRoundCustomPoints();
+	    if (empty($points)) {
+		self::$roundPoints = array(10, 6, 4, 3, 2, 1);
+	    } else {
+		self::$roundPoints = $points;
+	    }
+	} else {
+	    self::$roundPoints = array(10, 6, 4, 3, 2, 1);
+	}
+    }
+
+    public function onBeginMap($map, $warmUp, $matchContinuation) {
+	$this->getRoundsPoints();
 	self::$raceOn = false;
-	$this->dedi = true;
-	$this->local = true;
+	$this->forceUpdate = true;
+	$this->updateDediPanel();
+	$this->updateLocalPanel();
+	$this->updateLivePanel();
+	self::$secondMap = true;
+	self::$raceOn = true;
+    }
+
+    public function onBeginMatch() {
+	self::$raceOn = false;
 	$this->forceUpdate = true;
 	$this->updateDediPanel();
 	$this->updateLocalPanel();
@@ -297,13 +270,14 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	self::$raceOn = true;
     }
     
+
     public function onEndRound() {
 	//@TOdo remove it is good to have it to keep track of other players
 	//if($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_ROUNDS){
-	    //$this->hideLivePanel();
+	//$this->hideLivePanel();
 	//}
     }
-    
+
     public function onBeginRound() {
 	//We need to reset the panel for next Round
 	self::$raceOn = false;
@@ -316,10 +290,6 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	self::$localrecords = $data;
 	$this->local = true;
 	$this->needUpdate = self::$localrecords;
-    }
-
-    public function onUpdateRecords($data) {
-	
     }
 
     public function onDedimaniaGetRecords($data) {
@@ -341,6 +311,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	Gui\Widgets\DediPanel2::Erase($login);
 
 	Gui\Widgets\LivePanel::Erase($login);
+	Gui\Widgets\LivePanel2::Erase($login);
     }
 
     public function onDedimaniaOpenSession() {
@@ -348,7 +319,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onNewRecord($data) {
-	
+	self::$localrecords = $data;
+    }
+    
+    public function onUpdateRecords($data){
+	self::$localrecords = $data;
     }
 
     public function onDedimaniaUpdateRecords($data) {

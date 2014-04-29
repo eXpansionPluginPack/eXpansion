@@ -46,21 +46,6 @@ foreach (Player in Players) {
     }
 }
 
-
-
-foreach (Event in PendingEvents) {
-    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer") {
-	if (eXp_widgetLayers[version][id][gameMode] == "normal") {
-	    exp_needToCheckPersistentVars = True;
-	    eXp_widgetLayers[version][id][gameMode] = "scorestable";
-	} else {
-	    exp_needToCheckPersistentVars = True;
-	    eXp_widgetLayers[version][id][gameMode] = "normal";
-	}
-    }
-}
-
-
 if(!needUpdate){
     lastUpdateTime = Now;
 }
@@ -68,7 +53,9 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     lastUpdateTime = Now;
 
     needUpdate = False;
-
+    
+    log ("update: " ^ id);
+    
     declare i = 1;
     declare nbRec = 1;
     declare showed = False;
@@ -268,5 +255,17 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 	
 	declare redLabel = (Page.GetFirstChild("redPoints") as CMlLabel);
 	redLabel.SetText(""^teamRedScore);
+    }
+}
+
+foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer") {    
+	if (eXp_widgetLayers[version][id][gameMode] == "normal") {	
+	    eXp_widgetLayers[version][id][gameMode] = "scorestable";	    
+	    exp_needToCheckPersistentVars = True;
+	} else {
+    	    eXp_widgetLayers[version][id][gameMode] = "normal";	    
+	    exp_needToCheckPersistentVars = True;
+	}
     }
 }

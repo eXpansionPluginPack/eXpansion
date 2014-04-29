@@ -75,3 +75,13 @@ Rekorde
 
 Map Records
 Map-Rekorde
+
+#admin_action#Records saved sucessfully into the database
+#admin_action#Rekorde wurden erfolgreich in der Datenbank gespeichert
+
+Sector
+Sektor
+
+CheckPoint Times
+Zwischenzeiten
+

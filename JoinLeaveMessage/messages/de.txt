@@ -7,3 +7,12 @@
 #variable#[Info] Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.
 #variable#[Info] Einige widgets sind nicht direkt einsehbar. Drücke TAB um sie zu zeigen oder F8 um alle auszublenden
 
+#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s
+#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) aus #variable#%3$s #player# ist dem Server beigetreten! #variable#%4$s
+
+#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) leaves!
+#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) hat den Server verlassen!
+
+#variable#[#error#Info#variable#] #variable#Press TAB to show records widget, use right mouse button for quick menu access.
+#variable#[#error#Info#variable#] #variable#Drücke TAB um die Rekord-Widgets anzuzeigen, benutze die Rechte Maustaste um auf das Kontextmenü zuzugreifen.
+

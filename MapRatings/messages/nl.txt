@@ -16,3 +16,18 @@ Please rate the map!
 votes
 #translate# votes
 
+Map Rating
+#translate# Map Rating
+
+Remove
+#translate# Remove
+
+Close
+#translate# Close
+
+Maps with bad rating removed successfully.
+#translate# Maps with bad rating removed successfully.
+
+Ratings Manager
+#translate# Ratings Manager
+

@@ -1,3 +1,6 @@
 Apply
 Anwenden
 
+Server Stats
+#translate# Server Stats
+

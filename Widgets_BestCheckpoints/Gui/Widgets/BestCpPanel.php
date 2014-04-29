@@ -8,7 +8,9 @@ use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Controls\CheckpointEl
 class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     private $cps = array();
-
+    private $maxCpIndex = 18;
+    
+    
     /** @var \ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint[]  */
     public static $bestTimes;
     private $frame;
@@ -75,6 +77,7 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
         $this->timeScript->setParam("cpTimes", $timeData);
         $this->timeScript->setParam("playerNicks", $nickData);
+	$this->timeScript->setParam("maxCpIndex", $this->maxCpIndex);
         parent::onDraw();
     }
 

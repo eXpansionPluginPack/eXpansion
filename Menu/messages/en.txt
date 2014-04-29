@@ -1,0 +1,89 @@
+Help...
+Help...
+
+Map
+Map
+
+List Maps...
+List Maps...
+
+Add local map...
+Add local map...
+
+Mania-Exchange...
+Mania-Exchange...
+
+Remove this
+Remove this
+
+Trash this
+Trash this
+
+Stats
+Stats
+
+Show Records...
+Show Records...
+
+Top 100 Ranks...
+Top 100 Ranks...
+
+Statistics...
+Statistics...
+
+Server info...
+Server info...
+
+Players
+Players
+
+List Players...
+List Players...
+
+Rage Quit...
+Rage Quit...
+
+Hud
+Hud
+
+Move Positions
+Move Positions
+
+Lock Positions
+Lock Positions
+
+Show/Hide elements...
+Show/Hide elements...
+
+Reset Positions
+Reset Positions
+
+Votes
+Votes
+
+Vote Restart
+Vote Restart
+
+Vote Skip
+Vote Skip
+
+Cancel Vote
+Cancel Vote
+
+Admin
+Admin
+
+Instant Restart
+Instant Restart
+
+Replay
+Replay
+
+Skip
+Skip
+
+End Round
+End Round
+
+Server Controls
+Server Controls

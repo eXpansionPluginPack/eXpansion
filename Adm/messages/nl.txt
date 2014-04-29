@@ -247,3 +247,93 @@ Team: use new rules
 Round points
 #translate# Round points
 
+The restart of this track is in progress!
+#translate# The restart of this track is in progress!
+
+#error#Player can't restart tracks on this server
+#translate# #error#Player can't restart tracks on this server
+
+#error#The map has already been restarted. Limit reached!
+#translate# #error#The map has already been restarted. Limit reached!
+
+#error#You can't skip tracks on this server.
+#translate# #error#You can't skip tracks on this server.
+
+#error#You have skipped to many maps already!
+#translate# #error#You have skipped to many maps already!
+
+#player#Player #variable# %s #player#pays and restarts the challenge!
+#translate# #player#Player #variable# %s #player#pays and restarts the challenge!
+
+#player#Player#variable# %s #player#pays and skips the challenge!
+#translate# #player#Player#variable# %s #player#pays and skips the challenge!
+
+Are you sure you want to restart this map
+#translate# Are you sure you want to restart this map
+
+Are you sure you want to skip this map
+#translate# Are you sure you want to skip this map
+
+Podium: Chat Time
+#translate# Podium: Chat Time
+
+All: Warmup Duration
+#translate# All: Warmup Duration
+
+All: Finish Timeout
+#translate# All: Finish Timeout
+
+TimeAttack: Time Limit
+#translate# TimeAttack: Time Limit
+
+TimeAttack: Synch Start Period
+#translate# TimeAttack: Synch Start Period
+
+Rounds: Points Limit
+#translate# Rounds: Points Limit
+
+Rounds: Set Number of Forced Laps
+#translate# Rounds: Set Number of Forced Laps
+
+Rounds: Points Limit (NewRules)
+#translate# Rounds: Points Limit (NewRules)
+
+Team: Points Limit
+#translate# Team: Points Limit
+
+Team: Max Points For a Round
+#translate# Team: Max Points For a Round
+
+Team: Points Limit (NewRules)
+#translate# Team: Points Limit (NewRules)
+
+Cup: Points Limit
+#translate# Cup: Points Limit
+
+Cup: Number of Winners
+#translate# Cup: Number of Winners
+
+cup Rounds Per Map
+#translate# cup Rounds Per Map
+
+Laps: Number of Laps
+#translate# Laps: Number of Laps
+
+Laps: Time Limit
+#translate# Laps: Time Limit
+
+Deciated Control
+#translate# Deciated Control
+
+Disable Horns
+#translate# Disable Horns
+
+Disable Announces
+#translate# Disable Announces
+
+Autosave All Replays
+#translate# Autosave All Replays
+
+Autosave Validation Replays
+#translate# Autosave Validation Replays
+

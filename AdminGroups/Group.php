@@ -30,19 +30,18 @@ class Group {
     public function removeAdmin($login) {
         $i = 0;
         $found = false;
-        while ($i < sizeof($this->groupUsers) && !$found) {
-            if ($this->groupUsers[$i]->getLogin() == $login) {
-                $found = true;
-                while (isset($this->groupUsers[$i + 1])) {
-                    $this->groupUsers[$i] = $this->groupUsers[$i + 1];
-                    $i++;
-                }
-                unset($this->groupUsers[$i]);
-                return true;
-            }
+	$newGroupUsers = array();
+	
+        while ($i < sizeof($this->groupUsers)) {
+            if ($this->groupUsers[$i]->getLogin() === $login) {
+		$found = true;
+            }else{
+		$newGroupUsers[] = $this->groupUsers[$i];
+	    }
             $i++;
         }
-        return false;
+	$this->groupUsers = $newGroupUsers;
+        return $found;
     }
 
     public function addPermission($name, $val) {

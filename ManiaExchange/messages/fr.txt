@@ -47,8 +47,11 @@ Titre / environment invalide!
 #admin_error# $iLe vote a échoué!
 
 Error receving data from ManiaExchange!
-#translate# Error receving data from ManiaExchange!
+Erreur en recevant les donees de ManiaExchange!
 
 Map %s $z$s$fff added from MX Succesfully
-#translate# Map %s $z$s$fff added from MX Succesfully
+Le circuit %s $z$s$fff a été ajoute a partir de MX avec succès
+
+Author
+Auteur
 

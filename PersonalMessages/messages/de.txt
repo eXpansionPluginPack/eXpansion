@@ -1,2 +1,18 @@
 Select Player to send message
 Wähle den Spieler, an den die Nachrichten gehn soll
+
+#personalmessage#Player with login "%1$s" is not found at server!
+#personalmessage#Spieler mit Login "%1$s" ist nicht auf diesem Server!
+
+#personalmessage#No message to send to!
+#personalmessage#Keine Nachricht zum senden angegeben!
+
+#personalmessage#No one to reply back!
+#personalmessage#Kein Absender, dem du antworten kannst, vorhanden.
+
+#personalmessage#You can't send a message to yourself.
+#translate# #personalmessage#Du kannst keine Nachricht an dich selbst senden.
+
+#personalmessage#Usage /pm [login] your personal message here
+#personalmessage#Verwendung.. /pm [login] Deine persönliche Nachricht hier.
+

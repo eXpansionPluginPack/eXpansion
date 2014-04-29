@@ -2,7 +2,7 @@ Map name
 Map Name
 
 Creators name
-Author
+Autor
 
 Length
 Länge
@@ -20,13 +20,13 @@ Search Maps
 Maps suchen
 
 Usage.. /mx queue [id] or /mx search "your search terms here"
-Anwendung.. /mx queue [id] oder /mx search "Suchbegriffe"
+Verwendung.. /mx queue [id] oder /mx search "Suchbegriffe"
 
 Error: %s
 Fehler: %s
 
 MX is down
-ManiaExchnage ist derzeit nicht erreichbar
+ManiaExchange ist derzeit nicht erreichbar
 
 Couldn't create mapfile in maps folder, check folder permissions!
 Konnte Mapdatei im Verzeichnis nicht erstellen, bitte Schreibberechtigungen prüfen!
@@ -52,4 +52,10 @@ Kann die Daten von ManiaExchange nicht empfangen!
 Map %s $z$s$fff added from MX Succesfully
 Map %s $z$s$fff von MX erfolgreich hinzugefügt
 
+
+Author
+Autor
+
+Author
+#translate# Author
 

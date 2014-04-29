@@ -28,12 +28,13 @@ class GroupItem extends \ManiaLive\Gui\Control {
 
     function __construct($indexNumber, Group $group, $controller, $login) {
         $this->group = $group;
-        $sizeX = 105;
-        $sizeY = 4;
+        $sizeX = 100;
+        $sizeY = 6;
 
         $this->action_changePermissions = $this->createAction(array($controller, 'changePermission'), $group);
         $this->action_playerList = $this->createAction(array($controller, 'playerList'), $group);
-        $this->action_deleteGroup = $this->createAction(array($controller, 'deleteGroup'), $group);
+        $this->action_deleteGroupf = $this->createAction(array($controller, 'deleteGroup'), $group);
+        $this->action_deleteGroup = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->action_deleteGroupf);
         $this->action_inherticances = $this->createAction(array($controller, 'inheritList'), $group);
 
         $frame = new \ManiaLive\Gui\Controls\Frame();
@@ -93,7 +94,7 @@ class GroupItem extends \ManiaLive\Gui\Control {
 
   // manialive 3.1 override to do nothing.
     function destroy() {
-        
+
     }
     /*
      * custom function to remove contents.
@@ -109,7 +110,8 @@ class GroupItem extends \ManiaLive\Gui\Control {
         $this->plistButton=null;
         $this->deleteButton=null;
         $this->clearComponents();
-
+	\ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_deleteGroupf);
+	\ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_deleteGroup);
 
         parent::destroy();
     }

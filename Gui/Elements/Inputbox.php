@@ -23,15 +23,15 @@ class Inputbox extends \ManiaLive\Gui\Control {
         $this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
         $this->label->setAlign('left', 'center');
         $this->label->setTextSize(1);
-        $this->label->setStyle("TextValueMedium");
+        $this->label->setStyle("TextCardRaceRank");
         $this->addComponent($this->label);
 
         $this->border = new \ManiaLib\Gui\Elements\Quad();
-        $this->border->setSize($sizeX + 2, 6);
+        $this->border->setSize($sizeX + 2, 5.5);
         $this->border->setPosX(-1);
         $this->border->setAlign("left", "center");
-        $this->border->setStyle("Bgs1");
-        $this->border->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitleShadow);
+        $this->border->setStyle("Bgs1InRace");
+        $this->border->setSubStyle("BgTitleShadow");
         $this->addComponent($this->border);
 
 
@@ -60,7 +60,7 @@ class Inputbox extends \ManiaLive\Gui\Control {
             $this->button->setDefault($text);
             $this->button->setScriptEvents(true);
             $this->button->setStyle("TextValueMedium");
-            $this->button->setFocusAreaColor1("0004");
+            $this->button->setFocusAreaColor1("0000");
             $this->button->setFocusAreaColor2("2af6");
             $this->button->setTextEmboss();
         } else {
@@ -69,7 +69,7 @@ class Inputbox extends \ManiaLive\Gui\Control {
         }
 
         $this->button->setAlign('left', 'center');
-        $this->button->setTextColor('fff');
+        $this->button->setTextColor('000');
         $this->button->setTextSize(1.5);
         $this->addComponent($this->button);
     }

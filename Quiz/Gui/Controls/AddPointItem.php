@@ -15,7 +15,7 @@ class AddPointItem extends \ManiaLive\Gui\Control {
     private $frame;
 
     function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $isAdmin, $login, $sizeX) {
-        $sizeY = 4;
+        $sizeY = 6;
 
         if ($isAdmin) {
             $this->addpointAction = $this->createAction(array($controller, 'addPoint'), $player->login);

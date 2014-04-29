@@ -19,7 +19,6 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $this->enableDedicatedEvents();
     }
     
-    
     /**
      * displayWidget(string $login)
      * @param string $login
@@ -32,8 +31,12 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $info->show();
     }
 
-    public function onBeginMatch() {
+    public function onBeginMap($map, $warmUp, $matchContinuation) {
         Gui\Widgets\RanksPanel::EraseAll();
+    }
+    
+    public function onBeginMatch() {
+	Gui\Widgets\RanksPanel::EraseAll();
     }
 
     public function onBeginRound() {

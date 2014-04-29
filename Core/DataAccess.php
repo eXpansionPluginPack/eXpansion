@@ -32,8 +32,8 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
     }
 
     public function start() {
-        Dispatcher::register(TickEvent::getClass(), $this);
-        //       Dispatcher::register(AppEvent::getClass(), $this);
+        //Dispatcher::register(TickEvent::getClass(), $this);
+        Dispatcher::register(AppEvent::getClass(), $this);
     }
 
     public function onTick() {

@@ -141,7 +141,7 @@ class LinePlotter extends \ManiaLive\Gui\Control {
 
         $val = '
 declare CMlGraph Graph = (Page.GetFirstChild("graph") as CMlGraph);
-log(Graph);
+//log(Graph);
 
 Graph.CoordsMin = <' . $this->getNumber($this->limits[0]) . ',' . $this->getNumber($this->limits[1]) . '>;
 Graph.CoordsMax = <' . $this->getNumber($this->limits[2]) . ', ' . $this->getNumber($this->limits[3]) . '>;

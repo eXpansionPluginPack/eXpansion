@@ -22,17 +22,20 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     private $actionVisit;
     private $actionAward;
 
-    protected function onConstruct() {
-	parent::onConstruct();
+    protected function exp_onBeginConstruct() {
+	parent::exp_onBeginConstruct();
 	$this->setName("ManiaExchange Panel");
+    }
+    protected function exp_onSettingsLoaded() {
+	parent::exp_onSettingsLoaded();
 	$config = Config::getInstance();
 	$login = $this->getRecipient();
 	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
 	$script->setParam('isMinimized', 'True');
-	$script->setParam('autoCloseTimeout', '3500');
 	$script->setParam('posXMin', -27);
 	$script->setParam('posX', -27);
-	$script->setParam('posXMax', -4);
+	$script->setParam('posXMax', -4);	
+	$script->setParam('autoCloseTimeout', $this->getParameter('autoCloseTimeout'));
 	$this->registerScript($script);
 
 	$dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
@@ -82,6 +85,7 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
 	$this->addComponent($this->_windowFrame);
     }
+    
 
     function onResize($oldX, $oldY) {
 	parent::onResize($oldX, $oldY);
@@ -139,11 +143,6 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	}
 
 	return $json[0]->TrackID;
-    }
-
-    function destroy() {
-	$this->clearComponents();
-	parent::destroy();
     }
 
 }

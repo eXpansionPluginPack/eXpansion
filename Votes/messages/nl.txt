@@ -14,7 +14,7 @@ Cancel Vote
 Annuleer Stem
 
 #variable#%1$s #vote#initiated restart map vote..
-#variable#%1$s #vote#geïnitieerd herstart map stem..
+#variable#%1$s #vote#heeft een replay vote aangevraagd
 
 #vote_failure# $iMust run skip vote within first %1$s seconds of match start..
 #vote_failure# $iMoet sla over stem binnen de eerste %1$s seconden van een wedstrijd start..

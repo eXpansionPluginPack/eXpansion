@@ -23,7 +23,7 @@ File '%s' deleted from filesystem!
 Datei '%s' wurde gelöscht!
 
 Removes current map from the playlist.
-Entfernt die aktuelle Map von der Liste.
+Entfernt die aktuelle Strecke von der Liste.
 
 Sets current challenge to replay at end of match
 Am Ende des Wettkampfs wiederholen
@@ -32,7 +32,7 @@ Maps
 Maps
 
 List maps
-Mapliste
+Streckenliste
 
 #variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position
 #variable#%1$s  #queue#wurde an die Warteschlange eingetragen von #variable#%3$s#queue#, an der #variable#%5$s #queue#. Position
@@ -71,7 +71,7 @@ Fehler: %s
 #variable#%1$s #queue#hat #variable#%2$s #queue# aus der Warteschlange entfernt..
 
 #admin_action#Admin #variable#%1$s #admin_action#emptied the map queue list
-#admin_action#Admin #variable#%1$s #admin_action#hat die Map-Warteschlange geleert
+#admin_action#Admin #variable#%1$s #admin_action#hat die Strecken-Warteschlange geleert
 
 #admin_error# $iChallenge already set to be replayed!
 #admin_error# $iIst bereits zur Wiederholung vorgemerkt!
@@ -92,7 +92,7 @@ Add all
 Alle hinzufügen
 
 Map name
-Map Name
+Streckenname
 
 Author
 Autor
@@ -101,7 +101,7 @@ Lenght
 Länge
 
 Records
-#translate# Records
+Rekorde
 
 Ratings
 Bewertungen
@@ -110,7 +110,7 @@ Actions
 Aktionen
 
 adds a map via MX
-fügt eine Map von MX hinzu
+fügt eine Strecke via MX hinzu
 
 Jukebox
 Warteschlange
@@ -125,7 +125,7 @@ Warteschlange
 #admin_error#Kann nicht herunterladen, MX ist nicht erreichbar!
 
 #admin_error#The map is to large to be added to a server
-#admin_error#Die Map ist zu groß, um zum Server hinzugefügt zu werden
+#admin_error#Die Strecke ist zu groß, um zum Server hinzugefügt zu werden
 
 #admin_error#You must include a MX map ID!
 #admin_error#Du musst eine ManiaExchange ID angeben
@@ -135,3 +135,69 @@ Warteschlange
 
 #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
 #admin_action#Admin #variable#%1$s #admin_action#hat #variable#%3$s #admin_action# von der Mapliste entfernt und die Datei gelöscht!
+Title
+Titel
+
+Length
+Länge
+
+Record
+Rekord
+
+Rating
+Bewertung
+
+Search maps
+Strecken durchsuchen
+
+Search Map
+Nach Strecke suchen
+
+Search Author
+Nach Autor suchen
+
+Clear Maplist
+Streckenliste löschen
+
+#admin_error# $iA payment for wishin a track is in progress please try later.
+#admin_error# $iA Bezahlung um sich eine Strecke zu wünschen ist in Bearbeitung. Bitte versuche es später erneut.
+
+Are you sure you want to wish this map to be played
+Bist du dir sicher, dass du dir diese Strecke wünschen willst
+
+#admin_error# $iYOu can't wish for a map at the moment.
+#admin_error# $iDu kannst dir momentan leider keine Strecke wünschen.
+
+Title
+#translate# Title
+
+Length
+#translate# Length
+
+Record
+#translate# Record
+
+Rating
+#translate# Rating
+
+Search maps
+#translate# Search maps
+
+Search Map
+#translate# Search Map
+
+Search Author
+#translate# Search Author
+
+Clear Maplist
+#translate# Clear Maplist
+
+#admin_error# $iA payment for wishin a track is in progress please try later.
+#translate# #admin_error# $iA payment for wishin a track is in progress please try later.
+
+Are you sure you want to wish this map to be played
+#translate# Are you sure you want to wish this map to be played
+
+#admin_error# $iYOu can't wish for a map at the moment.
+#translate# #admin_error# $iYOu can't wish for a map at the moment.
+

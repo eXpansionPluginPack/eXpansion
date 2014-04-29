@@ -5,10 +5,10 @@ Votes
 Abstimmungen
 
 Restart Map
-Map neu starten
+Strecke neu starten
 
 Skip Map
-Map überspringen
+Strecke überspringen
 
 Cancel Vote
 Abstimmung abbrechen

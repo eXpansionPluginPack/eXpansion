@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLive\Gui\ActionHandler;
 
 class MatchSettingsFile extends \ManiaLive\Gui\Control {
 
@@ -16,105 +17,101 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
     private $saveAction;
     private $loadAction;
     private $deleteButton;
+    private $deleteButtonf;
     private $deleteAction;
     private $frame;
 
     function __construct($indexNumber, $filename, $controller, $login, $sizeX) {
-        $sizeY = 4;
-        $this->saveAction = $this->createAction(array($controller, 'saveSettings'), $filename);
-        $this->loadAction = $this->createAction(array($controller, 'loadSettings'), $filename);
-        $this->deleteAction = $this->createAction(array($controller, 'deleteSetting'), $filename);
+	$sizeY = 6;
+	$this->saveAction = $this->createAction(array($controller, 'saveSettings'), $filename);
+	$this->loadAction = $this->createAction(array($controller, 'loadSettings'), $filename);
 
-        $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-        $this->bg->setAlign('left', 'center');
-        if ($indexNumber % 2 == 0) {
-            $this->bg->setBgcolor('aaa4');
-        } else {
-            $this->bg->setBgcolor('7774');
-        }
-        $this->addComponent($this->bg);
+	$this->deleteActionf = ActionHandler::getInstance()->createAction(array($controller, "deleteSetting"), $filename);
+	$this->deleteAction = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->deleteActionf);
 
+	$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
+	$this->addComponent($this->bg);
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
-        $this->frame->setSize($sizeX, $sizeY);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+	$this->frame = new \ManiaLive\Gui\Controls\Frame();
+	$this->frame->setSize($sizeX, $sizeY);
+	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
 
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setAlign("center", "center2");
-        $spacer->setStyle("Icons128x128_1");
-        $spacer->setSubStyle("Challenge");
-        $this->frame->addComponent($spacer);
+	$spacer = new \ManiaLib\Gui\Elements\Quad();
+	$spacer->setSize(4, 4);
+	$spacer->setAlign("center", "center2");
+	$spacer->setStyle("Icons128x128_1");
+	$spacer->setSubStyle("Challenge");
+	$this->frame->addComponent($spacer);
 
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        //$this->frame->addComponent($spacer);
+	$spacer = new \ManiaLib\Gui\Elements\Quad();
+	$spacer->setSize(4, 4);
+	$spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+	//$this->frame->addComponent($spacer);
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(120, 4);
-        $this->label->setAlign('left', 'center');
-        $file = explode('/', $filename);
-        $text = utf8_encode(end($file));
-        $text = str_replace(".txt", "", $text);
-        $this->label->setText($text);
-        $this->label->setScale(0.8);
-        $this->frame->addComponent($this->label);
-
-
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-
-        $this->frame->addComponent($spacer);
+	$this->label = new \ManiaLib\Gui\Elements\Label(90, 4);
+	$this->label->setAlign('left', 'center');
+	$file = explode('/', $filename);
+	$text = utf8_encode(end($file));
+	//$text = str_replace(".txt", "", $text);
+	$this->label->setText($text);	
+	$this->label->setTextSize(1);
+	$this->label->setStyle("TextCardSmallScores2");
+	$this->label->setTextColor("222");	
+	$this->frame->addComponent($this->label);
 
 
-        $this->loadButton = new MyButton(26, 5);
-        $this->loadButton->setText(__("Load", $login));
-        $this->loadButton->setAction($this->loadAction);
-        $this->loadButton->setScale(0.5);
-        $this->loadButton->colorize("2a2");
-        $this->frame->addComponent($this->loadButton);
+	$spacer = new \ManiaLib\Gui\Elements\Quad();
+	$spacer->setSize(4, 4);
+	$spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
 
-        $this->saveButton = new MyButton(26, 5);
-        $this->saveButton->setText('$fff' . __("Save", $login));
-        $this->saveButton->colorize("a22");
-        $this->saveButton->setAction($this->saveAction);
-        $this->saveButton->setScale(0.5);
-        $this->frame->addComponent($this->saveButton);
+	$this->frame->addComponent($spacer);
 
-        $this->deleteButton = new MyButton(26, 5);
-        $this->deleteButton->setText('$ff0' . __("Delete", $login));
-        $this->deleteButton->colorize("222");
-        $this->deleteButton->setAction($this->deleteAction);
-        $this->deleteButton->setScale(0.5);
-        $this->frame->addComponent($this->deleteButton);
 
-        $this->addComponent($this->frame);
+	$this->loadButton = new MyButton(26, 5);
+	$this->loadButton->setText(__("Load", $login));
+	$this->loadButton->setAction($this->loadAction);
+	$this->loadButton->setScale(0.6);
+	$this->loadButton->colorize("0d0");
+	$this->frame->addComponent($this->loadButton);
 
-        $this->loadButton->setVisibility(AdminGroups::hasPermission($login, 'game_match'));
-        $this->saveButton->setVisibility(AdminGroups::hasPermission($login, 'game_matchSave'));
-        $this->deleteButton->setVisibility(AdminGroups::hasPermission($login, 'game_matchDelete'));
+	$this->saveButton = new MyButton(26, 5);
+	$this->saveButton->setText(__("Save", $login));
+	$this->saveButton->colorize("");
+	$this->saveButton->setAction($this->saveAction);
+	$this->saveButton->setScale(0.6);
+	$this->frame->addComponent($this->saveButton);
 
-        $this->sizeX = $sizeX;
-        $this->sizeY = $sizeY;
-        $this->setSize($sizeX, $sizeY);
+	$this->deleteButton = new MyButton(26, 5);
+	$this->deleteButton->setText(__("Delete", $login));
+	$this->deleteButton->colorize("d00");
+	$this->deleteButton->setAction($this->deleteAction);
+	$this->deleteButton->setScale(0.6);
+	$this->frame->addComponent($this->deleteButton);
+
+	$this->addComponent($this->frame);
+
+	$this->loadButton->setVisibility(AdminGroups::hasPermission($login, 'game_match'));
+	$this->saveButton->setVisibility(AdminGroups::hasPermission($login, 'game_matchSave'));
+	$this->deleteButton->setVisibility(AdminGroups::hasPermission($login, 'game_matchDelete'));
+
+	$this->sizeX = $sizeX;
+	$this->sizeY = $sizeY;
+	$this->setSize($sizeX, $sizeY);
     }
 
     protected function onResize($oldX, $oldY) {
-        $this->bg->setSize($this->sizeX, $this->sizeY);
-        $this->bg->setPosX(0);
-
-        $this->label->setSizeX(($this->sizeX - 3 * 26 * .5 - 4 - 10) * (1 / .8));
-
-        $this->frame->setPosX(2);
-        $this->frame->setSize($this->sizeX - 4, $this->sizeY);
+	$this->bg->setSize($this->sizeX, $this->sizeY);
+	$this->bg->setPosX(0);
+	
+	$this->frame->setPosX(2);
+	$this->frame->setSize($this->sizeX - 4, $this->sizeY);
     }
-
 
 // manialive 3.1 override to do nothing.
     function destroy() {
-        
+	ActionHandler::getInstance()->deleteAction($this->deleteAction);
+	ActionHandler::getInstance()->deleteAction($this->deleteActionf);
     }
 
     /*
@@ -122,12 +119,13 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
      */
 
     function erase() {
-        $this->saveButton->destroy();
-        $this->loadButton->destroy();
-        $this->frame->clearComponents();
-        $this->frame->destroy();
-        $this->clearComponents();
-        parent::destroy();
+	$this->saveButton->destroy();
+	$this->loadButton->destroy();
+	$this->frame->clearComponents();
+	$this->frame->destroy();
+	$this->clearComponents();
+
+	parent::destroy();
     }
 
 }

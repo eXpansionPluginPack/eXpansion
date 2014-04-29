@@ -19,7 +19,7 @@ class Message extends \ManiaLive\Gui\Control {
      * @param int $sizeX
      */
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message, $widths, $sizeX) {
-        $sizeY = 4;
+        $sizeY = 6;
         $this->widths = $widths;
 
         $totalWidths = Gui::getScaledSize($widths, $sizeX);

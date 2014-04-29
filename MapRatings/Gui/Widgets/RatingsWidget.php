@@ -8,16 +8,18 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     protected $frame, $starFrame, $move, $gauge;
     protected $stars = array();
-
-    protected function onConstruct() {
-        parent::onConstruct();
+    public static $parentPlugin;
+    
+    protected function exp_onEndConstruct() {
+        parent::exp_onEndConstruct();
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setAlign("left", "top");
         // $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(20, 20));
         $this->addComponent($this->frame);
 
-        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(34, 12);    
-        $bg->setPosition(0,-6);
+        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(30, 10);    
+	$bg->setAction($this->createAction(array(self::$parentPlugin, "showRatingsManager")));
+        $bg->setPosition(0,-4);
         $this->addComponent($bg);
 
         $label = new \ManiaLib\Gui\Elements\Label(34);
@@ -30,7 +32,7 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->addComponent($label);
 
         $this->starFrame = new \ManiaLive\Gui\Controls\Frame();
-        $this->starFrame->setPosition(2,0);
+        $this->starFrame->setPosition(2,-2);
         $this->starFrame->setSize(34, 4);
         $this->frame->addComponent($this->starFrame);
         $this->gauge = new \ManiaLive\Gui\Elements\Xml();
@@ -40,10 +42,6 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-    }
-
-    function destroy() {
-        parent::destroy();
     }
 
     function setStars($number, $total) {
@@ -59,7 +57,7 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         if ($test > 60)
             $color = "0cf";
 
-        $this->gauge->setContent('<gauge scale="0.7" sizen="45 15" drawblockbg="1" color="' . $color . '" drawbg="0" rotation="0" posn="0 -3" grading="1" ratio="' . ($number / 5) . '" centered="0" />');
+        $this->gauge->setContent('<gauge sizen="32 7" drawblockbg="1" style="ProgressBarSmall" color="' . $color . '" drawbg="1" rotation="0" posn="0 -2.5" grading="1" ratio="' . ($number / 5) . '" centered="0" />');
         $this->frame->addComponent($this->gauge);
 
         $score = ($number / 5) * 100;
@@ -72,7 +70,7 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $info->setAlign("center", "center");
         $info->setTextEmboss();
         $info->setText($score . "% (" . $total . ")");
-        $info->setPosition(17, -8.5);
+        $info->setPosition(17, -6);
         $this->frame->addComponent($info);
         $this->redraw();
     }

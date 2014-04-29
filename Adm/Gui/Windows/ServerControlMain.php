@@ -55,35 +55,39 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $btn->setAction($this->actions->serverOptions);
         $this->frame->addComponent($btn);
 
-        $btn = new myButton($btnX, $btnY);
-        $btn->setText(__("Game options", $login));
-        $btn->setAction($this->actions->gameOptions);
-        $this->frame->addComponent($btn);
-
+	if(!$this->exp_isRelay()){
+	    $btn = new myButton($btnX, $btnY);
+	    $btn->setText(__("Game options", $login));
+	    $btn->setAction($this->actions->gameOptions);
+	    $this->frame->addComponent($btn);
+	}
+	
         $btn = new myButton($btnX, $btnY);
         $btn->setText(__("Admin Groups", $login));
         $btn->setAction($this->actions->adminGroups);
         $this->frame->addComponent($btn);
 
-        $btn = new myButton($btnX, $btnY);
-        $btn->setText(__("Match settings", $login));
-        $btn->setAction($this->actions->matchSettings);
-        $this->frame->addComponent($btn);
+	if(!$this->exp_isRelay()){
+	    $btn = new myButton($btnX, $btnY);
+	    $btn->setText(__("Match settings", $login));
+	    $btn->setAction($this->actions->matchSettings);
+	    $this->frame->addComponent($btn);
 
-        $btn = new myButton($btnX, $btnY);
-        $btn->setText(__("ScriptMode settings", $login));
-        $btn->setAction($this->actions->scriptSettings);
-        $this->frame->addComponent($btn);
+	    $btn = new myButton($btnX, $btnY);
+	    $btn->setText(__("ScriptMode settings", $login));
+	    $btn->setAction($this->actions->scriptSettings);
+	    $this->frame->addComponent($btn);
 
-        $btn = new myButton($btnX, $btnY);
-        $btn->setText(__("Force Scores", $login));
-        $btn->setAction($this->actions->forceScores);
-        $this->frame->addComponent($btn);
+	    $btn = new myButton($btnX, $btnY);
+	    $btn->setText(__("Force Scores", $login));
+	    $btn->setAction($this->actions->forceScores);
+	    $this->frame->addComponent($btn);
 
-        $btn = new myButton($btnX, $btnY);
-        $btn->setText(__("Round points", $login));
-        $btn->setAction($this->actions->roundPoints);
-        $this->frame->addComponent($btn);
+	    $btn = new myButton($btnX, $btnY);
+	    $btn->setText(__("Round points", $login));
+	    $btn->setAction($this->actions->roundPoints);
+	    $this->frame->addComponent($btn);
+	}
 
         $btnDb = new myButton($btnX, $btnY);
         $btnDb->setText(__("Database tools", $login));
@@ -107,6 +111,10 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::destroy();
     }
 
+    public function exp_isRelay(){
+	return \ManiaLivePlugins\eXpansion\Core\Core::$isRelay;
+    }
+    
 }
 
 ?>

@@ -17,10 +17,13 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $wasWarmup = false;
 
     function exp_onInit() {
+	$this->exp_addTitleSupport("TM");
+	$this->exp_addTitleSupport("Trackmania");
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT);
     }
 
     public function exp_onReady() {
@@ -66,7 +69,17 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	$pospanel = Gui\Widgets\PositionPanel::Create($login);
 	$pospanel->setSize(80, 90);
 	$pospanel->setPosition(-158, 40);
-	$pospanel->setData(\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo, $this->storage->gameInfos->gameMode, $this->storage->gameInfos->teamMaxPoints);
+	
+	$teamMaxPoint = 10;
+	if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
+	    $settings = $this->connection->getModeScriptSettings();
+	    if (array_key_exists("S_MaxPointsPerRound", $settings))
+		$teamMaxPoint = $settings['S_MaxPointsPerRound'];
+	} else {
+	    $teamMaxPoint = $this->storage->gameInfos->teamPointsLimit;
+	}
+
+	$pospanel->setData(\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo, self::exp_getCurrentCompatibilityGameMode(), $teamMaxPoint);
 	$pospanel->setScale(1.1);
 	$pospanel->show();
     }
@@ -131,9 +144,8 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	$this->update = true;
     }
 
-    public function onUnload() {
+    public function exp_onUnload() {
 	$this->disableTickerEvent();
-	parent::onUnload();
     }
 
 }

@@ -1,0 +1,89 @@
+Help...
+Aide...
+
+Map
+Circuit
+
+List Maps...
+Liste des Circuits...
+
+Add local map...
+Ajout circuit local...
+
+Mania-Exchange...
+Mania-Exchange...
+
+Remove this
+Enlever celui ci
+
+Trash this
+Effacer celui ci
+
+Stats
+Stats
+
+Show Records...
+Afficher les Record...
+
+Top 100 Ranks...
+Top 100 Ranks...
+
+Statistics...
+Statistics...
+
+Server info...
+Info Serveur...
+
+Players
+Joueurs
+
+List Players...
+List des Joueurs...
+
+Rage Quit...
+Rage Quit...
+
+Hud
+Hud
+
+Move Positions
+Bouger les éléments
+
+Lock Positions
+Bloquer les éléments
+
+Show/Hide elements...
+Afficher/Cacher elements...
+
+Reset Positions
+Mettre a zéro
+
+Votes
+Votes
+
+Vote Restart
+Redémarrer le vote
+
+Vote Skip
+Passer le vote
+
+Cancel Vote
+Annuler le vote
+
+Admin
+Admin
+
+Instant Restart
+Redémarrage Instantané 
+
+Replay
+Rejouer
+
+Skip
+Passer
+
+End Round
+Fin du ROund
+
+Server Controls
+Control du Serveur

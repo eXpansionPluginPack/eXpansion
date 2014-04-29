@@ -26,6 +26,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $style_list_sizeXOffset = 2;
     public $style_list_posYOffset = 0;
     public $style_list_sizeYOffset = 0;
+    
     public $style_title_bgColor = 'ddd4';
     public $style_title_bgStyle = 'Bgs1';
     public $style_title_bgSubStyle = 'BgTitlePage';
@@ -35,11 +36,16 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $style_title_sizeYOffset = 0;
     
     public $style_widget_bgColor = '';
-    public $style_widget_bgStyle = 'Bgs1InRace';
-    public $style_widget_bgSubStyle = 'BgList';
-    public $style_widget_bgOpacity = 0.8;
+    public $style_widget_bgStyle = 'BgsPlayerCard';
+    public $style_widget_bgSubStyle = 'BgRacePlayerName'; // BgList
+    public $style_widget_bgColorize = '000'; // BgList
+    public $style_widget_bgOpacity = 1;
     public $style_widget_bgXOffset = 0;
     public $style_widget_bgYOffset = 0;
+    
+    public $disableAnimations = false;
+    public $disablePersonalHud = false;
+
 }
 
 ?>

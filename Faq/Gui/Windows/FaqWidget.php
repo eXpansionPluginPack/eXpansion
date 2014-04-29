@@ -13,11 +13,14 @@ class FaqWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     protected $frame, $label_help, $icon_help;
     private $action_help;
 
-    protected function onConstruct() {
-        parent::onConstruct();
+    protected function exp_onBeginConstruct() {
+	parent::exp_onBeginConstruct();
+	$this->setName("Faq Widget");
+    }
+    
+    protected function exp_onSettingsLoaded() {
+        parent::exp_onSettingsLoaded();
         $login = $this->getRecipient();
-
-		$this->setName("Faq Widget");
 		
         $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(7, 6);
         $bg->setPosition(-2, -3);

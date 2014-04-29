@@ -15,7 +15,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
     function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller) {
         $sizeX = 120;
-        $sizeY = 4;
+        $sizeY = 6;
         $this->player = $player;
 
         $this->sendAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'sendPm'), $player->login);
@@ -86,6 +86,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
      */
 
     function erase() {
+	$this->sendButton->destroy();
         parent::destroy();
     }
 

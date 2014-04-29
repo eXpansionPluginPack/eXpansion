@@ -1,0 +1,89 @@
+Help...
+Ohje...
+
+Map
+Kartat
+
+List Maps...
+Listaa kartat...
+
+Add local map...
+Lisää paikallinen...
+
+Mania-Exchange...
+Mania-Exchange...
+
+Remove this
+Poista tämä
+
+Trash this
+Poista pysyvästi
+
+Stats
+Stats
+
+Show Records...
+Näytä ennätykset...
+
+Top 100 Ranks...
+Top 100 Rankit...
+
+Statistics...
+Statistiikat...
+
+Server info...
+Palvelimen tiedot...
+
+Players
+Pelaajat
+
+List Players...
+Pelaajalista...
+
+Rage Quit...
+Lopeta karjuen...
+
+Hud
+Näkymä
+
+Move Positions
+Siirrä paikkoja
+
+Lock Positions
+Lukitse paikat
+
+Show/Hide elements...
+Näytä/Piilota näkymää...
+
+Reset Positions
+Palauta oletusarvot
+
+Votes
+Äänestys
+
+Vote Restart
+Uudelleenaloitus
+
+Vote Skip
+Vaihda kartta seuraavaan
+
+Cancel Vote
+Peruuta äänestys
+
+Admin
+Admin
+
+Instant Restart
+Uudelleen aloita heti!
+
+Replay
+Uudelleenaloita viiveellä
+
+Skip
+Vaihda kartta
+
+End Round
+Päätä kierros
+
+Server Controls
+Palvelimen asetukset

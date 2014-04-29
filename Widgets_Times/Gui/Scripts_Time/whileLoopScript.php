@@ -6,19 +6,20 @@ foreach (Player in Players) {
             PrevCheckpointCount = Player.CurRace.Checkpoints.count;
             curCp = Player.CurRace.Checkpoints.count;
 
-            if (curCp > 0 && curCp != totalCp) {
-                if (Checkpoints.count > curCp && Checkpoints[curCp] != -1) {
+            if (curCp > 0 && curCp != totalCp) {	    	    
+		declare temp = (curCp % totalCp) - 1;	   
+		if(temp == -1) {			
+		    continue;
+		}
+			
+                if (Checkpoints.count > (curCp % totalCp) && Checkpoints[temp] != -1) {
                     declare Integer diff = 0;
                     if (lapRace) {
-                        declare Integer lastCpIndex = curCp - totalCp - 1;
-                        if(lastCpIndex > 0) {
-                             diff = (Player.CurRace.Checkpoints[curCp-1] - Player.CurRace.Checkpoints[lastCpIndex]) - Checkpoints[(curCp % (totalCp+1))-1];
-                        } else {
-                            diff =(Player.CurRace.Checkpoints[curCp-1] - Checkpoints[curCp-1]);
-                        }                        
+                        declare Integer lastCpIndex = curCp - totalCp - 1;                        
+			diff = (Player.CurLap.Checkpoints[temp] - Checkpoints[temp]);
                     }
                     else {
-                        diff =(Player.CurRace.Checkpoints[curCp-1] - Checkpoints[curCp-1]);
+                        diff =(Player.CurRace.Checkpoints[curCp-1] - Checkpoints[temp]);
                     }
 		    
                     declare Text color = "$f00$s";
@@ -35,6 +36,26 @@ foreach (Player in Players) {
                     Cp.SetText((curCp % totalCp) ^ "/" ^ totalCp);
                 }
             } else {
+		if(curCp % totalCp == 0 && curCp > 0){
+		    //End of a Lap or Race. 
+		    declare temp = totalCp - 1;
+		    declare Integer diff = -1;
+		    log(Checkpoints);
+		    if( Checkpoints[temp] > 0){
+			diff =(Player.CurRace.Checkpoints[curCp-1] - Checkpoints[temp]);
+		    }
+                    
+		    log("Diff"^diff);
+		    if(diff < 0){
+			log("New Best TIme");
+			//New Best time
+			for(i, 0, totalCp-1) {
+			    log(i);
+			    Checkpoints[i] = Player.CurRace.Checkpoints[(curCp - totalCp) + i];
+			}
+		    }
+		    
+		}
                 Label.SetText("");
                 Cp.SetText("");
             }

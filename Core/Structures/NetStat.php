@@ -11,11 +11,17 @@ class NetStat extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure 
     public $login;
     public $updateLatency;
     public $updatePeriod;
+    public $packetLossRate;
+    public $latestNetworkActivity;
+    public $ipAddress;
     
     public function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player) {
 	$this->login = $player->login;
 	$this->updateLatency = $player->stateUpdateLatency;
-	$this->updatePeriod = $player->stateUpdatePeriod;
+	$this->updatePeriod = $player->stateUpdatePeriod;	
+	$this->packetLossRate = $player->packetLossRate;
+	$this->latestNetworkActivity = $player->latestNetworkActivity;
+	$this->ipAddress = $player->iPAddress;	
     }
     
     

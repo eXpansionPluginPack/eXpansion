@@ -1,3 +1,18 @@
 Select Player to send message
 Selecteer Speler om bericht te versturen
 
+#personalmessage#Player with login "%1$s" is not found at server!
+#translate# #personalmessage#Player with login "%1$s" is not found at server!
+
+#personalmessage#No message to send to!
+#translate# #personalmessage#No message to send to!
+
+#personalmessage#No one to reply back!
+#translate# #personalmessage#No one to reply back!
+
+#personalmessage#You can't send a message to yourself.
+#translate# #personalmessage#You can't send a message to yourself.
+
+#personalmessage#Usage /pm [login] your personal message here
+#translate# #personalmessage#Usage /pm [login] your personal message here
+

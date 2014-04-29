@@ -60,8 +60,7 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX, $this->sizeY - 8);
-        $this->pager->setStretchContentX($this->sizeX);
-        $this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
+	$this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
     }
 
     function onShow() {

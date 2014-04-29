@@ -6,6 +6,7 @@ use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\RatingsWidget;
 use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\EndMapRatings;
 use ManiaLivePlugins\eXpansion\MapRatings\Structures\PlayerVote;
+use ManiaLive\Gui\ActionHandler;
 
 class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -26,6 +27,9 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
 	}
 	EndMapRatings::$parentPlugin = $this;
+	\ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\RatingsWidget::$parentPlugin = $this;
+	$actionFinal =  ActionHandler::getInstance()->createAction(array($this, "autoRemove"));
+	Gui\Windows\MapRatingsManager::$removeId = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($actionFinal);
 	$this->config = Config::getInstance();
     }
 
@@ -50,6 +54,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$cmd->help = '/rating Map Rating Approval';
 
 	$this->setPublicMethod("getRatings");
+	$this->setPublicMethod("showRatingsManager");
     }
 
     public function exp_onReady() {
@@ -60,13 +65,13 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	if ($this->displayWidget) {
 	    $info = RatingsWidget::Create(null);
-	    $info->setSize(34, 12);
-	    $info->setPosition(128, 76);
+	    $info->setSize(34, 10);
 	    $info->setStars($this->rating, $this->ratingTotal);
 	    $info->show();
 	}
 
 	$this->previousUid = $this->storage->currentMap->uId;
+
 	// $this->onEndMatch("", "");
     }
 
@@ -110,7 +115,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$ratings = $this->db->execute("SELECT uid, avg(rating) AS rating, COUNT(rating) AS ratingTotal FROM exp_ratings GROUP BY uid;")->fetchArrayOfObject();
 	$out = array();
 	foreach ($ratings as $rating) {
-	    $out[$rating->uid] = new Structures\Rating($rating->rating, $rating->ratingTotal);
+	    $out[$rating->uid] = new Structures\Rating($rating->rating, $rating->ratingTotal, $rating->uid);
 	}
 	return $out;
     }
@@ -121,11 +126,11 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return PlayerVote[]
      */
     public function getVotesForMap($uId = null) {
-	if ($uId == null)
+	if ($uId == null) {
 	    $uId = $this->storage->currentMap->uId;
-
-	if ($uId instanceof \Maniaplanet\DedicatedServer\Structures\Map)
+	} else if ($uId instanceof \Maniaplanet\DedicatedServer\Structures\Map) {
 	    $uId = $uid->uId;
+	}
 
 	$ratings = $this->db->execute("SELECT login, rating FROM exp_ratings WHERE `uid` = " . $this->db->quote($uId) . ";")->fetchArrayOfAssoc();
 
@@ -165,11 +170,11 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		}
 		$i++;
 		$sqlInsert .= "(" . $this->db->quote($uid) . "," . $this->db->quote($login) . "," . $this->db->quote($rating) . ")";
-		$loginList .= $this->db->quote($login);
+		$loginList .= $this->db->quote($login) . ",";
 	    }
+	    $loginList = rtrim($loginList, ",");
 
-	    $this->db->execute(
-		    "DELETE FROM exp_ratings "
+	    $this->db->execute("DELETE FROM exp_ratings "
 		    . " WHERE `uid`= " . $this->db->quote($uid) . " "
 		    . " AND `login` IN (" . $loginList . ")");
 
@@ -189,7 +194,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if (isset($this->pendingRatings[$login])) {
 	    $oldRating = $this->pendingRatings[$login];
 	} else if (isset($this->oldRatings[$login])) {
-	    $oldRating = $this->oldRatings[$login]->vote;
+	    $oldRating = $this->oldRatings[$login]->rating;
 	} else {
 	    $this->ratingTotal++;
 	}
@@ -225,6 +230,52 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $rating = ($this->rating / 5) * 100;
 	    $rating = round($rating) . "%";
 	    $this->exp_chatSendServerMessage($this->msg_rating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'), $rating, $this->ratingTotal, $playerRating));
+	}
+    }
+
+    function autoRemove($login) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "server_maps")) {
+
+	    $filenames = array();
+	    foreach ($this->autoMapManager_getMaps() as $rating) {
+		$filenames[] = $rating->map->fileName;
+	    }
+	    
+	    try {
+		$this->connection->removeMapList($filenames);
+		$this->exp_chatSendServerMessage(exp_getMessage("Maps with bad rating removed successfully."));
+		Gui\Windows\MapRatingsManager::Erase($login);
+	    } catch (\Exception $e) {
+		$this->exp_chatSendServerMessage("#error#Error: %s", $login, array($e->getMessage()));
+	    }
+	}
+    }
+
+    /**
+     * 
+     * @return \ManiaLivePlugins\eXpansion\MapRatings\MapRating[]
+     */
+    function autoMapManager_getMaps() {
+	$items = array();
+	foreach ($this->getRatings() as $uid => $rating) {
+	    $value = round(($rating->rating / 5) * 100);
+	    if ($rating->totalvotes >= $this->config->minVotes && $value <= $this->config->removeTresholdPercentage) {
+		$map = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue($this->storage->maps, "uId", $uid);
+		if ($map) {
+		    $items[] = new Structures\MapRating($rating, $map);
+		}
+	    }
+	}
+	return $items;
+    }
+
+    function showRatingsManager($login) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "server_maps")) {
+	    $window = Gui\Windows\MapRatingsManager::Create($login);
+	    $window->setTitle(__("Ratings Manager", $login));
+	    $window->setSize(120, 90);
+	    $window->setRatings($this->autoMapManager_getMaps());
+	    $window->show();
 	}
     }
 
@@ -289,7 +340,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	}
     }
 
-    function onBeginMatch() {
+    function onBeginMap($var, $var2, $var3) {
 	if ($this->previousUid != null)
 	    $this->saveRatings($this->previousUid);
 
@@ -314,18 +365,27 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	}
     }
 
+    public function onBeginMatch() {
+	EndMapRatings::EraseAll();
+	$this->displayWidget();
+    }
+
     function onEndMatch($rankings, $winnerTeamOrMap) {
 	if ($this->config->showPodiumWindow) {
 	    $ratings = $this->getVotesForMap(null);
+
 	    $logins = array();
 	    foreach ($this->storage->players as $login => $player) {
 		if (!array_key_exists($login, $ratings) && !isset($this->pendingRatings[$login])) {
 		    $logins[] = $login;
 		}
 	    }
+
+
 	    if (sizeof($logins) > 0) {
 		$group = \ManiaLive\Gui\Group::Create("mapratings", $logins);
 		$widget = EndMapRatings::Create($group);
+		$widget->setMap($this->storage->currentMap);
 		$widget->show();
 	    }
 	}

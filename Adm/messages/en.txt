@@ -116,7 +116,7 @@ Server options
 Server options
 
 Game options
-Game options
+Legacy Game options
 
 Admin Groups
 Admin Groups
@@ -137,7 +137,7 @@ Stop Server
 Stop Server
 
 Stop Manialive
-Stop Manialive
+Stop ManiaLive
 
 Server Name
 Server Name
@@ -216,4 +216,94 @@ Team: use new rules
 
 Round points
 Round points
+
+The restart of this track is in progress!
+The restart of this track is in progress!
+
+#error#Player can't restart tracks on this server
+#error#Player can't restart tracks on this server
+
+#error#The map has already been restarted. Limit reached!
+#error#The map has already been restarted. Limit reached!
+
+#error#You can't skip tracks on this server.
+#error#You can't skip tracks on this server.
+
+#error#You have skipped to many maps already!
+#error#You have skipped to many maps already!
+
+#player#Player #variable# %s #player#pays and restarts the challenge!
+#player#Player #variable# %s #player#pays and restarts the challenge!
+
+#player#Player#variable# %s #player#pays and skips the challenge!
+#player#Player#variable# %s #player#pays and skips the challenge!
+
+Are you sure you want to restart this map
+Are you sure you want to restart this map
+
+Are you sure you want to skip this map
+Are you sure you want to skip this map
+
+Podium: Chat Time
+Podium: Chat Time
+
+All: Warmup Duration
+All: Warmup Duration
+
+All: Finish Timeout
+All: Finish Timeout
+
+TimeAttack: Time Limit
+TimeAttack: Time Limit
+
+TimeAttack: Synch Start Period
+TimeAttack: Synch Start Period
+
+Rounds: Points Limit
+Rounds: Points Limit
+
+Rounds: Set Number of Forced Laps
+Rounds: Set Number of Forced Laps
+
+Rounds: Points Limit (NewRules)
+Rounds: Points Limit (NewRules)
+
+Team: Points Limit
+Team: Points Limit
+
+Team: Max Points For a Round
+Team: Max Points For a Round
+
+Team: Points Limit (NewRules)
+Team: Points Limit (NewRules)
+
+Cup: Points Limit
+Cup: Points Limit
+
+Cup: Number of Winners
+Cup: Number of Winners
+
+cup Rounds Per Map
+cup Rounds Per Map
+
+Laps: Number of Laps
+Laps: Number of Laps
+
+Laps: Time Limit
+Laps: Time Limit
+
+Deciated Control
+Dedicated Server
+
+Disable Horns
+Disable Horns
+
+Disable Announces
+Disable Announces
+
+Autosave All Replays
+Autosave All Replays
+
+Autosave Validation Replays
+Autosave Validation Replays
 

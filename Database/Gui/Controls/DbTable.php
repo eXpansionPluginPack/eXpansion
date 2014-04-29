@@ -20,18 +20,18 @@ class DbTable extends \ManiaLive\Gui\Control {
      * @param int $sizeX
      */
     function __construct($indexNumber, $tableName, $sizeX) {
-        $sizeY = 4;
+        $sizeY = 6;
         $this->tableName = $tableName;
 
 
-        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
+        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX - 8, $sizeY);
         $this->addComponent($this->bg);
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame = new \ManiaLive\Gui\Controls\Frame(2,0);
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
-        $this->checkBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4);
+        $this->checkBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 40);
         $this->frame->addComponent($this->checkBox);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
@@ -62,9 +62,7 @@ class DbTable extends \ManiaLive\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY) {
-        $this->bg->setSize($this->sizeX, $this->sizeY);
-        $this->bg->setPosX(-2);
+    protected function onResize($oldX, $oldY) {        
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 

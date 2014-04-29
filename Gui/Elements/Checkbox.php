@@ -68,7 +68,7 @@ class Checkbox extends \ManiaLive\Gui\Control {
         $this->button->setSize(3, 3);
         $this->button->setPosition(0, -0.5);
         $this->label->setSize($this->textWidth, $this->sizeY);
-        $this->label->setPosition($this->sizeX - $this->textWidth, 0);
+        $this->label->setPosition(5, 0);
     }
 
     function onDraw() {

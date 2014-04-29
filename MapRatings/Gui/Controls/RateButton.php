@@ -51,7 +51,7 @@ class RateButton extends \ManiaLive\Gui\Control {
             $this->frame->addComponent($star);
         }
 
-        $this->setSize($sizeX, $sizeY);
+        $this->setSize($sizeX, $sizeY);	
     }
 
     protected function onResize($oldX, $oldY) {

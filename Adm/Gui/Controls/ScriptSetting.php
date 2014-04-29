@@ -20,7 +20,7 @@ class ScriptSetting extends \ManiaLive\Gui\Control {
      * @param int $sizeX
      */
     function __construct($indexNumber, $settingName, $value, $sizeX) {
-        $sizeY = 4;
+        $sizeY = 6;
         $this->settingName = $settingName;
         $this->type = gettype($value);
 

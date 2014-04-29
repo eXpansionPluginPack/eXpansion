@@ -177,9 +177,6 @@ class MenuPanel extends \ManiaLive\Gui\Window {
 	$this->_windowFrame->addComponent($this->frame);
     }
 
-    function destroy() {
-	parent::destroy();
-    }
 
 }
 

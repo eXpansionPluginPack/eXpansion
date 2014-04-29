@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted as Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use \Maniaplanet\DedicatedServer\Structures\GameInfos;
 
@@ -66,32 +66,32 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameGeneral = new \ManiaLive\Gui\Controls\Frame();
         $this->frameGeneral->setAlign("left", "top");
         $this->frameGeneral->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        $this->frameGeneral->setSize(160, 8);
+        $this->frameGeneral->setSize(160, 10);
 
         $this->frameRounds = new \ManiaLive\Gui\Controls\Frame();
         $this->frameRounds->setAlign("left", "top");
         $this->frameRounds->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        $this->frameRounds->setSize(160, 8);
+        $this->frameRounds->setSize(160, 10);
 
         $this->frameTa = new \ManiaLive\Gui\Controls\Frame();
         $this->frameTa->setAlign("left", "top");
         $this->frameTa->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        $this->frameTa->setSize(160, 8);
+        $this->frameTa->setSize(160, 10);
 
         $this->frameTeam = new \ManiaLive\Gui\Controls\Frame();
         $this->frameTeam->setAlign("left", "top");
         $this->frameTeam->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        $this->frameTeam->setSize(160, 8);
+        $this->frameTeam->setSize(160, 10);
 
         $this->frameCup = new \ManiaLive\Gui\Controls\Frame();
         $this->frameCup->setAlign("left", "top");
         $this->frameCup->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        $this->frameCup->setSize(160, 8);
+        $this->frameCup->setSize(160, 10);
 
         $this->frameLaps = new \ManiaLive\Gui\Controls\Frame();
         $this->frameLaps->setAlign("left", "top");
         $this->frameLaps->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        $this->frameLaps->setSize(160, 8);
+        $this->frameLaps->setSize(160, 10);
 
         $this->e['ChatTime'] = new Inputbox("ChatTime");
         $this->e['ChatTime']->setText(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->chatTime));
@@ -280,30 +280,35 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->btn_team->setStatus(true);
         $this->frameGameMode->addComponent($this->btn_team);
 
-        $lbl = new \ManiaLib\Gui\Elements\Label(25, 6);
+        $lbl = new \ManiaLib\Gui\Elements\Label(25, 8);
         $lbl->setText(__("Additional Options:", $login));
         $lbl->setTextSize(1);
+	$lbl->setPosY(-1);
         $this->frameGameMode->addComponent($lbl);
 
-        $this->e['roundsUseNewRules'] = new Checkbox();
+        $this->e['roundsUseNewRules'] = new Checkbox(4,4,30);
+	$this->e['roundsUseNewRules']->setPosX(-1);
         if ($this->nextGameInfo->roundsUseNewRules)
             $this->e['roundsUseNewRules']->setStatus(true);
         $this->e['roundsUseNewRules']->setText(__("Rounds: use new rules", $login));
         $this->frameGameMode->addComponent($this->e['roundsUseNewRules']);
 
-        $this->e['teamUseNewRules'] = new Checkbox();
+        $this->e['teamUseNewRules'] = new Checkbox(4,4,30);
+	$this->e['teamUseNewRules']->setPosX(-1);
         if ($this->nextGameInfo->teamUseNewRules)
             $this->e['teamUseNewRules']->setStatus(true);
         $this->e['teamUseNewRules']->setText(__("Team: use new rules", $login));
         $this->frameGameMode->addComponent($this->e['teamUseNewRules']);
 
-        $this->e['DisableRespawn'] = new Checkbox();
+        $this->e['DisableRespawn'] = new Checkbox(4,4,30);
+	$this->e['DisableRespawn']->setPosX(-1);
         if ($this->nextGameInfo->disableRespawn)
             $this->e['DisableRespawn']->setStatus(true);
         $this->e['DisableRespawn']->setText(__("Disable Respawn", $login));
         $this->frameGameMode->addComponent($this->e['DisableRespawn']);
 
-        $this->e['ForceShowAllOpponents'] = new Checkbox();
+        $this->e['ForceShowAllOpponents'] = new Checkbox(4,4,30);
+	$this->e['ForceShowAllOpponents']->setPosX(-1);
         if ($this->nextGameInfo->forceShowAllOpponents)
             $this->e['ForceShowAllOpponents']->setStatus(true);
 
@@ -315,10 +320,10 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->frameGameMode->setPosition($this->sizeX - 40, 0);
-        $this->frameContainer->setPosition(0, -8);
-        $this->buttonOK->setPosition($this->sizeX - $this->buttonCancel->sizeX - $this->buttonOK->sizeX, -$this->sizeY + 6);
-        $this->buttonCancel->setPosition($this->sizeX - $this->buttonCancel->sizeX, -$this->sizeY + 6);
+        $this->frameGameMode->setPosition($this->sizeX - 36, 0);
+        $this->frameContainer->setPosition(0, -5);
+        $this->buttonOK->setPosition($this->sizeX - $this->buttonCancel->sizeX - $this->buttonOK->sizeX + 8, -$this->sizeY + 2);
+        $this->buttonCancel->setPosition($this->sizeX - $this->buttonCancel->sizeX + 5, -$this->sizeY + 2);
     }
 
     function setGameMode($login, $gameMode) {
@@ -334,6 +339,12 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public function Ok($login, $options) {
         $gameInfos = $this->nextGameInfo;
 
+	foreach($this->e as $component){
+	     if($component instanceof Checkbox){
+		$component->setArgs($options);
+	    }
+	}
+	
         // general
         $gameInfos->allWarmUpDuration = intval($options['AllWarmupDuration']);
         $gameInfos->cupWarmUpDuration = intval($options['AllWarmupDuration']);

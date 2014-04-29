@@ -1,0 +1,90 @@
+Help...
+Hilfe...
+
+Map
+Strecke
+
+List Maps...
+Strecken anzeigen...
+
+Add local map...
+Strecke lokal hinzufügen...
+
+Mania-Exchange...
+Mania-Exchange...
+
+Remove this
+Diese Strecke entfernen
+
+Trash this
+Diese Strecke löschen
+
+Stats
+Statistiken
+
+Show Records...
+Rekorde anzeigen...
+
+Top 100 Ranks...
+Top 100 Ränge...
+
+Statistics...
+Statistiken...
+
+Server info...
+Server Infos...
+
+Players
+Spieler
+
+List Players...
+Spieler anzeigen...
+
+Rage Quit...
+Ragequit...
+
+Hud
+HUD
+
+Move Positions
+Positionen bewegen
+
+Lock Positions
+Positionen halten
+
+Show/Hide elements...
+Elemente anzeigen/verstecken...
+
+Reset Positions
+Positionen zurücksetzen
+
+Votes
+Abstimmungen
+
+Vote Restart
+Für Neustart stimmen
+
+Vote Skip
+Für Überspringen stimmen
+
+Cancel Vote
+Abstimmung abbrechen
+
+Admin
+Admin
+
+Instant Restart
+Sofort neustarten
+
+Replay
+Erneut spielen
+
+Skip
+Überspringen
+
+End Round
+Runde beenden
+
+Server Controls
+Server-Steuerung
+

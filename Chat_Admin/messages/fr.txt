@@ -13,3 +13,32 @@ Supprimer
 unIgnore
 Ne plus ignorer
 
+possible parameters: limit, dynamic, wu
+Paramètre possible : limit, dynamic, wu
+
+possible parameters: laps, limit, wu, fto, ftimeout
+Paramètre possible : laps, limit, wu, fto, ftimeout
+
+possible parameters: pointslimit, newrules, wu, fto, ftimeout
+Paramètre possible : pointslimit, newrules, wu, fto, ftimeout
+
+possible parameters: limit, rounds, nbwin, wu, fto, ftimeout
+Paramètre possible : limit, rounds, nbwin, wu, fto, ftimeout
+
+possible parameters: limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap
+Paramètre possible : limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap
+
+blacklist
+blacklist
+
+ban
+bannir
+
+kick
+kick
+
+Ok
+Ok
+
+Cancel
+Annuler

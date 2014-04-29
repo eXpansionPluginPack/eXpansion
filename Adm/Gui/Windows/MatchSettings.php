@@ -99,7 +99,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->frame->setPosition(4, -4);
-        $this->pager->setPosY(-12);
+        $this->pager->setPosY(-6);
         $this->pager->setSize($this->sizeX, $this->sizeY - 16);
         $this->pager->setStretchContentX($this->sizeX);
     }

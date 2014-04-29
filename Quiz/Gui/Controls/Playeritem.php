@@ -21,7 +21,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Quiz\Structures\QuizPlayer $player, $controller, $isAdmin, $login, $sizeX) {
 
 
-        $sizeY = 4;
+        $sizeY = 6;
         $this->isAdmin = $isAdmin;
 
         if ($isAdmin) {

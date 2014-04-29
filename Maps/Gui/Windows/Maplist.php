@@ -21,7 +21,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected $pager;
     protected $btnRemoveAll;
     private $frame;
-    protected $title_mapName;
+    protected $title_mapName, $title_envi;
     protected $title_authorName;
     protected $title_goldTime;
     protected $title_rank;
@@ -30,6 +30,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected $searchBox, $searchframe;
     protected $btn_search,  $btn_search2;
     private $actionRemoveAll;
+    private $actionRemoveAllf;
     private $currentMap = null;
     private $titlebg;
 
@@ -41,7 +42,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     /** @var  \ManiaLive\Data\Storage */
     private $storage;
-    private $widths = array(5, 15, 5, 3, 3, 3, .7);
+    private $widths = array(5, 15, 4, 4, 3, 3, 3, .7);
 
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap[] */
     private $maps = array();
@@ -87,6 +88,13 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 
         $this->frame->addComponent($this->title_mapName);
+	
+	$this->title_envi = new \ManiaLib\Gui\Elements\Label();
+        $this->title_envi->setText(__("Title", $login));
+        $this->title_envi->setStyle($textStyle);
+        $this->title_envi->setTextColor($textColor);
+        $this->title_envi->setTextSize($textSize);
+	$this->frame->addComponent($this->title_envi);
 
         $this->title_goldTime = new \ManiaLib\Gui\Elements\Label();
         $this->title_goldTime->setText(__("Length", $login));
@@ -155,7 +163,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
 
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps')) {
-            $this->actionRemoveAll = $this->createAction(array($this, "removeAllMaps"));
+            $this->actionRemoveAllf = $this->createAction(array($this, "removeAllMaps"));	    
+            $this->actionRemoveAll = Gui::createConfirm($this->actionRemoveAllf);	    
             $this->btnRemoveAll = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(35);
             $this->btnRemoveAll->setAction($this->actionRemoveAll);
             $this->btnRemoveAll->setText('$d00' . __("Clear Maplist", $login));
@@ -189,7 +198,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
 
-        $this->searchframe->setPosition(12, -5);
+        $this->searchframe->setPosition(12, -7);
 
         $this->pager->setSize($this->getSizeX() - 6, $this->getSizeY() - 20);
 
@@ -204,10 +213,11 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->title_authorName->setSizeX($scaledSizes[0]);
         $this->title_mapName->setSizeX($scaledSizes[1]);
-        $this->title_goldTime->setSizeX($scaledSizes[2]);
-        $this->title_rank->setSizeX($scaledSizes[3]);
-        $this->title_rating->setSizeX($scaledSizes[4]);
-        $this->title_actions->setSizeX($scaledSizes[5]);
+        $this->title_envi->setSizeX($scaledSizes[2]);
+        $this->title_goldTime->setSizeX($scaledSizes[3]);
+        $this->title_rank->setSizeX($scaledSizes[4]);
+        $this->title_rating->setSizeX($scaledSizes[5]);
+        $this->title_actions->setSizeX($scaledSizes[6]);
 
 
 
@@ -282,6 +292,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 $this->maps[] = new \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap($map, $localrecord, $maxrec, $rating);
             }
         }
+	
 
         if ($column !== null) {
             if ($column != Maps::$playerSortModes[$login]->column) {
@@ -330,7 +341,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 $rate = " - ";
 
             $this->pager->addSimpleItems(array($sortableMap->map->name => $queueMapAction,
-                $sortableMap->map->author => -1,
+		$sortableMap->map->author => -1,
+		$sortableMap->map->environnement => -1,
                 \ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime) => -1,
                 $sortableMap->localrecord => -1,
                 $rate => -1,
@@ -349,7 +361,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         Mapitem::$ColumnWidths = $this->widths;
         $this->pager->setContentLayout('\ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Mapitem');
-        $this->pager->update($this->getRecipient());
+        $this->pager->update($this->getRecipient());        
         $this->redraw($this->getRecipient());
     }
 
@@ -371,7 +383,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function setRatings($ratings) {
-        $this->ratingsLoaded = true;
+        $this->ratingsLoaded = true;	
         $this->ratings = $ratings;
     }
 
@@ -384,6 +396,10 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $this->btnRemoveAll->destroy();
         $this->pager->destroy();
         $this->clearComponents();
+	
+	 ActionHandler::getInstance()->deleteAction($this->actionRemoveAll);
+	 ActionHandler::getInstance()->deleteAction($this->actionRemoveAllf);
+	
         parent::destroy();
     }
 

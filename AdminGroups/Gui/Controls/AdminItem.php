@@ -21,7 +21,7 @@ class AdminItem extends \ManiaLive\Gui\Control {
     function __construct($indexNumber, Admin $admin, $controller, $login) {
         $this->group = $admin;
         $sizeX = 75;
-        $sizeY = 4;
+        $sizeY = 6;
 
         $this->action_remove = $this->createAction(array($controller, 'click_remove'), $admin);
 

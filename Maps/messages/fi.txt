@@ -135,3 +135,168 @@ Jukebox
 
 #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
 #admin_action#Ylläpitäjä #variable#%1$s #admin_action#poisti kartan #variable#%3$s #admin_action# sekä karttaluettelosta että kiintolevyltä!
+Title
+#translate# Title
+
+Length
+#translate# Length
+
+Record
+#translate# Record
+
+Rating
+#translate# Rating
+
+Search maps
+#translate# Search maps
+
+Search Map
+#translate# Search Map
+
+Search Author
+#translate# Search Author
+
+Clear Maplist
+#translate# Clear Maplist
+
+#admin_error# $iA payment for wishin a track is in progress please try later.
+#translate# #admin_error# $iA payment for wishin a track is in progress please try later.
+
+Are you sure you want to wish this map to be played
+#translate# Are you sure you want to wish this map to be played
+
+#admin_error# $iYOu can't wish for a map at the moment.
+#translate# #admin_error# $iYOu can't wish for a map at the moment.
+
+Title
+#translate# Title
+
+Length
+#translate# Length
+
+Record
+#translate# Record
+
+Rating
+#translate# Rating
+
+Search maps
+#translate# Search maps
+
+Search Map
+#translate# Search Map
+
+Search Author
+#translate# Search Author
+
+Clear Maplist
+#translate# Clear Maplist
+
+#admin_error# $iA payment for wishin a track is in progress please try later.
+#translate# #admin_error# $iA payment for wishin a track is in progress please try later.
+
+Are you sure you want to wish this map to be played
+#translate# Are you sure you want to wish this map to be played
+
+#admin_error# $iYOu can't wish for a map at the moment.
+#translate# #admin_error# $iYOu can't wish for a map at the moment.
+
+Title
+#translate# Title
+
+Length
+#translate# Length
+
+Record
+#translate# Record
+
+Rating
+#translate# Rating
+
+Search maps
+#translate# Search maps
+
+Search Map
+#translate# Search Map
+
+Search Author
+#translate# Search Author
+
+Clear Maplist
+#translate# Clear Maplist
+
+#admin_error# $iA payment for wishin a track is in progress please try later.
+#translate# #admin_error# $iA payment for wishin a track is in progress please try later.
+
+Are you sure you want to wish this map to be played
+#translate# Are you sure you want to wish this map to be played
+
+#admin_error# $iYOu can't wish for a map at the moment.
+#translate# #admin_error# $iYOu can't wish for a map at the moment.
+
+Title
+#translate# Title
+
+Length
+#translate# Length
+
+Record
+#translate# Record
+
+Rating
+#translate# Rating
+
+Search maps
+#translate# Search maps
+
+Search Map
+#translate# Search Map
+
+Search Author
+#translate# Search Author
+
+Clear Maplist
+#translate# Clear Maplist
+
+#admin_error# $iA payment for wishin a track is in progress please try later.
+#translate# #admin_error# $iA payment for wishin a track is in progress please try later.
+
+Are you sure you want to wish this map to be played
+#translate# Are you sure you want to wish this map to be played
+
+#admin_error# $iYOu can't wish for a map at the moment.
+#translate# #admin_error# $iYOu can't wish for a map at the moment.
+
+Title
+#translate# Title
+
+Length
+#translate# Length
+
+Record
+#translate# Record
+
+Rating
+#translate# Rating
+
+Search maps
+#translate# Search maps
+
+Search Map
+#translate# Search Map
+
+Search Author
+#translate# Search Author
+
+Clear Maplist
+#translate# Clear Maplist
+
+#admin_error# $iA payment for wishin a track is in progress please try later.
+#translate# #admin_error# $iA payment for wishin a track is in progress please try later.
+
+Are you sure you want to wish this map to be played
+#translate# Are you sure you want to wish this map to be played
+
+#admin_error# $iYOu can't wish for a map at the moment.
+#translate# #admin_error# $iYOu can't wish for a map at the moment.
+

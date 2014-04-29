@@ -26,11 +26,11 @@ Annuler le Vote
 #vote_success# $iVote passe!
 
 #vote_failure# $iLe vote a succédé!
-#vote_failure# $iLe vote a échoué!
+#vote_failure# $iLe vote a reussit!
 
 #admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
 #admin_action#Admin #variable#%1$s #admin_action# a annulé le vote!
 
 #vote_failure# $iVote failed!
-#translate# #vote_failure# $iVote failed!
+#vote_failure# $iLe vote a échoué!
 

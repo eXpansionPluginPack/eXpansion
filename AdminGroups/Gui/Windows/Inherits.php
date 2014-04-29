@@ -45,6 +45,10 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public function setGroup(Group $g) {
         $this->group = $g;
     }
+    
+     public function getGroup() {
+        return $this->group;
+    }
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
@@ -113,6 +117,13 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $adminGroups = AdminGroups::getInstance();
         $adminGroups->changeInheritanceOfGroup($login, $this->group, $newInheritances);
         $this->Erase($login);
+	
+	$windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
+        foreach ($windows as $window) {
+            $login = $window->getRecipient();
+            $window->onShow();
+            $window->redraw($login);
+        }
     }
 
     function click_cancel() {

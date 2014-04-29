@@ -89,16 +89,16 @@ Login :
 Login : 
 
 #admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
-#translate# #admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
+#admin_error#Cette commande Admin n'existe pas. Utiliser #variable#/admin help #admin_error#pour voir toutes les commandes
 
 #admin_error#You don't have the permission to use that admin command
-#translate# #admin_error#You don't have the permission to use that admin command
+#admin_error#Vous n'avez pas les droits pour utiliser cette commande
 
 #admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
-#translate# #admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
+#translate# #admin_error#Vous été #variable#%1$s #admin_error#Vous ne pouvez vous vous enlevez vous même du groupe
 
 #admin_error#Player #variable#%1$s #admin_action#isn't in the group
-#translate# #admin_error#Player #variable#%1$s #admin_action#isn't in the group
+#translate# #admin_error#Le jouer #variable#%1$s #admin_action#n'est pas dans le group
 
 #admin_error#Master Admins has all rights. You can't change that!
 #translate# #admin_error#Master Admins has all rights. You can't change that!
@@ -107,11 +107,13 @@ Login :
 #translate# #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
 
 Inherits
-#translate# Inherits
+Héritage
 
 Admin Group Inherits - %1$s
-#translate# Admin Group Inherits - %1$s
+Le Group hérite de - %1$s
 
 Permission_
-#translate# Permission_
+Permission_
 
+#admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
+#translate# #admin_action#Le jouer #variable# %1$s #admin_action# n'a pas pus être ajoute au group #variable#%2$s

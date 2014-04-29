@@ -30,7 +30,7 @@ class WidgetButton extends \ManiaLive\Gui\Control {
         $this->button->setAlign('center', 'center2');
         $this->button->setPosY(-3);
         $this->button->setBgcolor("0000");
-        $this->button->setBgcolorFocus("fff6");	
+        $this->button->setBgcolorFocus("fff6");		
         $this->addComponent($this->button);
 
         $this->sizeX = $sizeX + 2;
@@ -51,7 +51,7 @@ class WidgetButton extends \ManiaLive\Gui\Control {
         if (is_array($text)) {
             $y = 0;
             foreach ($text as $row) {
-                $label = new \ManiaLib\Gui\Elements\Label($this->sizeX, 3);
+                $label = new \ManiaLib\Gui\Elements\Label($this->sizeX-2, 3);
                 $label->setAlign('center', 'center2');
                 //$label->setStyle("TextValueMedium");
                 $label->setTextSize(1);
@@ -63,7 +63,7 @@ class WidgetButton extends \ManiaLive\Gui\Control {
             }
             $this->text = rtrim($this->text);
         } else {
-            $label = new \ManiaLib\Gui\Elements\Label($this->sizeX, 2);
+            $label = new \ManiaLib\Gui\Elements\Label($this->sizeX-2, 2);
             $label->setAlign('center', 'center2');
             $label->setStyle("TextValueMedium");
             $label->setTextSize(1);
@@ -73,6 +73,11 @@ class WidgetButton extends \ManiaLive\Gui\Control {
         }
     }
 
+    
+    function setManialink($url) {
+	$this->button->setManialink($url);
+    }
+    
     function setActive($bool = true) {
         $this->isActive = $bool;
     }

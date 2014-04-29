@@ -21,7 +21,7 @@ class Window extends \ManiaLive\Gui\Window {
     protected $_windowFrame;
     private $script;
     private $_scripts = array();
-    protected $bg;
+    protected $_bg;
     private $dDeclares = "";
     private $scriptLib = "";
     private $wLoop = "";
@@ -37,6 +37,7 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WindowScript");
 
 	$this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
+	$this->_windowFrame->setId("windowFrame");
 	$this->_windowFrame->setScriptEvents(true);
 	$this->_windowFrame->setAlign("left", "top");
 
@@ -48,40 +49,44 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->style->setAttribute("focusareacolor2", "fff");
 	// $this->addComponent($this->style); 
 
+	$this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
+	$this->_titlebar->setId("Titlebar");
+	$this->_titlebar->setStyle("ManiaPlanetMainMenu");
+	$this->_titlebar->setSubStyle("TopBar");
+	$this->_titlebar->setColorize("3af");
+	$this->_titlebar->setAlign("left", "top");
+	$this->_titlebar->setScriptEvents(true);
+	$this->_windowFrame->addComponent($this->_titlebar);
+
+	$this->_titlebar2 = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
+	$this->_titlebar2->setStyle("BgRaceScore2");
+	$this->_titlebar2->setSubStyle("CartoucheLine");
+	$this->_titlebar2->setAlign("center", "top");
+	// $this->_windowFrame->addComponent($this->_titlebar2);
+
+
 	$this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
 	$this->_mainWindow->setId("MainWindow");
-	$this->_mainWindow->setStyle("Bgs1");
-	$this->_mainWindow->setSubStyle("BgWindow4");
-	$this->_mainWindow->setOpacity(1);
-	$this->_mainWindow->setBgColor("fffe");
-	
+	$this->_mainWindow->setStyle("UIConstruction_Buttons");
+	$this->_mainWindow->setSubStyle("BgTools");
+	$this->_mainWindow->setOpacity(0.95);
+	//$this->_mainWindow->setBgColor("eee");
 	$this->_mainWindow->setScriptEvents(true);
 	$this->_windowFrame->addComponent($this->_mainWindow);
 
-	$this->bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
-	$this->bg->setStyle("Bgs1InRace");
-	$this->bg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1InRace::BgTitleGlow);
-	$this->_windowFrame->addComponent($this->bg);
-	
-	
-	$this->_titlebar2 = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
-	$this->_titlebar2->setStyle("Bgs1");
-	$this->_titlebar2->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitleGlow);
-	$this->_windowFrame->addComponent($this->_titlebar2);
+	$this->_bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
+	$this->_bg->setStyle("BgRaceScore2");
+	$this->_bg->setSubStyle("CartoucheLine");
+	$this->_bg->setAlign("left", "top");
+	//$this->_windowFrame->addComponent($this->_bg);
 
-	$this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
-	$this->_titlebar->setId("Titlebar");
-	$this->_titlebar->setStyle("Bgs1InRace");
-	$this->_titlebar->setSubStyle(\ManiaLib\Gui\Elements\Bgs1InRace::BgPager);
-	$this->_titlebar->setScriptEvents(true);
-	$this->_windowFrame->addComponent($this->_titlebar);
 
 
 
 	$this->_title = new \ManiaLib\Gui\Elements\Label(60, 4);
 	$this->_title->setId("TitlebarText");
-	$this->_title->setStyle("TextRaceMessage");
-	$this->_title->setTextColor('3af');
+	$this->_title->setStyle("TextRaceMessageBig");
+	$this->_title->setTextColor('fff');
 	$this->_title->setTextSize(1);
 	$this->_title->setTextEmboss();
 
@@ -94,11 +99,11 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_title2->setTextSize(2);
 	//$this->_windowFrame->addComponent($this->_title2);
 
-	$this->_closebutton = new \ManiaLib\Gui\Elements\Quad(5, 4);
+	$this->_closebutton = new \ManiaLib\Gui\Elements\Quad(4, 4);
 	$this->_closebutton->setId("Close");
 	$this->_closebutton->setAlign('center', 'center2');
-	$this->_closebutton->setStyle("Icons64x64_1");
-	$this->_closebutton->setSubStyle("QuitRace");
+	$this->_closebutton->setStyle("Icons128x32_1");
+	$this->_closebutton->setSubStyle("Close");
 
 	/*   $this->_closebutton->setStyle("TextChallengeNameMedium");
 	  $this->_closebutton->setScriptEvents(true);
@@ -109,7 +114,7 @@ class Window extends \ManiaLive\Gui\Window {
 	  $this->_closebutton->setTextColor('000');
 	  $this->_closebutton->setTextSize(1); */
 	$this->_closebutton->setScriptEvents(true);
-	$this->_closebutton->setAction($this->_closeAction);
+	//$this->_closebutton->setAction($this->_closeAction);
 	$this->_windowFrame->addComponent($this->_closebutton);
 
 	$this->_minbutton = new \ManiaLib\Gui\Elements\Label(7, 3);
@@ -125,7 +130,7 @@ class Window extends \ManiaLive\Gui\Window {
 	// $this->_windowFrame->addComponent($this->_minbutton);
 
 	$this->mainFrame = new \ManiaLive\Gui\Controls\Frame();
-	$this->mainFrame->setPosY(-3);
+	$this->mainFrame->setPosY(-7);
 	$this->_windowFrame->addComponent($this->mainFrame);
 
 	$this->addComponent($this->_windowFrame);
@@ -134,37 +139,43 @@ class Window extends \ManiaLive\Gui\Window {
 
     function onResize($oldX, $oldY) {
 	parent::onResize($oldX, $oldY);
+	$titleBarPos = 7;
+	$titlePos = 3;
 	$this->_windowFrame->setSize($this->sizeX, $this->sizeY);
 
-	$this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY + 6);
-	$this->_mainWindow->setPosY(5.5);
+	$this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY + 2);
+	$this->_mainWindow->setPosY(0);
 
-	$this->bg->setSize($this->sizeX + 0.6, $this->sizeY + 6);
-	$this->bg->setPosY(5.5);
+	$this->_bg->setPosY(0);
+	$this->_bg->setSize($this->sizeX, $this->sizeY + 3);
+	$this->_bg->setOpacity(1);
 
-	$this->_title->setSize($this->sizeX, 3.5);
-	$this->_title->setPosition(($this->_title->sizeX / 2), 4.5);
-	$this->_title->setHalign("center");
+
+	$this->_title->setSize($this->sizeX, 8);
+	$this->_title->setPosition(7, $titlePos);
+	$this->_title->setHalign("left");
 
 	$this->_title2->setSize($this->sizeX, 4);
-	$this->_title2->setPosition(($this->_title->sizeX / 2), 4.5);
-	$this->_title2->setHalign("center");
-
-	$this->_titlebar->setPosY(5.5);
-	$this->_titlebar->setSize($this->sizeX + 0.5, 4.5);
-
-	$this->_titlebar2->setPosY(5.5);
-	$this->_titlebar2->setSize($this->sizeX + 0.5, 4.5);
+	$this->_title2->setPosition(($this->_title->sizeX / 2), 3.25);
+	$this->_title2->setHalign("left");
 
 
-	$this->_closebutton->setSize(5, 5);
-	$this->_closebutton->setPosition($this->sizeX - 2, 3.2);
+
+	$this->_titlebar->setSize($this->sizeX * 1.5, 10.5);
+	$this->_titlebar->setPosition(-($this->sizeX * 1.5) / 40, $titleBarPos);
+	$this->_titlebar->setOpacity(1);
+
+	$this->_titlebar2->setSize($this->sizeX / 2, 4.5);
+	$this->_titlebar2->setPosition(0, $titleBarPos - 3);
+
+	$this->_closebutton->setSize(4, 4);
+	$this->_closebutton->setPosition(3, $titlePos - 1.2);
 
 	$this->_minbutton->setSize(5, 5);
-	$this->_minbutton->setPosition($this->sizeX - 8, 5);
+	$this->_minbutton->setPosition($this->sizeX - 8, 6);
 
 	$this->mainFrame->setSize($this->sizeX - 4, $this->sizeY - 8);
-	$this->mainFrame->setPosition(2, -2);
+	$this->mainFrame->setPosition(2, -4);
     }
 
     private $calledScripts = array();
@@ -217,10 +228,10 @@ class Window extends \ManiaLive\Gui\Window {
 	}
 
 	foreach ($this->_scripts as $script) {
-	   // echo "adding script...";
+	    // echo "adding script...";
 	    $this->addScriptToMain($script->getDeclarationScript($this, $this));
 	    $this->addScriptToLib($script->getlibScript($this, $this));
-	    $this->addScriptToWhile($script->getWhileLoopScript($this, $this));	    
+	    $this->addScriptToWhile($script->getWhileLoopScript($this, $this));
 	}
 
 	$this->calledScripts = array();
@@ -229,6 +240,8 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->script->setParam("dDeclares", $this->dDeclares);
 	$this->script->setParam("scriptLib", $this->scriptLib);
 	$this->script->setParam("wLoop", $this->wLoop);
+	$this->script->setParam("closeAction", $this->_closeAction);
+	$this->script->setParam("disableAnimations", Config::getInstance()->disableAnimations ? "True" : "False" );
 	$this->script->setParam("version", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
 	$reset = "False";
 	if (DEBUG)

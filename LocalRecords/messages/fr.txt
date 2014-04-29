@@ -75,3 +75,13 @@ Records
 
 Map Records
 Records de cartes
+
+#admin_action#Records saved sucessfully into the database
+Les records ont été enregistre avec succès a la base de donnée
+
+Sector
+Secteur
+
+CheckPoint Times
+Temps des CheckPoints
+

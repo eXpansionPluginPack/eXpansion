@@ -75,3 +75,48 @@ Rekorder
 
 Map Records
 Banerekorder
+#admin_action#Records saved sucessfully into the database
+#translate# #admin_action#Records saved sucessfully into the database
+
+Sector
+#translate# Sector
+
+CheckPoint Times
+#translate# CheckPoint Times
+
+#admin_action#Records saved sucessfully into the database
+#translate# #admin_action#Records saved sucessfully into the database
+
+Sector
+#translate# Sector
+
+CheckPoint Times
+#translate# CheckPoint Times
+
+#admin_action#Records saved sucessfully into the database
+#translate# #admin_action#Records saved sucessfully into the database
+
+Sector
+#translate# Sector
+
+CheckPoint Times
+#translate# CheckPoint Times
+
+#admin_action#Records saved sucessfully into the database
+#translate# #admin_action#Records saved sucessfully into the database
+
+Sector
+#translate# Sector
+
+CheckPoint Times
+#translate# CheckPoint Times
+
+#admin_action#Records saved sucessfully into the database
+#translate# #admin_action#Records saved sucessfully into the database
+
+Sector
+#translate# Sector
+
+CheckPoint Times
+#translate# CheckPoint Times
+

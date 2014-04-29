@@ -80,56 +80,88 @@ Erreur: %s
 #queue#Challenge marqué pour reprise!
 
 Add
-#translate# Add
+Ajouter
 
 Delete
-#translate# Delete
+Supprimer
 
 Drop
-#translate# Drop
+Effacer
 
 Add all
-#translate# Add all
+Ajouter tousse
 
 Map name
-#translate# Map name
+Nom du circuit
 
 Author
-#translate# Author
+Auteur
 
 Lenght
-#translate# Lenght
+Longeur
 
 Records
-#translate# Records
+Records
 
 Ratings
-#translate# Ratings
+Évaluations
 
 Actions
-#translate# Actions
+Actions
 
 adds a map via MX
-#translate# adds a map via MX
+Ajouter un circuit à travers MX
 
 Jukebox
-#translate# Jukebox
+Jukebox
 
 #queue#/jb uses next params: drop, reset and show
-#translate# #queue#/jb uses next params: drop, reset and show
+#queue#/jb a besoin des paramètres suivant: drop, reset and show
 
 #admin_error#Error downloading, or MX is down!
-#translate# #admin_error#Error downloading, or MX is down!
+#admin_error#Erreur de téléchargement, MX pourrait être en panne!
 
 #admin_error#The map is to large to be added to a server
-#translate# #admin_error#The map is to large to be added to a server
+#admin_error#The map is to large to be added to a server
 
 #admin_error#You must include a MX map ID!
-#translate# #admin_error#You must include a MX map ID!
+#admin_error#Vous devez préciser l'identifiant MX du circuit
 
 #admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s
-#translate# #admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s
+#admin_action#Le circuit #variable# %1$s #admin_action#a ete ajoute a la liste par le jouer #variable#%2$s
 
 #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
-#translate# #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
+#admin_action#L'Administrateur #variable#%1$s #admin_action#a effacer le circuit  #variable#%3$s #admin_action# de la liste des circuits et du disque!
 
+Title
+Titre
+
+Length
+Longeur
+
+Record
+Record
+
+Rating
+Evaluation
+
+Search maps
+Chercher un circuit
+
+Search Map
+Chercher un circuit
+
+Search Author
+Chercher un auteur
+
+Clear Maplist
+Vider la liste des circuits
+
+#admin_error# $iA payment for wishin a track is in progress please try later.
+#admin_error# $iA payement pour la demande d'un circuit est en progrès, veuillez vous essayer plus tard.
+
+Are you sure you want to wish this map to be played
+Ete vous sure de vouloir faire jouer ce circuit
+
+#admin_error# $iYOu can't wish for a map at the moment.
+#admin_error# $iVous ne pouvez pas souhaiter un circuit en ce moment

@@ -96,3 +96,18 @@ Admin Group Inherits - %1$s
 
 Permission_
 #translate# Permission_
+#admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
+#translate# #admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
+
+#admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
+#translate# #admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
+
+#admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
+#translate# #admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
+
+#admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
+#translate# #admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
+
+#admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
+#translate# #admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
+

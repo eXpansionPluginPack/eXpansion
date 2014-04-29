@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Maps\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
+use \ManiaLive\Gui\ActionHandler;
 
 class Additem extends \ManiaLive\Gui\Control {
 
@@ -14,13 +15,15 @@ class Additem extends \ManiaLive\Gui\Control {
     private $label;
     private $time;
     private $addMapAction;
+    private $deleteActionf;
     private $deleteAction;
     private $frame;
 
     function __construct($indexNumber, $filename, $controller, $gbx, $login, $sizeX) {
-        $sizeY = 4;
+        $sizeY = 6;
         $this->addMapAction = $this->createAction(array($controller, 'addMap'), $filename);
-        $this->deleteAction = $this->createAction(array($controller, 'deleteMap'), $filename);
+	$this->deleteActionf =  ActionHandler::getInstance()->createAction(array($controller, 'deleteMap'), $filename);
+        $this->deleteAction = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->deleteActionf);
 
         try {
             $gbx->processFile($filename);
@@ -102,7 +105,9 @@ class Additem extends \ManiaLive\Gui\Control {
 
 // manialive 3.1 override to do nothing.
     function destroy() {
-        
+        ActionHandler::getInstance()->deleteAction($this->addMapAction);
+        ActionHandler::getInstance()->deleteAction($this->deleteAction);
+        ActionHandler::getInstance()->deleteAction($this->deleteActionf);
     }
 
     /*
@@ -117,6 +122,7 @@ class Additem extends \ManiaLive\Gui\Control {
 
         $this->clearComponents();
 
+	$this->destroy();
         parent::destroy();
     }
 

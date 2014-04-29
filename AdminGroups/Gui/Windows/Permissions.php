@@ -45,6 +45,10 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public function setGroup(Group $g) {
         $this->group = $g;
     }
+    
+    public function getGroup() {
+        return $this->group;
+    }
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
@@ -120,7 +124,14 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         
         $adminGroups = AdminGroups::getInstance();
         $adminGroups->changePermissionOfGroup($login, $this->group, $newPermissions);
-        $this->Erase($login);
+	
+        $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
+        foreach ($windows as $window) {
+            $login = $window->getRecipient();
+            $window->onShow();
+            $window->redraw($login);
+	    $window->refreshAll();
+        }
     }
 
     function click_cancel() {

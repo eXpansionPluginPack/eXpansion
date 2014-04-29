@@ -7,6 +7,8 @@ use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
 use \Maniaplanet\DedicatedServer\Structures\ServerOptions;
+use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent as Event;
+use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 /**
  * Description of Core
@@ -17,9 +19,9 @@ use \Maniaplanet\DedicatedServer\Structures\ServerOptions;
  */
 class Core extends types\ExpPlugin {
 
-    const EXP_VERSION = "0.9.1";
+    const EXP_VERSION = "0.9.4";
     const EXP_REQUIRE_MANIALIVE = "4.0.0";
-    const EXP_REQUIRE_DEDIATED = "2013.7.30";  // replace dedicated 2013-7-30 to 2013.7.30
+    const EXP_REQUIRE_DEDIATED = "2014.4.2";  // replace dedicated 2013-7-30 to 2013.7.30
 
     /**
      * Last used game mode
@@ -63,9 +65,26 @@ class Core extends types\ExpPlugin {
     private $enableCalculation = true;
     private $loopTimer = 0;
     private $lastTick = 0;
+    public static $action_serverInfo = -1;
 
     /** @var Config */
     private $config;
+
+    /**
+     *
+     * @var ConfigManager
+     */
+    private $configManager;
+    public static $gameModeDisabledPlugins = array();
+    public static $isTMServer = false;
+    public static $isSMServer = false;
+    public static $titleId = null;
+
+    /**
+     * Is Manialive running on a Relay server or not
+     * @var type Boolean
+     */
+    public static $isRelay = false;
 
     /**
      * 
@@ -81,6 +100,12 @@ class Core extends types\ExpPlugin {
 	}
 
 	Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent::getClass(), $this);
+
+	$aHandler = \ManiaLive\Gui\ActionHandler::getInstance();
+	self::$action_serverInfo = $aHandler->createAction(array($this, 'showInfo'));
+
+	$this->configManager = ConfigManager::getInstance($this);
+	$this->configManager->loadSettings();
     }
 
     /**
@@ -92,6 +117,10 @@ class Core extends types\ExpPlugin {
 	$config = Config::getInstance();
 	i18n::getInstance()->start();
 	DataAccess::getInstance()->start();
+
+	foreach ($config->disableGameMode as $pluginName => $exception) {
+	    self::$gameModeDisabledPlugins[$pluginName] = explode(',', $exception);
+	}
 
 
 	$expansion = <<<'EOT'
@@ -164,10 +193,17 @@ EOT;
 
 	$this->lastGameMode = \ManiaLive\Data\Storage::getInstance()->gameInfos->gameMode;
 
-	$this->connection->chatSendServerMessage('$fff$w$o$s e $0dfX $fffp a n s i o n');
-	$this->connection->chatSendServerMessage('$000$o$iPluginPack for ManiaLive');
-	$this->connection->chatSendServerMessage("");
-	$this->connection->chatSendServerMessage('$fffRunning with version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
+	$this->connection->chatSendServerMessage('$fff$w$oe$3afΧ$fffpansion');
+	$this->connection->chatSendServerMessage('$000P L U G I N   P A C K  ');
+	$this->connection->chatSendServerMessage('Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . '  $n build ' . date("Y-m-d", filemtime(__FILE__)) . '');
+	if (DEBUG) {
+	    $this->connection->chatSendServerMessage('$f00$w DEBUG MODE enabled');
+	}
+    }
+
+    public function onTerminate() {
+	$this->connection->chatSendServerMessage("[Notice] eXpansion closed succesfully.");
+	$this->connection->sendHideManialinkPage();
     }
 
     /**
@@ -178,7 +214,10 @@ EOT;
 	$this->config = Config::getInstance();
 	$this->registerChatCommand("server", "showInfo", 0, true);
 	$this->registerChatCommand("serverlogin", "serverlogin", 0, true);
+
+	//$this->registerChatCommand("exp", "showExpSettings", 0, true);
 	$this->setPublicMethod("showInfo");
+	$this->setPublicMethod("showExpSettings");
 	$window = new Gui\Windows\QuitWindow();
 	$this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
 
@@ -188,14 +227,24 @@ EOT;
 	$this->resetExpPlayers(true);
 	$this->update = true;
 	$this->loopTimer = round(microtime(true));
-	// $this->enableTickerEvent();
+
+	// disable netStats Widget, comment next line
+	//$this->enableTickerEvent();
 
 	if ($this->config->enableRanksCalc == true) {
-	    $this->enableApplicationEvents(\ManiaLive\Application\Event::ON_POST_LOOP);
+	    $this->enableApplicationEvents();
 	} else {
 	    $this->enableCalculation = false;
 	}
 	$this->lastServerSettings = clone $this->storage->server;
+	$this->connection->dedicatedEcho("ManiaLive\\eXpansion", (string) getmypid());
+	$this->connection->setForcedMusic(false, "");
+    }
+
+    public function onEcho($internal, $public) {
+	if (($public == "ManiaLive\\eXpansion") && ($internal != (string) getmypid() )) {
+	    exit("\n\nManiaLive will now exit due new eXpansion process has been initialized.");
+	}
     }
 
     /**
@@ -214,6 +263,11 @@ EOT;
      */
     function onBeginMap($map, $warmUp, $matchContinuation) {
 
+	//Check if reload or save of configurations needed
+	$this->configManager->check();
+
+	//echo "Begin Map. Memory usage : ".$this->echo_memory_usage()."\n";
+
 	$gameSettings = \ManiaLive\Data\Storage::getInstance()->gameInfos;
 	$newGameMode = $gameSettings->gameMode;
 
@@ -226,7 +280,7 @@ EOT;
 	    $this->checkLoadedPlugins();
 	    $this->checkPluginsOnHold();
 	} else {
-//Detecting any changes in game Settings
+	    //Detecting any changes in game Settings
 	    if ($this->lastGameSettings == null)
 		$this->lastGameSettings = clone $gameSettings;
 	    else {
@@ -238,7 +292,7 @@ EOT;
 	    }
 	}
 
-//Detecting any changes in Server Settings
+	//Detecting any changes in Server Settings
 	$serverSettings = \ManiaLive\Data\Storage::getInstance()->server;
 	if ($this->lastServerSettings == null)
 	    $this->lastServerSettings = clone $serverSettings;
@@ -256,18 +310,18 @@ EOT;
 	$difs = array();
 
 	foreach ($obj1 as $varName => $value) {
-	    if (!in_array($varName, $ingnoreList)){
-		if(is_object($value)){
-		    if (!isset($obj2->$varName)){
+	    if (!in_array($varName, $ingnoreList)) {
+		if (is_object($value)) {
+		    if (!isset($obj2->$varName)) {
 			$difs[$varName] = true;
-		    }else{
+		    } else {
 			$newDisf = $this->compareObjects($value, $obj2->$varName, $ingnoreList);
-			if(!empty($newDisf))
+			if (!empty($newDisf))
 			    $difs[$varName] = $newDisf;
 		    }
 		}
-		else if (!isset($obj2->$varName) || $obj2->$varName != $value){
-		    echo $varName ." : ".$obj2->$varName." -> ".$value;
+		else if (!isset($obj2->$varName) || $obj2->$varName != $value) {
+		    // echo $varName . " : " . $obj2->$varName . " -> " . $value;
 		    $difs[$varName] = true;
 		}
 	    }
@@ -279,17 +333,79 @@ EOT;
 	$this->saveMatchSettings();
     }
 
+    public function onModeScriptCallback($param1, $param2) {
+	$this->connection->chatSendServerMessage($param1);
+	switch ($param1) {
+	    case 'LibXmlRpc_BeginMap':
+		$this->dispatch(Event::LibXmlRpc_BeginMap, $param2);
+		break;
+	    case 'LibXmlRpc_BeginMatch':
+		$this->dispatch(Event::LibXmlRpc_BeginMatch, $param2);
+		break;
+	    case 'LibXmlRpc_BeginRound':
+		$this->dispatch(Event::LibXmlRpc_BeginRound, $param2);
+		break;
+	    case 'LibXmlRpc_BeginSubmatch':
+		$this->dispatch(Event::LibXmlRpc_BeginSubmatch, $param2);
+		break;
+	    case 'LibXmlRpc_BeginTurn':
+		$this->dispatch(Event::LibXmlRpc_BeginTurn, $param2);
+		break;
+	    case 'LibXmlRpc_BeginWarmUp':
+		$this->dispatch(Event::LibXmlRpc_BeginWarmUp, $param2);
+		break;
+	    case 'LibXmlRpc_LoadingMap':
+		$this->dispatch(Event::LibXmlRpc_LoadingMap, $param2);
+		break;
+	    case 'LibXmlRpc_OnGiveUp':
+		$this->dispatch(Event::LibXmlRpc_OnGiveUp, $param2);
+		break;
+	    case 'LibXmlRpc_OnRespawn':
+		$this->dispatch(Event::LibXmlRpc_OnRespawn, $param2);
+		break;
+	    case 'LibXmlRpc_OnStartLine':
+		$this->dispatch(Event::LibXmlRpc_OnStartLine, $param2);
+		break;
+	    case 'LibXmlRpc_OnStunt':
+		$this->dispatch(Event::LibXmlRpc_OnStunt, $param2);
+		break;
+	    case 'LibXmlRpc_OnWayPoint':
+		$this->dispatch(Event::LibXmlRpc_OnWayPoint, $param2);
+		break;	    
+	    case 'LibXmlRpc_PlayerRanking':
+		$this->dispatch(Event::LibXmlRpc_PlayerRanking, $param2);
+		break;
+	    
+	    case 'LibAFK_IsAFK':
+		$this->dispatch(Event::LibAFK_IsAFK, $param2);
+		break;
+	    case 'LibAFK_Properties':
+		$this->dispatch(Event::LibAFK_Properties, $param2);
+		break;
+	    case 'LibXmlRpc_Scores':
+		$this->dispatch(Event::LibXmlRpc_Scores, $param2);
+		break;
+	    case 'LibXmlRpc_Rankings':
+		$this->dispatch(Event::LibXmlRpc_Rankings, $param2);
+		break;	    	    
+	}
+    }
+
+    protected function dispatch($event, $param) {
+	\ManiaLive\Event\Dispatcher::dispatch(new \ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent($event, $param));
+    }
+
     public function onServerSettingsChange(ServerOptions $old, ServerOptions $new, $diff) {
-	
+
 	$dediConfig = \ManiaLive\DedicatedApi\Config::getInstance();
 
 	$path = $this->connection->getMapsDirectory() . "/../Config/" . $this->config->dedicatedConfigFile;
 	if (file_exists($path)) {
 	    $oldXml = simplexml_load_file($path);
-	    
+
 	    $xml = '<?xml version="1.0" encoding="utf-8" ?>
 <dedicated>
-		'.$oldXml->authorization_levels->asXml().'
+		' . $oldXml->authorization_levels->asXml() . '
 	
  	<masterserver_account>
 		<login>' . $this->storage->serverLogin . '</login>
@@ -368,7 +484,7 @@ EOT;
 		<proxy_password>' . $oldXml->system_config->proxy_password . '</proxy_password>
 	</system_config>
 </dedicated>
-';	
+';
 	    file_put_contents($path, $xml);
 	}
     }
@@ -441,10 +557,15 @@ EOT;
     }
 
     public function showInfo($login) {
+	if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics')) {
+	    Gui\Windows\InfoWindow::$statsAction = \ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics::$serverStatAction;
+	} else {
+	    Gui\Windows\InfoWindow::$statsAction = -1;
+	}
 	$info = Gui\Windows\InfoWindow::Create($login);
 	$info->setTitle("Server info");
 	$info->centerOnScreen();
-	$info->setSize(120, 90);
+	$info->setSize(93, 68);
 	$info->show();
     }
 
@@ -456,23 +577,37 @@ EOT;
 	    foreach ($stats->playerNetInfos as $player) {
 		$stat = new Structures\NetStat($player);
 		self::$netStat[$player->login] = $stat;
+		$showNotice = true;
+		/* if ($stat->updateLatency >= 160) {
 
-		if ($stat->updateLatency >= 160) {
-		    $showNotice = true;
-		}
-		if ($stat->updatePeriod >= 600) {
-		    $showNotice = true;
-		}
+		  $showNotice = true;
+		  }
+		  if ($stat->updatePeriod >= 600) {
+		  $showNotice = true;
+		  } */
 	    }
 	    if ($showNotice) {
 		Gui\Widgets\Widget_Netstat::EraseAll();
+
 		$info = Gui\Widgets\Widget_Netstat::Create(\ManiaLive\Gui\Window::RECIPIENT_ALL);
-		$info->setPosition(-110, 60);
+		$info->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+		$info->setPosition(-158, 60);
+		$info->setScale(0.7);
 		$info->show();
 	    } else {
 		Gui\Widgets\Widget_Netstat::EraseAll();
 	    }
 	}
+    }
+
+    public function showExpSettings($login) {
+	Gui\Windows\ExpSettings::Erase($login);
+	$win = Gui\Windows\ExpSettings::Create($login);
+	$win->setTitle("Expansion Settings");
+	$win->centerOnScreen();
+	$win->setSize(140, 100);
+	$win->populate($this->configManager, 'General');
+	$win->show();
     }
 
     public function onPostLoop() {
@@ -483,10 +618,30 @@ EOT;
 	    $this->update = false;
 	    $this->loopTimer = microtime(true);
 	    $this->calculatePositions();
-	}
+	}  //Testint conf manager;
+    }
+
+    function echo_memory_usage() {
+	gc_enable();
+	gc_collect_cycles();
+	$mem_usage = memory_get_usage(true);
+
+	if ($mem_usage < 1024)
+	    return $mem_usage . " bytes";
+	elseif ($mem_usage < 1048576)
+	    return round($mem_usage / 1024, 2) . " kilobytes";
+	else
+	    return round($mem_usage / 1048576, 2) . " megabytes";
+    }
+
+    public function onPlayerConnect($login, $isSpectator) {
+	//echo "Player connected. Memory usage : ".$this->echo_memory_usage()."\n";
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason) {
+
+	//echo "Player Disconnect. Memory usage : ".$this->echo_memory_usage()."\n";
+
 	$this->update = true;
 	if (array_key_exists($login, self::$netStat)) {
 	    unset(self::$netStat[$login]);
@@ -786,7 +941,7 @@ EOT;
     function positionCompare(Structures\ExpPlayer $a, Structures\ExpPlayer $b) {
 // no cp
 	if ($a->curCpIndex < 0 && $b->curCpIndex < 0) {
-//      echo "no cp";
+//   "no cp";
 	    return strcmp($a->login, $b->login);
 	}
 // 2nd have del
@@ -861,8 +1016,6 @@ EOT;
 	return strcmp($a->login, $b->login);
     }
 
-    
-    
 }
 
 ?>

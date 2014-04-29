@@ -15,7 +15,7 @@ class BlacklistPlayeritem extends \ManiaLive\Gui\Control {
 
     function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller) {
         $sizeX = 120;
-        $sizeY = 4;        
+        $sizeY = 6;        
         $this->player = $player;
 
         $this->unblackAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'unblack'), $player->login);

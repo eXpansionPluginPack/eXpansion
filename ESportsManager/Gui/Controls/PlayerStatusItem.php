@@ -22,7 +22,7 @@ class PlayerStatusItem extends \ManiaLive\Gui\Control {
      * @param int $sizeX
      */
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus $player, $controller, $gameMode, $isAdmin, $sizeX) {
-        $sizeY = 4;
+        $sizeY = 6;
         $login = $player->login;
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);

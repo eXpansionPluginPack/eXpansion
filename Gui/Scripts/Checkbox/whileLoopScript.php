@@ -1,0 +1,31 @@
+foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::MouseClick)  {
+    
+        if(Event.ControlId != "Unassigned"){
+            declare CMlQuad checkBox <=> (Page.GetFirstChild(Event.ControlId) as CMlQuad);
+	    
+	     declare Parts = TextLib::Split("_", Event.ControlId);
+	     if(Parts.count == 3 && Parts[0] == "eXp" && Parts[1] == "CheckboxQ"){
+		
+		if(checkBox.ImageUrl == eXp_checkBox_disabledActiveUrl || checkBox.ImageUrl == eXp_checkBox_disabledUrl){
+		    //do nothing
+		}else if(checkBox.ImageUrl == eXp_checkBox_ActiveUrl){
+		    checkBox.ImageUrl = eXp_checkBox_InactiveUrl;
+		    
+		    declare CMlEntry entry <=> (Page.GetFirstChild("eXp_CheckboxE_"^Parts[2]) as CMlEntry);
+		    if(entry != Null){
+			entry.Value = "0";
+		    }
+		    
+		}else if(checkBox.ImageUrl == eXp_checkBox_InactiveUrl){
+		    checkBox.ImageUrl = eXp_checkBox_ActiveUrl;
+		    
+		    declare CMlEntry entry <=> (Page.GetFirstChild("eXp_CheckboxE_"^Parts[2]) as CMlEntry);
+		    if(entry != Null){
+			entry.Value = "1";
+		    }
+		}
+	     }
+        }
+    }
+}

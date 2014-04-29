@@ -52,3 +52,6 @@ Error receving data from ManiaExchange!
 Map %s $z$s$fff added from MX Succesfully
 #translate# Map %s $z$s$fff added from MX Succesfully
 
+Author
+#translate# Author
+

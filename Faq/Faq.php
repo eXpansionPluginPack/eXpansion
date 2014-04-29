@@ -35,7 +35,6 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	
         $window = Gui\Windows\FaqWidget::Create(null);
         $window->setSize(7, 7);
-        $window->setPosition(-161, 76);
         $window->show();
       
     }

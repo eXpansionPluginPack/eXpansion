@@ -11,7 +11,7 @@ Cancel
 Schließen
 
 #quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2
-#quiz#Anzahl Fragen:#variable# %s$1 #quiz#    Fragesteller:#variable# %s$2
+#quiz#Anzahl Fragen:#variable# %s$1 #quiz#    Fragensteller:#variable# %s$2
 
 #question#%s ?
 #question#%s ?

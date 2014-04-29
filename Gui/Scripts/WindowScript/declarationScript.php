@@ -15,15 +15,21 @@ $startPosY = intval($win->getSizeY() / 2) . ".0";
 
 //Main Function
 main () {
-    declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");
+    declare Real closeCounter = 1.0;
+    declare Real openCounter = 1.0;
+    declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");   
+    Window.RelativeScale = openCounter;
+    
+    declare windowFrame <=> Page.GetFirstChild("windowFrame");
     declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);    
 
     declare MoveWindow = False;
     declare Scroll = False;
-    declare CloseWindow = False;
+    declare closeWindow = False;
+    declare Text closeAction = "<?php echo $this->closeAction; ?>";
+    declare openWindow = False;
     declare isMinimized = False;
-    declare Real CloseCounter = 1.0;
-    declare Real OpenCounter = 0.0;
+   
     declare CenterWindow = False;
 
     declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
@@ -34,6 +40,12 @@ main () {
     declare Text id = "<?php echo $this->name ?>";
     declare Boolean forceReset = <?php echo $this->forceReset; ?>;
     declare Text version = "<?php echo $this->version; ?>";
+    declare Boolean disableAnimations = <?php echo $this->disableAnimations; ?>;
+    
+    if (disableAnimations) {
+	openWindow = False;
+	Window.RelativeScale = 1.;
+    }
     declare persistent Vec3[Text][Text] exp_windowLastPos;
     declare persistent Vec3[Text][Text] exp_windowLastPosRel;
     declare persistent Text[Text] exp_windowActive;
@@ -56,8 +68,8 @@ main () {
     if ( !exp_windowLastPosRel[version].existskey(id) || forceReset) {
         exp_windowLastPosRel[version][id] = < <?php echo $startPosX ?>, <?php echo  $startPosY ?>, 0.0>;
     }
-    Window.PosnX = exp_windowLastPos[version][id][0];
-    Window.PosnY = exp_windowLastPos[version][id][1];
+    Window.RelativePosition.X = exp_windowLastPos[version][id][0];
+    Window.RelativePosition.Y = exp_windowLastPos[version][id][1];
     LastDelta = exp_windowLastPosRel[version][id];
     Window.RelativePosition = exp_windowLastPosRel[version][id];
     
@@ -76,22 +88,52 @@ main () {
             temp.Z = -50.0;
             Window.RelativePosition = temp;				
         }
-
+	
+	if (openWindow) {
+	    openCounter += 0.2;
+	    	    	    
+	    if (openCounter > 1)
+	    {
+		openWindow = False;
+		Window.RelativeScale = 1.;
+	    } else {
+	    	Window.RelativeScale = openCounter;
+	    }
+	}
+	
+	if (closeWindow) {
+	    closeCounter -= 0.2;
+	    if (disableAnimations) {
+	    	TriggerPageAction(closeAction);
+		continue;
+	    }
+	    if (closeCounter <= 0)
+	    {
+		closeWindow = False;	    	    
+		Window.RelativeScale = 0.;
+		TriggerPageAction(closeAction);
+		continue;
+	    }
+	    else {
+	    Window.RelativeScale = closeCounter;
+	}
+	}
+	
         if (MoveWindow) {
             DeltaPos.X = MouseX - lastMouseX;
             DeltaPos.Y = MouseY - lastMouseY;
 
-            if (Window.PosnX < -140.0) {
+            if (Window.RelativePosition.X < -140.0) {
                 LastDelta.X = -140.0;	
             }
-            if (Window.PosnX > 110.0) {
+            if (Window.RelativePosition.X > 110.0) {
                 LastDelta.X = 110.0;
             }
-            if (Window.PosnY > 78.0) {
+            if (Window.RelativePosition.Y > 78.0) {
                 LastDelta.Y = 78.0;
             }
 
-            if (Window.PosnY < -80.0) {
+            if (Window.RelativePosition.Y < -80.0) {
                 LastDelta.Y = -80.0;
             }
 
@@ -122,7 +164,7 @@ main () {
 
 
                 if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close") {
-                    Window.Hide();
+                    closeWindow = True;
                 }
 
                 if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "MainWindow") {

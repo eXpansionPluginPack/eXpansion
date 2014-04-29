@@ -1,98 +1,107 @@
-	if (moveScroll || nbEventsCounted == -1) {
-		pagerDelta += MouseY - pagerMouseY;
 
-		declare max = (-itemSizeY * rowsPerPage) + 13 ;
 
-		if (pagerDelta >= 0.0) {
-			pagerDelta = 0.0;
-			pagerMouseY = MouseY;
+if(pager_moveScroll){
+
+    if(pager_firstClick){
+	pager_scrollYOriginPosition = ScrollBar.RelativePosition.Y;
+    }
+    pager_firstClick = False;
+
+    declare ypos = pager_scrollYOriginPosition + pager_deltaMouseYPosition;
+    
+    if(ypos >= pagerStartPos){
+	ScrollBar.RelativePosition.Y = pagerStartPos;
+    }else if(ypos < pagerStopPosition){
+	ScrollBar.RelativePosition.Y = pagerStopPosition;
+    }else{
+	ScrollBar.RelativePosition.Y = pager_scrollYOriginPosition + pager_deltaMouseYPosition;
+    }
+
+    declare maxDelta = pagerStartPos - pagerStopPosition;
+    
+    currentIndex = MathLib::NearestInteger((ScrollBar.RelativePosition.Y/maxDelta)*maxIndex) * -1;
+}
+
+if(oldIndex != currentIndex){
+    //Redraw
+    oldIndex = currentIndex;
+    for(i, 0, rowsPerPage) {                   
+	for(r, 0, itemsPerRow-1) { 
+	    declare CMlLabel item = labels[i][r];
+
+	    if (item != Null) {     
+		if (textData.count >  i+currentIndex && i+currentIndex >= 0) {
+		    item.SetText(textData[i+currentIndex][r]);                                                          
 		}
-		if (pagerDelta < max) {
-			pagerDelta = max;
-			pagerMouseY = MouseY;        
-		}
-
-		ScrollBar.RelativePosition.Y = pagerDelta;            
-
-		declare percent = 1 - (MathLib::Abs(max) -  MathLib::Abs(pagerDelta)) / MathLib::Abs(max);      
-		declare test = MathLib::NearestInteger(percent * (totalRows - rowsPerPage + 2));
-		//declare index = (test / itemsPerRow) * itemsPerRow;
-		
-		if( (nbEventsCounted == -1 || nbEventsCounted == 0) && currentIndex != test){		
-			log("update"^pagerDelta);
-			currentIndex = test;
-			for(i, 0, rowsPerPage) {                   
-                 for(r, 0, itemsPerRow-1) { 
-					declare CMlLabel item = labels[i][r];
-
-					if (item != Null) {     
-						if (textData.count >  i+test && i+test >= 0) {
-							item.SetText(textData[i+test][r]);                                                          
-						}
-					}
-				}  
-			}                                                                               
-		}
-		
-		pagerMouseY = MouseY;  
-		
-		if(nbEventsCounted == -1)
-			nbEventsCounted == 0;
-		else{
-			declare Integer i = 3;
-			// log(i);
-			if(nbEventsCounted >= i)
-				nbEventsCounted = 0;
-			else
-				nbEventsCounted = (nbEventsCounted+1) % i;
-		}
-	}else if(nbEventsCounted > 0){
-		nbEventsCounted += 1;
+	    }
+	}                                                                                 
+    }
+    
+    if (textData.count > rowsPerPage) {
+	    ScrollUp.Opacity = 1.0;
+	    ScrollDown.Opacity = 1.0;
+	
+	    if (currentIndex == 0) {
+	        ScrollUp.Opacity = disabledOpacity;	
+	    } 
+	
+	    if (currentIndex == maxIndex) {
+		ScrollDown.Opacity = disabledOpacity;	
+	    } 
 	}
 	
-	
+}
 
-   foreach (Event in PendingEvents) {
+foreach (Event in PendingEvents) {
 
-		if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "ScrollBar")  {
-			
-			pagerDelta += MouseY - pagerMouseY;
-			if(pagerDelta>4 || pagerDelta <-4){
-				nbEventsCounted = 1;
-			}
-		
-			pagerMouseY = MouseY;                                            
-			moveScroll = True;
-	   }                                   
-
-   
-		 if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {    
-			 if (Event.Control.HasClass("eXpOptimizedPagerAction")) {
-				declare id = TextLib::Split("_", Event.ControlId);
-				declare Integer row = TextLib::ToInteger(id[1]) + currentIndex;   
-				declare Integer col = TextLib::ToInteger(id[2]);   
-				
-				log("Test "^row^" "^col);
-				
-               if (data.existskey(row) && data[row].existskey(col)){
-					log(" " ^ data[row][col]);
-					entry.Value = " " ^ data[row][col];
-				}
-                                
-			 }
-			 else {
-				entry.Value = "";
-			 }
+    if(Event.Type == CMlEvent::Type::MouseClick){
+	if (Event.ControlId == "ScrollBar")  {
+	    pager_startMouseYPosition = MouseY;
+	    pager_firstClick = True;
+	    pager_moveScroll = True;
+	}else if (Event.ControlId == "ScrollDown")  {
+	    if (textData.count > rowsPerPage) {
+		currentIndex = currentIndex + 5;
+		if(currentIndex > maxIndex){
+		    currentIndex = maxIndex;
+		}
+		declare maxDelta = pagerStartPos - pagerStopPosition;
+		ScrollBar.RelativePosition.Y = -1*(maxDelta/maxIndex)*currentIndex;
+	    }
+	}else if (Event.ControlId == "ScrollUp")  {
+		if (textData.count > rowsPerPage) {
+		    currentIndex = currentIndex - 5;
+		    if(currentIndex < 0){
+			    currentIndex = 0;
+		    }
+		    declare maxDelta = pagerStartPos - pagerStopPosition;
+		    ScrollBar.RelativePosition.Y = -1*(maxDelta/maxIndex)*currentIndex;
 		}
 	}
-	
-	if (MouseLeftButton == True) { 
-		                                                                                                                               
-	} else {
-		moveScroll = False;
-		
-		if(nbEventsCounted > 0)
-			nbEventsCounted = -1;
-		else
-			nbEventsCounted = 0;
+    }
+    
+    if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {    
+	if (Event.Control.HasClass("eXpOptimizedPagerAction")) {
+	    declare id = TextLib::Split("_", Event.ControlId);
+	    declare Integer row = TextLib::ToInteger(id[1]) + currentIndex;   
+	    declare Integer col = TextLib::ToInteger(id[2]);   
+
+	    if (data.existskey(row) && data[row].existskey(col)){
+		entry.Value = " " ^ data[row][col];
+	    }else{
+		entry.Value = "";
+	    }
 	}
+	else{
+	    entry.Value = "";
+	}
+    }
+}
+
+if (MouseLeftButton == False) { 
+    pager_firstClick = False;
+    pager_moveScroll = False;
+}else if(pager_moveScroll){
+    pager_deltaMouseYPosition = MouseY - pager_startMouseYPosition;
+    log("Moving : "^pager_deltaMouseYPosition);
+}

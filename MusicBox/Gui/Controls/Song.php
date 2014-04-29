@@ -17,7 +17,7 @@ class Song extends \ManiaLive\Gui\Control {
     private $frame;
 
     function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\MusicBox\Structures\Song $song, $controller, $sizeX) {
-        $sizeY = 4;
+        $sizeY = 6;
 
         $this->queueSong = $this->createAction(array($controller, 'queueSong'), $indexNumber + 1);
         $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);

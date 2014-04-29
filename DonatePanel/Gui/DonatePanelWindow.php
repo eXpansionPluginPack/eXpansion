@@ -13,8 +13,13 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     public static $donatePlugin;
     private $items = array();
 
-    protected function onConstruct() {
-        parent::onConstruct();
+    protected function exp_onBeginConstruct() {
+	parent::exp_onBeginConstruct();
+	$this->setName("Donate Panel");
+    }
+    
+    protected function exp_onSettingsLoaded() {
+        parent::exp_onSettingsLoaded();
         $this->setName("Donate Panel");
 
         $login = $this->getRecipient();
@@ -22,7 +27,7 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
         $script->setParam('isMinimized', 'True');
-        $script->setParam('autoCloseTimeout', '10500');
+        $script->setParam('autoCloseTimeout',  $this->getParameter('autoCloseTimeout'));
         $script->setParam('posXMin', -62);
         $script->setParam('posX', -62);
         $script->setParam('posXMax', -2);

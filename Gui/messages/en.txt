@@ -10,3 +10,24 @@ Apply
 Cancel
 Cancel
 
+possible parameters: move, lock, reset
+possible parameters: move, lock, reset
+
+#error#Server Admin has disabled personal huds. Sorry!
+#error#Server Admin has disabled personal huds. Sorry!
+
+Hud reset done!
+Hud reset done!
+
+Starting hud reset, please wait
+Starting hud reset, please wait
+
+Yes
+Yes
+
+No
+No
+
+Really do this ?
+Really do this ?
+

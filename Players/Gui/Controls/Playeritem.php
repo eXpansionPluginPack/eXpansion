@@ -35,7 +35,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $this->recipient = $login;
         $this->widths = \ManiaLivePlugins\eXpansion\Gui\Gui::getScaledSize($widths, $sizeX);
 
-        $sizeY = 4;
+        $sizeY = 6;
         $this->isAdmin = $isAdmin;
         $this->player = $player;
         if ($isAdmin) {

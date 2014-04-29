@@ -15,7 +15,7 @@ if( (Now - eXp_lastClockUpdate) >= 1000 ){
             }
         }
     } 
-
+    serverName.SetText(""^CurrentServerName);    
     playerLabel.SetText(""^nbPlayer);
     specLabel.SetText(""^nbSpec);
     eXp_lastClockUpdate = Now;

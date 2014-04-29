@@ -71,8 +71,7 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $x = 0;
         $rankings = $this->connection->getCurrentRanking(-1, 0);
         foreach ($rankings as $player) {
-
-            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\PlayerScore($x, $player, $this->sizeX);
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\PlayerScore($x, $player, $this->sizeX-8);
             $this->pager->addItem($this->items[$x]);
             $x++;
         }

@@ -1,15 +1,19 @@
-declare persistent Boolean[Text][Text] exp_widgetVisible;
+declare persistent Boolean[Text][Text][Text] eXp_widgetVisible;
+declare Text gamemode = "all";
 
-if (!exp_widgetVisible.existskey(version) ) {
-	exp_widgetVisible[version] = Boolean[Text];
+if (!eXp_widgetVisible.existskey(version) ) {
+    eXp_widgetVisible = Boolean[Text][Text][Text];
 }
 
-if ( !exp_widgetVisible[version].existskey(id) || forceReset) {
-	exp_widgetVisible[version][id] = True;
+if ( !eXp_widgetVisible[version].existskey(id) ) {
+    eXp_widgetVisible[version][id] = Boolean[Text];
 }
 
-if (exp_widgetVisible[version][id] == False) {
+if ( !eXp_widgetVisible[version][id].existskey(gamemode) || forceReset) {
+	eXp_widgetVisible[version][id][gamemode] = True;
+}
+
+if (eXp_widgetVisible[version][id][gamemode] == False) {
     Window.Hide();
 }
-log("status:");
-log(exp_widgetVisible[version][id]);
+

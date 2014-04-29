@@ -7,3 +7,9 @@ Rij
 #music#Next song: $z$s#variable# %1$s - %2$s
 #music#Volgende liedje: $z$s#variable# %1$s - %2$s
 
+#variable# %1$s#music# by#variable#  %2$s #music# is been played next requested by #variable# %3$s 
+#translate# #variable# %1$s#music# by#variable#  %2$s #music# is been played next requested by #variable# %3$s 
+
+#music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s
+#translate# #music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s
+

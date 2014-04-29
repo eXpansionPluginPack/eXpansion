@@ -52,3 +52,6 @@ Virhe vastaanotettaessa tietoja Mania-Exchangesta!
 Map %s $z$s$fff added from MX Succesfully
 Onnistui! Kartta %s $z$s$fff lisätty MX:stä 
 
+Author
+#translate# Author
+

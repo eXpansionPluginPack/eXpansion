@@ -42,10 +42,6 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$this->enableTickerEvent();
     }
 
-    function onUnload() {
-        parent::onUnload();
-    }
-
     /*
      * onReady()
      * Function called when ManiaLive is ready loading.
@@ -59,7 +55,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
 	$this->mumble_feed = json_decode(file_get_contents($config->url), true);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('%server%Mumble Error: $fff»» %error%' . utf8_encode($e->getMessage()));
+            $this->connection->chatSendServerMessage('%server%Mumble Error: $fffï¿½ï¿½ %error%' . utf8_encode($e->getMessage()));
             echo $e->getMessage();
             $this->enabled = false;
         }	
@@ -86,7 +82,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         try {
 	$this->mumble_feed = json_decode(file_get_contents($config->url), true);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('%server%Mumble Error: $fff»» %error%' . utf8_encode($e->getMessage()));
+            $this->connection->chatSendServerMessage('%server%Mumble Error: $fffï¿½ï¿½ %error%' . utf8_encode($e->getMessage()));
             echo $e->getMessage();
             $this->enabled = false;
 		}

@@ -35,7 +35,7 @@ List maps
 List maps
 
 #variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position
-#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position
+#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$sth #queue#position
 
 #queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
 #queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s
@@ -132,4 +132,40 @@ Jukebox
 
 #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
 #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
+
+Title
+Title
+
+Length
+Length
+
+Record
+Record
+
+Rating
+Rating
+
+Search maps
+Search maps
+
+Search Map
+Search Map
+
+Search Author
+Search Author
+
+Clear Maplist
+Clear Maplist
+
+#queue#/jb uses next params: drop, reset and show
+#queue#/jb uses next params: drop, reset and show
+
+#admin_error# $iA payment for wishin a track is in progress please try later.
+#admin_error# $iA payment for wishin a track is in progress please try later.
+
+Are you sure you want to wish this map to be played
+Are you sure you want to wish this map to be played
+
+#admin_error# $iYOu can't wish for a map at the moment.
+#admin_error# $iYOu can't wish for a map at the moment.
 
