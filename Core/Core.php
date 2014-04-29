@@ -334,7 +334,7 @@ EOT;
     }
 
     public function onModeScriptCallback($param1, $param2) {
-	$this->connection->chatSendServerMessage($param1);
+
 	switch ($param1) {
 	    case 'LibXmlRpc_BeginMap':
 		$this->dispatch(Event::LibXmlRpc_BeginMap, $param2);
@@ -371,11 +371,11 @@ EOT;
 		break;
 	    case 'LibXmlRpc_OnWayPoint':
 		$this->dispatch(Event::LibXmlRpc_OnWayPoint, $param2);
-		break;	    
+		break;
 	    case 'LibXmlRpc_PlayerRanking':
 		$this->dispatch(Event::LibXmlRpc_PlayerRanking, $param2);
 		break;
-	    
+
 	    case 'LibAFK_IsAFK':
 		$this->dispatch(Event::LibAFK_IsAFK, $param2);
 		break;
@@ -387,7 +387,7 @@ EOT;
 		break;
 	    case 'LibXmlRpc_Rankings':
 		$this->dispatch(Event::LibXmlRpc_Rankings, $param2);
-		break;	    	    
+		break;
 	}
     }
 
