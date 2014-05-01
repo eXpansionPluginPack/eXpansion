@@ -73,7 +73,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	$this->previousUid = $this->storage->currentMap->uId;
 
-	$this->registerChatCommand("test", "onEndMatch", 0, false);
+	//$this->registerChatCommand("test", "onEndMatch", 0, false);
     }
 
     public function onOliverde8HudMenuReady($menu) {

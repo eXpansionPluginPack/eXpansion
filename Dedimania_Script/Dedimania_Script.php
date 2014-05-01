@@ -84,7 +84,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$this->enableScriptEvents();
 	\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
 
-	$this->registerChatCommand("test", "test",0,true);
+	//$this->registerChatCommand("test", "test",0,true);
 	
 	
 	$this->config = Config::getInstance();
