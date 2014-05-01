@@ -82,13 +82,6 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		}
 	    }
 
-	    if (($this->needUpdate & self::Localrecords) == self::Localrecords || $this->forceUpdate) {
-		if ($this->local) {
-		    $this->updateLocalPanel();
-		    $this->local = false;
-		}
-	    }
-
 	    $this->lastUpdate = time();
 	    $this->forceUpdate = false;
 	    $this->needUpdate = false;
@@ -98,7 +91,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function updateDediPanel($login = NULL) {
 
 	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania') || $this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script')) {
-
+	    
 	    if ($login == Null) {
 		$panelMain = Gui\Widgets\DediPanel::Create($login);
 		$panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
@@ -122,7 +115,8 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		$panelMain->update();
 		$panelMain->show();
 		$panelScore->show();
-	    } else if (isset($this->widgetIds["DediPanel"])) {
+		$panelScore->show("test");
+	    } else if (isset($this->widgetIds["DediPanel2"])) {
 		$this->widgetIds["DediPanel2"]->update();
 		$this->widgetIds["DediPanel2"]->show($login);
 	    }
@@ -130,7 +124,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function updateLocalPanel($login = null) {
-
+	
 	if ($login == Null) {
 	    $panelMain = Gui\Widgets\LocalPanel::Create($login);
 	    $panelMain->setSizeX(40);
@@ -309,7 +303,6 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	Gui\Widgets\DediPanel::Erase($login);
 	Gui\Widgets\LocalPanel2::Erase($login);
 	Gui\Widgets\DediPanel2::Erase($login);
-
 	Gui\Widgets\LivePanel::Erase($login);
 	Gui\Widgets\LivePanel2::Erase($login);
     }
@@ -335,9 +328,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onDedimaniaPlayerConnect($data) {
-	if (count(self::$dedirecords) > 0) {
+	/*if (count(self::$dedirecords) > 0) {
 	    $this->needUpdate = self::Dedimania_force;
-	}
+	}*/
     }
 
     public function onDedimaniaPlayerDisconnect() {
