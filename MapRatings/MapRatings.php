@@ -31,6 +31,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$actionFinal =  ActionHandler::getInstance()->createAction(array($this, "autoRemove"));
 	Gui\Windows\MapRatingsManager::$removeId = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($actionFinal);
 	$this->config = Config::getInstance();
+	
     }
 
     function exp_onLoad() {
@@ -72,7 +73,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	$this->previousUid = $this->storage->currentMap->uId;
 
-	// $this->onEndMatch("", "");
+	$this->registerChatCommand("test", "onEndMatch", 0, false);
     }
 
     public function onOliverde8HudMenuReady($menu) {
@@ -107,7 +108,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$menu->addButton($parent, "Fantastic (+++)", $button);
     }
 
-    public function hudRateMap($login, $param) {
+    public function hudRateMap($login, $param) {	
 	$this->onPlayerChat(1, $login, $param, false);
     }
 
@@ -370,7 +371,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->displayWidget();
     }
 
-    function onEndMatch($rankings, $winnerTeamOrMap) {
+    function onEndMatch($rankings = "", $winnerTeamOrMap = "") {
 	if ($this->config->showPodiumWindow) {
 	    $ratings = $this->getVotesForMap(null);
 

@@ -84,6 +84,9 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$this->enableScriptEvents();
 	\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
 
+	$this->registerChatCommand("test", "test",0,true);
+	
+	
 	$this->config = Config::getInstance();
 	$this->registerChatCommand("dedirecs", "showRecs", 0, true);
 	$this->previousEnvironment = $this->storage->currentMap->environnement;
@@ -94,6 +97,22 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$this->dedimania->checkSession();
     }
 
+    
+    public function test($login) {
+	echo " login\n";
+	$ranks = $this->connection->getCurrentRankingForLogin($login);
+	print_r($ranks);
+	
+	echo " all\n";
+	$ranks = $this->connection->getCurrentRanking(-1,0);
+	print_r($ranks);
+	
+	
+	print_r($this->connection->getServerPackMask());
+	
+	
+    }
+    
     public function onPlayerConnect($login, $isSpectator) {
 	$player = $this->storage->getPlayerObject($login);
 	$this->dedimania->playerConnect($player, $isSpectator);
@@ -114,7 +133,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$this->wasWarmup = $this->connection->getWarmUp();
     }
 
-    public function LibXmlRpc_BeginRound($number) {
+  /*  public function LibXmlRpc_BeginRound($number) {
 	echo "script beginRound\n";
 	$this->wasWarmup = $this->connection->getWarmUp();
     }
@@ -123,7 +142,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	echo "script beginMatch\n";
 	$this->records = array();
 	$this->dedimania->getChallengeRecords();
-    }
+    } */
 
     public function LibXmlRpc_BeginMap($number) {
 	echo "script beginMap\n";
@@ -340,7 +359,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
      * @param string $winnerTeamOrMap
      * 
      */
-    public function onEndMatch($rankings, $winnerTeamOrMap) {
+    public function onEndMatch($rankings_old, $winnerTeamOrMap) {
 
 
 	if ($this->exp_isRelay())
@@ -369,9 +388,12 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	    if (sizeof($rankings) == 0) {
 		$this->vReplay = "";
 		$this->gReplay = "";
+		$this->console("[Dedimania] No new times driven. Skipping dedimania sent.");
 		return;
 	    }
+	    
 	    $this->vReplay = $this->connection->getValidationReplay($rankings[0]['Login']);
+	    
 	    $greplay = "";
 	    $grfile = sprintf('Dedimania/%s.%d.%07d.%s.Replay.Gbx', $this->storage->currentMap->uId, $this->storage->gameInfos->gameMode, $rankings[0]['BestTime'], $rankings[0]['Login']);
 	    $this->connection->SaveBestGhostsReplay($rankings[0]['Login'], $grfile);
@@ -381,8 +403,8 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	    if (empty($this->vReplay)) {
 		$this->console("[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent.");
 		return;
-	    }
-
+	    }	
+	
 	    $this->dedimania->setChallengeTimes($this->storage->currentMap, $rankings, $this->vReplay, $this->gReplay);
 	} catch (\Exception $e) {
 	    $this->console("[Dedimania] " . $e->getMessage());

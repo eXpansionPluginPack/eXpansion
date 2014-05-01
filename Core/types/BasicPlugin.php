@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 
     use Maniaplanet\DedicatedServer\Structures\GameInfos;
-
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Config;
 use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
@@ -92,7 +91,6 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	 */
 	protected $metaData;
 
-
 	public final function onInit() {
 	    $this->loadMetaData();
 	    $this->checkVersion();
@@ -123,7 +121,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    //Recovering the eXpansion pack tools
 	    $this->colorParser = \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance();
 
-	    $this->exp_unloading = false;	    
+	    $this->exp_unloading = false;
 	    \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->registerDirectory($this->exp_getdir());
 
 
@@ -145,11 +143,11 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    Dispatcher::register(PlayerEvent::getClass(), $this);
 	    Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent::getClass(), $this);
 	}
-	
-	private function loadMetaData(){
+
+	private function loadMetaData() {
 	    $reflector = new \ReflectionClass(get_class($this));
 	    $dir = dirname($reflector->getFileName());
-	    if(file_exists($dir.DIRECTORY_SEPARATOR.'MetaData.php')){
+	    if (file_exists($dir . DIRECTORY_SEPARATOR . 'MetaData.php')) {
 		$pieces = explode('\\', get_class($this));
 		array_pop($pieces);
 		$class = implode('\\', $pieces);
@@ -167,10 +165,10 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	public final function enableScriptEvents() {
-	    $this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => True));	    
+	    $this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => True));
 	}
-	
-	public final function onLoad() {	    
+
+	public final function onLoad() {
 	    try {
 		$this->exp_onLoad();
 	    } catch (\Exception $e) {
@@ -187,7 +185,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	public final function onReady() {
-		
+
 //Recovering the billManager if need.
 	    if (self::$exp_billManager == null) {
 		self::$exp_billManager = new \ManiaLivePlugins\eXpansion\Core\BillManager($this->connection, $this->db, $this);
@@ -218,9 +216,9 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	final public function onUnload() {
-	    if($this->metaData != null)
+	    if ($this->metaData != null)
 		$this->metaData->unSetPlugin();
-		    
+
 	    Dispatcher::unregister(GameSettingsEvent::getClass(), $this);
 	    Dispatcher::unregister(PlayerEvent::getClass(), $this);
 
