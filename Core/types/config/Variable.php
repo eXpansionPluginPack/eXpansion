@@ -215,6 +215,10 @@ abstract class Variable {
 	    return true;
     }
 
+    public function castValue($value) {
+	return $value;
+    }
+    
     abstract function getPreviewValues();
 }
 

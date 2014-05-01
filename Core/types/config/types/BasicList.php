@@ -41,7 +41,7 @@ class BasicList extends Variable {
     public function addValue($value) {
 	if ($this->type->basicValueCheck($value)) {
 	    $array = $this->getRawValue();
-	    $array[] = $value;
+	    $array[] = $this->type->castValue($value);;
 	    $this->setRawValue($array);
 	    return true;
 	}
