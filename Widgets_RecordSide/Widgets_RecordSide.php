@@ -117,7 +117,6 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		$panelMain->update();
 		$panelMain->show();
 		$panelScore->show();
-		$panelScore->show("test");
 	    } else if (isset($this->widgetIds["DediPanel2"])) {
 		$this->widgetIds["DediPanel2"]->update();
 		$this->widgetIds["DediPanel2"]->show($login);
@@ -189,7 +188,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 	$gamemode = self::exp_getCurrentCompatibilityGameMode();
 	if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM || $gamemode == GameInfos::GAMEMODE_CUP) {
-	    \ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::ROUND_SCORES);
+	    \ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::ROUND_SCORES);	    
+	    if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT ){
+		echo "triggering hide\n";
+		$this->connection->triggerModeScriptEvent('UI_DisplaySmallScoresTable', "False");
+	    }
 	}
     }
 
