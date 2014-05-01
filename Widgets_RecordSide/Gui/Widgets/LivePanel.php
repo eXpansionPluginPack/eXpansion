@@ -47,11 +47,14 @@ class LivePanel extends LocalPanel {
 		$settings = self::$connection->getModeScriptSettings();
 		if (array_key_exists("S_ForceLapsNb", $settings)) {
 		    $nbLaps = $settings['S_ForceLapsNb'] == -1 ? 1 : $settings['S_ForceLapsNb'];
-		    $teamMaxPoint = $settings['S_MaxPointsPerRound'];
+		}
+		if(isset($settings['S_MaxPointsPerRound'])){
+		     $teamMaxPoint = $settings['S_MaxPointsPerRound'];
 		}
 	    } else {
 		$teamMaxPoint = $this->storage->gameInfos->teamPointsLimit;
 	    }
+	    
 	    $this->timeScript->setParam("maxPoint", $teamMaxPoint);
 
 	    if (Widgets_RecordSide::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
