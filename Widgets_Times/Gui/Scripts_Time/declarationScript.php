@@ -5,4 +5,3 @@ declare Integer curCp = 0;
 declare Integer totalCp = <?php echo $this->totalCp ?>;
 declare Boolean lapRace = <?php echo $this->lapRace ?>;
 declare Text target = "<?php echo $this->target; ?>";
-log("Widget Refreshed");
