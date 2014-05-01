@@ -189,7 +189,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 	$gamemode = self::exp_getCurrentCompatibilityGameMode();
 	if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM || $gamemode == GameInfos::GAMEMODE_CUP) {
-	    \ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::ROUND_SCORES);
+	    if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT){
+		//$this->connection->sendModeScriptCommands(array(array('UI_DisplaySmallScoresTable', "False")));
+	    }else{
+		\ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::ROUND_SCORES);
+	    }
 	}
     }
 
@@ -213,7 +217,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function onEndMatch($rankings, $winnerTeamOrMap) {
 
 	self::$raceOn = false;
-		$this->widgetIds = array();
+	$this->widgetIds = array();
 	Gui\Widgets\LocalPanel::EraseAll();
 	Gui\Widgets\LocalPanel2::EraseAll();
 	Gui\Widgets\DediPanel::EraseAll();
@@ -233,6 +237,11 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	}else{
 	    self::$dedirecords = array(); // reset 
 	    self::$localrecords = array(); //  reset
+	    Gui\Widgets\LocalPanel::EraseAll();
+	    Gui\Widgets\LocalPanel2::EraseAll();
+	    Gui\Widgets\DediPanel::EraseAll();
+	    Gui\Widgets\DediPanel2::EraseAll();
+	    $this->hideLivePanel();
 	}
     }
 

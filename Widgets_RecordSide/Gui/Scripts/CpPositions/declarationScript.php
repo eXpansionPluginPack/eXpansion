@@ -25,3 +25,5 @@ declare points = <?php echo $this->points ?>;
 declare isLaps = <?php echo $this->isLaps ?>;
 declare nbLaps = <?php echo $this->nbLaps ?>;
 declare isTeam = <?php echo $this->isTeam ?>;
+
+declare maxPoint = <?php echo $this->maxPoint ?>;

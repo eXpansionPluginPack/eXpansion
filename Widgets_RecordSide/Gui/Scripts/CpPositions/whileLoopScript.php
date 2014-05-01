@@ -119,6 +119,10 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     
     declare teamRedScore = 0;
     declare teamBlueScore = 0;
+    declare total = recCount;
+    if(total > maxPoint){
+	total = maxPoint;
+    }
     
     while(cpIndex >= 0){
 	declare bestCp = 0;
@@ -151,15 +155,19 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 			if(playersTeam[p] == 1){
 			    timeLabel.SetText("$00F"^TimeToText(Score));
 			    rank.SetText("$00F"^i);
-			    if(points.existskey(nbRec-1)){
-				teamBlueScore += points[nbRec-1];
+			    declare point = total - i;
+			    if(point < 0){
+				point = 0;
 			    }
+			    teamBlueScore +=  point;
 			}else{
 			    timeLabel.SetText("$F00"^TimeToText(Score));
 			    rank.SetText("$F00"^i);
-			    if(points.existskey(nbRec-1)){
-				teamRedScore += points[nbRec-1];
+			    declare point = total - i;
+			    if(point < 0){
+				point = 0;
 			    }
+			    teamRedScore += point;
 			}
 		    }else{
 			timeLabel.SetText(TimeToText(Score));
@@ -198,12 +206,22 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 		    declare labelCp2 = (Page.GetFirstChild("RecCp2_"^i) as CMlLabel);
 		    
 		    if((cpIndex+1) == totalCp*nbLaps && givePoints){
-			if(points.existskey(nbRec-1)){
-			    labelCp1.SetText("$2A2"^points[nbRec-1]^" pts");
-			    labelCp2.SetText("$2C2"^points[nbRec-1]^" pts");
+			if(isTeam){
+			   declare point = total  - i;
+			    if(point < 0){
+				point = 0;
+			    }
+			    teamRedScore += point;
+			    labelCp1.SetText("$2A2"^point^" pts");
+			    labelCp2.SetText("$2A2"^point^" pts");
 			}else{
-			    labelCp1.SetText("$2A20P");
-			    labelCp2.SetText("$2A20P");
+			     if(points.existskey(nbRec-1)){
+				labelCp1.SetText("$2A2"^points[nbRec-1]^" pts");
+				labelCp2.SetText("$2A2"^points[nbRec-1]^" pts");
+			    }else{
+				labelCp1.SetText("$2A20P");
+				labelCp2.SetText("$2A20P");
+			    }
 			}
 		    }else{
 			if(nbRec == 1){
