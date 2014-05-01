@@ -49,6 +49,8 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		}
 	    }
 	}
+	
+	\ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance()->check();
     }
 
     public function loadPlugins($list, \ManiaLive\PluginHandler\PluginHandler $pHandler) {

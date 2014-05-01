@@ -146,17 +146,17 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$var->setDefaultValue(true);
 	$this->registerVariable($var);
 
-	$var = new String('defaultMatchSettingsFile', 'This servers autosave matchsettings file', $config);
+	$var = new String('defaultMatchSettingsFile', 'This servers autosave matchsettings file', $config, false);
 	$var->setGroup("Config Files");
 	$var->setDefaultValue('eXpansion_autosave.txt');
 	$this->registerVariable($var);
 
-	$var = new String('dedicatedConfigFile', 'This servers autosave dedicated config file', $config);
+	$var = new String('dedicatedConfigFile', 'This servers autosave dedicated config file', $config, false);
 	$var->setGroup("Config Files");
 	$var->setDefaultValue('dedicated_cfg.txt');
 	$this->registerVariable($var);
 
-	$var = new String('contact', 'Server administrators contact info (displayed at serverinfo window)', $config);	
+	$var = new String('contact', 'Server administrators contact info (displayed at serverinfo window)', $config, false);	
 	$var->setDefaultValue('YOUR@EMAIL.COM');
 	$this->registerVariable($var);
 	

@@ -17,7 +17,7 @@ foreach (Event in PendingEvents) {
                 eXp_ButtonCurrentLb = (Page.GetFirstChild("eXp_ButtonDescText_"^Event.ControlId) as CMlLabel);
 
                 //Checking position
-                if(eXp_Button.AbsolutePosition.X + eXp_ButtonCurrentBg.Size.X > 160){
+                if(eXp_Button.AbsolutePosition.X + eXp_ButtonCurrentBg.Size.X > 200){
                     //Left open
                     eXp_ButtonCurrentBg.RelativePosition.X = - eXp_ButtonCurrentBg.Size.X;
                     eXp_ButtonCurrentLb.RelativePosition.X = - eXp_ButtonCurrentBg.Size.X + 1;

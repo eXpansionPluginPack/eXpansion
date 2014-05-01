@@ -14,13 +14,13 @@ class Boolean extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable{
     
     public function setValue($value){
 	if($this->basicValueCheck($value))
-	    return $this->setRawValue ($value);
+	    return $this->setRawValue($this->castValue($value));
 
 	return false;
     }
     
     public function basicValueCheck($value){
-	return parent::basicValueCheck($value) && is_bool($value);
+	return parent::basicValueCheck($value);
     }
     
     public function getLabelTrue() {
@@ -41,6 +41,16 @@ class Boolean extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable{
 
     public function getPreviewValues() {
 	return $this->getRawValue() ? $this->labelTrue : $this->labelFalse;
+    }
+    
+    public function castValue($string){
+	echo "Boool : $string\n";
+	if(is_bool($string))
+	    return $string;
+	if (strtoupper($string) == "FALSE" || $string == "0" || strtoupper($string) == "NO" || empty($string))
+            return false;
+        return true;
+	
     }
 
 }

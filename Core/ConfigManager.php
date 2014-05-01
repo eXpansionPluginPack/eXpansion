@@ -113,7 +113,7 @@ class ConfigManager {
 	    if ($var->getIsGlobal()) {
 		if (!isset($this->globalVariables[$class]))
 		    $this->globalVariables[$class] = array();
-
+		
 		$this->globalVariables[$class][$var->getName()] = $var;
 	    }else {
 		if (!isset($this->scopedVariables[$class]))
@@ -155,7 +155,6 @@ class ConfigManager {
      * @param \ManiaLivePlugins\eXpansion\Core\types\config\Variable $var
      */
     public function registerValueChange(Variable $var) {
-	echo "Change \n";
 	if ($var->getIsGlobal())
 	    $this->globalsUpdated = true;
 	else
@@ -178,7 +177,7 @@ class ConfigManager {
 	}
 
 	if (file_exists(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp")) {
-	    $scoped = unserialize(file_get_contents(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . "exp"));
+	    $scoped = unserialize(file_get_contents(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp"));
 	}
 
 	$this->applySettings($global);
@@ -211,20 +210,21 @@ class ConfigManager {
      * Applies the settings to the current configuration
      */
     protected function applySettings($newSettings, $scoped = false) {
-
+	
 	foreach ($newSettings as $className => $object) {
 	    if (!isset($this->configurations[$className]))
 		$this->configurations[$className] = $className::getInstance();
 
 	    $config = $this->configurations[$className];
 	    foreach ($config as $key => $value) {
-
 		if (!$scoped) {
-		    if (isset($object->$key) && (!isset($this->scopedVariables[$className]) || !isset($this->scopedVariables[$className][$key])))
+		    if (isset($object->$key) && isset($this->globalVariables[$className]) && isset($this->globalVariables[$className][$key])){
 			$config->$key = $object->$key;
+		    }
 		}else {
-		    if (isset($object->$key) && isset($this->scopedVariables[$className]) && isset($this->scopedVariables[$className][$key]))
+		    if (isset($object->$key) && isset($this->scopedVariables[$className]) && isset($this->scopedVariables[$className][$key])){
 			$config->$key = $object->$key;
+		    }
 		}
 	    }
 	}

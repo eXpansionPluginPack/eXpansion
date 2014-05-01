@@ -20,7 +20,11 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     public $actions = array();
     public $items = array();
     public $configManager;
+    private $currentGroup = "";
     private $first = false;
+    
+    private $button_validate = null;
+    private $button_cancel = null;
 
     protected function onConstruct() {
 	parent::onConstruct();
@@ -32,6 +36,11 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 	$this->mainFrame->addComponent($this->pagerFrame);
 	$this->mainFrame->addComponent($this->menuFrame);
+
+	$this->button_validate = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+	$this->button_validate->setText("Save");
+	$this->button_validate->setAction($this->createAction(array($this, 'applySettings')));
+	$this->mainFrame->addComponent($this->button_validate);
     }
 
     public function onResize($oldX, $oldY) {
@@ -40,13 +49,17 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->menuFrame->setSizeY($this->getSizeY());
 
 	$this->pagerFrame->setPosX($this->getSizeX() / 4);
-	$this->pagerFrame->setSize($this->getSizeX() * 3 / 4 - 3, $this->getSizeY() - 4);
+	$this->pagerFrame->setSize($this->getSizeX() * 3 / 4 - 3, $this->getSizeY() - 8);
+	
+	$this->button_validate->setPosX($this->getSizeX() - $this->button_validate->getSizeX());
+	$this->button_validate->setPosY(-$this->getSizeY() + 5);
     }
 
     public function populate(ConfigManager $configs, $groupName) {
 	$this->configManager = $configs;
 	$this->pagerFrame->clearItems();
-
+	$this->currentGroup = $groupName;
+	
 	$groupVars = $configs->getGroupedVariables();
 
 	if (!$this->first) {
@@ -64,6 +77,7 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    foreach ($groupVars[$groupName] as $var) {
 		$item = new \ManiaLivePlugins\eXpansion\Core\Gui\Controls\ExpSetting($i, $var, $this->getRecipient());
 		$this->pagerFrame->addItem($item);
+		$this->items[] = $item;
 		$i++;
 	    }
 	}
@@ -73,6 +87,19 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     public function switchGroup($login, $groupName) {
 	$this->populate($this->configManager, $groupName);
+	$this->redraw();
+    }
+
+    public function applySettings($login, $args) {
+	print_r($args);
+	foreach($this->items as $item){
+	    $var = $item->getVar();
+	    if($var != null){
+		$var->setValue($item->getVarValue($args));
+	    }
+	}
+	$this->configManager->check();
+	$this->populate($this->configManager, $this->currentGroup);
 	$this->redraw();
     }
 
