@@ -43,9 +43,10 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
 	$this->checkpoint = new \ManiaLib\Gui\Elements\Label(22, 4);
 	$this->checkpoint->setTextColor("fff");
-	$this->checkpoint->setAlign("left", "center");
+	$this->checkpoint->setAlign("right", "center");
 	$this->checkpoint->setText('');
 	$this->checkpoint->setId("Cp");
+	$this->checkpoint->setPosX(20);
 	$this->checkpoint->setScriptEvents();
 	$this->frame->addComponent($this->checkpoint);
 

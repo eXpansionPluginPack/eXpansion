@@ -91,7 +91,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function updateDediPanel($login = NULL) {
 
 	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania') || $this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script')) {
-	    
+
 	    if ($login == Null) {
 		Gui\Widgets\DediPanel::EraseAll();
 		$panelMain = Gui\Widgets\DediPanel::Create($login);
@@ -125,7 +125,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function updateLocalPanel($login = null) {
-	
+
 	if ($login == Null) {
 	    Gui\Widgets\LocalPanel::EraseAll();
 	    $panelMain = Gui\Widgets\LocalPanel::Create($login);
@@ -188,10 +188,10 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 	$gamemode = self::exp_getCurrentCompatibilityGameMode();
 	if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM || $gamemode == GameInfos::GAMEMODE_CUP) {
-	    \ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::ROUND_SCORES);	    
-	    if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT ){
-		echo "triggering hide\n";
-		$this->connection->triggerModeScriptEvent('UI_DisplaySmallScoresTable', "False");
+	    if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
+		$this->connection->triggerModeScriptEvent("UI_DisplaySmallScoresTable", "False");
+	    } else {
+		\ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::ROUND_SCORES);
 	    }
 	}
     }
@@ -216,7 +216,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function onEndMatch($rankings, $winnerTeamOrMap) {
 
 	self::$raceOn = false;
-		$this->widgetIds = array();
+	$this->widgetIds = array();
 	Gui\Widgets\LocalPanel::EraseAll();
 	Gui\Widgets\LocalPanel2::EraseAll();
 	Gui\Widgets\DediPanel::EraseAll();
@@ -225,7 +225,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
-	if($wasWarmUp){
+	if ($wasWarmUp) {
 	    self::$raceOn = false;
 	    $this->forceUpdate = true;
 	    $this->updateDediPanel();
@@ -233,9 +233,14 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	    $this->updateLivePanel();
 	    self::$secondMap = true;
 	    self::$raceOn = true;
-	}else{
+	} else {
 	    self::$dedirecords = array(); // reset 
 	    self::$localrecords = array(); //  reset
+	    Gui\Widgets\LocalPanel::EraseAll();
+	    Gui\Widgets\LocalPanel2::EraseAll();
+	    Gui\Widgets\DediPanel::EraseAll();
+	    Gui\Widgets\DediPanel2::EraseAll();
+	    $this->hideLivePanel();
 	}
     }
 
@@ -272,7 +277,6 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	self::$secondMap = true;
 	self::$raceOn = true;
     }
-    
 
     public function onEndRound() {
 	//@TOdo remove it is good to have it to keep track of other players
@@ -323,8 +327,8 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function onNewRecord($data) {
 	self::$localrecords = $data;
     }
-    
-    public function onUpdateRecords($data){
+
+    public function onUpdateRecords($data) {
 	self::$localrecords = $data;
     }
 
@@ -337,9 +341,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onDedimaniaPlayerConnect($data) {
-	/*if (count(self::$dedirecords) > 0) {
-	    $this->needUpdate = self::Dedimania_force;
-	}*/
+	/* if (count(self::$dedirecords) > 0) {
+	  $this->needUpdate = self::Dedimania_force;
+	  } */
     }
 
     public function onDedimaniaPlayerDisconnect() {

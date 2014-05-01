@@ -45,7 +45,6 @@ foreach (Player in Players) {
 			diff =(Player.CurRace.Checkpoints[curCp-1] - Checkpoints[temp]);
 		    }
                     
-		    log("Diff"^diff);
 		    if(diff < 0){
 			log("New Best TIme");
 			//New Best time
