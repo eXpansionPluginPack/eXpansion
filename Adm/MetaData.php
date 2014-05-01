@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Adm;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
 
 
@@ -23,14 +23,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData{
 	$contentType = new Int("", "", null);	
 	$config = Config::getInstance();
 	
-	$var = new BasicList('publicResAmount', 'Amount needed to restart a map', $config);
+	$var = new SortedList('publicResAmount', 'Amount needed to restart a map', $config);
 	$var->setGroup("Maps");
 	$var->setDescription("If you use a negative value it will disable this feature.");
 	$var->setType($contentType);
 	$var->setDefaultValue(array(0 => 500));
 	$this->registerVariable($var);
 	
-	$var = new BasicList('publicSkipAmount', 'Amount needed to skip a map', $config);
+	$var = new SortedList('publicSkipAmount', 'Amount needed to skip a map', $config);
 	$var->setGroup("Maps");
 	$var->setDescription("If you use a negative value it will disable this feature.");
 	$var->setType($contentType);

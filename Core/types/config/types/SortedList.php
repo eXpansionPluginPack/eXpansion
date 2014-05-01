@@ -10,27 +10,9 @@ use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
  *
  * @author De Cramer Oliver
  */
-class BasicList extends Variable {
-
-    protected $type;
-
-    /**
-     *  The type of the values it accepts to save in the list
-     * 
-     * @param \ManiaLivePlugins\eXpansion\Core\types\config\Variable $type The type
-     */
-    public function setType(Variable $type) {
-	$this->type = $type;
-    }
-
-    /**
-     * The type of the values the list accepts
-     * 
-     * @return \ManiaLivePlugins\eXpansion\Core\types\config\Variable
-     */
-    public function getType() {
-	return $this->type;
-    }
+class SortedList extends BasicList {
+    
+    private $lowToHight = true;
 
     /**
      * Adds a value to the end of the list
@@ -41,26 +23,20 @@ class BasicList extends Variable {
     public function addValue($value) {
 	if ($this->type->basicValueCheck($value)) {
 	    $array = $this->getRawValue();
-	    $array[] = $this->type->castValue($value);;
-	    $this->setRawValue($array);
+	    $array[] = $this->type->castValue($value);
+	    
+	    if($this->lowToHight && sort($array))
+		$this->setRawValue($array);
+	    else if(!$this->lowToHight && rsort($array))
+		$this->setRawValue($array);
+	    else
+		return false;
+	    
 	    return true;
 	}
 	return false;
     }
 
-    /**
-     * Returns the value at the index
-     * 
-     * @param int $index
-     * @return mixed the value
-     */
-    public function getValue($index) {
-	$array = $this->getRawValue();
-	if ($array == null)
-	    $array = array();
-
-	return isset($array[$index]) ? $array[$index] : null;
-    }
 
     /**
      * Removes the value at the index and shifts all elements in array to fill in the gap
@@ -70,7 +46,14 @@ class BasicList extends Variable {
     public function removeValue($index) {
 	$array = $this->getRawValue();
 	unset($array[$index]);
-	$this->setRawValue(array_values($array));
+	$array = array_values($array);
+	if($this->lowToHight && sort($array))
+	    $this->setRawValue($array);
+	else if(!$this->lowToHight && rsort($array))
+	    $this->setRawValue($array);
+	else
+	    return false;
+	return true;
     }
 
     public function getPreviewValues() {

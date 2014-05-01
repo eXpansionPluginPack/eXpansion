@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Maps;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
@@ -34,7 +35,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$var->setDefaultValue(true);
 	$this->registerVariable($var);
 
-	$var = new BasicList("publicQueueAmount", "Set Planets amounts for jukeboxing a map", $config, false);
+	$var = new SortedList("publicQueueAmount", "Set Planets amounts for jukeboxing a map", $config, false);
 	$var->setGroup("Maps");
 	$var->setType(new Int("", "", null));
 	$var->setDefaultValue(array(0));

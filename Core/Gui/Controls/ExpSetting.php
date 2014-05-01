@@ -7,6 +7,7 @@ use \ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
  use\ManiaLivePlugins\eXpansion\Core\types\config\types\HashList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpListSetting;
 
@@ -27,7 +28,7 @@ class ExpSetting extends \ManiaLive\Gui\Control {
 	$this->bg = new ListBackGround($indexNumber, 100, 4);
 	$this->addComponent($this->bg);
 
-	if ($var instanceof HashList || $var instanceof BasicList) {
+	if ($var instanceof HashList || $var instanceof BasicList  || $var instanceof SortedList) {
 
 	    $this->label_varValue = new \ManiaLib\Gui\Elements\Label(40, 5);
 	    $this->label_varValue->setScale(0.9);

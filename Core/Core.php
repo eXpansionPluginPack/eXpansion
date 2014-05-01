@@ -215,7 +215,7 @@ EOT;
 	$this->registerChatCommand("server", "showInfo", 0, true);
 	$this->registerChatCommand("serverlogin", "serverlogin", 0, true);
 
-	//$this->registerChatCommand("exp", "showExpSettings", 0, true);
+	$this->registerChatCommand("exp", "showExpSettings", 0, true);
 	$this->setPublicMethod("showInfo");
 	$this->setPublicMethod("showExpSettings");
 	$window = new Gui\Windows\QuitWindow();
