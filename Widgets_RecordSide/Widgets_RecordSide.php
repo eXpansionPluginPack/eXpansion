@@ -235,6 +235,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	} else {
 	    self::$dedirecords = array(); // reset 
 	    self::$localrecords = array(); //  reset
+	    $this->widgetIds = array();
 	    Gui\Widgets\LocalPanel::EraseAll();
 	    Gui\Widgets\LocalPanel2::EraseAll();
 	    Gui\Widgets\DediPanel::EraseAll();
@@ -260,6 +261,12 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$this->getRoundsPoints();
 	self::$raceOn = false;
 	$this->forceUpdate = true;
+	$this->widgetIds = array();
+	Gui\Widgets\LocalPanel::EraseAll();
+	Gui\Widgets\LocalPanel2::EraseAll();
+	Gui\Widgets\DediPanel::EraseAll();
+	Gui\Widgets\DediPanel2::EraseAll();
+	$this->hideLivePanel();
 	$this->updateDediPanel();
 	$this->updateLocalPanel();
 	$this->updateLivePanel();
@@ -270,6 +277,12 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function onBeginMatch() {
 	self::$raceOn = false;
 	$this->forceUpdate = true;
+	$this->widgetIds = array();
+	Gui\Widgets\LocalPanel::EraseAll();
+	Gui\Widgets\LocalPanel2::EraseAll();
+	Gui\Widgets\DediPanel::EraseAll();
+	Gui\Widgets\DediPanel2::EraseAll();
+	$this->hideLivePanel();
 	$this->updateDediPanel();
 	$this->updateLocalPanel();
 	$this->updateLivePanel();
