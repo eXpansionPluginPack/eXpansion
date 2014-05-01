@@ -177,7 +177,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->connection->callVote($vote, $this->config->restartVote_ratio, ($this->config->restartVote_timeout * 1000), $this->config->restartVote_voters);
 
             $player = $this->storage->getPlayerObject($login);
-            $msg = exp_getMessage('#variable#%1$s #vote#initiated restart map vote..');
+           $msg = exp_getMessage('#variable#%s #vote#initiated restart map vote..');	    
             $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage("[Notice] " . $e->getMessage(), $login);

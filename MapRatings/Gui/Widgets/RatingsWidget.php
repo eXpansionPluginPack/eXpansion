@@ -35,8 +35,8 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
         $this->starFrame->setPosition(2,-2);
         $this->starFrame->setSize(34, 4);
         $this->frame->addComponent($this->starFrame);
-        $this->gauge = new \ManiaLive\Gui\Elements\Xml();
-        
+        $this->gauge = new \ManiaLive\Gui\Elements\Xml();        	
+	
         $this->setName("Map Ratings Widget");
     }
 

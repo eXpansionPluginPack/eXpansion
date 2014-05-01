@@ -192,7 +192,11 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	//if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_LAPS) {
 	$Vchecks = $times[0]['Checks'];
 	//}
-
+	
+	if (empty($vreplay)) {
+	    $this->console("[Dedimania] Validation replay is empty, cancel sending times.");
+	    return;
+	}
 	$base64Vreplay = new IXR_Base64($vreplay);
 
 	$base64Greplay = "";
@@ -210,12 +214,17 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	    $times,
 	    $replays);
 
+	    print_r(array(
+	    $this->sessionId,
+	    $this->_getMapInfo($map),
+	    $this->_getGameMode(),
+	    $times));
+
 	$request = new dediRequest("dedimania.SetChallengeTimes", $args);
 	$this->send($request, array($this, "xSetChallengeTimes"));
     }
 
-    function send(dediRequest $request, $callback) {
-	// var_dump($request);
+    function send(dediRequest $request, $callback) {	
 	$this->webaccess->request($this->url, array(array($this, '_process'), $callback), $request->getXml(), true, 600, 3, 5);
     }
 
@@ -548,11 +557,14 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	    $this->console("[Dedimania] Authentication Error occurred: " . $data[0][0]['Error']);
 	    return;
 	}
+	print_r($data);
     }
 
     function xGetRecords($data) {
 	$data = $data[0];
-
+	
+	print_r($data);
+	
 	$this->dediRecords = array();
 	$this->dediUid = null;
 	$this->dediBest = null;
@@ -588,16 +600,17 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function xUpdateServerPlayers($data) {
-//   print_r($data);
+	  print_r($data);
     }
 
     function xSetChallengeTimes($data) {
-	//print_r($data);
-	$this->console("[Dedimania] Sending times new times: Success");
+	print_r($data);
+	
+	$this->console("[Dedimania] Sending times new times: Success");		
     }
 
     function xCheckSession($data) {
-// print_r($data);
+	 print_r($data);
     }
 
     function xPlayerConnect($data) {

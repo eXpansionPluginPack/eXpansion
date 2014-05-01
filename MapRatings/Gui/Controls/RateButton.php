@@ -14,18 +14,18 @@ class RateButton extends \ManiaLive\Gui\Control {
      * @param int $sizeX = 24
      * @param intt $sizeY = 6
      */
-    function __construct($plugin, $number) {
+    function __construct($number) {
         $sizeX = 22;
         $sizeY = 8;
         $this->setAlign("left");
-
-        $action = $this->createAction(array($plugin, "saveRating"), $number);
-
-        $this->quad = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+	
+	$this->quad = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->quad->setStyle("Bgs1InRace");
         $this->quad->setSubStyle("BgCard");
-        $this->quad->setAlign('left', 'center');
-        $this->quad->setAction($action);
+        $this->quad->setAlign('left', 'center');        
+	$this->quad->setAttribute("class","rateButton");
+	$this->quad->setId("rate_".$number);
+	$this->quad->setScriptEvents();
         $this->addComponent($this->quad);
 
         $this->label = new \ManiaLib\Gui\Elements\Label();
@@ -34,6 +34,7 @@ class RateButton extends \ManiaLive\Gui\Control {
         $this->label->setTextSize(1);
         $this->label->setTextColor("000");
         $this->label->setText($number . " / 5");
+	
         $this->label->setPosition(0, 3);
         //$this->addComponent($this->label);
 
