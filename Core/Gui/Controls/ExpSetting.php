@@ -52,7 +52,6 @@ class ExpSetting extends \ManiaLive\Gui\Control {
 	    $this->button_change = new Button(8, 8);
 	    $this->button_change->setIcon('UIConstructionSimple_Buttons', 'Help');
 	    $this->button_change->setDescription($var->getDescription(), 120, 12, 2);
-	    $this->button_change->setAction($this->createAction(array($this, "openWin"), $var));
 	    $this->addComponent($this->button_change);
 	}
 	
