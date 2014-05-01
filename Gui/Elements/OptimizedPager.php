@@ -156,8 +156,12 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 	    $totalRows++;
 	    $items .= $row . ' => [ ' . implode(",", $elem) . '],';
 	}
-	$items = "[" . trim($items, ",") . "]";
-	$this->myScript->setParam("items", $items);
+	if(empty($items)){
+	    $this->myScript->setParam("items", "");
+	}else{
+	    $items = "= [" . trim($items, ",") . "]";
+	    $this->myScript->setParam("items", $items);
+	}
 
 	$data = "";
 	foreach ($this->data as $row => $elem) {
