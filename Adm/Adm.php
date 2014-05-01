@@ -53,22 +53,22 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	}
 
 	$this->config = Config::getInstance();
-	
+
 	$this->donateConfig = \ManiaLivePlugins\eXpansion\DonatePanel\Config::getInstance();
 
 	$this->actions['skip_final'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
 	$this->actions['skip'] = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions['skip_final']);
 	$this->actions['res_final'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
 	$this->actions['res'] = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions['res_final']);
-	
+
 	$admingroup = AdminGroups::getInstance();
 
 	$cmd = AdminGroups::addAdminCommand('setting expansion', $this, 'showExpSettings', 'expansion_settings');
 	$cmd->setHelp('Set up your expansion');
 	AdminGroups::addAlias($cmd, "setexp"); // xaseco & fast
     }
-    
-    public function showExpSettings($login){
+
+    public function showExpSettings($login) {
 	$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Core\Core', 'showExpSettings', $login);
     }
 
@@ -149,12 +149,12 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$widget->setResAmount("no");
 	    }
 	}
-	
-	
-	
+
+
+
 	$widget->setActions($this->actions['res'], $this->actions['skip']);
 	$widget->setServerInfo($this->storage->serverLogin);
-	
+
 	$widget->setSize(40.0, 15.0);
 	$widget->show();
     }
@@ -316,10 +316,11 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function restartMap($login) {
 
 	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_res')) {
-	    if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\Chat_Admin\\Chat_Admin")) {
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Chat_Admin\\Chat_Admin", "restartMap", $login);
+	    if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Maps\\Maps", "replayMap", $login);
 		return;
 	    }
+
 	    $this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
 	    $admin = $this->storage->getPlayerObject($login);
 	    $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
