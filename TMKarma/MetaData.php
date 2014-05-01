@@ -23,8 +23,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$this->setDescription("Provides integration for TM-karma.com");
 	
 	$config = Config::getInstance();
-	$var = New String("contryCode", "3-letter country code for the server (leave empty for autosense)", $config);
+	$var = New String("contryCode", "TM Karma Country Code", $config, false);
+	$var->setDescription('3-letter country code for the server (leave empty for autosense)');
 	$var->setDefaultValue("");
+	$var->setGroup("Maps");
 	$this->registerVariable($var);
 	
 	

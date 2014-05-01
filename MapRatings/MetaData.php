@@ -24,23 +24,23 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 
 	$config = Config::getInstance();
 	
-	$var = new Boolean("sendBeginMapNotices", "Send Map ratings messages at begin of map ?", $config, false);
+	$var = new Boolean("sendBeginMapNotices", "Send Map ratings messages at begin of map ?", $config);
 	$var->setGroup("Chat Messages");
 	$var->setDefaultValue(false);
 	$this->registerVariable($var);
 	
-	$var = new Boolean("showPodiumWindow", "Show map ratings widget at podium ?", $config, false);
+	$var = new Boolean("showPodiumWindow", "Show map ratings widget at podium ?", $config);
 	$var->setGroup("Widgets");
 	$var->setDefaultValue(true);
 	$this->registerVariable($var);
 	
-	$var = new BoundedInt("minVotes", "Map Autoremoval required minimum votes (min: 5)", $config, false);
+	$var = new BoundedInt("minVotes", "Map Autoremoval required minimum votes (min: 5)", $config);
 	$var->setGroup("Voting");
 	$var->setMin(5);	
 	$var->setDefaultValue(10);
 	$this->registerVariable($var);
 	
-	$var = new BoundedInt("removeTresholdPercentage", "Map ratings autoremove percentage", $config, false);
+	$var = new BoundedInt("removeTresholdPercentage", "Map ratings autoremove percentage", $config);
 	$var->setDescription("%-value for autoremove treshold (min: 10, max:60)");
 	$var->setGroup("Voting");
 	$var->setMin(10);

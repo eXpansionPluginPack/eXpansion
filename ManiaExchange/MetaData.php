@@ -29,14 +29,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$var->setDefaultValue(false);
 	$this->registerVariable($var);
 	
-	$var = new BoundedFloat("mxVote_ratio", "MXVote ratio for adding map", $config, false);
+	$var = new BoundedFloat("mxVote_ratio", "MXVote ratio for adding map", $config);
 	$var->setGroup("Voting");
 	$var->setMin(-1.0);
 	$var->setMax(1.0);
 	$var->setDefaultValue(0.5);
 	$this->registerVariable($var);
 	
-	$var = new BoundedInt("mxVote_timeout", "MXVote Timeout in seconds", $config, false);
+	$var = new BoundedInt("mxVote_timeout", "MXVote Timeout in seconds", $config);
 	$var->setDescription("Min: 30, Max: 360");
 	$var->setGroup("Voting");
 	$var->setMin(30);
@@ -45,14 +45,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$this->registerVariable($var);
 	
 	
-	$var = new BoundedInt("mxVote_voters", "MXVote Limit", $config, false);
+	$var = new BoundedInt("mxVote_voters", "MXVote Limit", $config);
 	$var->setGroup("Voting");
 	$var->setMin(0);
 	$var->setMax(2);
 	$var->setDefaultValue(1);
 	$this->registerVariable($var);
 		
-	$var = new Boolean("juke_newmaps", "Autojuke newly added maps ?", $config, false);
+	$var = new Boolean("juke_newmaps", "Autojuke newly added maps ?", $config);
 	$var->setGroup("Maps");
 	$var->setDefaultValue(true);
 	$this->registerVariable($var);

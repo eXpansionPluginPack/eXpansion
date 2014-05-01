@@ -23,41 +23,49 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 
 	$config = Config::getInstance();
 	
-	$var = new String("hostname", "hostname", $config, false);
+	$var = new String("hostname", "hostname", $config);
 	$var->setDefaultValue("");
+	$var->setGroup("Communication");
 	$this->registerVariable($var);
 	
-	$var = new String("server", "irc server to connect", $config, false);
+	$var = new String("server", "irc server to connect", $config);
 	$var->setDefaultValue("");
+	$var->setGroup("Communication");
 	$this->registerVariable($var);
 	
-	$var = new Int("port", "connection port for the server", $config, false);
+	$var = new Int("port", "connection port for the server", $config);
 	$var->setDefaultValue(6667);
+	$var->setGroup("Communication");
 	$this->registerVariable($var);
 	
-	$var = new String("serverPass", "password for server", $config, false);
+	$var = new String("serverPass", "password for server", $config);
 	$var->setDefaultValue("");
+	$var->setGroup("Communication");
 	$this->registerVariable($var);
 	
 	$var = new String("realname", "Ircbot realname", $config, false);
 	$var->setDefaultValue("ManiaPlanet bot");
+	$var->setGroup("Communication");
 	$this->registerVariable($var);
 	
 	$var = new String("nickname", "Ircbot nickname", $config, false);
 	$var->setDefaultValue("maniaplanet_bot");
+	$var->setGroup("Communication");
 	$this->registerVariable($var);
-	
 	
 	$var = new String("ident", "ident for bot", $config, false);
 	$var->setDefaultValue("maniaplanet_bot");
+	$var->setGroup("Communication");
 	$this->registerVariable($var);
 	
-	$var = new String("channel", "irc channel to join", $config, false);
+	$var = new String("channel", "irc channel to join", $config);
 	$var->setDefaultValue("#bots");
+	$var->setGroup("Communication");
 	$this->registerVariable($var);
 	
-	$var = new String("channelKey", "irc channel key", $config, false);
+	$var = new String("channelKey", "irc channel key", $config);
 	$var->setDefaultValue("");
+	$var->setGroup("Communication");
 	$this->registerVariable($var);
 	
 	

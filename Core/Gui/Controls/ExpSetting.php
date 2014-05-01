@@ -37,7 +37,7 @@ class ExpSetting extends \ManiaLive\Gui\Control {
 
 	    $this->label_varValue = new \ManiaLib\Gui\Elements\Label(40, 5);
 	    $this->label_varValue->setScale(0.9);
-	    $this->label_varValue->setPosX(7);
+	    $this->label_varValue->setPosX(10);
 	    $this->label_varValue->setId('column_' . $indexNumber . '_1');
 	    $this->label_varValue->setText($var->getPreviewValues());
 	    $this->addComponent($this->label_varValue);
@@ -89,15 +89,16 @@ class ExpSetting extends \ManiaLive\Gui\Control {
     }
 
     protected function onResize($oldX, $oldY) {
+	//echo 'OnResize : '.$this->getSizeX()."\n";
 	parent::onResize($oldX, $oldY);
-	$this->label_varName->setSizeX($this->getSizeX() - 20);
+	$this->label_varName->setSizeX($this->getSizeX() - 27);
 	$this->bg->setSize($this->getSizeX(), $this->getSizeY() + 2);
 
 	if ($this->button_change != null) {
 	    $this->button_change->setPosition($this->getSizeX() - $this->button_change->getSizeX() + 5, 0);
 	}
 	if ($this->label_varValue != null) {
-	    $this->label_varValue->setSizeX($this->getSizeX() - 25);
+	    $this->label_varValue->setSizeX($this->getSizeX() - 27);
 	    $this->label_varValue->setPosition(5, -1);
 	}
 	

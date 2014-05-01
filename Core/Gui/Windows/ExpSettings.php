@@ -49,6 +49,7 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->menuFrame->setSizeY($this->getSizeY());
 
 	$this->pagerFrame->setPosX($this->getSizeX() / 4);
+	echo $this->getSizeX() * 3 / 4 - 3;
 	$this->pagerFrame->setSize($this->getSizeX() * 3 / 4 - 3, $this->getSizeY() - 8);
 	
 	$this->button_validate->setPosX($this->getSizeX() - $this->button_validate->getSizeX());
@@ -81,8 +82,6 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 		$i++;
 	    }
 	}
-
-	echo $i;
     }
 
     public function switchGroup($login, $groupName) {
