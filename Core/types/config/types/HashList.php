@@ -41,7 +41,7 @@ class HashList extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable {
 	$list = $this->getRawValue();
 	if ($list == null)
 	    $list = array();
-	$list[$key] = $value;
+	$list[$key] = $this->type->castValue($value);
 
 	return $this->setRawValue($list);
     }

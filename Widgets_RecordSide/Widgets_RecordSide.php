@@ -82,13 +82,6 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		}
 	    }
 
-	    if (($this->needUpdate & self::Localrecords) == self::Localrecords || $this->forceUpdate) {
-		if ($this->local) {
-		    $this->updateLocalPanel();
-		    $this->local = false;
-		}
-	    }
-
 	    $this->lastUpdate = time();
 	    $this->forceUpdate = false;
 	    $this->needUpdate = false;
@@ -98,8 +91,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function updateDediPanel($login = NULL) {
 
 	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania') || $this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script')) {
-
+	    
 	    if ($login == Null) {
+		Gui\Widgets\DediPanel::EraseAll();
 		$panelMain = Gui\Widgets\DediPanel::Create($login);
 		$panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 		$panelMain->setSizeX(40);
@@ -111,6 +105,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	    }
 
 	    if ($login == Null) {
+		Gui\Widgets\DediPanel2::EraseAll();
 		$panelScore = Gui\Widgets\DediPanel2::Create($login);
 		$panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 		$panelScore->setVisibleLayer("scorestable");
@@ -122,7 +117,8 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		$panelMain->update();
 		$panelMain->show();
 		$panelScore->show();
-	    } else if (isset($this->widgetIds["DediPanel"])) {
+		$panelScore->show("test");
+	    } else if (isset($this->widgetIds["DediPanel2"])) {
 		$this->widgetIds["DediPanel2"]->update();
 		$this->widgetIds["DediPanel2"]->show($login);
 	    }
@@ -130,8 +126,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function updateLocalPanel($login = null) {
-
+	
 	if ($login == Null) {
+	    Gui\Widgets\LocalPanel::EraseAll();
 	    $panelMain = Gui\Widgets\LocalPanel::Create($login);
 	    $panelMain->setSizeX(40);
 	    $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
@@ -142,6 +139,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	}
 
 	if ($login == Null) {
+	    Gui\Widgets\LocalPanel2::EraseAll();
 	    $panelScore = Gui\Widgets\LocalPanel2::Create($login);
 	    $panelScore->setSizeX(40);
 	    $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
@@ -163,6 +161,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	Gui\Widgets\LivePanel::$connection = $this->connection;
 
 	if ($login == Null) {
+	    Gui\Widgets\LivePanel::EraseAll();
 	    $panelMain = Gui\Widgets\LivePanel::Create($login);
 	    $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 	    $panelMain->setSizeX(40);
@@ -173,6 +172,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	}
 
 	if ($login == Null) {
+	    Gui\Widgets\LivePanel2::EraseAll();
 	    $panelScore = Gui\Widgets\LivePanel2::Create($login);
 	    $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 	    $panelScore->setVisibleLayer("scorestable");
@@ -309,7 +309,6 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	Gui\Widgets\DediPanel::Erase($login);
 	Gui\Widgets\LocalPanel2::Erase($login);
 	Gui\Widgets\DediPanel2::Erase($login);
-
 	Gui\Widgets\LivePanel::Erase($login);
 	Gui\Widgets\LivePanel2::Erase($login);
     }
@@ -335,9 +334,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function onDedimaniaPlayerConnect($data) {
-	if (count(self::$dedirecords) > 0) {
+	/*if (count(self::$dedirecords) > 0) {
 	    $this->needUpdate = self::Dedimania_force;
-	}
+	}*/
     }
 
     public function onDedimaniaPlayerDisconnect() {

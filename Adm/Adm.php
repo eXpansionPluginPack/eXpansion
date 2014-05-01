@@ -60,6 +60,16 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->actions['skip'] = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions['skip_final']);
 	$this->actions['res_final'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
 	$this->actions['res'] = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions['res_final']);
+	
+	$admingroup = AdminGroups::getInstance();
+
+	$cmd = AdminGroups::addAdminCommand('setting expansion', $this, 'showExpSettings', 'expansion_settings');
+	$cmd->setHelp('Set up your expansion');
+	AdminGroups::addAlias($cmd, "setexp"); // xaseco & fast
+    }
+    
+    public function showExpSettings($login){
+	$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Core\Core', 'showExpSettings', $login);
     }
 
     public function isPublicResIsActive() {

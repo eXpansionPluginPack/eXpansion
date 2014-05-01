@@ -90,7 +90,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	$this->backGroundDesc->setStyle('UIConstruction_Buttons');
 	$this->backGroundDesc->setSubStyle('BgIcons');
 	$this->backGroundDesc->setColorize("fff");
-	$this->backGroundDesc->setOpacity(0.75);
+	//$this->backGroundDesc->setOpacity(0.75);
 	$this->backGroundDesc->setPosition(5, 3);
 	$this->backGroundDesc->setPositionZ(1);
 	$this->backGroundDesc->setAttribute('hidden', '1');
@@ -152,10 +152,13 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	$this->text = $text;
     }
 
-    function setDescription($description, $sizeX = 30) {
+    function setDescription($description, $sizeX = 30, $sizeY = 5, $maxLine = 1) {
 	$this->description = "$000" . $description;
 	$this->labelDesc->setSizeX($sizeX);
+	$this->labelDesc->setSizeY($sizeY);
+	$this->labelDesc->setMaxline($maxLine);
 	$this->backGroundDesc->setSizeX($sizeX + 4);
+	$this->backGroundDesc->setSizeY($sizeY);
     }
 
     public function getDescription() {

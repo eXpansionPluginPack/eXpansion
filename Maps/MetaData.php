@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Maps;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
@@ -24,17 +25,17 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 
 	$config = Config::getInstance();
 
-	$var = new Boolean("showNextMapWidget", "Show next map widget ?", $config, false);
+	$var = new Boolean("showNextMapWidget", "Show next map widget ?", $config);
 	$var->setGroup("Widgets");
 	$var->setDefaultValue(true);
 	$this->registerVariable($var);
 
-	$var = new Boolean("showEndMatchNotices", "Show end map notices ?", $config, false);
+	$var = new Boolean("showEndMatchNotices", "Show end map notices ?", $config);
 	$var->setGroup("Chat Messages");
 	$var->setDefaultValue(true);
 	$this->registerVariable($var);
 
-	$var = new BasicList("publicQueueAmount", "Set Planets amounts for jukeboxing a map", $config, false);
+	$var = new SortedList("publicQueueAmount", "Set Planets amounts for jukeboxing a map", $config);
 	$var->setGroup("Maps");
 	$var->setType(new Int("", "", null));
 	$var->setDefaultValue(array(0));

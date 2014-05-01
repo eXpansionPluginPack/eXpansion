@@ -76,6 +76,14 @@ class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansio
 	
 	$this->scrollDown->setPosition($this->sizeX - 5.5, -$this->sizeY + 3);
 	$this->scrollUp->setPosition($this->sizeX - 0.5, 1);
+	
+	foreach($this->items as $item){
+	    $scale = $item->getScale();
+	    if($scale == "")
+		$scale = 1;
+	    
+	    $item->setSizeX($this->sizeX/$scale - 4);
+	}
     }
 
     public function setStretchContentX($value) {
@@ -83,7 +91,10 @@ class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansio
     }
 
     public function addItem(\ManiaLib\Gui\Component $component) {
-        $component->setSizeX($this->sizeX - 4);
+	 $scale = $component->getScale();
+	if($scale == "")
+	    $scale = 1;
+        $component->setSizeX($this->sizeX/$scale - 8);
         $component->setAlign("left", "top");
         if ($component->getSizeY() > 0) {
             $this->itemSizeY = $component->getSizeY();

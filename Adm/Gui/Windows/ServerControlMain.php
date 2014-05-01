@@ -42,6 +42,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->actions->forceScores = $this->createAction(array(self::$mainPlugin, "forceScores"));
         $this->actions->roundPoints = $this->createAction(array(self::$mainPlugin, "roundPoints"));
         $this->actions->dbTools = $this->createAction(array(self::$mainPlugin, "dbTools"));
+        $this->actions->expSettings = $this->createAction(array(self::$mainPlugin, "showExpSettings"));
 
         
 
@@ -92,6 +93,11 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $btnDb = new myButton($btnX, $btnY);
         $btnDb->setText(__("Database tools", $login));
         $btnDb->setAction($this->actions->dbTools);
+        $this->frame->addComponent($btnDb);
+
+	$btnDb = new myButton($btnX, $btnY);
+        $btnDb->setText(__("eXpansion Settings", $login));
+        $btnDb->setAction($this->actions->expSettings);
         $this->frame->addComponent($btnDb);
 
         $this->mainFrame->addComponent($this->frame);

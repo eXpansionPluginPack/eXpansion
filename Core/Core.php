@@ -214,8 +214,7 @@ EOT;
 	$this->config = Config::getInstance();
 	$this->registerChatCommand("server", "showInfo", 0, true);
 	$this->registerChatCommand("serverlogin", "serverlogin", 0, true);
-
-	//$this->registerChatCommand("exp", "showExpSettings", 0, true);
+	
 	$this->setPublicMethod("showInfo");
 	$this->setPublicMethod("showExpSettings");
 	$window = new Gui\Windows\QuitWindow();
@@ -601,13 +600,15 @@ EOT;
     }
 
     public function showExpSettings($login) {
-	Gui\Windows\ExpSettings::Erase($login);
-	$win = Gui\Windows\ExpSettings::Create($login);
-	$win->setTitle("Expansion Settings");
-	$win->centerOnScreen();
-	$win->setSize(140, 100);
-	$win->populate($this->configManager, 'General');
-	$win->show();
+	if (AdminGroups::hasPermission($login, 'expansion_settings')) {
+	    Gui\Windows\ExpSettings::Erase($login);
+	    $win = Gui\Windows\ExpSettings::Create($login);
+	    $win->setTitle("Expansion Settings");
+	    $win->centerOnScreen();
+	    $win->setSize(140, 100);
+	    $win->populate($this->configManager, 'General');
+	    $win->show();
+	}
     }
 
     public function onPostLoop() {

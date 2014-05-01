@@ -19,7 +19,7 @@ class ExpSettingsMenu extends \ManiaLive\Gui\Control {
     
     protected function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->frame->setSize($this->getSizeX(), 4);
+        $this->frame->setSize($this->getSizeX()/0.8, 4);
     }
     
     public function reset(){
@@ -27,7 +27,7 @@ class ExpSettingsMenu extends \ManiaLive\Gui\Control {
     }
 
     public function addItem($label, $action, $color = null){
-        $button = new Button($this->getSizeX(), 6);
+        $button = new Button($this->getSizeX()/0.8, 6);
         $button->setText($label);
         $button->setAction($action);
         

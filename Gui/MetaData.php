@@ -22,33 +22,33 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 
 	$config = Config::getInstance();
 
-	$var = new Boolean("disableAnimations", "Disable window animations", $config, false);
+	$var = new Boolean("disableAnimations", "Disable window animations", $config);
 	$var->setGroup("Look & Feel");
 	$var->setDefaultValue(false);
 	$this->registerVariable($var);
 
-	$var = new Boolean("disablePersonalHud", "Disable personalized hud", $config, false);
+	$var = new Boolean("disablePersonalHud", "Disable personalized hud", $config);
 	$var->setDescription("if disable this, server admin defined positions are forced to all players");
 	$var->setGroup("Look & Feel");
 	$var->setDefaultValue(false);
 	$this->registerVariable($var);
 
-	$var = new String("style_widget_bgStyle", "Widgets: background style", $config, false);
+	$var = new String("style_widget_bgStyle", "Widgets: background style", $config);
 	$var->setGroup("Widgets");
 	$var->setDefaultValue("BgsPlayerCard");
 	$this->registerVariable($var);
 
-	$var = new String("style_widget_bgSubStyle", "Widgets: background substyle", $config, false);
+	$var = new String("style_widget_bgSubStyle", "Widgets: background substyle", $config);
 	$var->setGroup("Widgets");
 	$var->setDefaultValue("BgRacePlayerName");
 	$this->registerVariable($var);
 
-	$var = new String("style_widget_bgColorize", "Widgets: background color", $config, false);
+	$var = new String("style_widget_bgColorize", "Widgets: background color", $config);
 	$var->setGroup("Widgets");
 	$var->setDefaultValue("000");
 	$this->registerVariable($var);
 
-	$var = new BoundedFloat("style_widget_bgOpacity", "Widgets: background opacity", $config, false);
+	$var = new BoundedFloat("style_widget_bgOpacity", "Widgets: background opacity", $config);
 	$var->setGroup("Widgets");
 	$var->setMin(0.0);
 	$var->setMax(1.0);
