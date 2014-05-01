@@ -24,8 +24,10 @@ class ColorParser extends \ManiaLib\Utils\Singleton {
      */
     public function parseColors($text) {
         $message = $text;
-        foreach ($this->codes as $code => $color)
-            $message = str_replace('#' . $code . '#', '$z$s'.$color, $message);
+        foreach ($this->codes as $code => $obj){
+	    $key = $obj[1];
+            $message = str_replace('#' . $code . '#', '$z$s'.$obj[0]->$key, $message);
+	}
         return $message;
     }
 
@@ -37,10 +39,11 @@ class ColorParser extends \ManiaLib\Utils\Singleton {
      */
    public function __construct() {
 	foreach (Config::getInstance() as $name => $value) {
+	    $key = $name;
 	    $names = explode("_", $name);
 	    $name = array_shift($names);
 	    if ($name == "Colors") {
-		$this->registerCode(implode("_", $names), $value);
+		$this->registerCode(implode("_", $names), Config::getInstance(), $key);
 	    }
 	}
     }
@@ -50,8 +53,8 @@ class ColorParser extends \ManiaLib\Utils\Singleton {
      * @param string $token
      * @param string $color
      */
-    public function registerCode($token, $color) {
-        $this->codes[$token] = $color;
+    public function registerCode($token, $obj, $key) {
+        $this->codes[$token] = array($obj, $key);
     }
 
 }
