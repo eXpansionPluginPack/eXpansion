@@ -9,6 +9,7 @@ use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediPlayer;
 use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord;
 use \ManiaLive\Event\Dispatcher;
 use \ManiaLive\Utilities\Console;
+use ManiaLivePlugins\eXpansion\Dedimania\Config;
 
 class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements \ManiaLivePlugins\eXpansion\Dedimania\Events\Listener {
 
@@ -44,6 +45,21 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public function exp_onInit() {
 	$this->setVersion(0.1);
 	$this->config = Config::getInstance();
+	$this->exp_addTitleSupport("TMStadium");
+	$this->exp_addTitleSupport("TMValley");
+	$this->exp_addTitleSupport("TMCanyon");
+	$this->exp_addTitleSupport("Trackmania_2@nadeolabs");
+	$this->exp_setSoftTitleCheck(false);
+
+	//$this->console(\ManiaLivePlugins\eXpansion\Core\Core::$titleId);
+
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "TimeAttack.Script.txt");
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Rounds.Script.txt");
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Cup.Script.txt");
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Team.Script.txt");
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Laps.Script.txt");
+	$this->exp_setScriptCompatibilityMode(false);
+	
     }
 
     public function exp_onLoad() {
@@ -61,21 +77,6 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$this->config->newRecordMsg = exp_getMessage($this->config->newRecordMsg);
 	$this->config->noRecordMsg = exp_getMessage($this->config->noRecordMsg);
 	$this->config->recordMsg = exp_getMessage($this->config->recordMsg);
-
-	$this->exp_addTitleSupport("TMStadium");
-	$this->exp_addTitleSupport("TMValley");
-	$this->exp_addTitleSupport("TMCanyon");
-	$this->exp_addTitleSupport("Trackmania_2@nadeolabs");
-	$this->exp_setSoftTitleCheck(false);
-
-	$this->console(\ManiaLivePlugins\eXpansion\Core\Core::$titleId);
-
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "TimeAttack.Script.txt");
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Rounds.Script.txt");
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Cup.Script.txt");
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Team.Script.txt");
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Laps.Script.txt");
-	$this->exp_setScriptCompatibilityMode(false);
     }
 
     public function exp_onReady() {
@@ -90,7 +91,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$this->config = Config::getInstance();
 	$this->registerChatCommand("dedirecs", "showRecs", 0, true);
 	$this->previousEnvironment = $this->storage->currentMap->environnement;
-	$this->dedimania->openSession($this->storage->currentMap->environnement, $this->config);
+	$this->dedimania->openSession(\ManiaLivePlugins\eXpansion\Core\Core::$titleId, $this->config);
     }
 
     function checkSession($login) {
@@ -146,10 +147,10 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
     public function LibXmlRpc_BeginMap($number) {
 	echo "script beginMap\n";
-	if ($this->storage->currentMap->environnement != $this->previousEnvironment) {
+	/* if ($this->storage->currentMap->environnement != $this->previousEnvironment) {
 	    $this->previousEnvironment = $this->storage->currentMap->environnement;
-	    $this->dedimania->openSession($this->storage->currentMap->environnement, $this->config);
-	}
+	    $this->dedimania->openSession(Core, $this->config);
+	} */
 
 	$this->records = array();
 	$this->rankings = array();

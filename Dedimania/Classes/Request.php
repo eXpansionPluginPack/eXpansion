@@ -24,7 +24,7 @@ class Request {
 
         $params = $this->requests;
 
-        array_push($params, $this->generate("dedimania.WarningsAndTTR", null));
+        array_push($params, $this->generate("dedimania.WarningsAndTTR2", null));
 
         $xml = '<?xml version="1.0" encoding="UTF-8" ?>'
                 . "\n<methodCall>\n<methodName>system.multicall</methodName>\n<params>\n";

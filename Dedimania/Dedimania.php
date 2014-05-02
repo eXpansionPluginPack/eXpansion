@@ -40,6 +40,18 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
     public function exp_onInit() {
 	$this->setVersion(0.1);
 	$this->config = Config::getInstance();
+	$this->exp_addTitleSupport("TMStadium");
+	$this->exp_addTitleSupport("TMValley");
+	$this->exp_addTitleSupport("TMCanyon");
+	$this->exp_addTitleSupport("Trackmania_2@nadeolabs");
+	$this->exp_setSoftTitleCheck(false);
+
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
+	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+	$this->exp_setScriptCompatibilityMode(false);
     }
 
     public function exp_onLoad() {
@@ -57,18 +69,6 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 	$this->config->newRecordMsg = exp_getMessage($this->config->newRecordMsg);
 	$this->config->noRecordMsg = exp_getMessage($this->config->noRecordMsg);
 	$this->config->recordMsg = exp_getMessage($this->config->recordMsg);
-
-	$this->exp_addTitleSupport("TMStadium");
-	$this->exp_addTitleSupport("TMValley");
-	$this->exp_addTitleSupport("TMCanyon");
-	$this->exp_setSoftTitleCheck(false);
-
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
-	$this->exp_setScriptCompatibilityMode(true);
     }
 
     public function exp_onReady() {

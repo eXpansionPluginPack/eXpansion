@@ -100,7 +100,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
 	$serverInfo = $this->connection->getDetailedPlayerInfo($this->storage->serverLogin);
 	if (is_null($config)) {
-	$config = \ManiaLivePlugins\eXpansion\Dedimania\Config::getInstance();
+	    $config = \ManiaLivePlugins\eXpansion\Dedimania\Config::getInstance();
 	}
 
 	if (empty($config->login))
@@ -121,6 +121,8 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 		    break;
 		case "TMValley":
 		    $packmask = "Valley";
+		case "Trackmania_2@nadeolabs":
+		    $packmask = "Trackmania_2@nadeolabs";
 	    }
 	}
 
@@ -177,7 +179,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
 	    if (sizeof($rank['BestCheckpoints']) > 0 && $rank['BestTime'] == end($rank['BestCheckpoints'])) {
 		if ($rank['BestTime'] > 5000)  // should do sanity checks for more...
-		    $times[] = array("Login" => $rank['Login'], "Best" => $rank['BestTime'], "Checks" => implode(',', $rank['BestCheckpoints']));
+		    $times[] = array("Login" => $rank['Login'], "Best" => intval($rank['BestTime']), "Checks" => implode(',', $rank['BestCheckpoints']));
 	    }
 	}
 
@@ -192,7 +194,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	//if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_LAPS) {
 	$Vchecks = $times[0]['Checks'];
 	//}
-	
+
 	if (empty($vreplay)) {
 	    $this->console("[Dedimania] Validation replay is empty, cancel sending times.");
 	    return;
@@ -214,7 +216,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	    $times,
 	    $replays);
 
-	    print_r(array(
+	print_r(array(
 	    $this->sessionId,
 	    $this->_getMapInfo($map),
 	    $this->_getGameMode(),
@@ -224,7 +226,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	$this->send($request, array($this, "xSetChallengeTimes"));
     }
 
-    function send(dediRequest $request, $callback) {	
+    function send(dediRequest $request, $callback) {
 	$this->webaccess->request($this->url, array(array($this, '_process'), $callback), $request->getXml(), true, 600, 3, 5);
     }
 
@@ -499,14 +501,14 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	    $msg = \Maniaplanet\DedicatedServer\Xmlrpc\Request::decode($dedires['Message']);
 	    $errors = end($msg[1]);
 
-	  //  print_r($errors);
+	     print_r($errors);	    	   	    
 	    // print "Actual Data\n";
 
 	    $array = $msg[1];
 	    unset($array[count($array) - 1]);
 
-	   // print_r(array_keys($array));	    
-	   // print_r($array);
+	    // print_r(array_keys($array));	    
+	    // print_r($array);
 
 	    if (array_key_exists("faultString", $array[0])) {
 		// $this->connection->chatSendServerMessage("[Dedimania] " . $array[0]['faultString']);
@@ -562,9 +564,9 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function xGetRecords($data) {
 	$data = $data[0];
-	
+
 	print_r($data);
-	
+
 	$this->dediRecords = array();
 	$this->dediUid = null;
 	$this->dediBest = null;
@@ -595,22 +597,22 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
 	if (!empty($data[0]['Records'][0]['Best']))
 	    $this->dediBest = $data[0]['Records'][0]['Best'];
-	
+
 	Dispatcher::dispatch(new dediEvent(dediEvent::ON_GET_RECORDS, $data[0]));
     }
 
     function xUpdateServerPlayers($data) {
-	  print_r($data);
+	print_r($data);
     }
 
     function xSetChallengeTimes($data) {
 	print_r($data);
-	
-	$this->console("[Dedimania] Sending times new times: Success");		
+
+	$this->console("[Dedimania] Sending times new times: Success");
     }
 
     function xCheckSession($data) {
-	 print_r($data);
+	print_r($data);
     }
 
     function xPlayerConnect($data) {

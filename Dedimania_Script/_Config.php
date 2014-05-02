@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania_Script;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class _Config extends \ManiaLib\Utils\Singleton {
 
     public $login = null;
     public $code = null;

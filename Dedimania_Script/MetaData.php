@@ -16,7 +16,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$this->setName("Dedimania (script mode)");
 	$this->setDescription("Dedimania, Global world records system integration");
 
-	$config	= Config::getInstance();
+	$config	= \ManiaLivePlugins\eXpansion\Dedimania\Config::getInstance();
 	
 	$var = new String("login", "Dedimania server login (use this server login)", $config, false);
 	$var->setDefaultValue("");
