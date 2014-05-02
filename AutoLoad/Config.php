@@ -5,16 +5,9 @@ namespace ManiaLivePlugins\eXpansion\AutoLoad;
 class Config extends \ManiaLib\Utils\Singleton {
 
     public $disable = array();
-    public $plugins = array(
-	'\ManiaLivePlugins\eXpansion\Core\Core'
-	, '\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups'
-	, '\ManiaLivePlugins\eXpansion\Gui\Gui'
-	, '\ManiaLivePlugins\eXpansion\Menu\Menu'
-	, '\ManiaLivePlugins\eXpansion\Adm\Adm'
-	, '\ManiaLivePlugins\eXpansion\AutoUpdate\AutoUpdate'
+    public $plugins = array('\ManiaLivePlugins\eXpansion\AutoUpdate\AutoUpdate'
 	, '\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin'
 	, '\ManiaLivePlugins\eXpansion\Chatlog\Chatlog'
-	, '\ManiaLivePlugins\eXpansion\Database\Database'
 	, '\ManiaLivePlugins\eXpansion\Emotes\Emotes'
 	, '\ManiaLivePlugins\eXpansion\DonatePanel\DonatePanel'
 	, '\ManiaLivePlugins\eXpansion\Faq\Faq'
