@@ -111,8 +111,6 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 	$this->pagerFrame->setContentLayout('\ManiaLivePlugins\eXpansion\Core\Gui\Controls\ExpSettingListElement');
 	$this->pagerFrame->update($this->getRecipient());
-
-	echo $i;
     }
 
     public function switchGroup($login, $groupName) {

@@ -142,9 +142,7 @@ class CheckboxScripted extends \ManiaLive\Gui\Control implements \ManiaLivePlugi
     }
 
     public function setArgs($args) {
-	echo "Id ".$this->checkboxId."\n";
 	if (isset($args['eXp_CheckboxE_' . $this->checkboxId])) {
-	    echo "Val ".$args['eXp_CheckboxE_' . $this->checkboxId]."\n";
 	    $active = $args['eXp_CheckboxE_' . $this->checkboxId] == '1';
 	    $out = true;
 	    if ($active == 0 || empty($active))

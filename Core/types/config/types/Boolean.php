@@ -44,7 +44,6 @@ class Boolean extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable{
     }
     
     public function castValue($string){
-	echo "Boool : $string\n";
 	if(is_bool($string))
 	    return $string;
 	if (strtoupper($string) == "FALSE" || $string == "0" || strtoupper($string) == "NO" || empty($string))
