@@ -499,9 +499,21 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	try {
 
 	    $msg = \Maniaplanet\DedicatedServer\Xmlrpc\Request::decode($dedires['Message']);
+	    //print_r($msg);
+
+
 	    $errors = end($msg[1]);
 
-	     print_r($errors);	    	   	    
+	    $triggerError = false;
+	    
+	    if (count($errors) > 0 && array_key_exists('methods', $errors[0])) {
+		foreach ($errors[0]['methods'] as $error) {
+		    if (!empty($error['errors'])) {
+			$this->console('[Dedimania service return error] Method:' . $error['methodName']);
+			$this->console('Error string:' . $error['errors']);
+		    }
+		}
+	    }
 	    // print "Actual Data\n";
 
 	    $array = $msg[1];
@@ -559,13 +571,13 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	    $this->console("[Dedimania] Authentication Error occurred: " . $data[0][0]['Error']);
 	    return;
 	}
-	print_r($data);
+	//print_r($data);
     }
 
     function xGetRecords($data) {
 	$data = $data[0];
 
-	print_r($data);
+	// print_r($data);
 
 	$this->dediRecords = array();
 	$this->dediUid = null;
@@ -602,7 +614,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function xUpdateServerPlayers($data) {
-	print_r($data);
+	// print_r($data);
     }
 
     function xSetChallengeTimes($data) {
@@ -612,7 +624,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function xCheckSession($data) {
-	print_r($data);
+	// print_r($data);
     }
 
     function xPlayerConnect($data) {
