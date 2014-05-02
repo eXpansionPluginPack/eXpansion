@@ -124,13 +124,13 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     public function onBeginMatch() {
-	echo "beginMatch\n";
+	// echo "beginMatch\n";
 	$this->records = array();
 	$this->dedimania->getChallengeRecords();
     }
 
     public function onBeginRound() {
-	echo "beginround\n";
+	// echo "beginround\n";
 	$this->wasWarmup = $this->connection->getWarmUp();
     }
 
@@ -146,7 +146,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     } */
 
     public function LibXmlRpc_BeginMap($number) {
-	echo "script beginMap\n";
+	// echo "script beginMap\n";
 	/* if ($this->storage->currentMap->environnement != $this->previousEnvironment) {
 	    $this->previousEnvironment = $this->storage->currentMap->environnement;
 	    $this->dedimania->openSession(Core, $this->config);
@@ -433,8 +433,8 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     public function onDedimaniaGetRecords($data) {
-	echo "dedirecords get\n";
-//print_r($data);
+	//echo "dedirecords get\n";
+	//print_r($data);
 
 	$this->records = array();
 
