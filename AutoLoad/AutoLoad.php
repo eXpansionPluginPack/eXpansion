@@ -14,16 +14,28 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	$config = Config::getInstance();
 	
-	$this->plugins = $config->plugins;
+	$this->plugins = array(	'\ManiaLivePlugins\eXpansion\Core\Core'
+	, '\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups'
+	, '\ManiaLivePlugins\eXpansion\Gui\Gui'
+	, '\ManiaLivePlugins\eXpansion\Menu\Menu'
+	, '\ManiaLivePlugins\eXpansion\Adm\Adm'
+	, '\ManiaLivePlugins\eXpansion\Database\Database');
 	
-//We Need the plugin Handler
+	foreach($config->plugins as $plugin){
+	    if(!in_array($plugin, $this->plugins))
+		$this->plugins[] = $plugin;
+	}
+		
+		//$config->plugins;
+	
+	//We Need the plugin Handler
 	$pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
 	$recheck = array();
 	$lastSize = 0;
 
 	$recheck = $this->loadPlugins($this->plugins, $pHandler);
-//
+
 	do {
 	    $lastSize = sizeof($recheck);
 	    $recheck = $this->loadPlugins($this->plugins, $pHandler);
