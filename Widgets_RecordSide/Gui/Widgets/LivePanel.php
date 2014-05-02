@@ -267,7 +267,10 @@ class LivePanel extends LocalPanel {
 	$NickNames .="]";
 	$teams .="]";
 
-	$this->timeScript->setParam("playerTeams", $teams);
+	if($teamCont == 0){
+	    $this->timeScript->setParam("playerTeams","Integer[Text]");
+	}else
+	    $this->timeScript->setParam("playerTeams", $teams);
 
 	if (!empty($newPlayerCps)) {
 	    $this->timeScript->setParam("playerTimes", $playerTimes);

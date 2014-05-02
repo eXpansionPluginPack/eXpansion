@@ -41,6 +41,8 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     private $wasWarmup = false;
     private $previousEnvironment = "";
     private $autoFetchRecords = true;
+    
+    private $msg_newRecord, $msg_norecord, $msg_record;
 
     public function exp_onInit() {
 	$this->setVersion(0.1);
@@ -74,9 +76,9 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	}
 	Dispatcher::register(DediEvent::getClass(), $this);
 	$this->dedimania = DediConnection::getInstance();
-	$this->config->newRecordMsg = exp_getMessage($this->config->newRecordMsg);
-	$this->config->noRecordMsg = exp_getMessage($this->config->noRecordMsg);
-	$this->config->recordMsg = exp_getMessage($this->config->recordMsg);
+	$this->msg_record = exp_getMessage('%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  #rank#%2$s: #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)');
+	$this->msg_newRecord = exp_getMessage('%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record! #time#%3$s');
+	$this->msg_norecord = exp_getMessage('#dedirecord#No dedimania records found for the map!');
     }
 
     public function exp_onReady() {
@@ -484,7 +486,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 		$time = substr($time, 2);
 	    }
 
-	    $this->exp_chatSendServerMessage($this->config->newRecordMsg, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time));
+	    $this->exp_chatSendServerMessage($this->msg_newRecord, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time));
 	} catch (\Exception $e) {
 	    $this->console("Error: couldn't show dedimania message" . $e->getMessage());
 	}
@@ -518,7 +520,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 		$time = substr($time, 2);
 	    }
 
-	    $this->exp_chatSendServerMessage($this->config->recordMsg, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time, $oldRecord->place, $diff));
+	    $this->exp_chatSendServerMessage($this->msg_record, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time, $oldRecord->place, $diff));
 	    $this->debug("message sent.");
 	} catch (\Exception $e) {
 	    $this->console("Error: couldn't show dedimania message");
@@ -537,7 +539,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	\ManiaLivePlugins\eXpansion\Dedimania\Gui\Windows\Records::Erase($login);
 
 	if (sizeof($this->records) == 0) {
-	    $this->exp_chatSendServerMessage($this->config->noRecordMsg, $login);
+	    $this->exp_chatSendServerMessage($this->msg_norecord, $login);
 	    return;
 	}
 	try {

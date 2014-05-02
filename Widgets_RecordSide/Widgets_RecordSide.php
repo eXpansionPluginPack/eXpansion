@@ -292,9 +292,9 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function onEndRound() {
 	//@TOdo remove it is good to have it to keep track of other players
-	//if($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_ROUNDS){
-	//$this->hideLivePanel();
-	//}
+	/*if($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_ROUNDS){
+	    $this->hideLivePanel();
+	}*/
     }
 
     public function onBeginRound() {

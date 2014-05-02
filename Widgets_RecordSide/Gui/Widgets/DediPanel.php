@@ -13,11 +13,11 @@ class DediPanel extends LocalPanel {
 	parent::exp_onBeginConstruct();
 	$this->setName("Dedimania Panel");
 	$this->timeScript->setParam("acceptMinCp", 2);
-	$this->timeScript->setParam("acceptMaxPlayerRank", \ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection::$serverMaxRank);
 	$this->timeScript->setParam('varName', 'DediTime1');
     }
 
     function update() {
+	$this->timeScript->setParam("acceptMaxPlayerRank", \ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection::$serverMaxRank);
 	$login = $this->getRecipient();
 
 	foreach ($this->items as $item)
