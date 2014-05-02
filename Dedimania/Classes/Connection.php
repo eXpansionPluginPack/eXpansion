@@ -215,13 +215,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	    $this->_getGameMode(),
 	    $times,
 	    $replays);
-
-	print_r(array(
-	    $this->sessionId,
-	    $this->_getMapInfo($map),
-	    $this->_getGameMode(),
-	    $times));
-
+	
 	$request = new dediRequest("dedimania.SetChallengeTimes", $args);
 	$this->send($request, array($this, "xSetChallengeTimes"));
     }
@@ -618,7 +612,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     }
 
     function xSetChallengeTimes($data) {
-	print_r($data);
+	//print_r($data);
 
 	$this->console("[Dedimania] Sending times new times: Success");
     }
