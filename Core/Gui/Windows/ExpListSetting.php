@@ -54,7 +54,6 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->buttonAdd->setPosX($this->getSizeX()-3);
 	if($this->input_key == null){
 	    $this->input_value->setSizeX($this->getSizeX() - 25);
-	    echo $this->input_value->getSizeX() . " Y ".$this->input_value->getSizeY()."\n";
 	}else{
 	    $this->input_value->setSizeX(($this->getSizeX() - 25)/2);
 	    $this->input_value->setPosX(($this->getSizeX() - 25)/2+1);
@@ -87,7 +86,6 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    }
 	    
 	    $this->input_value->setSizeX($this->getSizeX() - 25);
-	    echo $this->input_value->getSizeX() . " Y ".$this->input_value->getSizeY()."\n";
 	    \ManiaLivePlugins\eXpansion\Core\Gui\Controls\ExpSettingListElement::$large = false;
 	}	
 	
