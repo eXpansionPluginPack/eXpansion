@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\ForceMod;
 
 use \ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
+use \ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 
 /**
  * Description of MetaData
