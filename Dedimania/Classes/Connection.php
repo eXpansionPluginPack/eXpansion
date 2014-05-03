@@ -112,18 +112,25 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	    die("[Dedimania] Your dedicated server login differs from configured server login, please check your configuration.");
 
 	if ($packmask == "") {
-	    switch ($version->titleId) {
-		case "TMStadium":
-		    $packmask = "Stadium";
-		    break;
-		case "TMCanyon":
-		    $packmask = "Canyon";
-		    break;
-		case "TMValley":
-		    $packmask = "Valley";
-		case "Trackmania_2@nadeolabs":
-		    $packmask = "Trackmania_2@nadeolabs";
-	    }
+	    $packmask = $version->titleId;
+	}
+
+	switch ($packmask) {
+	    case "TMStadium":
+		$packmask = "Stadium";
+		break;
+	    case "TMCanyon":
+		$packmask = "Canyon";
+		break;
+	    case "TMValley":
+		$packmask = "Valley";
+		break;
+	    case "Trackmania_2@nadeolabs":
+		$packmask = "Trackmania_2@nadeolabs";
+		break;
+	    default:
+		$packmask = "";
+		break;
 	}
 
 	$args = array(array(
@@ -215,7 +222,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	    $this->_getGameMode(),
 	    $times,
 	    $replays);
-	
+
 	$request = new dediRequest("dedimania.SetChallengeTimes", $args);
 	$this->send($request, array($this, "xSetChallengeTimes"));
     }
@@ -499,7 +506,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	    $errors = end($msg[1]);
 
 	    $triggerError = false;
-	    
+
 	    if (count($errors) > 0 && array_key_exists('methods', $errors[0])) {
 		foreach ($errors[0]['methods'] as $error) {
 		    if (!empty($error['errors'])) {
