@@ -689,7 +689,7 @@ EOT;
 	    return;
 
 	$this->update = true;
-	$player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
+	$player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
 
 	if (!array_key_exists($player->login, $this->expPlayers)) {
 	    $login = $player->login;

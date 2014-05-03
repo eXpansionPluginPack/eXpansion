@@ -28,10 +28,10 @@ class Playeritem extends \ManiaLive\Gui\Control {
     protected $icon;
     private $toggleTeam = null;
 
-    /** @var \Maniaplanet\DedicatedServer\Structures\Player */
+    /** @var \ManiaLive\Data\Player */
     private $player;
 
-    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $isAdmin, $login, $widths, $sizeX) {
+    function __construct($indexNumber, \ManiaLive\Data\Player $player, $controller, $isAdmin, $login, $widths, $sizeX) {
         $this->recipient = $login;
         $this->widths = \ManiaLivePlugins\eXpansion\Gui\Gui::getScaledSize($widths, $sizeX);
 
@@ -196,7 +196,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
 // manialive 3.1 override to do nothing.
     function destroy() {
-        
+
     }
 
     /*

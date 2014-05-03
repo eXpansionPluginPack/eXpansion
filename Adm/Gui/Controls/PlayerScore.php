@@ -10,9 +10,9 @@ class PlayerScore extends \ManiaLive\Gui\Control {
     private $frame;
 
     /**
-     * 
+     *
      * @param int $indexNumber
-     * @param \Maniaplanet\DedicatedServer\Structures\Player $player
+     * @param \Maniaplanet\DedicatedServer\Structures\PlayerRanking $player
      * @param int $score
      * @param type $controller
      * @param int $sizeX
@@ -62,10 +62,10 @@ class PlayerScore extends \ManiaLive\Gui\Control {
         $this->sizeY = $sizeY;
         $this->setSize($sizeX, $sizeY);
     }
-    
+
 // manialive 3.1 override to do nothing.
     function destroy() {
-        
+
     }
 
     /*

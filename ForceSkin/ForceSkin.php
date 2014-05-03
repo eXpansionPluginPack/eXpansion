@@ -33,7 +33,7 @@ class ForceSkin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private function getSkins() {
 	try {
-	    $skin = new \Maniaplanet\DedicatedServer\Structures\Skin();
+	    $skin = new \Maniaplanet\DedicatedServer\Structures\ForcedSkin();
 	    $skin->name = $this->config->name;
 	    $skin->orig = "";
 	    $skin->url = $this->config->skinUrl;
@@ -42,7 +42,7 @@ class ForceSkin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	} catch (\Exception $e) {
 
 	    echo "error:" . $e->getMessage();
-	    return array(new \Maniaplanet\DedicatedServer\Structures\Skin());
+	    return array(new \Maniaplanet\DedicatedServer\Structures\ForcedSkin());
 	}
     }
 

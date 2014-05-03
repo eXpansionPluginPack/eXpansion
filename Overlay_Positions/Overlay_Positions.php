@@ -69,7 +69,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	$pospanel = Gui\Widgets\PositionPanel::Create($login);
 	$pospanel->setSize(80, 90);
 	$pospanel->setPosition(-158, 40);
-	
+
 	$teamMaxPoint = 10;
 	if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
 	    $settings = $this->connection->getModeScriptSettings();
@@ -88,7 +88,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	if ($this->storage->serverStatus->code != 4)
 	    return;
 
-	$player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
+	$player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
 	// hide widget for players who change from spectate to play
 	// on team mode, show infos when player is finished
 

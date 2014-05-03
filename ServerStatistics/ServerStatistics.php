@@ -11,7 +11,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     public static $serverMemAction = -1;
     public static $serverCpuAction = -1;
     public static $serverPlayerAction = -1;
-    
+
     private $startTime;
     private $ellapsed = 0;
     public $nbPlayerMax = 0;
@@ -24,7 +24,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
     function exp_onInit() {
         global $lang;
-        //The Database plugin is needed. 
+        //The Database plugin is needed.
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Database\\Database"));
 
         // Make sure pcre and php_com_dotnet are loaded :)
@@ -63,7 +63,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         }
 
         $this->startTime = time();
-        
+
         $aHandler = ActionHandler::getInstance();
         self::$serverStatAction = $aHandler->createAction(array($this, 'showStats'));
         self::$serverCpuAction = $aHandler->createAction(array($this, 'showCpu'));
@@ -127,7 +127,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
         }
         $this->nbSpecMax = sizeof($this->spectators);
         $this->nbPlayerMax = sizeof($this->players);
-        
+
     }
 
     public function onTick() {
@@ -188,7 +188,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	    $data['avgPlayer'] = $r->avgPlayer;
 	    $data['avgSpec'] = $r->avgSpec;
 	}
-        
+
         //NbPlayers & Nations
         $data['nbPlayer'] = 'unknown';
         $data['nbNation'] = 'unknown';
@@ -380,7 +380,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     public function onPlayerInfoChanged($playerInfo) {
-        $player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
+        $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
         $login = $player->login;
 
         $this->removePlayer($player->login);
