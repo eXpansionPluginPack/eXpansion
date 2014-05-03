@@ -48,7 +48,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     }
 
     public function onPlayerInfoChanged($playerInfo) {
-        $player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
+        $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
         if ($player->spectator == 1) {
             PBPanel::Erase($player->login);
         } else {

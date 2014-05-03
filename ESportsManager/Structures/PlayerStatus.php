@@ -20,7 +20,7 @@ class PlayerStatus extends \Maniaplanet\DedicatedServer\Structures\AbstractStruc
     const Timeout = "timeout";
     const Other = "other";
 
-    /** @var \Maniaplanet\DedicatedServer\Structures\Player */
+    /** @var \ManiaLive\Data\Player */
     public $player;
 
     /** @var String */
@@ -39,11 +39,11 @@ class PlayerStatus extends \Maniaplanet\DedicatedServer\Structures\AbstractStruc
     public $status;
 
     /**
-     * 
-     * @param \Maniaplanet\DedicatedServer\Structures\Player $player
+     *
+     * @param \ManiaLive\Data\Player $player
      * @param mixed $status
      */
-    public function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player) {
+    public function __construct(\ManiaLive\Data\Player $player) {
         $player->skins = null;
 
         $this->player = $player;

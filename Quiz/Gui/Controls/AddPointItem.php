@@ -14,7 +14,7 @@ class AddPointItem extends \ManiaLive\Gui\Control {
     private $addpointAction;
     private $frame;
 
-    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $isAdmin, $login, $sizeX) {
+    function __construct($indexNumber, \ManiaLive\Data\Player $player, $controller, $isAdmin, $login, $sizeX) {
         $sizeY = 6;
 
         if ($isAdmin) {
@@ -77,7 +77,7 @@ class AddPointItem extends \ManiaLive\Gui\Control {
 
     // manialive 3.1 override to do nothing.
     function destroy() {
-        
+
     }
 
     /*

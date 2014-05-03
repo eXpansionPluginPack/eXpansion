@@ -8,7 +8,7 @@ class RunPlayerElem extends \ManiaLive\Gui\Control {
     protected $nickname;
     protected $totalTime;
 
-    function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player) {
+    function __construct(\ManiaLive\Data\Player $player) {
 	$sizeX = 45;
 	$sizeY = 5;
 

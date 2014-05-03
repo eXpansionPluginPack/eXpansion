@@ -27,7 +27,7 @@ abstract class Service {
 
     /**
      * forceCountryCode();
-     * 
+     *
      * @param string $code
      * @throws Exception
      */
@@ -138,7 +138,7 @@ abstract class Service {
     /**
      * Retrieves the challenge's karma from the webservice.
      * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
-     * @param \Maniaplanet\DedicatedServer\Structures\Player[] $players
+     * @param \ManiaLive\Data\Player[] $players
      * @return \ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma
      */
     static function GetChallengeKarma($challenge, $players) {
@@ -166,9 +166,9 @@ abstract class Service {
     }
 
     /**
-     * 
+     *
      * SendVotes()
-     * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge     
+     * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
      * @param Structures\Vote[] $votes
      */
     static function SendVotes(\Maniaplanet\DedicatedServer\Structures\Map $challenge, $votes) {
@@ -228,15 +228,15 @@ abstract class Service {
 }
 
 class Exception extends \Exception {
-    
+
 }
 
 class NotAuthenticatedException extends Exception {
-    
+
 }
 
 class ApiException extends Exception {
-    
+
 }
 
 ?>
