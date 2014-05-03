@@ -14,6 +14,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     const Dedimania_force = 0x8;
     const All = 0x31;
 
+    public static $me = null;
     public static $dedirecords = array();
     public static $localrecords = array();
     public static $secondMap = false;
@@ -69,6 +70,7 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$this->updateDediPanel();
 	$this->updateLocalPanel();
 	$this->updateLivePanel();
+	self::$me = $this;
     }
 
     public function onTick() {

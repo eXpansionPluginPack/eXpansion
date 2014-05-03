@@ -352,7 +352,14 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 		    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid));
 		}
 	    } else {
-		$this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg));
+		try{
+		    $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg));
+		} catch (\Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException $ex){
+		    \ManiaLive\Utilities\Console::println("[eXpansion]Attempt to send Announce to a login failed. Login unknown");
+		    \ManiaLive\Utilities\Logger::info("[eXpansion]Attempt to send Announce to a login failed. Login unknown");
+		} catch (\Exception $e) {
+		    $this->console("Error while sending Announce message => Server said:" . $e->getMessage());
+		}
 	    }
 	}
 
@@ -371,7 +378,14 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 		    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array(null, $message));
 		}
 	    } else {
-		$this->connection->chatSendServerMessageToLanguage($msg->getMultiLangArray($args));
+		try{
+		    $this->connectiodn->chatSendServerMessageToLanguage($msg->getMultiLangArray($args));
+		} catch (\Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException $ex){
+		    \ManiaLive\Utilities\Console::println("[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown");
+		    \ManiaLive\Utilities\Logger::info("[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown");
+		}catch (\Exception $e) {
+		    $this->console("Error while sending Multilang Announce message => Server said:" . $e->getMessage());
+		}
 	    }
 	}
 
