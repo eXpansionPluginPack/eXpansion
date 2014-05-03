@@ -28,13 +28,13 @@ class WebLink extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /** @var boolean */
     private $connectionFailed = false;
 
-    /** @var \Maniaplanet\DedicatedServer\Structures\Player[] */
+    /** @var \Maniaplanet\DedicatedServer\Structures\PlayerRanking[] */
     private $rankings = array();
 
     /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     private $map = array();
 
-    /** @var \Maniaplanet\DedicatedServer\Structures\Player[] holds the players who finished this round in order of arrival */
+    /** @var \Maniaplanet\DedicatedServer\Structures\PlayerRanking[] holds the players who finished this round in order of arrival */
     private $roundFinish = array();
 
     public function exp_onLoad() {
@@ -61,7 +61,7 @@ class WebLink extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * syncDatas()
-     * 
+     *
      * will update the buffers for rankings, players + spectators and current map
      */
     public function syncDatas() {
@@ -138,7 +138,7 @@ class WebLink extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onPlayerFinish($playerUid, $login, $timeOrScore) {
         if ($timeOrScore == 0)
             return;
-        $player = new \Maniaplanet\DedicatedServer\Structures\Player();
+        $player = new \Maniaplanet\DedicatedServer\Structures\PlayerRanking();
         $player->playerId = $playerUid;
         $player->login = $login;
         $player->nickName = $this->storage->getPlayerObject($login)->nickName;

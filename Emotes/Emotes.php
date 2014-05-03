@@ -266,7 +266,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function getPlayerNick($login) {
 	try {
 	    $player = $this->storage->getPlayerObject($login);
-	    if ($player instanceof \Maniaplanet\DedicatedServer\Structures\Player) {
+	    if ($player instanceof \ManiaLive\Data\Player) {
 		return $player->nickName;
 	    }
 	    return "";

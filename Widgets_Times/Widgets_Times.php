@@ -21,7 +21,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function exp_onInit() {
 	$this->exp_addTitleSupport("TM");
 	$this->exp_addTitleSupport("Trackmania");
-	
+
 	//Important for all eXpansion plugins.
 	//$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
@@ -48,7 +48,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerInfoChanged($playerInfo) {
-	$player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
+	$player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
 	$this->showPanel($player->login, true);
     }
 
@@ -194,15 +194,15 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onRecordsLoaded($data) {
-	TimePanel::$localrecords = $data;	
+	TimePanel::$localrecords = $data;
 	$this->showToAll();
     }
 /**
- * 
+ *
  * @param \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record
  */
     public function onUpdateRecords($data) {
-	TimePanel::$localrecords = $data;		
+	TimePanel::$localrecords = $data;
 	/*
 	  TimePanel::$localrecords = $data;
 	$this->console("Records Changed, reload!");
@@ -218,27 +218,27 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onDedimaniaOpenSession() {
-	
+
     }
 
     public function onNewRecord($data) {
-	
+
     }
 
-    public function onPersonalBestRecord($data) {	
-	//$this->showPanel($data->login, false);	
+    public function onPersonalBestRecord($data) {
+	//$this->showPanel($data->login, false);
     }
 
     public function onDedimaniaPlayerConnect($data) {
-	
+
     }
 
     public function onDedimaniaPlayerDisconnect($login) {
-	
+
     }
 
     /**
-     * 
+     *
      * @param \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $record
      * @param \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecorr $oldrecord
      */
@@ -251,7 +251,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * 
+     *
      * @param \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $data
      */
     public function onDedimaniaNewRecord($record) {

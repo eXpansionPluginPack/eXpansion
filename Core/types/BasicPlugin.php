@@ -27,7 +27,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 
 	/**
 	 * The list of Plugin id's that may need to be started
-	 * @var string[] 
+	 * @var string[]
 	 */
 	public static $plugins_onHold = array();
 
@@ -37,7 +37,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	private static $plugin_gameModeSupport = array();
 
 	/**
-	 * @var Whatever plugins support soft script name or exact script name check 
+	 * @var Whatever plugins support soft script name or exact script name check
 	 */
 	private static $plugin_softScriptCompatibility = array();
 	private static $plugin_scriptCompatibiliyMode = array();
@@ -48,7 +48,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	private static $plugin_titleSupport = array();
 
 	/**
-	 * @var Whatever plugins support soft title name, or  
+	 * @var Whatever plugins support soft title name, or
 	 */
 	private static $plugin_softTitleSupport = array();
 
@@ -59,7 +59,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 
 	/**
 	 *
-	 * @var ManiaLivePlugins\eXpansion\Core\BillManager 
+	 * @var ManiaLivePlugins\eXpansion\Core\BillManager
 	 */
 	private static $exp_billManager = null;
 
@@ -71,13 +71,13 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 
 	/**
 	 * The path to the directory of this plugin
-	 * @var String 
+	 * @var String
 	 */
 	private $exp_dir = null;
 
 	/**
 	 * The colorparser
-	 * @var \ManiaLivePlugins\eXpansion\Core\ColorParser 
+	 * @var \ManiaLivePlugins\eXpansion\Core\ColorParser
 	 */
 	protected $colorParser;
 
@@ -87,7 +87,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 
 	/**
 	 *
-	 * @var ManiaLivePlugins\eXpansion\Core\types\config\MetaData 
+	 * @var ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	 */
 	protected $metaData;
 
@@ -161,7 +161,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	 * @abstract
 	 */
 	public function exp_onInit() {
-	    
+
 	}
 
 	public final function enableScriptEvents() {
@@ -177,11 +177,11 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	/**
-	 * eXpansion method invoked at Manialive onload        
+	 * eXpansion method invoked at Manialive onload
 	 * @abstract
 	 */
 	public function exp_onLoad() {
-	    
+
 	}
 
 	public final function onReady() {
@@ -212,7 +212,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	 * @abstract
 	 */
 	public function exp_onReady() {
-	    
+
 	}
 
 	final public function onUnload() {
@@ -232,7 +232,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	public function exp_onUnload() {
-	    
+
 	}
 
 	private function checkVersion() {
@@ -269,13 +269,13 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	/**
-	 * 
+	 *
 	 * to send everybody:
 	 * exp_chatSendServerMessage("Message with parameters %1$s %2$s", null, array("parameter1","parameter2));
-	 * 
+	 *
 	 * to send login:
 	 * exp_chatSendServerMessage("Message with parameters %1$s %2$s", $login, array("parameter1","parameter2));
-	 * 
+	 *
 	 * @param string|MultiLangMsg $msg String or MultiLangMsg to sent
 	 * @param null|string $login null for everybody, string for individual
 	 * @param array $args simple array of parameters
@@ -305,7 +305,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 
 	/**
 	 * Sends a chat message to the server or redirect to another plugin
-	 * 
+	 *
 	 * @param type $msg The message
 	 * @param type $login The login to whom it needs to be sent
 	 */
@@ -333,7 +333,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 
 	/**
 	 * Sends annoucement throught chat to the server or redirects it to another plugin
-	 * 
+	 *
 	 * @param type $message
 	 * @param type $icon
 	 * @param type $callback
@@ -379,7 +379,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 		}
 	    } else {
 		try{
-		    $this->connectiodn->chatSendServerMessageToLanguage($msg->getMultiLangArray($args));
+		    $this->connection->chatSendServerMessageToLanguage($msg->getMultiLangArray($args));
 		} catch (\Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException $ex){
 		    \ManiaLive\Utilities\Console::println("[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown");
 		    \ManiaLive\Utilities\Logger::info("[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown");
@@ -393,7 +393,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	 * Will force the plugin to be checked if it is compatible with the Game Mode
 	 * If it isn't the plugin will be unloaded From ManiaLive
 	 * If you change GameModes the plugin may be loaded again.
-	 * 
+	 *
 	 * @param int $gameMode
 	 * @param string | null $scriptName
 	 */
@@ -405,10 +405,10 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	/**
-	 * Shall the script name match exactly our should it be just similar. 
+	 * Shall the script name match exactly our should it be just similar.
 	 * By default eXP will check for similarity, but that might change in the future
-	 * if scripters don't do attention to the script name conventions. 
-	 * 
+	 * if scripters don't do attention to the script name conventions.
+	 *
 	 * @param bool $default
 	 */
 	protected function exp_setSoftScriptModeCheck($default = true) {
@@ -425,7 +425,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 
 	/**
 	 * Define the title names for whom this plugin will work
-	 * 
+	 *
 	 * @param string $titleName
 	 */
 	protected function exp_addTitleSupport($titleName) {
@@ -437,8 +437,8 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 
 	/**
 	 * Shall the title name match exactly or should we just check for
-	 * similarity. 
-	 * 
+	 * similarity.
+	 *
 	 * @param bool $default
 	 */
 	protected function exp_setSoftTitleCheck($default = true) {
@@ -575,7 +575,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	/**
-	 * Activates the message redirect for this plugin. 
+	 * Activates the message redirect for this plugin.
 	 * @param type $array The Object or plugin id and the function to call
 	 */
 	public function exp_activateChatRedirect($array) {
@@ -614,7 +614,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 
 	/**
 	 * Will start a billing process.
-	 * 
+	 *
 	 * @param type $source_login The login to whom the planets will be taken from
 	 * @param type $destination_login The login to whom the planets will be send
 	 * @param int $amount The amoint of planets that wil be sent
@@ -677,8 +677,8 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 
 	/**
 	 * Returns the current game mode taking in acount script modes that might be equivalent with old modes
-	 * 
-	 * @return Int The gamemode which is compatible with the current script. 0 if none 
+	 *
+	 * @return Int The gamemode which is compatible with the current script. 0 if none
 	 */
 	final static public function exp_getCurrentCompatibilityGameMode() {
 	    $gameInfo = \ManiaLive\Data\Storage::getInstance()->gameInfos;
@@ -690,9 +690,9 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param type $scriptName
-	 * @return int The gamemode which is compatible with the script. 0 if none 
+	 * @return int The gamemode which is compatible with the script. 0 if none
 	 */
 	final static public function exp_getScriptCompatibilityMode($scriptName) {
 	    $class = get_called_class();
@@ -771,7 +771,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	/**
 	 * Returns player object from given playerId
 	 * @param integer $id
-	 * @return \Maniaplanet\DedicatedServer\Structures\Player
+	 * @return \ManiaLive\Data\Player
 	 */
 	public function getPlayerObjectById($id) {
 	    if (!is_numeric($id))
@@ -784,7 +784,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 		if ($player->playerId == $id)
 		    return $player;
 	    }
-	    return new \Maniaplanet\DedicatedServer\Structures\Player();
+	    return new \ManiaLive\Data\Player();
 	}
 
 	final public function console($message) {
@@ -809,139 +809,139 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	public function onGameModeChange($oldGameMode, $newGameMode) {
-	    
+
 	}
 
 	public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes) {
-	    
+
 	}
 
 	/**
 	 * @param ExpPlayer $player player object of the player given up
 	 */
 	public function onPlayerGiveup(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player) {
-	    
+
 	}
 
 	/**
-	 * 
+	 *
 	 * @param ExpPlayer $player player object of the player
 	 * @param int $oldPos old position
 	 * @param int $newPos new position
 	 */
 	public function onPlayerPositionChange(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player, $oldPos, $newPos) {
-	    
+
 	}
 
 	/**
 	 * @param ExpPlayer[] $playerPositions array(string => ExpPlayer);
 	 */
 	public function onPlayerNewPositions($playerPositions) {
-	    
+
 	}
 
 	public function onMapRestart() {
-	    
+
 	}
 
 	public function onMapSkip() {
-	    
+
 	}
 
 	public function LibAFK_IsAFK($login) {
-	    
+
 	}
 
 	public function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec) {
-	    
+
 	}
 
 	public function LibXmlRpc_BeginMap($number) {
-	    
+
 	}
 
 	public function LibXmlRpc_BeginMatch($number) {
-	    
+
 	}
 
 	public function LibXmlRpc_BeginRound($number) {
-	    
+
 	}
 
 	public function LibXmlRpc_BeginSubmatch($number) {
-	    
+
 	}
 
 	public function LibXmlRpc_BeginTurn($number) {
-	    
+
 	}
 
 	public function LibXmlRpc_BeginWarmUp() {
-	    
+
 	}
 
 	public function LibXmlRpc_EndMap($number) {
-	    
+
 	}
 
 	public function LibXmlRpc_EndMatch($number) {
-	    
+
 	}
 
 	public function LibXmlRpc_EndRound($number) {
-	    
+
 	}
 
 	public function LibXmlRpc_EndSubmatch($number) {
-	    
+
 	}
 
 	public function LibXmlRpc_EndTurn($number) {
-	    
+
 	}
 
 	public function LibXmlRpc_EndWarmUp() {
-	    
+
 	}
 
 	public function LibXmlRpc_LoadingMap($number) {
-	    
+
 	}
 
 	public function LibXmlRpc_OnGiveUp($login) {
-	    
+
 	}
 
 	public function LibXmlRpc_OnRespawn($login) {
-	    
+
 	}
 
 	public function LibXmlRpc_OnStartLine($login) {
-	    
+
 	}
 
 	public function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump) {
-	    
+
 	}
 
 	public function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd) {
-	    
+
 	}
 
 	public function LibXmlRpc_PlayerRanking($rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone) {
-	    
+
 	}
 
 	public function LibXmlRpc_Rankings($array) {
-	    
+
 	}
 
 	public function LibXmlRpc_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2) {
-	    
+
 	}
 
 	public function WarmUp_Status($status) {
-	    
+
 	}
 
     }
@@ -965,7 +965,7 @@ namespace {
     }
 
 // return_bytes
-// 
+//
 // fix for  php 5.5.0
     error_reporting(E_ALL ^ E_DEPRECATED);
 // do custom logging also
@@ -994,7 +994,7 @@ namespace {
 	  array_unshift($args, $msg, $login);
 	  $msgString = call_user_func_array('__', $args);
 	  }
-	 * 
+	 *
 	 */
 	function __() {
 	    $args = func_get_args();
@@ -1024,7 +1024,7 @@ namespace {
 
 	/**
 	 * exp_getMessage(string $string)
-	 * 
+	 *
 	 * @param string $string
 	 * @return \ManiaLivePlugins\eXpansion\Core\i18n\Message
 	 */

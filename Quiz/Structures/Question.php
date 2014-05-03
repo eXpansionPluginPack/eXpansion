@@ -14,7 +14,7 @@ class Question {
     /** @var Answer[] answer */
     public $answer = array();
 
-    /** @var \Maniaplanet\DedicatedServer\Structures\Player */
+    /** @var \ManiaLive\Data\Player */
     public $asker;
 
     /** var float */
@@ -23,7 +23,7 @@ class Question {
     /** @var bool */
     public $multipart = false;
 
-    public function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player, $question) {
+    public function __construct(\ManiaLive\Data\Player $player, $question) {
         $this->asker = $player;
         $this->question = $question;
         return $this;
@@ -31,7 +31,7 @@ class Question {
 
     /**
      * setQuestion($question)
-     * Setter for question in place, can be used to correct typos 
+     * Setter for question in place, can be used to correct typos
      *
      * @param string $question
      */
@@ -67,7 +67,7 @@ class Question {
         try {
             unset($this->answer[$index]);
         } catch (\Exception $e) {
-            
+
         }
         return $this;
     }

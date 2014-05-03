@@ -141,7 +141,7 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function onPlayerInfoChanged($playerInfo) {
         if (self::exp_getCurrentCompatibilityGameMode() != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM)
             return;
-        $player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
+        $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
 
         if ($player->spectator == 1)
             $this->showWidget($player->login);

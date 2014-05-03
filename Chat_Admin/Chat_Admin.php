@@ -70,12 +70,12 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$cmd->setHelp('/team limit X; Sets Team PointLimit');
 	$admingroup->addShortAlias($cmd, 'team');
 
-	/* 		
-	 * ******************* 
-	 * Concerning Players 
+	/*
 	 * *******************
-	 * 
-	 * 
+	 * Concerning Players
+	 * *******************
+	 *
+	 *
 	 */
 
 	$cmd = AdminGroups::addAdminCommand('player kick', $this, 'kick', 'player_kick'); //
@@ -87,15 +87,15 @@ A kicked player may return to the server whanever he desires.');
 
 	$cmd = AdminGroups::addAdminCommand('player ban', $this, 'ban', 'player_ban');
 	$cmd->setHelp('Ban the player from the server');
-	$cmd->setHelpMore('$w/admin player ban #login$z will ban  the player from the server. 
+	$cmd->setHelpMore('$w/admin player ban #login$z will ban  the player from the server.
 He may not return until the server is restarted');
 	$cmd->setMinParam(1);
 	AdminGroups::addAlias($cmd, "ban"); // xaseco & fast
 
 	$cmd = AdminGroups::addAdminCommand('player black', $this, 'blacklist', 'player_black');
 	$cmd->setHelp('Add the player to the black list');
-	$cmd->setHelpMore('$w/admin player black #login$z will add the player to the blacklist of this server. 
-He may not return until the server blacklist file is deleted. 
+	$cmd->setHelpMore('$w/admin player black #login$z will add the player to the blacklist of this server.
+He may not return until the server blacklist file is deleted.
 Other server might use the same blacklist file!!');
 	$cmd->setMinParam(1);
 	AdminGroups::addAlias($cmd, "black"); // xaseco & fast
@@ -171,8 +171,8 @@ Other server might use the same blacklist file!!');
 //ENDSUPER
 
 	/*
-	 * *************************** 
-	 * Concerning Server Settings 
+	 * ***************************
+	 * Concerning Server Settings
 	 * ***************************
 	 */
 
@@ -282,9 +282,9 @@ Other server might use the same blacklist file!!');
 	AdminGroups::addAlias($cmd, 'res exp');
 	AdminGroups::addAlias($cmd, 'res expansion');
 
-	/* 		 
-	 * ************************* 
-	 * Concerning Game Settings 
+	/*
+	 * *************************
+	 * Concerning Game Settings
 	 * *************************
 	 */
 	$cmd = AdminGroups::addAdminCommand('skip', $this, 'skipMap', 'map_skip');
@@ -575,7 +575,7 @@ Other server might use the same blacklist file!!');
 		    break;
 	    }
 	} catch (\Exception $e) {
-	    
+
 	}
     }
 
@@ -611,7 +611,7 @@ Other server might use the same blacklist file!!');
 		    break;
 	    }
 	} catch (\Exception $e) {
-	    
+
 	}
     }
 
@@ -643,7 +643,7 @@ Other server might use the same blacklist file!!');
 		    break;
 	    }
 	} catch (\Exception $e) {
-	    
+
 	}
     }
 
@@ -684,7 +684,7 @@ Other server might use the same blacklist file!!');
 		    break;
 	    }
 	} catch (\Exception $e) {
-	    
+
 	}
     }
 
@@ -729,7 +729,7 @@ Other server might use the same blacklist file!!');
 		    break;
 	    }
 	} catch (\Exception $e) {
-	    
+
 	}
     }
 
@@ -1068,8 +1068,8 @@ Other server might use the same blacklist file!!');
 	    $data = file_get_contents($scriptName);
 	    $this->exp_chatSendServerMessage("Script loaded to server runtime: " . $params[0]);
 	    $this->connection->setScriptName($params[0]);
-	    $this->connection->setModeScriptText($data);	    
-	    		    
+	    $this->connection->setModeScriptText($data);
+
 	    return;
 	}
 	$this->exp_chatSendServerMessage("File not found: " . $params[0]);
@@ -1521,7 +1521,7 @@ Other server might use the same blacklist file!!');
 	    $items = array();
 
 	    /**
-	     * @var \Maniaplanet\DedicatedServer\Structures\Player 
+	     * @var \Maniaplanet\DedicatedServer\Structures\PlayerBan
 	     */
 	    foreach ($this->connection->getBanList(-1, 0) as $player) {
 		$items[] = new BannedPlayeritem($indexNumber, $player, $this);
@@ -1545,7 +1545,7 @@ Other server might use the same blacklist file!!');
 	    $items = array();
 
 	    /**
-	     * @var \Maniaplanet\DedicatedServer\Structures\Player 
+	     * @var \Maniaplanet\DedicatedServer\Structures\Player
 	     */
 	    foreach ($this->connection->getBlackList(-1, 0) as $player) {
 		$items[] = new BlacklistPlayeritem($indexNumber, $player, $this);
@@ -1569,7 +1569,7 @@ Other server might use the same blacklist file!!');
 	    $items = array();
 
 	    /**
-	     * @var \Maniaplanet\DedicatedServer\Structures\Player 
+	     * @var \Maniaplanet\DedicatedServer\Structures\Player
 	     */
 	    foreach ($this->connection->getGuestList(-1, 0) as $player) {
 		$items[] = new GuestPlayeritem($indexNumber, $player, $this);
@@ -1593,7 +1593,7 @@ Other server might use the same blacklist file!!');
 	    $items = array();
 
 	    /**
-	     * @var \Maniaplanet\DedicatedServer\Structures\Player 
+	     * @var \Maniaplanet\DedicatedServer\Structures\Player
 	     */
 	    foreach ($this->connection->getIgnoreList(-1, 0) as $player) {
 		$items[] = new IgnoredPlayeritem($indexNumber, $player, $this);

@@ -6,9 +6,9 @@ use ManiaLive\Event\Dispatcher;
 
 /**
  * ESLcup
- * 
+ *
  * Purpose of this plugin is to enhance the native cupmode to comply with ESL rules
- * 
+ *
  *
  * @author Reaby
  */
@@ -29,7 +29,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /** @var bool $enabled used to flag if mode is enabled */
     private $enabled = false;
 
-    /** @var \Maniaplanet\DedicatedServer\Structures\Player[] holds the players who finished this round in order of arrival */
+    /** @var \ManiaLive\Data\Player[] holds the players who finished this round in order of arrival */
     private $roundFinish = array();
 
     /** @var ManiaLivePlugins\eXpansion\ESLcup\Structures\CupScore[] holds winners in order of arrival */
@@ -62,7 +62,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * onReady
-     * 
+     *
      */
     public function exp_onReady() {
         if (!$this->enabled)
@@ -74,7 +74,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onOliverde8HudMenuReady($menu) {
-        
+
         $parent = $menu->findButton(array('admin', 'Game Options'));
         if (!$parent) {
             $button["style"] = "Icons128x128_1";
@@ -110,7 +110,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $button["substyle"] = "RT_Cup";
         $button['chat'] = 'admin game eslcup reset';
         $menu->addButton($parent, "Reset", $button);
-        
+
         unset($button);
         $button["style"] = "Icons128x128_1";
         $button["substyle"] = "RT_Cup";
@@ -119,7 +119,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         unset($button);
         $button["style"] = 'Icons128x32_1';
         $button["substyle"] = "RT_Cup";
-        
+
         foreach (array(2, 4, 5, 7, 9, 10, 15, 20, 25, 30,40,50,70) as $points){
             $button['chat'] = 'admin game eslcup limit '.$points;
             $menu->addButton($parent2, "$points Points", $button);
@@ -192,7 +192,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                     break;
             }
         } catch (\Exception $e) {
-            
+
         }
     }
 
@@ -296,8 +296,8 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param int $playerUid
      * @param string $login
      * @param int $timeOrScore
@@ -309,7 +309,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($timeOrScore == 0)
             return;
 
-        $player = new \Maniaplanet\DedicatedServer\Structures\Player();
+        $player = new \ManiaLive\Data\Player();
         $player->playerId = $playerUid;
         $player->login = $login;
         $player->nickName = $this->storage->getPlayerObject($login)->nickName;
@@ -318,7 +318,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * 
+     *
      * @return null
      */
     public function onEndRound() {
@@ -344,7 +344,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 if ($this->cupScores[$player->login]->finalist) {
 
                     //if ($this->lastRoundWinner == $player->login) {
-                    // and has won the last round 
+                    // and has won the last round
                     if ($ranking == 0) {
                         // mark his as a winner
                         $this->cupScores[$player->login]->hasWin = time();

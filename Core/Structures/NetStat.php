@@ -14,15 +14,15 @@ class NetStat extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure 
     public $packetLossRate;
     public $latestNetworkActivity;
     public $ipAddress;
-    
-    public function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player) {
+
+    public function __construct(\Maniaplanet\DedicatedServer\Structures\PlayerNetInfo $player) {
 	$this->login = $player->login;
 	$this->updateLatency = $player->stateUpdateLatency;
-	$this->updatePeriod = $player->stateUpdatePeriod;	
+	$this->updatePeriod = $player->stateUpdatePeriod;
 	$this->packetLossRate = $player->packetLossRate;
 	$this->latestNetworkActivity = $player->latestNetworkActivity;
-	$this->ipAddress = $player->iPAddress;	
+	$this->ipAddress = $player->iPAddress;
     }
-    
-    
+
+
 }

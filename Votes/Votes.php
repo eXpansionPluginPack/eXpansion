@@ -20,14 +20,14 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->config = Config::getInstance();
         $ratios = $this->connection->getCallVoteRatios();
         foreach ($ratios as $ratio) {
-            if ($ratio['Command'] == "*") {
-                $this->config->restartVote_ratio = floatval($ratio["Ratio"]);
-                $this->config->skipVote_ratio = floatval($ratio["Ratio"]);
+            if ($ratio->command == "*") {
+                $this->config->restartVote_ratio = floatval($ratio->ratio);
+                $this->config->skipVote_ratio = floatval($ratio->ratio);
             }
-            if ($ratio['Command'] == "RestartMap")
-                $this->config->restartVote_ratio = floatval($ratio["Ratio"]);
-            if ($ratio['Command'] == "NextMap")
-                $this->config->skipVote_ratio = floatval($ratio["Ratio"]);
+            if ($ratio->command == "RestartMap")
+                $this->config->restartVote_ratio = floatval($ratio->ratio);
+            if ($ratio->command == "NextMap")
+                $this->config->skipVote_ratio = floatval($ratio->ratio);
         }
 
         if ($this->config->restartVote_ratio == -1)

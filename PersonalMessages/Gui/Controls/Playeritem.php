@@ -13,7 +13,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
     private $sendAction;
     private $frame;
 
-    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller) {
+    function __construct($indexNumber, \ManiaLive\Data\Player $player, $controller) {
         $sizeX = 120;
         $sizeY = 6;
         $this->player = $player;
@@ -69,16 +69,16 @@ class Playeritem extends \ManiaLive\Gui\Control {
     }
 
     protected function onResize($oldX, $oldY) {
-        
+
     }
 
     function onDraw() {
-        
+
     }
 
     // manialive 3.1 override to do nothing.
     function destroy() {
-        
+
     }
 
     /*

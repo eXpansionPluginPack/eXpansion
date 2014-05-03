@@ -14,14 +14,14 @@ class PlayerStatusItem extends \ManiaLive\Gui\Control {
     protected $forceSpec;
 
     /**
-     * 
+     *
      * @param int $indexNumber
-     * @param \Maniaplanet\DedicatedServer\Structures\Player $player
+     * @param PlayerStatus $player
      * @param int $score
      * @param type $controller
      * @param int $sizeX
      */
-    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus $player, $controller, $gameMode, $isAdmin, $sizeX) {
+    function __construct($indexNumber, PlayerStatus $player, $controller, $gameMode, $isAdmin, $sizeX) {
         $sizeY = 6;
         $login = $player->login;
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);

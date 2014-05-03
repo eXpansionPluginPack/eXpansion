@@ -42,7 +42,7 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
 
     public function sendRelay($data) {
 	$data = gzdeflate(serialize($data));
-	$this->connection->tunnelSendDataFromString(implode(",", $this->connectedRelays), $data);
+	$this->connection->tunnelSendData(implode(",", $this->connectedRelays), $data);
     }
 
     public function sendMaster($data) {
@@ -52,7 +52,7 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
 	//print_r($data);
 
 	$data = gzdeflate(serialize($data));
-	$this->connection->tunnelSendDataFromString($this->relayMaster, $data);
+	$this->connection->tunnelSendData($this->relayMaster, $data);
     }
 
     public function queryMaster($method, $value, $callback) {
@@ -61,11 +61,11 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
 	echo "Querying: $method";
 
 	$data = gzdeflate(serialize(new Query($method, $value, $callback, $this->storage->serverLogin)));
-	$this->connection->tunnelSendDataFromString($this->relayMaster, $data);
+	$this->connection->tunnelSendData($this->relayMaster, $data);
     }
 
     public function queryRelay($method, $data, $callback) {
-	
+
     }
 
     private function syncMap($params) {
@@ -110,61 +110,61 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
     }
 
     final public function onBeginMatch() {
-	
+
     }
 
     final public function onBeginRound() {
-	
+
     }
 
     final public function onBillUpdated($billId, $state, $stateName, $transactionId) {
-	
+
     }
 
     final public function onEcho($internal, $public) {
-	
+
     }
 
     final public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
-	
+
     }
 
     final public function onEndMatch($rankings, $winnerTeamOrMap) {
-	
+
     }
 
     final public function onEndRound() {
-	
+
     }
 
     final public function onManualFlowControlTransition($transition) {
-	
+
     }
 
     final public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
-	
+
     }
 
     final public function onModeScriptCallback($param1, $param2) {
-	
+
     }
 
     final public function onPlayerAlliesChanged($login) {
-	
+
     }
 
     final public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
-	
+
     }
 
     final public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex) {
-	
+
     }
 
     final public function onPlayerConnect($login, $isSpectator) {
 
 	$this->connectedRelays = array();
-	foreach ($this->connection->getPlayerList(-1, 0, 3) as $spec) {
+	foreach ($this->connection->getPlayerList(-1, 0, 2) as $spec) {
 	  //  print_r($spec);
 
 	    // if ($spec->isServer == true && $spec->spectatorStatus == 2551101 && $spec->login != $this->relayMaster && $spec->login != $this->storage->serverLogin) {
@@ -177,43 +177,43 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
     }
 
     final public function onPlayerDisconnect($login, $disconnectionReason) {
-	
+
     }
 
     final public function onPlayerFinish($playerUid, $login, $timeOrScore) {
-	
+
     }
 
     final public function onPlayerIncoherence($playerUid, $login) {
-	
+
     }
 
     final public function onPlayerInfoChanged($playerInfo) {
-	
+
     }
 
     final public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries) {
-	
+
     }
 
     final public function onServerStart() {
-	
+
     }
 
     final public function onServerStop() {
-	
+
     }
 
     final public function onStatusChanged($statusCode, $statusName) {
-	
+
     }
 
     final public function onTunnelDataReceived($playerUid, $login, $data) {
 	$obj = unserialize(gzinflate($data->scalar));
-	
+
 	echo "recieved tunnelData!!";
 	var_dump($obj);
-	
+
 	if ($obj instanceof \ManiaLivePlugins\eXpansion\Core\Structures\Callback) {
 	    try {
 		echo "Callback:";
@@ -247,7 +247,7 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
 		var_dump($ret);
 
 		$data = gzdeflate(serialize(new Callback($obj->callback, array($ret))));
-		$this->connection->tunnelSendDataFromString($obj->from, $data);
+		$this->connection->tunnelSendData($obj->from, $data);
 	    } catch (\Exception $e) {
 		echo "Couldn't query! " . $e->getMessage();
 	    }
@@ -255,7 +255,7 @@ class RelayLink implements \ManiaLive\DedicatedApi\Callback\Listener {
     }
 
     final public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {
-	
+
     }
 
 }

@@ -9,7 +9,7 @@ class Run extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
     public $player;
     public $checkpoints = array();
 
-    function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player) {
+    function __construct(\ManiaLive\Data\Player $player) {
 	$this->player = $player;
 	$this->totalTime = $player->bestTime;
 	$this->nickname = $player->nickName;

@@ -12,7 +12,7 @@ class MapWish {
     /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     public $map;
 
-    /** @var \Maniaplanet\DedicatedServer\Structures\Player */
+    /** @var \ManiaLive\Data\Player */
     public $player;
 
     /** @bool - For temporary additions */
@@ -20,11 +20,11 @@ class MapWish {
 
     /**
      * MapWish($player, $map, $isTemp);
-     * @param \Maniaplanet\DedicatedServer\Structures\Player $player
+     * @param \ManiaLive\Data\Player $player
      * @param \Maniaplanet\DedicatedServer\Structures\Map $map
      * @param bool $isTemp
      */
-    public function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player, \Maniaplanet\DedicatedServer\Structures\Map $map, $isTemp = false) {
+    public function __construct(\ManiaLive\Data\Player $player, \Maniaplanet\DedicatedServer\Structures\Map $map, $isTemp = false) {
         $this->map = $map;
         $this->player = $player;
         $this->isTemp = $isTemp;

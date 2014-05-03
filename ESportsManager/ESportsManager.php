@@ -111,7 +111,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * generates totally new playerStatuses objects 
+     * generates totally new playerStatuses objects
      * @return \ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus[]
      */
     private function generatePlayerStatuses() {
@@ -257,7 +257,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     *  
+     *
      */
     private function checkPlayerStatuses() {
         foreach ($this->storage->players as $player) {
@@ -307,7 +307,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerInfoChanged($playerInfo) {
-        $player = \Maniaplanet\DedicatedServer\Structures\Player::fromArray($playerInfo);
+        $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
         $login = $player->login;
 
         if ($player->playerId == 0)
