@@ -13,7 +13,7 @@ use ManiaLive\Gui\ActionHandler;
 class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     private $serverName, $serverComment, $maxPlayers, $maxSpec, $minLadder, $maxLadder, $serverPass, $serverSpecPass, $refereePass;
-    private $cbPublicServer, $cbLadderServer, $cbAllowMapDl, $cbAllowp2pDown, $cbAllowp2pUp, $cbValidation, $cbReferee;
+    private $cbPublicServer, $cbLadderServer, $cbAllowMapDl, $cbAllowp2pDown, $cbAllowp2pUp, $cbReferee;
     private $frameCb;
     private $frameInputbox, $frameLadder;
     private $buttonOK, $buttonCancel;
@@ -163,12 +163,6 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->cbAllowp2pUp->setText(__("Allow Peer-2-Peer upload",$this->getRecipient()));
         $this->frameCb->addComponent($this->cbAllowp2pUp);
 
-        // checkbox for changing validation seed
-        $this->cbValidation = new Checkbox(4, 4, 50);
-        $this->cbValidation->setStatus($server->useChangingValidationSeed);
-        $this->cbValidation->setText(__("Allow changing validation seed",$this->getRecipient()));
-        $this->frameCb->addComponent($this->cbValidation);
-
         // checkbox for Enable referee mode
         $this->cbReferee = new Checkbox(4, 4, 50);
         $this->cbReferee->setStatus($server->refereeMode);
@@ -237,7 +231,6 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->cbAllowMapDl->SetIsWorking(AdminGroups::hasPermission($login, 'server_map'));
         $this->cbAllowp2pDown->SetIsWorking(AdminGroups::hasPermission($login, 'server_admin'));
         $this->cbAllowp2pUp->SetIsWorking(AdminGroups::hasPermission($login, 'server_admin'));
-        $this->cbValidation->SetIsWorking(AdminGroups::hasPermission($login, 'server_validation'));
         $this->cbReferee->SetIsWorking(AdminGroups::hasPermission($login, 'server_refmode'));
         
         parent::onDraw();
@@ -252,7 +245,6 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->cbLadderServer->destroy();
         $this->cbPublicServer->destroy();
         $this->cbReferee->destroy();
-        $this->cbValidation->destroy();
         $this->connection = null;
         $this->storage = null;
         $this->maxLadder->destroy();
