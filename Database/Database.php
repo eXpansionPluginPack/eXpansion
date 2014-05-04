@@ -69,7 +69,6 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                             " . $this->db->quote(String::stripColors($player->nickName)) . ",
                             " . $this->db->quote($time) . ",
                             " . $this->db->quote($player->iPAddress) . ",
-                            " . $this->db->quote($player->onlineRights) . ",
                             " . $this->db->quote($player->path) . ",
                             0,
                             0
@@ -81,8 +80,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 `player_nickname` = " . $this->db->quote($player->nickName) . ",
                 `player_nicknameStripped` = " . $this->db->quote(String::stripColors($player->nickName)) . ",
                 `player_updated` = " . $this->db->quote($time) . ",
-                `player_ip` =  " . $this->db->quote($player->iPAddress) . ",
-                `player_onlinerights` = " . $this->db->quote($player->onlineRights) . "
+                `player_ip` =  " . $this->db->quote($player->iPAddress) . "
              WHERE
              `player_login` = " . $this->db->quote($login) . ";";
 	    $this->db->execute($q);

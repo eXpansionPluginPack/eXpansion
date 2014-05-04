@@ -542,7 +542,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
-	$this->ranks_reset = true;
+	//$this->ranks_reset = true;
     }
 
     /**
