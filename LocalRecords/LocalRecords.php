@@ -719,7 +719,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		    $this->exp_chatSendServerMessage($msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
 		}
 
-		\ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->currentChallengeRecords));
+		\ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->currentChallengeRecords, $nrecord));
 	    }
 	    //First record the player drove
 	    else if ($nrecord->place <= $this->config->recordsCount) {
@@ -735,9 +735,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		    $this->exp_chatSendServerMessage($msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time));
 		}
 
-		\ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->currentChallengeRecords));
+		\ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->currentChallengeRecords, $nrecord));
 	    }
 	    \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_PERSONAL_BEST, $nrecord));
+	}else{
+	    \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_FINISH, $login));
 	}
     }
 
