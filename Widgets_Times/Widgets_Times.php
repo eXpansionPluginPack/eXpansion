@@ -216,6 +216,10 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onDedimaniaGetRecords($data) {
 	TimePanel::$dedirecords = $data['Records'];
     }
+    
+    public function onRecordPlayerFinished($login){
+	
+    }
 
     public function onDedimaniaOpenSession() {
 

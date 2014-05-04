@@ -30,7 +30,8 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         parent::exp_onLoad();
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_PERSONAL_BEST);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
-        Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
+        Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
+        Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_FINISH);
     }
 
     public function exp_onReady() {
@@ -56,7 +57,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         }
     }
 
-    function onUpdateRecords($record) {
+    function onRecordsLoaded($record) {
         foreach ($this->storage->players as $player)
             $this->redrawWidget($player->login);
         foreach ($this->storage->spectators as $player)
@@ -67,11 +68,13 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $this->redrawWidget($record->login, $record);
     }
 
-    public function onNewRecord($records) {
-        foreach ($this->storage->players as $player)
-            $this->redrawWidget($player->login);
-        foreach ($this->storage->spectators as $player)
-            $this->redrawWidget($player->login);
+    public function onNewRecord($records, Record $record) {
+	$this->redrawWidget($record->login);
+    }
+    
+    public function onRecordPlayerFinished($login){
+	echo $login."\n";
+	$this->redrawWidget($login);
     }
 
     public function redrawWidget($login = null) {

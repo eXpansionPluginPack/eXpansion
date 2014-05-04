@@ -8,6 +8,7 @@ class Event extends \ManiaLive\Event\Event {
     const ON_UPDATE_RECORDS = 2;
     const ON_PERSONAL_BEST = 4;
     const ON_RECORDS_LOADED = 8;
+    const ON_NEW_FINISH = 16;
 
     protected $params;
 
@@ -21,13 +22,15 @@ class Event extends \ManiaLive\Event\Event {
     function fireDo($listener) {
         $p = $this->params;
         switch ($this->onWhat) {
-            case self::ON_NEW_RECORD: $listener->onNewRecord($p[0]);
+	    case self::ON_NEW_RECORD: $listener->onNewRecord($p[0], $p[1]);
                 break;
             case self::ON_UPDATE_RECORDS: $listener->onUpdateRecords($p[0]);
                 break;
             case self::ON_PERSONAL_BEST: $listener->onPersonalBestRecord($p[0]);
                 break;
             case self::ON_RECORDS_LOADED: $listener->onRecordsLoaded($p[0]);
+                break;
+	    case self::ON_NEW_FINISH: $listener->onRecordPlayerFinished($p[0]);
                 break;
         }
     }
