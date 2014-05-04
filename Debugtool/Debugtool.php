@@ -26,11 +26,11 @@ namespace ManiaLivePlugins\eXpansion\Debugtool;
  *
  * @author Petri
  */
-class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Debugtool extends \ManiaLive\PluginHandler\Plugin {
 
-    public function exp_onReady() {			
-	//$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
-	//$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+    public function onReady() {			
+	$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
+	$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 	//\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
 	
 	/*$window = Gui\testWindow::Create("reaby");
