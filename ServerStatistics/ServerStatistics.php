@@ -116,14 +116,12 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
         $this->nbPlayer = 0;
         foreach ($this->storage->players as $player) {
-            if ($player->isConnected) {
-                $this->players[$player->login] = $player->login;
-            }
+            $this->players[$player->login] = $player->login;
+
         }
         foreach ($this->storage->spectators as $player) {
-            if ($player->isConnected) {
-                $this->spectators[$player->login] = $player->login;
-            }
+            $this->spectators[$player->login] = $player->login;
+
         }
         $this->nbSpecMax = sizeof($this->spectators);
         $this->nbPlayerMax = sizeof($this->players);
@@ -356,17 +354,14 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
         $this->players = array();
         foreach ($this->storage->players as $player) {
-            if ($player->isConnected) {
-                $this->nbPlayer++;
-                $this->players[$player->login] = $player->login;
-            }
+	    $this->nbPlayer++;
+	    $this->players[$player->login] = $player->login;
+
         }
 
         $this->spectators = array();
         foreach ($this->storage->spectators as $player) {
-            if ($player->isConnected) {
-                $this->spectators[$player->login] = $player->login;
-            }
+	    $this->spectators[$player->login] = $player->login;
         }
         $this->nbPlayerMax = sizeof($this->players);
         $this->nbSpecMax = sizeof($this->spectators);
