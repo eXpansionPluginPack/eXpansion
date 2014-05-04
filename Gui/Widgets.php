@@ -122,11 +122,11 @@ class Widgets extends \ManiaLib\Utils\Singleton {
     public $DonatePanel_autoCloseTimeout = array('default' => 0);
     
     public $AdminPanel_posX = array('default' => -160);
-    public $AdminPanel_posY = array('TM' => -44);
+    public $AdminPanel_posY = array('default' => -44);
     public $AdminPanel_autoCloseTimeout = array('default' => 0);
     
     public $PersonalChatWidget_posX = array('default' => -160);
-    public $PersonalChatWidget_posY = array('TM' => -56);
+    public $PersonalChatWidget_posY = array('default' => -56);
     public $PersonalChatWidget_autoCloseTimeout = array('default' => 0);
 
 }
