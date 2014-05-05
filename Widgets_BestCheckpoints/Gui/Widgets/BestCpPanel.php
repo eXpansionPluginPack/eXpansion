@@ -73,7 +73,7 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
             $nickData = 'Text[Integer]';
         } else {
             $timeData = '[' . $timeData . ']';
-            $nickData = '[' . $nickData . ']';
+            $nickData = '[' . Gui::fixHyphens($nickData) . ']';
         }
 
         $this->timeScript->setParam("cpTimes", $timeData);
