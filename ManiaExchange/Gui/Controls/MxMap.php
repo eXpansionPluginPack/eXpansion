@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class MxMap extends \ManiaLive\Gui\Control {
 
@@ -62,12 +63,12 @@ class MxMap extends \ManiaLive\Gui\Control {
         
         $this->label = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->label->setAlign('left', 'center');
-        $this->label->setText(Formatting::stripColors(Formatting::stripStyles($map->name)));
+        $this->label->setText(Gui::fixHyphens(Formatting::stripColors(Formatting::stripStyles($map->name))));
         $this->frame->addComponent($this->label);
 
         $info = new \ManiaLib\Gui\Elements\Label(25, 4);
         $info->setAlign('left', 'center');
-        $info->setText('$000' . $map->username);
+        $info->setText('$000' . Gui::fixHyphens($map->username));
         $info->setAction($this->actionSearch);
         $info->setStyle("TextCardSmallScores2");
         $info->setScriptEvents(true);

@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Widgets;
 
 use \ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint;
 use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Controls\CheckpointElem;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
@@ -55,7 +56,7 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
                 $nickData .= ', ';
             }
             $timeData .= '' . $x . '=>' . $cp->time;
-            $nickData .= '' . $x . '=>"' . $this->fixHyphens($cp->nickname) . '"';
+            $nickData .= '' . $x . '=>"' . Gui::fixHyphens($cp->nickname) . '"';
             $x++;
         }
 
@@ -91,13 +92,7 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
         parent::destroy();
     }
-
-    protected function fixHyphens($string) {
-        $out = str_replace('"', "'", $string);
-        $out = str_replace('\\', '\\\\', $out);
-        return $out;
-    }
-
+    
 }
 
 ?>

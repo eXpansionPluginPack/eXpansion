@@ -7,6 +7,7 @@ use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\MapitemCurrent;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Maps\Maps;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
@@ -340,8 +341,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             if ($sortableMap->rating->rating == -1)
                 $rate = " - ";
 
-            $this->pager->addSimpleItems(array($sortableMap->map->name => $queueMapAction,
-		$sortableMap->map->author => -1,
+            $this->pager->addSimpleItems(array(Gui::fixHyphens($sortableMap->map->name) => $queueMapAction,
+		Gui::fixHyphens($sortableMap->map->author) => -1,
 		$sortableMap->map->environnement => -1,
                 \ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime) => -1,
                 $sortableMap->localrecord => -1,

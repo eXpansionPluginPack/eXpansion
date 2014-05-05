@@ -7,7 +7,7 @@ use \ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint;
 
 class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
-    private $bestCps;
+    private $bestCps = array();
 
     function exp_onInit() {
 	$this->exp_addTitleSupport("TM");

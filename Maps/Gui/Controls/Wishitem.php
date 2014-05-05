@@ -6,6 +6,7 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 use \ManiaLib\Utils\Formatting;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class Wishitem extends \ManiaLive\Gui\Control {
 
@@ -51,7 +52,7 @@ class Wishitem extends \ManiaLive\Gui\Control {
 
         $this->label = new \ManiaLib\Gui\Elements\Label(70, 4);
         $this->label->setAlign('left', 'center');
-        $this->label->setText(Formatting::stripColors($map->map->name, "999f"));
+        $this->label->setText(Gui::fixHyphens(Formatting::stripColors($map->map->name, "999f")));
         $this->label->setScale(0.8);
         $this->frame->addComponent($this->label);
 
@@ -70,7 +71,7 @@ class Wishitem extends \ManiaLive\Gui\Control {
         $this->time = new \ManiaLib\Gui\Elements\Label(30, 4);
         $this->time->setAlign('left', 'center');
         $this->time->setScale(0.8);
-        $this->time->setText($map->player->nickName);
+        $this->time->setText(Gui::fixHyphens($map->player->nickName));
         //$this->time->setText(\ManiaLive\Utilities\Time::fromTM($map->goldTime));
         $this->frame->addComponent($this->time);
 

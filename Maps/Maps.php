@@ -693,6 +693,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function preloadHistory() {
         $mapList = $this->connection->getMapList(-1, 0);
+	
+	print_r($mapList);
+	
         $mapCount = count($mapList);
         if ($mapCount == 0) {
             return;
