@@ -344,11 +344,14 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
 
+	$cons = "";
 	//Checking for lap constraints
 	if ($this->useLapsConstraints()) {
 	    $nbLaps = $this->getNbOfLaps();
+	    $cons .= " AND rank_nbLaps = " . $this->getNbOfLaps();
 	} else {
 	    $nbLaps = 1;
+	    $cons .= " AND rank_nbLaps = 1";
 	}
 
 	if (($this->debug & self::DEBUG_LAPS) == self::DEBUG_LAPS)
@@ -365,10 +368,18 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	foreach ($this->currentChallengePlayerRecords as $i => $record) {
 	    $updated = $updated || $this->updateRecordInDatabase($record, $nbLaps);
 	}
-
+	
 	if ($updated) {
 	    $this->updateRanks($this->storage->currentMap->uId, $nbLaps);
+	}else{
+	    $q = "SELECT rank_playerlogin FROM `exp_ranks`"
+		    . " WHERE rank_challengeuid = " . $this->db->quote($this->storage->currentMap->uId).$cons;	    
+	    $data = $this->db->execute($q);
+	    echo "Size : ".sizeof($data->fetchArray())."\n";
+	    if(sizeof($data->fetchArray()) == 0)
+		$this->updateRanks($this->storage->currentMap->uId, $nbLaps, true);
 	}
+	
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
@@ -1229,20 +1240,32 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	return $this->player_ranks;
     }
 
-    /**
-     * 
-     */
+    
     private function resetRanks() {
+	$fullStart = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Reseting Ranks");
+	$delete = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Deleting existing Ranks");
+	
 	$this->db->execute('DELETE FROM exp_ranks WHERE rank_challengeuid IN (' . $this->getUidSqlString() . ')');
 	$this->ranks = array();
 	$this->player_ranks = array();
+	\ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($delete, "[LocalRecods]Deleting existing Ranks");
 
+	$i = 0;
 	foreach ($this->storage->maps as $map) {
-	    $this->updateRanks($map->uId, 1);
+	    $this->updateRanks($map->uId, 1, true);
+	    if($i > $this->config->nbMap_rankProcess)
+		break;
+	    $i++;
 	}
+	\ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($fullStart, "[LocalRecods]Reseting Ranks");
     }
 
-    private function updateRanks($challengeId, $nbLaps) {
+    private function updateRanks($challengeId, $nbLaps, $log = true) {
+	$id = -1;
+	if($log){
+	    $id = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Updating Ranks for $challengeId");
+	}
+	
 	$this->db->execute('DELETE FROM exp_ranks 
                             WHERE rank_challengeuid = \'' . $challengeId . '\'
                                 AND rank_nbLaps = ' . $nbLaps);
@@ -1263,6 +1286,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 LIMIT 0, ' . $this->config->recordsCount;
 
 	$this->db->execute($q);
+	\ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($id, "[LocalRecods]Updating Ranks for $challengeId");
     }
 
     /**
@@ -1369,7 +1393,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return array
      */
     public function getRanks() {
-	// if ((empty($this->ranks) && $this->rank_updated) || (($this->map_count % $this->config->nbMap_rankProcess) == 0 && $this->rank_updated)) {
 	if ((empty($this->ranks) && $this->rank_needUpdated) && !$this->exp_isRelay()) {
 	    $this->rank_needUpdated = false;
 	    $this->total_ranks = -1;

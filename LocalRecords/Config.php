@@ -9,7 +9,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $recordsCount = 100; // number of records to save
     public $recordPublicMsgTreshold = 15; // records rank number to show public message
     public $lapsModeCount1lap = true; 
-    public $nbMap_rankProcess = 1;
+    public $nbMap_rankProcess = 50;
     public $ranking = true;
     public $rankRefresh = 5;
     public $msg_secure = '#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
