@@ -68,14 +68,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$this->registerVariable($var);
 	
 	
-	$var = new BoundedInt("nbMap_rankProcess", "Process rankings every <x> maps. (min: 1, max: 10)", $config);	
+	$var = new Int("nbMap_rankProcess", "Number of Maps to Process", $config);
 	$var->setGroup("Records");
-	$var->setMin(1);
-	$var->setMax(10);
-	$var->setDefaultValue(15);
-	
-	
-
+	$var->setDescription("Number of consecutive maps for which ranking will be calculated at first start");
+	$var->setDefaultValue(100);
     }
 
 }
