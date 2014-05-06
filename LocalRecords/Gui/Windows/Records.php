@@ -120,7 +120,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 		Gui::fixHyphens($record->nickName) => -1,
 		\ManiaLive\Utilities\Time::fromTM($record->time)." " => -1,
                 \ManiaLive\Utilities\Time::fromTM($record->avgScore)."" => -1,
-                \ManiaLive\Utilities\Time::fromTM($record->nbFinish) => -1
+                "#".$record->nbFinish => -1
             ));
 	    $x++;
         }
