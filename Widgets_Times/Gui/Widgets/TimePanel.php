@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_Times\Gui\Widgets;
 
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     const Mode_BestOfAll = 1;
@@ -116,7 +116,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	
 	$this->nScript->setParam('checkpoints', $checkpoints);
 	$this->nScript->setParam('totalCp', $this->totalCp);
-	$this->nScript->setParam('target', $this->target);
+	$this->nScript->setParam('target', Gui::fixHyphens($this->target));
 	$this->nScript->setParam('lapRace', $bool);
 	parent::onDraw();
     }
