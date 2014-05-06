@@ -86,7 +86,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
     }
 
     function setTarget($login) {
-	$this->target = $login;
+	$this->target = Gui::fixHyphens($login);
     }
 
     function setMapInfo(\Maniaplanet\DedicatedServer\Structures\Map $map) {

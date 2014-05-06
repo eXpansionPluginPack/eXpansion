@@ -6,7 +6,7 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\Recorditem;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
-
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 class DediPanel extends LocalPanel {
 
     function exp_onBeginConstruct() {
@@ -44,8 +44,8 @@ class DediPanel extends LocalPanel {
 		$recsData .= ', ';
 		$nickData .= ', ';
 	    }
-	    $recsData .= '"' . $this->fixDashes($record['Login']) . '"=> ' . $record['Best'];
-	    $nickData .= '"' . $this->fixDashes($record['Login']) . '"=>"' . $this->fixHyphens($record['NickName']) . '"';
+	    $recsData .= '"' . Gui::fixHyphens($record['Login']) . '"=> ' . $record['Best'];
+	    $nickData .= '"' . Gui::fixHyphens($record['Login']) . '"=>"' . Gui::fixHyphens($record['NickName']) . '"';
 	    $index++;
 	}
 	$this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
@@ -65,7 +65,7 @@ class DediPanel extends LocalPanel {
 	if (count(\ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection::$players) > 0) {
 	    $out = "[";
 	    foreach (\ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection::$players as $dediplayer) {
-		$out .= '"' . $dediplayer->login . '" => ' . $dediplayer->maxRank . ',';
+		$out .= '"' . Gui::fixHyphens($dediplayer->login) . '" => ' . $dediplayer->maxRank . ',';
 	    }
 	    $out = trim($out, ",");
 	    $out = $out . "]";
