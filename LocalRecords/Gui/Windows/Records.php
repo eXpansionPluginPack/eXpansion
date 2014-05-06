@@ -16,6 +16,10 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $frame;
     private $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
     private $widths = array(1, 5, 3, 3, 2);
+   
+    /**
+     * @var \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager
+     */
     private $pager;
     private $items = array();
     private $button_sectors;
@@ -25,7 +29,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $sizeX = 100;
         $scaledSizes = Gui::getScaledSize($this->widths, $sizeX / .8);
 
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager();
         $this->pager->setPosX(0);
         $this->pager->setPosY(0);
         $this->mainFrame->addComponent($this->pager);
@@ -76,7 +80,8 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->label_score->setSizeX($scaledSizes[2]);
         $this->label_avgScore->setSizeX($scaledSizes[3]);
         $this->label_nbFinish->setSizeX($scaledSizes[4]);
-        $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 7);
+        $this->pager->setSize($this->getSizeX() -1, $this->getSizeY() - 12);
+        $this->pager->setPosY(-7);
         foreach ($this->items as $item)
             $item->setSizeX($this->getSizeX());
 	
@@ -105,11 +110,22 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->button_sectors->setVisibility($currentMap);
         $login = $this->getRecipient();
 	$x = 0;
+	
+	RecItem::$widths = $this->widths;
+	
         while ($x < $limit && $x < sizeof($recs)) {
-            $this->items[$x] = new RecItem($x, $login, $recs[$x], $this->widths);
-            $this->pager->addItem($this->items[$x]);
-            $x++;
+	    $record = $recs[$x];
+	    $rank = $x+1;
+            $this->pager->addSimpleItems(array($rank => -1,
+		Gui::fixHyphens($record->nickName) => -1,
+		\ManiaLive\Utilities\Time::fromTM($record->time)." " => -1,
+                \ManiaLive\Utilities\Time::fromTM($record->avgScore)."" => -1,
+                \ManiaLive\Utilities\Time::fromTM($record->nbFinish) => -1
+            ));
+	    $x++;
         }
+	$this->pager->setContentLayout('\ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls\RecItem');
+	$this->pager->update($this->getRecipient());
     }
 
 }

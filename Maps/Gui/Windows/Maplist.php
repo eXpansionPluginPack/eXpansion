@@ -7,7 +7,6 @@ use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\MapitemCurrent;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Maps\Maps;
-use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
