@@ -134,7 +134,6 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 	    $this->frame->addComponent($layout);
 	}
 	$this->rowPerPage = $limit;
-	
 	$this->nbElemParColumn = $layout->getNbTextColumns();
     }
 
