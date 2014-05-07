@@ -146,17 +146,17 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 		    break;
 	    }
 	} else {
-	    $query = 'http://tm.mania-exchange.com/tracksearch?mode=0&vm=0';
+	    $query = 'http://tm.mania-exchange.com/tracksearch2/search?api=on&format=json';
 
 	    switch ($info->titleId) {
 		case "TMCanyon":
-		    $query .= "&environments=1";
+		    $query .= "&tpack=TMCanyon";
 		    break;
 		case "TMStadium":
-		    $query .= "&environments=2";
+		    $query .= "&tpack=TMStadium";
 		    break;
 		case "TMValley":
-		    $query .= "&environments=3";
+		    $query .= "&tpack=TMValley";
 		    break;
 		default :
 		    break;
@@ -170,7 +170,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    }
 	    if (!empty($author))
 		$out = "";
-	    $query .= '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . $out . '&mtype=All&priord=2&limit=100&tracksearch&api=on&format=json';
+	    $query .= '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . $out . '&mtype=All&priord=2&limit=100';
 	}
 	/*
 	  $ch = curl_init($query);
@@ -192,7 +192,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	 */
 	$query = $query . "&" . \ManiaLivePlugins\eXpansion\ManiaExchange\ManiaExchange::$betakey;
 	$access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
-	$access->httpGet($query, Array($this, "xSearch"), null, "Manialive/eXpansion MXapi [search] ver 0.1", "application/json");
+	$access->httpGet($query, Array($this, "xSearch"), null, "Manialive/eXpansion MXapi [search] ver 0.2", "application/json");
 	if ($length !== null)
 	    $this->lenght->setSelected(intval($length) + 1);
 	if ($style !== null)
@@ -201,9 +201,21 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     function xSearch($data) {
+
 	if (!$data)
 	    return;
-	$this->maps = Map::fromArrayOfArray(json_decode($data, true));
+	$json = json_decode($data, true);
+
+	if ($json === false) {
+	    $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error while processing json data from MX.", $this->sizeX));
+	    return;
+	}
+	if (!array_key_exists("results", $json)) {
+	    $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error: MX returned no results.", $this->sizeX));
+	    return;
+	}
+	
+	$this->maps = Map::fromArrayOfArray($json['results']);
 
 	foreach ($this->items as $item)
 	    $item->erase();
@@ -218,7 +230,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "No maps found with this search terms.", $this->sizeX));
 	} else {
 	    foreach ($this->maps as $map) {
-		$this->items[$x] = new MxMap($x, $map, $this, $isadmin, $this->sizeX);
+		$this->items[$x] = new MxMap($x, $map, $this, $isadmin, $this->sizeX - 6);
 		$this->pager->addItem($this->items[$x]);
 		$x++;
 	    }

@@ -23,7 +23,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /** @var \ManiaLivePlugins\eXpansion\Core\DataAccess */
     private $dataAccess;
-    public static $betakey = "key=t42kEMjzH7xpAjBFHAvEkC7rqAlw";
+    public static $betakey = "";
 
     public function exp_onInit() {
 	$this->config = Config::getInstance();
@@ -180,7 +180,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	} else {
 	    $query = 'http://tm.mania-exchange.com/tracks/download/' . $mxId;
 	}
-	$query = $query ."?". self::$betakey;
+	$query = $query . "?" . self::$betakey;
 	$this->exp_chatSendServerMessage("Download starting for: $mxId", $login);
 	$this->dataAccess->httpGet($query, array($this, $redirect), array($login, $mxId), "Manialive/eXpansion MXapi [getter] ver 0.1", "application/json");
     }
@@ -207,6 +207,12 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if ($this->dataAccess->save($file, $data)) {
 
 	    try {
+		if (!$this->connection->checkMapForCurrentServerParams($file)) {
+		    $msg = exp_getMessage("Map is not compatible with current server settings, map not added.");
+		    $this->exp_chatSendServerMessage($msg, $login);
+		    return;
+		}
+
 		$this->connection->addMap($file);
 
 		$map = $this->connection->getMapInfo($file);
@@ -243,6 +249,11 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	}
 
 	if ($this->dataAccess->save($file, $data)) {
+	    if (!$this->connection->checkMapForCurrentServerParams($file)) {
+		$msg = exp_getMessage("Map is not compatible with current server settings, map not added.");
+		$this->exp_chatSendServerMessage($msg, $login);
+		return;
+	    }
 	    $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\Maps\\Maps', 'queueMxMap', $login, $file);
 	}
     }
@@ -288,7 +299,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	} else {
 	    $query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
 	}
-	$query = $query ."?". self::$betakey;
+	$query = $query . "?" . self::$betakey;
 	$this->dataAccess->httpGet($query, Array($this, "xVote"), array($login, $mxId), "Manialive/eXpansion MXapi [search] ver 0.1", "application/json");
     }
 
