@@ -86,10 +86,10 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->mainFrame->addComponent($this->searchframe);
 
 	$this->frame = new \ManiaLive\Gui\Controls\Frame();
-	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
+	//$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
 
-	$this->header = new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\Header();
-	$this->frame->addComponent($this->header);
+	/* $this->header = new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\Header();
+	$this->frame->addComponent($this->header);  */
 
 	$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
 	$this->frame->addComponent($this->pager);
@@ -99,11 +99,10 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
 	parent::onResize($oldX, $oldY);
-	$this->frame->setSizeX($this->sizeX);
-	$this->header->setSize($this->sizeX, 5);
-	$this->pager->setStretchContentX($this->sizeX);
-	$this->pager->setSize($this->sizeX, $this->sizeY - 22);
-	$this->searchframe->setPosition(8, -$this->sizeY + 6);
+	$this->frame->setSizeX($this->sizeX);	
+	$this->pager->setSize($this->sizeX-3, $this->sizeY - 12);
+	$this->searchframe->setPosition(8, -3);
+	$this->frame->setPosition(0,-6);
     }
 
     public function setPlugin($plugin) {
@@ -116,7 +115,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 	$this->pager->clearItems();
 	$this->items = array();
-	$this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Searching, please wait", $this->sizeX));
+	$this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Searching, please wait", $this->sizeX-6));
 	$this->redraw($this->getRecipient());
 
 	$info = $this->connection->getVersion();
@@ -207,11 +206,11 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$json = json_decode($data, true);
 
 	if ($json === false) {
-	    $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error while processing json data from MX.", $this->sizeX));
+	    $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error while processing json data from MX.", $this->sizeX-6));
 	    return;
 	}
 	if (!array_key_exists("results", $json)) {
-	    $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error: MX returned no results.", $this->sizeX));
+	    $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error: MX returned no results.", $this->sizeX-6));
 	    return;
 	}
 	
@@ -227,10 +226,10 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$login = $this->getRecipient();
 	$isadmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps');
 	if (count($this->maps) == 0) {
-	    $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "No maps found with this search terms.", $this->sizeX));
+	    $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "No maps found with this search terms.", $this->sizeX-6));
 	} else {
 	    foreach ($this->maps as $map) {
-		$this->items[$x] = new MxMap($x, $map, $this, $isadmin, $this->sizeX - 6);
+		$this->items[$x] = new MxMap($x, $map, $this, $isadmin, $this->sizeX - 9);
 		$this->pager->addItem($this->items[$x]);
 		$x++;
 	    }
@@ -271,7 +270,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->lenght->destroy();
 	$this->inputMapName->destroy();
 	$this->inputAuthor->destroy();
-	$this->header->destroy();
+	// $this->header->destroy();
 	$this->pager->destroy();
 	$this->connection = null;
 	$this->storage = null;
