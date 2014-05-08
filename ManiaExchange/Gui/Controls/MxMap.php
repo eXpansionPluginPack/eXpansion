@@ -52,6 +52,9 @@ class MxMap extends \ManiaLive\Gui\Control {
 	$label = new \ManiaLib\Gui\Elements\Label(36, 6);
 	$label->setAlign('left', 'center');
 	$pack = str_replace("TM", "", $map->titlePack);
+	if (empty($pack) || $pack == "Trackmania_2") {
+	    $pack = $map->environmentName;
+	}
 	$label->setText($pack);
 	$this->line1->addComponent($label);
 
