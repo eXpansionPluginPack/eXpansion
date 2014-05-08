@@ -31,6 +31,8 @@ abstract class Variable {
     
     private $pluginId = null;
     
+    private $visible = true;
+    
     /**
      *
      * @var \ManiaLivePlugins\eXpansion\Core\ConfigManager
@@ -160,6 +162,14 @@ abstract class Variable {
      */
     public function getGroup() {
 	return $this->group;
+    }
+    
+    public function getVisible() {
+	return $this->visible;
+    }
+
+    public function setVisible($visible) {
+	$this->visible = $visible;
     }
     
     /**

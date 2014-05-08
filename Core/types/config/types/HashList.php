@@ -31,7 +31,7 @@ class HashList extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable {
     }
 
     public function setValue($key, $value) {
-	if (!$this->keyType->basicValueCheck($key)) {
+	if ($this->keyType != null && !$this->keyType->basicValueCheck($key)) {
 	    return false;
 	}
 	if (!$this->type->basicValueCheck($value)) {
