@@ -405,11 +405,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$window->setTitle(__('Maps on server', $login), " (" . count($this->storage->maps) . ")");
 	$window->setHistory($this->history);
 	$window->setCurrentMap($this->storage->currentMap);
+	
 	if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
-	    $window->setRecords($this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
-	}
-	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings')) {
-	    $window->setRatings($this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings', 'getRatings'));
+	    $this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords', 'getPlayersRecordsForAllMaps', $login);
 	}
 
 	$window->centerOnScreen();
