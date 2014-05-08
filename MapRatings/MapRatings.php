@@ -78,7 +78,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
     
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
-	$this->affectAllRatings();
+	//$this->affectAllRatings();
     }
 
     public function onOliverde8HudMenuReady($menu) {
