@@ -166,48 +166,6 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	ResSkipButtons::Erase($login);
     }
 
-    public function onOliverde8HudMenuReady($menu) {
-
-	$parent = $menu->findButton(array('admin', 'Server Options'));
-	if (!$parent) {
-	    $button["style"] = "Icons128x128_1";
-	    $button["substyle"] = "Options";
-	    $button["plugin"] = $this;
-	    $parent = $menu->addButton("admin", "Server Options", $button);
-	}
-
-	$button["style"] = "Icons128x128_1";
-	$button["substyle"] = "Options";
-	$button["plugin"] = $this;
-	$button["function"] = "serverControlMain";
-	$menu->addButton($parent, "Server Window", $button);
-
-	if ($this->exp_isRelay())
-	    return;
-
-	$parent = $menu->findButton(array('admin', 'Game Options'));
-	if (!$parent) {
-	    $button["style"] = "Icons128x128_1";
-	    $button["substyle"] = "ProfileAdvanced";
-	    $button["plugin"] = $this;
-	    $parent = $menu->addButton("admin", "Game Options", $button);
-	}
-
-	$button["style"] = "Icons128x128_1";
-	$button["substyle"] = "ProfileAdvanced";
-	$button["plugin"] = $this;
-	$button["function"] = "gameOptions";
-	$button["permission"] = "game_gamemode";
-	$menu->addButton($parent, "Game Window", $button);
-
-	$button["style"] = "Icons128x128_1";
-	$button["substyle"] = "Save";
-	$button["plugin"] = $this;
-	$button["function"] = "matchSettings";
-	$button["permission"] = "game_match";
-	$menu->addButton($parent, "Match Settings", $button);
-    }
-
     public function serverOptions($login) {
 	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getAdmin($login) != null) {
 	    $window = ServerOptions::Create($login);
@@ -276,6 +234,13 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $window->setTitle(__('Server Management', $login));
 	    $window->setSize(120, 20);
 	    $window->show();
+	}
+    }
+
+    public function showVotesConfig($login) {
+	if (AdminGroups::hasPermission($login, 'server_votes')) {
+	    if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Votes\Votes'))
+		$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Votes\Votes', 'showVotesConfig', $login);
 	}
     }
 
