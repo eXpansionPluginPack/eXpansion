@@ -43,11 +43,11 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$out = array();
 	for ($x = 0; $x < count($this->config->managedVote_commands); $x++) {
 	    $vote = new Structures\ManagedVote();
-	    $vote->managed = $this->config->managedVote_enable[$x];
+	    $vote->managed = $this->config->managedVote_enable[$this->config->managedVote_commands[$x]];
 	    $vote->command = $this->config->managedVote_commands[$x];
-	    $vote->ratio = $this->config->managedVote_ratios[$x];
-	    $vote->timeout = $this->config->managedVote_timeouts[$x];
-	    $vote->voters = $this->config->managedVote_voters[$x];
+	    $vote->ratio = $this->config->managedVote_ratios[$this->config->managedVote_commands[$x]];
+	    $vote->timeout = $this->config->managedVote_timeouts[$this->config->managedVote_commands[$x]];
+	    $vote->voters = $this->config->managedVote_voters[$this->config->managedVote_commands[$x]];
 	    $out[$vote->command] = $vote;
 	}
 	return $out;
@@ -286,7 +286,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$window = Gui\Windows\VoteSettingsWindow::Create($login);	
 	$window->setSize(120, 96);
 	$window->setTitle(__("Configure Votes", $login));
-	$window->populateList($this->getVotes());	
+	$window->populateList($this->getVotes(), $this->metaData);	
 	$window->show($login);
     }
 
