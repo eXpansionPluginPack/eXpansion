@@ -61,7 +61,7 @@ class MxMap extends \ManiaLive\Gui\Control {
 	if ($map->vehicleName) {
 	    $vehicle = str_replace("Car", "", $map->vehicleName);
 	    if ($vehicle != $pack) {
-		$label->setText($vehicle);
+		$label->setText("Car: " . $vehicle);
 	    }
 	}
 	$this->line2->addComponent($label);
@@ -96,13 +96,13 @@ class MxMap extends \ManiaLive\Gui\Control {
 	$info->setText($map->mood);
 	$this->line2->addComponent($info);
 
-	$info = new \ManiaLib\Gui\Elements\Label(24, 4);
+	$info = new \ManiaLib\Gui\Elements\Label(18, 4);
 	$info->setAlign('left', 'center');
 	$info->setText($map->styleName);
 	$this->line1->addComponent($info);
 
 
-	$info = new \ManiaLib\Gui\Elements\Label(24, 4);
+	$info = new \ManiaLib\Gui\Elements\Label(18, 4);
 	$info->setAlign('left', 'center');
 	$info->setText($map->lengthName);
 	$this->line2->addComponent($info);
@@ -122,8 +122,27 @@ class MxMap extends \ManiaLive\Gui\Control {
 	    $this->addButton->colorize("0d0");
 	    $this->addButton->setAction($this->addAction);
 	    $this->line1->addComponent($this->addButton);
+
+	    $info = new \ManiaLib\Gui\Elements\Label(24, 5);
+	    $info->setText("");
+	    $this->line2->addComponent($info);
 	}
 
+
+	if ($map->awardCount > 0) {
+	    $info = new \ManiaLib\Gui\Elements\Quad(4, 4);
+	    $info->setPosY(3);
+	    $info->setStyle("Icons64x64_1");
+	    $info->setSubStyle("OfficialRace");
+	    $info->setAlign('center', 'center');
+	    $this->line2->addComponent($info);
+
+	    $info = new \ManiaLib\Gui\Elements\Label(12, 5);
+	    $info->setPosY(3);
+	    $info->setAlign('center', 'center');
+	    $info->setText($map->awardCount);
+	    $this->line2->addComponent($info);
+	}
 	$this->addComponent($this->line1);
 	$this->addComponent($this->line2);
 
