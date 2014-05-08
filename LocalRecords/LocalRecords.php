@@ -383,7 +383,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $q = "SELECT rank_playerlogin FROM `exp_ranks`"
 		    . " WHERE rank_challengeuid = " . $this->db->quote($this->storage->currentMap->uId).$cons;	    
 	    $data = $this->db->execute($q);
-	    echo "Size : ".sizeof($data->fetchArray())."\n";
 	    if(sizeof($data->fetchArray()) == 0)
 		$this->updateRanks($this->storage->currentMap->uId, $nbLaps, true);
 	}
