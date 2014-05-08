@@ -50,9 +50,3 @@ foreach (Player in Players) {
 
 declare origPlayerTimes = playerTimes;
 
-<?php
-
-//Dump players to test stu
-
-
-?>
