@@ -20,7 +20,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $displayWidget = true;
     private $pendingRatings = array();
     private $oldRatings = array();
-    private $previousUid = null;
+    private $previousMap = null;
 
     function exp_onInit() {
 	if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
@@ -71,9 +71,10 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $info->show();
 	}
 
-	$this->previousUid = $this->storage->currentMap->uId;
+	$this->previousUid = $this->storage->currentMap;
 
 	//$this->registerChatCommand("test", "onEndMatch", 0, false);
+	$this->affectAllRatings();
     }
 
     public function onOliverde8HudMenuReady($menu) {
@@ -119,6 +120,28 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $out[$rating->uid] = new Structures\Rating($rating->rating, $rating->ratingTotal, $rating->uid);
 	}
 	return $out;
+    }
+    
+    /**
+     * Will affect the rating to all the maps in the storage
+     */
+    public function affectAllRatings(){
+	$uids = "";
+	$mapsByUid = array();
+	foreach ($this->storage->maps as $map) {
+	    $uids .= $this->db->quote($map->uId) . ",";
+	    $mapsByUid[$map->uId] = $map;
+	}
+	$uids = trim($uids, ",");
+	
+	$ratings = $this->db->execute("SELECT uid, avg(rating) AS rating, COUNT(rating) AS ratingTotal "
+		. " FROM exp_ratings "
+		. " WHERE uid IN ($uids)"
+		. " GROUP BY uid;")->fetchArrayOfObject();
+	$out = array();
+	foreach ($ratings as $rating) {
+	    $mapsByUid[$rating->uid]->mapRating = new Structures\Rating($rating->rating, $rating->ratingTotal, $rating->uid);
+	}
     }
 
     /**
@@ -340,12 +363,20 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    // do silent exception;
 	}
     }
-
+    
     function onBeginMap($var, $var2, $var3) {
-	if ($this->previousUid != null)
-	    $this->saveRatings($this->previousUid);
-
-	$this->previousUid = $this->storage->currentMap->uId;
+	if ($this->previousMap != null){
+	    $this->saveRatings($this->previousMap->uId);
+	
+	    //Updating ratings in map object
+	    if(!isset($this->previousMap->mapRating))
+		$this->previousMap->mapRating = new Structures\Rating ($this->rating, $this->ratingTotal, $this->previousMap->uId);
+	    else{
+		$this->previousMap->mapRating->rating = $this->rating;
+		$this->previousMap->mapRating->totalvotes = $this->ratingTotal;
+	    }
+	    $this->previousMap = $this->storage->currentMap;
+	}
 
 	$this->reload();
 

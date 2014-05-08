@@ -275,28 +275,34 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return array $list -> $list[mapuid] = (int) position
      */
     public function getPlayersRecordsForAllMaps($login) {
-	$q = ' SELECT `record_playerlogin`,`record_score`,`record_challengeuid` FROM `exp_records` order by `record_challengeuid` asc,`record_score` asc';
-	$data = $this->db->execute($q);
-	$list = array();
-	$last = "";
-	$pos = 1;
-	while ($row = $data->fetchObject()) {
-	    // check for new map & reset rank
-	    if ($last != $row->record_challengeuid) {
-		$last = $row->record_challengeuid;
-		$pos = 1;
+	
+	$count = 0;
+	$uids = "";
+	foreach ($this->storage->maps as $map) {
+	    if(!isset($map->localRecords)){
+		$map->localRecords = array();
 	    }
-	    if (isset($list[$row->record_challengeuid]))
-		continue;
-
-	    // store player's maps & records
-	    if ($row->record_playerlogin == $login) {
-		$list[$row->record_challengeuid] = $pos;
-		continue;
+	    if(!isset($map->localRecords[$login])){
+		$count++;
+		
+		$uids .= $this->db->quote($map->uId) . ",";
+		$mapsByUid[$map->uId] = $map;
 	    }
-	    $pos++;
 	}
-	return $list;
+	
+	if($count > 0){
+	    $uids = trim($uids, ",");
+
+	    $q = ' SELECT `rank_rank` as rank,`rank_challengeuid` as uid '
+		    . ' FROM `exp_ranks` '
+		    . ' WHERE rank_challengeuid IN ('.$uids.')'
+		    . '	AND rank_playerlogin = '.$this->db->quote($login);
+	    $data = $this->db->execute($q);
+
+	    while ($row = $data->fetchObject()) {
+		$mapsByUid[$row->uid]->localRecords[$login] = $row->rank;
+	    }
+	}
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
@@ -361,7 +367,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	//We update the database
 	//Firs of the best records
+	$this->storage->currentMap->localRecords = array();
 	foreach ($this->currentChallengeRecords as $i => $record) {
+	    $this->storage->currentMap->localRecords[$record->login] = $record->place;	    
 	    $updated = $updated || $this->updateRecordInDatabase($record, $nbLaps);
 	}
 	//Now the rest of the times as well(PB)
