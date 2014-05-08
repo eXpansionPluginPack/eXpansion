@@ -14,7 +14,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $config;
     private $useQueue = false;
     private $timer = 0;
-    private $voter = null;
+    private $voter = "";
     private $counters = array();
 
     function exp_onInit() {
@@ -138,16 +138,18 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function vote_Restart($login) {
 	try {
 	    $managedVotes = $this->getVotes();
+
+	    //print_r($managedVotes);
 	    // if vote is not managed...
-	    if (!array_key_exists('ReplayMap', $managedVotes))
+	    if (!array_key_exists('RestartMap', $managedVotes))
 		return;
 	    // if vote is not managed...
-	    if ($managedVotes['ReplayMap']->managed == false)
+	    if ($managedVotes['RestartMap']->managed == false)
 		return;
 
 
 	    $this->voter = $login;
-	    $vote = $managedVotes['ReplayMap'];
+	    $vote = $managedVotes['RestartMap'];
 	    $this->debug("[exp\Votes] Calling Restart (queue) vote..");
 	    $vote->callerLogin = $this->voter;
 	    $vote->cmdName = "Replay";
@@ -192,16 +194,33 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam) {
 
-	$this->console("[exp\Votes] Vote Status: " . $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam);
+	//$this->console("[exp\Votes] Vote Status: " . $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam);
 
+	
 // in case managed votes are disabled, return..
 	if ($this->config->use_votes == false)
 	    return;
 
 	$managedVotes = $this->getVotes();
 
-
+// disable default votes... and replace them with our own implementations
 	if ($stateName == "NewVote") {
+	    if ($cmdName == "RestartMap") {
+		$this->connection->cancelVote();
+		$this->voter = $login;
+		$this->vote_Restart($login);
+		return;
+	    }
+	    if ($cmdName == "SkipMap") {
+		$this->connection->cancelVote();
+		$this->voter = $login;
+		$this->vote_Skip($login);
+		return;
+	    }
+	}
+// check for our stuff...	
+	if ($stateName == "NewVote") {
+	   $login = $this->voter;
 	    foreach ($managedVotes as $cmd => $vote) {
 		if ($cmdName == $cmd) {
 		    if ($vote->ratio == -1.) {
@@ -210,34 +229,26 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		}
 	    }
 
-	    if (!isset($this->counters[$login][$cmdName]))
+	    if (!isset($this->counters[$login][$cmdName])) {
 		$this->counters[$login][$cmdName] = 0;
+	    }
 
 	    $this->counters[$login][$cmdName] ++;
 
 	    if ($this->config->limit_votes != -1) {
+	//	echo $cmdName . " -> ". $this->counters[$login][$cmdName] . " <" . $this->config->limit_votes . "\n";
+
 		if ($this->counters[$login][$cmdName] > $this->config->limit_votes) {
+
 		    $this->connection->cancelVote();
 		    $msg = exp_getMessage("Vote limit reached.");
-		    $this->exp_chatSendServerMessage($msg, $login);
+		    $this->exp_chatSendServerMessage($msg);
 		    return;
 		}
 	    }
 	}
 
-// disable default votes... and replace them with our own implementations
-	if ($stateName == "NewVote") {
-	    if ($cmdName == "RestartMap") {
-		$this->connection->cancelVote();
-		$this->vote_Restart($login);
-		return;
-	    }
-	    if ($cmdName == "SkipMap") {
-		$this->connection->cancelVote();
-		$this->vote_Skip($login);
-		return;
-	    }
-	}
+
 
 // own votes handling...
 
@@ -283,10 +294,10 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function showVotesConfig($login) {
-	$window = Gui\Windows\VoteSettingsWindow::Create($login);	
+	$window = Gui\Windows\VoteSettingsWindow::Create($login);
 	$window->setSize(120, 96);
 	$window->setTitle(__("Configure Votes", $login));
-	$window->populateList($this->getVotes(), $this->metaData);	
+	$window->populateList($this->getVotes(), $this->metaData);
 	$window->show($login);
     }
 
