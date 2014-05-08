@@ -28,6 +28,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected $title_actions;
     protected $searchBox, $searchframe;
     protected $btn_search, $btn_search2;
+    protected $btn_sortNewest;
     private $actionRemoveAll;
     private $actionRemoveAllf;
     private $currentMap = null;
@@ -150,6 +151,12 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->btn_search2->setText(__("Search Author", $login));
 	$this->btn_search2->colorize('0a0');
 	$this->searchframe->addComponent($this->btn_search2);
+	
+	$this->btn_sortNewest = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(40);
+	$this->btn_sortNewest->setAction($this->createAction(array($this, "updateList"), "addTime"));
+	$this->btn_sortNewest->setText(__("Sort By Add Date", $login));
+	$this->btn_sortNewest->colorize('aaa');
+	$this->searchframe->addComponent($this->btn_sortNewest);
 
 	$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager();
 	$this->mainFrame->addComponent($this->pager);
@@ -194,7 +201,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function onResize($oldX, $oldY) {
 	parent::onResize($oldX, $oldY);
 
-	$this->searchframe->setPosition(12, -7);
+	$this->searchframe->setPosition(2, -7);
 
 	$this->pager->setSize($this->getSizeX() - 6, $this->getSizeY() - 20);
 
@@ -218,7 +225,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 
 	if (is_object($this->btnRemoveAll))
-	    $this->btnRemoveAll->setPosition($this->getSizeX() - 25, 0);
+	    $this->btnRemoveAll->setPosition($this->getSizeX() - 25, 2);
     }
 
     function removeAllMaps($login) {

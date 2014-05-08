@@ -125,26 +125,28 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function updateServerChallenges() {
-	//get server challenges
-	$serverChallenges = $this->storage->maps;
+	
 	//get database challenges
-
-	$g = "SELECT * FROM `exp_maps`;";
+	$uids = "";
+	$mapsByUid = array();
+	foreach ($this->storage->maps as $map) {
+	    $uids .= $this->db->quote($map->uId) . ",";
+	    $mapsByUid[$map->uId] = $map;
+	}
+	$uids = trim($uids, ",");
+	$g = "SELECT * FROM `exp_maps`  WHERE challenge_uid IN ($uids);";
 	$query = $this->db->execute($g);
-
-	$databaseUid = array();
-	//get database uid's of tracks.
+	
+	
 	while ($data = $query->fetchStdObject()) {
-	    $databaseUid[$data->challenge_uid] = $data->challenge_uid;
+	    $mapsByUid[$data->challenge_uid]->addTime = $data->challenge_addtime;
+	    unset($mapsByUid[$data->challenge_uid]);
 	}
 
-	unset($data);
-	$addCounter = 0;
-	foreach ($serverChallenges as $data) {
-	    // check if database doesn't have the challenge already.
-	    if (!array_key_exists($data->uId, $databaseUid)) {
-		$this->insertMap($data);
-		$addCounter++;
+	if(!empty($mapsByUid)){
+	    foreach($mapsByUid as $map){
+		$this->insertMap($map);
+		$map->addTime = time();
 	    }
 	}
     }

@@ -408,6 +408,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	
 	if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
 	    $this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords', 'getPlayersRecordsForAllMaps', $login);
+	    Gui\Windows\Maplist::$localrecordsLoaded = true;
+	}else{
+	    Gui\Windows\Maplist::$localrecordsLoaded = false;
 	}
 
 	$window->centerOnScreen();
