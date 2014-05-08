@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Controls;
+namespace ManiaLivePlugins\eXpansion\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
@@ -13,12 +13,12 @@ class Playeritem extends \ManiaLive\Gui\Control {
     private $sendAction;
     private $frame;
 
-    function __construct($indexNumber, \ManiaLive\Data\Player $player, $controller) {
-        $sizeX = 120;
+    function __construct($indexNumber, \ManiaLive\Data\Player $player, $callback, $text) {
+        $sizeX = 60;
         $sizeY = 6;
         $this->player = $player;
 
-        $this->sendAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'sendPm'), $player->login);
+        $this->sendAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction($callback, $player->login);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
@@ -36,13 +36,13 @@ class Playeritem extends \ManiaLive\Gui\Control {
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
         //$this->frame->addComponent($spacer);
 
-        $this->login = new \ManiaLib\Gui\Elements\Label(20, 4);
+        $this->login = new \ManiaLib\Gui\Elements\Label(30, 4);
         $this->login->setAlign('left', 'center');
         $this->login->setText($player->login);
         $this->login->setScale(0.8);
         $this->frame->addComponent($this->login);
 
-        $this->nickname = new \ManiaLib\Gui\Elements\Label(60, 4);
+        $this->nickname = new \ManiaLib\Gui\Elements\Label(40, 4);
         $this->nickname->setAlign('left', 'center');
         $this->nickname->setScale(0.8);
         $this->nickname->setText($player->nickName);
@@ -54,10 +54,10 @@ class Playeritem extends \ManiaLive\Gui\Control {
 
         $this->frame->addComponent($spacer);
 
-        $this->sendButton = new MyButton(24, 6);
+        $this->sendButton = new MyButton(20, 6);
         $this->sendButton->setAction($this->sendAction);
         $this->sendButton->setScale(0.6);
-        $this->sendButton->setText("Send");
+        $this->sendButton->setText($text);
 
         $this->frame->addComponent($this->sendButton);
 
