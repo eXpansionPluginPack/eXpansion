@@ -99,6 +99,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 $this->connection->unignore($target);
                 $this->connection->chatSendServerMessage(__('%s$z$s$fff was unignored by admin %s', $login, $player->nickName, $admin->nickName));
             }
+	    $this->populateList();
+	    $this->show($login);
         } catch (\Exception $e) {
             //   $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
             $this->console("Error:" . $e->getMessage());
@@ -169,8 +171,9 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->title_login->setSizeX($scaledSizes[2]);
     }
 
-    function onShow() {        
-        $this->populateList();
+    function onShow() {
+	if(empty($this->items))
+	    $this->populateList();
         parent::onShow();
     }
 
