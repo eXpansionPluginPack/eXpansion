@@ -31,7 +31,7 @@ class Playeritem extends \ManiaLive\Gui\Control {
     /** @var \ManiaLive\Data\Player */
     private $player;
 
-    function __construct($indexNumber, \ManiaLive\Data\Player $player, $controller, $isAdmin, $login, $widths, $sizeX) {
+    function __construct($indexNumber, \ManiaLive\Data\Player $player, $controller, $isAdmin, $login, $widths, $sizeX, $ignored = false) {
         $this->recipient = $login;
         $this->widths = \ManiaLivePlugins\eXpansion\Gui\Gui::getScaledSize($widths, $sizeX);
 
@@ -121,7 +121,11 @@ class Playeritem extends \ManiaLive\Gui\Control {
                 $this->ignoreButton->colorize("a22");
                 $this->ignoreButton->setScale(0.7);
                 $this->ignoreButton->setAction($this->ignoreAction);
-                $this->ignoreButton->setIcon('Icons128x128_1', 'Easy');
+		if($ignored){
+		    $this->ignoreButton->setDescription(__('UnIgnore player %1$s ', $login, $player->login), 50);
+		    $this->ignoreButton->setIcon('Icons128x128_1', 'Beginner');
+		}else
+		    $this->ignoreButton->setIcon('Icons128x128_1', 'Easy');
                 $this->frame->addComponent($this->ignoreButton);
             }
 

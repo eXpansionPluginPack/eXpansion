@@ -188,6 +188,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         foreach ($this->items as $item)
             $item->erase();
+	
         $this->pager->clearItems();
         $this->items = array();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
@@ -195,18 +196,21 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $login = $this->getRecipient();
         $isadmin = AdminGroups::hasPermission($login, "server_admin");
 
-        //try {
-            foreach ($this->storage->players as $player) {
-                $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->widths, $this->sizeX);
-                $this->pager->addItem($this->items[$x]);
-            }
-            foreach ($this->storage->spectators as $player) {
-                $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->widths, $this->sizeX);
-                $this->pager->addItem($this->items[$x]);
-            }
-        /*} catch (\Exception $e) {
+	$list = $this->connection->getIgnoreList(-1, 0);
+	$ignoreList = array();
+	foreach ($list as $player) {
+	    $ignoreList[$player->login] = true;
+	}
+	
+	foreach ($this->storage->players as $player) {
+	    $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->widths, $this->sizeX, isset($ignoreList[$player->login]));
+	    $this->pager->addItem($this->items[$x]);
+	}
+	foreach ($this->storage->spectators as $player) {
+	    $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->widths, $this->sizeX, isset($ignoreList[$player->login]));
+	    $this->pager->addItem($this->items[$x]);
+	}
 
-        }*/
     }
 
     function destroy() {
