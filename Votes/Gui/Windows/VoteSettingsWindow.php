@@ -16,6 +16,12 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window 
     private $cancel;
     private $actionOk;
     private $actionCancel;
+    
+    /**
+     *
+     * @var \ManiaLivePlugins\eXpansion\Votes\MetaData
+     */
+    private $metaData;
 
     protected function onConstruct() {
 	parent::onConstruct();
@@ -52,9 +58,10 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window 
      * 
      * @param \ManiaLivePlugins\eXpansion\Votes\Structures\ManagedVote $votes
      */
-    function populateList($managedVotes) {
+    function populateList($managedVotes, $metadata) {
 	$login = $this->getRecipient();
-
+	$this->metaData = $metadata;
+	
 	foreach ($this->items as $item)
 	    $item->erase();
 	$this->pager->clearItems();
@@ -71,43 +78,23 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window 
     }
 
     function Ok($login, $settings) {	
-	/*
-	  Array
-	  (
-	  [NextMap_timeout] => 30
-	  [NextMap_ratio] => 0.5
-	  [NextMap_voters] => 1
-	  [RestartMap_timeout] => 30
-	  [RestartMap_ratio] => 0.5
-	  [RestartMap_voters] => 1
-	  [Kick_timeout] => 30
-	  [Kick_ratio] => 0.6
-	  [Kick_voters] => 1
-	  [Ban_timeout] => 30
-	  [Ban_ratio] => -1
-	  [Ban_voters] => 1
-	  [SetModeScriptSettingsAndCommands_timeout] => 60
-	  [SetModeScriptSettingsAndCommands_ratio] => -1
-	  [SetModeScriptSettingsAndCommands_voters] => 1
-	  [JumpToMapIdent_timeout] => 60
-	  [JumpToMapIdent_ratio] => -1
-	  [JumpToMapIdent_voters] => 1
-	  [SetNextMapIdent_timeout] => 30
-	  [SetNextMapIdent_ratio] => -1
-	  [SetNextMapIdent_voters] => 1
-	  [AutoTeamBalance_timeout] => 30
-	  [AutoTeamBalance_ratio] => 0.5
-	  [AutoTeamBalance_voters] => 1
-	  )
-	 */
 	$array = array();	
 	
 	foreach ($settings as $key => $value) {
 	    
+	    $exploded = explode("_", $key);
 	    
+	    $varName = 'managedVote_'.array_pop($exploded);
+	    $voteName = implode('_', $exploded);
+
+	    $var = $this->metaData->getVariable($varName);
+	    if($var instanceof \ManiaLivePlugins\eXpansion\Core\types\config\types\HashList){
+		$var->setValue($voteName, $value);		
+	    }
 	}
 	
-	echo "THIS FEATURE NEEDS TO BE IMPLEMENTED.\n";
+	//Save data
+	\ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance()->check();
 	
 	$this->Erase($login);
     }

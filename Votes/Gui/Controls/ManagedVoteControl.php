@@ -34,7 +34,7 @@ class ManagedVoteControl extends \ManiaLive\Gui\Control {
 	$spacer->setSize(4, 4);
 	$spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
 
-	$this->timeout = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox($vote->command . "_timeout", 12);
+	$this->timeout = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox($vote->command . "_timeouts", 12);
 	$this->timeout->setPosY(-1);
 	$this->timeout->setLabel("Timeout");
 	$this->timeout->setText($vote->timeout);
@@ -42,7 +42,7 @@ class ManagedVoteControl extends \ManiaLive\Gui\Control {
 
 	$this->frame->addComponent($spacer);
 
-	$this->ratio = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox($vote->command . "_ratio", 12);
+	$this->ratio = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox($vote->command . "_ratios", 12);
 	$this->ratio->setLabel("Ratio");
 	$this->ratio->setPosY(-1);
 	$this->ratio->setText($vote->ratio);
