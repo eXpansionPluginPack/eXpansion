@@ -273,7 +273,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    if (!empty(Maps::$searchTerm[$login])) {
 		$field = Maps::$searchField[$login];
 
-		if ($field = "name")
+		if ($field == "name")
 		    $field = "strippedName";
 
 		$substring = $this->shortest_edit_substring(Maps::$searchTerm[$login], \ManiaLib\Utils\Formatting::stripStyles($map->{$field}));
