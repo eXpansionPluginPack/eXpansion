@@ -48,7 +48,6 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     public function onPlayerDisconnect($login, $reason = null) {
-	\ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Erase($login);
 	if (isset(self::$reply[$login]))
 	    unset(self::$reply[$login]);
 	if (isset($this->message[$login]))
