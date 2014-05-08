@@ -134,7 +134,7 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 	    }
 	}
     } else {
-	start = nbFirstFields;
+	start = recCount  - (nbFields - nbFirstFields);
 	end = start + (nbFields - nbFirstFields);
     }
 
