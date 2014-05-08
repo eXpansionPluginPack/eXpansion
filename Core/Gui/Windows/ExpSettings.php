@@ -75,10 +75,12 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$i = 0;
 	if (isset($groupVars[$this->currentGroup])) {
 	    foreach ($groupVars[$this->currentGroup] as $var) {
-		$item = new \ManiaLivePlugins\eXpansion\Core\Gui\Controls\ExpSetting($i, $var, $this->getRecipient());
-		$this->pagerFrame->addItem($item);
-		$this->items[] = $item;
-		$i++;
+		if($var->getVisible()){
+		    $item = new \ManiaLivePlugins\eXpansion\Core\Gui\Controls\ExpSetting($i, $var, $this->getRecipient());
+		    $this->pagerFrame->addItem($item);
+		    $this->items[] = $item;
+		    $i++;
+		}
 	    }
 	}
     }
@@ -89,7 +91,6 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function applySettings($login, $args) {
-	print_r($args);
 	foreach($this->items as $item){
 	    $var = $item->getVar();
 	    if($var != null){
