@@ -17,8 +17,10 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected $pager;
     protected $group;
     protected $button_add;
+    protected $button_select;
     protected $login_add;
     protected $action_add;
+    protected $action_select;
     private $items = array();
 
     protected function onConstruct() {
@@ -39,6 +41,13 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->button_add->setAction($this->action_add);
         $this->button_add->setScale(0.8);
         $this->mainFrame->addComponent($this->button_add);
+	
+	$this->button_select = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
+        $this->button_select->setText(__("Select"));
+        $this->action_select = $this->createAction(array($this, 'click_select'));
+        $this->button_select->setAction($this->action_select);
+        $this->button_select->setScale(0.8);
+        $this->mainFrame->addComponent($this->button_select);
     }
 
     public function setGroup($g) {
@@ -54,11 +63,14 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->pager->setSize($this->sizeX - 4, $this->sizeY - 12);   
         $this->pager->setPosition(0, -7);
 
-        $this->login_add->setSize($this->sizeX * (1 / 0.8) - 30, 7);
+        $this->login_add->setSize($this->sizeX * (1 / 0.8) - 60, 7);
         $this->login_add->setPosition(0, -3);
 
         $this->button_add->setSize(30, 5);
-        $this->button_add->setPosition($this->sizeX * (1 / 0.8) - 35 * (1 / 0.8), -3);
+        $this->button_add->setPosition($this->sizeX * (1 / 0.8) - 60 * (1 / 0.8), -3);
+	
+	$this->button_select->setSize(30, 5);
+        $this->button_select->setPosition($this->sizeX * (1 / 0.8) - 45 * (1 / 0.8), -3);
     }
 
     function onShow() {
@@ -95,6 +107,21 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $window->redraw($login);
 	    $window->refreshAll();
         }
+    }
+    
+    function click_select($login){
+	$window = \ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection::Create($login);
+	$window->setController($this);
+	$window->setTitle('Select Player to add to '.$this->group->getGroupName());
+	$window->setSize(85, 100);
+	$window->populateList(array($this, 'select_player'), 'select');
+	$window->centerOnScreen();
+	$window->show();
+    }
+    
+    public function select_player($login, $newlogin){
+	$this->click_add($login, array('login' => $newlogin));
+	\ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection::Erase($login);
     }
     
 
