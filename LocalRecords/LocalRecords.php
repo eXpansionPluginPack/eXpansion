@@ -1098,7 +1098,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     public function showRecsWindow($login, $map = NULL) {
 	Gui\Windows\Records::Erase($login);
-	try {
+	//try {
 	    if ($map === NULL) {
 		$records = $this->currentChallengeRecords;
 		$map = $this->storage->currentMap;
@@ -1113,12 +1113,12 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $window = Gui\Windows\Records::Create($login);
 	    $window->setTitle(__('Records on a Map', $login));
 	    $window->centerOnScreen();
-	    $window->populateList($records, $this->config->recordsCount, $currentMap);
 	    $window->setSize(120, 100);
+	    $window->populateList($records, $this->config->recordsCount, $currentMap);
 	    $window->show();
-	} catch (\Exception $e) {
+	/*} catch (\Exception $e) {
 	    $this->exp_chatSendServerMessage("Error: %s", $login, array($e->getMessage()));
-	}
+	}*/
     }
 
     /**

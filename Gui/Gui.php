@@ -143,7 +143,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	
     }
 
-    function hudCommands($login, $param) {
+    function hudCommands($login, $param = "null") {
 	switch ($param) {
 	    case "reset":
 		$this->resetHud($login);
@@ -211,8 +211,9 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public static function fixHyphens($string) {
 	$out = str_replace('"', "'", $string);
 	$out = str_replace('\\', '\\\\', $out);
-	$out = str_replace('-', '–', $out);
-	return $out;
+	$out = str_replace('--', '––', $out);
+	$out = str_replace('-', '–', $out);	
+	return $out;	
     }
 
     public static function showConfirmDialog($login, $actionId) {

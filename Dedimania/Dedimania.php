@@ -68,8 +68,8 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 	}
 	Dispatcher::register(DediEvent::getClass(), $this);
 	$this->dedimania = DediConnection::getInstance();
-	$this->msg_newRecord = exp_getMessage('%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  #rank#%2$s: #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)');
-	$this->msg_record = exp_getMessage('%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record! #time#%3$s');
+	$this->msg_newRecord = exp_getMessage('%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record! #time#%3$s');
+	$this->msg_record = exp_getMessage('%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  #rank#%2$s: #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)');	
 	$this->msg_norecord = exp_getMessage('#dedirecord#No dedimania records found for the map!');
     }
 
@@ -79,7 +79,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 	$this->registerChatCommand("dedirecs", "showRecs", 0, true);
 	$this->dedimania->openSession();
 
-	print_r($this->connection->getCurrentRanking(-1, 0));
+	//print_r($this->connection->getCurrentRanking(-1, 0));
     }
 
     function checkSession($login) {
@@ -128,7 +128,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 	// if current map doesn't have records, create one.
 	if (count($this->records) == 0) {
 	    $player = $this->connection->getCurrentRankingForLogin($login);
-	    print_r($player);
+	    //print_r($player);
 
 	    // map first array entry to player object;
 	    $player = $player[0];
@@ -246,7 +246,7 @@ class Dedimania extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin impleme
 		// update checkpoints for the record
 
 		$player = $this->connection->getCurrentRankingForLogin($login);
-		print_r($player);
+		//print_r($player);
 		// map first array entry to player object;
 		$player = $player[0];
 
