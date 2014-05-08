@@ -150,17 +150,18 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	$this->targetPlayer = $target;
 	$targetPlayer = $this->storage->getPlayerObject($target);
 	$this->labelPlayer->setText($targetPlayer->nickName);
-	\ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Erase($login);
+	\ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection::Erase($login);
 	$this->onResize($this->sizeX, $this->sizeY);
 	$this->redraw($this->getRecipient());
     }
 
     function players($login, $args) {
 	// $this->status = "False";
-	$window = \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Create($this->getRecipient());
+	$window = \ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection::Create($login);
 	$window->setController($this);
 	$window->setTitle('Select Player to send message');
-	$window->setSize(120, 100);
+	$window->setSize(85, 100);
+	$window->populateList(array($this, 'sendPm'), 'send');
 	$window->centerOnScreen();
 	$window->show();
     }
