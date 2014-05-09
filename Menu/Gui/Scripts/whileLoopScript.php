@@ -26,9 +26,11 @@ if (MouseMiddleButton && !eXp_mouseMiddleState) {
 	    }
 }
 
+/*
 if (IsSpectatorMode) { 	
     toggleSubmenu = False;
 }
+*/
 
 if (toggleSubmenu) {
 	Menu.Show();

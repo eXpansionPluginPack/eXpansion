@@ -495,6 +495,22 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
+     * returns group name for login, returns "player" for non-admins.
+     * 
+     * @param string $login
+     * @return string containing "Player" for non-admingroup memebers, othervice returns the admin group name.
+     */
+    static public function getGroupName($login) {
+	$grpName = "Player";
+
+	$admin = self::getAdmin($login);
+	if ($admin !== null)
+	    $grpName = $admin->getGroup()->getGroupName();
+
+	return $grpName;
+    }
+
+    /**
      *
      * @param string $login
      * @param string $permissionName
