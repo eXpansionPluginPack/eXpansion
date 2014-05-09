@@ -76,6 +76,10 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	//$this->registerChatCommand("test", "onEndMatch", 0, false);
 	$this->affectAllRatings();
     }
+    
+    public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
+	//$this->affectAllRatings();
+    }
 
     public function onOliverde8HudMenuReady($menu) {
 	$button["style"] = "UIConstructionSimple_Buttons";

@@ -172,6 +172,16 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 	    $nickData .= '"' . $this->fixDashes($record->login) . '"=>"' . $this->fixHyphens($record->nickName) . '"';
 	    $index++;
 	}
+	
+	/*for($i =0; $i < 100; $i++){
+	    if ($index > 1) {
+		$recsData .= ', ';
+		$nickData .= ', ';
+	    }
+	    $recsData .= '"' . 'player'.$i . '"=>' . (10000+$i);
+	    $nickData .= '"' . 'player'.$i . '"=>"' .'player'.$i . '"';
+	}*/
+	
 	$this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
 
 	if (empty($recsData)) {
