@@ -345,6 +345,21 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	return $masterGroup;
     }
+    
+    public function announceToGroup(Group $group, $msg){
+	foreach($group->getGroupUsers() as $user){
+	    $player = $this->storage->getPlayerObject($user->getLogin());
+	    if($player != null && $player->isConnected)
+		$this->exp_chatSendServerMessage($msg, $user->getLogin());
+	}
+    }
+    
+    public function announceToPermission($permission, $msg){
+	foreach(self::$groupList as $group){
+	    if($group->hasPermission($permission))
+		$this->announceToGroup ($group, $msg);
+	}
+    }
 
     public function getGroup($groupName) {
 	foreach (self::$groupList as $group) {
