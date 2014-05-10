@@ -228,6 +228,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    } catch (\Exception $e) {
 		echo "onUnload exception:" . $this->getId() . " -> " . $e->getMessage() . "\n";
 	    }
+	    
 	    unset(self::$plugins_list[get_class($this)]);
 	    parent::onUnload();
 	}
@@ -246,6 +247,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	private function exp_getdir() {
+	    $trim = false;
 	    if ($this->exp_dir == null) {
 		$exploded = explode("\\", get_class($this));
 		$trim = false;
@@ -265,7 +267,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 		$this->exp_dir = str_replace("\\ManiaLivePlugins/", "", $this->exp_dir);
 		$this->exp_dir = str_replace("eXpansion", "expansion", $this->exp_dir);
 	    }
-	    // echo "directory:" . $this->exp_dir . "\n";
+	    //echo "directory:" . $this->exp_dir . "\n";
 	    return $this->exp_dir;
 	}
 
@@ -531,6 +533,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    if ($this->exp_unloading)
 		return;
 
+	    echo get_class($this)."\n";
 	    $this->console('Unloading ' . $this->getId());
 	    $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
@@ -539,9 +542,9 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    foreach ($plugins as $plugin) {
 		try {
 		    if ($plugin != $this->getId()) {
-			$deps = null;
+			$deps = array();
 			if (method_exists($plugin, 'getDependencies')) {
-			    $deps = $this->callPublicMethod($plugin, 'getDependencies');
+			    //$deps = $this->callPublicMethod($plugin, 'getDependencies');
 			}
 			if (!empty($deps)) {
 			    foreach ($deps as $dep) {
