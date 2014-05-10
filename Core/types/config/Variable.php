@@ -196,6 +196,19 @@ abstract class Variable {
 	    $name = $this->name;
 	    $this->configInstance->$name = $value;
 	    $this->confManager->registerValueChange($this);
+	    $core = $this->confManager->getCore();
+	    
+	    /**
+	     * @var \ManiaLive\PluginHandler\PluginHandler
+	     */
+	    if($core != null){
+		$phandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+		try{
+		    $phandler->callPublicMethod($core, $this->pluginId, 'onSettingsChanged', array($this));
+		}  catch (\Exception $ex){
+
+		}
+	    }
 	}  else {
 	    $this->value = $value;
 	}

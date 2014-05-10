@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Core\types {
 
 
-    use Maniaplanet\DedicatedServer\Structures\GameInfos;
+use Maniaplanet\DedicatedServer\Structures\GameInfos;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Config;
 use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
@@ -136,6 +136,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    $this->setPublicMethod('exp_deactivateChatRedirect');
 	    $this->setPublicMethod('exp_activateAnnounceRedirect');
 	    $this->setPublicMethod('exp_deactivateAnnounceRedirect');
+	    $this->setPublicMethod('onSettingsChanged');
 
 	    $this->exp_onInit();
 
@@ -808,6 +809,8 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    }
 	}
 
+	public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var){}
+	
 	public function onGameModeChange($oldGameMode, $newGameMode) {
 
 	}

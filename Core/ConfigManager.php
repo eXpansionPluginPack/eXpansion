@@ -239,6 +239,10 @@ class ConfigManager {
     protected function saveSettings($fileName, $settings) {
 	file_put_contents($fileName, serialize($settings));
     }
+    
+    public function getCore(){
+	return $this->eXpCore;
+    }
 
 }
 
