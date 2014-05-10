@@ -92,36 +92,44 @@ class Widgets_RecordSide extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function updateDediPanel($login = NULL) {
 
-	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania') || $this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script')) {
-	    if ($login == Null) {
-		//Gui\Widgets\DediPanel::EraseAll();
-		$panelMain = Gui\Widgets\DediPanel::Create($login);
-		$panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-		$panelMain->setSizeX(40);
+	$dedi1 = '\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania';
+	$dedi2 = '\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script';
+	
+	try{
+	    if (($this->isPluginLoaded($dedi1) && $this->callPublicMethod($dedi1, 'isRunning')) 
+		    || ($this->isPluginLoaded($dedi2)  && $this->callPublicMethod($dedi2, 'isRunning'))) {
+		if ($login == Null) {
+		    //Gui\Widgets\DediPanel::EraseAll();
+		    $panelMain = Gui\Widgets\DediPanel::Create($login);
+		    $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+		    $panelMain->setSizeX(40);
 
-		$this->widgetIds["DediPanel"] = $panelMain;
-	    } else if (isset($this->widgetIds["DediPanel"])) {
-		$this->widgetIds["DediPanel"]->update();
-		$this->widgetIds["DediPanel"]->show($login);
+		    $this->widgetIds["DediPanel"] = $panelMain;
+		} else if (isset($this->widgetIds["DediPanel"])) {
+		    $this->widgetIds["DediPanel"]->update();
+		    $this->widgetIds["DediPanel"]->show($login);
+		}
+
+		if ($login == Null) {
+		    //Gui\Widgets\DediPanel2::EraseAll();
+		    $panelScore = Gui\Widgets\DediPanel2::Create($login);
+		    $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+		    $panelScore->setVisibleLayer("scorestable");
+		    $panelScore->setSizeX(40);
+		    $this->widgetIds["DediPanel2"] = $panelScore;
+
+
+		    $panelScore->update();
+		    $panelMain->update();
+		    $panelMain->show();
+		    $panelScore->show();
+		} else if (isset($this->widgetIds["DediPanel2"])) {
+		    $this->widgetIds["DediPanel2"]->update();
+		    $this->widgetIds["DediPanel2"]->show($login);
+		}
 	    }
-
-	    if ($login == Null) {
-		//Gui\Widgets\DediPanel2::EraseAll();
-		$panelScore = Gui\Widgets\DediPanel2::Create($login);
-		$panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-		$panelScore->setVisibleLayer("scorestable");
-		$panelScore->setSizeX(40);
-		$this->widgetIds["DediPanel2"] = $panelScore;
-
-
-		$panelScore->update();
-		$panelMain->update();
-		$panelMain->show();
-		$panelScore->show();
-	    } else if (isset($this->widgetIds["DediPanel2"])) {
-		$this->widgetIds["DediPanel2"]->update();
-		$this->widgetIds["DediPanel2"]->show($login);
-	    }
+	}  catch (\Exception $ex){
+	    
 	}
     }
 
