@@ -104,12 +104,12 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 	}
 
 	if (empty($config->login))
-	    die("[Dedimania] Server login is not configured!\n");
+	    throw new \Exception("[Dedimania] Server login is not configured!\n");
 	if (empty($config->code))
-	    die("[Dedimania] Server code is not configured! \n");
+	    throw new \Exception("[Dedimania] Server code is not configured! \n");
 
 	if ($serverInfo->login != $config->login)
-	    die("[Dedimania] Your dedicated server login differs from configured server login, please check your configuration.");
+	    throw new \Exception("[Dedimania] Your dedicated server login differs from configured server login, please check your configuration.");
 
 	if ($packmask == "") {
 	    $packmask = $version->titleId;
