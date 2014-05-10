@@ -73,6 +73,7 @@ abstract class MetaData {
 
     public function registerVariable(Variable $var) {
 	$this->variables[$var->getName()] = $var;
+	$var->setPluginId($this->plugin->getId());
 	$this->confManager->registerVariable($var, $this->plugin->getId());
     }
 
