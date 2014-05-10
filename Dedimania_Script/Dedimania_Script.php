@@ -15,6 +15,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
     /** @var DediConnection */
     private $dedimania;
+    private $running = false;
 
     /** @var Config */
     private $config;
@@ -39,9 +40,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
     /* @var bool $warmup */
     private $wasWarmup = false;
-    private $previousEnvironment = "";
     private $autoFetchRecords = true;
-    
     private $msg_newRecord, $msg_norecord, $msg_record;
 
     public function exp_onInit() {
@@ -53,8 +52,6 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$this->exp_addTitleSupport("Trackmania_2@nadeolabs");
 	$this->exp_setSoftTitleCheck(false);
 
-	//$this->console(\ManiaLivePlugins\eXpansion\Core\Core::$titleId);
-
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "TimeAttack.Script.txt");
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Rounds.Script.txt");
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Cup.Script.txt");
@@ -62,17 +59,18 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Laps.Script.txt");
 	$this->exp_setScriptCompatibilityMode(false);
 	
+	$this->setPublicMethod("isRunning");
     }
 
     public function exp_onLoad() {
 	$helpText = "\n\nPlease correct your config with these instructions: \nEdit and add following configuration lines to manialive config.ini\n\n ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config.login = 'your_server_login_here' \n ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config.code = 'your_server_code_here' \n\n Visit http://dedimania.net/tm2stats/?do=register to get code for your server.";
 	if (empty($this->config->login)) {
-	    $this->dumpException("Server login is not configured for dedimania plugin!" . $helpText, new \Exception("Server login missing."));
-	    die();
+	    $this->console("Server login is not configured for dedimania plugin!");
+	    $this->running = false;
 	}
 	if (empty($this->config->code)) {
-	    $this->dumpException("Server code is not configured for dedimania plugin!" . $helpText, new \Exception("Server code missing."));
-	    die();
+	    $this->console("Server code is not configured for dedimania plugin!");
+	    $this->running = false;
 	}
 	Dispatcher::register(DediEvent::getClass(), $this);
 	$this->dedimania = DediConnection::getInstance();
@@ -88,71 +86,100 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
 
 	//$this->registerChatCommand("test", "test",0,true);
-	
-	
-	$this->config = Config::getInstance();
-	$this->registerChatCommand("dedirecs", "showRecs", 0, true);
-	$this->previousEnvironment = $this->storage->currentMap->environnement;
-	$this->dedimania->openSession(\ManiaLivePlugins\eXpansion\Core\Core::$titleId, $this->config);
+	$this->tryConnection();
+    }
+    
+    private $settingsChanged = array();
+    public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var) {
+	$this->settingsChanged[$var->getName()] = true;
+	if($this->settingsChanged['login'] && $this->settingsChanged['code']){
+	    $this->tryConnection();
+	    $this->settingsChanged = array();
+	}
+    }
+	    
+    function tryConnection(){
+	if (!$this->running) {
+	    if (empty($this->config->login) || empty($this->config->code)) {
+		$admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
+		$admins->announceToPermission('expansion_settings', "#admin_error#Server login or/and Server code is empty in Dedimania Configuration");
+		$this->console("Server code or/and login is not configured for dedimania plugin!");
+	    }else{
+		try{
+		    $this->dedimania->openSession(\ManiaLivePlugins\eXpansion\Core\Core::$titleId, $this->config);
+		    $this->registerChatCommand("dedirecs", "showRecs", 0, true);
+		    $this->running = true;
+		    $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
+		    $admins->announceToPermission('expansion_settings', "#admin_action#Dedimania connection successfull.");
+		}  catch (\Exception $ex){
+		    $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
+		    $admins->announceToPermission('expansion_settings', "#admin_error#Server login or/and Server code is wrong in Dedimania Configuration");
+		    $admins->announceToPermission('expansion_settings', "#admin_error#".$ex->getMessage());
+		    $this->console("Server code or/and login is wrong for the dedimania plugin!");
+		}
+	    }
+	}
     }
 
     function checkSession($login) {
 	$this->dedimania->checkSession();
     }
 
-    
     public function test($login) {
 	echo " login\n";
 	$ranks = $this->connection->getCurrentRankingForLogin($login);
 	print_r($ranks);
-	
+
 	echo " all\n";
-	$ranks = $this->connection->getCurrentRanking(-1,0);
+	$ranks = $this->connection->getCurrentRanking(-1, 0);
 	print_r($ranks);
-	
-	
+
+
 	print_r($this->connection->getServerPackMask());
-	
-	
     }
-    
+
     public function onPlayerConnect($login, $isSpectator) {
+	if (!$this->running)
+	    return;
 	$player = $this->storage->getPlayerObject($login);
 	$this->dedimania->playerConnect($player, $isSpectator);
     }
 
     public function onPlayerDisconnect($login, $reason = null) {
+	if (!$this->running)
+	    return;
 	$this->dedimania->playerDisconnect($login);
     }
 
     public function onBeginMatch() {
+	if (!$this->running)
+	    return;
 	// echo "beginMatch\n";
 	$this->records = array();
 	$this->dedimania->getChallengeRecords();
     }
 
     public function onBeginRound() {
+	if (!$this->running)
+	    return;
 	// echo "beginround\n";
 	$this->wasWarmup = $this->connection->getWarmUp();
     }
 
-  /*  public function LibXmlRpc_BeginRound($number) {
-	echo "script beginRound\n";
-	$this->wasWarmup = $this->connection->getWarmUp();
-    }
+    /*  public function LibXmlRpc_BeginRound($number) {
+      echo "script beginRound\n";
+      $this->wasWarmup = $this->connection->getWarmUp();
+      }
 
-    public function LibXmlRpc_BeginMatch($number) {
-	echo "script beginMatch\n";
-	$this->records = array();
-	$this->dedimania->getChallengeRecords();
-    } */
+      public function LibXmlRpc_BeginMatch($number) {
+      echo "script beginMatch\n";
+      $this->records = array();
+      $this->dedimania->getChallengeRecords();
+      } */
 
     public function LibXmlRpc_BeginMap($number) {
-	// echo "script beginMap\n";
-	/* if ($this->storage->currentMap->environnement != $this->previousEnvironment) {
-	    $this->previousEnvironment = $this->storage->currentMap->environnement;
-	    $this->dedimania->openSession(Core, $this->config);
-	} */
+	if (!$this->running)
+	    return;
 
 	$this->records = array();
 	$this->rankings = array();
@@ -161,6 +188,8 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     public function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd) {
+	if (!$this->running)
+	    return;
 	if ($time == 0)
 	    return;
 
@@ -363,7 +392,8 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
      * 
      */
     public function onEndMatch($rankings_old, $winnerTeamOrMap) {
-
+	if (!$this->running)
+	    return;
 
 	if ($this->exp_isRelay())
 	    return;
@@ -394,9 +424,9 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 		$this->console("[Dedimania] No new times driven. Skipping dedimania sent.");
 		return;
 	    }
-	    
+
 	    $this->vReplay = $this->connection->getValidationReplay($rankings[0]['Login']);
-	    
+
 	    $greplay = "";
 	    $grfile = sprintf('Dedimania/%s.%d.%07d.%s.Replay.Gbx', $this->storage->currentMap->uId, $this->storage->gameInfos->gameMode, $rankings[0]['BestTime'], $rankings[0]['Login']);
 	    $this->connection->SaveBestGhostsReplay($rankings[0]['Login'], $grfile);
@@ -406,8 +436,8 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	    if (empty($this->vReplay)) {
 		$this->console("[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent.");
 		return;
-	    }	
-	
+	    }
+
 	    $this->dedimania->setChallengeTimes($this->storage->currentMap, $rankings, $this->vReplay, $this->gReplay);
 	} catch (\Exception $e) {
 	    $this->console("[Dedimania] " . $e->getMessage());
@@ -552,6 +582,10 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	} catch (\Exception $e) {
 	    echo $e->getFile() . ":" . $e->getLine();
 	}
+    }
+    
+    public function isRunning(){
+	return $this->running;
     }
 
 }
