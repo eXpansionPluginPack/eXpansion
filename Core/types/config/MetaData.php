@@ -70,12 +70,12 @@ abstract class MetaData {
     /**
      * @var The list of Titles the plugin support or exact title name chack
      */
-    private static $titleSupport = array();
+    private $titleSupport = array();
 
     /**
      * @var Whatever plugins support soft title name, or
      */
-    private static $softTitleSupport = array();
+    private $softTitleSupport = array();
 
     /**
      * @param String The Id of the plugin the meta data is working for
@@ -303,7 +303,7 @@ abstract class MetaData {
 	
 	if (!empty($this->titleSupport)) {
 	    foreach ($this->titleSupport as $supportedTitle) {
-		if ($soft && strpos($titleName, $supportedTitle) !== false) {
+		if ($this->softTitleSupport && strpos($titleName, $supportedTitle) !== false) {
 		    return true;
 		} else if ($titleName == $supportedTitle) {
 		    return true;

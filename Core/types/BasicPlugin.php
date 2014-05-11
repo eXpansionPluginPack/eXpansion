@@ -535,6 +535,20 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 	}
 
 	/**
+	 * Returns the current game mode taking in acount script modes that might be equivalent with old modes
+	 *
+	 * @return Int The gamemode which is compatible with the current script. 0 if none
+	 */
+	final static public function exp_getCurrentCompatibilityGameMode() {
+	    $gameInfo = \ManiaLive\Data\Storage::getInstance()->gameInfos;
+	    if ($gameInfo->gameMode == GameInfos::GAMEMODE_SCRIPT) {
+		return self::exp_getScriptCompatibilityMode($gameInfo->scriptName);
+	    } else {
+		return $gameInfo->gameMode;
+	    }
+	}
+	
+	/**
 	 *
 	 * @param type $scriptName
 	 * @return int The gamemode which is compatible with the script. 0 if none
