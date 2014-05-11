@@ -28,7 +28,6 @@ class Core extends types\ExpPlugin {
      * Last used game mode
      * @var \Maniaplanet\DedicatedServer\Structures\GameInfos
      */
-
     private $lastGameMode;
     private $lastGameSettings;
     private $lastServerSettings;
@@ -543,7 +542,7 @@ EOT;
 	$this->console('Shutting down uncompatible plugins');
 
 	foreach ($this->exp_getGameModeCompability() as $plugin => $compability) {
-	    if (!$plugin::exp_checkGameCompability()) {
+	    if (!$plugin::getMetaData()->checkAll()) {
 		try {
 		    $this->callPublicMethod($plugin, 'exp_unload');
 		} catch (\Exception $ex) {
@@ -562,7 +561,7 @@ EOT;
 		//$parts = explode("\\", $plugin_id);
 		//$className = '\\ManiaLivePlugins\\' . $plugin_id . '\\' . $parts[1];
 		$className = $plugin_id;
-		if ($className::exp_checkGameCompability() && !$this->isPluginLoaded($plugin_id)) {
+		if (!$className::getMetaData()->checkAll() && !$this->isPluginLoaded($plugin_id)) {
 		    try {
 			$pHandler->load($plugin_id);
 		    } catch (Exception $ex) {

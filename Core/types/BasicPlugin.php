@@ -3,18 +3,18 @@
 namespace ManiaLivePlugins\eXpansion\Core\types {
 
 
-use Maniaplanet\DedicatedServer\Structures\GameInfos;
-use ManiaLive\Utilities\Console;
-use ManiaLivePlugins\eXpansion\Core\Config;
-use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
-use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
-use \ManiaLivePlugins\eXpansion\Core\Events\PlayerEvent;
-use ManiaLive\Event\Dispatcher;
-use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
-use ManiaLivePlugins\eXpansion\Database\Database;
-use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
-use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent as Event;
-use ManiaLivePlugins\eXpansion\Core\Core;
+    use Maniaplanet\DedicatedServer\Structures\GameInfos;
+    use ManiaLive\Utilities\Console;
+    use ManiaLivePlugins\eXpansion\Core\Config;
+    use \ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
+    use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
+    use \ManiaLivePlugins\eXpansion\Core\Events\PlayerEvent;
+    use ManiaLive\Event\Dispatcher;
+    use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
+    use ManiaLivePlugins\eXpansion\Database\Database;
+    use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
+    use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent as Event;
+    use ManiaLivePlugins\eXpansion\Core\Core;
 
     /**
      * Description of BasicPlugin
@@ -146,15 +146,24 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	}
 
 	private function loadMetaData() {
-	    $reflector = new \ReflectionClass(get_class($this));
-	    $dir = dirname($reflector->getFileName());
-	    if (file_exists($dir . DIRECTORY_SEPARATOR . 'MetaData.php')) {
-		$pieces = explode('\\', get_class($this));
-		array_pop($pieces);
-		$class = implode('\\', $pieces);
-		$class .= '\\MetaData';
-		$this->metaData = $class::getInstance($this);
-	    }
+	    $pieces = explode('\\', get_class($this));
+	    array_pop($pieces);
+	    $class = implode('\\', $pieces);
+	    $class .= '\\MetaData';
+	    $this->metaData = $class::getInstance($this->getId());
+	}
+
+	/**
+	 * 
+	 * @return config\MetaData
+	 */
+	public static function getMetaData() {
+	    $class = get_called_class();
+	    $pieces = explode('\\', $class);
+	    array_pop($pieces);
+	    $class = implode('\\', $pieces);
+	    $class .= '\\MetaData';
+	    return $class::getInstance();
 	}
 
 	/**
@@ -162,7 +171,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	 * @abstract
 	 */
 	public function exp_onInit() {
-
+	    
 	}
 
 	public final function enableScriptEvents() {
@@ -182,7 +191,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	 * @abstract
 	 */
 	public function exp_onLoad() {
-
+	    
 	}
 
 	public final function onReady() {
@@ -192,7 +201,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 		self::$exp_billManager = new \ManiaLivePlugins\eXpansion\Core\BillManager($this->connection, $this->db, $this);
 	    }
 
-	    if (!self::exp_checkGameCompability()) {
+	    if (!$this->metaData->checkAll()) {
 		//$this->exp_unload();
 		return;
 	    } else {
@@ -213,13 +222,10 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	 * @abstract
 	 */
 	public function exp_onReady() {
-
+	    
 	}
 
 	final public function onUnload() {
-	    if ($this->metaData != null)
-		$this->metaData->unSetPlugin();
-
 	    Dispatcher::unregister(GameSettingsEvent::getClass(), $this);
 	    Dispatcher::unregister(PlayerEvent::getClass(), $this);
 
@@ -228,13 +234,13 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    } catch (\Exception $e) {
 		echo "onUnload exception:" . $this->getId() . " -> " . $e->getMessage() . "\n";
 	    }
-	    
+
 	    unset(self::$plugins_list[get_class($this)]);
 	    parent::onUnload();
 	}
 
 	public function exp_onUnload() {
-
+	    
 	}
 
 	private function checkVersion() {
@@ -355,9 +361,9 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 		    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid));
 		}
 	    } else {
-		try{
+		try {
 		    $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg));
-		} catch (\Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException $ex){
+		} catch (\Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException $ex) {
 		    \ManiaLive\Utilities\Console::println("[eXpansion]Attempt to send Announce to a login failed. Login unknown");
 		    \ManiaLive\Utilities\Logger::info("[eXpansion]Attempt to send Announce to a login failed. Login unknown");
 		} catch (\Exception $e) {
@@ -381,148 +387,15 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 		    $this->callPublicMethod(self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array(null, $message));
 		}
 	    } else {
-		try{
+		try {
 		    $this->connection->chatSendServerMessageToLanguage($msg->getMultiLangArray($args));
-		} catch (\Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException $ex){
+		} catch (\Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException $ex) {
 		    \ManiaLive\Utilities\Console::println("[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown");
 		    \ManiaLive\Utilities\Logger::info("[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown");
-		}catch (\Exception $e) {
+		} catch (\Exception $e) {
 		    $this->console("Error while sending Multilang Announce message => Server said:" . $e->getMessage());
 		}
 	    }
-	}
-
-	/**
-	 * Will force the plugin to be checked if it is compatible with the Game Mode
-	 * If it isn't the plugin will be unloaded From ManiaLive
-	 * If you change GameModes the plugin may be loaded again.
-	 *
-	 * @param int $gameMode
-	 * @param string | null $scriptName
-	 */
-	protected function exp_addGameModeCompability($gameMode, $scriptName = null) {
-	    if ($scriptName == null || $gameMode != GameInfos::GAMEMODE_SCRIPT)
-		self::$plugin_gameModeSupport[get_called_class()][$gameMode] = true;
-	    else
-		self::$plugin_gameModeSupport[get_called_class()][$gameMode][$scriptName] = true;
-	}
-
-	/**
-	 * Shall the script name match exactly our should it be just similar.
-	 * By default eXP will check for similarity, but that might change in the future
-	 * if scripters don't do attention to the script name conventions.
-	 *
-	 * @param bool $default
-	 */
-	protected function exp_setSoftScriptModeCheck($default = true) {
-	    self::$plugin_softScriptCompatibility[get_called_class()] = $default;
-	}
-
-	protected function exp_setScriptCompatibilityMode($default = true) {
-	    self::$plugin_scriptCompatibiliyMode[get_called_class()] = $default;
-	}
-
-	protected function exp_getGameModeCompability() {
-	    return self::$plugin_gameModeSupport;
-	}
-
-	/**
-	 * Define the title names for whom this plugin will work
-	 *
-	 * @param string $titleName
-	 */
-	protected function exp_addTitleSupport($titleName) {
-	    if (!isset(self::$plugin_titleSupport[get_called_class()])) {
-		self::$plugin_titleSupport[get_called_class()] = array();
-	    }
-	    self::$plugin_titleSupport[get_called_class()][] = $titleName;
-	}
-
-	/**
-	 * Shall the title name match exactly or should we just check for
-	 * similarity.
-	 *
-	 * @param bool $default
-	 */
-	protected function exp_setSoftTitleCheck($default = true) {
-	    self::$plugin_softTitleSupport[get_called_class()] = $default;
-	}
-
-	/**
-	 * Check for Game compability
-	 * @static
-	 * @return boolean
-	 */
-	public static function exp_checkGameCompability() {
-	    $gameInfo = \ManiaLive\Data\Storage::getInstance()->gameInfos;
-	    $class = get_called_class();
-	    $title = \ManiaLivePlugins\eXpansion\Core\Core::$titleId;
-
-	    //first let's check for the TitleCompatibility
-	    if (!self::exp_checkTitleCompatibility($title, $class))
-		return false;
-
-	    //Then let's check for configuration exception
-	    if (!self::exp_checkExceptionGameMode($gameInfo, $class))
-		return false;
-
-	    //Checking for game mode compatibility
-	    if (isset(self::$plugin_gameModeSupport[$class])) {
-		//need to check
-
-		if ($gameInfo->gameMode == GameInfos::GAMEMODE_SCRIPT) {
-		    return self::exp_checkScriptGameModeCompatibility($gameInfo, $class);
-		} else {
-		    return isset(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode]) ? self::$plugin_gameModeSupport[$class][$gameInfo->gameMode] : false;
-		}
-	    } else
-	    //This plugin supports all GameModes
-		return true;
-	}
-
-	private static function exp_checkExceptionGameMode(GameInfos $gameInfo, $class) {
-	    if (isset(\ManiaLivePlugins\eXpansion\Core\Core::$gameModeDisabledPlugins[$class])) {
-		$gamemode = $gameInfo->gameMode;
-
-		if ($gamemode == GameInfos::GAMEMODE_SCRIPT) {
-		    $gamemode = $gameInfo->scriptName;
-		}
-
-		if (in_array((string) $gamemode, \ManiaLivePlugins\eXpansion\Core\Core::$gameModeDisabledPlugins[$class]))
-		    return false;
-	    }
-	    return true;
-	}
-
-	private static function exp_checkTitleCompatibility($currentTitle, $class) {
-
-	    $soft = true;
-	    if (isset(self::$plugin_softTitleSupport[$class])) {
-		$soft = self::$plugin_softTitleSupport[$class];
-	    }
-
-	    if (isset(self::$plugin_titleSupport[$class])) {
-		foreach (self::$plugin_titleSupport[$class] as $supportedTitle) {
-		    if ($soft && strpos($currentTitle, $supportedTitle) !== false) {
-			return true;
-		    } else if ($currentTitle == $supportedTitle) {
-			return true;
-		    }
-		}
-		return false;
-	    }
-	    //This plugin supports all titles
-	    return true;
-	}
-
-	private static function exp_checkScriptGameModeCompatibility(GameInfos $gameInfo, $class) {
-	    $compatiblityGameMode = self::exp_getCurrentCompatibilityGameMode();
-
-	    if (!isset(self::$plugin_scriptCompatibiliyMode[$class]) || self::$plugin_scriptCompatibiliyMode[$class]) {
-		return isset(self::$plugin_gameModeSupport[$class][$compatiblityGameMode]) ? self::$plugin_gameModeSupport[$class][$compatiblityGameMode] : false;
-	    }
-
-	    return isset(self::$plugin_gameModeSupport[$class][$gameInfo->gameMode][$gameInfo->scriptName]) ? self::$plugin_gameModeSupport[$class][$gameInfo->gameMode][$gameInfo->scriptName] : false;
 	}
 
 	/**
@@ -533,7 +406,6 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    if ($this->exp_unloading)
 		return;
 
-	    echo get_class($this)."\n";
 	    $this->console('Unloading ' . $this->getId());
 	    $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
@@ -544,7 +416,11 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 		    if ($plugin != $this->getId()) {
 			$deps = array();
 			if (method_exists($plugin, 'getDependencies')) {
-			    //$deps = $this->callPublicMethod($plugin, 'getDependencies');
+			    try {
+				$deps = $this->callPublicMethod($plugin, 'getDependencies');
+			    } catch (Exception $ex) {
+				//Nothing to do, not a eXpansion plugin we will hope for the best
+			    }
 			}
 			if (!empty($deps)) {
 			    foreach ($deps as $dep) {
@@ -608,14 +484,6 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    unset(self::$exp_announceRedirected[get_class($this)]);
 	}
 
-	public function exp_isTMServer() {
-	    return \ManiaLivePlugins\eXpansion\Core\Core::$isTMServer;
-	}
-
-	public function exp_isSMServer() {
-	    return \ManiaLivePlugins\eXpansion\Core\Core::$isSMServer;
-	}
-
 	/**
 	 * Will start a billing process.
 	 *
@@ -642,6 +510,14 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    return \ManiaLivePlugins\eXpansion\Core\Core::$titleId;
 	}
 
+	public function exp_isTMServer() {
+	    return \ManiaLivePlugins\eXpansion\Core\Core::$isTMServer;
+	}
+
+	public function exp_isSMServer() {
+	    return \ManiaLivePlugins\eXpansion\Core\Core::$isSMServer;
+	}
+
 	final public function exp_getOldId($id = null) {
 	    if ($id == null) {
 		$id = $this->getId();
@@ -650,47 +526,12 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    return $e[1] . "\\" . $e[2];
 	}
 
-	final public function debug($message) {
-	    $config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
-	    if (!$config->debug)
-		return;
-
-	    if (is_string($message)) {
-		Console::println($message);
-		\ManiaLive\Utilities\Logger::log($message, true, "exp-debug.txt");
-	    }
-	    if (is_array($message)) {
-		$info = print_r($message, true);
-		Console::println($info);
-		\ManiaLive\Utilities\Logger::log($info, true, "exp-debug.txt");
-	    }
-	    if (is_object($message)) {
-		$info = var_export($message, true);
-		Console::println($info);
-		\ManiaLive\Utilities\Logger::log($message, true, "exp-debug.txt");
-	    }
-	}
-
 	/**
 	 * Is manialive running on a relay server or not
 	 * @return type Boolean
 	 */
 	final public function exp_isRelay() {
 	    return \ManiaLivePlugins\eXpansion\Core\Core::$isRelay;
-	}
-
-	/**
-	 * Returns the current game mode taking in acount script modes that might be equivalent with old modes
-	 *
-	 * @return Int The gamemode which is compatible with the current script. 0 if none
-	 */
-	final static public function exp_getCurrentCompatibilityGameMode() {
-	    $gameInfo = \ManiaLive\Data\Storage::getInstance()->gameInfos;
-	    if ($gameInfo->gameMode == GameInfos::GAMEMODE_SCRIPT) {
-		return self::exp_getScriptCompatibilityMode($gameInfo->scriptName);
-	    } else {
-		return $gameInfo->gameMode;
-	    }
 	}
 
 	/**
@@ -742,6 +583,27 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 		}
 	    }
 	    return $compatibility;
+	}
+
+	final public function debug($message) {
+	    $config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
+	    if (!$config->debug)
+		return;
+
+	    if (is_string($message)) {
+		Console::println($message);
+		\ManiaLive\Utilities\Logger::log($message, true, "exp-debug.txt");
+	    }
+	    if (is_array($message)) {
+		$info = print_r($message, true);
+		Console::println($info);
+		\ManiaLive\Utilities\Logger::log($info, true, "exp-debug.txt");
+	    }
+	    if (is_object($message)) {
+		$info = var_export($message, true);
+		Console::println($info);
+		\ManiaLive\Utilities\Logger::log($message, true, "exp-debug.txt");
+	    }
 	}
 
 	final public function dumpException($message, \Exception $e) {
@@ -812,21 +674,23 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	    }
 	}
 
-	public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var){}
-	
-	public function onGameModeChange($oldGameMode, $newGameMode) {
+	public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var) {
+	    
+	}
 
+	public function onGameModeChange($oldGameMode, $newGameMode) {
+	    
 	}
 
 	public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes) {
-
+	    
 	}
 
 	/**
 	 * @param ExpPlayer $player player object of the player given up
 	 */
 	public function onPlayerGiveup(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player) {
-
+	    
 	}
 
 	/**
@@ -836,118 +700,118 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 	 * @param int $newPos new position
 	 */
 	public function onPlayerPositionChange(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player, $oldPos, $newPos) {
-
+	    
 	}
 
 	/**
 	 * @param ExpPlayer[] $playerPositions array(string => ExpPlayer);
 	 */
 	public function onPlayerNewPositions($playerPositions) {
-
+	    
 	}
 
 	public function onMapRestart() {
-
+	    
 	}
 
 	public function onMapSkip() {
-
+	    
 	}
 
 	public function LibAFK_IsAFK($login) {
-
+	    
 	}
 
 	public function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec) {
-
+	    
 	}
 
 	public function LibXmlRpc_BeginMap($number) {
-
+	    
 	}
 
 	public function LibXmlRpc_BeginMatch($number) {
-
+	    
 	}
 
 	public function LibXmlRpc_BeginRound($number) {
-
+	    
 	}
 
 	public function LibXmlRpc_BeginSubmatch($number) {
-
+	    
 	}
 
 	public function LibXmlRpc_BeginTurn($number) {
-
+	    
 	}
 
 	public function LibXmlRpc_BeginWarmUp() {
-
+	    
 	}
 
 	public function LibXmlRpc_EndMap($number) {
-
+	    
 	}
 
 	public function LibXmlRpc_EndMatch($number) {
-
+	    
 	}
 
 	public function LibXmlRpc_EndRound($number) {
-
+	    
 	}
 
 	public function LibXmlRpc_EndSubmatch($number) {
-
+	    
 	}
 
 	public function LibXmlRpc_EndTurn($number) {
-
+	    
 	}
 
 	public function LibXmlRpc_EndWarmUp() {
-
+	    
 	}
 
 	public function LibXmlRpc_LoadingMap($number) {
-
+	    
 	}
 
 	public function LibXmlRpc_OnGiveUp($login) {
-
+	    
 	}
 
 	public function LibXmlRpc_OnRespawn($login) {
-
+	    
 	}
 
 	public function LibXmlRpc_OnStartLine($login) {
-
+	    
 	}
 
 	public function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump) {
-
+	    
 	}
 
 	public function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd) {
-
+	    
 	}
 
 	public function LibXmlRpc_PlayerRanking($rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone) {
-
+	    
 	}
 
 	public function LibXmlRpc_Rankings($array) {
-
+	    
 	}
 
 	public function LibXmlRpc_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2) {
-
+	    
 	}
 
 	public function WarmUp_Status($status) {
-
+	    
 	}
 
     }
