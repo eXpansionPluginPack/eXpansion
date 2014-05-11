@@ -75,7 +75,7 @@ abstract class MetaData {
     /**
      * @var Whatever plugins support soft title name, or
      */
-    private $softTitleSupport = array();
+    private $softTitleSupport = true;
 
     /**
      * @param String The Id of the plugin the meta data is working for
@@ -285,7 +285,7 @@ abstract class MetaData {
 
 	if (isset($this->gameModeSupport[0]) && !empty($this->gameModeSupport[0])) {
 	    foreach ($this->gameModeSupport[0] as $supportedScript) {
-		if ($soft && strpos($scriptName, $supportedScript) !== false) {
+		if ($this->softScriptCompatibility && strpos($scriptName, $supportedScript) !== false) {
 		    return true;
 		} else if ($currentTitle == $supportedScript) {
 		    return true;
@@ -322,6 +322,13 @@ abstract class MetaData {
     
     public function checkAll(){
 	$errors = $this->checkOtherCompatibility();
+	
+	/*echo "Compatibility : ";
+	echo "Game : ".($this->checkGameCompatibility() ? "True" : "False");
+	echo " | Title : ".($this->checkTitleCompatibility() ? "True" : "False");
+	echo " | Other : ".( empty($errors) ? "True" : "False");
+	echo "\n";*/
+	
 	return $this->checkGameCompatibility() && $this->checkTitleCompatibility() && empty($errors);
     }
 }

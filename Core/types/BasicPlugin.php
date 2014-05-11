@@ -93,6 +93,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 	public final function onInit() {
 	    $this->loadMetaData();
+	    if (!$this->metaData->checkAll()) {
+		return;
+	    }
+	    
 	    $this->checkVersion();
 
 	    if (\ManiaLivePlugins\eXpansion\Core\Core::$titleId === null) {
@@ -179,6 +183,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 	}
 
 	public final function onLoad() {
+	    if (!$this->metaData->checkAll()) {
+		$this->exp_unload();
+		return;
+	    }
 	    try {
 		$this->exp_onLoad();
 	    } catch (\Exception $e) {
@@ -196,23 +204,19 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 	public final function onReady() {
 
-//Recovering the billManager if need.
-	    if (self::$exp_billManager == null) {
-		self::$exp_billManager = new \ManiaLivePlugins\eXpansion\Core\BillManager($this->connection, $this->db, $this);
-	    }
-
 	    if (!$this->metaData->checkAll()) {
-		//$this->exp_unload();
+		$this->exp_unload();
 		return;
 	    } else {
 		if (!$this->_isReady) {
 		    $this->_isReady = true;
-		    //try {
 		    $this->exp_onReady();
-		    /* } catch (\Exception $e) {
-		      throw new \Exception("onReadyError at" .  get_class() .":\n" . $e->getFile() . ":" . $e->getLine() . "\n" . $e->getMessage(), 0, $e);
-		      } */
 		}
+	    }
+	    
+	    //Recovering the billManager if need.
+	    if (self::$exp_billManager == null) {
+		self::$exp_billManager = new \ManiaLivePlugins\eXpansion\Core\BillManager($this->connection, $this->db, $this);
 	    }
 	    $this->relay = \ManiaLivePlugins\eXpansion\Core\RelayLink::getInstance();
 	}
@@ -547,7 +551,6 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		return $gameInfo->gameMode;
 	    }
 	}
-	
 	/**
 	 *
 	 * @param type $scriptName
