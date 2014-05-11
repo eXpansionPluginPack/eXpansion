@@ -214,7 +214,7 @@ EOT;
 	$this->config = Config::getInstance();
 	$this->registerChatCommand("server", "showInfo", 0, true);
 	$this->registerChatCommand("serverlogin", "serverlogin", 0, true);
-	
+
 	$this->setPublicMethod("showInfo");
 	$this->setPublicMethod("showExpSettings");
 	$window = new Gui\Windows\QuitWindow();
@@ -398,11 +398,12 @@ EOT;
 
 	$dediConfig = \ManiaLive\DedicatedApi\Config::getInstance();
 
-	$path = $this->connection->getMapsDirectory() . "/../Config/" . $this->config->dedicatedConfigFile;
-	if (file_exists($path)) {
-	    $oldXml = simplexml_load_file($path);
+	try {
+	    $path = $this->connection->getMapsDirectory() . "/../Config/" . $this->config->dedicatedConfigFile;
+	    if (file_exists($path)) {
+		$oldXml = simplexml_load_file($path);
 
-	    $xml = '<?xml version="1.0" encoding="utf-8" ?>
+		$xml = '<?xml version="1.0" encoding="utf-8" ?>
 <dedicated>
 		' . $oldXml->authorization_levels->asXml() . '
 	
@@ -484,7 +485,10 @@ EOT;
 	</system_config>
 </dedicated>
 ';
-	    file_put_contents($path, $xml);
+		file_put_contents($path, $xml);
+	    }
+	} catch (\Exception $ex) {
+	    $this->console("[Core]Error writing ServerSettings : " . $path . " - " . $ex->getMessage());
 	}
     }
 
@@ -496,7 +500,11 @@ EOT;
 
     public function saveMatchSettings() {
 	if (!empty($this->config->defaultMatchSettingsFile)) {
-	    $this->connection->saveMatchSettings("MatchSettings" . DIRECTORY_SEPARATOR . $this->config->defaultMatchSettingsFile);
+	    try {
+		$this->connection->saveMatchSettings("MatchSettings" . DIRECTORY_SEPARATOR . $this->config->defaultMatchSettingsFile);
+	    } catch (\Exception $ex) {
+		$this->console("[Core]Error writing MatchSettings : " . $this->config->defaultMatchSettingsFile . " - " . $ex->getMessage());
+	    }
 	}
     }
 
