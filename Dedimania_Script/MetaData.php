@@ -16,6 +16,20 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$this->setName("Dedimania (script mode)");
 	$this->setDescription("Dedimania, Global world records system integration");
 
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+	$this->setScriptCompatibilityMode(false);
+	
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "TimeAttack.Script.txt");
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Rounds.Script.txt");
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Cup.Script.txt");
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Team.Script.txt");
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Laps.Script.txt");
+	$this->setScriptCompatibilityMode(false);
+	
 	$config	= \ManiaLivePlugins\eXpansion\Dedimania\Config::getInstance();
 	
 	$var = new String("login", "Dedimania server login (use this server login)", $config, false);
