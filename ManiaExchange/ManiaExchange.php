@@ -228,7 +228,7 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$this->exp_chatSendServerMessage("Error while saving a map file.", $login);
 	    }
 	} catch (\Exception $ex) {
-	    
+	    $this->exp_chatSendServerMessage("Error while saving a map file : ".$e->getMessage(), $login);
 	}
     }
 
