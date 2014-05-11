@@ -201,30 +201,34 @@ class ManiaExchange extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$dir = $maps . "/Downloaded/" . $game->titleId;
 	$file = $dir . "/" . $mxId . ".Map.Gbx";
 
-	if (!is_dir($dir)) {
-	    mkdir($dir, 0775);
-	}
-	if ($this->dataAccess->save($file, $data)) {
-
-	    try {
-		if (!$this->connection->checkMapForCurrentServerParams($file)) {
-		    $msg = exp_getMessage("Map is not compatible with current server settings, map not added.");
-		    $this->exp_chatSendServerMessage($msg, $login);
-		    return;
-		}
-
-		$this->connection->addMap($file);
-
-		$map = $this->connection->getMapInfo($file);
-		$this->exp_chatSendServerMessage($this->msg_add, null, array($map->name));
-		if ($this->config->juke_newmaps) {
-		    $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Maps\Maps', "queueMap", $login, $map, false);
-		}
-	    } catch (\Exception $e) {
-		$this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
+	try {
+	    if (!is_dir($dir)) {
+		mkdir($dir, 0775);
 	    }
-	} else {
-	    $this->exp_chatSendServerMessage("Error while saving a map file.", $login);
+	    if ($this->dataAccess->save($file, $data)) {
+
+		try {
+		    if (!$this->connection->checkMapForCurrentServerParams($file)) {
+			$msg = exp_getMessage("Map is not compatible with current server settings, map not added.");
+			$this->exp_chatSendServerMessage($msg, $login);
+			return;
+		    }
+
+		    $this->connection->addMap($file);
+
+		    $map = $this->connection->getMapInfo($file);
+		    $this->exp_chatSendServerMessage($this->msg_add, null, array($map->name));
+		    if ($this->config->juke_newmaps) {
+			$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Maps\Maps', "queueMap", $login, $map, false);
+		    }
+		} catch (\Exception $e) {
+		    $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
+		}
+	    } else {
+		$this->exp_chatSendServerMessage("Error while saving a map file.", $login);
+	    }
+	} catch (\Exception $ex) {
+	    
 	}
     }
 
