@@ -6,14 +6,6 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 
     private $wasWarmup = false;
 
-    function exp_onInit() {
-        //Important for all eXpansion plugins.
-        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
-        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
-        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
-        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
-        $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
-    }
 
     function exp_onLoad() {
         $this->enableDedicatedEvents();
