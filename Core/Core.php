@@ -15,7 +15,7 @@ use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
  *
  * @author oliverde8
  * @author reaby
- * 
+ *
  */
 class Core extends types\ExpPlugin {
 
@@ -32,7 +32,7 @@ class Core extends types\ExpPlugin {
     private $lastGameSettings;
     private $lastServerSettings;
 
-    /** private variable to hold players infos 
+    /** private variable to hold players infos
      * @var Structures\ExpPlayer[] */
     private $expPlayers = array();
 
@@ -40,12 +40,12 @@ class Core extends types\ExpPlugin {
     private $teamScores = array();
 
     /**
-     * public variable to export player infos 
+     * public variable to export player infos
      * @var Structures\ExpPlayer[] */
     public static $playerInfo = array();
 
     /**
-     * @var Structures\NetStat[] 
+     * @var Structures\NetStat[]
      */
     public static $netStat = array();
 
@@ -87,7 +87,7 @@ class Core extends types\ExpPlugin {
     public static $isRelay = false;
 
     /**
-     * 
+     *
      */
     function exp_onInit() {
 	$logFile = "manialive-" . $this->storage->serverLogin . ".console.log";
@@ -109,7 +109,7 @@ class Core extends types\ExpPlugin {
     }
 
     /**
-     * 
+     *
      */
     function exp_onLoad() {
 
@@ -207,7 +207,7 @@ EOT;
     }
 
     /**
-     * 
+     *
      */
     public function exp_onReady() {
 	$this->lastTick = time();
@@ -251,11 +251,11 @@ EOT;
      * @param type $login
      */
     public function serverlogin($login) {
-	
+
     }
 
     /**
-     * 
+     *
      * @param array $map
      * @param bool $warmUp
      * @param bool $matchContinuation
@@ -305,16 +305,25 @@ EOT;
 	$this->teamScores = array();
     }
 
-    protected function compareObjects($obj1, $obj2, $ingnoreList = array()) {
+    /**
+     * Compares the values  in 2 objects recursively.
+     *
+     * @param       $obj1       First object
+     * @param       $obj2       Object to compare with
+     * @param array $ignoreList Keys to ignore while comparing
+     *
+     * @return array List keys that has a different value.
+     */
+    protected function compareObjects($obj1, $obj2, $ignoreList = array()) {
 	$difs = array();
 
 	foreach ($obj1 as $varName => $value) {
-	    if (!in_array($varName, $ingnoreList)) {
+	    if (!in_array($varName, $ignoreList)) {
 		if (is_object($value)) {
 		    if (!isset($obj2->$varName)) {
 			$difs[$varName] = true;
 		    } else {
-			$newDisf = $this->compareObjects($value, $obj2->$varName, $ingnoreList);
+			$newDisf = $this->compareObjects($value, $obj2->$varName, $ignoreList);
 			if (!empty($newDisf))
 			    $difs[$varName] = $newDisf;
 		    }
@@ -501,7 +510,7 @@ EOT;
     public function saveMatchSettings() {
 	if (!empty($this->config->defaultMatchSettingsFile)) {
 	    try {
-		$this->connection->saveMatchSettings("MatchSettings" . DIRECTORY_SEPARATOR . $this->config->defaultMatchSettingsFile);
+		$this->connection->saveMatchSettings((empty($this->config->mapBase) ? "" : $this->config->mapBase.'/')."MatchSettings" . DIRECTORY_SEPARATOR . $this->config->defaultMatchSettingsFile);
 	    } catch (\Exception $ex) {
 		$this->console("[Core]Error writing MatchSettings : " . $this->config->defaultMatchSettingsFile . " - " . $ex->getMessage());
 	    }
@@ -537,7 +546,7 @@ EOT;
 		try {
 		    $this->callPublicMethod($plugin, 'exp_unload');
 		} catch (\Exception $ex) {
-		    
+
 		}
 	    }
 	}
@@ -620,7 +629,7 @@ EOT;
     }
 
     public function onPostLoop() {
-	// check for update conditions	
+	// check for update conditions
 	if ($this->enableCalculation == false)
 	    return;
 	if ($this->storage->serverStatus->code == 4 && $this->update && (microtime(true) - $this->loopTimer) > 0.35) {
