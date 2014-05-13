@@ -7,6 +7,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 class MatchSettings extends Window {
 
@@ -54,9 +55,7 @@ class MatchSettings extends Window {
                 $this->connection->chatSendServerMessage(__("Error in filename", $login), $login);
                 return;
             }
-	    $coreConf = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
-	    $maps = $this->connection->getMapsDirectory().(!empty($coreConf->mapBase) ? $coreConf->mapBase."/" : "");
-            $filename = $maps . "/MatchSettings/" . $entries['SaveAs'] . ".txt";
+            $filename = Helper::getPaths()->getMatchSettingPath() . $entries['SaveAs'] . ".txt";
             $this->saveSettings($login, $filename);
             $this->populateList();
             $this->RedrawAll();
@@ -121,11 +120,7 @@ class MatchSettings extends Window {
             $item->destroy();
         $this->pager->clearItems();
         $this->items = array();
-
-        $login = $this->getRecipient();
-	$coreConf = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
-	$maps = $this->connection->getMapsDirectory().(!empty($coreConf->mapBase) ? $coreConf->mapBase."/" : "");
-        $path = $maps . "/MatchSettings/*.txt";
+        $path = Helper::getPaths()->getMatchSettingPath() . "MatchSettings/*.txt";
 
         $settings = glob($path);
         $x = 0;

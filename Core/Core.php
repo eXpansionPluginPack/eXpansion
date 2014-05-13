@@ -6,6 +6,7 @@ use ManiaLive\Event\Dispatcher;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use \Maniaplanet\DedicatedServer\Structures\ServerOptions;
 use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent as Event;
 use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
@@ -408,7 +409,7 @@ EOT;
 	$dediConfig = \ManiaLive\DedicatedApi\Config::getInstance();
 
 	try {
-	    $path = $this->connection->getMapsDirectory() . "/../Config/" . $this->config->dedicatedConfigFile;
+	    $path = Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile;
 	    if (file_exists($path)) {
 		$oldXml = simplexml_load_file($path);
 

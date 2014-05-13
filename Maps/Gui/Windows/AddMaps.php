@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
 require_once(__DIR__ . "/gbxdatafetcher.inc.php");
 
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Additem;
 
 class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
@@ -73,7 +74,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         /** @var \Maniaplanet\DedicatedServer\Structures\Version */
         $game = $this->connection->getVersion();
-        $path = $this->connection->getMapsDirectory() . "/Downloaded/" . $game->titleId . "/*.Map.Gbx";
+        $path = Helper::getPaths()->getDownloadMapsPath() . $game->titleId . "/*.Map.Gbx";
 
         $maps = glob($path);
         $x = 0;
@@ -100,8 +101,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function addAllMaps($login) {
         $game = $this->connection->getVersion();
-        $mapsDir = $this->connection->getMapsDirectory();
-        $path = str_replace("\\", "/", $mapsDir) . "Downloaded/" . $game->titleId . "/*.Map.Gbx";
+        $path = Helper::getPaths()->getDownloadMapsPath() . $game->titleId . "/*.Map.Gbx";
 
         $mapsAtDisk = glob($path);
 //        $mapsAtServer = array();
