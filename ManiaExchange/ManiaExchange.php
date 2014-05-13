@@ -6,6 +6,7 @@ use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
 use Maniaplanet\DedicatedServer\Structures\Map;
 
@@ -211,12 +212,7 @@ class ManiaExchange extends ExpPlugin
 		/** @var \Maniaplanet\DedicatedServer\Structures\Version */
 		$game = $this->connection->getVersion();
 
-		/**
-		 * @var $coreConf \ManiaLivePlugins\eXpansion\Core\Config;
-		 */
-		$coreConf = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
-		$maps = $this->connection->²getMapsDirectory().(!empty($coreConf->mapBase) ? $coreConf->mapBase."/" : "");
-		$dir = $maps . "/Downloaded/" . $game->titleId;
+		$dir = Helper::getPaths()->getDownloadMapsPath() . $game->titleId;
 		$file = $dir . "/" . $mxId . ".Map.Gbx";
 
 		try {
@@ -263,10 +259,8 @@ class ManiaExchange extends ExpPlugin
 		/** @var \Maniaplanet\DedicatedServer\Structures\Version */
 		$game = $this->connection->getVersion();
 
-		$coreConf = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
-		$maps = $this->connection->getMapsDirectory().(!empty($coreConf->mapBase) ? $coreConf->mapBase."/" : "");
-		$dir = $maps . "/Downloaded/" . $game->titleId;
-		$file = $dir . "/" . $mxId . ".Map.Gbx";
+
+		$file = Helper::getPaths()->getDownloadMapsPath(). $mxId . ".Map.Gbx";
 
 		if (!is_dir($dir)) {
 			mkdir($dir, 0775);

@@ -8,6 +8,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Windows\GenericPlayerList;
 use ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Controls\BannedPlayeritem;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 /**
  * Description of Admin
@@ -1057,7 +1058,7 @@ Other server might use the same blacklist file!!');
     }
 
     public function loadScript($fromLogin, $params) {
-	$mapsDir = $this->connection->getMapsDirectory();
+	$mapsDir = Helper::getPaths()->getDefaultMapPath();
 	$mode = "TrackMania";
 	if (\ManiaLivePlugins\eXpansion\Core\Core::$isSMServer)
 	    $mode = "ShootMania";
