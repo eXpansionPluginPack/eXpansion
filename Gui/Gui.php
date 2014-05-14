@@ -77,7 +77,6 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function loadWidgetConfigs() {
-
 	$config = WConfig::getInstance();
 	foreach ($config as $confName => $values) {
 
