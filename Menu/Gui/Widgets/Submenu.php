@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Menu\Gui\Widgets;
 
-class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Windows\PlainWidget {
+class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
 
     private $menu, $debug, $bg;
     public $myscript;

@@ -7,7 +7,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\Recorditem;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
 
-class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     /** @var \ManiaLive\Gui\Controls\Frame */
     protected $frame;

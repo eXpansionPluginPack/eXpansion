@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     protected $frame, $starFrame, $move, $gauge;
     protected $stars = array();

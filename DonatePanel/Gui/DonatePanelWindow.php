@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\DonatePanel\Gui;
 
 use ManiaLivePlugins\eXpansion\DonatePanel\DonatePanel;
 
-class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     private $_windowFrame;
     private $_mainWindow;

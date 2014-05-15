@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Gui\Windows;
+namespace ManiaLivePlugins\eXpansion\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 

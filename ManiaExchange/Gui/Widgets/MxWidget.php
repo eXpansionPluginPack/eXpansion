@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
 
-class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     /**
      * @var \Maniaplanet\DedicatedServer\Connection
