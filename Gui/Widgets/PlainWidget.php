@@ -38,19 +38,19 @@ class PlainWidget extends \ManiaLive\Gui\Window
 	    }
 
 	    if ($component instanceof \ManiaLive\Gui\Container) {
-		$this->detectElements($component->getComponents());
+		$this->detectElements($component->getComponents(), $component);
 	    }
 
 	    if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer) {
 		$script = $component->getScript();
-		$this->applyScript($script);
+		$this->applyScript($script, $component);
 	    }
 
 	    if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\MultipleScriptedContainer) {
 		$scripts = $component->getScripts();
 		if (!empty($scripts)) {
 		    foreach ($scripts as $script)
-			$this->applyScript($script);
+			$this->applyScript($script, $component);
 		}
 	    }
 	}
@@ -92,19 +92,26 @@ class PlainWidget extends \ManiaLive\Gui\Window
      */
     private function applyScript(Script $script, $component)
     {
+	echo $script->getRelPath() . "\n";
 	$isset = !isset($this->calledScripts[$script->getRelPath()]);
 
-	if ($isset) {
-	    $this->addScriptToLib($script->getlibScript($this, $component));
-	}
-
 	if ($isset || $script->multiply()) {
+
+	    $libs = $script->getLibraries();
+	    if (!empty($libs)) {
+		foreach ($libs as $libSCript) {
+		    $this->applyScript($libSCript, $component);
+		}
+	    }
+
 	    $this->calledScripts[$script->getRelPath()] = $script;
 
 	    $this->addScriptToMain($script->getDeclarationScript($this, $component));
 	    $this->addScriptToWhile($script->getWhileLoopScript($this, $component));
+	}
 
-
+	if ($isset) {
+	    $this->addScriptToLib($script->getlibScript($this, $component));
 	}
     }
 

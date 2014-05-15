@@ -99,8 +99,8 @@ class Script
     {
 	$path = str_replace("\\", DIRECTORY_SEPARATOR, $path);
 	if (file_exists($path)) {
+	    echo $path."\n";
 	    ob_start();
-
 	    include $path;
 
 	    $script = ob_get_contents();

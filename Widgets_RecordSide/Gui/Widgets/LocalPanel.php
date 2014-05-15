@@ -5,6 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Widgets;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\Recorditem;
+use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts\PlayerFinish;
+use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts\PlayerFinish_Optmized;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
 
 class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
@@ -80,9 +82,9 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     protected function getScript() {
 	if($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT){
-	    $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/PlayerFinish_Optimized");
+	    $script = new PlayerFinish_Optmized();
 	}else{
-	    $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/PlayerFinish");
+	    $script = new PlayerFinish();
 	}
 	
 	$recCount = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
