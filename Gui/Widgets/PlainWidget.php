@@ -2,128 +2,164 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Widgets;
 
-use ManiaLivePlugins\eXpansion\Gui\Config;
+use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 
 /**
  * Description of EmptyWidget
  *
  * @author De Cramer Oliver
  */
-class PlainWidget extends \ManiaLive\Gui\Window {
+class PlainWidget extends \ManiaLive\Gui\Window
+{
 
     private $dDeclares = "";
     private $scriptLib = "";
     private $wLoop = "";
+
     private $_script;
     private $_scripts = array();
 
-    protected function onConstruct() {
-        parent::onConstruct();
+    protected function onConstruct()
+    {
+	parent::onConstruct();
 
-        $this->_script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\PlainWidgetScript");
+	$this->_script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\PlainWidgetScript");
 
-        $this->xml = new \ManiaLive\Gui\Elements\Xml();
+	$this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
     private $calledScripts = array();
 
-    private function detectElements($components) {
-        foreach ($components as $index => $component) {
-            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter) {
-                $this->addScriptToMain($component->getScript());
-            }
+    private function detectElements($components)
+    {
+	foreach ($components as $index => $component) {
+	    if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter) {
+		$this->addScriptToMain($component->getScript());
+	    }
 
-            if ($component instanceof \ManiaLive\Gui\Container) {
-                $this->detectElements($component->getComponents());
-            }
+	    if ($component instanceof \ManiaLive\Gui\Container) {
+		$this->detectElements($component->getComponents());
+	    }
 
-            if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer) {
-                $script = $component->getScript();
+	    if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer) {
+		$script = $component->getScript();
+		$this->applyScript($script);
+	    }
 
-                $isset = !isset($this->calledScripts[$script->getRelPath()]);
-
-                if ($isset) {
-                    $this->addScriptToLib($script->getlibScript($this, $component));
-                }
-
-                if ($isset || $script->multiply()) {
-                    $this->calledScripts[$script->getRelPath()] = $script;
-
-                    $dec = $script->getDeclarationScript($this, $component);
-                    $this->addScriptToMain($dec);
-                    $this->addScriptToWhile($script->getWhileLoopScript($this, $component));
-                }
-            }
-        }
+	    if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\MultipleScriptedContainer) {
+		$scripts = $component->getScripts();
+		if (!empty($scripts)) {
+		    foreach ($scripts as $script)
+			$this->applyScript($script);
+		}
+	    }
+	}
     }
 
-    private function getNumber($number) {
-        return number_format((float) $number, 2, '.', '');
+    private function getNumber($number)
+    {
+	return number_format((float)$number, 2, '.', '');
     }
 
-    protected function onDraw() {
-        parent::onDraw();
-        $this->nbButton = 0;
-        $this->dIndex = 0;
-        $this->scriptLib = "";
-        $this->dDeclares = "";
-        $this->wLoop = "";
+    /**
+     * Will apply all script to the current window
+     */
+    private function applyAllScripts()
+    {
+	$this->scriptLib = "";
+	$this->dDeclares = "";
+	$this->wLoop = "";
 
-        $this->calledScripts = array();
+	$this->calledScripts = array();
 
-        foreach ($this->_scripts as $script) {
-            $dec = $script->getDeclarationScript($this, $this);
-            $this->addScriptToMain($dec);
-            $this->addScriptToLib($script->getlibScript($this, $this));
-            $this->addScriptToWhile($script->getWhileLoopScript($this, $this));
-            $this->addScriptToMain($script->getEndScript($this));
-        }
+	foreach ($this->_scripts as $script) {
+	    $this->applyScript($script, $this);
+	}
 
-        $this->detectElements($this->getComponents());
-        foreach ($this->calledScripts as $script) {
-            $this->addScriptToMain($script->getEndScript($this));
-            $script->reset();
-        }
-        $this->calledScripts = array();
+	foreach ($this->calledScripts as $script) {
+	    $this->addScriptToMain($script->getEndScript($this));
+	    $script->reset();
+	}
 
-
-        $this->_script->setParam("dDeclares", $this->dDeclares);
-        $this->_script->setParam("scriptLib", $this->scriptLib);
-        $this->_script->setParam("wLoop", $this->wLoop);
-
-        $this->removeComponent($this->xml);
-        $this->xml->setContent($this->_script->getDeclarationScript($this, $this));
-
-        $this->addComponent($this->xml);
+	$this->calledScripts = array();
     }
 
-    function closeWindow() {
-        $this->erase($this->getRecipient());
+    /**
+     * Will apply a single script
+     *
+     * @param Script $script    The script to apply if possible to the current window
+     * @param mixed  $component the component that adds this script
+     */
+    private function applyScript(Script $script, $component)
+    {
+	$isset = !isset($this->calledScripts[$script->getRelPath()]);
+
+	if ($isset) {
+	    $this->addScriptToLib($script->getlibScript($this, $component));
+	}
+
+	if ($isset || $script->multiply()) {
+	    $this->calledScripts[$script->getRelPath()] = $script;
+
+	    $this->addScriptToMain($script->getDeclarationScript($this, $component));
+	    $this->addScriptToWhile($script->getWhileLoopScript($this, $component));
+
+
+	}
     }
 
-    function addScriptToMain($script) {
-        $this->dDeclares .= $script;
+    protected function onDraw()
+    {
+	parent::onDraw();
+
+	//Applying all scripts to the current widget
+	$this->applyAllScripts();
+
+	$this->_script->setParam("dDeclares", $this->dDeclares);
+	$this->_script->setParam("scriptLib", $this->scriptLib);
+	$this->_script->setParam("wLoop", $this->wLoop);
+
+	$this->removeComponent($this->xml);
+	$this->xml->setContent($this->_script->getDeclarationScript($this, $this));
+
+	$this->addComponent($this->xml);
     }
 
-    function addScriptToWhile($script) {
-        $this->wLoop .= $script;
+    function closeWindow()
+    {
+	$this->erase($this->getRecipient());
     }
 
-    function addScriptToLib($script) {
-        $this->scriptLib .= $script;
+    function addScriptToMain($script)
+    {
+	$this->dDeclares .= $script;
     }
 
-    function destroy() {
+    function addScriptToWhile($script)
+    {
+	$this->wLoop .= $script;
+    }
+
+    function addScriptToLib($script)
+    {
+	$this->scriptLib .= $script;
+    }
+
+    function destroy()
+    {
 	unset($this->_scripts);
-        $this->clearComponents();
-        parent::destroy();
+	$this->clearComponents();
+	parent::destroy();
     }
+
     /**
      * Registers a script to widget instance
+     *
      * @param \ManiaLivePlugins\eXpansion\Gui\Structures\Script $script
      */
-    public function registerScript(\ManiaLivePlugins\eXpansion\Gui\Structures\Script $script) {
-        $this->_scripts[] = $script;
+    public function registerScript(\ManiaLivePlugins\eXpansion\Gui\Structures\Script $script)
+    {
+	$this->_scripts[] = $script;
     }
 
 }
