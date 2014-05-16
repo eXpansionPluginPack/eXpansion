@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Widgets;
 
-class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     public $btn_res;
     public $btn_skip;

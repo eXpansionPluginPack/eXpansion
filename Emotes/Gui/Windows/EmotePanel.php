@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Emotes\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\Emotes\Config;
 
-class EmotePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class EmotePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     private $connection;
     private $storage;

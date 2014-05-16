@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\Core\Core;
  *
  * @author Petri
  */
-class Widget_Netstat extends \ManiaLivePlugins\eXpansion\Gui\Windows\PlainWidget {
+class Widget_Netstat extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
 
     private $frame;
 

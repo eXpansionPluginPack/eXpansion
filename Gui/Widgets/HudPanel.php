@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Widgets;
 
-class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     protected $_windowFrame;
     protected $background;

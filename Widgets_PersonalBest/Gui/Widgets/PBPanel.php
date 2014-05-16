@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Gui\Widgets;
 
-class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     private $record;
     private $pb;

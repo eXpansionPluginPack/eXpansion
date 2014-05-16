@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Widgets;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 
-class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     /** @var \Maniaplanet\DedicatedServer\Connection */
     private $connection;
