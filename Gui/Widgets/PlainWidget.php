@@ -92,7 +92,6 @@ class PlainWidget extends \ManiaLive\Gui\Window
      */
     private function applyScript(Script $script, $component)
     {
-	echo $script->getRelPath() . "\n";
 	$isset = !isset($this->calledScripts[$script->getRelPath()]);
 
 	if ($isset || $script->multiply()) {
