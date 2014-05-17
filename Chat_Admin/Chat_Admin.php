@@ -1468,7 +1468,7 @@ Other server might use the same blacklist file!!');
 	    $WshShell = new \COM("WScript.Shell");
 	    $WshShell->Run($cmd, 0,false);
 	} else {
-	    exec($cmd . " &");
+	    exec( 'sh ' . escapeshellarg($cmd) . ' > /dev/null &');
 	}
 	$this->console("eXpansion will restart!! This instance is stopping now!!");
 	die();
