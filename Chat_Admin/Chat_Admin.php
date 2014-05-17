@@ -1466,7 +1466,7 @@ Other server might use the same blacklist file!!');
 	$cmd = PHP_BINARY . " " . $path;
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 	    $WshShell = new \COM("WScript.Shell");
-	    $WshShell->Run($cmd, 0,false);
+	    $WshShell->Run($cmd, 3,false);
 	} else {
 	    exec( 'sh ' . escapeshellarg($cmd) . ' > /dev/null &');
 	}
