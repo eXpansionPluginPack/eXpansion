@@ -162,8 +162,8 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	$results = array();
 
 
-	$this->console("[eXpansion:AutoUpdate]Starting to update Manialive-lib API !!");
-	$this->exp_chatSendServerMessage("Starting to updateManialive-lib !!", $login);
+	$this->console("[eXpansion:AutoUpdate]Starting checking for update to  Manialive-lib API !!");
+	$this->exp_chatSendServerMessage("Starting checking for update to Manialive-lib !!", $login);
 	exec("cd ./vendor/maniaplanet/manialive-lib && git checkout $branch && git pull --rebase", $results, $ret);
 	if ($ret != 0) {
 	    $this->console("[eXpansion:AutoUpdate]Error while checking for Manialive Lib Updates !!");
