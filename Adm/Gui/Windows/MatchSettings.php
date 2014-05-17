@@ -120,7 +120,7 @@ class MatchSettings extends Window {
             $item->destroy();
         $this->pager->clearItems();
         $this->items = array();
-        $path = Helper::getPaths()->getMatchSettingPath() . "MatchSettings/*.txt";
+        $path = Helper::getPaths()->getMatchSettingPath() . "*.txt";
 
         $settings = glob($path);
         $x = 0;
