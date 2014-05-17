@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\types\config;
 
+use ManiaLive\Data\Storage;
+use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
@@ -10,12 +12,13 @@ use Maniaplanet\DedicatedServer\Structures\GameInfos;
  *
  * @author De Cramer Oliver
  */
-abstract class MetaData {
+abstract class MetaData
+{
 
     private static $_instances = array();
 
     /**
-     * @var String The plugin to whom the MetaData is affected 
+     * @var String The plugin to whom the MetaData is affected
      */
     private $pluginId;
 
@@ -37,12 +40,12 @@ abstract class MetaData {
 
     /**
      *
-     * @var Boolean Whatever or not this plugin is part of the core of eXpansion. 
+     * @var Boolean Whatever or not this plugin is part of the core of eXpansion.
      */
     private $core = false;
 
     /**
-     * @var InstallationStep[] Step to make the installation possible 
+     * @var InstallationStep[] Step to make the installation possible
      */
     private $installationSteps = array();
 
@@ -79,9 +82,11 @@ abstract class MetaData {
 
     /**
      * @param String The Id of the plugin the meta data is working for
+     *
      * @return MetaData The meta data of the plugin.
      */
-    public static function getInstance($pluginId = null) {
+    public static function getInstance($pluginId = null)
+    {
 
 	$class = get_called_class();
 	if (!isset(self::$_instances[$class])) {
@@ -93,10 +98,11 @@ abstract class MetaData {
     }
 
     /**
-     * 
+     *
      * @param String $pluginId The Id of the plugin the meta data is working for
      */
-    final private function __construct($pluginId) {
+    final private function __construct($pluginId)
+    {
 	$this->pluginId = $pluginId;
 	$this->confManager = \ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance();
 
@@ -104,84 +110,97 @@ abstract class MetaData {
 	$this->onEndLoad();
     }
 
-    public function onBeginLoad() {
-	
+    public function onBeginLoad()
+    {
+
     }
 
-    public function onEndLoad() {
-	
+    public function onEndLoad()
+    {
+
     }
 
     /**
      * Registers a variable for this plugin. This will also add the variable to the configuration manager
      * So that the value is automatically saved
-     * 
+     *
      * @param \ManiaLivePlugins\eXpansion\Core\types\config\Variable $var The variable to register
      */
-    public function registerVariable(Variable $var) {
+    public function registerVariable(Variable $var)
+    {
 	$this->variables[$var->getName()] = $var;
 	$var->setPluginId($this->pluginId);
 	$this->confManager->registerVariable($var, $this->pluginId);
     }
 
-    private function setPlugin($pluginId) {
+    private function setPlugin($pluginId)
+    {
 	$this->pluginId = $pluginId;
     }
 
-    public function unSetPlugin() {
+    public function unSetPlugin()
+    {
 	$this->pluginId = null;
     }
 
     /**
-     * Returns the variable of that name, so that it value can be modified. 
-     * 
+     * Returns the variable of that name, so that it value can be modified.
+     *
      * @param String $name
+     *
      * @return Variable
      */
-    public function getVariable($name) {
+    public function getVariable($name)
+    {
 	return isset($this->variables[$name]) ? $this->variables[$name] : null;
     }
 
     /**
      * The name is it should be seen in by players
-     * 
+     *
      * @return String The visual name of the plugin
      */
-    public function getName() {
+    public function getName()
+    {
 	return $this->name;
     }
 
     /**
      * @return String Describe what the plugin does
      */
-    public function getDescription() {
+    public function getDescription()
+    {
 	return $this->description;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
 	if (!$name instanceof String) {
 	    $name = new String($name, "", null);
 	}
 	$this->name = $name;
     }
 
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
 	if (!$description instanceof String) {
 	    $description = new String($description, "", null);
 	}
 	$this->description = $description;
     }
 
-    public function isCorePlugin() {
+    public function isCorePlugin()
+    {
 	return $this->core;
     }
 
     /**
-     * Core plugins can't be unloaded from ManiaLive once they have been loaded. 
-     * 
-     * @param type $isCore Whatever or not this plugin is part of the core of eXpansion. 
+     * Core plugins can't be unloaded from ManiaLive once they have been loaded.
+     *
+     * @param type $isCore Whatever or not this plugin is part of the core of eXpansion.
      */
-    public function setIsCorePlugin($isCore) {
+    public function setIsCorePlugin($isCore)
+    {
 	$this->core = $isCore;
     }
 
@@ -190,17 +209,19 @@ abstract class MetaData {
      * If it isn't the plugin will be unloaded From ManiaLive
      * If you change GameModes the plugin may be loaded again.
      *
-     * @param int $gameMode
+     * @param int           $gameMode
      * @param string | null $scriptName
      */
-    protected function addGameModeCompability($gameMode, $scriptName = null) {
+    protected function addGameModeCompability($gameMode, $scriptName = null)
+    {
 	if ($scriptName == null || $gameMode != GameInfos::GAMEMODE_SCRIPT)
 	    $this->gameModeSupport[$gameMode] = true;
 	else
 	    $this->gameModeSupport[$gameMode][$scriptName] = true;
     }
 
-    public function getGameModeCompability() {
+    public function getGameModeCompability()
+    {
 	return $this->gameModeSupport;
     }
 
@@ -209,30 +230,33 @@ abstract class MetaData {
      * By default eXP will check for similarity, but that might change in the future
      * if scripters don't do attention to the script name conventions.
      *
-     * @param Boolëan $default
+     * @param Boolean $default
      */
-    protected function setSoftScriptModeCheck($default = true) {
+    protected function setSoftScriptModeCheck($default = true)
+    {
 	$this->softScriptCompatibility = $default;
     }
 
     /**
      * By default if a game has legacy TimeAttack compatibility it will be considered that it
-     * is compatible with all scripts that has TimeAttack in their name. 
-     * With this setting you can disable that. 
-     * 
-     * @param Boolëan $default Whatever this plugin has script/legacy compatibility
+     * is compatible with all scripts that has TimeAttack in their name.
+     * With this setting you can disable that.
+     *
+     * @param Boolean $default Whatever this plugin has script/legacy compatibility
      */
-    protected function setScriptCompatibilityMode($default = true) {
+    protected function setScriptCompatibilityMode($default = true)
+    {
 	$this->scriptCompatibiliyMode = $default;
     }
 
     /**
-     * Will force a check before the plugin is loaded to know if the plugin 
-     * is compatible with the current title. 
+     * Will force a check before the plugin is loaded to know if the plugin
+     * is compatible with the current title.
      *
      * @param string $titleName
      */
-    protected function addTitleSupport($titleName) {
+    protected function addTitleSupport($titleName)
+    {
 	$this->titleSupport[] = $titleName;
     }
 
@@ -242,19 +266,23 @@ abstract class MetaData {
      *
      * @param bool $default
      */
-    protected function setSoftTitleCheck($default = true) {
+    protected function setSoftTitleCheck($default = true)
+    {
 	$this->softTitleSupport = $default;
     }
 
     /**
-     * See if this plugin is compatible with the current game mode. 
+     * See if this plugin is compatible with the current game mode.
      * You can pass a game mod in parameter to check if it is compatible with that one
-     * 
-     * @param int | null The game mode to check. If null will check for the current game mode
-     * @param String | null The script name to check. If null will check for the currrent. 
-     * 			    For this to be checked game mode need to be on script mpde
+     *
+     * @param int | null    The   game mode to check. If null will check for the current game mode
+     * @param String | null The   script name to check. If null will check for the currrent.
+     *                            For this to be checked game mode need to be on script mpde
+     *
+     * @return boolean IF is compatible with the game mode
      */
-    public function checkGameCompatibility($gamemode = null, $scriptName = null) {
+    public function checkGameCompatibility($gamemode = null, $scriptName = null)
+    {
 
 	if (!empty($this->gameModeSupport)) {
 	    //Get current state if need be
@@ -277,7 +305,8 @@ abstract class MetaData {
 	}
     }
 
-    protected function checkScriptGameModeCompatibility($scriptName) {
+    protected function checkScriptGameModeCompatibility($scriptName)
+    {
 	if ($this->scriptCompatibiliyMode) {
 	    $gmode = \ManiaLivePlugins\eXpansion\Core\Core::exp_getScriptCompatibilityMode($scriptName);
 	    return isset($this->gameModeSupport[$gmode]) ? $this->gameModeSupport[$gmode] : false;
@@ -287,7 +316,7 @@ abstract class MetaData {
 	    foreach ($this->gameModeSupport[0] as $supportedScript) {
 		if ($this->softScriptCompatibility && strpos($scriptName, $supportedScript) !== false) {
 		    return true;
-		} else if ($currentTitle == $supportedScript) {
+		} else if ($scriptName == $supportedScript) {
 		    return true;
 		}
 	    }
@@ -295,12 +324,22 @@ abstract class MetaData {
 	return false;
     }
 
-    public function checkTitleCompatibility($titleName = null) {
+    public function checkTitleCompatibility($titleName = null)
+    {
 
-	if($titleName == null){
-	    $titleName = \ManiaLivePlugins\eXpansion\Core\Core::$titleId;
+	if ($titleName == null) {
+	    /**
+	     * @var Storage $storage
+	     */
+	    $storage = Storage::getInstance();
+	    $titleName = $storage->currentMap->environnement;
+	    if($titleName == "Stadium" || $titleName == "Valley" || $titleName == "Canyon")
+		$titleName = 'TM';
+	    else{
+		$titleName = Core::$titleId;
+	    }
 	}
-	
+
 	if (!empty($this->titleSupport)) {
 	    foreach ($this->titleSupport as $supportedTitle) {
 		if ($this->softTitleSupport && strpos($titleName, $supportedTitle) !== false) {
@@ -314,21 +353,23 @@ abstract class MetaData {
 	//No rules for game compatibility, this plugin supports all modes
 	return true;
     }
-    
-    public function checkOtherCompatibility(){
+
+    public function checkOtherCompatibility()
+    {
 	return array();
     }
 
-    
-    public function checkAll(){
+
+    public function checkAll()
+    {
 	$errors = $this->checkOtherCompatibility();
-	
+
 	/*echo "Compatibility : ";
 	echo "Game : ".($this->checkGameCompatibility() ? "True" : "False");
 	echo " | Title : ".($this->checkTitleCompatibility() ? "True" : "False");
 	echo " | Other : ".( empty($errors) ? "True" : "False");
 	echo "\n";*/
-	
+
 	return $this->checkGameCompatibility() && $this->checkTitleCompatibility() && empty($errors);
     }
 }
