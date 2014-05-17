@@ -63,7 +63,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     function autoUpdate($login)
     {
 	if ($this->config->useGit) {
-	    $this->pullFromGit($login);
+	    $this->pullFromGit($login, $this->config->branchName);
 	} else {
 	    if (!$this->updateAvailable) {
 		$this->exp_chatSendServerMessage("Can't update, no update available!", $login);
