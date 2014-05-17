@@ -27,11 +27,11 @@ class Paths
 
     public function getMapPath()
     {
-	return $this->mapsDirectory.'/'.$this->getBaseMap();
+	return $this->mapsDirectory.$this->getBaseMap();
     }
 
     public function getDefaultMapPath(){
-	return $this->mapsDirectory.'/';
+	return $this->mapsDirectory;
     }
 
     public function getMatchSettingPath(){
