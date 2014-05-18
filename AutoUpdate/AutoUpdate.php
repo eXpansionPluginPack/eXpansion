@@ -93,7 +93,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	$this->console("[eXpansion:AutoUpdate]Starting to update Dedicated server API !!");
 	$this->exp_chatSendServerMessage("Starting to update Dedicated server API !!", $login);
-	exec("cd ./vendor/maniaplanet/dedicated-server-api && git fetch && git checkout $branch && git pull --rebase", $results, $ret);
+	exec("cd ./vendor/maniaplanet/dedicated-server-api && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
 	if ($ret != 0) {
 	    $this->console("[eXpansion:AutoUpdate]Error while updating Dedicated server API !!");
 	    $this->exp_chatSendServerMessage("#admin_error#Error while updating Dedicated server API !! ", $login);
@@ -104,7 +104,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	$this->console("[eXpansion:AutoUpdate]Starting to update Manialive-lib !!");
 	$this->exp_chatSendServerMessage("Starting to update Manialive-lib !!", $login);
-	exec("cd ./vendor/maniaplanet/manialive-lib && git fetch && git checkout $branch && git pull --rebase", $results, $ret);
+	exec("cd ./vendor/maniaplanet/manialive-lib && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
 	if ($ret != 0) {
 	    $this->console("[eXpansion:AutoUpdate]Error while updating Manialive Lib !!");
 	    $this->exp_chatSendServerMessage("#admin_error#Error while updating Manialive Lib !! ", $login);
@@ -115,7 +115,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	$this->console("[eXpansion:AutoUpdate]Starting to update eXpansion !!");
 	$this->exp_chatSendServerMessage("Starting to eXpansion !!", $login);
-	exec("cd ./libraries/ManiaLivePlugins/eXpansion && git fetch && git checkout $branch && git pull --rebase", $results, $ret);
+	exec("cd ./libraries/ManiaLivePlugins/eXpansion && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
 	if ($ret != 0) {
 	    $this->console("[eXpansion:AutoUpdate]Error while updating eXpansion !!");
 	    $this->exp_chatSendServerMessage("#admin_error#Error while updating eXpansion !! !! ", $login);
@@ -146,7 +146,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
 	$this->console("[eXpansion:AutoUpdate]Starting checking for update to Dedicated server API !!");
 	$this->exp_chatSendServerMessage("Starting checking for update to Dedicated server API !!", $login);
-	exec("cd ./vendor/maniaplanet/dedicated-server-api && git fetch && git checkout $branch && git pull --rebase", $results, $ret);
+	exec("cd ./vendor/maniaplanet/dedicated-server-api && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
 	if ($ret != 0) {
 	    $this->console("[eXpansion:AutoUpdate]Error while checking for Dedicated server API !!");
 	    $this->exp_chatSendServerMessage("#admin_error#Error while checking for Dedicated server API !! ", $login);
@@ -164,7 +164,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	$this->console("[eXpansion:AutoUpdate]Starting checking for update to  Manialive-lib API !!");
 	$this->exp_chatSendServerMessage("Starting checking for update to Manialive-lib !!", $login);
-	exec("cd ./vendor/maniaplanet/manialive-lib && git fetch && git checkout $branch && git pull --rebase", $results, $ret);
+	exec("cd ./vendor/maniaplanet/manialive-lib && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
 	if ($ret != 0) {
 	    $this->console("[eXpansion:AutoUpdate]Error while checking for Manialive Lib Updates !!");
 	    $this->exp_chatSendServerMessage("#admin_error#Error while checking for Manialive Lib Updates !! ", $login);
@@ -182,7 +182,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	$this->console("[eXpansion:AutoUpdate]Starting checking for update to eXpansion !!");
 	$this->exp_chatSendServerMessage("Starting checking for update to eXpansion !!", $login);
-	exec("cd ./libraries/ManiaLivePlugins/eXpansion && git fetch && git checkout $branch && git pull --rebase", $results, $ret);
+	exec("cd ./libraries/ManiaLivePlugins/eXpansion && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
 	if ($ret != 0) {
 	    $this->console("[eXpansion:AutoUpdate]Error while checking for eXpansion Updates !!");
 	    $this->exp_chatSendServerMessage("#admin_error#Error while checking for eXpansion Updates !! ", $login);
