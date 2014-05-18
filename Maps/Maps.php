@@ -289,9 +289,16 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if (count($this->history) > $this->config->historySize) {
 	    array_pop($this->history);
 	}
+    }
 
+    public function onBeginMap($map, $warmUp, $matchContinuation) {
 	$this->showCurrentMapWidget(null);
 	$this->showNextMapWidget(null);
+    }
+
+    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+	Gui\Widgets\CurrentMapWidget::EraseAll();
+	$this->redrawNextMapWidget();
     }
 
     public function onBeginRound() {
@@ -322,10 +329,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if ($this->wasWarmup)
 	    return;
 
-	Gui\Widgets\CurrentMapWidget::EraseAll();
-
 	$this->atPodium = true;
-	$this->redrawNextMapWidget();
 
 	if (count($this->queue) > 0) {
 	    reset($this->queue);
