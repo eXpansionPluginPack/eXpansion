@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 
 use ManiaLivePlugins\eXpansion\Gui\Widgets\HudPanel;
 use ManiaLivePlugins\eXpansion\Gui\Widgets as WConfig;
-use ManiaLivePlugins\eXpansion\Gui\Windows\Widget;
+use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 
 class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 

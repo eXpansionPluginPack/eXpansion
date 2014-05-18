@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Faq\Gui\Windows;
  *
  * @author Reaby
  */
-class FaqWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class FaqWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     public static $mainPlugin;
     protected $frame, $label_help, $icon_help;

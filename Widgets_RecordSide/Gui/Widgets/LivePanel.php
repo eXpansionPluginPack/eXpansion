@@ -6,6 +6,7 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\Recorditem;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\TeamItem;
+use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts\CpPositions;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
 use \Maniaplanet\DedicatedServer\Structures\GameInfos;
 
@@ -24,7 +25,7 @@ class LivePanel extends LocalPanel {
 	$gm = Widgets_RecordSide::exp_getCurrentCompatibilityGameMode();
 	if ($gm == GameInfos::GAMEMODE_ROUNDS || $gm == GameInfos::GAMEMODE_CUP || $gm == GameInfos::GAMEMODE_TEAM || Widgets_RecordSide::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
 
-	    $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_RecordSide/Gui/Scripts/CpPositions");
+	    $script = new CpPositions();
 	    $this->timeScript = $script;
 	    $this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
 	    $this->timeScript->setParam("nbFields", 20);

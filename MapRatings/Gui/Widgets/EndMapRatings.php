@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLivePlugins\eXpansion\MapRatings\Gui\Controls\RateButton;
 
-class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     protected $label, $xml, $frame, $bg, $titlebg;
     protected $b0, $b1, $b2, $b3, $b4, $b5;

@@ -50,18 +50,6 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    }
 	}
 	
-	$this->console( "\n");
-	foreach (self::$plugins_list as $plugin => $object) {
-	    if (!$plugin::exp_checkGameCompability()) {
-		try {
-		    $this->console( "[" . $plugin . "]..............................Not Compatible -> unLoaded");
-		    $object->exp_unload();
-		} catch (\Exception $ex) {
-		    
-		}
-	    }
-	}
-	
 	\ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance()->check();
     }
 
@@ -82,19 +70,25 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 			continue;
 		    }
 		    $status = false;
-		    try{
-			$status = $pHandler->load($pname);
-		    } catch (\Exception $ex) {
-			$status = false;
-		    }
 		    
-		    if (!$status) {
-			$this->console("[" . $pname . "]..............................FAIL -> will retry");
-			$this->connection->chatSendServerMessage('Starting ' . $pname . '........$f00 Failure');
-			$recheck[] = $pname;
-		    } else {
-			$this->debug("[" . $pname . "]..............................SUCCESS");
-			//   $this->connection->chatSendServerMessage('Starting ' . $pname . '........$0f0 Success');
+		    $metaData = $pname::getMetaData();
+		    if($metaData->checkAll()){
+			try{
+			    $status = $pHandler->load($pname);
+			} catch (\Exception $ex) {
+			    $status = false;
+			}
+
+			if (!$status) {
+			    $this->console("[" . $pname . "]..............................FAIL -> will retry");
+			    $this->connection->chatSendServerMessage('Starting ' . $pname . '........$f00 Failure');
+			    $recheck[] = $pname;
+			} else {
+			    $this->debug("[" . $pname . "]..............................SUCCESS");
+			    //   $this->connection->chatSendServerMessage('Starting ' . $pname . '........$0f0 Success');
+			}
+		    }else{
+			$this->console("[" . $pname . "]..............................Disabled -> Not Compatible");
 		    }
 		}
 	    } catch (\Exception $ex) {

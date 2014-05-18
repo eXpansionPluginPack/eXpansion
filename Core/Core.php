@@ -28,7 +28,6 @@ class Core extends types\ExpPlugin {
      * Last used game mode
      * @var \Maniaplanet\DedicatedServer\Structures\GameInfos
      */
-
     private $lastGameMode;
     private $lastGameSettings;
     private $lastServerSettings;
@@ -338,6 +337,13 @@ EOT;
 	return $difs;
     }
 
+    /**
+     * This event is called when game settings has changed
+     *
+     * @param \Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings The old Game Infos
+     * @param \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings The new Game Infos
+     * @param  array                                            $changes Differences between both of them
+     */
     public function onGameSettingsChange(\Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings, \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings, $changes) {
 	$this->saveMatchSettings();
     }
@@ -404,12 +410,14 @@ EOT;
 	\ManiaLive\Event\Dispatcher::dispatch(new \ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent($event, $param));
     }
 
+
     public function onServerSettingsChange(ServerOptions $old, ServerOptions $new, $diff) {
 
 	$dediConfig = \ManiaLive\DedicatedApi\Config::getInstance();
 
 	try {
 	    $path = Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile;
+	    echo $path;
 	    if (file_exists($path)) {
 		$oldXml = simplexml_load_file($path);
 
@@ -451,8 +459,6 @@ EOT;
 
 		<referee_password>' . $new->refereePassword . '</referee_password>
 		<referee_validation_mode>' . $new->refereeMode . '</referee_validation_mode>		<!-- value is 0 (only validate top3 players),  1 (validate all players) -->
-
-		<use_changing_validation_seed>' . ($new->useChangingValidationSeed ? 'True' : 'False') . '</use_changing_validation_seed>
 
 		<disable_horns>' . ($new->disableHorns ? 'True' : 'False') . '</disable_horns>
 		<clientinputs_maxlatency>' . ($new->clientInputsMaxLatency ? 'True' : 'False') . '</clientinputs_maxlatency>		<!-- 0 mean automatic adjustement -->
@@ -543,7 +549,7 @@ EOT;
 	$this->console('Shutting down uncompatible plugins');
 
 	foreach ($this->exp_getGameModeCompability() as $plugin => $compability) {
-	    if (!$plugin::exp_checkGameCompability()) {
+	    if (!$plugin::getMetaData()->checkAll()) {
 		try {
 		    $this->callPublicMethod($plugin, 'exp_unload');
 		} catch (\Exception $ex) {
@@ -562,7 +568,7 @@ EOT;
 		//$parts = explode("\\", $plugin_id);
 		//$className = '\\ManiaLivePlugins\\' . $plugin_id . '\\' . $parts[1];
 		$className = $plugin_id;
-		if ($className::exp_checkGameCompability() && !$this->isPluginLoaded($plugin_id)) {
+		if (!$className::getMetaData()->checkAll() && !$this->isPluginLoaded($plugin_id)) {
 		    try {
 			$pHandler->load($plugin_id);
 		    } catch (Exception $ex) {

@@ -9,18 +9,6 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
 
     private $bestCps = array();
 
-    function exp_onInit() {
-	$this->exp_addTitleSupport("TM");
-	$this->exp_addTitleSupport("Trackmania");
-	//Important for all eXpansion plugins.
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, 'TeamAttack.Script.txt');
-    }
-
     function exp_onLoad() {
 	$this->enableDedicatedEvents();
     }

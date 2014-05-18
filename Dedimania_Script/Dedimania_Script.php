@@ -13,17 +13,6 @@ use ManiaLivePlugins\eXpansion\Dedimania\Config;
 
 class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAbstract {
 
-    public function exp_onInit() {
-	parent::exp_onInit();
-	$this->setVersion(0.1);
-
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "TimeAttack.Script.txt");
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Rounds.Script.txt");
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Cup.Script.txt");
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Team.Script.txt");
-	$this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Laps.Script.txt");
-	$this->exp_setScriptCompatibilityMode(false);
-    }
 
     public function exp_onReady() {
 	parent::exp_onReady();

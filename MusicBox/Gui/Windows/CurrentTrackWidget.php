@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\MusicBox\Gui\Windows;
 
-class CurrentTrackWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class CurrentTrackWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     protected $frame;
     protected $quad;

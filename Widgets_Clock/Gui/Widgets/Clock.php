@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_Clock\Gui\Widgets;
 
-class Clock extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     protected $clockBg;
     private $frame, $players, $specs, $server;

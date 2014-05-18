@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Widgets;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     protected $bg;
     protected $authorTime, $logo;

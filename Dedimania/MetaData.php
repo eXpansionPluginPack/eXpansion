@@ -20,7 +20,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	parent::onBeginLoad();
 	$this->setName("Dedimania");
 	$this->setDescription("Dedimania, Global world records system integration");
-
+	
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
+	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+	$this->setScriptCompatibilityMode(false);	
+	
 	$config	= Config::getInstance();
 	
 	$var = new String("login", "Dedimania server login (use this server login)", $config, false);
