@@ -6,7 +6,7 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\Recorditem;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts\PlayerFinish;
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts\PlayerFinish_Optmized;
+use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts\PlayerFinish_Optimized;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
 
 class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
@@ -82,7 +82,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     protected function getScript() {
 	if($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT){
-	    $script = new PlayerFinish_Optmized();
+	    $script = new PlayerFinish_Optimized();
 	}else{
 	    $script = new PlayerFinish();
 	}

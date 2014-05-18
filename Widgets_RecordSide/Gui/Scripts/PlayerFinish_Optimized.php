@@ -25,7 +25,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts;
 
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 
-class PlayerFinish_Optmized extends CommonScript{
+class PlayerFinish_Optimized extends CommonScript{
 
 
     function __construct()
