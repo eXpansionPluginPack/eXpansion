@@ -232,7 +232,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 	\ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_UPDATE_RECORDS, $data));
     }
 
-    private function compare_bestTime($a, $b) {
+    public function compare_bestTime($a, $b) {
 	if ($a['BestTime'] == $b['BestTime'])
 	    return 0;
 	return ($a['BestTime'] < $b['BestTime']) ? -1 : 1;
