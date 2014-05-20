@@ -7,12 +7,12 @@ namespace ManiaLivePlugins\eXpansion\Gui\Structures;
  *
  * @author De Cramer Oliver
  */
-interface ScriptedContainer {
+interface MultipleScriptedContainer {
 
     /**
-     * @return Script the script this container needs
+     * @return Script[] All the scripts this component needs
      */
-    public function getScript();
+    public function getScripts();
     
 }
 

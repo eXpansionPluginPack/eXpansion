@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Times\Gui\Widgets;
 
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
-class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     const Mode_BestOfAll = 1;
     const Mode_PersonalBest = 2;

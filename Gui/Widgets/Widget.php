@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Gui\Windows;
+namespace ManiaLivePlugins\eXpansion\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
@@ -70,9 +70,9 @@ class Widget extends PlainWidget {
 		$gmode = $this->storage->gameInfos->scriptName;
 	    $compoMode = Gui::exp_getCurrentCompatibilityGameMode();
 	    
-	    $title = "TM";
+	    $title = WConfig::config_trackmania;
 	    if(\ManiaLivePlugins\eXpansion\Core\Core::$isSMServer){
-		$title = "SM";
+		$title = WConfig::config_shootmania;
 	    }
 	    $this->currentSettings = array();
 	    foreach(self::$config[$widgetName] as $name => $values){
@@ -82,7 +82,7 @@ class Widget extends PlainWidget {
 		    $this->currentSettings[$name] = $values[$compoMode];
 		}else if(isset($values[$title])){
 		    $this->currentSettings[$name] = $values[$title];
-		}else if(isset($values['default'])){
+		}else if(isset($values[WConfig::config_default])){
 		    $this->currentSettings[$name] = $values['default'];
 		}
 	    }

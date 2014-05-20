@@ -3,6 +3,8 @@
 namespace ManiaLivePlugins\eXpansion\Maps;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Help;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\Maps\Config;
 use ManiaLivePlugins\eXpansion\Maps\Structures\MapWish;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget;
@@ -287,9 +289,16 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if (count($this->history) > $this->config->historySize) {
 	    array_pop($this->history);
 	}
+    }
 
+    public function onBeginMap($map, $warmUp, $matchContinuation) {
 	$this->showCurrentMapWidget(null);
 	$this->showNextMapWidget(null);
+    }
+
+    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+	Gui\Widgets\CurrentMapWidget::EraseAll();
+	$this->redrawNextMapWidget();
     }
 
     public function onBeginRound() {
@@ -320,10 +329,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if ($this->wasWarmup)
 	    return;
 
-	Gui\Widgets\CurrentMapWidget::EraseAll();
-
 	$this->atPodium = true;
-	$this->redrawNextMapWidget();
 
 	if (count($this->queue) > 0) {
 	    reset($this->queue);
@@ -656,7 +662,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		}
 	    }
 
-	    unlink($this->connection->getMapsDirectory() . "/" . $map->fileName);
+	    unlink(Helper::getPaths()->getDefaultMapPath() . $map->fileName);
 	} catch (\Exception $e) {
 	    $this->exp_chatSendServerMessage(__("Error: %s", $login, $e->getMessage()));
 	}
@@ -901,7 +907,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 			return;
 		    }
 		    $game = $this->connection->getVersion();
-		    $path = $this->connection->getMapsDirectory() . "/Downloaded/" . $game->titleId . "/" . $trkid . ".Map.Gbx";
+		    $path = Helper::getPaths()->getDownloadMapsPath() . $game->titleId . "/" . $trkid . ".Map.Gbx";
 
 		    if (!$lfile = @fopen($path, 'wb')) {
 			$this->exp_chatSendServerMessage('#admin_error#Error creating file. Please contact admin.', $login);

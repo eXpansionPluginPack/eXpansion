@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Widgets;
 
-class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     private $bg;
     private $mapName;

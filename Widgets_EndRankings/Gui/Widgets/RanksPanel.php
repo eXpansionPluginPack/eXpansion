@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_EndRankings\Gui\Widgets;
 
-class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     private $frame;
     private $items = array();

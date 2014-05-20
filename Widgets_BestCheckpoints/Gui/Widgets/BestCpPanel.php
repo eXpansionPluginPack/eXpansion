@@ -6,7 +6,7 @@ use \ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint;
 use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Controls\CheckpointElem;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
-class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     private $cps = array();
     private $maxCpIndex = 18;

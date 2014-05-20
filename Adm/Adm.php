@@ -398,7 +398,15 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	ResSkipButtons::EraseAll();
     }
 
+    public function onBeginMatch() {
+	$this->countMapRestart();
+	$this->showResSkip(null);
+    }
+
     public function onBeginMap($map, $warmUp, $matchContinuation) {
+    }
+
+    private function countMapRestart(){
 	//print_r($this->storage->currentMap);
 	if ($this->storage->currentMap->uId == $this->lastMapUid)
 	    $this->resCount++;
@@ -411,10 +419,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if (!$this->skipActive) {
 	    $this->skipCount = array();
 	}
-
-	$this->showResSkip(null);
     }
-
 }
 
 ?>

@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
-class ConfirmProxy extends \ManiaLivePlugins\eXpansion\Gui\Windows\PlainWidget {
+class ConfirmProxy extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
 
     private $iscript;
 

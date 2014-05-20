@@ -7,8 +7,9 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
-class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class MatchSettings extends Window {
 
     private $pager;
     private $connection;
@@ -54,7 +55,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 $this->connection->chatSendServerMessage(__("Error in filename", $login), $login);
                 return;
             }
-            $filename = $this->connection->getMapsDirectory() . "/MatchSettings/" . $entries['SaveAs'] . ".txt";
+            $filename = Helper::getPaths()->getMatchSettingPath() . $entries['SaveAs'] . ".txt";
             $this->saveSettings($login, $filename);
             $this->populateList();
             $this->RedrawAll();
@@ -119,9 +120,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $item->destroy();
         $this->pager->clearItems();
         $this->items = array();
-
-        $login = $this->getRecipient();
-        $path = $this->connection->getMapsDirectory() . "/MatchSettings/*.txt";
+        $path = Helper::getPaths()->getMatchSettingPath() . "*.txt";
 
         $settings = glob($path);
         $x = 0;

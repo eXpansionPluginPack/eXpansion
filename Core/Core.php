@@ -6,6 +6,7 @@ use ManiaLive\Event\Dispatcher;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use \Maniaplanet\DedicatedServer\Structures\ServerOptions;
 use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent as Event;
 use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
@@ -15,7 +16,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
  *
  * @author oliverde8
  * @author reaby
- * 
+ *
  */
 class Core extends types\ExpPlugin {
 
@@ -27,12 +28,11 @@ class Core extends types\ExpPlugin {
      * Last used game mode
      * @var \Maniaplanet\DedicatedServer\Structures\GameInfos
      */
-
     private $lastGameMode;
     private $lastGameSettings;
     private $lastServerSettings;
 
-    /** private variable to hold players infos 
+    /** private variable to hold players infos
      * @var Structures\ExpPlayer[] */
     private $expPlayers = array();
 
@@ -40,12 +40,12 @@ class Core extends types\ExpPlugin {
     private $teamScores = array();
 
     /**
-     * public variable to export player infos 
+     * public variable to export player infos
      * @var Structures\ExpPlayer[] */
     public static $playerInfo = array();
 
     /**
-     * @var Structures\NetStat[] 
+     * @var Structures\NetStat[]
      */
     public static $netStat = array();
 
@@ -87,7 +87,7 @@ class Core extends types\ExpPlugin {
     public static $isRelay = false;
 
     /**
-     * 
+     *
      */
     function exp_onInit() {
 	$logFile = "manialive-" . $this->storage->serverLogin . ".console.log";
@@ -109,7 +109,7 @@ class Core extends types\ExpPlugin {
     }
 
     /**
-     * 
+     *
      */
     function exp_onLoad() {
 
@@ -207,14 +207,14 @@ EOT;
     }
 
     /**
-     * 
+     *
      */
     public function exp_onReady() {
 	$this->lastTick = time();
 	$this->config = Config::getInstance();
 	$this->registerChatCommand("server", "showInfo", 0, true);
 	$this->registerChatCommand("serverlogin", "serverlogin", 0, true);
-	
+
 	$this->setPublicMethod("showInfo");
 	$this->setPublicMethod("showExpSettings");
 	$window = new Gui\Windows\QuitWindow();
@@ -251,11 +251,11 @@ EOT;
      * @param type $login
      */
     public function serverlogin($login) {
-	
+
     }
 
     /**
-     * 
+     *
      * @param array $map
      * @param bool $warmUp
      * @param bool $matchContinuation
@@ -305,16 +305,25 @@ EOT;
 	$this->teamScores = array();
     }
 
-    protected function compareObjects($obj1, $obj2, $ingnoreList = array()) {
+    /**
+     * Compares the values  in 2 objects recursively.
+     *
+     * @param       $obj1       First object
+     * @param       $obj2       Object to compare with
+     * @param array $ignoreList Keys to ignore while comparing
+     *
+     * @return array List keys that has a different value.
+     */
+    protected function compareObjects($obj1, $obj2, $ignoreList = array()) {
 	$difs = array();
 
 	foreach ($obj1 as $varName => $value) {
-	    if (!in_array($varName, $ingnoreList)) {
+	    if (!in_array($varName, $ignoreList)) {
 		if (is_object($value)) {
 		    if (!isset($obj2->$varName)) {
 			$difs[$varName] = true;
 		    } else {
-			$newDisf = $this->compareObjects($value, $obj2->$varName, $ingnoreList);
+			$newDisf = $this->compareObjects($value, $obj2->$varName, $ignoreList);
 			if (!empty($newDisf))
 			    $difs[$varName] = $newDisf;
 		    }
@@ -328,6 +337,13 @@ EOT;
 	return $difs;
     }
 
+    /**
+     * This event is called when game settings has changed
+     *
+     * @param \Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings The old Game Infos
+     * @param \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings The new Game Infos
+     * @param  array                                            $changes Differences between both of them
+     */
     public function onGameSettingsChange(\Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings, \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings, $changes) {
 	$this->saveMatchSettings();
     }
@@ -394,15 +410,18 @@ EOT;
 	\ManiaLive\Event\Dispatcher::dispatch(new \ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent($event, $param));
     }
 
+
     public function onServerSettingsChange(ServerOptions $old, ServerOptions $new, $diff) {
 
 	$dediConfig = \ManiaLive\DedicatedApi\Config::getInstance();
 
-	$path = $this->connection->getMapsDirectory() . "/../Config/" . $this->config->dedicatedConfigFile;
-	if (file_exists($path)) {
-	    $oldXml = simplexml_load_file($path);
+	try {
+	    $path = Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile;
+	    echo $path;
+	    if (file_exists($path)) {
+		$oldXml = simplexml_load_file($path);
 
-	    $xml = '<?xml version="1.0" encoding="utf-8" ?>
+		$xml = '<?xml version="1.0" encoding="utf-8" ?>
 <dedicated>
 		' . $oldXml->authorization_levels->asXml() . '
 	
@@ -440,8 +459,6 @@ EOT;
 
 		<referee_password>' . $new->refereePassword . '</referee_password>
 		<referee_validation_mode>' . $new->refereeMode . '</referee_validation_mode>		<!-- value is 0 (only validate top3 players),  1 (validate all players) -->
-
-		<use_changing_validation_seed>' . ($new->useChangingValidationSeed ? 'True' : 'False') . '</use_changing_validation_seed>
 
 		<disable_horns>' . ($new->disableHorns ? 'True' : 'False') . '</disable_horns>
 		<clientinputs_maxlatency>' . ($new->clientInputsMaxLatency ? 'True' : 'False') . '</clientinputs_maxlatency>		<!-- 0 mean automatic adjustement -->
@@ -484,7 +501,10 @@ EOT;
 	</system_config>
 </dedicated>
 ';
-	    file_put_contents($path, $xml);
+		file_put_contents($path, $xml);
+	    }
+	} catch (\Exception $ex) {
+	    $this->console("[Core]Error writing ServerSettings : " . $path . " - " . $ex->getMessage());
 	}
     }
 
@@ -496,7 +516,11 @@ EOT;
 
     public function saveMatchSettings() {
 	if (!empty($this->config->defaultMatchSettingsFile)) {
-	    $this->connection->saveMatchSettings("MatchSettings" . DIRECTORY_SEPARATOR . $this->config->defaultMatchSettingsFile);
+	    try {
+		$this->connection->saveMatchSettings((empty($this->config->mapBase) ? "" : $this->config->mapBase.'/')."MatchSettings" . DIRECTORY_SEPARATOR . $this->config->defaultMatchSettingsFile);
+	    } catch (\Exception $ex) {
+		$this->console("[Core]Error writing MatchSettings : " . $this->config->defaultMatchSettingsFile . " - " . $ex->getMessage());
+	    }
 	}
     }
 
@@ -525,11 +549,11 @@ EOT;
 	$this->console('Shutting down uncompatible plugins');
 
 	foreach ($this->exp_getGameModeCompability() as $plugin => $compability) {
-	    if (!$plugin::exp_checkGameCompability()) {
+	    if (!$plugin::getMetaData()->checkAll()) {
 		try {
 		    $this->callPublicMethod($plugin, 'exp_unload');
 		} catch (\Exception $ex) {
-		    
+
 		}
 	    }
 	}
@@ -544,7 +568,7 @@ EOT;
 		//$parts = explode("\\", $plugin_id);
 		//$className = '\\ManiaLivePlugins\\' . $plugin_id . '\\' . $parts[1];
 		$className = $plugin_id;
-		if ($className::exp_checkGameCompability() && !$this->isPluginLoaded($plugin_id)) {
+		if (!$className::getMetaData()->checkAll() && !$this->isPluginLoaded($plugin_id)) {
 		    try {
 			$pHandler->load($plugin_id);
 		    } catch (Exception $ex) {
@@ -612,7 +636,7 @@ EOT;
     }
 
     public function onPostLoop() {
-	// check for update conditions	
+	// check for update conditions
 	if ($this->enableCalculation == false)
 	    return;
 	if ($this->storage->serverStatus->code == 4 && $this->update && (microtime(true) - $this->loopTimer) > 0.35) {

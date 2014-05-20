@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
-class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
+class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     protected $_windowFrame;
     protected $_mainWindow;
