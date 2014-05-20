@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\PersonalMessages;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\PersonalMessages\PersonalMessages;
 use ManiaLivePlugins\eXpansion\Core\Config;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -143,14 +144,13 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	    $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
 	    return;
 	}
-
 	try {
 	    foreach ($this->storage->players as $reciever => $player) {
-		if (AdminGroups::hasPermission($reciever, "admin_chatChannel"))
+		if (AdminGroups::hasPermission($reciever, Permission::chat_adminChannel))
 		    $this->connection->chatSendServerMessage($color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message, $reciever);
 	    }
 	    foreach ($this->storage->spectators as $reciever => $player) {
-		if (AdminGroups::hasPermission($reciever, "admin_chatChannel"))
+		if (AdminGroups::hasPermission($reciever, Permission::chat_adminChannel))
 		    $this->connection->chatSendServerMessage($color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message, $reciever);
 	    }
 	} catch (\Exception $e) {

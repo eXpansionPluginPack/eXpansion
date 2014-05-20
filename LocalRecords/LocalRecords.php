@@ -97,13 +97,12 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $msg_new_top5, $msg_improved_top1, $msg_improved_top5, $msg_admin_savedRecs, $msg_equals, $msg_equals_top5, $msg_equals_top1;
     public static $txt_rank, $txt_nick, $txt_score, $txt_sector, $txt_cp,
 	    $txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
-
     public static $openSectorsAction = -1;
-    
+
     function exp_onInit() {
 	//Activating debug for records only
 	$this->debug = self::DEBUG_NONE;
-	
+
 	self::$openSectorsAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showSectorWindow'));
 
 	$this->config = Config::getInstance();
@@ -119,16 +118,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	//The Database plugin is needed. 
 	$this->addDependency(new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\Database\Database"));
-
-	//Oliverde8 Menu
-	if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
-	    Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
-	}
     }
 
     public function exp_onLoad() {
-
-	parent::exp_onLoad();
 
 	//Recovering the multi language messages
 	$this->msg_secure = exp_getMessage($this->config->msg_secure);
@@ -264,28 +256,28 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return array $list -> $list[mapuid] = (int) position
      */
     public function getPlayersRecordsForAllMaps($login) {
-	
+
 	$count = 0;
 	$uids = "";
 	foreach ($this->storage->maps as $map) {
-	    if(!isset($map->localRecords)){
+	    if (!isset($map->localRecords)) {
 		$map->localRecords = array();
 	    }
-	    if(!isset($map->localRecords[$login])){
+	    if (!isset($map->localRecords[$login])) {
 		$count++;
-		
+
 		$uids .= $this->db->quote($map->uId) . ",";
 		$mapsByUid[$map->uId] = $map;
 	    }
 	}
-	
-	if($count > 0){
+
+	if ($count > 0) {
 	    $uids = trim($uids, ",");
 
 	    $q = ' SELECT `rank_rank` as rank,`rank_challengeuid` as uid '
 		    . ' FROM `exp_ranks` '
-		    . ' WHERE rank_challengeuid IN ('.$uids.')'
-		    . '	AND rank_playerlogin = '.$this->db->quote($login);
+		    . ' WHERE rank_challengeuid IN (' . $uids . ')'
+		    . '	AND rank_playerlogin = ' . $this->db->quote($login);
 	    $data = $this->db->execute($q);
 
 	    while ($row = $data->fetchObject()) {
@@ -304,7 +296,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	//Checking for lap constraints
 	if ($this->useLapsConstraints()) {
 	    $nbLaps = $this->getNbOfLaps();
-	} else {
+	}
+	else {
 	    $nbLaps = 1;
 	}
 
@@ -314,7 +307,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	//Sending begin map messages
 	if (sizeof($this->currentChallengeRecords) == 0 && $this->config->sendBeginMapNotices) {
 	    $this->exp_chatSendServerMessage($this->msg_newMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
-	} else if ($this->config->sendBeginMapNotices) {
+	}
+	else if ($this->config->sendBeginMapNotices) {
 	    $time = \ManiaLive\Utilities\Time::fromTM($this->currentChallengeRecords[0]->time);
 	    if (substr($time, 0, 2) === "0:") {
 		$time = substr($time, 2);
@@ -344,7 +338,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if ($this->useLapsConstraints()) {
 	    $nbLaps = $this->getNbOfLaps();
 	    $cons .= " AND rank_nbLaps = " . $this->getNbOfLaps();
-	} else {
+	}
+	else {
 	    $nbLaps = 1;
 	    $cons .= " AND rank_nbLaps = 1";
 	}
@@ -358,24 +353,24 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	//Firs of the best records
 	$this->storage->currentMap->localRecords = array();
 	foreach ($this->currentChallengeRecords as $i => $record) {
-	    $this->storage->currentMap->localRecords[$record->login] = $record->place;	    
+	    $this->storage->currentMap->localRecords[$record->login] = $record->place;
 	    $updated = $updated || $this->updateRecordInDatabase($record, $nbLaps);
 	}
 	//Now the rest of the times as well(PB)
 	foreach ($this->currentChallengePlayerRecords as $i => $record) {
 	    $updated = $updated || $this->updateRecordInDatabase($record, $nbLaps);
 	}
-	
+
 	if ($updated) {
 	    $this->updateRanks($this->storage->currentMap->uId, $nbLaps);
-	}else{
+	}
+	else {
 	    $q = "SELECT rank_playerlogin FROM `exp_ranks`"
-		    . " WHERE rank_challengeuid = " . $this->db->quote($this->storage->currentMap->uId).$cons;	    
+		    . " WHERE rank_challengeuid = " . $this->db->quote($this->storage->currentMap->uId) . $cons;
 	    $data = $this->db->execute($q);
-	    if(sizeof($data->fetchArray()) == 0)
+	    if (sizeof($data->fetchArray()) == 0)
 		$this->updateRanks($this->storage->currentMap->uId, $nbLaps, true);
 	}
-	
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
@@ -396,7 +391,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	//Send a message telling him about records on this map
 	if (sizeof($this->currentChallengeRecords) == 0 && $this->config->sendBeginMapNotices) {
 	    $this->exp_chatSendServerMessage($this->msg_newMap, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
-	} else if ($this->config->sendBeginMapNotices) {
+	}
+	else if ($this->config->sendBeginMapNotices) {
 	    $time = \ManiaLive\Utilities\Time::fromTM($this->currentChallengeRecords[0]->time);
 	    if (substr($time, 0, 2) === "0:") {
 		$time = substr($time, 2);
@@ -472,7 +468,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $gamemode = self::exp_getCurrentCompatibilityGameMode();
 
 	    if ($gamemode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) //Laps mode has it own on Player finish event
-		return; 
+		return;
 
 	    // if normal map, don't trigger the event for first lap :)
 	    if ($this->storage->currentMap->nbLaps == 0) {
@@ -483,69 +479,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->addRecord($player->login, $time, $gamemode, $this->checkpoints[$player->login]);
 	    $this->checkpoints[$player->login] = array();
 	}
-    }
-
-    /**
-     * Called when the Oliverde8HudMenu is loaded
-     * @param \ManiaLivePlugins\oliverde8\HudMenu\HudMenu
-     */
-    public function onOliverde8HudMenuReady($menu) {
-
-	$parent = $menu->findButton(array("menu", "Records"));
-	if (!$parent) {
-	    $button["style"] = "Icons128x128_1";
-	    $button["substyle"] = "Replay";
-	    $parent = $menu->addButton("menu", "Records", $button);
-	}
-
-	$button["style"] = "BgRaceScore2";
-	$button["substyle"] = "ScoreLink";
-	$button["plugin"] = $this;
-	$button["function"] = "showRecsWindow";
-	$menu->addButton($parent, "Local Records", $button);
-
-	$button["style"] = "BgRaceScore2";
-	$button["substyle"] = "LadderRank";
-	$button["plugin"] = $this;
-	$button["function"] = "showRanksWindow";
-	$menu->addButton($parent, "Local Ranks", $button);
-
-	$button["style"] = "Icons128x128_1";
-	$button["substyle"] = "Race";
-	$button["plugin"] = $this;
-	$button["function"] = "showCpWindow";
-	$menu->addButton($parent, "Best CheckPoints", $button);
-
-	$button["style"] = "Icons128x128_1";
-	$button["substyle"] = "Platform";
-	$button["plugin"] = $this;
-	$button["function"] = "showSectorWindow";
-	$menu->addButton($parent, "Best Sector Times", $button);
-
-	$parent = $menu->findButton(array("admin", "Server Options"));
-	if (!$parent) {
-	    $button["style"] = "Icons128x128_1";
-	    $button["substyle"] = "Options";
-	    $button["plugin"] = $this;
-	    $parent = $menu->addButton("admin", "Server Options", $button);
-	    unset($button["style"]);
-	}
-
-	$parent2 = $menu->findButton(array("admin", "Server Options", "Other Options"));
-	if (!$parent2) {
-	    $button["style"] = "Icons128x128_1";
-	    $button["substyle"] = "Options";
-	    $button["plugin"] = $this;
-	    $parent2 = $menu->addButton($parent, "Other Options", $button);
-	    unset($button["style"]);
-	}
-
-	$button["style"] = "Icons64x64_1";
-	$button["substyle"] = "Save";
-	$button["plugin"] = $this;
-	$button["function"] = "chat_forceSave";
-	$button["permission"] = "records_save";
-	$menu->addButton($parent2, "Save Records", $button);
     }
 
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified) {
@@ -671,7 +604,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$securedBy = \ManiaLive\Utilities\Time::fromTM($nrecord->time - $recordtime_old);
 		if (substr($securedBy, 0, 3) === "0:0") {
 		    $securedBy = substr($securedBy, 3);
-		} else if (substr($securedBy, 0, 2) === "0:") {
+		}
+		else if (substr($securedBy, 0, 2) === "0:") {
 		    $securedBy = substr($securedBy, 2);
 		}
 		// equals time
@@ -684,11 +618,13 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		    }
 		    if ($nrecord->place <= $this->config->recordPublicMsgTreshold) {
 			$this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time));
-		    } else {
+		    }
+		    else {
 			$this->exp_chatSendServerMessage($msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time));
 		    }
 		    // improves time
-		} else {
+		}
+		else {
 		    $msg = $this->msg_secure;
 		    if ($nrecord->place <= 5) {
 			$msg = $this->msg_secure_top5;
@@ -697,7 +633,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		    }
 		    if ($nrecord->place <= $this->config->recordPublicMsgTreshold) {
 			$this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
-		    } else {
+		    }
+		    else {
 			$this->exp_chatSendServerMessage($msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
 		    }
 		}
@@ -709,7 +646,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$securedBy = \ManiaLive\Utilities\Time::fromTM($nrecord->time - $recordtime_old);
 		if (substr($securedBy, 0, 3) === "0:0") {
 		    $securedBy = substr($securedBy, 3);
-		} else if (substr($securedBy, 0, 2) === "0:") {
+		}
+		else if (substr($securedBy, 0, 2) === "0:") {
 		    $securedBy = substr($securedBy, 2);
 		}
 
@@ -722,7 +660,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 		if ($nrecord->place <= $this->config->recordPublicMsgTreshold) {
 		    $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
-		} else {
+		}
+		else {
 		    $this->exp_chatSendServerMessage($msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time, $recordrank_old, $securedBy));
 		}
 
@@ -738,14 +677,16 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		}
 		if ($nrecord->place <= $this->config->recordPublicMsgTreshold) {
 		    $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time));
-		} else {
+		}
+		else {
 		    $this->exp_chatSendServerMessage($msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'), $nrecord->place, $time));
 		}
 
 		\ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_RECORD, $this->currentChallengeRecords, $nrecord));
 	    }
 	    \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_PERSONAL_BEST, $nrecord));
-	}else{
+	}
+	else {
 	    \ManiaLive\Event\Dispatcher::dispatch(new Event(Event::ON_NEW_FINISH, $login));
 	}
     }
@@ -773,7 +714,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                         )';
 	    $this->db->execute($q);
 	    $record->isNew = false;
-	} else if ($record->isUpdated) {
+	}
+	else if ($record->isUpdated) {
 	    //If it isn't but it has been updated we update
 	    $q = 'UPDATE `exp_records`
                         SET `record_score` = ' . $this->db->quote($record->time) . ',
@@ -840,7 +782,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$cons = "";
 	if ($this->useLapsConstraints()) {
 	    $cons .= " AND record_nbLaps = " . $this->getNbOfLaps();
-	} else {
+	}
+	else {
 	    $cons .= " AND record_nbLaps = 1";
 	}
 
@@ -923,7 +866,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$cons = "";
 	if ($this->useLapsConstraints()) {
 	    $cons .= " AND record_nbLaps = " . $this->getNbOfLaps();
-	} else {
+	}
+	else {
 	    $cons .= " AND record_nbLaps = 1";
 	}
 
@@ -981,7 +925,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$cons = "";
 	if ($this->useLapsConstraints()) {
 	    $cons .= " AND record_nbLaps = " . $this->getNbOfLaps();
-	} else {
+	}
+	else {
 	    $cons .= " AND record_nbLaps = 1";
 	}
 
@@ -1009,7 +954,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $record->uId = $this->storage->currentMap->uId;
 
 	    $this->currentChallengePlayerRecords[$login] = $record;
-	} else {
+	}
+	else {
 	    return false;
 	}
     }
@@ -1095,26 +1041,27 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showRecsWindow($login, $map = NULL) {
 	Gui\Windows\Records::Erase($login);
 	//try {
-	    if ($map === NULL) {
-		$records = $this->currentChallengeRecords;
-		$map = $this->storage->currentMap;
-	    } else {
-		$records = $this->getRecordsForMap(null, $map);
-	    }
-	    $currentMap = false;
-	    if($map == null || $map->uId == $this->storage->currentMap->uId){
-		$currentMap = true;
-	    }
-	    
-	    $window = Gui\Windows\Records::Create($login);
-	    $window->setTitle(__('Records on a Map', $login));
-	    $window->centerOnScreen();
-	    $window->setSize(120, 100);
-	    $window->populateList($records, $this->config->recordsCount, $currentMap);
-	    $window->show();
-	/*} catch (\Exception $e) {
-	    $this->exp_chatSendServerMessage("Error: %s", $login, array($e->getMessage()));
-	}*/
+	if ($map === NULL) {
+	    $records = $this->currentChallengeRecords;
+	    $map = $this->storage->currentMap;
+	}
+	else {
+	    $records = $this->getRecordsForMap(null, $map);
+	}
+	$currentMap = false;
+	if ($map == null || $map->uId == $this->storage->currentMap->uId) {
+	    $currentMap = true;
+	}
+
+	$window = Gui\Windows\Records::Create($login);
+	$window->setTitle(__('Records on a Map', $login));
+	$window->centerOnScreen();
+	$window->setSize(120, 100);
+	$window->populateList($records, $this->config->recordsCount, $currentMap);
+	$window->show();
+	/* } catch (\Exception $e) {
+	  $this->exp_chatSendServerMessage("Error: %s", $login, array($e->getMessage()));
+	  } */
     }
 
     /**
@@ -1187,7 +1134,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$cp++;
 		$sect++;
 		$array[$sect - 1] = $cp;
-	    } else {
+	    }
+	    else {
 		$cp++;
 		$array[$sect - 1] = $cp;
 	    }
@@ -1207,7 +1155,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 			    $sortable_array[$k] = $v2;
 			}
 		    }
-		} else {
+		}
+		else {
 		    $sortable_array[$k] = $v;
 		}
 	    }
@@ -1236,11 +1185,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	return $this->player_ranks;
     }
 
-    
     private function resetRanks() {
 	$fullStart = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Reseting Ranks");
 	$delete = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Deleting existing Ranks");
-	
+
 	$this->db->execute('DELETE FROM exp_ranks WHERE rank_challengeuid IN (' . $this->getUidSqlString() . ')');
 	$this->ranks = array();
 	$this->player_ranks = array();
@@ -1249,7 +1197,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$i = 0;
 	foreach ($this->storage->maps as $map) {
 	    $this->updateRanks($map->uId, 1, true);
-	    if($i > $this->config->nbMap_rankProcess)
+	    if ($i > $this->config->nbMap_rankProcess)
 		break;
 	    $i++;
 	}
@@ -1258,10 +1206,10 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private function updateRanks($challengeId, $nbLaps, $log = true) {
 	$id = -1;
-	if($log){
+	if ($log) {
 	    $id = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Updating Ranks for $challengeId");
 	}
-	
+
 	$this->db->execute('DELETE FROM exp_ranks 
                             WHERE rank_challengeuid = \'' . $challengeId . '\'
                                 AND rank_nbLaps = ' . $nbLaps);
@@ -1301,7 +1249,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	    if ($data->recordCount() == 0) {
 		$this->total_ranks = -1;
-	    } else {
+	    }
+	    else {
 		$vals = $data->fetchStdObject();
 		$this->total_ranks = $data->recordCount();
 	    }
@@ -1355,7 +1304,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    if ($data->recordCount() == 0) {
 		$this->player_ranks[$login] = -1;
 		return -1;
-	    } else {
+	    }
+	    else {
 		$vals = $data->fetchStdObject();
 		$points = $vals->points;
 
@@ -1376,7 +1326,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	    if ($data->recordCount() == 0) {
 		$this->player_ranks[$login] = 1;
-	    } else {
+	    }
+	    else {
 		$vals = $data->fetchStdObject();
 		$this->player_ranks[$login] = $data->recordCount() + 1;
 	    }
@@ -1452,7 +1403,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $rankTotal = $this->getTotalRanked();
 	    if ($rank > 0) {
 		$this->exp_chatSendServerMessage($this->msg_showRank, $login, array($rank, $rankTotal));
-	    } else {
+	    }
+	    else {
 		// reaby disabled this, people doesn't like error messages
 		// $this->exp_chatSendServerMessage($this->msg_noRank, $login, array());
 	    }
@@ -1465,7 +1417,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    if (!$record) {
 		// reaby disabed this, ppl doesn't like error messages!
 		// $this->exp_chatSendServerMessage($this->msg_noPB, $login, array());
-	    } else {
+	    }
+	    else {
 		$time = \ManiaLive\Utilities\Time::fromTM($record->time);
 		if (substr($time, 0, 2) === "0:") {
 		    $time = substr($time, 2);
@@ -1476,7 +1429,8 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		}
 		if ($record->place > 0 && $record->place <= $this->config->recordsCount) {
 		    $place = $record->place;
-		} else {
+		}
+		else {
 		    $place = '--';
 		}
 		$this->exp_chatSendServerMessage($this->msg_personalBest, $login, array($time, $place, $avg, $record->nbFinish));

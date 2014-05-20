@@ -8,6 +8,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Quiz\Gui\Controls\AddPointItem;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
@@ -42,7 +43,7 @@ class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $x = 0;
         $login = $this->getRecipient();
-        $isadmin = AdminGroups::hasPermission($login,"quiz_admin");
+        $isadmin = AdminGroups::hasPermission($login, Permission::quiz_admin);
         try {
             foreach (\ManiaLive\Data\Storage::getInstance()->players as $player) {
                 $this->items[$x] = new AddPointItem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->sizeX);

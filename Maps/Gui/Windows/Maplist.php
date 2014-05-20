@@ -7,7 +7,7 @@ use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\MapitemCurrent;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Maps\Maps;
-
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     public $records = array();
@@ -165,7 +165,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    Maps::$playerSortModes[$login] = new \ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode();
 	}
 
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps')) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_removeMap)) {
 	    $this->actionRemoveAllf = $this->createAction(array($this, "removeAllMaps"));
 	    $this->actionRemoveAll = Gui::createConfirm($this->actionRemoveAllf);
 	    $this->btnRemoveAll = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(35);
@@ -267,8 +267,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->items = array();
 
 
-	$isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps');
-
+	$isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_removeMap);
+	
 	$this->maps = array();
 
 	$maxrec = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;

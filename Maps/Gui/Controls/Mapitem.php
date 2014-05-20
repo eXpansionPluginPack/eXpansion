@@ -8,6 +8,7 @@ use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use \ManiaLivePlugins\eXpansion\Gui\Structures\OptimizedPagerElement;
 use \ManiaLive\Gui\Control;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class Mapitem extends Control implements OptimizedPagerElement {
 
@@ -86,7 +87,7 @@ class Mapitem extends Control implements OptimizedPagerElement {
 	    $this->actionsFrame->addComponent($this->showRecsButton);
 	}
 
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_remove')) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_removeMap)) {
 
 	    $spacer = new \ManiaLib\Gui\Elements\Quad();
 	    $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);

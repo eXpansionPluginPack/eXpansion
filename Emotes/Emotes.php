@@ -13,17 +13,6 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public static $action_Lol;
     public static $action_Bg;
 
-    function exp_onInit() {
-	parent::exp_onInit();
-	if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
-	    Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
-	}
-	/* self::$action_GG = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'sendEmote'), "GG");
-	  self::$action_Afk = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'sendEmote'), "Afk");
-	  self::$action_Lol = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'sendEmote'), "Lol");
-	  self::$action_Bg = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'sendEmote'), "BF"); */
-    }
-
     function exp_onLoad() {
 	$this->enableDedicatedEvents();
 	EmotePanel::$emotePlugin = $this;
@@ -46,57 +35,6 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->onPlayerConnect($player->login, false);
 	foreach ($this->storage->spectators as $player)
 	    $this->onPlayerConnect($player->login, true);
-    }
-
-    /* public function onOliverde8HudMenuReady($menu) {
-      $config = Config::getInstance();
-
-      $button["style"] = "Icons64x64_1";
-      $button["substyle"] = "ToolRoot";
-      $parent2 = $menu->findButton(array('menu', 'Extras'));
-      $button["image"] = $config->iconMenu;
-      if (!$parent2) {
-      $parent = $menu->addButton('menu', "Extras", $button);
-      }
-
-      unset($button["style"]);
-      unset($button["substyle"]);
-
-      $parent = $menu->findButton(array('menu', "Extras", 'Emotes'));
-      $button["image"] = $config->iconMenu;
-      if (!$parent) {
-      $parent = $menu->addButton($parent2, "Emotes", $button);
-      }
-
-      $button["image"] = $config->iconGG;
-      $button["chat"] = "gg";
-      $menu->addButton($parent, "Good Game(gg)", $button);
-
-      $button["image"] = $config->iconBG;
-      $button["chat"] = "bg";
-      $menu->addButton($parent, "Bad Game(bg)", $button);
-
-      $button["image"] = $config->iconLol;
-      $button["chat"] = "lol";
-      $menu->addButton($parent, "Lol", $button);
-
-      $button["image"] = $config->iconAfk;
-      $button["chat"] = "afk";
-      $menu->addButton($parent, "Away from Key(afk)", $button);
-
-      unset($button["image"]);
-      $button["chat"] = "bootme";
-      $menu->addButton($parent, "Boot Me", $button);
-      } */
-
-    function onPlayerConnect($login, $isSpectator) {
-	/* if (!Config::getInstance()->showPanel)
-	  return;
-
-	  $info = EmotePanel::Create($login);
-	  $info->setSize(60, 8);
-	  $info->setPosition(-160, -40);
-	  $info->show(); */
     }
 
     public function onPlayerDisconnect($login, $reason = null) {
@@ -253,12 +191,14 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    if (($nick = $this->getPlayerNick($args[0])) == "") {
 		$text = implode(" ", $args);
 		$this->exp_chatSendServerMessage($player->nickName . '$z$s #emote#' . $message . " #emote#" . $text);
-	    } else {
+	    }
+	    else {
 		array_shift($args);
 		$text = implode(" ", $args);
 		$this->exp_chatSendServerMessage($player->nickName . '$z$s #emote#' . $message2 . ", " . $nick . " #emote#" . $text);
 	    }
-	} else {
+	}
+	else {
 	    $this->exp_chatSendServerMessage($player->nickName . '$z$s #emote#' . $message);
 	}
     }

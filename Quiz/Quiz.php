@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Quiz;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -37,10 +38,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return void
      */
     public function exp_onInit() {
-        //Oliverde8 Menu
-        if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
-            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
-        }
+	
     }
 
     /**
@@ -125,35 +123,6 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         foreach ($data as $player) {
             $this->players[$player->login] = new Structures\QuizPlayer($player->login, $player->nickName, (int) $player->score);
         }
-    }
-
-    public function onOliverde8HudMenuReady($menu) {
-        $button["style"] = "Icons64x64_1";
-        $button["substyle"] = "ToolRoot";
-        $parent2 = $menu->findButton(array('menu', 'Extras'));
-        if (!$parent2) {
-            $parent2 = $menu->addButton('menu', "Extras", $button);
-        }
-
-        unset($button["style"]);
-        unset($button["substyle"]);
-
-        $parent = $menu->findButton(array('menu', "Extras", 'Quiz'));
-        if (!$parent) {
-            $parent = $menu->addButton($parent2, "Quiz", $button);
-        }
-
-        $button["chat"] = "q points";
-        $menu->addButton($parent, "Points", $button);
-
-        $button["chat"] = "q cancel";
-        $menu->addButton($parent, "Cancel", $button);
-
-        $button["chat"] = "q show";
-        $menu->addButton($parent, "Show", $button);
-
-        $button["chat"] = "q reset";
-        $menu->addButton($parent, "Reset", $button);
     }
 
     function chatquiz($login, $args) {
@@ -252,7 +221,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         if ($this->currentQuestion === null)
             return;
 
-        if ($this->currentQuestion->asker->login == $login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'quiz_admin')) {
+        if ($this->currentQuestion->asker->login == $login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
             $this->exp_chatSendServerMessage($this->msg_cancelQuestion, null, array($this->storage->getPlayerObject($login)->nickName));
             $this->currentQuestion = null;
             $this->chooseNextQuestion();
@@ -260,7 +229,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function reset($login) {
-        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "quiz_admin"))
+        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin))
             return;
         $this->players = array();
         $this->questionDb = array();
@@ -273,7 +242,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     function showAnswer($login) {
         if (!isset($this->currentQuestion->question))
             return;
-        if ($login == $this->currentQuestion->asker->login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "quiz_admin")) {
+        if ($login == $this->currentQuestion->asker->login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
             $answer = "";
 
             foreach ($this->currentQuestion->answer as $ans) {
@@ -305,7 +274,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function addPoint($login = null, $target) {
-        if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "quiz_admin")) {
+        if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
             if ($login !== null) {
                 $this->exp_chatSendServerMessage($this->msg_pointAdd, null, array($this->storage->getPlayerObject($target)->nickName));
             }
@@ -327,7 +296,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function removePoint($login, $target) {
 
-        if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "quiz_admin")) {
+        if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
             if ($login !== null) {
                 $this->exp_chatSendServerMessage($this->msg_pointRemove, null, array($this->storage->getPlayerObject($target)->nickName));
             }
@@ -395,7 +364,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function addPointsWindow($login) {
-        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "quiz_admin"))
+        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin))
             return;
         $window = Gui\Windows\AddPoint::Create($login);
         $window->setSize(90, 60);

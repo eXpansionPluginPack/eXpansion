@@ -45,7 +45,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onPlayerConnect($login, $isSpectator)
     {
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "server_update") && $this->config->autoCheckUpdates && !$this->config->useGit) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::server_update) && $this->config->autoCheckUpdates && !$this->config->useGit) {
 
 	    $this->checkUpdate($login);
 	}

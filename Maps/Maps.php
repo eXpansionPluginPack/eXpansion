@@ -9,6 +9,7 @@ use ManiaLivePlugins\eXpansion\Maps\Config;
 use ManiaLivePlugins\eXpansion\Maps\Structures\MapWish;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -48,11 +49,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onInit() {
 
-//Oliverde8 Menu
-	if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
-	    Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
-	}
-
 	$this->messages = new \StdClass();
 
 	$this->config = Config::getInstance();
@@ -70,26 +66,21 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
 
-	$cmd = AdminGroups::addAdminCommand('map remove', $this, 'chat_removeMap', 'map_remove');
+	$cmd = AdminGroups::addAdminCommand('map remove', $this, 'chat_removeMap', Permission::map_removeMap);
 	$cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
 	$cmd->setMinParam(1);
 	AdminGroups::addAlias($cmd, "remove");
 
-	$cmd = AdminGroups::addAdminCommand('map erase', $this, 'chat_eraseMap', 'map_erease');
+	$cmd = AdminGroups::addAdminCommand('map erase', $this, 'chat_eraseMap', Permission::map_removeMap);
 	$cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
 	$cmd->setMinParam(0);
 	AdminGroups::addAlias($cmd, "nuke this");
 	AdminGroups::addAlias($cmd, "trash this");
 
-	$cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', 'map_res');
+	$cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', Permission::map_restart);
 	$cmd->setHelp(exp_getMessage('Sets current challenge to replay at end of match'));
 	$cmd->setMinParam(0);
 	AdminGroups::addAlias($cmd, "replay");
-
-	/* $cmd = AdminGroups::addAdminCommand('map add', $this, 'addMxMap', 'map_add');
-	  $cmd->setHelp(exp_getMessage('adds a map via MX'));
-	  $cmd->setMinParam(1);
-	  AdminGroups::addAlias($cmd, "add"); */
 
 	$this->registerChatCommand('list', "showMapList", 0, true);
 	$this->registerChatCommand('maps', "showMapList", 0, true);
@@ -162,75 +153,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, $map);
     }
 
-    public function onOliverde8HudMenuReady($menu) {
-
-	$button["style"] = "UIConstructionSimple_Buttons";
-	$button["substyle"] = "Drive";
-	$button["plugin"] = $this;
-	$parent = $menu->findButton(array('menu', 'Maps'));
-	if (!$parent) {
-	    $parent = $menu->addButton('menu', "Maps", $button);
-	}
-
-	$button["style"] = "Icons128x128_1";
-	$button["substyle"] = "Browse";
-	$button["plugin"] = $this;
-	$button["function"] = 'showMapList';
-	$menu->addButton($parent, "List all Maps", $button);
-
-//Don't think this is a good idea..  may be useful in the future for temp adds of local maps, though
-//$button["substyle"] = "NewTrack";
-//$button["function"] = 'addMaps';
-//$menu->addButton($parent, "Add Map", $button);
-
-	$this->hudMenuAdminButtons($menu);
-    }
-
-    private function hudMenuAdminButtons($menu) {
-
-	$button["style"] = "UIConstructionSimple_Buttons";
-	$button["substyle"] = "Drive";
-	$button["plugin"] = $this;
-	$parent = $menu->findButton(array('admin', 'Maps'));
-	if (!$parent) {
-	    $parent = $menu->addButton('admin', "Maps", $button);
-	}
-
-	$button["style"] = "Icons64x64_1";
-	$button["substyle"] = "Close";
-
-	$button["plugin"] = $this;
-	$button["function"] = "chat_removeMap";
-	$button["params"] = "this";
-	$button["permission"] = "map_remove";
-	$menu->addButton($parent, "Remove Current Map", $button);
-
-	$button["style"] = "Icons64x64_1";
-	$button["substyle"] = "Sub";
-
-	$button["plugin"] = $this;
-	$button["function"] = "emptyWishes";
-	$button["params"] = "this";
-	$button["permission"] = "map_jukebox";
-	$menu->addButton($parent, "Empty Wish List", $button);
-
-	$button["style"] = "Icons128x128_1";
-	$button["substyle"] = "NewTrack";
-	$button["function"] = 'addMaps';
-	$button["permission"] = "map_add";
-	$menu->addButton($parent, "Add Map", $button);
-
-	$button["style"] = "Icons64x64_1";
-	$button["substyle"] = "Refresh";
-	$button["function"] = 'replayMap';
-	$button["permission"] = "map_res";
-	$parent = $menu->findButton(array('admin', 'Basic Commands'));
-	if (!$parent) {
-	    $parent = $menu->findButton(array('admin', 'Maps'));  // no basic cmd submenu?  just dump it in with map cmd's..
-	}
-	$menu->addButton($parent, "Replay Map", $button);
-    }
-
     public function onPlayerDisconnect($login, $reason = null) {
 	Gui\Windows\Maplist::Erase($login);
 	Gui\Windows\AddMaps::Erase($login);
@@ -267,10 +189,12 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		    }
 		}
 		array_shift($this->queue);
-	    } else {
+	    }
+	    else {
 		if ($this->tries < 3) {
 		    $this->tries++;
-		} else {
+		}
+		else {
 		    $this->tries = 0;
 		    array_shift($this->queue);
 		}
@@ -348,7 +272,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$this->exp_chatSendServerMessage('Recovering from error, map removed from jukebox...', $queue->player->login);
 	    }
 //}
-	} else {
+	}
+	else {
 	    if ($this->config->showEndMatchNotices) {
 		$map = $this->storage->nextMap;
 		if ($this->instantReplay == true) {
@@ -377,8 +302,9 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		    $this->chat_dropQueue($login);
 		    break;
 		case "reset":
-		    AdminGroups::hasPermission($login, "map_jukebox");
-		    $this->emptyWishes($login);
+		    if (AdminGroups::hasPermission($login, Permission::map_jukebox_admin)) {
+			$this->emptyWishes($login);
+		    }
 		    break;
 		case "list":
 		case "show":
@@ -411,11 +337,12 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$window->setTitle(__('Maps on server', $login), " (" . count($this->storage->maps) . ")");
 	$window->setHistory($this->history);
 	$window->setCurrentMap($this->storage->currentMap);
-	
+
 	if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
 	    $this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords', 'getPlayersRecordsForAllMaps', $login);
 	    Gui\Windows\Maplist::$localrecordsLoaded = true;
-	}else{
+	}
+	else {
 	    Gui\Windows\Maplist::$localrecordsLoaded = false;
 	}
 
@@ -466,7 +393,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	$amount = $this->getQueuAmount();
 
-	if ($amount == 0 || AdminGroups::hasPermission($login, 'map_jukebox_free'))
+	if ($amount == 0 || AdminGroups::hasPermission($login, Permission::map_jukebox_free))
 	    $this->queueMap($login, $map, $isTemp);
 	else if ($amount != -1) {
 	    if ($this->checkQueuMap($login, $map, true)) {
@@ -526,7 +453,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		return false;
 	    }
 
-	    if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_jukebox') && $queue->player->login == $login) {
+	    if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_jukebox_admin) && $queue->player->login == $login) {
 		$msg = exp_getMessage('#admin_error# $iYou already have a map in the queue...');
 		if ($sendMessages)
 		    $this->exp_chatSendServerMessage($msg, $login);
@@ -629,7 +556,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function removeMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map) {
-	if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_remove')) {
+	if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_removeMap)) {
 	    $msg = exp_getMessage('#admin_error# $iYou are not allowed to do that!');
 	    $this->exp_chatSendServerMessage($msg, $login);
 	    return;
@@ -646,7 +573,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function eraseMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map) {
-	if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_erease')) {
+	if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_removeMap)) {
 	    $msg = exp_getMessage('#admin_error# $iYou are not allowed to do that!');
 	    $this->exp_chatSendServerMessage($msg, $login);
 	    return;
@@ -673,7 +600,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    reset($this->queue);
 	    $queue = current($this->queue);
 	    $this->nextMap = $queue->map;
-	} else {
+	}
+	else {
 	    $this->nextMap = $this->storage->nextMap;
 	}
 	// update all widgets
@@ -753,7 +681,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		reset($this->queue);
 		$queue = current($this->queue);
 		$this->exp_chatSendServerMessage($this->msg_nextQueue, $login, array(\ManiaLib\Utils\Formatting::stripCodes($queue->map->name, 'wosnm'), $queue->map->author, \ManiaLib\Utils\Formatting::stripCodes($queue->player->nickName, 'wosnm'), $queue->player->login));
-	    } else {
+	    }
+	    else {
 		$this->exp_chatSendServerMessage($this->msg_nextMap, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->nextMap->name, 'wosnm'), $this->storage->nextMap->author));
 	    }
 	}
@@ -775,7 +704,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    reset($this->queue);
 	    $queue = current($this->queue);
 	    $this->nextMap = $queue->map;
-	} else {
+	}
+	else {
 	    $this->nextMap = $this->storage->nextMap;
 	}
 	if ($this->config->showNextMapWidget) {
@@ -799,14 +729,16 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		}
 		$i++;
 	    }
-	} else {
+	}
+	else {
 	    return;
 	}
 	if (count($this->queue) > 0) {
 	    reset($this->queue);
 	    $queue = current($this->queue);
 	    $this->nextMap = $queue->map;
-	} else {
+	}
+	else {
 	    $this->nextMap = $this->storage->nextMap;
 	}
 	if ($this->config->showNextMapWidget) {
@@ -820,7 +752,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function emptyWishes($login) {
-	if (!AdminGroups::hasPermission($login, "map_jukebox")) {
+	if (!AdminGroups::hasPermission($login, Permission::map_jukebox_admin)) {
 	    $this->exp_chatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
 	    return;
 	}
@@ -860,7 +792,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	if (!$this->atPodium) {
 	    array_unshift($this->queue, new MapWish($player, $this->storage->currentMap, false));
-	} else {
+	}
+	else {
 	    $this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
 	}
 
@@ -874,7 +807,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function addMaps($login) {
-	if (!AdminGroups::hasPermission($login, "map_add")) {
+	if (!AdminGroups::hasPermission($login, Permission::map_addLocal)) {
 	    $this->exp_chatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
 	    return;
 	}
@@ -886,7 +819,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function addMxMap($login, $params) {
-	if (!AdminGroups::hasPermission($login, "map_add")) {
+	if (!AdminGroups::hasPermission($login, Permission::map_addMX)) {
 	    $this->exp_chatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
 	    return;
 	}
@@ -901,7 +834,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 		if ($file === false || $file == -1) {
 		    $this->exp_chatSendServerMessage($this->msg_errDwld, $login);
-		} else {
+		}
+		else {
 		    if (strlen($file) >= 1024 * 1024) {
 			$this->exp_chatSendServerMessage($this->msg_errToLarge, $login);
 			return;
@@ -927,7 +861,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 			$this->connection->chatSendServerMessage(__('Error:', $e->getMessage()));
 		    }
 		}
-	    } else {
+	    }
+	    else {
 		$this->exp_chatSendServerMessage($this->msg_errMxId, $login);
 	    }
 	}

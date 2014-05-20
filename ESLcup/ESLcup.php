@@ -43,10 +43,6 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->exp_addTitleSupport("Trackmania");
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
 
-        //Oliverde8 Menu
-        if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
-            Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
-        }
     }
 
     public function exp_onLoad() {
@@ -71,59 +67,6 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->syncScores();
         $this->hideUI();
         $this->scoreTable(true, "scorestable");
-    }
-
-    public function onOliverde8HudMenuReady($menu) {
-
-        $parent = $menu->findButton(array('admin', 'Game Options'));
-        if (!$parent) {
-            $button["style"] = "Icons128x128_1";
-            $button["substyle"] = "ProfileAdvanced";
-            $button["plugin"] = $this;
-            $button["permission"] = "game_settings";
-            $parent = $menu->addButton("admin", "Game Options", $button);
-        }
-
-        $parent2 = $menu->findButton(array("admin", "Game Options", "Cup Settings"));
-        if (!$parent2) {
-            $button["plugin"] = $this;
-            $button["style"] = 'Icons128x32_1';
-            $button["substyle"] = "RT_Cup";
-            $button['function'] = 'check_gameSettings_Cup';
-            $button["permission"] = "game_settings";
-            $button["checkFunction"] = "check_gameSettings_Cup";
-            $parent2 = $menu->addButton($parent, "Cup Settings", $button);
-        }
-        $parent = $parent2;
-
-        unset($button);
-        $button["style"] = "Icons128x128_1";
-        $button["substyle"] = "RT_Cup";
-        $parent = $menu->addButton($parent, "ESL Cup Settings", $button);
-
-        $button["style"] = 'Icons128x32_1';
-        $button["substyle"] = "RT_Cup";
-        $button['chat'] = 'admin game eslcup start';
-        $menu->addButton($parent, "Start", $button);
-
-        $button["style"] = 'Icons128x32_1';
-        $button["substyle"] = "RT_Cup";
-        $button['chat'] = 'admin game eslcup reset';
-        $menu->addButton($parent, "Reset", $button);
-
-        unset($button);
-        $button["style"] = "Icons128x128_1";
-        $button["substyle"] = "RT_Cup";
-        $parent2 = $menu->addButton($parent, "Points Limit", $button);
-
-        unset($button);
-        $button["style"] = 'Icons128x32_1';
-        $button["substyle"] = "RT_Cup";
-
-        foreach (array(2, 4, 5, 7, 9, 10, 15, 20, 25, 30,40,50,70) as $points){
-            $button['chat'] = 'admin game eslcup limit '.$points;
-            $menu->addButton($parent2, "$points Points", $button);
-        }
     }
 
     public function check_gameSettings_Cup() {

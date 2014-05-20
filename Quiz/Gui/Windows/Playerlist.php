@@ -8,6 +8,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Quiz\Gui\Controls\Playeritem;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
@@ -48,7 +49,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $x = 0;
         $login = $this->getRecipient();
-        $isadmin = AdminGroups::hasPermission($login,"quiz_admin");
+        $isadmin = AdminGroups::hasPermission($login, Permission::quiz_admin);
         try {
             foreach ($players as $player) {
                 $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $login, $this->sizeX);
