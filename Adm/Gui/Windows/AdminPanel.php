@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
@@ -126,8 +127,10 @@ class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Windows\Widget {
 
     function onDraw() {
 	parent::onDraw();
-	$this->btnEndRound->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), 'map_endRound'));
-	$this->btnCancelVote->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), 'cancel_vote'));
+	$this->btnRestart->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), Permission::map_restart));
+	$this->btnSkip->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), Permission::map_skip));
+	$this->btnEndRound->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), Permission::map_roundEnd));
+	$this->btnCancelVote->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), Permission::server_votes));
     }
 
     function destroy() {

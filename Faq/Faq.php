@@ -42,7 +42,7 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showFaq($login, $topic = "toc", $recipient = null) {
 
         $showTo = $login;
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "admin")) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::game_settings)) {
             if (!empty($recipient)) {
                 if (array_key_exists($recipient, $this->storage->players)) {
                     $showTo = $recipient;

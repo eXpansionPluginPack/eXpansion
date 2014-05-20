@@ -11,6 +11,7 @@ use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\AdminPanel;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerControlMain;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Widgets\ResSkipButtons;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -24,13 +25,6 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $skipCount = 0;
     private $skipActive;
     private $actions = array();
-
-    public function exp_onInit() {
-	//Oliverde8 Menu
-	if ($this->isPluginLoaded('\ManiaLivePlugins\oliverde8\HudMenu\HudMenu')) {
-	    Dispatcher::register(\ManiaLivePlugins\oliverde8\HudMenu\onOliverde8HudMenuReady::getClass(), $this);
-	}
-    }
 
     public function exp_onLoad() {
 	$this->msg_forceScore_error = exp_getMessage("ForceScores can be used only with rounds or team mode");
@@ -97,7 +91,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	Gui\Windows\AdminPanel::$mainPlugin = $this;
 
 
-	$cmd = AdminGroups::addAdminCommand('server control', $this, 'serverControlMain', 'server_admin');
+	$cmd = AdminGroups::addAdminCommand('server control', $this, 'serverControlMain', Permission::server_controlPanel);
 	$cmd->setHelp('Displays the main control panel for the server');
 	$cmd->setMinParam(0);
 	AdminGroups::addAlias($cmd, "server");
@@ -177,7 +171,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function forceScores($login) {
-	if (AdminGroups::hasPermission($login, 'game_settings')) {
+	if (AdminGroups::hasPermission($login, Permission::game_settings)) {
 	    $gamemode = $this->storage->gameInfos->gameMode;
 	    if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM || GameInfos::GAMEMODE_CUP) {
 		$window = Gui\Windows\ForceScores::Create($login);
@@ -199,7 +193,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function gameOptions($login) {
-	if (AdminGroups::hasPermission($login, 'game_settings')) {
+	if (AdminGroups::hasPermission($login, Permission::game_settings)) {
 	    $window = GameOptions::Create($login);
 	    $window->setTitle(__('Game Options', $login));
 	    $window->setSize(160, 65);
@@ -209,7 +203,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function serverManagement($login) {
-	if (AdminGroups::hasPermission($login, 'server_stopServer') || AdminGroups::hasPermission($login, 'server_stopManialive')) {
+	if (AdminGroups::hasPermission($login, Permission::server_stopServer) || AdminGroups::hasPermission($login, Permission::server_stopManialive)) {
 	    $window = Gui\Windows\ServerManagement::Create($login);
 	    $window->setTitle(__('Server Control', $login));
 	    $window->setSize(60, 20);
@@ -219,7 +213,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function roundPoints($login) {
-	if (AdminGroups::hasPermission($login, 'server_admin')) {
+	if (AdminGroups::hasPermission($login, Permission::game_settings)) {
 	    $window = Gui\Windows\RoundPoints::Create($login);
 	    $window->setTitle(__('Custom Round Points', $login));
 	    $window->setSize(160, 90);
@@ -229,7 +223,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function serverControlMain($login) {
-	if (AdminGroups::hasPermission($login, 'server_admin')) {
+	if (AdminGroups::hasPermission($login, Permission::server_controlPanel)) {
 	    $window = Gui\Windows\ServerControlMain::Create($login);
 	    $window->setTitle(__('Server Management', $login));
 	    $window->setSize(120, 20);
@@ -238,14 +232,14 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function showVotesConfig($login) {
-	if (AdminGroups::hasPermission($login, 'server_votes')) {
+	if (AdminGroups::hasPermission($login, Permission::server_votes)) {
 	    if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Votes\Votes'))
 		$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Votes\Votes', 'showVotesConfig', $login);
 	}
     }
 
     public function matchSettings($login) {
-	if (AdminGroups::hasPermission($login, 'game_matchSave') || AdminGroups::hasPermission($login, 'game_matchDelete') || AdminGroups::hasPermission($login, 'game_match')) {
+	if (AdminGroups::hasPermission($login, Permission::game_matchSave) || AdminGroups::hasPermission($login, 'game_matchDelete') || AdminGroups::hasPermission($login, 'game_match')) {
 	    $window = Gui\Windows\MatchSettings::Create($login);
 	    $window->setTitle(__('Match Settings', $login));
 	    $window->centerOnScreen();
@@ -255,7 +249,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function scriptSettings($login) {
-	if (AdminGroups::hasPermission($login, 'game_settings')) {
+	if (AdminGroups::hasPermission($login, Permission::game_settings)) {
 	    if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
 		$window = Gui\Windows\ScriptSettings::Create($login);
 		$window->setTitle(__('Script Settings', $login));
@@ -269,7 +263,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function dbTools($login) {
-	if (AdminGroups::hasPermission($login, 'db_maintainance')) {
+	if (AdminGroups::hasPermission($login, Permission::server_database)) {
 	    if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Database\\Database")) {
 		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Database\\Database", "showDbMaintainance", $login);
 	    } else {
@@ -280,7 +274,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function restartMap($login) {
 
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_res')) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_restart)) {
 	    if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
 		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Maps\\Maps", "replayMap", $login);
 		return;
@@ -334,7 +328,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function skipMap($login) {
 
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'map_skip')) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_skip)) {
 	    if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\Chat_Admin\Chat_Admin")) {
 		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Chat_Admin\Chat_Admin", "skipMap", $login);
 	    }

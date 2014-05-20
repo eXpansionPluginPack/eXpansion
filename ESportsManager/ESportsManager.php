@@ -6,6 +6,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\ESportsManager\Structures\MatchStatus;
 use ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus;
 use ManiaLivePlugins\eXpansion\ESportsManager\Structures\MatchSetting;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 /**
  * Description of ESportsMAnager
@@ -197,11 +198,11 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private function findAdmin() {
         foreach ($this->storage->players as $login => $player) {
-            if (AdminGroups::hasPermission($login, "esports_admin"))
+            if (AdminGroups::hasPermission($login, Permission::game_settings))
                 return $login;
         }
         foreach ($this->storage->spectators as $login => $player) {
-            if (AdminGroups::hasPermission($login, "esports_admin"))
+            if (AdminGroups::hasPermission($login, Permission::game_settings))
                 return $login;
         }
         return false;
@@ -210,7 +211,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function sendSelectMatchWindow($fromLogin = null) {
         foreach ($this->storage->players as $login => $player) {
             $window = Gui\Windows\MatchWait::Create($login);
-            if (AdminGroups::hasPermission($login, "esports_admin")) {
+            if (AdminGroups::hasPermission($login, Permission::game_settings)) {
                 $window->setAdminAction($this->action_matchSelect, $this->actions_matchReady["forceContinue"]);
             }
             $window->setSize(90, 30);
@@ -218,7 +219,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }
         foreach ($this->storage->spectators as $login => $player) {
             $window = Gui\Windows\MatchWait::Create($login);
-            if (AdminGroups::hasPermission($login, "esports_admin")) {
+            if (AdminGroups::hasPermission($login, Permission::game_settings)) {
                 $window->setAdminAction($this->action_matchSelect, $this->actions_matchReady["forceContinue"]);
             }
             $window->setSize(90, 30);

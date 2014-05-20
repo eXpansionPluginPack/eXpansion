@@ -43,7 +43,7 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         }else{
             $tickCounter = 0;
             foreach ($this->timeStamps as $playerLogin => $value) {
-                if (AdminGroups::hasPermission($playerLogin, 'noIdleKick') && (time() - $value) > ($this->config->idleMinutes * 60)) {
+                if (AdminGroups::isInList($playerLogin) && (time() - $value) > ($this->config->idleMinutes * 60)) {
                     $player = $this->storage->getPlayerObject($playerLogin);
                     $this->exp_chatSendServerMessage('IdleKick: %s', null, array($player->nickName));
                     $this->connection->kick($playerLogin, "IdleKick");

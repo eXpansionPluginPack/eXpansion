@@ -101,7 +101,8 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
 
             try {
-                if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "server_admin")) {
+		// change text color, if admin is defined at admingroups
+                if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login) ) {
                     $this->connection->chatSendServerMessage("\$fff" . $config->adminSign . " $nick\$z\$s " . $config->chatSeparator . $config->adminChatColor . $force . $text);
                 } else {
                     $color = $config->publicChatColor;

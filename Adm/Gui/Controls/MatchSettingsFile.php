@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLive\Gui\ActionHandler;
-
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 class MatchSettingsFile extends \ManiaLive\Gui\Control {
 
     private $bg;
@@ -91,9 +91,9 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
 
 	$this->addComponent($this->frame);
 
-	$this->loadButton->setVisibility(AdminGroups::hasPermission($login, 'game_match'));
-	$this->saveButton->setVisibility(AdminGroups::hasPermission($login, 'game_matchSave'));
-	$this->deleteButton->setVisibility(AdminGroups::hasPermission($login, 'game_matchDelete'));
+	$this->loadButton->setVisibility(AdminGroups::hasPermission($login, Permission::game_matchSettings));
+	$this->saveButton->setVisibility(AdminGroups::hasPermission($login, Permission::game_matchSave));
+	$this->deleteButton->setVisibility(AdminGroups::hasPermission($login, Permission::game_matchDelete));
 
 	$this->sizeX = $sizeX;
 	$this->sizeY = $sizeY;

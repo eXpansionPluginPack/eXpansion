@@ -6,6 +6,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
@@ -110,7 +111,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     public function onDraw() {
         parent::onDraw();
-        $this->frame->setVisibility(AdminGroups::hasPermission($this->getRecipient(), 'game_matchSave'));
+        $this->frame->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::game_matchSave));
     }
     
     function populateList() {

@@ -6,7 +6,7 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\AdminGroups\Admin;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-
+use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 /**
  * Description of GroupItem
  *
@@ -45,7 +45,7 @@ class AdminItem extends \ManiaLive\Gui\Control {
 
         $frame->addComponent($gui_nick);
 
-        if (AdminGroups::hasPermission($login, 'group_admin') && !$admin->isReadOnly()) {
+        if (AdminGroups::hasPermission($login, Permission::admingroups_adminAllGroups) && !$admin->isReadOnly()) {
 
             $this->plistButton = new MyButton(30, 4);
             $this->plistButton->setAction($this->action_remove);

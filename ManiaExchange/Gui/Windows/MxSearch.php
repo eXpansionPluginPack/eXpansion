@@ -9,6 +9,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap as Map;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxMap;
 use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
@@ -224,7 +225,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 	$x = 0;
 	$login = $this->getRecipient();
-	$isadmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, 'server_maps');
+	$isadmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_addMX);
 	if (count($this->maps) == 0) {
 	    $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "No maps found with this search terms.", $this->sizeX-6));
 	} else {

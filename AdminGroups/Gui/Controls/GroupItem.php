@@ -6,6 +6,7 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\AdminGroups\Group;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 /**
  * Description of GroupItem
@@ -61,8 +62,8 @@ class GroupItem extends \ManiaLive\Gui\Control {
         $this->plistButton->setScale(0.4);
         $frame->addComponent($this->plistButton);
         
-        if (AdminGroups::hasPermission($login, 'group_admin') || (
-                AdminGroups::hasPermission($login, 'own_group') && AdminGroups::getAdmin($login)->getGroup()->getGroupName() == $group->getGroupName())) {
+        if (AdminGroups::hasPermission($login, Permission::admingroups_adminAllGroups) || (
+                AdminGroups::hasPermission($login, Permission::admingroups_onlyOwnGroup) && AdminGroups::getAdmin($login)->getGroup()->getGroupName() == $group->getGroupName())) {
 
             $this->permiButton = new MyButton(40, 6);
             $this->permiButton->setAction($this->action_changePermissions);
@@ -77,7 +78,7 @@ class GroupItem extends \ManiaLive\Gui\Control {
             $frame->addComponent($this->deleteButton);
         }
         
-        if (AdminGroups::hasPermission($login, 'group_admin')){
+        if (AdminGroups::hasPermission($login, Permission::admingroups_adminAllGroups)){
             $this->InheritButton = new MyButton(30, 6);
             $this->InheritButton->setAction($this->action_inherticances);
             $this->InheritButton->setText(__(AdminGroups::$txt_inherits, $login));

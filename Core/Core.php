@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
 use \Maniaplanet\DedicatedServer\Structures\ServerOptions;
 use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent as Event;
 use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 /**
  * Description of Core
  *
@@ -600,7 +600,7 @@ EOT;
     }
 
     public function showExpSettings($login) {
-	if (AdminGroups::hasPermission($login, 'expansion_settings')) {
+	if (AdminGroups::hasPermission($login, Permission::expansion_pluginSettings)) {
 	    Gui\Windows\ExpSettings::Erase($login);
 	    $win = Gui\Windows\ExpSettings::Create($login);
 	    $win->setTitle("Expansion Settings");

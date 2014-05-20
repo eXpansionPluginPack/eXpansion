@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\AutoUpdate;
+use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 /**
  * Description of AutoUpdate
@@ -40,7 +41,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "server_update") && $this->config->autoCheckUpdates) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::expansion_update) && $this->config->autoCheckUpdates) {
 	    
 	    $this->checkUpdate($login);
 	}

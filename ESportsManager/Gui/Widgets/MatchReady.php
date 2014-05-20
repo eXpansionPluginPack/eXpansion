@@ -83,7 +83,7 @@ class MatchReady extends \ManiaLive\Gui\Window {
         $this->btn_continue->setText(__("Force Go", $login));
         $this->btn_continue->colorize("d00");
         $this->btn_continue->setAlign("center");
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "esports_admin")) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::game_settings)) {
             $this->addComponent($this->btn_continue);
         }
 
@@ -118,7 +118,7 @@ class MatchReady extends \ManiaLive\Gui\Window {
     public function onDraw() {
         $login = $this->getRecipient();
         $isAdmin = false;
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, "esports_admin")) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::game_settings)) {
             $isAdmin = true;
         }
         $this->frame_team_blue->clearComponents();

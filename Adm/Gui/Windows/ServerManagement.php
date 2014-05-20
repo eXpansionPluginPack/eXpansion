@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 /**
  * Server Controlpanel Main window
@@ -63,8 +64,8 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     
     public function onDraw() {
         
-        $this->btn1->setVisibility(AdminGroups::hasPermission($this->getRecipient(), 'server_stopServer'));
-        $this->btn2->setVisibility(AdminGroups::hasPermission($this->getRecipient(), 'server_stopManialive'));
+        $this->btn1->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::server_stopDedicated));
+        $this->btn2->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::server_stopManialive));
         
         parent::onDraw();
     }
