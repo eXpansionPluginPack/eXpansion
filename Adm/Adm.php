@@ -203,7 +203,7 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function serverManagement($login) {
-	if (AdminGroups::hasPermission($login, Permission::server_stopServer) || AdminGroups::hasPermission($login, Permission::server_stopManialive)) {
+	if (AdminGroups::hasPermission($login, Permission::server_stopDedicated) || AdminGroups::hasPermission($login, Permission::server_stopManialive)) {
 	    $window = Gui\Windows\ServerManagement::Create($login);
 	    $window->setTitle(__('Server Control', $login));
 	    $window->setSize(60, 20);

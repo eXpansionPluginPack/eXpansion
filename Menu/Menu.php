@@ -182,7 +182,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_addLocal)) {
 	    $submenu->addItem($maps, __("Add local map...", $login), $this->actions['addMaps']);
 	}
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_addMx)) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_addMX)) {
 	    $submenu->addItem($maps, __("Mania-Exchange...", $login), $this->actions['admmx']);
 	}
 

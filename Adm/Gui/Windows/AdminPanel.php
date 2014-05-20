@@ -129,7 +129,7 @@ class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	parent::onDraw();
 	$this->btnRestart->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), Permission::map_restart));
 	$this->btnSkip->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), Permission::map_skip));
-	$this->btnEndRound->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), Permission::map_roundEnd));
+	$this->btnEndRound->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), Permission::map_endRound));
 	$this->btnCancelVote->setVisibility(\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), Permission::server_votes));
     }
 

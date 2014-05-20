@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
-class MatchSettings extends Window {
+class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window  {
 
     private $pager;
     private $connection;
