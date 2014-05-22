@@ -2,31 +2,26 @@
 
 namespace ManiaLivePlugins\eXpansion\Menu;
 
-use \ManiaLive\Event\Dispatcher;
-use \ManiaLivePlugins\eXpansion\Menu\Gui\Widgets\MenuPanel;
-use \ManiaLivePlugins\eXpansion\Menu\Structures\Menuitem;
+use ManiaLive\Event\Dispatcher;
+use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Events\Event;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
-use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\Menu\Gui\Widgets\Submenu;
 
-class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Menu extends ExpPlugin {
 
     private $menuItems = array();
     private $actions = array();
 
-    function exp_onInit() {
-//	$this->exp_addTitleSupport("TM");
-//	$this->exp_addTitleSupport("Trackmania");
-	$this->setPublicMethod("addItem");
-	$this->setPublicMethod("addSeparator");
-    }
-
     function exp_onReady() {
 	$this->enableDedicatedEvents();
 	if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\AdminGroups\\AdminGroups")) {
-	    Dispatcher::register(\ManiaLivePlugins\eXpansion\AdminGroups\Events\Event::getClass(), $this);
+	    Dispatcher::register(Event::getClass(), $this);
 	}
 
-	$actionHandler = \ManiaLive\Gui\ActionHandler::getInstance();
+	$actionHandler = ActionHandler::getInstance();
 
 	$this->actions['playerlist'] = $actionHandler->createAction(array($this, "actions"), "playerlist");
 	$this->actions['maplist'] = $actionHandler->createAction(array($this, "actions"), "maplist");
@@ -62,7 +57,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function actions($login, $action, $entries) {
-	$adminGrp = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
+	$adminGrp = AdminGroups::getInstance();
 
 	switch ($action) {
 	    case "playerlist":
@@ -141,68 +136,46 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function exp_admin_added($login) {
-	Gui\Widgets\Submenu::Erase($login);
+	Submenu::Erase($login);
 	$this->onPlayerConnect($login, false);
     }
 
     function exp_admin_removed($login) {
-	Gui\Widgets\Submenu::Erase($login);
+	Submenu::Erase($login);
 	$this->onPlayerConnect($login, false);
-    }
-
-    function addSeparator($title, $isAdmin, $pluginId = null) {
-	/* $item = new Structures\Menuitem($title, null, null, $isAdmin, true);
-	  $hash = spl_object_hash($item);
-	  $this->menuItems[$hash] = $item; */
-    }
-
-    function addItem($title, $icon, array $callback, $isAdmin, $pluginid = null) {
-	/* if (is_callable($callback)) {
-	  $item = new Structures\Menuitem($title, $icon, $callback, $isAdmin);
-	  $hash = spl_object_hash($item);
-	  $this->menuItems[$hash] = $item;
-	  } else {
-	  $this->console("Adding a button failed from plugin:" . $pluginid . " button callback is not valid.");
-	  } */
-    }
-
-    function reDraw() {
-	
     }
 
     function onPlayerConnect($login, $isSpectator) {
 
-	$submenu = Gui\Widgets\Submenu::Create($login);
+	$submenu = Submenu::Create($login);
 	$menu = $submenu->getMenu();
 
-	$submenu->addItem($menu, __("Help...", $login), $this->actions['help']);
+	$submenu->addItem($menu, __("Help", $login), $this->actions['help']);
+	$submenu->addItem($menu, __("Show Maplist", $login), $this->actions['maplist']);
+	$submenu->addItem($menu, __("Show Records", $login), $this->actions['maprecords']);
+	$submenu->addItem($menu, __("Show Players", $login), $this->actions['playerlist']);
 
-	$maps = $submenu->addSubMenu($menu, __("Map", $login));
-	$submenu->addItem($maps, __("List Maps...", $login), $this->actions['maplist']);
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_addLocal)) {
-	    $submenu->addItem($maps, __("Add local map...", $login), $this->actions['addMaps']);
-	}
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_addMX)) {
-	    $submenu->addItem($maps, __("Mania-Exchange...", $login), $this->actions['admmx']);
-	}
+	if (AdminGroups::hasPermission($login, Permission::map_addLocal) || AdminGroups::hasPermission($login, Permission::map_addMX) || AdminGroups::hasPermission($login, Permission::map_removeMap)) {
+	    $maps = $submenu->addSubMenu($menu, __("Map", $login));
+	    if (AdminGroups::hasPermission($login, Permission::map_addLocal)) {
+		$submenu->addItem($maps, __("Add local map", $login), $this->actions['addMaps']);
+	    }
+	    if (AdminGroups::hasPermission($login, Permission::map_addMX)) {
+		$submenu->addItem($maps, __("Mania-Exchange", $login), $this->actions['admmx']);
+	    }
 
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_removeMap)) {
-	    $submenu->addItem($maps, "", null);
-	    $submenu->addItem($maps, __("Remove this", $login), $this->actions['admremovemap']);
-	    $submenu->addItem($maps, __("Trash this", $login), $this->actions['admtrashmap']);
+	    if (AdminGroups::hasPermission($login, Permission::map_removeMap)) {
+		$submenu->addItem($maps, "", null);
+		$submenu->addItem($maps, __("Remove this", $login), $this->actions['admremovemap']);
+		$submenu->addItem($maps, __("Trash this", $login), $this->actions['admtrashmap']);
+	    }
 	}
+	$stats = $submenu->addSubMenu($menu, __("Statistics", $login));
 
-	$stats = $submenu->addSubMenu($menu, __("Stats", $login));
-	$submenu->addItem($stats, __("Show Records...", $login), $this->actions['maprecords']);
 	$submenu->addItem($stats, __("Top 100 Ranks...", $login), $this->actions['serverranks']);
-	$submenu->addItem($maps, "", null);
+	$submenu->addItem($stats, "", null);
 	$submenu->addItem($stats, __("Statistics...", $login), $this->actions['stats']);
 	$submenu->addItem($stats, __("Server info...", $login), $this->actions['serverinfo']);
-
-	$player = $submenu->addSubMenu($menu, __("Players", $login));
-	$submenu->addItem($player, __("List Players...", $login), $this->actions['playerlist']);
-	$submenu->addItem($player, "", null);
-	$submenu->addItem($player, __("Rage Quit...", $login), $this->actions['quit']);
 
 	$hud = $submenu->addSubMenu($menu, __("Hud", $login));
 	$submenu->addItem($hud, __("Move Positions", $login), $this->actions['hudMove']);
@@ -213,28 +186,30 @@ class Menu extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$votes = $submenu->addSubMenu($menu, __("Votes", $login));
 	$submenu->addItem($votes, __("Vote Restart", $login), $this->actions['voteres']);
 	$submenu->addItem($votes, __("Vote Skip", $login), $this->actions['voteskip']);
-	
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::server_votes))
+
+	if (AdminGroups::hasPermission($login, Permission::server_votes))
 	    $submenu->addItem($votes, __("Cancel Vote", $login), $this->actions['admcancel']);
 
 	if (AdminGroups::hasPermission($login, Permission::map_endRound) || AdminGroups::hasPermission($login, Permission::map_restart) || AdminGroups::hasPermission($login, Permission::map_skip)) {
 	    $adm = $submenu->addSubMenu($menu, __("Admin", $login));
 
-	    if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_restart))
+	    if (AdminGroups::hasPermission($login, Permission::map_restart))
 		$submenu->addItem($adm, __("Instant Restart", $login), $this->actions['admres']);
 
-	    if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_restart))
+	    if (AdminGroups::hasPermission($login, Permission::map_restart))
 		$submenu->addItem($adm, __("Replay", $login), $this->actions['admreplay']);
 
-	    if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_skip))
+	    if (AdminGroups::hasPermission($login, Permission::map_skip))
 		$submenu->addItem($adm, __("Skip", $login), $this->actions['admskip']);
 
-	    if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_endRound))
+	    if (AdminGroups::hasPermission($login, Permission::map_endRound))
 		$submenu->addItem($adm, __("End Round", $login), $this->actions['admer']);
+	}
 
-
+	if (AdminGroups::hasPermission($login, Permission::server_controlPanel)) {
 	    $submenu->addItem($menu, __("Server Controls", $login), $this->actions['admcontrol']);
 	}
+	
 	$submenu->show();
     }
 

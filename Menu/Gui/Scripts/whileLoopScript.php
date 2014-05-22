@@ -6,9 +6,9 @@ if(MouseRightButton && !eXp_mouseRightState) {
     
 	if((Now - eXp_mouseRightTime) < 200) {
 	    toggleSubmenu = True;
-	    Menu.PosnX = MouseX-1;
-	    Menu.PosnY = MouseY+.5;  
-	    Menu.PosnZ = 40.0;
+	    Menu.RelativePosition.X = MouseX-1.0;
+	    Menu.RelativePosition.Y = MouseY+.5;  
+	    Menu.RelativePosition.Z = 50.0;
 	}   
     
 }
@@ -34,6 +34,7 @@ if (IsSpectatorMode) {
 
 if (toggleSubmenu) {
 	Menu.Show();
+	
 	
 	foreach (Event in PendingEvents) {
 	    if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {			
