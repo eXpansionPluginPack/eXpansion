@@ -13,10 +13,32 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     /** @var \ManiaLive\Gui\Controls\Frame */
     protected $frame;
+
+    /**
+     * @var Control[]
+     */
     protected $items = array();
-    private $bgborder, $bg, $bgTitle, $bgFirst, $layer;
-    protected $lbl_title, $bg_title;
-    protected $_windowFrame;
+
+    /**
+     * @var Quad
+     */
+    private $bgborder, $bg, $bgTitle, $bgFirst;
+
+
+    /**
+     * @var Button
+     */
+    private $layer;
+
+    /**
+     * @var Quad
+     */
+    protected $lbl_title;
+
+    /**
+     * @var Label
+     */
+    protected $bg_title;
 
     /** @var \ManiaLive\Data\Storage */
     public $storage;
@@ -76,7 +98,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->layer->setId("setLayer");
 	$this->layer->setDescription("Switch from Race view to Score View(Visible on Tab)", 75);
 	$this->addComponent($this->layer);
-	
+
 	parent::exp_onBeginConstruct();
     }
 
@@ -102,7 +124,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->timeScript->setParam('getCurrentTimes', Widgets_RecordSide::$secondMap ? "True" : "False");
 	return $script;
     }
-    
+
     protected function autoSetPositions() {
 	parent::autoSetPositions();
 	$nbFields = $this->getParameter('nbFields');
@@ -133,11 +155,11 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->bgborder->setPosition(0, 1.5);
 
 	$this->bgFirst->setPosX(($this->sizeX / 2) + 1 );
-	
+
 	$this->bg->setSize($this->sizeX, $this->sizeY + 1);
 	$this->bg->setPosition(0, -($this->bg->getSizeY() / 2) + 1);
 
-	$this->bgTitle->setSize($this->sizeX, 4.2);	
+	$this->bgTitle->setSize($this->sizeX, 4.2);
 	$this->bgTitle->setPosition(0, 0.75);
 
 	$this->frame->setPosition(($this->sizeX / 2) + 1, -5);
@@ -174,7 +196,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	    $nickData .= '"' . $this->fixDashes($record->login) . '"=>"' . $this->fixHyphens($record->nickName) . '"';
 	    $index++;
 	}
-	
+
 	/*for($i =0; $i < 100; $i++){
 	    if ($index > 1) {
 		$recsData .= ', ';
