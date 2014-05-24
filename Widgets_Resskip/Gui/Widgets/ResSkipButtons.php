@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Adm\Gui\Widgets;
+namespace ManiaLivePlugins\eXpansion\Widgets_Resskip\Gui\Widgets;
 
 class ResSkipButtons extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
