@@ -126,7 +126,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      *
      * @return void
      */
-    function exp_Unload() {
+    function exp_onUnload() {
         $this->connection->chatEnableManualRouting(false);
     }
 
