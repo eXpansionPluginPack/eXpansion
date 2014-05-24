@@ -28,6 +28,8 @@ class Config extends \ManiaLib\Utils\Singleton {
 	, '\ManiaLivePlugins\eXpansion\Widgets_Times\Widgets_Times'
     );
 
+    public $pluginPaths = array('libraries\ManiaLivePlugins' => 2);
+
 }
 
 ?>
