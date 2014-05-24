@@ -20,7 +20,7 @@ abstract class MetaData
     /**
      * @var String The plugin to whom the MetaData is affected
      */
-    private $pluginId;
+    private $pluginId = null;
 
     /**
      *
@@ -133,7 +133,7 @@ abstract class MetaData
 	$this->confManager->registerVariable($var, $this->pluginId);
     }
 
-    private function setPlugin($pluginId)
+    public function setPlugin($pluginId)
     {
 	$this->pluginId = $pluginId;
     }
@@ -141,6 +141,10 @@ abstract class MetaData
     public function unSetPlugin()
     {
 	$this->pluginId = null;
+    }
+
+    public function getPlugin(){
+	return $this->pluginId;
     }
 
     /**
@@ -175,9 +179,9 @@ abstract class MetaData
 
     public function setName($name)
     {
-	if (!$name instanceof String) {
+	/*if (!$name instanceof String) {
 	    $name = new String($name, "", null);
-	}
+	}*/
 	$this->name = $name;
     }
 
@@ -363,13 +367,6 @@ abstract class MetaData
     public function checkAll()
     {
 	$errors = $this->checkOtherCompatibility();
-
-	/*echo "Compatibility : ";
-	echo "Game : ".($this->checkGameCompatibility() ? "True" : "False");
-	echo " | Title : ".($this->checkTitleCompatibility() ? "True" : "False");
-	echo " | Other : ".( empty($errors) ? "True" : "False");
-	echo "\n";*/
-
 	return $this->checkGameCompatibility() && $this->checkTitleCompatibility() && empty($errors);
     }
 }
