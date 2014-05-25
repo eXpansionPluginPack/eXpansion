@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Players;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\MatchMakingLobby\Windows\PlayerList;
 
 class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -78,7 +79,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function showPlayerList($login) {
 	\ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist::Erase($login);
-	$window = \ManiaLivePlugins\eXpansion\Players\Gui\ Windows\Playerlist::Create($login);
+	$window = \ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist::Create($login);
 	$window->setTitle('Players');
 
 	$window->setSize(120, 100);
@@ -90,6 +91,9 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->updateOpenedWindows();
     }
 
+    function exp_onUnload() {
+	PlayerList::EraseAll();
+    }
 }
 
 ?>

@@ -276,6 +276,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
     public function exp_onUnload() {
 	$this->disableTickerEvent();
 	$this->disableDedicatedEvents();
+	\ManiaLivePlugins\eXpansion\Dedimania\Gui\Windows\Records::EraseAll();
     }
 
     /**

@@ -73,7 +73,7 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
 	$this->irc->onTick();
     }
 
-    public function exp_unload() {
+    public function exp_onUnload() {
 	$this->irc->disconnect();
 	parent::exp_unload();
     }

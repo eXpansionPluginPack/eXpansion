@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\MapRatings;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\RatingsWidget;
 use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\EndMapRatings;
+use ManiaLivePlugins\eXpansion\MapRatings\Gui\Windows\MapRatingsManager;
 use ManiaLivePlugins\eXpansion\MapRatings\Structures\PlayerVote;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
@@ -421,6 +422,12 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->saveRating($login, 4);
 	if ($text == "+++")
 	    $this->saveRating($login, 5);
+    }
+
+    function exp_onUnload() {
+	EndMapRatings::EraseAll();
+	RatingsWidget::EraseAll();
+	MapRatingsManager::EraseAll();
     }
 
 }

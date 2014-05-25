@@ -36,7 +36,7 @@ class ForceMod extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->console("Enabling forced mods");
 	    $this->connection->setForcedMods(true, $this->mods);
 	} catch (\Exception $e) {
-	    $this->console("[eXp\ForceMod] error while enabling the mod:" . $e->getMessage());
+	    $this->console("[eXp\\ForceMod] error while enabling the mod:" . $e->getMessage());
 	    return;
 	}
     }
@@ -74,6 +74,10 @@ class ForceMod extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	} catch (\Exception $e) {
 	    return array();
 	}
+    }
+
+    function exp_onUnload() {
+
     }
 
 }

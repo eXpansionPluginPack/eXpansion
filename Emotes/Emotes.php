@@ -231,6 +231,10 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->exp_chatSendServerMessage($player->nickName . '$z$s #emote#' . trim($message) . '$z$s');
     }
 
+    function exp_onUnload() {
+	EmotePanel::EraseAll();
+    }
+
 }
 
 ?>

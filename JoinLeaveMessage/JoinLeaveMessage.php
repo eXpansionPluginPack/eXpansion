@@ -27,10 +27,6 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	    $this->setJoinTime($login);
     }
 
-    public function exp_unload() {
-	parent::exp_unload();
-    }
-
     public function setJoinTime($login) {
 	$this->storage->getPlayerObject($login)->sessionJoinTime = new \DateTime();
     }

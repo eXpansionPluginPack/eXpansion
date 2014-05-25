@@ -8,6 +8,8 @@ use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
+use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Widgets\MxWidget;
+use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Windows\MxSearch;
 use Maniaplanet\DedicatedServer\Structures\Map;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
@@ -346,6 +348,10 @@ class ManiaExchange extends ExpPlugin {
 	}
     }
 
+    function exp_onUnload() {
+	MxWidget::EraseAll();
+	MxSearch::EraseAll();
+    }
 }
 
 ?>

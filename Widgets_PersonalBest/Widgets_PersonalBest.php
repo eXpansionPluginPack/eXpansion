@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_PersonalBest;
 
 use \ManiaLive\Event\Dispatcher;
+use ManiaLive\PluginHandler\Dependency;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Gui\Widgets\PBPanel;
@@ -13,7 +14,11 @@ use ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Gui\Widgets\PBPanel;
  * @author oliverde8
  */
 class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
-    
+
+    public function exp_onInit(){
+	$this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
+    }
+
     public function exp_onLoad() {
         parent::exp_onLoad();
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_PERSONAL_BEST);
@@ -100,6 +105,11 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $info->setSize(30, 30);
         $info->setPosition(112, -76);
         $info->show();
+    }
+
+    function exp_onUnload()
+    {
+	PBPanel::EraseAll();
     }
 
 }

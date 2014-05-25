@@ -407,7 +407,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 	 *
 	 * @abstract
 	 */
-	public function exp_unload()
+	final public function exp_unload()
 	{
 	    if ($this->exp_unloading)
 		return;

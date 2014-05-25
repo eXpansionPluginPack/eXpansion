@@ -6,6 +6,10 @@ use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Help;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\Maps\Config;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\CurrentMapWidget;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\AddMaps;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Jukelist;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 use ManiaLivePlugins\eXpansion\Maps\Structures\MapWish;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
@@ -866,6 +870,14 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$this->exp_chatSendServerMessage($this->msg_errMxId, $login);
 	    }
 	}
+    }
+
+    function exp_onUnload() {
+	CurrentMapWidget::EraseAll();
+	NextMapWidget::EraseAll();
+	Maplist::EraseAll();
+	AddMaps::EraseAll();
+	Jukelist::EraseAll();
     }
 
 }

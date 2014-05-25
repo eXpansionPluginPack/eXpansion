@@ -4,6 +4,9 @@ namespace ManiaLivePlugins\eXpansion\Quiz;
 
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Quiz\Gui\Windows\AddPoint;
+use ManiaLivePlugins\eXpansion\Quiz\Gui\Windows\QuestionWindow;
+use ManiaLivePlugins\MatchMakingLobby\Windows\PlayerList;
 
 class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -385,6 +388,11 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->connection->chatSendServerMessage(substr($output, 0, (strlen($output) - 2)));
     }
 
+    function exp_onUnload() {
+	AddPoint::EraseAll();
+	PlayerList::EraseAll();
+	QuestionWindow::EraseAll();
+    }
 }
 
 ?>

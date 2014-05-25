@@ -2,12 +2,16 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_EndRankings;
 
+use ManiaLive\PluginHandler\Dependency;
+use ManiaLivePlugins\eXpansion\Widgets_EndRankings\Gui\Widgets\RanksPanel;
+
 class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $wasWarmup = false;
 
 
     function exp_onLoad() {
+	$this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
         $this->enableDedicatedEvents();
     }
     
@@ -41,6 +45,10 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $this->displayWidget();
     }
 
+    function exp_onUnload()
+    {
+	RanksPanel::EraseAll();
+    }
 }
 ?>
 

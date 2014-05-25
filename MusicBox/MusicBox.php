@@ -35,6 +35,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onUnload() {
 	CurrentTrackWidget::EraseAll();
+	MusicListWindow::EraseAll();
 	$this->connection->setForcedMusic(false, "");
     }
 
@@ -163,11 +164,6 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	} catch (\Exception $e) {
 	    echo $e->getMessage() . " \n" . $e->getLine();
 	}
-    }
-
-    public function exp_unload() {
-	parent::exp_unload();
-	$this->connection->setForcedMusic(false, "");
     }
 
     public function getSongs() {

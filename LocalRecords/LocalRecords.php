@@ -7,6 +7,10 @@ use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\i18n\Message;
 use \ManiaLivePlugins\eXpansion\LocalRecords\Config;
 use \ManiaLivePlugins\eXpansion\LocalRecords\Events\Event;
+use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Cps;
+use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Ranks;
+use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Records;
+use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Sector;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
@@ -1464,6 +1468,13 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $uids .= $this->db->quote($map->uId) . ",";
 	}
 	return trim($uids, ",");
+    }
+
+    function exp_onUnload() {
+	Sector::EraseAll();
+	Cps::EraseAll();
+	Ranks::EraseAll();
+	Records::EraseAll();
     }
 
 }

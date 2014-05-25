@@ -37,6 +37,11 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$window->show();
     }
 
+    public function exp_onUnload()
+    {
+	parent::exp_onUnload();
+	Gui\Windows\ChatlogWindow::EraseAll();
+    }
 }
 
 ?>

@@ -77,4 +77,9 @@ class Widgets_BestRuns extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	BestRunPanel::Erase($login);
     }
 
+    function exp_onUnload()
+    {
+	BestRunPanel::EraseAll();
+    }
+
 }

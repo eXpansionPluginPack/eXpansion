@@ -2,6 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Faq;
 
+use ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWidget;
+use ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWindow;
+
 class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     private $msg_admin_redirect, $msg_admin_info;
@@ -59,6 +62,10 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window->show();
     }
 
+    function exp_onUnload() {
+	FaqWindow::EraseAll();
+	FaqWidget::EraseAll();
+    }
 }
 
 ?>

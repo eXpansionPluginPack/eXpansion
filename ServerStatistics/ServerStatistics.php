@@ -4,6 +4,8 @@ namespace ManiaLivePlugins\eXpansion\ServerStatistics;
 
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\ServerStatistics\Gui\Windows\PlotterWindow;
+use ManiaLivePlugins\eXpansion\ServerStatistics\Gui\Windows\StatsWindow;
 
 class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -388,7 +390,11 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	    $this->players[$login] = $login;
 	}
     }
-    
+
+    function exp_onUnload() {
+	StatsWindow::EraseAll();
+	PlotterWindow::EraseAll();
+    }
 }
 
 ?>

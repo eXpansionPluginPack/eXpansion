@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\PersonalMessages;
 
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Widgets\MessagesPanel;
 use ManiaLivePlugins\eXpansion\PersonalMessages\PersonalMessages;
 use ManiaLivePlugins\eXpansion\Core\Config;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
@@ -176,6 +177,10 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	} catch (\Exception $e) {
 	    $this->console("Error sending a reply" . $e->getMessage());
 	}
+    }
+
+    function exp_onUnload() {
+	MessagesPanel::EraseAll();
     }
 
 }

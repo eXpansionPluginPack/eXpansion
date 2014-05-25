@@ -3,6 +3,11 @@
 namespace ManiaLivePlugins\eXpansion\Adm;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ForceScores;
+use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\MatchSettings;
+use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\RoundPoints;
+use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ScriptSettings;
+use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerManagement;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerOptions;
@@ -427,6 +432,22 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->skipCount = array();
 	}
     }
+
+    public function exp_onUnload()
+    {
+	parent::exp_onUnload();
+	AdminPanel::EraseAll();
+	ForceScores::EraseAll();
+	GameOptions::EraseAll();
+	MatchSettings::EraseAll();
+	RoundPoints::EraseAll();
+	ScriptSettings::EraseAll();
+	ServerControlMain::EraseAll();
+	ServerManagement::EraseAll();
+	ServerOptions::EraseAll();
+    }
+
+
 }
 
 ?>

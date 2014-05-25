@@ -2,26 +2,31 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints;
 
-use \ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Widgets\BestCpPanel;
-use \ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint;
+use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Widgets\BestCpPanel;
+use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint;
 
-class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+{
 
     private $bestCps = array();
 
-    function exp_onLoad() {
+    function exp_onLoad()
+    {
 	$this->enableDedicatedEvents();
     }
 
-    public function exp_onReady() {
+    public function exp_onReady()
+    {
 	$this->onBeginMatch();
     }
 
     /**
      * displayWidget(string $login)
+     *
      * @param string $login
      */
-    function displayWidget($login = null) {
+    function displayWidget($login = null)
+    {
 	$info = BestCpPanel::Create($login);
 	$info->setSize(190, 7);
 	$info->setPosition(-112, 90);
@@ -29,7 +34,8 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
 	$info->show();
     }
 
-    public function onBeginMatch() {
+    public function onBeginMatch()
+    {
 	$this->bestCps = new \SplFixedArray($this->storage->currentMap->nbCheckpoints);
 	for ($x = 0; $x < $this->storage->currentMap->nbCheckpoints; $x++) {
 	    $this->bestCps[$x] = new Checkpoint($x, "", "", 0);
@@ -54,12 +60,19 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
       }
       } */
 
-    public function onEndMatch($rankings, $winnerTeamOrMap) {
+    public function onEndMatch($rankings, $winnerTeamOrMap)
+    {
 	BestCpPanel::EraseAll();
 	BestCpPanel::$bestTimes = array();
 	$this->bestCps = array();
     }
 
+    function exp_onUnload()
+    {
+    	BestCpPanel::EraseAll();
+    }
+
 }
+
 ?>
 

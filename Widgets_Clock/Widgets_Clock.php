@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_Clock;
 
+use ManiaLivePlugins\eXpansion\Widgets_Clock\Gui\Widgets\Clock;
+
 class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onLoad() {
@@ -38,7 +40,10 @@ class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         //$this->updateWidget();
     }
 
-
+    function exp_onUnload()
+    {
+	Clock::EraseAll();
+    }
 
 }
 ?>

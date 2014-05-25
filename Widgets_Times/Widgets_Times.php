@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_Times;
 
+use ManiaLive\PluginHandler\Dependency;
 use ManiaLivePlugins\eXpansion\Widgets_Times\Gui\Widgets\TimePanel;
 use ManiaLivePlugins\eXpansion\Widgets_Times\Gui\Widgets\TimeChooser;
 use \ManiaLive\Event\Dispatcher;
@@ -19,6 +20,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $checkpointPos = array();
 
     function exp_onInit() {
+	$this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
 	//  TimeChooser::$plugin = $this;
     }
 
@@ -257,7 +259,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	}
     }
 
-    public function exp_unload() {
+    public function exp_onUnload() {
 	TimePanel::EraseAll();
 	parent::exp_unload();
     }

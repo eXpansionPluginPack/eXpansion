@@ -7,6 +7,7 @@ use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\i18n\Message;
 use \ManiaLivePlugins\eXpansion\Votes\Config;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\Votes\Gui\Windows\VoteSettingsWindow;
 
 class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
@@ -313,6 +314,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	  }
 	  if ($this->debug) echo "\n";
 	  } */
+	VoteSettingsWindow::EraseAll();
     }
 
 }

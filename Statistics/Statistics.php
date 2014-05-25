@@ -392,6 +392,23 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	return $datas;
     }
 
+    function exp_onUnload() {
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerTopIncome::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmount::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmountTotal::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationCountTotal::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationCountTotal::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationCount::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Winners::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\OnlineTime::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\OnlineTime::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\TrackPlay::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Finish::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryFinish::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryOnlineTime::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\CountryWinner::EraseAll();
+	\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Country::EraseAll();
+    }
 }
 
 ?>
