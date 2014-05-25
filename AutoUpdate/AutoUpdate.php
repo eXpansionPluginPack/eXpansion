@@ -41,8 +41,8 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	$this->repos = array(
 	    './vendor/maniaplanet/dedicated-server-api' => "Dedicated server Api",
-	    './vendor/maniaplanet/manialive-lib'        => "Manialive Lib"
-	    //'./libraries/ManiaLivePlugins/eXpansion' => "eXpansion"
+	    './vendor/maniaplanet/manialive-lib'        => "Manialive Lib",
+	    './libraries/ManiaLivePlugins/eXpansion' => "eXpansion"
 	);
     }
 

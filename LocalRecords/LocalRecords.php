@@ -806,7 +806,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	$i = 1;
 	$records = array();
-
+	$players = array();
 	while ($data = $dbData->fetchStdObject()) {
 
 	    $record = new Record();
@@ -822,8 +822,12 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
 	    $record->uId = $this->storage->currentMap->uId;
 
-	    $records[$i - 1] = $record;
-	    $i++;
+	    if(isset($players[$record->login])){
+		$this->db->execute("DELETE FROM `exp_records` WHERE record_id = ".$data->record_id);
+	    }else{
+		$records[$i - 1] = $record;
+	    	$i++;
+	    }
 	}
 
 	return $records;
