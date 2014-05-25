@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Adm;
+namespace ManiaLivePlugins\eXpansion\Widgets_Resskip;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;

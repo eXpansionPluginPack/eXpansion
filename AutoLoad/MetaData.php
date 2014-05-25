@@ -1,6 +1,7 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\AutoLoad;
+namespace ManiaLivePlugins\eXpansion\Autoload;
+
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 /**
@@ -46,7 +47,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 		    , '\ManiaLivePlugins\eXpansion\Widgets_EndRankings\Widgets_EndRankings'
 		    , '\ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Widgets_PersonalBest'
 		    , '\ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide'
-		    , '\ManiaLivePlugins\eXpansion\Widgets_Times\Widgets_Times'		
+		    , '\ManiaLivePlugins\eXpansion\Widgets_Times\Widgets_Times'			
+		    , '\ManiaLivePlugins\eXpansion\Widgets_ResSkip\Widgets_ResSkip'			
 	));
 	$this->registerVariable($var);
     }

@@ -26,6 +26,7 @@ class Config extends \ManiaLib\Utils\Singleton {
 	, '\ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Widgets_PersonalBest'
 	, '\ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide'
 	, '\ManiaLivePlugins\eXpansion\Widgets_Times\Widgets_Times'
+	, '\ManiaLivePlugins\eXpansion\Widgets_ResSkip\Widgets_ResSkip'
     );
 
 }

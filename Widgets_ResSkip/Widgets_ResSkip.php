@@ -1,15 +1,18 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_Resskip;
+namespace ManiaLivePlugins\eXpansion\Widgets_ResSkip;
 
+use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Core\types\Bill;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\DonatePanel\Config as DonateConfig;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
+use ManiaLivePlugins\eXpansion\Widgets_Resskip\Gui\Widgets\ResSkipButtons;
+use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
-/**
- * Description of Widgets_Resskip
- *
- * @author Reaby
- */
-class Widgets_Resskip extends ExpPlugin {
+class Widgets_ResSkip extends ExpPlugin {
 
     private $msg_resOnProgress, $msg_resUnused, $msg_resMax, $msg_skipUnused, $msg_skipMax, $msg_prestart, $msg_pskip;
     private $config;
@@ -30,18 +33,19 @@ class Widgets_Resskip extends ExpPlugin {
 	$this->msg_skipUnused = exp_getMessage("#error#You can't skip tracks on this server.");
 	$this->msg_skipMax = exp_getMessage("#error#You have skipped to many maps already!");
 
-	$this->config = Config::getInstance();
-	$this->donateConfig = \ManiaLivePlugins\eXpansion\DonatePanel\Config::getInstance();
-
-	$this->actions['skip_final'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
-	$this->actions['skip'] = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions['skip_final']);
-	$this->actions['res_final'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
-	$this->actions['res'] = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions['res_final']);
+	$this->setPublicMethod('isPublicResIsActive');
+	$this->setPublicMethod('isPublicSkipActive');
     }
 
     public function exp_onReady() {
-	$this->setPublicMethod('isPublicResIsActive');
-	$this->setPublicMethod('isPublicSkipActive');
+	$this->enableDedicatedEvents();
+
+	$this->config = Config::getInstance();
+	$this->donateConfig = DonateConfig::getInstance();
+	$this->actions['skip_final'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
+	$this->actions['skip'] = Gui::createConfirm($this->actions['skip_final']);
+	$this->actions['res_final'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
+	$this->actions['res'] = Gui::createConfirm($this->actions['res_final']);
 
 	$this->showResSkip(null);
     }
@@ -61,9 +65,9 @@ class Widgets_Resskip extends ExpPlugin {
 	$widget = ResSkipButtons::Create($login);
 	$widget->setActions($this->actions['res'], $this->actions['skip']);
 	$widget->setServerInfo($this->storage->serverLogin);
-	$widget->setSize(40.0, 15.0);	
-	$widget->show();	
-	
+	$widget->setSize(40.0, 15.0);
+	$widget->show();
+
 	$nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
 
 	if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] != -1) {
@@ -101,13 +105,13 @@ class Widgets_Resskip extends ExpPlugin {
 
     public function restartMap($login) {
 
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_restart)) {
-	    if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Maps\\Maps", "replayMap", $login);
+	if (AdminGroups::hasPermission($login, Permission::map_restart)) {
+	    if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
+		$this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\Maps\\Maps', 'replayMap', $login);
 		return;
 	    }
 
-	    $this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+	    $this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
 	    $admin = $this->storage->getPlayerObject($login);
 	    $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
 	}
@@ -141,7 +145,7 @@ class Widgets_Resskip extends ExpPlugin {
 	}
     }
 
-    public function publicRestartMap(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill) {
+    public function publicRestartMap(Bill $bill) {
 	$player = $this->storage->getPlayerObject($bill->getSource_login());
 	$this->exp_chatSendServerMessage($this->msg_prestart, null, array($player->nickName));
 
@@ -149,21 +153,28 @@ class Widgets_Resskip extends ExpPlugin {
 	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Maps\\Maps", "replayMap", $bill->getSource_login());
 	    return;
 	}
-	$this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+	$this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
     }
 
-    public function failRestartMap(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill, $state, $stateName) {
+    public function failRestartMap(Bill $bill, $state, $stateName) {
 	$this->resActive = false;
     }
 
-    public function publicSkipMap(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill) {
+    public function publicSkipMap(Bill $bill) {
 	$this->skipActive = true;
-	$this->connection->nextMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+	$this->connection->nextMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
 	$player = $this->storage->getPlayerObject($bill->getSource_login());
 	$this->exp_chatSendServerMessage($this->msg_pskip, null, array($player->nickName));
     }
 
     public function skipMap($login) {
+
+	if (AdminGroups::hasPermission($login, Permission::map_skip)) {
+	    $adminGrp = AdminGroups::getInstance();
+	    $adminGrp->adminCmd($login, "skip");
+	    return;
+	}
+
 	$nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
 
 	if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] != -1 && $nbSkips < count($this->config->publicSkipAmount)) {
@@ -187,7 +198,6 @@ class Widgets_Resskip extends ExpPlugin {
     }
 
     private function countMapRestart() {
-	//print_r($this->storage->currentMap);
 	if ($this->storage->currentMap->uId == $this->lastMapUid)
 	    $this->resCount++;
 	else {
@@ -208,6 +218,10 @@ class Widgets_Resskip extends ExpPlugin {
     public function onBeginMatch() {
 	$this->countMapRestart();
 	$this->showResSkip(null);
+    }
+
+    public function exp_onUnload() {
+	ResSkipButtons::EraseAll();
     }
 
 }
