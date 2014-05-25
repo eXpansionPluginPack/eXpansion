@@ -2,6 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
+use ManiaLive\PluginHandler\PluginHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
@@ -43,6 +46,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->actions->dbTools = $this->createAction(array(self::$mainPlugin, "dbTools"));
 	$this->actions->expSettings = $this->createAction(array(self::$mainPlugin, "showExpSettings"));
 	$this->actions->votesConfig = $this->createAction(array(self::$mainPlugin, "showVotesConfig"));
+	$this->actions->pluginManagement = $this->createAction(array(self::$mainPlugin, "showPluginManagement"));
 
 
 
@@ -98,6 +102,11 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$btnDb = new myButton($btnX, $btnY);
 	$btnDb->setText(__("eXpansion Settings", $login));
 	$btnDb->setAction($this->actions->expSettings);
+	$this->frame->addComponent($btnDb);
+
+	$btnDb = new myButton($btnX, $btnY);
+	$btnDb->setText(__("Plugin Management", $login));
+	$btnDb->setAction($this->actions->pluginManagement);
 	$this->frame->addComponent($btnDb);
 
 	if (!$this->exp_isRelay()) {

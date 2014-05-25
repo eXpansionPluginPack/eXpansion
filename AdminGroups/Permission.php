@@ -38,6 +38,7 @@ class Permission {
     // conserning expansion
     const server_update = "server_update";
     const expansion_pluginSettings = "expansion_pluginSettings";
+    const expansion_pluginStartStop = "expansion_pluginStartStop";
     //Concerning Game Settings      
     const game_gamemode = 'game_gamemode';
     const game_settings = 'game_settings';

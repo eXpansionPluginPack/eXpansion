@@ -238,6 +238,13 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	}
     }
 
+    public function showPluginManagement($login){
+	if (AdminGroups::hasPermission($login, Permission::server_votes)) {
+	    if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad'))
+		$this->callPublicMethod('\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad', 'showPluginsWindow', $login);
+	}
+    }
+
     public function matchSettings($login) {
 	if (AdminGroups::hasPermission($login, Permission::game_matchSave) || AdminGroups::hasPermission($login, 'game_matchDelete') || AdminGroups::hasPermission($login, 'game_match')) {
 	    $window = Gui\Windows\MatchSettings::Create($login);
