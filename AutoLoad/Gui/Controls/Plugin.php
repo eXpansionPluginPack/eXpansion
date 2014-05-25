@@ -107,7 +107,7 @@ class Plugin extends \ManiaLive\Gui\Control {
 
 	$this->label_author = new Label(40,4);
 	$this->label_author->setScale(0.6);
-	$this->label_author->setText('eXpansion');
+	$this->label_author->setText($plugin->getAuthor());
 	$this->label_author->setPosition(11,-1);
 	$this->addComponent($this->label_author);
 
