@@ -3,6 +3,8 @@
 namespace ManiaLivePlugins\eXpansion\AutoLoad;
 
 use ManiaLive\PluginHandler\PluginHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\AutoLoad\Gui\Windows\PluginList;
 use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\types\config\MetaData as MetaDataType;
@@ -25,7 +27,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function exp_onLoad()
     {
-
+	$this->setPublicMethod('showPluginsWindow');
 	$this->console("[eXpansion] AutoLoading eXpansion pack ... ");
 
 	/**
@@ -49,9 +51,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	$this->autoLoadPlugins($this->plugins, $pHandler);
 
-	\ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance()->check();
-
-	$this->registerChatCommand("ps", "showPluginsWindow", 0, true);
+	AdminGroups::addAdminCommand('plugins', $this, 'showPluginsWindow', Permission::expansion_pluginStartStop);
     }
 
     public function exp_onReady(){
