@@ -141,7 +141,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			    $this->console("[" . $pname . "]..............................FAIL -> will retry");
 			    $recheck[] = $pname;
 			} else {
-			    $this->console("[" . $pname . "]..............................SUCCESS");
+			    $this->debug("[" . $pname . "]..............................SUCCESS");
 			    //   $this->connection->chatSendServerMessage('Starting ' . $pname . '........$0f0 Success');
 			}
 		    } else {
@@ -184,6 +184,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	    }
 	} else {
 	    if($this->loadPlugin($pluginId, $pHandler)){
+		$pHandler->ready($pluginId);
 		$this->exp_chatSendServerMessage("#admin_action#Plugin started with success", $login);
 	    }else{
 		$this->exp_chatSendServerMessage("#admin_error#This plugin contains errors that prevented it from starting", $login);
@@ -192,6 +193,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	}
 	$this->showPluginsWindow($login);
 	ConfigManager::getInstance()->registerValueChange($this->getMetaData()->getVariable('plugins'));
+	ConfigManager::getInstance()->check();
     }
 
     /**
