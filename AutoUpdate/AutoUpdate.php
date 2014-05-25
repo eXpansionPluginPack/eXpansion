@@ -1,7 +1,11 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\AutoUpdate;
-use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\AutoUpdate\Structures\Repo;
+use ManiaLivePlugins\eXpansion\AutoUpdate\Structures\Step;
+use ManiaLivePlugins\eXpansion\Core\ParalelExecution;
 
 /**
  * Description of AutoUpdate
@@ -21,10 +25,24 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /** @var Config */
     private $config;
 
+    private $repos;
+
+    private $onGoingSteps = array();
+    private $currentLogin;
+
+    private $lastCheck = 0;
+    private $isUpToDate = false;
+
     public function exp_onLoad()
     {
 	$this->msg_update = exp_getMessage("new eXpansion version is available to update (%s)");
 	$this->dataAccess = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
+
+	$this->repos = array(
+	    './vendor/maniaplanet/dedicated-server-api' => "Dedicated server Api",
+	    './vendor/maniaplanet/manialive-lib'        => "Manialive Lib",
+	    /* './libraries/ManiaLivePlugins/eXpansion' => "eXpansion" */
+	);
     }
 
     public function exp_onReady()
@@ -45,7 +63,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onPlayerConnect($login, $isSpectator)
     {
-	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::server_update) && $this->config->autoCheckUpdates && !$this->config->useGit) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::server_update) && $this->config->autoCheckUpdates) {
 
 	    $this->checkUpdate($login);
 	}
@@ -88,42 +106,62 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	}
     }
 
+    public function checkForOnGoingGitUpdate($login)
+    {
+	if (!empty($this->onGoingSteps)) {
+	    $this->exp_chatSendServerMessage("#admin_error#An update or check for update process is already under way!!!");
+	    return true;
+	}
+	return false;
+    }
+
     function pullFromGit($login, $branch = "master")
     {
-	$results = array();
 
-	$this->console("[eXpansion:AutoUpdate]Starting to update Dedicated server API !!");
-	$this->exp_chatSendServerMessage("Starting to update Dedicated server API !!", $login);
-	exec("cd ./vendor/maniaplanet/dedicated-server-api && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
-	if ($ret != 0) {
-	    $this->console("[eXpansion:AutoUpdate]Error while updating Dedicated server API !!");
-	    $this->exp_chatSendServerMessage("#admin_error#Error while updating Dedicated server API !! ", $login);
+	if ($this->checkForOnGoingGitUpdate($login))
 	    return;
-	}
-	$this->console("[eXpansion:AutoUpdate]Dedicated server API Updated!!");
-	$this->exp_chatSendServerMessage("Dedicated server API Updated!!", $login);
 
-	$this->console("[eXpansion:AutoUpdate]Starting to update Manialive-lib !!");
-	$this->exp_chatSendServerMessage("Starting to update Manialive-lib !!", $login);
-	exec("cd ./vendor/maniaplanet/manialive-lib && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
-	if ($ret != 0) {
-	    $this->console("[eXpansion:AutoUpdate]Error while updating Manialive Lib !!");
-	    $this->exp_chatSendServerMessage("#admin_error#Error while updating Manialive Lib !! ", $login);
-	    return;
-	}
-	$this->console("[eXpansion:AutoUpdate]Manialive Lib Updated!!");
-	$this->exp_chatSendServerMessage("Manialive Lib Updated!!", $login);
 
-	$this->console("[eXpansion:AutoUpdate]Starting to update eXpansion !!");
-	$this->exp_chatSendServerMessage("Starting to eXpansion !!", $login);
-	exec("cd ./libraries/ManiaLivePlugins/eXpansion && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
-	if ($ret != 0) {
-	    $this->console("[eXpansion:AutoUpdate]Error while updating eXpansion !!");
-	    $this->exp_chatSendServerMessage("#admin_error#Error while updating eXpansion !! !! ", $login);
-	    return;
+	$steps = array();
+	foreach ($this->repos as $path => $name) {
+	    $step = new Step();
+	    $step->function = 'gitMultiPull';
+	    $step->commands = array(
+		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' fetch',
+		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' reset --hard',
+		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' checkout ' . $branch,
+		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' merge origin/' . $branch
+	    );
+	    $step->startMessage = '[eXpansion:AutoUpdate]Starting to update ' . $name . ' !!';
+	    $step->startConsole = 'Starting to update ' . $name . ' !!';
+
+	    $step->errorMessage = "#admin_error#Error while updating '.$name.' !! ";
+	    $step->errorConsole = "[eXpansion:AutoUpdate]Error while updating '.$name.' !! ";
+
+	    $step->upConsole = '[eXpansion:AutoUpdate]' . $name . ' Updated!!';
+	    $step->upMessage = '' . $name . ' Updated!!';
+
+	    $steps[] = $step;
 	}
-	$this->console("[eXpansion:AutoUpdate]eXpansion Updated!!");
-	$this->exp_chatSendServerMessage("eXpansion Updated!!", $login);
+	$this->onGoingSteps = $steps;
+	$this->currentLogin = $login;
+	$this->doSteps();
+    }
+
+    public function gitMultiPull($paralelExec, $results, $ret = 1)
+    {
+
+	$currentStep = $paralelExec->getValue('currentStep');
+	$login = $paralelExec->getValue('login');
+	if ($ret != 0) {
+	    $this->console($currentStep->errorConsole);
+	    $this->exp_chatSendServerMessage($currentStep->errorMessage, $login);
+	} else {
+	    $this->console($currentStep->upConsole);
+	    $this->exp_chatSendServerMessage($currentStep->upMessage, $login);
+	}
+
+	$this->doSteps();
     }
 
     public function xCheck($data, $code, $login = null)
@@ -145,56 +183,88 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function gitCheck($login, $branch = "master")
     {
-	$this->console("[eXpansion:AutoUpdate]Starting checking for update to Dedicated server API !!");
-	$this->exp_chatSendServerMessage("Starting checking for update to Dedicated server API !!", $login);
-	exec("cd ./vendor/maniaplanet/dedicated-server-api && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
-	if ($ret != 0) {
-	    $this->console("[eXpansion:AutoUpdate]Error while checking for Dedicated server API !!");
-	    $this->exp_chatSendServerMessage("#admin_error#Error while checking for Dedicated server API !! ", $login);
+	if ($this->checkForOnGoingGitUpdate($login))
 	    return;
+
+	$steps = array();
+	foreach ($this->repos as $path => $name) {
+	    $step = new Step();
+	    $step->function = 'gitCheckMultiStep';
+	    $step->commands = array(
+		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' fetch',
+		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' reset --hard',
+		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' checkout ' . $branch,
+		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' status'
+	    );
+	    $step->startMessage = 'Starting checking for update to ' . $name . ' !!';
+	    $step->startConsole = '[eXpansion:AutoUpdate]Starting checking for update to ' . $name . ' !!';
+
+	    $step->errorMessage = "#admin_error#Error while checking for '.$name.' !! ";
+	    $step->errorConsole = "[eXpansion:AutoUpdate]Error while checking for '.$name.' !! ";
+
+	    $step->upConsole = '[eXpansion:AutoUpdate]' . $name . ' is up to date!!';
+	    $step->upMessage = '' . $name . '  is up to date!!';
+
+	    $step->noUpMessage = '' . $name . ' needs updating!!';
+	    $step->noUpConsole = '[eXpansion:AutoUpdate]' . $name . ' needs updating!!';
+	    $steps[] = $step;
 	}
-	if (sizeof($results) > 3) {
-	    $this->console("[eXpansion:AutoUpdate]Dedicated server API needs updating!!");
-	    $this->exp_chatSendServerMessage("Dedicated server API needs updating!!", $login);
+	$this->onGoingSteps = $steps;
+	$this->currentLogin = $login;
+
+	if (time() - $this->lastCheck > 60 * 60 * 6) {
+	    $this->lastCheck = time();
+	    $this->isUpToDate = true;
+	    $this->doSteps();
 	} else {
-	    $this->console("[eXpansion:AutoUpdate]Dedicated server API is up to date!!");
-	    $this->exp_chatSendServerMessage("Dedicated server API is up to date!!", $login);
+	    foreach ($steps as $step) {
+		if ($this->isUpToDate) {
+		    $this->console($step->upConsole);
+		    $this->exp_chatSendServerMessage($step->upMessage, $login);
+		} else {
+		    $this->console($step->noUpConsole);
+		    $this->exp_chatSendServerMessage($step->noUpMessage, $login);
+		}
+	    }
 	}
-	$results = array();
+    }
 
-
-	$this->console("[eXpansion:AutoUpdate]Starting checking for update to  Manialive-lib API !!");
-	$this->exp_chatSendServerMessage("Starting checking for update to Manialive-lib !!", $login);
-	exec("cd ./vendor/maniaplanet/manialive-lib && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
+    public function gitCheckMultiStep($paralelExec, $results, $ret = 1)
+    {
+	/**
+	 * @var Step $currentStep
+	 */
+	$currentStep = $paralelExec->getValue('currentStep');
+	$login = $paralelExec->getValue('login');
 	if ($ret != 0) {
-	    $this->console("[eXpansion:AutoUpdate]Error while checking for Manialive Lib Updates !!");
-	    $this->exp_chatSendServerMessage("#admin_error#Error while checking for Manialive Lib Updates !! ", $login);
-	    return;
-	}
-	if (sizeof($results) > 3) {
-	    $this->console("[eXpansion:AutoUpdate]Manialive-lib needs updating!!");
-	    $this->exp_chatSendServerMessage("Manialive-lib  needs updating!!", $login);
+	    $this->console($currentStep->errorConsole);
+	    $this->exp_chatSendServerMessage($currentStep->errorMessage, $login);
+	} else if (!in_array('nothing to commit, working directory clean', $results)) {
+	    $this->console($currentStep->noUpConsole);
+	    $this->exp_chatSendServerMessage($currentStep->noUpMessage, $login);
+	    $this->isUpToDate = false;
 	} else {
-	    $this->console("[eXpansion:AutoUpdate]Manialive-lib  is up to date!!");
-	    $this->exp_chatSendServerMessage("Manialive-lib  is up to date!!", $login);
+	    $this->console($currentStep->upConsole);
+	    $this->exp_chatSendServerMessage($currentStep->upMessage, $login);
 	}
-	$results = array();
 
+	$this->doSteps();
+    }
 
-	$this->console("[eXpansion:AutoUpdate]Starting checking for update to eXpansion !!");
-	$this->exp_chatSendServerMessage("Starting checking for update to eXpansion !!", $login);
-	exec("cd ./libraries/ManiaLivePlugins/eXpansion && git fetch && git reset --hard && git checkout $branch && git pull --rebase", $results, $ret);
-	if ($ret != 0) {
-	    $this->console("[eXpansion:AutoUpdate]Error while checking for eXpansion Updates !!");
-	    $this->exp_chatSendServerMessage("#admin_error#Error while checking for eXpansion Updates !! ", $login);
-	    return;
-	}
-	if (sizeof($results) > 3) {
-	    $this->console("[eXpansion:AutoUpdate]eXpansion needs updating!!");
-	    $this->exp_chatSendServerMessage("eXpansion needs updating!!", $login);
-	} else {
-	    $this->console("[eXpansion:AutoUpdate]eXpansion is up to date!!");
-	    $this->exp_chatSendServerMessage("eXpansion is up to date!!", $login);
+    public function doSteps()
+    {
+	if (!empty($this->onGoingSteps)) {
+	    /**
+	     * @var Step $currentStep
+	     */
+	    $currentStep = array_shift($this->onGoingSteps);
+
+	    $this->console($currentStep->startConsole);
+	    $this->exp_chatSendServerMessage($currentStep->startMessage, $this->currentLogin);
+	    $exec = new ParalelExecution($currentStep->commands, array($this, $currentStep->function));
+	    $exec->setValue('login', $this->currentLogin);
+	    $exec->setValue('currentStep', $currentStep);
+	    $exec->start();
 	}
     }
 
