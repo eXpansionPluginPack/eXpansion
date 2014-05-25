@@ -34,6 +34,11 @@ abstract class MetaData
     private $name;
 
     /**
+     * @var string Author of the plugin.
+     */
+    private $author = "eXpansion";
+
+    /**
      * @var String Shortish description of what this plugin does
      */
     private $description;
@@ -183,6 +188,22 @@ abstract class MetaData
 	    $name = new String($name, "", null);
 	}*/
 	$this->name = $name;
+    }
+
+    /**
+     * @param string $author
+     */
+    public function setAuthor($author)
+    {
+	$this->author = $author;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthor()
+    {
+	return $this->author;
     }
 
     public function setDescription($description)

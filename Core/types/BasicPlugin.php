@@ -29,26 +29,6 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 	 */
 	public static $plugins_onHold = array();
 
-	/**
-	 * The List of GameModes the plugins support
-	 */
-	private static $plugin_gameModeSupport = array();
-
-	/**
-	 * @var Whatever plugins support soft script name or exact script name check
-	 */
-	private static $plugin_softScriptCompatibility = array();
-	private static $plugin_scriptCompatibiliyMode = array();
-
-	/**
-	 * @var The list of Titles the plugin support or exact title name chack
-	 */
-	private static $plugin_titleSupport = array();
-
-	/**
-	 * @var Whatever plugins support soft title name, or
-	 */
-	private static $plugin_softTitleSupport = array();
 
 	/**
 	 * The list of Plugins that has chat redirect activated
@@ -587,9 +567,6 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 	{
 	    $class = get_called_class();
 	    $soft = true;
-	    if (isset(self::$plugin_softScriptCompatibility[$class])) {
-		$soft = self::$plugin_softScriptCompatibility[$class];
-	    }
 
 	    $compatibility = explode(".", $scriptName);
 	    $compatibility = strtoupper($compatibility[0]);
