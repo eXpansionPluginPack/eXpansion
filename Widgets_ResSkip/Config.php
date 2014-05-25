@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Adm;
+namespace ManiaLivePlugins\eXpansion\Widgets_ResSkip;
 
 class Config extends \ManiaLib\Utils\Singleton
 {

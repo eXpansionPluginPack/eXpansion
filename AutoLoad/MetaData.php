@@ -1,6 +1,7 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\AutoLoad;
+namespace ManiaLivePlugins\eXpansion\Autoload;
+
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 /**
