@@ -60,7 +60,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	$this->autoLoadPlugins($this->config->plugins, $pHandler);
     }
 
-    public function autoLoadPlugins($plugins, $pHandler)
+    public function autoLoadPlugins($plugins, PluginHandler $pHandler)
     {
 	//First attempt to load plugins
 	$recheck = $this->loadPlugins($plugins, $pHandler);
@@ -71,6 +71,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	    $recheck = $this->loadPlugins($plugins, $pHandler);
 	} while (!empty($recheck) && $lastSize != sizeof($recheck));
 
+	foreach($plugins as $pname){
+	    $pHandler->ready($pname);
+	}
+
 	//If all plugins couldn't be loaded
 	if (!empty($recheck)) {
 	    //$this->dumpException("Couldn't Autoload all required plugins", new \Maniaplanet\WebServices\Exception("Autoload failed."));
@@ -78,6 +82,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	    $this->console("Not all required plugins were loaded, due to unmet dependencies or errors. list of not loaded plugins: ");
 	    foreach ($recheck as $pname) {
 		$this->console($pname);
+		$this->connection->chatSendServerMessage('Starting ' . $pname . '........$f00 Failure');
 	    }
 	}
     }
@@ -114,7 +119,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		if (in_array($pname, $disabled)) {
 		    $this->console("[" . $pname . "]..............................Disabled -> not loading");
 		} else {
-		    $status = false;
+		    $status = true;
 
 		    $metaData = $pname::getMetaData();
 
@@ -122,17 +127,21 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 		    if ($metaData->checkAll()) {
 			try {
-			    $status = $pHandler->load($pname);
+			    $status = $pHandler->load($pname, false);
 			} catch (\Exception $ex) {
+			    try{
+			   	 $pHandler->unload($pname);
+			    }catch (\Exception $ex) {
+
+			    }
 			    $status = false;
 			}
 
 			if (!$status) {
 			    $this->console("[" . $pname . "]..............................FAIL -> will retry");
-			    $this->connection->chatSendServerMessage('Starting ' . $pname . '........$f00 Failure');
 			    $recheck[] = $pname;
 			} else {
-			    $this->debug("[" . $pname . "]..............................SUCCESS");
+			    $this->console("[" . $pname . "]..............................SUCCESS");
 			    //   $this->connection->chatSendServerMessage('Starting ' . $pname . '........$0f0 Success');
 			}
 		    } else {
@@ -141,6 +150,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		}
 	    }
 	} catch (\Exception $ex) {
+	    echo "Second Catch";
 	    print_r($ex->getMessage());
 	    \ManiaLivePlugins\eXpansion\Core\types\ErrorHandler::displayAndLogError($ex);
 	    return false;
