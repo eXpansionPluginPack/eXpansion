@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\Core\types\Bill;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\DonatePanel\Config as DonateConfig;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
-use ManiaLivePlugins\eXpansion\Widgets_Resskip\Gui\Widgets\ResSkipButtons;
+use ManiaLivePlugins\eXpansion\Widgets_ResSkip\Gui\Widgets\ResSkipButtons;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class Widgets_ResSkip extends ExpPlugin {
