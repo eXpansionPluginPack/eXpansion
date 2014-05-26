@@ -58,12 +58,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$var->setGroup("Communication");
 	$this->registerVariable($var);
 	
-	$var = new String("channel", "irc channel to join", $config);
+	$var = new String("channel", "irc channel to join", $config, false);
 	$var->setDefaultValue("#bots");
 	$var->setGroup("Communication");
 	$this->registerVariable($var);
 	
-	$var = new String("channelKey", "irc channel key", $config);
+	$var = new String("channelKey", "irc channel key", $config, false);
 	$var->setDefaultValue("");
 	$var->setGroup("Communication");
 	$this->registerVariable($var);
