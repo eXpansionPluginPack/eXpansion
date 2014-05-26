@@ -29,7 +29,7 @@ class Config extends \ManiaLib\Utils\Singleton {
 	, '\ManiaLivePlugins\eXpansion\Widgets_ResSkip\Widgets_ResSkip'
     );
 
-    public $pluginPaths = array('libraries\ManiaLivePlugins' => 2);
+    public $pluginPaths = array('libraries/ManiaLivePlugins' => 2);
 
 }
 
