@@ -35,8 +35,7 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setId("Frame");
-        $this->_windowFrame->setScriptEvents(true);
-        $this->_windowFrame->setPosY(-3);
+        $this->_windowFrame->setScriptEvents(true);        
         $this->addComponent($this->_windowFrame);
 
         $this->_mainWindow = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(70, 6);

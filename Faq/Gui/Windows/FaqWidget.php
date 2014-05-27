@@ -23,7 +23,7 @@ class FaqWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
         $login = $this->getRecipient();
 		
         $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(7, 6);
-        $bg->setPosition(-2, -3);
+        $bg->setPosition(-2, 0);
         $this->addComponent($bg);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();

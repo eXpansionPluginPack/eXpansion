@@ -43,16 +43,12 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     function onResize($oldX, $oldY) {
 
 	$this->bg->setSize($this->sizeX, $this->sizeY );
-	$this->bg->setPosition(0, -($this->bg->getSizeY() / 2));
 
 	$this->bgTitle->setSize($this->sizeX+2, 4.2);
 	$this->bgTitle->setPosition(0, 0.75);
 	
 	$this->lbl_title->setPosition(($this->sizeX / 2), -1);
-	parent::onResize($oldX, $oldY);
-	/* $this->quad->setSizeX($this->sizeX);
-	  $this->quad->setPosX($this->sizeX / 2);
-	  $this->quad->setPosY(1); */
+	parent::onResize($oldX, $oldY);	
     }
 
     function setData($ranks) {
