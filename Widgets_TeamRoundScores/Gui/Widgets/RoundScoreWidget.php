@@ -55,6 +55,8 @@ class RoundScoreWidget extends Widget {
 
     public function setScores($roundScores) {
 	foreach ($roundScores as $score) {
+	    if ($score->roundNumber > 12)
+		return;
 	    $this->frame->addComponent(new ScoreItem($score));
 	}
     }
