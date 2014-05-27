@@ -21,20 +21,9 @@ class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     private $actionRestart;
     public static $mainPlugin;
 
-    protected function exp_onBeginConstruct() {
+    protected function exp_onBeginConstruct() {	
 	parent::exp_onBeginConstruct();
 	$this->setName("Admin Panel");
-    }
-
-    protected function exp_onSettingsLoaded() {
-	parent::exp_onSettingsLoaded();
-	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
-	$script->setParam('isMinimized', 'True');
-	$script->setParam('autoCloseTimeout', $this->getParameter('autoCloseTimeout'));
-	$script->setParam('posXMin', -32);
-	$script->setParam('posX', -32);
-	$script->setParam('posXMax', -6);
-	$this->registerScript($script);
 
 	$this->actionEndRound = $this->createAction(array($this, 'actions'), "forceEndRound");
 	$this->actionCancelVote = $this->createAction(array($this, 'actions'), "cancelVote");
@@ -45,17 +34,17 @@ class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
 	$this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
 	$this->_windowFrame->setId("Frame");
-	$this->_windowFrame->setScriptEvents(true);
-	$this->_windowFrame->setPosY(-3);
+	$this->_windowFrame->setScriptEvents(true);	
 	$this->addComponent($this->_windowFrame);
 
-	$this->_mainWindow = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 10);
+	$this->_mainWindow = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(42, 7);
 	$this->_mainWindow->setId("MainWindow");
 	$this->_windowFrame->addComponent($this->_mainWindow);
 
 	$frame = new \ManiaLive\Gui\Controls\Frame();
+	$frame->setAlign("left","top");
 	$frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-	$frame->setPosition(6, 0);
+	$frame->setPosition(6, -3);
 
 	$this->btnEndRound = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(7, 7);
 	$this->btnEndRound->setAction($this->actionEndRound);
@@ -85,23 +74,24 @@ class AdminPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->_windowFrame->addComponent($frame);
 
 	$this->_minButton = new \ManiaLib\Gui\Elements\Quad(5, 5);
-	$this->_minButton->setAlign("left", "center");
+	$this->_minButton->setAlign("left", "top");
 	$this->_minButton->setId("minimizeButton");
 	$this->_minButton->setStyle("Icons128x128_1");
 	$this->_minButton->setSubStyle("ProfileAdvanced");
 	$this->_minButton->setScriptEvents(true);
-
-
+	$this->_minButton->setPosition(40 - 4, -1);
 	$this->_windowFrame->addComponent($this->_minButton);
-
-	$this->setDisableAxis("x");
+	
     }
 
-    function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
-	$this->_windowFrame->setSize($this->getSizeX(), 12);
-	$this->_mainWindow->setSize($this->getSizeX(), 7);
-	$this->_minButton->setPosition($this->getSizeX() - 4, 0);
+    protected function exp_onSettingsLoaded() {
+	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
+	$script->setParam('isMinimized', 'True');
+	$script->setParam('autoCloseTimeout', $this->getParameter('autoCloseTimeout'));
+	$script->setParam('posXMin', -32);
+	$script->setParam('posX', -32);
+	$script->setParam('posXMax', -4);
+	$this->registerScript($script);
     }
 
     function actions($login, $action) {
