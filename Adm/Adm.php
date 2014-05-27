@@ -217,6 +217,19 @@ class Adm extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	}
     }
 
+    public function restartMap($login) {
+	if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_restart)) {
+	    if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
+		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps", "replayMap", $login);
+		return;
+	    }
+
+	    $this->connection->restartMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+	    $admin = $this->storage->getPlayerObject($login);
+	    $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
+	}
+    }
+
     public function cancelVote($login) {
 	if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin")) {
 	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin", "cancelVote", $login);
