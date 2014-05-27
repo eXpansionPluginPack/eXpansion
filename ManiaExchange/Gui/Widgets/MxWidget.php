@@ -23,20 +23,9 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     private $actionAward;
 
     protected function exp_onBeginConstruct() {
-	parent::exp_onBeginConstruct();
 	$this->setName("ManiaExchange Panel");
-    }
-    protected function exp_onSettingsLoaded() {
-	parent::exp_onSettingsLoaded();
-	$config = Config::getInstance();
+
 	$login = $this->getRecipient();
-	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
-	$script->setParam('isMinimized', 'True');
-	$script->setParam('posXMin', -27);
-	$script->setParam('posX', -27);
-	$script->setParam('posXMax', -4);	
-	$script->setParam('autoCloseTimeout', $this->getParameter('autoCloseTimeout'));
-	$this->registerScript($script);
 
 	$dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
 	$this->connection = \Maniaplanet\DedicatedServer\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
@@ -46,21 +35,17 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->actionVisit = $this->createAction(array($this, 'Visit'));
 	$this->actionAward = $this->createAction(array($this, 'Award'));
 
-	$this->setScriptEvents(true);
-
 	$this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
-	$this->_windowFrame->setAlign("left", "center");
+	$this->_windowFrame->setAlign("left", "top");
 	$this->_windowFrame->setId("Frame");
 	$this->_windowFrame->setScriptEvents(true);
 
-	$this->_mainWindow = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 10);
+	$this->_mainWindow = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(37, 6);
 	$this->_mainWindow->setId("MainWindow");
 	$this->_windowFrame->addComponent($this->_mainWindow);
 
-	$frame = new \ManiaLive\Gui\Controls\Frame();
+	$frame = new \ManiaLive\Gui\Controls\Frame(5, -3);
 	$frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-	$frame->setPosX(5);
-	$this->_windowFrame->setPosition(0, -9);
 
 	$this->btnVisit = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(6, 6);
 	$this->btnVisit->setIcon("Icons64x64_1", "TrackInfo");
@@ -79,19 +64,28 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->_minButton = new \ManiaLib\Gui\Elements\Quad(5, 5);
 	$this->_minButton->setScriptEvents(true);
 	$this->_minButton->setId("minimizeButton");
-	$this->_minButton->setImage($config->iconMx, true);
-	$this->_minButton->setAlign("left", "bottom");
+	$this->_minButton->setAlign("left", "top");
+	$this->_minButton->setPosition(35 - 4, 0);
 	$this->_windowFrame->addComponent($this->_minButton);
-
 	$this->addComponent($this->_windowFrame);
-    }
-    
 
-    function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
-	$this->_windowFrame->setSize(35, 12);
-	$this->_mainWindow->setSize(35, 6);
-	$this->_minButton->setPosition(35 - 4, -2.5);
+	$this->setScriptEvents(true);
+    }
+
+    protected function exp_onEndConstruct() {
+	$this->setSize(35, 7);
+    }
+
+    protected function exp_onSettingsLoaded() {
+	$config = Config::getInstance();
+	$this->_minButton->setImage($config->iconMx, true);
+	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
+	$script->setParam('isMinimized', 'True');
+	$script->setParam('posXMin', -27);
+	$script->setParam('posX', -27);
+	$script->setParam('posXMax', -4);
+	$script->setParam('autoCloseTimeout', $this->getParameter('autoCloseTimeout'));
+	$this->registerScript($script);
     }
 
     function Visit($login) {

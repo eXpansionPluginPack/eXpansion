@@ -29,12 +29,12 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function exp_onReady() {
-	$window = DonatePanelWindow::Create(null);
-	$window->setSize(70, 7);
+	$window = DonatePanelWindow::Create();	
 	if ($this->exp_isTMServer())
 	    $window->setPosition(-160, 69);
 	else
 	    $window->setPosition(-160, -37);
+	$window->setDisableAxis("x");
 	$window->show();
     }
 

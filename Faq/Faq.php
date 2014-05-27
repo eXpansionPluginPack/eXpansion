@@ -2,10 +2,14 @@
 
 namespace ManiaLivePlugins\eXpansion\Faq;
 
+use DirectoryIterator;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWidget;
 use ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWindow;
 
-class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Faq extends ExpPlugin {
 
     private $msg_admin_redirect, $msg_admin_info;
     public static $availableLanguages = array();
@@ -16,7 +20,7 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->msg_admin_info = exp_getMessage('Notice: Displaying a help page "%1$s" to "%2$s"');
         $this->setPublicMethod("showFaq");
                 
-        $langs = new \DirectoryIterator(__DIR__ . DIRECTORY_SEPARATOR . "Topics");
+        $langs = new DirectoryIterator(__DIR__ . DIRECTORY_SEPARATOR . "Topics");
 
         foreach ($langs as $lang) {
             if ($lang->isDot())
@@ -33,11 +37,12 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $this->registerChatCommand("faq", "showFaq", 0, true);
         $this->registerChatCommand("faq", "showFaq", 1, true);
         $this->registerChatCommand("faq", "showFaq", 2, true);
-        Gui\Windows\FaqWindow::$mainPlugin = $this;
-        Gui\Windows\FaqWidget::$mainPlugin = $this;
+        FaqWindow::$mainPlugin = $this;
+        FaqWidget::$mainPlugin = $this;
 	
-        $window = Gui\Windows\FaqWidget::Create(null);
+        $window = FaqWidget::Create(null);
         $window->setSize(7, 7);
+	$window->setDisableAxis("x");
         $window->show();
       
     }
@@ -45,7 +50,7 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showFaq($login, $topic = "toc", $recipient = null) {
 
         $showTo = $login;
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::game_settings)) {
+        if (AdminGroups::hasPermission($login, Permission::game_settings)) {
             if (!empty($recipient)) {
                 if (array_key_exists($recipient, $this->storage->players)) {
                     $showTo = $recipient;
@@ -55,7 +60,7 @@ class Faq extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         }
         $player = $this->storage->getPlayerObject($login);
-        $window = Gui\Windows\FaqWindow::Create($showTo, true);
+        $window = FaqWindow::Create($showTo, true);
         $window->setLanguage($player->language);
         $window->setTopic($topic);
         $window->setSize(160, 90);
