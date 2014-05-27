@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Times\Gui\Widgets;
 
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
+
 class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     const Mode_BestOfAll = 1;
@@ -26,8 +27,8 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     public static $localrecords = array();
     public static $dedirecords = array();
 
-    protected function onConstruct() {
-	parent::onConstruct();
+    protected function exp_onBeginConstruct() {
+
 	$login = $this->getRecipient();
 
 	$frame = new \ManiaLive\Gui\Controls\Frame();
@@ -81,10 +82,6 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->setName("Player Time Panel");
     }
 
-    function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
-    }
-
     function setTarget($login) {
 	$this->target = Gui::fixHyphens($login);
     }
@@ -97,23 +94,23 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     function onDraw() {
 	$record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->target);
 	$checkpoints = "[ -1 ]";
-	if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record && sizeof($record->ScoreCheckpoints) > $this->totalCp-1)  {
-	    $checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . ", $record->time]";	    
-	}else{
+	if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record && sizeof($record->ScoreCheckpoints) > $this->totalCp - 1) {
+	    $checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . ", $record->time]";
+	} else {
 	    $checkpoints = '[';
-	    for($i = 0; $i < $this->totalCp+2; $i++){
-		if($i > 0){
+	    for ($i = 0; $i < $this->totalCp + 2; $i++) {
+		if ($i > 0) {
 		    $checkpoints .= ', ';
 		}
 		$checkpoints .= -1;
 	    }
 	    $checkpoints .= ']';
 	}
-	
+
 	$bool = "False";
 	if ($this->lapRace)
 	    $bool = "True";
-	
+
 	$this->nScript->setParam('checkpoints', $checkpoints);
 	$this->nScript->setParam('totalCp', $this->totalCp);
 	$this->nScript->setParam('target', Gui::fixHyphens($this->target));

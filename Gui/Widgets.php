@@ -107,8 +107,8 @@ class Widgets extends \ManiaLib\Utils\Singleton
     public $NextMap_posY = array(self::config_trackmania => 67,
 				 self::config_shootmania => 92);
 
-    public $CurrentMapWidget_posX = array(self::config_default => 144);
-    public $CurrentMapWidget_posY = array(self::config_default => 83.5);
+    public $CurrentMapWidget_posX = array(self::config_default => 100);
+    public $CurrentMapWidget_posY = array(self::config_default => 90);
 
     public $MapRatingsWidget_posX = array(self::config_trackmania => 128,
 					  self::config_shootmania => 38);
@@ -136,4 +136,9 @@ class Widgets extends \ManiaLib\Utils\Singleton
     public $PersonalChatWidget_posY = array(self::config_default => -56);
     public $PersonalChatWidget_autoCloseTimeout = array(self::config_default => 0);
 
+    public $RoundScoreWidget_posX = array(self::config_default => -126);
+    public $RoundScoreWidget_posY = array(self::config_default => 58);
+    
+    
+    
 }

@@ -103,6 +103,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     }
 
     protected function getScript() {
+	$script = "";
 	if($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT){
 	    $script = new PlayerFinish_Optimized();
 	}else{
@@ -157,8 +158,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->bgFirst->setPosX(($this->sizeX / 2) + 1 );
 
 	$this->bg->setSize($this->sizeX, $this->sizeY + 1);
-	$this->bg->setPosition(0, -($this->bg->getSizeY() / 2) + 1);
-
+	
 	$this->bgTitle->setSize($this->sizeX, 4.2);
 	$this->bgTitle->setPosition(0, 0.75);
 

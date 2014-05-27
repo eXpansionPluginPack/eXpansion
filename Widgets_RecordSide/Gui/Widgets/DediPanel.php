@@ -7,6 +7,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\Recorditem;
 use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
+
 class DediPanel extends LocalPanel {
 
     function exp_onBeginConstruct() {
@@ -57,7 +58,8 @@ class DediPanel extends LocalPanel {
 	    $recsData = '[' . $recsData . ']';
 	    $nickData = '[' . $nickData . ']';
 	}
-
+	
+	$this->timeScript->setParam("nbRecord", count(Widgets_RecordSide::$dedirecords));
 	$this->timeScript->setParam("playerTimes", $recsData);
 	$this->timeScript->setParam("playerNicks", $nickData);
 	$this->timeScript->setParam("acceptMaxPlayerRank", "Integer[Text]");

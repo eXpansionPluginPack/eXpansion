@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
@@ -22,11 +23,10 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts;
 
-class CpPositions extends CommonScript{
+class CpPositions extends CommonScript {
 
-
-    function __construct()
-    {
-	parent::__construct("Widgets_RecordSide/Gui/Scripts/PlayerFinish");
+    function __construct() {
+	parent::__construct("Widgets_RecordSide/Gui/Scripts/CpPositions");
     }
+
 }

@@ -13,16 +13,15 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     private $map;
 
-    protected function exp_onEndConstruct() {
-	parent::exp_onEndConstruct();
+    protected function exp_onBeginConstruct() {
 	$this->setName("Next Map");
-	$frame = new \ManiaLive\Gui\Controls\Frame(0,1);
+	$frame = new \ManiaLive\Gui\Controls\Frame(0, 1);
 
 	// $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
 	// $login = $this->getRecipient();
 
 	$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(40, 13);
-	$this->bg->setPosition(2,-8);
+	$this->bg->setPosition(2, 0);
 	$this->addComponent($this->bg);
 
 	/* $label = new \ManiaLib\Gui\Elements\Label(30);
@@ -64,6 +63,9 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$frame->addComponent($row);
 
 	$this->addComponent($frame);
+    }
+
+    protected function exp_onEndConstruct() {
 	$this->setSize(44, 15);
 	$this->setScale(0.8);
     }

@@ -102,7 +102,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
         $info = PBPanel::Create($login);
         $info->setRecord($record, $rank, $rankTotal);
-        $info->setSize(30, 30);
+        $info->setSize(30, 13);
         $info->setPosition(112, -76);
         $info->show();
     }

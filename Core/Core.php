@@ -20,9 +20,9 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
  */
 class Core extends types\ExpPlugin {
 
-    const EXP_VERSION = "0.9.5";
+    const EXP_VERSION = "0.9.6";
     const EXP_REQUIRE_MANIALIVE = "4.0.0";
-    const EXP_REQUIRE_DEDIATED = "2014.4.2";  // replace dedicated 2013-7-30 to 2013.7.30
+    const EXP_REQUIRE_DEDIATED = "2014.5.23";  // replace dedicated 2013-7-30 to 2013.7.30
 
     /**
      * Last used game mode

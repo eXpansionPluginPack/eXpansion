@@ -235,10 +235,6 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function showCurrentMapWidget($login) {
 	$info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\CurrentMapWidget::Create(null);
-	if ($this->exp_isTMServer())
-	    $info->setPosition(144, 83.5);
-	else
-	    $info->setPosition(144, 83.5);
 	$info->setAction($this->actionShowMapList);
 	$info->show();
     }

@@ -23,7 +23,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $style_list_bgStyle = array('Bgs1', 'Bgs1');
     public $style_list_bgSubStyle = array('BgWindow2', 'BgWindow3');
     public $style_list_posXOffset = -1;
-    public $style_list_sizeXOffset = 2;
+    public $style_list_sizeXOffset = 0;
     public $style_list_posYOffset = 0;
     public $style_list_sizeYOffset = 0;
     

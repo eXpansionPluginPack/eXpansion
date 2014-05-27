@@ -7,15 +7,12 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     protected $clockBg;
     private $frame, $players, $specs, $server;
 
-    protected function onConstruct() {
-	parent::onConstruct();
-
-	$clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(52, 11.5);
-	$clockBg->setPosition(0,-6);
+    protected function exp_onBeginConstruct() {	
+	$clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(58, 11.5);	
 	$clockBg->setAction(\ManiaLivePlugins\eXpansion\Core\Core::$action_serverInfo);
 	$this->addComponent($clockBg);
 
-	$this->server = new \ManiaLib\Gui\Elements\Label(50, 6);
+	$this->server = new \ManiaLib\Gui\Elements\Label(58, 6);
 	$this->server->setId('serverName');
 	$this->server->setAlign("left", "top");
 	$this->server->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
