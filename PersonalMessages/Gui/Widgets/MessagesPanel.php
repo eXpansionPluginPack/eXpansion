@@ -33,9 +33,6 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     protected function exp_onBeginConstruct() {
 	parent::exp_onBeginConstruct();
 	$this->setName("Personal Chat Widget");
-    }
-
-    protected function exp_onSettingsLoaded() {
 	$config = Config::getInstance();
 
 	$this->setScriptEvents(true);
@@ -45,26 +42,28 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->connection = \Maniaplanet\DedicatedServer\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
 	$this->storage = \ManiaLive\Data\Storage::getInstance();
 
-	$this->actionPlayers = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'players'));
-	$this->actionSend = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'send'));
+	$this->actionPlayers = $this->createAction(array($this, 'players'));
+	$this->actionSend = $this->createAction(array($this, 'send'));
 
 	$this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
 	$this->_windowFrame->setAlign("left", "top");
-	$this->_windowFrame->setId("Frame");
-	$this->_windowFrame->setPosY(-3);
+	$this->_windowFrame->setId("Frame");	
 	$this->_windowFrame->setScriptEvents(true);
 
 	$this->_mainWindow = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(100, 10);
 	$this->_mainWindow->setId("MainWindow");
+	$this->_mainWindow->setScriptEvents();	
 	$this->_windowFrame->addComponent($this->_mainWindow);
 
-	$frame = new \ManiaLive\Gui\Controls\Frame();
-	$frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-	$frame->setPosition(6, 4);
-
+	$frame = new \ManiaLive\Gui\Controls\Frame(6,0);
+	$frame->setAlign("left", "top");
+	$line = new \ManiaLib\Gui\Layouts\Line();
+	$line->setMargin(2, 0);
+		
+	$frame->setLayout($line);	
+	
 	$this->labelReciever = new \ManiaLib\Gui\Elements\Label(40);
-	$this->labelReciever->setAlign("left", "top");
-	$this->labelReciever->setPosition(25, 6);
+	$this->labelReciever->setAlign("left", "top");	
 	$this->labelReciever->setText("");
 	$this->labelReciever->setStyle("TextCardSmallScores2");
 	$this->_windowFrame->addComponent($this->labelReciever);
@@ -72,34 +71,22 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
 	$this->labelPlayer = new myButton();
 	$this->labelPlayer->setAlign("left", "top");
-	$this->labelPlayer->setPosY(-4);
 	$this->labelPlayer->setTextColor('fff');
 	$this->labelPlayer->setText("Select...");
+	$this->labelPlayer->setPosY(-3);
 	$this->labelPlayer->setDescription("Select player whom to send the message", 35);
 	$this->labelPlayer->setAction($this->actionPlayers);
 	$frame->addComponent($this->labelPlayer);
 
-	$this->inputboxMessage = new \ManiaLib\Gui\Elements\Entry(70, 5);
+	$this->inputboxMessage = new \ManiaLib\Gui\Elements\Entry(85, 6);
 	$this->inputboxMessage->setAlign("left", "top");
 	$this->inputboxMessage->setId("messagebox");
 	$this->inputboxMessage->setName("message");
-	$this->inputboxMessage->setScale(0.8);
-	$this->inputboxMessage->setPosY(-2);
+	$this->inputboxMessage->setScale(0.8);	
+	$this->inputboxMessage->setPosY(-0.5);	
 	$this->inputboxMessage->setTextColor('fff');
-	$this->inputboxMessage->setScriptEvents(true);
-	//$this->inputboxMessage->setAction($this->actionSend);
+	$this->inputboxMessage->setScriptEvents(true);	
 	$frame->addComponent($this->inputboxMessage);
-
-	$this->buttonSend = new myButton(16, 6);
-	$this->buttonSend->setAlign("left", "top");
-	$this->buttonSend->setPosY(-4);
-	$this->buttonSend->setText("Send");
-	//$this->buttonSend->colorize("");
-	//$this->buttonSend->setAction($this->actionSend);
-	$this->buttonSend->setScale(0.6);
-	$this->buttonSend->setId("sendButton");
-
-	$frame->addComponent($this->buttonSend);
 
 	$this->_windowFrame->addComponent($frame);
 
@@ -107,14 +94,15 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->_minButton->setId("minimizeButton");
 	$this->_minButton->setStyle("Icons64x64_1");
 	$this->_minButton->setSubStyle("Outbox");
-	$this->_minButton->setScriptEvents(true);
-	//$this->_minButton->setAction($this->minMaxAction);
-	$this->_minButton->setAlign("left", "bottom");
+	$this->_minButton->setScriptEvents(true);	
+	$this->_minButton->setAlign("left", "center");
 
 	$this->_windowFrame->addComponent($this->_minButton);
 
-	$this->addComponent($this->_windowFrame);
+	$this->addComponent($this->_windowFrame);		
+    }
 
+    protected function exp_onSettingsLoaded() {
 	$this->widgetScript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
 	$this->widgetScript->setParam('isMinimized', $this->status);
 	$this->widgetScript->setParam('autoCloseTimeout', $this->getParameter('autoCloseTimeout'));
@@ -122,7 +110,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->widgetScript->setParam('posX', -92);
 	$this->widgetScript->setParam('posXMax', -4);
 	$this->registerScript($this->widgetScript);
-
+	
 	$this->sendscript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("PersonalMessages\Gui\Script");
 	$this->sendscript->setParam("sendAction", $this->actionSend);
 	$this->registerScript($this->sendscript);
@@ -130,20 +118,9 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     }
 
     function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
-	$this->_windowFrame->setSize(100, 6);
-	$this->_mainWindow->setSize(100, 6);
-	$this->_minButton->setPosition(100 - 4, -2.5);
-	$this->removeComponent($this->xml);
-    }
-
-    function onDraw() {
-	// $this->widgetScript->setParam('isMinimized', $this->status);
-	/* if ($this->status == "False") {
-	  $this->widgetScript->setParam('posX', -3);
-	  $this->sendscript->setParam('startEdition', "True");
-	  } */
-	parent::onDraw();
+	parent::onResize($oldX, $oldY);	
+	$this->_mainWindow->setSize(102, 6);
+	$this->_minButton->setPosition(100 - 4, -2.5);	
     }
 
     function sendPm($login, $target) {
@@ -199,9 +176,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->redraw($this->getRecipient());
     }
 
-    function destroy() {
-	\ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionPlayers);
-	\ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->actionSend);
+    function destroy() {	
 	parent::destroy();
     }
 
