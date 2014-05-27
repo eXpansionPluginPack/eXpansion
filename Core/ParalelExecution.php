@@ -70,14 +70,18 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
     {
 	$cmd = array_shift($this->cmds);
 
-	$command = $cmd . ' >> tmp/' . $this->id . '.txt 2>&1 & echo';
-
-	exec($command, $results, $this->return);
+	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+	    $command = $cmd . ' >> tmp/' . $this->id . '.txt 2>&1 & echo';
+	}else{
+	    $command = 'nohup '.$cmd . ' >> tmp/' . $this->id . '.txt 2>&1 & echo $!';
+	}
+	exec($command, $results, $return);
 	$this->pid = $results[0];
 
-
-	if ($this->pid == "")
+	if ($this->pid == ""){
+	    Dispatcher::unregister(TickEvent::getClass(), $this);
 	    $this->call();
+	}
 
 	$this->lastCheck = time();
     }
@@ -85,7 +89,6 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
     public function call()
     {
 	$results = explode("\n", file_get_contents('tmp/' . $this->id . '.txt'));
-	print_r($results);
 	unlink('tmp/' . $this->id . '.txt');
 	call_user_func($this->callback, $this, $results, $this->return);
     }
@@ -140,9 +143,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 
     public function PsExists()
     {
-
-	exec("ps ax | grep $this->pid 2>&1", $output);
-
+	exec("ps ax | grep ".$this->pid." 2>&1", $output);
 	while (list(, $row) = each($output)) {
 
 	    $row_array = explode(" ", $row);

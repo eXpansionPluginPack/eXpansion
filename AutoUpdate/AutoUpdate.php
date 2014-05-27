@@ -193,7 +193,6 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	    $step->function = 'gitCheckMultiStep';
 	    $step->commands = array(
 		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' fetch',
-		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' reset --hard',
 		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' checkout ' . $branch,
 		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' status'
 	    );
