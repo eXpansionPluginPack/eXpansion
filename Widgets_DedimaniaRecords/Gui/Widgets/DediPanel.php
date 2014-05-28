@@ -1,11 +1,10 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Widgets;
+namespace ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Widgets;
 
-use ManiaLivePlugins\eXpansion\Gui\Config;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\Recorditem;
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
+use ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Widgets_DedimaniaRecords;
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\LocalPanel;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class DediPanel extends LocalPanel {
@@ -40,7 +39,7 @@ class DediPanel extends LocalPanel {
 	}
 
 	$index = 1;
-	foreach (Widgets_RecordSide::$dedirecords as $record) {
+	foreach (Widgets_DedimaniaRecords::$dedirecords as $record) {
 	    if ($index > 1) {
 		$recsData .= ', ';
 		$nickData .= ', ';
@@ -59,7 +58,7 @@ class DediPanel extends LocalPanel {
 	    $nickData = '[' . $nickData . ']';
 	}
 	
-	$this->timeScript->setParam("nbRecord", count(Widgets_RecordSide::$dedirecords));
+	$this->timeScript->setParam("nbRecord", count(Widgets_DedimaniaRecords::$dedirecords));
 	$this->timeScript->setParam("playerTimes", $recsData);
 	$this->timeScript->setParam("playerNicks", $nickData);
 	$this->timeScript->setParam("acceptMaxPlayerRank", "Integer[Text]");

@@ -20,7 +20,7 @@
  *  along with this program.  If not, see {http://www.gnu.org/licenses/}.
  */
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts;
+namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts;
 
 
 use ManiaLivePlugins\eXpansion\Gui\Script_libraries\TimeToText;

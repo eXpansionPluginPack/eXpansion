@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide;
+namespace ManiaLivePlugins\eXpansion\Widgets_LiveRankings;
 
 class Config extends \ManiaLib\Utils\Singleton {
         

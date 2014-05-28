@@ -18,6 +18,8 @@ declare lastTimeDiff = 0;
 
 declare nbFinish = 0;
 
+die("WOrks");
+
 
 //Gui staff
 declare Boolean givePoints = <?php echo $this->givePoints ?>;

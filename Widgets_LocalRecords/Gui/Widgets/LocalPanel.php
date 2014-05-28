@@ -1,13 +1,13 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Widgets;
+namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\Recorditem;
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts\PlayerFinish;
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts\PlayerFinish_Optimized;
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts\PlayerFinish;
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts\PlayerFinish_Optimized;
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Widgets_LocalRecords;
 
 class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
@@ -122,7 +122,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->timeScript->setParam("nbFields", 20);
 	$this->timeScript->setParam("nbFirstFields", 5);
 	$this->timeScript->setParam('varName', 'LocalTime1');
-	$this->timeScript->setParam('getCurrentTimes', Widgets_RecordSide::$secondMap ? "True" : "False");
+	$this->timeScript->setParam('getCurrentTimes', Widgets_LocalRecords::$secondMap ? "True" : "False");
 	return $script;
     }
 
@@ -187,7 +187,7 @@ class LocalPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	}
 
 	$index = 1;
-	foreach (Widgets_RecordSide::$localrecords as $record) {
+	foreach (Widgets_LocalRecords::$localrecords as $record) {
 	    if ($index > 1) {
 		$recsData .= ', ';
 		$nickData .= ', ';

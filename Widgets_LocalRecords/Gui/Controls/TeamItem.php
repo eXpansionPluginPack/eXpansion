@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls;
+namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Widgets_Record\Config;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;

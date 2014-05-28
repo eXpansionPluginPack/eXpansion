@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Widgets;
+namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets;
 
 class LocalPanel2 extends LocalPanel {
 

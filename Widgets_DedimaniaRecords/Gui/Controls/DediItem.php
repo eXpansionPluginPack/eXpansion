@@ -1,8 +1,8 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls;
+namespace ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Config;
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
 
 class DediItem extends Recorditem {
 

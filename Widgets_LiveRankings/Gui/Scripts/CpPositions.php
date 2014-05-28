@@ -21,12 +21,14 @@
  *  along with this program.  If not, see {http://www.gnu.org/licenses/}.
  */
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts;
+namespace ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Gui\Scripts;
+
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts\CommonScript;
 
 class CpPositions extends CommonScript {
 
     function __construct() {
-	parent::__construct("Widgets_RecordSide/Gui/Scripts/CpPositions");
+	parent::__construct("Widgets_LiveRankings/Gui/Scripts/CpPositions");
     }
 
 }

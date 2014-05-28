@@ -20,16 +20,16 @@
  *  along with this program.  If not, see {http://www.gnu.org/licenses/}.
  */
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts;
+namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts;
 
 
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 
-class PlayerFinish_Optimized extends CommonScript{
+class PlayerFinish extends CommonScript{
 
 
     function __construct()
     {
-	parent::__construct("Widgets_RecordSide/Gui/Scripts/PlayerFinish_Optimized");
+	parent::__construct("Widgets_LocalRecords/Gui/Scripts/PlayerFinish");
     }
 }

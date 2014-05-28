@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide;
+namespace ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
@@ -19,8 +19,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 
     public function onBeginLoad() {
 	parent::onBeginLoad();
-	$this->setName("Records widgets");
-	$this->setDescription("Provides records widget");
+	$this->setName("Dedimania Records widgets");
+	$this->setDescription("Provides dedimania records widget");
 
 	$this->addTitleSupport("TM");
 	$this->addTitleSupport("Trackmania");

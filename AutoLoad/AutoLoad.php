@@ -120,7 +120,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		    $this->console("[" . $pname . "]..............................Disabled -> not loading");
 		} else {
 		    $status = true;
-
+		    if(!class_exists($pname)){
+			$this->console("[" . $pname . "]..............................Doesen't exist -> not loading");
+			return false;
+		    }
 		    $metaData = $pname::getMetaData();
 
 		    $this->availablePlugins[$pname] = $metaData;

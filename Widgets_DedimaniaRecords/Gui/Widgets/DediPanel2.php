@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Widgets;
+namespace ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Widgets;
 
 
 class DediPanel2 extends DediPanel {

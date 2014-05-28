@@ -1,13 +1,12 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Widgets;
+namespace ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Gui\Widgets;
 
-use ManiaLivePlugins\eXpansion\Gui\Config;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\Recorditem;
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Controls\TeamItem;
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Gui\Scripts\CpPositions;
-use ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide;
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\TeamItem;
+use ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Gui\Scripts\CpPositions;
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\LocalPanel;
+use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Widgets_LocalRecords;
 use \Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class LivePanel extends LocalPanel {
@@ -22,8 +21,8 @@ class LivePanel extends LocalPanel {
     }
 
     protected function getScript() {
-	$gm = Widgets_RecordSide::exp_getCurrentCompatibilityGameMode();
-	if ($gm == GameInfos::GAMEMODE_ROUNDS || $gm == GameInfos::GAMEMODE_CUP || $gm == GameInfos::GAMEMODE_TEAM || Widgets_RecordSide::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
+	$gm = Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode();
+	if ($gm == GameInfos::GAMEMODE_ROUNDS || $gm == GameInfos::GAMEMODE_CUP || $gm == GameInfos::GAMEMODE_TEAM || Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
 
 	    $script = new CpPositions();
 	    $this->timeScript = $script;
@@ -58,28 +57,28 @@ class LivePanel extends LocalPanel {
 	    
 	    $this->timeScript->setParam("maxPoint", $teamMaxPoint);
 
-	    if (Widgets_RecordSide::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
+	    if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
 		$this->timeScript->setParam("isLaps", "True");
 
 		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
 		    $this->timeScript->setParam("nbLaps", $nbLaps);
 		else
 		    $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->lapsNbLaps);
-	    }else if (Widgets_RecordSide::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_ROUNDS && $this->storage->gameInfos->roundsForcedLaps > 0) {
+	    }else if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_ROUNDS && $this->storage->gameInfos->roundsForcedLaps > 0) {
 		$this->timeScript->setParam("isLaps", "True");
 
 		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
 		    $this->timeScript->setParam("nbLaps", $nbLaps);
 		else
 		    $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
-	    }else if (Widgets_RecordSide::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->roundsForcedLaps > 0) {
+	    }else if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->roundsForcedLaps > 0) {
 		$this->timeScript->setParam("isLaps", "True");
 
 		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
 		    $this->timeScript->setParam("nbLaps", $$nbLaps);
 		else
 		    $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
-	    }else if (Widgets_RecordSide::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_CUP && $this->storage->gameInfos->roundsForcedLaps > 0) {
+	    }else if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_CUP && $this->storage->gameInfos->roundsForcedLaps > 0) {
 		$this->timeScript->setParam("isLaps", "True");
 
 		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
@@ -88,16 +87,16 @@ class LivePanel extends LocalPanel {
 		    $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
 	    }
 
-	    if (Widgets_RecordSide::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
+	    if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
 		$this->timeScript->setParam("givePoints", "False");
 	    }
 
-	    if (Widgets_RecordSide::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM) {
+	    if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM) {
 		$this->timeScript->setParam("isTeam", "True");
 	    }
 
-	    if (!empty(Widgets_RecordSide::$roundPoints)) {
-		$this->timeScript->setParam("points", "[" . implode(",", Widgets_RecordSide::$roundPoints) . "]");
+	    if (!empty(Widgets_LocalRecords::$roundPoints)) {
+		$this->timeScript->setParam("points", "[" . implode(",", Widgets_LocalRecords::$roundPoints) . "]");
 	    }
 
 	    return $script;
@@ -107,7 +106,7 @@ class LivePanel extends LocalPanel {
     }
 
     public function setNbFields($nb) {
-	if (Widgets_RecordSide::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM)
+	if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM)
 	    parent::setNbFields($nb - 1);
 	else
 	    parent::setNbFields($nb);
@@ -130,7 +129,7 @@ class LivePanel extends LocalPanel {
 	$recsData = "";
 	$nickData = "";
 
-	$gm = Widgets_RecordSide::exp_getCurrentCompatibilityGameMode();
+	$gm = Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode();
 	$short = false;
 	if ($gm == GameInfos::GAMEMODE_ROUNDS || $gm == GameInfos::GAMEMODE_CUP || $gm == GameInfos::GAMEMODE_TEAM || $gm == GameInfos::GAMEMODE_LAPS) {
 	    $short = true;
@@ -197,7 +196,7 @@ class LivePanel extends LocalPanel {
     }
 
     protected function cpUpdate() {
-	if (!Widgets_RecordSide::$raceOn) {
+	if (!Widgets_LocalRecords::$raceOn) {
 	    return;
 	}
 
