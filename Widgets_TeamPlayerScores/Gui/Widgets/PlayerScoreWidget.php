@@ -63,7 +63,7 @@ class PlayerScoreWidget extends Widget {
     public function setScores($playerScores) {
 	$x = 0;
 	foreach ($playerScores as $score) {
-	    if ($x > 12)
+	    if ($x >= 12)
 		return;
 	    $this->frame->addComponent(new ScoreItem($score));
 	    $x++;
