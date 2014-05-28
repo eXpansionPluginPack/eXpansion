@@ -118,6 +118,7 @@ class Widgets_TeamRoundScores extends ExpPlugin {
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
 	$this->reset();
+	$this->hideWidget();
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {

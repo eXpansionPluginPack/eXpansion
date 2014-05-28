@@ -108,6 +108,7 @@ class Widgets_TeamPlayerScores extends ExpPlugin {
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
 	$this->reset();
+	$this->hideWidget();
     }
 
     private function getScore($position) {
