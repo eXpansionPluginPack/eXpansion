@@ -5,6 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TeamPlayerScores;
 use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
+use ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj;
+use ManiaLivePlugins\eXpansion\Widgets_TeamPlayerScores\Gui\Widgets\PlayerScoreWidget;
 use ManiaLivePlugins\eXpansion\Widgets_TeamPlayerScores\Structures\PlayerScore;
 
 /**
@@ -80,7 +82,7 @@ class Widgets_TeamPlayerScores extends ExpPlugin {
 
 	// count scores
 	foreach (Core::$playerInfo as $player) {
-	    if ($player->finalTime != 0) {
+	    if ($player->finalTime != 0 && !$player->isSpectator) {
 		// get points
 		$this->playerScores[$player->login]->score += $this->getScore($player->position);
 
@@ -103,6 +105,7 @@ class Widgets_TeamPlayerScores extends ExpPlugin {
 		}
 	    }
 	}
+	ArrayOfObj::asortDesc($this->playerScores, "score");
 	$this->showWidget();
     }
 
@@ -113,15 +116,11 @@ class Widgets_TeamPlayerScores extends ExpPlugin {
 
     private function getScore($position) {
 	/** @var int[] */
-	$points = $this->connection->getRoundCustomPoints();
-	if (empty($points)) {
-	    $points = array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
-	}
-
-	if (array_key_exists($position, $points))
-	    return $points[$position];
-	else
-	    return end($points);
+	$total = count($this->storage->players);
+	$points = $total - $position;
+	if ($points < 0)
+	    $points = 0;
+	return $points;
     }
 
     private function reset() {
@@ -129,7 +128,7 @@ class Widgets_TeamPlayerScores extends ExpPlugin {
     }
 
     private function showWidget() {
-	$widget = Gui\Widgets\PlayerScoreWidget::Create();
+	$widget = PlayerScoreWidget::Create();
 	$widget->setSize(42, 56);
 	$widget->setScores($this->playerScores);
 	$widget->setLayer(Widget::LAYER_NORMAL);
@@ -138,7 +137,7 @@ class Widgets_TeamPlayerScores extends ExpPlugin {
     }
 
     private function hideWidget() {
-	Gui\Widgets\PlayerScoreWidget::EraseAll();
+	PlayerScoreWidget::EraseAll();
     }
 
     public function exp_onUnload() {

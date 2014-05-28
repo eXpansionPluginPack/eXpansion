@@ -74,7 +74,7 @@ class Widgets_TeamRoundScores extends ExpPlugin {
 	$teamScores = array(0 => 0, 1 => 0);
 
 	foreach (Core::$playerInfo as $player) {
-	    if ($player->finalTime != 0) {
+	    if ($player->finalTime != 0 && !$player->isSpectator) {
 		$teamScores[$player->teamId] += $this->getScore($player->position);
 	    }
 	}
@@ -127,15 +127,11 @@ class Widgets_TeamRoundScores extends ExpPlugin {
 
     private function getScore($position) {
 	/** @var int[] */
-	$points = $this->connection->getRoundCustomPoints();
-	if (empty($points)) {
-	    $points = array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
-	}
-
-	if (array_key_exists($position, $points))
-	    return $points[$position];
-	else
-	    return end($points);
+	$total = count($this->storage->players);
+	$points = $total - $position;
+	if ($points < 0)
+	    $points = 0;
+	return $points;
     }
 
     private function reset() {
