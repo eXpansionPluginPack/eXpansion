@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Core;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
@@ -548,12 +549,22 @@ EOT;
 	$pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 	$this->console('Shutting down uncompatible plugins');
 
-	foreach ($this->exp_getGameModeCompability() as $plugin => $compability) {
-	    if (!$plugin::getMetaData()->checkAll()) {
-		try {
-		    $this->callPublicMethod($plugin, 'exp_unload');
-		} catch (\Exception $ex) {
+	/**
+	 * @var PluginHandler $pHandler
+	 */
+	$pHandler = PluginHandler::getInstance();
 
+	foreach ($pHandler->getLoadedPluginsList() as $pluginId) {
+	    $exploded = explode('\\', $pluginId);
+	    array_pop($exploded);
+	    $metaData = implode('\\', $exploded) . '\\MetaData';
+	    if (class_exists($metaData)) {
+		if (!$pluginId::getMetaData()->checkAll()) {
+		    try {
+			$this->callPublicMethod($pluginId, 'exp_unload');
+		    } catch (\Exception $ex) {
+
+		    }
 		}
 	    }
 	}
