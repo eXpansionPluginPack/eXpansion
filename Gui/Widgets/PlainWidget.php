@@ -76,6 +76,9 @@ class PlainWidget extends \ManiaLive\Gui\Window
 	    $this->applyScript($script, $this);
 	}
 
+
+	$this->detectElements($this->getComponents());
+
 	foreach ($this->calledScripts as $script) {
 	    $this->addScriptToMain($script->getEndScript($this));
 	    $script->reset();

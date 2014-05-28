@@ -53,7 +53,7 @@ class Script
      */
     public function getDeclarationScript($win, $component)
     {
-	return $this->getScript($this->_relPath . '/declarationScript.php', $win, $component);
+	return $this->getScript($this->_relPath . '/declarationScript.txtm', $win, $component);
     }
 
     /**
@@ -64,7 +64,7 @@ class Script
      */
     public function getlibScript($win, $component)
     {
-	return $this->getScript($this->_relPath . '/libScript.php', $win, $component);
+	return $this->getScript($this->_relPath . '/libScript.txtm', $win, $component);
     }
 
     /**
@@ -75,7 +75,7 @@ class Script
      */
     public function getWhileLoopScript($win, $component)
     {
-	return $this->getScript($this->_relPath . '/whileLoopScript.php', $win, $component);
+	return $this->getScript($this->_relPath . '/whileLoopScript.txtm', $win, $component);
     }
 
     /**
@@ -85,7 +85,7 @@ class Script
      */
     public function getEndScript($win)
     {
-	return $this->getScript($this->_relPath . '/endDeclarationScript.php', $win, null);
+	return $this->getScript($this->_relPath . '/endDeclarationScript.txtm', $win, null);
     }
 
     /**
