@@ -37,14 +37,14 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->registerChatCommand("hud", "hudCommands", 1, true);
 	$this->setPublicMethod("hudCommands");
 	$this->setPublicMethod("showConfigWindow");
-	
+
 	$this->msg_params = exp_getMessage("possible parameters: move, lock, reset");
 	$this->msg_disabled = exp_getMessage("#error#Server Admin has disabled personal huds. Sorry!");
-	
+
 	$preloader = Widgets\Preloader::Create(null);
 	foreach (Config::getInstance() as $property => $value) {
 	    if (is_string($value) && substr($value, 0, 7) == "http://" && substr($value, -4) == ".png") {
-		//if (is_string($value) && substr($value, 0, 7) == "http://") {
+//if (is_string($value) && substr($value, 0, 7) == "http://") {
 		$preloader->add($value);
 	    }
 	}
@@ -94,18 +94,23 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    /** @var \ManiaLive\Gui\GuiHandler */
 	    $guiHandler = \ManiaLive\Gui\GuiHandler::getInstance();
 	    foreach ($this->resetLogins as $login => $value) {
+// delayed tick
 		$this->resetLogins[$login] ++;
-		// delayed tick
-		if ($value > 0) {
-		    $guiHandler->toggleGui($login);
-		}
-		if ($value > 1) {
-		    unset($this->resetLogins[$login]);
-		    $this->exp_chatSendServerMessage(exp_getMessage("Hud reset done!"), $login);
+		switch ($this->resetLogins[$login]) {
+		    case 1:
+			Windows\ResetHud::Erase($login);
+			break;
+		    case 2:
+			$guiHandler->toggleGui($login);
+			break;
+		    case 3:
+			$guiHandler->toggleGui($login);
+			unset($this->resetLogins[$login]);
+			$this->exp_chatSendServerMessage(exp_getMessage("Hud reset done!"), $login);
+			break;
 		}
 	    }
 	}
-
 	if ($this->counter != 0 && time() - $this->counter > 2) {
 	    $this->connection->sendDisplayManialinkPage(null, "<manialinks><manialink id=\"0\"><quad></quad></manialink><custom_ui><altmenu_scores visible=\"false\" /></custom_ui></manialinks>", 0, false);
 	    echo "GOGO";
@@ -114,8 +119,8 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function onPlayerConnect($login, $isSpectator) {
-	// remove f8 for hiding ui
-	// 	\ManiaLive\Gui\Windows\Shortkey::Erase($login);
+// remove f8 for hiding ui
+// 	\ManiaLive\Gui\Windows\Shortkey::Erase($login);
 
 
 	/* reaby disabled this, no need anymore :)
@@ -123,8 +128,6 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	  $info->setSize(75, 6);
 	  $info->setPosition(-160, -50);
 	  $info->show(); */
-
-
 
 	try {
 	    $SMstorm = array("SMStorm", "SMStormCombo@nadeolabs", "SMStormRoyal@nadeolabs", "SMStormElite@nadeolabs", "SMStormJoust@nadeolabs");
@@ -160,9 +163,9 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function enableHudMove($login) {
-	if(Config::getInstance()->disablePersonalHud){
+	if (Config::getInstance()->disablePersonalHud) {
 	    $this->exp_chatSendServerMessage($this->msg_disabled, $login);
-	}else{
+	} else {
 	    $window = Windows\HudMove::Create($login, false);
 	    $window->enable();
 	    $window->show();
@@ -170,9 +173,9 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function disableHudMove($login) {
-	if(Config::getInstance()->disablePersonalHud){
+	if (Config::getInstance()->disablePersonalHud) {
 	    $this->exp_chatSendServerMessage($this->msg_disabled, $login);
-	}else{
+	} else {
 	    $window = Windows\HudMove::Create($login, false);
 	    $window->disable();
 	    $window->show();
@@ -180,9 +183,9 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function showConfigWindow($login, $entries) {
-	if(Config::getInstance()->disablePersonalHud){
+	if (Config::getInstance()->disablePersonalHud) {
 	    $this->exp_chatSendServerMessage($this->msg_disabled, $login);
-	}else{
+	} else {
 	    $window = Windows\Configuration::Create($login, true);
 	    $window->setSize(120, 90);
 	    $window->setData($entries);
@@ -191,10 +194,11 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     function resetHud($login) {
-	if(Config::getInstance()->disablePersonalHud){
+	if (Config::getInstance()->disablePersonalHud) {
 	    $this->exp_chatSendServerMessage($this->msg_disabled, $login);
-	}else{
-	    $window = Windows\ResetHud::Create($login, false);
+	} else {
+	    $window = Windows\ResetHud::Create($login);
+	    $window->setTimeout(1);
 	    $window->show();
 	    $this->resetLogins[$login] = 0;
 	    $this->exp_chatSendServerMessage(exp_getMessage("Starting hud reset, please wait"), $login);
@@ -211,8 +215,8 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$out = str_replace('"', "'", $string);
 	$out = str_replace('\\', '\\\\', $out);
 	$out = str_replace('--', '––', $out);
-	$out = str_replace('-', '–', $out);	
-	return $out;	
+	$out = str_replace('-', '–', $out);
+	return $out;
     }
 
     public static function showConfirmDialog($login, $actionId) {
@@ -226,7 +230,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * 
      */
     public static function createConfirm($finalAction) {
-	//$finalAction = call_user_func_array(array(\ManiaLive\Gui\ActionHandler::getInstance(), 'createAction'), func_get_args());
+//$finalAction = call_user_func_array(array(\ManiaLive\Gui\ActionHandler::getInstance(), 'createAction'), func_get_args());
 	$outAction = call_user_func_array(array(\ManiaLive\Gui\ActionHandler::getInstance(), 'createAction'), array(array(__NAMESPACE__ . '\Gui', 'showConfirmDialog'), $finalAction));
 	return $outAction;
     }
