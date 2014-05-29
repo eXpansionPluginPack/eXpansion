@@ -235,6 +235,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function showCurrentMapWidget($login) {
 	$info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\CurrentMapWidget::Create(null);
+	$info->setMap($this->storage->currentMap);
 	$info->setAction($this->actionShowMapList);
 	$info->show();
     }
