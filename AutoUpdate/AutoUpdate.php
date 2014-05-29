@@ -212,7 +212,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	$this->onGoingSteps = $steps;
 	$this->currentLogin = $login;
 
-	if (time() - $this->lastCheck > 60 * 60 * 6) {
+	if (time() - $this->lastCheck > (60 * 60 * 6)) {
 	    $this->lastCheck = time();
 	    $this->isUpToDate = true;
 	    $this->doSteps();

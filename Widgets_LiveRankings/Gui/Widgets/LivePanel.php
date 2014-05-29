@@ -22,8 +22,8 @@ class LivePanel extends LocalPanel {
     }
 
     protected function getScript() {
-	$gm = Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode();
-	if ($gm == GameInfos::GAMEMODE_ROUNDS || $gm == GameInfos::GAMEMODE_CUP || $gm == GameInfos::GAMEMODE_TEAM || Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
+	$gm = Widgets_LiveRankings::exp_getCurrentCompatibilityGameMode();
+	if ($gm == GameInfos::GAMEMODE_ROUNDS || $gm == GameInfos::GAMEMODE_CUP || $gm == GameInfos::GAMEMODE_TEAM  || Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
 
 	    $script = new CpPositions();
 	    $this->timeScript = $script;
