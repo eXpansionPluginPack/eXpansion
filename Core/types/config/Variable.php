@@ -11,13 +11,22 @@ use ManiaLib\Utils\Singleton;
 abstract class Variable
 {
 
+    const SCOPE_GLOBAL = 0;
+    const SCOPE_SERVER = 1;
+    const SCOPE_FILE = 2;
+
     private $name;
 
     private $visibleName;
 
     private $description;
 
-    private $isGlobal = true;
+    private $scope = self::SCOPE_GLOBAL;
+
+    /**
+     * @var Variable
+     */
+    private $scopeHandler = null;
 
     private $group;
 
@@ -45,17 +54,17 @@ abstract class Variable
 
     /**
      *
-     * @param String    $name           The name of the variable in the config file
-     * @param String    $visibleName    The name the players should see
-     * @param Singleton $configInstance The config instance in which the value should be saved into
-     * @param Boolean   $isGlobal       Is the scope of this variable global or server only
-     * @param Boolean   $showMain       Should the setting be shown in the main configuration or in the main expansion configuration
+     * @param String     $name           The name of the variable in the config file
+     * @param String     $visibleName    The name the players should see
+     * @param Singleton  $configInstance The config instance in which the value should be saved into
+     * @param int | bool $scope          Is the scope of this variable global or server only
+     * @param Boolean    $showMain       Should the setting be shown in the main configuration or in the main expansion configuration
      */
-    public function __construct($name, $visibleName = "", $configInstance = null, $isGlobal = true, $showMain = true)
+    public function __construct($name, $visibleName = "", $configInstance = null, $scope = true, $showMain = true)
     {
 	$this->name = $name;
 	$this->visibleName = $visibleName;
-	$this->isGlobal = $isGlobal;
+	$this->setScope($scope);
 	$this->showMain = $showMain;
 	$this->configInstance = $configInstance;
 	$this->confManager = \ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance();
@@ -137,7 +146,41 @@ abstract class Variable
 
     public function getIsGlobal()
     {
-	return $this->isGlobal;
+	if ($this->scopeHandler == null)
+	    return $this->scope == self::SCOPE_GLOBAL;
+	else
+	    return $this->scopeHandler->getRawValue() == self::SCOPE_GLOBAL;
+    }
+
+    public function getScope(){
+	if ($this->scopeHandler == null)
+	    return $this->scope;
+	else
+	    return $this->scopeHandler->getRawValue();
+    }
+
+    /**
+     * @param int | bool $scope The scope of this variable
+     */
+    public function setScope($scope)
+    {
+	if (is_bool($scope)) {
+	    $this->scope = $scope ? self::SCOPE_GLOBAL : self::SCOPE_SERVER;
+	} else {
+	    $this->scope = $scope;
+	}
+	if ($this->scopeHandler != null) {
+	    $this->scopeHandler->setRawValue($this->scope);
+	}
+    }
+
+    /**
+     * @param Variable $scopeHandler
+     */
+    public function setScopeHandler(Variable $scopeHandler)
+    {
+	$this->scopeHandler = $scopeHandler;
+	$this->scopeHandler->setRawValue($this->scope);
     }
 
     public function getCanBeNull()

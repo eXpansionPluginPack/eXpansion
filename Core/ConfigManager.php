@@ -36,14 +36,13 @@ class ConfigManager
     private $configurations = array();
 
     /**
-     * @var Variable[] List of all global variables
+     * @var Variable[][] List of all global variables
      */
-    private $globalVariables = array();
+    private $variables = array();
 
     /**
-     * @var Variable[] List of all server scoped variables
+     * @var Variable[] List of all server variables grouped
      */
-    private $scopedVariables = array();
     private $groupedVariables = array();
 
     /**
@@ -118,17 +117,10 @@ class ConfigManager
 	    $class = get_class($config);
 
 	    $this->configurationPlugins[$class] = $pluginId;
-	    if ($var->getIsGlobal()) {
-		if (!isset($this->globalVariables[$class]))
-		    $this->globalVariables[$class] = array();
+	    if (!isset($this->variables[$class]))
+		$this->variables[$class] = array();
 
-		$this->globalVariables[$class][$var->getName()] = $var;
-	    } else {
-		if (!isset($this->scopedVariables[$class]))
-		    $this->scopedVariables[$class] = array();
-
-		$this->scopedVariables[$class][$var->getName()] = $var;
-	    }
+	    $this->variables[$class][$var->getName()] = $var;
 
 	    $group = $var->getGroup();
 	    if ($group == "")
@@ -166,7 +158,7 @@ class ConfigManager
 	if (sizeof($this->groupedVariables[$confName][$groupName]) > 64) {
 	    $this->addVariableToGroup($group, $var, $num + 1);
 	} else {
-		$this->groupedVariables[$confName][$groupName][$var->getName()] = $var;
+	    $this->groupedVariables[$confName][$groupName][$var->getName()] = $var;
 	}
     }
 
@@ -202,17 +194,18 @@ class ConfigManager
 	$global = array();
 	$scoped = array();
 
-	if (file_exists(self::dirName . DIRECTORY_SEPARATOR . "settings.exp")) {
-	    $global = unserialize(file_get_contents(self::dirName . DIRECTORY_SEPARATOR . "settings.exp"));
-	}
+	$global = $this->getSettingsFromFile(self::dirName . DIRECTORY_SEPARATOR . "settings.exp");
 
-	if (file_exists(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp")) {
-	    $scoped = unserialize(file_get_contents(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp"));
-	}
+	$scoped = $this->getSettingsFromFile(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp");
 
-	$this->applySettings($global);
+	$this->applySettings($global, Variable::SCOPE_GLOBAL);
 
-	$this->applySettings($scoped, true);
+	$this->applySettings($scoped, Variable::SCOPE_SERVER);
+    }
+
+    protected function getSettingsFromFile($file)
+    {
+	return file_exists($file) ? unserialize(file_get_contents($file)) : array();
     }
 
     /**
@@ -222,13 +215,13 @@ class ConfigManager
     {
 	$saved = false;
 	if ($this->scopedUpdated) {
-	    $this->saveSettings(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp", $this->configurations);
+	    $this->saveSettings(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp", $this->configurations, Variable::SCOPE_SERVER);
 	    $this->scopedUpdated = false;
 	    $saved = true;
 	}
 
 	if ($this->globalsUpdated) {
-	    $this->saveSettings(self::dirName . DIRECTORY_SEPARATOR . "settings.exp", $this->configurations);
+	    $this->saveSettings(self::dirName . DIRECTORY_SEPARATOR . "settings.exp", $this->configurations, Variable::SCOPE_GLOBAL);
 	    $this->globalsUpdated = false;
 	    $saved = true;
 	}
@@ -240,7 +233,7 @@ class ConfigManager
     /**
      * Applies the settings to the current configuration
      */
-    protected function applySettings($newSettings, $scoped = false)
+    protected function applySettings($newSettings, $scope)
     {
 
 	foreach ($newSettings as $className => $object) {
@@ -252,12 +245,11 @@ class ConfigManager
 
 	    $config = $this->configurations[$className];
 	    foreach ($config as $key => $value) {
-		if (!$scoped) {
-		    if (isset($object->$key) && isset($this->globalVariables[$className]) && isset($this->globalVariables[$className][$key])) {
-			$config->$key = $object->$key;
-		    }
-		} else {
-		    if (isset($object->$key) && isset($this->scopedVariables[$className]) && isset($this->scopedVariables[$className][$key])) {
+
+		if (isset($this->variables[$className]) && isset($this->variables[$className][$key])) {
+		    /** @var Variable $var */
+		    $var = $this->variables[$className][$key];
+		    if ($var->getScope() == $scope) {
 			$config->$key = $object->$key;
 		    }
 		}
@@ -270,10 +262,37 @@ class ConfigManager
      *
      * @param String $fileName The path ot the file to save the configuration to
      * @param mixed  $settings The settings to serialize and save
+     * @param int    $scope    the scope of the file being saved
      */
-    protected function saveSettings($fileName, $settings)
+    protected function saveSettings($fileName, $settings, $scope)
     {
-	file_put_contents($fileName, serialize($settings));
+	$toSave = $settings;
+	if (file_exists($fileName)) {
+	    //We migh need the old values to replace the new ones. for lower scoped settings
+	    $oldSettings = $this->getSettingsFromFile($fileName);
+
+	    foreach ($settings as $className => $object) {
+		$toSave[$className] = new \stdClass();
+		foreach ($object as $key => $value) {
+
+		    $toSave[$className]->$key =$value;
+
+		    if (isset($this->variables[$className]) && isset($this->variables[$className][$key])) {
+			/** @var Variable $ourVar */
+			$ourVar = $this->variables[$className][$key];
+
+			if ($ourVar->getScope() > $scope) {
+			    //Need to get old value if possible, value of this variable is for superior scopes only
+			    if (isset($oldSettings[$className]) && isset($oldSettings[$className]->$key)){
+				$toSave[$className]->$key = $oldSettings[$className]->$key;
+			    }
+			}
+		    }
+		}
+	    }
+
+	}
+	file_put_contents($fileName, serialize($toSave));
     }
 
     public function getCore()
