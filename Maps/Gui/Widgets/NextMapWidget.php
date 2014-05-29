@@ -5,69 +5,73 @@ namespace ManiaLivePlugins\eXpansion\Maps\Gui\Widgets;
 class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     private $bg;
+    private $leftFrame, $rightFrame;
     private $mapName;
     private $mapAuthor;
     private $labelName;
-    private $labelAuthor;
+    private $labelAuthor, $environment, $time, $country;
 
     /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     private $map;
 
     protected function exp_onBeginConstruct() {
 	$this->setName("Next Map");
-	$frame = new \ManiaLive\Gui\Controls\Frame(0, 1);
-
-	// $frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
-	// $login = $this->getRecipient();
-
-	$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(40, 13);
-	$this->bg->setPosition(2, 0);
+	$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 15);
 	$this->addComponent($this->bg);
 
-	/* $label = new \ManiaLib\Gui\Elements\Label(30);
-	  $label->setText('$ddd' . 'Next', $login));
-	  $label->setAlign("right", "top");
-	  $label->setPosX(-8);
-	  $label->setPosY(1);
-	  // $this->addComponent($label); */
+	$column = new \ManiaLib\Gui\Layouts\Column();
 
-	$row = new \ManiaLive\Gui\Controls\Frame(0, -4);
-	$this->labelName = new \ManiaLib\Gui\Elements\Label(30, 7);
+	$this->leftFrame = new \ManiaLive\Gui\Controls\Frame(4, -1);
+	$this->leftFrame->setAlign("left", "top");
+	$this->leftFrame->setLayout(clone $column);
+	$this->addComponent($this->leftFrame);
+
+	$this->rightFrame = new \ManiaLive\Gui\Controls\Frame(20, -3);
+	$this->rightFrame->setLayout(clone $column);
+	$this->addComponent($this->rightFrame);
+
+	$biglabel = new \ManiaLib\Gui\Elements\Label(40, 4);
+	$biglabel->setStyle("TextRankingsBig");
+	$biglabel->setTextSize(2);
+	$biglabel->setAlign("left", "center");
+
+	$label = new \ManiaLib\Gui\Elements\Label(40, 4);
+	$label->setStyle("TextRaceMessage");
+	$label->setAlign("left", "center");
+	$label->setTextSize(2);
+	$label->setTextEmboss();
+
+	$nowPlaying = clone $biglabel;
+	$nowPlaying->setText("Next Map");
+	$nowPlaying->setPosition(30, 3);
+	$nowPlaying->setAlign("center", "center");
+	$this->addComponent($nowPlaying);
+
+	$this->country = new \ManiaLib\Gui\Elements\Quad(14, 9);
+	$this->country->setId("authorZone");
+	$this->country->setImage("http://reaby.kapsi.fi/ml/flags/Other%20Countries.dds", true);
+	$this->country->setAlign("left", "top");
+	$this->leftFrame->addComponent($this->country);
+
+	$this->labelAuthor = clone $biglabel;
+	$this->labelAuthor->setText($this->mapAuthor);
+	$this->labelAuthor->setAlign("left", "top");
+	$this->leftFrame->addComponent($this->labelAuthor);
+
+	$this->environment = clone $label;
+	$this->environment->setText("unknown");
+	$this->rightFrame->addComponent($this->environment);
+
+	$this->labelName = clone $biglabel;
 	$this->labelName->setText('$ddd' . $this->mapName);
-	$this->labelName->setPosX(36);
-	$this->labelName->setAlign("right", "top");
-	$this->labelName->setPosY(0);
-	$row->addComponent($this->labelName);
+	$this->rightFrame->addComponent($this->labelName);
 
-	$icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
-	$icon->setStyle("UIConstructionSimple_Buttons");
-	$icon->setSubStyle("Challenge");
-	$icon->setPosX(36);
-	$icon->setPosY(1);
-	$row->addComponent($icon);
-	$frame->addComponent($row);
-
-	$row = new \ManiaLive\Gui\Controls\Frame(0, -8);
-	$this->labelAuthor = new \ManiaLib\Gui\Elements\Label(28, 7);
-	$this->labelAuthor->setText('$ddd' . $this->mapAuthor);
-	$this->labelAuthor->setAlign("right", "top");
-	$this->labelAuthor->setPosX(36);
-	$this->labelAuthor->setPosY(-1);
-	$row->addComponent($this->labelAuthor);
-
-	$icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
-	$icon->setStyle("UIConstructionSimple_Buttons");
-	$icon->setSubStyle("Author");
-	$icon->setPosX(36);
-	$row->addComponent($icon);
-	$frame->addComponent($row);
-
-	$this->addComponent($frame);
+	$this->time = clone $label;
+	$this->rightFrame->addComponent($this->time);
     }
 
     protected function exp_onEndConstruct() {
-	$this->setSize(44, 15);
-	$this->setScale(0.8);
+	$this->setSize(60, 15);
     }
 
     function setAction($action) {
@@ -76,8 +80,13 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map) {
 	$this->map = $map;
-	$this->labelName->setText('$ddd' . $this->map->name);
-	$this->labelAuthor->setText('$ddd' . $this->map->author);
+	$this->labelName->setText($this->map->name);
+	$this->labelAuthor->setText($this->map->author);
+	// $this->time->setText($this->map->goldTime);
+	$this->environment->setText($map->environnement);
+	
+	if ($map->author == "Nadeo")
+	    $this->country->setImage("http://reaby.kapsi.fi/ml/flags/France.dds", true);
     }
 
     function destroy() {

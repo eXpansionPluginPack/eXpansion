@@ -235,6 +235,8 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function showCurrentMapWidget($login) {
 	$info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\CurrentMapWidget::Create(null);
+	$info->setMap($this->storage->currentMap);
+	$info->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 	$info->setAction($this->actionShowMapList);
 	$info->show();
     }
@@ -242,7 +244,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showNextMapWidget($login) {
 	if ($this->config->showNextMapWidget) {
 	    $info = \ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget::Create($login);
-	    $info->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+	    $info->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 	    $info->setAction($this->actionShowJukeList);
 	    $info->setMap($this->nextMap);
 	    $info->show();

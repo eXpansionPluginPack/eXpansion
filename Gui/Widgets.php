@@ -102,14 +102,13 @@ class Widgets extends \ManiaLib\Utils\Singleton
 					   self::config_shootmania => -120);
     public $SkipandResButtons_posY = array(self::config_trackmania => 78,
 					   self::config_shootmania => 92);
-    public $NextMap_posX = array(self::config_trackmania => 126,
-				 self::config_shootmania => 67.5);
-    public $NextMap_posY = array(self::config_trackmania => 67,
-				 self::config_shootmania => 92);
-
-    public $CurrentMapWidget_posX = array(self::config_default => 100);
-    public $CurrentMapWidget_posY = array(self::config_default => 90);
-
+    
+    public $CurrentMapWidget_posX = array(self::config_default => -80);
+    public $CurrentMapWidget_posY = array(self::config_default => 65);
+    
+    public $NextMap_posX = array(self::config_default => 20);	
+    public $NextMap_posY = array(self::config_default => 65);
+    
     public $MapRatingsWidget_posX = array(self::config_trackmania => 128,
 					  self::config_shootmania => 38);
     public $MapRatingsWidget_posY = array(self::config_trackmania => 75,
