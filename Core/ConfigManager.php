@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Core;
 
+use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 
 /**
@@ -131,6 +132,12 @@ class ConfigManager
 	    if (!isset($this->configurations[$class])) {
 		$this->configurations[$class] = $config;
 	    }
+
+	    $scopeVar = new Int($class.$var->getName(), "", Config::getInstance(), Variable::SCOPE_SERVER, false);
+	    $var->setScopeHandler($scopeVar);
+	    if(!isset($this->variables[get_class(Config::getInstance())]))
+		$this->variables[get_class(Config::getInstance())] = array();
+	    $this->variables[get_class(Config::getInstance())][$scopeVar->getName()] = $scopeVar;
 	}
     }
 
@@ -290,7 +297,6 @@ class ConfigManager
 		    }
 		}
 	    }
-
 	}
 	file_put_contents($fileName, serialize($toSave));
     }
