@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Gui\Widgets;
 
+use ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Widgets_LiveRankings;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\TeamItem;
 use ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Gui\Scripts\CpPositions;
@@ -95,8 +96,8 @@ class LivePanel extends LocalPanel {
 		$this->timeScript->setParam("isTeam", "True");
 	    }
 
-	    if (!empty(Widgets_LocalRecords::$roundPoints)) {
-		$this->timeScript->setParam("points", "[" . implode(",", Widgets_LocalRecords::$roundPoints) . "]");
+	    if (!empty(Widgets_LiveRankings::$roundPoints)) {
+		$this->timeScript->setParam("points", "[" . implode(",", Widgets_LiveRankings::$roundPoints) . "]");
 	    }
 
 	    return $script;
@@ -129,7 +130,7 @@ class LivePanel extends LocalPanel {
 	$recsData = "";
 	$nickData = "";
 
-	$gm = Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode();
+	$gm = Widgets_LiveRankings::exp_getCurrentCompatibilityGameMode();
 	$short = false;
 	if ($gm == GameInfos::GAMEMODE_ROUNDS || $gm == GameInfos::GAMEMODE_CUP || $gm == GameInfos::GAMEMODE_TEAM || $gm == GameInfos::GAMEMODE_LAPS) {
 	    $short = true;
