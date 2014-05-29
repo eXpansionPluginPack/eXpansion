@@ -118,8 +118,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function getVotesForMap($uId = null) {
 	if ($uId == null) {
 	    $uId = $this->storage->currentMap->uId;
-	}
-	else if ($uId instanceof \Maniaplanet\DedicatedServer\Structures\Map) {
+	} else if ($uId instanceof \Maniaplanet\DedicatedServer\Structures\Map) {
 	    $uId = $uid->uId;
 	}
 
@@ -184,15 +183,18 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	if (isset($this->pendingRatings[$login])) {
 	    $oldRating = $this->pendingRatings[$login];
-	}
-	else if (isset($this->oldRatings[$login])) {
+	} else if (isset($this->oldRatings[$login])) {
 	    $oldRating = $this->oldRatings[$login]->rating;
-	}
-	else {
+	} else {
 	    $this->ratingTotal++;
 	}
 
-	$this->rating = ($sum - $oldRating + $rating) / $this->ratingTotal;
+	if ($this->ratingTotal == 0) {
+	    $this->rating = $rating;
+	} else {
+	    $this->rating = ($sum - $oldRating + $rating) / $this->ratingTotal;
+	}
+	
 	$this->pendingRatings[$login] = $rating;
 
 	if ($this->displayWidget) {
@@ -214,8 +216,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		$query = $this->db->execute("SELECT rating AS playerRating FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . " AND `login`=" . $this->db->quote($login) . ";")->fetchObject();
 		if ($query === false) {
 		    $playerRating = '-';
-		}
-		else {
+		} else {
 		    $playerRating = $query->playerRating;
 		}
 	    }
@@ -356,8 +357,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if ($this->config->sendBeginMapNotices) {
 	    if ($this->ratingTotal == 0) {
 		$this->exp_chatSendServerMessage($this->msg_noRating, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
-	    }
-	    else {
+	    } else {
 		foreach ($this->storage->players as $login => $player) {
 		    $this->sendRatingMsg($login, null);
 		}
