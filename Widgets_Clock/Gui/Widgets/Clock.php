@@ -8,16 +8,18 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     private $frame, $players, $specs, $server;
 
     protected function exp_onBeginConstruct() {	
-	$clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(58, 11.5);	
+	$this->setAlign("right", "top");
+	
+	$clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 6);	
 	$clockBg->setAction(\ManiaLivePlugins\eXpansion\Core\Core::$action_serverInfo);
 	$this->addComponent($clockBg);
 
-	$this->server = new \ManiaLib\Gui\Elements\Label(58, 6);
+	$this->server = new \ManiaLib\Gui\Elements\Label(60, 6);
 	$this->server->setId('serverName');
-	$this->server->setAlign("left", "top");
+	$this->server->setAlign("right", "top");
 	$this->server->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
 	$this->server->setTextSize(2);
-	$this->server->setPosition(2, -1);
+	$this->server->setPosition(58, -7.5);
 	$this->server->setTextColor('fff');
 	$this->server->setTextPrefix('$s');		
 	$this->addComponent($this->server);
@@ -26,17 +28,18 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	  $this->addComponent($this->nameBg);
 	  $this->nameBg->setPosition(0, -3); */
 
-	$line = new \ManiaLive\Gui\Controls\Frame(2, -8.5);
+	$line = new \ManiaLive\Gui\Controls\Frame(4, -3);
 	$layout = new \ManiaLib\Gui\Layouts\Line();
 	$layout->setMargin(1);
 	$line->setLayout($layout);
+	
 	$icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
 	$icon->setAlign("left", "center2");
 	$icon->setStyle("Icons128x128_1");
 	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x128_1::Buddies);
 	$line->addComponent($icon);
 
-	$this->players = new \ManiaLib\Gui\Elements\Label(9, 6);
+	$this->players = new \ManiaLib\Gui\Elements\Label(11, 6);
 	$this->players->setAlign("left", "center");
 	$this->players->setId('playersCount');
 	$this->players->setTextColor('fff');
@@ -50,11 +53,12 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
 	$icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
 	$icon->setStyle("Icons64x64_1");
+	$icon->setPosY(-0.5);
 	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons64x64_1::TV);
-	$icon->setAlign("left", "center2");
+	$icon->setAlign("left", "center");
 	$line->addComponent($icon);
 
-	$this->specs = new \ManiaLib\Gui\Elements\Label(9, 6);
+	$this->specs = new \ManiaLib\Gui\Elements\Label(11, 6);
 	$this->specs->setAlign("left", "center");
 	$this->specs->setId('specsCount');
 	$this->specs->setTextColor('fff');

@@ -20,9 +20,9 @@ class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      */
     function displayWidget($login) {
         $info = Gui\Widgets\Clock::Create(null);
-        $info->setSize(58, 11);
-        $info->setPosition(-161, 90.5);
-        $info->setScale(0.8);
+        $info->setSize(60, 15);
+        $info->setPosition(105, 89);
+	$info->setScale(0.9);
         $info->setPlayersCount(count($this->storage->players), count($this->storage->spectators));
         $info->setServerName($this->storage->server->name);
         $info->show();
