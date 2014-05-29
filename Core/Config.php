@@ -47,6 +47,7 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $mapBase = "";
 	public $defaultMatchSettingsFile = "eXpansion_autosave.txt";
 	public $dedicatedConfigFile = "dedicated_cfg.txt";
+    	public $saveSettingsFile = "casualRace";
 
 	public $contact = "YOUR@EMAIL.COM";
 

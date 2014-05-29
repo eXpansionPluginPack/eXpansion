@@ -52,6 +52,11 @@ class ConfigManager
     private $globalsUpdated = false;
 
     /**
+     * @var Bool Was the global variables updated? if yes need to save on next check
+     */
+    private $fileUpdated = false;
+
+    /**
      * @var Bool Was the server scoped variables updated? if yes need to save on next check
      */
     private $scopedUpdated = false;
@@ -176,10 +181,13 @@ class ConfigManager
      */
     public function registerValueChange(Variable $var)
     {
-	if ($var->getIsGlobal())
+	if ($var->getScope() == Variable::SCOPE_GLOBAL)
 	    $this->globalsUpdated = true;
-	else
+	else if($var->getScope() == Variable::SCOPE_SERVER)
 	    $this->scopedUpdated = true;
+	else{
+	    $this->fileUpdated = true;
+	}
     }
 
     /**
@@ -198,16 +206,22 @@ class ConfigManager
      */
     public function loadSettings()
     {
-	$global = array();
-	$scoped = array();
+	$fileS = array();
 
 	$global = $this->getSettingsFromFile(self::dirName . DIRECTORY_SEPARATOR . "settings.exp");
 
 	$scoped = $this->getSettingsFromFile(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp");
 
+	$conf = Config::getInstance();
+	if($conf->saveSettingsFile !== ''){
+	    $fileS = $this->getSettingsFromFile(self::dirName . DIRECTORY_SEPARATOR . $conf->saveSettingsFile . ".user.exp");
+	}
+
 	$this->applySettings($global, Variable::SCOPE_GLOBAL);
 
 	$this->applySettings($scoped, Variable::SCOPE_SERVER);
+
+	$this->applySettings($fileS, Variable::SCOPE_FILE);
     }
 
     protected function getSettingsFromFile($file)
@@ -221,6 +235,7 @@ class ConfigManager
     public function check()
     {
 	$saved = false;
+
 	if ($this->scopedUpdated) {
 	    $this->saveSettings(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp", $this->configurations, Variable::SCOPE_SERVER);
 	    $this->scopedUpdated = false;
@@ -230,6 +245,13 @@ class ConfigManager
 	if ($this->globalsUpdated) {
 	    $this->saveSettings(self::dirName . DIRECTORY_SEPARATOR . "settings.exp", $this->configurations, Variable::SCOPE_GLOBAL);
 	    $this->globalsUpdated = false;
+	    $saved = true;
+	}
+
+	$conf = Config::getInstance();
+	if($conf->saveSettingsFile !== '' && $this->fileUpdated){
+	    $this->saveSettings(self::dirName . DIRECTORY_SEPARATOR . $conf->saveSettingsFile . ".user.exp", $this->configurations, Variable::SCOPE_FILE);
+	    $this->fileUpdated = false;
 	    $saved = true;
 	}
 
@@ -252,11 +274,10 @@ class ConfigManager
 
 	    $config = $this->configurations[$className];
 	    foreach ($config as $key => $value) {
-
 		if (isset($this->variables[$className]) && isset($this->variables[$className][$key])) {
 		    /** @var Variable $var */
 		    $var = $this->variables[$className][$key];
-		    if ($var->getScope() == $scope) {
+		    if ($var->getScope() >= $scope) {
 			$config->$key = $object->$key;
 		    }
 		}
@@ -274,7 +295,8 @@ class ConfigManager
     protected function saveSettings($fileName, $settings, $scope)
     {
 	$toSave = $settings;
-	if (file_exists($fileName)) {
+	//If saving global settings, we need to preserve original setting for variables of higher scopes
+	if ($scope == Variable::SCOPE_GLOBAL && file_exists($fileName)) {
 	    //We migh need the old values to replace the new ones. for lower scoped settings
 	    $oldSettings = $this->getSettingsFromFile($fileName);
 

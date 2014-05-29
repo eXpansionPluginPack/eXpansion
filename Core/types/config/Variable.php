@@ -164,10 +164,10 @@ abstract class Variable
      */
     public function setScope($scope)
     {
-	if (is_bool($scope)) {
-	    $this->scope = $scope ? self::SCOPE_GLOBAL : self::SCOPE_SERVER;
-	} else {
+	if (is_int($scope)) {
 	    $this->scope = $scope;
+	} else {
+	    $this->scope = $scope ? self::SCOPE_GLOBAL : self::SCOPE_SERVER;
 	}
 	if ($this->scopeHandler != null) {
 	    $this->scopeHandler->setRawValue($this->scope);

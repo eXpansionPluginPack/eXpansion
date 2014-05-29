@@ -4,6 +4,8 @@ namespace ManiaLivePlugins\eXpansion\AutoLoad;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
+use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
+
 /**
  * Description of MetaData
  *
@@ -18,7 +20,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$config = Config::getInstance();
 	$type = new String("","",null);
 
-	$var = new BasicList('plugins', "Plugins to autoload", $config);
+	$var = new BasicList('plugins', "Plugins to autoload", $config, Variable::SCOPE_FILE);
 	$var->setType($type);
 	$var->setVisible(false);
 	$this->registerVariable($var);
