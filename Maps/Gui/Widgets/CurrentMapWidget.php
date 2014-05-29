@@ -7,7 +7,7 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     protected $bg;
     protected $authorTime, $logo;
     private $leftFrame, $centerFrame, $rightFrame;
-    private $environment;
+    private $environment, $country;
 
     protected function exp_onBeginConstruct() {
 	$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(90, 15);
@@ -31,7 +31,7 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->rightFrame->setLayout(clone $column);
 	$this->addComponent($this->rightFrame);
 
-	$biglabel = new \ManiaLib\Gui\Elements\Label(60, 4);
+	$biglabel = new \ManiaLib\Gui\Elements\Label(45, 4);
 	$biglabel->setStyle("TextRankingsBig");
 	$biglabel->setTextSize(2);
 	$biglabel->setAlign("center", "center");
@@ -44,14 +44,15 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
 	$nowPlaying = clone $biglabel;
 	$nowPlaying->setText("Now Playing");
-	$nowPlaying->setPosition(45,3);
-	$this->addComponent($nowPlaying);		
-	
-	$country = new \ManiaLib\Gui\Elements\Quad(14, 9);
-	$country->setId("authorZone");
-	$country->setImage("http://reaby.kapsi.fi/ml/flags/Other%20Countries.dds", true);
-	$country->setAlign("left", "top");
-	$this->leftFrame->addComponent($country);
+	$nowPlaying->setPosition(45, 3);
+	$this->addComponent($nowPlaying);
+
+	$this->country = new \ManiaLib\Gui\Elements\Quad(14, 9);
+	$this->country->setId("authorZone");
+	$this->country->setImage("", true);
+	$this->country->setImage("http://reaby.kapsi.fi/ml/flags/Other%20Countries.dds", true);
+	$this->country->setAlign("left", "top");
+	$this->leftFrame->addComponent($this->country);
 
 	$author = clone $biglabel;
 	$author->setSizeX(40);
@@ -85,6 +86,9 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map) {
 	$this->environment->setText($map->environnement);
+	if ($map->author == "Nadeo") {
+	    $this->country->setImage("http://reaby.kapsi.fi/ml/flags/France.dds", true);
+	}
     }
 
     function setAction($action) {

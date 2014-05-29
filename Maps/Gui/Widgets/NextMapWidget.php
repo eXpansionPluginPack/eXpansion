@@ -9,7 +9,7 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     private $mapName;
     private $mapAuthor;
     private $labelName;
-    private $labelAuthor, $environment, $time;
+    private $labelAuthor, $environment, $time, $country;
 
     /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     private $map;
@@ -18,7 +18,7 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->setName("Next Map");
 	$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 15);
 	$this->addComponent($this->bg);
-	
+
 	$column = new \ManiaLib\Gui\Layouts\Column();
 
 	$this->leftFrame = new \ManiaLive\Gui\Controls\Frame(4, -1);
@@ -30,28 +30,28 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->rightFrame->setLayout(clone $column);
 	$this->addComponent($this->rightFrame);
 
-	$biglabel = new \ManiaLib\Gui\Elements\Label(60, 4);
+	$biglabel = new \ManiaLib\Gui\Elements\Label(40, 4);
 	$biglabel->setStyle("TextRankingsBig");
 	$biglabel->setTextSize(2);
 	$biglabel->setAlign("left", "center");
 
-	$label = new \ManiaLib\Gui\Elements\Label(45, 4);
+	$label = new \ManiaLib\Gui\Elements\Label(40, 4);
 	$label->setStyle("TextRaceMessage");
 	$label->setAlign("left", "center");
 	$label->setTextSize(2);
 	$label->setTextEmboss();
-	
+
 	$nowPlaying = clone $biglabel;
 	$nowPlaying->setText("Next Map");
-	$nowPlaying->setPosition(30,3);
+	$nowPlaying->setPosition(30, 3);
 	$nowPlaying->setAlign("center", "center");
 	$this->addComponent($nowPlaying);
-	
-	$country = new \ManiaLib\Gui\Elements\Quad(14, 9);
-	$country->setId("authorZone");
-	$country->setImage("http://reaby.kapsi.fi/ml/flags/Other%20Countries.dds", true);
-	$country->setAlign("left", "top");
-	$this->leftFrame->addComponent($country);
+
+	$this->country = new \ManiaLib\Gui\Elements\Quad(14, 9);
+	$this->country->setId("authorZone");
+	$this->country->setImage("http://reaby.kapsi.fi/ml/flags/Other%20Countries.dds", true);
+	$this->country->setAlign("left", "top");
+	$this->leftFrame->addComponent($this->country);
 
 	$this->labelAuthor = clone $biglabel;
 	$this->labelAuthor->setText($this->mapAuthor);
@@ -71,7 +71,7 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     }
 
     protected function exp_onEndConstruct() {
-	$this->setSize(60, 15);	
+	$this->setSize(60, 15);
     }
 
     function setAction($action) {
@@ -84,6 +84,9 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->labelAuthor->setText($this->map->author);
 	// $this->time->setText($this->map->goldTime);
 	$this->environment->setText($map->environnement);
+	
+	if ($map->author == "Nadeo")
+	    $this->country->setImage("http://reaby.kapsi.fi/ml/flags/France.dds", true);
     }
 
     function destroy() {
