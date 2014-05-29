@@ -146,6 +146,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 	//We need to reset the panel for next Round
 	self::$raceOn = false;
 	$this->hideLivePanel();
+	echo 'Begin Round';
 	$this->updateLivePanel();
 	self::$raceOn = true;
     }

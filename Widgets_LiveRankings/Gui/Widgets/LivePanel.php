@@ -196,7 +196,7 @@ class LivePanel extends LocalPanel {
     }
 
     protected function cpUpdate() {
-	if (!Widgets_LocalRecords::$raceOn) {
+	if (!\ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Widgets_LiveRankings::$raceOn) {
 	    return;
 	}
 
