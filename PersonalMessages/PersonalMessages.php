@@ -3,8 +3,8 @@
 namespace ManiaLivePlugins\eXpansion\PersonalMessages;
 
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection;
 use ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Widgets\MessagesPanel;
-use ManiaLivePlugins\eXpansion\PersonalMessages\PersonalMessages;
 use ManiaLivePlugins\eXpansion\Core\Config;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
@@ -58,12 +58,11 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     public function sendPersonalMessage($login, $message = "") {
-	$window = \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Create($login);
+	$window = PlayerSelection::Create($login);
 	$window->setController($this);
-	$window->setTitle(__('Select Player to send message'));
-	$window->setMessage($message);
-	$this->message[$login][$login] = $message;
-	$window->setSize(120, 100);
+	$window->setTitle('Select Player to send message');
+	$window->setSize(85, 100);
+	$window->populateList(array($this, 'sendPm'), 'send');
 	$window->centerOnScreen();
 	$window->show();
     }
@@ -79,7 +78,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
 	try {
 	    $color = '$z$s' . $this->config->Colors_personalmessage;
-	    \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Erase($login);
+	    PlayerSelection::Erase($login);
 
 	    if (!array_key_exists($target, $this->storage->players) && !array_key_exists($target, $this->storage->spectators)) {
 		$this->exp_chatSendServerMessage($this->msg_noLogin, $login, array($target));
@@ -122,8 +121,8 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 		$this->exp_chatSendServerMessage($this->msg_noMessage, $login);
 		return;
 	    }
-	    
-	    \ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Windows\PmWindow::Erase($login);
+
+	    PlayerSelection::Erase($login);
 	    $targetPlayer = $this->storage->getPlayerObject($target);
 	    $sourcePlayer = $this->storage->getPlayerObject($login);
 	    self::$reply[$login] = $target;
