@@ -697,12 +697,16 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     /**
      * Will update the record in the database.
+     *
      * @param Record $record
      * @param $nbLaps
+     *
+     * @return bool Was the record updated in the database
      */
     private function updateRecordInDatabase(Record $record, $nbLaps) {
 	//$uid = $this->storage->currentMap->uId;
 	$uid = $record->uId;
+        $changed = false;
 	if ($record->isNew) {
 	    //If the record is new we insert
 	    $q = 'INSERT INTO `exp_records` (`record_challengeuid`, `record_playerlogin`, `record_nbLaps`
@@ -718,6 +722,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                         )';
 	    $this->db->execute($q);
 	    $record->isNew = false;
+            $changed =  true;
 	}
 	else if ($record->isUpdated) {
 	    //If it isn't but it has been updated we update
@@ -732,9 +737,11 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                             AND `record_nbLaps` = ' . $this->db->quote($nbLaps) . ';';
 
 	    $this->db->execute($q);
+            $changed =  true;
 	}
 	//We flag it as updated
 	$record->isUpdated = false;
+        return $changed;
     }
 
     /**
