@@ -124,6 +124,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$this->console("[" . $pname . "]..............................Doesen't exist -> not loading");
 			return false;
 		    }
+                    /** @var MetaDataType $metaData */
 		    $metaData = $pname::getMetaData();
 
 		    $this->availablePlugins[$pname] = $metaData;
@@ -148,6 +149,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			    //   $this->connection->chatSendServerMessage('Starting ' . $pname . '........$0f0 Success');
 			}
 		    } else {
+                        $otherCheckResults = $metaData->checkAll();
+                        if(!empty($otherCheckResults)){
+                            return false;
+                        }
 			$this->console("[" . $pname . "]..............................Disabled -> Not Compatible");
 		    }
 		}

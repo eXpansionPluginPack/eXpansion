@@ -41,12 +41,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         /** @var PluginHandler $phandler */
         $phandler = PluginHandler::getInstance();
 
-        if ($phandler->isLoaded($dedi1) && $phandler->callPublicMethod(Core::$core, $dedi1, 'isRunning', array())) {
-            return true;
-        } elseif ($phandler->isLoaded($dedi2) && $phandler->callPublicMethod(Core::$core, $dedi2, 'isRunning', array()) ) {
-            return true;
+        if ($phandler->isLoaded($dedi1)) {
+            return array();
+        } elseif ($phandler->isLoaded($dedi2)) {
+            return array();
         }
 
-        return false;
+        return array('Dedimania Records Panel needs a running Dedimania plugin!!');
     }
 }
