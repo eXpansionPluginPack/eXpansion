@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Widgets;
 
 
-class DediPanel2 extends DediPanel {
+class DediPanel2 extends PlainPanel {
     
      function exp_onBeginConstruct() {
 	// $this->setName("Dedimania Panel (Tab-layer)");	

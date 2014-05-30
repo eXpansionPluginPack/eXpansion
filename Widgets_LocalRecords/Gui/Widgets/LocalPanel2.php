@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets;
 
-class LocalPanel2 extends LocalPanel {
+class LocalPanel2 extends PlainPanel {
 
     protected function exp_onBeginConstruct() {
 	
