@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLive\PluginHandler\Dependency;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\LocalPanel;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\LocalPanel2;
@@ -21,9 +22,12 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     /** @var Config */
     private $config;
 
+    public function exp_onInit(){
+        $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
+    }
+
     public function exp_onLoad()
     {
-
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);

@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords;
 
+use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
@@ -31,5 +32,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
 	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, 'TeamAttack.Script.txt');
     }
-
 }
