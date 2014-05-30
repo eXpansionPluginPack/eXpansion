@@ -2,6 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords;
 
+use ManiaLive\PluginHandler\PluginHandler;
+use ManiaLivePlugins\eXpansion\Core\Core;
+
 /**
  * Description of MetaData
  *
@@ -38,9 +41,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         /** @var PluginHandler $phandler */
         $phandler = PluginHandler::getInstance();
 
-        if ($phandler->isLoaded($dedi1) && $this->callPublicMethod($dedi2, 'isRunning')) {
+        if ($phandler->isLoaded($dedi1) && $phandler->callPublicMethod(Core::$core, $dedi1, 'isRunning', array())) {
             return true;
-        } elseif ($phandler->isLoaded($dedi2)) {
+        } elseif ($phandler->isLoaded($dedi2) && $phandler->callPublicMethod(Core::$core, $dedi2, 'isRunning', array()) ) {
             return true;
         }
 

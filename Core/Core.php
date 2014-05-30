@@ -87,6 +87,7 @@ class Core extends types\ExpPlugin {
      */
     public static $isRelay = false;
 
+    public static $core = null;
     /**
      *
      */
@@ -107,6 +108,8 @@ class Core extends types\ExpPlugin {
 
 	$this->configManager = ConfigManager::getInstance($this);
 	$this->configManager->loadSettings();
+
+        self::$core = $this;
     }
 
     /**
