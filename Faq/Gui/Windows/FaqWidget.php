@@ -18,7 +18,7 @@ class FaqWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->setName("Faq Widget");
 	$login = $this->getRecipient();
 
-	$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(7, 7);
+	$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(7, 6);
 	$this->addComponent($bg);
 
 	$this->frame = new \ManiaLive\Gui\Controls\Frame();
