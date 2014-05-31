@@ -115,15 +115,15 @@ class Widgets extends \ManiaLib\Utils\Singleton
 					  self::config_shootmania => 90);
 
     public $ManiaExchangePanel_posX = array(self::config_default => -160);
-    public $ManiaExchangePanel_posY = array(self::config_default => 81);
+    public $ManiaExchangePanel_posY = array(self::config_default => 83);
     public $ManiaExchangePanel_autoCloseTimeout = array(self::config_default => 0);
 
     public $FaqWidget_posX = array(self::config_default => -161);
-    public $FaqWidget_posY = array(self::config_trackmania => 75,
+    public $FaqWidget_posY = array(self::config_trackmania => 77,
 				   self::config_shootmania => -31);
 
     public $DonatePanel_posX = array(self::config_default => -160);
-    public $DonatePanel_posY = array(self::config_trackmania => 69,
+    public $DonatePanel_posY = array(self::config_trackmania => 71,
 				     self::config_shootmania => -37);
     public $DonatePanel_autoCloseTimeout = array(self::config_default => 0);
 
