@@ -42,7 +42,7 @@ class Widgets extends \ManiaLib\Utils\Singleton
 					GameInfos::GAMEMODE_TEAM   => -161,
 					GameInfos::GAMEMODE_LAPS   => -161,
 					GameInfos::GAMEMODE_CUP    => -161);
-    public $DedimaniaPanel_posY = array(self::config_default       => 63,
+    public $DedimaniaPanel_posY = array(self::config_default       => 64,
 					GameInfos::GAMEMODE_ROUNDS => 63,
 					GameInfos::GAMEMODE_TEAM   => 63,
 					GameInfos::GAMEMODE_LAPS   => 63,
@@ -62,7 +62,7 @@ class Widgets extends \ManiaLib\Utils\Singleton
 					   GameInfos::GAMEMODE_TEAM   => -161,
 					   GameInfos::GAMEMODE_LAPS   => -161,
 					   GameInfos::GAMEMODE_CUP    => -161);
-    public $LocalRecordsPanel_posY = array(self::config_default       => 52,
+    public $LocalRecordsPanel_posY = array(self::config_default       => 64,
 					   GameInfos::GAMEMODE_ROUNDS => 9,
 					   GameInfos::GAMEMODE_TEAM   => 9,
 					   GameInfos::GAMEMODE_LAPS   => 9,
@@ -82,12 +82,12 @@ class Widgets extends \ManiaLib\Utils\Singleton
 					   GameInfos::GAMEMODE_TEAM   => 118,
 					   GameInfos::GAMEMODE_LAPS   => 118,
 					   GameInfos::GAMEMODE_CUP    => 118);
-    public $LiveRankingsPanel_posY = array(self::config_default       => -13,
+    public $LiveRankingsPanel_posY = array(self::config_default       => -1,
 					   GameInfos::GAMEMODE_ROUNDS => 42,
 					   GameInfos::GAMEMODE_TEAM   => 42,
 					   GameInfos::GAMEMODE_LAPS   => 42,
 					   GameInfos::GAMEMODE_CUP    => 42);
-    public $LiveRankingsPanel_nbFields = array(self::config_default       => 8,
+    public $LiveRankingsPanel_nbFields = array(self::config_default       => 10,
 					       GameInfos::GAMEMODE_ROUNDS => 22,
 					       GameInfos::GAMEMODE_TEAM   => 22,
 					       GameInfos::GAMEMODE_LAPS   => 22,
@@ -98,9 +98,9 @@ class Widgets extends \ManiaLib\Utils\Singleton
 						    GameInfos::GAMEMODE_LAPS   => 10,
 						    GameInfos::GAMEMODE_CUP    => 10);
 
-    public $SkipandResButtons_posX = array(self::config_trackmania => 90,
+    public $SkipandResButtons_posX = array(self::config_trackmania => 96.5,
 					   self::config_shootmania => -120);
-    public $SkipandResButtons_posY = array(self::config_trackmania => 78,
+    public $SkipandResButtons_posY = array(self::config_trackmania => 75,
 					   self::config_shootmania => 92);
     
     public $CurrentMapWidget_posX = array(self::config_default => -80);
@@ -115,15 +115,15 @@ class Widgets extends \ManiaLib\Utils\Singleton
 					  self::config_shootmania => 90);
 
     public $ManiaExchangePanel_posX = array(self::config_default => -160);
-    public $ManiaExchangePanel_posY = array(self::config_default => 83);
+    public $ManiaExchangePanel_posY = array(self::config_default => 80);
     public $ManiaExchangePanel_autoCloseTimeout = array(self::config_default => 0);
 
     public $FaqWidget_posX = array(self::config_default => -161);
-    public $FaqWidget_posY = array(self::config_trackmania => 77,
+    public $FaqWidget_posY = array(self::config_trackmania => 76,
 				   self::config_shootmania => -31);
 
     public $DonatePanel_posX = array(self::config_default => -160);
-    public $DonatePanel_posY = array(self::config_trackmania => 71,
+    public $DonatePanel_posY = array(self::config_trackmania => 72,
 				     self::config_shootmania => -37);
     public $DonatePanel_autoCloseTimeout = array(self::config_default => 0);
 

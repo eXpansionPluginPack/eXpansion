@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Core;
 
+use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\Core\Events\ConfigLoadEvent;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 
@@ -232,24 +234,24 @@ class ConfigManager
     /**
      * Checks whatever a save is required, if it is not it will reload settings to be on the safe side.
      */
-    public function check()
+    public function check($forceSave = false)
     {
 	$saved = false;
 
-	if ($this->scopedUpdated) {
+	if ($forceSave || $this->scopedUpdated) {
 	    $this->saveSettings(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp", $this->configurations, Variable::SCOPE_SERVER);
 	    $this->scopedUpdated = false;
 	    $saved = true;
 	}
 
-	if ($this->globalsUpdated) {
+	if ($forceSave || $this->globalsUpdated) {
 	    $this->saveSettings(self::dirName . DIRECTORY_SEPARATOR . "settings.exp", $this->configurations, Variable::SCOPE_GLOBAL);
 	    $this->globalsUpdated = false;
 	    $saved = true;
 	}
 
 	$conf = Config::getInstance();
-	if($conf->saveSettingsFile !== '' && $this->fileUpdated){
+	if($forceSave || $conf->saveSettingsFile !== '' && $this->fileUpdated){
 	    $this->saveSettings(self::dirName . DIRECTORY_SEPARATOR . $conf->saveSettingsFile . ".user.exp", $this->configurations, Variable::SCOPE_FILE);
 	    $this->fileUpdated = false;
 	    $saved = true;
@@ -283,6 +285,35 @@ class ConfigManager
 		}
 	    }
 	}
+    }
+
+    public function saveSettingsIn($fileName){
+        $this->saveSettings(self::dirName . DIRECTORY_SEPARATOR . $fileName, $this->configurations, Variable::SCOPE_FILE);
+        $this->fileUpdated = false;
+    }
+
+    public function loadSettingsFrom($fileName, $save = true){
+        $fileS = array();
+
+        $global = $this->getSettingsFromFile(self::dirName . DIRECTORY_SEPARATOR . "settings.exp");
+
+        $scoped = $this->getSettingsFromFile(self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp");
+
+        $this->applySettings($global, Variable::SCOPE_GLOBAL);
+
+        $this->applySettings($scoped, Variable::SCOPE_SERVER);
+
+        $conf = Config::getInstance();
+        if($conf->saveSettingsFile !== ''){
+            $fileS = $this->getSettingsFromFile(self::dirName . DIRECTORY_SEPARATOR . $fileName);
+        }
+
+        $this->applySettings($fileS, Variable::SCOPE_FILE);
+
+        if($save)
+            $this->check(true);
+
+        Dispatcher::dispatch(new ConfigLoadEvent(ConfigLoadEvent::ON_CONFIG_FILE_LOADED));
     }
 
     /**

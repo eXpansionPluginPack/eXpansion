@@ -161,12 +161,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$var->setGroup("Config Files");
 	$var->setDefaultValue('casualRace');
 	$this->registerVariable($var);
-        $var->showConfWindow('oliverde8');
 
 	$var = new String('contact', 'Server administrators contact info (displayed at serverinfo window)', $config, false);	
 	$var->setDefaultValue('YOUR@EMAIL.COM');
 	$this->registerVariable($var);
-	
     }
 
 }

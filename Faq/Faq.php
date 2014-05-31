@@ -40,10 +40,10 @@ class Faq extends ExpPlugin {
         FaqWindow::$mainPlugin = $this;
         FaqWidget::$mainPlugin = $this;
 	
-        $window = FaqWidget::Create(null);
+        /*$window = FaqWidget::Create(null);
         $window->setSize(7, 5);
 	$window->setDisableAxis("x");
-        $window->show();
+        $window->show();*/
       
     }
 
