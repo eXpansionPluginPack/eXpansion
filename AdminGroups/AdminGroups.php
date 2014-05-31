@@ -327,7 +327,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * Parsing a group
      *
      * @param string $groupName The groups name
-     * @param array $value
+     * @param array  $value
+     *
+     * @return array
      */
     private function ParseGroup($groupName, $value) {
 

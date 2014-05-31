@@ -6,6 +6,7 @@ use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\AutoLoad\Gui\Windows\PluginList;
+use ManiaLivePlugins\eXpansion\AutoLoad\Structures\PluginNotFoundException;
 use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\types\config\MetaData as MetaDataType;
 
@@ -23,6 +24,8 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * @var Config
      */
     private $config;
+
+    private $toBeRemoved =array();
 
 
     public function exp_onLoad()
@@ -57,7 +60,23 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function exp_onReady(){
 	//We Need the plugin Handler
 	$pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
-	$this->autoLoadPlugins($this->config->plugins, $pHandler);
+
+        $this->autoLoadPlugins($this->config->plugins, $pHandler);
+
+        if(!empty($this->toBeRemoved)){
+            $this->cleanPluginsArray($this->config->plugins, $this->toBeRemoved);
+            ConfigManager::getInstance()->registerValueChange($this->getMetaData()->getVariable('plugins'));
+            ConfigManager::getInstance()->check();
+        }
+    }
+
+    private function cleanPluginsArray(&$plugins, $toRemove){
+
+        for($i = 0; $i < count($plugins); $i++){
+            if(in_array($plugins[$i], $toRemove)){
+                array_splice($plugins, $i, 1);
+            }
+        }
     }
 
     public function autoLoadPlugins($plugins, PluginHandler $pHandler)
@@ -100,8 +119,12 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 
 	foreach ($list as $pname) {
+            try{
 	    if (!$this->loadPlugin($pname, $pHandler))
-		$recheck[] = $pname;;
+		$recheck[] = $pname;
+            }catch (PluginNotFoundException $ex){
+                $this->toBeRemoved[] = $pname;
+            }
 	}
 	return $recheck;
     }
@@ -122,6 +145,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		    $status = true;
 		    if(!class_exists($pname)){
 			$this->console("[" . $pname . "]..............................Doesen't exist -> not loading");
+                        throw new PluginNotFoundException($pname);
 			return false;
 		    }
                     /** @var MetaDataType $metaData */
@@ -157,7 +181,9 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		    }
 		}
 	    }
-	} catch (\Exception $ex) {
+	}catch(PluginNotFoundException $ex){
+            throw $ex;
+        }catch(\Exception $ex) {
 	    echo "Second Catch";
 	    print_r($ex->getMessage());
 	    \ManiaLivePlugins\eXpansion\Core\types\ErrorHandler::displayAndLogError($ex);
