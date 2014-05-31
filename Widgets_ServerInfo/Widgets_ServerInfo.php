@@ -19,10 +19,8 @@ class Widgets_ServerInfo extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	$info = Gui\Widgets\ServerInfo::Create(null);
 	$info->setSize(60, 15);
 	$info->setPosition(-159, 89);
-	$info->setScale(0.9);
-	$info->setServerName($this->storage->server->name);
+	$info->setScale(0.75);
 	$info->setLadderLimits($this->storage->server->ladderServerLimitMin, $this->storage->server->ladderServerLimitMax);
-	$info->setPlayersCount($this->storage->server->currentMaxPlayers);
 	$info->show();
     }
 
@@ -31,7 +29,7 @@ class Widgets_ServerInfo extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     function exp_onUnload() {
-	Clock::EraseAll();
+	Gui\Widgets\ServerInfo::EraseAll();
     }
 
 }

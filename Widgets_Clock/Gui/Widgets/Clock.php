@@ -7,21 +7,21 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     protected $clockBg;
     private $frame, $players, $specs, $map, $author;
 
-    protected function exp_onBeginConstruct() {	
+    protected function exp_onBeginConstruct() {
 	$this->setAlign("right", "top");
-	
-	$clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 6);	
+
+	$clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 6);
 	$clockBg->setAction(\ManiaLivePlugins\eXpansion\Core\Core::$action_serverInfo);
-	$this->addComponent($clockBg);
+	//$this->addComponent($clockBg);
 
 	$this->map = new \ManiaLib\Gui\Elements\Label(60, 6);
 	$this->map->setId('mapName');
 	$this->map->setAlign("right", "top");
 	$this->map->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
 	$this->map->setTextSize(2);
-	$this->map->setPosition(58, -6.5);
+	$this->map->setPosition(58, 0);
 	$this->map->setTextColor('fff');
-	$this->map->setTextPrefix('$s');		
+	$this->map->setTextPrefix('$s');
 	$this->addComponent($this->map);
 
 	$this->author = new \ManiaLib\Gui\Elements\Label(60, 6);
@@ -29,60 +29,20 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->author->setAlign("right", "top");
 	$this->author->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
 	$this->author->setTextSize(2);
-	$this->author->setPosition(58, -11.5);
+	$this->author->setPosition(58, -4.5);
 	$this->author->setTextColor('fff');
-	$this->author->setTextPrefix('$s');		
+	$this->author->setTextPrefix('$s');
 	$this->addComponent($this->author);
-	
-	
-	$line = new \ManiaLive\Gui\Controls\Frame(4, -3);
+
+
+	$line = new \ManiaLive\Gui\Controls\Frame(40, -10.5);	
+	$line->setAlign("right", "top");
 	$layout = new \ManiaLib\Gui\Layouts\Line();
-	$layout->setMargin(1);
+	$layout->setMargin(1);	
 	$line->setLayout($layout);
+	$icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
 	
-	$icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
-	$icon->setAlign("left", "center2");
-	$icon->setStyle("Icons128x128_1");
-	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x128_1::Buddies);
-	$line->addComponent($icon);
-
-	$this->players = new \ManiaLib\Gui\Elements\Label(11, 6);
-	$this->players->setAlign("left", "center");
-	$this->players->setId('playersCount');
-	$this->players->setTextColor('fff');
-	$this->players->setScale(0.8);
-	$this->players->setStyle('TextCardScores2');
-	$this->players->setId("nbPlayer");
-	//$this->players->setTextPrefix('$s');
-	$line->addComponent($this->players);
-
-
-
-	$icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
-	$icon->setStyle("Icons64x64_1");
-	$icon->setPosY(-0.5);
-	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons64x64_1::TV);
-	$icon->setAlign("left", "center");
-	$line->addComponent($icon);
-
-	$this->specs = new \ManiaLib\Gui\Elements\Label(11, 6);
-	$this->specs->setAlign("left", "center");
-	$this->specs->setId('specsCount');
-	$this->specs->setTextColor('fff');
-	$this->specs->setScale(0.8);
-	$this->specs->setStyle('TextCardScores2');
-	$this->specs->setId("nbSpec");
-	//$this->specs->setTextPrefix('$s');
-	$line->addComponent($this->specs);
-
-
-	$icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
-	$icon->setStyle("Icons128x32_1");
-	$icon->setAlign("left", "center");
-	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::RT_TimeAttack);
-	$line->addComponent($icon);
-
-	$clock = new \ManiaLib\Gui\Elements\Label(24, 6);
+	$clock = new \ManiaLib\Gui\Elements\Label(16, 6);
 	$clock->setAlign("left", "center");
 	$clock->setId('clock');
 	$clock->setTextColor('fff');
@@ -91,24 +51,24 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	//$clock->setTextPrefix('$s');
 	$line->addComponent($clock);
 
+	$icon->setStyle("Icons128x32_1");
+	$icon->setAlign("left", "center");
+	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::RT_TimeAttack);
+	$line->addComponent($icon);
+	
+	
 	$this->frame = $line;
 	$this->addComponent($this->frame);
 	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Clock\Gui\Scripts_Clock");
-	$this->registerScript($script);
-	$script->setParam("serverLogin", \ManiaLive\Data\Storage::getInstance()->serverLogin);
+	$this->registerScript($script);	
 
-	$this->setName("Clock & Server Name Widget");
-    }
-
-    public function setPlayersCount($players, $specs) {
-	$this->players->setText($players);
-	$this->specs->setText($specs);
+	$this->setName("Clock & Mapinfo Widget");
     }
 
     public function setServerName($name) {
 	// $this->server->setText($name);
     }
-    
+
     function destroy() {
 	$this->clearComponents();
 	parent::destroy();
