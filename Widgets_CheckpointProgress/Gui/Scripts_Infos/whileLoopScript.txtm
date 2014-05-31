@@ -1,0 +1,19 @@
+foreach (Player in Players) {
+        declare CpProgressCount for Player = -1;
+        if (CpProgressCount != Player.CurRace.Checkpoints.count && Player.Login != CurrentServerLogin) {
+            CpProgressCount = Player.CurRace.Checkpoints.count;
+            curCp = Player.CurRace.Checkpoints.count;            
+
+        if (curCp > highestCp) {            
+            highestCp = curCp;            
+        }
+
+        if (Player.Login == InputPlayer.Login) {                       
+            myProgress.Ratio =  curCp * divGrad;
+        }
+
+    }
+}
+
+totalProgress.Ratio = highestCp * divGrad;
+

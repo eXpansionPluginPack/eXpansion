@@ -3,7 +3,7 @@ foreach (Player in Players) {
     //If first checkpoint time or new checkpoint time
     declare playerCp for Player = -1;
 
-    if(playerCp != Player.CurRace.Checkpoints.count) {
+    if(playerCp != Player.CurRace.Checkpoints.count && Player.Login != CurrentServerLogin) {
 	//Update the current checkpoint of this user
 	playerCp = Player.CurRace.Checkpoints.count;
 	

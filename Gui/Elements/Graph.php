@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
-class Graph extends \ManiaLib\Gui\Element {
+class Graoh extends \ManiaLib\Gui\Element {
 
     protected $xmlTagName = 'graph';
     protected $posX = 0;

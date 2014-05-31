@@ -3,8 +3,8 @@ if(MouseRightButton && !eXp_mouseRightState) {
 	eXp_mouseRightState = True;    
         toggleSubmenu = False;
 } else if(!MouseRightButton && eXp_mouseRightState) {
-    eXp_mouseRightState = False;    
-     toggleSubmenu = False;
+        eXp_mouseRightState = False;    
+        toggleSubmenu = False;
 
 	if((Now - eXp_mouseRightTime) < 125) {
 	    toggleSubmenu = True;
