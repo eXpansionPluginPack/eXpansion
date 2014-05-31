@@ -1,15 +1,19 @@
 if(MouseRightButton && !eXp_mouseRightState) {        
 	eXp_mouseRightTime = Now;
 	eXp_mouseRightState = True;    
+        toggleSubmenu = False;
 } else if(!MouseRightButton && eXp_mouseRightState) {
     eXp_mouseRightState = False;    
-    
-	if((Now - eXp_mouseRightTime) < 200) {
+     toggleSubmenu = False;
+
+	if((Now - eXp_mouseRightTime) < 125) {
 	    toggleSubmenu = True;
 	    Menu.RelativePosition.X = MouseX-1.0;
 	    Menu.RelativePosition.Y = MouseY+.5;  
 	    Menu.RelativePosition.Z = 50.0;
-	}   
+	}
+        
+        
     
 }
 
