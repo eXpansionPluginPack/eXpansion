@@ -20,8 +20,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	parent::onBeginLoad();
 	$this->setName("Dedimania");
 	$this->setDescription("Dedimania, Global world records system integration");
-	
-	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
+
+        $this->addTitleSupport("TM");
+        $this->addTitleSupport("Trackmania");
+        $this->setEnviAsTitle(false);
+
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
 	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
 	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
 	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);

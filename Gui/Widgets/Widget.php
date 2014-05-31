@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Widgets;
 
+use ManiaLive\Data\Storage;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Widgets as WConfig;
@@ -71,10 +72,15 @@ class Widget extends PlainWidget {
 		$gmode = $this->storage->gameInfos->scriptName;
 	    $compoMode = Gui::exp_getCurrentCompatibilityGameMode();
 
-	    $title = WConfig::config_trackmania;
-	    if (\ManiaLivePlugins\eXpansion\Core\Core::$isSMServer) {
-		$title = WConfig::config_shootmania;
-	    }
+            $storage = Storage::getInstance();
+            $title = $storage->currentMap->environnement;
+            if($title == "Stadium" || $title == "Valley" || $title == "Canyon")
+                $title = WConfig::config_trackmania;
+            else{
+                $title =WConfig::config_shootmania;
+            }
+
+
 	    $this->currentSettings = array();
 	    foreach (self::$config[$widgetName] as $name => $values) {
 		if (isset($values[$gmode])) {

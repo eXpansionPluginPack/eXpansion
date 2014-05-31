@@ -98,9 +98,9 @@ class Widgets extends \ManiaLib\Utils\Singleton
 						    GameInfos::GAMEMODE_LAPS   => 10,
 						    GameInfos::GAMEMODE_CUP    => 10);
 
-    public $SkipandResButtons_posX = array(self::config_trackmania => 96.5,
+    public $SkipandResButtons_posX = array(self::config_default => 96.5,
 					   self::config_shootmania => -120);
-    public $SkipandResButtons_posY = array(self::config_trackmania => 75,
+    public $SkipandResButtons_posY = array(self::config_default => 75,
 					   self::config_shootmania => 92);
     
     public $CurrentMapWidget_posX = array(self::config_default => -80);
@@ -109,9 +109,9 @@ class Widgets extends \ManiaLib\Utils\Singleton
     public $NextMap_posX = array(self::config_default => 20);	
     public $NextMap_posY = array(self::config_default => 65);
     
-    public $MapRatingsWidget_posX = array(self::config_trackmania => 128,
+    public $MapRatingsWidget_posX = array(self::config_default => 128,
 					  self::config_shootmania => 38);
-    public $MapRatingsWidget_posY = array(self::config_trackmania => 75,
+    public $MapRatingsWidget_posY = array(self::config_default => 75,
 					  self::config_shootmania => 90);
 
     public $ManiaExchangePanel_posX = array(self::config_default => -160);
