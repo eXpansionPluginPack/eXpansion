@@ -424,14 +424,13 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->storage->currentMap->localRecords = array();
         foreach ($this->currentChallengeRecords as $i => $record) {
             $this->storage->currentMap->localRecords[$record->login] = $record->place;
-            $updated                                                 = $updated || $this->updateRecordInDatabase(
-                    $record,
-                    $nbLaps
-                );
+            $newUpdate = $this->updateRecordInDatabase($record, $nbLaps);
+            $updated = $updated || $newUpdate;
         }
         //Now the rest of the times as well(PB)
         foreach ($this->currentChallengePlayerRecords as $i => $record) {
-            $updated = $updated || $this->updateRecordInDatabase($record, $nbLaps);
+            $newUpdate = $this->updateRecordInDatabase($record, $nbLaps);
+            $updated = $updated || $newUpdate;
         }
 
         if ($updated) {
@@ -882,7 +881,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         WHERE `record_challengeuid` = ' . $this->db->quote($uid) . '
                             AND `record_playerlogin` =  ' . $this->db->quote($record->login) . '
                             AND `record_nbLaps` = ' . $this->db->quote($nbLaps) . ';';
-
             $this->db->execute($q);
             $changed = true;
         }
