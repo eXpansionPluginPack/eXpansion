@@ -37,9 +37,6 @@ class PlayerList extends Window{
         
         
         $this->pager->clearItems();
-        foreach ($this->items as $item) {
-            $item->destroy();            
-        }        
         $this->items = array();
         
         $i = 1;
