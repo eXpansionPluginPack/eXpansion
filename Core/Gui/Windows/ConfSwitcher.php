@@ -1,6 +1,6 @@
 <?php
 /**
- * @author      Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -24,12 +24,15 @@ namespace ManiaLivePlugins\eXpansion\Core\Gui\Windows;
 
 
 use ManiaLive\Gui\Controls\Pager;
+use ManiaLivePlugins\eXpansion\Chat_Admin\MetaData;
 use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\Gui\Controls\ConfElement;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
-class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window{
+class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     /**
      * @var Pager
@@ -46,22 +49,42 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window{
      */
     private $items = array();
 
+    private $input;
+    private $buttonSave;
+
     protected function onConstruct()
     {
         parent::onConstruct();
 
         $this->pagerFrame = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
-        $this->pagerFrame->setPosY(3);
+        $this->pagerFrame->setPosY(-2);
 
         $this->mainFrame->addComponent($this->pagerFrame);
 
         $this->configManager = ConfigManager::getInstance();
+
+        $this->input = new Inputbox("name", 35, true);
+        $this->input->setScale(0.8);
+        $this->mainFrame->addComponent($this->input);
+
+        $this->buttonSave = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
+        $this->buttonSave->setText(__("Save"));
+        $this->buttonSave->setAction($this->createAction(array($this, 'saveAction')));
+        $this->buttonSave->setScale(0.8);
+        $this->mainFrame->addComponent($this->buttonSave);
+
     }
 
     public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pagerFrame->setSize($this->getSizeX() - 3, $this->getSizeY() - 8);
+
+        $this->input->setSize($this->sizeX * (1 / 0.8) - 60, 7);
+        $this->input->setPosition(0, -3);
+
+        $this->buttonSave->setSize(30, 5);
+        $this->buttonSave->setPosition($this->sizeX * (1 / 0.8) - 60 * (1 / 0.8), -3);
     }
 
 
@@ -74,16 +97,32 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window{
 
         if (is_dir(ConfigManager::dirName)) {
             $subFiles = scandir(ConfigManager::dirName);
-            $i = 0;
-            foreach($subFiles as $file){
-                if($helper->fileHasExtension($file, '.user.exp')){
-                    echo "$file === ".$var->getRawValue().".user.exp \n";
-                    $item = new ConfElement($i, $file, $file == ($var->getRawValue().'.user.exp'), $this->getRecipient());
+            $i        = 0;
+            foreach ($subFiles as $file) {
+                if ($helper->fileHasExtension($file, '.user.exp')) {
+                    echo "$file === " . $var->getRawValue() . ".user.exp \n";
+                    $item = new ConfElement($i, $file, $file == ($var->getRawValue(
+                            ) . '.user.exp'), $this->getRecipient());
                     $i++;
                     $this->items[] = $item;
                     $this->pagerFrame->addItem($item);
                 }
             }
+        }
+    }
+
+    public function saveAction($login, $params)
+    {
+        $name = $params['name'];
+        if ($name != "") {
+            $name.='.user.exp';
+            /** @var ConfigManager $confManager */
+            $confManager = ConfigManager::getInstance();
+
+            $confManager->saveSettingsIn($name);
+            $var = MetaData::getInstance()->getVariable('saveSettingsFile');
+            $var->hideConfWindow($login);
+            $var->showConfWindow($login);
         }
     }
 
