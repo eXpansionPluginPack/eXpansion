@@ -289,11 +289,13 @@ abstract class Variable
 	     * @var \ManiaLive\PluginHandler\PluginHandler
 	     */
 	    if ($core != null) {
+                echo "Sending Event\n";
 		$phandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 		try {
 		    $phandler->callPublicMethod($core, $this->pluginId, 'onSettingsChanged', array($this));
 		} catch (\Exception $ex) {
-
+                    echo "Error Event\n";
+                    print_r($ex);
 		}
 	    }
 	} else {

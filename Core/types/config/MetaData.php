@@ -55,7 +55,7 @@ abstract class MetaData
     private $installationSteps = array();
 
     /**
-     * @var Variable
+     * @var Variable[]
      */
     private $variables = array();
 
@@ -141,6 +141,9 @@ abstract class MetaData
     public function setPlugin($pluginId)
     {
 	$this->pluginId = $pluginId;
+        foreach($this->variables as $var){
+            $var->setPluginId($pluginId);
+        }
     }
 
     public function unSetPlugin()

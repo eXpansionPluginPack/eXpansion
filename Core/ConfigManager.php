@@ -277,7 +277,7 @@ class ConfigManager
 		if (isset($this->variables[$className]) && isset($this->variables[$className][$key])) {
 		    /** @var Variable $var */
 		    $var = $this->variables[$className][$key];
-		    if ($var->getScope() >= $scope) {
+		    if ($var->getScope() >= $scope && isset($object->$key)) {
 			$config->$key = $object->$key;
 		    }
 		}
