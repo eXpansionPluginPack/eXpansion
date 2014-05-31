@@ -50,7 +50,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->players->setAlign("left", "center");
 	$this->players->setId('playersCount');
 	$this->players->setTextColor('fff');
-	$this->players->setScale(0.8);
+	$this->players->setTextSize(2);
 	$this->players->setStyle('TextCardScores2');
 	$this->players->setId("nbPlayer");
 	//$this->players->setTextPrefix('$s');
@@ -67,7 +67,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->specs->setAlign("left", "center");
 	$this->specs->setId('specsCount');
 	$this->specs->setTextColor('fff');
-	$this->specs->setScale(0.8);
+	$this->specs->setTextSize(2);
 	$this->specs->setStyle('TextCardScores2');
 	$this->specs->setId("nbSpec");
 	//$this->specs->setTextPrefix('$s');
@@ -82,7 +82,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->ladderMin = new \ManiaLib\Gui\Elements\Label(24, 6);
 	$this->ladderMin->setAlign("left", "center");
 	$this->ladderMin->setTextColor('fff');
-	$this->ladderMin->setScale(0.8);
+	$this->ladderMin->setTextSize(2);
 	$this->ladderMin->setStyle('TextCardScores2');
 	//$this->players->setTextPrefix('$s');
 	$line->addComponent($this->ladderMin);

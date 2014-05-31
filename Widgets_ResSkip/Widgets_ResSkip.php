@@ -65,20 +65,18 @@ class Widgets_ResSkip extends ExpPlugin {
 	$widget = ResSkipButtons::Create($login);
 	$widget->setActions($this->actions['res'], $this->actions['skip']);
 	$widget->setServerInfo($this->storage->serverLogin);
-	$widget->setSize(40.0, 15.0);
-	$widget->show();
+	$widget->setSize(32.0, 10.0);
+
 
 	$nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
 
 	if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] != -1) {
 	    $amount = $this->config->publicSkipAmount[$nbSkips];
 	    $widget->setSkipAmount($amount);
-	}
-	else {
+	} else {
 	    if ($nbSkips >= count($this->config->publicSkipAmount)) {
 		$widget->setSkipAmount("max");
-	    }
-	    else {
+	    } else {
 		$widget->setSkipAmount("no");
 	    }
 	}
@@ -86,15 +84,14 @@ class Widgets_ResSkip extends ExpPlugin {
 	if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] != -1) {
 	    $amount = $this->config->publicResAmount[$this->resCount];
 	    $widget->setResAmount($amount);
-	}
-	else {
+	} else {
 	    if ($this->resCount >= count($this->config->publicResAmount)) {
 		$widget->setResAmount("max");
-	    }
-	    else {
+	    } else {
 		$widget->setResAmount("no");
 	    }
-	}
+	}	
+	$widget->show();
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason = null) {
@@ -114,14 +111,12 @@ class Widgets_ResSkip extends ExpPlugin {
 	    $this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
 	    $admin = $this->storage->getPlayerObject($login);
 	    $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
-	}
-	else {
+	} else {
 	    //Player restart cost Planets
 	    if ($this->resActive) {
 		//Already restarted no need to do
 		$this->exp_chatSendServerMessage($this->msg_resOnProgress, $login);
-	    }
-	    else if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] != -1 && $this->resCount < count($this->config->publicResAmount)) {
+	    } else if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] != -1 && $this->resCount < count($this->config->publicResAmount)) {
 		$amount = $this->config->publicResAmount[$this->resCount];
 		$this->resActive = true;
 
@@ -137,8 +132,7 @@ class Widgets_ResSkip extends ExpPlugin {
 	    }else {
 		if (empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1) {
 		    $this->exp_chatSendServerMessage($this->msg_resUnused, $login);
-		}
-		else {
+		} else {
 		    $this->exp_chatSendServerMessage($this->msg_resMax, $login);
 		}
 	    }
@@ -190,8 +184,7 @@ class Widgets_ResSkip extends ExpPlugin {
 	} else {
 	    if (empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1) {
 		$this->exp_chatSendServerMessage($this->msg_skipUnused, $login);
-	    }
-	    else {
+	    } else {
 		$this->exp_chatSendServerMessage($this->msg_skipMax, $login);
 	    }
 	}

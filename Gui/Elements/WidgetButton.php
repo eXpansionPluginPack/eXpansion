@@ -19,23 +19,19 @@ class WidgetButton extends \ManiaLive\Gui\Control {
      * @param intt $sizeY = 6
      */
     function __construct($sizeX = 12, $sizeY = 12) {	
-        $this->quad = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-        $this->quad->setAlign('center', 'center2');
-        $this->quad->setStyle("Bgs1InRace");
-        $this->quad->setSubStyle("BgList");
-        $this->quad->setPosY(-3);
-        $this->addComponent($this->quad);
+        $this->quad = new WidgetBackGround($sizeX, $sizeY);
+        $this->quad->setAlign('center', 'top');	
+	$this->addComponent($this->quad);
 
         $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-        $this->button->setAlign('center', 'center2');
-        $this->button->setPosY(-3);
-        $this->button->setBgcolor("0000");
+        $this->button->setAlign('center', 'top');
+         $this->button->setBgcolor("0000");
         $this->button->setBgcolorFocus("fff6");		
         $this->addComponent($this->button);
 
-        $this->sizeX = $sizeX + 2;
-        $this->sizeY = $sizeY + 2;
-        $this->setSize($sizeX + 2, $sizeY + 2);
+        $this->sizeX = $sizeX;
+        $this->sizeY = $sizeY;
+        $this->setSize($sizeX, $sizeY);
     }
 
     protected function onResize($oldX, $oldY) {
@@ -49,7 +45,7 @@ class WidgetButton extends \ManiaLive\Gui\Control {
 
     function setText($text) {
         if (is_array($text)) {
-            $y = 0;
+            $y = 0.5;
             foreach ($text as $row) {
                 $label = new \ManiaLib\Gui\Elements\Label($this->sizeX-2, 3);
                 $label->setAlign('center', 'center2');
@@ -64,7 +60,7 @@ class WidgetButton extends \ManiaLive\Gui\Control {
             $this->text = rtrim($this->text);
         } else {
             $label = new \ManiaLib\Gui\Elements\Label($this->sizeX-2, 2);
-            $label->setAlign('center', 'center2');
+            $label->setAlign('center', 'center');
             $label->setStyle("TextValueMedium");
             $label->setTextSize(1);
             $label->setText($text);

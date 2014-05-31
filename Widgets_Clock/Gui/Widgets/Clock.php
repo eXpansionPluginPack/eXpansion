@@ -42,11 +42,11 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$line->setLayout($layout);
 	$icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
 	
-	$clock = new \ManiaLib\Gui\Elements\Label(16, 6);
+	$clock = new \ManiaLib\Gui\Elements\Label(14, 6);
 	$clock->setAlign("left", "center");
 	$clock->setId('clock');
 	$clock->setTextColor('fff');
-	$clock->setScale(0.8);
+	$clock->setTextSize(2);
 	$clock->setStyle('TextCardScores2');
 	//$clock->setTextPrefix('$s');
 	$line->addComponent($clock);

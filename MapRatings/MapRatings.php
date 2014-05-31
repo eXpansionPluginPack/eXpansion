@@ -64,7 +64,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	if ($this->displayWidget) {
 	    $info = RatingsWidget::Create(null);
-	    $info->setSize(34, 10);
+	    $info->setSize(34, 12);
 	    $info->setStars($this->rating, $this->ratingTotal);
 	    $info->show();
 	}

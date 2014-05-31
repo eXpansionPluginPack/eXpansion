@@ -14,18 +14,24 @@ class ResSkipButtons extends Widget {
 
     protected function exp_onBeginConstruct() {
 	parent::exp_onBeginConstruct();
-	$this->btn_res = new WidgetButton(10, 10);
-	$this->btn_res->setPositionZ(-1);
-	$this->addComponent($this->btn_res);
+	$line = new \ManiaLive\Gui\Controls\Frame(6, 0);
+	$line->setAlign("center", "top");
+	$line->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
 	$this->btn_skip = new WidgetButton(10, 10);
 	$this->btn_skip->setPositionZ(-1);
-	$this->addComponent($this->btn_skip);
+	$line->addComponent($this->btn_skip);
+
+	$this->btn_res = new WidgetButton(10, 10);
+	$this->btn_res->setPositionZ(-1);
+	$line->addComponent($this->btn_res);
 
 	$this->btn_fav = new WidgetButton(10, 10);
 	$this->btn_fav->setPositionZ(-1);
 	$this->btn_fav->setText(array('$s$fffAdd', '$s$fffto', '$s$fffFav\'s'));
-	$this->addComponent($this->btn_fav);
+	$line->addComponent($this->btn_fav);
+
+	$this->addComponent($line);
 
 	$this->setName("Skip and Res Buttons");
     }
@@ -42,20 +48,9 @@ class ResSkipButtons extends Widget {
 	}
 	if ($amount == "max") {
 	    $this->btn_res->setText(array('$ff0Maximum', '$fffrestarts', '$ff0reached'));
-	}
-	else {
+	} else {
 	    $this->btn_res->setText(array('$fffBuy', '$fffRestart', '$fff' . $amount . 'p'));
 	}
-    }
-
-    public function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
-	$this->btn_fav->setPosX(8);
-	$this->btn_fav->setPosY(-5);
-	$this->btn_res->setPosX(20);
-	$this->btn_res->setPosY(-5);
-	$this->btn_skip->setPosX(32);
-	$this->btn_skip->setPosY(-5);
     }
 
     public function setSkipAmount($amount) {
@@ -65,8 +60,7 @@ class ResSkipButtons extends Widget {
 	}
 	if ($amount == "max") {
 	    $this->btn_skip->setText(array('$ff0fMaximum', '$fffskips', '$ff0reached'));
-	}
-	else {
+	} else {
 	    $this->btn_skip->setText(array('$fffBuy', '$fffSkip', '$fff' . $amount . 'p'));
 	}
     }
