@@ -334,6 +334,18 @@ abstract class Variable
 	return $value;
     }
 
+    public function showConfWindow($login){
+        return null;
+    }
+
+    public function hideConfWindow($login){
+        return null;
+    }
+
+    public function hasConfWindow(){
+        return false;
+    }
+
     abstract function getPreviewValues();
 }
 

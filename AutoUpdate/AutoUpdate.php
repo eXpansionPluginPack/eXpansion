@@ -118,7 +118,6 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function pullFromGit($login, $branch = "master")
     {
-
 	if ($this->checkForOnGoingGitUpdate($login))
 	    return;
 
@@ -129,7 +128,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	    $step->function = 'gitMultiPull';
 	    $step->commands = array(
 		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' fetch',
-		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' reset --hard',
+		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' reset --hard origin/'.$branch,
 		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' checkout ' . $branch,
 		'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' merge origin/' . $branch
 	    );

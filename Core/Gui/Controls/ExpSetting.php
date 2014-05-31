@@ -33,7 +33,7 @@ class ExpSetting extends \ManiaLive\Gui\Control {
 	$this->bg = new ListBackGround($indexNumber, 100, 4);
 	$this->addComponent($this->bg);
 
-	if ($var instanceof HashList || $var instanceof BasicList || $var instanceof SortedList) {
+	if ($var instanceof HashList || $var instanceof BasicList || $var instanceof SortedList || $var->hasConfWindow()) {
 
 	    $this->label_varValue = new \ManiaLib\Gui\Elements\Label(40, 5);
 	    $this->label_varValue->setScale(0.9);
@@ -110,14 +110,18 @@ class ExpSetting extends \ManiaLive\Gui\Control {
 	return 2;
     }
 
-    public function openWin($login, $var) {
-	ExpListSetting::Erase($login);
-	$win = ExpListSetting::Create($login);
-	$win->setTitle("Expansion Settings : " . $var->getVisibleName());
-	$win->centerOnScreen();
-	$win->setSize(140, 100);
-	$win->populate($var);
-	$win->show();
+    public function openWin($login, Variable $var) {
+        if($var->hasConfWindow()){
+            $var->showConfWindow($login);
+        }else{
+            ExpListSetting::Erase($login);
+            $win = ExpListSetting::Create($login);
+            $win->setTitle("Expansion Settings : " . $var->getVisibleName());
+            $win->centerOnScreen();
+            $win->setSize(140, 100);
+            $win->populate($var);
+            $win->show();
+        }
     }
     
     public function getVar(){
