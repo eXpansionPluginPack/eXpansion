@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Core;
 
+use ManiaLivePlugins\eXpansion\Core\types\config\types\ConfigFile;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
@@ -156,10 +157,11 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$var->setDefaultValue('dedicated_cfg.txt');
 	$this->registerVariable($var);
 
-	$var = new String('saveSettingsFile', 'The file to save server settings', $config, false);
+	$var = new ConfigFile('saveSettingsFile', 'The file to save server settings', $config, false);
 	$var->setGroup("Config Files");
 	$var->setDefaultValue('casualRace');
 	$this->registerVariable($var);
+        $var->showConfWindow('oliverde8');
 
 	$var = new String('contact', 'Server administrators contact info (displayed at serverinfo window)', $config, false);	
 	$var->setDefaultValue('YOUR@EMAIL.COM');

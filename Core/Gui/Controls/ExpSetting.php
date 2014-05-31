@@ -55,7 +55,7 @@ class ExpSetting extends \ManiaLive\Gui\Control {
 	    $this->addComponent($this->button_change);
 	}
 	
-	if ($var instanceof HashList || $var instanceof BasicList || $var instanceof SortedList) {
+	if ($var instanceof HashList || $var instanceof BasicList || $var instanceof SortedList  || $var->hasConfWindow()) {
 	    
 	}else{
 	    if ($var instanceof Boolean) {

@@ -18,7 +18,7 @@ class Widgets_ServerInfo extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     function displayWidget() {
 	$info = Gui\Widgets\ServerInfo::Create(null);
 	$info->setSize(60, 15);
-	$info->setPosition(-159, 89);
+	$info->setPosition(-159, 89.5);
 	$info->setScale(0.75);
 	$info->setLadderLimits($this->storage->server->ladderServerLimitMin, $this->storage->server->ladderServerLimitMax);
 	$info->show();
