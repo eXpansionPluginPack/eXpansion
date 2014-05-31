@@ -1,107 +1,95 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_Clock\Gui\Widgets;
+namespace ManiaLivePlugins\eXpansion\Widgets_ServerInfo\Gui\Widgets;
 
-class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
+class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     protected $clockBg;
-    private $frame, $players, $specs, $server;
+    private $frame, $ladderMin, $ladderMax, $serverName, $maxPlayers;
 
-    protected function exp_onBeginConstruct() {	
+    protected function exp_onBeginConstruct() {
 	$this->setAlign("right", "top");
-	
-	$clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 6);	
-	$clockBg->setAction(\ManiaLivePlugins\eXpansion\Core\Core::$action_serverInfo);
-	$this->addComponent($clockBg);
 
-	$this->server = new \ManiaLib\Gui\Elements\Label(60, 6);
-	$this->server->setId('serverName');
-	$this->server->setAlign("right", "top");
-	$this->server->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
-	$this->server->setTextSize(2);
-	$this->server->setPosition(58, -7.5);
-	$this->server->setTextColor('fff');
-	$this->server->setTextPrefix('$s');		
-	$this->addComponent($this->server);
+	$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 6);
+	$bg->setAction(\ManiaLivePlugins\eXpansion\Core\Core::$action_serverInfo);
+	$this->addComponent($bg);
 
-	/* $this->nameBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(57, 5);
-	  $this->addComponent($this->nameBg);
-	  $this->nameBg->setPosition(0, -3); */
+	$this->serverName = new \ManiaLib\Gui\Elements\Label(60, 6);
+	$this->serverName->setId('serverName');
+	$this->serverName->setAlign("left", "top");
+	$this->serverName->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
+	$this->serverName->setTextSize(2);
+	$this->serverName->setPosition(2, -6.5);
+	$this->serverName->setTextColor('fff');
+	$this->serverName->setTextPrefix('$s');
+	$this->addComponent($this->serverName);
 
-	$line = new \ManiaLive\Gui\Controls\Frame(4, -3);
+//	$this->author = new \ManiaLib\Gui\Elements\Label(60, 6);
+//	$this->author->setId('mapAuthor');
+//	$this->author->setAlign("right", "top");
+//	$this->author->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
+//	$this->author->setTextSize(2);
+//	$this->author->setPosition(58, -11.5);
+//	$this->author->setTextColor('fff');
+//	$this->author->setTextPrefix('$s');		
+//	$this->addComponent($this->author);
+
+
+	$line = new \ManiaLive\Gui\Controls\Frame(8, -3);
 	$layout = new \ManiaLib\Gui\Layouts\Line();
 	$layout->setMargin(1);
 	$line->setLayout($layout);
-	
+
 	$icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
 	$icon->setAlign("left", "center2");
 	$icon->setStyle("Icons128x128_1");
-	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x128_1::Buddies);
+	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x128_1::LadderPoints);
 	$line->addComponent($icon);
 
-	$this->players = new \ManiaLib\Gui\Elements\Label(11, 6);
-	$this->players->setAlign("left", "center");
-	$this->players->setId('playersCount');
-	$this->players->setTextColor('fff');
-	$this->players->setScale(0.8);
-	$this->players->setStyle('TextCardScores2');
-	$this->players->setId("nbPlayer");
+	$this->ladderMin = new \ManiaLib\Gui\Elements\Label(24, 6);
+	$this->ladderMin->setAlign("left", "center");
+	$this->ladderMin->setTextColor('fff');
+	$this->ladderMin->setScale(0.8);
+	$this->ladderMin->setStyle('TextCardScores2');
 	//$this->players->setTextPrefix('$s');
-	$line->addComponent($this->players);
-
-
-
-	$icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
-	$icon->setStyle("Icons64x64_1");
-	$icon->setPosY(-0.5);
-	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons64x64_1::TV);
-	$icon->setAlign("left", "center");
-	$line->addComponent($icon);
-
-	$this->specs = new \ManiaLib\Gui\Elements\Label(11, 6);
-	$this->specs->setAlign("left", "center");
-	$this->specs->setId('specsCount');
-	$this->specs->setTextColor('fff');
-	$this->specs->setScale(0.8);
-	$this->specs->setStyle('TextCardScores2');
-	$this->specs->setId("nbSpec");
-	//$this->specs->setTextPrefix('$s');
-	$line->addComponent($this->specs);
-
+	$line->addComponent($this->ladderMin);
 
 	$icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
 	$icon->setStyle("Icons128x32_1");
 	$icon->setAlign("left", "center");
-	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::RT_TimeAttack);
+	$icon->setStyle("Icons128x128_1");
+	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x128_1::Hotseat);
 	$line->addComponent($icon);
 
-	$clock = new \ManiaLib\Gui\Elements\Label(24, 6);
-	$clock->setAlign("left", "center");
-	$clock->setId('clock');
-	$clock->setTextColor('fff');
-	$clock->setScale(0.8);
-	$clock->setStyle('TextCardScores2');
-	//$clock->setTextPrefix('$s');
-	$line->addComponent($clock);
+	$this->maxPlayers = new \ManiaLib\Gui\Elements\Label(24, 6);
+	$this->maxPlayers->setAlign("left", "center");
+	$this->maxPlayers->setId('clock');
+	$this->maxPlayers->setTextColor('fff');
+	$this->maxPlayers->setScale(0.8);
+	$this->maxPlayers->setStyle('TextCardScores2');
+	//$this->maxPlayers->setTextPrefix('$s');
+	$line->addComponent($this->maxPlayers);
 
 	$this->frame = $line;
 	$this->addComponent($this->frame);
-	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Clock\Gui\Scripts_Clock");
+	/*$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_\Gui\Scripts_Clock");
 	$this->registerScript($script);
-	$script->setParam("serverLogin", \ManiaLive\Data\Storage::getInstance()->serverLogin);
+	$script->setParam("serverLogin", \ManiaLive\Data\Storage::getInstance()->serverLogin); */
 
-	$this->setName("Clock & Server Name Widget");
+	$this->setName("Server info Widget");
     }
 
-    public function setPlayersCount($players, $specs) {
-	$this->players->setText($players);
-	$this->specs->setText($specs);
+    public function setPlayersCount($maxPlayers) {
+	$this->maxPlayers->setText($maxPlayers);	
     }
 
     public function setServerName($name) {
-	$this->server->setText($name);
+	$this->serverName->setText($name);
     }
-    
+    public function setLadderLimits($min, $max) {
+	$this->ladderMin->setText(($min / 1000) . " - " . ($max / 1000) . "k");	
+    }
+
     function destroy() {
 	$this->clearComponents();
 	parent::destroy();

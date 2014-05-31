@@ -1,47 +1,36 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_Clock;
+namespace ManiaLivePlugins\eXpansion\Widgets_ServerInfo;
 
-use ManiaLivePlugins\eXpansion\Widgets_Clock\Gui\Widgets\Clock;
-
-class Widgets_Clock extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Widgets_ServerInfo extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onLoad() {
-        // $this->enableDedicatedEvents();
+	// $this->enableDedicatedEvents();
     }
 
     function exp_onReady() {
-        $this->displayWidget(null);
+	$this->displayWidget();
     }
 
     /**
-     * displayWidget(string $login)
-     * @param string $login
+     * displayWidget()
      */
-    function displayWidget($login) {
-        $info = Gui\Widgets\Clock::Create(null);
-        $info->setSize(60, 15);
-        $info->setPosition(105, 89);
+    function displayWidget() {
+	$info = Gui\Widgets\ServerInfo::Create(null);
+	$info->setSize(60, 15);
+	$info->setPosition(-159, 89);
 	$info->setScale(0.9);
-        $info->setPlayersCount(count($this->storage->players), count($this->storage->spectators));
-        $info->setServerName($this->storage->server->name);
-        $info->show();
+	$info->setServerName($this->storage->server->name);
+	$info->setLadderLimits($this->storage->server->ladderServerLimitMin, $this->storage->server->ladderServerLimitMax);
+	$info->setPlayersCount($this->storage->server->currentMaxPlayers);
+	$info->show();
     }
 
-
-
-  
-
-    public function onBeginMatch() {
-        //$this->updateWidget();
+    public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var) {
+	$this->displayWidget();
     }
 
-    public function onPlayerInfoChanged($playerInfo) {
-        //$this->updateWidget();
-    }
-
-    function exp_onUnload()
-    {
+    function exp_onUnload() {
 	Clock::EraseAll();
     }
 

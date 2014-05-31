@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_Clock;
+namespace ManiaLivePlugins\eXpansion\Widgets_ServerInfo;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
@@ -19,8 +19,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 
     public function onBeginLoad() {
 	parent::onBeginLoad();
-	$this->setName("Clock and Server infos widget");
-	$this->setDescription("Provides clock and server infos widget");
+	$this->setName("Server infos widget");
+	$this->setDescription("Provides server infos widget");
     }
 
 }

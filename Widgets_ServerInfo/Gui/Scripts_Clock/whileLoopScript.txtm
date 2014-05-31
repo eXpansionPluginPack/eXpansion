@@ -15,7 +15,8 @@ if( (Now - eXp_lastClockUpdate) >= 1000 ){
             }
         }
     } 
-    serverName.SetText(""^CurrentServerName);    
+    mapName.SetText(""^Map.MapName);    
+    mapAuthor.SetText(""^Map.AuthorNickName);    
     playerLabel.SetText(""^nbPlayer);
     specLabel.SetText(""^nbSpec);
     eXp_lastClockUpdate = Now;

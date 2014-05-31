@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Clock\Gui\Widgets;
 class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
     protected $clockBg;
-    private $frame, $players, $specs, $server;
+    private $frame, $players, $specs, $map, $author;
 
     protected function exp_onBeginConstruct() {	
 	$this->setAlign("right", "top");
@@ -14,20 +14,27 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$clockBg->setAction(\ManiaLivePlugins\eXpansion\Core\Core::$action_serverInfo);
 	$this->addComponent($clockBg);
 
-	$this->server = new \ManiaLib\Gui\Elements\Label(60, 6);
-	$this->server->setId('serverName');
-	$this->server->setAlign("right", "top");
-	$this->server->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
-	$this->server->setTextSize(2);
-	$this->server->setPosition(58, -7.5);
-	$this->server->setTextColor('fff');
-	$this->server->setTextPrefix('$s');		
-	$this->addComponent($this->server);
+	$this->map = new \ManiaLib\Gui\Elements\Label(60, 6);
+	$this->map->setId('mapName');
+	$this->map->setAlign("right", "top");
+	$this->map->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
+	$this->map->setTextSize(2);
+	$this->map->setPosition(58, -6.5);
+	$this->map->setTextColor('fff');
+	$this->map->setTextPrefix('$s');		
+	$this->addComponent($this->map);
 
-	/* $this->nameBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(57, 5);
-	  $this->addComponent($this->nameBg);
-	  $this->nameBg->setPosition(0, -3); */
-
+	$this->author = new \ManiaLib\Gui\Elements\Label(60, 6);
+	$this->author->setId('mapAuthor');
+	$this->author->setAlign("right", "top");
+	$this->author->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
+	$this->author->setTextSize(2);
+	$this->author->setPosition(58, -11.5);
+	$this->author->setTextColor('fff');
+	$this->author->setTextPrefix('$s');		
+	$this->addComponent($this->author);
+	
+	
 	$line = new \ManiaLive\Gui\Controls\Frame(4, -3);
 	$layout = new \ManiaLib\Gui\Layouts\Line();
 	$layout->setMargin(1);
@@ -99,7 +106,7 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     }
 
     public function setServerName($name) {
-	$this->server->setText($name);
+	// $this->server->setText($name);
     }
     
     function destroy() {
