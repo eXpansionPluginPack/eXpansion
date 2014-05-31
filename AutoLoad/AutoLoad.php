@@ -86,8 +86,6 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $toRemove[] = $plugin;
             }
         }
-        print_r($toRemove);
-        print_r($this->configPlugins);
 
         $toAdd = array();
         foreach ($this->config->plugins as $plugin) {
@@ -95,8 +93,6 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $toAdd[] = $plugin;
             }
         }
-
-        print_r($toAdd);
 
         $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 

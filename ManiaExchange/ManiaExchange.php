@@ -226,8 +226,8 @@ class ManiaExchange extends ExpPlugin {
 
 	$file = Helper::getPaths()->getDownloadMapsPath() . $mxId . ".Map.Gbx";
 
-	if (!is_dir($dir)) {
-	    mkdir($dir, 0775);
+	if (!is_dir(Helper::getPaths()->getDownloadMapsPath())) {
+	    mkdir(Helper::getPaths()->getDownloadMapsPath(), 0775);
 	}
 
 	if ($this->dataAccess->save($file, $data)) {
