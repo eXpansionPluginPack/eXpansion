@@ -123,12 +123,12 @@ class Widgets extends \ManiaLib\Utils\Singleton
 				   self::config_shootmania => -31);
 
     public $DonatePanel_posX = array(self::config_default => -160);
-    public $DonatePanel_posY = array(self::config_trackmania => 72,
+    public $DonatePanel_posY = array(self::config_trackmania => -42,
 				     self::config_shootmania => -37);
     public $DonatePanel_autoCloseTimeout = array(self::config_default => 0);
 
     public $AdminPanel_posX = array(self::config_default => -160);
-    public $AdminPanel_posY = array(self::config_default => -44);
+    public $AdminPanel_posY = array(self::config_default => -48);
     public $AdminPanel_autoCloseTimeout = array(self::config_default => 0);
 
     public $PersonalChatWidget_posX = array(self::config_default => -160);

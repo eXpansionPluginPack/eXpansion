@@ -1,0 +1,4 @@
+declare Integer time = Now;
+declare CMlLabel seconds <=> (Page.GetFirstChild("ode8_sn_SecCounter") as CMlLabel);
+
+declare CMlFrame Frame <=> (Page.GetFirstChild("MainFrame") as CMlFrame);

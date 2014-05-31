@@ -64,6 +64,10 @@ class WidgetBackGround extends \ManiaLive\Gui\Control {
 	$this->config = null;
     }
 
+    public function setOpacity($opacity){
+        $this->bg->setOpacity($opacity);
+    }
+
 }
 
 ?>
