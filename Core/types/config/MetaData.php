@@ -86,6 +86,11 @@ abstract class MetaData
     private $softTitleSupport = true;
 
     /**
+     * @var bool use environment name instead of title
+     */
+    private $enviAsTitle = true;
+
+    /**
      * @param String The Id of the plugin the meta data is working for
      *
      * @return MetaData The meta data of the plugin.
@@ -300,6 +305,24 @@ abstract class MetaData
     }
 
     /**
+     * @param boolean $enviAsTitle
+     */
+    public function setEnviAsTitle($enviAsTitle)
+    {
+        $this->enviAsTitle = $enviAsTitle;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getEnviAsTitle()
+    {
+        return $this->enviAsTitle;
+    }
+
+
+
+    /**
      * See if this plugin is compatible with the current game mode.
      * You can pass a game mod in parameter to check if it is compatible with that one
      *
@@ -356,16 +379,20 @@ abstract class MetaData
     {
 
 	if ($titleName == null) {
-	    /**
-	     * @var Storage $storage
-	     */
-	    $storage = Storage::getInstance();
-	    $titleName = $storage->currentMap->environnement;
-	    if($titleName == "Stadium" || $titleName == "Valley" || $titleName == "Canyon")
-		$titleName = 'TM';
-	    else{
-		$titleName = Core::$titleId;
-	    }
+            if($this->enviAsTitle){
+                /**
+                 * @var Storage $storage
+                 */
+                $storage = Storage::getInstance();
+                $titleName = $storage->currentMap->environnement;
+                if($titleName == "Stadium" || $titleName == "Valley" || $titleName == "Canyon")
+                    $titleName = 'TM';
+                else{
+                    $titleName = Core::$titleId;
+                }
+            }else{
+                $titleName = Core::$titleId;
+            }
 	}
 
 	if (!empty($this->titleSupport)) {

@@ -15,8 +15,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	parent::onBeginLoad();
 	$this->setName("Dedimania (script mode)");
 	$this->setDescription("Dedimania, Global world records system integration");
-	
-	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "TimeAttack.Script.txt");
+
+        $this->addTitleSupport("TM");
+        $this->addTitleSupport("Trackmania");
+        $this->setEnviAsTitle(false);
+
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "TimeAttack.Script.txt");
 	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Rounds.Script.txt");
 	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Cup.Script.txt");
 	$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, "Team.Script.txt");
