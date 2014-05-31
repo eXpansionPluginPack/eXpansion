@@ -93,16 +93,21 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pagerFrame->clearItems();
         $this->items = array();
 
+        $this->populateFromDir($var, ConfigManager::dirName, true);
+        $this->populateFromDir($var, 'libraries/ManiaLivePlugins/eXpansion/Core/defaultConfigs', false);
+    }
+
+    public function populateFromDir($var, $dir, $diff){
         $helper = Helper::getPaths();
 
-        if (is_dir(ConfigManager::dirName)) {
-            $subFiles = scandir(ConfigManager::dirName);
+        if (is_dir($dir)) {
+            $subFiles = scandir($dir);
             $i        = 0;
             foreach ($subFiles as $file) {
                 if ($helper->fileHasExtension($file, '.user.exp')) {
                     echo "$file === " . $var->getRawValue() . ".user.exp \n";
                     $item = new ConfElement($i, $file, $file == ($var->getRawValue(
-                            ) . '.user.exp'), $this->getRecipient());
+                            ) . '.user.exp'), $diff, $this->getRecipient());
                     $i++;
                     $this->items[] = $item;
                     $this->pagerFrame->addItem($item);
