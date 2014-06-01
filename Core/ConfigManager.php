@@ -304,9 +304,7 @@ class ConfigManager
         $this->applySettings($scoped, Variable::SCOPE_SERVER);
 
         $conf = Config::getInstance();
-        if($conf->saveSettingsFile !== ''){
-            $fileS = $this->getSettingsFromFile(self::dirName . DIRECTORY_SEPARATOR . $fileName);
-        }
+        $fileS = $this->getSettingsFromFile($fileName);
 
         $this->applySettings($fileS, Variable::SCOPE_FILE);
 

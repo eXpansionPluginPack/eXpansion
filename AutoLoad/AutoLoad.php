@@ -206,6 +206,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                             } catch (\Exception $ex) {
 
                             }
+                            print_r($ex);
                             $status = false;
                         }
 
