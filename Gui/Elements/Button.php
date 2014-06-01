@@ -21,7 +21,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
     private $value;
     private $isActive = false;
     private $action = 0;
-
+    
     /**
      * Button
      * 
@@ -61,7 +61,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 
 
 
-	$this->label = new \ManiaLib\Gui\Elements\Label($sizeX -2, $sizeY -2);
+	$this->label = new \ManiaLib\Gui\Elements\Label($sizeX - 2, $sizeY - 2);
 	$this->label->setAlign('center', 'center2');
 	$this->label->setStyle("TextValueSmall");
 	$this->label->setTextSize(2);
@@ -69,7 +69,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	//$this->label->setTextColor("eee");
 	$this->label->setFocusAreaColor1("0000");
 	$this->label->setFocusAreaColor2("0000");
-	
+
 	$this->frameDescription = new \ManiaLive\Gui\Controls\Frame();
 	//$this->frameDescription->setId("Desc_Icon_" . $this->buttonId);
 	$this->frameDescription->setPositionZ(10);
@@ -112,6 +112,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	} else {
 	    $this->label->setPosX((($this->sizeX - 2) / 2) + ($this->getSizeY() - 1));
 	    $this->label->setSizeX($this->getSizeX() - ($this->getSizeY() + 1));
+	    $this->icon->setSize($this->sizeX, $this->sizeY);		    
 	}
 
 	$this->setScale(0.7);
@@ -202,12 +203,15 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	if ($this->icon != null)
 	    $this->icon->setAction($action);
     }
-    
-    public function setManialink($manialink){
+
+    public function setManialink($manialink) {
 	$this->label->setManialink($manialink);
+	if ($this->icon != null) {
+	    $this->icon->setManialink($manialink);
+	}
     }
-    
-    public function setUrl($url){
+
+    public function setUrl($url) {
 	$this->label->setUrl($url);
     }
 
@@ -233,9 +237,9 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
     public function setId($id) {
 	parent::setId($id);
 	$this->buttonId = $id;
-	if ($this->icon != null){
+	if ($this->icon != null) {
 	    $this->icon->setId($this->buttonId);
-	}else {
+	} else {
 	    $this->label->setId($id);
 	    $this->label->setScriptEvents();
 	}
@@ -246,7 +250,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
     public function setClass($class) {
 	if ($this->icon != null)
 	    $this->icon->setAttribute('class', $class);
-	else{
+	else {
 	    $this->label->setAttribute('class', $class);
 	}
     }
