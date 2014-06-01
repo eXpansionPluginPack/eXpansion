@@ -293,7 +293,7 @@ abstract class Variable
 		try {
 		    $phandler->callPublicMethod($core, $this->pluginId, 'onSettingsChanged', array($this));
 		} catch (\Exception $ex) {
-                    echo "Error Event\n";
+
 		}
 	    }
 	} else {
