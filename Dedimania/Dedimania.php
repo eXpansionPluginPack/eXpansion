@@ -136,7 +136,7 @@ class Dedimania extends DedimaniaAbstract {
 	}
 	$this->rankings = $rankings;
 
-	if ($this->exp_isRelay())
+	if ($this->expStorage->isRelay)
 	    return;
 
 	try {

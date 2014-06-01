@@ -76,16 +76,8 @@ class Core extends types\ExpPlugin {
      * @var ConfigManager
      */
     private $configManager;
-    public static $gameModeDisabledPlugins = array();
-    public static $isTMServer = false;
-    public static $isSMServer = false;
-    public static $titleId = null;
 
-    /**
-     * Is Manialive running on a Relay server or not
-     * @var type Boolean
-     */
-    public static $isRelay = false;
+
 
     public static $core = null;
     /**
@@ -121,10 +113,6 @@ class Core extends types\ExpPlugin {
 	$config = Config::getInstance();
 	i18n::getInstance()->start();
 	DataAccess::getInstance()->start();
-
-	foreach ($config->disableGameMode as $pluginName => $exception) {
-	    self::$gameModeDisabledPlugins[$pluginName] = explode(',', $exception);
-	}
 
 
 	$expansion = <<<'EOT'

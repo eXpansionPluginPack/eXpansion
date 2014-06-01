@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui;
 
+use ManiaLivePlugins\eXpansion\Helpers\Storage;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 /**
@@ -34,8 +35,8 @@ class Widgets extends \ManiaLib\Utils\Singleton
 {
 
     const config_default = 'default';
-    const config_trackmania = 'TM';
-    const config_shootmania = 'SM';
+    const config_trackmania = Storage::TITLE_SIMPLE_TM;
+    const config_shootmania = Storage::TITLE_SIMPLE_SM;
 
     public $DedimaniaPanel_posX = array(self::config_default       => -160,
 					GameInfos::GAMEMODE_ROUNDS => -161,

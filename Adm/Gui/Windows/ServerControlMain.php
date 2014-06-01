@@ -11,6 +11,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
 use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\Helpers\Storage;
 
 /**
  * Server Control panel Main window
@@ -133,7 +134,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
     public function exp_isRelay() {
-	return \ManiaLivePlugins\eXpansion\Core\Core::$isRelay;
+	return Storage::getInstance()->isRelay;
     }
 
 }

@@ -67,33 +67,43 @@ class Widget extends PlainWidget {
 	$widgetName = str_replace(" ", "", $this->_name);
 
 	if (isset(self::$config[$widgetName])) {
-	    $gmode = $this->storage->gameInfos->gameMode;
-	    if ($gmode == 0)
-		$gmode = $this->storage->gameInfos->scriptName;
+
+            //Getting exact game mode
+            $gameMode = $this->storage->gameInfos->gameMode;
+	    if ($gameMode == 0)
+		$gameMode = $this->storage->gameInfos->scriptName;
+
+            //Getting compatibility Game mode
 	    $compoMode = Gui::exp_getCurrentCompatibilityGameMode();
 
-            $storage = Storage::getInstance();
-            $title = $storage->currentMap->environnement;
-            if($title == "Stadium" || $title == "Valley" || $title == "Canyon")
-                $title = WConfig::config_trackmania;
-            else{
-                $title =WConfig::config_shootmania;
-            }
+            /**
+             * @var \ManiaLivePlugins\eXpansion\Helpers\Storage $storage
+             */
+            $storage = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance();
+
+            //Getting full title id
+            $titleid = $storage->version->titleId;
+
+            //Getting environnment based simple title id
+            $enviTitle = $storage->simpleEnviTitle;
 
 
 	    $this->currentSettings = array();
 	    foreach (self::$config[$widgetName] as $name => $values) {
-		if (isset($values[$gmode])) {
-		    $this->currentSettings[$name] = $values[$gmode];
+		if (isset($values[$gameMode])) {
+		    $this->currentSettings[$name] = $values[$gameMode];
 		}
 		else if (isset($values[$compoMode])) {
 		    $this->currentSettings[$name] = $values[$compoMode];
 		}
-		else if (isset($values[$title])) {
-		    $this->currentSettings[$name] = $values[$title];
+		else if (isset($values[$titleid])) {
+		    $this->currentSettings[$name] = $values[$titleid];
 		}
+                else if (isset($values[$enviTitle])) {
+                    $this->currentSettings[$name] = $values[$enviTitle];
+                }
 		else if (isset($values[WConfig::config_default])) {
-		    $this->currentSettings[$name] = $values['default'];
+		    $this->currentSettings[$name] = $values[WConfig::config_default];
 		}
 	    }
 	}

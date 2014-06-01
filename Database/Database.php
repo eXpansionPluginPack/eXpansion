@@ -111,7 +111,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function updatePlayTime($player) {
 	$time = time();
-	if (empty($player) || (!$player->spectator && $this->exp_isRelay()))
+	if (empty($player) || (!$player->spectator && $this->expStorage->isRelay))
 	    return;
 
 	if (isset($player->lastTimeUpdate)) {

@@ -9,6 +9,7 @@ use ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Windows\GenericPlayerList;
 use ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Windows\ParameterDialog;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Helpers\Storage;
 
 /**
  * Description of Admin
@@ -1598,7 +1599,7 @@ Other server might use the same blacklist file!!');
     }
 
     public function onStatusChanged($statusCode, $statusName) {
-	if ($this->exp_isTMServer() && $statusCode == 6 && $this->dynamicTime > 0)
+	if ($this->expStorage->simpleEnviTitle == Storage::TITLE_SIMPLE_TM && $statusCode == 6 && $this->dynamicTime > 0)
 	    if ($this->exp_getCurrentCompatibilityGameMode() == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
 		$map = $this->connection->getNextMapInfo();
 		$laps = $map->nbLaps;

@@ -75,7 +75,7 @@ class Adm extends ExpPlugin {
     }
 
     function onPlayerConnect($login, $isSpectator) {
-	if ($this->exp_isRelay())
+	if ($this->expStorage->isRelay)
 	    return;
 
 	if (AdminGroups::isInList($login)) {

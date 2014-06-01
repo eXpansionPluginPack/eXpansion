@@ -161,7 +161,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAb
 	if (!$this->running)
 	    return;
 
-	if ($this->exp_isRelay())
+	if ($this->expStorage->isRelay)
 	    return;
 
 	usort($this->rankings, array($this, "compare_BestTime"));

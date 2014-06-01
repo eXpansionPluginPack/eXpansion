@@ -59,7 +59,7 @@ class Widgets_ResSkip extends ExpPlugin {
     }
 
     public function showResSkip($login) {
-	if ($this->exp_isRelay())
+	if ($this->expStorage->isRelay)
 	    return;
 
 	$widget = ResSkipButtons::Create($login);

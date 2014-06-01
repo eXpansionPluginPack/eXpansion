@@ -383,15 +383,9 @@ abstract class MetaData
                 /**
                  * @var Storage $storage
                  */
-                $storage = Storage::getInstance();
-                $titleName = $storage->currentMap->environnement;
-                if($titleName == "Stadium" || $titleName == "Valley" || $titleName == "Canyon")
-                    $titleName = 'TM';
-                else{
-                    $titleName = Core::$titleId;
-                }
+                $titleName = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->simpleEnviTitle;
             }else{
-                $titleName = Core::$titleId;
+                $titleName = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId;
             }
 	}
 

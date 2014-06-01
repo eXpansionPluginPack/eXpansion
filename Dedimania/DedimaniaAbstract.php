@@ -97,7 +97,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 		$this->console("Server code or/and login is not configured for dedimania plugin!");
 	    } else {
 		try {
-		    $this->dedimania->openSession(\ManiaLivePlugins\eXpansion\Core\Core::$titleId, $this->config);
+		    $this->dedimania->openSession($this->expStorage->version->titleId, $this->config);
 		    $this->registerChatCommand("dedirecs", "showRecs", 0, true);
 		    $this->running = true;
 		    $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();

@@ -1430,7 +1430,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function getTotalRanked()
     {
-        if ($this->total_ranks == -1 && !$this->exp_isRelay()) {
+        if ($this->total_ranks == -1 && !$this->expStorage->isRelay) {
             $q = 'SELECT Count(*) as nbRanked
                     FROM exp_ranks
                     WHERE rank_challengeuid IN (' . $this->getUidSqlString() . ')'
@@ -1480,7 +1480,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function getPlayerRank($login)
     {
-        if ($this->exp_isRelay())
+        if ($this->expStorage->isRelay)
             return -1;
 
         if (!isset($this->player_ranks[$login])) {
@@ -1539,7 +1539,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function getRanks()
     {
-        if ((empty($this->ranks) && $this->rank_needUpdated) && !$this->exp_isRelay()) {
+        if ((empty($this->ranks) && $this->rank_needUpdated) && !$this->expStorage->isRelay) {
             $this->rank_needUpdated = false;
             $this->total_ranks      = -1;
             $this->getTotalRanked();
