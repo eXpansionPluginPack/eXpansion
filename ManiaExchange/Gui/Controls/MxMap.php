@@ -2,11 +2,17 @@
 
 namespace ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Elements\Quad;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Gui\Control;
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
+use ManiaLivePlugins\eXpansion\ManiaExchange\Config; 
 
-class MxMap extends \ManiaLive\Gui\Control {
+class MxMap extends Control {
 
     private $bg;
     private $label;
@@ -20,7 +26,7 @@ class MxMap extends \ManiaLive\Gui\Control {
     private $isAdmin;
 
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map, $controller, $isAdmin, $sizeX) {
-	$config = \ManiaLivePlugins\eXpansion\ManiaExchange\Config::getInstance();
+	$config = Config::getInstance();
 	$sizeY = 12;
 
 	$this->isAdmin = $isAdmin;
@@ -31,7 +37,7 @@ class MxMap extends \ManiaLive\Gui\Control {
 	if (property_exists($map, "mapID"))
 	    $id = $map->mapID;
 
-	$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
+	$this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
 	$this->addComponent($this->bg);
 
 
@@ -39,17 +45,17 @@ class MxMap extends \ManiaLive\Gui\Control {
 	$this->queueAction = $this->createAction(array($controller, 'mxVote'), $id);
 	$this->actionSearch = $this->createAction(array($controller, 'search'), "", $map->username, null, null);
 
-	$this->line1 = new \ManiaLive\Gui\Controls\Frame(0, 3);
+	$this->line1 = new Frame(0, 3);
 	$this->line1->setAlign("left", "top");
 	$this->line1->setSize($sizeX, $sizeY);
-	$this->line1->setLayout(new \ManiaLib\Gui\Layouts\Line());
+	$this->line1->setLayout(new Line());
 
-	$this->line2 = new \ManiaLive\Gui\Controls\Frame(0, -3);
+	$this->line2 = new Frame(0, -3);
 	$this->line2->setAlign("left", "top");
 	$this->line2->setSize($sizeX, $sizeY);
-	$this->line2->setLayout(new \ManiaLib\Gui\Layouts\Line());
+	$this->line2->setLayout(new Line());
 
-	$label = new \ManiaLib\Gui\Elements\Label(36, 6);
+	$label = new Label(36, 6);
 	$label->setAlign('left', 'center');
 	$pack = str_replace("TM", "", $map->titlePack);
 	if (empty($pack) || $pack == "Trackmania_2") {
@@ -58,7 +64,7 @@ class MxMap extends \ManiaLive\Gui\Control {
 	$label->setText($pack);
 	$this->line1->addComponent($label);
 
-	$label = new \ManiaLib\Gui\Elements\Label(36, 6);
+	$label = new Label(36, 6);
 	$label->setAlign('left', 'center');
 	$label->setText("");
 	if ($map->vehicleName) {
@@ -70,17 +76,14 @@ class MxMap extends \ManiaLive\Gui\Control {
 	$this->line2->addComponent($label);
 
 
-	$this->label = new \ManiaLib\Gui\Elements\Label(80, 6);
-	$this->label->setAlign('left', 'center');
-	$this->label->setStyle("TextCardSmallScores2");
-	$this->label->setTextEmboss();
-	$this->label->setText(Gui::fixHyphens(Formatting::stripCodes($map->gbxMapName, 's')));
-	if ($config->mxVote_enable) {
-	    $this->label->setAction($this->queueAction);
-	}
-	$this->line1->addComponent($this->label);
+	$label = new Label(80, 6);
+	$label->setAlign('left', 'center');
+	$label->setStyle("TextCardSmallScores2");
+	$label->setTextEmboss();
+	$label->setText(Gui::fixHyphens($map->gbxMapName));
+	$this->line1->addComponent($label);
 
-	$info = new \ManiaLib\Gui\Elements\Label(80, 6);
+	$info = new Label(80, 6);
 	$info->setAlign('left', 'center');
 	$info->setText('$000' . Gui::fixHyphens($map->username));
 	$info->setAction($this->actionSearch);
@@ -89,58 +92,55 @@ class MxMap extends \ManiaLive\Gui\Control {
 	$this->line2->addComponent($info);
 
 
-	$info = new \ManiaLib\Gui\Elements\Label(24, 4);
+	$info = new Label(24, 4);
 	$info->setAlign('left', 'center');
 	$info->setText($map->difficultyName);
 	$this->line1->addComponent($info);
 
-	$info = new \ManiaLib\Gui\Elements\Label(24, 4);
+	$info = new Label(24, 4);
 	$info->setAlign('left', 'center');
 	$info->setText($map->mood);
 	$this->line2->addComponent($info);
 
-	$info = new \ManiaLib\Gui\Elements\Label(18, 4);
+	$info = new Label(18, 4);
 	$info->setAlign('left', 'center');
 	$info->setText($map->styleName);
 	$this->line1->addComponent($info);
 
 
-	$info = new \ManiaLib\Gui\Elements\Label(18, 4);
+	$info = new Label(18, 4);
 	$info->setAlign('left', 'center');
 	$info->setText($map->lengthName);
 	$this->line2->addComponent($info);
 
-	/* if ($config->mxVote_enable) {
-	  $this->queueButton = new myButton(24, 5);
-	  $this->queueButton->setText(__("Queue"));
-	  $this->queueButton->colorize("0d0");
-	  $this->queueButton->setAction($this->queueAction);
-	  $this->line1->addComponent($this->queueButton);
-	  } */
 
 	if ($this->isAdmin) {
 	    $this->addButton = new myButton(24, 5);
-	    $this->addButton->setPosY(-3);
 	    $this->addButton->setText(__("Install"));
 	    $this->addButton->colorize("0d0");
 	    $this->addButton->setAction($this->addAction);
-	    $this->line1->addComponent($this->addButton);
-
-	    $info = new \ManiaLib\Gui\Elements\Label(24, 5);
-	    $info->setText("");
-	    $this->line2->addComponent($info);
+	} else {
+	    $this->addButton = new Label(24, 5);
+	    $this->addButton->setText("");
 	}
+	$this->line1->addComponent($this->addButton);
 
+	$this->queueButton = new myButton(24, 5);
+	$this->queueButton->setText(__("Queue"));
+	if ($config->mxVote_enable) {
+	    $this->queueButton->setAction($this->queueAction);
+	}
+	$this->line2->addComponent($this->queueButton);
 
 	if ($map->awardCount > 0) {
-	    $info = new \ManiaLib\Gui\Elements\Quad(4, 4);
+	    $info = new Quad(4, 4);
 	    $info->setPosY(3);
 	    $info->setStyle("Icons64x64_1");
 	    $info->setSubStyle("OfficialRace");
 	    $info->setAlign('center', 'center');
 	    $this->line2->addComponent($info);
 
-	    $info = new \ManiaLib\Gui\Elements\Label(12, 5);
+	    $info = new Label(12, 5);
 	    $info->setPosY(3);
 	    $info->setAlign('center', 'center');
 	    $info->setText($map->awardCount);

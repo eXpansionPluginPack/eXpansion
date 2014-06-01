@@ -120,8 +120,8 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->redraw($this->getRecipient());
 
 	$info = $this->connection->getVersion();
-
-	if (strpos($info->titleId, "TM") === false && strpos($info->titleId, "Trackmania") === false) {
+	
+	if (\ManiaLivePlugins\eXpansion\Core\Core::$isSMServer) {
 	    $script = $this->connection->getModeScriptInfo();
 	    $query = "";
 
