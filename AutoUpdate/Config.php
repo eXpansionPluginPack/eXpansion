@@ -8,7 +8,7 @@ namespace ManiaLivePlugins\eXpansion\AutoUpdate;
  * @author Petri
  */
 class Config extends \ManiaLib\Utils\Singleton{
-    public $autoCheckUpdates = true;
+    public $autoCheckUpdates = false;
     public $useGit = true;
     public $branchName = "master";
 }
