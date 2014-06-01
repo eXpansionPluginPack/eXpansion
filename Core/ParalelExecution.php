@@ -61,9 +61,8 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
     }
 
     public function start(){
+        Dispatcher::register(TickEvent::getClass(), $this);
 	$this->run();
-
-	Dispatcher::register(TickEvent::getClass(), $this);
     }
 
     private function run()
@@ -71,12 +70,25 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 	$cmd = array_shift($this->cmds);
 
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-	    $command = $cmd . ' >> tmp/' . $this->id . '.txt 2>&1 & echo';
+            Dispatcher::unregister(TickEvent::getClass(), $this);
+	    $command = $cmd . ' ';
+            exec($command, $results, $return);
+
+            $this->return = $return;
+
+            $this->results = array_merge($this->results, $results);
+            if (empty($this->cmds) || $this->return != 0) {
+                $this->call ($this->results);
+            }else{
+                $this->run();
+            }
+            return;
 	}else{
 	    $command = 'nohup '.$cmd . ' >> tmp/' . $this->id . '.txt 2>&1 & echo $!';
+            exec($command, $results, $return);
+            $this->pid = $results[0];
 	}
-	exec($command, $results, $return);
-	$this->pid = $results[0];
+
 
 	if ($this->pid == ""){
 	    Dispatcher::unregister(TickEvent::getClass(), $this);
@@ -86,10 +98,12 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 	$this->lastCheck = time();
     }
 
-    public function call()
+    public function call($results = array())
     {
-	$results = explode("\n", file_get_contents('tmp/' . $this->id . '.txt'));
-	unlink('tmp/' . $this->id . '.txt');
+        if(empty($results) && file_exists('tmp/' . $this->id . '.txt')){
+            $results = explode("\n", file_get_contents('tmp/' . $this->id . '.txt'));
+            unlink('tmp/' . $this->id . '.txt');
+        }
 	call_user_func($this->callback, $this, $results, $this->return);
     }
 
