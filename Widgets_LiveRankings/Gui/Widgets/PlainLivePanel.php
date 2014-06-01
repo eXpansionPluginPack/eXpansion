@@ -137,7 +137,7 @@ class PlainLivePanel extends PlainPanel
 
         $index = 1;
 
-        $this->lbl_title->setText('Live Rankings');
+        $this->bgTitle->setText('Live Rankings');
 
 
         $recsData = "";
