@@ -564,21 +564,19 @@ EOT;
     private function checkPluginsOnHold() {
 	$this->console('Starting compatible plugins');
 
-	if (!empty(types\BasicPlugin::$plugins_onHold)) {
-	    $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
-	    foreach (types\BasicPlugin::$plugins_onHold as $plugin_id) {
-		//$parts = explode("\\", $plugin_id);
-		//$className = '\\ManiaLivePlugins\\' . $plugin_id . '\\' . $parts[1];
-		$className = $plugin_id;
-		if (!$className::getMetaData()->checkAll() && !$this->isPluginLoaded($plugin_id)) {
-		    try {
-			$pHandler->load($plugin_id);
-		    } catch (Exception $ex) {
-			$this->console('Plugin : ' . $plugin_id . ' Maybe already loaded');
-		    }
-		}
-	    }
-	}
+        $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+        foreach (\ManiaLivePlugins\eXpansion\AutoLoad\Config::getInstance()->plugins as $plugin_id) {
+            //$parts = explode("\\", $plugin_id);
+            //$className = '\\ManiaLivePlugins\\' . $plugin_id . '\\' . $parts[1];
+            $className = $plugin_id;
+            if ($className::getMetaData()->checkAll() && !$this->isPluginLoaded($plugin_id)) {
+                try {
+                    $pHandler->load($plugin_id);
+                } catch (Exception $ex) {
+                    $this->console('Plugin : ' . $plugin_id . ' Maybe already loaded');
+                }
+            }
+        }
     }
 
     public function showInfo($login) {

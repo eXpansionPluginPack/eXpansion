@@ -20,10 +20,13 @@ class ConfElement extends \ManiaLive\Gui\Control
     private $button_load = null;
     private $button_select = null;
 
+    private $path;
+
     private $input;
 
-    function __construct($indexNumber, $name, $isCurrent, $modify, $login)
+    function __construct($indexNumber, $name, $isCurrent, $modify, $login, $path)
     {
+        $this->path = $path;
 
         $this->label_name = new \ManiaLib\Gui\Elements\Label(40, 5);
         $this->label_name->setPosY(4);
@@ -90,7 +93,7 @@ class ConfElement extends \ManiaLive\Gui\Control
         /** @var ConfigManager $confManager */
         $confManager = ConfigManager::getInstance();
 
-        $confManager->loadSettingsFrom($name);
+        $confManager->loadSettingsFrom($this->path.'/'.$name);
     }
 
     public function selectAction($login, $name)

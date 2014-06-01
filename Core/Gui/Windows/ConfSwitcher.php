@@ -106,8 +106,7 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             foreach ($subFiles as $file) {
                 if ($helper->fileHasExtension($file, '.user.exp')) {
                     echo "$file === " . $var->getRawValue() . ".user.exp \n";
-                    $item = new ConfElement($i, $file, $file == ($var->getRawValue(
-                            ) . '.user.exp'), $diff, $this->getRecipient());
+                    $item = new ConfElement($i, $file, $file == ($var->getRawValue() . '.user.exp'), $diff, $this->getRecipient(), $dir);
                     $i++;
                     $this->items[] = $item;
                     $this->pagerFrame->addItem($item);
