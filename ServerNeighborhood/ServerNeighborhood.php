@@ -39,6 +39,8 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Widgets\ServerPanel;
+use ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Windows\PlayerList;
+use ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Windows\ServerList;
 
 class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -172,6 +174,13 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             foreach ($windows as $window) {
                 $window->redraw();
             }
+    }
+
+    public function exp_onUnload()
+    {
+        ServerPanel::EraseAll();
+        ServerList::EraseAll();
+        PlayerList::EraseAll();
     }
 
 
