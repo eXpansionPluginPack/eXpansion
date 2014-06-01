@@ -36,8 +36,8 @@ class ScoreItem extends Control {
 	$this->nick = clone $label;
 	$this->nick->setPosX(4);
 	$this->nick->setSize(13, 4);
-	$this->nick->setAlign('left', 'center');
-	$this->nick->setText($playerScore->nickName);
+	$this->nick->setAlign('left', 'center');	
+	$this->nick->setText(\ManiaLib\Utils\Formatting::stripColors($playerScore->nickName));
 	$this->addComponent($this->nick);
 	
 	// BestTime

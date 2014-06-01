@@ -28,7 +28,7 @@ class Widgets_TeamPlayerScores extends ExpPlugin {
     public function exp_onReady() {
 	$this->enableDedicatedEvents();
 	$this->reset();
-	$this->registerChatCommand("test", "test", 0, false);
+	$this->showWidget(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
     }
 
     public function test() {
@@ -63,11 +63,12 @@ class Widgets_TeamPlayerScores extends ExpPlugin {
 	    }
 	}
 
-	$this->showWidget();
+	$this->showWidget($this->showWidget(\ManiaLive\Gui\Window::LAYER_NORMAL));
     }
 
     public function onBeginRound() {
 	$this->hideWidget();
+	$this->showWidget(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
     }
 
     public function onEndRound() {
@@ -106,12 +107,14 @@ class Widgets_TeamPlayerScores extends ExpPlugin {
 	    }
 	}
 	ArrayOfObj::asortDesc($this->playerScores, "score");
-	$this->showWidget();
+	$this->hideWidget();
+	$this->showWidget(\ManiaLive\Gui\Window::LAYER_NORMAL);
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
 	$this->reset();
 	$this->hideWidget();
+	$this->showWidget(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
     }
 
     private function getScore($position) {
@@ -127,11 +130,11 @@ class Widgets_TeamPlayerScores extends ExpPlugin {
 	$this->playerScores = array();
     }
 
-    private function showWidget() {
+    private function showWidget($layer) {
 	$widget = PlayerScoreWidget::Create();
 	$widget->setSize(42, 56);
 	$widget->setScores($this->playerScores);
-	$widget->setLayer(Widget::LAYER_NORMAL);
+	$widget->setLayer($layer);
 	$widget->setPosition(-124, 6);
 	$widget->show();
     }

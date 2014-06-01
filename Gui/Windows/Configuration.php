@@ -44,8 +44,8 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	parent::onResize($oldX, $oldY);
 	$this->pager->setSize($this->sizeX, $this->sizeY - 8);
 	$this->pager->setStretchContentX($this->sizeX);
-	$this->ok->setPosition($this->sizeX - 38, -$this->sizeY + 6);
-	$this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
+	$this->ok->setPosition($this->sizeX - 44, -$this->sizeY + 6);
+	$this->cancel->setPosition($this->sizeX - 26, -$this->sizeY + 6);
     }
 
     function setData($data) {
