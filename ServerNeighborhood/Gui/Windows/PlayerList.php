@@ -40,7 +40,7 @@ class PlayerList extends Window{
         $this->items = array();
         
         $i = 1;
-        for($ii = 0; $ii < 50; $ii++)
+        //for($ii = 0; $ii < 50; $ii++)
         foreach($server->getServer_data()->current->players->player as $player){
 
             $pitem = new PlayerItem($i, $this, $player);
