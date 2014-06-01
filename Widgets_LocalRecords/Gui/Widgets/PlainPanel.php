@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts\PlayerFinish;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts\PlayerFinish_Optimized;
@@ -22,7 +23,7 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     /**
      * @var Quad
      */
-    private $bgborder, $bg, $bgTitle, $bgFirst;
+    protected $bgborder, $bg, $bgTitle, $bgFirst;
 
 
     /**
@@ -30,15 +31,7 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
      */
     private $layer;
 
-    /**
-     * @var Quad
-     */
-    protected $lbl_title;
 
-    /**
-     * @var Label
-     */
-    protected $bg_title;
 
     /** @var \ManiaLive\Data\Storage */
     public $storage;
@@ -70,24 +63,13 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround($sizeX, $sizeY);
         $this->_windowFrame->addComponent($this->bg);
 
-        $this->bgTitle = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY + 2);
-        $this->bgTitle->setStyle("UiSMSpectatorScoreBig");
-        $this->bgTitle->setSubStyle("PlayerSlotCenter");
-        $this->bgTitle->setColorize("3af");
+        $this->bgTitle = new WidgetTitle($sizeX, $sizeY + 2);
         $this->_windowFrame->addComponent($this->bgTitle);
 
         $this->bgFirst = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->bgFirst->setBgcolor("aaa5");
         $this->bgFirst->setAlign("center", "top");
         $this->_windowFrame->addComponent($this->bgFirst);
-
-        $this->lbl_title = new \ManiaLib\Gui\Elements\Label(30, 5);
-        $this->lbl_title->setTextSize(1);
-        $this->lbl_title->setTextColor("fff");
-        $this->lbl_title->setStyle("TextCardScores2");
-
-        $this->lbl_title->setAlign("center", "center");
-        $this->_windowFrame->addComponent($this->lbl_title);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setAlign("left", "top");
@@ -167,10 +149,8 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->bg->setSize($this->sizeX, $this->sizeY + 1);
 
         $this->bgTitle->setSize($this->sizeX, 4.2);
-        $this->bgTitle->setPosition(0, 0.75);
 
         $this->frame->setPosition(($this->sizeX / 2) + 1, -5);
-        $this->lbl_title->setPosition(($this->sizeX / 2), -1);
         $this->layer->setPosition($this->sizeX - 5, -1.5);
     }
 
@@ -183,7 +163,7 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
         $index = 1;
 
-        $this->lbl_title->setText('Local Records');
+        $this->bgTitle->setText('Local Records');
 
 
         $recsData = "";

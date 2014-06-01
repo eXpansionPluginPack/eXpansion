@@ -32,7 +32,7 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
 
         $index = 1;
 
-        $this->lbl_title->setText('Dedimania Records');
+        $this->bgTitle->setText('Dedimania Records');
 
 
         $recsData = "";

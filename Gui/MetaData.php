@@ -33,27 +33,54 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$var->setDefaultValue(false);
 	$this->registerVariable($var);
 
-	$var = new String("style_widget_bgStyle", "Widgets: background style", $config);
+	$var = new String("style_widget_bgStyle", "background style", $config);
 	$var->setGroup("Widgets");
 	$var->setDefaultValue("BgsPlayerCard");
 	$this->registerVariable($var);
 
-	$var = new String("style_widget_bgSubStyle", "Widgets: background substyle", $config);
+	$var = new String("style_widget_bgSubStyle", "background substyle", $config);
 	$var->setGroup("Widgets");
 	$var->setDefaultValue("BgRacePlayerName");
 	$this->registerVariable($var);
 
-	$var = new String("style_widget_bgColorize", "Widgets: background color", $config);
+	$var = new String("style_widget_bgColorize", "background color", $config);
 	$var->setGroup("Widgets");
 	$var->setDefaultValue("000");
 	$this->registerVariable($var);
 
-	$var = new BoundedFloat("style_widget_bgOpacity", "Widgets: background opacity", $config);
+	$var = new BoundedFloat("style_widget_bgOpacity", "background opacity", $config);
 	$var->setGroup("Widgets");
 	$var->setMin(0.0);
 	$var->setMax(1.0);
 	$var->setDefaultValue(1.0);
 	$this->registerVariable($var);
+
+        $var = new String("style_widget_title_bgStyle", "Title background style", $config);
+        $var->setGroup("Widgets");
+        $var->setDefaultValue("UiSMSpectatorScoreBig");
+        $this->registerVariable($var);
+
+        $var = new String("style_widget_title_bgSubStyle", "Title background substyle", $config);
+        $var->setGroup("Widgets");
+        $var->setDefaultValue("PlayerSlotCenter");
+        $this->registerVariable($var);
+
+        $var = new String("style_widget_title_bgColorize", "Title background color", $config);
+        $var->setGroup("Widgets");
+        $var->setDefaultValue("3af");
+        $this->registerVariable($var);
+
+        $var = new String("style_widget_title_lbStyle", "Title label style", $config);
+        $var->setGroup("Widgets");
+        $var->setDefaultValue("TextCardScores2");
+        $this->registerVariable($var);
+
+        $var = new BoundedFloat("style_widget_title_lbSize", "Title label size", $config);
+        $var->setGroup("Widgets");
+        $var->setMin(0.5);
+        $var->setMax(5.0);
+        $var->setDefaultValue(1);
+        $this->registerVariable($var);
     }
 
 }

@@ -42,7 +42,17 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $style_widget_bgOpacity = 1;
     public $style_widget_bgXOffset = 0;
     public $style_widget_bgYOffset = 0;
-    
+
+    public $style_widget_title_bgStyle = 'UiSMSpectatorScoreBig';
+    public $style_widget_title_bgSubStyle = 'PlayerSlotCenter'; // BgList
+    public $style_widget_title_bgColorize = '3af'; // BgList
+    public $style_widget_title_bgOpacity = 1;
+    public $style_widget_title_bgXOffset = 0;
+    public $style_widget_title_bgYOffset = 0.75;
+    public $style_widget_title_lbStyle = 'TextCardScores2';
+    public $style_widget_title_lbSize = 1;
+    public $style_widget_title_lbColor = 'fff';
+
     public $disableAnimations = false;
     public $disablePersonalHud = false;
 
