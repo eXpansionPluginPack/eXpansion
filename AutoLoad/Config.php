@@ -27,6 +27,10 @@ class Config extends \ManiaLib\Utils\Singleton {
 	, '\ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide'
 	, '\ManiaLivePlugins\eXpansion\Widgets_Times\Widgets_Times'
 	, '\ManiaLivePlugins\eXpansion\Widgets_ResSkip\Widgets_ResSkip'
+	, '\ManiaLivePlugins\eXpansion\Widgets_ServerInfo\Widgets_ServerInfo'
+	, '\ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Widgets_LocalRecords'
+	, '\ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Widgets_LiveRankings'
+	, '\ManiaLivePlugins\eXpansion\Widgets_Dedimania\Widgets_Dedimania'
     );
 
     public $pluginPaths = array('libraries/ManiaLivePlugins' => 2);
