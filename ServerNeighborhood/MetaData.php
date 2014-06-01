@@ -31,7 +31,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setGroup("Server Neighborhood");
         $this->registerVariable($var);
 
-        $var = new Int('storing_path', "Path to store server information", $config, Variable::SCOPE_SERVER);
+        $var = new String('storing_path', "Path to store server information", $config, Variable::SCOPE_SERVER);
         $var->setGroup("Server Neighborhood");
         $this->registerVariable($var);
 

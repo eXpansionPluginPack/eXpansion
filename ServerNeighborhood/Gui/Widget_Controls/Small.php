@@ -14,7 +14,6 @@ class Small extends AbsControl {
     private $label_name;
     
     function __construct($i, $ctr, Server $server){
-        
         $sizeX = 20;
         $sizeY = 4;
         $this->bg = new \ManiaLib\Gui\Elements\BgsPlayerCard($sizeX, $sizeY*0.6+1);
@@ -37,6 +36,7 @@ class Small extends AbsControl {
         $this->bg->setAction($action);
         $this->label_name->setAction($action);
         //$this->label_name->setManialink('maniaplanet://#join='.$server->getServer_data()->server->login.'@'.$server->getServer_data()->server->packmask);
+        parent::__construct($server);
     }
     
     public function onResize($oldX, $oldY) {

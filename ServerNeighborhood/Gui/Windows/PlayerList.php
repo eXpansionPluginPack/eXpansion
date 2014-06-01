@@ -62,9 +62,6 @@ class PlayerList extends Window{
     }
     
     public function destroy() {
-        foreach ($this->items as $item) {
-            $item->destroy();            
-        }        
         $this->items = null;
         $this->pager->destroy();
         $this->serverItem->destroy();

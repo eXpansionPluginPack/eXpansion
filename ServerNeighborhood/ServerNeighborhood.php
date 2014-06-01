@@ -35,6 +35,9 @@
 
 namespace ManiaLivePlugins\eXpansion\ServerNeighborhood;
 
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Widgets\ServerPanel;
 
 class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
@@ -71,12 +74,24 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $this->enableTickerEvent();
     }
 
+    public function onSettingsChanged(Variable $var){
+        if($var->getName() == 'storing_path'){
+            $status = $this->saveData($this->server->createXML($this->connection, $this->storage));
+            $this->lastSent = time();
+
+            if(!$status){
+                $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
+                $admins->announceToPermission(Permission::expansion_pluginSettings, "#admin_error#[ServerNeighborhoo]Storage path is wrong. Can't write!!");
+            }
+        }
+    }
+
     public function onTick()
     {
         parent::onTick();
         if ((time() - $this->lastSent) > Config::getInstance()->refresh_interval) {
-            $this->lastSent = time();
             $this->saveData($this->server->createXML($this->connection, $this->storage));
+            $this->lastSent = time();
 
             if (sizeof($this->storage->players) > 0 || sizeof($this->storage->spectators) > 0) {
                 $this->getData();
@@ -110,13 +125,13 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             }
         }
         if ($tries >= 40) {
-            \ManiaLive\Utilities\Console::println(
-                '[server_neighborhood] Could not open file " ' . $filename . '" to store the Server Information!'
-            );
+            $this->console('[server_neighborhood] Could not open file " ' . $filename . '" to store the Server Information!');
+            return false;
         } else {
             fwrite($fh, $data);
             fclose($fh);
         }
+        return true;
     }
 
     public function getData()

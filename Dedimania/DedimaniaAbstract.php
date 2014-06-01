@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania;
 
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection as DediConnection;
 use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as DediEvent;
 use ManiaLive\DedicatedApi\Callback\Event as Event;
@@ -93,7 +94,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 	if (!$this->running) {
 	    if (empty($this->config->login) || empty($this->config->code)) {
 		$admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
-		$admins->announceToPermission('expansion_settings', "#admin_error#Server login or/and Server code is empty in Dedimania Configuration");
+		$admins->announceToPermission(Permission::expansion_pluginSettings, "#admin_error#Server login or/and Server code is empty in Dedimania Configuration");
 		$this->console("Server code or/and login is not configured for dedimania plugin!");
 	    } else {
 		try {
