@@ -188,7 +188,7 @@ class PlainLivePanel extends PlainPanel
                 }
                 $recsData .= '"' . $this->fixDashes($player->login) . '"=>' . $player->bestTime;
                 $nickData .= '"' . $this->fixDashes($player->login) . '"=>"' . $this->fixHyphens(
-                        $player->nickName
+				\ManiaLib\Utils\Formatting::stripColors($player->nickName)
                     ) . '"';
                 $index++;
             }
@@ -234,7 +234,7 @@ class PlainLivePanel extends PlainPanel
                 $lastCpTime                                    = $player->checkpoints[$lastCpIndex];
                 $player                                        = $this->storage->getPlayerObject($login);
                 $playerCps[$lastCpIndex][$login]               = $lastCpTime;
-                $playerNickNames[$lastCpIndex][$player->login] = $player->nickName;
+                $playerNickNames[$lastCpIndex][$player->login] = \ManiaLib\Utils\Formatting::stripColors($player->nickName);
                 $playerTeams[$login]                           = $player->teamId;
             }
         }

@@ -144,16 +144,16 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 
 				if(isTeam){
 					if(playersTeam[p] == 1){
-						timeLabel.SetText("$00F"^TimeToText(Score));
-						rank.SetText("$00F"^i);
+						timeLabel.SetText("$3AF"^TimeToText(Score));
+						rank.SetText("$3AF"^i);
 						declare point = total - i;
 						if(point < 0){
 							point = 0;
 						}
 						teamBlueScore +=  point;
 					}else{
-						timeLabel.SetText("$F00"^TimeToText(Score));
-						rank.SetText("$F00"^i);
+						timeLabel.SetText("$D00"^TimeToText(Score));
+						rank.SetText("$D00"^i);
 						declare point = total - i;
 						if(point < 0){
 							point = 0;
@@ -172,8 +172,8 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 					labelInfo1.SetText("   -"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
 					labelInfo2.SetText("   -"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
 				}else if(firstOfCp){
-					labelInfo1.SetText("$00F"^"-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
-					labelInfo2.SetText("$00F"^"-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
+					labelInfo1.SetText("$3AF"^"-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
+					labelInfo2.SetText("$3AF"^"-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
 				}else{
 					declare diff = Score - bestCp;
 					if(lastTimeDiff > diff && playerNickNames[cpIndex][p] == LocalUser.Name){
