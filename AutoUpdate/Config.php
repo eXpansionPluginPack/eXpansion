@@ -10,5 +10,5 @@ namespace ManiaLivePlugins\eXpansion\AutoUpdate;
 class Config extends \ManiaLib\Utils\Singleton{
     public $autoCheckUpdates = false;
     public $useGit = true;
-    public $branchName = "master";
+    public $branchName = "nighty";
 }
