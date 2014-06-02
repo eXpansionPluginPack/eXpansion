@@ -12,14 +12,12 @@ use ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls\PlayerStatusItem;
  */
 class MatchReady extends \ManiaLive\Gui\Window {
 
+    public static $actions;
     protected $background, $lbl_nextMatch, $lbl_info, $btn_ready, $btn_wait, $btn_continue, $btn_spec, $btn_play;
     protected $btn_joinRed, $btn_joinBlue;
-
     /** @var \ManiaLive\Gui\Controls\Frame */
     protected $frame_team_blue, $frame_team_red, $frame_rounds;
     private $gameMode;
-    public static $actions;
-
     /** @var  \Maniaplanet\DedicatedServer\Connection */
     private $connection;
 
@@ -94,7 +92,7 @@ class MatchReady extends \ManiaLive\Gui\Window {
         $this->btn_spec->setAlign("center");
         $this->addComponent($this->btn_spec);
 
-        $this->btn_play = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+        $this->btn_play = new \ManiaLivePlugins\eXpansion\Gui\Elements\But²ton();
         $this->btn_play->setAction(self::$actions['play']);
         $this->btn_play->setText(__("Play", $login));
 

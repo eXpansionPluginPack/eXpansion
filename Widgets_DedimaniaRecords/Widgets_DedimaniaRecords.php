@@ -152,6 +152,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
         $this->widgetIds   = array();
         Gui\Widgets\DediPanel::EraseAll();
         Gui\Widgets\DediPanel2::EraseAll();
+        $this->updateDediPanel();
         self::$secondMap = true;
         self::$raceOn    = true;
     }
@@ -163,6 +164,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
         $this->widgetIds   = array();
         Gui\Widgets\DediPanel::EraseAll();
         Gui\Widgets\DediPanel2::EraseAll();
+        $this->updateDediPanel();
         self::$secondMap = true;
         self::$raceOn    = true;
     }
