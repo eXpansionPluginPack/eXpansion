@@ -6,6 +6,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
+use ManiaLivePlugins\eXpansion\Helpers\Storage;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap as Map;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxMap;
 use ManiaLive\Gui\ActionHandler;
@@ -120,8 +121,13 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->redraw($this->getRecipient());
 
 	$info = $this->connection->getVersion();
-	
-	if (\ManiaLivePlugins\eXpansion\Core\Core::$isSMServer) {
+
+        /**
+         * @var Storage $storage
+         */
+        $storage = Storage::getInstance();
+
+	if ($storage->simpleEnviTitle == Storage::TITLE_SIMPLE_SM) {
 	    $script = $this->connection->getModeScriptInfo();
 	    $query = "";
 
