@@ -149,10 +149,6 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function onEndRound()
     {
-        //@TOdo remove it is good to have it to keep track of other players
-        /* if($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_ROUNDS){
-          $this->hideLivePanel();
-          } */
     }
 
     public function onBeginRound()
