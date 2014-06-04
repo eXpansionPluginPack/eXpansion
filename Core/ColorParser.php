@@ -1,17 +1,18 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Core;
-use ManiaLivePlugins\eXpansion\Core\Config;
 
 /**
  * ColorParser - Singleton
+ * Replaces specific text with color codes as configured
  *
  * @author oliverde8
  */
-class ColorParser extends \ManiaLib\Utils\Singleton {
+class ColorParser extends \ManiaLib\Utils\Singleton
+{
 
     /**
-     *  @type array
+     * @type array
      */
     private $codes = array();
 
@@ -20,40 +21,43 @@ class ColorParser extends \ManiaLib\Utils\Singleton {
      * Parses the colortokens within a string and returns new string with color codes.
      *
      * @param string $text
+     *
      * @return string
      */
-    public function parseColors($text) {
+    public function parseColors($text)
+    {
         $message = $text;
-        foreach ($this->codes as $code => $obj){
-	    $key = $obj[1];
-            $message = str_replace('#' . $code . '#', '$z$s'.$obj[0]->$key, $message);
-	}
+        foreach ($this->codes as $code => $obj) {
+            $key     = $obj[1];
+            $message = str_replace('#' . $code . '#', '$z$s' . $obj[0]->$key, $message);
+        }
+
         return $message;
     }
 
     /**
-     * LoadColors()
      * Loads the colors to colorparser class
-     * 
-     * @return void 
      */
-   public function __construct() {
-	foreach (Config::getInstance() as $name => $value) {
-	    $key = $name;
-	    $names = explode("_", $name);
-	    $name = array_shift($names);
-	    if ($name == "Colors") {
-		$this->registerCode(implode("_", $names), Config::getInstance(), $key);
-	    }
-	}
+    public function __construct()
+    {
+        foreach (Config::getInstance() as $name => $value) {
+            $key   = $name;
+            $names = explode("_", $name);
+            $name  = array_shift($names);
+            if ($name == "Colors") {
+                $this->registerCode(implode("_", $names), Config::getInstance(), $key);
+            }
+        }
     }
-    
+
     /**
      *
      * @param string $token
-     * @param string $color
+     * @param string $obj
+     * @param string $key
      */
-    public function registerCode($token, $obj, $key) {
+    public function registerCode($token, $obj, $key)
+    {
         $this->codes[$token] = array($obj, $key);
     }
 

@@ -90,7 +90,6 @@ class Inputbox extends \ManiaLive\Gui\Control {
         $this->label->setText('$222' . $text);
     }
 
-    // todo: Get the actual right text value of the element
     function getText() {
         if ($this->button instanceof \ManiaLib\Gui\Elements\Entry)
             return $this->button->getDefault();
