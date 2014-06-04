@@ -26,16 +26,15 @@ namespace ManiaLivePlugins\eXpansion\Debugtool;
  *
  * @author Petri
  */
-class Debugtool extends \ManiaLive\PluginHandler\Plugin {
+class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
-    public function onReady() {			
+    public function exp_onReady() {
 	$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
 	$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 	//\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
-	
-	/*$window = Gui\testWindow::Create("reaby");
-	$window->show(); */
-	
+
+	/* $window = Gui\testWindow::Create("reaby");
+	  $window->show(); */
     }
 
     function connect($login, $playercount) {
@@ -51,30 +50,5 @@ class Debugtool extends \ManiaLive\PluginHandler\Plugin {
 	    echo "error disconnecting;";
 	}
     }
-    
-    function LibXmlRpc_OnStartLine($login) {
-	    echo __FUNCTION__ . ":" . print_r(func_get_args(), true);	   
-	    return;
-	}
-
-	function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd) {
-	    echo __FUNCTION__ . ":" . print_r(func_get_args(), true);
-	    return;
-	}
-
-	function LibXmlRpc_OnGiveUp($login) {
-	    echo __FUNCTION__ . ":" . print_r(func_get_args(), true);
-	    return;
-	}
-
-	function LibXmlRpc_OnRespawn($login) {
-	    echo __FUNCTION__ . ":" . print_r(func_get_args(), true);
-	    return;
-	}
-
-	function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump) {
-	    echo __FUNCTION__ . ":" . print_r(func_get_args(), true);
-	    return;
-	}
 
 }

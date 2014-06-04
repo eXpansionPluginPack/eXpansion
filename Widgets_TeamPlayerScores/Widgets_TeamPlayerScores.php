@@ -143,9 +143,10 @@ class Widgets_TeamPlayerScores extends ExpPlugin {
 	PlayerScoreWidget::EraseAll();
     }
 
-    public function exp_onUnload() {
+    public function exp_onUnload() {	
 	$this->reset();
-	$this->hideWidget();
+	$this->hideWidget();	
+	parent::exp_onUnload();
     }
 
 }

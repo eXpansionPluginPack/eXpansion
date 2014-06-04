@@ -156,5 +156,11 @@ class Widgets_TeamRoundScores extends ExpPlugin {
     private function hideWidget() {
 	Gui\Widgets\RoundScoreWidget::EraseAll();
     }
+    
+    public function exp_onUnload() {
+	$this->reset();
+	$this->hideWidget();
+	parent::exp_onUnload();
+    }
 
 }
