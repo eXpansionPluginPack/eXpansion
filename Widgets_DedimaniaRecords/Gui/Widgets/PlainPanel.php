@@ -49,8 +49,8 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
                 $recsData .= ', ';
                 $nickData .= ', ';
             }
-            $recsData .= '"' . Gui::fixHyphens($record['Login']) . '"=> ' . $record['Best'];
-            $nickData .= '"' . Gui::fixHyphens($record['Login']) . '"=>"' . Gui::fixHyphens($record['NickName']) . '"';
+            $recsData .= '"' . Gui::fixString($record['Login']) . '"=> ' . $record['Best'];
+            $nickData .= '"' . Gui::fixString($record['Login']) . '"=>"' . Gui::fixString($record['NickName']) . '"';
             $index++;
         }
         $this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
@@ -71,7 +71,7 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
         if (count(\ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection::$players) > 0) {
             $out = "[";
             foreach (\ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection::$players as $dediplayer) {
-                $out .= '"' . Gui::fixHyphens($dediplayer->login) . '" => ' . $dediplayer->maxRank . ',';
+                $out .= '"' . Gui::fixString($dediplayer->login) . '" => ' . $dediplayer->maxRank . ',';
             }
             $out = trim($out, ",");
             $out = $out . "]";

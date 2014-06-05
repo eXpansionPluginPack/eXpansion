@@ -117,7 +117,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    $record = $recs[$x];
 	    $rank = $x+1;
             $this->pager->addSimpleItems(array($rank => -1,
-		Gui::fixHyphens($record->nickName) => -1,
+		Gui::fixString($record->nickName) => -1,
 		\ManiaLive\Utilities\Time::fromTM($record->time)." " => -1,
                 \ManiaLive\Utilities\Time::fromTM($record->avgScore)."" => -1,
                 "#".$record->nbFinish => -1

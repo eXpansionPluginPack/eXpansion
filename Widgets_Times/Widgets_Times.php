@@ -26,23 +26,26 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     function exp_onLoad() {
 	$this->enableDedicatedEvents();
+    }
+
+    function exp_onReady() {
 	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania')) {
+	    Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
+	    $this->console('registered Dedimania event!!');
+	}
+	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script')) {
 	    Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
 	}
 	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords')) {
 	    Dispatcher::register(LocalEvent::getClass(), $this);
 	}
-    }
-
-    function exp_onReady() {
-	//  $this->checkpointPos = $this->connection->getCurrentRanking(-1, 0);
 	TimePanel::$localrecords = $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
 	$this->showToAll();
     }
 
     public function onPlayerInfoChanged($playerInfo) {
 	$player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
-	$this->showPanel($player->login, true);
+	$this->showPanel($player->login, $player->isSpectator);
     }
 
     public function onPlayerGiveup(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player) {
@@ -143,6 +146,9 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function onEndMatch($rankings, $winnerTeamOrMap) {
 	// TimeChooser::EraseAll();
+	TimePanel::$dedirecords = Array();
+	TimePanel::$localrecords = Array();
+		
     }
 
     public function showToAll() {
@@ -190,16 +196,17 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	TimePanel::$localrecords = $data;
 	$this->showToAll();
     }
-/**
- *
- * @param \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record
- */
+
+    /**
+     *
+     * @param \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record
+     */
     public function onUpdateRecords($data) {
 	TimePanel::$localrecords = $data;
 	/*
 	  TimePanel::$localrecords = $data;
-	$this->console("Records Changed, reload!");
-	$this->showToAll(); */
+	  $this->console("Records Changed, reload!");
+	  $this->showToAll(); */
     }
 
     public function onDedimaniaUpdateRecords($data) {
@@ -207,19 +214,20 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onDedimaniaGetRecords($data) {
-	TimePanel::$dedirecords = $data['Records'];
+	TimePanel::$dedirecords = $data['Records'];	
+	$this->showToAll();
     }
-    
-    public function onRecordPlayerFinished($login){
+
+    public function onRecordPlayerFinished($login) {
 	
     }
 
     public function onDedimaniaOpenSession() {
-
+	
     }
 
     public function onNewRecord($data) {
-
+	
     }
 
     public function onPersonalBestRecord($data) {
@@ -227,11 +235,11 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onDedimaniaPlayerConnect($data) {
-
+	
     }
 
     public function onDedimaniaPlayerDisconnect($login) {
-
+	
     }
 
     /**
@@ -245,6 +253,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		TimePanel::$dedirecords[$index] = Array("Login" => $record->login, "NickName" => $record->nickname, "Rank" => $record->place, "Best" => $record->time, "Checks" => $record->checkpoints);
 	    }
 	}
+	$this->showPanel($record->login, false);
     }
 
     /**
@@ -257,6 +266,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 		TimePanel::$dedirecords[$index] = Array("Login" => $record->login, "NickName" => $record->nickname, "Rank" => $record->place, "Best" => $record->time, "Checks" => $record->checkpoints);
 	    }
 	}
+	$this->showPanel($record->login, false);
     }
 
     public function exp_onUnload() {

@@ -80,12 +80,12 @@ class MxMap extends Control {
 	$label->setAlign('left', 'center');
 	$label->setStyle("TextCardSmallScores2");
 	$label->setTextEmboss();
-	$label->setText(Gui::fixHyphens($map->gbxMapName));
+	$label->setText(Gui::fixString($map->gbxMapName));
 	$this->line1->addComponent($label);
 
 	$info = new Label(80, 6);
 	$info->setAlign('left', 'center');
-	$info->setText('$000' . Gui::fixHyphens($map->username));
+	$info->setText('$000' . Gui::fixString($map->username));
 	$info->setAction($this->actionSearch);
 	$info->setStyle("TextCardSmallScores2");
 	$info->setScriptEvents(true);

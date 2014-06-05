@@ -32,7 +32,7 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     }
 
     public function getSessionTime($login) {
-	$playtime = "0 hours 0 min 0 sec";
+	$playtime = "";
 	if (!$login) {
 	    return $playtime;
 	}
@@ -42,8 +42,13 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	
 	if (property_exists($player, "sessionJoinTime")) {
 	    $diff = $now->diff($player->sessionJoinTime, true);
-	    $playtime = $diff->h . " hours " . $diff->i . " min " . $diff->s . " sec";
-	}
+	    if ($diff->h)
+		$playtime .= $diff->h . " hours ";
+	    if ($diff->i)
+		$playtime .= $diff->i . " min ";
+	    if ($diff->s)
+		$playtime .= $diff->s . " sec ";	  
+	    }
 	return $playtime;
     }
 
@@ -90,7 +95,7 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
 	    $spec = "";
 	    if ($player->isSpectator)
-		$spec = __("\$n(Spectator)", $login);
+		$spec = '$n(Spectator)';
 
 	    $grpName = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getGroupName($login);
 	    $this->exp_chatSendServerMessage($this->joinMsg, null, array($nick, $login, $country, $spec, $grpName));

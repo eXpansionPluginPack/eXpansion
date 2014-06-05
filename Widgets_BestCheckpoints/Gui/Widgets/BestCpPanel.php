@@ -56,7 +56,7 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
                 $nickData .= ', ';
             }
             $timeData .= '' . $x . '=>' . $cp->time;
-            $nickData .= '' . $x . '=>"' . Gui::fixHyphens($cp->nickname) . '"';
+            $nickData .= '' . $x . '=>"' . Gui::fixString($cp->nickname) . '"';
             $x++;
         }
 
@@ -73,7 +73,7 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
             $nickData = 'Text[Integer]';
         } else {
             $timeData = '[' . $timeData . ']';
-            $nickData = '[' . Gui::fixHyphens($nickData) . ']';
+            $nickData = '[' . Gui::fixString($nickData) . ']';
         }
 
         $this->timeScript->setParam("cpTimes", $timeData);

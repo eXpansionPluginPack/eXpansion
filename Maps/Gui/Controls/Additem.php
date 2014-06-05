@@ -53,14 +53,14 @@ class Additem extends \ManiaLive\Gui\Control {
 
 	$this->label = new \ManiaLib\Gui\Elements\Label(90, 4);
 	$this->label->setAlign('left', 'center');
-	$this->label->setText(Gui::fixHyphens(\ManiaLib\Utils\Formatting::stripColors($gbx->name, "fff")));
+	$this->label->setText(Gui::fixString(\ManiaLib\Utils\Formatting::stripColors($gbx->name, "fff")));
 	$this->label->setScale(0.8);
 	$this->frame->addComponent($this->label);
 
 	$this->mapNick = new \ManiaLib\Gui\Elements\Label(50, 4);
 	$this->mapNick->setAlign('left', 'center');
 
-	$this->mapNick->setText(Gui::fixHyphens(\ManiaLib\Utils\Formatting::stripColors($gbx->authorNick, "fff")));
+	$this->mapNick->setText(Gui::fixString(\ManiaLib\Utils\Formatting::stripColors($gbx->authorNick, "fff")));
 	$this->mapNick->setScale(0.8);
 	$this->frame->addComponent($this->mapNick);
 

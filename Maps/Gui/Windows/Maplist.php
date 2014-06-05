@@ -364,8 +364,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    if (isset($sortableMap->localRecords) && isset($sortableMap->localRecords[$login]))
 		$localrecord = $sortableMap->localRecords[$login]+1;
 
-	    $this->pager->addSimpleItems(array(Gui::fixHyphens($sortableMap->name) => $queueMapAction,
-		Gui::fixHyphens($sortableMap->author) => -1,
+	    $this->pager->addSimpleItems(array(Gui::fixString($sortableMap->name) => $queueMapAction,
+		Gui::fixString($sortableMap->author) => -1,
 		$sortableMap->environnement => -1,
 		\ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime) => -1,
 		$localrecord => -1,

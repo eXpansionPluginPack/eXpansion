@@ -134,7 +134,7 @@ class Widget extends PlainWidget {
 	$this->script->setParam("version", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
 
 	if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
-	    $this->script->setParam("gameMode", Gui::fixHyphens($this->storage->gameInfos->scriptName));
+	    $this->script->setParam("gameMode", Gui::fixString($this->storage->gameInfos->scriptName));
 	}
 	else {
 	    $this->script->setParam("gameMode", $this->storage->gameInfos->gameMode);

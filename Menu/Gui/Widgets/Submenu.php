@@ -98,7 +98,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
 	$this->myscript->setParam("name", "Submenu");
 	
 	if($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT){
-	    $this->myscript->setParam("gameMode", \ManiaLivePlugins\eXpansion\Gui\Gui::fixHyphens($this->storage->gameInfos->scriptName));
+	    $this->myscript->setParam("gameMode", \ManiaLivePlugins\eXpansion\Gui\Gui::fixString($this->storage->gameInfos->scriptName));
 	} else {
 	    $this->myscript->setParam("gameMode", $this->storage->gameInfos->gameMode);
 	}

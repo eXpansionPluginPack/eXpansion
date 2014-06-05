@@ -211,10 +211,8 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	print "\n" . $mem . "\n";
     }
 
-    public static function fixHyphens($string) {
-	$out = str_replace('"', "'", $string);
-	$out = str_replace('\\', '\\\\', $out);
-	$out = str_replace('--', '––', $out);
+    public static function fixString($string) {
+	$out = \ManiaLib\ManiaScript\Tools::escapeString($string);
 	$out = str_replace('-', '–', $out);
 	return $out;
     }
