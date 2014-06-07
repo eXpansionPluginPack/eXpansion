@@ -18,6 +18,14 @@ namespace ManiaLivePlugins\eXpansion\Chat;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
+/**
+ * Redirects the chat in order to display it nicer.
+ * Can be used to disable the chat as well.
+ *
+ * @package ManiaLivePlugins\eXpansion\Chat
+ *
+ * @author Reaby
+ */
 class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
@@ -48,6 +56,12 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->config = Config::getInstance();
     }
 
+    /**
+     * On Player connect just show console
+     *
+     * @param $login
+     * @param $isSpectator
+     */
     public function onPlayerConnect($login, $isSpectator)
     {
         $player  = $this->storage->getPlayerObject($login);
@@ -57,6 +71,12 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         );
     }
 
+    /**
+     * On player just disconnect
+     *
+     * @param      $login
+     * @param null $reason
+     */
     public function onPlayerDisconnect($login, $reason = null)
     {
         $player = $this->storage->getPlayerObject($login);
