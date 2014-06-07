@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use \ManiaLive\DedicatedApi\Callback\Event;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer {
 
@@ -94,8 +95,8 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 
     public function addSimpleItems($items) {
 	foreach ($items as $text => $action) {
-	    $this->iitems[$this->index][] = '"' . $this->fixHyphens($text) . '"';
-	    $this->data[$this->index][] = '"' . $this->fixHyphens($action) . '"';
+	    $this->iitems[$this->index][] = '"' . Gui::fixString($text) . '"';
+	    $this->data[$this->index][] = '"' . Gui::fixString($action) . '"';
 	}
 	$this->index++;
     }
@@ -179,13 +180,6 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 
 
 	return $this->myScript;
-    }
-
-    protected function fixHyphens($string) {
-	$out = str_replace('"', "'", $string);
-	$out = str_replace('\\', '\\\\', $out);
-	$out = str_replace('-', '–', $out);
-	return $out;
     }
 
 }
