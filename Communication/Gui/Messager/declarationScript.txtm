@@ -1,0 +1,12 @@
+declare Text[][Text] chatLiness for InputPlayer = Text[][Text];
+declare Boolean isChatUpdated for UI;
+declare Text tab = "<?php echo $this->tab; ?>";
+declare Text chat = "<?php echo $this->text; ?>";
+ 
+isChatUpdated = True;
+if (!chatLiness.existskey(tab)) {
+    chatLiness[tab] = Text[];
+}
+
+chatLiness[tab].add(chat);
+

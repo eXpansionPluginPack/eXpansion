@@ -1,0 +1,130 @@
+// This library is available at https://github.com/maniaplanet/library-manialink
+
+#Include "MathLib" as ML
+#Include "TextLib" as TL
+
+
+// Draggable Start
+
+Real[] LibManialink_PrivateDraggableGetOffset(CMlControl _Control) {
+  declare Offset = [0., 0., 0., 0.];
+  if (_Control == Null) return Offset;
+          
+  if (_Control.HorizontalAlign == CMlControl::AlignHorizontal::HCenter) {
+    Offset[0] -= _Control.Size.X / 2.;
+    Offset[1] += _Control.Size.X / 2.;
+  } else if (_Control.HorizontalAlign == CMlControl::AlignHorizontal::Right) {
+    Offset[0] -= _Control.Size.X;
+  } else {
+    Offset[1] += _Control.Size.X;
+  }
+  
+  if (_Control.VerticalAlign == CMlControl::AlignVertical::VCenter) {
+    Offset[2] -= _Control.Size.Y / 2.;
+    Offset[3] += _Control.Size.Y / 2.;
+  } else if (_Control.VerticalAlign == CMlControl::AlignVertical::Bottom) {
+    Offset[3] += _Control.Size.Y;
+  } else {
+    Offset[2] -= _Control.Size.Y;
+  }
+  
+  return Offset;
+}
+
+Void LibManialink_DraggableLoop() {
+  declare Boolean LibManialink_DragMouseLeftButton for Page;
+  declare Boolean LibManialink_IsDragging for Page;
+  declare Text LibManialink_Draggable for Page;
+  declare CMlControl[Integer] LibManialink_Dragging for Page;
+  declare Real[] LibManialink_DragLimit for Page;
+  declare CMlControl LibManialink_DragBoundingBox for Page;
+  declare Real[] LibManialink_DragBoundingBoxOffset for Page;
+  
+  if (LibManialink_DragMouseLeftButton != MouseLeftButton) {
+    LibManialink_DragMouseLeftButton = MouseLeftButton;
+    
+    if (MouseLeftButton && LibManialink_Draggable != "") {
+      LibManialink_IsDragging = True;
+      LibManialink_Dragging.clear();
+      LibManialink_DragLimit = [-160., 160., -90., 90.];
+      LibManialink_DragBoundingBox = Null;
+      
+      Page.GetClassChildren("LibManialink_Draggable", Page.MainFrame, True);
+      foreach (Key => Control in Page.GetClassChildren_Result) {
+        if (Control.ControlId == LibManialink_Draggable) {
+          declare Vec2 LibManialink_DragOffset for Control;
+          LibManialink_DragOffset = <Control.RelativePosition.X - MouseX, Control.RelativePosition.Y - MouseY>;
+          LibManialink_Dragging[Key] = Control;
+        }
+      }
+      
+      Page.GetClassChildren("LibManialink_DraggableArea", Page.MainFrame, True);
+      foreach (Control in Page.GetClassChildren_Result) {
+        if (Control.ControlId == LibManialink_Draggable) {
+          LibManialink_DragLimit = [Control.AbsolutePosition.X, Control.AbsolutePosition.X, Control.AbsolutePosition.Y, Control.AbsolutePosition.Y];
+          declare Offset = LibManialink_PrivateDraggableGetOffset(Control);
+          
+          for (I, 0, 3) {
+            LibManialink_DragLimit[I] += Offset[I];
+          }
+          
+          break;
+        }
+      }
+      
+      Page.GetClassChildren("LibManialink_DraggableBoundingBox", Page.MainFrame, True);
+      foreach (Control in Page.GetClassChildren_Result) {
+        if (Control.ControlId == LibManialink_Draggable) {
+          LibManialink_DragBoundingBox = Control;
+          LibManialink_DragBoundingBoxOffset = LibManialink_PrivateDraggableGetOffset(Control);
+          
+          break;
+        }
+      }
+    } else {
+      LibManialink_IsDragging = False;
+      LibManialink_Dragging.clear();
+    }
+  }
+  
+  foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::MouseOver) {
+      if (Event.Control.HasClass("LibManialink_DraggableHandle")) {
+        LibManialink_Draggable = Event.ControlId;
+      } else {
+        LibManialink_Draggable = "";
+      }
+    } else if (Event.Type == CMlEvent::Type::MouseOut) {
+      LibManialink_Draggable = "";
+    }
+  }
+  
+  if (LibManialink_IsDragging && LibManialink_Dragging.count > 0) {
+    foreach (Control in LibManialink_Dragging) {
+      declare Vec2 LibManialink_DragOffset for Control;
+      Control.RelativePosition.X = MouseX + LibManialink_DragOffset.X;
+      Control.RelativePosition.Y = MouseY + LibManialink_DragOffset.Y;
+    }
+    
+    if (LibManialink_DragBoundingBox != Null) {
+      declare Box = [
+        LibManialink_DragBoundingBox.AbsolutePosition.X + LibManialink_DragBoundingBoxOffset[0],
+        LibManialink_DragBoundingBox.AbsolutePosition.X + LibManialink_DragBoundingBoxOffset[1],
+        LibManialink_DragBoundingBox.AbsolutePosition.Y + LibManialink_DragBoundingBoxOffset[2],
+        LibManialink_DragBoundingBox.AbsolutePosition.Y + LibManialink_DragBoundingBoxOffset[3]
+      ];
+      declare Shift = <0., 0.>;
+      if (Box[0] < LibManialink_DragLimit[0]) Shift.X += LibManialink_DragLimit[0] - Box[0];
+      if (Box[1] > LibManialink_DragLimit[1]) Shift.X += LibManialink_DragLimit[1] - Box[1];
+      if (Box[2] < LibManialink_DragLimit[2]) Shift.Y += LibManialink_DragLimit[2] - Box[2];
+      if (Box[3] > LibManialink_DragLimit[3]) Shift.Y += LibManialink_DragLimit[3] - Box[3];
+      
+      foreach (Control in LibManialink_Dragging) {
+        Control.RelativePosition.X += Shift.X;
+        Control.RelativePosition.Y += Shift.Y;
+      }
+    }
+  }
+}
+
+// Draggable Stop

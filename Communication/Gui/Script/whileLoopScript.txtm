@@ -1,0 +1,91 @@
+if (isChatUpdated == True) {
+    log(Now);
+    log(chatLiness);
+    isChatUpdated = False;
+    isMinimized = False;
+    LibManialink_Anim("<frame posn=\"-160 "^ Window.RelativePosition.Y ^"\" scale=\"1\" id=\"<?php echo $this->winid; ?>\" />", 750, "EaseOutElastic");
+    declare Integer tabCounter = 0;
+
+    // reset lines
+    for (i, 0, 4) {
+     //   LibManialink_AnimInsert("<label opacity=\"0.0\" id=\"line_"^i^"\" />", i*450, 750, "");
+        declare label <=> (Page.GetFirstChild("line_"^i) as CMlLabel);
+        label.Value = "";  
+    }
+
+    // generate tabs and lines
+    foreach (tabTitle => texts in chatLiness) {
+
+        if (tabCounter > 4) {
+            break;
+        }
+
+        declare tabLabel <=> (Page.GetFirstChild("tab_"^tabCounter) as CMlLabel);
+        if (tabLabel != Null) {
+            tabLabel.Value = tabTitle;
+        }
+
+        if (tabCounter == activeTab) {
+            if (texts.count > 0) {
+                declare Integer startpos = texts.count-5;
+                if (startpos < 0) {
+                    startpos = 0;
+                }
+                declare Integer lineCount = 0;
+                for (i, startpos, texts.count-1) {
+                   declare label <=> (Page.GetFirstChild("line_"^lineCount) as CMlLabel);
+                   label.Value = texts[i];
+              //      LibManialink_AnimInsert("<label opacity=\"1.0\" id=\"line_"^lineCount^"\"/>", i * 450, 750, "");
+                   lineCount += 1;
+                }
+            }
+        }
+        tabCounter += 1;
+    }
+}
+
+foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::EntrySubmit)  {
+     
+// add text entry
+        declare Integer tabCounter = 0;
+        foreach (tabTitle => texts in chatLiness) {
+            log (tabCounter ^ ":" ^ activeTab);
+            if (tabCounter == activeTab) {
+                replyTo.Value = tabTitle;
+                log("setting value: "^tabTitle);
+            }
+            tabCounter += 1;
+        }
+        TriggerPageAction(sendAction);
+        inputBox.Value = "";
+        inputBox.StartEdition();
+    }	
+
+    if (Event.Type == CMlEvent::Type::MouseClick) {
+       
+        if (Event.ControlId == "minimizeButton") {
+            isMinimized = !isMinimized;
+            if (isMinimized) {
+                 LibManialink_Anim("<frame posn=\"-278 "^ Window.RelativePosition.Y ^"\" scale=\"1\" id=\"<?php echo $this->winid; ?>\" />", 250, "EaseInSinc");
+            } else {
+                LibManialink_Anim("<frame posn=\"-160 "^ Window.RelativePosition.Y ^"\" scale=\"1\" id=\"<?php echo $this->winid; ?>\" />", 750, "EaseOutElastic");
+            }      
+
+       } else {
+            switch (Event.ControlId) {
+                case "tab_0":
+                        activeTab = 0;
+                case "tab_1":
+                        activeTab = 1;
+                case "tab_2":
+                        activeTab = 2;
+                case "tab_3":
+                        activeTab = 3;
+                case "tab_4":
+                        activeTab = 4;         
+            }
+            isChatUpdated = True;
+       }
+    }
+}

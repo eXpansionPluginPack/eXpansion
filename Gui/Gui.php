@@ -213,6 +213,7 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public static function fixString($string) {
 	$out = \ManiaLib\ManiaScript\Tools::escapeString($string);
+	$out = str_replace('"', "'", $out);
 	$out = str_replace('-', '–', $out);
 	return $out;
     }

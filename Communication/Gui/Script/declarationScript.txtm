@@ -1,0 +1,9 @@
+declare CMlEntry inputBox <=> (Page.GetFirstChild("chatEntry") as CMlEntry);
+declare CMlEntry replyTo <=> (Page.GetFirstChild("replyTo") as CMlEntry);
+declare Text sendAction = "<?php echo $this->sendAction ?>";
+declare Text[][Text] chatLiness for InputPlayer = Text[][Text];
+declare Boolean isChatUpdated for UI = True;
+declare Boolean isMinimized = True;
+declare Integer activeTab = 0;
+
+isChatUpdated = False;

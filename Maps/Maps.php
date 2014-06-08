@@ -156,6 +156,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function showRec($login, $map) {
 	$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, $map);
     }
+    
 
     public function onPlayerDisconnect($login, $reason = null) {
 	Gui\Windows\Maplist::Erase($login);
@@ -178,7 +179,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 // changed from onBeginMap -> it doesn't trigger if map was replayed.    
     function onBeginMatch() {
 	$this->atPodium = false;
-
+	
 	$this->nextMap = $this->storage->nextMap;
 
 	if (count($this->queue) > 0) {
@@ -222,6 +223,7 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public function onBeginMap($map, $warmUp, $matchContinuation) {
 	$this->showCurrentMapWidget(null);
 	$this->showNextMapWidget(null);
+	\ManiaLive\Gui\CustomUI::HideForAll(\ManiaLive\Gui\CustomUI::CHALLENGE_INFO);
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
