@@ -34,7 +34,7 @@ class Widgets_CheckpointProgress extends \ManiaLivePlugins\eXpansion\Core\types\
     private function displayWidget() {
 	$info = Gui\Widgets\CpProgress::Create(null);
 	$info->setSize(160, 15);
-	$info->setPosition(0, -60);
+	$info->setPosition(-80, -60);
 	$info->show();
     }
 

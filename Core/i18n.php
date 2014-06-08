@@ -9,25 +9,45 @@ namespace ManiaLivePlugins\eXpansion\Core;
 class i18n extends \ManiaLib\Utils\Singleton {
 
     /**
-     * Current locale string
+     * default language
+     *
      * @var string $language 
      */
     private $defaultLanguage = null;
 
     /**
      * Translated messages by language
+     *
      * @var array(String => Message)
      */
     private $messages = array();
 
     /**
      * Supported locales
+     *
      * @var array
      */
     private $supportedLocales = array();
+
+    /**
+     * Directories to look into from translations
+     *
+     * @var array
+     */
     private $directorties = array();
+
+    /**
+     * Was the class started (all directories checked and everything)
+     *
+     * @var bool
+     */
     private $started = false;
 
+    /**
+     * Registers a directory to look into for translations. If already started then it will load it immediately
+     *
+     * @param $dir Directory
+     */
     public function registerDirectory($dir) {
         if ($this->started) {
             $this->readFiles($dir);
@@ -37,6 +57,9 @@ class i18n extends \ManiaLib\Utils\Singleton {
         }
     }
 
+    /**
+     * Start loading the directories that are pending
+     */
     public function start() {
         if (!empty($this->directorties)) {
             foreach ($this->directorties as $dir) {
@@ -47,6 +70,11 @@ class i18n extends \ManiaLib\Utils\Singleton {
         $this->started = true;
     }
 
+    /**
+     * Read the files in order to register the translations found
+     *
+     * @param $dir the directory to load translations from
+     */
     protected function readFiles($dir) {
         if (is_dir($dir . "/messages")) {
 
@@ -74,10 +102,22 @@ class i18n extends \ManiaLib\Utils\Singleton {
         }
     }
 
+    /**
+     * Sets default language, used for players which has languages unknown to the system
+     *
+     * @param $language
+     */
     public function setDefaultLanguage($language) {
         $this->defaultLanguage = $language;
     }
 
+    /**
+     * Get language object from key
+     *
+     * @param $string Translation key
+     *
+     * @return i18n\Message FOund message, or new message
+     */
     public function getObject($string) {
         if (isset($this->messages[$string])) {
             return $this->messages[$string];
@@ -87,16 +127,36 @@ class i18n extends \ManiaLib\Utils\Singleton {
         }
     }
 
+    /**
+     * Get the translation of a key in a certain language. If no language is defined default language
+     *
+     * @param      $string      Translation key
+     * @param null $fromLanguage Language to get the translation for
+     *
+     * @return string the translation, if none find the translation key
+     */
     public function getString($string, $fromLanguage = null) {
         if ($fromLanguage == null)
             return $this->translate($string, $this->defaultLanguage);
         return $this->translate($string, $fromLanguage);
     }
 
+    /**
+     * Returns the list of languages that are supported.
+     *
+     * @return string[]
+     */
     public function getSupportedLocales() {
         return $this->supportedLocales;
     }
 
+    /**
+     * @param      $string
+     * @param null $language
+     *
+     * @return mixed
+     * @todo check if this is actually used :S I don't understand what it does.
+     */
     private function translate($string, $language = null) {
 
         if (isset($this->messages[$string])) {

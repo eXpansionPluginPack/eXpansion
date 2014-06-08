@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Chatlog;
 
 /**
- * Description of Chatlog
+ * Get all chat and logs it
  *
  * @author Reaby
  */
@@ -16,6 +16,14 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->registerChatCommand("chatlog", "showLog", 0, true);
     }
 
+    /**
+     * When player chat we log it
+     *
+     * @param $playerUid
+     * @param $login
+     * @param $text
+     * @param $isRegistredCmd
+     */
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
 	if ($playerUid == 0 || substr($text, 0, 1) == "/")
 	    return;
@@ -27,6 +35,11 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->log = array_slice($this->log, 0, Config::getInstance()->historyLenght, True);
     }
 
+    /**
+     * Displays the chat log to the players
+     *
+     * @param $login
+     */
     public function showLog($login) {
 	$window = Gui\Windows\ChatlogWindow::Create($login);
 	$window->setTitle(__('Chatlog', $login));

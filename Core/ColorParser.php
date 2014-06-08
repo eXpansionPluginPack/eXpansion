@@ -36,7 +36,7 @@ class ColorParser extends \ManiaLib\Utils\Singleton
     }
 
     /**
-     * Loads the colors to colorparser class
+     * Loads the default color codes that are defined in the config
      */
     public function __construct()
     {
@@ -51,10 +51,11 @@ class ColorParser extends \ManiaLib\Utils\Singleton
     }
 
     /**
+     * Register a new color code
      *
-     * @param string $token
-     * @param string $obj
-     * @param string $key
+     * @param string $token The key for the color code
+     * @param string $obj The object that contains the variable to use(allows the color code to be changed live)
+     * @param string $key The key in the object fhat contains this color code
      */
     public function registerCode($token, $obj, $key)
     {
