@@ -76,6 +76,8 @@ class Recorditem extends \ManiaLive\Gui\Control {
 	$this->nick->setTextSize(1);
 	$this->nick->setTextColor('fff');
 	$this->nick->setId("RecNick_" . $index);
+	$this->nick->setAttribute("class", "nickLabel");
+	$this->nick->setScriptEvents();
 	//$this->nick->setText("#######################################################");
 	$this->addComponent($this->nick);
 

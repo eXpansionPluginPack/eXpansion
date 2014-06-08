@@ -177,7 +177,7 @@ foreach (Event in PendingEvents) {
     /*if (Event.Type == CXmlRpcEvent::Type::LibXmlRpc_OnWayPoint) {
 	
     }*/
-    
+
     if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer") {
 	if (eXp_widgetLayers[version][id][gameMode] == "normal") {	    
 	    eXp_widgetLayers[version][id][gameMode] = "scorestable";	    

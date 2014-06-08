@@ -123,7 +123,8 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     if(total > maxPoint){
 		total = maxPoint;
     }
-    
+
+    playerScoreRanks.clear();
     while(cpIndex >= 0){
 		declare bestCp = 0;
 		if(playerTimes.existskey(cpIndex)){
@@ -135,6 +136,8 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 				declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
 				declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
 				declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
+                                log(p);
+                                playerScoreRanks.add(p);
 
 				if (playerNickNames[cpIndex][p] == LocalUser.Name) {
 				showed = True;
@@ -267,6 +270,16 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 }
 
 foreach (Event in PendingEvents) {
+     if (Event.Type == CMlEvent::Type::MouseClick ) {
+        declare CMlControl control = Page.GetFirstChild(Event.ControlId);
+        if (control.ControlClasses.count > 0 && control.ControlClasses[0] == "nickLabel") {
+                //log("nicklabel:" ^ Event.ControlId);
+                declare controlId = TextLib::Split("_",Event.ControlId);
+                declare Integer index = TextLib::ToInteger(controlId[1])-1;
+                SetSpectateTarget(playerScoreRanks[index]);
+        }
+    }
+
     if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer") {
 		if (eXp_widgetLayers[version][id][gameMode] == "normal") {	
 			eXp_widgetLayers[version][id][gameMode] = "scorestable";	    

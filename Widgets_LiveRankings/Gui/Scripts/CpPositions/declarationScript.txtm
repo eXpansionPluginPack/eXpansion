@@ -26,3 +26,5 @@ declare nbLaps = <?php echo $this->nbLaps ?>;
 declare isTeam = <?php echo $this->isTeam ?>;
 
 declare maxPoint = <?php echo $this->maxPoint ?>;
+
+declare Text[] playerScoreRanks;
