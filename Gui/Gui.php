@@ -216,21 +216,15 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * Cleans the string for manialink or maniascript purposes.
      *
      * @param string $string The string to clean
-     * @param array  $slash The characters to espace with a slash
      *
      * @return string cleaned up string
      */
-    public static function fixString($string, $slash = array('"')){
+    public static function fixString($string){
 
-        $toFix = array("\r", "-");
-        $fix = array('', '–');
+        $out = str_replace('"', "'", $string);
+        $out = str_replace('\\', '\\\\', $out);
+	$out = str_replace('-', '–', $out);
 
-        foreach($slash as $char){
-            $toFix[] = $char;
-            $fix[] = '\\'.$char;
-        }
-
-	$out = str_replace($toFix, $fix, $string);
 	return $out;
     }
 
