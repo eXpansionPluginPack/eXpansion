@@ -10,17 +10,30 @@ Void updateTabContents() {
         label.Value = ""; 
 
         declare tabLabel <=> (Page.GetFirstChild("tablabel_"^i) as CMlLabel);
-        declare tabBg <=> (Page.GetFirstChild("tabBg_"^i) as CMlLabel);
-        declare tabClose <=> (Page.GetFirstChild("closeButton_"^i) as CMlLabel);
+        declare tabBg <=> (Page.GetFirstChild("tabBg_"^i) as CMlQuad);
+        declare tabClose <=> (Page.GetFirstChild("closeButton_"^i) as CMlQuad);
+        tabBg.Substyle = "BgCard3";
+        tabBg.Colorize = <0.,0.,0.>;
 
         if (tabLabel != Null) {
             tabLabel.Value = "";
             tabLabel.Hide();
             tabBg.Hide();
+
             tabClose.Hide();
         }
  
     }
+    
+    declare tabBg <=> (Page.GetFirstChild("tabBg_"^activeTab) as CMlQuad);
+    tabBg.Substyle = "BgWindow4";
+    tabBg.Colorize = <0.,.8,1.0>;
+
+
+    declare help <=> (Page.GetFirstChild("line_0") as CMlLabel);
+    help.Value="Send personal messages: click (+) icon";
+            
+
     // generate tabs and lines
     foreach (tabTitle => texts in chatLiness) {
 
@@ -58,7 +71,7 @@ Void updateTabContents() {
               //      LibManialink_AnimInsert("<label opacity=\"1.0\" id=\"line_"^lineCount^"\"/>", i * 450, 750, "");
                    lineCount += 1;
                 }
-            }
+            } 
         }
         tabCounter += 1;
     }

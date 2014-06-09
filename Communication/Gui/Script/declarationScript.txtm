@@ -6,9 +6,12 @@ declare minimizeButton <=> (Page.GetFirstChild("minimizeButton") as CMlQuad);
 declare Text sendAction = "<?php echo $this->sendAction ?>";
 declare Text[][Text] chatLiness for UI = Text[][Text];
 declare Boolean isChatUpdated for UI = True;
+declare Boolean forceUpdate for UI = False;
+
 declare Boolean isMinimized = True;
 declare Integer activeTab for UI = 0;
 
 isChatUpdated = False;
+forceUpdate = False;
 
 updateTabContents();

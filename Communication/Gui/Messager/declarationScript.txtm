@@ -1,5 +1,6 @@
 declare Text[][Text] chatLiness for UI = Text[][Text];
 declare Boolean isChatUpdated for UI;
+declare Boolean forceUpdate for UI;
 declare Text tab = "<?php echo $this->tab; ?>";
 declare Text chat = "<?php echo $this->text; ?>";
 declare Text action = "<?php echo $this->action; ?>";
@@ -10,19 +11,22 @@ switch (action) {
             chatLiness[tab] = Text[];
         }
         chatLiness[tab].add(chat);
+        isChatUpdated = True;
     }
     case "clearMessages": {
-        chatLiness.clear();     
+        chatLiness.clear(); 
+        forceUpdate = True; 
     }
     case "closeTab": {
         chatLiness.removekey(tab);
+        forceUpdate = True; 
     }
     case "openTab": {
         if (!chatLiness.existskey(tab)) {
             chatLiness[tab] = Text[];
         }
+        forceUpdate = True; 
     }
 
 }
 
-isChatUpdated = True;

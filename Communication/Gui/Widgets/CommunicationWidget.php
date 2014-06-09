@@ -40,6 +40,10 @@ class CommunicationWidget extends Widget {
     protected function exp_onBeginConstruct() {
 	$this->setName("Messaging Widget");
 
+	$bg = new WidgetBackGround(8,6);
+	$bg->setPosition(117,0);
+	$this->addComponent($bg);
+	
 	$this->_mainWindow = new Frame();
 	$this->_mainWindow->setAlign("left", "center");
 	$this->_mainWindow->setId("Frame");
@@ -47,11 +51,8 @@ class CommunicationWidget extends Widget {
 	$this->_mainWindow->setScriptEvents(true);
 	$this->addComponent($this->_mainWindow);
 
-
-
-
-
-	$this->bg = new \ManiaLib\Gui\Elements\Bgs1InRace(120, 39);
+	
+	$this->bg = new \ManiaLib\Gui\Elements\Bgs1InRace(118, 39);
 	$this->bg->setSubStyle('BgWindow4');
 	$this->bg->setColorize('777');
 	$this->bg->setAlign("left", "top");
@@ -77,7 +78,6 @@ class CommunicationWidget extends Widget {
 
 	for ($x = 0; $x < 5; $x++) {
 	    $label = new \ManiaLib\Gui\Elements\Label(116, 5);
-	    //$label->setText("line".$x);
 	    $label->setId("line_" . $x);
 	    $label->setTextColor("fff");
 	    //   $label->setScriptEvents();

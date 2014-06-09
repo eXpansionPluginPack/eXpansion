@@ -1,12 +1,21 @@
 if (isChatUpdated == True) {
     isChatUpdated = False;
-    minimizeButton.Style = "Icons128x128_Blink";
-    minimizeButton.Substyle = "Easy";
-  
+   // minimizeButton.Style = "Icons128x128_Blink";
+   // minimizeButton.Substyle = "Easy";
+ 
+      LibManialink_Anim("<quad colorize=\"ff0\" id=\"minimizeButton\" />", 750, "EaseInOutSinc");
+      for (i, 0 , 3) {
+            LibManialink_AnimChain("<quad colorize=\"fff\" id=\"minimizeButton\" />", 750, "EaseInOutSinc");
+            LibManialink_AnimChain("<quad colorize=\"ff0\" id=\"minimizeButton\" />", 750, "EaseInOutSinc");
+      }
  //   LibManialink_Anim("<frame posn=\"-160 "^ Window.RelativePosition.Y ^"\" scale=\"1\" id=\"<?php echo $this->winid; ?>\" />", 750, "EaseOutElastic");
     updateTabContents();
 }
 
+if (forceUpdate == True) {
+    forceUpdate = False;
+    updateTabContents();
+}
 
     
 foreach (Event in PendingEvents) {
@@ -34,8 +43,12 @@ foreach (Event in PendingEvents) {
        
         if (Event.ControlId == "minimizeButton") {
             isMinimized = !isMinimized;
-            minimizeButton.Style = "Icons64x64_1";
-            minimizeButton.Substyle = "NewMessage";
+          //  minimizeButton.Style = "Icons64x64_1";
+          //  minimizeButton.Substyle = "NewMessage";
+              minimizeButton.Colorize = <1.,1.,1.>;
+              
+
+
             if (isMinimized) {            
                  LibManialink_Anim("<frame posn=\"-278 "^ Window.RelativePosition.Y ^"\" scale=\"1\" id=\"<?php echo $this->winid; ?>\" />", 250, "EaseInSinc");
             } else {
