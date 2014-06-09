@@ -17,9 +17,10 @@ switch (action) {
     case "closeTab": {
         chatLiness.removekey(tab);
     }
+    case "openTab": {
+        chatLiness[tab] = Text[];
+    }
 
 }
-
-
 
 isChatUpdated = True;

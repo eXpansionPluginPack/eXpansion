@@ -1,6 +1,8 @@
 declare CMlEntry inputBox <=> (Page.GetFirstChild("chatEntry") as CMlEntry);
 declare CMlEntry replyTo <=> (Page.GetFirstChild("replyTo") as CMlEntry);
 declare minimizeButton <=> (Page.GetFirstChild("minimizeButton") as CMlQuad);
+//declare window <=> (Page.GetFirstChild("<?php echo $this->winid ?>") );
+
 declare Text sendAction = "<?php echo $this->sendAction ?>";
 declare Text[][Text] chatLiness for UI = Text[][Text];
 declare Boolean isChatUpdated for UI = True;

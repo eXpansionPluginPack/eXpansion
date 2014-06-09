@@ -19,35 +19,44 @@
 
 namespace ManiaLivePlugins\eXpansion\Communication;
 
+use ManiaLib\Utils\Formatting;
+use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\Communication\Gui\Widgets\CommunicationWidget;
+use ManiaLivePlugins\eXpansion\Communication\Gui\Widgets\Messager;
+use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection;
+
 /**
  * Description of Communication
  *
  * @author Reaby
  */
-class Communication extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Communication extends ExpPlugin {
 
     public function exp_onReady() {
 	$this->enableDedicatedEvents();
 
-	Gui\Widgets\CommunicationWidget::$action = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, "guiSendMessage"));
-
-	$widget = Gui\Widgets\CommunicationWidget::Create();
+	CommunicationWidget::$action = ActionHandler::getInstance()->createAction(array($this, "guiSendMessage"));
+	CommunicationWidget::$selectPlayer = ActionHandler::getInstance()->createAction(array($this, "selectPlayer"));
+	
+	$widget = CommunicationWidget::Create();
 	$widget->show();
-	$this->registerChatCommand("send", "sendPm", 2, true);
+
+	$this->registerChatCommand("send", "sendPmChat", 2, true);
     }
 
     public function onPlayerConnect($login, $isSpectator) {
-	$info = Gui\Widgets\Messager::Create($login);
+	$info = Messager::Create($login);
 	$info->clearMessages();
+
 	$info->setTimeout(0.5);
 	$info->show();
     }
 
     public function sendPm($login, $tab, $text) {
-	$fromPlayer = $this->storage->getPlayerObject($login);
-
-	$info = Gui\Widgets\Messager::Create($login);
-	$info->sendChat($tab, \ManiaLib\Utils\Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $text);
+	Messager::Erase($login);
+	$info = Messager::Create($login);
+	$info->sendChat($tab, $text);
 	$info->setTimeout(0.5);
 	$info->show();
 	//echo "pm send;" . $login;
@@ -57,13 +66,38 @@ class Communication extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	//echo "login: '" . $login . "' said:" . $entries['chatEntry'] . "\n";
 	//print_r($entries);
 	$target = $entries['replyTo'];
-	$this->sendPm($login, $target, $entries['chatEntry']);
-	$this->sendPm($target, $login, $entries['chatEntry']);
+	$fromPlayer = $this->storage->getPlayerObject($login);
+	$this->sendPm($login, $target, Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $entries['chatEntry']);
+	$this->sendPm($target, $login, Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $entries['chatEntry']);
     }
 
+    public function sendPmChat($login, $target, $text) {
+	$fromPlayer = $this->storage->getPlayerObject($login);
+	$this->sendPm($login, $target, Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $text);
+	$this->sendPm($target, $login, Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $$text);
+    }
+
+    public function selectPlayer($login) {
+	$window = PlayerSelection::Create($login);
+	$window->setController($this);
+	$window->setTitle('Select Player');
+	$window->setSize(85, 100);
+	$window->populateList(array($this, 'openNewTab'), 'Select');
+	$window->centerOnScreen();
+	$window->show();
+    }
+    
+    public function openNewTab($login, $target) {
+	$info = Messager::Create($login);
+	$info->openNewTab($target);
+	$info->setTimeout(0.5);
+	$info->show();
+    }
+    
+
     public function exp_onUnload() {
-	Gui\Widgets\Messager::EraseAll();
-	Gui\Widgets\CommunicationWidget::EraseAll();
+	Messager::EraseAll();
+	CommunicationWidget::EraseAll();
 	parent::exp_onUnload();
     }
 

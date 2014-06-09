@@ -110,25 +110,26 @@ if(!disablePersonalHud){
     }else {
 	    MoveWindow = False;
     }
-    foreach (Event in PendingEvents) {
-	if (Event.Type == CMlEvent::Type::MouseOver ) {
-	    if(Event.Control != Null ){
-	       element = Event.Control;
-	       element.RelativeScale = 1.1;	   
-	    }	
-	}
-	else {
-	      if (element != Null){ 	   	    
-		element.RelativeScale = 1.0;	  
-	      }
-	}
-    }		  
+
+//    foreach (Event in PendingEvents) {
+//	if (Event.Type == CMlEvent::Type::MouseOver ) {
+//	    if(Event.Control != Null ){
+//	       element = Event.Control;
+//	       element.RelativeScale = 1.1;	   
+//	    }	
+//	}
+//	else {
+//	      if (element != Null){ 	   	    
+//		element.RelativeScale = 1.0;	  
+//	      }
+//	}
+//    }		  
 
     if (MoveWindow) {
 	    <?php echo $deltaX ?>
 	    <?php echo $deltaY ?>
 	    LastDelta += DeltaPos;
-	    LastDelta.Z = 3.0;
+	    //LastDelta.Z = 3.0;
 	    Window.RelativePosition = LastDelta;
 	    eXp_widgetLastPos[version][id][gameMode] = Window.AbsolutePosition;
 	    eXp_widgetLastPosRel[version][id][gameMode] = Window.RelativePosition;

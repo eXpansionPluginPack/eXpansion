@@ -56,6 +56,9 @@ Void updateTabContents() {
         }
         tabCounter += 1;
     }
+    declare addTab <=> (Page.GetFirstChild("addTab") as CMlQuad);
+    addTab.RelativePosition.X = 1.0 * tabCounter * 23.0;
+
 }
 
 Void closeTab(Integer tabNb) {

@@ -35,18 +35,26 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 class CommunicationWidget extends Widget {
 
     private $script, $frame, $bg, $_mainWindow, $tabs, $inputbox, $replyTo, $sendAction;
-    public static $action;
+    public static $action, $selectPlayer;
 
     protected function exp_onBeginConstruct() {
 	$this->setName("Messaging Widget");
-	
+
 	$this->_mainWindow = new Frame();
 	$this->_mainWindow->setAlign("left", "center");
 	$this->_mainWindow->setId("Frame");
+	$this->_mainWindow->setPosZ(30);
 	$this->_mainWindow->setScriptEvents(true);
 	$this->addComponent($this->_mainWindow);
 
-	$this->bg = new WidgetBackGround(120, 42);
+
+
+
+
+	$this->bg = new \ManiaLib\Gui\Elements\Bgs1InRace(120, 39);
+	$this->bg->setSubStyle('BgWindow4');
+	$this->bg->setColorize('777');
+	$this->bg->setAlign("left", "top");
 	$this->_mainWindow->addComponent($this->bg);
 
 	$this->icon_title = new \ManiaLib\Gui\Elements\Icons64x64_1(6, 6);
@@ -55,47 +63,55 @@ class CommunicationWidget extends Widget {
 	$this->icon_title->setScriptEvents(1);
 	$this->_mainWindow->addComponent($this->icon_title);
 
-	$this->tabs = new Frame();
-	$this->tabs->setLayout(new \ManiaLib\Gui\Layouts\Line(22,5));
+	$this->tabs = new Frame(2, 0);
+	$this->tabs->setLayout(new \ManiaLib\Gui\Layouts\Line(22, 5));
 	for ($x = 0; $x < 5; $x++) {
 	    $tab = new \ManiaLivePlugins\eXpansion\Communication\Gui\Controls\Tab($x);
 	    $this->tabs->addComponent($tab);
 	}
 	$this->_mainWindow->addComponent($this->tabs);
 
-	$this->frame = new Frame(0,-6);
+	$this->frame = new Frame(2, -6);
 	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
 
 
 	for ($x = 0; $x < 5; $x++) {
-	    $label = new \ManiaLib\Gui\Elements\Label(120,6);
+	    $label = new \ManiaLib\Gui\Elements\Label(116, 5);
 	    //$label->setText("line".$x);
 	    $label->setId("line_" . $x);
 	    $label->setTextColor("fff");
 	    //   $label->setScriptEvents();
 	    $this->frame->addComponent($label);
 	}
-	
-	$this->inputbox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("chatEntry", 90);
-	$this->inputbox->setId("chatEntry");	
+
+	$this->inputbox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("chatEntry", 110);
+	$this->inputbox->setPosY(-3);
+	$this->inputbox->setId("chatEntry");
 	$this->inputbox->setScriptEvents();
 	$this->frame->addComponent($this->inputbox);
-	
+
 	$this->_mainWindow->addComponent($this->frame);
-	
+
 	// this is used to create a controller logger
-	$quad = new \ManiaLib\Gui\Elements\Quad(5,5);
+	$quad = new \ManiaLib\Gui\Elements\Quad(5, 5);
 	$quad->setBgcolor("000");
-	$quad->setPosition(0,600);
+	$quad->setPosition(0, 600);
 	$quad->setAction(self::$action);
 	$this->addComponent($quad);
-    
+
 	$reply = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("replyTo", 30);
-	$reply->setPosition(0,600);
+	$reply->setPosition(0, 600);
 	$reply->setScriptEvents();
 	$this->addComponent($reply);
-	
-	
+
+	$add = new \ManiaLib\Gui\Elements\Icons64x64_1(6, 6);
+	$add->setPosY(-0.5);
+	$add->setSubStyle(\ManiaLib\Gui\Elements\Icons64x64_1::Add);
+	$add->setId("addTab");
+	$add->setAction(self::$selectPlayer);
+	//$add->setScriptEvents(1);
+	$this->_mainWindow->addComponent($add);
+
 	$lib = new Animation();
 	$this->registerScript($lib);
 
