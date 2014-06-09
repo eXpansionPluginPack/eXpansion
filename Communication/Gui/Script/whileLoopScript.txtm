@@ -3,10 +3,10 @@ if (isChatUpdated == True) {
    // minimizeButton.Style = "Icons128x128_Blink";
    // minimizeButton.Substyle = "Easy";
  
-      LibManialink_Anim("<quad colorize=\"ff0\" id=\"minimizeButton\" />", 750, "EaseInOutSinc");
-      for (i, 0 , 3) {
-            LibManialink_AnimChain("<quad colorize=\"fff\" id=\"minimizeButton\" />", 750, "EaseInOutSinc");
-            LibManialink_AnimChain("<quad colorize=\"ff0\" id=\"minimizeButton\" />", 750, "EaseInOutSinc");
+      LibManialink_Anim("<quad colorize=\"0f0\" id=\"minimizeButton\" />", 250, "EaseInOutSinc");
+      for (i, 0 , 5) {
+            LibManialink_AnimChain("<quad colorize=\"fff\" id=\"minimizeButton\" />", 250, "EaseInOutSinc");
+            LibManialink_AnimChain("<quad colorize=\"0f0\" id=\"minimizeButton\" />", 250, "EaseInOutSinc");
       }
  //   LibManialink_Anim("<frame posn=\"-160 "^ Window.RelativePosition.Y ^"\" scale=\"1\" id=\"<?php echo $this->winid; ?>\" />", 750, "EaseOutElastic");
     updateTabContents();

@@ -12,8 +12,8 @@ Void updateTabContents() {
         declare tabLabel <=> (Page.GetFirstChild("tablabel_"^i) as CMlLabel);
         declare tabBg <=> (Page.GetFirstChild("tabBg_"^i) as CMlQuad);
         declare tabClose <=> (Page.GetFirstChild("closeButton_"^i) as CMlQuad);
-        tabBg.Substyle = "BgCard3";
-        tabBg.Colorize = <0.,0.,0.>;
+        tabBg.Style = "BgsPlayerCard";
+        tabBg.Substyle = "BgCardSystem";
 
         if (tabLabel != Null) {
             tabLabel.Value = "";
@@ -26,8 +26,9 @@ Void updateTabContents() {
     }
     
     declare tabBg <=> (Page.GetFirstChild("tabBg_"^activeTab) as CMlQuad);
-    tabBg.Substyle = "BgWindow4";
-    tabBg.Colorize = <0.,.8,1.0>;
+    tabBg.Style = "BgsPlayerCard";
+    tabBg.Substyle = "BgMediaTracker";
+
 
 
     declare help <=> (Page.GetFirstChild("line_0") as CMlLabel);
@@ -76,7 +77,7 @@ Void updateTabContents() {
         tabCounter += 1;
     }
     declare addTab <=> (Page.GetFirstChild("addTab") as CMlQuad);
-    addTab.RelativePosition.X = 1.0 * tabCounter * 23.0;
+    addTab.RelativePosition.X = 1.0 * tabCounter * 22.0 + 2;
 
 }
 
