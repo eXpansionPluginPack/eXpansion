@@ -78,7 +78,7 @@ class Communication extends ExpPlugin {
     public function sendPmChat($login, $target, $text) {
 	$fromPlayer = $this->storage->getPlayerObject($login);
 	$this->sendPm($login, $target, Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $text);
-	$this->sendPm($target, $login, Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $$text);
+	$this->sendPm($target, $login, Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $text);
     }
 
     public function selectPlayer($login) {
