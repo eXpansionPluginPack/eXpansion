@@ -40,8 +40,8 @@ class CommunicationWidget extends Widget {
     protected function exp_onBeginConstruct() {
 	$this->setName("Messaging Widget");
 
-	$bg = new WidgetBackGround(8,6);
-	$bg->setPosition(117,0);
+	$bg = new WidgetBackGround(10,6);
+	$bg->setPosition(115,-0.25);
 	$this->addComponent($bg);
 	
 	$this->_mainWindow = new Frame();

@@ -43,7 +43,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData{
 	$var->setDefaultValue(true);
 	$this->registerVariable($var);
 
-        $var = new Boolean('publicChatActive', 'Disable chat for players', $config);
+        $var = new Boolean('publicChatActive', 'Enable chat for players', $config);
         $var->setDescription('Admins with required permissions can continue to chat. A personal message is sent to other players');
         $var->setDefaultValue(true);
         $this->registerVariable($var);
