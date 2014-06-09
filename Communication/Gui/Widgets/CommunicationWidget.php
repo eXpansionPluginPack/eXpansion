@@ -55,20 +55,11 @@ class CommunicationWidget extends Widget {
 	$this->icon_title->setScriptEvents(1);
 	$this->_mainWindow->addComponent($this->icon_title);
 
-
 	$this->tabs = new Frame();
-	$this->tabs->setLayout(new \ManiaLib\Gui\Layouts\Line());
+	$this->tabs->setLayout(new \ManiaLib\Gui\Layouts\Line(22,5));
 	for ($x = 0; $x < 5; $x++) {
-	    $label = new \ManiaLib\Gui\Elements\Label();
-	    $label->setText("Tab".$x);
-	    $label->setId("tab_" . $x);
-	    $label->setTextColor("fff");
-	    $label->setStyle("TextChallengeNameMedium");
-	    $label->getFocusAreaColor1("ffff");
-	    $label->getFocusAreaColor2("3af");
-	    $label->setScriptEvents();
-	    $label->setTextSize(1);
-	    $this->tabs->addComponent($label);
+	    $tab = new \ManiaLivePlugins\eXpansion\Communication\Gui\Controls\Tab($x);
+	    $this->tabs->addComponent($tab);
 	}
 	$this->_mainWindow->addComponent($this->tabs);
 
@@ -89,7 +80,6 @@ class CommunicationWidget extends Widget {
 	$this->inputbox->setId("chatEntry");	
 	$this->inputbox->setScriptEvents();
 	$this->frame->addComponent($this->inputbox);
-
 	
 	$this->_mainWindow->addComponent($this->frame);
 	

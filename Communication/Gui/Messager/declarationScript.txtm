@@ -1,12 +1,25 @@
-declare Text[][Text] chatLiness for InputPlayer = Text[][Text];
+declare Text[][Text] chatLiness for UI = Text[][Text];
 declare Boolean isChatUpdated for UI;
 declare Text tab = "<?php echo $this->tab; ?>";
 declare Text chat = "<?php echo $this->text; ?>";
- 
-isChatUpdated = True;
-if (!chatLiness.existskey(tab)) {
-    chatLiness[tab] = Text[];
+ declare Text action = "<?php echo $this->action; ?>";
+
+switch (action) {
+    case "sendMessage": {
+        if (!chatLiness.existskey(tab)) {
+            chatLiness[tab] = Text[];
+        }
+        chatLiness[tab].add(chat);
+    }
+    case "clearMessages": {
+        chatLiness.clear();     
+    }
+    case "closeTab": {
+        chatLiness.removekey(tab);
+    }
+
 }
 
-chatLiness[tab].add(chat);
 
+
+isChatUpdated = True;

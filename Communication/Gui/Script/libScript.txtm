@@ -1,0 +1,78 @@
+
+Void updateTabContents() {
+    declare Text[][Text] chatLiness for UI = Text[][Text];
+    declare Integer tabCounter = 0;
+    declare Integer activeTab for UI = 0;
+    // reset lines
+    for (i, 0, 4) {
+     //   LibManialink_AnimInsert("<label opacity=\"0.0\" id=\"line_"^i^"\" />", i*450, 750, "");
+        declare label <=> (Page.GetFirstChild("line_"^i) as CMlLabel);
+        label.Value = ""; 
+
+        declare tabLabel <=> (Page.GetFirstChild("tablabel_"^i) as CMlLabel);
+        declare tabBg <=> (Page.GetFirstChild("tabBg_"^i) as CMlLabel);
+        declare tabClose <=> (Page.GetFirstChild("closeButton_"^i) as CMlLabel);
+
+        if (tabLabel != Null) {
+            tabLabel.Value = "";
+            tabLabel.Hide();
+            tabBg.Hide();
+            tabClose.Hide();
+        }
+ 
+    }
+    // generate tabs and lines
+    foreach (tabTitle => texts in chatLiness) {
+
+        if (tabCounter > 4) {
+            break;
+        }
+
+        declare tabLabel <=> (Page.GetFirstChild("tablabel_"^tabCounter) as CMlLabel);
+      
+        declare tabBg <=> (Page.GetFirstChild("tabBg_"^tabCounter) as CMlLabel);
+        declare tabClose <=> (Page.GetFirstChild("closeButton_"^tabCounter) as CMlLabel);
+        if (tabLabel != Null) {
+            tabLabel.Value = tabTitle;
+            tabLabel.Show();
+            tabBg.Show();
+            tabClose.Show();
+        }
+
+        if (tabCounter == activeTab) {
+            if (texts.count > 0) {
+                declare Integer startpos = texts.count-5;
+                if (startpos < 0) {
+                    startpos = 0;
+                }
+                declare Integer lineCount = 0;
+                for (i, startpos, texts.count-1) {
+                   declare label <=> (Page.GetFirstChild("line_"^lineCount) as CMlLabel);
+                   label.Value = texts[i];
+              //      LibManialink_AnimInsert("<label opacity=\"1.0\" id=\"line_"^lineCount^"\"/>", i * 450, 750, "");
+                   lineCount += 1;
+                }
+            }
+        }
+        tabCounter += 1;
+    }
+}
+
+Void closeTab(Integer tabNb) {
+    declare Text[][Text] chatLiness for UI = Text[][Text];
+    declare Integer tabCounter = 0;
+    
+    foreach (tabTitle => texts in chatLiness) {
+        if (tabCounter > 4) {
+            break;
+        }
+    
+        if (tabCounter == tabNb) {
+            chatLiness.removekey(tabTitle);
+            updateTabContents();
+            return;
+         }
+
+        tabCounter += 1;
+    }
+}

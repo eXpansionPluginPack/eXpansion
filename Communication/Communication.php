@@ -27,31 +27,44 @@ namespace ManiaLivePlugins\eXpansion\Communication;
 class Communication extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onReady() {
-	Gui\Widgets\CommunicationWidget::$action = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, "sendMessage"));
+	$this->enableDedicatedEvents();
+
+	Gui\Widgets\CommunicationWidget::$action = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, "guiSendMessage"));
 
 	$widget = Gui\Widgets\CommunicationWidget::Create();
 	$widget->show();
 	$this->registerChatCommand("send", "sendPm", 2, true);
     }
 
-    public function sendPm($login, $tab, $text) {
+    public function onPlayerConnect($login, $isSpectator) {
 	$info = Gui\Widgets\Messager::Create($login);
-	$info->sendChat($tab, $text);
+	$info->clearMessages();
+	$info->setTimeout(0.5);
+	$info->show();
+    }
+
+    public function sendPm($login, $tab, $text) {
+	$fromPlayer = $this->storage->getPlayerObject($login);
+
+	$info = Gui\Widgets\Messager::Create($login);
+	$info->sendChat($tab, \ManiaLib\Utils\Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $text);
+	$info->setTimeout(0.5);
 	$info->show();
 	//echo "pm send;" . $login;
     }
 
-    public function sendMessage($login, $entries) {
+    public function guiSendMessage($login, $entries) {
 	//echo "login: '" . $login . "' said:" . $entries['chatEntry'] . "\n";
 	//print_r($entries);
 	$target = $entries['replyTo'];
+	$this->sendPm($login, $target, $entries['chatEntry']);
+	$this->sendPm($target, $login, $entries['chatEntry']);
+    }
 
-
-	$fromPlayer = $this->storage->getPlayerObject($login);
-	// $toPlayer = $this->storage->getPlayerObject($target);
-
-	$this->sendPm($login, $target, \ManiaLib\Utils\Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $entries['chatEntry']);
-	$this->sendPm($target, $login, \ManiaLib\Utils\Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $entries['chatEntry']);
+    public function exp_onUnload() {
+	Gui\Widgets\Messager::EraseAll();
+	Gui\Widgets\CommunicationWidget::EraseAll();
+	parent::exp_onUnload();
     }
 
 }
