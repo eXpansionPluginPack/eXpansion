@@ -42,12 +42,18 @@ Void updateTabContents() {
         if (tabCounter == activeTab) {
             if (texts.count > 0) {
                 declare Integer startpos = texts.count-5;
-                if (startpos < 0) {
-                    startpos = 0;
+
+                if (startpos <= 0) {
+                    startpos = -1;
                 }
+                log("startpos: "^ startpos ^ "  endpos:" ^ texts.count-1);
+
                 declare Integer lineCount = 0;
                 for (i, startpos, texts.count-1) {
                    declare label <=> (Page.GetFirstChild("line_"^lineCount) as CMlLabel);
+                    if (i < 0) {
+                        continue;
+                    }
                    label.Value = texts[i];
               //      LibManialink_AnimInsert("<label opacity=\"1.0\" id=\"line_"^lineCount^"\"/>", i * 450, 750, "");
                    lineCount += 1;

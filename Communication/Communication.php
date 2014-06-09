@@ -38,18 +38,22 @@ class Communication extends ExpPlugin {
 
 	CommunicationWidget::$action = ActionHandler::getInstance()->createAction(array($this, "guiSendMessage"));
 	CommunicationWidget::$selectPlayer = ActionHandler::getInstance()->createAction(array($this, "selectPlayer"));
-	
+
 	$widget = CommunicationWidget::Create();
 	$widget->show();
 
 	$this->registerChatCommand("send", "sendPmChat", 2, true);
+
+	foreach ($this->storage->players as $login => $player)
+	    $this->onPlayerConnect($login, null);
+	foreach ($this->storage->spectators as $login => $player)
+	    $this->onPlayerConnect($login, null);
     }
 
     public function onPlayerConnect($login, $isSpectator) {
+	Messager::Erase($login);
 	$info = Messager::Create($login);
 	$info->clearMessages();
-
-	$info->setTimeout(0.5);
 	$info->show();
     }
 
@@ -86,14 +90,15 @@ class Communication extends ExpPlugin {
 	$window->centerOnScreen();
 	$window->show();
     }
-    
+
     public function openNewTab($login, $target) {
+	PlayerSelection::Erase($login);
+
 	$info = Messager::Create($login);
 	$info->openNewTab($target);
-	$info->setTimeout(0.5);
+	//$info->setTimeout(0.5);
 	$info->show();
     }
-    
 
     public function exp_onUnload() {
 	Messager::EraseAll();

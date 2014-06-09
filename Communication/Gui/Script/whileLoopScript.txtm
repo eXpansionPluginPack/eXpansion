@@ -21,7 +21,10 @@ foreach (Event in PendingEvents) {
                }
                tabCounter += 1;
            }
-           TriggerPageAction(sendAction);
+           if (replyTo.Value != "") { 
+                TriggerPageAction(sendAction);
+               
+           }
            inputBox.Value = "";
            inputBox.StartEdition();
        }

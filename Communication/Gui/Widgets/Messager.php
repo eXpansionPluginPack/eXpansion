@@ -44,16 +44,20 @@ class Messager extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
 
     public function clearMessages() {
 	$this->script->setParam("action", "clearMessages");
+	$this->script->setParam("tab", "");
+	$this->script->setParam("text", "");
     }
 
     public function closeTab($tab) {
 	$this->script->setParam("action", "closeTab");
 	$this->script->setParam("tab", Gui::fixString($tab));
+	$this->script->setParam("text", "");
     }
 
     public function openNewTab($tab) {
 	$this->script->setParam("action", "openTab");
 	$this->script->setParam("tab", Gui::fixString($tab));
+	$this->script->setParam("text", "");
     }
 
 }
