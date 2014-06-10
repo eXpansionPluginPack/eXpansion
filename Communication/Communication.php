@@ -107,7 +107,9 @@ class Communication extends ExpPlugin {
 		return false;
 	    }
 	}
-	if (empty($this->storage->getPlayerObject($login))) {
+
+	$test = $this->storage->getPlayerObject($login);
+	if (empty($test)) {
 	    return false;
 	}
 	return true;
