@@ -277,7 +277,7 @@ abstract class Variable
      *
      * @param mixed $value the new value
      */
-    protected function setRawValue($value)
+    public function setRawValue($value)
     {
 	if ($this->configInstance != null) {
 	    $name = $this->name;
