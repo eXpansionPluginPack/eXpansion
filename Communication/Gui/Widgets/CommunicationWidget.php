@@ -54,7 +54,7 @@ class CommunicationWidget extends Widget {
 	
 	$this->bg = new \ManiaLib\Gui\Elements\Bgs1InRace(118, 39);
 	$this->bg->setSubStyle('BgWindow4');
-	$this->bg->setColorize('777');
+	$this->bg->setColorize('aaa');
 	$this->bg->setAlign("left", "top");
 	$this->_mainWindow->addComponent($this->bg);
 
@@ -124,7 +124,7 @@ class CommunicationWidget extends Widget {
 
 	$this->setSize(120, 42);
 	$this->setScale(1);
-	$this->setPosition(-278, 60);
+	$this->setPosition(-278, -20);
 	$this->setDisableAxis("x");
 	$this->script->setParam("winid", $this->getId());
 	$this->script->setParam("posY", $this->getPosY());

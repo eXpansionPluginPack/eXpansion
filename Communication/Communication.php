@@ -33,6 +33,11 @@ use ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection;
  */
 class Communication extends ExpPlugin {
 
+    private $lastCheck = 0;
+
+    /** @var \Maniaplanet\DedicatedServer\Structures\Player */
+    private $cachedIgnoreList = array();
+
     public function exp_onReady() {
 	$this->enableDedicatedEvents();
 
@@ -42,12 +47,15 @@ class Communication extends ExpPlugin {
 	$widget = CommunicationWidget::Create();
 	$widget->show();
 
-	$this->registerChatCommand("send", "sendPmChat", 2, true);
+	$this->registerChatCommand("send", "sendPmChat", -1, true);
 
 	foreach ($this->storage->players as $login => $player)
 	    $this->onPlayerConnect($login, null);
 	foreach ($this->storage->spectators as $login => $player)
 	    $this->onPlayerConnect($login, null);
+
+	$this->lastCheck = time();
+	$this->cachedIgnoreList = $this->connection->getIgnoreList(-1, 0);
     }
 
     public function onPlayerConnect($login, $isSpectator) {
@@ -57,28 +65,72 @@ class Communication extends ExpPlugin {
 	$info->show();
     }
 
-    public function sendPm($login, $tab, $text) {
+    public function send($login, $tab, $text) {
+	$login = str_replace('–', '-', $login); // undo replacing maniascript en hyphen to normal one, so message reaches the right person...
 	Messager::Erase($login);
 	$info = Messager::Create($login);
 	$info->sendChat($tab, $text);
-	$info->setTimeout(0.5);
 	$info->show();
 	//echo "pm send;" . $login;
+    }
+
+    public function sendPm($login, $target, $text) {
+	if (!$this->checkPlayer($login)) {
+	    $this->send($login, $target, '$d00' . __("You are being ignored. Message not sent.", $login));
+	    return;
+	}
+
+	/* if (!$this->checkPlayer($target)) {
+	  $this->send($login, $target, '$f00' . __("You can't send a message to " . $target . ", he is ignored or disconnected.", $login));
+	  return;
+	  } */
+
+	$fromPlayer = $this->storage->getPlayerObject($login);
+	$this->send($login, $target, '$z$fffMe: ' . $text);
+	$this->send($target, $login, '$z$222' . Formatting::stripWideFonts($fromPlayer->nickName) . '$z$222: ' . $text);
+    }
+
+    /**
+     * checks if player is found at server 
+     * @param string $login
+     * @return boolean
+     */
+    private function checkPlayer($login) {
+	// sync ignorelist every 10 seconds...
+	if (time() > $this->lastCheck + 10) {
+	    $this->lastCheck = time();
+	    $this->cachedIgnoreList = $this->connection->getIgnoreList(-1, 0);
+	}
+
+	foreach ($this->cachedIgnoreList as $player) {
+	    if ($player->login == $login) {
+		return false;
+	    }
+	}
+	if (empty($this->storage->getPlayerObject($login))) {
+	    return false;
+	}
+	return true;
     }
 
     public function guiSendMessage($login, $entries) {
 	//echo "login: '" . $login . "' said:" . $entries['chatEntry'] . "\n";
 	//print_r($entries);
 	$target = $entries['replyTo'];
-	$fromPlayer = $this->storage->getPlayerObject($login);
-	$this->sendPm($login, $target, Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $entries['chatEntry']);
-	$this->sendPm($target, $login, Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $entries['chatEntry']);
+
+	$this->sendPm($login, $target, $entries['chatEntry']);
     }
 
-    public function sendPmChat($login, $target, $text) {
-	$fromPlayer = $this->storage->getPlayerObject($login);
-	$this->sendPm($login, $target, Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $text);
-	$this->sendPm($target, $login, Formatting::stripWideFonts($fromPlayer->nickName) . '$z$fff$s: ' . $text);
+    public function sendPmChat($login, $params = false) {
+	if ($params === false) {
+	    $this->exp_chatSendServerMessage($this->msg_help, $login);
+	    return;
+	}
+	$text = explode(" ", $params);
+	$target = array_shift($text);
+	$text = implode(" ", $text);
+
+	$this->sendPm($login, $target, $text);
     }
 
     public function selectPlayer($login) {
