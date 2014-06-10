@@ -112,6 +112,7 @@ class Mimporter
         $select = trim($select, ",");
 
         $query1 = $this->query("SELECT $select FROM $tableName1", $this->conn);
+        echo "SELECT $select FROM $tableName1\n\n";
 
         while ($data1[] = mysql_fetch_array($query1));
 
@@ -131,7 +132,16 @@ class Mimporter
                 $percentage = round((($i+1) / $total) * 100, 0);
                 $this->c($percentage . "%...");
             }
-            $buffer .= "('".implode('\',\'',array_values($data)).'\'),';
+            $buffer .= "(";
+            foreach($data as $key=>$var){
+                if(isset($map[$key])){
+                    echo $key."\n";
+                    $buffer .= "'".mysql_escape_string($var)."',";
+                }
+            }
+            echo "\n";
+            $buffer = trim($buffer, ",");
+            $buffer .= '),';
             $i++;
         }
 
