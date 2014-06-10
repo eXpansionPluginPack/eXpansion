@@ -50,10 +50,10 @@ foreach (Event in PendingEvents) {
 
 
             if (isMinimized) {            
-                 LibManialink_Anim("<frame posn=\"-278 "^ Window.RelativePosition.Y ^"\" scale=\"1\" id=\"<?php echo $this->winid; ?>\" />", 250, "EaseInSinc");
+                 LibManialink_Anim("<frame posn=\"-278 "^ Window.RelativePosition.Y ^"\" scale=\"1\" id=\"<?php echo $this->winid; ?>\" />", 250, "EaseInCirc");
             } else {
               
-                LibManialink_Anim("<frame posn=\"-160 "^ Window.RelativePosition.Y ^"\" scale=\"1\" id=\"<?php echo $this->winid; ?>\" />", 750, "EaseOutElastic");
+                LibManialink_Anim("<frame posn=\"-160 "^ Window.RelativePosition.Y ^"\" scale=\"1\" id=\"<?php echo $this->winid; ?>\" />", 550, "EaseOutCirc");
             }      
 
        } else {
