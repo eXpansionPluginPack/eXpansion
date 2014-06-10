@@ -90,7 +90,7 @@ class Mimporter
             'player_onlinerights'=> 'player_onlinerights',
             'player_ip'=> 'player_ip'
         );
-        $this->merge($this->config['mlepp_db'].'.players', $this->config['exp_db'].'.exp_players', $map, array('player_updated2' => 'UNIX_TIMESTAMP(player_updated) as player_updated2'));
+        //ds$this->merge($this->config['mlepp_db'].'.players', $this->config['exp_db'].'.exp_players', $map, array('player_updated2' => 'UNIX_TIMESTAMP(player_updated) as player_updated2'));
 
         $map = array("challenge_uid" => "challenge_uid",
                      "challenge_name" => "challenge_name",
@@ -108,7 +108,27 @@ class Mimporter
                      "challenge_nbCheckpoints" => "challenge_nbCheckpoints",
                      "challenge_addtime2" => "challenge_addtime"
         );
-        $this->merge($this->config['mlepp_db'].'.challenges', $this->config['exp_db'].'.exp_maps', $map, array('challenge_addtime2' => 'UNIX_TIMESTAMP(challenge_addtime) as challenge_addtime2'));
+        //$this->merge($this->config['mlepp_db'].'.challenges', $this->config['exp_db'].'.exp_maps', $map, array('challenge_addtime2' => 'UNIX_TIMESTAMP(challenge_addtime) as challenge_addtime2'));
+
+        $map = array("record_challengeuid"=> "record_challengeuid",
+                     "record_playerlogin"=> "record_playerlogin",
+                     "record_nbLaps"=> "record_nbLaps",
+                     "record_score"=> "record_score",
+                     "record_nbFinish"=> "record_nbFinish",
+                     "record_avgScore"=> "record_avgScore",
+                     "record_checkpoints"=> "record_checkpoints",
+                     "record_date2"=> "record_date");
+        $this->merge($this->config['mlepp_db'].'.localrecords', $this->config['exp_db'].'.exp_records', $map, array('record_date2' => 'UNIX_TIMESTAMP(record_date) as record_date2'));
+
+        /*$map = array("record_challengeuid"=> "record_challengeuid",
+                     "record_playerlogin"=> "record_playerlogin",
+                     "record_nbLaps"=> "record_nbLaps",
+                     "record_score"=> "record_score",
+                     "record_nbFinish"=> "record_nbFinish",
+                     "record_avgScore"=> "record_avgScore",
+                     "record_checkpoints"=> "record_checkpoints",
+                     "record_date2"=> "record_date");
+        $this->merge($this->config['mlepp_db'].'.top_donation', $this->config['exp_db'].'.exp_planet_transaction', $map);*/
 
         //$this->query('COMMIT;', $this->conn);
     }
