@@ -92,6 +92,24 @@ class Mimporter
         );
         $this->merge($this->config['mlepp_db'].'.players', $this->config['exp_db'].'.exp_players', $map, array('player_updated2' => 'UNIX_TIMESTAMP(player_updated) as player_updated2'));
 
+        $map = array("challenge_uid" => "challenge_uid",
+                     "challenge_name" => "challenge_name",
+                     "challenge_nameStripped" => "challenge_nameStripped",
+                     "challenge_author" => "challenge_author",
+                     "challenge_environment" => "challenge_environment",
+                     "challenge_mood" => "challenge_mood",
+                     "challenge_bronzeTime" => "challenge_bronzeTime",
+                     "challenge_silverTime" => "challenge_silverTime",
+                     "challenge_goldTime" => "challenge_goldTime",
+                     "challenge_authorTime" => "challenge_authorTime",
+                     "challenge_copperPrice" => "challenge_copperPrice",
+                     "challenge_lapRace" => "challenge_lapRace",
+                     "challenge_nbLaps" => "challenge_nbLaps",
+                     "challenge_nbCheckpoints" => "challenge_nbCheckpoints",
+                     "challenge_addtime2" => "challenge_addtime"
+        );
+        $this->merge($this->config['mlepp_db'].'.challenges', $this->config['exp_db'].'.exp_maps', $map, array('challenge_addtime2' => 'UNIX_TIMESTAMP(challenge_addtime) as challenge_addtime2'));
+
         //$this->query('COMMIT;', $this->conn);
     }
 
@@ -125,7 +143,6 @@ class Mimporter
                 continue;
             if($i > 0 && $i%5 == 0){
                 $buffer = trim($buffer, ",");
-                echo "INSERT INTO $tableName2 ($columns) VALUES $buffer; \n\n";
                 $this->query("INSERT INTO $tableName2 ($columns) VALUES $buffer;", $this->conn);
                 $buffer = "";
                 // for pretty output to user :)
@@ -135,11 +152,10 @@ class Mimporter
             $buffer .= "(";
             foreach($data as $key=>$var){
                 if(isset($map[$key])){
-                    echo $key."\n";
                     $buffer .= "'".mysql_escape_string($var)."',";
                 }
             }
-            echo "\n";
+
             $buffer = trim($buffer, ",");
             $buffer .= '),';
             $i++;
