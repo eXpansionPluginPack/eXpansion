@@ -16,7 +16,8 @@ use ManiaLivePlugins\eXpansion\Helpers\Storage;
  *
  * @author oliverde8
  */
-class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+{
 
     /** @var integer $dynamicTime */
     private $dynamicTime = 0;
@@ -27,7 +28,8 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /** @var ManiaLivePlugins\eXpansion\Chat_Admin\Structures\ActionDuration[] $durations */
     private $durations = array();
 
-    public function exp_onInit() {
+    public function exp_onInit()
+    {
 	parent::exp_onInit();
 	Gui\Windows\ParameterDialog::$mainPlugin = $this;
 	$this->addDependency(new \ManiaLive\PluginHandler\Dependency('\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups'));
@@ -38,7 +40,8 @@ class Chat_Admin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->setPublicMethod("forceEndRound");
     }
 
-    public function exp_onLoad() {
+    public function exp_onLoad()
+    {
 	parent::exp_onLoad();
 
 	$admingroup = AdminGroups::getInstance();
@@ -274,6 +277,7 @@ Other server might use the same blacklist file!!');
 	$cmd->setHelp("Stops the Manialive instance running on for the server.");
 	AdminGroups::addAlias($cmd, 'stop exp');
 	AdminGroups::addAlias($cmd, 'stop expansion');
+	AdminGroups::addAlias($cmd, 'manialive stop');
 	$cmd = AdminGroups::addAdminCommand('manialive restart', $this, 'restartManiaLive', Permission::server_stopManialive);
 	$cmd->setHelp("Restart the Manialive instance running on for the server.");
 	AdminGroups::addAlias($cmd, 'res exp');
@@ -476,11 +480,13 @@ Other server might use the same blacklist file!!');
 	$this->enableTickerEvent();
     }
 
-    public function exp_onReady() {
+    public function exp_onReady()
+    {
 	$this->enableDedicatedEvents();
     }
 
-    public function onTick() {
+    public function onTick()
+    {
 	if (time() % 30 == 0) {
 	    foreach ($this->durations as $duration) {
 		if ($duration->stamp < time()) {
@@ -506,13 +512,15 @@ Other server might use the same blacklist file!!');
      * @param string $action
      * @param string $duration
      */
-    public function addActionDuration($login, $action, $duration) {
+    public function addActionDuration($login, $action, $duration)
+    {
 	if ($duration != "permanent") {
 	    $this->durations[$login] = new Structures\ActionDuration($login, $action, $duration);
 	}
     }
 
-    function support_fastScript($fromLogin, $params) {
+    function support_fastScript($fromLogin, $params)
+    {
 
 	if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
 	    $this->exp_chatSendServerMessage("#admin_error#Error: Not in script mode!", $fromLogin);
@@ -536,7 +544,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function support_fastTa($fromLogin, $params) {
+    function support_fastTa($fromLogin, $params)
+    {
 
 	try {
 	    $command = array_shift($params);
@@ -566,7 +575,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function support_fastLaps($fromLogin, $params) {
+    function support_fastLaps($fromLogin, $params)
+    {
 	try {
 	    $command = array_shift($params);
 
@@ -602,7 +612,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function support_fastRounds($fromLogin, $params) {
+    function support_fastRounds($fromLogin, $params)
+    {
 	try {
 	    $command = array_shift($params);
 
@@ -634,7 +645,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function support_fastCup($fromLogin, $params) {
+    function support_fastCup($fromLogin, $params)
+    {
 	try {
 	    $command = array_shift($params);
 
@@ -675,7 +687,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function support_fastTeam($fromLogin, $params) {
+    function support_fastTeam($fromLogin, $params)
+    {
 	try {
 	    $command = array_shift($params);
 
@@ -720,11 +733,13 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    public function invokeExpSettings($fromLogin, $params = null) {
+    public function invokeExpSettings($fromLogin, $params = null)
+    {
 	$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Core\Core', "showExpSettings", $fromLogin);
     }
 
-    public function setScriptName($fromLogin, $params) {
+    public function setScriptName($fromLogin, $params)
+    {
 	if (sizeof($params) == 0) {
 	    $name = $this->connection->getScriptName();
 	    $this->exp_chatSendServerMessage("current script name: " . $name['CurrentValue'], $fromLogin);
@@ -745,7 +760,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    public function enableTeamGap($login, $params) {
+    public function enableTeamGap($login, $params)
+    {
 	if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
 	    $this->exp_chatSendServerMessage("#admin_error#Not in teams mode!", $login);
 	}
@@ -758,27 +774,32 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    public function onBeginMatch() {
+    public function onBeginMatch()
+    {
 //  if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
 //      $this->connection->setTeamPointsLimit($this->teamGap * 10);
 //  }
     }
 
-    public function onEndMatch($rankings, $winnerTeamOrMap) {
+    public function onEndMatch($rankings, $winnerTeamOrMap)
+    {
 	if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
 	    $this->connection->setTeamPointsLimit($this->teamGap * 10);
 	}
     }
 
-    public function onEndRound() {
+    public function onEndRound()
+    {
 	$this->checkTeamGap();
     }
 
-    public function onBeginRound() {
+    public function onBeginRound()
+    {
 	$this->checkTeamGap();
     }
 
-    public function checkTeamGap() {
+    public function checkTeamGap()
+    {
 	if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->teamUseNewRules) {
 	    $ranking = $this->connection->getCurrentRanking(-1, 0);
 	    $scoregap = abs($ranking[0]->score - $ranking[1]->score);
@@ -789,7 +810,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function pay($fromLogin, $params) {
+    function pay($fromLogin, $params)
+    {
 	try {
 	    $this->connection->pay($params[0], intval($params[1]), $params[0] . " Planets payed out from server " . $this->storage->server->name);
 	    $this->exp_chatSendServerMessage('#admin_action#Server just sent#variable# %s #admin_action#Planets to#variable# %s #admin_action#!', $fromLogin, array($params[1], $params[0]));
@@ -798,7 +820,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function getServerPlanets($fromLogin, $params = null) {
+    function getServerPlanets($fromLogin, $params = null)
+    {
 	try {
 
 	    $this->exp_chatSendServerMessage('#admin_action#Server has #variable# %s #admin_action#Planets.', $fromLogin, array($this->connection->getServerPlanets()));
@@ -807,7 +830,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setTeamBlue($fromLogin, $params) {
+    function setTeamBlue($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->forcePlayerTeam($params[0], 0);
@@ -817,7 +841,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setTeamRed($fromLogin, $params) {
+    function setTeamRed($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->forcePlayerTeam($params[0], 1);
@@ -827,7 +852,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setCupNbWinners($fromLogin, $params) {
+    function setCupNbWinners($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setCupWarmUpDuration(intval($params[0]));
@@ -837,7 +863,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setCupWarmUpDuration($fromLogin, $params) {
+    function setCupWarmUpDuration($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setCupWarmUpDuration(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($params[0]));
@@ -847,7 +874,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setCupRoundsPerMap($fromLogin, $params) {
+    function setCupRoundsPerMap($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setCupRoundsPerMap(intval($params[0]));
@@ -857,7 +885,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setCupPointsLimit($fromLogin, $params) {
+    function setCupPointsLimit($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setCupPointsLimit(intval($params[0]));
@@ -867,7 +896,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function forcePlayerTeam($fromLogin, $params) {
+    function forcePlayerTeam($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	$player = $this->storage->getPlayerObject($params[0]);
 	if ($player == null) {
@@ -888,7 +918,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setUseNewRulesTeam($fromLogin, $params) {
+    function setUseNewRulesTeam($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setMaxPointsTeam(filter_var($params[0], FILTER_VALIDATE_BOOLEAN));
@@ -898,7 +929,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setMaxPointsTeam($fromLogin, $params) {
+    function setMaxPointsTeam($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setMaxPointsTeam(intval($params[0]));
@@ -908,7 +940,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setTeamPointsLimit($fromLogin, $params) {
+    function setTeamPointsLimit($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setTeamPointsLimit(intval($params[0]));
@@ -918,7 +951,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setFinishTimeout($fromLogin, $params) {
+    function setFinishTimeout($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setFinishTimeout(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($params[0]));
@@ -928,7 +962,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setNbLaps($fromLogin, $params) {
+    function setNbLaps($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setNbLaps(intval($params[0]));
@@ -938,7 +973,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setLapsTimeLimit($fromLogin, $params) {
+    function setLapsTimeLimit($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setLapsTimeLimit(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($params[0]));
@@ -948,7 +984,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setRoundPointsLimit($fromLogin, $params) {
+    function setRoundPointsLimit($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setRoundPointsLimit(intval($params[0]));
@@ -958,7 +995,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function forceEndRound($fromLogin, $params) {
+    function forceEndRound($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->forceEndRound();
@@ -968,7 +1006,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setUseNewRulesRound($fromLogin, $params) {
+    function setUseNewRulesRound($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->setUseNewRulesRound(filter_var($params[0], FILTER_VALIDATE_BOOLEAN));
@@ -978,7 +1017,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setRoundForcedLaps($fromLogin, $params) {
+    function setRoundForcedLaps($fromLogin, $params)
+    {
 
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
@@ -989,7 +1029,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function blacklist($fromLogin, $params) {
+    function blacklist($fromLogin, $params)
+    {
 	$target = array_shift($params);
 	$reason = implode(" ", $params);
 	$player = $this->storage->getPlayerObject($target);
@@ -1013,7 +1054,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function cleanBlacklist($fromLogin, $params) {
+    function cleanBlacklist($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->cleanBlackList();
@@ -1023,7 +1065,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function cleanBanlist($fromLogin, $params) {
+    function cleanBanlist($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->cleanBanList();
@@ -1033,7 +1076,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function cleanIgnorelist($fromLogin, $params) {
+    function cleanIgnorelist($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->cleanIgnoreList();
@@ -1043,7 +1087,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    public function loadScript($fromLogin, $params) {
+    public function loadScript($fromLogin, $params)
+    {
 	$mapsDir = Helper::getPaths()->getDefaultMapPath();
 	$mode = "TrackMania";
 	if (\ManiaLivePlugins\eXpansion\Core\Core::$isSMServer)
@@ -1062,7 +1107,8 @@ Other server might use the same blacklist file!!');
 	$this->exp_chatSendServerMessage("File not found: " . $params[0]);
     }
 
-    public function unBlacklist($fromLogin, $params) {
+    public function unBlacklist($fromLogin, $params)
+    {
 
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
@@ -1073,7 +1119,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function ban($fromLogin, $params) {
+    function ban($fromLogin, $params)
+    {
 	$target = array_shift($params);
 	$reason = implode(" ", $params);
 	$player = $this->storage->getPlayerObject($target);
@@ -1099,7 +1146,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function ignore($fromLogin, $params) {
+    function ignore($fromLogin, $params)
+    {
 
 	$player = $this->storage->getPlayerObject($params[0]);
 	if (is_object($player)) {
@@ -1118,7 +1166,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function unban($fromLogin, $params) {
+    function unban($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	try {
 	    $this->connection->unBan($params[0]);
@@ -1128,7 +1177,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function unignore($fromLogin, $params) {
+    function unignore($fromLogin, $params)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 
 	try {
@@ -1139,7 +1189,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function kick($fromLogin, $params) {
+    function kick($fromLogin, $params)
+    {
 	$target = array_shift($params);
 	$reason = implode(" ", $params);
 	$reason = trim($reason);
@@ -1164,7 +1215,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function forceSpec($fromLogin, $params) {
+    function forceSpec($fromLogin, $params)
+    {
 	$player = $this->storage->getPlayerObject($params[0]);
 	if ($player == null) {
 	    $this->exp_chatSendServerMessage('#admin_action#Player #variable# %s doesn\' exist.', $fromLogin, array($params[0]));
@@ -1180,11 +1232,13 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    public function sendErrorChat($login, $message) {
+    public function sendErrorChat($login, $message)
+    {
 	$this->exp_chatSendServerMessage('#admin_error#' . $message, $login);
     }
 
-    function setServerName($fromLogin, $params) {
+    function setServerName($fromLogin, $params)
+    {
 	$name = implode(" ", $params);
 	try {
 	    $this->connection->setServerName($name);
@@ -1195,7 +1249,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setServerComment($fromLogin, $params) {
+    function setServerComment($fromLogin, $params)
+    {
 	$comment = implode(" ", $params);
 	try {
 	    $this->connection->setServerComment($comment);
@@ -1206,7 +1261,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setServerMaxPlayers($fromLogin, $params) {
+    function setServerMaxPlayers($fromLogin, $params)
+    {
 	$params[0] = (int) $params[0];
 	try {
 	    $this->connection->setMaxPlayers($params[0]);
@@ -1217,7 +1273,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setServerMaxSpectators($fromLogin, $params) {
+    function setServerMaxSpectators($fromLogin, $params)
+    {
 	$params[0] = (int) $params[0];
 	try {
 	    $this->connection->setMaxSpectators($params[0]);
@@ -1228,7 +1285,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setServerPassword($fromLogin, $params) {
+    function setServerPassword($fromLogin, $params)
+    {
 	try {
 	    $this->connection->setServerPassword($params[0]);
 	    $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1239,7 +1297,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setSpecPassword($fromLogin, $params) {
+    function setSpecPassword($fromLogin, $params)
+    {
 	try {
 	    $this->connection->setServerPasswordForSpectator($params[0]);
 	    $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1250,7 +1309,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setRefereePassword($fromLogin, $params) {
+    function setRefereePassword($fromLogin, $params)
+    {
 	try {
 	    $this->connection->setRefereePassword($params[0]);
 	    $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1261,7 +1321,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setserverchattime($fromLogin, $params) {
+    function setserverchattime($fromLogin, $params)
+    {
 	$newLimit = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($params[0]) - 8000;
 
 	if ($newLimit < 0)
@@ -1276,7 +1337,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setTAdynamic($fromLogin, $params) {
+    function setTAdynamic($fromLogin, $params)
+    {
 	try {
 	    $this->dynamicTime = $params[0];
 	    $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1293,7 +1355,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setTAlimit($fromLogin, $params) {
+    function setTAlimit($fromLogin, $params)
+    {
 	try {
 	    $this->connection->setTimeAttackLimit(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($params[0]));
 	    $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1304,7 +1367,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setServerMapDownload($fromLogin, $params) {
+    function setServerMapDownload($fromLogin, $params)
+    {
 
 	$bool = false;
 	if ($params[0] == 'true' || $params[0] == 'false') {
@@ -1326,7 +1390,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setHideServer($fromLogin, $params) {
+    function setHideServer($fromLogin, $params)
+    {
 	$validValues = array("1", "0", "2", "all", "visible", "both", "nations", "off", "hidden");
 	if (in_array(strtolower($params[0]), $validValues, true)) {
 	    if ($params[0] == 'off' || $params[0] == 'visible')
@@ -1350,7 +1415,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function stopDedicated($fromLogin, $params) {
+    function stopDedicated($fromLogin, $params)
+    {
 	try {
 	    $this->connection->sendHideManialinkPage();
 	    $this->connection->stopServer();
@@ -1359,21 +1425,25 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function stopManiaLive($fromLogin, $params) {
+    function stopManiaLive($fromLogin, $params)
+    {
 	$this->connection->chatSendServerMessage("[Notice] stopping eXpansion...");
 	$this->connection->sendHideManialinkPage();
+	$this->connection->chatEnableManualRouting(false);
 	\ManiaLive\Application\Application::getInstance()->kill();
     }
 
-    function restartManiaLive($fromLogin, $params) {
+    function restartManiaLive($fromLogin, $params)
+    {
 	$this->connection->chatSendServerMessage("[Notice] restarting eXpansion...");
 	$this->connection->sendHideManialinkPage();
-
+	$this->connection->chatEnableManualRouting(false);
+	
 	\ManiaLive\Application\Application::getInstance()->kill();
 
 	$path = \ManiaLib\Utils\Path::getInstance();
-	$path = $path->getRoot(true) . "bootstrapper.php";
-	$cmd = PHP_BINARY . " " . $path;
+	$dir = $path->getRoot(true) . "bootstrapper.php";
+	$cmd = PHP_BINARY . " " . realpath($dir);
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 	    if (class_exists("COM")) {
 		$WshShell = new \COM("WScript.Shell");
@@ -1384,13 +1454,15 @@ Other server might use the same blacklist file!!');
 	    }
 	}
 	else {
-	    exec(escapeshellarg($cmd) . ' > /dev/null &');
+	    exec("cd " . $path->getRoot(true) . "; " . $cmd . " >> /tmp/manialive.log 2>&1 &");
 	}
-	$this->console("eXpansion will restart!! This instance is stopping now!!");
+	$this->console("eXpansion will restart!!This instance is stopping now!!"
+	);
 	exit();
     }
 
-    function skipMap($fromLogin, $params) {
+    function skipMap($fromLogin, $params)
+    {
 	try {
 	    $this->connection->nextMap($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
 	    $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1400,7 +1472,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function restartMap($fromLogin, $params) {
+    function restartMap($fromLogin, $params)
+    {
 	try {
 	    $admin = $this->storage->getPlayerObject($fromLogin);
 	    $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
@@ -1414,15 +1487,17 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setGameMode($fromLogin, $params) {
+    function setGameMode($fromLogin, $params)
+    {
 	$gamemode = NULL;
 
-	if (is_numeric($params[0])) {
+	if (is_numeric($params[0
+		])) {
 	    $gamemode = $params[0];
 	}
 	else {
 	    $param1 = $params[0];
-	    if (strtolower($param1) == "script")
+	    if (strtolower($param1) == " script")
 		$gamemode = \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT;
 	    if (strtolower($param1) == "rounds")
 		$gamemode = \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS;
@@ -1446,15 +1521,18 @@ Other server might use the same blacklist file!!');
 	    $this->connection->setGameMode($gamemode);
 	    $admin = $this->storage->getPlayerObject($fromLogin);
 	    $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets game mode to#variable# %s', null, array($admin->nickName, $params[0]));
-	} catch (\Exception $e) {
+	} catch (\Exception $e
+	) {
 	    $this->sendErrorChat($fromLogin, $e->getMessage());
 	}
     }
 
-    function setAllWarmUpDuration($fromLogin, $params) {
+    function setAllWarmUpDuration($fromLogin, $params)
+    {
 
 	try {
-	    $this->connection->setAllWarmUpDuration($params[0]);
+	    $this->connection->setAllWarmUpDuration($params[0
+	    ]);
 	    $admin = $this->storage->getPlayerObject($fromLogin);
 	    $this->exp_chatSendServerMessage('#admin_action#Admin #variable# %s #admin_action#sets all game modes warmup duration to#variable# %s', null, array($admin->nickName, $params[0]));
 	} catch (\Exception $e) {
@@ -1463,7 +1541,9 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function cancelVote($fromLogin) {
+    function cancelVote(
+    $fromLogin)
+    {
 	$admin = $this->storage->getPlayerObject($fromLogin);
 	$vote = $this->connection->getCurrentCallVote();
 	if (!empty($vote->cmdName)) {
@@ -1480,8 +1560,10 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function setDisableRespawn($fromLogin, $params) {
-	if ($params[0] == 'true' || $params[0] == 'false') {
+    function setDisableRespawn($fromLogin, $params)
+    {
+	if ($params[0] == 'true' || $params[0
+		] == 'false') {
 	    if ($params[0] == 'true')
 		$bool = false; // reverse the order as the command is for disable;
 	    if ($params[0] == 'false')
@@ -1502,7 +1584,8 @@ Other server might use the same blacklist file!!');
 
     /* Graphical Methods */
 
-    function getBanList($login) {
+    function getBanList($login)
+    {
 	GenericPlayerList::Erase($login);
 
 	try {
@@ -1526,7 +1609,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function getBlackList($login) {
+    function getBlackList($login)
+    {
 	GenericPlayerList::Erase($login);
 
 	try {
@@ -1550,7 +1634,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function getGuestList($login) {
+    function getGuestList($login)
+    {
 	GenericPlayerList::Erase($login);
 
 	try {
@@ -1574,7 +1659,8 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    function getIgnoreList($login) {
+    function getIgnoreList($login)
+    {
 	GenericPlayerList::Erase($login);
 
 	try {
@@ -1598,9 +1684,11 @@ Other server might use the same blacklist file!!');
 	}
     }
 
-    public function onStatusChanged($statusCode, $statusName) {
+    public function onStatusChanged($statusCode, $statusName)
+    {
 	if ($this->expStorage->simpleEnviTitle == Storage::TITLE_SIMPLE_TM && $statusCode == 6 && $this->dynamicTime > 0)
-	    if ($this->exp_getCurrentCompatibilityGameMode() == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+	    if ($this
+			    ->exp_getCurrentCompatibilityGameMode() == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
 		$map = $this->connection->getNextMapInfo();
 		$laps = $map->nbLaps;
 		if ($map->nbLaps <= 1) {
@@ -1626,7 +1714,8 @@ Other server might use the same blacklist file!!');
 		    $this->connection->setTimeAttackLimit(intval($newLimit));
 		}
 
-		$this->exp_chatSendServerMessage('#admin_action#Dynamic time limit set to: #variable#' . \ManiaLive\Utilities\Time::fromTM($newLimit), null);
+		$this->exp_chatSendServerMessage('#admin_action#Dynamic time limit set to: #variable#' . \ManiaLive\Utilities\Time::fromTM($newLimit
+			), null);
 	    }
     }
 
@@ -1635,7 +1724,6 @@ Other server might use the same blacklist file!!');
 	parent::exp_onUnload();
 	ParameterDialog::EraseAll();
     }
-
 
 }
 

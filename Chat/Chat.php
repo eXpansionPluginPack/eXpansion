@@ -38,19 +38,13 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /** @var Config */
     private $config;
 
-    /**
-     * onLoad()
-     * Function called on loading of ManiaLive.
-     *
-     * @return void
-     */
-    function exp_onLoad()
+    function exp_onReady()
     {
 	$this->enableDedicatedEvents();
 	try {
 	    $this->connection->chatEnableManualRouting(true);
 	} catch (\Exception $e) {
-	    $this->console(__("[eXpansion|Chat] Couldn't initialize chat. Error from server: %s", $e->getMessage()));
+	    $this->console("[eXpansion|Chat] Couldn't initialize chat. Error from server: " . $e->getMessage());
 	    $this->enabled = false;
 	}
 	$this->config = Config::getInstance();
