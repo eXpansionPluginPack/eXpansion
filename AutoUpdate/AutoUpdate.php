@@ -91,6 +91,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function exp_onLoad()
     {
         $this->msg_update = exp_getMessage("new eXpansion version is available to update (%s)");
+        $this->msg_notActive = exp_getMessage("#admin_error#git update isn't activated. Need to have git installed on the server first!!");
         $this->dataAccess = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
 
         $this->gitRepositories = array(
@@ -139,8 +140,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($this->config->useGit) {
             $this->gitCheck($login, $this->config->branchName);
         } else {
-            $query = "http://reaby.kapsi.fi/ml/update/index.php";
-            $this->dataAccess->httpGet($query, array($this, "xCheck"), array($login));
+            $this->exp_chatSendServerMessage($this->msg_notActive, $login);
         }
     }
 
@@ -154,31 +154,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($this->config->useGit) {
             $this->pullFromGit($login, $this->config->branchName);
         } else {
-            if (!$this->updateAvailable) {
-                $this->exp_chatSendServerMessage("Can't update, no update available!", $login);
-
-                return;
-            }
-
-            //Getting full path to application
-            $path   = \ManiaLib\Utils\Path::getInstance();
-            $window = Gui\Windows\UpdateProgress::Create($login);
-            $window->show($login);
-
-            //The command to run in order to update
-            $path   = $path->getRoot(true) . "/update/update.php";
-            $config = \ManiaLive\DedicatedApi\Config::getInstance();
-
-            $cmd = PHP_BINARY . " " . realpath(
-                    $path
-                ) . " " . $this->currentVersion . " " . $config->host . " " . $config->port . " " . $config->user . " " . $config->password;
-
-            //Running update process in background
-            if (substr(php_uname(), 0, 7) == "Windows") {
-                pclose(popen("start " . $cmd, "r"));
-            } else {
-                exec($cmd . " > /dev/null &");
-            }
+            $this->exp_chatSendServerMessage($this->msg_notActive, $login);
         }
     }
 
@@ -340,7 +316,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->currentLogin = $login;
 
         //If there wasn't a check recently then check
-        if (time() - $this->lastCheck > (60 * 60 * 6)) {
+        if ((time() - $this->lastCheck) > (60 * 60 * 6)) {
             $this->lastCheck  = time();
             $this->isUpToDate = true;
             $this->doSteps();
