@@ -31,6 +31,8 @@ class ManiaExchange extends ExpPlugin {
     private $dataAccess;
     public static $betakey = "";
 
+    private $cmd_add;
+
     public function exp_onInit() {
 	$this->config = Config::getInstance();
     }
@@ -50,6 +52,7 @@ class ManiaExchange extends ExpPlugin {
 	$cmd->setHelp('Adds a map from ManiaExchange');
 	$cmd->setHelpMore('$w/admin add #id$z will add a map with id fron ManiaExchange');
 	$cmd->setMinParam(1);
+        $this->cmd_add = $cmd;
 
 //
 //if ($this->config->mxVote_enable) {
@@ -351,6 +354,7 @@ class ManiaExchange extends ExpPlugin {
     function exp_onUnload() {
 	MxWidget::EraseAll();
 	MxSearch::EraseAll();
+        AdminGroups::removeAdminCommand($this->cmd_add);
     }
 }
 

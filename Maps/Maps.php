@@ -3,6 +3,8 @@
 namespace ManiaLivePlugins\eXpansion\Maps;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd;
 use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Help;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\Maps\Config;
@@ -51,6 +53,11 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public static $searchTerm = array();
     public static $searchField = array();
 
+    /**
+     * @var AdminCmd
+     */
+    private $cmd_remove, $cmd_erease, $cmd_replay;
+
     public function exp_onInit() {
 
 	$this->messages = new \StdClass();
@@ -74,17 +81,20 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
 	$cmd->setMinParam(1);
 	AdminGroups::addAlias($cmd, "remove");
+        $this->cmd_remove = $cmd;
 
 	$cmd = AdminGroups::addAdminCommand('map erase', $this, 'chat_eraseMap', Permission::map_removeMap);
 	$cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
 	$cmd->setMinParam(0);
 	AdminGroups::addAlias($cmd, "nuke this");
 	AdminGroups::addAlias($cmd, "trash this");
+        $this->cmd_erease = $cmd;
 
 	$cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', Permission::map_restart);
 	$cmd->setHelp(exp_getMessage('Sets current challenge to replay at end of match'));
 	$cmd->setMinParam(0);
 	AdminGroups::addAlias($cmd, "replay");
+        $this->cmd_replay = $cmd;
 
 	$this->registerChatCommand('list', "showMapList", 0, true);
 	$this->registerChatCommand('maps', "showMapList", 0, true);
@@ -878,6 +888,17 @@ class Maps extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	Maplist::EraseAll();
 	AddMaps::EraseAll();
 	Jukelist::EraseAll();
+
+        \ManiaLive\Gui\CustomUI::ShowForAll(\ManiaLive\Gui\CustomUI::CHALLENGE_INFO);
+
+        AdminGroups::removeAdminCommand($this->cmd_replay);
+        AdminGroups::removeAdminCommand($this->cmd_erease);
+        AdminGroups::removeAdminCommand($this->cmd_remove);
+
+        /** @var ActionHandler $action */
+        $action = \ManiaLive\Gui\ActionHandler::getInstance();
+        $action->deleteAction($this->actionShowJukeList);
+        $action->deleteAction($this->actionShowMapList);
     }
 
 }
