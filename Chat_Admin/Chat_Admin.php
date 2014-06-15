@@ -1384,7 +1384,7 @@ Other server might use the same blacklist file!!');
 	    }
 	}
 	else {
-	    exec('sh ' . escapeshellarg($cmd) . ' > /dev/null &');
+	    exec(escapeshellarg($cmd) . ' > /dev/null &');
 	}
 	$this->console("eXpansion will restart!! This instance is stopping now!!");
 	exit();
