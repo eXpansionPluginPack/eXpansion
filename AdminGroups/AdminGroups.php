@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
 use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
 use ManiaLive\Event\Dispatcher;
+use ManiaLive\Features\ChatCommand\Interpreter;
 
 /**
  *
@@ -85,6 +86,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     private $msg_pRemoveSuc;
     private $msg_pRemoveFa;
     private $msg_masterMasterE;
+    static public $txt_msg_cmdDontEx;
     static public $txt_groupsTitle;
     static public $txt_helpTitle;
     static public $txt_permissionsTitle;
@@ -131,6 +133,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->msg_pRemoveFa = exp_getMessage('#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group');
 	$this->msg_masterMasterE = exp_getMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
 	$this->msg_removeMlAdmin = exp_getMessage('#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!');
+	self::$txt_msg_cmdDontEx = $this->msg_cmdDontEx;
 	self::$txt_noPermissionMsg = $this->msg_neeMorPerm;
 	self::$txt_groupsTitle = exp_getMessage('Admin Groups');
 	self::$txt_helpTitle = exp_getMessage('Admin Commands Help');
@@ -550,7 +553,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$comand = new AdminCmd($cmd, $class, $function, $permission);
 
 	self::addCommand($comand, $cmd);
-	self::$commandsList[] = $comand;
+	self::$commandsList[$cmd] = $comand;
 	if ($permission != null)
 	    self::$permissionList[$permission] = true;
 
@@ -624,6 +627,15 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	//We return the command object
 	return $adminCmd;
+    }
+
+    static public function removeAdminCommand(AdminCmd $adminCmd){
+        unset(self::$commandsList[$adminCmd->getCmd()]);
+        $adminCmd->deactivate();
+    }
+
+    static public function removeShortAllias($command){
+        self::getInstance()->unregisterChatCommand($command);
     }
 
     static private function addRecursive($commands, $cmdArray, $comandObj) {

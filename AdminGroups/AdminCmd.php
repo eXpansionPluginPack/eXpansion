@@ -55,7 +55,7 @@ class AdminCmd {
      * @return string
      */
     public function cmd($login, $param) {
-        if (method_exists($this->class, $this->function)) {
+        if ($this->class != null && method_exists($this->class, $this->function)) {
 
             /*
              * Checking parameters
@@ -79,6 +79,7 @@ class AdminCmd {
             call_user_func_array(array($this->class, $this->function), array($login, $param));
             return "";
         }
+        return AdminGroups::$txt_msg_cmdDontEx;
     }
 
     /**
@@ -179,6 +180,10 @@ class AdminCmd {
 
     public function getAliases() {
         return $this->aliases;
+    }
+
+    public function deactivate(){
+        $this->class = null;
     }
 
 }

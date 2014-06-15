@@ -19,6 +19,8 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
     /** @var \ManiaLivePlugins\eXpansion\Core\i18n\Message */
     private $msg_noLogin, $msg_noMessage, $msg_noReply, $msg_self, $msg_help;
 
+    private $cmd_chat;
+
     public function exp_onLoad() {
 	$this->msg_noLogin = exp_getMessage('#personalmessage#Player with login "%1$s" is not found at server!');
 	$this->msg_noMessage = exp_getMessage("#personalmessage#No message to send to!");
@@ -32,8 +34,11 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$this->registerChatCommand("pm", "chatSendPersonalMessage", -1, true);
 	$this->registerChatCommand("r", "sendReply", -1, true);
 	$admingroup = AdminGroups::getInstance();
+
 	$cmd = AdminGroups::addAdminCommand("chat", $this, "adminChat", "admin_chatChannel");
 	$admingroup->addShortAlias($cmd, "a");
+
+        $this->cmd_chat = $cmd;
 
 	$this->config = Config::getInstance();
 
@@ -181,6 +186,8 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 
     function exp_onUnload() {
 	MessagesPanel::EraseAll();
+        AdminGroups::removeAdminCommand($this->cmd_chat);
+        AdminGroups::removeShortAllias('a');
     }
 
 }
