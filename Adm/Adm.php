@@ -275,7 +275,6 @@ class Adm extends ExpPlugin {
 	ServerManagement::EraseAll();
 	ServerOptions::EraseAll();
     }
-
 }
 
 ?>
