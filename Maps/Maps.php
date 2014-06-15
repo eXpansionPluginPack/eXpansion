@@ -274,7 +274,7 @@ class Maps extends ExpPlugin
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
-	CurrentMapWidget;
+	//CurrentMapWidget;
 	//$this->redrawNextMapWidget();
     }
 
@@ -429,7 +429,7 @@ class Maps extends ExpPlugin
 	}
 
 	$window->centerOnScreen();
-	$wind6ow->setSize(180, 100);
+	$window->setSize(180, 100);
 	$window->updateList($login, 'name', 'null', $this->history);
 	$window->show();
     }
