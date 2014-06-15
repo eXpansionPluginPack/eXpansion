@@ -10,14 +10,21 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Menu\Gui\Widgets\Submenu;
 
-class Menu extends ExpPlugin {
+class Menu extends ExpPlugin
+{
 
-    private $menuItems = array();
+    private $doCheck = false;
+
+    private $counter = 0;
+
     private $actions = array();
 
-    function exp_onReady() {
+    function exp_onReady()
+    {
+	$this->enableTickerEvent();
 	$this->enableDedicatedEvents();
-	if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\AdminGroups\\AdminGroups")) {
+	$this->enablePluginEvents();
+	if ($this->exp_isPluginLoaded("AdminGroups")) {
 	    Dispatcher::register(Event::getClass(), $this);
 	}
 
@@ -56,27 +63,50 @@ class Menu extends ExpPlugin {
 	}
     }
 
-    function actions($login, $action, $entries) {
+    private function getPluginName($plugin)
+    {
+	return "\\ManiaLivePlugins\\eXpansion\\" . $plugin . "\\" . $plugin;
+    }
+
+    private function exp_isPluginLoaded($plugin)
+    {
+	return $this->isPluginLoaded($this->getPluginName($plugin));
+    }
+
+    function actions($login, $action, $entries)
+    {
 	$adminGrp = AdminGroups::getInstance();
 
 	switch ($action) {
 	    case "playerlist":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Players\\Players", "showPlayerList", $login);
+		$this->callPublicMethod($this->getPluginName("Players"), "showPlayerList", $login);
 		break;
 	    case "maplist":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps", "showMapList", $login);
+		$this->callPublicMethod($this->getPluginName("Maps"), "showMapList", $login);
 		break;
 	    case "addMaps":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps", "addMaps", $login);
+		$this->callPublicMethod($this->getPluginName("Maps"), "addMaps", $login);
 		break;
 	    case "maprecords":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, Null);
+		$this->callPublicMethod($this->getPluginName("LocalRecords"), "showRecsWindow", $login, Null);
 		break;
 	    case "voteres":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Votes\Votes", "vote_restart", $login);
+		$plugin = $this->getPluginName("Votes");
+		if ($this->isPluginLoaded($plugin)) {
+		    $this->callPublicMethod($plugin, "vote_restart", $login);
+		}
+		else {
+		    $this->connection->callVoteRestartMap();
+		}
 		break;
 	    case "voteskip":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Votes\\Votes", "vote_skip", $login);
+		$plugin = $this->getPluginName("Votes");
+		if ($this->isPluginLoaded($plugin)) {
+		    $this->callPublicMethod($plugin, "vote_skip", $login);
+		}
+		else {
+		    $this->connection->callVoteNextMap();
+		}
 		break;
 	    case "quit":
 		$this->connection->kick($login, "Thanks for visiting and welcome back");
@@ -100,34 +130,34 @@ class Menu extends ExpPlugin {
 		$adminGrp->adminCmd($login, "trash this");
 		break;
 	    case "admmx":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\ManiaExchange\\ManiaExchange", "mxSearch", $login, "", "");
+		$this->callPublicMethod($this->getPluginName("ManiaExchange"), "mxSearch", $login, "", "");
 		break;
 	    case "admcontrol":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Adm\\Adm", "serverControlMain", $login);
+		$this->callPublicMethod($this->getPluginName("Adm"), "serverControlMain", $login);
 		break;
 	    case "help":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Faq\\Faq", "showFaq", $login, "toc", null);
+		$this->callPublicMethod($this->getPluginName("Faq"), "showFaq", $login, "toc", null);
 		break;
 	    case "hudMove":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "move");
+		$this->callPublicMethod($this->getPluginName("Gui"), "hudCommands", $login, "move");
 		break;
 	    case "hudLock":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "lock");
+		$this->callPublicMethod($this->getPluginName("Gui"), "hudCommands", $login, "lock");
 		break;
 	    case "hudConfig":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Gui\\Gui", "showConfigWindow", $login, $entries);
+		$this->callPublicMethod($this->getPluginName("Gui"), "showConfigWindow", $login, $entries);
 		break;
 	    case "hudReset":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Gui\\Gui", "hudCommands", $login, "reset");
+		$this->callPublicMethod($this->getPluginName("Gui"), "hudCommands", $login, "reset");
 		break;
 	    case "stats":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Statistics\\Statistics", "showTopWinners", $login);
+		$this->callPublicMethod($this->getPluginName("Statistics"), "showTopWinners", $login);
 		break;
 	    case "serverinfo":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Core\\Core", "showInfo", $login);
+		$this->callPublicMethod($this->getPluginName("Core"), "showInfo", $login);
 		break;
 	    case "serverranks":
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRanksWindow", $login);
+		$this->callPublicMethod($this->getPluginName("LocalRecords"), "showRanksWindow", $login);
 		break;
 	    case "admreplay":
 		$adminGrp->adminCmd($login, "replay");
@@ -135,32 +165,38 @@ class Menu extends ExpPlugin {
 	}
     }
 
-    function exp_admin_added($login) {
+    function exp_admin_added($login)
+    {
 	Submenu::Erase($login);
 	$this->onPlayerConnect($login, false);
     }
 
-    function exp_admin_removed($login) {
+    function exp_admin_removed($login)
+    {
 	Submenu::Erase($login);
 	$this->onPlayerConnect($login, false);
     }
 
-    function onPlayerConnect($login, $isSpectator) {
+    function onPlayerConnect($login, $isSpectator)
+    {
 
 	$submenu = Submenu::Create($login);
 	$menu = $submenu->getMenu();
 
 	$submenu->addItem($menu, __("Help", $login), $this->actions['help']);
-	$submenu->addItem($menu, __("Show Maplist", $login), $this->actions['maplist']);
-	$submenu->addItem($menu, __("Show Records", $login), $this->actions['maprecords']);
-	$submenu->addItem($menu, __("Show Players", $login), $this->actions['playerlist']);
+	if ($this->exp_isPluginLoaded("Maps"))
+	    $submenu->addItem($menu, __("Show Maplist", $login), $this->actions['maplist']);
+	if ($this->exp_isPluginLoaded("LocalRecords"))
+	    $submenu->addItem($menu, __("Show Records", $login), $this->actions['maprecords']);
+	if ($this->exp_isPluginLoaded("Players"))
+	    $submenu->addItem($menu, __("Show Players", $login), $this->actions['playerlist']);
 
-	if (AdminGroups::hasPermission($login, Permission::map_addLocal) || AdminGroups::hasPermission($login, Permission::map_addMX) || AdminGroups::hasPermission($login, Permission::map_removeMap)) {
+	if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps") && AdminGroups::hasPermission($login, Permission::map_addLocal) || AdminGroups::hasPermission($login, Permission::map_addMX) || AdminGroups::hasPermission($login, Permission::map_removeMap)) {
 	    $maps = $submenu->addSubMenu($menu, __("Map", $login));
 	    if (AdminGroups::hasPermission($login, Permission::map_addLocal)) {
 		$submenu->addItem($maps, __("Add local map", $login), $this->actions['addMaps']);
 	    }
-	    if (AdminGroups::hasPermission($login, Permission::map_addMX)) {
+	    if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\ManiaExchange\\ManiaExchange") && AdminGroups::hasPermission($login, Permission::map_addMX)) {
 		$submenu->addItem($maps, __("Mania-Exchange", $login), $this->actions['admmx']);
 	    }
 
@@ -171,10 +207,11 @@ class Menu extends ExpPlugin {
 	    }
 	}
 	$stats = $submenu->addSubMenu($menu, __("Statistics", $login));
-
-	$submenu->addItem($stats, __("Top 100 Ranks...", $login), $this->actions['serverranks']);
+	if ($this->exp_isPluginLoaded("LocalRecords"))
+	    $submenu->addItem($stats, __("Top 100 Ranks...", $login), $this->actions['serverranks']);
 	$submenu->addItem($stats, "", null);
-	$submenu->addItem($stats, __("Statistics...", $login), $this->actions['stats']);
+	if ($this->exp_isPluginLoaded("Statistics"))
+	    $submenu->addItem($stats, __("Statistics...", $login), $this->actions['stats']);
 	$submenu->addItem($stats, __("Server info...", $login), $this->actions['serverinfo']);
 
 	$hud = $submenu->addSubMenu($menu, __("Hud", $login));
@@ -209,8 +246,41 @@ class Menu extends ExpPlugin {
 	if (AdminGroups::hasPermission($login, Permission::server_controlPanel)) {
 	    $submenu->addItem($menu, __("Server Controls", $login), $this->actions['admcontrol']);
 	}
-	
+
 	$submenu->show();
+    }
+
+    public function onPluginLoaded($pluginId)
+    {
+	echo "doCheck enabled";
+	$this->doCheck = true;
+    }
+
+    public function onPluginUnloaded($pluginId)
+    {
+	echo "doCheck enabled";
+	$this->doCheck = true;
+    }
+
+    public function onTick()
+    {
+	if ($this->doCheck) {
+	    if ($this->counter > 2) {
+		$this->counter = 0;
+		$this->doCheck = false;
+		echo "refreshing menu...\n";
+		Submenu::EraseAll();
+		foreach ($this->storage->players as $login => $player) {
+		    $this->onPlayerConnect($login, null);
+		}
+		foreach ($this->storage->spectators as $login => $player) {
+		    $this->onPlayerConnect($login, null);
+		}
+
+		return;
+	    }
+	    $this->counter++;
+	}
     }
 
 }

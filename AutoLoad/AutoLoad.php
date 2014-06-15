@@ -242,7 +242,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function logMemory()
     {
-        $mem = "Memory Usage: " . round(memory_get_usage() / 1024 / 1024) . "Kb";
+        $mem = "Memory Usage: " . round(memory_get_usage() / 1024 ) . "Kb";
         //\ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
         print "\n" . $mem . "\n";
         $this->connection->chatSend($mem);
@@ -290,7 +290,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->config->plugins[] = $pluginId;
         }
 
-        //$this->logMemory();
+        $this->logMemory();
 
         $this->showPluginsWindow($login);
         $this->configPlugins = $this->config->plugins;
