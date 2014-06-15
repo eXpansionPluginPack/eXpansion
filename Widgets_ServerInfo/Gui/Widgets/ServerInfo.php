@@ -46,7 +46,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x128_1::Buddies);
 	$line->addComponent($icon);
 
-	$this->players = new \ManiaLib\Gui\Elements\Label(16, 6);
+	$this->players = new \ManiaLib\Gui\Elements\Label(12, 6);
 	$this->players->setAlign("left", "center");
 	$this->players->setId('playersCount');
 	$this->players->setTextColor('fff');
@@ -63,7 +63,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$icon->setAlign("left", "center");
 	$line->addComponent($icon);
 
-	$this->specs = new \ManiaLib\Gui\Elements\Label(16, 6);
+	$this->specs = new \ManiaLib\Gui\Elements\Label(12, 6);
 	$this->specs->setAlign("left", "center");
 	$this->specs->setId('specsCount');
 	$this->specs->setTextColor('fff');
@@ -79,7 +79,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x128_1::LadderPoints);
 	$line->addComponent($icon);
 
-	$this->ladderMin = new \ManiaLib\Gui\Elements\Label(24, 6);
+	$this->ladderMin = new \ManiaLib\Gui\Elements\Label(16, 6);
 	$this->ladderMin->setAlign("left", "center");
 	$this->ladderMin->setTextColor('fff');
 	$this->ladderMin->setTextSize(2);

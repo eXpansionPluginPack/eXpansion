@@ -2,14 +2,19 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Widgets;
 
-class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
+class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
+{
 
     protected $bg;
+
     protected $authorTime, $logo;
+
     private $leftFrame, $centerFrame, $rightFrame;
+
     private $environment, $country;
 
-    protected function exp_onBeginConstruct() {
+    protected function exp_onBeginConstruct()
+    {
 	$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(90, 15);
 	$this->addComponent($this->bg);
 
@@ -27,8 +32,9 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->centerFrame->setLayout($column2);
 	$this->addComponent($this->centerFrame);
 
-	$this->rightFrame = new \ManiaLive\Gui\Controls\Frame(50, -2);
+	$this->rightFrame = new \ManiaLive\Gui\Controls\Frame(88, -2);
 	$this->rightFrame->setLayout(clone $column);
+	$this->rightFrame->setAlign("right", "top");
 	$this->addComponent($this->rightFrame);
 
 	$biglabel = new \ManiaLib\Gui\Elements\Label(45, 4);
@@ -70,9 +76,14 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$mapname->setId("mapName");
 	$this->centerFrame->addComponent($mapname);
 
+	$blank = clone $label;
+	$this->rightFrame->addComponent($blank);
+	$blank = clone $label;
+	$this->rightFrame->addComponent($blank);
 	$time = clone $label;
 	$time->setId("authorTime");
-	$this->centerFrame->addComponent($time);
+	$time->setAlign("right");
+	$this->rightFrame->addComponent($time);
 
 	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Maps\Gui\Scripts_CurrentMap");
 	$this->registerScript($script);
@@ -80,18 +91,21 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->setName("Current Map Widget");
     }
 
-    protected function exp_onEndConstruct() {
+    protected function exp_onEndConstruct()
+    {
 	$this->setSize(90, 15);
     }
 
-    function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map) {
+    function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
+    {
 	$this->environment->setText($map->environnement);
 	if ($map->author == "Nadeo") {
 	    $this->country->setImage("http://reaby.kapsi.fi/ml/flags/France.dds", true);
 	}
     }
 
-    function setAction($action) {
+    function setAction($action)
+    {
 	$this->bg->setAction($action);
     }
 
