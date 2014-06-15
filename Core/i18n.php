@@ -36,6 +36,8 @@ class i18n extends \ManiaLib\Utils\Singleton {
      */
     private $directorties = array();
 
+    private $handledDirectories = array();
+
     /**
      * Was the class started (all directories checked and everything)
      *
@@ -76,6 +78,11 @@ class i18n extends \ManiaLib\Utils\Singleton {
      * @param $dir the directory to load translations from
      */
     protected function readFiles($dir) {
+        if(isset($this->handledDirectories[$dir]))
+            return;
+
+        $this->handledDirectories[$dir] = true;
+
         if (is_dir($dir . "/messages")) {
 
             $langFiles = glob($dir . "/messages/*.txt", GLOB_MARK);	    

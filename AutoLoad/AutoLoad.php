@@ -235,6 +235,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             return false;
         }
+        
 
         return true;
     }

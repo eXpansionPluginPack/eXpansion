@@ -451,6 +451,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             if ($this->exp_unloading)
                 return;
 
+            Dispatcher::unregister(GameSettingsEvent::getClass(), $this);
+            Dispatcher::unregister(PlayerEvent::getClass(), $this);
+            Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent::getClass(), $this);
+
             $this->console('Unloading ' . $this->getId());
             $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
