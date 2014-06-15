@@ -27,13 +27,18 @@ foreach (Player in Players) {
 
 			//Register Checkpoint time
 			if(!playerTimes.existskey(curCp)){
-			//Is it first player throught this checkpoint?
-			playerTimes[curCp] = Integer[Text];
-			playerNickNames[curCp] = Text[Text];
+				//Is it first player throught this checkpoint?
+				playerTimes[curCp] = Integer[Text];
+				playerNickNames[curCp] = Text[Text];
+				bestCps[curCp] = Player.CurRace.Checkpoints[curCp];
+			}else{
+				if(bestCps[curCp] > Player.CurRace.Checkpoints[curCp]){
+					bestCps[curCp] = Player.CurRace.Checkpoints[curCp];
+				}
 			}
 			playerTimes[curCp][Player.Login] = Player.CurRace.Checkpoints[curCp];
 			playerNickNames[curCp][Player.Login] = Player.Name;
-
+			updatedPlayers[Player.Login] = True;
 			//Remove from older checkpoint
 			if(curCp > 0){
 				if(playerTimes.existskey(curCp-1)){
@@ -174,24 +179,26 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 				if(nbRec == 1){
 					labelInfo1.SetText("   -"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
 					labelInfo2.SetText("   -"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
-				}else if(firstOfCp){
-					labelInfo1.SetText("$3AF"^"-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
-					labelInfo2.SetText("$3AF"^"-"^"-:"^"-"^"-"^"."^"-"^"-"^"-");
 				}else{
-					declare diff = Score - bestCp;
-					if(lastTimeDiff > diff && playerNickNames[cpIndex][p] == LocalUser.Name){
-						labelInfo1.SetText("$F00+"^TimeToText(Score - bestCp));
-						labelInfo2.SetText("$F00+"^TimeToText(Score - bestCp));
-					}else if(lastTimeDiff < diff && playerNickNames[cpIndex][p] == LocalUser.Name){
-						labelInfo1.SetText("$0F0+"^TimeToText(Score - bestCp));
-						labelInfo2.SetText("$0F0+"^TimeToText(Score - bestCp));
-					}else{
-						labelInfo1.SetText("+"^TimeToText(Score - bestCp));
-						labelInfo2.SetText("+"^TimeToText(Score - bestCp));
+					declare diff = Score - bestCps[cpIndex];
+					
+					if(!lastTimeDiff.existskey(p)){
+						lastTimeDiff[p] = 0;
 					}
-					if(showed){
-						lastTimeDiff = diff;
-					}
+
+					/*if(lastTimeDiff[p] > diff){
+						labelInfo1.SetText("$F00+"^TimeToText(Score - bestCps[cpIndex]));
+						labelInfo2.SetText("$F00+"^TimeToText(Score - bestCps[cpIndex]));
+					}else if(lastTimeDiff[p] < diff){
+						labelInfo1.SetText("$0F0+"^TimeToText(Score - bestCps[cpIndex]));
+						labelInfo2.SetText("$0F0+"^TimeToText(Score - bestCps[cpIndex]));
+					}else{*/
+						labelInfo1.SetText("+"^TimeToText(Score - bestCps[cpIndex]));
+						labelInfo2.SetText("+"^TimeToText(Score - bestCps[cpIndex]));
+					/*}
+					if(updatedPlayers.existskey(p)){
+						lastTimeDiff[p] = diff;
+					}*/
 				}
 
 
@@ -221,8 +228,8 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 						 declare lap = 0;
 						 lap = cpIndex/totalCp;
 						 if(lap > 0 && isLaps){
-							labelCp1.SetText("Lap"^lap);
-							labelCp2.SetText("Lap"^lap);
+							labelCp1.SetText("Lap"^(lap+1));
+							labelCp2.SetText("Lap"^(lap+1));
 						 }else{
 							labelCp1.SetText("Cp"^(cpIndex+1));
 							labelCp2.SetText("Cp"^(cpIndex+1));
@@ -267,6 +274,8 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 		declare redLabel = (Page.GetFirstChild("redPoints") as CMlLabel);
 		redLabel.SetText(""^teamRedScore);
     }
+
+	updatedPlayers = Boolean[Text];
 }
 
 foreach (Event in PendingEvents) {
