@@ -278,6 +278,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 	$this->disableTickerEvent();
 	$this->disableDedicatedEvents();
 	\ManiaLivePlugins\eXpansion\Dedimania\Gui\Windows\Records::EraseAll();
+        Dispatcher::unregister(DediEvent::getClass(), $this);
     }
 
     /**
@@ -382,6 +383,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
     public function isRunning() {
 	return $this->running;
     }
+
+
 
 }
 

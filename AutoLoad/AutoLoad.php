@@ -240,12 +240,22 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return true;
     }
 
+    function logMemory()
+    {
+        $mem = "Memory Usage: " . round(memory_get_usage() / 1024 / 1024) . "Kb";
+        //\ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
+        print "\n" . $mem . "\n";
+        $this->connection->chatSend($mem);
+    }
+
     /**
      * @param              $login
      * @param MetaDataType $metaData
      */
     public function tooglePlugin($login, MetaDataType $metaData)
     {
+
+        $this->logMemory();
         /**
          * @var PluginHandler $pHandler
          */
@@ -279,6 +289,9 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
             $this->config->plugins[] = $pluginId;
         }
+
+        //$this->logMemory();
+
         $this->showPluginsWindow($login);
         $this->configPlugins = $this->config->plugins;
         ConfigManager::getInstance()->registerValueChange($this->getMetaData()->getVariable('plugins'));

@@ -117,6 +117,16 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	$this->redraw();
     }
 
+    public function destroy() {
+        foreach ($this->items as $item) {
+            $item->destroy();
+        }
+        $this->items = null;
+        $this->pagerFrame->destroy();
+        $this->clearComponents();
+        parent::destroy();
+    }
+
 }
 
 ?>

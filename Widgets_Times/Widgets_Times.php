@@ -148,7 +148,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	// TimeChooser::EraseAll();
 	TimePanel::$dedirecords = Array();
 	TimePanel::$localrecords = Array();
-		
+
     }
 
     public function showToAll() {
@@ -214,20 +214,20 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onDedimaniaGetRecords($data) {
-	TimePanel::$dedirecords = $data['Records'];	
+	TimePanel::$dedirecords = $data['Records'];
 	$this->showToAll();
     }
 
     public function onRecordPlayerFinished($login) {
-	
+
     }
 
     public function onDedimaniaOpenSession() {
-	
+
     }
 
     public function onNewRecord($data) {
-	
+
     }
 
     public function onPersonalBestRecord($data) {
@@ -235,11 +235,11 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onDedimaniaPlayerConnect($data) {
-	
+
     }
 
     public function onDedimaniaPlayerDisconnect($login) {
-	
+
     }
 
     /**
@@ -269,9 +269,13 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->showPanel($record->login, false);
     }
 
-    public function exp_onUnload() {
-	TimePanel::EraseAll();
-	parent::exp_unload();
+    public function exp_onUnload()
+    {
+        Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
+        Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
+        Dispatcher::unregister(LocalEvent::getClass(), $this);
+        TimePanel::EraseAll();
+        parent::exp_unload();
     }
 
 }

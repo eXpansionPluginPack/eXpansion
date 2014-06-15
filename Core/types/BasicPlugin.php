@@ -225,6 +225,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         {
             Dispatcher::unregister(GameSettingsEvent::getClass(), $this);
             Dispatcher::unregister(PlayerEvent::getClass(), $this);
+            Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent::getClass(), $this);
 
             try {
                 $this->exp_onUnload();

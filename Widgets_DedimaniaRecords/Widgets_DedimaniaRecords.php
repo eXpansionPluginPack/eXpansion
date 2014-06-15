@@ -227,6 +227,8 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
     {
         Gui\Widgets\DediPanel::EraseAll();
         Gui\Widgets\DediPanel2::EraseAll();
+
+        Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
     }
 
 }
