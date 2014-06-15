@@ -26,29 +26,82 @@ namespace ManiaLivePlugins\eXpansion\Debugtool;
  *
  * @author Petri
  */
-class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+{
 
-    public function exp_onReady() {
+    private $counter = 0;
+
+    private $login = null;
+
+    private $testActive = false;
+
+    public function exp_onReady()
+    {
+	$this->enableTickerEvent();
 	$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
 	$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+	$this->registerChatCommand("starttest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 	//\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
 
 	/* $window = Gui\testWindow::Create("reaby");
 	  $window->show(); */
     }
 
-    function connect($login, $playercount) {
+    function onTick()
+    {
+	if ($this->testActive) {
+	    echo $this->counter . "\n";
+	    \ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist::EraseAll();
+	    \ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist::EraseAll();
+	    \ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Records::EraseAll();
+	    \ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWindow::EraseAll();
+	    \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\StatsWindow::EraseAll();
+
+	    if ($this->counter > 50) {
+		$this->counter = 0;
+		$this->testActive = false;
+		return;
+	    }
+	    $login = $this->login;
+	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Players\\Players", "showPlayerList", $login);
+	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps", "showMapList", $login);
+	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, Null);
+	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Faq\\Faq", "showFaq", $login, "toc", null);
+	    $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Statistics\\Statistics", "showTopWinners", $login);
+	    $this->logMemory();
+	    $this->counter++;
+	}
+    }
+
+    function connect($login, $playercount)
+    {
 	for ($x = 0; $x < $playercount; $x++) {
 	    $this->connection->connectFakePlayer();
 	}
     }
 
-    function disconnect($login) {
+    function disconnect($login)
+    {
 	try {
 	    $this->connection->disconnectFakePlayer("*");
 	} catch (\Exception $e) {
 	    echo "error disconnecting;";
 	}
+    }
+
+    function test($login)
+    {
+	$this->login = $login;
+	$this->counter = 0;
+	$this->testActive = true;
+    }
+
+    function logMemory()
+    {
+	$mem = "Memory Usage: " . round(memory_get_usage() / 1024 / 1024) . "Kb";
+	//\ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
+	print "\n" . $mem . "\n";
+	$this->connection->chatSend($mem);
     }
 
 }
