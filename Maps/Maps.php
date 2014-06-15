@@ -274,7 +274,6 @@ class Maps extends ExpPlugin
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
-	//CurrentMapWidget;
 	//$this->redrawNextMapWidget();
     }
 
