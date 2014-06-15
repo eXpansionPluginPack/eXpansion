@@ -31,14 +31,16 @@ use ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection;
  *
  * @author Reaby
  */
-class Communication extends ExpPlugin {
+class Communication extends ExpPlugin
+{
 
     private $lastCheck = 0;
 
     /** @var \Maniaplanet\DedicatedServer\Structures\Player */
     private $cachedIgnoreList = array();
 
-    public function exp_onReady() {
+    public function exp_onReady()
+    {
 	$this->enableDedicatedEvents();
 
 	CommunicationWidget::$action = ActionHandler::getInstance()->createAction(array($this, "guiSendMessage"));
@@ -58,23 +60,28 @@ class Communication extends ExpPlugin {
 	$this->cachedIgnoreList = $this->connection->getIgnoreList(-1, 0);
     }
 
-    public function onPlayerConnect($login, $isSpectator) {
+    public function onPlayerConnect($login, $isSpectator)
+    {
 	Messager::Erase($login);
 	$info = Messager::Create($login);
 	$info->clearMessages();
+	$info->setTimeout(0.5);
 	$info->show();
     }
 
-    public function send($login, $tab, $text) {
+    public function send($login, $tab, $text)
+    {
 	$login = str_replace('–', '-', $login); // undo replacing maniascript en hyphen to normal one, so message reaches the right person...
 	Messager::Erase($login);
 	$info = Messager::Create($login);
 	$info->sendChat($tab, $text);
+	$info->setTimeout(0.5);
 	$info->show();
 	//echo "pm send;" . $login;
     }
 
-    public function sendPm($login, $target, $text) {
+    public function sendPm($login, $target, $text)
+    {
 	if (!$this->checkPlayer($login)) {
 	    $this->send($login, $target, '$d00' . __("You are being ignored. Message not sent.", $login));
 	    return;
@@ -95,7 +102,8 @@ class Communication extends ExpPlugin {
      * @param string $login
      * @return boolean
      */
-    private function checkPlayer($login) {
+    private function checkPlayer($login)
+    {
 	// sync ignorelist every 10 seconds...
 	if (time() > $this->lastCheck + 10) {
 	    $this->lastCheck = time();
@@ -115,7 +123,8 @@ class Communication extends ExpPlugin {
 	return true;
     }
 
-    public function guiSendMessage($login, $entries) {
+    public function guiSendMessage($login, $entries)
+    {
 	//echo "login: '" . $login . "' said:" . $entries['chatEntry'] . "\n";
 	//print_r($entries);
 	$target = $entries['replyTo'];
@@ -123,7 +132,8 @@ class Communication extends ExpPlugin {
 	$this->sendPm($login, $target, $entries['chatEntry']);
     }
 
-    public function sendPmChat($login, $params = false) {
+    public function sendPmChat($login, $params = false)
+    {
 	if ($params === false) {
 	    $this->exp_chatSendServerMessage($this->msg_help, $login);
 	    return;
@@ -135,7 +145,8 @@ class Communication extends ExpPlugin {
 	$this->sendPm($login, $target, $text);
     }
 
-    public function selectPlayer($login) {
+    public function selectPlayer($login)
+    {
 	$window = PlayerSelection::Create($login);
 	$window->setController($this);
 	$window->setTitle('Select Player');
@@ -145,16 +156,18 @@ class Communication extends ExpPlugin {
 	$window->show();
     }
 
-    public function openNewTab($login, $target) {
+    public function openNewTab($login, $target)
+    {
 	PlayerSelection::Erase($login);
 
 	$info = Messager::Create($login);
 	$info->openNewTab($target);
-	//$info->setTimeout(0.5);
+	$info->setTimeout(0.5);
 	$info->show();
     }
 
-    public function exp_onUnload() {
+    public function exp_onUnload()
+    {
 	Messager::EraseAll();
 	CommunicationWidget::EraseAll();
 	parent::exp_onUnload();

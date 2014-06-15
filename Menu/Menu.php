@@ -252,13 +252,11 @@ class Menu extends ExpPlugin
 
     public function onPluginLoaded($pluginId)
     {
-	echo "doCheck enabled";
 	$this->doCheck = true;
     }
 
     public function onPluginUnloaded($pluginId)
     {
-	echo "doCheck enabled";
 	$this->doCheck = true;
     }
 
@@ -268,7 +266,7 @@ class Menu extends ExpPlugin
 	    if ($this->counter > 2) {
 		$this->counter = 0;
 		$this->doCheck = false;
-		echo "refreshing menu...\n";
+
 		Submenu::EraseAll();
 		foreach ($this->storage->players as $login => $player) {
 		    $this->onPlayerConnect($login, null);
