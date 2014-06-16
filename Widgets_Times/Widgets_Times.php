@@ -8,9 +8,11 @@ use ManiaLivePlugins\eXpansion\Widgets_Times\Gui\Widgets\TimeChooser;
 use \ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 
-class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+{
 
     private $modes = array();
+
     private $audio = array();
 
     /** @var \Maniaplanet\DedicatedServer\Structures\Player[] */
@@ -19,16 +21,19 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     /** @var \Maniaplanet\DedicatedServer\Structures\Player[] */
     private $checkpointPos = array();
 
-    function exp_onInit() {
+    function exp_onInit()
+    {
 	$this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
 	//  TimeChooser::$plugin = $this;
     }
 
-    function exp_onLoad() {
+    function exp_onLoad()
+    {
 	$this->enableDedicatedEvents();
     }
 
-    function exp_onReady() {
+    function exp_onReady()
+    {
 	if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania')) {
 	    Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
 	    $this->console('registered Dedimania event!!');
@@ -43,12 +48,14 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->showToAll();
     }
 
-    public function onPlayerInfoChanged($playerInfo) {
+    public function onPlayerInfoChanged($playerInfo)
+    {
 	$player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
 	$this->showPanel($player->login, $player->isSpectator);
     }
 
-    public function onPlayerGiveup(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player) {
+    public function onPlayerGiveup(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player)
+    {
 	if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
 	    $this->spectatorTargets[$player->login] = $player;
 	}
@@ -132,26 +139,38 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
       }
       } */
 
-    public function setMode($login, $mode) {
+    public function setMode($login, $mode)
+    {
 	$this->modes[$login] = $mode;
 	$info = Gui\Widgets\TimeChooser::Create($login);
 	$info->updatePanelMode($this->modes[$login], $this->audio[$login]);
     }
 
-    public function setAudioMode($login, $audiomode) {
+    public function setAudioMode($login, $audiomode)
+    {
 	$this->audio[$login] = $audiomode;
 	$info = Gui\Widgets\TimeChooser::Create($login);
 	$info->updatePanelMode($this->modes[$login], $this->audio[$login]);
     }
 
-    public function onEndMatch($rankings, $winnerTeamOrMap) {
+    public function onBeginMatch()
+    {
+	if (empty(TimePanel::$localrecords)) {
+	    $this->connection->chatSend("read localrecords, since no data :)");
+	    TimePanel::$localrecords = $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
+	    $this->showToAll();
+	}
+    }
+
+    public function onEndMatch($rankings, $winnerTeamOrMap)
+    {
 	// TimeChooser::EraseAll();
 	TimePanel::$dedirecords = Array();
 	TimePanel::$localrecords = Array();
-
     }
 
-    public function showToAll() {
+    public function showToAll()
+    {
 	TimePanel::EraseAll();
 	foreach ($this->storage->players as $player)
 	    $this->showPanel($player->login, false);
@@ -160,7 +179,8 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $this->showPanel($player->login, true);
     }
 
-    function showPanel($login, $isSpectator = false) {
+    function showPanel($login, $isSpectator = false)
+    {
 	$spectatorTarget = $login;
 	if ($isSpectator) {
 	    $player = $this->storage->getPlayerObject($login);
@@ -182,17 +202,20 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$info->show();
     }
 
-    function onPlayerConnect($login, $isSpectator) {
+    function onPlayerConnect($login, $isSpectator)
+    {
 	$audiopreload = Gui\Widgets\AudioPreload::Create($login);
 	$audiopreload->show();
 	$this->showPanel($login, $isSpectator);
     }
 
-    function onPlayerDisconnect($login, $reason = null) {
+    function onPlayerDisconnect($login, $reason = null)
+    {
 	TimePanel::Erase($login);
     }
 
-    public function onRecordsLoaded($data) {
+    public function onRecordsLoaded($data)
+    {
 	TimePanel::$localrecords = $data;
 	$this->showToAll();
     }
@@ -201,7 +224,8 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      *
      * @param \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record $record
      */
-    public function onUpdateRecords($data) {
+    public function onUpdateRecords($data)
+    {
 	TimePanel::$localrecords = $data;
 	/*
 	  TimePanel::$localrecords = $data;
@@ -209,37 +233,45 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	  $this->showToAll(); */
     }
 
-    public function onDedimaniaUpdateRecords($data) {
+    public function onDedimaniaUpdateRecords($data)
+    {
 	TimePanel::$dedirecords = $data['Records'];
     }
 
-    public function onDedimaniaGetRecords($data) {
+    public function onDedimaniaGetRecords($data)
+    {
 	TimePanel::$dedirecords = $data['Records'];
 	$this->showToAll();
     }
 
-    public function onRecordPlayerFinished($login) {
-
+    public function onRecordPlayerFinished($login)
+    {
+	
     }
 
-    public function onDedimaniaOpenSession() {
-
+    public function onDedimaniaOpenSession()
+    {
+	
     }
 
-    public function onNewRecord($data) {
-
+    public function onNewRecord($data)
+    {
+	
     }
 
-    public function onPersonalBestRecord($data) {
+    public function onPersonalBestRecord($data)
+    {
 	//$this->showPanel($data->login, false);
     }
 
-    public function onDedimaniaPlayerConnect($data) {
-
+    public function onDedimaniaPlayerConnect($data)
+    {
+	
     }
 
-    public function onDedimaniaPlayerDisconnect($login) {
-
+    public function onDedimaniaPlayerDisconnect($login)
+    {
+	
     }
 
     /**
@@ -247,7 +279,8 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $record
      * @param \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecorr $oldrecord
      */
-    public function onDedimaniaRecord($record, $oldrecord) {
+    public function onDedimaniaRecord($record, $oldrecord)
+    {
 	foreach (TimePanel::$dedirecords as $index => $data) {
 	    if (TimePanel::$dedirecords[$index]['Login'] == $record->login) {
 		TimePanel::$dedirecords[$index] = Array("Login" => $record->login, "NickName" => $record->nickname, "Rank" => $record->place, "Best" => $record->time, "Checks" => $record->checkpoints);
@@ -260,7 +293,8 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      *
      * @param \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $data
      */
-    public function onDedimaniaNewRecord($record) {
+    public function onDedimaniaNewRecord($record)
+    {
 	foreach (TimePanel::$dedirecords as $index => $data) {
 	    if (TimePanel::$dedirecords[$index]['Login'] == $record->login) {
 		TimePanel::$dedirecords[$index] = Array("Login" => $record->login, "NickName" => $record->nickname, "Rank" => $record->place, "Best" => $record->time, "Checks" => $record->checkpoints);
@@ -271,11 +305,11 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
     public function exp_onUnload()
     {
-        Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
-        Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
-        Dispatcher::unregister(LocalEvent::getClass(), $this);
-        TimePanel::EraseAll();
-        parent::exp_unload();
+	Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
+	Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
+	Dispatcher::unregister(LocalEvent::getClass(), $this);
+	TimePanel::EraseAll();
+	parent::exp_unload();
     }
 
 }
