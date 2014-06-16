@@ -70,6 +70,7 @@ class Core extends types\ExpPlugin
 
     /** @var bool $enableCalculation marks if player positions should be calculated */
     private $enableCalculation = true;
+
     private $loopTimer = 0;
     private $lastTick = 0;
     public static $action_serverInfo = -1;
