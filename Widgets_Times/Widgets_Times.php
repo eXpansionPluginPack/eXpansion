@@ -156,7 +156,6 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onBeginMatch()
     {
 	if (empty(TimePanel::$localrecords)) {
-	    $this->connection->chatSend("read localrecords, since no data :)");
 	    TimePanel::$localrecords = $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
 	    $this->showToAll();
 	}
