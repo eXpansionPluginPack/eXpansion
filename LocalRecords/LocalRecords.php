@@ -1539,7 +1539,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function getRanks()
     {
-        if ((empty($this->ranks) && $this->rank_needUpdated) && !$this->expStorage->isRelay) {
+        if ((empty($this->ranks) || $this->rank_needUpdated) && !$this->expStorage->isRelay) {
             $this->rank_needUpdated = false;
             $this->total_ranks      = -1;
             $this->getTotalRanked();
