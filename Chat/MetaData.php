@@ -20,7 +20,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	$this->setDescription('Reroute chat to controller and customize the chat colors and look!');
 
 	$config = Config::getInstance();
-
+	
 	$var = new Boolean('publicChatActive', 'Enable public chat for players', $config, false);
 	$var->setDescription('Admins with required permissions can continue to chat. A personal message is sent to other players');
 	$var->setDefaultValue(true);

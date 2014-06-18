@@ -202,10 +202,10 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$window = CurrentTrackWidget::Create($login);
 	$window->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
 	$window->setVisibleLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	$window->setPosition(0, 60);
-	if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
+	$window->setPosition(0,80);
+/*	if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
 	    $window->setPosition(0, 50);
-	}
+	} */
 	$window->setSize(100, 10);
 	$window->setSong($outsong);
 	//$window->setValign("center");
