@@ -15,20 +15,24 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
  *
  * @author Petri
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
+class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
+{
 
-    public function onBeginLoad() {
+    public function onBeginLoad()
+    {
 	parent::onBeginLoad();
 	$this->setName("Music Box");
 	$this->setDescription("Provides custom music for your server");
 	$config = Config::getInstance();
 
-	$var = new Boolean("override", "Override all music on server, even if map has defined custom one ?", $config);
+	$var = new Boolean("override", "Override all music on server, even if map has defined custom one ?", $config, false);
 	$var->setDefaultValue(true);
+	$var->setGroup("Musicbox");
 	$this->registerVariable($var);
 
-	$var = new Boolean("url", "Set url for index.csv url to get tracklist", $config);
+	$var = new String("url", "Enter tracklist url for musicbox ", $config, false);
 	$var->setDefaultValue("http://reaby.kapsi.fi/ml/musictest");
+	$var->setGroup("Musicbox");
 	$this->registerVariable($var);
     }
 
