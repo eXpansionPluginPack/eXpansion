@@ -312,13 +312,13 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $step->noUpConsole = '[eXpansion:AutoUpdate]' . $name . ' needs updating!!';
             $steps[]           = $step;
         }
-        $this->onGoingSteps = $steps;
-        $this->currentLogin = $login;
 
         //If there wasn't a check recently then check
         if ((time() - $this->lastCheck) > (60 * 60 * 6)) {
             $this->lastCheck  = time();
             $this->isUpToDate = true;
+            $this->onGoingSteps = $steps;
+            $this->currentLogin = $login;
             $this->doSteps();
         } else {
             //If not just show if not up to date
@@ -343,6 +343,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
          */
         $currentStep = $paralelExec->getValue('currentStep');
         $login       = $paralelExec->getValue('login');
+
         if ($ret != 0) {
             //There was an error
             $this->console($currentStep->errorConsole);
