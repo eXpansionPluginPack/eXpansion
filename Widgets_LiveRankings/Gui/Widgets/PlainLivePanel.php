@@ -299,9 +299,9 @@ class PlainLivePanel extends PlainPanel
 
         $bestCpsText = '';
         foreach($bestCps as $cpIndex=>$time){
-            if($bestCps != "")
-                $bestCps .=', ';
-            $bestCps .= $cpIndex .'=>'. $time;
+            if($bestCpsText != "")
+                $bestCpsText .=', ';
+            $bestCpsText .= $cpIndex .'=>'. $time;
         }
 
         $bestCps  = '['.$bestCpsText.']';
