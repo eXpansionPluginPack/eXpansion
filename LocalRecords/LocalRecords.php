@@ -434,7 +434,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
 
         if ($updated) {
-            $this->updateRanks($this->storage->currentMap->uId, $nbLaps);
+            $this->updateRanks($this->storage->currentMap->uId, $nbLaps, true);
         } else {
             $q    = "SELECT rank_playerlogin FROM `exp_ranks`"
                 . " WHERE rank_challengeuid = " . $this->db->quote($this->storage->currentMap->uId) . $cons;
@@ -1540,6 +1540,9 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function getRanks()
     {
         if ((empty($this->ranks) || $this->rank_needUpdated) && !$this->expStorage->isRelay) {
+
+            $this->console("[LocalRecods]Fetching Server Ranks from Database !");
+
             $this->rank_needUpdated = false;
             $this->total_ranks      = -1;
             $this->getTotalRanked();
