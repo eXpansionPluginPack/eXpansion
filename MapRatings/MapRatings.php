@@ -69,7 +69,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	    $info->show();
 	}
 
-	$this->previousUid = $this->storage->currentMap;
+        $this->previousMap = $this->storage->currentMap;
 
 	//$this->registerChatCommand("test", "onEndMatch", 0, false);
 	$this->affectAllRatings();
@@ -119,7 +119,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	if ($uId == null) {
 	    $uId = $this->storage->currentMap->uId;
 	} else if ($uId instanceof \Maniaplanet\DedicatedServer\Structures\Map) {
-	    $uId = $uid->uId;
+	    $uId = $uId->uId;
 	}
 
 	$ratings = $this->db->execute("SELECT login, rating FROM exp_ratings WHERE `uid` = " . $this->db->quote($uId) . ";")->fetchArrayOfAssoc();
@@ -369,12 +369,17 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     public function onBeginMatch() {
+        $this->saveRatings($this->storage->currentMap->uId);
+        $this->reload();
+
 	EndMapRatings::EraseAll();
 	$this->displayWidget();
     }
 
     function onEndMatch($rankings = "", $winnerTeamOrMap = "") {
+
 	if ($this->config->showPodiumWindow) {
+            $this->reload();
 	    $ratings = $this->getVotesForMap(null);
 
 	    $logins = array();
