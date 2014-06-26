@@ -631,6 +631,10 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     function xPlayerConnect($data) {
 	$dediplayer = DediPlayer::fromArray($data[0][0]);
 	self::$players[$dediplayer->login] = $dediplayer;
+
+        echo "Player connect";
+        print_r(self::$players[$dediplayer->login]);
+
 	if ($dediplayer->banned) {
 	    try {
 		$player = $this->storage->getPlayerObject($dediplayer->login);
