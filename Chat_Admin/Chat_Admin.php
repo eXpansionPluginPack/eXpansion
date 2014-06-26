@@ -1444,6 +1444,33 @@ Other server might use the same blacklist file!!');
 	$path = \ManiaLib\Utils\Path::getInstance();
 	$dir = $path->getRoot(true) . "bootstrapper.php";
 	$cmd = PHP_BINARY . " " . realpath($dir);
+
+        //Getting the server arguments.
+        $args = getopt(null, array(
+                'help::',//Display Help
+                'manialive_cfg::',
+                'rpcport::',//Set the XML RPC Port to use
+                'address::',//Set the adresse of the server
+                'password::',//Set the User Password
+                'dedicated_cfg::',//Set the configuration file to use to define XML RPC Port, SuperAdmin, Admin and User passwords
+                'user::',//Set the user to use during the communication with the server
+                'logsPrefix::', //Set the log prefix option
+                'debug::' // Set up the debug option//Set a configuration file to load instead of config.ini
+            ));
+        $arg_string = " ";
+        foreach($args as $key => $value){
+            $arg_string.="--$key";
+            if(!empty($value))
+                $arg_string.="=$value";
+            $arg_string.=" ";
+        }
+
+        print_r($args);
+
+        $cmd .= $arg_string;
+
+        echo "Cmd $cmd\n";
+
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 	    if (class_exists("COM")) {
 		$WshShell = new \COM("WScript.Shell");
