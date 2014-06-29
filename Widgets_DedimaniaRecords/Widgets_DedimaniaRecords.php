@@ -3,6 +3,9 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection;
+use ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAbstract;
+use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediPlayer;
 use ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Widgets\DediPanel;
 use ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Widgets\DediPanel2;
 
@@ -53,7 +56,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
     public function onTick()
     {
 
-        if ((time() - $this->lastUpdate) > 1 && $this->needUpdate !== false || $this->forceUpdate == true) {
+        if ((time() - $this->lastUpdate) > 8) {
 
             if (($this->needUpdate & self::Dedimania) == self::Dedimania || $this->forceUpdate || ($this->needUpdate & self::Dedimania_force) == self::Dedimania_force) {
                 if ($this->dedi || $this->needUpdate == self::Dedimania_force) {
@@ -206,11 +209,14 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
     }
 
+    /**
+     * @param $data DediPlayer
+     */
     public function onDedimaniaPlayerConnect($data)
     {
-        /* if (count(self::$dedirecords) > 0) {
+        /*if ($data->maxRank > Connection::$serverMaxRank) {*/
           $this->needUpdate = self::Dedimania_force;
-          } */
+        //}
     }
 
     public function onDedimaniaPlayerDisconnect()
