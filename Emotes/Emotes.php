@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Emotes;
 
+use ManiaLivePlugins\eXpansion\Chat\Chat;
 use \ManiaLivePlugins\eXpansion\Emotes\Gui\Windows\EmotePanel;
 use ManiaLive\Event\Dispatcher;
 
@@ -181,6 +182,11 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return void
      */
     function helper($login, $args, $source1, $source2) {
+
+        if($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Chat\Chat') && !\ManiaLivePlugins\eXpansion\Chat\Config::getInstance()->publicChatActive){
+            $this->exp_chatSendServerMessage("#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages", $login, array());
+            return;
+        }
 	$args = explode(" ", $args);
 
 	$player = $this->storage->getPlayerObject($login);
