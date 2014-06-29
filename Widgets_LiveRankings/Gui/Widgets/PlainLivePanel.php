@@ -207,7 +207,6 @@ class PlainLivePanel extends PlainPanel
         } else {
             $recsData = '[' . $recsData . ']';
             $nickData = '[' . $nickData . ']';
-            $bestCps  = implode(',', $bestCps);
         }
 
 
