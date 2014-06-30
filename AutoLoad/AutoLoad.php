@@ -207,7 +207,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                             } catch (\Exception $ex) {
 
                             }
-                            ErrorHandling::displayAndLogError($ex);
+                            //ErrorHandling::displayAndLogError($ex);
                             $status = false;
                         }
 
@@ -230,8 +230,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         } catch (PluginNotFoundException $ex) {
             throw $ex;
         } catch (\Exception $ex) {
-            \ManiaLivePlugins\eXpansion\Core\types\ErrorHandler::displayAndLogError($ex);
-
+            $this->console("[" . $pname . "]..............................FAIL -> will retry");
             return false;
         }
         
@@ -244,7 +243,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $mem = "Memory Usage: " . round(memory_get_usage() / 1024 ) . "Kb";
         //\ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
         print "\n" . $mem . "\n";
-        $this->connection->chatSend($mem);
+        //$this->connection->chatSend($mem);
     }
 
     /**
