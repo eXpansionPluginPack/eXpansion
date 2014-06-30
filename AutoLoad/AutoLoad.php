@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\AutoLoad;
 
+use ManiaLive\Application\ErrorHandling;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
@@ -206,7 +207,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                             } catch (\Exception $ex) {
 
                             }
-                            print_r($ex);
+                            //ErrorHandling::displayAndLogError($ex);
                             $status = false;
                         }
 
@@ -229,10 +230,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         } catch (PluginNotFoundException $ex) {
             throw $ex;
         } catch (\Exception $ex) {
-            echo "Second Catch";
-            print_r($ex->getMessage());
-            \ManiaLivePlugins\eXpansion\Core\types\ErrorHandler::displayAndLogError($ex);
-
+            $this->console("[" . $pname . "]..............................FAIL -> will retry");
             return false;
         }
         
@@ -245,7 +243,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $mem = "Memory Usage: " . round(memory_get_usage() / 1024 ) . "Kb";
         //\ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
         print "\n" . $mem . "\n";
-        $this->connection->chatSend($mem);
+        //$this->connection->chatSend($mem);
     }
 
     /**
