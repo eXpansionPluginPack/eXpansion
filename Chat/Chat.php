@@ -15,6 +15,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Chat;
 
+use ManiaLive\DedicatedApi\Callback\Event;
+use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
@@ -40,7 +42,11 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function exp_onReady()
     {
-	$this->enableDedicatedEvents();
+	$this->enableDedicatedEvents(Event::ON_PLAYER_CONNECT);
+	$this->enableDedicatedEvents(Event::ON_PLAYER_DISCONNECT);
+
+        Dispatcher::register(Event::getClass(), $this, Event::ON_PLAYER_CHAT, 10);
+
 	try {
 	    $this->connection->chatEnableManualRouting(true);
 	} catch (\Exception $e) {
@@ -167,6 +173,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     function exp_onUnload()
     {
+        Dispatcher::unregister(Event::getClass(), $this, Event::ON_PLAYER_CHAT);
 	$this->connection->chatEnableManualRouting(false);
     }
 
