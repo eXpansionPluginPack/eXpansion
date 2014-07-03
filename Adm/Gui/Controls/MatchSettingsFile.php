@@ -57,7 +57,7 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control {
 	$this->label->setText($text);	
 	$this->label->setTextSize(1);
 	$this->label->setStyle("TextCardSmallScores2");
-	$this->label->setTextColor("222");	
+	$this->label->setTextColor("fff");	
 	$this->frame->addComponent($this->label);
 
 

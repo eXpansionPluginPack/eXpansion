@@ -21,7 +21,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
     private $value;
     private $isActive = false;
     private $action = 0;
-    
+
     /**
      * Button
      * 
@@ -47,9 +47,9 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 
 	$this->backGround = new \ManiaLib\Gui\Elements\Quad($sizeX + 2, $sizeY + 1);
 	$this->backGround->setAlign('center', 'center2');
-	$this->backGround->setStyle("EnergyBar");
-	$this->backGround->setSubStyle("EnergyBar");
-	// $this->backGround->setScriptEvents(true);
+	$this->backGround->setStyle("BgsButtons");
+	$this->backGround->setSubStyle("BgButtonSmall");
+	$this->backGround->setScriptEvents(true);
 	$this->addComponent($this->backGround);
 
 	$this->backGround2 = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
@@ -61,14 +61,14 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 
 
 
-	$this->label = new \ManiaLib\Gui\Elements\Label($sizeX - 2, $sizeY - 2);
+	$this->label = new \ManiaLib\Gui\Elements\Label($sizeX, $sizeY - 2);
 	$this->label->setAlign('center', 'center2');
-	$this->label->setStyle("TextValueSmall");
+	$this->label->setStyle("TextValueSmallSm");
 	$this->label->setTextSize(2);
 	$this->label->setTextEmboss();
-	//$this->label->setTextColor("eee");
-	$this->label->setFocusAreaColor1("0000");
-	$this->label->setFocusAreaColor2("0000");
+	$this->label->setTextColor("eee");	
+	$this->label->setFocusAreaColor1("000f");
+	$this->label->setFocusAreaColor2("ffff");
 
 	$this->frameDescription = new \ManiaLive\Gui\Controls\Frame();
 	//$this->frameDescription->setId("Desc_Icon_" . $this->buttonId);
@@ -112,9 +112,10 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	} else {
 	    $this->label->setPosX((($this->sizeX - 2) / 2) + ($this->getSizeY() - 1));
 	    $this->label->setSizeX($this->getSizeX() - ($this->getSizeY() + 1));
-	    $this->icon->setSize($this->sizeX, $this->sizeY);		    
+	    $this->icon->setSize($this->sizeX, $this->sizeY);
 	}
-
+	$this->label->setPosZ($this->backGround->getPosZ()-0.03);
+	
 	$this->setScale(0.7);
 	parent::onResize($oldX, $oldY);
     }
@@ -197,8 +198,8 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 
     function setAction($action) {
 	// $this->label->setAction($action);
-	// $this->backGround->setAction($action);
-	$this->label->setAction($action);
+	$this->backGround->setAction($action);
+	//$this->label->setAction($action);
 	$this->action = $action;
 	if ($this->icon != null)
 	    $this->icon->setAction($action);

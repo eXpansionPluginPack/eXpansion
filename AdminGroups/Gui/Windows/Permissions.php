@@ -80,7 +80,7 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         foreach ($adminGroups->getPermissionList() as $key => $value) {
             $cPermission = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 60);
             $cPermission->setStatus($this->group->hasPermission($key));
-            $cPermission->setText(__(AdminGroups::getPermissionTitleMessage($key), $this->getRecipient()));
+            $cPermission->setText('$fff'.__(AdminGroups::getPermissionTitleMessage($key), $this->getRecipient()));
             $cPermission->setScale(0.8);
             
             $cInherit = null;
@@ -88,7 +88,7 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $inheritances = $this->group->getInherits();
             if(!empty($inheritances)){
                 $cInherit = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 15, $cPermission);
-                $cInherit->setText(__(AdminGroups::$txt_inherits, $this->getRecipient())."?");
+                $cInherit->setText('$fff'.__(AdminGroups::$txt_inherits, $this->getRecipient())."?");
                 $cInherit->setScale(0.8);
                 if($this->group->getPermission($key) == AdminGroups::unknownPermission){
                     $cPermission->SetIsWorking(false);

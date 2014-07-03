@@ -41,6 +41,7 @@ class AdminItem extends \ManiaLive\Gui\Control {
         $gui_nick = new \ManiaLib\Gui\Elements\Label(32, 4);
         $gui_nick->setAlign('left', 'center');
         $gui_nick->setText($player != null ? $player->nickName : "");
+	$gui_nick->setTextColor("fff");
         $gui_nick->setScale(0.8);
 
         $frame->addComponent($gui_nick);

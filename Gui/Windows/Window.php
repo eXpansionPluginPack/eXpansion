@@ -47,12 +47,26 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->style->setAttribute("textcolor", "f00");
 	$this->style->setAttribute("focusareacolor1", "09a");
 	$this->style->setAttribute("focusareacolor2", "fff");
-	// $this->addComponent($this->style); 
+	//$this->addComponent($this->style); 
+
+
+
+	
+	$this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
+	$this->_mainWindow->setId("MainWindow");
+	$this->_mainWindow->setStyle("UIConstruction_Buttons");
+	$this->_mainWindow->setSubStyle("BgTools");
+	$this->_mainWindow->setOpacity(0.95);
+	//$this->_mainWindow->setBgColor("eee");
+	$this->_mainWindow->setScriptEvents(true);
+	$this->_windowFrame->addComponent($this->_mainWindow);
+
+	
 
 	$this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
 	$this->_titlebar->setId("Titlebar");
-	$this->_titlebar->setStyle("ManiaPlanetMainMenu");
-	$this->_titlebar->setSubStyle("TopBar");
+	$this->_titlebar->setStyle("Bgs1");
+	$this->_titlebar->setSubStyle("BgEmpty");
 	$this->_titlebar->setColorize("3af");
 	$this->_titlebar->setAlign("left", "top");
 	$this->_titlebar->setScriptEvents(true);
@@ -63,25 +77,13 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_titlebar2->setSubStyle("CartoucheLine");
 	$this->_titlebar2->setAlign("center", "top");
 	// $this->_windowFrame->addComponent($this->_titlebar2);
-
-
-	$this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
-	$this->_mainWindow->setId("MainWindow");
-	$this->_mainWindow->setStyle("UIConstruction_Buttons");
-	$this->_mainWindow->setSubStyle("BgTools");
-	$this->_mainWindow->setOpacity(0.95);
-	//$this->_mainWindow->setBgColor("eee");
-	$this->_mainWindow->setScriptEvents(true);
-	$this->_windowFrame->addComponent($this->_mainWindow);
-
+	
 	$this->_bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
-	$this->_bg->setStyle("BgRaceScore2");
-	$this->_bg->setSubStyle("CartoucheLine");
+	$this->_bg->setStyle("Bgs1");
+	$this->_bg->setSubStyle("BgColorContour");
+	$this->_bg->setColorize("3af");
 	$this->_bg->setAlign("left", "top");
-	//$this->_windowFrame->addComponent($this->_bg);
-
-
-
+	$this->_windowFrame->addComponent($this->_bg);
 
 	$this->_title = new \ManiaLib\Gui\Elements\Label(60, 4);
 	$this->_title->setId("TitlebarText");
@@ -139,15 +141,15 @@ class Window extends \ManiaLive\Gui\Window {
 
     function onResize($oldX, $oldY) {
 	parent::onResize($oldX, $oldY);
-	$titleBarPos = 7;
-	$titlePos = 3;
+	$titleBarPos = 3.5;
+	$titlePos = 2.5;
 	$this->_windowFrame->setSize($this->sizeX, $this->sizeY);
 
-	$this->_mainWindow->setSize($this->sizeX + 0.6, $this->sizeY + 2);
+	$this->_mainWindow->setSize($this->sizeX, $this->sizeY+2);
 	$this->_mainWindow->setPosY(0);
 
-	$this->_bg->setPosY(0);
-	$this->_bg->setSize($this->sizeX, $this->sizeY + 3);
+	$this->_bg->setPosY(4);
+	$this->_bg->setSize($this->sizeX, $this->sizeY+6);
 	$this->_bg->setOpacity(1);
 
 
@@ -161,15 +163,15 @@ class Window extends \ManiaLive\Gui\Window {
 
 
 
-	$this->_titlebar->setSize($this->sizeX * 1.5, 10.5);
-	$this->_titlebar->setPosition(-($this->sizeX * 1.5) / 40, $titleBarPos);
+	$this->_titlebar->setSize($this->sizeX, 4);
+	$this->_titlebar->setPosition(0, $titleBarPos);
 	$this->_titlebar->setOpacity(1);
 
 	$this->_titlebar2->setSize($this->sizeX / 2, 4.5);
 	$this->_titlebar2->setPosition(0, $titleBarPos - 3);
 
 	$this->_closebutton->setSize(4, 4);
-	$this->_closebutton->setPosition(3, $titlePos - 1.2);
+	$this->_closebutton->setPosition($this->sizeX - 3, $titlePos - 1.2);
 
 	$this->_minbutton->setSize(5, 5);
 	$this->_minbutton->setPosition($this->sizeX - 8, 6);

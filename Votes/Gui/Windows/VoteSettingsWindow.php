@@ -63,7 +63,7 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window 
 	$this->metaData = $metadata;
 	
 	foreach ($this->items as $item)
-	    $item->erase();
+	    $item->destroy();
 	$this->pager->clearItems();
 	$this->items = array();
 

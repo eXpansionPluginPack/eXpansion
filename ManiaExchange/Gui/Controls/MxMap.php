@@ -85,9 +85,10 @@ class MxMap extends Control {
 
 	$info = new Label(80, 6);
 	$info->setAlign('left', 'center');
-	$info->setText('$000' . Gui::fixString($map->username));
+	$info->setText('$fff' . Gui::fixString($map->username));
 	$info->setAction($this->actionSearch);
 	$info->setStyle("TextCardSmallScores2");
+	
 	$info->setScriptEvents(true);
 	$this->line2->addComponent($info);
 

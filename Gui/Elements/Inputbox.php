@@ -22,8 +22,10 @@ class Inputbox extends \ManiaLive\Gui\Control {
 
         $this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
         $this->label->setAlign('left', 'center');
-        $this->label->setTextSize(1);
-        $this->label->setStyle("TextCardRaceRank");
+        $this->label->setTextSize(1);	
+        $this->label->setStyle("TextValueSmallSm");
+	$this->label->setScale(0.9);
+	$this->label->setTextEmboss();
         $this->addComponent($this->label);
 
         $this->border = new \ManiaLib\Gui\Elements\Quad();
@@ -31,7 +33,7 @@ class Inputbox extends \ManiaLive\Gui\Control {
         $this->border->setPosX(-1);
         $this->border->setAlign("left", "center");
         $this->border->setStyle("Bgs1InRace");
-        $this->border->setSubStyle("BgTitleShadow");
+        $this->border->setSubStyle("BgColorContour");
         $this->addComponent($this->border);
 
 
@@ -69,7 +71,7 @@ class Inputbox extends \ManiaLive\Gui\Control {
         }
 
         $this->button->setAlign('left', 'center');
-        $this->button->setTextColor('000');
+        $this->button->setTextColor('fff');
         $this->button->setTextSize(1.5);
         $this->addComponent($this->button);
     }
@@ -87,7 +89,7 @@ class Inputbox extends \ManiaLive\Gui\Control {
     }
 
     function setLabel($text) {
-        $this->label->setText('$222' . $text);
+        $this->label->setText('$3af' . $text);
     }
 
     function getText() {
