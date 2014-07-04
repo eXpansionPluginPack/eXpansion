@@ -969,7 +969,15 @@ namespace {
         function __()
         {
             $args     = func_get_args();
+
+            if(empty($args))
+                return '';
+
             $message  = array_shift($args);
+
+            if($message == "" || $message == null)
+                return '';
+
             $language = null;
             if (sizeof($args) > 0) {
                 $login  = array_shift($args);
@@ -990,6 +998,7 @@ namespace {
             }
 
             array_unshift($args, $lang);
+
 
             return call_user_func_array('sprintf', $args);
         }
