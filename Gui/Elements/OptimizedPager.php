@@ -37,9 +37,10 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 	$this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 40);
 	$this->scrollBg->setAlign("center", "top");
 	$this->scrollBg->setStyle("Bgs1");
-	$this->scrollBg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitle3_3);
+	$this->scrollBg->setSubStyle("BgCard1");
 	$this->scrollBg->setId("ScrollBg");
-	$this->scrollBg->setScriptEvents();
+	$this->scrollBg->setOpacity(0.9);
+	//$this->scrollBg->setScriptEvents();
 	$this->addComponent($this->scrollBg);
 
 	$this->scroll = new \ManiaLib\Gui\Elements\Quad(3, 15);

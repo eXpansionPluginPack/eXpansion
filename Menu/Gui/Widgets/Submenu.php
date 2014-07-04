@@ -18,6 +18,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
 	$this->item[$nb]->setSize(25, 4.5);
 	$this->item[$nb]->setFocusAreaColor1("0009");
 	$this->item[$nb]->setFocusAreaColor2("0009");
+	$this->item[$nb]->setBgcolor("000");
 
 	if (!empty($action)) {
 	    $this->item[$nb]->setFocusAreaColor2("fff9");

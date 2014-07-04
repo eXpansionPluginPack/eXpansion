@@ -32,7 +32,7 @@ class MxInfo extends \ManiaLive\Gui\Control {
 
         $info = new \ManiaLib\Gui\Elements\Label(120, 4);
         $info->setAlign('left', 'center');
-        $info->setText('$000' . $message);
+        $info->setText('$fff' . $message);
         $info->setStyle("TextCardSmallScores2");
         $info->setScriptEvents(true);
         $this->frame->addComponent($info);

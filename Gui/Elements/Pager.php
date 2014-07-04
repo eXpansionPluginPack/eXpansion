@@ -29,9 +29,11 @@ class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansio
 	$this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 40);
 	$this->scrollBg->setAlign("center", "top");
 	$this->scrollBg->setStyle("Bgs1");
-	$this->scrollBg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgTitle3_3);
+	$this->scrollBg->setSubStyle("BgCard1");
+	$this->scrollBg->setOpacity(0.9);
 	$this->scrollBg->setId("ScrollBg");
-	$this->scrollBg->setScriptEvents();
+	
+	//$this->scrollBg->setScriptEvents();
 	$this->barFrame->addComponent($this->scrollBg);
 
 	$this->scroll = new \ManiaLib\Gui\Elements\Quad(3, 15);

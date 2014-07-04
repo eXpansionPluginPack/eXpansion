@@ -21,7 +21,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     
     public $style_list_bgColor = array('aaa6', 'eee6');
     public $style_list_bgStyle = array('Bgs1', 'Bgs1');
-    public $style_list_bgSubStyle = array('BgWindow2', 'BgWindow3');
+    public $style_list_bgSubStyle = array('BgCard', 'BgCard');
     public $style_list_posXOffset = -1;
     public $style_list_sizeXOffset = 0;
     public $style_list_posYOffset = 0;
@@ -29,7 +29,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     
     public $style_title_bgColor = 'ddd4';
     public $style_title_bgStyle = 'Bgs1';
-    public $style_title_bgSubStyle = 'BgTitlePage';
+    public $style_title_bgSubStyle = 'BgCard';
     public $style_title_posXOffset = -1;
     public $style_title_sizeXOffset = 2;
     public $style_title_posYOffset = 0;

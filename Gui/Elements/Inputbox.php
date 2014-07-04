@@ -28,9 +28,7 @@ class Inputbox extends \ManiaLive\Gui\Control {
 	$this->label->setTextEmboss();
         $this->addComponent($this->label);
 
-        $this->border = new \ManiaLib\Gui\Elements\Quad();
-        $this->border->setSize($sizeX + 2, 5.5);
-        $this->border->setPosX(-1);
+        $this->border = new \ManiaLib\Gui\Elements\Quad();        
         $this->border->setAlign("left", "center");
         $this->border->setStyle("Bgs1InRace");
         $this->border->setSubStyle("BgColorContour");
@@ -43,7 +41,8 @@ class Inputbox extends \ManiaLive\Gui\Control {
     protected function onResize($oldX, $oldY) {
         // parent::onResize($oldX, $oldY);
         $this->button->setSize($this->getSizeX(), 4);
-        $this->border->setSize($this->getSizeX() + 2, 6);
+        $this->border->setSize($this->getSizeX() + 1, 5);
+	$this->border->setPosX(-0.8);
         $this->label->setSize($this->getSizeX(), 3);
         $this->label->setPosition(0, 4);
     }
@@ -62,9 +61,8 @@ class Inputbox extends \ManiaLive\Gui\Control {
             $this->button->setDefault($text);
             $this->button->setScriptEvents(true);
             $this->button->setStyle("TextValueMedium");
-            $this->button->setFocusAreaColor1("0000");
-            $this->button->setFocusAreaColor2("2af6");
-            $this->button->setTextEmboss();
+            $this->button->setFocusAreaColor1("eee6");
+            $this->button->setFocusAreaColor2("3af6");            
         } else {
             $this->button = new \ManiaLib\Gui\Elements\Label($this->sizeX, 5);
             $this->button->setText($text);

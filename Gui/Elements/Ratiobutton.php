@@ -67,7 +67,7 @@ class Ratiobutton extends \ManiaLive\Gui\Control {
     }
 
     function setText($text) {
-        $this->label->setText('$222' . $text);
+        $this->label->setText('$fff' . $text);
     }
 
     function toggleActive($login) {

@@ -109,7 +109,7 @@ class Mapitem extends Control implements OptimizedPagerElement {
     }
 
     protected function onResize($oldX, $oldY) {
-	$this->bg->setSize($this->getSizeX() - 5, $this->getSizeY());
+	$this->bg->setSize($this->getSizeX(), $this->getSizeY());
 	$scaledSizes = Gui::getScaledSize(self::$ColumnWidths, ($this->getSizeX()));
 	$this->label_author->setSizeX($scaledSizes[0]);
 	$this->label_map->setSizeX($scaledSizes[1]);

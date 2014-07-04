@@ -7,7 +7,8 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 /**
  * @abstract
  */
-class Window extends \ManiaLive\Gui\Window {
+class Window extends \ManiaLive\Gui\Window
+{
 
     protected $_titlebar, $_titlebar2;
     protected $_title, $title2;
@@ -30,7 +31,8 @@ class Window extends \ManiaLive\Gui\Window {
     private $style;
     private $dicoMessages = array();
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
 	parent::onConstruct();
 	$config = Config::getInstance();
 	$this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
@@ -49,28 +51,23 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->style->setAttribute("focusareacolor1", "09a");
 	$this->style->setAttribute("focusareacolor2", "fff");
 	//$this->addComponent($this->style); 
-
-
-
-
+	
 	$this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
 	$this->_mainWindow->setId("MainWindow");
 	$this->_mainWindow->setStyle("UIConstruction_Buttons");
 	$this->_mainWindow->setSubStyle("BgTools");
 //	$this->_mainWindow->setStyle("Bgs1");
 	//$this->_mainWindow->setSubStyle("BgWindow4");
-	$this->_mainWindow->setOpacity(0.93);
-	//$this->_mainWindow->setBgColor("eee");
+	$this->_mainWindow->setOpacity(0.95);
+	$this->_mainWindow->setColorize("002c59e9");
 	$this->_mainWindow->setScriptEvents(true);
 	$this->_windowFrame->addComponent($this->_mainWindow);
-
-
-
+	
 	$this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
 	$this->_titlebar->setId("Titlebar");
 	$this->_titlebar->setStyle("Bgs1");
 	$this->_titlebar->setSubStyle("BgEmpty");
-	$this->_titlebar->setColorize("3af");
+	$this->_titlebar->setBgcolor("3afe");
 	$this->_titlebar->setAlign("left", "top");
 	$this->_titlebar->setScriptEvents(true);
 	$this->_windowFrame->addComponent($this->_titlebar);
@@ -142,7 +139,8 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
 	parent::onResize($oldX, $oldY);
 	$titleBarPos = 3.5;
 	$titlePos = 2.5;
@@ -157,16 +155,15 @@ class Window extends \ManiaLive\Gui\Window {
 
 
 	$this->_title->setSize($this->sizeX, 8);
-	$this->_title->setPosition(7, $titlePos);
+	$this->_title->setPosition(3, $titlePos);
 	$this->_title->setHalign("left");
 
 	$this->_title2->setSize($this->sizeX, 4);
 	$this->_title2->setPosition(($this->_title->sizeX / 2), 3.25);
 	$this->_title2->setHalign("left");
 
-	$this->_titlebar->setSize($this->sizeX, 4);
-	$this->_titlebar->setPosition(0, $titleBarPos);
-	$this->_titlebar->setOpacity(1);
+	$this->_titlebar->setSize($this->sizeX - 0.2, 4);
+	$this->_titlebar->setPosition(0.2, $titleBarPos);
 
 	$this->_titlebar2->setSize($this->sizeX / 2, 4.5);
 	$this->_titlebar2->setPosition(0, $titleBarPos - 3);
@@ -183,7 +180,8 @@ class Window extends \ManiaLive\Gui\Window {
 
     private $calledScripts = array();
 
-    private function detectElements($components) {
+    private function detectElements($components)
+    {
 	$buttonScript = null;
 	foreach ($components as $index => $component) {
 	    if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel) {
@@ -218,8 +216,10 @@ class Window extends \ManiaLive\Gui\Window {
 	}
     }
 
-    protected function onDraw() {
+    protected function onDraw()
+    {
 	parent::onDraw();
+	
 	$this->nbButton = 0;
 	$this->dIndex = 0;
 	$this->dDeclares = "";
@@ -228,7 +228,7 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->calledScripts = array();
 
 	$this->detectElements($this->getComponents());
-	
+
 	foreach ($this->calledScripts as $script) {
 	    $this->addScriptToMain($script->getEndScript($this));
 	    $script->reset();
@@ -261,38 +261,45 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->xml->setContent($this->script->getDeclarationScript($this, $this->xml));
 
 	$this->addComponent($this->xml);
-	
+
 	$dico = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dico($this->dicoMessages);
 	\ManiaLive\Gui\Manialinks::appendXML($dico->getXml());
     }
 
-    function setText($text) {
+    function setText($text)
+    {
 	$this->_mainText->setText($text);
     }
 
-    function setTitle($text, $parameter = "") {
+    function setTitle($text, $parameter = "")
+    {
 	$this->_name = $text;
 	$this->_title->setText($text . " " . $parameter);
 	// $this->_title2->setText($text . " " . $parameter);
     }
 
-    function closeWindow() {
+    function closeWindow()
+    {
 	$this->erase($this->getRecipient());
     }
 
-    function addScriptToMain($script) {
+    function addScriptToMain($script)
+    {
 	$this->dDeclares .= $script;
     }
 
-    function addScriptToWhile($script) {
+    function addScriptToWhile($script)
+    {
 	$this->wLoop .= $script;
     }
 
-    function addScriptToLib($script) {
+    function addScriptToLib($script)
+    {
 	$this->scriptLib .= $script;
     }
 
-    function destroy() {
+    function destroy()
+    {
 	\ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->_closeAction);
 	$this->_windowFrame->clearComponents();
 	$this->_windowFrame->destroy();
@@ -307,7 +314,8 @@ class Window extends \ManiaLive\Gui\Window {
      * Registers a script to widget instance
      * @param \ManiaLivePlugins\eXpansion\Gui\Structures\Script $script
      */
-    public function registerScript(\ManiaLivePlugins\eXpansion\Gui\Structures\Script $script) {
+    public function registerScript(\ManiaLivePlugins\eXpansion\Gui\Structures\Script $script)
+    {
 	$this->_scripts[] = $script;
     }
 

@@ -58,7 +58,7 @@ class CheckboxScripted extends \ManiaLive\Gui\Control implements \ManiaLivePlugi
 	$this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 4);
 	$this->label->setAlign('left', 'center');
 	$this->label->setTextSize(1);
-	$this->label->setTextColor("222");
+	$this->label->setTextColor("fff");
 	//$this->label->setStyle("TextCardInfoSmall");		                
 	$this->addComponent($this->label);
 

@@ -18,20 +18,23 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $label_rank, $label_nick, $label_wins, $label_score, $label_finish, $label_nbRecords, $label_ptime, $label_lastRec;
     private $widths = array(1,6,2,2,2,2,3,3);
     
-    private $pager;    
+    private $pager, $headerbar;  
     private $items = array();
     
     protected function onConstruct() {
         parent::onConstruct();
         $sizeX = 100;
-        $scaledSizes = Gui::getScaledSize($this->widths, $sizeX/.8);
+        $scaledSizes = Gui::getScaledSize($this->widths, ($sizeX/.8) - 4);
         
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->pager->setPosX(0);
         $this->pager->setPosY(-4);
         $this->mainFrame->addComponent($this->pager);
         
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->headerbar = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround($sizeX, 4.5);	
+	$this->mainFrame->addComponent($this->headerbar);
+	
+	$this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, 4);
         $this->frame->setPosY(0);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
@@ -80,8 +83,10 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     
     public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX()/0.8) - 5);
-        
+        $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX()/0.8) - 8);
+        $this->headerbar->setSize($this->getSizeX()-10, 4.5);
+	$this->headerbar->setPosX(1);
+	
         $this->label_rank->setSizeX($scaledSizes[0]);
         $this->label_nick->setSizeX($scaledSizes[1]);
         $this->label_wins->setSizeX($scaledSizes[2]);
@@ -92,7 +97,7 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->label_lastRec->setSizeX($scaledSizes[7]);
         $this->pager->setSize($this->getSizeX()-4, $this->getSizeY()-7);
         foreach ($this->items as $item)
-            $item->setSizeX($this->getSizeX());
+            $item->setSizeX($this->getSizeX()- 4);
     }
     
     public function onDraw() {
