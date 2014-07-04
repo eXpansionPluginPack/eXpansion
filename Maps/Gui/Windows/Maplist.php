@@ -154,8 +154,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	
 	$this->btn_sortNewest = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(40);
 	$this->btn_sortNewest->setAction($this->createAction(array($this, "updateList"), "addTime"));
-	$this->btn_sortNewest->setText(__("Sort By Add Date", $login));
-	$this->btn_sortNewest->colorize('aaa');
+	$this->btn_sortNewest->setText(__("Sort By Add Date", $login));	
 	$this->searchframe->addComponent($this->btn_sortNewest);
 
 	$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager();
