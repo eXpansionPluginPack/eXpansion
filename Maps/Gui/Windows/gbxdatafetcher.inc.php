@@ -253,7 +253,7 @@ class GBXBaseFetcher
 	{
 		foreach ($attribs as $key => &$val)
 			$val = utf8_decode($val);
-		//echo 'startTag: ' . $name . "\n"; print_r($attribs);
+
 		array_push($this->_parsestack, $name);
 		if ($name == 'DEP') {
 			$this->xmlParsed['DEPS'][] = $attribs;
@@ -265,7 +265,6 @@ class GBXBaseFetcher
 
 	private function charData($parser, $data)
 	{
-		//echo 'charData: ' . $data . "\n";
 		if (count($this->_parsestack) == 3)
 			$this->xmlParsed[$this->_parsestack[1]][$this->_parsestack[2]] = $data;
 		elseif (count($this->_parsestack) > 3)
@@ -274,7 +273,6 @@ class GBXBaseFetcher
 
 	private function endTag($parser, $name)
 	{
-		//echo 'endTag: ' . $name . "\n";
 		array_pop($this->_parsestack);
 	}
 

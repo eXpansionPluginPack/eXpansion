@@ -52,8 +52,6 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener
     function __construct(\Maniaplanet\DedicatedServer\Connection $connection, DbConnection $dbcon, $plugin)
     {
 
-        echo "Init Bill \n";
-
         $this->connection = $connection;
         self::$instance   = $this;
         $this->db         = $dbcon;

@@ -1467,7 +1467,7 @@ Other server might use the same blacklist file!!');
 
         $cmd .= $arg_string;
 
-        echo "Cmd $cmd\n";
+        Helper::log('[ChatAdmin]Restarting manialive with command : '.$cmd);
 
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             if (class_exists("COM")) {

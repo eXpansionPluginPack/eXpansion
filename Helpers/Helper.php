@@ -23,6 +23,9 @@
 namespace ManiaLivePlugins\eXpansion\Helpers;
 
 
+use ManiaLive\Utilities\Console;
+use ManiaLive\Utilities\Logger;
+
 class Helper
 {
 
@@ -36,9 +39,9 @@ class Helper
      */
     public static function getPaths()
     {
-	if(self::$paths == null)
-	    self::$paths = new Paths();
-	return self::$paths;
+        if (self::$paths == null)
+            self::$paths = new Paths();
+        return self::$paths;
     }
 
     /**
@@ -48,9 +51,14 @@ class Helper
      */
     public static function getSingletons()
     {
-	if (self::$singletons == null)
-	    self::$singletons = Singletons::getInstance();
-	return self::$singletons;
+        if (self::$singletons == null)
+            self::$singletons = Singletons::getInstance();
+        return self::$singletons;
+    }
+
+    public static function log($message){
+        Logger::info('[Adm/AdminPanel]'. $message);
+        Console::println('[Adm/AdminPanel]'. $message);
     }
 
 } 

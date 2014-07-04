@@ -235,7 +235,6 @@ class Window extends \ManiaLive\Gui\Window
 	}
 
 	foreach ($this->_scripts as $script) {
-	    // echo "adding script...";
 	    $this->addScriptToMain($script->getDeclarationScript($this, $this));
 	    $this->addScriptToLib($script->getlibScript($this, $this));
 	    $this->addScriptToWhile($script->getWhileLoopScript($this, $this));

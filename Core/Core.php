@@ -319,9 +319,6 @@ EOT;
      */
     function onBeginMap($map, $warmUp, $matchContinuation)
     {
-
-        //echo "Begin Map. Memory usage : ".$this->echo_memory_usage()."\n";
-
         //Check if reload or save of configurations needed
         $this->configManager->check();
 
@@ -404,7 +401,6 @@ EOT;
                             $difs[$varName] = $newDisf;
                     }
                 } else if (!isset($obj2->$varName) || $obj2->$varName != $value) {
-                    // echo $varName . " : " . $obj2->$varName . " -> " . $value;
                     $difs[$varName] = true;
                 }
             }
@@ -519,7 +515,9 @@ EOT;
 
         try {
             $path = Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile;
-            echo $path;
+
+            Helper::log('[Core]Saving server settings to : '.$path);
+
             if (file_exists($path)) {
                 $oldXml = simplexml_load_file($path);
 
@@ -838,7 +836,7 @@ EOT;
 
     public function onPlayerConnect($login, $isSpectator)
     {
-        //echo "Player connected. Memory usage : ".$this->echo_memory_usage()."\n";
+
     }
 
     /**
@@ -850,7 +848,6 @@ EOT;
     public function onPlayerDisconnect($login, $disconnectionReason)
     {
         //Player disconnects
-        //echo "Player Disconnect. Memory usage : ".$this->echo_memory_usage()."\n";
 
         $this->update = true;
         if (array_key_exists($login, self::$netStat)) {
@@ -1185,34 +1182,26 @@ EOT;
         }
         // 2nd have del
         if ($a->finalTime > 0 && $b->finalTime <= 0) {
-            //    echo "2nd have del";
             return -1;
         } // 1st have del
         elseif ($a->finalTime <= 0 && $b->finalTime > 0) {
-            //  echo "1nd have del";
             return 1;
         }
         // only 1st
         if ($b->curCpIndex < 0) {
-            //echo "1st";
             return -1;
         } // only 2nd
         elseif ($a->curCpIndex < 0) {
-            //  echo "2nd";
             return 1;
         } // both ok, so...
         elseif ($a->curCpIndex > $b->curCpIndex) {
-            //   echo "cp a";
             return -1;
         } elseif ($a->curCpIndex < $b->curCpIndex) {
-            //       echo "cp b";
             return 1;
         } // same check, so test time
         elseif ($a->time < $b->time) {
-            //        echo "time";
             return -1;
         } elseif ($a->time > $b->time) {
-            //           echo "tiem";
             return 1;
         } // same check check and time, so test general rank
         elseif ($a->rank == 0 && $b->rank > 0) {
@@ -1225,10 +1214,8 @@ EOT;
             return 1;
         } // same check check, time and rank (only in team or beginning?), so test general scores
         elseif ($a->score > 0 && $b->score > 0 && $a->score > $b->score) {
-            // echo "score";
             return -1;
         } elseif ($a->score > 0 && $b->score > 0 && $a->score < $b->score) {
-            // echo "score";
             return 1;
         } // same check check, time, rank and general score, so test besttime
         elseif ($a->bestTime > 0 && $b->bestTime > 0 && $a->bestTime < $b->bestTime)

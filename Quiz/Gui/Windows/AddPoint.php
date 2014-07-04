@@ -50,7 +50,7 @@ class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 $this->pager->addItem($this->items[$x]);                
             }
         } catch (\Exception $e) {
-            echo $e->getFile() . ":" . $e->getLine();
+            Helper::log("[Quiz/AddPoint]On setData Error : ".$e->getMessage());
         }
     }
 

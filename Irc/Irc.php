@@ -58,7 +58,6 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
 		try {
 		    $this->irc->registerCallbackClass(new $load);
 		} catch (\Exception $ex) {
-		    echo "Error:" . $ex->getMessage() . "\n";
 		    $msg = "Failed to load IrcBot plugin: " . $plugin . ", plugin not found.";
 		    $this->console($msg);
 		    $this->exp_chatSendServerMessage($msg);

@@ -13,6 +13,7 @@ use ManiaLivePlugins\eXpansion\Dedimania\Classes\Request as dediRequest;
 use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as dediEvent;
 use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediMap;
 use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediPlayer;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickListener
@@ -688,7 +689,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function console($message)
     {
-        echo $message . "\n";
+        Helper::log("[DediMania/Connection]$message");
     }
 
     function onInit()

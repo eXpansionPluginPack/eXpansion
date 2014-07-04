@@ -77,7 +77,6 @@ class Communication extends ExpPlugin
 	$info->sendChat($tab, $text);
 	$info->setTimeout(0.5);
 	$info->show();
-	//echo "pm send;" . $login;
     }
 
     public function sendPm($login, $target, $text)

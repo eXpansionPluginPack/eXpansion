@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_PersonalBest;
 
-use \ManiaLive\Event\Dispatcher;
+use ManiaLive\Event\Dispatcher;
 use ManiaLive\PluginHandler\Dependency;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
@@ -13,13 +13,16 @@ use ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Gui\Widgets\PBPanel;
  *
  * @author oliverde8
  */
-class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+{
 
-    public function exp_onInit(){
-	$this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
+    public function exp_onInit()
+    {
+        $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
-    public function exp_onLoad() {
+    public function exp_onLoad()
+    {
         parent::exp_onLoad();
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_PERSONAL_BEST);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
@@ -27,7 +30,8 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_FINISH);
     }
 
-    public function exp_onReady() {
+    public function exp_onReady()
+    {
         $this->enableDedicatedEvents();
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);
@@ -35,13 +39,15 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             $this->onPlayerConnect($player->login, true);
     }
 
-    function onPlayerConnect($login, $isSpectator) {
+    function onPlayerConnect($login, $isSpectator)
+    {
         if (!$isSpectator) {
             $this->displayRecordWidget($login);
         }
     }
 
-    public function onPlayerInfoChanged($playerInfo) {
+    public function onPlayerInfoChanged($playerInfo)
+    {
         $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
         if ($player->spectator == 1) {
             PBPanel::Erase($player->login);
@@ -50,27 +56,31 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         }
     }
 
-    function onRecordsLoaded($record) {
+    function onRecordsLoaded($record)
+    {
         foreach ($this->storage->players as $player)
             $this->redrawWidget($player->login);
         foreach ($this->storage->spectators as $player)
             $this->redrawWidget($player->login);
     }
 
-    public function onPersonalBestRecord(Record $record) {
+    public function onPersonalBestRecord(Record $record)
+    {
         $this->redrawWidget($record->login, $record);
     }
 
-    public function onNewRecord($records, Record $record) {
-	$this->redrawWidget($record->login);
-    }
-    
-    public function onRecordPlayerFinished($login){
-	echo $login."\n";
-	$this->redrawWidget($login);
+    public function onNewRecord($records, Record $record)
+    {
+        $this->redrawWidget($record->login);
     }
 
-    public function redrawWidget($login = null) {
+    public function onRecordPlayerFinished($login)
+    {
+        $this->redrawWidget($login);
+    }
+
+    public function redrawWidget($login = null)
+    {
         $record = null;
         if ($login != null) {
             $record = $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords', 'getCurrentChallangePlayerRecord', $login);
@@ -79,12 +89,13 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     }
 
     /**
-     * 
+     *
      * @param string $login
      * @param Record $record
-     * @return 
+     * @return
      */
-    function displayRecordWidget($login, $record = null) {
+    function displayRecordWidget($login, $record = null)
+    {
         //PBPanel::Erase($login);
 
         if ($login == null)
@@ -113,7 +124,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_FINISH);
-	PBPanel::EraseAll();
+        PBPanel::EraseAll();
     }
 
 }

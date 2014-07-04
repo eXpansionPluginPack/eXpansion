@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Dedimania;
 
 use ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection as DediConnection;
 use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as DediEvent;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 class Dedimania extends DedimaniaAbstract
 {
@@ -49,7 +50,7 @@ class Dedimania extends DedimaniaAbstract
             // map first array entry to player object;
             $player = $player[0];
             if ($this->storage->players[$login]->bestCheckpoints !== $player->bestCheckpoints) {
-                echo "\nplayer cp mismatch!\n";
+                Helper::log("[DediMania]Player CP mismatch");
             }
 
             $this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, $player->bestCheckpoints);
@@ -94,7 +95,6 @@ class Dedimania extends DedimaniaAbstract
                     ) {
                         //print "increasing maxrank! \n";
                         DediConnection::$dediMap->mapMaxRank++;
-                        echo "new maxrank:" . DediConnection::$dediMap->mapMaxRank . " \n";
                     }
                     $this->reArrage($login);
                     // have to recheck if the player is still at the dedi array
@@ -122,7 +122,6 @@ class Dedimania extends DedimaniaAbstract
                 ) {
 
                     DediConnection::$dediMap->mapMaxRank++;
-                    echo "new maxrank:" . DediConnection::$dediMap->mapMaxRank . " \n";
                 }
                 $this->reArrage($login);
 

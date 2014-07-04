@@ -290,7 +290,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
     {
-        echo "Settings Changed : ".$var->getName()."\n";
         if($var->getName() == 'resetRanks' && $var instanceof Boolean){
             if($var->getRawValue()){
                 $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();

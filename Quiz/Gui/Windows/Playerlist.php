@@ -56,7 +56,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 $this->pager->addItem($this->items[$x]);                
             }
         } catch (\Exception $e) {
-            echo $e->getFile() . ":" . $e->getLine();
+            Helper::log("[MusicBox/PlayerList]Set data error : ".$e->getMessage());
         }
     }
 

@@ -16,17 +16,6 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAb
         $this->enableScriptEvents();
     }
 
-    /*  public function LibXmlRpc_BeginRound($number) {
-      echo "script beginRound\n";
-      $this->wasWarmup = $this->connection->getWarmUp();
-      }
-
-      public function LibXmlRpc_BeginMatch($number) {
-      echo "script beginMatch\n";
-      $this->records = array();
-      $this->dedimania->getChallengeRecords();
-      } */
-
     public function LibXmlRpc_BeginMap($number)
     {
         if (!$this->running)
@@ -83,7 +72,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAb
             $player     = $this->storage->getPlayerObject($login);
             $playerinfo = \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo;
             if ($this->storage->currentMap->nbCheckpoints !== count($playerinfo[$login]->checkpoints)) {
-                // echo "\nplayer cp mismatch!\n";
+                Helper::log("[DediMania]Player CP mistmach");
             }
 
             $this->records[$login] = new DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, $playerinfo[$login]->checkpoints);
@@ -128,7 +117,6 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAb
                     ) {
                         //print "increasing maxrank! \n";
                         DediConnection::$dediMap->mapMaxRank++;
-                        echo "new maxrank:" . DediConnection::$dediMap->mapMaxRank . " \n";
                     }
                     $this->reArrage($login);
                     // have to recheck if the player is still at the dedi array
@@ -156,7 +144,6 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAb
                 ) {
 
                     DediConnection::$dediMap->mapMaxRank++;
-                    echo "new maxrank:" . DediConnection::$dediMap->mapMaxRank . " \n";
                 }
                 $this->reArrage($login);
 

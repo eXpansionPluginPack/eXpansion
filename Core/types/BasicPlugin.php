@@ -9,6 +9,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
     use ManiaLivePlugins\eXpansion\Core\Events\PlayerEvent;
     use ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
     use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
+    use ManiaLivePlugins\eXpansion\Helpers\Helper;
     use ManiaLivePlugins\eXpansion\Helpers\Storage;
     use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
@@ -179,7 +180,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             try {
                 $this->exp_onLoad();
             } catch (\Exception $e) {
-                echo "onLoad exception:" . $this->getId() . " -> " . $e->getMessage() . "\n";
+                Helper::log("[BasicPlugin]onLoad exception:" . $this->getId() . " -> " . $e->getMessage() . "\n");
             }
         }
 
@@ -230,7 +231,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             try {
                 $this->exp_onUnload();
             } catch (\Exception $e) {
-                echo "onUnload exception:" . $this->getId() . " -> " . $e->getMessage() . "\n";
+                Helper::log("[BasicPlugin]onUnload exception:" . $this->getId() . " -> " . $e->getMessage() . "\n");
             }
 
             unset(self::$plugins_list[get_class($this)]);
@@ -283,7 +284,6 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                 $this->exp_dir = str_replace("eXpansion", "expansion", $this->exp_dir);
             }
 
-            //echo "directory:" . $this->exp_dir . "\n";
             return $this->exp_dir;
         }
 
@@ -483,7 +483,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                         }
                     }
                 } catch (\Exception $ex) {
-                    echo "Error:" . $ex->getFile() . ":" . $ex->getLine() . "\n" . $ex->getMessage();
+                    Helper::log("[BasicPlugin]onUnload exception:". $ex->getFile() . ":" . $ex->getLine() . "\n" . $ex->getMessage());
                 }
             }
 

@@ -29,7 +29,7 @@ class Additem extends \ManiaLive\Gui\Control {
 	try {
 	    $gbx->processFile($filename);
 	} catch (Exception $e) {
-	    echo $e->getMessage() . "\n";
+        Helper::log("[Maps/Additem]Error processing file : ".$e->getMessage());
 	}
 
 	$this->frame = new \ManiaLive\Gui\Controls\Frame();

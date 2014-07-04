@@ -14,8 +14,6 @@ class Tab extends \ManiaLive\Gui\Control {
     function __construct($idx) {
 	$sizeX = 22;
 	$sizeY = 4;
-	
-	echo $idx;
 
 	$background = new \ManiaLib\Gui\Elements\Quad(22, 5);
 	$background->setStyle("Bgs1");

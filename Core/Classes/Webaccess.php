@@ -481,12 +481,6 @@ class WebaccessUrl
                 if ($query['IsXmlrpc'] === true) {
                     if ($_web_access_post_xmlrpc) {
                         $msg .= "Content-type: application/x-www-form-urlencoded; charset=UTF-8\r\n";
-
-                        //echo "\n=========================== Datas =================================\n\n".$datas."\n";
-                        //$d2 = urlsafe_base64_encode($datas);
-                        //$d3 = urlsafe_base64_decode($d2);
-                        //echo "\n--------------------------- Datas ---------------------------------\n\n".$d3."\n";
-
                         $query['QueryDatas'] = "xmlrpc=" . urlsafe_base64_encode($query['QueryDatas']);
                     } else {
                         $msg .= "Content-type: text/xml; charset=UTF-8\r\n";
