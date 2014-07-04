@@ -6,11 +6,8 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
     protected $bg;
-
     protected $authorTime, $logo;
-
     private $leftFrame, $centerFrame, $rightFrame;
-
     private $environment, $country;
 
     protected function exp_onBeginConstruct()
@@ -37,19 +34,19 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 	$this->rightFrame->setAlign("right", "top");
 	$this->addComponent($this->rightFrame);
 
-	$biglabel = new \ManiaLib\Gui\Elements\Label(45, 4);
+	$biglabel = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(45, 4);
 	$biglabel->setStyle("TextRankingsBig");
 	$biglabel->setTextSize(2);
 	$biglabel->setAlign("center", "center");
 
-	$label = new \ManiaLib\Gui\Elements\Label(45, 4);
+	$label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(45, 4);
 	$label->setStyle("TextRaceMessage");
 	$label->setAlign("center", "center");
 	$label->setTextSize(2);
 	$label->setTextEmboss();
 
 	$nowPlaying = clone $biglabel;
-	$nowPlaying->setText("Now Playing");
+	$nowPlaying->setText(exp_getMessage("Now Playing"));
 	$nowPlaying->setPosition(45, 3);
 	$this->addComponent($nowPlaying);
 

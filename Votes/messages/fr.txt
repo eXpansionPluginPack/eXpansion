@@ -34,3 +34,18 @@ Annuler le Vote
 #vote_failure# $iVote failed!
 #vote_failure# $iLe vote a échoué!
 
+Apply
+#translate# Apply
+
+Cancel
+#translate# Cancel
+
+#variable#%s #vote#initiated restart map vote..
+#translate# #variable#%s #vote#initiated restart map vote..
+
+Vote limit reached.
+#translate# Vote limit reached.
+
+Configure Votes
+#translate# Configure Votes
+

@@ -33,7 +33,7 @@ class WidgetTitle extends \ManiaLive\Gui\Control {
 	$this->addComponent($this->bg);
 
 
-        $this->lbl_title = new \ManiaLib\Gui\Elements\Label($sizeX, $sizeY);
+        $this->lbl_title = new DicoLabel($sizeX, $sizeY);
         $this->lbl_title->setTextSize($config->style_widget_title_lbSize);
         $this->lbl_title->setTextColor($config->style_widget_title_lbColor);
         $this->lbl_title->setStyle($config->style_widget_title_bgStyle);

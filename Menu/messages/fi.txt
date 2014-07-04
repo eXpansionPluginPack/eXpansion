@@ -87,3 +87,24 @@ Päätä kierros
 
 Server Controls
 Palvelimen asetukset
+
+Help
+Ohje
+
+Show Maplist
+Näytä Karttalista
+
+Show Records
+Kartan Ennätykset
+
+Show Players
+Näytä Pelaajat
+
+Add local map
+Lisää paikallinen kartta
+
+Mania-Exchange
+Mania-Exchange
+
+Statistics
+Statistiikat

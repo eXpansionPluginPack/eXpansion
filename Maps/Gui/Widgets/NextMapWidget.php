@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Widgets;
 
-class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
+class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
+{
 
     private $bg;
     private $leftFrame, $rightFrame;
@@ -14,7 +15,8 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     private $map;
 
-    protected function exp_onBeginConstruct() {
+    protected function exp_onBeginConstruct()
+    {
 	$this->setName("Next Map");
 	$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 15);
 	$this->addComponent($this->bg);
@@ -30,19 +32,19 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->rightFrame->setLayout(clone $column);
 	$this->addComponent($this->rightFrame);
 
-	$biglabel = new \ManiaLib\Gui\Elements\Label(40, 4);
+	$biglabel = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(40, 4);
 	$biglabel->setStyle("TextRankingsBig");
 	$biglabel->setTextSize(2);
 	$biglabel->setAlign("left", "center");
 
-	$label = new \ManiaLib\Gui\Elements\Label(40, 4);
+	$label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(40, 4);
 	$label->setStyle("TextRaceMessage");
 	$label->setAlign("left", "center");
 	$label->setTextSize(2);
 	$label->setTextEmboss();
 
 	$nowPlaying = clone $biglabel;
-	$nowPlaying->setText("Next Map");
+	$nowPlaying->setText(exp_getMessage("Next Map"));
 	$nowPlaying->setPosition(30, 3);
 	$nowPlaying->setAlign("center", "center");
 	$this->addComponent($nowPlaying);
@@ -70,26 +72,30 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->rightFrame->addComponent($this->time);
     }
 
-    protected function exp_onEndConstruct() {
+    protected function exp_onEndConstruct()
+    {
 	$this->setSize(60, 15);
     }
 
-    function setAction($action) {
+    function setAction($action)
+    {
 	$this->bg->setAction($action);
     }
 
-    function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map) {
+    function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
+    {
 	$this->map = $map;
 	$this->labelName->setText($this->map->name);
 	$this->labelAuthor->setText($this->map->author);
 	// $this->time->setText($this->map->goldTime);
 	$this->environment->setText($map->environnement);
-	
+
 	if ($map->author == "Nadeo")
 	    $this->country->setImage("http://reaby.kapsi.fi/ml/flags/France.dds", true);
     }
 
-    function destroy() {
+    function destroy()
+    {
 	$this->clearComponents();
 	parent::destroy();
     }

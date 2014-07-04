@@ -155,7 +155,7 @@ class PlainPanel extends Widget {
 
 	$index = 1;
 
-	$this->bgTitle->setText('Local Records');
+	$this->bgTitle->setText(exp_getMessage('Local Records'));
 
 
 	$recsData = "";

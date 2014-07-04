@@ -47,4 +47,9 @@ Correct from
 #quiz#$oPoint à été enlevé à# variable#%s
 
 New question
-Nouvelle Question
+Nouvelle Question#question#%s?
+#translate# #question#%s?
+
+#question#%s?
+#translate# #question#%s?
+

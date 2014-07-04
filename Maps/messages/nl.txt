@@ -166,3 +166,12 @@ Are you sure you want to wish this map to be played
 #admin_error# $iYOu can't wish for a map at the moment.
 #translate# #admin_error# $iYOu can't wish for a map at the moment.
 
+Sort By Add Date
+#translate# Sort By Add Date
+
+Now Playing
+#translate# Now Playing
+
+Next Map
+#translate# Next Map
+

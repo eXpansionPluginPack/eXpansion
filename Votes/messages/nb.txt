@@ -31,3 +31,18 @@ Kanseller avstemming
 #admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
 #admin_action#Admin #variable#%1$s #admin_action# kansellerte avstemmingen!
 
+Apply
+#translate# Apply
+
+Cancel
+#translate# Cancel
+
+#variable#%s #vote#initiated restart map vote..
+#translate# #variable#%s #vote#initiated restart map vote..
+
+Vote limit reached.
+#translate# Vote limit reached.
+
+Configure Votes
+#translate# Configure Votes
+

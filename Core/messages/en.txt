@@ -4,3 +4,18 @@ Apply
 Server Stats
 Server Stats
 
+Global Setting, Saved for all servers sharing this configuration
+Global Setting, Saved for all servers sharing this configuration
+
+Server Setting, Saved for this server only
+Server Setting, Saved for this server only
+
+Save
+Save
+
+Copy
+Copy
+
+Add to Fav's
+Add to Fav's
+

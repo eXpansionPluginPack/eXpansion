@@ -141,8 +141,8 @@ class PlainLivePanel extends PlainPanel
         $this->frame->clearComponents();
 
         $index = 1;
-
-        $this->bgTitle->setText('Live Rankings');
+	
+        $this->bgTitle->setText(exp_getMessage("Live Rankings"));
 
 
         $recsData = "";

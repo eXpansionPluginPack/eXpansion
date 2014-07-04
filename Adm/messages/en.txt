@@ -307,3 +307,15 @@ Autosave All Replays
 Autosave Validation Replays
 Autosave Validation Replays
 
+Set
+Set
+
+eXpansion Settings
+eXpansion Settings
+
+Plugin Management
+Plugin Management
+
+Configure Votes
+Configure Votes
+

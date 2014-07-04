@@ -55,3 +55,6 @@ Le circuit %s $z$s$fff a été ajoute a partir de MX avec succès
 Author
 Auteur
 
+Map is not compatible with current server settings, map not added.
+#translate# Map is not compatible with current server settings, map not added.
+

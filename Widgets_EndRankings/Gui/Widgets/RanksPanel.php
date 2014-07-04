@@ -7,6 +7,7 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     private $frame;
     private $items = array();
     private $bg;
+    private $bgTitle;
     private $quad;
     private $lbl;
 
@@ -18,19 +19,9 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(38, 95);
 	$this->addComponent($this->bg);
 
-	$this->bgTitle = new \ManiaLib\Gui\Elements\Quad();
-	$this->bgTitle->setStyle("UiSMSpectatorScoreBig");
-	$this->bgTitle->setSubStyle("PlayerSlotCenter");
-	$this->bgTitle->setColorize("3af");
+	$this->bgTitle = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle($sizeX, $sizeY);	
+	$this->bgTitle->setText(exp_getMessage("Server Ranks"));
 	$this->addComponent($this->bgTitle);
-
-	$this->lbl_title = new \ManiaLib\Gui\Elements\Label(30, 5);
-	$this->lbl_title->setTextSize(1);
-	$this->lbl_title->setTextColor("fff");
-	$this->lbl_title->setStyle("TextCardScores2");
-	$this->lbl_title->setAlign("center", "center");
-	$this->lbl_title->setText("Server Ranks");
-	$this->addComponent($this->lbl_title);
 
 	$this->frame = new \ManiaLive\Gui\Controls\Frame(4, -5);
 	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(-1));
@@ -43,11 +34,8 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     function onResize($oldX, $oldY) {
 
 	$this->bg->setSize($this->sizeX, $this->sizeY );
-
-	$this->bgTitle->setSize($this->sizeX+2, 4.2);
-	$this->bgTitle->setPosition(0, 0.75);
+	$this->bgTitle->setSize($this->sizeX, 4.2);
 	
-	$this->lbl_title->setPosition(($this->sizeX / 2), -1);
 	parent::onResize($oldX, $oldY);	
     }
 

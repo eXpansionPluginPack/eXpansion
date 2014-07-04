@@ -428,7 +428,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                 }
             } else {
                 try {
-                    $this->connection->chatSendServerMessageToLanguage($msg->getMultiLangArray($args));
+		    $msg->setArgs($args);
+                    $this->connection->chatSendServerMessageToLanguage($msg->getMultiLangArray());
                 } catch (\Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException $ex) {
                     \ManiaLive\Utilities\Console::println(
                         "[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown"

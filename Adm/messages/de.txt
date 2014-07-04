@@ -307,3 +307,15 @@ Alle Replays automatisch speichern
 Autosave Validation Replays
 Validierungs-Replays automatisch speichern
 
+Set
+#translate# Set
+
+eXpansion Settings
+#translate# eXpansion Settings
+
+Plugin Management
+#translate# Plugin Management
+
+Configure Votes
+#translate# Configure Votes
+

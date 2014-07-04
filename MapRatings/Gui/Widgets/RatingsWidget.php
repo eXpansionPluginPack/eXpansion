@@ -4,13 +4,15 @@ namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
+class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
+{
 
     protected $frame, $starFrame, $move, $gauge;
     protected $stars = array();
     public static $parentPlugin;
 
-    protected function exp_onBeginConstruct() {
+    protected function exp_onBeginConstruct()
+    {
 	$this->frame = new \ManiaLive\Gui\Controls\Frame();
 	$this->frame->setAlign("left", "top");
 	// $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(20, 20));
@@ -20,8 +22,8 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$bg->setAction($this->createAction(array(self::$parentPlugin, "showRatingsManager")));
 	$this->addComponent($bg);
 
-	$label = new \ManiaLib\Gui\Elements\Label(34);
-	$label->setText('$s' . 'Map Rating');
+	$label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(34);
+	$label->setText(exp_getMessage('Map Rating'));
 	$label->setTextColor("ffff");
 	$label->setHalign("center");
 	$label->setStyle("TextRaceMessage");
@@ -38,11 +40,13 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	$this->setName("Map Ratings Widget");
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
 	parent::onResize($oldX, $oldY);
     }
 
-    function setStars($number, $total) {
+    function setStars($number, $total)
+    {
 	$this->frame->clearComponents();
 	$login = $this->getRecipient();
 

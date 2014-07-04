@@ -144,6 +144,7 @@ class Widget extends PlainWidget {
 	$this->script->setParam("forceReset", $this->getBoolean(DEBUG));
 
 	parent::onDraw();
+	
     }
 
     public function onResize($oldX, $oldY) {

@@ -30,3 +30,27 @@ Maps with bad rating removed successfully.
 Ratings Manager
 #translate# Ratings Manager
 
+Remove
+#translate# Remove
+
+Close
+#translate# Close
+
+Maps with bad rating removed successfully.
+#translate# Maps with bad rating removed successfully.
+
+Ratings Manager
+#translate# Ratings Manager
+
+Remove
+#translate# Remove
+
+Close
+#translate# Close
+
+Maps with bad rating removed successfully.
+#translate# Maps with bad rating removed successfully.
+
+Ratings Manager
+#translate# Ratings Manager
+

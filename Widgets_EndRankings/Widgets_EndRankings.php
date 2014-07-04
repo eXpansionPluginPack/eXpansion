@@ -14,7 +14,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 	$this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
         $this->enableDedicatedEvents();
     }
-    
+        
     /**
      * displayWidget(string $login)
      * @param string $login

@@ -9,3 +9,9 @@
 
 #dedirecord#Thank You for supporting Dedimania!  Your max record ranking is set at #rank#%s$1#dedirecord#.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..
 #dedirecord#Kiitos, kun tuet Dedimaniaa!  Saat top #rank#%s$1#dedirecord# sijaan saakka ajat talteen!
+#dedirecord#No dedimania records found for the map!
+#translate# #dedirecord#No dedimania records found for the map!
+
+#dedirecord#No dedimania records found for the map!
+#translate# #dedirecord#No dedimania records found for the map!
+

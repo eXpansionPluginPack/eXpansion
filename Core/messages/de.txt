@@ -4,3 +4,18 @@ Anwenden
 Server Stats
 #translate# Server Stats
 
+Global Setting, Saved for all servers sharing this configuration
+#translate# Global Setting, Saved for all servers sharing this configuration
+
+Server Setting, Saved for this server only
+#translate# Server Setting, Saved for this server only
+
+Save
+#translate# Save
+
+Copy
+#translate# Copy
+
+Add to Fav's
+#translate# Add to Fav's
+

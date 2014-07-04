@@ -28,6 +28,7 @@ class Window extends \ManiaLive\Gui\Window {
     private $dIndex = 0;
     private $_name = "window";
     private $style;
+    private $dicoMessages = array();
 
     protected function onConstruct() {
 	parent::onConstruct();
@@ -51,7 +52,7 @@ class Window extends \ManiaLive\Gui\Window {
 
 
 
-	
+
 	$this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
 	$this->_mainWindow->setId("MainWindow");
 	$this->_mainWindow->setStyle("UIConstruction_Buttons");
@@ -61,7 +62,7 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_mainWindow->setScriptEvents(true);
 	$this->_windowFrame->addComponent($this->_mainWindow);
 
-	
+
 
 	$this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, 6);
 	$this->_titlebar->setId("Titlebar");
@@ -77,7 +78,7 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_titlebar2->setSubStyle("CartoucheLine");
 	$this->_titlebar2->setAlign("center", "top");
 	// $this->_windowFrame->addComponent($this->_titlebar2);
-	
+
 	$this->_bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
 	$this->_bg->setStyle("Bgs1");
 	$this->_bg->setSubStyle("BgColorContour");
@@ -85,7 +86,7 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_bg->setAlign("left", "top");
 	$this->_windowFrame->addComponent($this->_bg);
 
-	$this->_title = new \ManiaLib\Gui\Elements\Label(60, 4);
+	$this->_title = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(60, 4);
 	$this->_title->setId("TitlebarText");
 	$this->_title->setStyle("TextRaceMessageBig");
 	$this->_title->setTextColor('fff');
@@ -145,11 +146,11 @@ class Window extends \ManiaLive\Gui\Window {
 	$titlePos = 2.5;
 	$this->_windowFrame->setSize($this->sizeX, $this->sizeY);
 
-	$this->_mainWindow->setSize($this->sizeX, $this->sizeY+2);
+	$this->_mainWindow->setSize($this->sizeX, $this->sizeY + 2);
 	$this->_mainWindow->setPosY(0);
 
 	$this->_bg->setPosY(4);
-	$this->_bg->setSize($this->sizeX, $this->sizeY+6);
+	$this->_bg->setSize($this->sizeX, $this->sizeY + 6);
 	$this->_bg->setOpacity(1);
 
 
@@ -160,8 +161,6 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_title2->setSize($this->sizeX, 4);
 	$this->_title2->setPosition(($this->_title->sizeX / 2), 3.25);
 	$this->_title2->setHalign("left");
-
-
 
 	$this->_titlebar->setSize($this->sizeX, 4);
 	$this->_titlebar->setPosition(0, $titleBarPos);
@@ -185,6 +184,10 @@ class Window extends \ManiaLive\Gui\Window {
     private function detectElements($components) {
 	$buttonScript = null;
 	foreach ($components as $index => $component) {
+	    if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel) {
+		$this->dicoMessages[$component->getTextid()] = $component->getMessages();
+	    }
+
 	    if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter) {
 		$this->addScriptToMain($component->getScript());
 	    }
@@ -223,7 +226,7 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->calledScripts = array();
 
 	$this->detectElements($this->getComponents());
-
+	
 	foreach ($this->calledScripts as $script) {
 	    $this->addScriptToMain($script->getEndScript($this));
 	    $script->reset();
@@ -256,6 +259,9 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->xml->setContent($this->script->getDeclarationScript($this, $this->xml));
 
 	$this->addComponent($this->xml);
+	
+	$dico = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dico($this->dicoMessages);
+	\ManiaLive\Gui\Manialinks::appendXML($dico->getXml());
     }
 
     function setText($text) {

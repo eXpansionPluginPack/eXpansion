@@ -86,4 +86,45 @@ End Round
 End Round
 
 Server Controls
-Server Controls
+Server ControlsHelp
+Help
+
+Show Maplist
+Show Maplist
+
+Show Records
+Show Records
+
+Show Players
+Show Players
+
+Add local map
+Add local map
+
+Mania-Exchange
+Mania-Exchange
+
+Statistics
+Statistics
+
+Help
+Help
+
+Show Maplist
+Show Maplist
+
+Show Records
+Show Records
+
+Show Players
+Show Players
+
+Add local map
+Add local map
+
+Mania-Exchange
+Mania-Exchange
+
+Statistics
+Statistics
+

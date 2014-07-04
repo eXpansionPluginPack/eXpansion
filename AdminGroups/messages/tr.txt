@@ -100,3 +100,6 @@ Permission_
 #admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
 #translate# #admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
 
+Select
+#translate# Select
+

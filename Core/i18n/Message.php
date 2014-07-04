@@ -7,7 +7,8 @@ namespace ManiaLivePlugins\eXpansion\Core\i18n;
  *
  * @author oliverde8
  */
-class Message {
+class Message
+{
 
     public static $defaultLanguage = "en";
 
@@ -28,36 +29,40 @@ class Message {
      */
     private $args = array();
 
-    function __construct($orginalMessage) {
-        $this->originalMessage = $orginalMessage;
+    function __construct($orginalMessage)
+    {
+	$this->originalMessage = $orginalMessage;
     }
 
-    public function addLanguageMessage($lang, $message) {
-        $this->lmessages[$lang] = $message;
+    public function addLanguageMessage($lang, $message)
+    {
+	$this->lmessages[$lang] = $message;
     }
 
-    public function setArgs(array $args) {
-        $this->args = $args;
+    public function setArgs(array $args)
+    {
+	$this->args = $args;
     }
 
     /**
      * getMultiLangArray()
      * Returns a multilanguage message array to be used with Connection->ChatSendServerMessageToLanguage();
-     * @param Array $args 
+     * if message contains arguments, please use $msg->setArgs before calling this function
      * @return Strign[String] $out Array[] = array("Lang" => string, "Text" => string)
      */
-    public function getMultiLangArray($args) {
-        $temp = $this->lmessages;
-        $temp[] = $this->originalMessage;
-        $out = array();
+    public function getMultiLangArray()
+    {
+	$temp = $this->lmessages;
+	$temp["en"] = $this->originalMessage;
+	$out = array();
 
-        foreach ($temp as $lang => $msg) {
-            $arrgs = $args;
-            array_unshift($arrgs, $msg);
-            $text = call_user_func_array('sprintf', $arrgs);
-            $out[] = array("Lang" => lcfirst($lang), "Text" => \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text));
-        }			
-        return $out;
+	foreach ($temp as $lang => $msg) {
+	    $arrgs = $this->args;
+	    array_unshift($arrgs, $msg);
+	    $text = call_user_func_array('sprintf', $arrgs);
+	    $out[] = array("Lang" => lcfirst($lang), "Text" => \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text));
+	}
+	return $out;
     }
 
     /**
@@ -66,11 +71,12 @@ class Message {
      * @param string $lang
      * @return string 
      */
-    public function getParsedMessage($lang = null) {
-        $arrgs = $this->args;
-        array_unshift($arrgs, $this->getMessage($lang));
-        $text = call_user_func_array('sprintf', $arrgs);
-        return \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text);
+    public function getParsedMessage($lang = null)
+    {
+	$arrgs = $this->args;
+	array_unshift($arrgs, $this->getMessage($lang));
+	$text = call_user_func_array('sprintf', $arrgs);
+	return \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text);
     }
 
     /**
@@ -78,18 +84,20 @@ class Message {
      * @param string $lang language code
      * @return string
      */
-    public function getMessage($lang = null) {
-        if ($lang == null) {
-            return isset($this->lmessages[self::$defaultLanguage]) ? $this->lmessages[self::$defaultLanguage] : $this->originalMessage;
-        } else if (isset($this->lmessages[$lang]))
-            return $this->lmessages[$lang];
-        else {
-            return isset($this->lmessages[self::$defaultLanguage]) ? $this->lmessages[self::$defaultLanguage] : $this->originalMessage;
-        }
+    public function getMessage($lang = null)
+    {
+	if ($lang == null) {
+	    return isset($this->lmessages[self::$defaultLanguage]) ? $this->lmessages[self::$defaultLanguage] : $this->originalMessage;
+	} else if (isset($this->lmessages[$lang]))
+	    return $this->lmessages[$lang];
+	else {
+	    return isset($this->lmessages[self::$defaultLanguage]) ? $this->lmessages[self::$defaultLanguage] : $this->originalMessage;
+	}
     }
 
-    public function __toString() {
-        return "string: " . $this->originalMessage;
+    public function __toString()
+    {
+	return $this->originalMessage;
     }
 
 }

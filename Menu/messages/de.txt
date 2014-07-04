@@ -88,3 +88,24 @@ Runde beenden
 Server Controls
 Server-Steuerung
 
+Help
+#translate# Help
+
+Show Maplist
+#translate# Show Maplist
+
+Show Records
+#translate# Show Records
+
+Show Players
+#translate# Show Players
+
+Add local map
+#translate# Add local map
+
+Mania-Exchange
+#translate# Mania-Exchange
+
+Statistics
+#translate# Statistics
+

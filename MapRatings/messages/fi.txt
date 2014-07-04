@@ -18,18 +18,18 @@ votes
 
 Map Rating
 Kartan arvio
+
 Remove
-#translate# Remove
+Poista
 
 Close
-#translate# Close
+Sulje
 
 #rank#$iVote Registered!!
-#translate# #rank#$iVote Registered!!
+#rank#$iArvio rekisteröity!!
 
 Maps with bad rating removed successfully.
-#translate# Maps with bad rating removed successfully.
+Kartat joilla oli huono arvio on nyt poistettu.
 
 Ratings Manager
-#translate# Ratings Manager
-
+Kartta-arvioiden hallinta

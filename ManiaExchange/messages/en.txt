@@ -55,3 +55,6 @@ Map %s $z$s$fff added from MX Succesfully
 Author
 Author
 
+Map is not compatible with current server settings, map not added.
+Map is not compatible with current server settings, map not added.
+

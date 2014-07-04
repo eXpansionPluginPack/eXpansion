@@ -31,3 +31,18 @@ Peruuta äänestys
 #admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
 #admin_action#Admin #variable#%1$s #admin_action# hylkäsi äänestyksen!
 
+Apply
+Käytä
+
+Cancel
+Peruuta
+
+#variable#%s #vote#initiated restart map vote..
+#variable#%s #vote#pyytää äänestämään: pelaataanko kartta uudelleen? F1 = kyllä, F2 = ei
+
+Vote limit reached.
+Äänetyksen raja saavutettu.
+
+Configure Votes
+Säädä Äänestyksiä
+

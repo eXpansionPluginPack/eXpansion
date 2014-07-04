@@ -31,3 +31,18 @@ Cancel Vote
 #admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
 #admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
 
+Apply
+Apply
+
+Cancel
+Cancel
+
+#variable#%s #vote#initiated restart map vote..
+#variable#%s #vote#initiated restart map vote..
+
+Vote limit reached.
+Vote limit reached.
+
+Configure Votes
+Configure Votes
+
