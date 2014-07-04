@@ -57,8 +57,8 @@ class Helper
     }
 
     public static function log($message){
-        Logger::info('[Adm/AdminPanel]'. $message);
-        Console::println('[Adm/AdminPanel]'. $message);
+        Logger::info('[eXpansion][Adm/AdminPanel]'. $message);
+        Console::println('[eXpansion][Adm/AdminPanel]'. $message);
     }
 
 } 
