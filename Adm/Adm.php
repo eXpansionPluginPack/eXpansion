@@ -155,9 +155,8 @@ class Adm extends ExpPlugin {
 
     public function serverControlMain($login) {
 	if (AdminGroups::hasPermission($login, Permission::server_controlPanel)) {
-	    $window = ServerControlMain::Create($login);
-	    $window->setTitle(__('Server Management', $login));
-	    $window->setSize(120, 20);
+	    $window = ServerControlMain::Create($login);	    
+	    $window->setSize(120, 20);	    
 	    $window->show();
 	}
     }

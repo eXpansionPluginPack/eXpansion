@@ -31,13 +31,8 @@ class DbTable extends \ManiaLive\Gui\Control {
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
-        $this->checkBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 40);
+        $this->checkBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 1);
         $this->frame->addComponent($this->checkBox);
-
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        //$this->frame->addComponent($spacer);
 
         $this->label = new \ManiaLib\Gui\Elements\Label(120, 4);
         $this->label->setAlign('left', 'center');

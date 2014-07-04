@@ -74,7 +74,7 @@ Tämä komento edellyttää vähintään yhtä valitsinta
 #admin_action#Pelaaja #variable# %1$s #admin_action#on lisätty ylläpitoryhmään #variable#%2$s
 
 #admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
-##admin_error#Olet #variable#%1$s #admin_error#Et voi poistaa itseäsi ryhmästä
+#admin_error#Olet #variable#%1$s #admin_error#Et voi poistaa itseäsi ryhmästä
 
 #admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
 #admin_action#Player : #variable#%1$s #admin_action#on poistettu ylläpitoryhmästä #variable#%2$s
@@ -120,9 +120,6 @@ Oikeus_
 
 #admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s
 #admin_action#Virhe lisättäessä pelaajaa #variable# %1$s #admin_action# ylläpitoryhmään #variable#%2$s
-Select
-#translate# Select
 
 Select
-#translate# Select
-
+Valitse

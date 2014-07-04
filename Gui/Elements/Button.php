@@ -11,7 +11,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
     protected $label;
     protected $labelDesc;
     protected $activeFrame;
-    protected $backGround, $backGround2;
+    private $backGround, $backGround2;
     protected $backGroundDesc;
     protected $frameDescription;
     protected $icon;
@@ -180,8 +180,9 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
      * @param string $value 4-digit RGBa code
      */
     function colorize($value) {
-	$this->label->setTextColor($value);
-	//$this->backGround->setModulateColor($value);
+	$this->label->setTextColor("fff");
+	$this->backGround->setSubStyle("BgButtonMediumSpecial");
+	$this->backGround->setModulateColor($value);
     }
 
     /**

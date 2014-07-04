@@ -57,7 +57,9 @@ class Window extends \ManiaLive\Gui\Window {
 	$this->_mainWindow->setId("MainWindow");
 	$this->_mainWindow->setStyle("UIConstruction_Buttons");
 	$this->_mainWindow->setSubStyle("BgTools");
-	$this->_mainWindow->setOpacity(0.95);
+//	$this->_mainWindow->setStyle("Bgs1");
+	//$this->_mainWindow->setSubStyle("BgWindow4");
+	$this->_mainWindow->setOpacity(0.93);
 	//$this->_mainWindow->setBgColor("eee");
 	$this->_mainWindow->setScriptEvents(true);
 	$this->_windowFrame->addComponent($this->_mainWindow);

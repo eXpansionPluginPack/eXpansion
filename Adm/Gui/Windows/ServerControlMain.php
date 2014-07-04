@@ -29,6 +29,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	parent::onConstruct();
 	$login = $this->getRecipient();
 
+	$this->setTitle(__('Server Management', $login));
 	$btnX = 40;
 	$btnY = 5.5;
 
@@ -117,7 +118,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    $this->frame->addComponent($btn);
 	}
 
-	$this->mainFrame->addComponent($this->frame);
+	$this->mainFrame->addComponent($this->frame);	
     }
 
     function onResize($oldX, $oldY) {

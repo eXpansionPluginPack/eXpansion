@@ -1,0 +1,5 @@
+Start
+Käynnistä
+
+Stop
+Pysäytä

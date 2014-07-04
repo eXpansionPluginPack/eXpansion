@@ -306,27 +306,15 @@ Tallenna kaikki ajot (replay)
 
 Autosave Validation Replays
 Tallenna Validaatio ajot (replay)
-Set
-#translate# Set
-
-eXpansion Settings
-#translate# eXpansion Settings
-
-Plugin Management
-#translate# Plugin Management
-
-Configure Votes
-#translate# Configure Votes
 
 Set
-#translate# Set
+Aseta
 
 eXpansion Settings
-#translate# eXpansion Settings
+eXpansionin Asetukset
 
 Plugin Management
-#translate# Plugin Management
+Plugin Asetukset
 
 Configure Votes
-#translate# Configure Votes
-
+Äänestyksen Ylläpito

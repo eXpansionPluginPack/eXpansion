@@ -1,0 +1,33 @@
+Start
+Start
+
+Stop
+Stop
+
+This plugin is running on the server at the moment
+This plugin is running on the server at the moment
+
+This plugin isn't compatible with game mode or title. It is therefor pending
+This plugin isn't compatible with game mode or title. It is therefor pending
+
+This plugin isn't running
+This plugin isn't running
+
+This plugin is compatible with the current Title
+This plugin is compatible with the current Title
+
+This plugin isn't compatible with the current Title
+This plugin isn't compatible with the current Title
+
+This plugin is compatible with the current Game mode
+This plugin is compatible with the current Game mode
+
+This plugin isn't compatible with the current Game mode
+This plugin isn't compatible with the current Game mode
+
+This plugin is is compatible with current installation
+This plugin is is compatible with current installation
+
+
+
+
