@@ -1465,8 +1465,6 @@ Other server might use the same blacklist file!!');
             $arg_string.=" ";
         }
 
-        print_r($args);
-
         $cmd .= $arg_string;
 
         echo "Cmd $cmd\n";
@@ -1483,8 +1481,7 @@ Other server might use the same blacklist file!!');
         else {
             exec("cd " . $path->getRoot(true) . "; " . $cmd . " >> /tmp/manialive.log 2>&1 &");
         }
-        $this->console("eXpansion will restart!!This instance is stopping now!!"
-        );
+        $this->console("eXpansion will restart!!This instance is stopping now!!");
         exit();
     }
 

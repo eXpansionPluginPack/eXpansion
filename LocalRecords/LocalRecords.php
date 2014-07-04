@@ -1350,7 +1350,6 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     arsort($sortable_array);
                     break;
             }
-            // print_r($sortable_array);
             foreach ($sortable_array as $k => $v) {
                 $new_array[$k] = $array[$k];
             }

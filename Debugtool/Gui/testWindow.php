@@ -13,10 +13,10 @@ class testWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     protected function onConstruct() {
 	parent::onConstruct();
-	
+
 	$frame = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
 	$frame->setSize(120,40);
-	
+
 	for ($x = 0; $x < 150; $x++) {
 
 	    $this->entries[$x] = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("e" . $x);
@@ -32,7 +32,7 @@ class testWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$button->setAction($this->createAction(array($this, "submit")));
 	$this->addComponent($button);
 
-	
+
 	$this->setSize(120,60);
 	$this->setTitle("testwidnow");
     }

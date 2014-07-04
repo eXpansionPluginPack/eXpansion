@@ -140,7 +140,6 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	try {
 	    $managedVotes = $this->getVotes();
 
-	    //print_r($managedVotes);
 	    // if vote is not managed...
 	    if (!array_key_exists('RestartMap', $managedVotes))
 		return;
@@ -151,7 +150,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 
 	    $this->voter = $login;
 	    $vote = $managedVotes['RestartMap'];
-	    $this->debug("[exp\Votes] Calling Restart (queue) vote..");
+	    $this->debug("[exp\\Votes] Calling Restart (queue) vote..");
 	    $vote->callerLogin = $this->voter;
 	    $vote->cmdName = "Replay";
 	    $vote->cmdParam = array("the current map");

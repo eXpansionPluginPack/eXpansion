@@ -129,8 +129,6 @@ class IrcBot {
 	$needle = "/^(?:[:](\S+) )?(\S+)(?: (?!:)(.+?))?(?: [:](.+))?$/";
 	preg_match($needle, $data, $messages);
 
-	//print_r($messages);
-
 	switch ($messages[2]) {
 	    case "221":
 	    case "266":

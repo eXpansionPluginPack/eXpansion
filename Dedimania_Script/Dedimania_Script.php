@@ -78,8 +78,6 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAb
             }
         }
 
-
-        //print_r($this->rankings);
         // if current map doesn't have records, create one.
         if (count($this->records) == 0) {
             $player     = $this->storage->getPlayerObject($login);

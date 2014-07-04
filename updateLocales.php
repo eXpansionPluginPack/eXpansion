@@ -21,8 +21,6 @@ foreach ($iterator as $dir) {
 	    if (!array_key_exists($message, $newmessages))
 		$newmessages[$message] = $message;
 	}
-	//print_r($newmessages);
-
 
 	$localefiles = glob($messagedir . DIRECTORY_SEPARATOR . "*.txt");
 	foreach ($localefiles as $localefile) {

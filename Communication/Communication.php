@@ -125,8 +125,6 @@ class Communication extends ExpPlugin
 
     public function guiSendMessage($login, $entries)
     {
-	//echo "login: '" . $login . "' said:" . $entries['chatEntry'] . "\n";
-	//print_r($entries);
 	$target = $entries['replyTo'];
 
 	$this->sendPm($login, $target, $entries['chatEntry']);

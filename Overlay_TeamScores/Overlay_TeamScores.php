@@ -95,7 +95,6 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $output = curl_exec($ch);
         curl_close($ch);
         $xml = simplexml_load_string($output);
-        // print_r($xml);
         $this->teams[$team]->name = $xml->name;
         $this->showWidget();
     }

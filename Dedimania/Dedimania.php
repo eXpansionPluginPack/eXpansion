@@ -45,7 +45,6 @@ class Dedimania extends DedimaniaAbstract
         // if current map doesn't have records, create one.
         if (count($this->records) == 0) {
             $player = $this->connection->getCurrentRankingForLogin($login);
-            //print_r($player);
 
             // map first array entry to player object;
             $player = $player[0];

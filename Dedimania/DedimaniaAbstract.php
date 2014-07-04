@@ -143,20 +143,6 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         $this->dedimania->checkSession();
     }
 
-    public function test($login)
-    {
-        echo " login\n";
-        $ranks = $this->connection->getCurrentRankingForLogin($login);
-        print_r($ranks);
-
-        echo " all\n";
-        $ranks = $this->connection->getCurrentRanking(-1, 0);
-        print_r($ranks);
-
-
-        print_r($this->connection->getServerPackMask());
-    }
-
     public function onPlayerConnect($login, $isSpectator)
     {
         if (!$this->running)
