@@ -4,7 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class Inputbox extends \ManiaLive\Gui\Control {
+class Inputbox extends \ManiaLive\Gui\Control
+{
 
     private $label;
     private $button;
@@ -13,7 +14,8 @@ class Inputbox extends \ManiaLive\Gui\Control {
     private $border;
     private $mysizeX;
 
-    function __construct($name, $sizeX = 35, $editable = true) {
+    function __construct($name, $sizeX = 35, $editable = true)
+    {
         $config = Config::getInstance();
         $this->sizeX = $sizeX;
         $this->name = $name;
@@ -22,32 +24,35 @@ class Inputbox extends \ManiaLive\Gui\Control {
 
         $this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
         $this->label->setAlign('left', 'center');
-        $this->label->setTextSize(1);	
+        $this->label->setTextSize(1);
         $this->label->setStyle("TextValueSmallSm");
-	$this->label->setScale(0.9);
-	$this->label->setTextEmboss();
+        $this->label->setScale(0.9);
+        $this->label->setTextEmboss();
         $this->addComponent($this->label);
 
-        $this->border = new \ManiaLib\Gui\Elements\Quad();        
+        $this->border = new \ManiaLib\Gui\Elements\Quad();
         $this->border->setAlign("left", "center");
         $this->border->setStyle("Bgs1InRace");
         $this->border->setSubStyle("BgColorContour");
+        $this->border->setBgcolor('66a');
         $this->addComponent($this->border);
 
 
         $this->setSize($sizeX + 2, 12);
     }
 
-    protected function onResize($oldX, $oldY) {
+    protected function onResize($oldX, $oldY)
+    {
         // parent::onResize($oldX, $oldY);
         $this->button->setSize($this->getSizeX(), 4);
         $this->border->setSize($this->getSizeX() + 1, 5);
-	$this->border->setPosX(-0.8);
+        $this->border->setPosX(-0.8);
         $this->label->setSize($this->getSizeX(), 3);
         $this->label->setPosition(0, 4);
     }
 
-    protected function createButton($editable) {
+    protected function createButton($editable)
+    {
         $text = "";
         if ($this->button != null) {
             $this->removeComponent($this->button);
@@ -62,7 +67,7 @@ class Inputbox extends \ManiaLive\Gui\Control {
             $this->button->setScriptEvents(true);
             $this->button->setStyle("TextValueMedium");
             $this->button->setFocusAreaColor1("eee6");
-            $this->button->setFocusAreaColor2("3af6");            
+            $this->button->setFocusAreaColor2("3af6");
         } else {
             $this->button = new \ManiaLib\Gui\Elements\Label($this->sizeX, 5);
             $this->button->setText($text);
@@ -74,7 +79,8 @@ class Inputbox extends \ManiaLive\Gui\Control {
         $this->addComponent($this->button);
     }
 
-    public function setEditable($state) {
+    public function setEditable($state)
+    {
         if ($state && $this->button instanceof \ManiaLib\Gui\Elements\Label) {
             $this->createButton($state);
         } elseif (!$state && $this->button instanceof \ManiaLib\Gui\Elements\Entry) {
@@ -82,42 +88,50 @@ class Inputbox extends \ManiaLive\Gui\Control {
         }
     }
 
-    function getLabel() {
+    function getLabel()
+    {
         return $this->label->getText();
     }
 
-    function setLabel($text) {
+    function setLabel($text)
+    {
         $this->label->setText('$3af' . $text);
     }
 
-    function getText() {
+    function getText()
+    {
         if ($this->button instanceof \ManiaLib\Gui\Elements\Entry)
             return $this->button->getDefault();
         else
             return $this->button->getText();
     }
 
-    function setText($text) {
+    function setText($text)
+    {
         if ($this->button instanceof \ManiaLib\Gui\Elements\Entry)
             $this->button->setDefault($text);
         else
             $this->button->setText($text);
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->button->getName();
     }
 
-    function setName($text) {
-        $this->button->setName($name);
+    function setName($text)
+    {
+        $this->button->setName($text);
     }
 
-    function setId($id) {
+    function setId($id)
+    {
         $this->button->setId($id);
         $this->button->setScriptEvents();
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    {
         parent::onIsRemoved($target);
         parent::destroy();
     }
