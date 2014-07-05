@@ -1,0 +1,4 @@
+declare speedLabel = (Page.GetFirstChild("speed") as CMlLabel);
+declare eXp_lastClockUpdate = Now;
+declare Vec3 eXp_lastPos;
+declare needleQuad = (Page.GetFirstChild("needle") as CMlQuad);

@@ -1,0 +1,20 @@
+if( (Now - eXp_lastClockUpdate) >= 50 ){
+if (GUIPlayer == Null) continue;
+
+//declare Distance = MathLib::Distance(InputPlayer.Position, eXp_lastPos);
+//declare Real Speed = (Distance / 250) * 3600;
+
+declare Real Speed = GUIPlayer.Speed*3.6;
+if (Speed <= 1.0) {
+Speed = 0.;
+}
+
+
+speedLabel.Value = "" ^ MathLib::NearestInteger(Speed);
+needleQuad.RelativeRotation = (Speed/1040)*(360-28.8);
+
+//eXp_lastPos = InputPlayer.Position;
+eXp_lastClockUpdate = Now;
+
+}
+
