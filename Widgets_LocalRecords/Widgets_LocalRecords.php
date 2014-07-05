@@ -54,6 +54,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     {
 
         if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords')) {
+			/** @var LocalPanel $localRecs */
             $localRecs = LocalPanel::GetAll();
             if ($login == null) {
                 //Gui\Widgets\LocalPanel::EraseAll();
