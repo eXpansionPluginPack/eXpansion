@@ -183,9 +183,10 @@ class Adm extends ExpPlugin
         }
     }
 
+
     public function showPluginManagement($login)
     {
-        if (AdminGroups::hasPermission($login, Permission::server_votes)) {
+        if (AdminGroups::hasPermission($login, Permission::expansion_pluginStartStop)) {
             if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad'))
                 $this->callPublicMethod('\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad', 'showPluginsWindow', $login);
         }

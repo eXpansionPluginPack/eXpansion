@@ -2,140 +2,138 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
-use ManiaLive\PluginHandler\PluginHandler;
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
-use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
-use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Helpers\Storage;
 
 /**
  * Server Control panel Main window
- * 
+ *
  * @author Petri
  */
-class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     /** @var \ManiaLivePlugins\eXpansion\Adm\Adm */
     public static $mainPlugin;
     private $frame;
     private $actions;
 
-    function onConstruct() {
-	parent::onConstruct();
-	$login = $this->getRecipient();
 
-	$this->setTitle(__('Server Management', $login));
-	$btnX = 40;
-	$btnY = 5.5;
+    function onConstruct()
+    {
+        parent::onConstruct();
+        $login = $this->getRecipient();
 
-	$this->frame = new \ManiaLive\Gui\Controls\Frame(0, -1);
-	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow(120, $btnY + 2));
+        $this->setTitle(__('Server Management', $login));
+        $btnX = 40;
+        $btnY = 5.5;
 
-	$this->actions = new \stdClass();
-	$this->actions->serverOptions = $this->createAction(array(self::$mainPlugin, "serverOptions"));
-	$this->actions->gameOptions = $this->createAction(array(self::$mainPlugin, "gameOptions"));
-	$this->actions->matchSettings = $this->createAction(array(self::$mainPlugin, "matchSettings"));
-	$this->actions->serverManagement = $this->createAction(array(self::$mainPlugin, "serverManagement"));
-	$this->actions->adminGroups = $this->createAction(array(self::$mainPlugin, "adminGroups"));
-	$this->actions->scriptSettings = $this->createAction(array(self::$mainPlugin, "scriptSettings"));
-	$this->actions->forceScores = $this->createAction(array(self::$mainPlugin, "forceScores"));
-	$this->actions->roundPoints = $this->createAction(array(self::$mainPlugin, "roundPoints"));
-	$this->actions->dbTools = $this->createAction(array(self::$mainPlugin, "dbTools"));
-	$this->actions->expSettings = $this->createAction(array(self::$mainPlugin, "showExpSettings"));
-	$this->actions->votesConfig = $this->createAction(array(self::$mainPlugin, "showVotesConfig"));
-	$this->actions->pluginManagement = $this->createAction(array(self::$mainPlugin, "showPluginManagement"));
+        $this->frame = new \ManiaLive\Gui\Controls\Frame(0, -1);
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow(120, $btnY + 2));
+
+        $this->actions = new \stdClass();
+        $this->actions->serverOptions = $this->createAction(array(self::$mainPlugin, "serverOptions"));
+        $this->actions->gameOptions = $this->createAction(array(self::$mainPlugin, "gameOptions"));
+        $this->actions->matchSettings = $this->createAction(array(self::$mainPlugin, "matchSettings"));
+        $this->actions->serverManagement = $this->createAction(array(self::$mainPlugin, "serverManagement"));
+        $this->actions->adminGroups = $this->createAction(array(self::$mainPlugin, "adminGroups"));
+        $this->actions->scriptSettings = $this->createAction(array(self::$mainPlugin, "scriptSettings"));
+        $this->actions->forceScores = $this->createAction(array(self::$mainPlugin, "forceScores"));
+        $this->actions->roundPoints = $this->createAction(array(self::$mainPlugin, "roundPoints"));
+        $this->actions->dbTools = $this->createAction(array(self::$mainPlugin, "dbTools"));
+        $this->actions->expSettings = $this->createAction(array(self::$mainPlugin, "showExpSettings"));
+        $this->actions->votesConfig = $this->createAction(array(self::$mainPlugin, "showVotesConfig"));
+        $this->actions->pluginManagement = $this->createAction(array(self::$mainPlugin, "showPluginManagement"));
 
 
+        $btn = new myButton($btnX, $btnY);
+        $btn->setText(__("Deciated Control", $login));
+        $btn->setAction($this->actions->serverManagement);
+        $this->frame->addComponent($btn);
 
-	$btn = new myButton($btnX, $btnY);
-	$btn->setText(__("Deciated Control", $login));
-	$btn->setAction($this->actions->serverManagement);
-	$this->frame->addComponent($btn);
+        $btn = new myButton($btnX, $btnY);
+        $btn->setText(__("Server options", $login));
+        $btn->setAction($this->actions->serverOptions);
+        $this->frame->addComponent($btn);
 
-	$btn = new myButton($btnX, $btnY);
-	$btn->setText(__("Server options", $login));
-	$btn->setAction($this->actions->serverOptions);
-	$this->frame->addComponent($btn);
+        if (!$this->exp_isRelay()) {
+            $btn = new myButton($btnX, $btnY);
+            $btn->setText(__("Game options", $login));
+            $btn->setAction($this->actions->gameOptions);
+            $this->frame->addComponent($btn);
+        }
 
-	if (!$this->exp_isRelay()) {
-	    $btn = new myButton($btnX, $btnY);
-	    $btn->setText(__("Game options", $login));
-	    $btn->setAction($this->actions->gameOptions);
-	    $this->frame->addComponent($btn);
-	}
+        $btn = new myButton($btnX, $btnY);
+        $btn->setText(__("Admin Groups", $login));
+        $btn->setAction($this->actions->adminGroups);
+        $this->frame->addComponent($btn);
 
-	$btn = new myButton($btnX, $btnY);
-	$btn->setText(__("Admin Groups", $login));
-	$btn->setAction($this->actions->adminGroups);
-	$this->frame->addComponent($btn);
+        if (!$this->exp_isRelay()) {
+            $btn = new myButton($btnX, $btnY);
+            $btn->setText(__("Match settings", $login));
+            $btn->setAction($this->actions->matchSettings);
+            $this->frame->addComponent($btn);
 
-	if (!$this->exp_isRelay()) {
-	    $btn = new myButton($btnX, $btnY);
-	    $btn->setText(__("Match settings", $login));
-	    $btn->setAction($this->actions->matchSettings);
-	    $this->frame->addComponent($btn);
+            $btn = new myButton($btnX, $btnY);
+            $btn->setText(__("ScriptMode settings", $login));
+            $btn->setAction($this->actions->scriptSettings);
+            $this->frame->addComponent($btn);
 
-	    $btn = new myButton($btnX, $btnY);
-	    $btn->setText(__("ScriptMode settings", $login));
-	    $btn->setAction($this->actions->scriptSettings);
-	    $this->frame->addComponent($btn);
+            $btn = new myButton($btnX, $btnY);
+            $btn->setText(__("Force Scores", $login));
+            $btn->setAction($this->actions->forceScores);
+            $this->frame->addComponent($btn);
 
-	    $btn = new myButton($btnX, $btnY);
-	    $btn->setText(__("Force Scores", $login));
-	    $btn->setAction($this->actions->forceScores);
-	    $this->frame->addComponent($btn);
+            $btn = new myButton($btnX, $btnY);
+            $btn->setText(__("Round points", $login));
+            $btn->setAction($this->actions->roundPoints);
+            $this->frame->addComponent($btn);
+        }
 
-	    $btn = new myButton($btnX, $btnY);
-	    $btn->setText(__("Round points", $login));
-	    $btn->setAction($this->actions->roundPoints);
-	    $this->frame->addComponent($btn);
-	}
+        $btnDb = new myButton($btnX, $btnY);
+        $btnDb->setText(__("Database tools", $login));
+        $btnDb->setAction($this->actions->dbTools);
+        $this->frame->addComponent($btnDb);
 
-	$btnDb = new myButton($btnX, $btnY);
-	$btnDb->setText(__("Database tools", $login));
-	$btnDb->setAction($this->actions->dbTools);
-	$this->frame->addComponent($btnDb);
+        $btnDb = new myButton($btnX, $btnY);
+        $btnDb->setText(__("eXpansion Settings", $login));
+        $btnDb->setAction($this->actions->expSettings);
+        $this->frame->addComponent($btnDb);
 
-	$btnDb = new myButton($btnX, $btnY);
-	$btnDb->setText(__("eXpansion Settings", $login));
-	$btnDb->setAction($this->actions->expSettings);
-	$this->frame->addComponent($btnDb);
+        $btnDb = new myButton($btnX, $btnY);
+        $btnDb->setText(__("Plugin Management", $login));
+        $btnDb->setAction($this->actions->pluginManagement);
+        $this->frame->addComponent($btnDb);
 
-	$btnDb = new myButton($btnX, $btnY);
-	$btnDb->setText(__("Plugin Management", $login));
-	$btnDb->setAction($this->actions->pluginManagement);
-	$this->frame->addComponent($btnDb);
+        if (!$this->exp_isRelay()) {
+            $btn = new myButton($btnX, $btnY);
+            $btn->setText(__("Configure Votes", $login));
+            $btn->setAction($this->actions->votesConfig);
+            $this->frame->addComponent($btn);
+        }
 
-	if (!$this->exp_isRelay()) {
-	    $btn = new myButton($btnX, $btnY);
-	    $btn->setText(__("Configure Votes", $login));
-	    $btn->setAction($this->actions->votesConfig);
-	    $this->frame->addComponent($btn);
-	}
+        $this->mainFrame->addComponent($this->frame);
 
-	$this->mainFrame->addComponent($this->frame);	
     }
 
-    function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
+    function onResize($oldX, $oldY)
+    {
+        parent::onResize($oldX, $oldY);
     }
 
-    function destroy() {
+    function destroy()
+    {
 
-	$this->frame->clearComponents();
-	$this->connection = null;
-	$this->storage = null;
+        $this->frame->clearComponents();
+        $this->connection = null;
+        $this->storage = null;
 
-	parent::destroy();
+        parent::destroy();
     }
 
-    public function exp_isRelay() {
-	return Storage::getInstance()->isRelay;
+    public function exp_isRelay()
+    {
+        return Storage::getInstance()->isRelay;
     }
 
 }
