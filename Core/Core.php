@@ -784,8 +784,8 @@ EOT;
     public function showNetStats($login)
     {
 	if (AdminGroups::hasPermission($login, Permission::chat_adminChannel)) {
-	    Gui\Windows\Netstat::Erase($login);
-	    $win = Gui\Windows\Netstat::Create($login);
+	    Gui\Windows\NetStat::Erase($login);
+	    $win = Gui\Windows\NetStat::Create($login);
 	    $win->setTitle("Network Status");	    
 	    $win->setSize(140, 100);	    
 	    $win->show();
