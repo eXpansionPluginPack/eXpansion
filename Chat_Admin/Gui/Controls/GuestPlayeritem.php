@@ -17,12 +17,12 @@ class GuestPlayeritem extends \ManiaLive\Gui\Control {
 
     private $frame;
 
-    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller) {
+    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login) {
         $sizeX = 120;
         $sizeY = 6;        
         $this->player = $player;
 
-        $this->removeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'removeGuest'), $player->login);
+        $this->removeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'removeGuest'), array($login, $player->login));
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);

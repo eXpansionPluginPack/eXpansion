@@ -7,7 +7,8 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
-class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     protected $pager;
 
@@ -24,7 +25,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected $title_status, $title_login, $title_nickname;
     private $widths;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
 	parent::onConstruct();
 	$login = $this->getRecipient();
 	$config = \ManiaLive\DedicatedApi\Config::getInstance();
@@ -35,49 +37,48 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->mainFrame->addComponent($this->pager);
 	$this->widths = array(1, 8, 6, 5);
 
-	$this->frame = new \ManiaLive\Gui\Controls\Frame();
-	$this->frame->setSize($this->sizeX, 4);
-	$this->frame->setPosY(0);
-	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-	$this->mainFrame->addComponent($this->frame);
+	$line = new \ManiaLive\Gui\Controls\Frame(23,0);
+	$line->setLayout(new \ManiaLib\Gui\Layouts\Line());
+	if (AdminGroups::hasPermission($login, Permission::player_ignore)) {
+	    $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+	    $btn->setText(__("Ignore List", $login));
+	    $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['ignore']);
+	    $line->addComponent($btn);
+	}
+	
+	if (AdminGroups::hasPermission($login, Permission::game_settings)) {
+	    $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+	    $btn->setText(__("Guest List", $login));
+	    $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['guest']);
+	    $line->addComponent($btn);
+	}
+
+	if (AdminGroups::hasPermission($login, Permission::player_unban)) {
+	    $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+	    $btn->setText(__("Ban List", $login));
+	    $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['ban']);
+	    $line->addComponent($btn);
+	}
+	if (AdminGroups::hasPermission($login, Permission::player_black)) {
+	    $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+	    $btn->setText(__("Black List", $login));
+	    $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['black']);
+	    $line->addComponent($btn);
+	}
+
+
+	$this->mainFrame->addComponent($line);
+
 
 	$textStyle = "TextCardRaceRank";
-	$textColor = "000";
+	$textColor = "fff";
 	$textSize = 2.5;
 	$scaledSizes = Gui::getScaledSize($this->widths, $this->sizeX / .8);
-
-	$this->title_status = new \ManiaLib\Gui\Elements\Label();
-	$this->title_status->setText(__("", $login));
-	$this->title_status->setStyle($textStyle);
-	$this->title_status->setTextColor($textColor);
-	$this->title_status->setTextSize($textSize);
-	$this->title_status->setScale(0.8);
-	$this->title_status->setSizeX(4);
-	$this->title_status->setAlign('left', 'center');
-	$this->frame->addComponent($this->title_status);
-
-	$this->title_nickname = new \ManiaLib\Gui\Elements\Label();
-	$this->title_nickname->setText(__("NickName", $login));
-	$this->title_nickname->setStyle($textStyle);
-	$this->title_nickname->setTextColor($textColor);
-	$this->title_nickname->setTextSize($textSize);
-	$this->title_nickname->setScale(0.8);
-	$this->title_nickname->setSizeX($scaledSizes[1]);
-	$this->title_nickname->setAlign('left', 'center');
-	$this->frame->addComponent($this->title_nickname);
-
-	$this->title_login = new \ManiaLib\Gui\Elements\Label();
-	$this->title_login->setText(__("Login", $login));
-	$this->title_login->setStyle($textStyle);
-	$this->title_login->setTextColor($textColor);
-	$this->title_login->setTextSize($textSize);
-	$this->title_login->setScale(0.8);
-	$this->title_login->setSizeX($scaledSizes[2]);
-	$this->title_login->setAlign('left', 'center');
-	$this->frame->addComponent($this->title_login);
+	
     }
 
-    function ignorePlayer($login, $target) {
+    function ignorePlayer($login, $target)
+    {
 	try {
 	    $login = $this->getRecipient();
 	    if (!AdminGroups::hasPermission($login, Permission::player_ignore)) {
@@ -96,8 +97,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    if ($ignore) {
 		$this->connection->ignore($target);
 		$this->connection->chatSendServerMessage(__('%s$z$s$fff was ignored by admin %s', $login, $player->nickName, $admin->nickName));
-	    }
-	    else {
+	    } else {
 		$this->connection->unignore($target);
 		$this->connection->chatSendServerMessage(__('%s$z$s$fff was unignored by admin %s', $login, $player->nickName, $admin->nickName));
 	    }
@@ -109,7 +109,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	}
     }
 
-    function kickPlayer($login, $target) {
+    function kickPlayer($login, $target)
+    {
 	try {
 	    AdminGroups::getInstance()->adminCmd($login, "kick " . $target);
 	} catch (\Exception $e) {
@@ -118,7 +119,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	}
     }
 
-    function banPlayer($login, $target) {
+    function banPlayer($login, $target)
+    {
 	try {
 	    AdminGroups::getInstance()->adminCmd($login, "ban " . $target);
 	} catch (\Exception $e) {
@@ -127,7 +129,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	}
     }
 
-    function blacklistPlayer($login, $target) {
+    function blacklistPlayer($login, $target)
+    {
 	try {
 	    AdminGroups::getInstance()->adminCmd($login, "black " . $target);
 	} catch (\Exception $e) {
@@ -136,7 +139,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	}
     }
 
-    function toggleSpec($login, $target) {
+    function toggleSpec($login, $target)
+    {
 	try {
 	    $login = $this->getRecipient();
 	    if (!AdminGroups::hasPermission($login, Permission::player_forcespec)) {
@@ -161,25 +165,22 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	}
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
 	parent::onResize($oldX, $oldY);
-	$this->pager->setSize($this->sizeX - 5, $this->sizeY - 8);
-	$this->pager->setStretchContentX($this->sizeX);
-	$this->pager->setPosition(4, -4);
-
-	$scaledSizes = Gui::getScaledSize($this->widths, $this->sizeX / .8);
-	$this->title_status->setSizeX($scaledSizes[0]);
-	$this->title_nickname->setSizeX($scaledSizes[1]);
-	$this->title_login->setSizeX($scaledSizes[2]);
+	$this->pager->setSize($this->sizeX - 5, $this->sizeY - 10);	
+	$this->pager->setPosition(2, -1);	
     }
 
-    function onShow() {
+    function onShow()
+    {
 	if (empty($this->items))
 	    $this->populateList();
 	parent::onShow();
     }
 
-    function toggleTeam($login, $target) {
+    function toggleTeam($login, $target)
+    {
 	if (AdminGroups::hasPermission($login, Permission::player_changeTeam)) {
 	    $player = $this->storage->getPlayerObject($target);
 	    if ($player->teamId === 0)
@@ -189,7 +190,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	}
     }
 
-    function populateList() {
+    function populateList()
+    {
 
 	foreach ($this->items as $item)
 	    $item->erase();
@@ -217,7 +219,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	}
     }
 
-    function destroy() {
+    function destroy()
+    {
 	$this->connection = null;
 	$this->storage = null;
 	foreach ($this->items as $item)
