@@ -24,7 +24,7 @@
 namespace ManiaLivePlugins\eXpansion\Core\Events;
 
 use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
-use Maniaplanet\DedicatedServer\Structures\NetworkStats;
+use Maniaplanet\DedicatedServer\Structures\PlayerNetInfo;
 
 /**
  * Description of PlayerEventListener
