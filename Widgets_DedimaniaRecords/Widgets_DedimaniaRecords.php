@@ -84,7 +84,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
                     )) || ($this->isPluginLoaded($dedi2) && $this->callPublicMethod($dedi2, 'isRunning'))
             ) {
                 $localRecs = DediPanel::GetAll();
-                if ($login == null) {
+                if (!isset($localRecs[0])) {
                     //Gui\Widgets\DediPanel::EraseAll();
                     $panelMain = Gui\Widgets\DediPanel::Create($login);
                     $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
@@ -98,7 +98,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
                 }
 
                 $localRecs = DediPanel2::GetAll();
-                if ($login == null) {
+                if (!isset($localRecs[0])) {
                     //Gui\Widgets\DediPanel2::EraseAll();
                     $panelScore = Gui\Widgets\DediPanel2::Create($login);
                     $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);

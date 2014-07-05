@@ -19,6 +19,7 @@ declare playerTimes = <?php echo $this->playerTimes ?>;
 //The latest chackpoint the player past
 declare playerNickName = <?php echo $this->playerNicks ?>;
 declare playersOnServer = Text[Text];
+declare playersCps = Text[Text];
 declare recordLogin = "";
 declare nbCount = 0;
 
@@ -33,18 +34,18 @@ if(getCurrentTimes){
 
 //Updating currently connected players
 foreach (Player in Players) {
-declare <?php echo $this->varName ?> for Player = -1;
-<?php echo $this->varName ?> = -1;
+    //declare <?php echo $this->varName ?> for Player = -1;
+    //<?php echo $this->varName ?> = -1;
 
-if(getCurrentTimes && Player.CurRace.Time != -1){
-//log("Getting Current Times for "^Player.Login^" Time : "^Player.CurRace.Time);
-//playerTimes[Player.Login] = Player.CurRace.Time;
-}
+    if(getCurrentTimes && Player.CurRace.Time != -1){
+    //log("Getting Current Times for "^Player.Login^" Time : "^Player.CurRace.Time);
+    //playerTimes[Player.Login] = Player.CurRace.Time;
+    }
 
-playersOnServer[Player.Login] = Player.Name;
-if(!playerNickName.existskey(Player.Login)){
-playerNickName[Player.Login] = Player.Name;
-}
+    playersOnServer[Player.Login] = Player.Name;
+    if(!playerNickName.existskey(Player.Login)){
+    playerNickName[Player.Login] = Player.Name;
+    }
 }
 
 declare origPlayerTimes = playerTimes;
