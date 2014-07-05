@@ -65,30 +65,39 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     declare Integer inRank = 1;
     declare Boolean isNewRecord = False;
 
+
     playerTimes = playerTimes.sort();
 
     foreach (Login => Score in playerTimes) {
-	if (Login == recordLogin) {
-	    if (inRank < maxServerRank) {
-		if (useMaxPlayerRank) {
-		    if (maxPlayerRank.existskey(Login)) {
-			if (inRank < maxPlayerRank[Login]) {
-			    isNewRecord = True;
-			}
-		    }
-		} else {
-		    isNewRecord = True;
-		}
-	    }
-	}
-	inRank += 1;
+        if (Login == recordLogin) {
+            if (useMaxPlayerRank) {
+
+                log("Dedimania New Rank : "^inRank);
+
+                declare maxRank = maxServerRank;
+                if (maxPlayerRank.existskey(Login) && maxPlayerRank[Login] > maxRank) {
+                    maxRank = maxPlayerRank[Login];
+                }
+
+                log("Dedimania Max Rank : "^maxRank);
+
+                if(inRank < maxRank){
+                    log("Dedimania Record not to be ignored");
+                    isNewRecord = True;
+                }
+
+            } else {
+                isNewRecord = True;
+            }
+        }
+        inRank += 1;
     }
 
     inRank = 1;
 
     if (!isNewRecord) {
-	playerTimes.clear();
-	playerTimes = origPlayerTimes.sort();
+        playerTimes.clear();
+        playerTimes = origPlayerTimes.sort();
     }
 
 

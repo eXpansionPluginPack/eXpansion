@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Widgets;
 
+use ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Widgets_DedimaniaRecords;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
@@ -14,7 +15,8 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
         parent::exp_onBeginConstruct();
         $this->setName("Dedimania Panel");
         $this->timeScript->setParam("acceptMinCp", 2);
-        $this->timeScript->setParam('varName', 'DediTime1');
+		$this->timeScript->setParam('varName', 'DediTime1');
+		$this->timeScript->setParam("acceptMaxServerRank",  Connection::$serverMaxRank);
     }
 
     function update()
@@ -63,7 +65,8 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
             $nickData = '[' . $nickData . ']';
         }
 
-        $this->timeScript->setParam("nbRecord", count(Widgets_DedimaniaRecords::$dedirecords));
+        $this->timeScript->setParam("nbRecord", 100);
+        $this->timeScript->setParam("acceptMaxServerRank", Connection::$serverMaxRank);
         $this->timeScript->setParam("playerTimes", $recsData);
         $this->timeScript->setParam("playerNicks", $nickData);
         $this->timeScript->setParam("acceptMaxPlayerRank", "Integer[Text]");
