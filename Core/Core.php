@@ -257,7 +257,7 @@ EOT;
 	//Add exterior access to the expansion settings
 	$this->setPublicMethod("showExpSettings");
 	$this->setPublicMethod("showNetStats");
-	
+
 	$window = new Gui\Windows\QuitWindow();
 	$this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
 
@@ -746,33 +746,28 @@ EOT;
 
     public function onTick()
     {
-	//Get network statistics from the server
-	$stats = $this->connection->getNetworkStats();
-	$showNotice = false;
+	if ($this->storage->serverStatus->code < 3 || $this->storage->serverStatus->code > 4)
+	    return;
 
 	//every 5 seconds gogo
 	if (time() - $this->lastTick > 5) {
+	    $outPlayers = array();
+
 	    $this->lastTick = time();
+	    //Get network statistics from the server
+	    $stats = $this->connection->getNetworkStats();
+
 	    foreach ($stats->playerNetInfos as $player) {
 		$netstat = new Structures\NetStat($player);
 		self::$netStat[$player->login] = $netstat;
 
 		if ($player->latestNetworkActivity >= $this->config->netLostTime) {
-		    Dispatcher::dispatch(new Events\PlayerEvent(Events\PlayerEvent::ON_PLAYER_NETLOST, $player));
+		    $outPlayers[$player->login] = $player;
 		}
 	    }
-
-	    /* //show notification widget.
-	      if ($showNotice) {
-	      Gui\Widgets\Widget_Netstat::EraseAll();
-	      $info = Gui\Widgets\Widget_Netstat::Create(\ManiaLive\Gui\Window::RECIPIENT_ALL);
-	      $info->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-	      $info->setPosition(-158, 60);
-	      $info->setScale(0.7);
-	      $info->show();
-	      } else {
-	      Gui\Widgets\Widget_Netstat::EraseAll();
-	      } */
+	    if (sizeof($outPlayers < 0)) {
+		Dispatcher::dispatch(new Events\PlayerEvent(Events\PlayerEvent::ON_PLAYER_NETLOST, $outPlayers));
+	    }
 	}
     }
 
@@ -786,8 +781,8 @@ EOT;
 	if (AdminGroups::hasPermission($login, Permission::chat_adminChannel)) {
 	    Gui\Windows\NetStat::Erase($login);
 	    $win = Gui\Windows\NetStat::Create($login);
-	    $win->setTitle("Network Status");	    
-	    $win->setSize(140, 100);	    
+	    $win->setTitle("Network Status");
+	    $win->setSize(140, 100);
 	    $win->show();
 	}
     }

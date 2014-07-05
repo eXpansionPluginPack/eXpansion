@@ -48,8 +48,9 @@ interface PlayerEventListener
 
     /** @param ExpPlayer[] $playerPositions newly calculated playerPositions */
     public function onPlayerNewPositions($playerPositions);
-
-    public function onPlayerNetLost(PlayerNetInfo $player);
+    
+    /** @param PlayerNetInfo[] $players  */
+    public function onPlayerNetLost($players);
 }
 ?>
 

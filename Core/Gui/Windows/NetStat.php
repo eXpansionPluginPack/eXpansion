@@ -55,7 +55,7 @@ class Netstat extends Window
 	$this->frame->clearComponents();
 
 	$netstat = Core::$netStat;
-	\ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($netstat, "updateLatency");
+	\ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc($netstat, "login");
 	$index = 0;
 
 	foreach ($netstat as $login => $stat) {
