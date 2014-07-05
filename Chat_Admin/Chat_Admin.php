@@ -179,6 +179,10 @@ Other server might use the same blacklist file!!');
         $cmd = AdminGroups::addAdminCommand('settings', $this, 'invokeExpSettings', Permission::expansion_pluginSettings);
         $cmd->setMinParam(0);
 
+	$cmd = AdminGroups::addAdminCommand('netstats', $this, 'invokeNetStats', Permission::chat_adminChannel);	
+        $cmd->setMinParam(0);
+	AdminGroups::addAlias($cmd, "netstat"); // fast
+	
         $cmd = AdminGroups::addAdminCommand('get server planets', $this, 'getServerPlanets', Permission::server_genericOptions);
         $cmd->setHelp('Gets the serveraccount planets amount')
             ->addLineHelpMore('$w/admin planets $zreturn the planets amount on server account.')
@@ -738,6 +742,11 @@ Other server might use the same blacklist file!!');
         $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Core\Core', "showExpSettings", $fromLogin);
     }
 
+    public function invokeNetStats($fromLogin, $params = null)
+    {
+        $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Core\Core', "showNetStats", $fromLogin);
+    }
+    
     public function setScriptName($fromLogin, $params)
     {
         if (sizeof($params) == 0) {

@@ -12,6 +12,7 @@ interface GlobalEventListener {
     public function onMapRestart();
 
     public function onMapSkip();
+    
 }
 ?>
 

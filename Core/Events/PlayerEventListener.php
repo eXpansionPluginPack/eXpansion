@@ -24,13 +24,15 @@
 namespace ManiaLivePlugins\eXpansion\Core\Events;
 
 use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
+use Maniaplanet\DedicatedServer\Structures\NetworkStats;
 
 /**
  * Description of PlayerEventListener
  *
  * @author reaby
  */
-interface PlayerEventListener {
+interface PlayerEventListener
+{
 
     /**
      * @param  ExpPlayer $player $player player object of the changed info
@@ -46,6 +48,8 @@ interface PlayerEventListener {
 
     /** @param ExpPlayer[] $playerPositions newly calculated playerPositions */
     public function onPlayerNewPositions($playerPositions);
+
+    public function onPlayerNetLost(NetworkStats $player);
 }
 ?>
 
