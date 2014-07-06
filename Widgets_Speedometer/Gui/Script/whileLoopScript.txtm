@@ -1,7 +1,7 @@
 if( (Now - eXp_lastClockUpdate) >= 50 ){
 if (GUIPlayer == Null) continue;
 
-//declare Distance = MathLib::Distance(InputPlayer.Position, eXp_lastPos);
+//declare Distance = MathLib::Distance(GUIPlayer.Position, eXp_lastPos);
 //declare Real Speed = (Distance / 250) * 3600;
 
 declare Real Speed = GUIPlayer.Speed*3.6;
@@ -9,11 +9,30 @@ if (Speed <= 1.0) {
 Speed = 0.;
 }
 
+if (Speed > 1040.0) {
+Speed = 1040.;
+}
 
-speedLabel.Value = "" ^ MathLib::NearestInteger(Speed);
-needleQuad.RelativeRotation = (Speed/1040)*(360-28.8);
+declare Real val = (Speed/1040)*1.0;
 
-//eXp_lastPos = InputPlayer.Position;
+if (val < 0.0) {
+val = 0.;
+}
+
+if (val > 1.0) {
+val = 1.;
+}
+
+
+
+//speedLabel.Value = "" ^ MathLib::NearestInteger(Speed);
+speedLabel.Value = "";
+
+// needleQuad.RelativeRotation = (Speed/1040)*(360-28.8);
+
+barGauge.Ratio = 2.06034 * val -1.21457 * MathLib::Pow(val,2.0) + 0.154232 * MathLib::Pow(val,3.);
+
+eXp_lastPos = GUIPlayer.Position;
 eXp_lastClockUpdate = Now;
 
 }

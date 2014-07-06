@@ -1,4 +1,7 @@
 declare speedLabel = (Page.GetFirstChild("speed") as CMlLabel);
 declare eXp_lastClockUpdate = Now;
 declare Vec3 eXp_lastPos;
-declare needleQuad = (Page.GetFirstChild("needle") as CMlQuad);
+// declare needleQuad = (Page.GetFirstChild("needle") as CMlQuad);
+declare barGauge = (Page.GetFirstChild("bar") as CMlGauge);
+
+declare euler = 2.718281828459045;

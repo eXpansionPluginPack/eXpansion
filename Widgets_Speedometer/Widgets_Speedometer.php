@@ -31,7 +31,7 @@ class Widgets_Speedometer extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
     public function exp_onReady() {
 	$this->enableDedicatedEvents();
 	$this->widget = Gui\Widgets\Speedmeter::Create(null);
-	$this->widget->setPosition(100, -50);
+	$this->widget->setPosition(-14, -74);
 	$this->widget->show();
     }
 
