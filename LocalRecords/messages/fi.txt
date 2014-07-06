@@ -75,66 +75,12 @@ Tulokset
 
 Map Records
 Kartan tulokset
-#admin_action#Records saved sucessfully into the database
-#translate# #admin_action#Records saved sucessfully into the database
-
-Sector
-#translate# Sector
-
-CheckPoint Times
-#translate# CheckPoint Times
 
 #admin_action#Records saved sucessfully into the database
-#translate# #admin_action#Records saved sucessfully into the database
+#admin_action#Tulokset tallennettu tietokantaan.
 
 Sector
-#translate# Sector
+Sektori
 
 CheckPoint Times
-#translate# CheckPoint Times
-
-#admin_action#Records saved sucessfully into the database
-#translate# #admin_action#Records saved sucessfully into the database
-
-Sector
-#translate# Sector
-
-CheckPoint Times
-#translate# CheckPoint Times
-
-#admin_action#Records saved sucessfully into the database
-#translate# #admin_action#Records saved sucessfully into the database
-
-Sector
-#translate# Sector
-
-CheckPoint Times
-#translate# CheckPoint Times
-
-#admin_action#Records saved sucessfully into the database
-#translate# #admin_action#Records saved sucessfully into the database
-
-Sector
-#translate# Sector
-
-CheckPoint Times
-#translate# CheckPoint Times
-
-#admin_action#Records saved sucessfully into the database
-#translate# #admin_action#Records saved sucessfully into the database
-
-Sector
-#translate# Sector
-
-CheckPoint Times
-#translate# CheckPoint Times
-
-#admin_action#Records saved sucessfully into the database
-#translate# #admin_action#Records saved sucessfully into the database
-
-Sector
-#translate# Sector
-
-CheckPoint Times
-#translate# CheckPoint Times
-
+Checkpoint ajat

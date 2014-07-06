@@ -48,9 +48,6 @@ Korrekt von
 
 New question
 Neue Frage
-#question#%s?
-#translate# #question#%s?
 
 #question#%s?
-#translate# #question#%s?
-
+#question#%s?
