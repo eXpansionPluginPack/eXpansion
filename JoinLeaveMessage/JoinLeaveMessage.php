@@ -2,7 +2,13 @@
 
 namespace ManiaLivePlugins\eXpansion\JoinLeaveMessage;
 
-class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+use DateTime;
+use Exception;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
+
+class JoinLeaveMessage extends ExpPlugin
 {
 
     private $joinMsg, $leaveMsg, $tabNoticeMsg, $playtimeMsg;
@@ -31,7 +37,7 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function setJoinTime($login)
     {
-        $this->storage->getPlayerObject($login)->sessionJoinTime = new \DateTime();
+        $this->storage->getPlayerObject($login)->sessionJoinTime = new DateTime();
     }
 
     public function getSessionTime($login)
@@ -42,7 +48,7 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
 
         $player = $this->storage->getPlayerObject($login);
-        $now = new \DateTime();
+        $now = new DateTime();
 
         if (property_exists($player, "sessionJoinTime")) {
             $diff = $now->diff($player->sessionJoinTime, true);
@@ -69,10 +75,10 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $stamp = intval($result->fetchObject()->stamp);
 
         if ($stamp) {
-            $start = new \DateTime();
+            $start = new DateTime();
             $start->setTimestamp(0);
 
-            $time = new \DateTime();
+            $time = new DateTime();
             $time->setTimestamp($stamp);
 
             $diff = $time->diff($start);
@@ -104,10 +110,10 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if ($player->isSpectator)
                 $spec = '$n(Spectator)';
 
-            $grpName = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getGroupName($login);
+            $grpName = AdminGroups::getGroupName($login);
             $this->exp_chatSendServerMessage($this->joinMsg, null, array($nick, $login, $country, $spec, $grpName));
             $this->exp_chatSendServerMessage($this->tabNoticeMsg, $login);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->console($e->getLine() . ":" . $e->getMessage());
         }
     }
@@ -120,13 +126,13 @@ class JoinLeaveMessage extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             $playtime = $this->getSessionTime($login);
 
-            $grpName = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getGroupName($login);
+            $grpName = AdminGroups::getGroupName($login);
 
             $country = str_replace("World|", "", $player->path);
             $country = explode("|", $country);
             $country = $country[1];
             $this->exp_chatSendServerMessage($this->leaveMsg, null, array($nick, $login, $country, $grpName, $playtime));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Helper::log("[JoinLeaveMessage]Error while disconnecting : $login");
         }
     }
