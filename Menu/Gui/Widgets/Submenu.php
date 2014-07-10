@@ -21,7 +21,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
 	$this->item[$nb]->setBgcolor("000");
 
 	if (!empty($action)) {
-	    $this->item[$nb]->setFocusAreaColor2("fff9");
+	    $this->item[$nb]->setFocusAreaColor2("3afb");
 	    $this->item[$nb]->setAction($action);
 	}
 
@@ -32,7 +32,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
 
 	if ($submenuNb !== false) {
 	    $this->item[$nb]->setId("sub_" . $submenuNb);
-	    $this->item[$nb]->setFocusAreaColor2("fffb");
+	    $this->item[$nb]->setFocusAreaColor2("3afb");
 	} else {
 
 	    $snb = false;
@@ -44,7 +44,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
 	    }
 	    if ($snb) {
 		$this->item[$nb]->setId("sub_" . $snb . "_item_" . $nb);
-		$this->item[$nb]->setFocusAreaColor2("fffb");
+		$this->item[$nb]->setFocusAreaColor2("3afb");
 		$this->item[$nb]->setAction($action);
 	    } else {
 		$this->item[$nb]->setId("item_" . $nb);
