@@ -1,0 +1,4 @@
+declare eXp_lastUpdate = 0;
+declare Text[] netLost for UI = Text[];
+declare Boolean isNetlostUpdated for UI;
+declare CMlQuad icon <=> (Page.GetFirstChild("icon") as CMlQuad);

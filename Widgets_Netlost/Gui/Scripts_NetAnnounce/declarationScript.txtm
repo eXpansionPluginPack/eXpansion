@@ -1,0 +1,9 @@
+declare eXp_lastUpdate = 0;
+declare Text[] netLost for UI = Text[];
+declare Integer[Text] netLostTimeouts for UI;
+
+declare Boolean isNetlostUpdated for UI;
+
+
+netLost = <?php echo $this->players; ?>;
+isNetlostUpdated = True;

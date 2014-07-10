@@ -893,8 +893,7 @@ use Maniaplanet\DedicatedServer\Structures\GameInfos;
 	    
 	}
 
-	/**
-	 * 	
+	/**	 
 	 * @param \Maniaplanet\DedicatedServer\Structures\PlayerNetInfo[] $players
 	 */
 	public function onPlayerNetLost($players)

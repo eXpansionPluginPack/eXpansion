@@ -1,0 +1,26 @@
+    
+if( isNetlostUpdated == True) {
+
+    isNetlostUpdated = False;
+    
+    icon.Hide();
+    
+    if (netLost.count > 0) {
+        icon.Show();
+    }
+
+    declare Integer x;
+    for ( x, 0, 11) {    
+        declare CMlLabel label <=> (Page.GetFirstChild("netlost_"^x) as CMlLabel);
+        if (netLost.existskey(x)) {
+            label.Value = netLost[x];
+        }
+        else {    
+            label.Value = "";
+        }
+    
+    } 
+}
+
+    
+ 
