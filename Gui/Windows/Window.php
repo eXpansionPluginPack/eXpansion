@@ -34,11 +34,15 @@ class Window extends \ManiaLive\Gui\Window
     protected function onConstruct()
     {
         parent::onConstruct();
-        $config = Config::getInstance();
+        $config = Config::getInstance();	
+	
         $this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
 
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WindowScript");
-
+	
+	$lib = new \ManiaLivePlugins\eXpansion\Gui\Script_libraries\Animation();
+	$this->registerScript($lib);
+	
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setId("windowFrame");
         $this->_windowFrame->setScriptEvents(true);

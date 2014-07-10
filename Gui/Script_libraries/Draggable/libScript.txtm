@@ -1,9 +1,5 @@
 // This library is available at https://github.com/maniaplanet/library-manialink
 
-#Include "MathLib" as ML
-#Include "TextLib" as TL
-
-
 // Draggable Start
 
 Real[] LibManialink_PrivateDraggableGetOffset(CMlControl _Control) {

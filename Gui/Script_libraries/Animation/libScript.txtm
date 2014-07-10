@@ -72,10 +72,6 @@
  *  - Color
  */
 
-#Include "MathLib" as ML
-#Include "TextLib" as TL
-
-
 // Animations Start
 
 Void LibManialink_AnimRepeatStart(Integer _RepeatTime, Integer _RepeatNb) {

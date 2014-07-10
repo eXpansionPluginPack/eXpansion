@@ -30,21 +30,25 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
     private $counter = 0;
-
     private $login = null;
-
     private $testActive = false;
 
     public function exp_onReady()
     {
 	$this->enableTickerEvent();
+	$this->enableDedicatedEvents();
 	$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
 	$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-	$this->registerChatCommand("starttest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+	//$this->registerChatCommand("starttest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 	//\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
 
 	/* $window = Gui\testWindow::Create("reaby");
 	  $window->show(); */
+    }
+
+    public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries)
+    {
+	echo $login . ":" . $answer . "\n";
     }
 
     function onTick()

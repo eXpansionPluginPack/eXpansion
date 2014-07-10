@@ -123,7 +123,7 @@ class ExpSetting extends \ManiaLive\Gui\Control
             $win->setTitle("Expansion Settings : " . $var->getVisibleName());
             $win->centerOnScreen();
             $win->setSize(140, 100);
-            $win->populate($var);
+            $win->populate($var);	    
             $win->show();
         }
     }

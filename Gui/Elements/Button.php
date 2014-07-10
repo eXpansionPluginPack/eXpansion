@@ -237,13 +237,13 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
     }
 
     public function setId($id) {
-	parent::setId($id);
+	//parent::setId($id);
 	$this->buttonId = $id;
 	if ($this->icon != null) {
 	    $this->icon->setId($this->buttonId);
 	} else {
-	    $this->label->setId($id);
-	    $this->label->setScriptEvents();
+	    $this->backGround->setId($id);
+	    $this->backGround->setScriptEvents();
 	}
 	$this->labelDesc->setId("eXp_ButtonDescText_" . $this->buttonId);
 	$this->backGroundDesc->setId("eXp_ButtonDescBg_" . $this->buttonId);
@@ -252,8 +252,8 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
     public function setClass($class) {
 	if ($this->icon != null)
 	    $this->icon->setAttribute('class', $class);
-	else {
-	    $this->label->setAttribute('class', $class);
+	else {	    
+	    $this->backGround->setAttribute('class', $class);
 	}
     }
 
