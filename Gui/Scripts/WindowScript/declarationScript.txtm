@@ -18,7 +18,7 @@ $startPosY = intval($win->getSizeY() / 2) . ".0";
 <?php echo $this->scriptLib ?>
     
 Void stackActivateWindow(Text window) {
-    declare Text[] exp_windowStack for UI;   
+    declare Text[] exp_windowStack for UI = Text[];  
     declare Boolean exp_updateStack for UI;
     declare Integer exp_stackCounter for UI;
     
@@ -37,24 +37,20 @@ Void stackActivateWindow(Text window) {
 }
 
 Void stackRemoveWindow(Text window) {
-    declare Text[] exp_windowStack for UI;
+    declare Text[] exp_windowStack for UI = Text[];
     declare Boolean exp_updateStack for UI;
     declare Integer exp_stackCounter for UI;
     
     declare Text[] outArray = Text[];
     
     foreach (key => value in exp_windowStack) {
-	if (value == window) {
-	    exp_windowStack.removekey(key);
-	}
 	if (value != window) {
 	    outArray.add(value);
-	}	
+	}
     }
     exp_windowStack = outArray;
     exp_updateStack = True;   
-    exp_stackCounter = Now;
-   
+    exp_stackCounter = Now;    
 }
 
 //Main Function
@@ -90,10 +86,10 @@ main () {
     declare Boolean disableAnimations = <?php echo $this->disableAnimations; ?>;
     
     declare persistent Vec3[Text][Text] exp_windowLastPosRel;
-    declare Text[] exp_windowStack for UI; 
+    declare Text[] exp_windowStack for UI = Text[];
     declare Boolean exp_updateStack for UI = False;
     declare Integer exp_stackCounter for UI = 0;
-    
+    declare Text exp_window = "";
     declare Real zIndex = 30.;
     
     stackActivateWindow(id);
@@ -119,8 +115,8 @@ main () {
 	
         <?php echo $this->wLoop ?>
         	
-	if (closeWindow && closeCounter + 750 <= Now ) {	    
-	    stackRemoveWindow(id);    
+	if (closeWindow && closeCounter + 350 <= Now ) {	    
+	    stackRemoveWindow(id);
 	    TriggerPageAction(closeAction);
 	    closeWindow = False;	    
 	    continue;
@@ -156,7 +152,10 @@ main () {
 			stackRemoveWindow(id);
 			continue;
 		    } else {
-		    LibManialink_Anim("<frame scale=\"0\" id=\"" ^ windowId ^ "\" />", 550, "EaseOutLinear");
+		    declare Real winX = Window.RelativePosition.X + <?php echo $win->getSizeX()/2; ?>; 
+		    declare Real winY = Window.RelativePosition.Y;
+		    declare Text pos = winX ^ " " ^ winY;
+		    LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"0\" id=\"" ^ windowId ^ "\" />", 250, "EaseOutLinear");
                     closeWindow = True;
 		    closeCounter = Now;	  	
 		    }
@@ -167,20 +166,25 @@ main () {
 	    }
 	}
 	
-    if (MouseLeftButton == True && exp_windowStack[0] == id) {	
-            foreach (Event in PendingEvents) {
-                if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Titlebar")  {
-		    stackActivateWindow(id);
-                    Offset = <Window.RelativePosition.X - MouseX, Window.RelativePosition.Y - MouseY>;
-                    MoveWindow = True;
-                 }		                 
-            }
-         } else {
-	 MoveWindow = False; 	 
+	if (exp_windowStack.count == 0) {
+	    exp_window = "";
+	} else {
+	    exp_window = exp_windowStack[0];
 	}
-	 
-    }
+	
+	if (MouseLeftButton == True && exp_window == id) {	
+		foreach (Event in PendingEvents) {
+		    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Titlebar")  {
+			stackActivateWindow(id);
+			Offset = <Window.RelativePosition.X - MouseX, Window.RelativePosition.Y - MouseY>;
+			MoveWindow = True;
+		     }		                 
+		}
+	     } else {
+	     MoveWindow = False; 	 
+	    }
 
-
+	}
+	
 }  //end of window
 --></script>
