@@ -6,7 +6,6 @@ class Config extends \ManiaLib\Utils\Singleton {
 
     public $disable = array();
     public $plugins = array('\ManiaLivePlugins\eXpansion\AutoUpdate\AutoUpdate'
-	, '\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin'
 	, '\ManiaLivePlugins\eXpansion\Chatlog\Chatlog'
 	, '\ManiaLivePlugins\eXpansion\Emotes\Emotes'
 	, '\ManiaLivePlugins\eXpansion\DonatePanel\DonatePanel'

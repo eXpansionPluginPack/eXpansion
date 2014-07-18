@@ -47,6 +47,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         //List of plugins that must be loaded always !!
         $this->plugins = array('\ManiaLivePlugins\eXpansion\Core\Core'
         , '\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups'
+		, '\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin'
         , '\ManiaLivePlugins\eXpansion\Gui\Gui'
         , '\ManiaLivePlugins\eXpansion\Menu\Menu'
         , '\ManiaLivePlugins\eXpansion\Adm\Adm'
