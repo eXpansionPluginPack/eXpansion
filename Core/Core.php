@@ -189,6 +189,11 @@ EOT;
 	    $bExitApp = true;
 	}
 
+	$this->console('Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . '  $n build ' . date(
+				"Y-m-d h:i:s A", Helper::getBuildDate()
+			) . ''
+		);
+
 	//List of supported languages found
 	$this->console('');
 	$this->console(
@@ -222,7 +227,7 @@ EOT;
 	$this->connection->chatSendServerMessage('$000P L U G I N   P A C K  ');
 	$this->connection->chatSendServerMessage(
 		'Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . '  $n build ' . date(
-			"Y-m-d", filemtime(__FILE__)
+			"Y-m-d", Helper::getBuildDate()
 		) . ''
 	);
 	if (DEBUG) {

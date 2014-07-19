@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\AutoLoad;
 
-use ManiaLive\Application\ErrorHandling;
+use ManiaLib\Application\ErrorHandling;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
@@ -12,6 +12,7 @@ use ManiaLivePlugins\eXpansion\AutoLoad\Structures\PluginNotFoundException;
 use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\Events\ConfigLoadEvent;
 use ManiaLivePlugins\eXpansion\Core\types\config\MetaData as MetaDataType;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -214,6 +215,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
                         if (!$status) {
                             $this->console("[" . $pname . "]..............................FAIL -> will retry");
+							//Helper::log("[AutoLoad]".ErrorHandling::computeMessage($ex));
                             $recheck[] = $pname;
                         } else {
                             $this->debug("[" . $pname . "]..............................SUCCESS");
@@ -232,6 +234,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             throw $ex;
         } catch (\Exception $ex) {
             $this->console("[" . $pname . "]..............................FAIL -> will retry");
+			//Helper::log("[AutoLoad]".ErrorHandling::computeMessage($ex));
             return false;
         }
         
