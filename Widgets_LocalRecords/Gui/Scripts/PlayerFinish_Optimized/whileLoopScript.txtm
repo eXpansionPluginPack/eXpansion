@@ -5,98 +5,45 @@ if((Now - lastCheckTime) > 50){
     lastCheckTime = Now;
     
     foreach(Score in Scores){
-	declare <?php echo $this->varName ?> for Score.User = -1; 
-	
-	if((<?php echo $this->varName ?> == -1 || <?php echo $this->varName ?> > Score.BestLap.Time) && Score.BestLap.Time > 0){
-	
-	  //  log("Interesting Player: "^Score.User.Login);
-	    
-	    
-	    //This player start's to be interesting. 
-	    <?php echo $this->varName ?> = Score.BestLap.Time;
+        declare <?php echo $this->varName ?> for Score.User = -1;
 
-	    if (!playerTimes.existskey(Score.User.Login)) {
-		origPlayerTimes.clear();
-		origPlayerTimes = playerTimes;
-		playerTimes[Score.User.Login] = -1;
-		playerNickName[Score.User.Login] = Score.User.Name;
-	    }
-	    declare playerTime = playerTimes[Score.User.Login];
-	    // log("Var Time: "^<?php echo $this->varName ?>^"New Time : "^Score.BestLap.Time^" Old Time : "^playerTime);
-	    
-	    if (playerTime == -1 || playerTime > Score.BestLap.Time) {
-		// log("Better Time: "^Score.User.Login);
-		if (playerTime != -1) {
-		    origPlayerTimes.clear();
-		    origPlayerTimes = playerTimes;
-		}
+        if((<?php echo $this->varName ?> == -1 || <?php echo $this->varName ?> > Score.BestLap.Time) && Score.BestLap.Time > 0){
 
-		playerTimes[Score.User.Login] = Score.BestLap.Time;
 
-		recordLogin = Score.User.Login;
-		needUpdate = True;
-	    }else{
-		<?php echo $this->varName ?> = playerTime;
-	    }
-	    // log("");
-	}
+            //This player start's to be interesting.
+            <?php echo $this->varName ?> = Score.BestLap.Time;
+
+            if (!playerTimes.existskey(Score.User.Login)) {
+                origPlayerTimes.clear();
+                origPlayerTimes = playerTimes;
+                playerTimes[Score.User.Login] = -1;
+                playerNickName[Score.User.Login] = Score.User.Name;
+            }
+            declare playerTime = playerTimes[Score.User.Login];
+            // log("Var Time: "^<?php echo $this->varName ?>^"New Time : "^Score.BestLap.Time^" Old Time : "^playerTime);
+
+            if (playerTime == -1 || playerTime > Score.BestLap.Time) {
+                // log("Better Time: "^Score.User.Login);
+                if (playerTime != -1) {
+                    origPlayerTimes.clear();
+                    origPlayerTimes = playerTimes;
+                }
+
+                origPlayerTimes.clear();
+                origPlayerTimes = playerTimes;
+
+                playerTimes[Score.User.Login] = Score.BestLap.Time;
+
+                recordLogin = Score.User.Login;
+                needUpdate = True;
+            }else{
+                <?php echo $this->varName ?> = playerTime;
+            }
+
+        }
     }
 }
 
-/*
-foreach (Player in Players) {
-
-    declare <?php echo $this->varName ?> for Player = -1;
-
-    if (<?php echo $this->varName ?> != Player.CurRace.Checkpoints.count) {
-	//Update the current checkpoint of this user
-	<?php echo $this->varName ?> = Player.CurRace.Checkpoints.count;
-	curCp = Player.CurRace.Checkpoints.count;
-
-	//If finish
-	if (curCp > 0 && curCp % (totalCp) == 0 && totalCp > acceptMinCp) {
-	    
-	    declare Integer cpIndex = totalCp - 1;
-	    declare Integer lastCpIndex = curCp - totalCp - 1;
-	    declare time = 0;
-
-	    if (lastCpIndex > 0) {
-		time = Player.CurRace.Checkpoints[curCp - 1] - Player.CurRace.Checkpoints[lastCpIndex];
-	    } else {
-		time = Player.CurRace.Checkpoints[curCp - 1];
-	    }
-	    
-	    //This player start's to be interesting. 
-	    declare playerTime = -1;
-	
-	    if (!playerTimes.existskey(Player.Login)) {
-		origPlayerTimes.clear();
-		origPlayerTimes = playerTimes;
-		playerTimes[Player.Login] = -1;
-		playerNickName[Player.Login] = Player.Name;
-	    }
-	    playerTime = playerTimes[Player.Login];
-	    
-
-	    if (playerTime == -1 || playerTime > time) {
-		log("Better Time: "^Player.Login);
-		if (playerTime != -1) {
-		    origPlayerTimes.clear();
-		    origPlayerTimes = playerTimes;
-		}
-
-		playerTimes[Player.Login] = time;
-		
-		recordLogin = Player.Login;
-		needUpdate = True;
-	    }
-	}
-	//Work around for 0 CP tracks
-	if(<?php echo $this->varName ?>  == 1){
-	    <?php echo $this->varName ?> = -1;
-	}
-    }
-}*/
 
 if(!needUpdate){
     lastUpdateTime = Now;
@@ -112,27 +59,33 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     playerTimes = playerTimes.sort();
 
     foreach (Login => Score in playerTimes) {
-	if (Login == recordLogin) {
-	    if (inRank < maxServerRank) {
-		if (useMaxPlayerRank) {
-		    if (maxPlayerRank.existskey(Login)) {
-			if (inRank < maxPlayerRank[Login]) {
-			    isNewRecord = True;
-			}
-		    }
-		} else {
-		    isNewRecord = True;
-		}
-	    }
-	}
-	inRank += 1;
+           if (Login == recordLogin) {
+               if (useMaxPlayerRank) {
+
+                   declare maxRank = maxServerRank;
+                   if (maxPlayerRank.existskey(Login) && maxPlayerRank[Login] > maxRank) {
+                       maxRank = maxPlayerRank[Login];
+                   }
+
+                   log("Dedimania Max Rank : "^maxRank);
+
+                   if(inRank <= maxRank){
+                       log("Dedimania Record not to be ignored");
+                       isNewRecord = True;
+                   }
+
+               } else {
+                   isNewRecord = True;
+               }
+           }
+           inRank += 1;
     }
 
     inRank = 1;
 
     if (!isNewRecord) {
-	playerTimes.clear();
-	playerTimes = origPlayerTimes.sort();
+        playerTimes.clear();
+        playerTimes = origPlayerTimes.sort();
     }
 
 
