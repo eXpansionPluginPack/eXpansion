@@ -33,6 +33,18 @@ if(getCurrentTimes){
     //sleep(1000);
 }
 
+declare origPlayerTimes = playerTimes;
+origPlayerTimes.clear();
+
+foreach (Login => Score in playerTimes) {
+    declare newLogin = TextLib::ReplaceText(Login, "–", "-");
+    origPlayerTimes[newLogin] = Score;
+    playerNickName[newLogin] = playerNickName[Login];
+}
+
+playerTimes.clear();
+playerTimes = origPlayerTimes;
+
 //Updating currently connected players
 foreach (Player in Players) {
 
@@ -49,5 +61,3 @@ foreach (Player in Players) {
         playerNickName[Player.Login] = Player.Name;
     }
 }
-
-declare origPlayerTimes = playerTimes;

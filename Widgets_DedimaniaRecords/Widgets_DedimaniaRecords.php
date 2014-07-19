@@ -56,7 +56,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
     public function onTick()
     {
 
-        if ((time() - $this->lastUpdate) > 8) {
+        if ((time() - $this->lastUpdate) > 20) {
 
             if (($this->needUpdate & self::Dedimania) == self::Dedimania || $this->forceUpdate || ($this->needUpdate & self::Dedimania_force) == self::Dedimania_force) {
                 if ($this->dedi || $this->needUpdate == self::Dedimania_force) {
@@ -214,9 +214,9 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
      */
     public function onDedimaniaPlayerConnect($data)
     {
-        /*if ($data->maxRank > Connection::$serverMaxRank) {*/
+        if ($data->maxRank > Connection::$serverMaxRank) {
           $this->needUpdate = self::Dedimania_force;
-        //}
+        }
     }
 
     public function onDedimaniaPlayerDisconnect()

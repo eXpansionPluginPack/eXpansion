@@ -30,3 +30,15 @@ declare maxPoint = <?php echo $this->maxPoint ?>;
 
 declare Text[] playerScoreRanks;
 declare updatedPlayers = Boolean[Text];
+
+declare origPlayerTimes = playerTimes;
+origPlayerTimes.clear();
+
+foreach (Login => Score in playerTimes) {
+    declare newLogin = TextLib::ReplaceText(Login, "–", "-");
+    origPlayerTimes[newLogin] = Score;
+    playerNickNames[newLogin] = playerNickNames[Login];
+}
+
+playerTimes.clear();
+playerTimes = origPlayerTimes;

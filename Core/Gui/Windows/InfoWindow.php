@@ -6,6 +6,7 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\ServerStatistics\Gui\Controls\InfoLine;
 
 class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
@@ -59,7 +60,7 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $line = new Infoline(5, "Manialive version: ", \ManiaLive\Application\VERSION, 0);
 	$this->frame->addComponent($line);
 
-	$line = new Infoline(5, "eXpansion version: ", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION, 0);
+	$line = new Infoline(5, "eXpansion version: ", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . " - ". (date("Y-m-d h:i:s A", Helper::getBuildDate())), 0);
 	$this->frame->addComponent($line);
 	
 	$line = new Infoline(5, "Php Version: ", phpversion(), 0);

@@ -29,6 +29,7 @@ use ManiaLive\Utilities\Logger;
 class Helper
 {
 
+	private static $buildData = null;
     private static $singletons;
     private static $paths;
 
@@ -61,4 +62,46 @@ class Helper
         Console::println('[eXpansion][Adm/AdminPanel]'. $message);
     }
 
+	public static function logInfo($message){
+		Logger::info('[eXpansion]'. $message);
+		Console::println('[eXpansion]'. $message);
+	}
+
+	public static function logError($message){
+		Logger::error('[eXpansion]'. $message);
+		Console::println('[eXpansion]'. $message);
+	}
+
+	public static function getBuildDate(){
+		if(self::$buildData == null){
+			echo "\n".dirname(__DIR__)."\n";
+			self::$buildData = self::rBuildDate(dirname(__DIR__).'/');
+		}
+		return self::$buildData;
+	}
+
+	protected static function rBuildDate($base='') {
+
+		$array = array_diff(scandir($base), array('.', '..', '.git'));
+
+		$maxDate = 0;
+
+		foreach($array as $value){
+
+			$newDate = 0;
+			if (is_dir($base.$value)){
+				$newDate = self::rBuildDate($base.$value.'/');
+
+			}elseif ($base.$value){
+				$newDate = filemtime($base.$value);
+			}
+
+			if($newDate > $maxDate)
+				$maxDate = $newDate;
+
+		}
+
+		return $maxDate;
+
+	}
 } 

@@ -15,3 +15,6 @@
 #dedirecord#No dedimania records found for the map!
 #translate# #dedirecord#No dedimania records found for the map!
 
+#dedirecord#No dedimania records found for the map!
+#translate# #dedirecord#No dedimania records found for the map!
+

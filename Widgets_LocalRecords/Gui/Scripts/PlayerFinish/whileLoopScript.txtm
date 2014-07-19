@@ -39,16 +39,16 @@ foreach (Player in Players) {
 
 
             if (playerTime == -1 || playerTime > time) {
-            log("Better Time: "^Player.Login);
-            if (playerTime != -1) {
+                log("Better Time: "^Player.Login);
+
                 origPlayerTimes.clear();
                 origPlayerTimes = playerTimes;
-            }
 
-            playerTimes[Player.Login] = time;
 
-            recordLogin = Player.Login;
-            needUpdate = True;
+                playerTimes[Player.Login] = time;
+
+                recordLogin = Player.Login;
+                needUpdate = True;
             }
         }
         //Work around for 0 CP tracks

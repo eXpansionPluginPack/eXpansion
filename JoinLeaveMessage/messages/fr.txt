@@ -21,3 +21,9 @@
 #player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s
 #translate# #player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s
 
+#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# leaves! Playtime: #variable#%5$s
+#translate# #player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# leaves! Playtime: #variable#%5$s
+
+#player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s
+#translate# #player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s
+

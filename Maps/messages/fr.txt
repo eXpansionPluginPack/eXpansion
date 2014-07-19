@@ -177,3 +177,12 @@ Next Map
 Sort By Add Date
 #translate# Sort By Add Date
 
+Now Playing
+#translate# Now Playing
+
+Next Map
+#translate# Next Map
+
+Sort By Add Date
+#translate# Sort By Add Date
+
