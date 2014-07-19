@@ -906,8 +906,10 @@ use Maniaplanet\DedicatedServer\Structures\GameInfos;
 }
 
 namespace {
+	use ManiaLib\Utils\Logger;
+	use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
-    /**
+	/**
      * Convert php.ini memory shorthand string to integer bytes
      * http://www.php.net/manual/en/function.ini-get.php#96996
      */
@@ -987,15 +989,21 @@ namespace {
 	    }
 
 	    if (is_object($message)) {
-		$lang = $message->getMessage($language);
+			$lang = $message->getMessage($language);
 	    } else {
-		$lang = \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getString($message, $language);
+			$lang = \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getString($message, $language);
 	    }
 
 	    array_unshift($args, $lang);
 
+		try{
+	    	return call_user_func_array('sprintf', $args);
+		}catch (\Exception $e){
+			Helper::logError('[basicPlugin/Chat]Error with translations strings : '.$lang);
+			Helper::logError('[basicPlugin/Chat]'.$e->getMessage());
 
-	    return call_user_func_array('sprintf', $args);
+			return $lang;
+		}
 	}
 
 	/**
