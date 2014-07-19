@@ -51,6 +51,12 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	echo $login . ":" . $answer . "\n";
     }
 
+    public function onModeScriptCallback($param1, $param2)
+    {
+	echo "Event: '".$param1 ."'\n";
+	print_r($param2);
+    }
+    
     function onTick()
     {
 	if ($this->testActive) {

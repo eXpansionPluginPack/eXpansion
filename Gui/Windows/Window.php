@@ -30,7 +30,8 @@ class Window extends \ManiaLive\Gui\Window
     private $_name = "window";
     private $style;
     private $dicoMessages = array();
-
+    private $calledScripts = array();
+    
     protected function onConstruct()
     {
         parent::onConstruct();
@@ -181,9 +182,7 @@ class Window extends \ManiaLive\Gui\Window
         $this->mainFrame->setSize($this->sizeX - 4, $this->sizeY - 8);
         $this->mainFrame->setPosition(2, -4);
     }
-
-    private $calledScripts = array();
-
+    
     private function detectElements($components)
     {
         $buttonScript = null;
@@ -199,7 +198,7 @@ class Window extends \ManiaLive\Gui\Window
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer) {
                 $script = $component->getScript();
 
-                $isset = !isset($this->calledScripts[$script->getRelPath()]);
+                $isset = !array_key_exists($script->getRelPath(), $this->calledScripts);
 
                 if ($isset) {
                     $this->addScriptToLib($script->getlibScript($this, $component));
