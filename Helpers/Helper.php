@@ -61,4 +61,14 @@ class Helper
         Console::println('[eXpansion][Adm/AdminPanel]'. $message);
     }
 
+	public static function logInfo($message){
+		Logger::info('[eXpansion]'. $message);
+		Console::println('[eXpansion]'. $message);
+	}
+
+	public static function logError($message){
+		Logger::error('[eXpansion]'. $message);
+		Console::println('[eXpansion]'. $message);
+	}
+
 } 

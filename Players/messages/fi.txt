@@ -55,3 +55,15 @@ Virhe:
 %s$1 $z$s$fff is $f00broadcasting$fff at $lwww.twitch.tv$l, say hello to all the viewers :)
 %s$1 $z$s$fff $f00lähettää streamia$fff $lwww.twitch.tv$l:ssä, sano hei katsojille :)
 
+Ignore List
+#translate# Ignore List
+
+Guest List
+#translate# Guest List
+
+Ban List
+#translate# Ban List
+
+Black List
+#translate# Black List
+

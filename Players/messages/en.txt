@@ -52,3 +52,15 @@ Error:
 %s$1 $z$s$fff is $f00broadcasting$fff at $lwww.twitch.tv$l, say hello to all the viewers :)
 %s$1 $z$s$fff is $f00broadcasting$fff at $lwww.twitch.tv$l, say hello to all the viewers :)
 
+Ignore List
+Ignore List
+
+Guest List
+Guest List
+
+Ban List
+Ban List
+
+Black List
+Black List
+

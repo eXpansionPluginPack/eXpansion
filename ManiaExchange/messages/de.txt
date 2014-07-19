@@ -71,3 +71,9 @@ Author
 Map is not compatible with current server settings, map not added.
 #translate# Map is not compatible with current server settings, map not added.
 
+Author
+#translate# Author
+
+Map is not compatible with current server settings, map not added.
+#translate# Map is not compatible with current server settings, map not added.
+

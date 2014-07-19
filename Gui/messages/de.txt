@@ -77,3 +77,27 @@ No
 Really do this ?
 #translate# Really do this ?
 
+Hello World
+#translate# Hello World
+
+possible parameters: move, lock, reset
+#translate# possible parameters: move, lock, reset
+
+#error#Server Admin has disabled personal huds. Sorry!
+#translate# #error#Server Admin has disabled personal huds. Sorry!
+
+Hud reset done!
+#translate# Hud reset done!
+
+Starting hud reset, please wait
+#translate# Starting hud reset, please wait
+
+Yes
+#translate# Yes
+
+No
+#translate# No
+
+Really do this ?
+#translate# Really do this ?
+
