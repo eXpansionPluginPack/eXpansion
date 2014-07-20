@@ -15,7 +15,8 @@ use ManiaLivePlugins\eXpansion\Core\Classes\Webaccess;
  *
  * @author Reaby
  */
-class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Application\Listener, \ManiaLive\Features\Tick\Listener {
+class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Application\Listener, \ManiaLive\Features\Tick\Listener
+{
 
     /** @var \Webaccess */
     private $webaccess;
@@ -25,19 +26,22 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
     private $except;
     private $tryTimer = -1;
 
-    public function __construct() {
+    public function __construct()
+    {
 	$this->read = array();
 	$this->write = array();
 	$this->except = array();
 	$this->webaccess = new Webaccess();
     }
 
-    public function start() {
+    public function start()
+    {
 	//Dispatcher::register(TickEvent::getClass(), $this);
 	Dispatcher::register(AppEvent::getClass(), $this);
     }
 
-    public function onTick() {
+    public function onTick()
+    {
 	try {
 	    if ($this->tryTimer == -1) {
 		$this->webaccess->select($this->read, $this->write, $this->except, 0, 0);
@@ -47,7 +51,8 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 	}
     }
 
-    function __destruct() {
+    function __destruct()
+    {
 	$this->webaccess = null;
 	Dispatcher::unregister(TickEvent::getClass(), $this);
     }
@@ -68,7 +73,8 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
      * @param string $mimeType header mimetype request -> defaults to "text/html"
      * @throws Exception
      */
-    final public function httpGet($url, $callback, $callparams = array(), $userAgent = "ManiaLive - eXpansionPluginPack", $mimeType = "text/html") {
+    final public function httpGet($url, $callback, $callparams = array(), $userAgent = "ManiaLive - eXpansionPluginPack", $mimeType = "text/html")
+    {
 	/* if (!is_callable($callback))
 	  throw new \Exception("Invalid Callback!");
 	 */
@@ -76,12 +82,14 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 	$this->_get(new HttpQuery($url, $callback, $callparams, $userAgent, $mimeType));
     }
 
-    private function _get(HttpQuery $query) {
+    private function _get(HttpQuery $query)
+    {
 	$this->webaccess->request($query->baseurl . "?" . $query->params, array(array($this, "_process"), $query), null, false, 20, 3, 5, $query->userAgent, $query->mimeType);
     }
 
     /** @todo make queue and process it onPostLoop */
-    final public function save($filename, $data) {
+    final public function save($filename, $data, $append = false)
+    {
 	clearstatcache();
 	if (!is_file($filename)) {
 	    if (!touch($filename)) {
@@ -92,6 +100,9 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 	clearstatcache();
 	if (is_writable($filename)) {
 	    try {
+		if ($append === true) {
+		    return file_put_contents($filename, $data, LOCK_EX | FILE_APPEND);
+		}
 		return file_put_contents($filename, $data, LOCK_EX);
 	    } catch (\Exception $e) {
 		Console::println("File write exception:" . $e->getMessage());
@@ -101,7 +112,8 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
     }
 
     /** @todo make queue and process it onPostLoop */
-    final public function load($filename) {
+    final public function load($filename)
+    {
 	clearstatcache();
 	if (!is_file($filename)) {
 	    return false;
@@ -116,7 +128,8 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 	}
     }
 
-    public function _process($data, HttpQuery $query) {
+    public function _process($data, HttpQuery $query)
+    {
 	if (!is_callable($query->callback)) {
 	    Console::println("[DataAccess Error] Callback-function is not valid!");
 	    return;
@@ -181,36 +194,41 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 	}
     }
 
-    public function onInit() {
+    public function onInit()
+    {
 	
     }
 
-    public function onPostLoop() {
+    public function onPostLoop()
+    {
 	try {
 	    if ($this->tryTimer == -1) {
 		$this->webaccess->select($this->read, $this->write, $this->except, 0, 0);
 	    } else {
 		if (time() >= $this->tryTimer) {
-		    Console::println("[DataAccess] Loop active again!");	  
+		    Console::println("[DataAccess] Loop active again!");
 		    $this->tryTimer = -1;
 		}
 	    }
 	} catch (\Exception $e) {
 	    Console::println("[DataAccess] OnTick Update failed: " . $e->getMessage() . "\n file " . $e->getFile() . ":" . $e->getLine());
-	    Console::println("[DataAccess] Recovering retry loop in 2 seconds...");	  
-	    $this->tryTimer = time() + 2;	   
+	    Console::println("[DataAccess] Recovering retry loop in 2 seconds...");
+	    $this->tryTimer = time() + 2;
 	}
     }
 
-    public function onPreLoop() {
+    public function onPreLoop()
+    {
 	
     }
 
-    public function onRun() {
+    public function onRun()
+    {
 	
     }
 
-    public function onTerminate() {
+    public function onTerminate()
+    {
 	
     }
 

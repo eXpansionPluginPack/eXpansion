@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
@@ -22,14 +23,13 @@
 
 namespace ManiaLivePlugins\eXpansion\Helpers;
 
-
 use ManiaLive\Utilities\Console;
 use ManiaLive\Utilities\Logger;
 
 class Helper
 {
 
-	private static $buildData = null;
+    private static $buildData = null;
     private static $singletons;
     private static $paths;
 
@@ -40,9 +40,9 @@ class Helper
      */
     public static function getPaths()
     {
-        if (self::$paths == null)
-            self::$paths = new Paths();
-        return self::$paths;
+	if (self::$paths == null)
+	    self::$paths = new Paths();
+	return self::$paths;
     }
 
     /**
@@ -52,56 +52,59 @@ class Helper
      */
     public static function getSingletons()
     {
-        if (self::$singletons == null)
-            self::$singletons = Singletons::getInstance();
-        return self::$singletons;
+	if (self::$singletons == null)
+	    self::$singletons = Singletons::getInstance();
+	return self::$singletons;
     }
 
-    public static function log($message){
-        Logger::info('[eXpansion][Adm/AdminPanel]'. $message);
-        Console::println('[eXpansion][Adm/AdminPanel]'. $message);
+    public static function log($message)
+    {
+	Logger::info('[eXpansion][Adm/AdminPanel]' . $message);
+	Console::println('[eXpansion][Adm/AdminPanel]' . $message);
     }
 
-	public static function logInfo($message){
-		Logger::info('[eXpansion]'. $message);
-		Console::println('[eXpansion]'. $message);
+    public static function logInfo($message)
+    {
+	Logger::info('[eXpansion]' . $message);
+	Console::println('[eXpansion]' . $message);
+    }
+
+    public static function logError($message)
+    {
+	Logger::error('[eXpansion]' . $message);
+	Console::println('[eXpansion]' . $message);
+    }
+
+    public static function getBuildDate()
+    {
+	if (self::$buildData == null) {
+	    echo "\n" . dirname(__DIR__) . "\n";
+	    self::$buildData = self::rBuildDate(dirname(__DIR__) . '/');
+	}
+	return self::$buildData;
+    }
+
+    protected static function rBuildDate($base = '')
+    {
+
+	$array = array_diff(scandir($base), array('.', '..', '.git'));
+
+	$maxDate = 0;
+
+	foreach ($array as $value) {
+
+	    $newDate = 0;
+	    if (is_dir($base . $value)) {
+		$newDate = self::rBuildDate($base . $value . '/');
+	    } elseif ($base . $value) {
+		$newDate = filemtime($base . $value);
+	    }
+
+	    if ($newDate > $maxDate)
+		$maxDate = $newDate;
 	}
 
-	public static function logError($message){
-		Logger::error('[eXpansion]'. $message);
-		Console::println('[eXpansion]'. $message);
-	}
+	return $maxDate;
+    }
 
-	public static function getBuildDate(){
-		if(self::$buildData == null){
-			echo "\n".dirname(__DIR__)."\n";
-			self::$buildData = self::rBuildDate(dirname(__DIR__).'/');
-		}
-		return self::$buildData;
-	}
-
-	protected static function rBuildDate($base='') {
-
-		$array = array_diff(scandir($base), array('.', '..', '.git'));
-
-		$maxDate = 0;
-
-		foreach($array as $value){
-
-			$newDate = 0;
-			if (is_dir($base.$value)){
-				$newDate = self::rBuildDate($base.$value.'/');
-
-			}elseif ($base.$value){
-				$newDate = filemtime($base.$value);
-			}
-
-			if($newDate > $maxDate)
-				$maxDate = $newDate;
-
-		}
-
-		return $maxDate;
-
-	}
-} 
+}
