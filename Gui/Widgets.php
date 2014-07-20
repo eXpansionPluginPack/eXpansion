@@ -100,9 +100,9 @@ class Widgets extends \ManiaLib\Utils\Singleton
 						    GameInfos::GAMEMODE_CUP    => 10);
 
     public $SkipandResButtons_posX = array(self::config_default => 96.5,
-					   self::config_shootmania => -120);
+					   self::config_shootmania => -70);
     public $SkipandResButtons_posY = array(self::config_default => 75,
-					   self::config_shootmania => 92);
+					   self::config_shootmania => 90);
     
     public $CurrentMapWidget_posX = array(self::config_default => -80);
     public $CurrentMapWidget_posY = array(self::config_default => 65);
