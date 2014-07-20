@@ -2,17 +2,19 @@
 
 namespace ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Windows;
 
+use ManiaLib\Application\ErrorHandling;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ButtonHook;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\Helpers\Storage;
+use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxMap;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Hooks\ListButtons;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\HookData;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap as Map;
-use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
 
 class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
@@ -135,8 +137,15 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$storage = Storage::getInstance();
 
 		if ($storage->simpleEnviTitle == Storage::TITLE_SIMPLE_SM) {
+
 			$script = $this->connection->getModeScriptInfo();
 			$query = "";
+
+			/** @var Storage $storage */
+			$storage = Storage::getInstance();
+			$titlePack = $storage->version->titleId;
+			$parts = explode('@', $titlePack);
+			$titlePack = $parts[0];
 
 			switch ($script->name) {
 				case "Royal.Script.txt":
@@ -155,9 +164,10 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 					$query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&mtype=SiegeArena&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&priord=2&limit=100&environments=1&tracksearch&api=on&format=json';
 					break;
 				default:
-					$query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&tpack=All&priord=2&limit=100&environments=1&tracksearch&api=on&format=json';
+					$query = 'http://sm.mania-exchange.com/tracksearch?mode=0&vm=0&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&tpack='. rawurlencode($titlePack).'&priord=2&limit=100&environments=1&tracksearch&api=on&format=jsonbe';
 					break;
 			}
+			echo $query;
 		} else {
 			$query = 'http://tm.mania-exchange.com/tracksearch2/search?api=on&format=json';
 
@@ -215,65 +225,77 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	function xSearch($data)
 	{
-		if (!$data)
-			return;
-		$json = json_decode($data, true);
+		try {
+			if (!$data)
+				return;
+			$json = json_decode($data, true);
 
-		if ($json === false) {
-			$this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error while processing json data from MX.", $this->sizeX - 6));
-			return;
-		}
-		if (!array_key_exists("results", $json)) {
-			$this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error: MX returned no results.", $this->sizeX - 6));
-			return;
-		}
-
-		$this->maps = Map::fromArrayOfArray($json['results']);
-
-		foreach ($this->items as $item)
-			$item->erase();
-
-		$this->pager->clearItems();
-		$this->items = array();
-
-		$login = $this->getRecipient();
-		$isadmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_addMX);
-
-		$buttons = $this->hookButtons($isadmin);
-
-		$x = 0;
-		if (count($this->maps) == 0) {
-			$this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "No maps found with this search terms.", $this->sizeX - 6));
-		} else {
-			foreach ($this->maps as $map) {
-				$this->items[$x] = new MxMap($x, $map, $this, $buttons, $this->sizeX - 9);
-				$this->pager->addItem($this->items[$x]);
-				$x++;
+			if(isset($json[0]) && !isset($json['results'])){
+				$newArray['results'] = $json;
+				$json = $newArray;
 			}
-		}
 
-		$this->redraw();
+			if ($json === false) {
+				$this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error while processing json data from MX.", $this->sizeX - 6));
+				$this->redraw();
+				return;
+			}
+			if (!array_key_exists("results", $json)) {
+				$this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error: MX returned no results.", $this->sizeX - 6));
+				$this->redraw();
+				return;
+			}
+
+			$this->maps = Map::fromArrayOfArray($json['results']);
+
+			foreach ($this->items as $item)
+				$item->erase();
+
+			$this->pager->clearItems();
+			$this->items = array();
+
+			$login = $this->getRecipient();
+			$isadmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_addMX);
+
+			$buttons = $this->hookButtons($isadmin);
+
+			$x = 0;
+			if (empty($this->maps)) {
+				$this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "No maps found with this search terms.", $this->sizeX - 6));
+			} else {
+				foreach ($this->maps as $map) {
+					$this->items[$x] = new MxMap($x, $map, $this, $buttons, $this->sizeX - 9);
+					$this->pager->addItem($this->items[$x]);
+					$x++;
+				}
+			}
+
+			$this->redraw();
+		} catch (\Exception $ex) {
+			Helper::logError(ErrorHandling::computeMessage($ex));
+		}
 	}
 
-	protected function hookButtons($isadmin){
+	protected function hookButtons($isadmin)
+	{
 		$buttons = array();
 
 		$config = Config::getInstance();
 
-		if($isadmin){
+		if ($isadmin) {
 			$buttons['install'] = new ButtonHook();
 			$buttons['install']->callback = array($this, 'addMap');
 			$buttons['install']->label = 'Install';
 		}
 
-		if($config->mxVote_enable){
+		if ($config->mxVote_enable) {
 			$buttons['queue'] = new ButtonHook();
 			$buttons['queue']->callback = array($this, 'mxVote');
 			$buttons['queue']->label = 'Queue';
 		}
 
 		$hook = new HookData();
-		$hook->data=$buttons;
+		$hook->data = $buttons;
 
 		\ManiaLive\Event\Dispatcher::dispatch(
 			new ListButtons(ListButtons::ON_BUTTON_LIST_CREATE, $hook, 'test')
