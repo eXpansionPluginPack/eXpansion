@@ -54,6 +54,7 @@ class Menu extends ExpPlugin
 	$this->actions['serverinfo'] = $actionHandler->createAction(array($this, "actions"), "serverinfo");
 	$this->actions['admreplay'] = $actionHandler->createAction(array($this, "actions"), "admreplay");
 	$this->actions['serverranks'] = $actionHandler->createAction(array($this, "actions"), "serverranks");
+	$this->actions['teambalance'] = $actionHandler->createAction(array($this, "actions"), "teambalance");
 
 	foreach ($this->storage->players as $login => $player) {
 	    $this->onPlayerConnect($login, null);
@@ -162,6 +163,9 @@ class Menu extends ExpPlugin
 	    case "admreplay":
 		$adminGrp->adminCmd($login, "replay");
 		break;
+	    case "teambalance":
+		$adminGrp->adminCmd($login, "setTeamBalance");
+		break;
 	}
     }
 
@@ -227,7 +231,7 @@ class Menu extends ExpPlugin
 	if (AdminGroups::hasPermission($login, Permission::server_votes))
 	    $submenu->addItem($votes, __("Cancel Vote", $login), $this->actions['admcancel']);
 
-	if (AdminGroups::hasPermission($login, Permission::map_endRound) || AdminGroups::hasPermission($login, Permission::map_restart) || AdminGroups::hasPermission($login, Permission::map_skip)) {
+	if (AdminGroups::hasPermission($login, Permission::team_balance) || AdminGroups::hasPermission($login, Permission::map_endRound) || AdminGroups::hasPermission($login, Permission::map_restart) || AdminGroups::hasPermission($login, Permission::map_skip)) {
 	    $adm = $submenu->addSubMenu($menu, __("Admin", $login));
 
 	    if (AdminGroups::hasPermission($login, Permission::map_restart))
@@ -241,6 +245,9 @@ class Menu extends ExpPlugin
 
 	    if (AdminGroups::hasPermission($login, Permission::map_endRound))
 		$submenu->addItem($adm, __("End Round", $login), $this->actions['admer']);
+
+	    if (AdminGroups::hasPermission($login, Permission::team_balance))
+		$submenu->addItem($adm, __("Balance Teams", $login), $this->actions['teambalance']);
 	}
 
 	if (AdminGroups::hasPermission($login, Permission::server_controlPanel)) {

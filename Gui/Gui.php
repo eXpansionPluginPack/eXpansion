@@ -23,12 +23,8 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function exp_onLoad()
     {
 	HudPanel::$mainPlugin = $this;
-
-	$version = $this->connection->getVersion();
-	$this->titleId = $version->titleId;
-
-	$SMstorm = array("SMStorm", "SMStormCombo@nadeolabs", "SMStormRoyal@nadeolabs", "SMStormElite@nadeolabs", "SMStormJoust@nadeolabs");
-	if (in_array($this->titleId, $SMstorm)) {
+	
+	if ($this->expStorage->simpleEnviTitle == "SM") {
 	    $settings = array("S_UseScriptCallbacks" => true);
 	    $this->connection->setModeScriptSettings($settings);
 	}
@@ -138,8 +134,8 @@ class Gui extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	  $info->show(); */
 
 	try {
-	    $SMstorm = array("SMStorm", "SMStormCombo@nadeolabs", "SMStormRoyal@nadeolabs", "SMStormElite@nadeolabs", "SMStormJoust@nadeolabs");
-	    if (in_array($this->titleId, $SMstorm)) {
+	  
+	    if ($this->expStorage->simpleEnviTitle == "SM") {
 		$this->counter = time();
 		$this->connection->TriggerModeScriptEvent("LibXmlRpc_DisableAltMenu", $login);
 		$this->connection->sendDisplayManialinkPage($login, "<manialinks><manialink id=\"0\"><quad></quad></manialink><custom_ui><altmenu_scores visible=\"false\" /></custom_ui></manialinks>", 0, false);

@@ -147,6 +147,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$var->setDefaultValue(true);
 	$this->registerVariable($var);
 
+	$var = new BasicList('modeTeamSupport', 'Script Modes that has Teams as gameplay', $config,false);
+	$var->setDescription("This is used to change plugins behaviour and add new options especially for teams based gaming!");
+	$var->setGroup("Misc");
+	$var->setType(new String("","",null));
+	$var->setDefaultValue(array('Team.Script.txt','Siege.Script.txt','Battle.Script.txt','ShootMania\\Elite.Script.txt'));
+	$this->registerVariable($var);
+	
 	$var = new String('defaultMatchSettingsFile', 'This servers autosave matchsettings file', $config, false);
 	$var->setGroup("Config Files");
 	$var->setDefaultValue('eXpansion_autosave.txt');

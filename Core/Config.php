@@ -52,8 +52,10 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $contact = "YOUR@EMAIL.COM";
 
 	public $disableGameMode = array();
-	
+
 	public $netLostTime = 4000;   // time in milliseconds for lastresponse time, used to determine netlost 
+	
+	public $modeTeamSupport = array('Team.Script.txt','Siege.Script.txt','Battle.Script.txt','ShootMania\\Elite.Script.txt');
 	
 }
 
