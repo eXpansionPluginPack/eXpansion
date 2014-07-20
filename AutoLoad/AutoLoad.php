@@ -114,7 +114,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
 
         for ($i = 0; $i < count($plugins); $i++) {
-            if (in_array($plugins[$i], $toRemove)) {
+            if (isset($plugins[$i]) && in_array($plugins[$i], $toRemove)) {
                 array_splice($plugins, $i, 1);
             }
         }
