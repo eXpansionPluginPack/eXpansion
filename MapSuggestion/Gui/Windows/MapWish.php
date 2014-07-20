@@ -54,13 +54,13 @@ class MapWish extends Window
 	function onConstruct()
 	{
 		parent::onConstruct();
-
+		
 
 		$login = $this->getRecipient();
 		$player = Storage::getInstance()->getPlayerObject($login);
 		$this->fromText = $player->nickName . '$z$s$fff (' . $login . ')';
-
-		$this->setName(__("Wish a map", $login));
+		$this->setName("MapSuggestion window");
+		$this->setTitle( __("Wish a map", $login));
 		$this->setSize(90, 60);
 
 		$this->frame = new Frame(2, -6);

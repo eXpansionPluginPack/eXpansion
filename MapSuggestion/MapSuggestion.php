@@ -16,29 +16,28 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 
 	public function exp_onReady()
 	{
-		$this->registerChatCommand("mapwish", "mapSuggestChatCommand", 0, true);
-
+		$this->registerChatCommand("mapwish", "showMapWishWindow", 0, true);
+		$this->setPublicMethod("showMapWishWindow");
 		Dispatcher::register(ListButtons::getClass(), $this);
 	}
 
-
-
-	public function mapSuggestChatCommand($login)
+	public function showMapWishWindow($login)
 	{
-		/** @var MxSearch $window */
 		$window = MapWish::Create($login);
 		$window->setPlugin($this);
 		$window->show();
 	}
 
-	function addMapToWish($login, $mxid, $description = null){
+	function addMapToWish($login, $mxid, $description = null)
+	{
 
 		if (is_array($mxid))
 			$mxid = $mxid[0];
 
 
-		if($description == null || is_array($description));
+		if ($description == null || is_array($description)) {
 			$description = 'Add with MX Search Window';
+		}
 
 		$player = $this->storage->getPlayerObject($login);
 		$from = '"' . $player->nickName . '$z$s$fff (' . $login . ')' . '"';
@@ -59,7 +58,7 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 
 			$data .= $mxid . ";" . $from . ";\"" . $description . "\"\r\n";
 			$dataAccess->save($file, $data, true);
-			Gui::showNotice(exp_getMessage("Your wish has been saved\nThe server admin will review the wish and add the map if it's good enough."), $login);
+			Gui::showNotice(exp_getMessage("Your wish has been saved\nThe server admin will review the wish\nand add the map if it's good enough."), $login);
 			MapWish::Erase($login);
 			return;
 		}
@@ -75,7 +74,7 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 	 */
 	public function hook_ManiaExchangeListButtons($buttons, $login)
 	{
-		if(isset($buttons->data['queue'])){
+		if (isset($buttons->data['queue'])) {
 			unset($buttons->data['queue']);
 		}
 
@@ -84,6 +83,7 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 		$button->label = 'Suggest';
 		$buttons->data['suggest'] = $button;
 	}
+
 }
 
 ?>
