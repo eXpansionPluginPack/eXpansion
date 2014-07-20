@@ -30,10 +30,10 @@ foreach (Player in Players) {
             declare playerTime = -1;
 
             if (!playerTimes.existskey(Player.Login)) {
-            origPlayerTimes.clear();
-            origPlayerTimes = playerTimes;
-            playerTimes[Player.Login] = -1;
-            playerNickName[Player.Login] = Player.Name;
+                origPlayerTimes.clear();
+                origPlayerTimes = playerTimes;
+                playerTimes[Player.Login] = -1;
+                playerNickName[Player.Login] = Player.Name;
             }
             playerTime = playerTimes[Player.Login];
 
@@ -41,9 +41,10 @@ foreach (Player in Players) {
             if (playerTime == -1 || playerTime > time) {
                 log("Better Time: "^Player.Login);
 
-                origPlayerTimes.clear();
-                origPlayerTimes = playerTimes;
-
+                if(playerTime != -1){
+                    origPlayerTimes.clear();
+                    origPlayerTimes = playerTimes;
+                }
 
                 playerTimes[Player.Login] = time;
 
