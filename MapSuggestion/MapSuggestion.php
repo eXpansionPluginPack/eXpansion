@@ -3,8 +3,13 @@
 namespace ManiaLivePlugins\eXpansion\MapSuggestion;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
+use ManiaLivePlugins\eXpansion\Gui\Structures\ButtonHook;
+use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Windows\MxSearch;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Hooks\ListButtons;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Hooks\ListButtons_Event;
+use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\HookData;
+use ManiaLivePlugins\eXpansion\MapSuggestion\Gui\Windows\MapWish;
 
 class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements ListButtons_Event
 {
@@ -20,13 +25,50 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 
 	public function mapSuggestChatCommand($login)
 	{
-		$window = Gui\Windows\MapWish::Create($login);
+		/** @var MxSearch $window */
+		$window = MapWish::Create($login);
+		$window->setPlugin($this);
 		$window->show();
+	}
+
+	function addMapToWish($login, $mxid, $description = null){
+
+		if (is_array($mxid))
+			$mxid = $mxid[0];
+
+
+		if($description == null || is_array($description));
+			$description = 'Add with MX Search Window';
+
+		$player = $this->storage->getPlayerObject($login);
+		$from = '"' . $player->nickName . '$z$s$fff (' . $login . ')' . '"';
+
+		$data = "";
+
+		$dataAccess = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
+
+		if (is_numeric($mxid)) {
+			$mxid = intval($mxid);
+			if (empty($description)) {
+				Gui::showNotice(exp_getMessage("Looks like you have not entered any description."), $login);
+				return;
+			}
+
+			$gameData = \ManiaLivePlugins\eXpansion\Helpers\Helper::getPaths()->getGameDataPath();
+			$file = $gameData . DIRECTORY_SEPARATOR . "map_suggestions.txt";
+
+			$data .= $mxid . ";" . $from . ";\"" . $description . "\"\r\n";
+			$dataAccess->save($file, $data, true);
+			Gui::showNotice(exp_getMessage("Your wish has been saved\nThe server admin will review the wish and add the map if it's good enough."), $login);
+			MapWish::Erase($login);
+			return;
+		}
+		Gui::showNotice(exp_getMessage("Looks like mx id is missing or is invalid."), $login);
 	}
 
 	/**
 	 *
-	 * @param $buttons
+	 * @param HookData $buttons
 	 * @param $login
 	 *
 	 * @return mixed
@@ -34,9 +76,13 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 	public function hook_ManiaExchangeListButtons($buttons, $login)
 	{
 		if(isset($buttons->data['queue'])){
-			echo "Removing \n";
 			unset($buttons->data['queue']);
 		}
+
+		$button = new ButtonHook();
+		$button->callback = array($this, 'addMapToWish');
+		$button->label = 'Suggest';
+		$buttons->data['suggest'] = $button;
 	}
 }
 

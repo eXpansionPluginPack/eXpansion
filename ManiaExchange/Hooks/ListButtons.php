@@ -45,7 +45,6 @@ class ListButtons extends \ManiaLive\Event\Event
 
 	function fireDo($listener)
 	{
-		echo "Firedo";
 		switch ($this->onWhat) {
 			case self::ON_BUTTON_LIST_CREATE:
 				$listener->hook_ManiaExchangeListButtons($this->buttons, $this->login);
