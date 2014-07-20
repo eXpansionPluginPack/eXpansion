@@ -9,6 +9,8 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ButtonHook;
 use ManiaLivePlugins\eXpansion\Helpers\Storage;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxMap;
+use ManiaLivePlugins\eXpansion\ManiaExchange\Hooks\ListButtons;
+use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\HookData;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap as Map;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
 
@@ -270,7 +272,14 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			$buttons['queue']->label = 'Queue';
 		}
 
-		return $buttons;
+		$hook = new HookData();
+		$hook->data=$buttons;
+
+		\ManiaLive\Event\Dispatcher::dispatch(
+			new ListButtons(ListButtons::ON_BUTTON_LIST_CREATE, $hook, 'test')
+		);
+
+		return $hook->data;
 	}
 
 	function addMap($login, $mapId)

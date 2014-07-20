@@ -1,6 +1,6 @@
 <?php
 /**
- * @author       Oliver de Cramer (oliverde8 at gmail.com)
+ * @author      Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -23,33 +23,14 @@
 namespace ManiaLivePlugins\eXpansion\ManiaExchange\Hooks;
 
 
-class ListButtons extends \ManiaLive\Event\Event
-{
-	const ON_BUTTON_LIST_CREATE = 1;
-
-	protected $buttons;
-	protected $login;
+interface ListButtons_Event {
 
 	/**
-	 * @param $onWhat
+	 *
 	 * @param $buttons
 	 * @param $login
+	 *
+	 * @return mixed
 	 */
-	function __construct($onWhat, $buttons, $login) {
-		echo $onWhat;
-		parent::__construct($onWhat);
-
-		$this->buttons = $buttons;
-		$this->login = $login;
-	}
-
-	function fireDo($listener)
-	{
-		echo "Firedo";
-		switch ($this->onWhat) {
-			case self::ON_BUTTON_LIST_CREATE:
-				$listener->hook_ManiaExchangeListButtons($this->buttons, $this->login);
-				break;
-		}
-	}
+	public function hook_ManiaExchangeListButtons($buttons, $login);
 } 

@@ -20,17 +20,16 @@
  *  along with this program.  If not, see {http://www.gnu.org/licenses/}.
  */
 
-namespace ManiaLivePlugins\eXpansion\ManiaExchange\Hooks;
+namespace ManiaLivePlugins\eXpansion\ManiaExchange\Structures;
 
 
-interface ListButtons_Events {
+use ManiaLivePlugins\eXpansion\Gui\Structures\ButtonHook;
+
+class HookData {
 
 	/**
-	 *
-	 * @param $buttons
-	 * @param $login
-	 *
-	 * @return mixed
+	 * @var ButtonHook[]
 	 */
-	public function hook_ManiaExchangeListButtons(&$buttons, $login);
+	public $data;
+
 } 
