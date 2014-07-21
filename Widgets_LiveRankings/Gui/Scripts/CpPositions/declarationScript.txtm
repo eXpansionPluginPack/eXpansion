@@ -31,7 +31,7 @@ declare maxPoint = <?php echo $this->maxPoint ?>;
 declare Text[] playerScoreRanks;
 declare updatedPlayers = Boolean[Text];
 
-declare origPlayerTimes = playerTimes;
+/*declare origPlayerTimes = playerTimes;
 origPlayerTimes.clear();
 
 foreach (Login => Score in playerTimes) {
@@ -41,4 +41,4 @@ foreach (Login => Score in playerTimes) {
 }
 
 playerTimes.clear();
-playerTimes = origPlayerTimes;
+playerTimes = origPlayerTimes;*/
