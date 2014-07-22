@@ -87,6 +87,7 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             self::$mainPlugin->addActionDuration($prms[0], $this->adminAction, $items[$inputbox['select']]);
         }
         \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->adminCmd($login, $params);
+		$this->Erase($login);
     }
 
     function cancel($login) {

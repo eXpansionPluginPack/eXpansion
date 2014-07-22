@@ -106,7 +106,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 				$this->connection->unignore($target);
 				$this->connection->chatSendServerMessage(__('%s$z$s$fff was unignored by admin %s', $login, $player->nickName, $admin->nickName));
 			}
-			$this->populateList();
+
 			$this->show($login);
 		} catch (\Exception $e) {
 			//   $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
@@ -120,7 +120,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			AdminGroups::getInstance()->adminCmd($login, "kick " . $target);
 		} catch (\Exception $e) {
 			//$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
-				Helper::logError("Error:" . $e->getMessage());
+			Helper::logError("Error:" . $e->getMessage());
 		}
 	}
 
@@ -147,7 +147,6 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	function toggleSpec($login, $target)
 	{
 		try {
-			Helper::logError("test");
 			$login = $this->getRecipient();
 			if (!AdminGroups::hasPermission($login, Permission::player_forcespec)) {
 				$this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!', $login), $login);
@@ -156,7 +155,6 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 			if ($player->spectatorStatus == 0) {
 				$this->connection->forceSpectator($target, 1);
-				$this->connection->spectatorReleasePlayerSlot($target);
 				$this->connection->chatSendServerMessage(__('Admin has forced you to specate!', $target), $target);
 				return;
 			}
@@ -165,7 +163,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 				$this->connection->forceSpectator($target, 0);
 				$this->connection->chatSendServerMessage(__("Admin has released you from specate to play.", $target), $target);
 				return;
-			}			
+			}
 		} catch (\Exception $e) {
 			Helper::logError("Error:" . $e->getMessage());
 			//$this->connection->chatSendServerMessage(__("Error:".$login, $e->getMessage()), $login);
@@ -179,11 +177,10 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->pager->setPosition(2, -1);
 	}
 
-	function onShow()
+	function onDraw()
 	{
-		if (empty($this->items))
-			$this->populateList();
-		parent::onShow();
+		$this->populateList();
+		parent::onDraw();
 	}
 
 	function toggleTeam($login, $target)
@@ -197,7 +194,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		}
 	}
 
-	function populateList()
+	private function populateList()
 	{
 
 		foreach ($this->items as $item)
