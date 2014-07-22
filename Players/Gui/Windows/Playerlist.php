@@ -6,231 +6,238 @@ use ManiaLivePlugins\eXpansion\Players\Gui\Controls\Playeritem;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    protected $pager;
+	protected $pager;
 
-    /** @var \ManiaLivePlugins\eXpansion\Players\Players */
-    public static $mainPlugin;
+	/** @var \ManiaLivePlugins\eXpansion\Players\Players */
+	public static $mainPlugin;
 
-    /** @var \Maniaplanet\DedicatedServer\Connection */
-    private $connection;
+	/** @var \Maniaplanet\DedicatedServer\Connection */
+	private $connection;
 
-    /** @var \ManiaLive\Data\Storage */
-    private $storage;
-    private $items = array();
-    private $frame;
-    protected $title_status, $title_login, $title_nickname;
-    private $widths;
+	/** @var \ManiaLive\Data\Storage */
+	private $storage;
 
-    protected function onConstruct()
-    {
-	parent::onConstruct();
-	$login = $this->getRecipient();
-	$config = \ManiaLive\DedicatedApi\Config::getInstance();
-	$this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
-	$this->storage = \ManiaLive\Data\Storage::getInstance();
+	private $items = array();
 
-	$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
-	$this->mainFrame->addComponent($this->pager);
-	$this->widths = array(1, 8, 6, 5);
+	private $frame;
 
-	$line = new \ManiaLive\Gui\Controls\Frame(23,0);
-	$line->setLayout(new \ManiaLib\Gui\Layouts\Line());
-	if (AdminGroups::hasPermission($login, Permission::player_ignore)) {
-	    $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-	    $btn->setText(__("Ignore List", $login));
-	    $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['ignore']);
-	    $line->addComponent($btn);
-	}
-	
-	if (AdminGroups::hasPermission($login, Permission::game_settings)) {
-	    $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-	    $btn->setText(__("Guest List", $login));
-	    $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['guest']);
-	    $line->addComponent($btn);
-	}
+	protected $title_status, $title_login, $title_nickname;
 
-	if (AdminGroups::hasPermission($login, Permission::player_unban)) {
-	    $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-	    $btn->setText(__("Ban List", $login));
-	    $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['ban']);
-	    $line->addComponent($btn);
-	}
-	if (AdminGroups::hasPermission($login, Permission::player_black)) {
-	    $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-	    $btn->setText(__("Black List", $login));
-	    $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['black']);
-	    $line->addComponent($btn);
-	}
+	private $widths;
 
+	protected function onConstruct()
+	{
+		parent::onConstruct();
+		$login = $this->getRecipient();
+		$config = \ManiaLive\DedicatedApi\Config::getInstance();
+		$this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
+		$this->storage = \ManiaLive\Data\Storage::getInstance();
 
-	$this->mainFrame->addComponent($line);
+		$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+		$this->mainFrame->addComponent($this->pager);
+		$this->widths = array(1, 8, 6, 5);
 
-
-	$textStyle = "TextCardRaceRank";
-	$textColor = "fff";
-	$textSize = 2.5;
-	$scaledSizes = Gui::getScaledSize($this->widths, $this->sizeX / .8);
-	
-    }
-
-    function ignorePlayer($login, $target)
-    {
-	try {
-	    $login = $this->getRecipient();
-	    if (!AdminGroups::hasPermission($login, Permission::player_ignore)) {
-		$this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!', $login), $login);
-	    }
-	    $player = $this->storage->getPlayerObject($target);
-	    $admin = $this->storage->getPlayerObject($login);
-	    $list = $this->connection->getIgnoreList(-1, 0);
-	    $ignore = true;
-	    foreach ($list as $test) {
-		if ($target == $test->login) {
-		    $ignore = false;
-		    break;
+		$line = new \ManiaLive\Gui\Controls\Frame(23, 0);
+		$line->setLayout(new \ManiaLib\Gui\Layouts\Line());
+		if (AdminGroups::hasPermission($login, Permission::player_ignore)) {
+			$btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+			$btn->setText(__("Ignore List", $login));
+			$btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['ignore']);
+			$line->addComponent($btn);
 		}
-	    }
-	    if ($ignore) {
-		$this->connection->ignore($target);
-		$this->connection->chatSendServerMessage(__('%s$z$s$fff was ignored by admin %s', $login, $player->nickName, $admin->nickName));
-	    } else {
-		$this->connection->unignore($target);
-		$this->connection->chatSendServerMessage(__('%s$z$s$fff was unignored by admin %s', $login, $player->nickName, $admin->nickName));
-	    }
-	    $this->populateList();
-	    $this->show($login);
-	} catch (\Exception $e) {
-	    //   $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
-	    $this->console("Error:" . $e->getMessage());
-	}
-    }
 
-    function kickPlayer($login, $target)
-    {
-	try {
-	    AdminGroups::getInstance()->adminCmd($login, "kick " . $target);
-	} catch (\Exception $e) {
-	    //$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
-	    $this->console("Error:" . $e->getMessage());
-	}
-    }
+		if (AdminGroups::hasPermission($login, Permission::game_settings)) {
+			$btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+			$btn->setText(__("Guest List", $login));
+			$btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['guest']);
+			$line->addComponent($btn);
+		}
 
-    function banPlayer($login, $target)
-    {
-	try {
-	    AdminGroups::getInstance()->adminCmd($login, "ban " . $target);
-	} catch (\Exception $e) {
-	    //$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
-	    $this->console("Error:" . $e->getMessage());
-	}
-    }
+		if (AdminGroups::hasPermission($login, Permission::player_unban)) {
+			$btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+			$btn->setText(__("Ban List", $login));
+			$btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['ban']);
+			$line->addComponent($btn);
+		}
+		if (AdminGroups::hasPermission($login, Permission::player_black)) {
+			$btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+			$btn->setText(__("Black List", $login));
+			$btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['black']);
+			$line->addComponent($btn);
+		}
 
-    function blacklistPlayer($login, $target)
-    {
-	try {
-	    AdminGroups::getInstance()->adminCmd($login, "black " . $target);
-	} catch (\Exception $e) {
-	    //  $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
-	    $this->console("Error:" . $e->getMessage());
-	}
-    }
 
-    function toggleSpec($login, $target)
-    {
-	try {
-	    $login = $this->getRecipient();
-	    if (!AdminGroups::hasPermission($login, Permission::player_forcespec)) {
-		$this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!', $login), $login);
-	    }
-	    $player = $this->storage->getPlayerObject($target);
+		$this->mainFrame->addComponent($line);
 
-	    if ($player->spectatorStatus == 0) {
-		$this->connection->forceSpectator($target, 1);
-		$this->connection->chatSendServerMessage(__('Admin has forced you to specate!', $target), $target);
-		return;
-	    }
-	    if ($player->spectator == 1) {
-		$this->connection->forceSpectator($target, 2);
-		$this->connection->forceSpectator($target, 0);
-		$this->connection->chatSendServerMessage(__("Admin has released you from specate to play.", $target), $target);
-		return;
-	    }
-	} catch (\Exception $e) {
-	    $this->console("Error:" . $e->getMessage());
-	    //$this->connection->chatSendServerMessage(__("Error:".$login, $e->getMessage()), $login);
-	}
-    }
 
-    function onResize($oldX, $oldY)
-    {
-	parent::onResize($oldX, $oldY);
-	$this->pager->setSize($this->sizeX - 5, $this->sizeY - 10);	
-	$this->pager->setPosition(2, -1);	
-    }
-
-    function onShow()
-    {
-	if (empty($this->items))
-	    $this->populateList();
-	parent::onShow();
-    }
-
-    function toggleTeam($login, $target)
-    {
-	if (AdminGroups::hasPermission($login, Permission::player_changeTeam)) {
-	    $player = $this->storage->getPlayerObject($target);
-	    if ($player->teamId === 0)
-		$this->connection->forcePlayerTeam($target, 1);
-	    if ($player->teamId === 1)
-		$this->connection->forcePlayerTeam($target, 0);
-	}
-    }
-
-    function populateList()
-    {
-
-	foreach ($this->items as $item)
-	    $item->erase();
-
-	$this->pager->clearItems();
-	$this->items = array();
-	$this->storage = \ManiaLive\Data\Storage::getInstance();
-	$x = 0;
-	$login = $this->getRecipient();
-	$isadmin = AdminGroups::hasPermission($login, Permission::player_forcespec);
-
-	$list = $this->connection->getIgnoreList(-1, 0);
-	$ignoreList = array();
-	foreach ($list as $player) {
-	    $ignoreList[$player->login] = true;
+		$textStyle = "TextCardRaceRank";
+		$textColor = "fff";
+		$textSize = 2.5;
+		$scaledSizes = Gui::getScaledSize($this->widths, $this->sizeX / .8);
 	}
 
-	foreach ($this->storage->players as $player) {
-	    $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->widths, $this->sizeX, isset($ignoreList[$player->login]));
-	    $this->pager->addItem($this->items[$x]);
+	function ignorePlayer($login, $target)
+	{
+		try {
+			$login = $this->getRecipient();
+			if (!AdminGroups::hasPermission($login, Permission::player_ignore)) {
+				$this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!', $login), $login);
+			}
+			$player = $this->storage->getPlayerObject($target);
+			$admin = $this->storage->getPlayerObject($login);
+			$list = $this->connection->getIgnoreList(-1, 0);
+			$ignore = true;
+			foreach ($list as $test) {
+				if ($target == $test->login) {
+					$ignore = false;
+					break;
+				}
+			}
+			if ($ignore) {
+				$this->connection->ignore($target);
+				$this->connection->chatSendServerMessage(__('%s$z$s$fff was ignored by admin %s', $login, $player->nickName, $admin->nickName));
+			}
+			else {
+				$this->connection->unignore($target);
+				$this->connection->chatSendServerMessage(__('%s$z$s$fff was unignored by admin %s', $login, $player->nickName, $admin->nickName));
+			}
+			$this->populateList();
+			$this->show($login);
+		} catch (\Exception $e) {
+			//   $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
+			Helper::logError("Error:" . $e->getMessage());
+		}
 	}
-	foreach ($this->storage->spectators as $player) {
-	    $this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->widths, $this->sizeX, isset($ignoreList[$player->login]));
-	    $this->pager->addItem($this->items[$x]);
+
+	function kickPlayer($login, $target)
+	{
+		try {
+			AdminGroups::getInstance()->adminCmd($login, "kick " . $target);
+		} catch (\Exception $e) {
+			//$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
+				Helper::logError("Error:" . $e->getMessage());
+		}
 	}
-    }
 
-    function destroy()
-    {
-	$this->connection = null;
-	$this->storage = null;
-	foreach ($this->items as $item)
-	    $item->erase();
+	function banPlayer($login, $target)
+	{
+		try {
+			AdminGroups::getInstance()->adminCmd($login, "ban " . $target);
+		} catch (\Exception $e) {
+			//$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
+			Helper::logError("Error:" . $e->getMessage());
+		}
+	}
 
-	$this->items = null;
+	function blacklistPlayer($login, $target)
+	{
+		try {
+			AdminGroups::getInstance()->adminCmd($login, "black " . $target);
+		} catch (\Exception $e) {
+			//  $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
+			Helper::logError("Error:" . $e->getMessage());
+		}
+	}
+
+	function toggleSpec($login, $target)
+	{
+		try {
+			Helper::logError("test");
+			$login = $this->getRecipient();
+			if (!AdminGroups::hasPermission($login, Permission::player_forcespec)) {
+				$this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!', $login), $login);
+			}
+			$player = $this->storage->getPlayerObject($target);
+
+			if ($player->spectatorStatus == 0) {
+				$this->connection->forceSpectator($target, 1);
+				$this->connection->spectatorReleasePlayerSlot($target);
+				$this->connection->chatSendServerMessage(__('Admin has forced you to specate!', $target), $target);
+				return;
+			}
+			if ($player->spectator == 1) {
+				$this->connection->forceSpectator($target, 2);
+				$this->connection->forceSpectator($target, 0);
+				$this->connection->chatSendServerMessage(__("Admin has released you from specate to play.", $target), $target);
+				return;
+			}			
+		} catch (\Exception $e) {
+			Helper::logError("Error:" . $e->getMessage());
+			//$this->connection->chatSendServerMessage(__("Error:".$login, $e->getMessage()), $login);
+		}
+	}
+
+	function onResize($oldX, $oldY)
+	{
+		parent::onResize($oldX, $oldY);
+		$this->pager->setSize($this->sizeX - 5, $this->sizeY - 10);
+		$this->pager->setPosition(2, -1);
+	}
+
+	function onShow()
+	{
+		if (empty($this->items))
+			$this->populateList();
+		parent::onShow();
+	}
+
+	function toggleTeam($login, $target)
+	{
+		if (AdminGroups::hasPermission($login, Permission::player_changeTeam)) {
+			$player = $this->storage->getPlayerObject($target);
+			if ($player->teamId === 0)
+				$this->connection->forcePlayerTeam($target, 1);
+			if ($player->teamId === 1)
+				$this->connection->forcePlayerTeam($target, 0);
+		}
+	}
+
+	function populateList()
+	{
+
+		foreach ($this->items as $item)
+			$item->erase();
+
+		$this->pager->clearItems();
+		$this->items = array();
+		$this->storage = \ManiaLive\Data\Storage::getInstance();
+		$x = 0;
+		$login = $this->getRecipient();
+		$isadmin = AdminGroups::hasPermission($login, Permission::player_forcespec);
+
+		$list = $this->connection->getIgnoreList(-1, 0);
+		$ignoreList = array();
+		foreach ($list as $player) {
+			$ignoreList[$player->login] = true;
+		}
+
+		foreach ($this->storage->players as $player) {
+			$this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->widths, $this->sizeX, isset($ignoreList[$player->login]));
+			$this->pager->addItem($this->items[$x]);
+		}
+		foreach ($this->storage->spectators as $player) {
+			$this->items[$x] = new Playeritem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->widths, $this->sizeX, isset($ignoreList[$player->login]));
+			$this->pager->addItem($this->items[$x]);
+		}
+	}
+
+	function destroy()
+	{
+		$this->connection = null;
+		$this->storage = null;
+		foreach ($this->items as $item)
+			$item->erase();
+
+		$this->items = null;
 
 
-	parent::destroy();
-    }
+		parent::destroy();
+	}
 
 }
 
