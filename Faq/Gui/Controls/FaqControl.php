@@ -30,7 +30,7 @@ abstract class FaqControl extends \ManiaLive\Gui\Control {
     }
 
     public function setTopicLink($file) {
-        $this->label->setTextColor("00e");
+        $this->label->setTextColor("3af");
         $this->action = $this->createAction(array(\ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWindow::$mainPlugin, "showFaq"), $file, null);
         $this->label->setAction($this->action);
 	return $this;
