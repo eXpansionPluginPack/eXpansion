@@ -57,14 +57,18 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	public function updateOpenedWindows()
 	{
 		$windows = \ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist::GetAll();
-		foreach ($windows as $window) {		
+		foreach ($windows as $window) {
 			$window->redraw($window->getRecipient());
 		}
 	}
+
 	public function setPlay($login)
 	{
-		$this->connection->forceSpectator($login, 2);
-		$this->connection->forceSpectator($login, 0);
+		$player = $this->storage->getPlayerObject($login);
+		if (!$player->forceSpectator) {
+			$this->connection->forceSpectator($login, 2);
+			$this->connection->forceSpectator($login, 0);
+		}
 	}
 
 	public function setSpec($login)
