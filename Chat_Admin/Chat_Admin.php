@@ -63,6 +63,7 @@ class Chat_Admin extends ExpPlugin
 	$this->setPublicMethod("showBanList");
 	$this->setPublicMethod("showBlackList");
 	$this->setPublicMethod("showIgnoreList");
+	$this->setPublicMethod("forceEndRound");
     }
 
     public function exp_onLoad()
