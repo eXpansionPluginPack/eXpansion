@@ -58,6 +58,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onPlayerConnect($login, $isSpec)
     {
+
         $g = "SELECT * FROM `exp_players` WHERE `player_login` = " . $this->db->quote($login) . ";";
         $query = $this->db->execute($g);
         // get player data
@@ -81,7 +82,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                             )";
             $this->db->execute($q);
 
-			$dbPlayer = new DbPlayer($player-login, 0, $time, 0);
+			$dbPlayer = new DbPlayer($player->login, 0, $time, 0);
         } else {
             $q = "UPDATE `exp_players`
              SET
@@ -94,7 +95,9 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
              `player_login` = " . $this->db->quote($login) . ";";
             $this->db->execute($q);
 
-			$dbPlayer = new DbPlayer($player-login, $query->player_timeplayed, $time, $query->player_wins);
+			$query = $query->fetchObject();
+
+			$dbPlayer = new DbPlayer($player->login, $query->player_timeplayed, $time, $query->player_wins);
         }
 		$this->expStorage->dbPlayers[$login] = $dbPlayer;
     }

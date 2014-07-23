@@ -115,7 +115,13 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener{
 	 * @return DbPlayer|null
 	 */
 	public function getDbPlayer($login){
-		return $this->dbPlayers[$login] == null ? null : $this->dbPlayers[$login];
+		if(isset($this->dbPlayers[$login])){
+			echo 'FOUND\n';
+			return $this->dbPlayers[$login];
+		}else {
+			echo 'NOO\n';
+			return null;
+		}
 	}
 
     /**
