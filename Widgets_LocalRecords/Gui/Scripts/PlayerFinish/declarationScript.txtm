@@ -36,7 +36,7 @@ declare origPlayerTimes = playerTimes;
 origPlayerTimes.clear();
 
 foreach (Login => Score in playerTimes) {
-    declare newLogin = TextLib::ReplaceText(Login, "–", "-");
+    declare newLogin = TextLib::ReplaceChars(Login, "–", "-");
     origPlayerTimes[newLogin] = Score;
     playerNickName[newLogin] = playerNickName[Login];
 }
