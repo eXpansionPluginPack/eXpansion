@@ -29,82 +29,117 @@ use ManiaLive\Utilities\Logger;
 class Helper
 {
 
-    private static $buildData = null;
-    private static $singletons;
-    private static $paths;
+	private static $buildData = null;
+	private static $singletons;
+	private static $paths;
 
-    /**
-     * Returns helper that allows to get paths
-     *
-     * @return Paths
-     */
-    public static function getPaths()
-    {
-	if (self::$paths == null)
-	    self::$paths = new Paths();
-	return self::$paths;
-    }
-
-    /**
-     * Returns instance of singleton instance.
-     *
-     * @return Singletons
-     */
-    public static function getSingletons()
-    {
-	if (self::$singletons == null)
-	    self::$singletons = Singletons::getInstance();
-	return self::$singletons;
-    }
-
-    public static function log($message)
-    {
-	Logger::info('[eXpansion][Adm/AdminPanel]' . $message);
-	Console::println('[eXpansion][Adm/AdminPanel]' . $message);
-    }
-
-    public static function logInfo($message)
-    {
-	Logger::info('[eXpansion]' . $message);
-	Console::println('[eXpansion]' . $message);
-    }
-
-    public static function logError($message)
-    {
-	Logger::error('[eXpansion]' . $message);
-	Console::println('[eXpansion]' . $message);
-    }
-
-    public static function getBuildDate()
-    {
-	if (self::$buildData == null) {
-	    echo "\n" . dirname(__DIR__) . "\n";
-	    self::$buildData = self::rBuildDate(dirname(__DIR__) . '/');
-	}
-	return self::$buildData;
-    }
-
-    protected static function rBuildDate($base = '')
-    {
-
-	$array = array_diff(scandir($base), array('.', '..', '.git'));
-
-	$maxDate = 0;
-
-	foreach ($array as $value) {
-
-	    $newDate = 0;
-	    if (is_dir($base . $value)) {
-		$newDate = self::rBuildDate($base . $value . '/');
-	    } elseif ($base . $value) {
-		$newDate = filemtime($base . $value);
-	    }
-
-	    if ($newDate > $maxDate)
-		$maxDate = $newDate;
+	/**
+	 * Returns helper that allows to get paths
+	 *
+	 * @return Paths
+	 */
+	public static function getPaths()
+	{
+		if (self::$paths == null)
+			self::$paths = new Paths();
+		return self::$paths;
 	}
 
-	return $maxDate;
-    }
+	/**
+	 * Returns instance of singleton instance.
+	 *
+	 * @return Singletons
+	 */
+	public static function getSingletons()
+	{
+		if (self::$singletons == null)
+			self::$singletons = Singletons::getInstance();
+		return self::$singletons;
+	}
 
+	public static function log($message)
+	{
+		Logger::info('[eXpansion][Adm/AdminPanel]' . $message);
+		Console::println('[eXpansion][Adm/AdminPanel]' . $message);
+	}
+
+	public static function logInfo($message)
+	{
+		Logger::info('[eXpansion]' . $message);
+		Console::println('[eXpansion]' . $message);
+	}
+
+	public static function logError($message)
+	{
+		Logger::error('[eXpansion]' . $message);
+		Console::println('[eXpansion]' . $message);
+	}
+
+	public static function getBuildDate()
+	{
+		if (self::$buildData == null) {
+			echo "\n" . dirname(__DIR__) . "\n";
+			self::$buildData = self::rBuildDate(dirname(__DIR__) . '/');
+		}
+		return self::$buildData;
+	}
+
+	protected static function rBuildDate($base = '')
+	{
+
+		$array = array_diff(scandir($base), array('.', '..', '.git'));
+
+		$maxDate = 0;
+
+		foreach ($array as $value) {
+
+			$newDate = 0;
+			if (is_dir($base . $value)) {
+				$newDate = self::rBuildDate($base . $value . '/');
+			} elseif ($base . $value) {
+				$newDate = filemtime($base . $value);
+			}
+
+			if ($newDate > $maxDate)
+				$maxDate = $newDate;
+		}
+
+		return $maxDate;
+	}
+
+	protected static function formatPastTime($time, $nbDetails)
+	{
+		$info = array();
+
+		$totalMinutes = ((int)($time/60));
+
+		//Number of seconds
+		$info[] = $time - ($totalMinutes*60).' sec';
+
+		if($totalMinutes > 0){
+			$totalHours = ((int)($totalMinutes/60));
+
+			//Number of minutes
+			$info[] = $totalMinutes - ($totalHours*60).' min';
+
+			if($totalHours > 0){
+				$totalDays = ((int)($totalHours/24));
+
+				//number of days
+				$info[] = $totalHours - ($totalDays*24).' hours';
+			}
+		}
+
+		$start = $nbDetails;
+		$size = sizeof($info)-1;
+		if($start > $size){
+			$start = $size;
+		}
+
+		$content = '';
+		for($i = $start; $i >= 0; $i--){
+			$content .= $info[$i].' ';
+		}
+		return $content;
+	}
 }

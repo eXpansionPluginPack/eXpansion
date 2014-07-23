@@ -34,6 +34,7 @@ use ManiaLive\Event\Dispatcher;
 use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
 use ManiaLive\DedicatedApi\Callback\Listener as ServerListener;
 use ManiaLivePlugins\eXpansion\Core\RelayLink;
+use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
 use Maniaplanet\DedicatedServer\Structures\Version;
 
 class Storage extends Singleton implements \ManiaLive\Event\Listener{
@@ -45,6 +46,11 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener{
      * @var \Maniaplanet\DedicatedServer\Connection
      */
     private $connection;
+
+	/**
+	 * @var DbPlayer[]
+	 */
+	public $dbPlayers = array();
 
     /**
      * @var \ManiaLive\Data\Storage
@@ -102,6 +108,15 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener{
             return self::TITLE_SIMPLE_SM;
         }
     }
+
+	/**
+	 * @param $login
+	 *
+	 * @return DbPlayer|null
+	 */
+	public function getDbPlayer($login){
+		return $this->dbPlayers[$login] == null ? null : $this->dbPlayers[$login];
+	}
 
     /**
      * Method called when a map begin

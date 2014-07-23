@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Database;
 
 use ManiaLib\Utils\Formatting as String;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
 
 /**
  * Description of Database
@@ -79,6 +80,8 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                             0
                             )";
             $this->db->execute($q);
+
+			$dbPlayer = new DbPlayer($player-login, 0, $time, 0);
         } else {
             $q = "UPDATE `exp_players`
              SET
@@ -90,12 +93,16 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
              WHERE
              `player_login` = " . $this->db->quote($login) . ";";
             $this->db->execute($q);
+
+			$dbPlayer = new DbPlayer($player-login, $query->player_timeplayed, $time, $query->player_wins);
         }
+		$this->expStorage->dbPlayers[$login] = $dbPlayer;
     }
 
     function onPlayerDisconnect($login, $reason = null)
     {
         $this->updatePlayTime($this->storage->getPlayerObject($login));
+		unset($this->expStorage->dbPlayers[$login]);
     }
 
     function onEndMatch($rankings, $winnerTeamOrMap)
@@ -304,6 +311,10 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function getPlayer($login)
     {
+		if(isset($this->expStorage->dbPlayers[$login])){
+			return $this->expStorage->dbPlayers[$login];
+		}
+
         $g = "SELECT * FROM `exp_players` WHERE `player_login` = " . $this->db->quote($login) . ";";
 
         $query = $this->db->execute($g);
