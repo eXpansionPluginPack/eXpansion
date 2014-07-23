@@ -4,6 +4,9 @@
 #player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s
 #player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s
 
+#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s Total Playtime: #variable#%6$s
+#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s Total Playtime: #variable#%6$s
+
 #player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) leaves!
 #player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) leaves!
 

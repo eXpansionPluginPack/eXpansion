@@ -11,13 +11,17 @@ use ManiaLivePlugins\eXpansion\Helpers\Helper;
 class JoinLeaveMessage extends ExpPlugin
 {
 
-    private $joinMsg, $leaveMsg, $tabNoticeMsg, $playtimeMsg;
+    private $joinMsg, $joinMsgTime, $leaveMsg, $tabNoticeMsg, $playtimeMsg;
+
+	/** @var  Config */
+	private $config;
 
     public function exp_onLoad()
     {
         $this->enableDedicatedEvents();
 
         $this->joinMsg = exp_getMessage('#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s');
+        $this->joinMsgTime = exp_getMessage('#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s Total Playtime: #variable#%6$s');
         $this->leaveMsg = exp_getMessage('#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# leaves! Playtime: #variable#%5$s');
         $this->tabNoticeMsg = exp_getMessage('#variable#[#error#Info#variable#] #variable#Press TAB to show records widget, use right mouse button for quick menu access.');
         $this->playtimeMsg = exp_getMessage('#player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s');
@@ -33,6 +37,8 @@ class JoinLeaveMessage extends ExpPlugin
 
         foreach ($this->storage->spectators as $login => $player)
             $this->setJoinTime($login);
+
+		$this->config = Config::getInstance();
     }
 
     public function setJoinTime($login)
@@ -111,7 +117,14 @@ class JoinLeaveMessage extends ExpPlugin
                 $spec = '$n(Spectator)';
 
             $grpName = AdminGroups::getGroupName($login);
-            $this->exp_chatSendServerMessage($this->joinMsg, null, array($nick, $login, $country, $spec, $grpName));
+
+			if($this->config->showTotalPlayOnJoin){
+				$playTime = Helper::formatPastTime($this->expStorage->getDbPlayer($login)->getPlayTime()*4, 2);
+				echo "Play TIme : $playTime\n";
+            	$this->exp_chatSendServerMessage($this->joinMsgTime, null, array($nick, $login, $country, $spec, $grpName, $playTime));
+			}else{
+				$this->exp_chatSendServerMessage($this->joinMsg, null, array($nick, $login, $country, $spec, $grpName));
+			}
             $this->exp_chatSendServerMessage($this->tabNoticeMsg, $login);
         } catch (Exception $e) {
             $this->console($e->getLine() . ":" . $e->getMessage());
