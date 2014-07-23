@@ -77,6 +77,7 @@ class Queue
 	public function getNextPlayer()
 	{
 		$player = array_shift($this->queue);
+		echo "After next player \n";
 		print_r(array_keys($this->queue));
 		return $player;
 	}
