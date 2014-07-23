@@ -107,7 +107,7 @@ class Helper
 		return $maxDate;
 	}
 
-	protected static function formatPastTime($time, $nbDetails)
+	public static function formatPastTime($time, $nbDetails)
 	{
 		$info = array();
 
@@ -125,19 +125,28 @@ class Helper
 			if($totalHours > 0){
 				$totalDays = ((int)($totalHours/24));
 
-				//number of days
+				//number of hours
 				$info[] = $totalHours - ($totalDays*24).' hours';
+
+				if($totalDays > 0){
+
+					$info[] = $totalDays.' days';
+				}
 			}
 		}
 
-		$start = $nbDetails;
-		$size = sizeof($info)-1;
-		if($start > $size){
-			$start = $size;
+		$start = sizeof($info)-1;;
+
+		$stop = $start - $nbDetails;
+		if($stop < 0){
+			$stop = 0;
 		}
+		$stop++;
 
 		$content = '';
-		for($i = $start; $i >= 0; $i--){
+
+
+		for($i = $start; $i >= $stop; $i--){
 			$content .= $info[$i].' ';
 		}
 		return $content;
