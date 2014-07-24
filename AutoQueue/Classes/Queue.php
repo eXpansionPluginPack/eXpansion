@@ -59,7 +59,7 @@ class Queue
 				$this->queue[$login] = $qPlayer;
 			}
 		}
-		print_r(array_keys($this->queue));
+		
 	}
 
 	public function remove($login)
@@ -67,7 +67,7 @@ class Queue
 		if (array_key_exists($login, $this->queue)) {
 			unset($this->queue[$login]);
 		}
-		print_r(array_keys($this->queue));
+		
 	}
 
 	/**
@@ -77,8 +77,6 @@ class Queue
 	public function getNextPlayer()
 	{
 		$player = array_shift($this->queue);
-		echo "After next player \n";
-		print_r(array_keys($this->queue));
 		return $player;
 	}
 

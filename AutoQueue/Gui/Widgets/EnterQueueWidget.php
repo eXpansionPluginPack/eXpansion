@@ -31,22 +31,51 @@ class EnterQueueWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
 	public $dicoLabel;
 
-	protected function exp_onEndConstruct()
+	protected function exp_onBeginConstruct()
 	{
 		$this->setName("Enter Queue");
 		$login = $this->getRecipient();
-		$this->dicoLabel = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(50,5);
-		$this->dicoLabel->setText(exp_getMessage("Click the button to enter queue!"));
+
+		$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(80, 18);
+		$this->addComponent($bg);
+
+		$header = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle(81, 4);
+		$header->setText(exp_getMessage("Join Queue"));
+		$this->addComponent($header);
+
+		$this->dicoLabel = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(50, 10);
+		$this->dicoLabel->setPosition(2, -6);
+		$this->dicoLabel->setText(exp_getMessage("Click the button to \njoin the waiting queue!"));
 		$this->dicoLabel->setTextColor("fff");
 		$this->addComponent($this->dicoLabel);
 
+		$frame = new \ManiaLive\Gui\Controls\Frame(60, -7);
+		$frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
+
 		$button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-		$button->setPosition(0, -8);
 		$button->setText(__("Join", $login));
 		$button->setAction(self::$action_toggleQueue);
 		$button->colorize("0f0");
+		$frame->addComponent($button);
 
-		$this->addComponent($button);
+		$button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+		$button->setText(__("Hide", $login));
+		$button->setDescription("Click waiting queue to show this window again.");
+		$button->setAction($this->createAction(array($this, "hideWidget")));
+		$frame->addComponent($button);
+
+		$this->addComponent($frame);
+	}
+
+	protected function exp_onEndConstruct()
+	{
+		$this->setSize(80, 18);
+		$this->setPosition(-30, 60);
+	}
+
+	public function hideWidget($login)
+	{
+		$this->Erase($login);
 	}
 
 }

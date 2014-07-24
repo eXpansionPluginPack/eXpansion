@@ -34,17 +34,27 @@ class QueueList extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 	/** @var \ManiaLivePlugins\eXpansion\AutoQueue\Structures\QueuePlayer[] */
 	public $queueplayers = array();
 
-	protected function exp_onEndConstruct()
+	protected function exp_onBeginConstruct()
 	{
 		$this->setName("Queue List");
 		$login = $this->getRecipient();
-
-		$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 30);
+		$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(32, 40);
+		$bg->setAction($this->createAction(array($this, "enterQueue")));
 		$this->addComponent($bg);
 
-		$this->frame = new \ManiaLive\Gui\Controls\Frame();
+		$header = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle(32, 4);
+		$header->setText(exp_getMessage("Waiting Queue"));
+		$this->addComponent($header);
+
+		$this->frame = new \ManiaLive\Gui\Controls\Frame(1, -8);
 		$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
 		$this->addComponent($this->frame);
+	}
+
+	protected function exp_onEndConstruct()
+	{
+		$this->setPosition(80, -30);
+		$this->setSize(32, 40);
 	}
 
 	protected function onDraw()
@@ -57,12 +67,21 @@ class QueueList extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 			$label->setText($x . "." . $player->nickName);
 			$this->frame->addComponent($label);
 			$x++;
+			if ($x < 8)
+				break;
 		}
 		parent::onDraw();
 	}
-	
-	public function setPlayers($players) {
+
+	public function setPlayers($players)
+	{
 		$this->queueplayers = $players;
+	}
+
+	public function enterQueue($login)
+	{
+		$widget = EnterQueueWidget::Create($login);
+		$widget->show($login);
 	}
 
 }

@@ -18,13 +18,12 @@
 
 namespace ManiaLivePlugins\eXpansion\AutoQueue;
 
-use Exception;
-use ManiaLive\Data\Player;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AutoQueue\Classes\Queue;
 use ManiaLivePlugins\eXpansion\AutoQueue\Gui\Widgets\EnterQueueWidget;
+use ManiaLivePlugins\eXpansion\AutoQueue\Gui\Widgets\QueueList;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
-use ManiaLivePlugins\MatchMakingLobby\Windows\Dialog;
+use Maniaplanet\DedicatedServer\Structures\PlayerInfo;
 use Maniaplanet\DedicatedServer\Structures\Status;
 
 /**
@@ -37,8 +36,6 @@ class AutoQueue extends ExpPlugin
 
 	/** @var Queue */
 	private $queue;
-
-	private $widget_enterQueue;
 
 	public function exp_onLoad()
 	{
@@ -71,9 +68,10 @@ class AutoQueue extends ExpPlugin
 
 	public function onPlayerInfoChanged($info)
 	{
-		if ($this->storage->serverStatus->code != Status::PLAY) return;
+		if ($this->storage->serverStatus->code != Status::PLAY)
+			return;
 
-		$player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($info);
+		$player = PlayerInfo::fromArray($info);
 		$login = $player->login;
 
 		if ($player->spectator) {
@@ -87,7 +85,7 @@ class AutoQueue extends ExpPlugin
 			}
 			$this->showEnterQueue($login);
 
-			if($this->storage->server->currentMaxPlayers  > count($this->storage->players)){
+			if ($this->storage->server->currentMaxPlayers > count($this->storage->players)) {
 				$this->queueReleaseNext();
 			}
 		}
@@ -116,13 +114,13 @@ class AutoQueue extends ExpPlugin
 		$this->queRealeseAvailable();
 	}
 
-	public function queRealeseAvailable(){
+	public function queRealeseAvailable()
+	{
 		$count = $this->storage->server->currentMaxPlayers;
-		for($i = 0; $i < $count; $i++){
+		for ($i = 0; $i < $count; $i++) {
 			$this->queueReleaseNext();
 		}
 	}
-
 
 	public function queueReleaseNext()
 	{
@@ -140,11 +138,10 @@ class AutoQueue extends ExpPlugin
 	{
 		$this->queue->add($login);
 
-		echo $this->storage->server->currentMaxPlayers. " < ".count($this->storage->players)."\n";
-
-		if($this->storage->server->currentMaxPlayers  > count($this->storage->players)){
+		if ($this->storage->server->currentMaxPlayers > count($this->storage->players)) {
 			$this->queueReleaseNext();
-		}else{
+		}
+		else {
 			EnterQueueWidget::Erase($login);
 			$this->widgetSyncList();
 		}
@@ -154,7 +151,7 @@ class AutoQueue extends ExpPlugin
 	{
 		EnterQueueWidget::$action_toggleQueue = null;
 		EnterQueueWidget::EraseAll();
-		Gui\Widgets\QueueList::EraseAll();
+		QueueList::EraseAll();
 		$this->queue = null;
 	}
 
@@ -162,15 +159,12 @@ class AutoQueue extends ExpPlugin
 	{
 		$this->queue->syncPlayers(array_keys($this->storage->players));
 
-		Gui\Widgets\QueueList::EraseAll();
+		QueueList::EraseAll();
 
-		$widget = Gui\Widgets\QueueList::Create();
-		$widget->setPlayers($this->queue->getQueuedPlayers());
-		$widget->setPosition(0, 0);
-		$widget->setSize(60, 30);
-		$spectators = array_keys($this->storage->spectators);
-		if (!empty($spectators)) {
-			$widget->show($spectators);
+		foreach ($this->storage->spectators as $login => $player) {
+			$widget = QueueList::Create($login);
+			$widget->setPlayers($this->queue->getQueuedPlayers());
+			$widget->show();
 		}
 	}
 
@@ -180,7 +174,6 @@ class AutoQueue extends ExpPlugin
 			return;
 
 		$widget = EnterQueueWidget::Create($login);
-		$widget->setPosition(0, 30);
 		$widget->show($login);
 	}
 
