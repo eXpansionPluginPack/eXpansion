@@ -1,0 +1,45 @@
+foreach (Player in Players) {
+    declare LastSpawnStatus for Player = CSmPlayer::ESpawnStatus::NotSpawned;
+    declare CheckpointsTimeLast for Player = Integer[Ident];
+
+
+if (Player.CapturedLandmark != Null) {
+    log(Player.CapturedLandmark.Tag);
+}
+
+    if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned && Player.CapturedLandmark != Null && Player.CapturedLandmark.Tag == "Checkpoint" && !CheckpointsTimeLast.existskey(Player.CapturedLandmark.Id) ) {
+        LastSpawnStatus = Player.SpawnStatus;
+
+        CheckpointsTimeLast[Player.CapturedLandmark.Id] = Player.Score.RoundPoints;
+
+            cpIndex.Value = "" ^ CheckpointsTimeLast.count;
+            timeOrScore.Value = "" ^ Player.Score.RoundPoints;
+            CheckpointsTimeLast[Player.CapturedLandmark.Id] = Player.Score.RoundPoints;
+            if (CheckpointsTimeLast.count == TotalCheckpoints) {
+                TriggerPageAction(finishAction);
+            }
+            else {
+                TriggerPageAction(cpAction);
+            }
+    }
+    if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned && Player.CapturedLandmark != Null && Player.CapturedLandmark.Tag == "Goal" && !CheckpointsTimeLast.existskey(Player.CapturedLandmark.Id) ) {
+        LastSpawnStatus = Player.SpawnStatus;
+        CheckpointsTimeLast[Player.CapturedLandmark.Id] = Player.Score.RoundPoints;
+        cpIndex.Value = "" ^ CheckpointsTimeLast.count;
+        timeOrScore.Value = "" ^ Player.Score.RoundPoints;
+        if (CheckpointsTimeLast.count == TotalCheckpoints) {
+            TriggerPageAction(finishAction);
+        }
+    }
+
+    if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawning) {
+        if (LastSpawnStatus != Player.SpawnStatus ) {
+            cpIndex.Value = "" ^ CheckpointsTimeLast.count;
+            timeOrScore.Value = "" ^ Player.Score.RoundPoints;
+          //  TriggerPageAction(finishAction);    // 
+            CheckpointsTimeLast.clear();
+            LastSpawnStatus = Player.SpawnStatus;   
+        }
+        
+   }
+}
