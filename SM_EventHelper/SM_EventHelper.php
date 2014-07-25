@@ -64,7 +64,7 @@ class SM_EventHelper extends ExpPlugin
 
 		Dispatcher::dispatch(
 				// login  , #id      , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
-				new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, false, null, null, null))
+				new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, "False", null, null, null))
 		);
 		echo "dispatched: checkpoint!\n";
 	}
@@ -75,7 +75,7 @@ class SM_EventHelper extends ExpPlugin
 		$cpIndex = $entries['index'];
 		Dispatcher::dispatch(
 				// login  , #id      , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
-				new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, true, null, null, null))
+				new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, "True", null, null, null))
 		);
 		echo "dispached: Finish\n";
 	}
