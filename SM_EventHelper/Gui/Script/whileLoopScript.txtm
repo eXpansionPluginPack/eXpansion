@@ -2,11 +2,11 @@ foreach (Player in Players) {
     declare LastSpawnStatus for Player = CSmPlayer::ESpawnStatus::NotSpawned;
     declare CheckpointsTimeLast for Player = Integer[Ident];
 
-    if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned && Player.CapturedLandmark != Null && Player.CapturedLandmark.Tag == "Checkpoint" && !CheckpointsTimeLast.existskey(Player.CapturedLandmark.Id) ) {
+    if (Player == InputPlayer && Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned && Player.CapturedLandmark != Null && Player.CapturedLandmark.Tag == "Checkpoint" && !CheckpointsTimeLast.existskey(Player.CapturedLandmark.Id) ) {
         LastSpawnStatus = Player.SpawnStatus;
 
         CheckpointsTimeLast[Player.CapturedLandmark.Id] = Player.Score.RoundPoints;
-
+       
             cpIndex.Value = "" ^ CheckpointsTimeLast.count;
             timeOrScore.Value = "" ^ Player.Score.RoundPoints;
             CheckpointsTimeLast[Player.CapturedLandmark.Id] = Player.Score.RoundPoints;
@@ -17,7 +17,7 @@ foreach (Player in Players) {
                 TriggerPageAction(cpAction);
             }
     }
-    if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned && Player.CapturedLandmark != Null && Player.CapturedLandmark.Tag == "Goal" && !CheckpointsTimeLast.existskey(Player.CapturedLandmark.Id) ) {
+    if (Player == InputPlayer && Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned && Player.CapturedLandmark != Null && Player.CapturedLandmark.Tag == "Goal" && !CheckpointsTimeLast.existskey(Player.CapturedLandmark.Id) ) {
         LastSpawnStatus = Player.SpawnStatus;
         CheckpointsTimeLast[Player.CapturedLandmark.Id] = Player.Score.RoundPoints;
         cpIndex.Value = "" ^ CheckpointsTimeLast.count;
