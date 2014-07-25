@@ -27,8 +27,8 @@ foreach (Player in Players) {
         }
     }
 
-    if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawning) {
-        if (LastSpawnStatus != Player.SpawnStatus ) {
+    if (Player == InputPlayer && Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawning) {
+        if (Player == InputPlayer && LastSpawnStatus != Player.SpawnStatus ) {
             cpIndex.Value = "" ^ CheckpointsTimeLast.count;
             timeOrScore.Value = "" ^ Player.Score.RoundPoints;
           //  TriggerPageAction(finishAction);    // 
