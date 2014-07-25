@@ -2,11 +2,6 @@ foreach (Player in Players) {
     declare LastSpawnStatus for Player = CSmPlayer::ESpawnStatus::NotSpawned;
     declare CheckpointsTimeLast for Player = Integer[Ident];
 
-
-if (Player.CapturedLandmark != Null) {
-    log(Player.CapturedLandmark.Tag);
-}
-
     if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned && Player.CapturedLandmark != Null && Player.CapturedLandmark.Tag == "Checkpoint" && !CheckpointsTimeLast.existskey(Player.CapturedLandmark.Id) ) {
         LastSpawnStatus = Player.SpawnStatus;
 

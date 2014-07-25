@@ -2,6 +2,12 @@
 
 namespace ManiaLivePlugins\eXpansion\SM_EventHelper;
 
+use ManiaLive\Event\Dispatcher;
+use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
+use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\SM_EventHelper\Gui\EventHelper;
+
 /*
  * Copyright (C) 2014 Reaby
  *
@@ -20,24 +26,24 @@ namespace ManiaLivePlugins\eXpansion\SM_EventHelper;
  */
 
 /**
- * Description of Widgets_Speedometer
+ * Description of SM_EventHelper
  *
  * @author Reaby
  */
-class SM_EventHelper extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+class SM_EventHelper extends ExpPlugin
 {
 
 	private $widget;
 
 	public function exp_onReady()
 	{
-		$aHandler = \ManiaLive\Gui\ActionHandler::getInstance();
+		$aHandler = ActionHandler::getInstance();
 
-		Gui\EventHelper::$actions['checkpoint'] = $aHandler->createAction(array($this, "invokeCheckpoint"));
-		Gui\EventHelper::$actions['finish'] = $aHandler->createAction(array($this, "invokeFinish"));
-		
+		EventHelper::$actions['checkpoint'] = $aHandler->createAction(array($this, "invokeCheckpoint"));
+		EventHelper::$actions['finish'] = $aHandler->createAction(array($this, "invokeFinish"));
+
 		$this->enableDedicatedEvents();
-		$this->widget = Gui\EventHelper::Create(null);
+		$this->widget = EventHelper::Create(null);
 		$this->widget->show();
 	}
 
@@ -54,20 +60,26 @@ class SM_EventHelper extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	public function invokeCheckpoint($login, $entries)
 	{
 		$timeOrScore = $entries['timeOrScore'];
-		$cpIndex =  $entries['index'];
-		echo "onCheckpoint:" . $login . "\n";
-		print_r($entries);	
+		$cpIndex = $entries['index'];
+
+		Dispatcher::dispatch(
+				// login  , #id      , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
+				new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, false, null, null, null))
+		);
+		echo "dispatched: checkpoint!\n";
 	}
-	
+
 	public function invokeFinish($login, $entries)
 	{
 		$timeOrScore = $entries['timeOrScore'];
 		$cpIndex = $entries['index'];
-		
-		echo "onFinish;" . $login . "\n";
-		print_r($entries);
+		Dispatcher::dispatch(
+				// login  , #id      , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
+				new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, true, null, null, null))
+		);
+		echo "dispached: Finish\n";
 	}
-	
+
 	public function onBeginMatch()
 	{
 		$this->widget->show();
@@ -76,7 +88,7 @@ class SM_EventHelper extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	public function exp_onUnload()
 	{
 		$this->widget = null;
-		Gui\EventHelper::EraseAll();
+		EventHelper::EraseAll();
 	}
 
 }
