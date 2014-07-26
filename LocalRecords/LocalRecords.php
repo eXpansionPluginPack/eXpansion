@@ -710,7 +710,7 @@ class LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     if ($nrecord->place <= 5) {
                         $msg = $this->msg_equals_top5;
                         if ($nrecord->place == 1)
-                            $msg = $this->msg_equas_top1;
+                            $msg = $this->msg_equals_top1;
                     }
                     if ($nrecord->place <= $this->config->recordPublicMsgTreshold) {
                         $this->exp_chatSendServerMessage(
