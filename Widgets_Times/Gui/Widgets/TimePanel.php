@@ -100,7 +100,10 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->target);
 		$checkpoints = "[ -1 ]";
 		if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record && sizeof($record->ScoreCheckpoints) > $this->totalCp - 1) {
-			$checkpoints = "[" . $record->time . "," . implode(",", $record->ScoreCheckpoints) . "]";
+			if($this->lapRace)
+				$checkpoints = "[" . $record->time . "," . implode(",", $record->ScoreCheckpoints) . "]";
+			else
+				$checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . "]";
 		} else {
 			$checkpoints = '[';
 			for ($i = 0; $i < $this->totalCp + 2; $i++) {

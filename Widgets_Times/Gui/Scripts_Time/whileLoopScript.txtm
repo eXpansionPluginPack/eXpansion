@@ -26,6 +26,7 @@ foreach (Player in Players) {
                         declare Integer lastCpIndex = curCp - totalCp - 1;
                         diff = (Player.CurLap.Checkpoints[temp] - Checkpoints[temp]);
                     } else {
+                        log("Comaparing "^(Player.CurRace.Checkpoints[curCp-1])^" & "^ Checkpoints[temp]);
                         diff =(Player.CurRace.Checkpoints[curCp-1] - Checkpoints[temp]);
                     }
 
