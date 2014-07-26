@@ -20,6 +20,7 @@
  */
 
 namespace ManiaLivePlugins\eXpansion\Debugtool;
+use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 /**
  * Description of Debugtool
@@ -39,7 +40,8 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		$this->enableTickerEvent();
 		$this->enableDedicatedEvents();
-		$this->enableScriptEvents();
+		if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
+			$this->enableScriptEvents();
 		
 		$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
