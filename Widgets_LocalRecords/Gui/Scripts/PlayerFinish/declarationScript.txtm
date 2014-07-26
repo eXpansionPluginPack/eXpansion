@@ -20,7 +20,6 @@ declare playerTimes = <?php echo $this->playerTimes ?>;
 declare playerNickName = <?php echo $this->playerNicks ?>;
 declare playersOnServer = Text[Text];
 declare playersCps = Text[Text];
-declare recordLogin = "";
 declare nbCount = 0;
 
 // test

@@ -30,25 +30,58 @@ foreach (Player in Players) {
             declare playerTime = -1;
 
             if (!playerTimes.existskey(Player.Login)) {
-                origPlayerTimes.clear();
-                origPlayerTimes = playerTimes;
-                playerTimes[Player.Login] = -1;
+                playerTime = -1;
                 playerNickName[Player.Login] = Player.Name;
+            }else{
+                playerTime = playerTimes[Player.Login];
             }
-            playerTime = playerTimes[Player.Login];
+
 
 
             if (playerTime == -1 || playerTime > time) {
                 log("Better Time: "^Player.Login);
 
-                if(playerTime != -1){
+                //Dedimania situation need to check record fits
+                if (useMaxPlayerRank) {
                     origPlayerTimes.clear();
                     origPlayerTimes = playerTimes;
+
+                    //Add new time that might be removed
+                    playerTimes[Player.Login] = time;
+
+                    //sort times
+                    playerTimes = playerTimes.sort();
+
+                    //get max rank
+                    declare maxRank = maxServerRank;
+                    if (maxPlayerRank.existskey(Player.Login) && maxPlayerRank[Player.Login] > maxRank) {
+                        maxRank = maxPlayerRank[Player.Login];
+                    }
+
+                    declare Boolean keepRecord = False;
+                    declare Integer inRank = 1;
+
+                    //Check if player ew rank is nice to go
+                    foreach (Login => Score in playerTimes) {
+                        if (Login == Player.Login) {
+                            //It's our player
+                            if(inRank <= maxRank){
+                                log("Dedimania Record not to be ignored");
+                                keepRecord = True;
+                            }
+                        }
+                        inRank += 1;
+                    }
+
+                    if(!keepRecord){
+                        playerTimes.clear();
+                        playerTimes = origPlayerTimes;
+                    }
+                }else{
+                    //Normal situation all times are taken in account
+                    playerTimes[Player.Login] = time;
                 }
 
-                playerTimes[Player.Login] = time;
-
-                recordLogin = Player.Login;
                 needUpdate = True;
             }
         }
@@ -71,42 +104,7 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     declare Integer inRank = 1;
     declare Boolean isNewRecord = False;
 
-
     playerTimes = playerTimes.sort();
-
-    foreach (Login => Score in playerTimes) {
-        if (Login == recordLogin) {
-            if (useMaxPlayerRank) {
-
-                log("Dedimania New Rank : "^inRank);
-
-                declare maxRank = maxServerRank;
-                if (maxPlayerRank.existskey(Login) && maxPlayerRank[Login] > maxRank) {
-                    maxRank = maxPlayerRank[Login];
-                }
-
-                log("Dedimania Max Rank : "^maxRank);
-
-                if(inRank <= maxRank){
-                    log("Dedimania Record not to be ignored");
-                    isNewRecord = True;
-                }
-
-            } else {
-                isNewRecord = True;
-            }
-        }
-        inRank += 1;
-    }
-
-    inRank = 1;
-
-    if (!isNewRecord) {
-        playerTimes.clear();
-        playerTimes = origPlayerTimes.sort();
-    }
-
-
 
     declare i = 1;
     declare nbRec = 1;
@@ -126,66 +124,65 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     i = 1;
 
     foreach (Login => Score in playerTimes) {
-	if (LocalUser != Null) {
-	    if (Login == LocalUser.Login) {
-		myRank = i;
-		break;
-	    }
-	}
-	i += 1;
+        if (LocalUser != Null) {
+            if (Login == LocalUser.Login) {
+            myRank = i;
+            break;
+            }
+        }
+        i += 1;
     }
 
     if (myRank != -1) {
-	start = myRank - ((nbFields - nbFirstFields) / 2);
+        start = myRank - ((nbFields - nbFirstFields) / 2);
 
-	if (start <= nbFirstFields) {
-	    start = nbFirstFields;
-	    end = start + (nbFields - nbFirstFields);
-	} else {
-	    end = start + (nbFields - nbFirstFields);
-	    if (end > recCount) {
-		end = recCount;
-		start = end - (nbFields - nbFirstFields);
-	    }
-	}
+        if (start <= nbFirstFields) {
+            start = nbFirstFields;
+            end = start + (nbFields - nbFirstFields);
+        } else {
+            end = start + (nbFields - nbFirstFields);
+            if (end > recCount) {
+            end = recCount;
+            start = end - (nbFields - nbFirstFields);
+            }
+        }
     } else {
-	start = recCount  - (nbFields - nbFirstFields);
-	end = start + (nbFields - nbFirstFields);
+        start = recCount  - (nbFields - nbFirstFields);
+        end = start + (nbFields - nbFirstFields);
     }
 
     i = 1;
     nbRec = 1;
     foreach (Login => Score in playerTimes) {
 
-	if ((nbRec <= nbFirstFields || (nbRec > start && nbRec <= end) ) && nbRec <= nbShow && i <= nbFields) {
+        if ((nbRec <= nbFirstFields || (nbRec > start && nbRec <= end) ) && nbRec <= nbShow && i <= nbFields) {
 
-	    declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
-	    declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
-	    declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
+            declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
+            declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
+            declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
 
-	    if (highliteQuad != Null) {
-		if (playersOnServer.existskey(Login) && i != myRank) {
-		    highliteQuad.Show();
-		} else {
-		    highliteQuad.Hide();
-		}
-	    }
+            if (highliteQuad != Null) {
+                if (playersOnServer.existskey(Login) && i != myRank) {
+                    highliteQuad.Show();
+                } else {
+                    highliteQuad.Hide();
+                }
+            }
 
-	    if (nickLabel != Null) {
-		putRecordTo(i, nbRec, Score, Login, playerNickName[Login], Login == LocalUser.Login);
-		if (Login == LocalUser.Login) {
-		    showed = True;
-		}
-	    }
-	    i += 1;
-	}
-	nbRec += 1;
+            if (nickLabel != Null) {
+                putRecordTo(i, nbRec, Score, Login, playerNickName[Login], Login == LocalUser.Login);
+                if (Login == LocalUser.Login) {
+                    showed = True;
+                }
+            }
+            i += 1;
+        }
+        nbRec += 1;
 
-	if (nbRec > nbShow) {
-	    
-	}
+        if (nbRec > nbShow) {
+
+        }
     }
-    recordLogin = "";
 }
 
 foreach (Event in PendingEvents) {
@@ -194,13 +191,13 @@ foreach (Event in PendingEvents) {
     }*/
 
     if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer") {
-	if (eXp_widgetLayers[version][id][gameMode] == "normal") {	    
-	    eXp_widgetLayers[version][id][gameMode] = "scorestable";	    
-	    exp_needToCheckPersistentVars = True;
-	} else {	   
-	    eXp_widgetLayers[version][id][gameMode] = "normal";
-	    exp_needToCheckPersistentVars = True;
-	    
-	}
+        if (eXp_widgetLayers[version][id][gameMode] == "normal") {
+            eXp_widgetLayers[version][id][gameMode] = "scorestable";
+            exp_needToCheckPersistentVars = True;
+        } else {
+            eXp_widgetLayers[version][id][gameMode] = "normal";
+            exp_needToCheckPersistentVars = True;
+
+        }
     }
 }
