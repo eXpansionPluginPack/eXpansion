@@ -531,7 +531,12 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $player                            = $this->storage->getPlayerObject($login);
         $force                             = false;
         $this->currentChallangeSectorTimes = array();
-
+		
+		if (is_object($player) == false)  {
+			$this->console("[eXp] notice: Error while saving record for login '". $login . "',couldn't fetch player object!");
+			return;
+		}
+		
         //Player doesen't have record need to create one
         if (!isset($this->currentChallengePlayerRecords[$login])) {
             $record                   = new Record();
