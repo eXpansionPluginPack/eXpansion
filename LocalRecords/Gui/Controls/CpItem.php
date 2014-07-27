@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 
+use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
@@ -17,7 +18,7 @@ class CpItem extends \ManiaLive\Gui\Control {
     private $bg;
     private $widths;
 
-    function __construct($indexNumber, $login, $rank, $widths) {
+    function __construct($indexNumber, $login, $rank, $widths, LocalBase $localBase) {
         $this->widths = $widths;
         $this->sizeY = 4;
         $this->bg = new ListBackGround($indexNumber, 100, 4);
@@ -48,7 +49,7 @@ class CpItem extends \ManiaLive\Gui\Control {
         $text = "";
         $i = 1;
         foreach($rank->ScoreCheckpoints as $cpTime){
-            $text .= "\$6C6CP#$i \$z".\ManiaLive\Utilities\Time::fromTM($cpTime)." | ";
+            $text .= "\$6C6CP#$i \$z".$localBase->formatScore($cpTime)." | ";
             $i++;
         }
         
