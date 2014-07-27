@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Advertising\Gui\Widgets;
  *
  * @author Petri
  */
-class WidgetAd extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
+class WidgetAd extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
     
     protected $quad;
 
