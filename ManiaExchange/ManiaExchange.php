@@ -26,6 +26,7 @@ class ManiaExchange extends ExpPlugin
 
 	/** @var \ManiaLivePlugins\eXpansion\Core\DataAccess */
 	private $dataAccess;
+
 	public static $betakey = "";
 
 	private $cmd_add;
@@ -149,22 +150,15 @@ class ManiaExchange extends ExpPlugin
 			$this->connection->chatSendServerMessage(__('"%s" is not a numeric value.', $login, $mxId), $login);
 			return false;
 		}
-		if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
-			$query = "";
-			switch ($this->titleId) {
-				case "SMStorm":
-				case "SMStormCombo@nadeolabs":
-				case "SMStormRoyal@nadeolabs":
-				case "SMStormElite@nadeolabs":
-				case "SMStormJoust@nadeolabs":
-					$query = 'http://sm.mania-exchange.com/tracks/download/' . $mxId;
-					break;
-				default:
-					$query = 'http://tm.mania-exchange.com/tracks/download/' . $mxId;
-					break;
-			}
-		} else {
-			$query = 'http://tm.mania-exchange.com/tracks/download/' . $mxId;
+
+		$query = "";
+		switch ($this->expStorage->simpleEnviTitle) {
+			case "SM":
+				$query = 'http://sm.mania-exchange.com/tracks/download/' . $mxId;
+				break;
+			case "TM":
+				$query = 'http://tm.mania-exchange.com/tracks/download/' . $mxId;
+				break;
 		}
 		$query = $query . "?" . self::$betakey;
 		$this->exp_chatSendServerMessage("Download starting for: $mxId", $login);
@@ -210,7 +204,8 @@ class ManiaExchange extends ExpPlugin
 				} catch (\Exception $e) {
 					$this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
 				}
-			} else {
+			}
+			else {
 				$this->exp_chatSendServerMessage("Error while saving a map file. ", $login);
 			}
 		} catch (\Exception $ex) {
@@ -287,7 +282,8 @@ class ManiaExchange extends ExpPlugin
 					$query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
 					break;
 			}
-		} else {
+		}
+		else {
 			$query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
 		}
 		$query = $query . "?" . self::$betakey;
@@ -365,6 +361,7 @@ class ManiaExchange extends ExpPlugin
 		MxSearch::EraseAll();
 		AdminGroups::removeAdminCommand($this->cmd_add);
 	}
+
 }
 
 ?>
