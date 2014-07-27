@@ -366,7 +366,16 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             $this->availablePlugins[$pluginId] = $metaData;
         }
+
+		uasort($this->availablePlugins, array($this, 'pluginNameCmp'));
     }
+
+	public function pluginNameCmp(MetaDataType $a, MetaDataType $b) {
+		if ($a->getName() == $b->getName()) {
+			return 0;
+		}
+		return ($a->getName() < $b->getName()) ? -1 : 1;
+	}
 
     public function showPluginsWindow($login)
     {
