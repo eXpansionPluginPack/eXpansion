@@ -1,0 +1,81 @@
+<?php
+
+namespace ManiaLivePlugins\eXpansion\LoadScreen\Gui\Windows;
+
+use ManiaLib\Gui\Elements\Quad;
+use ManiaLive\Gui\Window;
+use ManiaLivePlugins\eXpansion\LoadScreen\Config;
+
+class LScreen extends Window
+{
+
+	protected $frame;
+
+	private $xml;
+
+	private $quad;
+
+	protected function onConstruct()
+	{
+		parent::onConstruct();
+		$this->setName("LoadingScreen");
+		$this->quad = new Quad(320, 180);
+		$this->quad->setAlign("top", "left");
+		$this->quad->setId("image");
+		$this->quad->setScriptEvents();
+		$this->addComponent($this->quad);
+		$this->setPosition(-160, 90);
+		$this->setScriptEvents();
+		$this->xml = new \ManiaLive\Gui\Elements\Xml();
+		$this->xml->setContent('
+				<script>
+				<!--
+				main() {
+				  declare Window <=> Page.GetFirstChild("image");
+				  declare startTime = Now;
+				  
+				
+					while(True) {
+						yield;
+						if (Window.Visible) {
+							if (Now > (startTime+8000)) {
+								Window.Hide(); // autohide after 8 seconds
+							}
+									
+							foreach (Event in PendingEvents) {                
+								if (Event.Type == CMlEvent::Type::MouseClick || Event.Type == CMlEvent::Type::KeyPress ) {
+									if (Now > (startTime+3000)) {
+									Window.Hide(); // enable hide after 3 seconds, if user press key or clicks mouse
+									}
+								}
+							}
+						}
+					}				
+				} 
+				-->
+				</script>
+');
+		$this->addComponent($this->xml);
+	}
+
+	protected function onDraw()
+	{
+		$config = Config::getInstance();
+		$this->quad->setImage("", true);
+		if (count($config->screens) > 0) {
+			$index = mt_rand(0, (count($config->screens) - 1));
+			$this->quad->setImage($config->screens[$index], true);
+		}
+		$this->quad->setPosZ(80);
+		parent::onDraw();
+	}
+
+	function destroy()
+	{
+		$this->clearComponents();
+		parent::destroy();
+	}
+
+}
+
+?>
