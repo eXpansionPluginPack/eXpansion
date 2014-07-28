@@ -109,7 +109,7 @@ class ManiaExchange extends ExpPlugin
 		$window->setTitle('ManiaExchange');
 		$window->setPlugin($this);
 		$window->search($login, $search, $author);
-		$window->setSize(200, 100);
+		$window->setSize(210, 100);
 		$window->centerOnScreen();
 		$window->show();
 	}
