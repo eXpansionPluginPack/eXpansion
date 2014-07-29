@@ -74,7 +74,7 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
 
     public function exp_onUnload() {
 	$this->irc->disconnect();
-	parent::exp_unload();
+	parent::exp_onUnload();
     }
 
     public function irc_onConnect($connection) {
