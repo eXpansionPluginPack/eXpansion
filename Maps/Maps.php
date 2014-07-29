@@ -257,6 +257,8 @@ class Maps extends ExpPlugin
 		if (count($this->history) > $this->config->historySize) {
 			array_pop($this->history);
 		}
+		$this->showCurrentMapWidget(null);
+		$this->showNextMapWidget(null);
 	}
 
 	public function onBeginMap($map, $warmUp, $matchContinuation)
