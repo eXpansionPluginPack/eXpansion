@@ -274,6 +274,8 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $pos = array_search($pluginId, Config::getInstance()->plugins);
                 if ($pos !== false) {
                     unset($this->config->plugins[$pos]);
+					ConfigManager::getInstance()->registerValueChange($this->getMetaData()->getVariable('plugins'));
+					ConfigManager::getInstance()->check();
                 }
                 if ($pHandler->isLoaded($pluginId))
                     $pHandler->callPublicMethod($this, $pluginId, 'exp_unload', array());
@@ -289,15 +291,18 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     $login
                 );
             }
+			
             $this->config->plugins[] = $pluginId;
+
+			ConfigManager::getInstance()->registerValueChange($this->getMetaData()->getVariable('plugins'));
+			ConfigManager::getInstance()->check();
         }
 
         $this->logMemory();
 
         $this->showPluginsWindow($login);
         $this->configPlugins = $this->config->plugins;
-        ConfigManager::getInstance()->registerValueChange($this->getMetaData()->getVariable('plugins'));
-        ConfigManager::getInstance()->check();
+
     }
 
     /**
