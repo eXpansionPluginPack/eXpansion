@@ -33,7 +33,7 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Config;
  *
  * @package ManiaLivePlugins\eXpansion\SM\PlatformScores
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData{
+class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData {
 
 	protected function initName()
 	{

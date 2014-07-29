@@ -33,8 +33,8 @@ class LScreen extends Window
 				main() {
 				  declare Window <=> Page.GetFirstChild("image");
 				  declare startTime = Now;
-				  
-				
+	
+
 					while(True) {
 						yield;
 						if (Window.Visible) {

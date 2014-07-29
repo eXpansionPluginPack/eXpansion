@@ -63,7 +63,9 @@ class LoadScreen extends ExpPlugin
 
 	public function onTick()
 	{
-		if ($this->isActive == true && time() > ($this->startTime + (($this->storage->gameInfos->chatTime / 1000) + 7) )) {
+
+		$delay = intval(Config::getInstance()->screensDelay);
+		if ($this->isActive == true && time() > ($this->startTime + $delay)) {
 
 			$this->isActive = false;
 			$this->startTime = 0;

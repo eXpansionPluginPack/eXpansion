@@ -207,15 +207,15 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                             try {
                                 $pHandler->unload($pname);
                             } catch (\Exception $ex) {
-
+								//ErrorHandling::displayAndLogError($ex);
                             }
-                            //ErrorHandling::displayAndLogError($ex);
+                           
                             $status = false;
                         }
 
                         if (!$status) {
                             $this->console("[" . $pname . "]..............................FAIL -> will retry");
-							//Helper::log("[AutoLoad]".ErrorHandling::computeMessage($ex));
+							Helper::log("[AutoLoad]".ErrorHandling::computeMessage($ex));
                             $recheck[] = $pname;
                         } else {
                             $this->debug("[" . $pname . "]..............................SUCCESS");

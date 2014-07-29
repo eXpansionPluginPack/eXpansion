@@ -32,7 +32,7 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
  *
  * @package ManiaLivePlugins\eXpansion\SM\PlatformScores
  */
-class SM_PlatformScores extends LocalBase{
+class SM_PlatformScores extends LocalBase {
 
 	private $lastCpNum = array();
 	private $cpScores = array();
