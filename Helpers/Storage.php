@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
@@ -22,7 +23,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Helpers;
 
-
 use ManiaLib\Utils\Singleton;
 use ManiaLive\DedicatedApi\Callback\base64;
 use ManiaLive\DedicatedApi\Callback\SMapInfo;
@@ -37,101 +37,127 @@ use ManiaLivePlugins\eXpansion\Core\RelayLink;
 use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
 use Maniaplanet\DedicatedServer\Structures\Version;
 
-class Storage extends Singleton implements \ManiaLive\Event\Listener{
+class Storage extends Singleton implements \ManiaLive\Event\Listener
+{
 
-    const TITLE_SIMPLE_TM = 'TM';
-    const TITLE_SIMPLE_SM = 'SM';
+	const TITLE_SIMPLE_TM = 'TM';
 
-    /**
-     * @var \Maniaplanet\DedicatedServer\Connection
-     */
-    private $connection;
+	const TITLE_SIMPLE_SM = 'SM';
+
+	/**
+	 * @var \Maniaplanet\DedicatedServer\Connection
+	 */
+	private $connection;
 
 	/**
 	 * @var DbPlayer[]
 	 */
 	public $dbPlayers = array();
 
-    /**
-     * @var \ManiaLive\Data\Storage
-     */
-    private $storage;
+	/**
+	 * @var \ManiaLive\Data\Storage
+	 */
+	private $storage;
 
-    /**
-     * The version of the dedicated on which the system is running
-     *
-     * @var Version
-     */
-    public $version;
+	/**
+	 * The version of the dedicated on which the system is running
+	 *
+	 * @var Version
+	 */
+	public $version;
 
-    /**
-     * The simple title the environment of the track refers to
-     *
-     * @var String
-     */
-    public $simpleEnviTitle;
+	/**
+	 * The simple title the environment of the track refers to
+	 *
+	 * @var String
+	 */
+	public $simpleEnviTitle;
 
-    /**
-     * Is this server a relay server or a game server
-     *
-     * @var bool
-     */
-    public $isRelay;
+	/**
+	 * Is this server a relay server or a game server
+	 *
+	 * @var bool
+	 */
+	public $isRelay;
 
+	/**
+	 * 	base map type for the server
+	 * @var type 
+	 */
+	public $baseMapType = null;
 
-    /**
-     * @var RelayLink
-     */
-    public $relay;
+	/**
+	 * @var RelayLink
+	 */
+	public $relay;
 
-    protected function __construct()
-    {
-        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_BEGIN_MAP);
+	protected function __construct()
+	{
+		Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_BEGIN_MAP);
 
-        $this->connection = Singletons::getInstance()->getDediConnection();
+		$this->connection = Singletons::getInstance()->getDediConnection();
 
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+		$this->storage = \ManiaLive\Data\Storage::getInstance();
 
-        $this->version = $this->connection->getVersion();
+		$this->version = $this->connection->getVersion();
 
-        $this->isRelay = $this->connection->isRelayServer();
+		$this->isRelay = $this->connection->isRelayServer();
 
-        $this->simpleEnviTitle = $this->getSimpleTitleByEnvironment($this->storage->currentMap->environnement);
+		$this->simpleEnviTitle = $this->getSimpleTitleByEnvironment($this->storage->currentMap->environnement);
 
-        $this->relay = RelayLink::getInstance();
-    }
+		$this->baseMapType = $this->getSimpleMapType($this->storage->currentMap->mapType);
 
-    protected function getSimpleTitleByEnvironment($enviName){
-        if($enviName == "Stadium" || $enviName == "Valley" || $enviName == "Canyon"){
-            return self::TITLE_SIMPLE_TM;
-        }else{
-            return self::TITLE_SIMPLE_SM;
-        }
-    }
+		$this->relay = RelayLink::getInstance();
+	}
+
+	protected function getSimpleMapType($type)
+	{
+		$parts = explode("\\", $type);
+		if (is_array($parts)) {
+			return end($parts);
+		}
+		else {
+			return $type;
+		}
+	}
+
+	protected function getSimpleTitleByEnvironment($enviName)
+	{
+		if ($enviName == "Stadium" || $enviName == "Valley" || $enviName == "Canyon") {
+			return self::TITLE_SIMPLE_TM;
+		}
+		else {
+			return self::TITLE_SIMPLE_SM;
+		}
+	}
 
 	/**
 	 * @param $login
 	 *
 	 * @return DbPlayer|null
 	 */
-	public function getDbPlayer($login){
-		if(isset($this->dbPlayers[$login])){
+	public function getDbPlayer($login)
+	{
+		if (isset($this->dbPlayers[$login])) {
 			echo 'FOUND\n';
 			return $this->dbPlayers[$login];
-		}else {
+		}
+		else {
 			echo 'NOO\n';
 			return null;
 		}
 	}
 
-    /**
-     * Method called when a map begin
-     *
-     * @param SMapInfo $map
-     * @param bool     $warmUp
-     * @param bool     $matchContinuation
-     */
-    function onBeginMap($map, $warmUp, $matchContinuation)
-    {
-    }
+	/**
+	 * Method called when a map begin
+	 *
+	 * @param SMapInfo $map
+	 * @param bool     $warmUp
+	 * @param bool     $matchContinuation
+	 */
+	function onBeginMap($map, $warmUp, $matchContinuation)
+	{
+		
+	}
+
 }
