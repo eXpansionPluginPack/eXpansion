@@ -42,13 +42,18 @@ class PlainPanel extends Widget
 
 	protected $nbFields;
 
+	protected function exp_onBeginConstruct()
+	{
+		$this->setName("Local Scores Panel");
+	}
+
 	protected function exp_onEndConstruct()
 	{
 		$sizeX = 46;
 		$sizeY = 95;
 		$this->setScriptEvents();
 		$this->storage = Storage::getInstance();
-		$this->setName("LocalScores Panel");
+
 
 		$this->storage = Storage::getInstance();
 
@@ -70,8 +75,6 @@ class PlainPanel extends Widget
 		$this->_windowFrame->addComponent($this->frame);
 		$this->setSize($sizeX, $sizeY);
 	}
-	
-	
 
 	function onResize($oldX, $oldY)
 	{
@@ -104,7 +107,7 @@ class PlainPanel extends Widget
 		}
 
 		$index = 1;
-		
+
 		foreach (Widgets_LocalScores::$localrecords as $record) {
 			if ($index > 23)
 				break;

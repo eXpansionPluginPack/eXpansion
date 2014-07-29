@@ -44,7 +44,7 @@ class Widgets_LocalScores extends ExpPlugin implements Listener
 	public function updateLocalPanel($login = null)
 	{
 		$widget = LocalPanel::Create($login);
-		$widget->setPosition(120, 64);
+		$widget->setPosition(114, 64);
 		$widget->update();
 		$widget->show();
 		echo "widget update\n";
@@ -91,6 +91,7 @@ class Widgets_LocalScores extends ExpPlugin implements Listener
 	{
 		Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
 		Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
+		LocalPanel::EraseAll();
 	}
 
 	public function onPersonalBestRecord($record)
