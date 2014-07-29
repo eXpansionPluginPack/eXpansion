@@ -44,6 +44,7 @@ class Widgets_LocalScores extends ExpPlugin implements Listener
 	public function updateLocalPanel($login = null)
 	{
 		$widget = LocalPanel::Create($login);
+		$widget->setPosition(120, 64);
 		$widget->update();
 		$widget->show();
 		echo "widget update\n";
