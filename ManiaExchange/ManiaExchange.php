@@ -109,7 +109,7 @@ class ManiaExchange extends ExpPlugin
 		$window->setTitle('ManiaExchange');
 		$window->setPlugin($this);
 		$window->search($login, $search, $author);
-		$window->setSize(200, 100);
+		$window->setSize(210, 100);
 		$window->centerOnScreen();
 		$window->show();
 	}
@@ -267,25 +267,18 @@ class ManiaExchange extends ExpPlugin
 			}
 		}
 
-		if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
 
-			$query = "";
-			switch ($this->titleId) {
-				case "SMStorm":
-				case "SMStormCombo@nadeolabs":
-				case "SMStormRoyal@nadeolabs":
-				case "SMStormElite@nadeolabs":
-				case "SMStormJoust@nadeolabs":
-					$query = 'http://sm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
-					break;
-				default:
-					$query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
-					break;
-			}
+
+		$query = "";
+		switch ($this->expStorage->simpleEnviTitle) {
+			case "SM":
+				$query = 'http://sm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
+				break;
+			case "TM":
+				$query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
+				break;
 		}
-		else {
-			$query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
-		}
+		
 		$query = $query . "?" . self::$betakey;
 		$this->dataAccess->httpGet($query, Array($this, "xVote"), array($login, $mxId), "Manialive/eXpansion MXapi [search] ver 0.1", "application/json");
 	}
