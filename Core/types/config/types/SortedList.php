@@ -10,55 +10,74 @@ use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
  *
  * @author De Cramer Oliver
  */
-class SortedList extends BasicList {
-    
-    private $lowToHight = true;
+class SortedList extends BasicList
+{
 
-    /**
-     * Adds a value to the end of the list
-     * 
-     * @param mixed $value The value to add
-     * @return bool True if the variable could be added
-     */
-    public function addValue($value) {
-	if ($this->type->basicValueCheck($value)) {
-	    $array = $this->getRawValue();
-	    $array[] = $this->type->castValue($value);
-	    
-	    if($this->lowToHight && sort($array))
-		$this->setRawValue($array);
-	    else if(!$this->lowToHight && rsort($array))
-		$this->setRawValue($array);
-	    else
+	private $lowToHight = true;
+
+	/**
+	 * Adds a value to the end of the list
+	 * 
+	 * @param mixed $value The value to add
+	 * @return bool True if the variable could be added
+	 */
+	public function addValue($value)
+	{
+		if ($this->type->basicValueCheck($value)) {
+			$array = $this->getRawValue();
+			$array[] = $this->type->castValue($value);
+
+			if ($this->lowToHight && sort($array))
+				$this->setRawValue($array);
+			else if (!$this->lowToHight && rsort($array))
+				$this->setRawValue($array);
+			else
+				return false;
+
+			return true;
+		}
 		return false;
-	    
-	    return true;
 	}
-	return false;
-    }
 
+	/**
+	 * Removes the value at the index and shifts all elements in array to fill in the gap
+	 * 
+	 * @param int $index The index at which the value must be removed
+	 */
+	public function removeValue($index)
+	{
+		$array = $this->getRawValue();
+		unset($array[$index]);
+		$array = array_values($array);
+		if ($this->lowToHight && sort($array))
+			$this->setRawValue($array);
+		else if (!$this->lowToHight && rsort($array))
+			$this->setRawValue($array);
+		else
+			return false;
+		return true;
+	}
 
-    /**
-     * Removes the value at the index and shifts all elements in array to fill in the gap
-     * 
-     * @param int $index The index at which the value must be removed
-     */
-    public function removeValue($index) {
-	$array = $this->getRawValue();
-	unset($array[$index]);
-	$array = array_values($array);
-	if($this->lowToHight && sort($array))
-	    $this->setRawValue($array);
-	else if(!$this->lowToHight && rsort($array))
-	    $this->setRawValue($array);
-	else
-	    return false;
-	return true;
-    }
+	public function getPreviewValues()
+	{
+		return implode(",", $this->getRawValue());
+	}
 
-    public function getPreviewValues() {
-	return implode(",",$this->getRawValue());
-    }
+	/**
+	 * 
+	 * @param string $order : "asc" or "desc";
+	 */
+	public function setOrder($order)
+	{
+		switch (strtolower($order)) {
+			case "desc":
+				$this->lowToHight = false;
+				break;
+			default:
+				$this->lowToHight = true;
+				break;
+		}
+	}
 
 }
 
