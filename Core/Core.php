@@ -317,6 +317,8 @@ EOT;
 		$this->lastServerSettings = clone $this->storage->server;
 		$this->connection->dedicatedEcho("ManiaLive\\eXpansion", (string) getmypid());
 		$this->connection->setForcedMusic(false, "");
+		$this->connection->setRoundCustomPoints($this->config->roundsPoints);
+		
 	}
 
 	/**

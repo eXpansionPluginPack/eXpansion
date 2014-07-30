@@ -55,6 +55,8 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $netLostTime = 4000;   // time in milliseconds for lastresponse time, used to determine netlost 
 	
+	public $roundsPoints = array(10,8,6,5,4,3,2,1);
+
 	public $modeTeamSupport = array('Team.Script.txt','Siege.Script.txt','Battle.Script.txt','ShootMania\\Elite.Script.txt');
 	
 }

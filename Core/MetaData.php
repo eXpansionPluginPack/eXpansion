@@ -2,11 +2,13 @@
 
 namespace ManiaLivePlugins\eXpansion\Core;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\ConfigFile;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\ConfigFile;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 
 /**
  * Description of MetaData
@@ -172,7 +174,15 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$var = new String('contact', 'Server administrators contact info (displayed at serverinfo window)', $config, false);	
 	$var->setDefaultValue('YOUR@EMAIL.COM');
 	$this->registerVariable($var);
-    }
+    
+	
+	$var = new SortedList('roundsPoints', 'The file to save server settings', $config, false);
+	$var->setGroup("Misc");
+	$var->setType(new Int(""));
+	$var->setOrder("desc");
+	$var->setDefaultValue(array(10,8,7,6,5,4,3,2,1));
+	$this->registerVariable($var);
+	}
 
 }
 

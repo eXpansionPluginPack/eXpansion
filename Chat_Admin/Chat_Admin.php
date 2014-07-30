@@ -500,10 +500,10 @@ Other server might use the same blacklist file!!');
 	$cmd->addchecker(1, Integer::getInstance());
 	AdminGroups::addAlias($cmd, "setCupNbWinners");
 
-	$cmd = AdminGroups::addAdminCommand('set game cup customPoints', $this, 'prepareRoundPoints', Permission::game_settings);
+	/*$cmd = AdminGroups::addAdminCommand('set game cup customPoints', $this, 'prepareRoundPoints', Permission::game_settings);
 	$cmd->setHelp('Changes the Cup CustomPoints of Cup mode');
 	$cmd->setMinParam(1);
-	AdminGroups::addAlias($cmd, "prepareRoundPoints");
+	AdminGroups::addAlias($cmd, "prepareRoundPoints"); */
 
 	$cmd = AdminGroups::addAdminCommand('set game cup finishtimeout', $this, 'setFinishTimeout', Permission::game_settings);
 	$cmd->setHelp('Changes the Cup Finishtimeout of Cup mode');
