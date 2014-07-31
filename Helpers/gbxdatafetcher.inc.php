@@ -1,5 +1,6 @@
 <?php
 namespace ManiaLivePlugins\eXpansion\Helpers;
+
 /* vim: set noexpandtab tabstop=2 softtabstop=2 shiftwidth=2: */
 
 /**
