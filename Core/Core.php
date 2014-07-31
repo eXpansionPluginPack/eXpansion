@@ -95,6 +95,8 @@ class Core extends types\ExpPlugin
 
 	public static $core = null;
 
+	private $quitDialogXml = "";
+
 	/**
 	 * Declares what is necessary for expansion ro run.
 	 */
@@ -289,12 +291,7 @@ EOT;
 		$this->setPublicMethod("showExpSettings");
 		$this->setPublicMethod("showNetStats");
 
-		$window = new Gui\Windows\QuitWindow();
-		$this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
-
-		// this is a fix for servers with a password, if player chooses to spectate, he can now enter back to play
-		$this->connection->keepPlayerSlots(true);
-
+		$this->updateQuitDialog();
 		//trigger a begin map
 		$this->onBeginMap(null, null, null);
 
@@ -318,7 +315,36 @@ EOT;
 		$this->connection->dedicatedEcho("ManiaLive\\eXpansion", (string) getmypid());
 		$this->connection->setForcedMusic(false, "");
 		$this->connection->setRoundCustomPoints($this->config->roundsPoints);
-		
+		// this is a fix for servers with a password, if player chooses to spectate, he can now enter back to play
+		$this->connection->keepPlayerSlots(true);
+	}
+
+	public function onSettingsChanged(types\config\Variable $var)
+	{
+		switch ($var->getName()) {
+			case "quitDialogManialink":
+				$this->updateQuitDialog();
+				break;
+		}
+	}
+
+	function updateQuitDialog()
+	{
+		$config = Config::getInstance();
+		if (empty($config->quitDialogManialink)) {
+			$window = new Gui\Windows\QuitWindow();
+			$this->quitDialogXml = $window->getXml();
+		}
+		else {
+			try {
+				$this->quitDialogXml = file_get_contents($config->quitDialogManialink);
+			} catch (\Exception $e) {
+				$this->console("[eXp] error while fetching quitDialog xml: " . $e->getMessage());
+				$window = new Gui\Windows\QuitWindow();
+				$this->quitDialogXml = $window->getXml();
+			}
+		}
+		$this->connection->customizeQuitDialog($this->quitDialogXml, "", true, 0);
 	}
 
 	/**
@@ -406,6 +432,8 @@ EOT;
 			}
 		}
 		$this->teamScores = array();
+
+		$this->connection->customizeQuitDialog($this->quitDialogXml, "", true, 0);
 	}
 
 	/**
@@ -850,8 +878,7 @@ EOT;
 
 	function onBeginMatch()
 	{
-		$window = new Gui\Windows\QuitWindow();
-		$this->connection->customizeQuitDialog($window->getXml(), "", true, 0);
+		
 	}
 
 	public function onBeginRound()

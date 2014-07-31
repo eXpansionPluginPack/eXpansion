@@ -59,6 +59,8 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $modeTeamSupport = array('Team.Script.txt','Siege.Script.txt','Battle.Script.txt','ShootMania\\Elite.Script.txt');
 	
+	public $quitDialogManialink = "";
+	
 }
 
 ?>
