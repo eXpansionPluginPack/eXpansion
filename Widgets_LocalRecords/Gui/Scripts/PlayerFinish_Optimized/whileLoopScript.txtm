@@ -12,29 +12,58 @@ if((Now - lastCheckTime) > 50){
 
             //This player start's to be interesting.
             <?php echo $this->varName ?> = Score.BestLap.Time;
+            declare time = Score.BestLap.Time;
+
+            declare playerTime = -1;
 
             if (!playerTimes.existskey(Score.User.Login)) {
-                origPlayerTimes.clear();
-                origPlayerTimes = playerTimes;
-                playerTimes[Score.User.Login] = -1;
                 playerNickName[Score.User.Login] = Score.User.Name;
+            }else{
+                playerTime =  playerTimes[Score.User.Login];
             }
-            declare playerTime = playerTimes[Score.User.Login];
-            // log("Var Time: "^<?php echo $this->varName ?>^"New Time : "^Score.BestLap.Time^" Old Time : "^playerTime);
 
-            if (playerTime == -1 || playerTime > Score.BestLap.Time) {
-                // log("Better Time: "^Score.User.Login);
-                if (playerTime != -1) {
+            if (playerTime == -1 || playerTime > time) {
+                //Dedimania situation need to check record fits
+                if (useMaxPlayerRank) {
                     origPlayerTimes.clear();
                     origPlayerTimes = playerTimes;
+
+                    //Add new time that might be removed
+                    playerTimes[Score.User.Login] = time;
+
+                    //sort times
+                    playerTimes = playerTimes.sort();
+
+                    //get max rank
+                    declare maxRank = maxServerRank;
+                    if (maxPlayerRank.existskey(Score.User.Login) && maxPlayerRank[Score.User.Login] > maxRank) {
+                        maxRank = maxPlayerRank[Score.User.Login];
+                    }
+
+                    declare Boolean keepRecord = False;
+                    declare Integer inRank = 1;
+
+                    //Check if player ew rank is nice to go
+                    foreach (Login => Time in playerTimes) {
+                        if (Login == Score.User.Login) {
+                            //It's our player
+                            if(inRank <= maxRank){
+                                log("Dedimania Record not to be ignored");
+                                keepRecord = True;
+                            }
+                        }
+                        inRank += 1;
+                    }
+
+                    if(!keepRecord){
+                        playerTimes.clear();
+                        playerTimes = origPlayerTimes;
+                    }
+                }else{
+                    //Normal situation all times are taken in account
+                    playerTimes[Score.User.Login] = time;
                 }
 
-                origPlayerTimes.clear();
-                origPlayerTimes = playerTimes;
-
-                playerTimes[Score.User.Login] = Score.BestLap.Time;
-
-                recordLogin = Score.User.Login;
                 needUpdate = True;
             }else{
                 <?php echo $this->varName ?> = playerTime;
@@ -53,43 +82,6 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     lastUpdateTime = Now;
 
     needUpdate = False;
-    declare Integer inRank = 1;
-    declare Boolean isNewRecord = False;
-
-    playerTimes = playerTimes.sort();
-
-    foreach (Login => Score in playerTimes) {
-           if (Login == recordLogin) {
-               if (useMaxPlayerRank) {
-
-                   declare maxRank = maxServerRank;
-                   if (maxPlayerRank.existskey(Login) && maxPlayerRank[Login] > maxRank) {
-                       maxRank = maxPlayerRank[Login];
-                   }
-
-                   log("Dedimania Max Rank : "^maxRank);
-
-                   if(inRank <= maxRank){
-                       log("Dedimania Record not to be ignored");
-                       isNewRecord = True;
-                   }
-
-               } else {
-                   isNewRecord = True;
-               }
-           }
-           inRank += 1;
-    }
-
-    inRank = 1;
-
-    if (!isNewRecord) {
-        playerTimes.clear();
-        playerTimes = origPlayerTimes.sort();
-    }
-
-
-
     declare i = 1;
     declare nbRec = 1;
     declare showed = False;
