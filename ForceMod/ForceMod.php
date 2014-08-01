@@ -15,9 +15,10 @@ use Maniaplanet\DedicatedServer\Structures\Mod;
  */
 class ForceMod extends ExpPlugin
 {
+
 	/** @var Config */
 	private $config;
-	
+
 	public function exp_onReady()
 	{
 		$this->enableDedicatedEvents();
@@ -27,25 +28,52 @@ class ForceMod extends ExpPlugin
 	private function forceMods()
 	{
 		try {
+			$rnd_mod = array();
 			$mods = $this->getMods();
-			if (count($mods) > 0) {
-				$index = mt_rand(0, (count($mods) - 1));
-				if (array_key_exists($index, $mods)) {
-					$rnd_mod = $mods[$index];
-					$this->console("Enabling forced mod at url: " . $rnd_mod->url);
-				}
-				else {
-					$this->console("Enabling forced mods!");
-					$rnd_mod = $mods;
+			if ($this->expStorage->version->titleId == "Trackmania_2@nadeolabs") {
+
+				foreach ($mods as $env => $mod) {
+					$index = mt_rand(0, (count($mod) - 1));
+					if (array_key_exists($index, $mod)) {
+						$rnd_mod[] = $mod[$index];
+					}
 				}
 			}
 			else {
-				$this->console("Force mods disabled, since there is no mods defined in config");
-				$rnd_mod = array();
+				if (array_key_exists($this->expStorage->version->titleId, $mods)) {
+					$mods = $mods[$this->expStorage->version->titleId];
+					if (count($mods) > 0) {
+						$index = mt_rand(0, (count($mods) - 1));
+						if (array_key_exists($index, $mods)) {
+							$rnd_mod[0] = $mods[$index];
+							$this->console("Enabling forced mod at url: " . $rnd_mod[0]->url);
+						}
+					}
+				}
 			}
+
+			foreach ($rnd_mod as $key => $mod) {
+				switch ($mod->env) {
+					case "TMStadium":
+						$mod->env = "Stadium";
+						break;
+					case "TMValley":
+						$mod->env = "Valley";
+						break;
+					case "TMCanyon":
+						$mod->env = "Canyon";
+						break;
+				}
+				$rnd_mod[$key] = $mod;
+			}
+
+			if (empty($rnd_mod)) {
+				$this->console("Force mods disabled, since there is no mods defined in config");
+			}
+
 			$this->connection->setForcedMods(true, $rnd_mod);
 		} catch (Exception $e) {
-			$this->console("[eXp\\ForceMod] error while enabling the mod:" . $e->getMessage());
+			$this->console("[eXp\\ForceMod] error while enabling the mod:" . $e->getMessage() . " line:" . $e->getLine());
 			return;
 		}
 	}
@@ -53,33 +81,21 @@ class ForceMod extends ExpPlugin
 	private function getMods()
 	{
 		$this->config = Config::getInstance();
-		$version = $this->connection->getVersion();
-		$env = "";
-		switch ($version->titleId) {
-			case "TMStadium":
-				$env = "Stadium";
-				break;
-			case "TMValley":
-				$env = "Valley";
-				break;
-			case "TMCanyon":
-				$env = "Canyon";
-				break;
-		}
 
 		try {
 			$mods = array();
 			if (!is_array($this->config->mods)) {
 				$this->config->mods = array($this->config->mods);
 			}
-			foreach ($this->config->mods as $entry) {
-				if (empty($entry))
-					continue;
+			foreach ($this->config->mods as $url => $envString) {
+				$env = $envString;
+				if (empty($envString))
+					$env = $this->expStorage->version->titleId;
+
 				$mod = new Mod();
-				$mod->url = $entry;
+				$mod->url = $url;
 				$mod->env = $env;
-				//$mod->env = $env->titleId;
-				$mods[] = $mod;
+				$mods[$env][] = $mod;
 			}
 			return $mods;
 		} catch (Exception $e) {
