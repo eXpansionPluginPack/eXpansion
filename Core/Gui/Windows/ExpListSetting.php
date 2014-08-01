@@ -40,6 +40,7 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	$this->buttonAdd = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
 	$this->buttonAdd->setText("Add");
+	$this->buttonAdd->setPosY(-2);
 	$this->buttonAdd->setAction($this->createAction(array($this, "addValue")));
 	$this->mainFrame->addComponent($this->buttonAdd);
     }
@@ -51,7 +52,7 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	$this->pagerFrame->setPosX(0);
 	$this->pagerFrame->setSize($this->getSizeX() - 3, $this->getSizeY() - 11);
 
-	$this->buttonAdd->setPosX($this->getSizeX() - 13);
+	$this->buttonAdd->setPosX($this->getSizeX() - 23);
 	if ($this->input_key == null) {
 	    $this->input_value->setSizeX($this->getSizeX() - 25);
 	} else {
@@ -71,10 +72,10 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	    if ($this->input_key == null) {
 		$this->input_key = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("key", 50);
 		$this->input_key->setPosY(-2);
-		$this->addComponent($this->input_key);
+		$this->input_key->setLabel('Key');
+		$this->mainFrame->addComponent($this->input_key);
 	    }
-
-	    $this->input_value->setSizeX(($this->getSizeX() - 25) / 2);
+		
 	    $this->input_value->setPosX(($this->getSizeX() - 25) / 2 + 1);
 	    $this->input_value->setSizeX(($this->getSizeX() - 25) / 2 - 1);
 
