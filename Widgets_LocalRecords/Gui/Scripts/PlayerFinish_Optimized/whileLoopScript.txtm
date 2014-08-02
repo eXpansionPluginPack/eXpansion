@@ -86,6 +86,8 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     declare nbRec = 1;
     declare showed = False;
 
+    playerTimes = playerTimes.sort();
+
     declare myRank = -1;
     declare start = -1;
     declare end = -1;
