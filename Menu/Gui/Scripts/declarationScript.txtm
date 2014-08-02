@@ -13,7 +13,7 @@ declare Text version = "<?php echo $this->version ?>";
 declare Text id = "<?php echo $this->name ?>";
 declare Text gameMode = "<?php echo $this->gameMode; ?>";
 declare Boolean forceReset = <?php echo $this->forceReset ?>;
-
+declare Integer menuCount = <?php echo $this->count ?>;
 declare Boolean eXp_mouseRightState = False;
 declare eXp_mouseRightTime = 0;
 
@@ -21,10 +21,13 @@ declare Boolean eXp_mouseMiddleState = False;
 declare eXp_mouseMiddleTime = 0;
 
 declare Boolean tabKey = False;
+declare hideStamp = 0;
 
 declare Boolean exp_enableHudMove for UI = False;     
 declare Boolean exp_needToCheckPersistentVars for UI = False;
-		
+declare Boolean showStatus = False;
+declare Boolean needUpdate = True;		
+declare Boolean needHidden = False;
 
 if (!eXp_widgetVisible.existskey(version) ) {
 	eXp_widgetVisible[version] = Boolean[Text][Text];
@@ -38,10 +41,18 @@ if ( !eXp_widgetVisible[version][id].existskey(gameMode) ) {
 	eXp_widgetVisible[version][id][gameMode] = True;
 }
 
-for(i, 1, <?php echo $this->count ?>) {
+for(i, 1, menuCount) {
     Page.GetFirstChild("submenu_"^i).Hide();
 }
 
 Menu.RelativePosition.Z = 30.0;     
 
-
+ Page.GetClassChildren("menuitem" , Menu , True);
+  foreach (control in Page.GetClassChildren_Result) { 
+             declare CMlQuad quad  <=> (Page.GetFirstChild(control.ControlId) as CMlQuad);
+             quad.Opacity = 0.0;
+             quad.Scale = 0.0;
+             declare CMlLabel lbl  <=> (Page.GetFirstChild(control.ControlId^"_lbl") as CMlLabel);
+             lbl.Opacity = 0.0;
+             lbl.Scale = 0.0;
+}
