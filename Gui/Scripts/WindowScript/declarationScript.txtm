@@ -53,6 +53,16 @@ Void stackRemoveWindow(Text window) {
     exp_stackCounter = Now;    
 }
 
+Boolean stackContainsWindow(Text window) {
+    declare Text[] exp_windowStack for UI = Text[];
+    foreach (key => value in exp_windowStack) {
+        if (value == window) {
+            return True;
+        }  
+    }
+    return False;
+}
+
 //Main Function
 main () {
     declare Integer closeCounter = 0;
@@ -92,7 +102,7 @@ main () {
     declare Text exp_window = "";
     declare Real zIndex = 0.;
     
-    stackActivateWindow(id);
+    
     
     //Declarations by containers included in this window
     <?php echo $this->dDeclares ?>
@@ -108,12 +118,14 @@ main () {
     LastDelta = exp_windowLastPosRel[version][id];
     Window.RelativePosition = exp_windowLastPosRel[version][id];
     
-    //if (!disableAnimations) {
-    //    Window.RelativePosition.X = 0.;
-    //    Window.RelativePosition.Y = 0.;
-    //    Window.Scale = 0.0;
-    //    openWindow = True;
-    //}
+    if (!disableAnimations && !stackContainsWindow(id) ) {
+        Window.RelativePosition.X = 0.;
+        Window.RelativePosition.Y = 0.;
+        Window.Scale = 0.0;
+        openWindow = True;
+    }
+    
+    stackActivateWindow(id);
     
 
     while(True) {
@@ -166,10 +178,10 @@ main () {
 			stackRemoveWindow(id);
 			continue;
 		    } else {
-		    declare Real winX = Window.RelativePosition.X + <?php echo $win->getSizeX()/2; ?>; 
-                   declare Real winY = Window.RelativePosition.Y;
-                    //declare Real winX = 0.;
-		    //declare Real winY = 0.;
+		   // declare Real winX = Window.RelativePosition.X + <?php echo $win->getSizeX()/2; ?>; 
+                   //declare Real winY = Window.RelativePosition.Y;
+                    declare Real winX = 0.;
+		    declare Real winY = 0.;
 		    declare Text pos = winX ^ " " ^ winY;
 		    LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"0\" id=\"" ^ windowId ^ "\" />", 250, "EaseOutLinear");
                     closeWindow = True;
