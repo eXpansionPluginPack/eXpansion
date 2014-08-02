@@ -100,10 +100,7 @@ if (needUpdate) {
 	}
 
     } else {
-        if (needHidden) {  
-                if (currentButton != Null) {
-                    currentButton.Hide();
-                }        
+        if (needHidden) {                  
             log("Hidden"^ Now);
             hideStamp = Now;
             needHidden = False;
@@ -127,5 +124,4 @@ if (needUpdate) {
 
 if(!toggleSubmenu && Menu.Visible && (Now - hideStamp) > 700) {
     Menu.Hide();
-    
 }
