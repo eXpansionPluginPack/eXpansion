@@ -21,7 +21,7 @@ Void stackActivateWindow(Text window) {
     declare Text[] exp_windowStack for UI = Text[];  
     declare Boolean exp_updateStack for UI;
     declare Integer exp_stackCounter for UI;
-    
+
     declare Text[] outArray = Text[];
      
     outArray.add(window);
@@ -108,13 +108,27 @@ main () {
     LastDelta = exp_windowLastPosRel[version][id];
     Window.RelativePosition = exp_windowLastPosRel[version][id];
     
+    //if (!disableAnimations) {
+    //    Window.RelativePosition.X = 0.;
+    //    Window.RelativePosition.Y = 0.;
+    //    Window.Scale = 0.0;
+    //    openWindow = True;
+    //}
     
 
     while(True) {
 	yield;
 	
         <?php echo $this->wLoop ?>
-        	
+
+        if (openWindow) {
+            openWindow = False;
+            declare Real winX = exp_windowLastPosRel[version][id].X;
+            declare Real winY = exp_windowLastPosRel[version][id].Y;
+            declare Text pos = winX ^ " " ^ winY;
+            LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"1\" id=\"" ^ windowId ^ "\" />", 250, "EaseInLinear");
+        }	
+
 	if (closeWindow && closeCounter + 350 <= Now ) {	    
 	    stackRemoveWindow(id);
 	    TriggerPageAction(closeAction);
@@ -153,7 +167,9 @@ main () {
 			continue;
 		    } else {
 		    declare Real winX = Window.RelativePosition.X + <?php echo $win->getSizeX()/2; ?>; 
-		    declare Real winY = Window.RelativePosition.Y;
+                   declare Real winY = Window.RelativePosition.Y;
+                    //declare Real winX = 0.;
+		    //declare Real winY = 0.;
 		    declare Text pos = winX ^ " " ^ winY;
 		    LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"0\" id=\"" ^ windowId ^ "\" />", 250, "EaseOutLinear");
                     closeWindow = True;
