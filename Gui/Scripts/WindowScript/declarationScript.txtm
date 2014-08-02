@@ -90,7 +90,7 @@ main () {
     declare Boolean exp_updateStack for UI = False;
     declare Integer exp_stackCounter for UI = 0;
     declare Text exp_window = "";
-    declare Real zIndex = 30.;
+    declare Real zIndex = 0.;
     
     stackActivateWindow(id);
     
