@@ -2,12 +2,15 @@
 
 namespace ManiaLivePlugins\eXpansion\LoadScreen;
 
+use Exception;
+use ManiaLivePlugins\eXpansion\Core\DataAccess;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
-use ManiaLivePlugins\eXpansion\Gui\Widgets\Preloader;
-use ManiaLivePlugins\eXpansion\LoadScreen\Gui\Windows\LScreen;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\LoadScreen\Config;
+use ManiaLivePlugins\eXpansion\LoadScreen\Gui\Windows\LScreen;
+use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap;
 
 /*
  * Copyright (C) 2014 Reaby
@@ -38,16 +41,24 @@ class LoadScreen extends ExpPlugin
 
 	private $isActive = false;
 
+	private $mxImage = "";
+
+	/** @var DataAccess */
+	private $dataAccess;
+
 	public function exp_onReady()
 	{
 		$this->enableDedicatedEvents();
 		$this->enableTickerEvent();
-
+		$this->dataAccess = DataAccess::getInstance();
 		$config = Config::getInstance();
 		foreach ($config->screens as $url) {
 			Gui::preloadImage($url);
 		}
-		Gui::updatePreloader();
+		Gui::preloadUpdate();
+
+		if (Config::getInstance()->screensMx)
+			$this->syncMxImage();
 	}
 
 	public function onSettingsChanged(Variable $var)
@@ -58,19 +69,34 @@ class LoadScreen extends ExpPlugin
 				Gui::preloadImage($url);
 			}
 		}
-		Gui::updatePreloader();
+		Gui::preloadUpdate();
 	}
 
 	public function onTick()
 	{
 
 		$delay = intval(Config::getInstance()->screensDelay);
+
+
+
 		if ($this->isActive == true && time() > ($this->startTime + $delay)) {
 
+			$url = "";
 			$this->isActive = false;
 			$this->startTime = 0;
+			$config = Config::getInstance();
+			if (count($config->screens) > 0) {
+				$index = mt_rand(0, (count($config->screens) - 1));
+				$url = $config->screens[$index];
+			}
+
+			if (Config::getInstance()->screensMx)
+				if (!empty($this->mxImage))
+					$url = $this->mxImage;
+
 			$widget = LScreen::Create(null);
 			$widget->setName("loading Screen");
+			$widget->setImage($url);
 			$widget->show();
 		}
 	}
@@ -89,8 +115,56 @@ class LoadScreen extends ExpPlugin
 
 	public function onBeginMatch()
 	{
+
 		$this->isActive = false;
 		LScreen::EraseAll();
+		Gui::preloadRemove($this->mxImage);
+		Gui::preloadUpdate();
+
+		if (Config::getInstance()->screensMx)
+			$this->syncMxImage();
+	}
+
+	private function syncMxImage()
+	{
+		$uid = urlencode($this->storage->nextMap->uId);
+
+		switch ($this->expStorage->simpleEnviTitle) {
+			case "SM":
+				$query = 'http://sm.mania-exchange.com/api/tracks/get_track_info/uid/' . $uid;
+				break;
+			case "TM":
+				$query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/uid/' . $uid;
+				break;
+		}
+
+		$this->dataAccess->httpGet($query, array($this, "xGetImage"), null, "MX", "application/json");
+	}
+
+	public function xGetImage($data, $code, $params = null)
+	{
+		if ($code != 200)
+			return;
+		try {
+			$json = json_decode($data, true);
+			$map = MxMap::fromArray($json);
+			$game = strtolower($this->expStorage->simpleEnviTitle);
+
+			if ($map->hasScreenshot) {
+
+				$this->mxImage = "http://" . $game . ".mania-exchange.com/tracks/screenshot/normal/" . $map->trackID."?.png";
+				Gui::preloadImage($this->mxImage);
+				Gui::preloadUpdate();
+				echo $this->mxImage . "\n";
+			}
+			else {
+				$this->mxImage = "";
+				echo "no screenshot for map\n";
+			}
+		} catch (Exception $e) {
+			Helper::logError("Loadscreen error:" . $e->getMessage());
+			$this->mxImage = "";
+		}
 	}
 
 	public function exp_onUnload()

@@ -282,7 +282,16 @@ class Gui extends ExpPlugin
 		Preloader::add($url);
 	}
 
-	public static function updatePreloader()
+	/**
+	 * Preload image
+	 * @param type $url
+	 */
+	public static function preloadRemove($url)
+	{
+		Preloader::remove($url);
+	}
+
+	public static function preloadUpdate()
 	{
 		$preloader = Preloader::Create(null);
 		$preloader->show();

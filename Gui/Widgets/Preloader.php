@@ -26,9 +26,8 @@ class Preloader extends Window
 		$this->addComponent($this->frame);
 
 		$this->setSize(120, 40);
-		$this->setPosition(0,200);
+		$this->setPosition(0, 200);
 		$this->setAlign("center", "center");
-
 	}
 
 	protected function onDraw()
@@ -45,6 +44,14 @@ class Preloader extends Window
 	public static function add($url)
 	{
 		self::$cache[md5($url)] = $url;
+	}
+
+	public static function remove($url)
+	{
+		$md5 = md5($url);
+		if (array_key_exists($md5, self::$cache)) {
+			unset(self::$cache[$md5]);
+		}
 	}
 
 	function destroy()

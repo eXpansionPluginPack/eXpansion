@@ -60,14 +60,13 @@ class LScreen extends Window
 
 	protected function onDraw()
 	{
-		$config = Config::getInstance();
-		$this->quad->setImage("", true);
-		if (count($config->screens) > 0) {
-			$index = mt_rand(0, (count($config->screens) - 1));
-			$this->quad->setImage($config->screens[$index], true);
-		}
-		$this->quad->setPosZ(80);
+		$this->quad->setPosZ(70);
 		parent::onDraw();
+	}
+
+	public function setImage($url)
+	{
+		$this->quad->setImage($url, true);
 	}
 
 	function destroy()
