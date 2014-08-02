@@ -32,6 +32,8 @@ class PanelItem extends \ManiaLive\Gui\Control
 		$this->addComponent($this->bg);
 
 		$this->label = new \ManiaLib\Gui\Elements\Label($sizeX, $sizeY);
+		$this->label->setPosY(-1);
+		$this->label->setAlign("left", "top");
 		$this->addComponent($this->label);
 		$this->setSize($sizeX, $sizeY);
 	}
