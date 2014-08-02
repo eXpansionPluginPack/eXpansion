@@ -89,7 +89,7 @@ if (needUpdate) {
    
     if (showStatus) {
         Menu.Show();
-        log("Show"^ Now);
+        //log("Show"^ Now);
         needHidden = True;
         Page.GetClassChildren("menuitem" , Menu , True);
          declare Integer delay = 0;  
@@ -101,7 +101,6 @@ if (needUpdate) {
 
     } else {
         if (needHidden) {                  
-            log("Hidden"^ Now);
             hideStamp = Now;
             needHidden = False;
             declare Integer delay = 350;  
@@ -122,6 +121,11 @@ if (needUpdate) {
     }
 }
 
-if(!toggleSubmenu && Menu.Visible && (Now - hideStamp) > 700) {
+if(!toggleSubmenu && Menu.Visible && (Now - hideStamp) > 500) {
     Menu.Hide();
+    if (currentButton != Null) {                
+        //log ("hiding:" ^ currentButton.ControlId);
+        currentButton.Hide();        
+        currentButton = Null;
+    }
 }
