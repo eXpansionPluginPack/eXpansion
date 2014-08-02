@@ -23,6 +23,8 @@ class PlainWidget extends \ManiaLive\Gui\Window
     {
         parent::onConstruct();
 
+		$this->setPosZ(-30);
+
         $this->_script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\PlainWidgetScript");
 
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
