@@ -35,9 +35,9 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $ident = 'driftbot';
     public $channel = "#driftstation";
     public $channelKey = "";
-    
-    
-    public $plugins = array("AdminPrivateTriggers", "AdminPublicTriggers");
+    public $allowedIrcLogins = array();
+	
+    public $plugins = array("AdminPrivateTriggers");
     
 
 }
