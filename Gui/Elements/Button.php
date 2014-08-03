@@ -179,10 +179,10 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	{
 		$this->description = "$000" . $description;
 		$this->labelDesc->setSizeX($sizeX);
-		$this->labelDesc->setSizeY($sizeY);
+		$this->labelDesc->setSizeY($sizeY*$maxLine);
 		$this->labelDesc->setMaxline($maxLine);
 		$this->backGroundDesc->setSizeX($sizeX + 4);
-		$this->backGroundDesc->setSizeY($sizeY);
+		$this->backGroundDesc->setSizeY($sizeY*$maxLine);
 	}
 
 	public function getDescription()
