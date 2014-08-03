@@ -161,10 +161,9 @@ class LoadScreen extends ExpPlugin
 			}
 			else {
 				$this->mxImage = "";
-				echo "no screenshot for map\n";
 			}
 		} catch (Exception $e) {
-			Helper::logError("Loadscreen error:" . $e->getMessage());
+			Helper::logError("LoadScreen error: " . $e->getMessage() . " at line " . $e->getLine());
 			$this->mxImage = "";
 		}
 	}

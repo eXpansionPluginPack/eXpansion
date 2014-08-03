@@ -19,6 +19,7 @@
 namespace ManiaLivePlugins\eXpansion\Irc\Classes\Plugins;
 
 use ManiaLivePlugins\eXpansion\Irc\Classes\IrcBot;
+use ManiaLivePlugins\eXpansion\Irc\Config;
 
 /**
  * Description of AdminPublic
@@ -35,7 +36,7 @@ class AdminPublicTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Irc
 
     /** @var ManiaLive\Data\Storage */
     private $storage;
-    private $allowedLogins = Array("reaby");
+    private $allowedLogins = Array();
 
     public function __construct() {
 	$config = \ManiaLive\DedicatedApi\Config::getInstance();
@@ -58,7 +59,7 @@ class AdminPublicTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Irc
     public function irc_onPublicChat($connection, $channel, $nick, $message) {
 
 	if (substr($message, 0, 1) == "!") {
-	    if (!in_array($connection->getIrcNick($nick), $this->allowedLogins)) {
+	    if (!in_array($connection->getIrcNick($nick), Config::getInstance()->allowedIrcLogins)) {
 		$this->irc->sendPublicChat("You are not allowed to use ! commands.");
 		return;
 	    }
