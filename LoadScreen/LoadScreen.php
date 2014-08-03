@@ -155,11 +155,9 @@ class LoadScreen extends ExpPlugin
 			$game = strtolower($this->expStorage->simpleEnviTitle);
 
 			if ($map->hasScreenshot) {
-
 				$this->mxImage = "http://" . $game . ".mania-exchange.com/tracks/screenshot/normal/" . $map->trackID . "?.png";
 				Gui::preloadImage($this->mxImage);
 				Gui::preloadUpdate();
-				echo $this->mxImage . "\n";
 			}
 			else {
 				$this->mxImage = "";
