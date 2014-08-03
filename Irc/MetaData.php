@@ -21,7 +21,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	{
 		parent::onBeginLoad();
 		$this->setName("Internet Relay Chat");
-		$this->setDescription("Provides IRC link for chatting and remote administration");
+		$this->setDescription("Provides IRC link for chatting and remote administration, needs php_sockets extension.");
 
 		$config = Config::getInstance();
 
@@ -75,6 +75,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(array());
 		$var->setGroup("Communication");
 		$this->registerVariable($var);
+	}
+
+	public function checkOtherCompatibility()
+	{
+		
+		if (!extension_loaded("sockets"))
+			return array('You need extension "php_sockets" enabled for php!');
+		return array();
 	}
 
 }
