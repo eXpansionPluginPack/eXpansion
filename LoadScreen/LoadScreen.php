@@ -147,12 +147,16 @@ class LoadScreen extends ExpPlugin
 			return;
 		try {
 			$json = json_decode($data, true);
+			if ($json === null) {
+				$this->mxImage = "";
+				return;
+			}
 			$map = MxMap::fromArray($json);
 			$game = strtolower($this->expStorage->simpleEnviTitle);
 
 			if ($map->hasScreenshot) {
 
-				$this->mxImage = "http://" . $game . ".mania-exchange.com/tracks/screenshot/normal/" . $map->trackID."?.png";
+				$this->mxImage = "http://" . $game . ".mania-exchange.com/tracks/screenshot/normal/" . $map->trackID . "?.png";
 				Gui::preloadImage($this->mxImage);
 				Gui::preloadUpdate();
 				echo $this->mxImage . "\n";

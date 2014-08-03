@@ -40,8 +40,9 @@ class ForceMod extends ExpPlugin
 				}
 			}
 			else {
-				if (array_key_exists($this->expStorage->version->titleId, $mods)) {
-					$mods = $mods[$this->expStorage->version->titleId];
+				$env = $this->fixEnv($this->expStorage->version->titleId);
+				if (array_key_exists($env, $mods)) {
+					$mods = $mods[$env];
 					if (count($mods) > 0) {
 						$index = mt_rand(0, (count($mods) - 1));
 						if (array_key_exists($index, $mods)) {
@@ -53,18 +54,7 @@ class ForceMod extends ExpPlugin
 			}
 
 			foreach ($rnd_mod as $key => $mod) {
-				switch ($mod->env) {
-					case "TMStadium":
-						$mod->env = "Stadium";
-						break;
-					case "TMValley":
-						$mod->env = "Valley";
-						break;
-					case "TMCanyon":
-						$mod->env = "Canyon";
-						break;
-				}
-				$rnd_mod[$key] = $mod;
+				$rnd_mod[$key] = $this->fixEnv($mod);
 			}
 
 			if (empty($rnd_mod)) {
@@ -99,8 +89,14 @@ class ForceMod extends ExpPlugin
 			}
 			return $mods;
 		} catch (Exception $e) {
+			\ManiaLivePlugins\eXpansion\Helpers\Helper::logError("Error while forcemod:" . $e->getMessage());
 			return array();
 		}
+	}
+
+	public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
+	{
+		
 	}
 
 	public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
@@ -117,6 +113,22 @@ class ForceMod extends ExpPlugin
 			$this->console("[eXp\\ForceMod] error while disabling the mods:" . $e->getMessage());
 			return;
 		}
+	}
+
+	private function fixEnv($env)
+	{
+		switch ($env) {
+			case "TMStadium":
+				return "Stadium";
+				break;
+			case "TMValley":
+				return "Valley";
+				break;
+			case "TMCanyon":
+				return "Canyon";
+				break;
+		}
+		return $env;
 	}
 
 }
