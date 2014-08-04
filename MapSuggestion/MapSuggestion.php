@@ -16,7 +16,6 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 
 	public function exp_onReady()
 	{
-		echo "\n!!!! mapwish\n";
 		$this->registerChatCommand("mapwish", "showMapWishWindow", 0, true);
 		$this->setPublicMethod("showMapWishWindow");
 		Dispatcher::register(ListButtons::getClass(), $this);

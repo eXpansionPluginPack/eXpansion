@@ -10,7 +10,7 @@ class Widgets_MapSuggestion extends ExpPlugin
 {
 
 	private $action;
-
+	
 	public function exp_onReady()
 	{
 		$ahandler = ActionHandler::getInstance();
