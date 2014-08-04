@@ -16,6 +16,7 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 
 	public function exp_onReady()
 	{
+		echo "\n!!!! mapwish\n";
 		$this->registerChatCommand("mapwish", "showMapWishWindow", 0, true);
 		$this->setPublicMethod("showMapWishWindow");
 		Dispatcher::register(ListButtons::getClass(), $this);
@@ -82,6 +83,15 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 		$button->callback = array($this, 'addMapToWish');
 		$button->label = 'Suggest';
 		$buttons->data['suggest'] = $button;
+	}
+	
+	
+	public function exp_onUnload()
+	{
+		MapWish::EraseAll();
+		Dispatcher::unregister(ListButtons::getClass(), $this);
+		parent::exp_onUnload();
+		
 	}
 
 }
