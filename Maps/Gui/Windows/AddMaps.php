@@ -46,14 +46,13 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->mainFrame->addComponent($this->btnAddAll);
 	}
 
-	function addMap($login, $filename)
+	function addMap($login, $array)
 	{
 		try {
-			$this->connection->addMap($filename);
-			$mapinfo = $this->connection->getMapInfo($filename);
-			$this->connection->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.', $this->getRecipient(), $mapinfo->name));
+			$this->connection->addMap($array[0]);
+			$this->connection->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.', $this->getRecipient(), $array[1]));
 		} catch (\Exception $e) {
-			$this->connection->chatSendServerMessage(__('Error:', $e->getMessage()));
+			$this->connection->chatSendServerMessage("Error: " . $e->getMessage(), $login);
 		}
 	}
 
