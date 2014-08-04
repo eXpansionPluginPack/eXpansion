@@ -139,7 +139,7 @@ class Plugin extends \ManiaLive\Gui\Control
 
 		$this->button_more = new Button(8, 8);
 		$this->button_more->setIcon("Icons128x128_1", "Options");
-		$this->addComponent($this->button_more);
+		//$this->addComponent($this->button_more);
 
 		$this->button_start = new Button(12, 5);
 		$this->button_start->setAction($this->createAction(array($this, "startPlugin")));
@@ -166,7 +166,7 @@ class Plugin extends \ManiaLive\Gui\Control
 		$this->button_gameComp->setPositionX($this->getSizeX() - 5 * 4 - 4);
 		$this->button_otherComp->setPositionX($this->getSizeX() - 5 * 3 - 3);
 		$this->button_more->setPositionX($this->getSizeX() - 5 * 2 - 4);
-		$this->button_start->setPositionX($this->getSizeX() - 5 * 1 - 1);
+		$this->button_start->setPositionX($this->getSizeX() - 8 * 1 - 1);
 	}
 
 	private function getRunningDescriptionText($runnig, $inStart)
