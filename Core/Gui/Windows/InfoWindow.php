@@ -44,26 +44,26 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	$this->mainFrame->addComponent($this->frame);
 	$version = $this->connection->getVersion();
 
-	$line = new Infoline(5, "Server Login: ", $this->storage->serverLogin, 0);
+	$line = new Infoline(5, "Server Login", $this->storage->serverLogin, 0);
 	$this->frame->addComponent($line);
 
-	$line = new Infoline(5, "Server version: ", $version->version, 0);
+	$line = new Infoline(5, "Server version", $version->version, 0);
 	$this->frame->addComponent($line);
-	$line = new Infoline(5, "Server Build: ",$version->build, 0);
+	$line = new Infoline(5, "Server Build",$version->build, 0);
 	$this->frame->addComponent($line);
-	$line = new Infoline(5, "Server ApiVersio: ", $version->apiVersion, 0);
-	$this->frame->addComponent($line);
-
-	$line = new Infoline(5, "Server Titlepack: ", $version->titleId, 0);
+	$line = new Infoline(5, "Server ApiVersio", $version->apiVersion, 0);
 	$this->frame->addComponent($line);
 
-        $line = new Infoline(5, "Manialive version: ", \ManiaLive\Application\VERSION, 0);
+	$line = new Infoline(5, "Server Titlepack", $version->titleId, 0);
 	$this->frame->addComponent($line);
 
-	$line = new Infoline(5, "eXpansion version: ", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . " - ". (date("Y-m-d h:i:s A", Helper::getBuildDate())), 0);
+        $line = new Infoline(5, "Manialive version", \ManiaLive\Application\VERSION, 0);
+	$this->frame->addComponent($line);
+
+	$line = new Infoline(5, "eXpansion version", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . " - ". (date("Y-m-d h:i:s A", Helper::getBuildDate())), 0);
 	$this->frame->addComponent($line);
 	
-	$line = new Infoline(5, "Php Version: ", phpversion(), 0);
+	$line = new Infoline(5, "Php Version", phpversion(), 0);
 	$this->frame->addComponent($line);
 
 	$this->frame->addComponent(new \ManiaLib\Gui\Elements\Label(10, 7));
@@ -82,7 +82,7 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 	$this->ok = new OkButton();
 	$this->ok->colorize("0d0");
-	$this->ok->setText(__("Apply", $login));
+	$this->ok->setText(__("Close", $login));
 	$this->ok->setAction($this->actionOk);
 	$this->mainFrame->addComponent($this->ok);
 	
@@ -107,7 +107,7 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
     function onResize($oldX, $oldY) {
 	parent::onResize($oldX, $oldY);
-	$this->ok->setPosition($this->sizeX - 20, -$this->sizeY + 6);
+	$this->ok->setPosition($this->sizeX - 22, -$this->sizeY + 6);
 	
 	if(self::$statsAction == -1){
 	    $this->stats->setVisibility(false);
@@ -115,8 +115,8 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	    $this->stats->setPosition($this->sizeX - 45  , -$this->sizeY + 6);
 	}
 	
-	$this->button_cpJoin->setPosition($this->sizeX - 17, -$this->sizeY + 26);
-	$this->button_addFav->setPosition($this->sizeX - 17, -$this->sizeY + 14.5);
+	$this->button_cpJoin->setPosition($this->sizeX - 20, -$this->sizeY + 26);
+	$this->button_addFav->setPosition($this->sizeX - 20, -$this->sizeY + 14.5);
     }
 
     function Ok($login) {

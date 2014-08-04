@@ -11,19 +11,21 @@ class InfoLine extends \ManiaLive\Gui\Control {
    
     
     public function __construct($sizeY, $title, $data, $i){
-        $posX = 25;
+        $posX = 33;
         
-        $label = new \ManiaLib\Gui\Elements\Label(23, 5);
+        $label = new \ManiaLib\Gui\Elements\Label(32, 5);
+		$label->setPosY(-0.5);
         $label->setText($title);
         $this->addComponent($label);
         
-        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($i+1, 23, 5);
+        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($i+1, 32, 5);
         $bg->setPosY(-2);
         $this->addComponent($bg);
         
         $content = new \ManiaLib\Gui\Elements\Label(60, 25);
         $content->enableAutonewline();
         $content->setText($data);
+		$content->setPosY(-0.5);
         $content->setPosX($posX);
         $this->addComponent($content);
         

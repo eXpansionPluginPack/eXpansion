@@ -728,7 +728,7 @@ EOT;
 		$info = Gui\Windows\InfoWindow::Create($login);
 		$info->setTitle("Server info");
 		$info->centerOnScreen();
-		$info->setSize(93, 68);
+		$info->setSize(100, 68);
 		$info->show();
 	}
 
