@@ -52,6 +52,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         , '\ManiaLivePlugins\eXpansion\Gui\Gui'
         , '\ManiaLivePlugins\eXpansion\Menu\Menu'
         , '\ManiaLivePlugins\eXpansion\Adm\Adm'
+        , '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad'
         , '\ManiaLivePlugins\eXpansion\Database\Database');
 
         $this->findAvailablePlugins();
@@ -246,7 +247,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         $mem = "Memory Usage: " . round(memory_get_usage() / 1024 ) . "Kb";
         //\ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
-        print "\n" . $mem . "\n";
+        //print "\n" . $mem . "\n";
         //$this->connection->chatSend($mem);
     }
 
