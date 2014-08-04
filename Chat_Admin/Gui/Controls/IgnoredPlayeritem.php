@@ -27,7 +27,7 @@ class IgnoredPlayeritem extends Control
 	$sizeY = 6;
 	$this->player = $player;
 
-	$this->unignoreAction = $this->createAction(array($controller, 'unignore'), array($login, $player->login));
+	$this->unignoreAction = $this->createAction(array($controller, 'unignore'), array($player->login));
 	$this->frame = new Frame();
 	$this->frame->setSize($sizeX, $sizeY);
 	$this->frame->setLayout(new Line());

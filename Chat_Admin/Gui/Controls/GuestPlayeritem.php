@@ -22,7 +22,7 @@ class GuestPlayeritem extends \ManiaLive\Gui\Control {
         $sizeY = 6;        
         $this->player = $player;
 
-        $this->removeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'removeGuest'), array($login, $player->login));
+        $this->removeAction = $this->createAction(array($controller, 'removeGuest'), array($player->login));
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
@@ -64,7 +64,7 @@ class GuestPlayeritem extends \ManiaLive\Gui\Control {
     }
 
     function __destruct() {
-        ActionHandler::getInstance()->deleteAction($this->removeAction);
+      
     }
 
 }

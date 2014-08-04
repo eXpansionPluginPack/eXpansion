@@ -19,7 +19,7 @@ class BlacklistPlayeritem extends \ManiaLive\Gui\Control
 	$sizeY = 6;
 	$this->player = $player;
 
-	$this->unblackAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($controller, 'unblack'), array($login, $player->login));
+	$this->unblackAction = $this->createAction(array($controller, 'unblack'), array($player->login));
 
 	$this->frame = new \ManiaLive\Gui\Controls\Frame();
 	$this->frame->setSize($sizeX, $sizeY);
@@ -64,7 +64,7 @@ class BlacklistPlayeritem extends \ManiaLive\Gui\Control
 
     function __destruct()
     {
-	ActionHandler::getInstance()->deleteAction($this->unbanAction);
+		
     }
 
 }
