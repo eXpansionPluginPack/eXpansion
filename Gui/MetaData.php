@@ -73,17 +73,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setMax(1.0);
 		$var->setDefaultValue(1.0);
 		$this->registerVariable($var);
-
-		$var = new String("style_widget_title_bgStyle", "Title background style", $config);
-		$var->setGroup("Widgets");
-		$var->setDefaultValue("UiSMSpectatorScoreBig");
-		$this->registerVariable($var);
-
-		$var = new String("style_widget_title_bgSubStyle", "Title background substyle", $config);
-		$var->setGroup("Widgets");
-		$var->setDefaultValue("PlayerSlotCenter");
-		$this->registerVariable($var);
-
+		
 		$var = new String("style_widget_title_bgColorize", "Title background color", $config);
 		$var->setGroup("Widgets");
 		$var->setDefaultValue("3af");

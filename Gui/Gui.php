@@ -62,7 +62,7 @@ class Gui extends ExpPlugin
 		$this->textures['statusbuttons'] = $config->uiTextures_statusButtons;
 		$this->textures['button'] = $config->uiTextures_button;
 		$this->textures['checkbox'] = $config->uiTextures_checkbox;
-		
+		$this->textures['widgets'] = $config->uiTextures_widgets;
 	}
 
 	public function exp_onReady()

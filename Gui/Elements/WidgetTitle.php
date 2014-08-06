@@ -16,38 +16,28 @@ class WidgetTitle extends \ManiaLive\Gui\Control {
     public function __construct($sizeX, $sizeY) {
         /** @var Config $config */
 	$config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
-	$this->config = $config;
-
-
-        $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY + 2);
-        $this->bg->setColorize($this->config->style_widget_title_bgColorize);
-        $this->bg->setOpacity($this->config->style_widget_title_bgOpacity);
-        if (!empty($config->style_widget_title_bgStyle)) {
-            $this->bg->setStyle($config->style_widget_title_bgStyle);
-            $this->bg->setSubStyle($config->style_widget_title_bgSubStyle);
-        } else {
-            $this->bg->setImage($config->style_widget_bgStyle);
-        }
-        $this->bg->setPosition($config->style_widget_title_bgXOffset, $config->style_widget_title_bgYOffset);
 	
-	$this->addComponent($this->bg);
+        $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+        $this->bg->setColorize($config->style_widget_title_bgColorize);
+        $this->bg->setOpacity($config->style_widget_title_bgOpacity);
+        $this->bg->setImage($config->getImage("widgets", "title.png"), true);
+        $this->bg->setPosition($config->style_widget_title_bgXOffset, $config->style_widget_title_bgYOffset);
+		$this->addComponent($this->bg);
 
 
         $this->lbl_title = new DicoLabel($sizeX, $sizeY);
         $this->lbl_title->setTextSize($config->style_widget_title_lbSize);
-        $this->lbl_title->setTextColor($config->style_widget_title_lbColor);
-        $this->lbl_title->setStyle($config->style_widget_title_bgStyle);
-
+        $this->lbl_title->setTextColor($config->style_widget_title_lbColor);       
         $this->lbl_title->setAlign("center", "center");
-
         $this->addComponent($this->lbl_title);
 	
 	$this->setSize($sizeX, $sizeY);
     }
 
     public function onResize($oldX, $oldY) {
-        $this->bg->setSize($this->sizeX, $this->sizeY);
-        $this->lbl_title->setPosition(($this->sizeX / 2), -1);
+        $this->bg->setSize($this->sizeX, $this->sizeY+1);
+		$this->lbl_title->setSizeX($this->sizeX - 4);
+        $this->lbl_title->setPosition(($this->sizeX / 2), -1.5);
     }
 
     public function setAction($action) {

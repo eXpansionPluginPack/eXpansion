@@ -25,6 +25,8 @@ class Config extends \ManiaLib\Utils\Singleton
 	
 	public $uiTextures_ratiobutton = array("normal_on.png", "normal_off.png");
 	
+	public $uiTextures_widgets = array("title.png", "background.png");
+		
 	public $windowTitleColor = "000d";
 	public $buttonTitleColor = "fffd";
 
@@ -65,19 +67,15 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $style_widget_bgColorize = '000'; // BgList
 
-	public $style_widget_bgOpacity = 1;
+	public $style_widget_bgOpacity = 0.9;
 
 	public $style_widget_bgXOffset = 0;
 
 	public $style_widget_bgYOffset = 0;
-
-	public $style_widget_title_bgStyle = 'UiSMSpectatorScoreBig';
-
-	public $style_widget_title_bgSubStyle = 'PlayerSlotCenter'; // BgList
-
+	
 	public $style_widget_title_bgColorize = '3af'; // BgList
-
-	public $style_widget_title_bgOpacity = 1;
+	
+	public $style_widget_title_bgOpacity = 0.6;
 
 	public $style_widget_title_bgXOffset = 0;
 
