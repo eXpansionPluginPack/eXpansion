@@ -7,18 +7,24 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $logo = "http://reaby.kapsi.fi/ml/exp.png";
     public $button = "http://reaby.kapsi.fi/ml/button2.png";
     public $buttonActive = "http://reaby.kapsi.fi/ml/button2_active.png";
-    public $checkbox = "http://reaby.kapsi.fi/ml/checkbox_off.png";
+
+	public $checkbox = "http://reaby.kapsi.fi/ml/checkbox_off.png";
     public $checkboxActive = "http://reaby.kapsi.fi/ml/checkbox_on.png";
     public $checkboxDisabled = "http://reaby.kapsi.fi/ml/checkbox_disabled_off.png";
     public $checkboxDisabledActive = "http://reaby.kapsi.fi/ml/checkbox_disabled_on.png";
-    public $ratiobutton = "http://reaby.kapsi.fi/ml/ratio_off.png";
+    
+	public $ratiobutton = "http://reaby.kapsi.fi/ml/ratio_off.png";
     public $ratiobuttonActive = "http://reaby.kapsi.fi/ml/ratio_on.png";
-    public $windowTitlebar = "http://reaby.kapsi.fi/ml/title3.png";
+   
     public $windowClosebutton = "http://reaby.kapsi.fi/ml/close_off2.png";
     public $windowClosebuttonActive = "http://reaby.kapsi.fi/ml/close_on2.png";
     public $windowMinbutton = "http://reaby.kapsi.fi/ml/min_off.png";
     public $windowMinbuttonActive = "http://reaby.kapsi.fi/ml/min_on.png";
-    
+ 
+	public $uiTextureBase = "http://reaby.kapsi.fi/ml/ui/";	
+	
+	public $uiTextures_Window = array("top_left.png", "top_center.png", "top_left.png", "left.png", "bg.png", "right.png", "bottom_left.png", "bottom_center.png", "bottom_right.png");
+	
     public $style_list_bgColor = array('aaa6', 'eee6');
     public $style_list_bgStyle = array('Bgs1', 'Bgs1');
     public $style_list_bgSubStyle = array('BgCard', 'BgCard');
