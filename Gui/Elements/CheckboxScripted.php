@@ -31,7 +31,7 @@ class CheckboxScripted extends \ManiaLive\Gui\Control implements \ManiaLivePlugi
 
 	$this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
 	$this->button->setAlign('left', 'center2');
-	$this->button->setImage($config->checkbox, true);
+	$this->button->setImage($config->getImage("checkbox", "normal_off.png"), true);
 	$this->button->setId('eXp_CheckboxQ_' . $this->checkboxId);
 	$this->button->setScriptEvents(true);
 	$this->addComponent($this->button);
@@ -49,10 +49,10 @@ class CheckboxScripted extends \ManiaLive\Gui\Control implements \ManiaLivePlugi
 	if (self::$script == null) {
 	    self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\CheckboxScript();
 
-	    self::$script->setParam("disabledActiveUrl", $config->checkboxDisabledActive);
-	    self::$script->setParam("disabledUrl", $config->checkboxDisabled);
-	    self::$script->setParam("ActiveUrl", $config->checkboxActive);
-	    self::$script->setParam("InactiveUrl", $config->checkbox);
+	    self::$script->setParam("disabledActiveUrl", $config->getImage("checkbox", "disabled_on.png"));
+	    self::$script->setParam("disabledUrl", $config->getImage("checkbox", "disabled_off.png"));
+	    self::$script->setParam("ActiveUrl", $config->getImage("checkbox", "normal_on.png"));
+	    self::$script->setParam("InactiveUrl", $config->getImage("checkbox", "disabled_off.png"));
 	}
 
 	$this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 4);
@@ -87,15 +87,15 @@ class CheckboxScripted extends \ManiaLive\Gui\Control implements \ManiaLivePlugi
 
 	if (!$this->enabled) {
 	    if ($this->active) {
-		$this->button->setImage($config->checkboxDisabledActive, true);
+		$this->button->setImage($config->getImage("checkbox", "disabled_on.png"), true);
 	    } else {
-		$this->button->setImage($config->checkboxDisabled, true);
+		$this->button->setImage($config->getImage("checkbox", "disabled_off.png"), true);
 	    }
 	} else {
 	    if ($this->active) {
-		$this->button->setImage($config->checkboxActive, true);
+		$this->button->setImage($config->getImage("checkbox", "normal_on.png"), true);
 	    } else {
-		$this->button->setImage($config->checkbox, true);
+		$this->button->setImage($config->getImage("checkbox", "normal_off.png"), true);
 	    }
 	}
     }

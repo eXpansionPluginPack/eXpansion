@@ -58,6 +58,10 @@ class Gui extends ExpPlugin
 
 		$config = Config::getInstance();
 		$this->textures['window'] = $config->uiTextures_Window;
+		$this->textures['closebutton'] = $config->uiTextures_closeButton;
+		$this->textures['statusbuttons'] = $config->uiTextures_statusButtons;
+		$this->textures['button'] = $config->uiTextures_button;
+		$this->textures['checkbox'] = $config->uiTextures_checkbox;
 		
 	}
 

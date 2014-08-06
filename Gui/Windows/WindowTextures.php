@@ -50,8 +50,10 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 	{
 		parent::onConstruct();
 		$config = Config::getInstance();
-		$baseurl = trim($config->uiTextureBase, "/") . '/window/';
-
+		$baseUrl = trim($config->uiTextureBase, "/");
+		$windowUrl = $baseUrl . '/window/';
+		$closeUrl = $baseUrl . '/closebutton/';
+		
 		$this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
 
 		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WindowScript");
@@ -67,18 +69,18 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
 		$this->_bg->setAlign("left", "top");
 		$this->_bg->setId("MainWindow");
-		$this->_bg->setImage($baseurl . "bg.png", true);
+		$this->_bg->setImage($windowUrl . "bg.png", true);
 		$this->_windowFrame->addComponent($this->_bg);
 
 		$this->_topleft = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_topleft->setAlign("right", "bottom");
-		$this->_topleft->setImage($baseurl . "top_left.png", true);
+		$this->_topleft->setImage($windowUrl . "top_left.png", true);
 		$this->_windowFrame->addComponent($this->_topleft);
 
 		$this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->element);
 		$this->_titlebar->setId("Titlebar");
 		$this->_titlebar->setAlign("left", "bottom");
-		$this->_titlebar->setImage($baseurl . "top_center.png", true);
+		$this->_titlebar->setImage($windowUrl . "top_center.png", true);
 		$this->_titlebar->setScriptEvents(true);
 		$this->_windowFrame->addComponent($this->_titlebar);
 
@@ -86,7 +88,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_title->setId("TitlebarText");
 		$this->_title->setAlign("center", "bottom");
 		$this->_title->setStyle("TextRaceMessageBig");
-		$this->_title->setTextColor('000');
+		$this->_title->setTextColor($config->windowTitleColor);
 		$this->_title->setTextSize(1);
 		$this->_title->setTextEmboss();
 		$this->_windowFrame->addComponent($this->_title);
@@ -94,19 +96,19 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		
 		$this->_topright = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_topright->setAlign("left", "bottom");
-		$this->_topright->setImage($baseurl . "top_right.png", true);
+		$this->_topright->setImage($windowUrl . "top_right.png", true);
 		$this->_windowFrame->addComponent($this->_topright);
 
 // center		
 		$this->_right = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_right->setAlign("left", "top");
-		$this->_right->setImage($baseurl . "right.png", true);
+		$this->_right->setImage($windowUrl . "right.png", true);
 		$this->_windowFrame->addComponent($this->_right);
 
 
 		$this->_left = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_left->setAlign("right", "top");
-		$this->_left->setImage($baseurl . "left.png", true);
+		$this->_left->setImage($windowUrl . "left.png", true);
 		$this->_windowFrame->addComponent($this->_left);
 // bottom
 
@@ -114,26 +116,25 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
 		$this->_bottomleft = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_bottomleft->setAlign("right", "top");
-		$this->_bottomleft->setImage($baseurl . "bottom_left.png", true);
+		$this->_bottomleft->setImage($windowUrl . "bottom_left.png", true);
 		$this->_windowFrame->addComponent($this->_bottomleft);
 		
 		$this->_bottomcenter = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_bottomcenter->setAlign("left", "top");
-		$this->_bottomcenter->setImage($baseurl . "bottom_center.png", true);
+		$this->_bottomcenter->setImage($windowUrl . "bottom_center.png", true);
 		$this->_windowFrame->addComponent($this->_bottomcenter);
 
 		$this->_bottomright = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_bottomright->setAlign("left", "top");
-		$this->_bottomright->setImage($baseurl . "bottom_right.png", true);
+		$this->_bottomright->setImage($windowUrl . "bottom_right.png", true);
 		$this->_windowFrame->addComponent($this->_bottomright);
 
 
 		$this->_closebutton = new \ManiaLib\Gui\Elements\Quad(4, 4);
 		$this->_closebutton->setId("Close");
 		$this->_closebutton->setAlign('right', 'bottom');
-		$this->_closebutton->setStyle("Icons128x32_1");
-		$this->_closebutton->setSubStyle("Close");
-		$this->_closebutton->setColorize("f00");
+		$this->_closebutton->setImage($closeUrl . "normal.png", true);
+		$this->_closebutton->setImageFocus($closeUrl . "focus.png", true);
 		$this->_closebutton->setScriptEvents(true);
 		$this->_windowFrame->addComponent($this->_closebutton);
 

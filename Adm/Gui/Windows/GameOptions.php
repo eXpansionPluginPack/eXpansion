@@ -333,6 +333,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameGameMode->clearComponents();
         $this->mainFrame->removeComponent($this->frameGameMode);
         $this->genGameModes();
+		$this->frameGameMode->setPosition($this->sizeX - 36, 0);
         $this->RedrawAll();
     }
 

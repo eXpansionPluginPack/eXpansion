@@ -28,6 +28,18 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue("http://reaby.kapsi.fi/ml/ui");
 		$this->registerVariable($var);
 
+		$var = new String("windowTitleColor", "Color for window titlebar", $config);
+		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
+		$var->setGroup("Look & Feel");
+		$var->setDefaultValue("000a");
+		$this->registerVariable($var);
+
+		$var = new String("buttonTitleColor", "Color for button texts", $config);
+		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
+		$var->setGroup("Look & Feel");
+		$var->setDefaultValue("000a");
+		$this->registerVariable($var);
+
 
 		$var = new Boolean("disableAnimations", "Disable window animations", $config);
 		$var->setGroup("Look & Feel");

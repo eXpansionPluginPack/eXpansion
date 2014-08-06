@@ -46,11 +46,9 @@ class Ratiobutton extends \ManiaLive\Gui\Control {
         $config = Config::getInstance();
 
         if ($this->active) {
-            $this->button->setImage($config->ratiobuttonActive, true);
-            //  $this->buttonac->setText("$000๏");
+            $this->button->setImage($config->getImage("ratiobutton","normal_on.png"), true);
         } else {
-            $this->button->setImage($config->ratiobutton, true);
-            //  $this->buttonac->setText(" ");
+            $this->button->setImage($config->getImage("ratiobutton","normal_off.png"), true);
         }
     }
 
