@@ -25,6 +25,8 @@ class Config extends \ManiaLib\Utils\Singleton
 	
 	public $uiTextures_ratiobutton = array("normal_on.png", "normal_off.png");
 	
+	public $uiTextures_inputbox = array("left.png", "center.png", "right.png");
+	
 	public $uiTextures_widgets = array("title.png", "background.png");
 		
 	public $windowTitleColor = "000d";

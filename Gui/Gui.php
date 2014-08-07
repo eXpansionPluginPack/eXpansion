@@ -63,6 +63,10 @@ class Gui extends ExpPlugin
 		$this->textures['button'] = $config->uiTextures_button;
 		$this->textures['checkbox'] = $config->uiTextures_checkbox;
 		$this->textures['widgets'] = $config->uiTextures_widgets;
+		$this->textures['inputbox'] = $config->uiTextures_inputbox;
+		$this->textures['ratiobutton'] = $config->uiTextures_ratiobutton;
+		
+		
 	}
 
 	public function exp_onReady()
