@@ -32,6 +32,7 @@ class Gui extends ExpPlugin
 
 	private $preloader;
 
+	
 	/**
 	 * base directory is defined at Config::GetInstance()->uiTextureBase;
 	 * 

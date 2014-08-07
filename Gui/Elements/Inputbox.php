@@ -51,7 +51,7 @@ class Inputbox extends \ManiaLive\Gui\Control
 	protected function onResize($oldX, $oldY)
 	{
 		parent::onResize($oldX, $oldY);
-		$this->button->setSize($this->getSizeX()-6, 4);
+		$this->button->setSize($this->getSizeX()-8, 4);
 		$this->button->setPosX(2);
 		
 		$this->bgleft->setSize(3, 6);
@@ -94,6 +94,7 @@ class Inputbox extends \ManiaLive\Gui\Control
 		$this->button->setTextColor('fff');
 		$this->button->setTextSize(1.5);
 		$this->button->setPosX(2);
+		$this->button->setSize($this->getSizeX()-3, 4);
 		$this->addComponent($this->button);
 	}
 
