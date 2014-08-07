@@ -25,8 +25,7 @@ class Inputbox extends \ManiaLive\Gui\Control
 		$this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
 		$this->label->setAlign('left', 'center');
 		$this->label->setTextSize(1);
-		$this->label->setStyle("TextValueSmallSm");
-		$this->label->setScale(0.9);
+		$this->label->setStyle("TextCardMediumWhite");
 		$this->label->setTextEmboss();
 		$this->addComponent($this->label);
 		
@@ -115,7 +114,7 @@ class Inputbox extends \ManiaLive\Gui\Control
 
 	function setLabel($text)
 	{
-		$this->label->setText('$3af' . $text);
+		$this->label->setText($text);
 	}
 
 	function getText()

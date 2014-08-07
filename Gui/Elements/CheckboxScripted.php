@@ -88,10 +88,10 @@ class CheckboxScripted extends \ManiaLive\Gui\Control implements \ManiaLivePlugi
 	{
 		parent::onResize($oldX, $oldY);
 
-		$this->button->setSize($this->getSizeY() - 1, $this->getSizeY() - 1);
+		$this->button->setSize($this->getSizeY(), $this->getSizeY());
 		$this->button->setPosition(0, -0.5);
 		$this->label->setSize($this->textWidth, $this->sizeY);
-		$this->label->setPosition(4, 0);
+		$this->label->setPosition($this->getSizeY()+1, 0);
 	}
 
 	function onDraw()
