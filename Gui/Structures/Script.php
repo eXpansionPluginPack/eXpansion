@@ -6,6 +6,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Structures;
  * Description of Script
  *
  * @author De Cramer Oliver
+ * @author Petri
  */
 class Script
 {
@@ -14,10 +15,24 @@ class Script
 
 	private $libs = array();
 
-	function __construct($relPath)
+	/**
+	 * construct a script
+	 * 
+	 * example for external plugins
+	 * $this->script = new Script("authorName/pluginName/Gui/Script", true);
+	 * 
+	 * @param string $path relative path to your script
+	 * @param bool $pluginsRoot set the relative path pointer to ManialivePlugins\ instead of ManialivePlugins\eXpansion\
+	 * 
+	 * 
+	 */
+	function __construct($path, $pluginsRoot = false)
 	{
-		$relPath = str_replace("\\", DIRECTORY_SEPARATOR, $relPath);
-		$this->_relPath = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . $relPath;
+		$path = str_replace("\\", DIRECTORY_SEPARATOR, $path);
+
+		$this->_relPath = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . $path;
+		if ($pluginsRoot)
+			$this->_relPath = dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . $path;
 	}
 
 	/**
