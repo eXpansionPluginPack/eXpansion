@@ -63,7 +63,7 @@ class Inputbox extends \ManiaLive\Gui\Control
 		$this->bgright->setPosX($this->getSizeX()-3);
 
 		$this->label->setSize($this->getSizeX(), 3);
-		$this->label->setPosition(0, 4);
+		$this->label->setPosition(1, 5);
 	}
 
 	protected function createButton($editable)

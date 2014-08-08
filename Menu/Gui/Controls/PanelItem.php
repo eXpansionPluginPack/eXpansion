@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Menu\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Config;
 
 class PanelItem extends \ManiaLive\Gui\Control
 {
@@ -20,20 +21,26 @@ class PanelItem extends \ManiaLive\Gui\Control
 
 	function __construct()
 	{
-		$sizeX = 25;
-		$sizeY = 4.5;
+		$config = Config::getInstance();
+
+		$sizeX = 30;
+		$sizeY = 5.5;
 		$this->setAlign("left", "top");
 
 		$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
 		$this->bg->setAlign("left", "top");
-		$this->bg->setBgcolor("000b");
-		$this->bg->setBgcolorFocus("3afb");
+		$this->bg->setImage($config->getImage("menu", "middle_off.png"), true);
+		$this->bg->setImageFocus($config->getImage("menu", "middle_on.png"), true);
+		$this->bg->setOpacity(0.8);
 		$this->bg->setScriptEvents();
 		$this->addComponent($this->bg);
 
 		$this->label = new \ManiaLib\Gui\Elements\Label($sizeX, $sizeY);
-		$this->label->setPosY(-1);
-		$this->label->setAlign("left", "top");
+		$this->label->setPosX($sizeX / 2);
+		$this->label->setPosY(-1.5);
+		$this->label->setAlign("center", "top");
+		$this->label->setTextEmboss();
+		
 		$this->addComponent($this->label);
 		$this->setSize($sizeX, $sizeY);
 	}
@@ -69,6 +76,20 @@ class PanelItem extends \ManiaLive\Gui\Control
 	function destroy()
 	{
 		parent::destroy();
+	}
+
+	function setTop()
+	{
+		$config = Config::getInstance();
+		$this->bg->setImage($config->getImage("menu", "top_off.png"), true);
+		$this->bg->setImageFocus($config->getImage("menu", "top_on.png"), true);
+	}
+
+	function setBottom()
+	{
+		$config = Config::getInstance();
+		$this->bg->setImage($config->getImage("menu", "bottom_off.png"), true);
+		$this->bg->setImageFocus($config->getImage("menu", "bottom_on.png"), true);
 	}
 
 }

@@ -14,15 +14,14 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 	private $submenu = array();
 
 	private $bgs = array();
-	
-	
+
 	private $storage;
 
 	public function addItem(&$menu, $text, $action = null, $submenuNb = false)
 	{
 		$nb = count($this->item);
 		$this->item[$nb] = new \ManiaLivePlugins\eXpansion\Menu\Gui\Controls\PanelItem();
-		
+
 		if (!empty($action)) {
 			$this->item[$nb]->setAction($action);
 		}
@@ -53,14 +52,14 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 				$this->item[$nb]->setClass("menuitem");
 			}
 		}
-		
+
 		$menu->addComponent($this->item[$nb]);
 	}
 
 	public function addSubMenu(&$menu, $text)
 	{
 		$mb = count($this->submenu) + 1;
-		$this->submenu[$mb] = new \ManiaLive\Gui\Controls\Frame(25, 4.5);
+		$this->submenu[$mb] = new \ManiaLive\Gui\Controls\Frame(29.5, 5.5);
 		$this->submenu[$mb]->setLayout(new \ManiaLib\Gui\Layouts\Column());
 		$this->submenu[$mb]->setId("submenu_" . $mb);
 		$this->submenu[$mb]->setScriptEvents();
@@ -97,12 +96,24 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
 		$this->myscript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Menu\Gui\Scripts");
 		$this->registerScript($this->myscript);
-		
 	}
 
 	protected function onDraw()
 	{
 		$storage = \ManiaLive\Data\Storage::getInstance();
+
+		$this->item[0]->setTop();
+		$this->item[count($this->item) - 1]->setBottom();
+
+		foreach ($this->submenu as &$item) {
+			$comp = $item->getComponents();
+			if (empty($comp))
+				continue;
+			reset($comp);
+			current($comp)->setTop();
+			end($comp)->setBottom();
+		}
+
 		$count = count($this->submenu);
 		$version = \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION;
 		$this->myscript->setParam("version", $version);

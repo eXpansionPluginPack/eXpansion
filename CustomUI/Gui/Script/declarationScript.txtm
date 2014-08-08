@@ -1,0 +1,4 @@
+ClientUI.OverlayHide321Go = False;
+ClientUI.OverlayHideSpeedAndDist = True;
+ClientUI.OverlayHideCheckPointTime = True;
+ClientUI.OverlayHideCheckPointList = True;

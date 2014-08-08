@@ -29,7 +29,10 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $btnY = 5.5;
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame(0, -1);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow(120, $btnY + 2));
+		$flow = new \ManiaLib\Gui\Layouts\Flow(150, $btnY + 2);
+		$flow->setMargin(2,1);
+		
+        $this->frame->setLayout($flow);
 
         $this->actions = new \stdClass();
         $this->actions->serverOptions = $this->createAction(array(self::$mainPlugin, "serverOptions"));

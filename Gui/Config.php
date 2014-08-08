@@ -16,22 +16,28 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $uiTextures_Window = array("top_left.png", "top_center.png", "top_left.png", "left.png", "bg.png", "right.png", "bottom_left.png", "bottom_center.png", "bottom_right.png");
 
 	public $uiTextures_statusButtons = array("1_on.png", "1_off.png", "2_on.png", "2_off.png", "3_on.png", "3_off.png",);
-	
+
 	public $uiTextures_closeButton = array("normal.png", "focus.png");
 
-	public $uiTextures_button = array("normal.png" , "focus.png");
-		
-	public $uiTextures_checkbox = array("normal_on.png", "normal_off.png", "disabled_on.png", "disabled_off.png");
-	
-	public $uiTextures_ratiobutton = array("normal_on.png", "normal_off.png");
-	
-	public $uiTextures_inputbox = array("left.png", "center.png", "right.png");
-	
-	public $uiTextures_widgets = array("title.png", "background.png");
-		
-	public $windowTitleColor = "000d";
-	public $buttonTitleColor = "fffd";
+	public $uiTextures_button = array("normal.png", "focus.png");
 
+	public $uiTextures_checkbox = array("normal_on.png", "normal_off.png", "disabled_on.png", "disabled_off.png");
+
+	public $uiTextures_ratiobutton = array("normal_on.png", "normal_off.png");
+
+	public $uiTextures_inputbox = array("left.png", "center.png", "right.png");
+
+	public $uiTextures_widgets = array("title.png", "background.png");
+
+	public $uiTextures_scrollbar = array("background.png", "scrollbar_normal.png", "scrollbar_focus.png", "buttonUp_on.png", "buttonUp_off.png", "buttonUp_focus.png", "buttonDown_on.png", "buttonDown_off.png", "buttonDown_focus.png");
+
+	public $uiTextures_menu = array("top_on.png", "top_off.png", "middle_on.png", "middle_off.png", "bottom_on.png", "bottom_off.png");
+
+	public $uiTextures_listitem = array("normal_left.png", "normal_center.png", "normal_right.png", "odd_left.png", "odd_center.png", "odd_right.png", "even_left.png", "even_center.png", "even_right.png");
+
+	public $windowTitleColor = "000d";
+
+	public $buttonTitleColor = "fffd";
 
 	public $style_list_bgColor = array('aaa6', 'eee6');
 
@@ -74,9 +80,9 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $style_widget_bgXOffset = 0;
 
 	public $style_widget_bgYOffset = 0;
-	
+
 	public $style_widget_title_bgColorize = '3af'; // BgList
-	
+
 	public $style_widget_title_bgOpacity = 0.6;
 
 	public $style_widget_title_bgXOffset = 0;
@@ -93,13 +99,11 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $disablePersonalHud = false;
 
-	
-	public function getImage($folder, $image) {
+	public function getImage($folder, $image)
+	{
 		return trim($this->uiTextureBase, "/") . '/' . $folder . '/' . $image;
 	}
-	
-	
-	
+
 }
 
 ?>

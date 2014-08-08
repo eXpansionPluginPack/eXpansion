@@ -43,7 +43,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	 * @param int $sizeX = 24
 	 * @param intt $sizeY = 6
 	 */
-	function __construct($sizeX = 24, $sizeY = 6)
+	function __construct($sizeX = 32, $sizeY = 6)
 	{
 
 		if (self::$script == null) {
@@ -96,8 +96,9 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 		$this->backGroundDesc = new \ManiaLib\Gui\Elements\Quad(32, 6);
 		$this->backGroundDesc->setAlign('left', 'center');
 		$this->backGroundDesc->setId("eXp_ButtonDescBg_Icon_" . $this->buttonId);
-		$this->backGroundDesc->setStyle('UIConstruction_Buttons');
-		$this->backGroundDesc->setSubStyle('BgIcons');
+		$this->backGroundDesc->setStyle('Bgs1');
+		$this->backGroundDesc->setSubStyle('BgMetalBar');
+	// $this->backGroundDesc->setImage($config->getImage("button", "normal.png"),true);
 		$this->backGroundDesc->setColorize("fff");
 		//$this->backGroundDesc->setOpacity(0.75);
 		$this->backGroundDesc->setPosition(5, 3);
@@ -124,7 +125,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 		}
 		$this->label->setPosZ($this->backGround->getPosZ() - 0.03);
 
-		$this->setScale(0.7);
+		$this->setScale(0.75);
 		parent::onResize($oldX, $oldY);
 	}
 

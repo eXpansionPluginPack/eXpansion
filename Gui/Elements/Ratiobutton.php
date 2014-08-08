@@ -19,7 +19,7 @@ class Ratiobutton extends \ManiaLive\Gui\Control {
         $this->action = $this->createAction(array($this, 'toggleActive'));
         $config = Config::getInstance();
 
-        $this->button = new \ManiaLib\Gui\Elements\Quad(8, 4);
+        $this->button = new \ManiaLib\Gui\Elements\Quad(12, 6);
         $this->button->setAlign('center', 'center');
         $this->button->setAction($this->action);
         $this->button->setScriptEvents(true);
@@ -32,14 +32,17 @@ class Ratiobutton extends \ManiaLive\Gui\Control {
         $this->label->setTextSize(1);
         //$this->label->setStyle("TextCardInfoSmall");		                
         $this->addComponent($this->label);
-        $this->setSize(8 + $textWidth, 4);
+        $this->setSize(10 + $textWidth, 5);
     }
 
     protected function onResize($oldX, $oldY) {
-        $this->button->setSize(8,4);
+		parent::onResize($this->textWidth + 10, 5);
+		
+        $this->button->setSize(10,5);
         $this->button->setPosition(0, -0.5);
-        $this->label->setSize($this->textWidth, $this->sizeY);
-        $this->label->setPosition($this->sizeX - $this->textWidth + 1, 0);
+        $this->label->setSize($this->textWidth,6);
+        $this->label->setPosition(8, 0);
+		
     }
 
     function onDraw() {

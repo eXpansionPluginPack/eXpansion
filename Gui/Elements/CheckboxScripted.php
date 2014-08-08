@@ -67,11 +67,12 @@ class CheckboxScripted extends \ManiaLive\Gui\Control implements \ManiaLivePlugi
 		$this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 4);
 		$this->label->setAlign('left', 'center');
 		$this->label->setTextSize(1);
+		$this->label->setScale(1.1);
 		$this->label->setTextColor("fff");
-		//$this->label->setStyle("TextCardInfoSmall");		                
+		$this->label->setStyle("TextCardInfoSmall");
 		$this->addComponent($this->label);
 
-		$this->setSize($sizeX + $textWidth, $sizeY);
+		$this->setSize($sizeX + $textWidth, 6);
 	}
 
 	public function SetIsWorking($state)
@@ -86,16 +87,15 @@ class CheckboxScripted extends \ManiaLive\Gui\Control implements \ManiaLivePlugi
 
 	protected function onResize($oldX, $oldY)
 	{
-		parent::onResize($oldX, $oldY);
-
-		$this->button->setSize($this->getSizeY(), $this->getSizeY());
-		$this->button->setPosition(0, -0.5);
-		$this->label->setSize($this->textWidth, $this->sizeY);
-		$this->label->setPosition($this->getSizeY()+1, 0);
+		$this->button->setSize(5, 5);
+		$this->button->setPosition(0, 0);
+		$this->label->setSize($this->textWidth, 5);
+		$this->label->setPosition(5, 0);
+		parent::onResize($this->textWidth + 5, 5);
 	}
 
 	function onDraw()
-	{		
+	{
 		self::$script->reset();
 		$config = Config::getInstance();
 

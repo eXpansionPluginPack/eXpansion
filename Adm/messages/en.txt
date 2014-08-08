@@ -116,7 +116,7 @@ Server options
 Server options
 
 Game options
-Legacy Game options
+Legacy options
 
 Admin Groups
 Admin Groups
@@ -125,10 +125,10 @@ Match settings
 Match settings
 
 ScriptMode settings
-ScriptMode settings
+Script Settings
 
 Database tools
-Database tools
+Database
 
 Close
 Close
@@ -311,11 +311,11 @@ Set
 Set
 
 eXpansion Settings
-eXpansion Settings
+Config Settings
 
 Plugin Management
-Plugin Management
+Plugins
 
 Configure Votes
-Configure Votes
+Votes
 

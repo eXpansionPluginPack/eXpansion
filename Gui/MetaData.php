@@ -90,6 +90,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setMax(5.0);
 		$var->setDefaultValue(1);
 		$this->registerVariable($var);
+		
 	}
 
 }
