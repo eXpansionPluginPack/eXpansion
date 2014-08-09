@@ -107,7 +107,7 @@ class LocalRecords extends LocalBase{
 	 */
 	public function onPlayerCheckpoint($playerUid, $login, $score, $curLap, $checkpointIndex)
 	{
-		$this->checkpoints[$login][] = $score;
+		$this->checkpoints[$login][$checkpointIndex] = $score;
 	}
 
 	/**

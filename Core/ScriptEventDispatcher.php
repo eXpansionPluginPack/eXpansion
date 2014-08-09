@@ -32,8 +32,8 @@ use ManiaLive\DedicatedApi\Callback\SPlayerRanking;
 use ManiaLive\DedicatedApi\Callback\StatsName;
 use ManiaLive\DedicatedApi\Callback\StatusCode;
 use ManiaLive\Event\Dispatcher;
-use Maniaplanet\DedicatedServer\Connection;
 use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent as Event;
+use Maniaplanet\DedicatedServer\Connection;
 
 /**
  * Transforms script callbacks to nicer Elite events
