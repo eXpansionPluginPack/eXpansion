@@ -25,7 +25,10 @@ namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
+use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad;
+use ManiaLivePlugins\eXpansion\Core\ConfigManager;
+use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpSettings;
 use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
@@ -128,7 +131,8 @@ class Plugin extends \ManiaLive\Gui\Control
 
 		$this->button_more = new Button(8, 8);
 		$this->button_more->setIcon("Icons128x128_1", "Options");
-		//$this->addComponent($this->button_more);
+		$this->button_more->setAction($this->createAction(array($this, 'showPluginSettings')));
+		$this->addComponent($this->button_more);
 
 		$this->button_start = new Button(12, 5);
 		$this->button_start->setAction($toggleAction);
@@ -139,7 +143,7 @@ class Plugin extends \ManiaLive\Gui\Control
 		} else {
 			$this->button_start->colorize("F00");
 		}
-	//	$this->addComponent($this->button_start);
+		$this->addComponent($this->button_start);
 
 		$this->setSize(117, 8);
 	}
@@ -204,6 +208,17 @@ class Plugin extends \ManiaLive\Gui\Control
 	public function togglePlugin($login)
 	{
 		$this->autoLoad->tooglePlugin($login, $this->metaData);
+	}
+
+	public function showPluginSettings($login){
+		ExpSettings::Erase($login);
+		/** @var ExpSettings $win */
+		$win = ExpSettings::Create($login);
+		$win->setTitle("Expansion Settings");
+		$win->centerOnScreen();
+		$win->setSize(140, 100);
+		$win->populate(ConfigManager::getInstance(), 'General', $this->metaData->getPlugin());
+		$win->show();
 	}
 
 }
