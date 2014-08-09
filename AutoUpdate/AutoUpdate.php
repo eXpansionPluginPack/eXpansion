@@ -225,9 +225,11 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 //Need to update fetch last data
                 'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' fetch',
                 //Remove changes made to the source code by stupid user( :D ) or by zip update
-                'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' reset --hard origin/' . $branch,
+                'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' reset --hard ',
                 //Switch to demanded branch
                 'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' checkout ' . $branch,
+				//Removing unpushed changes
+				'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' reset --hard origin/' . $branch,
                 //Merges changes with origin
                 'git --git-dir=' . $path . '/.git --work-tree=' . $path . ' merge origin/' . $branch
             );
