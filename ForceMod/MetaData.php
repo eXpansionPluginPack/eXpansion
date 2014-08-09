@@ -22,7 +22,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$config = Config::getInstance();
 
-		$var = new HashList("mods", "mods to be loaded", $config, false);
+		$var = new HashList("mods", "mods to be loaded", $config, false, false);
 		$var->setKeyType(new String(""));
 		$var->setType(new String(""));
 		$var->setDefaultValue(array());

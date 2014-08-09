@@ -97,7 +97,7 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->label_nbRecords->setSizeX($scaledSizes[5]);
 		$this->label_ptime->setSizeX($scaledSizes[6]);
 		$this->label_lastRec->setSizeX($scaledSizes[7]);
-		$this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 7);
+		$this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 12);
 		foreach ($this->items as $item)
 			$item->setSizeX($this->getSizeX() - 4);
 	}

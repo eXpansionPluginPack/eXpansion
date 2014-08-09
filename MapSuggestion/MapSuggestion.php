@@ -83,6 +83,15 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 		$button->label = 'Suggest';
 		$buttons->data['suggest'] = $button;
 	}
+	
+	
+	public function exp_onUnload()
+	{
+		MapWish::EraseAll();
+		Dispatcher::unregister(ListButtons::getClass(), $this);
+		parent::exp_onUnload();
+		
+	}
 
 }
 

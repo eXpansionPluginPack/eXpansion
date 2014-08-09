@@ -33,16 +33,17 @@ class Additem extends \ManiaLive\Gui\Control
 	function __construct($indexNumber, $filename, $controller, $gbx, $login, $sizeX)
 	{
 		$sizeY = 6;
-		$this->addMapAction = $this->createAction(array($controller, 'addMap'), $filename);
-		$this->deleteActionf = ActionHandler::getInstance()->createAction(array($controller, 'deleteMap'), $filename);
-		$this->deleteAction = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->deleteActionf);
 
 		try {
 			$gbx->processFile($filename);
 		} catch (Exception $e) {
 			Helper::log("[Maps/Additem]Error processing file : " . $e->getMessage());
+			return;
 		}
-
+		$this->addMapAction = $this->createAction(array($controller, 'addMap'), array($filename, $gbx->name));
+		$this->deleteActionf = $this->createAction(array($controller, 'deleteMap'), $filename);
+		$this->deleteAction = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->deleteActionf);
+		
 		$this->frame = new \ManiaLive\Gui\Controls\Frame();
 		$this->frame->setSize($sizeX, $sizeY);
 		$layout = new \ManiaLib\Gui\Layouts\Line();
@@ -119,9 +120,9 @@ class Additem extends \ManiaLive\Gui\Control
 // manialive 3.1 override to do nothing.
 	function destroy()
 	{
-		ActionHandler::getInstance()->deleteAction($this->addMapAction);
+		
 		ActionHandler::getInstance()->deleteAction($this->deleteAction);
-		ActionHandler::getInstance()->deleteAction($this->deleteActionf);
+		
 	}
 
 	/*

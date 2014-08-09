@@ -105,7 +105,7 @@ class Adm extends ExpPlugin
 			$window = ServerOptions::Create($login);
 			$window->setTitle(__('Server Options', $login));
 			$window->centerOnScreen();
-			$window->setSize(160, 80);
+			$window->setSize(160, 100);
 			$window->show();
 		}
 	}
@@ -140,7 +140,7 @@ class Adm extends ExpPlugin
 		if (AdminGroups::hasPermission($login, Permission::game_settings)) {
 			$window = GameOptions::Create($login);
 			$window->setTitle(__('Game Options', $login));
-			$window->setSize(160, 65);
+			$window->setSize(160, 85);
 			$window->centerOnScreen();
 			$window->show();
 		}
@@ -151,7 +151,7 @@ class Adm extends ExpPlugin
 		if (AdminGroups::hasPermission($login, Permission::server_stopDedicated) || AdminGroups::hasPermission($login, Permission::server_stopManialive)) {
 			$window = ServerManagement::Create($login);
 			$window->setTitle(__('Server Control', $login));
-			$window->setSize(60, 20);
+			$window->setSize(90, 30);
 			$window->centerOnScreen();
 			$window->show();
 		}
@@ -172,7 +172,7 @@ class Adm extends ExpPlugin
 	{
 		if (AdminGroups::hasPermission($login, Permission::server_controlPanel)) {
 			$window = ServerControlMain::Create($login);
-			$window->setSize(120, 20);
+			$window->setSize(140, 25);
 			$window->show();
 		}
 	}

@@ -1,0 +1,12 @@
+ClientUI.OverlayHide321Go = True;
+ClientUI.OverlayHideChrono = True;
+ClientUI.OverlayHideSpeedAndDist = True;
+ClientUI.OverlayHideCheckPointTime = True;
+ClientUI.OverlayHideCheckPointList = True;
+ClientUI.OverlayHideCountdown = False;
+ClientUI.OverlayChatHideAvatar = True;
+ClientUI.OverlayHidePersonnalBestAndRank = True;
+ClientUI.OverlayHidePosition = False;
+ClientUI.OverlayHideMapInfo = True;
+ClientUI.OverlayChatLineCount = 9;
+ClientUI.OverlayChatOffset = <0.,0.>;

@@ -19,7 +19,7 @@ class Ratiobutton extends \ManiaLive\Gui\Control {
         $this->action = $this->createAction(array($this, 'toggleActive'));
         $config = Config::getInstance();
 
-        $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+        $this->button = new \ManiaLib\Gui\Elements\Quad(12, 6);
         $this->button->setAlign('center', 'center');
         $this->button->setAction($this->action);
         $this->button->setScriptEvents(true);
@@ -32,25 +32,26 @@ class Ratiobutton extends \ManiaLive\Gui\Control {
         $this->label->setTextSize(1);
         //$this->label->setStyle("TextCardInfoSmall");		                
         $this->addComponent($this->label);
-        $this->setSize($sizeX + $textWidth, $sizeY);
+        $this->setSize(10 + $textWidth, 5);
     }
 
     protected function onResize($oldX, $oldY) {
-        $this->button->setSize($this->sizeX - $this->textWidth, $this->sizeY);
+		parent::onResize($this->textWidth + 10, 5);
+		
+        $this->button->setSize(10,5);
         $this->button->setPosition(0, -0.5);
-        $this->label->setSize($this->textWidth, $this->sizeY);
-        $this->label->setPosition($this->sizeX - $this->textWidth + 1, 0);
+        $this->label->setSize($this->textWidth,6);
+        $this->label->setPosition(8, 0);
+		
     }
 
     function onDraw() {
         $config = Config::getInstance();
 
         if ($this->active) {
-            $this->button->setImage($config->ratiobuttonActive, true);
-            //  $this->buttonac->setText("$000๏");
+            $this->button->setImage($config->getImage("ratiobutton","normal_on.png"), true);
         } else {
-            $this->button->setImage($config->ratiobutton, true);
-            //  $this->buttonac->setText(" ");
+            $this->button->setImage($config->getImage("ratiobutton","normal_off.png"), true);
         }
     }
 

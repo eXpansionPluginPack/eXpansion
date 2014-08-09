@@ -29,13 +29,11 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->group_add = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("group_name");
 		$this->group_add->setLabel(__(AdminGroups::$txt_nwGroupNameL));
 		$this->group_add->setText("");
-		$this->group_add->setScale(0.8);
 		$this->mainFrame->addComponent($this->group_add);
 
-		$this->button_add = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
+		$this->button_add = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
 		$this->button_add->setText(__(AdminGroups::$txt_add));
 		$this->button_add->setAction($this->createAction(array($this, 'click_add')));
-		$this->button_add->setScale(0.8);
 		$this->mainFrame->addComponent($this->button_add);
 	}
 
@@ -46,10 +44,9 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->pager->setStretchContentX($this->sizeX);
 		$this->pager->setPosition(0, -7);
 
-		$this->group_add->setSize($this->sizeX * (1 / 0.8) - 30, 7);
+		$this->group_add->setSize($this->sizeX - 25, 7);
 		$this->group_add->setPosition(0, -3);
-
-		$this->button_add->setSize(30, 5);
+		
 		$this->button_add->setPosition($this->sizeX * (1 / 0.8) - 40 * (1 / 0.8), -3);
 	}
 
@@ -58,8 +55,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		foreach ($this->items as $item) {
 			$item->erase();
 		}
-
-
+		
 		$this->pager->clearItems();
 		$this->items = array();
 

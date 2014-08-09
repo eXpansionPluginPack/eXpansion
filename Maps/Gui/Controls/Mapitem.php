@@ -42,9 +42,9 @@ class Mapitem extends Control implements OptimizedPagerElement {
 
 	$this->label_map = new \ManiaLib\Gui\Elements\Label($scaledSizes[0], 4);
 	$this->label_map->setAlign('left', 'center');
-	$this->label_map->setStyle('TextCardSmallScores2');
+	$this->label_map->setStyle('TextValueSmall');
 	$this->label_map->setFocusAreaColor1('0000');
-	$this->label_map->setFocusAreaColor2('2af6');
+	$this->label_map->setFocusAreaColor2('0000');
 	$this->label_map->setTextPrefix('$s');
 	$this->label_map->setId('column_' . $indexNumber . '_0');
 	$this->label_map->setAction($action);

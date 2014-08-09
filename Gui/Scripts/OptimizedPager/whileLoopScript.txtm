@@ -103,5 +103,5 @@ if (MouseLeftButton == False) {
     pager_moveScroll = False;
 }else if(pager_moveScroll){
     pager_deltaMouseYPosition = MouseY - pager_startMouseYPosition;
-    log("Moving : "^pager_deltaMouseYPosition);
+//    log("Moving : "^pager_deltaMouseYPosition);
 }

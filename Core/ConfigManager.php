@@ -166,8 +166,9 @@ class ConfigManager
             $groupName = $group . ' #' . $num;
 
         $confName = "main";
-        if (!$var->getShowMain())
+        if (!$var->getShowMain()){
             $confName = $var->getPluginId();
+		}
 
         if (!isset($this->groupedVariables[$confName]))
             $this->groupedVariables[$confName] = array();
@@ -206,7 +207,7 @@ class ConfigManager
      */
     public function getGroupedVariables($confName = "main")
     {
-        return $this->groupedVariables[$confName];
+        return isset($this->groupedVariables[$confName]) ? $this->groupedVariables[$confName] : array();
     }
 
     /**

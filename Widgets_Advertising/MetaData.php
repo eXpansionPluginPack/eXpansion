@@ -34,42 +34,35 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData{
 		$this->setDescription("Provides a Custom Widget to put your advertisement in");
 		$config = Config::getInstance();
 
-		$var = new String('imageUrl', 'Image Url', $config, false);
+		$var = new String('imageUrl', 'Image Url', $config, false, false);
 		$var->setDefaultValue('http://reaby.kapsi.fi/ml/exp_small.png');
-		$var->setGroup('Simple Advert');
 		$this->registerVariable($var);
 
-		$var = new String('imageUrl', 'Image Url on Focus', $config, false);
+		$var = new String('imageUrl', 'Image Url on Focus', $config, false, false);
 		$var->setDefaultValue('http://reaby.kapsi.fi/ml/exp_small.png');
-		$var->setGroup('Simple Advert');
 		$this->registerVariable($var);
 
-		$var = new Int('imageSizeX', 'Image Size X', $config, false);
+		$var = new Int('imageSizeX', 'Image Size X', $config, false, false);
 		$var->setDescription('In Px');
 		$var->setDefaultValue('512');
-		$var->setGroup('Simple Advert');
 		$this->registerVariable($var);
 
-		$var = new Int('imageSizeY', 'Image Size X', $config, false);
+		$var = new Int('imageSizeY', 'Image Size X', $config, false, false);
 		$var->setDescription('In Px');
 		$var->setDefaultValue('128');
-		$var->setGroup('Simple Advert');
 		$this->registerVariable($var);
 
-		$var = new Int('size', 'Display Size X', $config, false);
+		$var = new Int('size', 'Display Size X', $config, false, false);
 		$var->setDescription('In maniaplanet display units');
 		$var->setDefaultValue('30');
-		$var->setGroup('Simple Advert');
 		$this->registerVariable($var);
 
-		$var = new Int('x', 'Position X', $config, false);
+		$var = new Int('x', 'Position X', $config, false, false);
 		$var->setDefaultValue('-30');
-		$var->setGroup('Simple Advert');
 		$this->registerVariable($var);
 
-		$var = new Int('y', 'Position Y', $config, false);
+		$var = new Int('y', 'Position Y', $config, false, false);
 		$var->setDefaultValue('90');
-		$var->setGroup('Simple Advert');
 		$this->registerVariable($var);
 
 	}

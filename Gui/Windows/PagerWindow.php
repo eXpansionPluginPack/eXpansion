@@ -57,7 +57,7 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
     public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         
-        $sizeX = $this->getSizeX() - $this->pager->getPosX();
+        $sizeX = $this->getSizeX() - $this->pager->getPosX() - 2;
         $this->pager->setSize($sizeX, $this->getSizeY() - 15 - $this->pager->getPosY());
         
         $scaledSizes = Gui::getScaledSize($this->getWidths(), $sizeX);

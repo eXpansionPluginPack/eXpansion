@@ -120,7 +120,7 @@ class JoinLeaveMessage extends ExpPlugin
 
 			if($this->config->showTotalPlayOnJoin){
 				$playTime = Helper::formatPastTime($this->expStorage->getDbPlayer($login)->getPlayTime(), 2);
-				echo "Play TIme : $playTime\n";
+
             	$this->exp_chatSendServerMessage($this->joinMsgTime, null, array($nick, $login, $country, $spec, $grpName, $playTime));
 			}else{
 				$this->exp_chatSendServerMessage($this->joinMsg, null, array($nick, $login, $country, $spec, $grpName));

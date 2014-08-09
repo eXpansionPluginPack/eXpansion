@@ -202,7 +202,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$win = Gui\Windows\StatsWindow::Create($login);
 	$win->setData($data, $this->storage);
 	$win->setTitle(__('Welcome to : %1$s', $login, \ManiaLivePlugins\eXpansion\Gui\Gui::fixString($this->storage->server->name)));
-	$win->setSize(75, 70);
+	$win->setSize(78, 70);
 	$win->show($login);
     }
 

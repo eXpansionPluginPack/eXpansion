@@ -5,125 +5,142 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLive\Gui\ActionHandler;
 
-class Checkbox extends \ManiaLive\Gui\Control {
+class Checkbox extends \ManiaLive\Gui\Control
+{
 
-    private $label;
-    private $button;
-    private $active = false;
-    private $textWidth;
-    private $action;
-    private $toToggle = null;
+	private $label;
 
-    function __construct($sizeX = 4, $sizeY = 4, $textWidth = 25, Checkbox $toToggle = null) {
-        $this->textWidth = $textWidth;
-        $this->action = $this->createAction(array($this, 'toggleActive'));
-        $this->toToggle = $toToggle;
+	private $button;
 
-        $config = Config::getInstance();
-        $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-        $this->button->setAlign('left', 'center2');
-        $this->button->setImage($config->checkbox, true);
-        $this->button->setAction($this->action);
-        $this->button->setScriptEvents(true);
-        $this->addComponent($this->button);
+	private $active = false;
 
-        /* $this->button = new \ManiaLib\Gui\Elements\Label(4,4);
-          $this->button->setAlign('center', 'center');
-          $this->button->setBgcolor('ddd');
-          $this->button->setText(' ');
-          $this->button->setSize(0.8);
-          $this->button->setAction($this->action);
-          $this->button->setScriptEvents(true);
-          $this->addComponent($this->button); */
-        //「×」
+	private $textWidth;
 
-        $this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 4);
-        $this->label->setAlign('left', 'center');
-        $this->label->setTextSize(1);
-        //$this->label->setStyle("TextCardInfoSmall");		                
-        $this->addComponent($this->label);
+	private $action;
 
-        $this->setSize($sizeX + $textWidth, $sizeY);
-    }
+	private $toToggle = null;
 
-    public function SetIsWorking($state) {
-        if ($state) {
-            if ($this->button->getAction() == -1) {
-                $this->button->setAction($this->action);
-            }
-        } else {
-            $this->button->setAction(-1);
-        }
-    }
+	function __construct($sizeX = 5, $sizeY = 5, $textWidth = 25, Checkbox $toToggle = null)
+	{
+		$this->textWidth = $textWidth;
+		$this->action = $this->createAction(array($this, 'toggleActive'));
+		$this->toToggle = $toToggle;
 
-    public function ToogleIsWorking() {
-        if ($this->button->getAction() == -1) {
-            $this->button->setAction($this->action);
-        } else {
-            $this->button->setAction(-1);
-        }
-    }
+		$config = Config::getInstance();
+		$this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+		$this->button->setAlign('left', 'center2');
+		$this->button->setAction($this->action);
+		$this->button->setScriptEvents(true);
+		$this->addComponent($this->button);
+		
+		$this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 6);
+		$this->label->setAlign('left', 'center');
+		$this->label->setTextSize(1);
+		$this->label->setScale(1.1);
+		$this->label->setStyle("TextCardInfoSmall");		                
+		$this->addComponent($this->label);
 
-    protected function onResize($oldX, $oldY) {
-        $this->button->setSize(3, 3);
-        $this->button->setPosition(0, -0.5);
-        $this->label->setSize($this->textWidth, $this->sizeY);
-        $this->label->setPosition(5, 0);
-    }
+		$this->setSize($sizeX + $textWidth, $sizeY);
+	}
 
-    function onDraw() {
-        $config = Config::getInstance();
+	public function SetIsWorking($state)
+	{
+		if ($state) {
+			if ($this->button->getAction() == -1) {
+				$this->button->setAction($this->action);
+			}
+		}
+		else {
+			$this->button->setAction(-1);
+		}
+	}
 
-        if ($this->button->getAction() == -1) {
-            if ($this->active) {
-                $this->button->setImage($config->checkboxDisabledActive, true);
-            } else {
-                $this->button->setImage($config->checkboxDisabled, true);
-            }
-        } else {
-            if ($this->active) {
-                $this->button->setImage($config->checkboxActive, true);
-            } else {
-                $this->button->setImage($config->checkbox, true);
-            }
-        }
-    }
+	public function ToogleIsWorking()
+	{
+		if ($this->button->getAction() == -1) {
+			$this->button->setAction($this->action);
+		}
+		else {
+			$this->button->setAction(-1);
+		}
+	}
 
-    function setStatus($boolean) {
-        $this->active = $boolean;
-    }
+	protected function onResize($oldX, $oldY)
+	{
+		$this->button->setSize(5, 5);
+		$this->button->setPosition(0, 0);
+		$this->label->setSize($this->textWidth, 5);
+		$this->label->setPosition(5, 0);
+		parent::onResize($this->textWidth + 5, 5);
+	}
 
-    function getStatus() {
-        return $this->active;
-    }
+	function onDraw()
+	{
+		$config = Config::getInstance();
 
-    function getText() {
-        return $this->label->getText();
-    }
+		if ($this->button->getAction() == -1) {
+			if ($this->active) {
+				$this->button->setImage($config->getImage("checkbox", "disabled_on.png"), true);
+			}
+			else {
+				$this->button->setImage($config->getImage("checkbox", "disabled_off.png"), true);
+			}
+		}
+		else {
+			if ($this->active) {
+				$this->button->setImage($config->getImage("checkbox", "normal_on.png"), true);
+			}
+			else {
+				$this->button->setImage($config->getImage("checkbox", "normal_off.png"), true);
+			}
+		}
+	}
 
-    function setText($text) {
-        $this->label->setText('$fff' . $text);
-    }
+	function setStatus($boolean)
+	{
+		$this->active = $boolean;
+	}
 
-    function toggleActive($login) {
-        $this->active = !$this->active;
-        if ($this->toToggle != null)
-            $this->toToggle->ToogleIsWorking($login);
-        $this->redraw();
-    }
+	function getStatus()
+	{
+		return $this->active;
+	}
 
-    function setAction($action) {
-        $this->button->setAction($action);
-    }
+	function getText()
+	{
+		return $this->label->getText();
+	}
 
-    public function destroy() {
-        $this->button->setAction($this->action);
-        parent::destroy();
-    }
+	function setText($text)
+	{
+		$this->label->setText('$fff' . $text);
+	}
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
-        parent::onIsRemoved($target);
-        $this->destroy();
-    }
+	function toggleActive($login)
+	{
+		$this->active = !$this->active;
+		if ($this->toToggle != null)
+			$this->toToggle->ToogleIsWorking($login);
+		$this->redraw();
+	}
+
+	function setAction($action)
+	{
+		$this->button->setAction($action);
+	}
+
+	public function destroy()
+	{
+		$this->button->setAction($this->action);
+		parent::destroy();
+	}
+
+	function onIsRemoved(\ManiaLive\Gui\Container $target)
+	{
+		parent::onIsRemoved($target);
+		$this->destroy();
+	}
+
 }
+
 ?>

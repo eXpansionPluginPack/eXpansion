@@ -728,7 +728,7 @@ EOT;
 		$info = Gui\Windows\InfoWindow::Create($login);
 		$info->setTitle("Server info");
 		$info->centerOnScreen();
-		$info->setSize(93, 68);
+		$info->setSize(100, 68);
 		$info->show();
 	}
 
@@ -778,17 +778,20 @@ EOT;
 	/**
 	 * Show main expansion settings window
 	 *
-	 * @param $login the login of the player to show the settings to
+	 * @param string $login    the login of the player to show the settings to
+	 * @param string $pluginId
+	 * @param string $confName The config window to show. either main or plugin id
 	 */
-	public function showExpSettings($login)
+	public function showExpSettings($login, $pluginId, $confName = 'main')
 	{
 		if (AdminGroups::hasPermission($login, Permission::expansion_pluginSettings)) {
 			Gui\Windows\ExpSettings::Erase($login);
+			/** @var Gui\Windows\ExpSettings $win */
 			$win = Gui\Windows\ExpSettings::Create($login);
 			$win->setTitle("Expansion Settings");
 			$win->centerOnScreen();
 			$win->setSize(140, 100);
-			$win->populate($this->configManager, 'General');
+			$win->populate($this->configManager, 'General', $confName);
 			$win->show();
 		}
 	}

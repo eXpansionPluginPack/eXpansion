@@ -25,7 +25,10 @@ namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
+use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad;
+use ManiaLivePlugins\eXpansion\Core\ConfigManager;
+use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpSettings;
 use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
@@ -63,15 +66,23 @@ class Plugin extends \ManiaLive\Gui\Control
 	 */
 	private $icon_name, $icon_author;
 
+	/**
+	 * @var ConfigManager
+	 */
+	private $configManger = null;
+
 	function __construct($indexNumber, AutoLoad $autoload, MetaData $plugin, $login, $isLoaded)
 	{
 
 		$this->metaData = $plugin;
 		$this->autoLoad = $autoload;
+		$toggleAction = $this->createAction(array($this, "togglePlugin"));
+		$this->configManger = ConfigManager::getInstance();
 
 		$this->bg = new ListBackGround($indexNumber, 100, 4);
 		$this->addComponent($this->bg);
-
+		$guiConfig = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
+		
 		$titleCompatible = $plugin->checkTitleCompatibility();
 		$gameCompatible = $plugin->checkGameCompatibility();
 		$otherCompatible = $plugin->checkOtherCompatibility();
@@ -80,69 +91,59 @@ class Plugin extends \ManiaLive\Gui\Control
 		$this->button_running = new Button(8, 8);
 		$this->button_running->setDescription(__($this->getRunningDescriptionText($isLoaded, $isInStart), $login), 120);
 		if ($isLoaded)
-			$this->button_running->setIcon("Icons64x64_1", "LvlGreen");
+			$this->button_running->setIcon($guiConfig->getImage("statusbuttons", "3_on.png"));
 		else if ($isInStart)
-			$this->button_running->setIcon("Icons64x64_1", "LvlYellow");
+			$this->button_running->setIcon($guiConfig->getImage("statusbuttons", "2_on.png"));
 		else
-			$this->button_running->setIcon("Icons64x64_1", "LvlRed");
+			$this->button_running->setIcon($guiConfig->getImage("statusbuttons", "1_off.png"));
+		$this->button_running->setAction($toggleAction);
 		$this->addComponent($this->button_running);
-
-		$this->icon_name = new Quad();
-		$this->icon_name->setSize(4, 4);
-		$this->icon_name->setStyle('Icons128x128_1');
-		$this->icon_name->setSubStyle('CustomStars');
-		$this->icon_name->setPosition(6, 4);
-		$this->addComponent($this->icon_name);
 
 		$this->label_name = new Label(40, 4);
 		$this->label_name->setScale(0.8);
 		$this->label_name->setText($plugin->getName() == "" ? $plugin->getPlugin() : $plugin->getName());
-		$this->label_name->setPosition(11, 3);
+		$this->label_name->setPosition(8, 3);
 		$this->addComponent($this->label_name);
-
-		$this->icon_author = new Quad();
-		$this->icon_author->setSize(4, 4);
-		$this->icon_author->setStyle('Icons64x64_1');
-		$this->icon_author->setSubStyle('IconPlayers');
-		$this->icon_author->setPosition(6, 0);
-		$this->addComponent($this->icon_author);
 
 		$this->label_author = new Label(40, 4);
 		$this->label_author->setScale(0.6);
 		$this->label_author->setText($plugin->getAuthor());
-		$this->label_author->setPosition(11, -1);
+		$this->label_author->setPosition(8, -1);
 		$this->addComponent($this->label_author);
 
 		$this->button_titleComp = new Button(7, 7);
 		$this->button_titleComp->setDescription(__($this->getTitleDescriptionText($titleCompatible), $login), 100);
 		if ($titleCompatible)
-			$this->button_titleComp->setIcon("Icons64x64_1", "LvlGreen");
+			$this->button_titleComp->setIcon($guiConfig->getImage("statusbuttons", "3_off.png"));
 		else
-			$this->button_titleComp->setIcon("Icons64x64_1", "LvlRed");
+			$this->button_titleComp->setIcon($guiConfig->getImage("statusbuttons", "1_on.png"));
 		$this->addComponent($this->button_titleComp);
 
 		$this->button_gameComp = new Button(7, 7);
 		$this->button_gameComp->setDescription(__($this->getGameDescriptionText($gameCompatible), $login), 100);
 		if ($gameCompatible)
-			$this->button_gameComp->setIcon("Icons64x64_1", "LvlGreen");
+			$this->button_gameComp->setIcon($guiConfig->getImage("statusbuttons", "3_off.png"));
 		else
-			$this->button_gameComp->setIcon("Icons64x64_1", "LvlRed");
+			$this->button_gameComp->setIcon($guiConfig->getImage("statusbuttons", "1_on.png"));
 		$this->addComponent($this->button_gameComp);
 
 		$this->button_otherComp = new Button(7, 7);
 		$this->button_otherComp->setDescription(__($this->getOtherDescriptionText($otherCompatible), $login), 100, 5, sizeof($otherCompatible) + 1);
 		if (empty($otherCompatible))
-			$this->button_otherComp->setIcon("Icons64x64_1", "LvlGreen");
+			$this->button_otherComp->setIcon($guiConfig->getImage("statusbuttons", "3_off.png"));
 		else
-			$this->button_otherComp->setIcon("Icons64x64_1", "LvlRed");
+			$this->button_otherComp->setIcon($guiConfig->getImage("statusbuttons", "1_on.png"));
 		$this->addComponent($this->button_otherComp);
 
 		$this->button_more = new Button(8, 8);
 		$this->button_more->setIcon("Icons128x128_1", "Options");
-		$this->addComponent($this->button_more);
+		$this->button_more->setAction($this->createAction(array($this, 'showPluginSettings')));
+		$configs = $this->configManger->getGroupedVariables($this->metaData->getPlugin());
+		if(!empty($configs))
+			$this->addComponent($this->button_more);
 
 		$this->button_start = new Button(12, 5);
-		$this->button_start->setAction($this->createAction(array($this, "startPlugin")));
+		$this->button_start->setAction($toggleAction);
 		$this->button_start->setText(__($this->getStartText($isLoaded, $isInStart), $login));
 
 		if ($this->getStartText($isLoaded, $isInStart) == "Start") {
@@ -166,17 +167,17 @@ class Plugin extends \ManiaLive\Gui\Control
 		$this->button_gameComp->setPositionX($this->getSizeX() - 5 * 4 - 4);
 		$this->button_otherComp->setPositionX($this->getSizeX() - 5 * 3 - 3);
 		$this->button_more->setPositionX($this->getSizeX() - 5 * 2 - 4);
-		$this->button_start->setPositionX($this->getSizeX() - 5 * 1 - 1);
+		$this->button_start->setPositionX($this->getSizeX() - 8 * 1 - 1);
 	}
 
 	private function getRunningDescriptionText($runnig, $inStart)
 	{
 		if ($runnig)
-			return "This plugin is running on the server at the moment";
+			return "Plugin is running. Click to unload!";
 		else if ($inStart)
-			return "This plugin isn't compatible with game mode or title. It is therefor pending";
+			return "Plugin not compatible with game mode, title or server settings.\n Plugin will be enabled when possible.";
 		else
-			return "This plugin isn't running";
+			return "Plugin not running. Click to load!";
 	}
 
 	private function getTitleDescriptionText($titleCompatible)
@@ -212,9 +213,20 @@ class Plugin extends \ManiaLive\Gui\Control
 		}
 	}
 
-	public function startPlugin($login)
+	public function togglePlugin($login)
 	{
 		$this->autoLoad->tooglePlugin($login, $this->metaData);
+	}
+
+	public function showPluginSettings($login){
+		ExpSettings::Erase($login);
+		/** @var ExpSettings $win */
+		$win = ExpSettings::Create($login);
+		$win->setTitle("Expansion Settings");
+		$win->centerOnScreen();
+		$win->setSize(140, 100);
+		$win->populate($this->configManger, 'General', $this->metaData->getPlugin());
+		$win->show();
 	}
 
 }

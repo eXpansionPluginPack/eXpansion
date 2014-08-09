@@ -32,6 +32,17 @@ class Gui extends ExpPlugin
 
 	private $preloader;
 
+	
+	/**
+	 * base directory is defined at Config::GetInstance()->uiTextureBase;
+	 * 
+	 * array keys are folders relative to base and values are files in the folder... 
+	 * this is used to preload textures
+	 * 
+	 * @var String[] 
+	 */
+	private $textures = array();
+
 	public function exp_onInit()
 	{
 		$this->setVersion("0.1");
@@ -45,6 +56,19 @@ class Gui extends ExpPlugin
 			$settings = array("S_UseScriptCallbacks" => true);
 			$this->connection->setModeScriptSettings($settings);
 		}
+
+		$config = Config::getInstance();
+		$this->textures['window'] = $config->uiTextures_Window;
+		$this->textures['closebutton'] = $config->uiTextures_closeButton;
+		$this->textures['statusbuttons'] = $config->uiTextures_statusButtons;
+		$this->textures['button'] = $config->uiTextures_button;
+		$this->textures['checkbox'] = $config->uiTextures_checkbox;
+		$this->textures['widgets'] = $config->uiTextures_widgets;
+		$this->textures['inputbox'] = $config->uiTextures_inputbox;
+		$this->textures['ratiobutton'] = $config->uiTextures_ratiobutton;
+		$this->textures['scrollbar'] = $config->uiTextures_scrollbar;
+		$this->textures['menu'] = $config->uiTextures_menu;
+		$this->textures['listitem'] = $config->uiTextures_listitem;
 	}
 
 	public function exp_onReady()
@@ -65,6 +89,16 @@ class Gui extends ExpPlugin
 				Preloader::add($value);
 			}
 		}
+		$config = Config::getInstance();
+
+		foreach ($this->textures as $folder => $data) {
+			foreach ($data as $file) {
+				Preloader::add(trim($config->uiTextureBase, "/") . '/' . $folder . '/' . $file);
+			}
+		}
+
+
+
 		$this->preloader->show();
 
 		foreach ($this->storage->players as $player) {

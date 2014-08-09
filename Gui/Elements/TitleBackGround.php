@@ -26,6 +26,9 @@ class TitleBackGround extends \ManiaLive\Gui\Control {
         } else {
             $this->bg->setBgcolor($config->style_title_bgColor);
         }
+		
+		$this->bg->setImage($config->getImage("listItem", "normal_center.png"), true);
+		
         $this->bg->setPosition($config->style_title_posXOffset, $config->style_title_posYOffset);
 
         $this->addComponent($this->bg);

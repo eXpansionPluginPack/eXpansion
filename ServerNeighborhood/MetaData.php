@@ -15,32 +15,28 @@ use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-    public function onBeginLoad()
-    {
-        parent::onBeginLoad();
-        $this->setName("Server Neighborhood");
-        $this->setDescription('Connects to other server to show information');
+	public function onBeginLoad()
+	{
+		parent::onBeginLoad();
+		$this->setName("Server Neighborhood");
+		$this->setDescription('Connects to other server to show information');
 
-        $config = Config::getInstance();
+		$config = Config::getInstance();
 
-        $var = new Int('refresh_interval', "Refresh the Panel every [INT] seconds", $config, Variable::SCOPE_GLOBAL);
-        $var->setGroup("Server Neighborhood");
-        $this->registerVariable($var);
+		$var = new Int('refresh_interval', "Refresh the Panel every [INT] seconds", $config, Variable::SCOPE_GLOBAL, false);
+		$this->registerVariable($var);
 
-        $var = new Int('nbElement', "Number of element in Widget", $config, Variable::SCOPE_GLOBAL);
-        $var->setGroup("Server Neighborhood");
-        $this->registerVariable($var);
+		$var = new Int('nbElement', "Number of element in Widget", $config, Variable::SCOPE_GLOBAL, false);
+		$this->registerVariable($var);
 
-        $var = new String('storing_path', "Path to store server information", $config, Variable::SCOPE_SERVER);
-        $var->setGroup("Server Neighborhood");
-        $this->registerVariable($var);
+		$var = new String('storing_path', "Path to store server information", $config, Variable::SCOPE_SERVER, false);
+		$this->registerVariable($var);
 
-        $type = new String("","",null);
-        $var = new BasicList('servers', "Path to each server information", $config, Variable::SCOPE_SERVER);
-        $var->setGroup("Server Neighborhood");
-        $var->setType($type);
-        $this->registerVariable($var);
+		$type = new String("", "", null);
+		$var = new BasicList('servers', "Path to each server information", $config, Variable::SCOPE_SERVER, false);
+		$var->setType($type);
+		$this->registerVariable($var);
 
-    }
+	}
 
 }

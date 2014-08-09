@@ -51,5 +51,11 @@ class Widgets_Advertising extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 		$widget->setPositionY($this->config->y);
 		$widget->show();
 	}
+	
+	public function exp_onUnload()
+	{
+		Gui\Widgets\WidgetAd::EraseAll();
+		parent::exp_onUnload();
+	}
 
 }
