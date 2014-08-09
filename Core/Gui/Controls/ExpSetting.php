@@ -2,7 +2,10 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
 
+use ManiaLib\Gui\Elements\Icons128x128_1;
+use ManiaLib\Gui\Elements\Quad;
 use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpListSetting;
+use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpSettings;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\HashList;
@@ -18,13 +21,16 @@ class ExpSetting extends \ManiaLive\Gui\Control
 	private $label_varName;
 	private $label_varValue;
 	private $button_change = null;
+	private $button_reset = null;
 	private $icon_global = null;
 	private $input;
 	private $var;
+	private $win;
 
-	function __construct($indexNumber, Variable $var, $login)
+	function __construct($indexNumber, Variable $var, $login, ExpSettings $win)
 	{
 		$this->var = $var;
+		$this->win = $win;
 
 		$this->label_varName = new \ManiaLib\Gui\Elements\Label(40, 5);
 		$this->label_varName->setPosY(4);
@@ -56,6 +62,13 @@ class ExpSetting extends \ManiaLive\Gui\Control
 			$this->button_change->setDescription($var->getDescription(), 120, 5, 2);
 			$this->addComponent($this->button_change);
 		}
+
+		$this->button_reset = new Button(8,8);
+		$this->button_reset->setIcon(Quad::Icons128x128_1, Icons128x128_1::DefaultIcon);
+		$this->button_reset->setDescription(__('Reset the settings !', $login));
+		$this->button_reset->setAction($this->createAction(array($this, 'reset')));
+		if($var->getDefaultValue() != null)
+			$this->addComponent($this->button_reset);
 
 		if ($var instanceof HashList || $var instanceof BasicList || $var instanceof SortedList || $var->hasConfWindow()) {
 
@@ -95,8 +108,11 @@ class ExpSetting extends \ManiaLive\Gui\Control
 		$this->label_varName->setSizeX($this->getSizeX() - 27);
 		$this->bg->setSize($this->getSizeX()+2, $this->getSizeY() + 2);
 
+		$this->button_reset->setPosition($this->getSizeX() -  7, 0);
+
 		if ($this->button_change != null) {
 			$this->button_change->setPosition($this->getSizeX() - $this->button_change->getSizeX() + 4, 0);
+			$this->button_reset->setPosition($this->getSizeX() - $this->button_change->getSizeX() - 4, 0);
 		}
 		if ($this->label_varValue != null) {
 			$this->label_varValue->setSizeX($this->getSizeX() - 27);
@@ -126,6 +142,13 @@ class ExpSetting extends \ManiaLive\Gui\Control
 			$win->populate($var);
 			$win->show();
 		}
+	}
+
+	public function reset($login){
+		print_r($this->var->getDefaultValue());
+		$this->var->setRawValue($this->var->getDefaultValue());
+		$this->win->refreshInfo();
+		$this->win->redraw();
 	}
 
 	public function getVar()

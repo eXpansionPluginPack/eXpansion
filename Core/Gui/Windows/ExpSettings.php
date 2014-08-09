@@ -69,11 +69,16 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	public function populate(ConfigManager $configs, $groupName, $confName = "main")
 	{
 		$this->configManager = $configs;
-		$this->pagerFrame->clearItems();
 		$this->currentGroup = $groupName;
 		$this->confName = $confName;
 
-		$groupVars = $configs->getGroupedVariables($confName);
+		$this->refreshInfo();
+	}
+
+	public function refreshInfo(){
+		$this->pagerFrame->clearItems();
+		
+		$groupVars = $this->configManager->getGroupedVariables($this->confName);
 
 		if (!$this->first) {
 			$this->menuFrame->reset();
@@ -89,7 +94,7 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		if (isset($groupVars[$this->currentGroup])) {
 			foreach ($groupVars[$this->currentGroup] as $var) {
 				if ($var->getVisible()) {
-					$item = new \ManiaLivePlugins\eXpansion\Core\Gui\Controls\ExpSetting($i, $var, $this->getRecipient());
+					$item = new \ManiaLivePlugins\eXpansion\Core\Gui\Controls\ExpSetting($i, $var, $this->getRecipient(), $this);
 					$this->pagerFrame->addItem($item);
 					$this->items[] = $item;
 					$i++;
