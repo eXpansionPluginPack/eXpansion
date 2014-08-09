@@ -77,7 +77,7 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	public function refreshInfo(){
 		$this->pagerFrame->clearItems();
-		
+
 		$groupVars = $this->configManager->getGroupedVariables($this->confName);
 
 		if (!$this->first) {
