@@ -2,11 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Float;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 
 /**
  * Description of MetaData
@@ -73,7 +71,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setMax(1.0);
 		$var->setDefaultValue(1.0);
 		$this->registerVariable($var);
-		
+
 		$var = new String("style_widget_title_bgColorize", "Title background color", $config);
 		$var->setGroup("Widgets");
 		$var->setDefaultValue("3af");
@@ -90,7 +88,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setMax(5.0);
 		$var->setDefaultValue(1);
 		$this->registerVariable($var);
-		
+
 	}
 
 }

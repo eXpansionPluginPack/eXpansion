@@ -13,12 +13,14 @@ namespace ManiaLivePlugins\eXpansion\Emotes;
  *
  * @author Petri
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
-    
-    public function onBeginLoad() {
-	parent::onBeginLoad();
-	$this->setName("Emotes");
-	$this->setDescription("Provides lot of chat commands for players to emote");
-	
-    }
+class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
+{
+
+	public function onBeginLoad()
+	{
+		parent::onBeginLoad();
+		$this->setName("Emotes");
+		$this->setDescription("Provides lot of chat commands for players to emote");
+
+	}
 }

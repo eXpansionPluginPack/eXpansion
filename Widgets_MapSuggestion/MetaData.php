@@ -2,10 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_MapSuggestion;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
-
 /**
  * Description of MetaData
  *

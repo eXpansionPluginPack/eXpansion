@@ -66,13 +66,19 @@ class Plugin extends \ManiaLive\Gui\Control
 	 */
 	private $icon_name, $icon_author;
 
+	/**
+	 * @var ConfigManager
+	 */
+	private $configManger = null;
+
 	function __construct($indexNumber, AutoLoad $autoload, MetaData $plugin, $login, $isLoaded)
 	{
 
 		$this->metaData = $plugin;
 		$this->autoLoad = $autoload;
 		$toggleAction = $this->createAction(array($this, "togglePlugin"));
-		
+		$this->configManger = ConfigManager::getInstance();
+
 		$this->bg = new ListBackGround($indexNumber, 100, 4);
 		$this->addComponent($this->bg);
 		$guiConfig = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
@@ -132,7 +138,9 @@ class Plugin extends \ManiaLive\Gui\Control
 		$this->button_more = new Button(8, 8);
 		$this->button_more->setIcon("Icons128x128_1", "Options");
 		$this->button_more->setAction($this->createAction(array($this, 'showPluginSettings')));
-		$this->addComponent($this->button_more);
+		$configs = $this->configManger->getGroupedVariables($this->metaData->getPlugin());
+		if(!empty($configs))
+			$this->addComponent($this->button_more);
 
 		$this->button_start = new Button(12, 5);
 		$this->button_start->setAction($toggleAction);
@@ -217,7 +225,7 @@ class Plugin extends \ManiaLive\Gui\Control
 		$win->setTitle("Expansion Settings");
 		$win->centerOnScreen();
 		$win->setSize(140, 100);
-		$win->populate(ConfigManager::getInstance(), 'General', $this->metaData->getPlugin());
+		$win->populate($this->configManger, 'General', $this->metaData->getPlugin());
 		$win->show();
 	}
 

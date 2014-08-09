@@ -13,18 +13,20 @@ namespace ManiaLivePlugins\eXpansion\DonatePanel;
  *
  * @author Petri
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
+class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
+{
 
-    public function onBeginLoad() {
-	parent::onBeginLoad();
-	$this->setName("Player donates");
-	$this->setDescription("Donates for players to send for server or eachother");
+	public function onBeginLoad()
+	{
+		parent::onBeginLoad();
+		$this->setName("Player donates");
+		$this->setDescription("Donates for players to send for server or eachother");
 
-	$config = Config::getInstance();
-	$var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\Int("donateAmountForGlobalMsg", "Treshold to show public message on donation", $config);
-	$var->setGroup("Chat Messages");
-	$var->setDefaultValue(500);
-	$this->registerVariable($var);
-    }
+		$config = Config::getInstance();
+		$var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\Int("donateAmountForGlobalMsg", "Treshold to show public message on donation", $config);
+		$var->setGroup("Chat Messages");
+		$var->setDefaultValue(500);
+		$this->registerVariable($var);
+	}
 
 }
