@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\types {
 
-use Exception;
+	use Exception;
 use ManiaLib\Application\ErrorHandling;
 use ManiaLive\Data\Player;
 use ManiaLive\Data\Storage as Storage2;
@@ -49,9 +49,9 @@ use Phine\Exception\Exception as Exception2;
 	{
 
 		public static $plugins_list;
-		
+
 		private $_isScriptEventsEnabled = false;
-		
+
 		/**
 		 * The list of Plugin id's that may need to be started
 		 *
@@ -960,6 +960,7 @@ use Phine\Exception\Exception as Exception2;
 }
 
 namespace {
+use \ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 	/**
 	 * Convert php.ini memory shorthand string to integer bytes
