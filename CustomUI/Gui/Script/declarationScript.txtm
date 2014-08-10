@@ -10,3 +10,4 @@ ClientUI.OverlayHidePosition = False;
 ClientUI.OverlayHideMapInfo = True;
 ClientUI.OverlayChatLineCount = 9;
 ClientUI.OverlayChatOffset = <0.,0.>;
+ClientUI.AltMenuNoDefaultScores = True;

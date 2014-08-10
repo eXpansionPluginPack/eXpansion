@@ -24,6 +24,7 @@ namespace ManiaLivePlugins\eXpansion\SM_ObstaclesScores;
 
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Core\types\BasicPlugin;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
@@ -35,6 +36,10 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
  * @package ManiaLivePlugins\eXpansion\SM\PlatformScores
  */
 class SM_ObstaclesScores extends LocalBase {
+
+	const PERM_JUMTO = "obstacles:jumpto";
+
+	const CB_JUMPTO = 'Obstacle.JumpTo';
 
 	/**
 	 * The last time of the players past the checkpoints
@@ -49,6 +54,9 @@ class SM_ObstaclesScores extends LocalBase {
 		parent::exp_onReady();
 
 		Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
+
+		$cmd = AdminGroups::addAdminCommand("jumpto", $this, "jumpto", self::PERM_JUMTO);
+		$cmd->setMinParam(1);
 	}
 
 	/*public function LibXmlRpc_OnWayPoint(
@@ -125,6 +133,11 @@ class SM_ObstaclesScores extends LocalBase {
 		//Remove all checkpoints data
 		$this->checkpoints[$login] = array();
 		unset($this->checkpoints[$login]);
+	}
+
+	public function jumpto($login, $params){
+		$param = $login . ";" . $params[0] . ";";
+		$this->connection->triggerModeScriptEvent(self::CB_JUMPTO, $param);
 	}
 
 	/**
