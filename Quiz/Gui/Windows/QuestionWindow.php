@@ -31,12 +31,12 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 
         $this->IBQuestion = new Inputbox("question", 235);
-        $this->IBQuestion->setLabel(__("Question"), $login);
+        $this->IBQuestion->setLabel(__("Question", $login), $login);
         $this->frame->addComponent($this->IBQuestion);
 
         for ($x = 0; $x < $this->answerCount; $x++) {
             $this->IBanswers[$x] = new Inputbox("answer." . $x, 235);
-            $this->IBanswers[$x]->setLabel(__("Answer") . ($x + 1), $login);
+            $this->IBanswers[$x]->setLabel(__("Answer", $login) . ($x + 1), $login);
             $this->frame->addComponent($this->IBanswers[$x]);
         }
 

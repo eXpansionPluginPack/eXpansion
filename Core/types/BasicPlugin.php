@@ -2,43 +2,43 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\types {
 
-use Exception;
-use ManiaLib\Application\ErrorHandling;
-use ManiaLive\Data\Player;
-use ManiaLive\Data\Storage as Storage2;
-use ManiaLive\Event\Dispatcher;
-use ManiaLive\PluginHandler\Dependency;
-use ManiaLive\PluginHandler\Exception as Exception3;
-use ManiaLive\PluginHandler\Plugin;
-use ManiaLive\PluginHandler\PluginHandler;
-use ManiaLive\PluginHandler\WaitingCompliant;
-use ManiaLive\Utilities\Console;
-use ManiaLive\Utilities\Logger;
-use ManiaLivePlugins\eXpansion\Core\BillManager;
-use ManiaLivePlugins\eXpansion\Core\ColorParser;
-use ManiaLivePlugins\eXpansion\Core\Config;
-use ManiaLivePlugins\eXpansion\Core\Core;
-use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
-use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEventListener;
-use ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent;
-use ManiaLivePlugins\eXpansion\Core\Events\GlobalEventListener;
-use ManiaLivePlugins\eXpansion\Core\Events\PlayerEvent;
-use ManiaLivePlugins\eXpansion\Core\Events\PlayerEventListener;
-use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
-use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEventListener;
-use ManiaLivePlugins\eXpansion\Core\i18n;
-use ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
-use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
-use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
-use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
-use ManiaLivePlugins\eXpansion\Helpers\Helper;
-use ManiaLivePlugins\eXpansion\Helpers\Storage;
-use ManiaLivePlugins\Standard\TeamSpeak\TeamSpeak3\Helper\String;
-use Maniaplanet\DedicatedServer\Structures\GameInfos;
-use Maniaplanet\DedicatedServer\Structures\PlayerNetInfo;
-use Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException;
-use Phine\Exception\Exception as Exception2;
+	use Exception;
+	use ManiaLib\Application\ErrorHandling;
+	use ManiaLive\Data\Player;
+	use ManiaLive\Data\Storage as Storage2;
+	use ManiaLive\Event\Dispatcher;
+	use ManiaLive\PluginHandler\Dependency;
+	use ManiaLive\PluginHandler\Exception as Exception3;
+	use ManiaLive\PluginHandler\Plugin;
+	use ManiaLive\PluginHandler\PluginHandler;
+	use ManiaLive\PluginHandler\WaitingCompliant;
+	use ManiaLive\Utilities\Console;
+	use ManiaLive\Utilities\Logger;
+	use ManiaLivePlugins\eXpansion\Core\BillManager;
+	use ManiaLivePlugins\eXpansion\Core\ColorParser;
+	use ManiaLivePlugins\eXpansion\Core\Config;
+	use ManiaLivePlugins\eXpansion\Core\Core;
+	use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
+	use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEventListener;
+	use ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent;
+	use ManiaLivePlugins\eXpansion\Core\Events\GlobalEventListener;
+	use ManiaLivePlugins\eXpansion\Core\Events\PlayerEvent;
+	use ManiaLivePlugins\eXpansion\Core\Events\PlayerEventListener;
+	use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
+	use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEventListener;
+	use ManiaLivePlugins\eXpansion\Core\i18n;
+	use ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
+	use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
+	use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
+	use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+	use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
+	use ManiaLivePlugins\eXpansion\Helpers\Helper;
+	use ManiaLivePlugins\eXpansion\Helpers\Storage;
+	use ManiaLivePlugins\Standard\TeamSpeak\TeamSpeak3\Helper\String;
+	use Maniaplanet\DedicatedServer\Structures\GameInfos;
+	use Maniaplanet\DedicatedServer\Structures\PlayerNetInfo;
+	use Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException;
+	use Phine\Exception\Exception as Exception2;
 
 	/**
 	 * Description of BasicPlugin
@@ -49,9 +49,9 @@ use Phine\Exception\Exception as Exception2;
 	{
 
 		public static $plugins_list;
-		
+
 		private $_isScriptEventsEnabled = false;
-		
+
 		/**
 		 * The list of Plugin id's that may need to be started
 		 *
@@ -186,7 +186,7 @@ use Phine\Exception\Exception as Exception2;
 		 */
 		public function exp_onInit()
 		{
-			
+
 		}
 
 		public final function enableScriptEvents()
@@ -220,7 +220,7 @@ use Phine\Exception\Exception as Exception2;
 		 */
 		public function exp_onLoad()
 		{
-			
+
 		}
 
 		public final function onReady()
@@ -249,7 +249,7 @@ use Phine\Exception\Exception as Exception2;
 		 */
 		public function exp_onReady()
 		{
-			
+
 		}
 
 		final public function onUnload()
@@ -277,19 +277,19 @@ use Phine\Exception\Exception as Exception2;
 
 		public function exp_onUnload()
 		{
-			
+
 		}
 
 		private function checkVersion()
 		{
 			if (version_compare(
-							\ManiaLive\Application\VERSION, Core::EXP_REQUIRE_MANIALIVE, 'lt'
-					)
+				\ManiaLive\Application\VERSION, Core::EXP_REQUIRE_MANIALIVE, 'lt'
+			)
 			) {
 				$this->dumpException(
-						"Looks like your ManiaLive is too old to run this version of eXpansion.\n"
-						. "Your ManiaLive version: " . \ManiaLive\Application\VERSION . ", (required " . Core::EXP_REQUIRE_MANIALIVE . ")\n"
-						. "Please update your manialive version in order to continue.", New Exception3("ManiaLive version is too old!")
+					"Looks like your ManiaLive is too old to run this version of eXpansion.\n"
+					. "Your ManiaLive version: " . \ManiaLive\Application\VERSION . ", (required " . Core::EXP_REQUIRE_MANIALIVE . ")\n"
+					. "Please update your manialive version in order to continue.", New Exception3("ManiaLive version is too old!")
 				);
 				exit();
 			}
@@ -374,11 +374,11 @@ use Phine\Exception\Exception as Exception2;
 				$message = $msg;
 				if (is_object(self::$exp_chatRedirected[$sender][0]))
 					call_user_func_array(
-							self::$exp_chatRedirected[$sender], array($login, $this->colorParser->parseColors($message))
+						self::$exp_chatRedirected[$sender], array($login, $this->colorParser->parseColors($message))
 					);
 				else {
 					$this->callPublicMethod(
-							self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($login, $this->colorParser->parseColors($message))
+						self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($login, $this->colorParser->parseColors($message))
 					);
 				}
 			}
@@ -388,7 +388,7 @@ use Phine\Exception\Exception as Exception2;
 					$this->connection->chatSendServerMessage($this->colorParser->parseColors($msg), $login);
 				} catch (Exception $e) {
 					$this->console(
-							"Error while sending chat message to '" . $login . "'\n Server said:" . $e->getMessage()
+						"Error while sending chat message to '" . $login . "'\n Server said:" . $e->getMessage()
 					);
 				}
 			}
@@ -412,25 +412,25 @@ use Phine\Exception\Exception as Exception2;
 				$message = clone $msg;
 				if (is_object(self::$exp_announceRedirected[$sender][0]))
 					call_user_func_array(
-							self::$exp_announceRedirected[$sender], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
+						self::$exp_announceRedirected[$sender], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
 					);
 				else {
 					$this->callPublicMethod(
-							self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
+						self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
 					);
 				}
 			}
 			else {
 				try {
 					$this->connection->chatSendServerMessage(
-							'$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg)
+						'$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg)
 					);
 				} catch (LoginUnknownException $ex) {
 					Console::println(
-							"[eXpansion]Attempt to send Announce to a login failed. Login unknown"
+						"[eXpansion]Attempt to send Announce to a login failed. Login unknown"
 					);
 					Logger::info(
-							"[eXpansion]Attempt to send Announce to a login failed. Login unknown"
+						"[eXpansion]Attempt to send Announce to a login failed. Login unknown"
 					);
 				} catch (Exception $e) {
 					$this->console("Error while sending Announce message => Server said:" . $e->getMessage());
@@ -452,7 +452,7 @@ use Phine\Exception\Exception as Exception2;
 					call_user_func_array(self::$exp_chatRedirected[$sender], array(null, $message));
 				else {
 					$this->callPublicMethod(
-							self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array(null, $message)
+						self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array(null, $message)
 					);
 				}
 			}
@@ -462,10 +462,10 @@ use Phine\Exception\Exception as Exception2;
 					$this->connection->chatSendServerMessageToLanguage($msg->getMultiLangArray());
 				} catch (LoginUnknownException $ex) {
 					Console::println(
-							"[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown"
+						"[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown"
 					);
 					Logger::info(
-							"[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown"
+						"[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown"
 					);
 				} catch (Exception $e) {
 					$this->console("Error while sending Multilang Announce message => Server said:" . $e->getMessage());
@@ -572,7 +572,7 @@ use Phine\Exception\Exception as Exception2;
 		 * @return Bill*
 		 */
 		final public function exp_startBill(
-		$source_login, $destination_login, $amount, $msg, $callback = array(), $params = array()
+			$source_login, $destination_login, $amount, $msg, $callback = array(), $params = array()
 		)
 		{
 			$bill = new Bill($source_login, $destination_login, $amount, $msg);
@@ -630,8 +630,8 @@ use Phine\Exception\Exception as Exception2;
 					$compatibility = GameInfos::GAMEMODE_TIMEATTACK;
 				}
 				elseif (strpos($compatibility, 'ROUNDS') !== false || strpos(
-								$compatibility, 'ROUNDSBASE'
-						) !== false
+						$compatibility, 'ROUNDSBASE'
+					) !== false
 				) {
 					$compatibility = GameInfos::GAMEMODE_ROUNDS;
 				}
@@ -769,17 +769,17 @@ use Phine\Exception\Exception as Exception2;
 
 		public function onSettingsChanged(Variable $var)
 		{
-			
+
 		}
 
 		public function onGameModeChange($oldGameMode, $newGameMode)
 		{
-			
+
 		}
 
 		public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes)
 		{
-			
+
 		}
 
 		/**
@@ -787,7 +787,7 @@ use Phine\Exception\Exception as Exception2;
 		 */
 		public function onPlayerGiveup(ExpPlayer $player)
 		{
-			
+
 		}
 
 		/**
@@ -797,10 +797,10 @@ use Phine\Exception\Exception as Exception2;
 		 * @param int $newPos       new position
 		 */
 		public function onPlayerPositionChange(
-		ExpPlayer $player, $oldPos, $newPos
+			ExpPlayer $player, $oldPos, $newPos
 		)
 		{
-			
+
 		}
 
 		/**
@@ -808,143 +808,143 @@ use Phine\Exception\Exception as Exception2;
 		 */
 		public function onPlayerNewPositions($playerPositions)
 		{
-			
+
 		}
 
 		public function onMapRestart()
 		{
-			
+
 		}
 
 		public function onMapSkip()
 		{
-			
+
 		}
 
 		public function LibAFK_IsAFK($login)
 		{
-			
+
 		}
 
 		public function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_BeginMap($number)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_BeginMatch($number)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_BeginRound($number)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_BeginSubmatch($number)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_BeginTurn($number)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_BeginWarmUp()
 		{
-			
+
 		}
 
 		public function LibXmlRpc_EndMap($number)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_EndMatch($number)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_EndRound($number)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_EndSubmatch($number)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_EndTurn($number)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_EndWarmUp()
 		{
-			
+
 		}
 
 		public function LibXmlRpc_LoadingMap($number)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_OnGiveUp($login)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_OnRespawn($login)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_OnStartLine($login)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_OnStunt(
-		$login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump
+			$login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump
 		)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_OnWayPoint(
-		$login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
+			$login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
 		)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_PlayerRanking(
-		$rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone
+			$rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone
 		)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_Rankings($array)
 		{
-			
+
 		}
 
 		public function LibXmlRpc_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2)
 		{
-			
+
 		}
 
 		public function WarmUp_Status($status)
 		{
-			
+
 		}
 
 		/**
@@ -952,7 +952,7 @@ use Phine\Exception\Exception as Exception2;
 		 */
 		public function onPlayerNetLost($players)
 		{
-			
+
 		}
 
 	}
@@ -960,6 +960,7 @@ use Phine\Exception\Exception as Exception2;
 }
 
 namespace {
+	use \ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 	/**
 	 * Convert php.ini memory shorthand string to integer bytes

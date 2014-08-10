@@ -1,0 +1,50 @@
+﻿Question
+Question
+
+Answer
+Answer
+
+Apply
+Apply
+
+Cancel
+Peruuta
+
+#quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2
+#quiz#Kysymyksen numero:#variable# %s$1 #quiz#    Kysyjä:#variable# %s$2
+
+#question#%s ?
+#question#%s ?
+
+#error#Question needs to be at the right format!
+#error#Kysymyksen täytyy olla oikeassa muodossa!
+
+#quiz#Quiz has been reset!
+#quiz#Tietokisan pisteet nollattu!
+
+Correct from
+Oikein
+
+#quiz#Right answers: $o#question#%s
+#quiz#Oikeat vastaukset: $o#question#%s
+
+#error#Aswer is missing from the question!
+#error#Vastaus puuttuu kysymyksestä!
+
+#error#Question is missing from the question!
+#error#Kysymys puuttuu kysymyksestä!
+
+%s #quiz#cancels the question.
+%s #quiz#peruuttaa kysymyksen.
+
+#quiz#Current point holders:
+#quiz#Pistetilanne:
+
+#quiz#$oPoint added for #variable#%s
+#quiz#$oPiste lisätty #variable#%s
+
+#quiz#$oPoint removed from #variable#%s
+#quiz#$oPiste poistettu #variable#%s
+
+New question
+Kysymys
