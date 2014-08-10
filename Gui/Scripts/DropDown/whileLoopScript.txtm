@@ -10,7 +10,7 @@ foreach (Event in PendingEvents) {
     $x = 0;
     foreach ($this->values as $item) {
         ?>
-        if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "<?php echo $this->name . $x ?>") {                           
+        if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "<?php echo $this->name . $x ?>") {
                       Label<?php echo $this->dropdownIndex ?>.Value = "<?php echo $item ?>";
                       Output<?php echo $this->dropdownIndex ?>.Value = "<?php echo $x ?>";
                       Frame<?php echo $this->dropdownIndex ?>.Hide();

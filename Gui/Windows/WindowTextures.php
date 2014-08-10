@@ -12,6 +12,9 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
 	protected $_mainWindow;
 
+	/**
+	 * @var \ManiaLive\Gui\Controls\Frame
+	 */
 	protected $mainFrame;
 
 	protected $_closebutton;

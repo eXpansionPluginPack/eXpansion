@@ -36,7 +36,7 @@ class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansio
 		$this->barFrame = new \ManiaLive\Gui\Controls\Frame(0, 0);
 		$this->addComponent($this->barFrame);
 
-	$this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 40);
+		$this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 40);
 		$this->scrollBg->setAlign("center", "top");
 		$this->scrollBg->setImage($config->getImage("scrollbar", "background.png"), true);
 		$this->scrollBg->setId("ScrollBg");
@@ -78,12 +78,12 @@ class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansio
 
 		$this->myScript->setParam("pagerSizeY", $this->sizeY);
 
-		$this->scroll->setPosition($this->sizeX - 3, 0);
-		$this->scrollBg->setPosition($this->sizeX - 3);
-		$this->scrollBg->setSizeY($this->sizeY-4);
+		$this->scroll->setPosition($this->sizeX - 3, -5);
+		$this->scrollBg->setPosition($this->sizeX - 3, -5);
+		$this->scrollBg->setSizeY($this->sizeY - 4);
 
-		$this->scrollDown->setPosition($this->sizeX - 5, -($this->sizeY-4));
-		$this->scrollUp->setPosition($this->sizeX - 5, 0);
+		$this->scrollDown->setPosition($this->sizeX - 5, -($this->sizeY - 4)-5);
+		$this->scrollUp->setPosition($this->sizeX - 5, -5);
 
 		foreach ($this->items as $item) {
 			$scale = $item->getScale();
