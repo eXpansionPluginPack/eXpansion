@@ -5,6 +5,6 @@ FOR /F "tokens=2 delims==" %%a IN ('find "phpPath" ^<..\..\..\run.ini') DO SET p
 
 IF _%phpPath%==_ SET phpPath="php.exe"
 
-%phpPath% mlepp_migration.php
+%phpPath% mleppImporter.php
 
 pause

@@ -63,6 +63,8 @@ class Mimporter
 
     function dothejob()
     {
+		print_r($this->config);
+
         $this->hr();
         $this->c("* By now you are aware that this is ONE TIME operation * ", true);
         $this->c("* Once completed, do not run again! * ", true);
@@ -90,7 +92,7 @@ class Mimporter
             'player_onlinerights'=> 'player_onlinerights',
             'player_ip'=> 'player_ip'
         );
-        //ds$this->merge($this->config['mlepp_db'].'.players', $this->config['exp_db'].'.exp_players', $map, array('player_updated2' => 'UNIX_TIMESTAMP(player_updated) as player_updated2'));
+        $this->merge($this->config['mlepp_db'].'.players', $this->config['exp_db'].'.exp_players', $map, array('player_updated2' => 'UNIX_TIMESTAMP(player_updated) as player_updated2'));
 
         $map = array("challenge_uid" => "challenge_uid",
                      "challenge_name" => "challenge_name",
@@ -108,7 +110,7 @@ class Mimporter
                      "challenge_nbCheckpoints" => "challenge_nbCheckpoints",
                      "challenge_addtime2" => "challenge_addtime"
         );
-        //$this->merge($this->config['mlepp_db'].'.challenges', $this->config['exp_db'].'.exp_maps', $map, array('challenge_addtime2' => 'UNIX_TIMESTAMP(challenge_addtime) as challenge_addtime2'));
+        $this->merge($this->config['mlepp_db'].'.challenges', $this->config['exp_db'].'.exp_maps', $map, array('challenge_addtime2' => 'UNIX_TIMESTAMP(challenge_addtime) as challenge_addtime2'));
 
         $map = array("record_challengeuid"=> "record_challengeuid",
                      "record_playerlogin"=> "record_playerlogin",
@@ -120,15 +122,21 @@ class Mimporter
                      "record_date2"=> "record_date");
         $this->merge($this->config['mlepp_db'].'.localrecords', $this->config['exp_db'].'.exp_records', $map, array('record_date2' => 'UNIX_TIMESTAMP(record_date) as record_date2'));
 
-        /*$map = array("record_challengeuid"=> "record_challengeuid",
-                     "record_playerlogin"=> "record_playerlogin",
-                     "record_nbLaps"=> "record_nbLaps",
-                     "record_score"=> "record_score",
-                     "record_nbFinish"=> "record_nbFinish",
-                     "record_avgScore"=> "record_avgScore",
-                     "record_checkpoints"=> "record_checkpoints",
-                     "record_date2"=> "record_date");
-        $this->merge($this->config['mlepp_db'].'.top_donation', $this->config['exp_db'].'.exp_planet_transaction', $map);*/
+		$map = array("planets_login"=> "transaction_fromLogin",
+			"planets_amount"=> "transaction_amount",
+			"transaction_toLogin"=> "transaction_toLogin",
+			"planets_fromplugin"=> "transaction_plugin",
+			"planets_description"=> "transaction_subject");
+
+		$specials =  array('transaction_toLogin' => '"'.$this->config['transaction_toLogin'].'" as transaction_toLogin');
+
+		$this->merge($this->config['mlepp_db'].'.planettransactions', $this->config['exp_db'].'.exp_planet_transaction', $map,$specials);
+
+		$query = 'UPDATE '.$this->config['exp_db'].'.exp_planet_transaction SET transaction_plugin = "eXpansion\\DonatePanel" WHERE transaction_plugin = "MLEPP\\DonatePlanets"';
+		mysql_query($query, $this->conn);
+
+		$query = 'UPDATE '.$this->config['exp_db'].'.exp_planet_transaction SET transaction_plugin = "ManiaLivePlugins\\PMC" WHERE transaction_plugin = "PMC"';
+		mysql_query($query, $this->conn);
 
         //$this->query('COMMIT;', $this->conn);
     }
