@@ -34,6 +34,8 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $this->enableDedicatedEvents();
         $this->updateLivePanel();
         self::$me = $this;
+
+		$this->getRoundsPoints();
     }
 
 
