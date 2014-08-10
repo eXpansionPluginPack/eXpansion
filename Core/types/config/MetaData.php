@@ -43,6 +43,11 @@ abstract class MetaData
 	private $description;
 
 	/**
+	 * @var String[] list of groups the plugin is in
+	 */
+	private $groups = array();
+
+	/**
 	 *
 	 * @var Boolean Whatever or not this plugin is part of the core of eXpansion.
 	 */
@@ -234,6 +239,24 @@ abstract class MetaData
 		}
 		$this->description = $description;
 	}
+
+	/**
+	 * @param String $groups
+	 */
+	public function setGroups($groups)
+	{
+		$this->groups = $groups;
+	}
+
+	/**
+	 * @return String
+	 */
+	public function getGroups()
+	{
+		return $this->groups;
+	}
+
+
 
 	public function isCorePlugin()
 	{

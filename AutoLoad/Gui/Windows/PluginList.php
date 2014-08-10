@@ -23,72 +23,232 @@
 namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Windows;
 
 
+use ManiaLib\Gui\Elements\Label;
 use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad;
 use ManiaLivePlugins\eXpansion\AutoLoad\Gui\Controls\Plugin;
 use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
 
 class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    /**
-     * @var Pager
-     */
-    public $pagerFrame = null;
+	/**
+	 * @var Inputbox
+	 */
+	protected $input_name, $input_author;
 
-    /**
-     * @var PluginHandler
-     */
-    private $pluginHandler = null;
+	/**
+	 * @var String
+	 */
+	protected $value_name, $value_author;
 
-    /**
-     * @var Plugin[]
-     */
-    private $items = array();
+	/**
+	 * @var Dropdown
+	 */
+	protected $select_group;
 
-    protected function onConstruct()
-    {
-	parent::onConstruct();
+	/**
+	 * @var Label
+	 */
+	protected $label_group;
 
-	$this->pagerFrame = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
-	$this->pagerFrame->setPosY(3);
+	/**
+	 * @var String
+	 */
+	protected $value_group;
 
-	$this->mainFrame->addComponent($this->pagerFrame);
+	protected $elements = array();
 
-	$this->pluginHandler = PluginHandler::getInstance();
-    }
+	/**
+	 * @var CheckboxScripted
+	 */
+	protected $input_compatible;
 
-    public function onResize($oldX, $oldY)
-    {
-	parent::onResize($oldX, $oldY);
-	$this->pagerFrame->setSize($this->getSizeX() - 3, $this->getSizeY() - 8);
-    }
+	/**
+	 * @var Label
+	 */
+	protected $label_compatible;
 
-    /**
-     * @param AutoLoad   $autoLoader
-     * @param MetaData[] $availablePlugins
-     */
-    public function populate(AutoLoad $autoLoader, $availablePlugins)
-    {
-	$this->pagerFrame->clearItems();
-	$this->items = array();
+	/**
+	 * @var Button
+	 */
+	protected $button_search;
 
-	$i = 0;
-	foreach($availablePlugins as $metaData){
-	    $control = new Plugin($i++, $autoLoader, $metaData, $this->getRecipient(), $this->pluginHandler->isLoaded($metaData->getPlugin()));
-	    $this->items[] = $control;
-	    $this->pagerFrame->addItem($control);
+	/**
+	 * @var Pager
+	 */
+	public $pagerFrame = null;
+
+	/**
+	 * @var PluginHandler
+	 */
+	private $pluginHandler = null;
+
+	/**
+	 * @var Plugin[]
+	 */
+	private $items = array();
+
+	/**
+	 * @var MetaData[]
+	 */
+	private $pluginList = array();
+
+	/**
+	 * @var AutoLoad
+	 */
+	private $autoLoad;
+
+	public $firstDisplay = true;
+
+	protected function onConstruct()
+	{
+		parent::onConstruct();
+		$login = $this->getRecipient();
+
+		$this->input_name = new Inputbox('name');
+		$this->input_name->setSizeX(25);
+		$this->input_name->setLabel(__("Name", $login));
+		$this->input_name->setPositionX(-3);
+		$this->mainFrame->addComponent($this->input_name);
+
+		$this->input_author = new Inputbox('author');
+		$this->input_author->setSizeX(25);
+		$this->input_author->setPositionX(23);
+		$this->input_author->setLabel(__("Author", $login));
+		$this->mainFrame->addComponent($this->input_author);
+
+		$this->label_group = new Label();
+		$this->label_group->setText(__("Group", $login));
+		$this->label_group->setPosition(49, 4);
+		$this->label_group->setScale(0.8);
+		$this->mainFrame->addComponent($this->label_group);
+
+		$this->select_group = new Dropdown("group", array('All'), 0, 25);
+		$this->select_group->setPositionX(49);
+		$this->mainFrame->addComponent($this->select_group);
+
+		$this->label_compatible = new Label();
+		$this->label_compatible->setText(__("Show All", $login));
+		$this->label_compatible->setPosition(75, 4);
+		$this->label_compatible->setScale(0.8);
+		$this->mainFrame->addComponent($this->label_compatible);
+
+		$this->input_compatible = new CheckboxScripted();
+		$this->input_compatible->setStatus(true);
+		$this->input_compatible->setPositionX(75);
+		$this->mainFrame->addComponent($this->input_compatible);
+
+		$this->button_search = new Button(20);
+		$this->button_search->setPositionX(87);
+		$this->button_search->setText(__("Search", $login));
+		$this->button_search->colorize('0a0');
+		$this->button_search->setAction($this->createAction(array($this, "doSearch")));
+		$this->mainFrame->addComponent($this->button_search);
+
+		$this->pagerFrame = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+		$this->pagerFrame->setPosY(-3);
+
+		$this->mainFrame->addComponent($this->pagerFrame);
+
+		$this->pluginHandler = PluginHandler::getInstance();
 	}
-    }
 
-    public function destroy() {
-        foreach ($this->items as $item) {
-            $item->destroy();
-        }
-        $this->items = null;
-        $this->pagerFrame->destroy();
-        $this->clearComponents();
-        parent::destroy();
-    }
+	public function onResize($oldX, $oldY)
+	{
+		parent::onResize($oldX, $oldY);
+		$this->pagerFrame->setSize($this->getSizeX() - 3, $this->getSizeY() - 11);
+	}
+
+	/**
+	 * @param AutoLoad $autoLoader
+	 * @param MetaData[] $availablePlugins
+	 */
+	public function populate(AutoLoad $autoLoader, $availablePlugins)
+	{
+
+		$this->pluginList = $availablePlugins;
+		$this->autoLoad = $autoLoader;
+
+		$this->pagerFrame->clearItems();
+		$this->items = array();
+
+		$groups = array();
+
+		$i = 0;
+
+		foreach ($availablePlugins as $metaData) {
+			if($this->firstDisplay){
+				foreach($metaData->getGroups() as $name){
+					$groups[$name] = true;
+				}
+			}
+
+			if(!empty($this->value_name) && strpos(strtoupper($metaData->getName()), strtoupper($this->input_name->getText())) === false)
+				continue;
+
+			if(!empty($this->value_author) && strpos(strtoupper($metaData->getAuthor()), strtoupper(strtoupper($this->input_author->getText()))) === false)
+				continue;
+
+			if(!empty($this->value_group) && !in_array($this->value_group, $metaData->getGroups())){
+				continue;
+			}
+
+			if(!$this->input_compatible->getStatus() && !$metaData->checkAll())
+				continue;
+
+			$control = new Plugin($i++, $autoLoader, $metaData, $this->getRecipient(), $this->pluginHandler->isLoaded($metaData->getPlugin()));
+			$this->items[] = $control;
+			$this->pagerFrame->addItem($control);
+		}
+
+		if($this->firstDisplay){
+			$groups = array_keys($groups);
+			$this->select_group->addItems($groups);
+			$this->elements = $groups;
+		}
+
+		$this->firstDisplay = false;
+	}
+
+	public function destroy()
+	{
+		foreach ($this->items as $item) {
+			$item->destroy();
+		}
+		$this->items = null;
+		$this->pagerFrame->destroy();
+		$this->clearComponents();
+
+		$this->autoLoad = null;
+
+		parent::destroy();
+	}
+
+	public function doSearch($login, $params)
+	{
+
+		print_r($params);
+
+		print_r($this->elements);
+
+		$this->input_name->setText($params['name']);
+		$this->input_author->setText($params['author']);
+		$this->value_group = $params['group'] == "" ? "" : $this->elements[$params['group']];
+
+		echo $this->value_group;
+
+		$this->select_group->setSelected($params['group']);
+
+		$this->input_compatible->setArgs($params);
+
+		$this->populate($this->autoLoad, $this->pluginList);
+		$this->redraw($login);
+	}
 }

@@ -15,6 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Game UI customizer");
 		$this->setDescription("Custom Game UI");
+		$this->setGroups(array('UI'));
 	}
 
 }
