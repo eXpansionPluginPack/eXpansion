@@ -158,6 +158,10 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
     public function PsExists()
     {
 	exec("ps ax | grep ".$this->pid." 2>&1", $output);
+	
+	if ( $output )
+	    return false;
+	
 	while (list(, $row) = each($output)) {
 
 	    $row_array = explode(" ", $row);
