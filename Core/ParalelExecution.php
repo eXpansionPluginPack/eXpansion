@@ -60,8 +60,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 
 	}
 
-	public function start()
-	{
+	public function start(){
 		Dispatcher::register(TickEvent::getClass(), $this);
 		$this->run();
 	}
@@ -79,19 +78,19 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 
 			$this->results = array_merge($this->results, $results);
 			if (empty($this->cmds) || $this->return != 0) {
-				$this->call($this->results);
-			} else {
+				$this->call ($this->results);
+			}else{
 				$this->run();
 			}
 			return;
-		} else {
-			$command = 'nohup ' . $cmd . ' >> tmp/' . $this->id . '.txt 2>&1 & echo $!';
+		}else{
+			$command = 'nohup '.$cmd . ' >> tmp/' . $this->id . '.txt 2>&1 & echo $!';
 			exec($command, $results, $return);
 			$this->pid = $results[0];
 		}
 
 
-		if ($this->pid == "") {
+		if ($this->pid == ""){
 			Dispatcher::unregister(TickEvent::getClass(), $this);
 			$this->call();
 		}
@@ -101,7 +100,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 
 	public function call($results = array())
 	{
-		if (empty($results) && file_exists('tmp/' . $this->id . '.txt')) {
+		if(empty($results) && file_exists('tmp/' . $this->id . '.txt')){
 			$results = explode("\n", file_get_contents('tmp/' . $this->id . '.txt'));
 			unlink('tmp/' . $this->id . '.txt');
 		}
@@ -158,9 +157,9 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 
 	public function PsExists()
 	{
-		exec("ps ax | grep " . $this->pid . " 2>&1", $output);
+		exec("ps ax | grep ".$this->pid." 2>&1", $output);
 
-		if (!$output)
+		if ( !$output )
 			return false;
 
 		while (list(, $row) = each($output)) {
@@ -192,13 +191,11 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 		}
 	}
 
-	public function setValue($key, $val)
-	{
+	public function setValue($key, $val){
 		$this->values[$key] = $val;
 	}
 
-	public function getValue($key)
-	{
+	public function getValue($key){
 		return $this->values[$key];
 	}
 }
