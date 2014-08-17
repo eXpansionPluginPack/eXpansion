@@ -159,7 +159,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
     {
 	exec("ps ax | grep ".$this->pid." 2>&1", $output);
 	
-	if ( $output )
+	if ( !$output )
 	    return false;
 	
 	while (list(, $row) = each($output)) {
