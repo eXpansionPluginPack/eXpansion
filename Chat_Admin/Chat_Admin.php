@@ -1079,7 +1079,12 @@ Other server might use the same blacklist file!!');
 	{
 		$admin = $this->storage->getPlayerObject($fromLogin);
 		try {
-			$this->connection->forceEndRound();
+			if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT){
+				$this->connection->triggerModeScriptEvent('Rounds_ForceEndRound');
+			}else{
+				$this->connection->forceEndRound();
+			}
+
 			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#forces the round to end.', null, array($admin->nickName));
 		} catch (Exception $e) {
 			$this->sendErrorChat($fromLogin, $e->getMessage());
