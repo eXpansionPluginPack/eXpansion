@@ -13,7 +13,7 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
 	protected $pager;
-	
+
 	/** @var CheckboxScripted[] */
 	protected $items = array();
 
@@ -80,10 +80,10 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	/**
 	 * data is following format:
-	 * 
+	 *
 	 * widgetname ^ ":" ^ gameMode ^ ":" ^ bool ^ "|";
 	 * you can assume only one gamemode is sent at a time, so multiple gamemodes are not mixed
-	 * 
+	 *
 	 * @param array $data
 	 * @return \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem
 	 */
