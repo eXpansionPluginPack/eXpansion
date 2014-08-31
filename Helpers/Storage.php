@@ -91,6 +91,11 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 	 */
 	public $relay;
 
+
+	private $startTime;
+
+	private $dediUpTime;
+
 	protected function __construct()
 	{
 		Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_BEGIN_MAP);
@@ -108,6 +113,10 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 		$this->baseMapType = $this->getSimpleMapType($this->storage->currentMap->mapType);
 
 		$this->relay = RelayLink::getInstance();
+
+		$this->startTime = time();
+
+		$this->dediUpTime = $this->connection->getNetworkStats()->uptime;
 	}
 
 	protected function getSimpleMapType($type)
@@ -139,13 +148,19 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 	public function getDbPlayer($login)
 	{
 		if (isset($this->dbPlayers[$login])) {
-			echo 'FOUND\n';
 			return $this->dbPlayers[$login];
 		}
 		else {
-			echo 'NOO\n';
 			return null;
 		}
+	}
+
+	public function getExpansionUpTime(){
+		return time() - $this->startTime;
+	}
+
+	public function getDediUpTime(){
+		return $this->getExpansionUpTime() + $this->dediUpTime;
 	}
 
 	/**
