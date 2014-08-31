@@ -291,7 +291,17 @@ class Adm extends ExpPlugin
 			$ipoints = implode(",", $points);
 			$msg = exp_getMessage('#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s');
 			$this->exp_chatSendServerMessage($msg, null, array($nick, $ipoints));
-			$this->connection->setRoundCustomPoints($points);
+
+			if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT){
+				$cpoints = array();
+				foreach($points as $p){
+					$cpoints[] = $p."";
+				}
+				$this->connection->triggerModeScriptEventArray('Rounds_SetPointsRepartition',$cpoints);
+			}else{
+				$this->connection->setRoundCustomPoints($ipoints);
+			}
+
 		} catch (Exception $e) {
 			$this->connection->chatSendServerMessage(__('#error#Error: %s', $login, $e->getMessage()), $login);
 		}

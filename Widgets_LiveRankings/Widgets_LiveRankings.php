@@ -125,6 +125,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             }
         } else {
             self::$roundPoints = array(10, 6, 4, 3, 2, 1);
+			//points = $this->connection->triggerModeScriptEvent('Rounds_GetPointsRepartition',"");
         }
     }
 
