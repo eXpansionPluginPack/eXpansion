@@ -159,7 +159,7 @@ class Widget extends PlainWidget
         $posX = $this->getParameter("posX");
         $posY = $this->getParameter("posY");
 
-        if ($posX != null & $posY != null) {
+        if ($posX != null && $posY != null) {
             $this->setPosition($posX, $posY);
         }
     }

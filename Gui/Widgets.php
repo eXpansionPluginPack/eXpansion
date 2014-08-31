@@ -147,5 +147,8 @@ class Widgets extends \ManiaLib\Utils\Singleton
 
 	public $BestCheckPointsWidget_posX = array(self::config_default => -112);
 	public $BestCheckPointsWidget_posY = array(self::config_default =>90);
+
+	public $AroundMePanel_posX = array(self::config_default => -15);
+	public $AroundMePanel_posY = array(self::config_default => -70);
     
 }

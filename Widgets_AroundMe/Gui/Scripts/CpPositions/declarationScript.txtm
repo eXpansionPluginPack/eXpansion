@@ -1,0 +1,31 @@
+
+declare Integer totalCp = <?php echo $this->totalCp ?>;
+declare Integer nbFields =  <?php echo $this->nbFields ?>;
+declare Integer nbFirstFields =  <?php echo $this->nbFirstFields ?>;
+
+//Ranks of the players
+declare playerTimes	= <?php echo $this->playerTimes ?>;
+declare playerNickNames	= <?php echo $this->nickNames ?>;
+declare bestCps	= <?php echo $this->bestCps ?>;
+
+//The latest chackpoint the player past
+declare playersOnServer = Text[Text];
+declare playersTeam = <?php echo $this->playerTeams ?>;
+declare maxCp = <?php echo $this->maxCp ?>;
+
+declare Boolean needUpdate = True;
+declare lastUpdateTime = 0;
+declare lastTimeDiff = Integer[Text];
+
+declare nbFinish = 0;
+
+//Gui staff
+declare isLaps = <?php echo $this->isLaps ?>;
+declare nbLaps = <?php echo $this->nbLaps ?>;
+declare isTeam = <?php echo $this->isTeam ?>;
+
+declare Text[] playerScoreRanks;
+declare updatedPlayers = Boolean[Text];
+
+declare frontDif = 0;
+declare backDif = 0;
