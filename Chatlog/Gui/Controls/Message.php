@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Chatlog\Gui\Controls;
 
+use ManiaLib\Gui\Elements\Quad;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class Message extends \ManiaLive\Gui\Control {
@@ -50,19 +51,20 @@ class Message extends \ManiaLive\Gui\Control {
         $this->label_text->setScale(0.8);
         $this->frame->addComponent($this->label_text);
 
+
         $this->setSize($sizeX, $sizeY);
     }
 
     protected function onResize($oldX, $oldY) {
-        $this->bg->setSize($this->sizeX, $this->sizeY);
+        $this->bg->setSize($this->sizeX+6, $this->sizeY);
         $this->bg->setPosX(-2);
 
         $this->frame->setSize($this->sizeX, $this->sizeY);
 
         $totalWidths = Gui::getScaledSize($this->widths, $this->getSizeX());
-        $this->label_time->setSizeX($totalWidths[0]);
-        $this->label_nickname->setSizeX($totalWidths[1]);
-        $this->label_text->setSizeX($totalWidths[2]);
+        $this->label_time->setSizeX($totalWidths[0]/.8);
+        $this->label_nickname->setSizeX($totalWidths[1]/.8);
+        $this->label_text->setSizeX($totalWidths[2]/.8 - 2);
     }
 
     // manialive 3.1 override to do nothing.

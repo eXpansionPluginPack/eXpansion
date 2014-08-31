@@ -5,12 +5,13 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 
 class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
+	/** @var  \ManiaLivePlugins\eXpansion\Gui\Elements\Pager */
     protected $pager;
     private $items = array();
     protected $btn_close;
     protected $actionClose;
     protected $ok;
-    private $widths = array(2, 5, 8);
+    private $widths = array(2, 5, 25);
 
     function onConstruct() {
         parent::onConstruct();
@@ -20,18 +21,19 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->mainFrame->addComponent($this->pager);
         $this->actionClose = $this->createAction(array($this, "Close"));
 
-        $this->ok = new OkButton();
+        /*$this->ok = new OkButton();
         //  $this->ok->colorize("0d0");
         $this->ok->setText(__("Close", $login));
         $this->ok->setAction($this->actionClose);
-        $this->mainFrame->addComponent($this->ok);
+        $this->mainFrame->addComponent($this->ok);*/
     }
 
     function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX, $this->sizeY - 8);
+		$this->pager->setPositionY(6);
+        $this->pager->setSize($this->sizeX, $this->sizeY - 2);
         $this->pager->setStretchContentX($this->sizeX);
-        $this->ok->setPosition($this->sizeX - 20, -$this->sizeY + 6);
+        //$this->ok->setPosition($this->sizeX - 20, -$this->sizeY + 6);
     }
 
     /**
@@ -64,7 +66,7 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->items = array();
         $this->pager->destroy();
-        $this->ok->destroy();
+        //$this->ok->destroy();
         $this->clearComponents();
         parent::destroy();
     }
