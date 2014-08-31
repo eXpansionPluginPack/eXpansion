@@ -49,14 +49,14 @@ class AroundMe extends Widget
 
 		$behindLabel = new Label();
 		$behindLabel->setStyle('TextRaceChronoError');
-		$behindLabel->setText('$0F000:00:000');
+		$behindLabel->setText('$FFF');
 		$behindLabel->setId('behindLabel');
 		$behindLabel->setPositionX(-20);
 		$this->_windowFrame->addComponent($behindLabel);
 
 		$frontLabel = new Label();
 		$frontLabel->setStyle('TextRaceChronoError');
-		$frontLabel->setText('$FFF00:00:000');
+		$frontLabel->setText('$FFF');
 		$frontLabel->setId('frontLabel');
 		$frontLabel->setPositionX(28);
 		$this->_windowFrame->addComponent($frontLabel);

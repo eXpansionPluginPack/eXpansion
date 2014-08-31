@@ -1,7 +1,7 @@
 
 declare Integer totalCp = <?php echo $this->totalCp ?>;
-declare Integer nbFields =  <?php echo $this->nbFields ?>;
-declare Integer nbFirstFields =  <?php echo $this->nbFirstFields ?>;
+declare Integer nbFields =  3;
+declare Integer nbFirstFields =  0;
 
 //Ranks of the players
 declare playerTimes	= <?php echo $this->playerTimes ?>;
@@ -27,5 +27,7 @@ declare isTeam = <?php echo $this->isTeam ?>;
 declare Text[] playerScoreRanks;
 declare updatedPlayers = Boolean[Text];
 
-declare frontDif = 0;
-declare backDif = 0;
+declare frontLastDif = -1;
+declare frontLastColor = -1;
+declare behindLastDif = -1;
+declare behindLastColor = -1;
