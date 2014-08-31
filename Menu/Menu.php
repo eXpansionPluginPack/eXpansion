@@ -78,92 +78,96 @@ class Menu extends ExpPlugin
 	{
 		$adminGrp = AdminGroups::getInstance();
 
-		switch ($action) {
-			case "playerlist":
-				$this->callPublicMethod($this->getPluginName("Players"), "showPlayerList", $login);
-				break;
-			case "maplist":
-				$this->callPublicMethod($this->getPluginName("Maps"), "showMapList", $login);
-				break;
-			case "addMaps":
-				$this->callPublicMethod($this->getPluginName("Maps"), "addMaps", $login);
-				break;
-			case "maprecords":
-				$this->callPublicMethod($this->getPluginName("LocalRecords"), "showRecsWindow", $login, Null);
-				break;
-			case "voteres":
-				$plugin = $this->getPluginName("Votes");
-				if ($this->isPluginLoaded($plugin)) {
-					$this->callPublicMethod($plugin, "vote_restart", $login);
-				} else {
-					$this->connection->callVoteRestartMap();
-				}
-				break;
-			case "voteskip":
-				$plugin = $this->getPluginName("Votes");
-				if ($this->isPluginLoaded($plugin)) {
-					$this->callPublicMethod($plugin, "vote_skip", $login);
-				} else {
-					$this->connection->callVoteNextMap();
-				}
-				break;
-			case "quit":
-				$this->connection->kick($login, "Thanks for visiting and welcome back");
-				break;
-			case "admres":
-				$adminGrp->adminCmd($login, "restart");
-				break;
-			case "admskip":
-				$adminGrp->adminCmd($login, "skip");
-				break;
-			case "admer":
-				$adminGrp->adminCmd($login, "er");
-				break;
-			case "admcancel":
-				$adminGrp->adminCmd($login, "cancel");
-				break;
-			case "admremovemap":
-				$adminGrp->adminCmd($login, "remove this");
-				break;
-			case "admtrashmap":
-				$adminGrp->adminCmd($login, "trash this");
-				break;
-			case "admmx":
-				$this->callPublicMethod($this->getPluginName("ManiaExchange"), "mxSearch", $login, "", "");
-				break;
-			case "admcontrol":
-				$this->callPublicMethod($this->getPluginName("Adm"), "serverControlMain", $login);
-				break;
-			case "help":
-				$this->callPublicMethod($this->getPluginName("Faq"), "showFaq", $login, "toc", null);
-				break;
-			case "hudMove":
-				$this->callPublicMethod($this->getPluginName("Gui"), "hudCommands", $login, "move");
-				break;
-			case "hudLock":
-				$this->callPublicMethod($this->getPluginName("Gui"), "hudCommands", $login, "lock");
-				break;
-			case "hudConfig":
-				$this->callPublicMethod($this->getPluginName("Gui"), "showConfigWindow", $login, $entries);
-				break;
-			case "hudReset":
-				$this->callPublicMethod($this->getPluginName("Gui"), "hudCommands", $login, "reset");
-				break;
-			case "stats":
-				$this->callPublicMethod($this->getPluginName("Statistics"), "showTopWinners", $login);
-				break;
-			case "serverinfo":
-				$this->callPublicMethod($this->getPluginName("Core"), "showInfo", $login);
-				break;
-			case "serverranks":
-				$this->callPublicMethod($this->getPluginName("LocalRecords"), "showRanksWindow", $login);
-				break;
-			case "admreplay":
-				$adminGrp->adminCmd($login, "replay");
-				break;
-			case "teambalance":
-				$adminGrp->adminCmd($login, "setTeamBalance");
-				break;
+		try {
+			switch ($action) {
+				case "playerlist":
+					$this->callPublicMethod($this->getPluginName("Players"), "showPlayerList", $login);
+					break;
+				case "maplist":
+					$this->callPublicMethod($this->getPluginName("Maps"), "showMapList", $login);
+					break;
+				case "addMaps":
+					$this->callPublicMethod($this->getPluginName("Maps"), "addMaps", $login);
+					break;
+				case "maprecords":
+					$this->callPublicMethod($this->getPluginName("LocalRecords"), "showRecsWindow", $login, Null);
+					break;
+				case "voteres":
+					$plugin = $this->getPluginName("Votes");
+					if ($this->isPluginLoaded($plugin)) {
+						$this->callPublicMethod($plugin, "vote_restart", $login);
+					} else {
+						$this->connection->callVoteRestartMap();
+					}
+					break;
+				case "voteskip":
+					$plugin = $this->getPluginName("Votes");
+					if ($this->isPluginLoaded($plugin)) {
+						$this->callPublicMethod($plugin, "vote_skip", $login);
+					} else {
+						$this->connection->callVoteNextMap();
+					}
+					break;
+				case "quit":
+					$this->connection->kick($login, "Thanks for visiting and welcome back");
+					break;
+				case "admres":
+					$adminGrp->adminCmd($login, "restart");
+					break;
+				case "admskip":
+					$adminGrp->adminCmd($login, "skip");
+					break;
+				case "admer":
+					$adminGrp->adminCmd($login, "er");
+					break;
+				case "admcancel":
+					$adminGrp->adminCmd($login, "cancel");
+					break;
+				case "admremovemap":
+					$adminGrp->adminCmd($login, "remove this");
+					break;
+				case "admtrashmap":
+					$adminGrp->adminCmd($login, "trash this");
+					break;
+				case "admmx":
+					$this->callPublicMethod($this->getPluginName("ManiaExchange"), "mxSearch", $login, "", "");
+					break;
+				case "admcontrol":
+					$this->callPublicMethod($this->getPluginName("Adm"), "serverControlMain", $login);
+					break;
+				case "help":
+					$this->callPublicMethod($this->getPluginName("Faq"), "showFaq", $login, "toc", null);
+					break;
+				case "hudMove":
+					$this->callPublicMethod($this->getPluginName("Gui"), "hudCommands", $login, "move");
+					break;
+				case "hudLock":
+					$this->callPublicMethod($this->getPluginName("Gui"), "hudCommands", $login, "lock");
+					break;
+				case "hudConfig":
+					$this->callPublicMethod($this->getPluginName("Gui"), "showConfigWindow", $login, $entries);
+					break;
+				case "hudReset":
+					$this->callPublicMethod($this->getPluginName("Gui"), "hudCommands", $login, "reset");
+					break;
+				case "stats":
+					$this->callPublicMethod($this->getPluginName("Statistics"), "showTopWinners", $login);
+					break;
+				case "serverinfo":
+					$this->callPublicMethod($this->getPluginName("Core"), "showInfo", $login);
+					break;
+				case "serverranks":
+					$this->callPublicMethod($this->getPluginName("LocalRecords"), "showRanksWindow", $login);
+					break;
+				case "admreplay":
+					$adminGrp->adminCmd($login, "replay");
+					break;
+				case "teambalance":
+					$adminGrp->adminCmd($login, "setTeamBalance");
+					break;
+			}
+		} catch (Exception $e) {
+			Logger::error("Error in Menu while running action : " . $action);
 		}
 	}
 
@@ -185,7 +189,10 @@ class Menu extends ExpPlugin
 		$submenu = Submenu::Create($login);
 		$menu = $submenu->getMenu();
 
-		$submenu->addItem($menu, __("Help", $login), $this->actions['help']);
+		if ($this->exp_isPluginLoaded('Faq')) {
+			$submenu->addItem($menu, __("Help", $login), $this->actions['help']);
+		}
+
 		if ($this->exp_isPluginLoaded("Maps"))
 			$submenu->addItem($menu, __("Show Maplist", $login), $this->actions['maplist']);
 		if ($this->exp_isPluginLoaded("LocalRecords"))

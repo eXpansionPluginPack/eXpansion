@@ -80,7 +80,7 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	/**
 	 * data is following format:
-	 *
+	 * 
 	 * widgetname ^ ":" ^ gameMode ^ ":" ^ bool ^ "|";
 	 * you can assume only one gamemode is sent at a time, so multiple gamemodes are not mixed
 	 *
