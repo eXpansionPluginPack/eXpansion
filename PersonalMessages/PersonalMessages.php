@@ -35,7 +35,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin 
 	$this->registerChatCommand("r", "sendReply", -1, true);
 	$admingroup = AdminGroups::getInstance();
 
-	$cmd = AdminGroups::addAdminCommand("chat", $this, "adminChat", "admin_chatChannel");
+	$cmd = AdminGroups::addAdminCommand("channel", $this, "adminChat", "admin_chatChannel");
 	$admingroup->addShortAlias($cmd, "a");
 
         $this->cmd_chat = $cmd;

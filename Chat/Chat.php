@@ -49,11 +49,30 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 		try {
 			$this->connection->chatEnableManualRouting(true);
+			$cmd = AdminGroups::addAdminCommand('chat', $this, 'adm_chat', Permission::game_settings);
+			$cmd->setHelp('/adm chat enable or disable');
 		} catch (\Exception $e) {
 			$this->console("[eXpansion|Chat] Couldn't initialize chat. Error from server: " . $e->getMessage());
 			$this->enabled = false;
 		}
+
 		$this->config = Config::getInstance();
+	}
+
+	public function adm_chat($login, $params)
+	{
+		$command = array_shift($params);
+
+		switch (strtolower($command)) {
+			case "enable":
+				$this->config->publicChatActive = true;
+				$this->exp_chatSendServerMessage("#admin_action#Public chat is now #variable#Enabled");
+				break;
+			case "disable":
+				$this->config->publicChatActive = false;
+				$this->exp_chatSendServerMessage("#admin_action#Public chat is now #variable#Disabled");
+				break;
+		}
 	}
 
 	/**
@@ -67,7 +86,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$player = $this->storage->getPlayerObject($login);
 		$nickLog = \ManiaLib\Utils\Formatting::stripStyles($player->nickName);
 		\ManiaLive\Utilities\Logger::getLog('chat')->write(
-			" (" . $player->iPAddress . ") [" . $login . "] Connect with nickname " . $nickLog
+				" (" . $player->iPAddress . ") [" . $login . "] Connect with nickname " . $nickLog
 		);
 	}
 
@@ -83,7 +102,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		if (empty($player))
 			return;
 		\ManiaLive\Utilities\Logger::getLog('chat')->write(
-			" (" . $player->iPAddress . ") [" . $login . "] Disconnected"
+				" (" . $player->iPAddress . ") [" . $login . "] Disconnected"
 		);
 	}
 
@@ -136,15 +155,16 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 					// change text color, if admin is defined at admingroups
 					if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::isInList($login)) {
 						$this->connection->chatSendServerMessage(
-							'$fff$<' . $config->adminSign . '' . $nick . '$z$s ' . $config->chatSeparator . '$>' . $config->adminChatColor . $force . $text
+								'$fff$<' . $config->adminSign . '' . $nick . '$z$s ' . $config->chatSeparator . '$>' . $config->adminChatColor . $force . $text
 						);
-					} else {
+					}
+					else {
 						$color = $config->publicChatColor;
 						if ($source_player->isManagedByAnOtherServer) {
 							$color = $config->otherServerChatColor;
 						}
 						$this->connection->chatSendServerMessage(
-							'$<$fff' . $nick . '$z$s ' . $config->chatSeparator . '$>' . $color . $force . $text
+								'$<$fff' . $nick . '$z$s ' . $config->chatSeparator . '$>' . $color . $force . $text
 						);
 					}
 					$nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);
@@ -152,12 +172,13 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 					\ManiaLive\Utilities\Logger::getLog('chat')->write("[" . $login . "] " . $nickLog . " - " . $text);
 				} catch (\Exception $e) {
 					$this->console(
-						__(
-							'[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()
-						)
+							__(
+									'[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()
+							)
 					);
 				}
-			} else {
+			}
+			else {
 				$this->exp_chatSendServerMessage("#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages", $login, array());
 			}
 		}
