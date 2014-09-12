@@ -186,9 +186,12 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 */
 		public function exp_onInit()
 		{
-
+			
 		}
 
+		/**
+		 * enables eXpansion modescript bidings
+		 */
 		public final function enableScriptEvents()
 		{
 			if (!$this->_isScriptEventsEnabled) {
@@ -220,7 +223,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 */
 		public function exp_onLoad()
 		{
-
+			
 		}
 
 		public final function onReady()
@@ -249,7 +252,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 */
 		public function exp_onReady()
 		{
-
+			
 		}
 
 		final public function onUnload()
@@ -277,19 +280,19 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 		public function exp_onUnload()
 		{
-
+			
 		}
 
 		private function checkVersion()
 		{
 			if (version_compare(
-				\ManiaLive\Application\VERSION, Core::EXP_REQUIRE_MANIALIVE, 'lt'
-			)
+							\ManiaLive\Application\VERSION, Core::EXP_REQUIRE_MANIALIVE, 'lt'
+					)
 			) {
 				$this->dumpException(
-					"Looks like your ManiaLive is too old to run this version of eXpansion.\n"
-					. "Your ManiaLive version: " . \ManiaLive\Application\VERSION . ", (required " . Core::EXP_REQUIRE_MANIALIVE . ")\n"
-					. "Please update your manialive version in order to continue.", New Exception3("ManiaLive version is too old!")
+						"Looks like your ManiaLive is too old to run this version of eXpansion.\n"
+						. "Your ManiaLive version: " . \ManiaLive\Application\VERSION . ", (required " . Core::EXP_REQUIRE_MANIALIVE . ")\n"
+						. "Please update your manialive version in order to continue.", New Exception3("ManiaLive version is too old!")
 				);
 				exit();
 			}
@@ -374,11 +377,11 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 				$message = $msg;
 				if (is_object(self::$exp_chatRedirected[$sender][0]))
 					call_user_func_array(
-						self::$exp_chatRedirected[$sender], array($login, $this->colorParser->parseColors($message))
+							self::$exp_chatRedirected[$sender], array($login, $this->colorParser->parseColors($message))
 					);
 				else {
 					$this->callPublicMethod(
-						self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($login, $this->colorParser->parseColors($message))
+							self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($login, $this->colorParser->parseColors($message))
 					);
 				}
 			}
@@ -388,7 +391,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 					$this->connection->chatSendServerMessage($this->colorParser->parseColors($msg), $login);
 				} catch (Exception $e) {
 					$this->console(
-						"Error while sending chat message to '" . $login . "'\n Server said:" . $e->getMessage()
+							"Error while sending chat message to '" . $login . "'\n Server said:" . $e->getMessage()
 					);
 				}
 			}
@@ -412,25 +415,25 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 				$message = clone $msg;
 				if (is_object(self::$exp_announceRedirected[$sender][0]))
 					call_user_func_array(
-						self::$exp_announceRedirected[$sender], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
+							self::$exp_announceRedirected[$sender], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
 					);
 				else {
 					$this->callPublicMethod(
-						self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
+							self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
 					);
 				}
 			}
 			else {
 				try {
 					$this->connection->chatSendServerMessage(
-						'$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg)
+							'$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg)
 					);
 				} catch (LoginUnknownException $ex) {
 					Console::println(
-						"[eXpansion]Attempt to send Announce to a login failed. Login unknown"
+							"[eXpansion]Attempt to send Announce to a login failed. Login unknown"
 					);
 					Logger::info(
-						"[eXpansion]Attempt to send Announce to a login failed. Login unknown"
+							"[eXpansion]Attempt to send Announce to a login failed. Login unknown"
 					);
 				} catch (Exception $e) {
 					$this->console("Error while sending Announce message => Server said:" . $e->getMessage());
@@ -452,7 +455,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 					call_user_func_array(self::$exp_chatRedirected[$sender], array(null, $message));
 				else {
 					$this->callPublicMethod(
-						self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array(null, $message)
+							self::$exp_chatRedirected[$sender][0], self::$exp_chatRedirected[$sender][1], array(null, $message)
 					);
 				}
 			}
@@ -462,10 +465,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 					$this->connection->chatSendServerMessageToLanguage($msg->getMultiLangArray());
 				} catch (LoginUnknownException $ex) {
 					Console::println(
-						"[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown"
+							"[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown"
 					);
 					Logger::info(
-						"[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown"
+							"[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown"
 					);
 				} catch (Exception $e) {
 					$this->console("Error while sending Multilang Announce message => Server said:" . $e->getMessage());
@@ -572,7 +575,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 * @return Bill*
 		 */
 		final public function exp_startBill(
-			$source_login, $destination_login, $amount, $msg, $callback = array(), $params = array()
+		$source_login, $destination_login, $amount, $msg, $callback = array(), $params = array()
 		)
 		{
 			$bill = new Bill($source_login, $destination_login, $amount, $msg);
@@ -630,8 +633,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 					$compatibility = GameInfos::GAMEMODE_TIMEATTACK;
 				}
 				elseif (strpos($compatibility, 'ROUNDS') !== false || strpos(
-						$compatibility, 'ROUNDSBASE'
-					) !== false
+								$compatibility, 'ROUNDSBASE'
+						) !== false
 				) {
 					$compatibility = GameInfos::GAMEMODE_ROUNDS;
 				}
@@ -769,17 +772,17 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 		public function onSettingsChanged(Variable $var)
 		{
-
+			
 		}
 
 		public function onGameModeChange($oldGameMode, $newGameMode)
 		{
-
+			
 		}
 
 		public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes)
 		{
-
+			
 		}
 
 		/**
@@ -787,7 +790,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 */
 		public function onPlayerGiveup(ExpPlayer $player)
 		{
-
+			
 		}
 
 		/**
@@ -797,10 +800,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 * @param int $newPos       new position
 		 */
 		public function onPlayerPositionChange(
-			ExpPlayer $player, $oldPos, $newPos
+		ExpPlayer $player, $oldPos, $newPos
 		)
 		{
-
+			
 		}
 
 		/**
@@ -808,143 +811,143 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 */
 		public function onPlayerNewPositions($playerPositions)
 		{
-
+			
 		}
 
 		public function onMapRestart()
 		{
-
+			
 		}
 
 		public function onMapSkip()
 		{
-
+			
 		}
 
 		public function LibAFK_IsAFK($login)
 		{
-
+			
 		}
 
 		public function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_BeginMap($number)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_BeginMatch($number)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_BeginRound($number)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_BeginSubmatch($number)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_BeginTurn($number)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_BeginWarmUp()
 		{
-
+			
 		}
 
 		public function LibXmlRpc_EndMap($number)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_EndMatch($number)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_EndRound($number)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_EndSubmatch($number)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_EndTurn($number)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_EndWarmUp()
 		{
-
+			
 		}
 
 		public function LibXmlRpc_LoadingMap($number)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_OnGiveUp($login)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_OnRespawn($login)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_OnStartLine($login)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_OnStunt(
-			$login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump
+		$login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump
 		)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_OnWayPoint(
-			$login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
+		$login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
 		)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_PlayerRanking(
-			$rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone
+		$rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone
 		)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_Rankings($array)
 		{
-
+			
 		}
 
 		public function LibXmlRpc_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2)
 		{
-
+			
 		}
 
 		public function WarmUp_Status($status)
 		{
-
+			
 		}
 
 		/**
@@ -952,7 +955,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 */
 		public function onPlayerNetLost($players)
 		{
-
+			
 		}
 
 	}
@@ -960,6 +963,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 }
 
 namespace {
+
 	use \ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 	/**

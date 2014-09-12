@@ -109,7 +109,7 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->redraw();
 	}
 
-	public function applySettings($login, $args)
+	public function applySettings($login, $args = null)
 	{
 		foreach ($this->items as $item) {
 			$var = $item->getVar();

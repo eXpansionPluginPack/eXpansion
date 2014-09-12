@@ -111,23 +111,6 @@ class Widget extends PlainWidget
         $this->exp_onSettingsLoaded();
     }
 
-    /**
-     * formats number for maniascript
-     * @param numeric $number
-     * @return string
-     */
-    private function getNumber($number)
-    {
-        return number_format((float)$number, 2, '.', '');
-    }
-
-    private function getBoolean($boolean)
-    {
-        if ($boolean)
-            return "True";
-        return "False";
-    }
-
     protected function onDraw()
     {
 

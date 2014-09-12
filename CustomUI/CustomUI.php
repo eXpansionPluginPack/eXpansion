@@ -14,6 +14,7 @@ class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	function exp_onReady()
 	{
+
 		$this->displayWidget(null);
 	}
 
@@ -24,11 +25,18 @@ class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	 */
 	function displayWidget($login)
 	{
+		Customizer::EraseAll();
 		$info = Customizer::Create(null);
+		$info->update();
 		$info->setSize(60, 15);
-		//$info->setPosition(115, 89);
-		$info->setScale(0.75);
 		$info->show();
+	}
+
+	function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
+	{
+		if ($var->getConfigInstance() instanceof \ManiaLivePlugins\eXpansion\CustomUI\Config) {
+			$this->displayWidget(null);
+		}
 	}
 
 	function exp_onUnload()
@@ -37,6 +45,5 @@ class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	}
 
 }
-
 ?>
 

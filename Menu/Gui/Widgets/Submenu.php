@@ -131,13 +131,6 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		parent::onDraw();
 	}
 
-	private function getBoolean($boolean)
-	{
-		if ($boolean)
-			return "True";
-		return "False";
-	}
-
 	protected function onResize($oldX, $oldY)
 	{
 		parent::onResize($oldX, $oldY);
