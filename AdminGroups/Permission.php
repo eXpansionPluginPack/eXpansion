@@ -60,6 +60,8 @@ class Permission {
     const chat_adminChannel = "chat_adminchat";
     const chat_onDisabled = "chat_onDisabled";
     const quiz_admin = "quiz_admin";
+
+	const localRecrods_delete = 'localRecords_delete';
     
 }
 

@@ -789,7 +789,10 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         //$uid = $this->storage->currentMap->uId;
         $uid     = $record->uId;
         $changed = false;
-        if ($record->isNew) {
+		if($record->isDelete){
+			$this->deleteRecordInDatabase($record,$nbLaps);
+			return true;
+		}else if ($record->isNew) {
             //If the record is new we insert
             $q = 'INSERT INTO `exp_records` (`record_challengeuid`, `record_playerlogin`, `record_nbLaps`
                             ,`record_score`, `record_nbFinish`, `record_avgScore`, `record_checkpoints`, `record_date`
@@ -827,6 +830,32 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
         return $changed;
     }
+
+	protected function deleteRecordInDatabase(Record $record, $nbLaps){
+		$q = 'DELETE FROM `exp_records`
+			WHERE record_challengeuid = ' . $this->db->quote($record->uId) . '
+				AND record_playerlogin =' . $this->db->quote($record->login) . '
+				AND record_nbLaps = ' . $this->db->quote($nbLaps) . '
+				AND score_type' . $this->db->quote($this->getScoreType());
+
+		$this->db->execute($q);
+	}
+
+	public function deleteRecordOfPlayerOnMap($adminLogin, $login){
+		if(isset($this->currentChallengePlayerRecords[$login])){
+			$record = $this->currentChallengePlayerRecords[$login];
+
+			if($record->isDelete){
+				$record->isDelete = false;
+				$this->exp_chatSendServerMessage("#admin_action#Delete of record player canceled!", $adminLogin);
+			}else{
+				$this->exp_chatSendServerMessage("#admin_action#Record of player deleted! Restart map to take in account.", $adminLogin);
+				$record->isDelete = true;
+			}
+		}else{
+			$this->exp_chatSendServerMessage("#admin_error#Player doesn't have a record on this map! can't delete.", $adminLogin);
+		}
+	}
 
     /**
      * updateCurrentChallengeRecords()
