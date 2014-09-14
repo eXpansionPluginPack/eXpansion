@@ -14,11 +14,25 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
+
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
+
+		$this->initName();
+
+		$this->initCompatibility();
+
+		$this->initSettings();
+	}
+
+	protected function initName(){
 		$this->setName("Records");
 		$this->setDescription("Provides local records for the server, uses mysql database to store records");
+	}
+
+	protected function initCompatibility()
+	{
 
 		//Listing the compatible Games
 		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -30,7 +44,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");
+	}
 
+	protected function initSettings(){
 		$config = Config::getInstance();
 
 		$var = new BoundedInt("recordsCount", "Localrecords: records count (min: 30)", $config, true, false);

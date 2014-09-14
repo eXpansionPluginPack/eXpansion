@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Core\types\config;
 
 use ManiaLive\Data\Storage;
+use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
@@ -53,15 +54,11 @@ abstract class MetaData
 	 */
 	private $core = false;
 
-	/**
-	 * @var InstallationStep[] Step to make the installation possible
-	 */
-	private $installationSteps = array();
+    /**
+     * @var Variable[]
+     */
+    private $variables = array();
 
-	/**
-	 * @var Variable[]
-	 */
-	private $variables = array();
 
 	/**
 	 * @var String[] The List of GameModes the plugins support

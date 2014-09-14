@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows;
 
+use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls\CpItem;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
@@ -78,12 +79,12 @@ class Cps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::destroy();
     }
 
-    public function populateList($recs, $limit) {
+    public function populateList($recs, $limit, LocalBase $localBase) {
         $x = 0;
         $login = $this->getRecipient();
 
         while ($x < $limit && $x < sizeof($recs)) {
-            $this->items[$x] = new CpItem($x, $login, $recs[$x], $this->widths);
+            $this->items[$x] = new CpItem($x, $login, $recs[$x], $this->widths, $localBase);
             $this->pager->addItem($this->items[$x]);
             $x++;
         }

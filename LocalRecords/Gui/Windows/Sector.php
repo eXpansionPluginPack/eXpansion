@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows;
 
+use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls\SecItem;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
@@ -83,12 +84,12 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::destroy();
     }
 
-    public function populateList($recs, $limit) {
+    public function populateList($recs, $limit, LocalBase $localBase) {
         $x = 0;
         $login = $this->getRecipient();
 
         foreach($recs as $rec){
-            $this->items[$x] = new SecItem($x, $login, $rec, $this->widths);
+            $this->items[$x] = new SecItem($x, $login, $rec, $this->widths, $localBase);
             $this->pager->addItem($this->items[$x]);
             $x++;
         }

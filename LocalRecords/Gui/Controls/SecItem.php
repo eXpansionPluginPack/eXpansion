@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Sector;
+use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 
 /**
  * Description of RecItem
@@ -18,7 +19,7 @@ class SecItem extends \ManiaLive\Gui\Control
     private $bg;
     private $widths;
 
-    function __construct($indexNumber, $login, $rank, $widths)
+    function __construct($indexNumber, $login, $rank, $widths, LocalBase $localBase)
     {
         $this->widths = $widths;
         $this->sizeY  = 8;
@@ -55,7 +56,7 @@ class SecItem extends \ManiaLive\Gui\Control
             $this->label_time[$i]->setPosY(-4);
 
             if ($i < Sector::$nbResult) {
-                $time = \ManiaLive\Utilities\Time::fromTM($sector['sectorTime']);
+                $time = $localBase->formatScore($sector['sectorTime']);
                 $this->label_time[$i]->setText($time);
 
                 $frame->addComponent($this->label_nick[$i]);
