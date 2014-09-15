@@ -2,76 +2,112 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_Netlost;
 
+use ManiaLive\Event\Dispatcher;
+use ManiaLive\Gui\Group;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Events\Event as AdminGroupEvent;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Widgets_Netlost\Gui\Widgets\Netlost;
+use ManiaLivePlugins\eXpansion\Widgets_Netlost\Gui\Widgets\NetlostUpdate;
+use Maniaplanet\DedicatedServer\Structures\PlayerNetInfo;
 
-class Widgets_Netlost extends ExpPlugin
+class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\Events\Listener
 {
 
-    private $buffer = "";
+	private $buffer = "";
 
-    function exp_onLoad()
-    {
-	$this->enableDedicatedEvents();
-    }
+	private $group;
 
-    function exp_onReady()
-    {
-	$this->displayWidget(null);
-    }
-
-    public function netlostTest($login)
-    {
-	$info = new \Maniaplanet\DedicatedServer\Structures\PlayerNetInfo();
-	$info->login = "reaby";
-	$this->onPlayerNetLost(array($info));
-    }
-
-    /**
-     * @param \Maniaplanet\DedicatedServer\Structures\PlayerNetInfo[] $players
-     */
-    public function onPlayerNetLost($players)
-    {
-	$out = "";
-	$comma = "";
-
-	foreach ($players as $player) {
-	    $pla = $this->storage->getPlayerObject($player->login);
-	    $out .= $comma . '"' . \ManiaLivePlugins\eXpansion\Gui\Gui::fixString($pla->nickName) . ' $z$s('.\ManiaLivePlugins\eXpansion\Gui\Gui::fixString($player->login).') "';
-	    $comma = ", ";
+	function exp_onLoad()
+	{
+		$this->enableDedicatedEvents();
+		$this->updateGroup();
 	}
 
-	if (empty($out)) {
-	    $out = "Text[]";
-	} else {
-	    $out = "[" . $out . "]";
+	function exp_onReady()
+	{
+		Dispatcher::register(AdminGroupEvent::getClass(), $this);
+		$this->displayWidget();
 	}
-	
-	if ($this->buffer !== $out) {	    
-	    $update = Gui\Widgets\NetlostUpdate::Create();
-	    $update->setPlayer($out);
-	    $update->setTimeout(2);
-	    $update->show();	   
-	    $this->buffer = $out;
+
+	/**
+	 * @param PlayerNetInfo[] $players
+	 */
+	public function onPlayerNetLost($players)
+	{
+		$out = "";
+		$comma = "";
+
+		foreach ($players as $player) {
+			$pla = $this->storage->getPlayerObject($player->login);
+			$out .= $comma . '"' . Gui::fixString($pla->nickName) . ' $z$s(' . Gui::fixString($player->login) . ') "';
+			$comma = ", ";
+		}
+
+		if (empty($out)) {
+			$out = "Text[]";
+		}
+		else {
+			$out = "[" . $out . "]";
+		}
+
+		if ($this->buffer !== $out) {
+
+			$recepient = null;
+			if (Config::getInstance()->showOnlyAdmins)
+				$recepient = $this->group;
+
+			$update = NetlostUpdate::Create($recepient);
+			$update->setPlayer($out);
+			$update->setTimeout(2);
+			$update->show();
+			$this->buffer = $out;
+		}
 	}
-    }
 
-    /**
-     * displayWidget(string $login)
-     * @param string $login
-     */
-    function displayWidget($login)
-    {
-	$info = Netlost::Create(null);
-	$info->setSize(200, 12);
-	$info->setPosition(-115, -50);
-	$info->show();
-    }
+	public function updateGroup()
+	{
+		$adminlist = AdminGroups::getInstance()->get();
+		$this->group = Group::Create("netlost_admins", $adminlist);
+		$this->displayWidget();
+	}
 
-    function exp_onUnload()
-    {
-	Netlost::EraseAll();
-    }
+	/**
+	 * displayWidget(string $login)
+	 * @param string $login
+	 */
+	function displayWidget()
+	{
+		$recepient = null;
+		if (Config::getInstance()->showOnlyAdmins)
+			$recepient = $this->group;
+
+		$info = Netlost::Create($recepient);
+		$info->setSize(200, 12);
+		$info->setPosition(-115, -50);
+		$info->show();
+	}
+
+	function exp_onUnload()
+	{
+		Dispatcher::unregister(AdminGroupEvent::getClass(), $this);
+		Netlost::EraseAll();
+		NetlostUpdate::EraseAll();
+		Group::Erase("netlost_admins");
+		$this->group = null;
+	}
+
+	public function exp_admin_added($login)
+	{
+		$this->updateGroup();
+	}
+
+	public function exp_admin_removed($login)
+	{
+		$this->updateGroup();
+		Netlost::Erase($login);
+	}
 
 }
 ?>

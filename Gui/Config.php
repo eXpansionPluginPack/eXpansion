@@ -27,7 +27,7 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $uiTextures_inputbox = array("left.png", "center.png", "right.png");
 
-	public $uiTextures_widgets = array("title.png");
+	public $uiTextures_widgets = array("title.png", "header_left.png", "header_right.png", "header_center.png");
 
 	public $uiTextures_scrollbar = array("background.png", "scrollbar_normal.png", "scrollbar_focus.png", "downButton_on.png", "downButton_off.png", "downButton_focus.png", "upButton_on.png", "upButton_off.png", "upButton_focus.png");
 

@@ -28,7 +28,7 @@ class ConfirmDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
 	$this->ok = new OkButton();
 	$this->ok->colorize("0d0");
-	$this->ok->setPosition(8,0);
+	$this->ok->setPosition(4,0);
 	$this->ok->setText(__("Yes", $login));
 	$this->ok->setAction($this->actionOk);
 	$this->mainFrame->addComponent($this->ok);
