@@ -116,10 +116,7 @@ class Bets extends ExpPlugin
 		foreach ($rankings as $index => $player) {
 			if (array_key_exists($player->login, $this->players)) {
 				$this->exp_chatSendServerMessage($this->msg_winner, null, array($player->nickName . '$z$s', $total));
-				$bill = $this->exp_startBill($this->storage->serverLogin, $player->login, intval($total), 'Winner of the bet!',  array($this, 'billPaySuccess'));
-				$bill->setErrorCallback(5, array($this, 'billPayFail'));
-				$bill->setErrorCallback(6, array($this, 'billPayFail'));
-				$bill->setSubject('bets_plugin');
+				$this->connection->pay($player->login, intval($total), 'Winner of the bet!');
 				return;
 			}
 		}
@@ -153,6 +150,7 @@ class Bets extends ExpPlugin
 		$bill->setErrorCallback(6, array($this, 'billFail'));
 		$bill->setSubject('bets_plugin');
 	}
+
 	/**
 	 * 	this called when recieves the a bet from server 
 	 * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
@@ -162,6 +160,7 @@ class Bets extends ExpPlugin
 		$login = $bill->getSource_login();
 		$this->exp_chatSendServerMessage($this->msg_billPaySuccess, $login, array($bill->getAmount()));
 	}
+
 	/**
 	 * 	this called when player accepts a bet 
 	 * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
@@ -240,7 +239,7 @@ class Bets extends ExpPlugin
 		self::$betAmount = 0;
 		$this->counters = array();
 		$this->players = array();
-		BetWidget::EraseAll();	
+		BetWidget::EraseAll();
 	}
 
 	function exp_onUnload()
