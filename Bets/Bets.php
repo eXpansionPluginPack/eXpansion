@@ -75,8 +75,6 @@ class Bets extends ExpPlugin
 		BetWidget::$action_setAmount = $ah->createAction(array($this, "setBetAmount"));
 		BetWidget::$action_acceptBet = $ah->createAction(array($this, "acceptBet"));
 		$this->reset();
-
-		$this->onBeginMatch();
 	}
 
 	public function onTick()
@@ -103,7 +101,8 @@ class Bets extends ExpPlugin
 			case self::state_nobets:
 				break;
 			default:
-				$this->exp_chatSendServerMessage("#error#Bets was not placed properly, no winner for bet.");
+				BetWidget::EraseAll();
+				$this->exp_chatSendServerMessage("#error#Map was skipped or replayed before bet was placed.");
 				break;
 		}
 	}
