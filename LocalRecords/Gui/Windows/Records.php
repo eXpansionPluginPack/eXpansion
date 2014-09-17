@@ -6,6 +6,7 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls\RecItem;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
+use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 
 /**
  * Description of Records
@@ -121,19 +122,28 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		RecItem::$widths = $this->widths;
 
 		while ($x < $limit && $x < sizeof($recs)) {
+            /** @var Record $record */
 			$record = $recs[$x];
 			$rank = $x + 1;
 			$this->pager->addSimpleItems(array($rank => -1,
 				Gui::fixString($record->nickName) => -1,
 				$localBase->formatScore($record->time) . " " => -1,
 				$localBase->formatScore($record->avgScore) . "" => -1,
-				"#" . $record->nbFinish => -1
+				"#" . $record->nbFinish => -1,
+                ($record->isDelete ? 'Cancel Delete' : 'Delete') => $this->createAction(array($this, 'toogleDelete'), $record)
 			));
 			$x++;
 		}
 		$this->pager->setContentLayout('\ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls\RecItem');
 		$this->pager->update($this->getRecipient());
 	}
+
+
+    public function toogleDelete($login, $record){
+        $record->isDelete = !$record->isDelete;
+
+        $this->redraw($login);
+    }
 
 }
 
