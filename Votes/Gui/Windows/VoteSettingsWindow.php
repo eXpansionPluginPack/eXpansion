@@ -2,120 +2,132 @@
 
 namespace ManiaLivePlugins\eXpansion\Votes\Gui\Windows;
 
-class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
-    private $pager;
+	private $pager;
 
-    /** @var \Maniaplanet\DedicatedServer\Connection */
-    private $connection;
+	/** @var \Maniaplanet\DedicatedServer\Connection */
+	private $connection;
 
-    /** @var \ManiaLive\Data\Storage */
-    private $storage;
-    private $items = array();
-    private $ok;
-    private $cancel;
-    private $actionOk;
-    private $actionCancel;
-    
-    /**
-     *
-     * @var \ManiaLivePlugins\eXpansion\Votes\MetaData
-     */
-    private $metaData;
+	/** @var \ManiaLive\Data\Storage */
+	private $storage;
 
-    protected function onConstruct() {
-	parent::onConstruct();
-	$login = $this->getRecipient();
+	private $items = array();
 
-	$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
-	$this->pager->setPosX(5);
+	private $ok;
 
-	$this->addComponent($this->pager);
-	$this->actionOk = $this->createAction(array($this, "Ok"));
-	$this->actionCancel = $this->createAction(array($this, "Cancel"));
+	private $cancel;
 
-	$this->ok = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-	$this->ok->colorize("0d0");
-	$this->ok->setText(__("Apply", $login));
-	$this->ok->setAction($this->actionOk);
-	$this->addComponent($this->ok);
+	private $actionOk;
 
-	$this->cancel = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-	$this->cancel->setText(__("Cancel", $login));
-	$this->cancel->setAction($this->actionCancel);
-	$this->addComponent($this->cancel);
-    }
+	private $actionCancel;
 
-    function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
-	$this->pager->setSize($this->sizeX - 5, $this->sizeY - 12);
+	/**
+	 *
+	 * @var \ManiaLivePlugins\eXpansion\Votes\MetaData
+	 */
+	private $metaData;
 
-	$this->ok->setPosition($this->sizeX - 38, -$this->sizeY + 3);
-	$this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 3);
-    }
+	protected function onConstruct()
+	{
+		parent::onConstruct();
+		$login = $this->getRecipient();
 
-    /**
-     * 
-     * @param \ManiaLivePlugins\eXpansion\Votes\Structures\ManagedVote $votes
-     */
-    function populateList($managedVotes, $metadata) {
-	$login = $this->getRecipient();
-	$this->metaData = $metadata;
-	
-	foreach ($this->items as $item)
-	    $item->destroy();
-	$this->pager->clearItems();
-	$this->items = array();
+		$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+		$this->pager->setPosX(5);
 
+		$this->addComponent($this->pager);
+		$this->actionOk = $this->createAction(array($this, "Ok"));
+		$this->actionCancel = $this->createAction(array($this, "Cancel"));
 
-	$x = 0;
+		$this->ok = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+		$this->ok->colorize("0d0");
+		$this->ok->setText(__("Apply", $login));
+		$this->ok->setAction($this->actionOk);
+		$this->addComponent($this->ok);
 
-	foreach ($managedVotes as $vote) {
-	    $this->items[$x] = new \ManiaLivePlugins\eXpansion\Votes\Gui\Controls\ManagedVoteControl($x, $vote, $this->sizeX - 11);
-	    $this->pager->addItem($this->items[$x]);
-	    $x++;
+		$this->cancel = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+		$this->cancel->setText(__("Cancel", $login));
+		$this->cancel->setAction($this->actionCancel);
+		$this->addComponent($this->cancel);
 	}
-    }
 
-    function Ok($login, $settings) {	
-	$array = array();	
-	
-	foreach ($settings as $key => $value) {
-	    
-	    $exploded = explode("_", $key);
-	    
-	    $varName = 'managedVote_'.array_pop($exploded);
-	    $voteName = implode('_', $exploded);
+	function onResize($oldX, $oldY)
+	{
+		parent::onResize($oldX, $oldY);
+		$this->pager->setSize($this->sizeX - 5, $this->sizeY - 12);
 
-	    $var = $this->metaData->getVariable($varName);
-	    if($var instanceof \ManiaLivePlugins\eXpansion\Core\types\config\types\HashList){
-		$var->setValue($voteName, $value);		
-	    }
+		$this->ok->setPosition($this->sizeX - 38, -$this->sizeY + 3);
+		$this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 3);
 	}
-	
-	//Save data
-	\ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance()->check();
-	
-	$this->Erase($login);
-    }
 
-    function Cancel($login) {
-	$this->Erase($login);
-    }
+	/**
+	 * 
+	 * @param \ManiaLivePlugins\eXpansion\Votes\Structures\ManagedVote $votes
+	 */
+	function populateList($managedVotes, $metadata)
+	{
+		$login = $this->getRecipient();
+		$this->metaData = $metadata;
 
-    function destroy() {
-	foreach ($this->items as $item)
-	    $item->destroy();
+		foreach ($this->items as $item)
+			$item->destroy();
+		$this->pager->clearItems();
+		$this->items = array();
 
-	$this->items = array();
-	$this->pager->destroy();
-	$this->ok->destroy();
-	$this->cancel->destroy();
-	$this->connection = null;
-	$this->storage = null;
-	$this->clearComponents();
-	parent::destroy();
-    }
+
+		$x = 0;
+
+		foreach ($managedVotes as $vote) {
+			$this->items[$x] = new \ManiaLivePlugins\eXpansion\Votes\Gui\Controls\ManagedVoteControl($x, $vote, $this->sizeX - 11);
+			$this->pager->addItem($this->items[$x]);
+			$x++;
+		}
+	}
+
+	function Ok($login, $settings)
+	{
+		$array = array();
+		
+		foreach ($settings as $key => $value) {
+
+			$exploded = explode("_", $key);
+
+			$varName = 'managedVote_' . array_pop($exploded);
+			$voteName = implode('_', $exploded);
+
+			$var = $this->metaData->getVariable($varName);
+			if ($var instanceof \ManiaLivePlugins\eXpansion\Core\types\config\types\HashList) {
+				$var->setValue($voteName, $value);
+			}
+		}
+
+		//Save data
+		\ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance()->check();
+
+		$this->Erase($login);
+	}
+
+	function Cancel($login)
+	{
+		$this->Erase($login);
+	}
+
+	function destroy()
+	{
+		foreach ($this->items as $item)
+			$item->destroy();
+
+		$this->items = array();
+		$this->pager->destroy();
+		$this->ok->destroy();
+		$this->cancel->destroy();
+		$this->connection = null;
+		$this->storage = null;
+		$this->clearComponents();
+		parent::destroy();
+	}
 
 }
 

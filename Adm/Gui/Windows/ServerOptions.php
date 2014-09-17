@@ -24,6 +24,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	private $buttonOK, $buttonCancel;
 
+	/** @var \Maniaplanet\DedicatedServer\Connection */
 	private $connection;
 
 	private $actionOK, $actionCancel;
@@ -311,14 +312,14 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			"Comment" => !AdminGroups::hasPermission($login, Permission::server_comment) ? $server->comment : $args['serverComment'],
 			"Password" => !AdminGroups::hasPermission($login, Permission::server_password) ? $server->password : $args['serverPass'],
 			"PasswordForSpectator" => !AdminGroups::hasPermission($login, Permission::server_specpwd) ? $server->passwordForSpectator : $args['serverSpecPass'],
-			"NextCallVoteTimeOut" => !AdminGroups::hasPermission($login, Permission::server_votes) ? $server->nextCallVoteTimeOut : $server->nextCallVoteTimeOut,
-			"CallVoteRatio" => !AdminGroups::hasPermission($login, Permission::server_votes) ? $server->callVoteRatio : $server->callVoteRatio,
+			"NextCallVoteTimeOut" => !AdminGroups::hasPermission($login, Permission::server_votes) ? $server->nextCallVoteTimeOut : intval($server->nextCallVoteTimeOut),
+			"CallVoteRatio" => !AdminGroups::hasPermission($login, Permission::server_votes) ? $server->callVoteRatio : floatval($server->callVoteRatio),
 			"RefereePassword" => !AdminGroups::hasPermission($login, Permission::server_refpwd) ? $server->refereePassword : $args['refereePass'],
 			"IsP2PUpload" => !AdminGroups::hasPermission($login, Permission::server_genericOptions) ? $server->isP2PUpload : $this->cbAllowp2pUp->getStatus(),
 			"IsP2PDownload" => !AdminGroups::hasPermission($login, Permission::server_genericOptions) ? $server->isP2PDownload : $this->cbAllowp2pDown->getStatus(),
 			"AllowMapDownload" => !AdminGroups::hasPermission($login, Permission::server_genericOptions) ? $server->allowMapDownload : $this->cbAllowMapDl->getStatus(),
-			"NextMaxPlayers" => !AdminGroups::hasPermission($login, Permission::server_maxplayer) ? $server->nextMaxPlayers : $args['maxPlayers'],
-			"NextMaxSpectators" => !AdminGroups::hasPermission($login, Permission::server_maxspec) ? $server->nextMaxSpectators : $args['maxSpec'],
+			"NextMaxPlayers" => !AdminGroups::hasPermission($login, Permission::server_maxplayer) ? $server->nextMaxPlayers : intval($args['maxPlayers']),
+			"NextMaxSpectators" => !AdminGroups::hasPermission($login, Permission::server_maxspec) ? $server->nextMaxSpectators : intval($args['maxSpec']),
 			"RefereeMode" => !AdminGroups::hasPermission($login, 'server_refmode') ? $server->refereeMode : $this->cbReferee->getStatus(),
 			"AutoSaveReplays" => $this->e['AutosaveReplays']->getStatus(),
 			"AutoSaveValidationReplays" => $this->e['AutosaveValidation']->getStatus(),
@@ -327,6 +328,15 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			"KeepPlayerSlots" => true,
 		);
 		$this->connection->setServerOptions($serverOptions);
+		
+		if (AdminGroups::hasPermission($login, Permission::server_maxplayer)) {
+			$this->connection->setMaxPlayers(intval($args['maxPlayers']));
+		}
+
+		if (AdminGroups::hasPermission($login, Permission::server_maxspec)) {
+			$this->connection->setMaxSpectators(intval($args['maxSpec']));
+		}
+
 		$this->Erase($this->getRecipient());
 	}
 

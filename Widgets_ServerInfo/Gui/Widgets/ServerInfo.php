@@ -6,7 +6,8 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
 	protected $clockBg;
-	private $frame, $ladderMin, $ladderMax, $serverName, $maxPlayers;
+
+	private $frame, $ladderMin, $ladderMax, $serverName, $maxPlayers, $script;
 
 	protected function exp_onBeginConstruct()
 	{
@@ -90,21 +91,24 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$this->frame = $line;
 		$this->addComponent($this->frame);
 
-		$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_ServerInfo\Gui\Scripts_Infos");
-		$script->setParam("maxPlayers", \ManiaLive\Data\Storage::getInstance()->server->currentMaxPlayers);
-		$script->setParam("maxSpec", \ManiaLive\Data\Storage::getInstance()->server->currentMaxSpectators);
-		$this->registerScript($script);
+		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_ServerInfo\Gui\Scripts_Infos");
+		$this->script->setParam("maxPlayers", \ManiaLive\Data\Storage::getInstance()->server->currentMaxPlayers);
+		$this->script->setParam("maxSpec", \ManiaLive\Data\Storage::getInstance()->server->currentMaxSpectators);
+		$this->registerScript($this->script);
 		$this->setName("Server info Widget");
 	}
 
 	public function setLadderLimits($min, $max)
 	{
 		$this->ladderMin->setText(($min / 1000) . " - " . ($max / 1000) . "k");
+		$this->script->setParam("maxPlayers", \ManiaLive\Data\Storage::getInstance()->server->currentMaxPlayers);
+		$this->script->setParam("maxSpec", \ManiaLive\Data\Storage::getInstance()->server->currentMaxSpectators);
 	}
 
 	function destroy()
 	{
 		$this->clearComponents();
+		unset($this->script);
 		parent::destroy();
 	}
 
