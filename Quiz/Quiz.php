@@ -21,18 +21,31 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	/** @var int */
 	private $questionCounter = 0;
+
 	private $msg_format = "";
+
 	private $msg_rightAnswer = "";
+
 	private $msg_correct = "";
+
 	private $msg_correctAnswer = "";
+
 	private $msg_reset = "";
+
 	private $msg_cancelQuestion = "";
+
 	private $msg_question = "";
+
 	private $msg_questionPre = "";
+
 	private $msg_points = "";
+
 	private $msg_answerMissing = "";
+
 	private $msg_questionMissing = "";
+
 	private $msg_pointAdd = "";
+
 	private $msg_pointRemove = "";
 
 	/**
@@ -43,7 +56,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	 */
 	public function exp_onInit()
 	{
-
+		
 	}
 
 	/**
@@ -135,10 +148,11 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		Gui\Windows\QuestionWindow::$mainPlugin = $this;
 		Gui\Windows\Playerlist::$mainPlugin = $this;
 		Gui\Windows\AddPoint::$mainPlugin = $this;
+		Gui\Widget\QuizImageWidget::EraseAll();
 
 		$data = $this->db->execute("SELECT * FROM `quiz_points` order by score desc;")->fetchArrayOfObject();
 		foreach ($data as $player) {
-			$this->players[$player->login] = new Structures\QuizPlayer($player->login, $player->nickName, (int)$player->score);
+			$this->players[$player->login] = new Structures\QuizPlayer($player->login, $player->nickName, (int) $player->score);
 		}
 	}
 
@@ -234,6 +248,10 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		}
 	}
 
+	/**
+	 * 
+	 * @return QuizPlayer[] 
+	 */
 	public function getPlayers()
 	{
 		return $this->players;
@@ -261,6 +279,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$this->questionCounter = 0;
 		$this->db->execute('TRUNCATE TABLE`quiz_points`;');
 		$this->exp_chatSendServerMessage($this->msg_reset);
+		Gui\Widget\QuizImageWidget::EraseAll();
 	}
 
 	function showAnswer($login)
@@ -283,6 +302,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	function chooseNextQuestion($login = null)
 	{
+		Gui\Widget\QuizImageWidget::EraseAll();
 		if ($this->questionDb == null)
 			return;
 
@@ -298,7 +318,8 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$this->currentQuestion = array_shift($this->questionDb);
 			$this->questionCounter++;
 			$this->showQuestion();
-		} else {
+		}
+		else {
 			$this->currentQuestion = null;
 			$this->questionDb = null;
 		}
@@ -313,14 +334,16 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			if (!isset($this->players[$target])) {
 				$this->players[$target] = new Structures\QuizPlayer($target, $this->storage->getPlayerObject($target)->nickName, 1);
 				$this->showPoints();
-			} else {
+			}
+			else {
 				$this->players[$target]->points++;
 				$this->showPoints();
 			}
 			$count = $this->db->execute("SELECT * FROM `quiz_points` where login = " . $this->db->quote($target) . " LIMIT 1;")->recordCount();
 			if ($count) {
 				$this->db->execute("UPDATE `quiz_points` SET `score` = " . $this->db->quote($this->players[$target]->points) . " where `login` = " . $this->db->quote($target) . ";");
-			} else {
+			}
+			else {
 				$this->db->execute("INSERT INTO `quiz_points` (login,nickName,score) values(" . $this->db->quote($target) . ", " . $this->db->quote($this->storage->getPlayerObject($target)->nickName) . ", " . $this->db->quote($this->players[$target]->points) . ");");
 			}
 		}
@@ -338,7 +361,8 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 				$count = $this->db->execute("SELECT * FROM `quiz_points` where login = " . $this->db->quote($target) . " LIMIT 1;")->recordCount();
 				if ($count) {
 					$this->db->execute("UPDATE `quiz_points` SET `score` = " . $this->db->quote($this->players[$target]->points) . " where `login` = " . $this->db->quote($target) . ";");
-				} else {
+				}
+				else {
 					$this->db->execute("INSERT INTO `quiz_points` (login,nickName,score) values(" . $this->db->quote($target) . ", " . $this->db->quote($this->storage->getPlayerObject($target)->nickName) . ", " . $this->db->quote($this->players[$target]->points) . ");");
 				}
 				$this->showPoints();
@@ -352,6 +376,11 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$question = $this->currentQuestion->question;
 		$this->exp_chatSendServerMessage($this->msg_questionPre, null, array($this->questionCounter, $nickName));
 		$this->exp_chatSendServerMessage($this->msg_question, null, array($question));
+		if ($this->currentQuestion->hasImage()) {
+			$widget = Gui\Widget\QuizImageWidget::Create(null);
+			$widget->setImage($this->currentQuestion->getImage());
+			$widget->show();
+		}
 	}
 
 	function ask($login, $text = "")
@@ -384,7 +413,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$window->setTitle(__("New question", $login));
 			$window->Show();
 		} catch (\Exception $e) {
-			Helper::log("[Quiz]Error when asking : ".$e->getMessage());
+			Helper::log("[Quiz]Error when asking : " . $e->getMessage());
 		}
 	}
 
@@ -392,10 +421,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		\ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->players, "points");
 		$window = Gui\Windows\Playerlist::Create($login);
-		$window->setData($this->players);
+		$window->setTitle("Point Holders");
 		$window->setSize(90, 60);
 		$window->centerOnScreen();
-		$window->setTitle("Point Holders");
 		$window->Show();
 	}
 
@@ -428,6 +456,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		AddPoint::EraseAll();
 		PlayerList::EraseAll();
 		QuestionWindow::EraseAll();
+		Gui\Widget\QuizImageWidget::EraseAll();
 	}
 
 }
