@@ -315,8 +315,9 @@ EOT;
 		$this->connection->dedicatedEcho("ManiaLive\\eXpansion", (string) getmypid());
 		$this->connection->setForcedMusic(false, "");
 		$this->connection->setRoundCustomPoints($this->config->roundsPoints);
-		// this is a fix for servers with a password, if player chooses to spectate, he can now enter back to play
-		$this->connection->keepPlayerSlots(true);
+		// this is a fix for servers with a password, if player chooses to spectate, he can now enter back to play,
+		// which is not needed anymore as of 09/2014
+		// $this->connection->keepPlayerSlots(true);
 	}
 
 	public function onSettingsChanged(types\config\Variable $var)
