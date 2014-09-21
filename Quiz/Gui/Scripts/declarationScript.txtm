@@ -1,1 +1,1 @@
-declare image <=> Page.GetFirstChild("image");
+declare image <=> Page.GetFirstChild("image");  

@@ -1,12 +1,13 @@
 foreach (Event in PendingEvents) {
     if (Event.Type == CMlEvent::Type::MouseOver ) {
         if(Event.ControlId == "image" ){
-            image.RelativeScale = 3.;	   
+            image.RelativeScale = 4.;	
+            image.RelativePosition.Z = 29.; 
         }
     }  	
     if (Event.Type == CMlEvent::Type::MouseOut ) {
         if(Event.ControlId == "image" ) {
-            image.RelativeScale = 1.;	   
+            image.RelativeScale = 1.;   
         }
     }
 }       

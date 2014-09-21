@@ -302,7 +302,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	function chooseNextQuestion($login = null)
 	{
-		Gui\Widget\QuizImageWidget::EraseAll();
+
 		if ($this->questionDb == null)
 			return;
 
@@ -322,6 +322,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		else {
 			$this->currentQuestion = null;
 			$this->questionDb = null;
+			Gui\Widget\QuizImageWidget::EraseAll();
 		}
 	}
 
