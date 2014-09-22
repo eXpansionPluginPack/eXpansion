@@ -33,14 +33,14 @@ class QuizImageWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 	{
 		$this->setName("Quiz Widget");
 
-		$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(38, 22);
+		$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(24, 22);
 		$this->addComponent($this->bg);
 
-		$this->title = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle(38, 4);
+		$this->title = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle(24, 4);
 		$this->title->setText(exp_getMessage("Question"));
 		$this->addComponent($this->title);
 
-		$this->quad = new \ManiaLib\Gui\Elements\Quad(32, 18);
+		$this->quad = new \ManiaLib\Gui\Elements\Quad(24, 16);
 		$this->quad->setId("image");
 		$this->quad->setScriptEvents();
 		$this->quad->setPosition(2, -4);
@@ -54,7 +54,7 @@ class QuizImageWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
 	protected function exp_onEndConstruct()
 	{
-		$this->setSize(22, 22);
+		$this->setSize(24, 24);
 		$this->setPosition(-152, 80);
 	}
 

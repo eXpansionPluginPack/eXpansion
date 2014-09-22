@@ -288,6 +288,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$this->exp_chatSendServerMessage($this->msg_cancelQuestion, null, array($this->storage->getPlayerObject($login)->nickName));
 			$this->currentQuestion = null;
 			$this->chooseNextQuestion();
+			Gui\Widget\QuizImageWidget::EraseAll();
 		}
 	}
 
@@ -318,6 +319,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$this->exp_chatSendServerMessage($this->msg_rightAnswer, null, array($answer));
 
 			$this->currentQuestion = null;
+			Gui\Widget\QuizImageWidget::EraseAll();
 			$this->chooseNextQuestion();
 		}
 	}
@@ -404,7 +406,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			else {
 				$widget = Gui\Widget\QuizImageWidget::Create(null);
 				$widget->setImage($this->currentQuestion->getImage());
-				$widget->setImageSize(32, 18);
+				$widget->setImageSize(20, 11.25);
 				$widget->show();
 			}
 		}
