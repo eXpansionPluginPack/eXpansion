@@ -48,6 +48,13 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	private $msg_pointRemove = "";
 
+	private $msg_errorImageType = "";
+
+	/** @var \ManiaLivePlugins\eXpansion\Core\DataAccess */
+	private $dataAccess = null;
+
+	public static $GDsupport = false;
+
 	/**
 	 * onInit()
 	 * Function called on initialisation of ManiaLive.
@@ -67,8 +74,22 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	 */
 	function exp_onLoad()
 	{
+		if (!extension_loaded("gd")) {
+			if (!(bool) ini_get("enable_dl") || (bool) ini_get("safe_mode")) {
+				$phpPath = get_cfg_var('cfg_file_path');
+				$this->dumpException("Autoloading extensions is not enabled in php.ini.\n\n`php_gd2` extension needs to be enabled for systems running this plugin.\n\nEdit following file $phpPath and set:\n\nenable_dl = On\n\nor add this line:\n\nextension=php_gd2.dll", new \Maniaplanet\WebServices\Exception("Loading extensions is not permitted."));
+				$this->exp_chatSendServerMessage("#quiz#Quiz started, php GD2-extension was not not loaded, see console log for more details.");
+			}
+			else {
+				dl("php_gd2");
+				self::$GDsupport = true;
+			}
+		}
+
 		$this->enableDedicatedEvents();
 		$this->enableDatabase();
+
+		$this->dataAccess = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
 
 		$this->db->execute("CREATE TABLE IF NOT EXISTS `quiz_questions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -134,6 +155,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$this->msg_points = exp_getMessage("#quiz#Current point holders:");
 		$this->msg_pointAdd = exp_getMessage('#quiz#$oPoint added for #variable#%s');
 		$this->msg_pointRemove = exp_getMessage('#quiz#$oPoint removed from #variable#%s');
+		$this->msg_errorImageType = exp_getMessage('#quiz#$Displaying image not possible, due unsupported media type was detected.');
 	}
 
 	function exp_onReady()
@@ -375,12 +397,55 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		$nickName = $this->currentQuestion->asker->nickName;
 		$question = $this->currentQuestion->question;
+		if ($this->currentQuestion->hasImage()) {
+			if (self::$GDsupport) {
+				$this->dataAccess->httpGet($this->currentQuestion->getImage(), array($this, "xGetImage"));
+			}
+			else {
+				$widget = Gui\Widget\QuizImageWidget::Create(null);
+				$widget->setImage($this->currentQuestion->getImage());
+				$widget->setImageSize(32, 18);
+				$widget->show();
+			}
+		}
 		$this->exp_chatSendServerMessage($this->msg_questionPre, null, array($this->questionCounter, $nickName));
 		$this->exp_chatSendServerMessage($this->msg_question, null, array($question));
-		if ($this->currentQuestion->hasImage()) {
+	}
+
+	function xGetImage($data, $httpCode)
+	{
+		if ($httpCode != 200)
+			return;
+
+		$maxWidth = 20;
+		$maxHeight = 20;
+
+		$meta = array();
+		list($width, $height, $type, $attr) = @getimagesizefromstring($data, $meta);
+
+		if (($type == IMAGETYPE_JPEG) || ($type == IMAGETYPE_PNG)) {
+			$xRatio = $maxWidth / $width;
+			$yRatio = $maxHeight / $height;
+
+			$newHeight = 20;
+			$newWidth = 20;
+
+			if (($xRatio * $height) < $maxHeight) {
+				$newHeight = ceil($xRatio * $height);
+				$newWidth = $maxWidth;
+			}
+			else {
+				$newWidth = ceil($yRatio * $width);
+				$newHeight = $maxHeight;
+			}
+
 			$widget = Gui\Widget\QuizImageWidget::Create(null);
 			$widget->setImage($this->currentQuestion->getImage());
+			$widget->setImageSize($newWidth, $newHeight);
 			$widget->show();
+		}
+		else {
+			$this->exp_chatSendServerMessage($msg_errorImageType);
 		}
 	}
 
