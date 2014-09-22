@@ -327,9 +327,11 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	function chooseNextQuestion($login = null)
 	{
 
-		if ($this->questionDb == null)
+		if ($this->questionDb == null) {
+			Gui\Widget\QuizImageWidget::EraseAll();
 			return;
-
+		}
+		
 		if (isset($this->currentQuestion->question)) {
 			//Show info to asker that there is already question active and the new question was added to the queue
 			if ($login != null) {

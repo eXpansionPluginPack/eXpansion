@@ -284,26 +284,27 @@ class Adm extends ExpPlugin
 			$nick = $this->storage->getPlayerObject($login)->nickName;
 			$config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
 			$config->roundsPoints = $points;
-			
+
 			\ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance()->registerValueChange(\ManiaLivePlugins\eXpansion\Core\MetaData::getInstance()->getVariable('roundsPoints'));
 			\ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance()->check();
 
-			$ipoints = implode(",", $points);
+
 			$msg = exp_getMessage('#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s');
 			$this->exp_chatSendServerMessage($msg, null, array($nick, $ipoints));
 
-			if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT){
+			if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
+				$ipoints = implode(",", $points);
+				$this->connection->triggerModeScriptEventArray('Rounds_SetPointsRepartition', $ipoints);
+			}
+			else {
 				$cpoints = array();
-				foreach($points as $p){
-					$cpoints[] = $p."";
+				foreach ($points as $p) {
+					$cpoints[] = intval($p);
 				}
-				$this->connection->triggerModeScriptEventArray('Rounds_SetPointsRepartition',$cpoints);
-			}else{
 				$this->connection->setRoundCustomPoints($ipoints);
 			}
-
 		} catch (Exception $e) {
-			$this->connection->chatSendServerMessage(__('#error#Error: %s', $login, $e->getMessage()), $login);
+			$this->connection->chatSendServerMessage(__('#admin_error#Error: %s', $login, $e->getMessage()), $login);
 		}
 	}
 
