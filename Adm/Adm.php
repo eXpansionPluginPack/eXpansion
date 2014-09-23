@@ -301,7 +301,7 @@ class Adm extends ExpPlugin
 				foreach ($points as $p) {
 					$cpoints[] = intval($p);
 				}
-				$this->connection->setRoundCustomPoints($ipoints);
+				$this->connection->setRoundCustomPoints($cpoints);
 			}
 		} catch (Exception $e) {
 			$this->connection->chatSendServerMessage(__('#admin_error#Error: %s', $login, $e->getMessage()), $login);

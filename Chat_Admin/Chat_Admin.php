@@ -23,6 +23,7 @@ use ManiaLivePlugins\eXpansion\Chat_Admin\Structures\ActionDuration;
 use ManiaLivePlugins\eXpansion\Core\Config;
 use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\Helpers\Storage;
 use ManiaLivePlugins\eXpansion\Helpers\TimeConversion;
@@ -1079,9 +1080,10 @@ Other server might use the same blacklist file!!');
 	{
 		$admin = $this->storage->getPlayerObject($fromLogin);
 		try {
-			if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT){
+			if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
 				$this->connection->triggerModeScriptEvent('Rounds_ForceEndRound');
-			}else{
+			}
+			else {
 				$this->connection->forceEndRound();
 			}
 
@@ -1573,6 +1575,7 @@ Other server might use the same blacklist file!!');
 	function skipMap($fromLogin, $params)
 	{
 		try {
+			\ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_SKIP));
 			$this->connection->nextMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
 			$admin = $this->storage->getPlayerObject($fromLogin);
 			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#skips the challenge!', null, array($admin->nickName));
@@ -1587,9 +1590,11 @@ Other server might use the same blacklist file!!');
 			$admin = $this->storage->getPlayerObject($fromLogin);
 			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
 			if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Maps\Maps')) {
+				\ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_RESTART));
 				$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Maps\Maps', "replayMapInstant");
 				return;
 			}
+			\ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_RESTART));
 			$this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
 		} catch (Exception $e) {
 			$this->sendErrorChat($fromLogin, $e->getMessage());

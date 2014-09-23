@@ -138,12 +138,6 @@ class Maps extends ExpPlugin
 		$this->registerChatCommand('jb', "jukebox", 1, true);
 
 
-		if ($this->isPluginLoaded('eXpansion\Menu')) {
-			$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Maps'), false);
-			$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('List maps'), null, array($this, 'showMapList'), false);
-			$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Jukebox'), null, array($this, 'showJukeList'), false);
-			$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Add map'), null, array($this, 'addMaps'), true);
-		}
 
 		$this->nextMap = $this->storage->nextMap;
 
