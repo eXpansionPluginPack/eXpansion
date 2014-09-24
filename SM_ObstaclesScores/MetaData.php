@@ -37,10 +37,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData {
 
 	protected function initName()
 	{
-		echo "\nYEAH\n";
-
 		$this->setName('Obstacles records');
-
 		$this->setDescription('Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. Higher scores are better.');
 	}
 

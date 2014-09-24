@@ -69,7 +69,7 @@ class KnockOut extends ExpPlugin
 		$adminGroups = AdminGroups::getInstance();
 
 		$this->adm_ko = AdminGroups::addAdminCommand('ko', $this, 'chatCommands', Permission::game_settings);
-		$this->adm_ko->setHelp('/ko start, stop');
+		$this->adm_ko->setHelp('/ko start, stop, res, skip');
 		$adminGroups->addShortAlias($this->adm_ko, 'ko');
 
 		$this->colorParser->registerCode("ko", Config::getInstance(), "koColor");
@@ -158,7 +158,6 @@ class KnockOut extends ExpPlugin
 		$this->isRunning = false;
 		$this->exp_chatSendServerMessage($this->msg_koStop, null);
 
-
 // release spectators to play
 		foreach ($this->storage->spectators as $player) {
 			$this->connection->forceSpectator($player->login, 2);
@@ -236,7 +235,7 @@ class KnockOut extends ExpPlugin
 		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TIMEATTACK) {
 			$prop = "bestTime";
 		}
-		
+
 		print_r($ranking);
 
 		foreach ($ranking as $player) {

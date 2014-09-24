@@ -331,7 +331,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			Gui\Widget\QuizImageWidget::EraseAll();
 			return;
 		}
-		
+
 		if (isset($this->currentQuestion->question)) {
 			//Show info to asker that there is already question active and the new question was added to the queue
 			if ($login != null) {
@@ -355,15 +355,18 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	function addPoint($login = null, $target)
 	{
 		if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
-			if ($login !== null) {
-				$this->exp_chatSendServerMessage($this->msg_pointAdd, null, array($this->storage->getPlayerObject($target)->nickName));
-			}
 			if (!isset($this->players[$target])) {
 				$this->players[$target] = new Structures\QuizPlayer($target, $this->storage->getPlayerObject($target)->nickName, 1);
+				if ($login !== null) {
+					$this->exp_chatSendServerMessage($this->msg_pointAdd, null, array($this->players[$target]->nickName));
+				}
 				$this->showPoints();
 			}
 			else {
 				$this->players[$target]->points++;
+				if ($login !== null) {
+					$this->exp_chatSendServerMessage($this->msg_pointAdd, null, array($this->players[$target]->nickName));
+				}
 				$this->showPoints();
 			}
 			$count = $this->db->execute("SELECT * FROM `quiz_points` where login = " . $this->db->quote($target) . " LIMIT 1;")->recordCount();
@@ -380,10 +383,10 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 
 		if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
-			if ($login !== null) {
-				$this->exp_chatSendServerMessage($this->msg_pointRemove, null, array($this->storage->getPlayerObject($target)->nickName));
-			}
 			if (isset($this->players[$target])) {
+				if ($login !== null) {
+					$this->exp_chatSendServerMessage($this->msg_pointRemove, null, array($this->players[$target]->nickName));
+				}
 				$this->players[$target]->points--;
 				$count = $this->db->execute("SELECT * FROM `quiz_points` where login = " . $this->db->quote($target) . " LIMIT 1;")->recordCount();
 				if ($count) {
