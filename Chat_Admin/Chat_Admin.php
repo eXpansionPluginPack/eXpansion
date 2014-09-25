@@ -65,6 +65,7 @@ class Chat_Admin extends ExpPlugin
 		$this->setPublicMethod("showBlackList");
 		$this->setPublicMethod("showIgnoreList");
 		$this->setPublicMethod("forceEndRound");
+		$this->setPublicMethod("shuffleMaps");
 	}
 
 	public function exp_onLoad()
@@ -511,6 +512,12 @@ Other server might use the same blacklist file!!');
 		$cmd->setMinParam(1);
 		$cmd->addchecker(1, Time_ms::getInstance());
 		AdminGroups::addAlias($cmd, "setFinishTimeout");
+
+		$cmd = AdminGroups::addAdminCommand('maps shuffle', $this, 'shuffleMaps', Permission::game_settings);
+		$cmd->setHelp('Shuffles the mapslist');
+		$cmd->setMinParam(0);
+		AdminGroups::addAlias($cmd, "shuffle");
+
 		$this->enableDatabase();
 		$this->enableTickerEvent();
 	}
@@ -805,6 +812,26 @@ Other server might use the same blacklist file!!');
 	public function invokeNetStats($fromLogin, $params = null)
 	{
 		$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Core\Core', "showNetStats", $fromLogin);
+	}
+
+	public function shuffleMaps($login, $params = null)
+	{
+		$mapsArray = array();
+		foreach ($this->storage->maps as $map) {
+			$mapsArray[] = $map->fileName;
+		}
+		try {
+			$this->connection->removeMapList($mapsArray);
+			shuffle($mapsArray);
+			$this->connection->addMapList($mapsArray);
+			$msg = exp_getMessage('#admin_action#Admin #variable#%1$s $z$s#admin_action#shuffles the maps list!');
+			$nick = $this->storage->getPlayerObject($login)->nickName;
+
+			$this->exp_chatSendServerMessage($msg, null, array($nick));
+		} catch (\Exception $e) {
+			$this->exp_chatSendServerMessage("#admin_error#there was error while shuffling the maps", $login);
+			$this->console("Error while shuffling maps: " . $e->getMessage);
+		}
 	}
 
 	public function setTeamBalance($fromLogin, $params)
