@@ -25,7 +25,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	 */
 	private $pager;
 	private $items = array();
-	private $button_sectors;
+	private $button_sectors, $button_cps;
 
 	protected function onConstruct()
 	{
@@ -73,6 +73,12 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->button_sectors->setText("Sector Times");
 		$this->button_sectors->setAction(LocalRecords::$openSectorsAction);
 		$this->mainFrame->addComponent($this->button_sectors);
+		
+		$this->button_cps = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(30, 5);
+		$this->button_cps->setText("Cp Times");
+		$this->button_cps->setAction(LocalRecords::$openCpsAction);
+		$this->mainFrame->addComponent($this->button_cps);
+		
 	}
 
 	public function onResize($oldX, $oldY)
@@ -91,6 +97,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			$item->setSizeX($this->getSizeX());
 
 		$this->button_sectors->setPosition($this->getSizeX() - 27, -$this->getSizeY() + 6);
+		$this->button_cps->setPosition($this->getSizeX() - 53, -$this->getSizeY() + 6);
 	}
 
 	public function onShow()

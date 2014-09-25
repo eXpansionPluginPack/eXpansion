@@ -55,6 +55,9 @@ class Menu extends ExpPlugin
 		$this->actions['admreplay'] = $actionHandler->createAction(array($this, "actions"), "admreplay");
 		$this->actions['serverranks'] = $actionHandler->createAction(array($this, "actions"), "serverranks");
 		$this->actions['teambalance'] = $actionHandler->createAction(array($this, "actions"), "teambalance");
+		$this->actions['localcps'] = $actionHandler->createAction(array($this, "actions"), "localcps");
+		$this->actions['dedicps'] = $actionHandler->createAction(array($this, "actions"), "dedicps");
+		$this->actions['dedirecs'] = $actionHandler->createAction(array($this, "actions"), "dedirecs");
 
 		foreach ($this->storage->players as $login => $player) {
 			$this->onPlayerConnect($login, null);
@@ -96,7 +99,8 @@ class Menu extends ExpPlugin
 					$plugin = $this->getPluginName("Votes");
 					if ($this->isPluginLoaded($plugin)) {
 						$this->callPublicMethod($plugin, "vote_restart", $login);
-					} else {
+					}
+					else {
 						$this->connection->callVoteRestartMap();
 					}
 					break;
@@ -104,7 +108,8 @@ class Menu extends ExpPlugin
 					$plugin = $this->getPluginName("Votes");
 					if ($this->isPluginLoaded($plugin)) {
 						$this->callPublicMethod($plugin, "vote_skip", $login);
-					} else {
+					}
+					else {
 						$this->connection->callVoteNextMap();
 					}
 					break;
@@ -165,6 +170,29 @@ class Menu extends ExpPlugin
 				case "teambalance":
 					$adminGrp->adminCmd($login, "setTeamBalance");
 					break;
+				case "localcps":
+					$this->callPublicMethod($this->getPluginName("LocalRecords"), "showCpWindow", $login);
+					break;
+				case "dedicps":
+					$plugin = $this->getPluginName("Dedimania");
+					if ($this->isPluginLoaded($plugin)) {
+						$this->callPublicMethod($plugin, "showCps", $login);
+					}
+					$plugin = $this->getPluginName("Dedimania_Script");
+					if ($this->isPluginLoaded($plugin)) {
+						$this->callPublicMethod($plugin, "showCps", $login);
+					}
+					break;
+				case "dedirecs":
+					$plugin = $this->getPluginName("Dedimania");
+					if ($this->isPluginLoaded($plugin)) {
+						$this->callPublicMethod($plugin, "showRecs", $login);
+					}
+					$plugin = $this->getPluginName("Dedimania_Script");
+					if ($this->isPluginLoaded($plugin)) {
+						$this->callPublicMethod($plugin, "showRecs", $login);
+					}
+					break;
 			}
 		} catch (Exception $e) {
 			Logger::error("Error in Menu while running action : " . $action);
@@ -195,8 +223,17 @@ class Menu extends ExpPlugin
 
 		if ($this->exp_isPluginLoaded("Maps"))
 			$submenu->addItem($menu, __("Show Maplist", $login), $this->actions['maplist']);
-		if ($this->exp_isPluginLoaded("LocalRecords"))
-			$submenu->addItem($menu, __("Show Records", $login), $this->actions['maprecords']);
+		if ($this->exp_isPluginLoaded("LocalRecords") || $this->exp_isPluginLoaded("Dedimania") || $this->exp_isPluginLoaded("Dedimania_Script")) {
+			$records = $submenu->addSubMenu($menu, __("Records", $login));
+
+			if ($this->exp_isPluginLoaded("LocalRecords")) {
+				$submenu->addItem($records, __("Local Records", $login), $this->actions['maprecords']);
+			}
+			if ($this->exp_isPluginLoaded("Dedimania") || $this->exp_isPluginLoaded("Dedimania_Script")) {
+				$submenu->addItem($records, __("Dedimania Records", $login), $this->actions['dedirecs']);
+			}
+		}
+
 		if ($this->exp_isPluginLoaded("Players"))
 			$submenu->addItem($menu, __("Show Players", $login), $this->actions['playerlist']);
 
@@ -226,7 +263,7 @@ class Menu extends ExpPlugin
 		$hud = $submenu->addSubMenu($menu, __("Hud", $login));
 		$submenu->addItem($hud, __("Move Positions", $login), $this->actions['hudMove']);
 		$submenu->addItem($hud, __("Lock Positions", $login), $this->actions['hudLock']);
-		$submenu->addItem($hud, __("Show/Hide elements...", $login), $this->actions['hudConfig']);
+		$submenu->addItem($hud, __("Show/Hide widgets...", $login), $this->actions['hudConfig']);
 		$submenu->addItem($hud, __("Reset Positions", $login), $this->actions['hudReset']);
 
 		$votes = $submenu->addSubMenu($menu, __("Votes", $login));

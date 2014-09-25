@@ -34,7 +34,7 @@ class PlainPanel extends Widget
 	/**
 	 * @var Quad
 	 */
-	protected $bgborder, $bg, $bgTitle, $bgFirst;
+	public $bgborder, $bg, $bgTitle, $bgFirst;
 
 	/**
 	 * @var Button
@@ -64,6 +64,7 @@ class PlainPanel extends Widget
 		$this->addComponent($this->_windowFrame);
 
 		$this->bg = new WidgetBackGround($sizeX, $sizeY);
+		$this->bg->setAction(\ManiaLivePlugins\eXpansion\LocalRecords\LocalBase::$openRecordsAction);
 		$this->_windowFrame->addComponent($this->bg);
 
 		$this->bgTitle = new WidgetTitle($sizeX, $sizeY + 2);

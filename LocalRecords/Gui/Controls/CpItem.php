@@ -8,75 +8,91 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 /**
- * Description of RecItem
+ * Description of CpItem
  *
- * @author oliverde8
+ * @author reaby
  */
-class CpItem extends \ManiaLive\Gui\Control {
+class CpItem extends \ManiaLive\Gui\Control
+{
 
-    private $label_rank, $label_nick, $label_cp;
-    private $bg;
-    private $widths;
+	protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish, $label_login;
 
-    function __construct($indexNumber, $login, $rank, $widths, LocalBase $localBase) {
-        $this->widths = $widths;
-        $this->sizeY = 4;
-        $this->bg = new ListBackGround($indexNumber, 100, 4);
-        $this->addComponent($this->bg);
+	protected $bg;
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
-        $this->frame->setSize(100, 4);
-        $this->frame->setPosY(0);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        $this->addComponent($this->frame);
+	private $widths;
 
-        $this->label_rank = new \ManiaLib\Gui\Elements\Label(10, 4);
-        $this->label_rank->setAlign('left', 'center');
-        $this->label_rank->setScale(0.8);
-        $this->label_rank->setText(($indexNumber + 1) . ".");
-        $this->frame->addComponent($this->label_rank);
+	function __construct($indexNumber, $login, Record $record, $widths, $offset = 0)
+	{
+		$this->widths = $widths;
+		$this->sizeY = 6;
+		$this->bg = new ListBackGround($indexNumber, 100, 6);
+		$this->addComponent($this->bg);
 
-        $this->label_nick = new \ManiaLib\Gui\Elements\Label(10., 4);
-        $this->label_nick->setAlign('left', 'center');
-        $this->label_nick->setScale(0.8);
-        $this->label_nick->setText($rank->nickName);
-        $this->frame->addComponent($this->label_nick);
+		$this->frame = new \ManiaLive\Gui\Controls\Frame();
+		$this->frame->setSize(160, 6);
+		$this->frame->setPosY(0);
+		$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+		$this->addComponent($this->frame);
 
-        $this->label_cp = new \ManiaLib\Gui\Elements\Label(10, 4);
-        $this->label_cp->setAlign('left', 'center');
-        $this->label_cp->setScale(0.8);
-        
-        $text = "";
-        $i = 1;
-        foreach($rank->ScoreCheckpoints as $cpTime){
-            $text .= "\$6C6CP#$i \$z".$localBase->formatScore($cpTime)." | ";
-            $i++;
-        }
-        
-        $this->label_cp->setText($text);
-        $this->frame->addComponent($this->label_cp);
-    }
+		$this->label_rank = new \ManiaLib\Gui\Elements\Label(10, 4);
+		$this->label_rank->setAlign('left', 'center');
 
-    public function onResize($oldX, $oldY) {
-        $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / .8) - 5);
-        $this->bg->setSizeX($this->getSizeX() - 5);
-        $this->label_rank->setSizeX($scaledSizes[0]);
-        $this->label_nick->setSizeX($scaledSizes[1]);
-        $this->label_cp->setSizeX($scaledSizes[2]);
-    }
+		/** @var \ManiaLivePlugins\eXpansion\Core\ColorParser $color */
+		$color = \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance();
 
-    // manialive 3.1 override to do nothing.
-    function destroy() {
-        
-    }
+		$this->label_rank->setTextColor('');
+		$this->label_rank->setText($color->parseColors("#rank#") . ($indexNumber + 1));
+		$this->frame->addComponent($this->label_rank);
 
-    /*
-     * custom function to remove contents.
-     */
+		$this->label_nick = new \ManiaLib\Gui\Elements\Label(10, 4);
+		$this->label_nick->setAlign('left', 'center');
+		$this->label_nick->setText($record->nickName);
+		$this->frame->addComponent($this->label_nick);
 
-    function erase() {
-        parent::destroy();
-    }
+		$frameCP = new \ManiaLive\Gui\Controls\Frame();
+		$frameCP->setLayout(new \ManiaLib\Gui\Layouts\Line());
+
+		$cpArray = $record->ScoreCheckpoints;
+		$idx = 0;
+		$addLast = false;
+		for ($x = $offset; $x <= $offset + 6; $x++) {
+			if ($x > count($cpArray))
+				break;
+
+			if (array_key_exists($x, $cpArray)) {
+				$label = new \ManiaLib\Gui\Elements\Label(15, 6);
+				$label->setText(\ManiaLive\Utilities\Time::fromTM($cpArray[$x]));
+				$label->setAlign("left", "center");
+				$frameCP->addComponent($label);
+			}
+			$idx++;
+		}
+
+		$this->frame->addComponent($frameCP);
+	}
+
+	public function onResize($oldX, $oldY)
+	{
+		$scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / .8) - 5);
+		$this->bg->setSizeX($this->getSizeX() - 5);
+		$this->label_rank->setSizeX($scaledSizes[0]);
+		$this->label_nick->setSizeX($scaledSizes[1]);
+	}
+
+	// manialive 3.1 override to do nothing.
+	function destroy()
+	{
+		
+	}
+
+	/*
+	 * custom function to remove contents.
+	 */
+
+	function erase()
+	{
+		parent::destroy();
+	}
 
 }
 

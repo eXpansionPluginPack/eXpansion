@@ -15,7 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Menu");
 		$this->setDescription("Provides right click menu for the server");
-
+		
 	}
 
 }
