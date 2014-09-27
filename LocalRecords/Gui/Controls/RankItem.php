@@ -79,7 +79,7 @@ class RankItem extends \ManiaLive\Gui\Control {
 
     public function onResize($oldX, $oldY) {
         $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / .8) - 5);
-        $this->bg->setSizeX($this->getSizeX() - 5);
+        $this->bg->setSizeX($this->getSizeX()/$this->getScale() - 2);
         $this->label_rank->setSizeX($scaledSizes[0]);
         $this->label_nick->setSizeX($scaledSizes[1]);
         $this->label_wins->setSizeX($scaledSizes[2]);

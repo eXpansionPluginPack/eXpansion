@@ -29,15 +29,16 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 		$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
 		$this->pager->setPosX(0);
-		$this->pager->setPosY(-4);
+		$this->pager->setPosY(2);
 		$this->mainFrame->addComponent($this->pager);
 
-		$this->headerbar = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround($sizeX, 4.5);
-		$this->mainFrame->addComponent($this->headerbar);
+		//$this->headerbar = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround($sizeX, 4.5);
+		//$this->mainFrame->addComponent($this->headerbar);
 
 		$this->frame = new \ManiaLive\Gui\Controls\Frame();
 		$this->frame->setSize($sizeX, 4);
-		$this->frame->setPosY(0);
+		$this->frame->setPosY(3);
+		$this->frame->setPosX(-2);
 		$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 		$this->mainFrame->addComponent($this->frame);
 
@@ -86,8 +87,8 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	{
 		parent::onResize($oldX, $oldY);
 		$scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / 0.8) - 8);
-		$this->headerbar->setSize($this->getSizeX() - 10, 4.5);
-		$this->headerbar->setPosX(1);
+		//$this->headerbar->setSize($this->getSizeX() - 10, 4.5);
+		//$this->headerbar->setPosX(1);
 
 		$this->label_rank->setSizeX($scaledSizes[0]);
 		$this->label_nick->setSizeX($scaledSizes[1]);
@@ -97,9 +98,9 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->label_nbRecords->setSizeX($scaledSizes[5]);
 		$this->label_ptime->setSizeX($scaledSizes[6]);
 		$this->label_lastRec->setSizeX($scaledSizes[7]);
-		$this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 12);
+		$this->pager->setSize($this->getSizeX()+4, $this->getSizeY() - 8);
 		foreach ($this->items as $item)
-			$item->setSizeX($this->getSizeX() - 4);
+			$item->setSizeX($this->getSizeX());
 	}
 
 	public function onDraw()
@@ -134,6 +135,7 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 		while ($x < $limit && $x < sizeof($ranks)) {
 			$this->items[$x] = new RankItem($x, $login, $ranks[$x], $this->widths);
+			$this->items[$x]->setScale(0.8);
 			$this->pager->addItem($this->items[$x]);
 			$x++;
 		}
