@@ -1,5 +1,5 @@
 
-eXp_tabPressed = false;
+eXp_tabPressed = False;
 foreach (Event in PendingEvents) {
     if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 123)  {
         eXp_tabPressed = True;
