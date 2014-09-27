@@ -18,7 +18,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	private $frame;
 	private $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
-	private $widths = array(1, 5, 3, 3, 2);
+	private $widths = array(1, 5, 3, 3, 2, 4);
 
 	/**
 	 * @var \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager
@@ -26,6 +26,13 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	private $pager;
 	private $items = array();
 	private $button_sectors, $button_cps;
+
+	private $recList;
+	private $limit;
+	private $currentMap;
+
+	/** @var  LocalBase */
+	private $localBase;
 
 	protected function onConstruct()
 	{
@@ -122,22 +129,31 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	public function populateList($recs, $limit, $currentMap, LocalBase $localBase)
 	{
+		$this->recList = $recs;
+		$this->limit = $limit;
+		$this->currentMap = $currentMap;
+		$this->localBase = $localBase;
+
+		$this->pager->clearItems();
 		$this->button_sectors->setVisibility($currentMap);
 		$login = $this->getRecipient();
 		$x = 0;
 
 		RecItem::$widths = $this->widths;
 
+
 		while ($x < $limit && $x < sizeof($recs)) {
             /** @var Record $record */
 			$record = $recs[$x];
+
 			$rank = $x + 1;
+
 			$this->pager->addSimpleItems(array($rank => -1,
 				Gui::fixString($record->nickName) => -1,
 				$localBase->formatScore($record->time) . " " => -1,
 				$localBase->formatScore($record->avgScore) . "" => -1,
 				"#" . $record->nbFinish => -1,
-                ($record->isDelete ? 'Cancel Delete' : 'Delete') => $this->createAction(array($this, 'toogleDelete'), $record)
+                ($record->isDelete ? '$w$F00Cancel Delete' : '$F00$wDelete') => $this->createAction(array($this, 'toogleDelete'), $record)
 			));
 			$x++;
 		}
@@ -149,6 +165,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function toogleDelete($login, $record){
         $record->isDelete = !$record->isDelete;
 
+		$this->populateList($this->recList, $this->limit, $this->currentMap, $this->localBase);
         $this->redraw($login);
     }
 

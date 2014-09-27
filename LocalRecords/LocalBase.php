@@ -768,6 +768,9 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	 */
 	protected function updateRecordInDatabase(Record $record, $nbLaps)
 	{
+
+		print_r($record);
+
 		//$uid = $this->storage->currentMap->uId;
 		$uid = $record->uId;
 		$changed = false;
@@ -815,15 +818,26 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		return $changed;
 	}
 
+	/**
+	 * @param Record $record Record to delete
+	 * @param int    $nbLaps
+	 *
+	 * @return bool
+	 */
 	protected function deleteRecordInDatabase(Record $record, $nbLaps)
 	{
-		$q = 'DELETE FROM `exp_records`
-			WHERE record_challengeuid = ' . $this->db->quote($record->uId) . '
-				AND record_playerlogin =' . $this->db->quote($record->login) . '
-				AND record_nbLaps = ' . $this->db->quote($nbLaps) . '
-				AND score_type' . $this->db->quote($this->getScoreType());
+		try{
+			$q = 'DELETE FROM `exp_records`
+				WHERE record_challengeuid = ' . $this->db->quote($record->uId) . '
+					AND record_playerlogin =' . $this->db->quote($record->login) . '
+					AND record_nbLaps = ' . $this->db->quote($nbLaps) . '
+					AND score_type = ' . $this->db->quote($this->getScoreType());
 
-		$this->db->execute($q);
+			$this->db->execute($q);
+		} catch (\Exception $ex){
+			return false;
+		}
+		return true;
 	}
 
 	public function deleteRecordOfPlayerOnMap($adminLogin, $login)
@@ -879,12 +893,11 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	}
 
 	/**
-	 * buildCurrentChallangeRecords().
 	 * It will get the list of records of this map from the database
 	 *
 	 * @param mixed $gamemode
 	 *
-	 * @return
+	 * @return Record[]
 	 */
 	protected function buildCurrentChallangeRecords($gamemode = null)
 	{
@@ -947,7 +960,6 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	}
 
 	/**
-	 * deleteRecord()
 	 * deletes a record from database for map.
 	 *
 	 * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
@@ -961,7 +973,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		$q = "DELETE FROM `exp_records` WHERE `exp_records`.`record_challengeuid` = " . $this->db->quote(
 						$challenge->uId
 				) . " and " .
-				"`exp_records`.`record_playerlogin` = " . $this->db->quote($recordLogin) . ";";
+				"`exp_records`.`record_playerlogin` = " . $this->db->quote($login) . ";";
 		try {
 			$this->db->execute($q);
 

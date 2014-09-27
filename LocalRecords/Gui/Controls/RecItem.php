@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
@@ -14,7 +16,10 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
 class RecItem extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\OptimizedPagerElement
 {
 
+	/** @var \ManiaLib\Gui\Elements\Label  */
 	private $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
+
+	private $button_delete;
 
 	private $bg;
 
@@ -57,6 +62,15 @@ class RecItem extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpans
 		$this->label_nbFinish->setId('column_' . $indexNumber . '_4');
 		$this->frame->addComponent($this->label_nbFinish);
 
+		$this->button_delete = new Label(15, 6);
+		$this->button_delete->setId('column_' . $indexNumber . '_5');
+		$this->button_delete->setAlign('left', 'center');
+		$this->button_delete->setAttribute('class', "eXpOptimizedPagerAction");
+		$this->button_delete->setAction($action);
+		$this->button_delete->setScriptEvents(true);
+		$this->button_delete->setTextColor("F22");
+		$this->frame->addComponent($this->button_delete);
+
 		$this->setSizeX(120);
 	}
 
@@ -88,7 +102,7 @@ class RecItem extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpans
 
 	public function getNbTextColumns()
 	{
-		return 5;
+		return 6;
 	}
 
 }
