@@ -3,6 +3,8 @@
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Label;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
@@ -62,14 +64,16 @@ class RecItem extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpans
 		$this->label_nbFinish->setId('column_' . $indexNumber . '_4');
 		$this->frame->addComponent($this->label_nbFinish);
 
-		$this->button_delete = new Label(15, 6);
-		$this->button_delete->setId('column_' . $indexNumber . '_5');
-		$this->button_delete->setAlign('left', 'center');
-		$this->button_delete->setAttribute('class', "eXpOptimizedPagerAction");
-		$this->button_delete->setAction($action);
-		$this->button_delete->setScriptEvents(true);
-		$this->button_delete->setTextColor("F22");
-		$this->frame->addComponent($this->button_delete);
+		if(AdminGroups::hasPermission($login, Permission::localRecrods_delete)){
+			$this->button_delete = new Label(15, 6);
+			$this->button_delete->setId('column_' . $indexNumber . '_5');
+			$this->button_delete->setAlign('left', 'center');
+			$this->button_delete->setAttribute('class', "eXpOptimizedPagerAction");
+			$this->button_delete->setAction($action);
+			$this->button_delete->setScriptEvents(true);
+			$this->button_delete->setTextColor("F22");
+			$this->frame->addComponent($this->button_delete);
+		}
 
 		$this->setSizeX(120);
 	}
@@ -83,6 +87,9 @@ class RecItem extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpans
 		$this->label_score->setSizeX($scaledSizes[2]);
 		$this->label_avgScore->setSizeX($scaledSizes[3]);
 		$this->label_nbFinish->setSizeX($scaledSizes[4]);
+		if($this->button_delete != null){
+			$this->button_delete->setSizeX($scaledSizes[5]);
+		}
 	}
 
 	// manialive 3.1 override to do nothing.
