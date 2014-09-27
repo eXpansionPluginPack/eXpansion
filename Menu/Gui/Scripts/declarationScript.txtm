@@ -16,11 +16,11 @@ declare Boolean forceReset = <?php echo $this->forceReset ?>;
 declare Integer menuCount = <?php echo $this->count ?>;
 declare Boolean eXp_mouseRightState = False;
 declare eXp_mouseRightTime = 0;
+declare eXp_tabPressed = False;
 
 declare Boolean eXp_mouseMiddleState = False;
 declare eXp_mouseMiddleTime = 0;
 
-declare Boolean tabKey = False;
 declare hideStamp = 0;
 
 declare Boolean exp_enableHudMove for UI = False;     

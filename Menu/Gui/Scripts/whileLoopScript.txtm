@@ -1,24 +1,35 @@
-if(MouseRightButton && !eXp_mouseRightState) {        
-	eXp_mouseRightTime = Now;
-	eXp_mouseRightState = True;    
+
+foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 123)  {
+        eXp_tabPressed = True;
+    }
+}
+
+if(eXp_tabPressed){
+    if(showStatus){
+        needUpdate = True;
+        showStatus = False;
+    }
+}else{
+    if(MouseRightButton && !eXp_mouseRightState) {
+        eXp_mouseRightTime = Now;
+        eXp_mouseRightState = True;
         toggleSubmenu = False;
-} else if(!MouseRightButton && eXp_mouseRightState) {
-        eXp_mouseRightState = False;    
+    } else if(!MouseRightButton && eXp_mouseRightState) {
+        eXp_mouseRightState = False;
         toggleSubmenu = False;
-	if((Now - eXp_mouseRightTime) < 150) {
-	    toggleSubmenu = True;
+        if((Now - eXp_mouseRightTime) < 500) {
+            toggleSubmenu = True;
             showStatus = True;
-            needUpdate = True;    
-	    Menu.RelativePosition.X = MouseX-1.0;
-	    Menu.RelativePosition.Y = MouseY+.5;  
-	    Menu.RelativePosition.Z = 50.0;
-	} else {
-          needUpdate = True;
-          showStatus = False;
+            needUpdate = True;
+            Menu.RelativePosition.X = MouseX-1.0;
+            Menu.RelativePosition.Y = MouseY+.5;
+            Menu.RelativePosition.Z = 50.0;
+        } else {
+            needUpdate = True;
+            showStatus = False;
         }
-    
-        
-    
+    }
 }
 
 if (MouseMiddleButton && !eXp_mouseMiddleState) {
