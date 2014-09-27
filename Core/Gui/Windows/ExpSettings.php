@@ -61,8 +61,8 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	/**
 	 * @param ConfigManager $configs          The config manager instance
-	 * @param               $groupName        The name of the group to show
-	 * @param string $confName                The conf name.
+	 * @param string        $groupName        The name of the group to show
+	 * @param string        $confName         The conf name.
 	 *
 	 * @see ConfigManager getGroupedVariables
 	 */
@@ -118,7 +118,7 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			}
 		}
 		$this->configManager->check();
-		$this->populate($this->configManager, $this->currentGroup);
+		$this->populate($this->configManager, $this->currentGroup, $this->confName);
 		$this->redraw();
 	}
 
