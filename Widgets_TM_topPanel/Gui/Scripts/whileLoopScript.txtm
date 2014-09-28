@@ -1,0 +1,26 @@
+
+if( (Now - eXp_lastClockUpdate) >= 1000 ){
+    declare nbSpec = 0;
+    declare nbPlayer = 0;
+    lbl_clock.SetText(""^TextLib::SubString(CurrentLocalDateText, 11, 2)^":"^TextLib::SubString(CurrentLocalDateText, 14, 2)^":"^TextLib::SubString(CurrentLocalDateText, 17, 2));
+    mapName.SetText(""^Map.MapName);    
+    mapAuthor.SetText(""^Map.AuthorNickName);       
+    eXp_lastClockUpdate = Now;
+
+    foreach (Player in Players) {
+        if(Player.Login != CurrentServerLogin){
+            if(!Player.RequestsSpectate){
+                nbPlayer += 1;
+            }else{
+                nbSpec += 1;
+            }
+        }
+    } 
+    serverName.SetText("" ^ CurrentServerName);        
+    playerLabel.SetText("" ^ nbPlayer ^ "/" ^ maxPlayers);
+    specLabel.SetText("" ^ nbSpec ^ "/" ^ maxSpec);
+    if (Map.AuthorZoneIconUrl != "") {
+        mapIcon.ChangeImageUrl(Map.AuthorZoneIconUrl);
+    }
+    eXp_lastClockUpdate = Now;
+}

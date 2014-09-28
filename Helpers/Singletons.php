@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
@@ -22,25 +23,27 @@
 
 namespace ManiaLivePlugins\eXpansion\Helpers;
 
-
 use ManiaLib\Utils\Singleton;
 
 class Singletons extends Singleton
 {
-    private $connection = null;
 
-    /**
-     * @return \Maniaplanet\DedicatedServer\Connection Connection to the dedicated server
-     */
-    public function getDediConnection()
-    {
-	if ($this->connection == null) {
-	    /**
-	     * @var \ManiaLive\DedicatedApi\Config $config
-	     */
-	    $config = \ManiaLive\DedicatedApi\Config::getInstance();
-	    $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
+	/** @var \Maniaplanet\DedicatedServer\Connection  */
+	private $connection = null;
+
+	/**
+	 * @return \Maniaplanet\DedicatedServer\Connection Connection to the dedicated server
+	 */
+	public function getDediConnection()
+	{
+		if ($this->connection == null) {
+			/**
+			 * @var \ManiaLive\DedicatedApi\Config $config
+			 */
+			$config = \ManiaLive\DedicatedApi\Config::getInstance();
+			$this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
+		}
+		return $this->connection;
 	}
-	return $this->connection;
-    }
+
 }

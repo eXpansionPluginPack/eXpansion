@@ -289,7 +289,9 @@ class KnockOut extends ExpPlugin
 
 	public function exp_onUnload()
 	{
+		AdminGroups::removeShortAllias("ko");
 		AdminGroups::removeAdminCommand($this->adm_ko);
+		
 		parent::exp_onUnload();
 	}
 
