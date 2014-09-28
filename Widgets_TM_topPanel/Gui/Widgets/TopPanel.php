@@ -19,6 +19,10 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Widgets;
 
+use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\HookData;
+use ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Hooks\BarElements;
+use ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Hooks\HookElement;
+
 /**
  * Description of TopPanel
  *
@@ -63,23 +67,86 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$line->setMargin(1, 1);
 		$line->setAlign("right");
 
+		$offset = 0;
+		foreach($this->hookLeft() as $elem){
+			$this->frameLeft->addComponent($elem->gui);
+		}
 
 		$this->frameRight = new \ManiaLive\Gui\Controls\Frame(0, -1.5);
 		$this->frameRight->setAlign("right");
 		$this->frameRight->setLayout($line);
 		$this->addComponent($this->frameRight);
 
+		foreach($this->hookRight() as $elem){
+			$this->frameRight->addComponent($elem->gui);
+			$offset += $elem->gui->getSizeX();
+		}
+
+		$this->frameRight->setPosX(320 - $offset, 0);
+
+		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\Gui\Scripts");
+		$this->script->setParam("maxSpec", $this->storage->server->currentMaxSpectators);
+		$this->script->setParam("maxPlayers", $this->storage->server->currentMaxPlayers);
+
+		$this->registerScript($this->script);
+	}
+
+	/**
+	 * @return HookElement[]
+	 */
+	protected function hookLeft(){
+
+		$elements = array();
+
+
+		$elements['serverName'] = new HookElement($this->getServerNameItem(), 1000);
+		$elements['gameInfo'] = new HookElement($this->getGameModeItem(), 50);
+		$elements['mapInfo'] = new HookElement($this->getMapInfo(), 40);
+		$elements['nbPlayer'] = new HookElement($this->getNbPlayer(), 30);
+		$elements['nbSpec'] = new HookElement($this->getNbSpectators(), 20);
+
+		$hook = new HookData();
+		$hook->data = $elements;
+
+		\ManiaLive\Event\Dispatcher::dispatch(
+			new BarElements(BarElements::ON_LEFT_CREATE, $hook, 'test')
+		);
+
+		usort($hook->data, array($this, 'cmp'));
+		return $hook->data;
+	}
+
+	/**
+	 * @return HookElement[]
+	 */
+	protected function hookRight(){
+
+		$elements = array();
+
+
+		$elements['clock'] = new HookElement($this->getClock());
+
+		$hook = new HookData();
+		$hook->data = $elements;
+
+		\ManiaLive\Event\Dispatcher::dispatch(
+			new BarElements(BarElements::ON_LEFT_CREATE, $hook, 'test')
+		);
+
+		usort($hook->data, array($this, 'cmp'));
+		return $hook->data;
+	}
+
+	protected function getServerNameItem(){
 		$ladder = "Ladder limits " . ( $this->storage->server->ladderServerLimitMin / 1000 ) . " - " . ( $this->storage->server->ladderServerLimitMax / 1000 ) . "k";
 		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem($ladder, "", 48, "Icons64x64_1", "ToolLeague1");
 		$item->setId('serverName');
-		$this->frameLeft->addComponent($item);
 
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem("", "", 48, "Icons128x128_1", "Race");
-		$item->setId('mapName');
-		$item->setIdTitle('mapAuthor');
-		$item->setQuadId("mapIcon");
-		$this->frameLeft->addComponent($item);
+		return $item;
+		return $item;
+	}
 
+	protected function getGameModeItem(){
 		$gamemode = "";
 		$scriptName = "";
 		$desc = "";
@@ -120,41 +187,34 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		}
 		$icon = $gamemode;
 		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem($desc, $gamemode, 32, "Icons128x32_1", "RT_" . $icon);
-		$this->frameLeft->addComponent($item);
 
+		return $item;
+	}
 
+	protected function getMapInfo(){
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem("", "", 48, "Icons128x128_1", "Race");
+		$item->setId('mapName');
+		$item->setIdTitle('mapAuthor');
+		$item->setQuadId("mapIcon");
+		return $item;
+	}
 
-
+	protected function getNbPlayer(){
 		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem("Players", "", 16, "Icons64x64_1", "Buddy");
 		$item->setId('nbPlayer');
+		return $item;
+	}
 
-		$this->frameLeft->addComponent($item);
+	protected function getNbSpectators(){
 		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem("Spectators", "", 16, "Icons64x64_1", "TV");
 		$item->setId('nbSpec');
+		return $item;
+	}
 
-		$this->frameLeft->addComponent($item);
-
-
-
-
-
+	protected function getClock(){
 		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem("Local Time", "", 16, "BgRaceScore2", "SendScore");
 		$item->setId('clock');
-		$this->frameRight->addComponent($item);
-
-		$offset = 0;
-		foreach ($this->frameRight->getComponents() as $panel) {
-			$offset += $panel->getSizeX();
-		}
-
-		$this->frameRight->setPosX(320 - $offset, 0);
-
-
-		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\Gui\Scripts");
-		$this->script->setParam("maxSpec", $this->storage->server->currentMaxSpectators);
-		$this->script->setParam("maxPlayers", $this->storage->server->currentMaxPlayers);
-
-		$this->registerScript($this->script);
+		return $item;
 	}
 
 	protected function exp_onEndConstruct()
@@ -162,4 +222,7 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$this->setPosition(-160, 90);
 	}
 
+	public function cmp(HookElement $a, HookElement $b){
+		return $b->priority - $a->priority;
+	}
 }
