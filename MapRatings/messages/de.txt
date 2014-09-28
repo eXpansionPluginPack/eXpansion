@@ -20,14 +20,14 @@ Map Rating
 Bewertung aufgenommen
 
 Remove
-#translate# Remove
+Entfernen
 
 Close
-#translate# Close
+Schließen
 
 Maps with bad rating removed successfully.
-#translate# Maps with bad rating removed successfully.
+Maps mit schlechter Bewertung erfolgreich entfernt.
 
 Ratings Manager
-#translate# Ratings Manager
+Bewertungs Manager
 

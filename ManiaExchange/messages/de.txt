@@ -57,23 +57,23 @@ Author
 Autor
 
 Author
-#translate# Author
+Autor
 
 Author
-#translate# Author
+Autor
 
 Map is not compatible with current server settings, map not added.
-#translate# Map is not compatible with current server settings, map not added.
+Diese Map ist nicht mit den Servereinstellungen kompatibel und wurde nicht hinzugefügt.
 
 Author
-#translate# Author
+autor
 
 Map is not compatible with current server settings, map not added.
-#translate# Map is not compatible with current server settings, map not added.
+Diese Map ist nicht mit den Servereinstellungen kompatibel und wurde nicht hinzugefügt.
 
 Author
-#translate# Author
+Autor
 
 Map is not compatible with current server settings, map not added.
-#translate# Map is not compatible with current server settings, map not added.
+Diese Map ist nicht mit den Servereinstellungen kompatibel und wurde nicht hinzugefügt.
 

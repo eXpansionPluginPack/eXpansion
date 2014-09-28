@@ -1,0 +1,33 @@
+Start
+Starten
+
+Stop
+Stoppen
+
+This plugin is running on the server at the moment
+Dieses Plugin ist derzeit auf dem Server aktiviert
+
+This plugin isn't compatible with game mode or title. It is therefor pending
+Dieses Plugin ist nicht mit dem Spielmodus kompatibel und daher deaktiviert
+
+This plugin isn't running
+Dieses Plugin ist deaktiviert
+
+This plugin is compatible with the current Title
+Dieses Plugin ist mit dem aktuellen Titel kompatibel
+
+This plugin isn't compatible with the current Title
+Dieses Plugin ist nicht mit dem aktuellen Titel kompatibel
+
+This plugin is compatible with the current Game mode
+Dieses Plugin ist mit dem aktuellen Spielmodus kompatibel
+
+This plugin isn't compatible with the current Game mode
+Dieses Plugin ist nicht mit dem aktuellen Spielmodus kompatibel
+
+This plugin is is compatible with current installation
+Dieses Plugin ist kompatibel mit der aktuellen Installation (Version)
+
+
+
+

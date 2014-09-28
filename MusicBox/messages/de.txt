@@ -8,7 +8,7 @@ Warteschlange
 #music#Nächstes Lied: $z$s#variable# %1$s - %2$s
 
 #variable# %1$s#music# by#variable#  %2$s #music# is been played next requested by #variable# %3$s 
-#translate# #variable# %1$s#music# von#variable#  %2$s #music# wird als nächstes gespielt (gewünscht von #variable# %3$s) 
+#variable# %1$s#music# von#variable#  %2$s #music# wird als nächstes gespielt (gewünscht von #variable# %3$s) 
 
 #music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s
 #music#Nächstes Lied: $z$s#variable# %1$s #music#von#variable# %2$s

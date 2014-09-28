@@ -56,14 +56,14 @@ Fehler:
 %s$1 $z$s$fff $f00streamt$fff auf $lwww.twitch.tv$l, sagt Hallo an alle Zuschauer :)
 
 Ignore List
-#translate# Ignore List
+Ignorierliste
 
 Guest List
-#translate# Guest List
+Gästeliste
 
 Ban List
-#translate# Ban List
+Banliste
 
 Black List
-#translate# Black List
+Schwarze Liste
 

@@ -17,8 +17,8 @@
 #variable#[#error#Info#variable#] #variable#Drücke TAB um die Rekord-Widgets anzuzeigen, benutze die Rechte Maustaste um auf das Kontextmenü zuzugreifen.
 
 #player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# leaves! Playtime: #variable#%5$s
-#translate# #player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# leaves! Playtime: #variable#%5$s
+#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) aus #variable#%3$s #player# verlässt den Server! Spielzeit: #variable#%5$s
 
 #player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s
-#translate# #player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s
+#player#Spielzeit seit Beitreten des Server:#variable# %1$s#player#, Insgesamte Spielzeit auf dem Server: #variable#%2$s
 

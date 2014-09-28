@@ -163,43 +163,43 @@ Streckenliste löschen
 #admin_error# $iA Bezahlung um sich eine Strecke zu wünschen ist in Bearbeitung. Bitte versuche es später erneut.
 
 Are you sure you want to wish this map to be played
-Bist du dir sicher, dass du dir diese Strecke wünschen willst
+Bist du dir sicher, dass du dir diese Strecke wünschen willst?
 
 #admin_error# $iYOu can't wish for a map at the moment.
 #admin_error# $iDu kannst dir momentan leider keine Strecke wünschen.
 
 Title
-#translate# Title
+Titel
 
 Length
-#translate# Length
+Länge
 
 Record
-#translate# Record
+Rekord
 
 Rating
-#translate# Rating
+Bewertung
 
 Search maps
-#translate# Search maps
+Maps Suchen
 
 Search Map
-#translate# Search Map
+Map suchen
 
 Search Author
-#translate# Search Author
+Autor suchen
 
 Clear Maplist
-#translate# Clear Maplist
+Mapliste leeren
 
 #admin_error# $iA payment for wishin a track is in progress please try later.
-#translate# #admin_error# $iA payment for wishin a track is in progress please try later.
+#admin_error# $iA Bezahlung für eine Map zu wünschen wird gerade durchgeführt. Bitte versuche es später noch einmal.
 
 Are you sure you want to wish this map to be played
-#translate# Are you sure you want to wish this map to be played
+Bist du dir sicher, dass du willst, dass diese Map gespielt werden soll?
 
 #admin_error# $iYOu can't wish for a map at the moment.
-#translate# #admin_error# $iYOu can't wish for a map at the moment.
+#admin_error# $iDu kannst dir derzeit keine Map wünschen.
 
 Title
 #translate# Title
