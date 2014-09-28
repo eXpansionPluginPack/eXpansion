@@ -41,8 +41,8 @@ Schließen
 #variable#%s #vote#Map Neustart Abstimmung gestartet
 
 Vote limit reached.
-#translate# Abstimmungslimit erreicht.
+Abstimmungslimit erreicht.
 
 Configure Votes
-#translate# Abstimungen einstellen
+Abstimungen einstellen
 
