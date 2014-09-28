@@ -2,20 +2,20 @@ Apply
 Anwenden
 
 Server Stats
-#translate# Server Stats
+Server Statistiken
 
 Global Setting, Saved for all servers sharing this configuration
-#translate# Global Setting, Saved for all servers sharing this configuration
+Globale Einstellung, gespeichert für alle Server die diese konfiguration nutzen
 
 Server Setting, Saved for this server only
-#translate# Server Setting, Saved for this server only
+Server Einstellung, gespeichert nur für diesen server
 
 Save
-#translate# Save
+Speichern
 
 Copy
-#translate# Copy
+Kopieren
 
 Add to Fav's
-#translate# Add to Fav's
+To Favoriten hinzufügen
 
