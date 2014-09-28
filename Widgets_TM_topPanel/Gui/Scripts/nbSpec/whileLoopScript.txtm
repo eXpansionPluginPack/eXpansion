@@ -1,0 +1,15 @@
+
+if( (Now - eXp_lastNbSpecUpdate) >= 1000 ){
+    declare nbPlayer = 0;
+
+    foreach (Player in Players) {
+        if(Player.Login != CurrentServerLogin){
+            if(Player.RequestsSpectate){
+                nbPlayer += 1;
+            }
+        }
+    }
+    specLabel.SetText("" ^ nbPlayer ^ "/" ^ maxSpec);
+
+    eXp_lastNbSpecUpdate = Now;
+}

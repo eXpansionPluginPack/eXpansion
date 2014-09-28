@@ -28,7 +28,7 @@ use ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Hooks\HookElement;
  *
  * @author Reaby
  */
-class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
+class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
 
 	private $bg, $logo;
@@ -40,8 +40,11 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 	/** @var \ManiaLive\Data\Storage 	 */
 	private $storage;
 
-	protected function exp_onBeginConstruct()
+	protected function onConstruct()
 	{
+		parent::onConstruct();
+		$this->setPosition(-160, 90);
+
 		$this->setName("Top Panel");
 		$this->storage = \ManiaLive\Data\Storage::getInstance();
 
@@ -83,12 +86,6 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		}
 
 		$this->frameRight->setPosX(320 - $offset, 0);
-
-		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\Gui\Scripts");
-		$this->script->setParam("maxSpec", $this->storage->server->currentMaxSpectators);
-		$this->script->setParam("maxPlayers", $this->storage->server->currentMaxPlayers);
-
-		$this->registerScript($this->script);
 	}
 
 	/**
@@ -139,10 +136,9 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
 	protected function getServerNameItem(){
 		$ladder = "Ladder limits " . ( $this->storage->server->ladderServerLimitMin / 1000 ) . " - " . ( $this->storage->server->ladderServerLimitMax / 1000 ) . "k";
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem($ladder, "", 48, "Icons64x64_1", "ToolLeague1");
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\ServerInfoItem($ladder, "", 48, "Icons64x64_1", "ToolLeague1");
 		$item->setId('serverName');
 
-		return $item;
 		return $item;
 	}
 
@@ -192,7 +188,7 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 	}
 
 	protected function getMapInfo(){
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem("", "", 48, "Icons128x128_1", "Race");
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\MapInfoItem("", "", 48, "Icons128x128_1", "Race");
 		$item->setId('mapName');
 		$item->setIdTitle('mapAuthor');
 		$item->setQuadId("mapIcon");
@@ -200,26 +196,21 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 	}
 
 	protected function getNbPlayer(){
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem("Players", "", 16, "Icons64x64_1", "Buddy");
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\NbPlayerItem("Players", "", 16, "Icons64x64_1", "Buddy");
 		$item->setId('nbPlayer');
 		return $item;
 	}
 
 	protected function getNbSpectators(){
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem("Spectators", "", 16, "Icons64x64_1", "TV");
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\NbSpecItem("Spectators", "", 16, "Icons64x64_1", "TV");
 		$item->setId('nbSpec');
 		return $item;
 	}
 
 	protected function getClock(){
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\PanelItem("Local Time", "", 16, "BgRaceScore2", "SendScore");
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\ClockItem("Local Time", "", 16, "BgRaceScore2", "SendScore");
 		$item->setId('clock');
 		return $item;
-	}
-
-	protected function exp_onEndConstruct()
-	{
-		$this->setPosition(-160, 90);
 	}
 
 	public function cmp(HookElement $a, HookElement $b){

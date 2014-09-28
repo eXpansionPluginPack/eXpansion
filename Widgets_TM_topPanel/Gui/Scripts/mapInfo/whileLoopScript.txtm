@@ -1,0 +1,9 @@
+
+if( (Now - eXp_lastMapInfoUpdate) >= 1000 ){
+    mapName.SetText(""^Map.MapName);    
+    mapAuthor.SetText(""^Map.AuthorNickName);
+    if (Map.AuthorZoneIconUrl != "") {
+        mapIcon.ChangeImageUrl(Map.AuthorZoneIconUrl);
+    }
+    eXp_lastMapInfoUpdate = Now;
+}

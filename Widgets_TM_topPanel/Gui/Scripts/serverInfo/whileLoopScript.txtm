@@ -1,0 +1,5 @@
+
+if( (Now - eXp_lastServerInfoUpdate) >= 10000 ){
+    serverName.SetText("" ^ CurrentServerName);
+    eXp_lastServerInfoUpdate = Now;
+}

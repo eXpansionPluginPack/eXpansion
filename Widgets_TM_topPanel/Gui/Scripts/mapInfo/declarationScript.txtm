@@ -1,0 +1,4 @@
+declare mapName <=> (Page.GetFirstChild("mapName") as CMlLabel);
+declare mapAuthor <=> (Page.GetFirstChild("mapAuthor") as CMlLabel);
+declare mapIcon <=> (Page.GetFirstChild("mapIcon") as CMlQuad);
+declare eXp_lastMapInfoUpdate = 0;

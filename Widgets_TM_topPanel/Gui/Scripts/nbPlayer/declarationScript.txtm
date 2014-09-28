@@ -1,0 +1,3 @@
+declare playerLabel = (Page.GetFirstChild("nbPlayer") as CMlLabel);
+declare maxPlayers = "<?php echo $this->maxPlayers; ?>";
+declare eXp_lastNbPlayerUpdate = 0;
