@@ -63,13 +63,15 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		$command = array_shift($params);
 
+		$var = MetaData::getInstance()->getVariable('publicChatActive');
+
 		switch (strtolower($command)) {
 			case "enable":
-				$this->config->publicChatActive = true;
+				$var->setRawValue(true);
 				$this->exp_chatSendServerMessage("#admin_action#Public chat is now #variable#Enabled");
 				break;
 			case "disable":
-				$this->config->publicChatActive = false;
+				$var->setRawValue(false);
 				$this->exp_chatSendServerMessage("#admin_action#Public chat is now #variable#Disabled");
 				break;
 		}
