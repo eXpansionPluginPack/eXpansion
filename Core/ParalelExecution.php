@@ -33,169 +33,169 @@ use ManiaLive\Features\Tick\Event as TickEvent;
 class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 {
 
-    private $pid;
-    private $id;
+	private $pid;
+	private $id;
 
-    private $results = array();
+	private $results = array();
 
-    private $callback;
+	private $callback;
 
-    private $lastCheck;
+	private $lastCheck;
 
-    private $return = 0;
+	private $return = 0;
 
-    private $cmds = array();
+	private $cmds = array();
 
-    private $values;
+	private $values;
 
-    function __construct($cmds, $callback)
-    {
-	$this->id = time() . '.' . rand(0, 100000);
-	$this->callback = $callback;
+	function __construct($cmds, $callback)
+	{
+		$this->id = time() . '.' . rand(0, 100000);
+		$this->callback = $callback;
 
-	if (!file_exists('tmp'))
-	    mkdir('tmp/');
+		if (!file_exists('tmp'))
+			mkdir('tmp/');
 
-	$this->cmds = $cmds;
-
-    }
-
-    public function start(){
-        Dispatcher::register(TickEvent::getClass(), $this);
-	$this->run();
-    }
-
-    private function run()
-    {
-	$cmd = array_shift($this->cmds);
-
-	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            Dispatcher::unregister(TickEvent::getClass(), $this);
-	    $command = $cmd . ' ';
-            exec($command, $results, $return);
-
-            $this->return = $return;
-
-            $this->results = array_merge($this->results, $results);
-            if (empty($this->cmds) || $this->return != 0) {
-                $this->call ($this->results);
-            }else{
-                $this->run();
-            }
-            return;
-	}else{
-	    $command = 'nohup '.$cmd . ' >> tmp/' . $this->id . '.txt 2>&1 & echo $!';
-            exec($command, $results, $return);
-            $this->pid = $results[0];
-	}
-
-
-	if ($this->pid == ""){
-	    Dispatcher::unregister(TickEvent::getClass(), $this);
-	    $this->call();
-	}
-
-	$this->lastCheck = time();
-    }
-
-    public function call($results = array())
-    {
-        if(empty($results) && file_exists('tmp/' . $this->id . '.txt')){
-            $results = explode("\n", file_get_contents('tmp/' . $this->id . '.txt'));
-            unlink('tmp/' . $this->id . '.txt');
-        }
-	call_user_func($this->callback, $this, $results, $this->return);
-    }
-
-    /**
-     * @param string $id
-     */
-    public function setId($id)
-    {
-	$this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-	return $this->id;
-    }
-
-    /**
-     * @param int $pid
-     */
-    public function setPid($pid)
-    {
-	$this->pid = $pid;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPid()
-    {
-	return $this->pid;
-    }
-
-    /**
-     * @param mixed $results
-     */
-    public function setResults($results)
-    {
-	$this->results = $results;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getResults()
-    {
-	return $this->results;
-    }
-
-    public function PsExists()
-    {
-	exec("ps ax | grep ".$this->pid." 2>&1", $output);
-	
-	if ( !$output )
-	    return false;
-	
-	while (list(, $row) = each($output)) {
-
-	    $row_array = explode(" ", $row);
-	    $check_pid = $row_array[0];
-
-	    if ($this->pid == $check_pid) {
-		return true;
-	    }
+		$this->cmds = $cmds;
 
 	}
 
-	return false;
-    }
-
-    /**
-     * Event launch every seconds
-     */
-    function onTick()
-    {
-	if (!$this->PsExists()) {
-	    if (empty($this->cmds) || $this->return != 0) {
-		$this->call();
-		Dispatcher::unregister(TickEvent::getClass(), $this);
-	    } else {
+	public function start(){
+		Dispatcher::register(TickEvent::getClass(), $this);
 		$this->run();
-	    }
 	}
-    }
 
-    public function setValue($key, $val){
-	$this->values[$key] = $val;
-    }
+	private function run()
+	{
+		$cmd = array_shift($this->cmds);
 
-    public function getValue($key){
-	return $this->values[$key];
-    }
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			Dispatcher::unregister(TickEvent::getClass(), $this);
+			$command = $cmd . ' ';
+			exec($command, $results, $return);
+
+			$this->return = $return;
+
+			$this->results = array_merge($this->results, $results);
+			if (empty($this->cmds) || $this->return != 0) {
+				$this->call ($this->results);
+			}else{
+				$this->run();
+			}
+			return;
+		}else{
+			$command = 'nohup '.$cmd . ' >> tmp/' . $this->id . '.txt 2>&1 & echo $!';
+			exec($command, $results, $return);
+			$this->pid = $results[0];
+		}
+
+
+		if ($this->pid == ""){
+			Dispatcher::unregister(TickEvent::getClass(), $this);
+			$this->call();
+		}
+
+		$this->lastCheck = time();
+	}
+
+	public function call($results = array())
+	{
+		if(empty($results) && file_exists('tmp/' . $this->id . '.txt')){
+			$results = explode("\n", file_get_contents('tmp/' . $this->id . '.txt'));
+			unlink('tmp/' . $this->id . '.txt');
+		}
+		call_user_func($this->callback, $this, $results, $this->return);
+	}
+
+	/**
+	 * @param string $id
+	 */
+	public function setId($id)
+	{
+		$this->id = $id;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	/**
+	 * @param int $pid
+	 */
+	public function setPid($pid)
+	{
+		$this->pid = $pid;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getPid()
+	{
+		return $this->pid;
+	}
+
+	/**
+	 * @param mixed $results
+	 */
+	public function setResults($results)
+	{
+		$this->results = $results;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getResults()
+	{
+		return $this->results;
+	}
+
+	public function PsExists()
+	{
+		exec("ps ax | grep ".$this->pid." 2>&1", $output);
+
+		if ( !$output )
+			return false;
+
+		while (list(, $row) = each($output)) {
+
+			$row_array = explode(" ", $row);
+			$check_pid = $row_array[0];
+
+			if ($this->pid == $check_pid) {
+				return true;
+			}
+
+		}
+
+		return false;
+	}
+
+	/**
+	 * Event launch every seconds
+	 */
+	function onTick()
+	{
+		if (!$this->PsExists()) {
+			if (empty($this->cmds) || $this->return != 0) {
+				$this->call();
+				Dispatcher::unregister(TickEvent::getClass(), $this);
+			} else {
+				$this->run();
+			}
+		}
+	}
+
+	public function setValue($key, $val){
+		$this->values[$key] = $val;
+	}
+
+	public function getValue($key){
+		return $this->values[$key];
+	}
 }
