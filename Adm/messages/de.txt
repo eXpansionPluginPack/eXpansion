@@ -308,14 +308,14 @@ Autosave Validation Replays
 Validierungs-Replays automatisch speichern
 
 Set
-#translate# Set
+Setzen
 
 eXpansion Settings
-#translate# eXpansion Settings
+eXpansion Einstellungen
 
 Plugin Management
-#translate# Plugin Management
+Plugin Management
 
 Configure Votes
-#translate# Configure Votes
+Abstimmungen Einstellen
 
