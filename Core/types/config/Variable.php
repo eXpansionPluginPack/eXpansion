@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\types\config;
 use ManiaLib\Utils\Singleton;
+use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\Core\Events\PluginSettingChange;
 
 /**
  * Description of Variable
@@ -277,6 +279,8 @@ abstract class Variable
 	 * Changes the value in the configuration instance of the variable
 	 *
 	 * @param mixed $value the new value
+	 *
+	 * @return boolean
 	 */
 	public function setRawValue($value)
 	{
@@ -294,8 +298,10 @@ abstract class Variable
 				try {
 					$phandler->callPublicMethod($core, $this->pluginId, 'onSettingsChanged', array($this));
 				} catch (\Exception $ex) {
-
 				}
+
+				Dispatcher::dispatch(new PluginSettingChange(PluginSettingChange::ON_SETTINGS_CHANGE, $this->pluginId, $this));
+
 			}
 		} else {
 			$this->value = $value;
