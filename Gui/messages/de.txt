@@ -8,96 +8,98 @@ Apply
 Anwenden
 
 Cancel
-Schließenpossible parameters: move, lock, reset
+Schließen
+
+possible parameters: move, lock, reset
 Mögliche Parameter: move, lock, reset
 
 possible parameters: move, lock, reset
-#translate# possible parameters: move, lock, reset
+Mögliche Parameter: move, lock, reset
 
 #error#Server Admin has disabled personal huds. Sorry!
-#translate# #error#Server Admin has disabled personal huds. Sorry!
+#error#Server Admin hat die persönliche Benutzeroberfläche (HUD) deaktiviert. Sorry!
 
 Hud reset done!
-#translate# Hud reset done!
+Persönliche Benutzeroberfläche (HUD) zurückgesetzt
 
 Starting hud reset, please wait
-#translate# Starting hud reset, please wait
+Persönliche Benutzeroberfläche (HUD) wird zurückgesetzt. Bitte warten ...
 
 Yes
-#translate# Yes
+Ja
 
 No
-#translate# No
+Nein
 
 Really do this ?
-#translate# Really do this ?
+Möchtes du das wirklich tun?
 
 possible parameters: move, lock, reset
-#translate# possible parameters: move, lock, reset
+Mögliche Parameter: move, lock, reset
 
 #error#Server Admin has disabled personal huds. Sorry!
-#translate# #error#Server Admin has disabled personal huds. Sorry!
+#error#Server Admin hat die persönliche Benutzeroberfläche (HUD) deaktiviert. Sorry!
 
 Hud reset done!
-#translate# Hud reset done!
+Persönliche Benutzeroberfläche (HUD) zurückgesetzt!
 
 Starting hud reset, please wait
-#translate# Starting hud reset, please wait
+Persönliche Benutzeroberfläche (HUD) wird zurückgesetzt. Bitte warten ...
 
 Yes
-#translate# Yes
+Ja
 
 No
-#translate# No
+Nein
 
 Really do this ?
-#translate# Really do this ?
+Möchtes du das wirklich tun?
 
 Hello World
-#translate# Hello World
+Hallo Welt
 
 possible parameters: move, lock, reset
-#translate# possible parameters: move, lock, reset
+Mögliche Parameter: move, lock, reset
 
 #error#Server Admin has disabled personal huds. Sorry!
-#translate# #error#Server Admin has disabled personal huds. Sorry!
+#error#Server Admin hat die persönliche Benutzeroberfläche (HUD) deaktiviert. Sorry!
 
 Hud reset done!
-#translate# Hud reset done!
+Persönliche Benutzeroberfläche (HUD) zurückgesetzt!
 
 Starting hud reset, please wait
-#translate# Starting hud reset, please wait
+Persönliche Benutzeroberfläche (HUD) wird zurückgesetzt. Bitte warten ...
 
 Yes
-#translate# Yes
+Ja
 
 No
-#translate# No
+Nein
 
 Really do this ?
-#translate# Really do this ?
+Möchtes du das wirklich tun?
 
 Hello World
-#translate# Hello World
+Hallo Welt
 
 possible parameters: move, lock, reset
-#translate# possible parameters: move, lock, reset
+Mögliche Parameter: move, lock, reset
 
 #error#Server Admin has disabled personal huds. Sorry!
-#translate# #error#Server Admin has disabled personal huds. Sorry!
+#error#Server Admin hat die persönliche Benutzeroberfläche (HUD) deaktiviert. Sorry!
 
 Hud reset done!
-#translate# Hud reset done!
+Persönliche Benutzeroberfläche (HUD) zurückgesetzt!
 
 Starting hud reset, please wait
-#translate# Starting hud reset, please wait
+Persönliche Benutzeroberfläche (HUD) wird zurückgesetzt. Bitte warten ...
 
 Yes
-#translate# Yes
+Ja
 
 No
-#translate# No
+Nein
 
 Really do this ?
-#translate# Really do this ?
+Möchtes du das wirklich tun?
 

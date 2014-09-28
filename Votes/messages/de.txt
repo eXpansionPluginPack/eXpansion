@@ -32,17 +32,17 @@ Abstimmung abbrechen
 #admin_action#Admin #variable#%1$s #admin_action# hat die Abstimmung abgebrochen!
 
 Apply
-#translate# Apply
+Anwenden
 
 Cancel
-#translate# Cancel
+Schließen
 
 #variable#%s #vote#initiated restart map vote..
-#translate# #variable#%s #vote#initiated restart map vote..
+#variable#%s #vote#Map Neustart Abstimmung gestartet
 
 Vote limit reached.
-#translate# Vote limit reached.
+Abstimmungslimit erreicht.
 
 Configure Votes
-#translate# Configure Votes
+Abstimungen einstellen
 

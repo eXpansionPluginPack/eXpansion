@@ -92,20 +92,20 @@ Help
 #translate# Help
 
 Show Maplist
-#translate# Show Maplist
+Mapliste anzeigen
 
 Show Records
-#translate# Show Records
+Rekorde anzeigen
 
 Show Players
-#translate# Show Players
+Spieler anzigen
 
 Add local map
-#translate# Add local map
+Lokale Map hinzufg.
 
 Mania-Exchange
-#translate# Mania-Exchange
+Mania-Exchange
 
 Statistics
-#translate# Statistics
+Statistiken
 

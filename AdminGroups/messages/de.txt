@@ -119,5 +119,5 @@ Permission_
 #admin_action#Konnte Spieler #variable# %1$s #admin_action# nicht zu Admingruppe #variable#%2$s hinzufügen
 
 Select
-#translate# Select
+Auswählen
 
