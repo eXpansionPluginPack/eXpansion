@@ -154,6 +154,7 @@ class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     function exp_onUnload()
     {
         Gui\Widgets\AroundMe::EraseAll();
+		self::$me = null;
     }
 
 }
