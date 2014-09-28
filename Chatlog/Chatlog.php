@@ -16,6 +16,7 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		$this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_PLAYER_CHAT);
 		$this->registerChatCommand("chatlog", "showLog", 0, true);
+		$this->setPublicMethod('showLog');
 	}
 
 	/**
