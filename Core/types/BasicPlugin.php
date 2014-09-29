@@ -39,6 +39,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 	use Maniaplanet\DedicatedServer\Structures\PlayerNetInfo;
 	use Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException;
 	use Phine\Exception\Exception as Exception2;
+	use \ManiaLive\DedicatedApi\Config as DedicatedConfig;
 
 	/**
 	 * Description of BasicPlugin
@@ -49,7 +50,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 	{
 
 		public static $plugins_list;
-
+		
 		private $_isScriptEventsEnabled = false;
 
 		/**

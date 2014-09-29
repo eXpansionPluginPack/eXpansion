@@ -36,6 +36,7 @@ use ManiaLive\DedicatedApi\Callback\Listener as ServerListener;
 use ManiaLivePlugins\eXpansion\Core\RelayLink;
 use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
 use Maniaplanet\DedicatedServer\Structures\Version;
+use ManiaLive\DedicatedApi\Config as DedicatedConfig;
 
 class Storage extends Singleton implements \ManiaLive\Event\Listener
 {
@@ -91,6 +92,14 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 	 */
 	public $relay;
 
+	/**
+	 * is this eXpansion running locally on server (true)
+	 * or 
+	 * is this expansion running remotelly from server (false)
+	 * 
+	 * @var boolean 
+	 */
+	public $isRemoteControlled = false;
 
 	private $startTime;
 
@@ -98,7 +107,6 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 
 	protected function __construct()
 	{
-		Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_BEGIN_MAP);
 
 		$this->connection = Singletons::getInstance()->getDediConnection();
 
@@ -116,6 +124,11 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 
 		$this->startTime = time();
 
+		if (DedicatedConfig::getInstance()->host == "localhost" || DedicatedConfig::getInstance()->host == "127.0.0.1")
+			$this->isRemoteControlled = false;
+		else
+			$this->isRemoteControlled = true;
+		
 		$this->dediUpTime = $this->connection->getNetworkStats()->uptime;
 	}
 
@@ -155,24 +168,14 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 		}
 	}
 
-	public function getExpansionUpTime(){
+	public function getExpansionUpTime()
+	{
 		return time() - $this->startTime;
 	}
 
-	public function getDediUpTime(){
-		return $this->getExpansionUpTime() + $this->dediUpTime;
-	}
-
-	/**
-	 * Method called when a map begin
-	 *
-	 * @param SMapInfo $map
-	 * @param bool     $warmUp
-	 * @param bool     $matchContinuation
-	 */
-	function onBeginMap($map, $warmUp, $matchContinuation)
+	public function getDediUpTime()
 	{
-		
+		return $this->getExpansionUpTime() + $this->dediUpTime;
 	}
 
 }

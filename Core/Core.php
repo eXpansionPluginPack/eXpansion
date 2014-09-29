@@ -496,6 +496,8 @@ EOT;
 	{
 
 		$dediConfig = \ManiaLive\DedicatedApi\Config::getInstance();
+		if ($this->expStorage->isRemoteControlled)
+			return;
 
 		try {
 			$path = Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile;
