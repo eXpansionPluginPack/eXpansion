@@ -65,6 +65,8 @@ Boolean stackContainsWindow(Text window) {
 
 //Main Function
 main () {
+
+    EnableMenuNavigationInputs = True;  // to enable pressing escape-key + tab-key 
     declare Integer closeCounter = 0;
     declare Boolean mouseButton for Page;
     
@@ -172,26 +174,33 @@ main () {
         if (PendingEvents.count != 0) { 
 	    foreach (Event in PendingEvents) {                
 		
-		if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close") {
-		    if (disableAnimations) {
-			TriggerPageAction(closeAction);
-			stackRemoveWindow(id);
-			continue;
-		    } else {
-		   // declare Real winX = Window.RelativePosition.X + <?php echo $win->getSizeX()/2; ?>; 
-                   //declare Real winY = Window.RelativePosition.Y;
-                    declare Real winX = 0.;
-		    declare Real winY = 0.;
-		    declare Text pos = winX ^ " " ^ winY;
-		    LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"0\" id=\"" ^ windowId ^ "\" />", 250, "EaseOutLinear");
-                    closeWindow = True;
-		    closeCounter = Now;	  	
-		    }
+		if ( (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close") || (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 35) ) {
+		    if (exp_windowStack.count > 0) 
+                    {
+                     if (exp_windowStack[0] == id) {
+                            if (disableAnimations) {
+                                TriggerPageAction(closeAction);
+                                stackRemoveWindow(id);
+                                continue;
+                            } else {
+                           // declare Real winX = Window.RelativePosition.X + <?php echo $win->getSizeX()/2; ?>; 
+                           //declare Real winY = Window.RelativePosition.Y;
+
+                            declare Real winX = 0.;
+                            declare Real winY = 0.;
+                            declare Text pos = winX ^ " " ^ winY;
+                            LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"0\" id=\"" ^ windowId ^ "\" />", 250, "EaseOutLinear");
+                            closeWindow = True;
+                            closeCounter = Now;	  	
+                          }
+                         }
+                     }
                 }
                 if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "MainWindow" || Event.ControlId == "Titlebar" ) ) {            
                     stackActivateWindow(id);
-                }		
-	    }
+                }
+
+            } 
 	}
 	
 	if (exp_windowStack.count == 0) {
