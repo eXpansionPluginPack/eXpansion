@@ -20,11 +20,11 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	private $items = array();
 
-	private $inputboxSaveAs;
+	private $inputboxSaveAs, $inputboxLoadAs;
 
-	private $actionSave;
+	private $actionSave, $actionLoad;
 
-	private $saveButton;
+	private $saveButton, $loadButton;
 
 	private $frame;
 
@@ -35,22 +35,36 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
 		$this->storage = \ManiaLive\Data\Storage::getInstance();
 		$this->frame = new \ManiaLive\Gui\Controls\Frame();
-		$layout =  new \ManiaLib\Gui\Layouts\Line();
-		$layout->setMargin(2,0);
+		$layout = new \ManiaLib\Gui\Layouts\Line();
+		$layout->setMargin(2, 0);
 		$this->frame->setLayout($layout);
-		$login = $this->getRecipient();
-		$this->inputboxSaveAs = new Inputbox("SaveAs", 60);
-		$this->inputboxSaveAs->setLabel(__("Save MatchSettings as", $login));
 
+
+		$login = $this->getRecipient();
+		$this->inputboxSaveAs = new Inputbox("SaveAs", 40);
+		$this->inputboxSaveAs->setLabel(__("Save MatchSettings as", $login));
 		$this->frame->addComponent($this->inputboxSaveAs);
 
 		$this->actionSave = $this->createAction(array($this, "saveAs"));
 
-		$this->saveButton = new OkButton(26, 5);
+		$this->saveButton = new OkButton();
 		$this->saveButton->setText('$fff' . __("Save", $login));
-		$this->saveButton->colorize("0d0");
+		$this->saveButton->colorize("d00");
 		$this->saveButton->setAction($this->actionSave);
 		$this->frame->addComponent($this->saveButton);
+
+		// Load 
+		$this->inputboxLoadAs = new Inputbox("LoadAs", 40);
+		$this->inputboxLoadAs->setLabel(__("Load MatchSettings by name", $login));
+		$this->frame->addComponent($this->inputboxLoadAs);
+
+		$this->actionLoad = $this->createAction(array($this, "loadAs"));
+
+		$this->loadButton = new OkButton();
+		$this->loadButton->setText('$fff' . __("Load", $login));
+		$this->loadButton->colorize("0d0");
+		$this->loadButton->setAction($this->actionLoad);
+		$this->frame->addComponent($this->loadButton);
 
 		$this->mainFrame->addComponent($this->frame);
 
@@ -66,8 +80,35 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 				$this->connection->chatSendServerMessage(__("Error in filename", $login), $login);
 				return;
 			}
-			$filename = Helper::getPaths()->getMatchSettingPath() . $entries['SaveAs'] . ".txt";
+			$appendTxt = ".txt";
+			if (substr($entries['SaveAs'], -4, 4) == ".txt") {
+				$appendTxt = "";
+			}
+
+			$filename = Helper::getPaths()->getMatchSettingPath() . $entries['SaveAs'] . $appendTxt;
 			$this->saveSettings($login, $filename);
+			$this->populateList();
+			$this->RedrawAll();
+		} catch (\Exception $e) {
+			$this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $login, $e->getMessage()), $login);
+		}
+	}
+
+	function loadAs($login, $entries)
+	{
+
+		try {
+			if (empty($entries['LoadAs'])) {
+				$this->connection->chatSendServerMessage(__("Error in filename", $login), $login);
+				return;
+			}
+			$appendTxt = ".txt";
+			if (substr($entries['LoadAs'], -4, 4) == ".txt") {
+				$appendTxt = "";
+			}
+
+			$filename = Helper::getPaths()->getMatchSettingPath() . $entries['LoadAs'] . $appendTxt;
+			$this->loadSettings($login, $filename);
 			$this->populateList();
 			$this->RedrawAll();
 		} catch (\Exception $e) {
@@ -115,6 +156,8 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	function onResize($oldX, $oldY)
 	{
 		parent::onResize($oldX, $oldY);
+
+
 		$this->frame->setPosition(4, -4);
 		$this->pager->setPosY(-6);
 		$this->pager->setSize($this->sizeX - 2, $this->sizeY - 16);
@@ -134,19 +177,28 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	function populateList()
 	{
+
 		foreach ($this->items as $item)
 			$item->erase();
 		$this->pager->clearItems();
 		$this->items = array();
-		$path = Helper::getPaths()->getMatchSettingPath() . "*.txt";
+		if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
+			$this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(1, __("File listing disabled since you are running remote", $this->getRecipient()), $this->sizeX);
+			$this->pager->addItem($this->items[0]);
+			$this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(1, __("You can tho save and load files from server by the filename!", $this->getRecipient()), $this->sizeX);
+			$this->pager->addItem($this->items[0]);
+		}
+		else {
+			$path = Helper::getPaths()->getMatchSettingPath() . "*.txt";
 
-		$settings = glob($path);
-		$x = 0;
-		if (count($settings) > 1) {
-			foreach ($settings as $file) {
-				$this->items[$x] = new MatchSettingsFile($x, $file, $this, $this->getRecipient(), $this->sizeX);
-				$this->pager->addItem($this->items[$x]);
-				$x++;
+			$settings = glob($path);
+			$x = 0;
+			if (count($settings) > 1) {
+				foreach ($settings as $file) {
+					$this->items[$x] = new MatchSettingsFile($x, $file, $this, $this->getRecipient(), $this->sizeX);
+					$this->pager->addItem($this->items[$x]);
+					$x++;
+				}
 			}
 		}
 	}
