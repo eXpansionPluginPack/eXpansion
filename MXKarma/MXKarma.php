@@ -53,6 +53,8 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
 	/** @var String[][] */
 	private $votes = array();
 
+	private $votesTemp = array();
+
 	/** @var MXVote */
 	private $msg_error, $msg_connected;
 
@@ -156,6 +158,7 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
 		parent::onBeginMatch();
 		$this->mxRatings = null;
 		$this->votes = array();
+		$this->votesTemp = array();
 		$this->mapStart = time();
 		if ($this->mxConnection->isConnected()) {
 			$this->mxConnection->getRatings($this->getPlayers(), false);
