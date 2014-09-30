@@ -298,6 +298,7 @@ abstract class Variable
 				try {
 					$phandler->callPublicMethod($core, $this->pluginId, 'onSettingsChanged', array($this));
 				} catch (\Exception $ex) {
+					echo "error on settings change!". $ex->getMessage()."\n";
 				}
 
 				Dispatcher::dispatch(new PluginSettingChange(PluginSettingChange::ON_SETTINGS_CHANGE, $this->pluginId, $this));

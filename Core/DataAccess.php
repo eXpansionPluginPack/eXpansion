@@ -17,12 +17,16 @@ use ManiaLivePlugins\eXpansion\Core\Structures\HttpQuery;
 class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Application\Listener, \ManiaLive\Features\Tick\Listener
 {
 
-	/** @var \Webaccess */
+	/** @var Webaccess */
 	private $webaccess;
+
 // these are used for async webaccess 
 	private $read;
+
 	private $write;
+
 	private $except;
+
 	private $tryTimer = -1;
 
 	public function __construct()
@@ -84,7 +88,15 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 
 	private function _get(HttpQuery $query)
 	{
-		$this->webaccess->request($query->baseurl . "?" . $query->params, array(array($this, "_process"), $query), null, false, 20, 3, 5, $query->userAgent, $query->mimeType);
+		$this->webaccess->request($query->baseurl . "?" . $query->params, array(array($this, "_process"), $query), $query->data, false, 20, 3, 5, $query->userAgent, $query->mimeType);
+	}
+
+	final public function httpPost($url, $data = null, $callback , $callparams = array(), $userAgent = "ManiaLive - eXpansionPluginPack", $mimeType = "application/json")
+	{
+		
+		$query = new HttpQuery($url, $callback, $callparams, $userAgent, $mimeType);
+		$query->setData($data);
+		$this->_get($query);
 	}
 
 	/** @todo make queue and process it onPostLoop */
@@ -154,7 +166,8 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 			if ($query->redirectCount < 3) {
 				Console::println("[DataAccess] request redirection to " . $query->baseurl);
 				$this->_get($query);
-			} else {
+			}
+			else {
 				Console::println("[DataAccess] webRequest redirected more than 3 times, canceling request.");
 			}
 			return;
@@ -174,7 +187,8 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 			if ($query->redirectCount < 3) {
 				Console::println("[DataAccess] request redirection to " . $query->baseurl);
 				$this->_get($query);
-			} else {
+			}
+			else {
 				Console::println("[DataAccess] webRequest redirected more than 3 times, canceling request.");
 			}
 			return;
@@ -187,7 +201,8 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 			$args = $query->callparams;
 			array_unshift($args, $outData, $data['Code']);
 			call_user_func_array($query->callback, $args);
-		} else {
+		}
+		else {
 			$args = $query->callparams;
 			array_unshift($args, null, $data['Code']);
 			call_user_func_array($query->callback, $args);
@@ -196,7 +211,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 
 	public function onInit()
 	{
-
+		
 	}
 
 	public function onPostLoop()
@@ -204,7 +219,8 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 		try {
 			if ($this->tryTimer == -1) {
 				$this->webaccess->select($this->read, $this->write, $this->except, 0, 0);
-			} else {
+			}
+			else {
 				if (time() >= $this->tryTimer) {
 					Console::println("[DataAccess] Loop active again!");
 					$this->tryTimer = -1;
@@ -219,17 +235,17 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 
 	public function onPreLoop()
 	{
-
+		
 	}
 
 	public function onRun()
 	{
-
+		
 	}
 
 	public function onTerminate()
 	{
-
+		
 	}
 
 }

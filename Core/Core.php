@@ -286,7 +286,8 @@ EOT;
 
 		//Add exterior access to the server information window
 		$this->setPublicMethod("showInfo");
-
+		$this->setPublicMethod("onSettingsChanged");
+		
 		//Add exterior access to the expansion settings
 		$this->setPublicMethod("showExpSettings");
 		$this->setPublicMethod("showNetStats");

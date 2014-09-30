@@ -60,6 +60,20 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 
 	const LibXmlRpc_OnStunt = 0x24;
 
+	/* more storm events */
+
+	const LibXmlRpc_OnCapture = 0x25;
+
+	const LibXmlRpc_BeginPlaying = 0x26;
+
+	const LibXmlRpc_EndPlaying = 0x27;
+
+	const LibXmlRpc_UnloadingMap = 0x28;
+
+	const LibXmlRpc_BeginPodium = 0x29;
+
+	const LibXmlRpc_EndPodium = 0x30;
+
 	protected $params;
 
 	function __construct($onWhat)
@@ -173,6 +187,10 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 			case self::LibXmlRpc_PlayerRanking:
 				// * Note : [Rank, Login, NickName, TeamId, IsSpectator, IsAway, BestTime, Zone]
 				$listener->LibXmlRpc_PlayerRanking($array[0], $array[1], $array[2], $array[3], $array[4], $array[5], $array[6], $array[7]);
+				break;
+			case self::LibXmlRpc_OnCapture:
+				// * Note : Login
+				$listener->LibXmlRpc_OnCapture($array[0]);
 				break;
 		}
 		return;

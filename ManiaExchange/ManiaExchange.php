@@ -185,14 +185,14 @@ class ManiaExchange extends ExpPlugin
 		$file = $dir . "/" . $mxId . ".Map.Gbx";
 
 		if ($this->expStorage->isRemoteControlled) {
-			$this->saveMapRemotelly($file, $data, $login);
+			$this->saveMapRemotelly($file, $dir, $data, $login);
 		}
 		else {
-			$this->saveMapLocally($file, $data, $login);
+			$this->saveMapLocally($file, $dir, $data, $login);
 		}
 	}
 
-	public function saveMapRemotelly($file, $data, $login)
+	public function saveMapRemotelly($file, $dir, $data, $login)
 	{
 		try {
 			if ($this->connection->writeFile($file, $data)) {
@@ -223,7 +223,7 @@ class ManiaExchange extends ExpPlugin
 		}
 	}
 
-	public function saveMapLocally($file, $data, $login)
+	public function saveMapLocally($file, $dir, $data, $login)
 	{
 		try {
 			if (!is_dir($dir)) {
@@ -254,7 +254,7 @@ class ManiaExchange extends ExpPlugin
 				$this->exp_chatSendServerMessage("Error while saving a map file. ", $login);
 			}
 		} catch (\Exception $ex) {
-			$this->exp_chatSendServerMessage("Error while saving a map file : " . $e->getMessage(), $login);
+			$this->exp_chatSendServerMessage("Error while saving a map file : " . $ex->getMessage(), $login);
 		}
 	}
 

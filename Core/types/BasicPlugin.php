@@ -50,7 +50,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 	{
 
 		public static $plugins_list;
-		
+
 		private $_isScriptEventsEnabled = false;
 
 		/**
@@ -955,6 +955,11 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 * @param PlayerNetInfo[] $players
 		 */
 		public function onPlayerNetLost($players)
+		{
+			
+		}
+
+		function LibXmlRpc_OnCapture($login)
 		{
 			
 		}

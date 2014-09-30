@@ -68,6 +68,12 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 	public $version;
 
 	/**
+	 * Cached titleId value
+	 * @var string
+	 */
+	public $titleId;
+
+	/**
 	 * The simple title the environment of the track refers to
 	 *
 	 * @var String
@@ -114,6 +120,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 
 		$this->version = $this->connection->getVersion();
 
+		$this->titleId = $this->version->titleId;
+
 		$this->isRelay = $this->connection->isRelayServer();
 
 		$this->simpleEnviTitle = $this->getSimpleTitleByEnvironment($this->storage->currentMap->environnement);
@@ -128,7 +136,7 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 			$this->isRemoteControlled = false;
 		else
 			$this->isRemoteControlled = true;
-		
+
 		$this->dediUpTime = $this->connection->getNetworkStats()->uptime;
 	}
 
