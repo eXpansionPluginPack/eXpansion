@@ -174,10 +174,10 @@ main () {
         if (PendingEvents.count != 0) { 
 	    foreach (Event in PendingEvents) {                
 		
-		if ( (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close") || (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 35) ) {
+		if ( (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close")  || (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 35) ) {
 		    if (exp_windowStack.count > 0) 
                     {
-                     if (exp_windowStack[0] == id) {
+                     if (exp_windowStack[0] == id || Event.Type == CMlEvent::Type::MouseClick) {
                             if (disableAnimations) {
                                 TriggerPageAction(closeAction);
                                 stackRemoveWindow(id);
