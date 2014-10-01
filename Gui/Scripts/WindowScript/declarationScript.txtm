@@ -69,7 +69,8 @@ main () {
     EnableMenuNavigationInputs = True;  // to enable pressing escape-key + tab-key 
     declare Integer closeCounter = 0;
     declare Boolean mouseButton for Page;
-    
+    declare Integer tabIndex = -1;
+
     declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");   
 
     declare windowFrame <=> Page.GetFirstChild("windowFrame");
@@ -85,7 +86,8 @@ main () {
     declare isMinimized = False;
     
     declare Boolean active = False; 
-    
+    declare Boolean isTab = False;
+
     declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
     declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
     declare Vec2 Offset = <0., 0.>;
@@ -149,7 +151,7 @@ main () {
 	    closeWindow = False;	    
 	    continue;
 	}
-	
+
 	if (exp_updateStack == True) {
 	    foreach (key => value in exp_windowStack) {		
 		if (id == value) {
@@ -162,6 +164,35 @@ main () {
 	    }	    
 	}
 	    
+        if (isTab == True) {
+            isTab = False;
+            Page.GetClassChildren("isTabIndex", Page.MainFrame, True);
+            declare CMlControl control;
+            declare Integer x = 0;
+
+            declare Integer mod = 1;
+            if (Page.GetClassChildren_Result.count > 0) {
+                mod = Page.GetClassChildren_Result.count;
+            }
+
+
+            tabIndex = (tabIndex + 1) % mod;
+
+            foreach (control in Page.GetClassChildren_Result) {
+                if (tabIndex == x) {
+                    control.Focus();
+
+                    if (control.HasClass("isEditable")) {
+                        declare CMlEntry entry <=> (control as CMlEntry);  
+                         entry.StartEdition();
+                    }
+                }
+                x += 1;
+            } 
+
+
+
+        }   
 	
         if (MoveWindow) {                        
              Window.RelativePosition.X = MouseX + Offset.X;
@@ -199,9 +230,22 @@ main () {
                 if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "MainWindow" || Event.ControlId == "Titlebar" ) ) {            
                     stackActivateWindow(id);
                 }
+                // tab handler  
+                if (Event.Type == CMlEvent::Type::KeyPress) {
+                    log(Event.KeyCode);
+                }
+
+                if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 123) {
+		    if (exp_windowStack.count > 0) 
+                    {
+                        if (exp_windowStack[0] == id) {
+                            isTab = True;
+                       }
+                    }
+                }
 
             } 
-	}
+	} 
 	
 	if (exp_windowStack.count == 0) {
 	    exp_window = "";

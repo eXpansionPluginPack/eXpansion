@@ -69,6 +69,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 		$this->backGround->setImageFocus($config->getImage("button", "focus.png"),true);
 		$this->backGround->setScriptEvents(true);
 		$this->backGround->setColorize("2af");
+	//	$this->backGround->setAttribute("class", "isTabIndex");
 		$this->addComponent($this->backGround);
 	
 		
