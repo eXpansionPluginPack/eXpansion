@@ -31,7 +31,8 @@ declare CMlFrame item;
 declare Real nb = 1.0;
 declare Real itemsPerPage = -1.0;
 
-
+declare Boolean isScrollDown = False;
+declare Boolean isScrollUp = False;
 
 foreach (item in Pager.Controls) {
     item.RelativePosition.Y = -itemSizeY * nb;                    

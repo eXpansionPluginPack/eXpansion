@@ -52,6 +52,30 @@ if(oldIndex != currentIndex){
 	
 }
 
+if (isScrollDown) {
+    isScrollDown = False;
+    if (textData.count > rowsPerPage) {
+        currentIndex = currentIndex + 5;
+        if(currentIndex > maxIndex){
+            currentIndex = maxIndex;
+        }
+        declare maxDelta = pagerStartPos - pagerStopPosition;
+        ScrollBar.RelativePosition.Y = -1*(maxDelta/maxIndex)*currentIndex;
+    }
+}
+
+if (isScrollUp) {
+    isScrollUp  = False;
+     if (textData.count > rowsPerPage) {
+        currentIndex = currentIndex - 5;
+        if(currentIndex < 0){
+                currentIndex = 0;
+        }
+        declare maxDelta = pagerStartPos - pagerStopPosition;
+        ScrollBar.RelativePosition.Y = -1*(maxDelta/maxIndex)*currentIndex;
+    }
+}
+
 foreach (Event in PendingEvents) {
 
     if(Event.Type == CMlEvent::Type::MouseClick){
@@ -60,24 +84,28 @@ foreach (Event in PendingEvents) {
 	    pager_firstClick = True;
 	    pager_moveScroll = True;
 	}else if (Event.ControlId == "ScrollDown")  {
-	    if (textData.count > rowsPerPage) {
-		currentIndex = currentIndex + 5;
-		if(currentIndex > maxIndex){
-		    currentIndex = maxIndex;
-		}
-		declare maxDelta = pagerStartPos - pagerStopPosition;
-		ScrollBar.RelativePosition.Y = -1*(maxDelta/maxIndex)*currentIndex;
-	    }
+               isScrollDown = True;
 	}else if (Event.ControlId == "ScrollUp")  {
-		if (textData.count > rowsPerPage) {
-		    currentIndex = currentIndex - 5;
-		    if(currentIndex < 0){
-			    currentIndex = 0;
-		    }
-		    declare maxDelta = pagerStartPos - pagerStopPosition;
-		    ScrollBar.RelativePosition.Y = -1*(maxDelta/maxIndex)*currentIndex;
-		}
+               isScrollUp = True;
 	}
+    }
+// pagedown = 78
+    if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 78) {
+        if (exp_windowStack.count > 0) 
+        {
+            if (exp_windowStack[0] == id) {
+              isScrollDown = True;
+           }
+        }
+    }
+// pageup = 103
+   if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 103) {
+        if (exp_windowStack.count > 0) 
+        {
+            if (exp_windowStack[0] == id) {
+              isScrollUp = True;
+           }
+        }
     }
     
     if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {    
