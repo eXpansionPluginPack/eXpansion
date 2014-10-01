@@ -54,6 +54,13 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		/* $window = Gui\testWindow::Create("reaby");
 		  $window->show(); */
 	}
+	
+	public function exp_onUnload()
+	{
+		$this->disableTickerEvent();
+		\ManiaLivePlugins\eXpansion\DebugTool\Gui\testWidget::EraseAll();
+		parent::exp_onUnload();
+	}
 
 	function onTick()
 	{
