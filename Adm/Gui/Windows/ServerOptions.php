@@ -203,7 +203,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->e['AutosaveValidation']->setStatus($server->autoSaveValidationReplays);
 		$this->e['AutosaveValidation']->setText(__("Autosave Validation Replays", $login));
 		$this->frameCb->addComponent($this->e['AutosaveValidation']);
-		
+
 		$this->e['KeepPlayerSlots'] = new Checkbox(4, 4, 50);
 		$this->e['KeepPlayerSlots']->setStatus($server->keepPlayerSlots);
 		$this->e['KeepPlayerSlots']->setText(__("Keep Player Slots", $login));
@@ -331,7 +331,10 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			"DisableServiceAnnounces" => $this->e['DisableAnnounces']->getStatus(),
 			"KeepPlayerSlots" => $this->e['KeepPlayerSlots']->getStatus()
 		);
+
 		$this->connection->setServerOptions($serverOptions);
+	
+		$this->connection->keepPlayerSlots($this->e['KeepPlayerSlots']->getStatus());
 		
 		if (AdminGroups::hasPermission($login, Permission::server_maxplayer)) {
 			$this->connection->setMaxPlayers(intval($args['maxPlayers']));

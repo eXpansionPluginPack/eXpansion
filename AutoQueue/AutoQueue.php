@@ -98,11 +98,7 @@ class AutoQueue extends ExpPlugin
 
 	public function onPlayerDisconnect($login, $disconnectionReason = null)
 	{
-		try {
-			$this->connection->spectatorReleasePlayerSlot($login);
-		} catch (Exception $ex) {
-			
-		}
+	
 		
 		if (in_array($login, $this->queue->getLogins())) {
 			$this->queue->remove($login);
