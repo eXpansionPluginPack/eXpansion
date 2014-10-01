@@ -20,6 +20,7 @@
  */
 
 namespace ManiaLivePlugins\eXpansion\Debugtool;
+
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 /**
@@ -32,6 +33,8 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	private $counter = 0;
 
+	private $ticker = 0;
+
 	private $login = null;
 
 	private $testActive = false;
@@ -40,9 +43,9 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		$this->enableTickerEvent();
 		$this->enableDedicatedEvents();
-		if($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
-			$this->enableScriptEvents();
-		
+		//if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
+		//	$this->enableScriptEvents();
+
 		$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		//$this->registerChatCommand("starttest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
@@ -51,10 +54,20 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		/* $window = Gui\testWindow::Create("reaby");
 		  $window->show(); */
 	}
-	
 
 	function onTick()
 	{
+
+		if ($this->ticker > 5) {
+			$this->ticker = 0;
+			\ManiaLivePlugins\eXpansion\DebugTool\Gui\testWidget::EraseAll();
+			$widget = \ManiaLivePlugins\eXpansion\DebugTool\Gui\testWidget::Create();
+			$widget->setPosition(60,0);
+			$widget->setData($this->connection->getPlayerList(20, 0));
+			$widget->show();
+			return;
+		}
+
 		if ($this->testActive) {
 			echo $this->counter . "\n";
 			\ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist::EraseAll();
@@ -77,6 +90,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$this->logMemory();
 			$this->counter++;
 		}
+		$this->ticker++;
 	}
 
 	function connect($login, $playercount)
@@ -99,7 +113,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		echo "$login: cpindex: $cpIndex with $time\n";
 	}
-	
+
 	function test($login)
 	{
 		$this->login = $login;
