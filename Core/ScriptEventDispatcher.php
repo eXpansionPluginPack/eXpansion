@@ -60,12 +60,13 @@ class ScriptEventDispatcher implements ServerEventListener
 	public function onModeScriptCallback($param1, $param2)
 	{
 
-		echo "\n". $param1."\n";
+		/* echo "\n". $param1."\n";
 		print_r($param2);
 		
 
 		$this->connection->chatSend($param1, null, true);
 		$this->connection->chatSend(print_r($param2, true), null, true);
+		*/
 		
 		switch ($param1) {
 			case 'LibXmlRpc_BeginMap':
