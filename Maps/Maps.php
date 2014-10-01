@@ -118,7 +118,7 @@ class Maps extends ExpPlugin
 		$this->cmd_remove = $cmd;
 
 		$cmd = AdminGroups::addAdminCommand('map erase', $this, 'chat_eraseMap', Permission::map_removeMap);
-		$cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
+		$cmd->setHelp(exp_getMessage('Erases current map from the playlist.'));
 		$cmd->setMinParam(0);
 		AdminGroups::addAlias($cmd, "nuke this");
 		AdminGroups::addAlias($cmd, "trash this");
@@ -685,15 +685,49 @@ class Maps extends ExpPlugin
 
 		try {
 			$player = $this->storage->getPlayerObject($login);
-			$msg = exp_getMessage('#admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!');
-			$this->exp_chatSendServerMessage($msg, null, array(Formatting::stripCodes($player->nickName, 'wosnm'), null, Formatting::stripCodes($map->name, 'wosnm'), $map->author));
+			$found = false;
 			foreach ($this->storage->maps as $storagemap) {
 				if ($storagemap->uId == $map->uId) {
+					$found = true;
 					$this->connection->removeMap($map->fileName);
 				}
 			}
+			$msg = "";
+			$recievers = null;
+			$additions = "";
+			if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
+				if ($found) {
+					$msg = exp_getMessage('#admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from playlist!');
+				}
+				else {
+					$msg = exp_getMessage('#admin_error#Map #variable#%3$s #admin_error# not found at playlist, perhaps it was already removed ?');
+					$recievers = $login;
+				}
+				$this->exp_chatSendServerMessage($msg, $recievers, array(Formatting::stripCodes($player->nickName, 'wosnm'), null, Formatting::stripCodes($map->name, 'wosnm'), $map->author));
+				return;
+			}
+			else {
 
-			unlink(Helper::getPaths()->getDefaultMapPath() . $map->fileName);
+				try {
+					unlink(Helper::getPaths()->getDefaultMapPath() . $map->fileName);
+					if ($found)
+						$additions = "playlist and disk!";
+					else
+						$additions = "disk!";
+				} catch (\Exception $ex) {
+					if ($found) {
+						$additions = "playlist";
+					}
+				}
+				if ($additions != "") {
+					$msg = exp_getMessage('#admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s by %4$s #admin_action# from %5$s');
+					$this->exp_chatSendServerMessage($msg, $recievers, array(Formatting::stripCodes($player->nickName, 'wosnm'), null, Formatting::stripCodes($map->name, 'wosnm'), $map->author, $additions));
+				}
+				else {
+					$msg = exp_getMessage('#admin_error#Nothing to do, the map has been removed already from playlist and from disk!');
+					$this->exp_chatSendServerMessage($msg, $login);
+				}
+			}
 		} catch (Exception $e) {
 			$this->exp_chatSendServerMessage(__("Error: %s", $login, $e->getMessage()));
 		}
@@ -993,8 +1027,7 @@ class Maps extends ExpPlugin
 			$this->exp_chatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
 			return;
 		}
-		if ($this->expStorage->isRemoteControlled) 
-		{
+		if ($this->expStorage->isRemoteControlled) {
 			$this->exp_chatSendServerMessage(exp_getMessage("#admin_error#Can't continue, since this instance of eXpansion is running remote agains the server"), $login);
 			return;
 		}

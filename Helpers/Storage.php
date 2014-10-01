@@ -41,6 +41,9 @@ use ManiaLive\DedicatedApi\Config as DedicatedConfig;
 class Storage extends Singleton implements \ManiaLive\Event\Listener
 {
 
+	/**  for testing stuff */
+	const ForceRemote = false;
+
 	const TITLE_SIMPLE_TM = 'TM';
 
 	const TITLE_SIMPLE_SM = 'SM';
@@ -137,6 +140,10 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 		else
 			$this->isRemoteControlled = true;
 
+		if (self::ForceRemote) {
+			$this->isRemoteControlled = true;
+			$this->connection->chatSend('[notice] $$Exp_storage->isRemoteControlled is forced to True!', null, true);
+		}
 		$this->dediUpTime = $this->connection->getNetworkStats()->uptime;
 	}
 

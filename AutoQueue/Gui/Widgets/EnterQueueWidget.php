@@ -49,7 +49,7 @@ class EnterQueueWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$this->dicoLabel->setTextColor("fff");
 		$this->addComponent($this->dicoLabel);
 
-		$frame = new \ManiaLive\Gui\Controls\Frame(60, -7);
+		$frame = new \ManiaLive\Gui\Controls\Frame(50, -7);
 		$frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
 
 		$button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
