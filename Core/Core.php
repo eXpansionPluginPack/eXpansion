@@ -287,7 +287,7 @@ EOT;
 		//Add exterior access to the server information window
 		$this->setPublicMethod("showInfo");
 		$this->setPublicMethod("onSettingsChanged");
-		
+
 		//Add exterior access to the expansion settings
 		$this->setPublicMethod("showExpSettings");
 		$this->setPublicMethod("showNetStats");
@@ -316,6 +316,11 @@ EOT;
 		$this->connection->dedicatedEcho("ManiaLive\\eXpansion", (string) getmypid());
 		$this->connection->setForcedMusic(false, "");
 		$this->connection->setRoundCustomPoints($this->config->roundsPoints);
+		$this->connection->resetServerTags();
+		$this->connection->setServerTag("nl.controller", "ManiaLive / eXpansion");
+		$this->connection->setServerTag("nl.controller.version", \ManiaLive\Application\VERSION . " / " . Core::EXP_VERSION);
+		$this->syncAdminStatus();
+
 		// this is a fix for servers with a password, if player chooses to spectate, he can now enter back to play,
 		// which is not needed anymore as of 09/2014
 		// $this->connection->keepPlayerSlots(true);
@@ -327,6 +332,37 @@ EOT;
 			case "quitDialogManialink":
 				$this->updateQuitDialog();
 				break;
+			case "useWhiteList":
+				if ($var->getRawValue()) {
+					$this->doWhitelist();
+				}
+				break;
+		}
+	}
+
+	public function doWhitelist()
+	{
+		$guests = $this->connection->getGuestList(-1, 0);
+		$guestList = array();
+		foreach ($guests as $player) {
+			$guestList[] = $player->login;
+		}
+
+		foreach ($this->storage->players as $login => $player) {
+			if (in_array($login, $guestList) || AdminGroups::getInstance()->isInList($login)) {
+				// do nothing
+			}
+			else {
+				$this->connection->kick($login, "This server is whitelisted, you are not in the list.");
+			}
+		}
+		foreach ($this->storage->spectators as $login => $player) {
+			if (in_array($login, $guestList) || AdminGroups::getInstance()->isInList($login)) {
+				// do nothing
+			}
+			else {
+				$this->connection->kick($login, "This server is whitelisted, you are not in the list.");
+			}
 		}
 	}
 
@@ -833,7 +869,40 @@ EOT;
 
 	public function onPlayerConnect($login, $isSpectator)
 	{
+		$this->syncAdminStatus();
+		if ($this->config->useWhitelist) {
+			if (in_array($login, $guestList) || AdminGroups::getInstance()->isInList($login)) {
+				// do nothing
+			}
+			else {
+				$this->connection->kick($login, "This server is whitelisted, you are not in the list.");
+			}
+		}
+	}
+
+	public function syncAdminStatus($loginDisconnecting = false)
+	{
+		$admingroup = AdminGroups::getInstance();
+		$hasAdmin = "false";
+		$playerArray = array();
+
+		foreach ($this->storage->players as $login => $player) {
+			$playerArray[$login] = "present";
+		}
+		foreach ($this->storage->spectators as $login => $player) {
+			$playerArray[$login] = "present";
+		}
+
+		if ($loginDisconnecting !== false && array_key_exists($loginDisconnecting, $playerArray))
+			unset($playerArray[$loginDisconnecting]);
 		
+		foreach ($playerArray as $login => $player) {
+			if (AdminGroups::hasPermission($login, Permission::player_kick)) {
+				$hasAdmin = "true";
+			}
+		}
+		
+		$this->connection->setServerTag("server.isAdminPresent", $hasAdmin);
 	}
 
 	/**
@@ -842,7 +911,7 @@ EOT;
 	 * @param string $login              The login of the player that disconnected
 	 * @param mixed $disconnectionReason The reason the player disconnected
 	 */
-	public function onPlayerDisconnect($login, $disconnectionReason)
+	public function onPlayerDisconnect($login, $disconnectionReason = null)
 	{
 		//Player disconnects
 
@@ -855,6 +924,7 @@ EOT;
 			$this->expPlayers[$login]->isPlaying = false;
 			unset($this->expPlayers[$login]);
 		}
+		$this->syncAdminStatus($login);
 	}
 
 	/**

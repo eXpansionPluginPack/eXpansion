@@ -176,8 +176,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var = new String('contact', 'Server administrators contact info (displayed at serverinfo window)', $config, false);
 		$var->setDefaultValue('YOUR@EMAIL.COM');
 		$this->registerVariable($var);
-
-
+		
 		$var = new SortedList('roundsPoints', 'The file to save server settings', $config, false);
 		$var->setGroup("Misc");
 		$var->setType(new Int(""));
@@ -188,6 +187,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var = new String('quitDialogManialink', 'Quit dialog customization, use url with custom manialink.xml', $config, false);
 		$var->setDefaultValue('');
 		$this->registerVariable($var);
+		
+		$var = new Boolean('useWhitelist', 'Use Whitelist', $config);
+		$var->setDescription("Kicks everybody else from server, than players in quest list");
+		$var->setDefaultValue(false);
+		$this->registerVariable($var);
+		
 	}
 
 }

@@ -61,6 +61,8 @@ class Config extends \ManiaLib\Utils\Singleton
 	
 	public $quitDialogManialink = "";
 	
+	public $useWhitelist = false;
+	
 }
 
 ?>
