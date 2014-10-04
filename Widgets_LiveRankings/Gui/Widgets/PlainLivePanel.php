@@ -25,6 +25,7 @@ class PlainLivePanel extends PlainPanel
 		$this->setName("Live Rankings Panel");
 		$this->timeScript->setParam('varName', 'LiveTime1');
 		$this->timeScript->setParam('getCurrentTimes', 'True');
+		$this->bg->setAction(null);
 	}
 
 	protected function getScript()
