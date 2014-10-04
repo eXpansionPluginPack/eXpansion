@@ -17,6 +17,7 @@ declare Integer menuCount = <?php echo $this->count ?>;
 declare Boolean eXp_mouseRightState = False;
 declare eXp_mouseRightTime = 0;
 declare eXp_tabPressed = False;
+declare eXp_tabTime = 0;
 
 declare Boolean eXp_mouseMiddleState = False;
 declare eXp_mouseMiddleTime = 0;
