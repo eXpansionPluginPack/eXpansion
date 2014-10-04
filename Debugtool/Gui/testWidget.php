@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\DebugTool\Gui;
+namespace ManiaLivePlugins\eXpansion\Debugtool\Gui;
 
 use ManiaLivePlugins\eXpansion\Core\Core;
 
