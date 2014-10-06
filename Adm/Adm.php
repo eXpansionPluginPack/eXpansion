@@ -289,9 +289,6 @@ class Adm extends ExpPlugin
 			\ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance()->check();
 
 
-			$msg = exp_getMessage('#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s');
-			$this->exp_chatSendServerMessage($msg, null, array($nick, $ipoints));
-
 			if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
 				$ipoints = implode(",", $points);
 				$this->connection->triggerModeScriptEventArray('Rounds_SetPointsRepartition', $ipoints);
@@ -303,6 +300,8 @@ class Adm extends ExpPlugin
 				}
 				$this->connection->setRoundCustomPoints($cpoints);
 			}
+			$msg = exp_getMessage('#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s');
+			$this->exp_chatSendServerMessage($msg, null, array($nick, implode(",", $points)));
 		} catch (Exception $e) {
 			$this->connection->chatSendServerMessage(__('#admin_error#Error: %s', $login, $e->getMessage()), $login);
 		}
