@@ -39,6 +39,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 	use Maniaplanet\DedicatedServer\Structures\PlayerNetInfo;
 	use Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException;
 	use Phine\Exception\Exception as Exception2;
+	use \ManiaLive\DedicatedApi\Config as DedicatedConfig;
 
 	/**
 	 * Description of BasicPlugin
@@ -954,6 +955,11 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 * @param PlayerNetInfo[] $players
 		 */
 		public function onPlayerNetLost($players)
+		{
+			
+		}
+
+		function LibXmlRpc_OnCapture($login)
 		{
 			
 		}

@@ -98,6 +98,8 @@ class AutoQueue extends ExpPlugin
 
 	public function onPlayerDisconnect($login, $disconnectionReason = null)
 	{
+	
+		
 		if (in_array($login, $this->queue->getLogins())) {
 			$this->queue->remove($login);
 		}

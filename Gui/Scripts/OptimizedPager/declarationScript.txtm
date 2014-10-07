@@ -36,6 +36,9 @@ declare Integer currentIndex = 0;
 declare Integer oldIndex = 0;
 declare Integer maxIndex = totalRows - rowsPerPage;
 
+declare Boolean isScrollDown = False;
+declare Boolean isScrollUp = False;
+
 declare CMlLabel[Integer][Integer] labels;
 
 //Initializing the script

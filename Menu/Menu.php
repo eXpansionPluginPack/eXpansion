@@ -240,7 +240,9 @@ class Menu extends ExpPlugin
 		if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps") && AdminGroups::hasPermission($login, Permission::map_addLocal) || AdminGroups::hasPermission($login, Permission::map_addMX) || AdminGroups::hasPermission($login, Permission::map_removeMap)) {
 			$maps = $submenu->addSubMenu($menu, __("Map", $login));
 			if (AdminGroups::hasPermission($login, Permission::map_addLocal)) {
-				$submenu->addItem($maps, __("Add local map", $login), $this->actions['addMaps']);
+				if ($this->expStorage->isRemoteControlled == false) {
+					$submenu->addItem($maps, __("Add local map", $login), $this->actions['addMaps']);
+				}
 			}
 			if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\ManiaExchange\\ManiaExchange") && AdminGroups::hasPermission($login, Permission::map_addMX)) {
 				$submenu->addItem($maps, __("Mania-Exchange", $login), $this->actions['admmx']);

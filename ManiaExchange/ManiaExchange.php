@@ -177,14 +177,59 @@ class ManiaExchange extends ExpPlugin
 		}
 		/** @var \Maniaplanet\DedicatedServer\Structures\Version */
 		$game = $this->connection->getVersion();
-
 		$dir = Helper::getPaths()->getDownloadMapsPath() . $game->titleId;
+		if ($this->expStorage->isRemoteControlled) {
+			$dir = "Downloaded/" . $game->titleId;
+		}
+
 		$file = $dir . "/" . $mxId . ".Map.Gbx";
 
+		if ($this->expStorage->isRemoteControlled) {
+			$this->saveMapRemotelly($file, $dir, $data, $login);
+		}
+		else {
+			$this->saveMapLocally($file, $dir, $data, $login);
+		}
+	}
+
+	public function saveMapRemotelly($file, $dir, $data, $login)
+	{
+		try {
+			if ($this->connection->writeFile($file, $data)) {
+
+				try {
+					if (!$this->connection->checkMapForCurrentServerParams($file)) {
+						$msg = exp_getMessage("The Map is not compatible with current server settings, map not added.");
+						$this->exp_chatSendServerMessage($msg, $login);
+						return;
+					}
+
+					$this->connection->addMap($file);
+
+					$map = $this->connection->getMapInfo($file);
+					$this->exp_chatSendServerMessage($this->msg_add, null, array($map->name));
+					if ($this->config->juke_newmaps) {
+						$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Maps\Maps', "queueMap", $login, $map, false);
+					}
+				} catch (\Exception $e) {
+					$this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
+				}
+			}
+			else {
+				$this->exp_chatSendServerMessage("Error while saving a map file at remote host: " . $file, $login);
+			}
+		} catch (Exception $ex) {
+			$this->exp_chatSendServerMessage("Error while saving a map file at remote host :" . $e->getMessage(), $login);
+		}
+	}
+
+	public function saveMapLocally($file, $dir, $data, $login)
+	{
 		try {
 			if (!is_dir($dir)) {
 				mkdir($dir, 0775);
 			}
+
 			if (is_dir($dir) && $this->dataAccess->save($file, $data)) {
 
 				try {
@@ -209,7 +254,7 @@ class ManiaExchange extends ExpPlugin
 				$this->exp_chatSendServerMessage("Error while saving a map file. ", $login);
 			}
 		} catch (\Exception $ex) {
-			$this->exp_chatSendServerMessage("Error while saving a map file : " . $e->getMessage(), $login);
+			$this->exp_chatSendServerMessage("Error while saving a map file : " . $ex->getMessage(), $login);
 		}
 	}
 
@@ -278,7 +323,7 @@ class ManiaExchange extends ExpPlugin
 				$query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
 				break;
 		}
-		
+
 		$query = $query . "?" . self::$betakey;
 		$this->dataAccess->httpGet($query, Array($this, "xVote"), array($login, $mxId), "Manialive/eXpansion MXapi [search] ver 0.1", "application/json");
 	}

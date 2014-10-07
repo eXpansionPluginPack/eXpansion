@@ -76,6 +76,7 @@ class Inputbox extends \ManiaLive\Gui\Control
 
 		if ($editable) {
 			$this->button = new \ManiaLib\Gui\Elements\Entry($this->sizeX, 4.5);
+			$this->button->setAttribute("class", "isTabIndex isEditable");
 			$this->button->setName($this->name);
 			$this->button->setId($this->name);
 			$this->button->setDefault($text);

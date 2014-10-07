@@ -204,6 +204,10 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->e['AutosaveValidation']->setText(__("Autosave Validation Replays", $login));
 		$this->frameCb->addComponent($this->e['AutosaveValidation']);
 
+		$this->e['KeepPlayerSlots'] = new Checkbox(4, 4, 50);
+		$this->e['KeepPlayerSlots']->setStatus($server->keepPlayerSlots);
+		$this->e['KeepPlayerSlots']->setText(__("Keep Player Slots", $login));
+		$this->frameCb->addComponent($this->e['KeepPlayerSlots']);
 
 		// spacer
 		$quad = new \ManiaLib\Gui\Elements\Quad(20, 16);
@@ -292,8 +296,8 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->refereePass->setSizeX(($this->sizeX - 8) / 2);
 		$this->frameInputbox->setPosition(0, -4);
 		$this->frameCb->setPosition($this->sizeX / 2 + 20, -25);
-		$this->buttonOK->setPosition($this->sizeX - $this->buttonCancel->sizeX - $this->buttonOK->sizeX, -$this->sizeY + 6);
-		$this->buttonCancel->setPosition($this->sizeX - $this->buttonCancel->sizeX, -$this->sizeY + 6);
+		$this->buttonOK->setPosition($this->sizeX - $this->buttonCancel->sizeX - $this->buttonOK->sizeX, -$this->sizeY);
+		$this->buttonCancel->setPosition($this->sizeX - $this->buttonCancel->sizeX, -$this->sizeY);
 	}
 
 	public function serverOptionsOk($login, $args)
@@ -325,9 +329,12 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			"AutoSaveValidationReplays" => $this->e['AutosaveValidation']->getStatus(),
 			"DisableHorns" => $this->e['DisableHorns']->getStatus(),
 			"DisableServiceAnnounces" => $this->e['DisableAnnounces']->getStatus(),
-			"KeepPlayerSlots" => true,
+			"KeepPlayerSlots" => $this->e['KeepPlayerSlots']->getStatus()
 		);
+
 		$this->connection->setServerOptions($serverOptions);
+	
+		$this->connection->keepPlayerSlots($this->e['KeepPlayerSlots']->getStatus());
 		
 		if (AdminGroups::hasPermission($login, Permission::server_maxplayer)) {
 			$this->connection->setMaxPlayers(intval($args['maxPlayers']));

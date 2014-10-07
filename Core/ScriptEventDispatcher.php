@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
@@ -21,7 +22,6 @@
  */
 
 namespace ManiaLivePlugins\eXpansion\Core;
-
 
 use ManiaLive\DedicatedApi\Callback\base64;
 use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
@@ -57,9 +57,17 @@ class ScriptEventDispatcher implements ServerEventListener
 		Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
 	}
 
-
 	public function onModeScriptCallback($param1, $param2)
 	{
+
+		/* echo "\n". $param1."\n";
+		print_r($param2);
+		
+
+		$this->connection->chatSend($param1, null, true);
+		$this->connection->chatSend(print_r($param2, true), null, true);
+		*/
+		
 		switch ($param1) {
 			case 'LibXmlRpc_BeginMap':
 				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginMap, $param2);
@@ -112,9 +120,11 @@ class ScriptEventDispatcher implements ServerEventListener
 			case 'LibXmlRpc_Rankings':
 				$this->dispatchSciptEvent(Event::LibXmlRpc_Rankings, $param2);
 				break;
+			case 'LibXmlRpc_OnCapture':
+				$this->dispatchSciptEvent(Event::LibXmlRpc_OnCapture, $param2);
+				break;
 		}
 	}
-
 
 	/**
 	 * Dispatches a script event.
@@ -123,10 +133,10 @@ class ScriptEventDispatcher implements ServerEventListener
 	 * @param $param The parameters of the event
 	 */
 	protected
-	function dispatchSciptEvent($event, $param)
+			function dispatchSciptEvent($event, $param)
 	{
 		\ManiaLive\Event\Dispatcher::dispatch(
-			new \ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent($event, $param)
+				new \ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent($event, $param)
 		);
 	}
 
@@ -138,6 +148,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerConnect($login, $isSpectator)
 	{
+		
 	}
 
 	/**
@@ -147,6 +158,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerDisconnect($login, $disconnectionReason)
 	{
+		
 	}
 
 	/**
@@ -159,6 +171,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
 	{
+		
 	}
 
 	/**
@@ -171,6 +184,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries)
 	{
+		
 	}
 
 	/**
@@ -181,6 +195,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onEcho($internal, $public)
 	{
+		
 	}
 
 	/**
@@ -188,6 +203,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onServerStart()
 	{
+		
 	}
 
 	/**
@@ -195,6 +211,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onServerStop()
 	{
+		
 	}
 
 	/**
@@ -202,6 +219,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onBeginMatch()
 	{
+		
 	}
 
 	/**
@@ -227,6 +245,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onEndMatch($rankings, $winnerTeamOrMap)
 	{
+		
 	}
 
 	/**
@@ -238,6 +257,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onBeginMap($map, $warmUp, $matchContinuation)
 	{
+		
 	}
 
 	/**
@@ -251,6 +271,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
 	{
+		
 	}
 
 	/**
@@ -258,6 +279,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onBeginRound()
 	{
+		
 	}
 
 	/**
@@ -265,6 +287,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onEndRound()
 	{
+		
 	}
 
 	/**
@@ -275,6 +298,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onStatusChanged($statusCode, $statusName)
 	{
+		
 	}
 
 	/**
@@ -288,6 +312,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex)
 	{
+		
 	}
 
 	/**
@@ -299,6 +324,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerFinish($playerUid, $login, $timeOrScore)
 	{
+		
 	}
 
 	/**
@@ -309,6 +335,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerIncoherence($playerUid, $login)
 	{
+		
 	}
 
 	/**
@@ -321,6 +348,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onBillUpdated($billId, $state, $stateName, $transactionId)
 	{
+		
 	}
 
 	/**
@@ -332,6 +360,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onTunnelDataReceived($playerUid, $login, $data)
 	{
+		
 	}
 
 	/**
@@ -343,6 +372,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onMapListModified($curMapIndex, $nextMapIndex, $isListModified)
 	{
+		
 	}
 
 	/**
@@ -352,6 +382,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerInfoChanged($playerInfo)
 	{
+		
 	}
 
 	/**
@@ -361,6 +392,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onManualFlowControlTransition($transition)
 	{
+		
 	}
 
 	/**
@@ -373,6 +405,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onVoteUpdated($stateName, $login, $cmdName, $cmdParam)
 	{
+		
 	}
 
 	/**
@@ -382,5 +415,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerAlliesChanged($login)
 	{
+		
 	}
+
 }

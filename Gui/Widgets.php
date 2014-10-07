@@ -114,7 +114,14 @@ class Widgets extends \ManiaLib\Utils\Singleton
 					  self::config_shootmania => 38);
     public $MapRatingsWidget_posY = array(self::config_default => 75,
 					  self::config_shootmania => 90);
-
+   
+	public $MXMapRatingWidget_posX = array(
+					  self::config_default => 128,
+					  self::config_shootmania => 38);
+    public $MXMapRatingWidget_posY = array(
+					  self::config_default => 75,
+					  self::config_shootmania => 90);
+	
     public $ManiaExchangePanel_posX = array(self::config_default => -160);
     public $ManiaExchangePanel_posY = array(self::config_default => 80);
     public $ManiaExchangePanel_autoCloseTimeout = array(self::config_default => 0);

@@ -44,8 +44,50 @@ if (percent != oldPercent) {
 	    } 
 	}
 }
+if (isScrollDown) {
+    isScrollDown = False;
+    declare Real totalHeight = (Pager.Controls.count * itemSizeY);
+
+    declare Real stepIncrement = itemSizeY * 5;		
+
+    declare Real step = (totalHeight/stepIncrement)/100;
+
+    declare Real positionDelta = (maxDelta * step);
+
+    declare Real newPerc = percent + step;
+
+    if (itemsPerPage != -1.0) {
+        if (newPerc <= 1) {		
+            percent = newPerc;
+            ScrollBar.RelativePosition.Y -= positionDelta;
+        } else {
+            percent = 1.;
+            ScrollBar.RelativePosition.Y = pagerStopPosition;
+        }
+    }
+}
+
+if (isScrollUp) {
+    isScrollUp  = False;
+    declare Real totalHeight = (Pager.Controls.count * itemSizeY);
+    declare Real stepIncrement = itemSizeY * 5;						
+    declare Real step = (totalHeight/stepIncrement)/100;		
+    declare Real positionDelta = (maxDelta * step);		
+    declare Real newPerc = percent - step;
+    if (itemsPerPage != -1.0) {
+        if (newPerc >= 0 ) {		
+            percent = newPerc;
+            ScrollBar.RelativePosition.Y += positionDelta;
+        } else {
+            percent = 0.;
+            ScrollBar.RelativePosition.Y = pagerStartPos;
+        }
+
+    }    
+}
 
 foreach (Event in PendingEvents) {
+   
     if(Event.Type == CMlEvent::Type::MouseClick){
 	if (Event.ControlId == "ScrollBar")  {
 	    pager_startMouseYPosition = MouseY;
@@ -53,41 +95,33 @@ foreach (Event in PendingEvents) {
 	    pager_moveScroll = True;
 	}
 	else if (Event.ControlId == "ScrollDown")  {
-		declare Real totalHeight = (Pager.Controls.count * itemSizeY);
-		declare Real stepIncrement = itemSizeY * 5;		
-		declare Real step = ((totalHeight/stepIncrement)*itemSizeY)/100;
-		declare Real positionDelta = (maxDelta * step);
-		declare Real newPercent = percent + step;
-		if (itemsPerPage != -1.0) {
-		    if (newPercent <= 1) {		
-			percent = newPercent;
-			ScrollBar.RelativePosition.Y -= positionDelta;
-		    } else {
-			percent = 1.;
-			ScrollBar.RelativePosition.Y = pagerStopPosition;
-		    }
-		}
+            isScrollDown = True;
 		
 	} else if (Event.ControlId == "ScrollUp")  {
-		declare Real totalHeight = (Pager.Controls.count * itemSizeY);
-		declare Real stepIncrement = itemSizeY * 5;						
-		declare Real step = ((totalHeight/stepIncrement)*itemSizeY)/100;		
-		declare Real positionDelta = (maxDelta * step);		
-		declare Real newPercent = percent - step;
-		if (itemsPerPage != -1.0) {
-		    if (newPercent >= 0 ) {		
-		    	percent = newPercent;
-			ScrollBar.RelativePosition.Y += positionDelta;
-		    } else {
-		    	percent = 0.;
-			ScrollBar.RelativePosition.Y = pagerStartPos;
-		    }
-		
-		}
-	    }
+            isScrollUp = True;
+	}
+    }
+// pagedown = 78
+    if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 78) {
+        if (exp_windowStack.count > 0) 
+        {
+            if (exp_windowStack[0] == id) {
+              isScrollDown = True;
+           }
+        }
+    }
+// pageup = 103
+   if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 103) {
+        if (exp_windowStack.count > 0) 
+        {
+            if (exp_windowStack[0] == id) {
+              isScrollUp = True;
+           }
+        }
     }
     
 }              
+
 
 if (MouseLeftButton == False) { 
     pager_firstClick = False;

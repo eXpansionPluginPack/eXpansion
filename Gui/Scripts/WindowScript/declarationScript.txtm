@@ -65,9 +65,12 @@ Boolean stackContainsWindow(Text window) {
 
 //Main Function
 main () {
+
+    EnableMenuNavigationInputs = True;  // to enable pressing escape-key + tab-key 
     declare Integer closeCounter = 0;
     declare Boolean mouseButton for Page;
-    
+    declare Integer tabIndex = -1;
+
     declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");   
 
     declare windowFrame <=> Page.GetFirstChild("windowFrame");
@@ -83,7 +86,8 @@ main () {
     declare isMinimized = False;
     
     declare Boolean active = False; 
-    
+    declare Boolean isTab = False;
+
     declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
     declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
     declare Vec2 Offset = <0., 0.>;
@@ -147,7 +151,7 @@ main () {
 	    closeWindow = False;	    
 	    continue;
 	}
-	
+
 	if (exp_updateStack == True) {
 	    foreach (key => value in exp_windowStack) {		
 		if (id == value) {
@@ -160,6 +164,35 @@ main () {
 	    }	    
 	}
 	    
+        if (isTab == True) {
+            isTab = False;
+            Page.GetClassChildren("isTabIndex", Page.MainFrame, True);
+            declare CMlControl control;
+            declare Integer x = 0;
+
+            declare Integer mod = 1;
+            if (Page.GetClassChildren_Result.count > 0) {
+                mod = Page.GetClassChildren_Result.count;
+            }
+
+
+            tabIndex = (tabIndex + 1) % mod;
+
+            foreach (control in Page.GetClassChildren_Result) {
+                if (tabIndex == x) {
+                    control.Focus();
+
+                    if (control.HasClass("isEditable")) {
+                        declare CMlEntry entry <=> (control as CMlEntry);  
+                         entry.StartEdition();
+                    }
+                }
+                x += 1;
+            } 
+
+
+
+        }   
 	
         if (MoveWindow) {                        
              Window.RelativePosition.X = MouseX + Offset.X;
@@ -172,27 +205,47 @@ main () {
         if (PendingEvents.count != 0) { 
 	    foreach (Event in PendingEvents) {                
 		
-		if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close") {
-		    if (disableAnimations) {
-			TriggerPageAction(closeAction);
-			stackRemoveWindow(id);
-			continue;
-		    } else {
-		   // declare Real winX = Window.RelativePosition.X + <?php echo $win->getSizeX()/2; ?>; 
-                   //declare Real winY = Window.RelativePosition.Y;
-                    declare Real winX = 0.;
-		    declare Real winY = 0.;
-		    declare Text pos = winX ^ " " ^ winY;
-		    LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"0\" id=\"" ^ windowId ^ "\" />", 250, "EaseOutLinear");
-                    closeWindow = True;
-		    closeCounter = Now;	  	
-		    }
+		if ( (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "Close")  || (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 35) ) {
+		    if (exp_windowStack.count > 0) 
+                    {
+                     if (exp_windowStack[0] == id || Event.Type == CMlEvent::Type::MouseClick) {
+                            if (disableAnimations) {
+                                TriggerPageAction(closeAction);
+                                stackRemoveWindow(id);
+                                continue;
+                            } else {
+                           // declare Real winX = Window.RelativePosition.X + <?php echo $win->getSizeX()/2; ?>; 
+                           //declare Real winY = Window.RelativePosition.Y;
+
+                            declare Real winX = 0.;
+                            declare Real winY = 0.;
+                            declare Text pos = winX ^ " " ^ winY;
+                            LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"0\" id=\"" ^ windowId ^ "\" />", 250, "EaseOutLinear");
+                            closeWindow = True;
+                            closeCounter = Now;	  	
+                          }
+                         }
+                     }
                 }
                 if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "MainWindow" || Event.ControlId == "Titlebar" ) ) {            
                     stackActivateWindow(id);
-                }		
-	    }
-	}
+                }
+                // tab handler  
+                if (Event.Type == CMlEvent::Type::KeyPress) {
+                    log(Event.KeyCode);
+                }
+
+                if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 123) {
+		    if (exp_windowStack.count > 0) 
+                    {
+                        if (exp_windowStack[0] == id) {
+                            isTab = True;
+                       }
+                    }
+                }
+
+            } 
+	} 
 	
 	if (exp_windowStack.count == 0) {
 	    exp_window = "";

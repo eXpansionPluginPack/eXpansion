@@ -28,59 +28,64 @@ namespace ManiaLivePlugins\eXpansion\Core\Events;
  *
  * @author reaby
  */
-interface ScriptmodeEventListener {
+interface ScriptmodeEventListener
+{
 
-    function LibXmlRpc_BeginMatch($number);
+	function LibXmlRpc_BeginMatch($number);
 
-    function LibXmlRpc_LoadingMap($number);
+	function LibXmlRpc_LoadingMap($number);
 
-    function LibXmlRpc_BeginMap($number);
+	function LibXmlRpc_BeginMap($number);
 
-    function LibXmlRpc_BeginSubmatch($number);
+	function LibXmlRpc_BeginSubmatch($number);
 
-    function LibXmlRpc_BeginRound($number);
+	function LibXmlRpc_BeginRound($number);
 
-    function LibXmlRpc_BeginTurn($number);
+	function LibXmlRpc_BeginTurn($number);
 
-    function LibXmlRpc_EndTurn($number);
+	function LibXmlRpc_EndTurn($number);
 
-    function LibXmlRpc_EndRound($number);
+	function LibXmlRpc_EndRound($number);
 
-    function LibXmlRpc_EndSubmatch($number);
+	function LibXmlRpc_EndSubmatch($number);
 
-    function LibXmlRpc_EndMap($number);
+	function LibXmlRpc_EndMap($number);
 
-    function LibXmlRpc_EndMatch($number);
+	function LibXmlRpc_EndMatch($number);
 
-    function LibXmlRpc_BeginWarmUp();
+	function LibXmlRpc_BeginWarmUp();
 
-    function LibXmlRpc_EndWarmUp();
+	function LibXmlRpc_EndWarmUp();
 
-    /* storm common */
+	/* storm common */
 
-    function LibXmlRpc_Rankings($array);
+	function LibXmlRpc_Rankings($array);
 
-    function LibXmlRpc_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2);
+	function LibXmlRpc_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2);
 
-    function LibXmlRpc_PlayerRanking($rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone);
+	function LibXmlRpc_PlayerRanking($rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone);
 
-    function WarmUp_Status($status);
+	function LibXmlRpc_OnCapture($login);
 
-    function LibAFK_IsAFK($login);
+	function WarmUp_Status($status);
 
-    function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec);
+	function LibAFK_IsAFK($login);
 
-    /* tm common */
+	function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec);
 
-    function LibXmlRpc_OnStartLine($login);
 
-    function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd);
 
-    function LibXmlRpc_OnGiveUp($login);
+	/* tm common */
 
-    function LibXmlRpc_OnRespawn($login);
+	function LibXmlRpc_OnStartLine($login);
 
-    function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump);
+	function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd);
+
+	function LibXmlRpc_OnGiveUp($login);
+
+	function LibXmlRpc_OnRespawn($login);
+
+	function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump);
 }
 
 ?>

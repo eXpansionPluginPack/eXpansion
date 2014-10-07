@@ -53,20 +53,31 @@ class Maniascript
 	 *  @todo implement the converter
 	 * 
 	 * @param mixed $data
-
 	 */
 	static public function stringifyAsArray($data)
 	{
 		throw new Exception("not implemented yet");
 	}
 
+	/**
+	 * Converts mixed php variable types to maniascript equilable
+	 * supported php->maniascript types:
+	 * 
+	 * String, Boolean, Integer, Float, Null
+	 * 
+	 * @param  String|Boolean|Integer|Float|Null $var
+	 * @return string|numeric
+	 */
 	static public function convertType($var)
 	{
 		if (is_null($var)) {
 			return 'Null';
 		}
-		if (is_numeric($var)) {
+		if (is_float($var)) {
 			return strval(number_format((float) $var, 2, '.', ''));
+		}
+		if (is_int($var)) {
+			return $var;
 		}
 		if (is_bool($var)) {
 			if ($var)
@@ -75,7 +86,7 @@ class Maniascript
 		}
 
 		if (is_string($var)) {
-			return '"'.addslashes(self::fixString($var)).'"';
+			return '"' . addslashes(self::fixString($var)) . '"';
 		}
 	}
 
@@ -94,6 +105,30 @@ class Maniascript
 		$out = str_replace('-', '–', $out);
 
 		return $out;
+	}
+
+	/**
+	 * convert php numeric value to maniascript Real 
+	 * @param numeric $var
+	 * @return int|float
+	 */
+	public static function getReal($var)
+	{
+		if (is_numeric($var)) {
+			return strval(number_format((float) $var, 2, '.', ''));
+		}
+	}
+
+	/**
+	 * convert php boolean to maniascript boolan
+	 * @param bool $boolean
+	 * @return string
+	 */
+	public static function getBoolean($boolean)
+	{
+		if ($boolean)
+			return "True";
+		return "False";
 	}
 
 }

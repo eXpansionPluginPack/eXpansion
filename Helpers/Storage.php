@@ -36,9 +36,13 @@ use ManiaLive\DedicatedApi\Callback\Listener as ServerListener;
 use ManiaLivePlugins\eXpansion\Core\RelayLink;
 use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
 use Maniaplanet\DedicatedServer\Structures\Version;
+use ManiaLive\DedicatedApi\Config as DedicatedConfig;
 
 class Storage extends Singleton implements \ManiaLive\Event\Listener
 {
+
+	/**  for testing stuff */
+	const ForceRemote = false;
 
 	const TITLE_SIMPLE_TM = 'TM';
 
@@ -67,6 +71,12 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 	public $version;
 
 	/**
+	 * Cached titleId value
+	 * @var string
+	 */
+	public $titleId;
+
+	/**
 	 * The simple title the environment of the track refers to
 	 *
 	 * @var String
@@ -91,6 +101,14 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 	 */
 	public $relay;
 
+	/**
+	 * is this eXpansion running locally on server (true)
+	 * or 
+	 * is this expansion running remotelly from server (false)
+	 * 
+	 * @var boolean 
+	 */
+	public $isRemoteControlled = false;
 
 	private $startTime;
 
@@ -98,13 +116,14 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 
 	protected function __construct()
 	{
-		Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_BEGIN_MAP);
 
 		$this->connection = Singletons::getInstance()->getDediConnection();
 
 		$this->storage = \ManiaLive\Data\Storage::getInstance();
 
 		$this->version = $this->connection->getVersion();
+
+		$this->titleId = $this->version->titleId;
 
 		$this->isRelay = $this->connection->isRelayServer();
 
@@ -116,6 +135,15 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 
 		$this->startTime = time();
 
+		if (DedicatedConfig::getInstance()->host == "localhost" || DedicatedConfig::getInstance()->host == "127.0.0.1")
+			$this->isRemoteControlled = false;
+		else
+			$this->isRemoteControlled = true;
+
+		if (self::ForceRemote) {
+			$this->isRemoteControlled = true;
+			$this->connection->chatSend('[notice] $$Exp_storage->isRemoteControlled is forced to True!', null, true);
+		}
 		$this->dediUpTime = $this->connection->getNetworkStats()->uptime;
 	}
 
@@ -155,24 +183,14 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 		}
 	}
 
-	public function getExpansionUpTime(){
+	public function getExpansionUpTime()
+	{
 		return time() - $this->startTime;
 	}
 
-	public function getDediUpTime(){
-		return $this->getExpansionUpTime() + $this->dediUpTime;
-	}
-
-	/**
-	 * Method called when a map begin
-	 *
-	 * @param SMapInfo $map
-	 * @param bool     $warmUp
-	 * @param bool     $matchContinuation
-	 */
-	function onBeginMap($map, $warmUp, $matchContinuation)
+	public function getDediUpTime()
 	{
-		
+		return $this->getExpansionUpTime() + $this->dediUpTime;
 	}
 
 }
