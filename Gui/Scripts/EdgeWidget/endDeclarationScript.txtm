@@ -1,9 +1,12 @@
-declare persistent Boolean edge_isMinimized = True;
+declare Boolean edge_isMinimized for UI= False;
 declare Boolean edge_isAnimated for UI = False;
+declare persistent Boolean edge_isLockedVisible = False;
+
 declare Text orientation for UI = "right";
 declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
-
+declare Integer eXp_lastClockUpdate = Now;
 declare Vec3 p = eXp_widgetLastPosRel[version][id][gameMode];
+declare Boolean lastValue = True;
 
 if (!edge_animatedId.existskey(id) ) {
     edge_animatedId[id] = edge_isMinimized;

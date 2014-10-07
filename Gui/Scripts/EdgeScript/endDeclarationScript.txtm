@@ -1,14 +1,22 @@
 declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");
 declare Text id = Window.ControlId;
-declare Edge <=> Page.GetFirstChild("Edge");
-declare persistent Boolean edge_isMinimized = True;
+declare  CMlQuad Edge <=> (Page.GetFirstChild("Edge") as CMlQuad);
+declare  Boolean edge_isMinimized for UI = False;
 declare Boolean edge_isAnimated for UI= False;
 declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
-
-declare Text orientation for UI = "right";
+declare persistent Boolean edge_isLockedVisible = False;
 
 edge_isAnimated = False;
 edge_animatedId.clear();
 
-orientation = "<?php echo $this->orientation; ?>";
-
+ if (edge_isLockedVisible) {
+    //Edge.Style = "Icons64x64_1";
+    //Edge.Substyle = "LvlGreen";
+     Edge.BgColor = <0.8,0.,0.>;
+}
+else {             
+     // Edge.Style = "Icons64x64_1";
+    // Edge.Substyle = "LvlRed";   
+Edge.BgColor = <0.,0.8,0.>;          
+       
+}
