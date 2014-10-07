@@ -22,20 +22,21 @@ class WidgetTitle extends \ManiaLive\Gui\Control
 		$config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
 
 		$quad = new \ManiaLib\Gui\Elements\Quad();
-		$quad->setColorize($config->style_widget_title_bgColorize);
+	
+		$quad->setBgcolor($config->style_widget_title_bgColorize);
 		$quad->setOpacity($config->style_widget_title_bgOpacity);
 		$quad->setPosition($config->style_widget_title_bgXOffset, $config->style_widget_title_bgYOffset);
 
 		$this->bg_left = clone $quad;
-		$this->bg_left->setImage($config->getImage("widgets", "header_left.png"), true);
+	//	$this->bg_left->setImage($config->getImage("widgets", "header_left.png"), true);
 		$this->addComponent($this->bg_left);
 
 		$this->bg = clone $quad;
-		$this->bg->setImage($config->getImage("widgets", "header_center.png"), true);
+	//	$this->bg->setImage($config->getImage("widgets", "header_center.png"), true);
 		$this->addComponent($this->bg);
 
 		$this->bg_right = clone $quad;
-		$this->bg_right->setImage($config->getImage("widgets", "header_right.png"), true);
+	//	$this->bg_right->setImage($config->getImage("widgets", "header_right.png"), true);
 		$this->bg_right->setAlign("right");
 		$this->addComponent($this->bg_right);
 

@@ -1,0 +1,10 @@
+declare Edge <=> Page.GetFirstChild("Edge");
+declare Boolean edge_isMinimized for UI = False;
+declare Boolean edge_isAnimated for UI= False;
+declare Text orientation for UI = "right";
+
+edge_isMinimized = False;
+edge_isAnimated = False;
+orientation = "<?php echo $this->orientation; ?>";
+
+

@@ -1,0 +1,6 @@
+foreach (Event in PendingEvents) {                                                
+    if (Event.Type == CMlEvent::Type::MouseOver && ( Event.ControlId == "Edge" )) {	
+           edge_isMinimized = !edge_isMinimized; 
+           edge_isAnimated = True;
+    }                                       
+}

@@ -1,0 +1,26 @@
+
+if (edge_isAnimated) {
+    edge_isAnimated = False;    
+    log("is animating");
+
+    declare Vec3 p = eXp_widgetLastPosRel[version][id][gameMode];
+    declare Text pos = "";
+    declare Text scale = "1.";
+    declare Text edge = "-160";
+    if (orientation == "right") {
+       edge = "160";
+    }
+
+    if (edge_isMinimized) {
+        pos = edge ^ " " ^ p.Y ^ " " ^ p.Z ;
+        scale = "1.0";
+        LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\""^ scale ^"\" id=\"" ^ Window.ControlId ^ "\" />", 250, "Bounce");
+       log(pos);
+    }
+    else {  
+        pos = p.X ^ " " ^ p.Y ^ " " ^ p.Z ;
+        scale = "1.0";      
+        LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\""^ scale ^"\" id=\"" ^ Window.ControlId ^ "\" />", 250, "Bounce");  
+        log(pos);
+    }
+}

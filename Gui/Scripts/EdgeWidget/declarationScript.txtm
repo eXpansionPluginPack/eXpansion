@@ -1,0 +1,3 @@
+declare Boolean edge_isMinimized for UI = False;
+declare Boolean edge_isAnimated for UI= False;
+declare Text orientation for UI = "right";
