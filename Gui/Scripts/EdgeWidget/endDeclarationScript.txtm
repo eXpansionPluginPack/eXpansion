@@ -1,0 +1,20 @@
+declare persistent Boolean edge_isMinimized = True;
+declare Boolean edge_isAnimated for UI = False;
+declare Text orientation for UI = "right";
+declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
+
+declare Vec3 p = eXp_widgetLastPosRel[version][id][gameMode];
+
+if (!edge_animatedId.existskey(id) ) {
+    edge_animatedId[id] = edge_isMinimized;
+}
+
+declare Real edgeR = -200.;
+    if (p.X > 1) {
+       edgeR = 200.;
+    }
+
+if (edge_isMinimized) {
+    Window.RelativePosition.X = edgeR;
+}
+

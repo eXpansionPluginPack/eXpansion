@@ -1,0 +1,14 @@
+declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");
+declare Text id = Window.ControlId;
+declare Edge <=> Page.GetFirstChild("Edge");
+declare persistent Boolean edge_isMinimized = True;
+declare Boolean edge_isAnimated for UI= False;
+declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
+
+declare Text orientation for UI = "right";
+
+edge_isAnimated = False;
+edge_animatedId.clear();
+
+orientation = "<?php echo $this->orientation; ?>";
+

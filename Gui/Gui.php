@@ -111,7 +111,7 @@ class Gui extends ExpPlugin
 		$this->loadWidgetConfigs();
 		
 		$edge = Widgets\Edge::Create(null);
-		$edge->setPosition(-160,0);
+		$edge->setPosition(155,-85);
 		$edge->show();
 	}
 

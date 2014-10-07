@@ -33,11 +33,11 @@ class Edge extends PlainWidget
 		$this->sscript->setParam("orientation", "right");
 		$this->registerScript($this->sscript);
 		
-		$sizeX = 2;
-		$sizeY = 90;
+		$sizeX = 16;
+		$sizeY = 16;
 		
 		$this->bg = new Quad($sizeX, $sizeY);
-		$this->bg->setBgcolor("ff0");
+		$this->bg->setOpacity(0.1);
 		$this->bg->setId("Edge");
 		$this->bg->setAlign("center", "center");
 		$this->bg->setScriptEvents();
