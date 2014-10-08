@@ -39,11 +39,11 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $buttonTitleColor = "fffd";
 
-	public $style_list_bgColor = array('aaa6', 'eee6');
+	public $style_list_bgColor = array('aaa8', 'eee8');
 
-	public $style_list_bgStyle = array('Bgs1', 'Bgs1');
+	public $style_list_bgStyle = array('BgsPlayerCard', 'BgsPlayerCard');
 
-	public $style_list_bgSubStyle = array('BgCard', 'BgCard');
+	public $style_list_bgSubStyle = array('BgRacePlayerName', 'BgRacePlayerName');
 
 	public $style_list_posXOffset = -1;
 
@@ -51,7 +51,7 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $style_list_posYOffset = 0;
 
-	public $style_list_sizeYOffset = 0;
+	public $style_list_sizeYOffset = -0.25;
 
 	public $style_title_bgColor = 'ddd4';
 

@@ -203,6 +203,9 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		$cmd = $this->registerChatCommand("recs", "showRecsWindow", 0, true);
 		$cmd->help = 'Show Records Window';
 
+		$cmd = $this->registerChatCommand("topsums", "showTopSums", 0, true);
+		$cmd->help = 'show Top Sums';
+
 		//Top 100 ranked players
 		$cmd = $this->registerChatCommand("top100", "showRanksWindow", 0, true);
 		$cmd->help = 'Show Server Ranks Window';
@@ -769,8 +772,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	protected function updateRecordInDatabase(Record $record, $nbLaps)
 	{
 
-		print_r($record);
-
+		//print_r($record);
 		//$uid = $this->storage->currentMap->uId;
 		$uid = $record->uId;
 		$changed = false;
@@ -826,7 +828,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	 */
 	protected function deleteRecordInDatabase(Record $record, $nbLaps)
 	{
-		try{
+		try {
 			$q = 'DELETE FROM `exp_records`
 				WHERE record_challengeuid = ' . $this->db->quote($record->uId) . '
 					AND record_playerlogin =' . $this->db->quote($record->login) . '
@@ -834,7 +836,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 					AND score_type = ' . $this->db->quote($this->getScoreType());
 
 			$this->db->execute($q);
-		} catch (\Exception $ex){
+		} catch (\Exception $ex) {
 			return false;
 		}
 		return true;
@@ -981,6 +983,58 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		} catch (\Exception $e) {
 			return false;
 		}
+	}
+
+	/**
+	 * get topsums
+	 * @return array["string login"] = array("stats" => array(0,1,2), total);
+	 * 
+	 */
+	public function getTopSums()
+	{
+		$q = 'SELECT `record_challengeuid`, GROUP_CONCAT(`record_playerlogin` ORDER BY `record_score` ASC) logins
+			  FROM     `exp_records`
+			  WHERE `record_challengeuid` IN (' . $this->getUidSqlString() . ')
+			  GROUP BY  `record_challengeuid`';
+		$sql = $this->db->execute($q);
+
+		$topSums = array();
+
+		foreach ($sql->fetchArrayOfObject() as $value) {
+			$logins = explode(",", $value->logins);
+			array_flip($logins);
+			$logins = array_slice($logins, 0, 3);
+			foreach ($logins as $index => $login) {
+				if (!array_key_exists($login, $topSums)) {
+					$topSums[$login] = (object) array("stats" => Array(0 => 0, 1 => 0, 2 => 0), "total" => 0);
+				}
+				$topSums[$login]->stats[$index] ++;
+				$topSums[$login]->total++;
+			}
+		}
+
+		$players = array_keys($topSums);
+		$playerlist = "";
+
+		foreach ($players as $player) {
+			$playerlist .= $this->db->quote($player) . ",";
+		}
+
+		$q = "SELECT * FROM `exp_players` where `player_login` IN (" . trim($playerlist, ',') . ");";
+		$sql = $this->db->execute($q);
+
+		foreach ($sql->fetchArrayOfObject() as $obj) {
+			$topSums[$obj->player_login]->{"nickName"} = $obj->player_nickname;
+		}
+
+		uasort($topSums, function($a, $b) {
+			if ($a->total == $b->total) {
+				return 0;
+			}
+			return ($a->total > $b->total) ? -1 : 1;
+		});
+
+		return $topSums;
 	}
 
 	/**
@@ -1135,6 +1189,17 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		}
 
 		return false;
+	}
+
+	public function showTopSums($login)
+	{
+		Gui\Windows\TopSumsWindow::EraseAll();
+		
+		$win = Gui\Windows\TopSumsWindow::Create($login);
+		$win->setTitle("TopSums");
+		$win->setDatas($this->getTopSums());
+		$win->setSize(100, 90);
+		$win->show();
 	}
 
 	/**
