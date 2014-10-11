@@ -10,6 +10,7 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
 	public static $plugin = null;
+
 	private $pager;
 
 	/** @var \Maniaplanet\DedicatedServer\Connection */
@@ -17,9 +18,13 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	/** @var \ManiaLive\Data\Storage */
 	private $storage;
+
 	private $items = array();
+
 	private $cancel;
+
 	private $actionCancel;
+
 	private $rpoints = array();
 
 	protected function onConstruct()
@@ -56,11 +61,11 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 		$config = Config::getInstance();
 
-		for($i = 0; $i < 20; $i++){
-			$name = 'customPoints'.($i+1);
+		for ($i = 0; $i < 20; $i++) {
+			$name = 'customPoints' . ($i + 1);
 			$points = $config->$name;
 			if (!empty($points)) {
-				$this->rpoints[] = new CustomPoint('Custom '.($i+1), $points);
+				$this->rpoints[] = new CustomPoint('Custom ' . ($i + 1), $points);
 			}
 		}
 	}
@@ -87,8 +92,8 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$login = $this->getRecipient();
 		$x = 0;
 
-		$login = $this->getRecipient();
-		$this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\CustomPointctrl($x, new CustomPoint(__('Current points', $login), $this->connection->getRoundCustomPoints()), $this, $login, $this->sizeX);
+		$points = implode(",", $this->connection->getRoundCustomPoints());
+		$this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\CustomPointEntry($x, $points, $this, $login, $this->sizeX);
 		$this->pager->addItem($this->items[$x]);
 		$x++;
 
@@ -99,9 +104,20 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		}
 	}
 
-	function setPoints($login, $points)
+	function setPoints($login, $points, $entry)
 	{
-		self::$plugin->setPoints($login, $points);
+		if ($points === null) {
+			if (!empty($entry['customPoints'])) {
+				$points = explode(",", $entry['customPoints']);
+				rsort($points, SORT_NUMERIC);
+				foreach ($points as $p)
+					$intPoints[] = intval($p);
+				self::$plugin->setPoints($login, $intPoints);
+			}
+		}
+		else {
+			self::$plugin->setPoints($login, $points);
+		}
 		$this->erase($login);
 	}
 

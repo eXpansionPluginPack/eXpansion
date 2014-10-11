@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
@@ -22,7 +23,6 @@
 
 namespace ManiaLivePlugins\eXpansion\SM_PlatformScores;
 
-
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
@@ -33,18 +33,16 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Config;
  *
  * @package ManiaLivePlugins\eXpansion\SM\PlatformScores
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData {
+class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData
+{
 
-	protected function initName()
+	public function onBeginLoad()
 	{
-		$this->setName('Local Scores');
-
+		parent::onBeginLoad();
+		$this->setName('Platform Scores');
 		$this->setDescription('Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. Higher scores are better.');
-	}
-
-	protected function initCompatibility()
-	{
 		$this->addTitleSupport('PlatformBeta@nadeolabs');
 		$this->setEnviAsTitle(false);
 	}
+
 }
