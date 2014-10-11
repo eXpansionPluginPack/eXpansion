@@ -150,6 +150,10 @@ class Inputbox extends \ManiaLive\Gui\Control
 		$this->button->setScriptEvents();
 	}
 
+	function setClass($class) {
+		$this->button->setAttribute("class", "isTabIndex isEditable ".$class);
+	}
+
 	function onIsRemoved(\ManiaLive\Gui\Container $target)
 	{
 		parent::onIsRemoved($target);

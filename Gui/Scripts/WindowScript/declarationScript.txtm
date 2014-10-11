@@ -266,6 +266,6 @@ main () {
 	    }
 
 	}
-	
+	LibManialink_AnimLoop();
 }  //end of window
 --></script>

@@ -51,10 +51,10 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		//$this->registerChatCommand("starttest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		//\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
 
-		/* $window = Gui\testWindow::Create("reaby");
-		  $window->show(); */
+	//	$window = Gui\testWindow::Create("reaby");
+	//	$window->show();
 	}
-	
+
 	public function exp_onUnload()
 	{
 		$this->disableTickerEvent();
@@ -69,7 +69,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$this->ticker = 0;
 			\ManiaLivePlugins\eXpansion\DebugTool\Gui\testWidget::EraseAll();
 			$widget = \ManiaLivePlugins\eXpansion\DebugTool\Gui\testWidget::Create();
-			$widget->setPosition(60,0);
+			$widget->setPosition(60, 0);
 			$widget->setData($this->connection->getPlayerList(20, 0));
 			$widget->show();
 			return;
@@ -118,7 +118,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
 	{
-		echo "$login: cpindex: $cpIndex with $time\n";
+	//	echo "$login: cpindex: $cpIndex with $time\n";
 	}
 
 	function test($login)

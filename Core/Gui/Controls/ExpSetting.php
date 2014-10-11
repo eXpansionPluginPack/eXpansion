@@ -3,28 +3,41 @@
 namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Icons128x128_1;
+use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
+use ManiaLive\Gui\Control;
 use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpListSetting;
 use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpSettings;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\HashList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
+use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
-class ExpSetting extends \ManiaLive\Gui\Control
+class ExpSetting extends Control
 {
 
 	private $bg;
+
 	private $label_varName;
+
 	private $label_varValue;
+
 	private $button_change = null;
+
 	private $button_reset = null;
+
 	private $icon_global = null;
+
 	private $input;
+
 	private $var;
+
 	private $win;
 
 	function __construct($indexNumber, Variable $var, $login, ExpSettings $win)
@@ -32,7 +45,7 @@ class ExpSetting extends \ManiaLive\Gui\Control
 		$this->var = $var;
 		$this->win = $win;
 
-		$this->label_varName = new \ManiaLib\Gui\Elements\Label(40, 5);
+		$this->label_varName = new Label(40, 5);
 		$this->label_varName->setPosY(4);
 		$this->label_varName->setPosX(7);
 		$this->label_varName->setText($var->getVisibleName());
@@ -43,7 +56,7 @@ class ExpSetting extends \ManiaLive\Gui\Control
 
 		if ($var instanceof HashList || $var instanceof BasicList || $var instanceof SortedList || $var->hasConfWindow()) {
 
-			$this->label_varValue = new \ManiaLib\Gui\Elements\Label(40, 5);
+			$this->label_varValue = new Label(40, 5);
 			$this->label_varValue->setScale(0.9);
 			$this->label_varValue->setPosX(10);
 			$this->label_varValue->setId('column_' . $indexNumber . '_1');
@@ -55,7 +68,8 @@ class ExpSetting extends \ManiaLive\Gui\Control
 			$this->button_change->setDescription(__('Allows you to edit values', $login), 40);
 			$this->button_change->setAction($this->createAction(array($this, "openWin"), $var));
 			$this->addComponent($this->button_change);
-		} else if ($var->getDescription() != "") {
+		}
+		else if ($var->getDescription() != "") {
 
 			$this->button_change = new Button(8, 8);
 			$this->button_change->setIcon('UIConstructionSimple_Buttons', 'Help');
@@ -63,24 +77,33 @@ class ExpSetting extends \ManiaLive\Gui\Control
 			$this->addComponent($this->button_change);
 		}
 
-		$this->button_reset = new Button(8,8);
+		$this->button_reset = new Button(8, 8);
 		$this->button_reset->setIcon(Quad::Icons128x128_1, Icons128x128_1::DefaultIcon);
 		$this->button_reset->setDescription(__('Reset the settings !', $login));
 		$this->button_reset->setAction($this->createAction(array($this, 'reset')));
-		if($var->getDefaultValue() != null)
+		if ($var->getDefaultValue() != null)
 			$this->addComponent($this->button_reset);
 
 		if ($var instanceof HashList || $var instanceof BasicList || $var instanceof SortedList || $var->hasConfWindow()) {
-
-		} else {
+			
+		}
+		else {
 			if ($var instanceof Boolean) {
-				$this->input = new \ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted(5, 5);
+				$this->input = new CheckboxScripted(5, 5);
 				$this->input->setStatus($var->getRawValue());
 				$this->input->setPosY(-1);
 				$this->input->setPosX(7);
 				$this->addComponent($this->input);
-			} else {
-				$this->input = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox($var->getName());
+			}
+			else if ($var instanceof ColorCode) {
+				$this->input = new \ManiaLivePlugins\eXpansion\Gui\Elements\ColorChooser($var->getName());
+				$this->input->setColor($var->getRawValue());
+				$this->input->setPosY(-2);
+				$this->input->setPosX(7);
+				$this->addComponent($this->input);
+			}
+			else {
+				$this->input = new Inputbox($var->getName());
 				$this->input->setText($var->getRawValue());
 				$this->input->setPosY(-2);
 				$this->input->setPosX(7);
@@ -92,7 +115,8 @@ class ExpSetting extends \ManiaLive\Gui\Control
 		if ($var->getIsGlobal()) {
 			$this->icon_global->setIcon('Icons64x64_1', 'IconLeaguesLadder');
 			$this->icon_global->setDescription(__("Global Setting, Saved for all servers sharing this configuration", $login), 120);
-		} else {
+		}
+		else {
 			$this->icon_global->setIcon('Icons64x64_1', 'IconServers');
 			$this->icon_global->setDescription(__("Server Setting, Saved for this server only", $login), 80);
 		}
@@ -106,9 +130,9 @@ class ExpSetting extends \ManiaLive\Gui\Control
 	{
 		parent::onResize($oldX, $oldY);
 		$this->label_varName->setSizeX($this->getSizeX() - 27);
-		$this->bg->setSize($this->getSizeX()+2, $this->getSizeY() + 2);
+		$this->bg->setSize($this->getSizeX() + 2, $this->getSizeY() + 2);
 
-		$this->button_reset->setPosition($this->getSizeX() -  7, 0);
+		$this->button_reset->setPosition($this->getSizeX() - 7, 0);
 
 		if ($this->button_change != null) {
 			$this->button_change->setPosition($this->getSizeX() - $this->button_change->getSizeX() + 4, 0);
@@ -133,7 +157,8 @@ class ExpSetting extends \ManiaLive\Gui\Control
 	{
 		if ($var->hasConfWindow()) {
 			$var->showConfWindow($login);
-		} else {
+		}
+		else {
 			ExpListSetting::Erase($login);
 			$win = ExpListSetting::Create($login);
 			$win->setTitle("Expansion Settings : " . $var->getVisibleName());
@@ -144,7 +169,8 @@ class ExpSetting extends \ManiaLive\Gui\Control
 		}
 	}
 
-	public function reset($login){
+	public function reset($login)
+	{
 		print_r($this->var->getDefaultValue());
 		$this->var->setRawValue($this->var->getDefaultValue());
 		$this->win->refreshInfo();
@@ -162,16 +188,16 @@ class ExpSetting extends \ManiaLive\Gui\Control
 	public function getVarValue($options)
 	{
 		if ($this->input != null) {
-			if ($this->input instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted) {
+			if ($this->input instanceof CheckboxScripted) {
 				$this->input->setArgs($options);
 				return $this->input->getStatus();
-			} else {
+			}
+			else {
 				return isset($options[$this->var->getName()]) ? $options[$this->var->getName()] : null;
 			}
 		}
 	}
 
 }
-
 ?>
 /

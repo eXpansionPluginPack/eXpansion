@@ -1,0 +1,157 @@
+foreach (Event in PendingEvents) {
+
+    if (Event.Type == CMlEvent::Type::EntrySubmit && Event.Control.HasClass("color_input"))  {
+        declare i = TextLib::Split("_", Event.ControlId);
+        cid = TextLib::ToInteger(i[1]);
+        hide();
+        setActive(cid);
+     
+   
+        declare Text plainColor = TextLib::Replace(color_output.Value, "$", "");
+        plainColor = TextLib::ToLowerCase(plainColor);
+//        color = exp_RgbToHsv(convert(plainColor));
+
+
+//        color_h.Value = "" ^ color.X;
+//        color_s.Value = "" ^ color.Y;
+//        color_v.Value = "" ^ color.Z;
+//        color_selectionBoxHue.RelativePosition.Y = MathLib::Abs(1. - (color.X)) * -32.;
+//        color_selectionBox.RelativePosition.X =  MathLib::Abs(color.Y) * 32.;
+//        color_selectionBox.RelativePosition.Y =  MathLib::Abs( (1. - color.Z)) * -32;
+//        color_chooser.Colorize = HsvToRgb(<color.X, 1.,1.>);   
+        color_preview.BgColor = convert(plainColor);
+}
+
+    if (Event.Type == CMlEvent::Type::MouseClick && Event.Control.HasClass("colorchooser"))  {
+        declare i = TextLib::Split("_", Event.ControlId);
+        cid = TextLib::ToInteger(i[1]);
+        hide();
+        setActive(cid);
+        show();
+        
+        declare Text plainColor = TextLib::Replace(color_output.Value, "$", "");
+        plainColor = TextLib::ToLowerCase(plainColor);
+        color = exp_RgbToHsv(convert(plainColor));
+        
+        color_h.Value = "" ^ color.X;
+        color_s.Value = "" ^ color.Y;
+        color_v.Value = "" ^ color.Z;
+        color_selectionBoxHue.RelativePosition.Y = MathLib::Abs(1. - (color.X)) * -32.;
+        color_selectionBox.RelativePosition.X =  MathLib::Abs(color.Y) * 32.;
+        color_selectionBox.RelativePosition.Y =  MathLib::Abs( (1. - color.Z)) * -32;
+        color_chooser.Colorize = HsvToRgb(<color.X, 1.,1.>);
+
+    }
+    if (color_chooser != Null) {
+        if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId == color_chooser.ControlId ) {
+            overColorElement = True;
+        }
+
+        if (Event.Type == CMlEvent::Type::MouseOut && Event.ControlId == color_chooser.ControlId ) {
+            overColorElement = False;
+        }
+    
+        if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId == color_hue.ControlId ) {
+            overHueElement = True;
+        }
+
+        if (Event.Type == CMlEvent::Type::MouseOut && Event.ControlId == color_hue.ControlId ) {
+            overHueElement = False;
+        }
+
+        if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == color_ok.ControlId ) {
+            declare prefix = "";
+            if (usePrefix) {
+                prefix = "$";
+            }
+            color_output.Value = prefix ^ TextLib::ColorToText(HsvToRgb(color));
+            hide(); 
+        }
+
+        if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == color_cancel.ControlId ) {         
+             declare Text plainColor = TextLib::Replace(color_output.Value, "$", "");
+             plainColor = TextLib::ToLowerCase(plainColor);
+             color = exp_RgbToHsv(convert(plainColor));
+             color_preview.BgColor = convert(plainColor);
+           
+            color_h.Value = "" ^ color.X;
+            color_s.Value = "" ^ color.Y;
+            color_v.Value = "" ^ color.Z;
+            color_selectionBoxHue.RelativePosition.Y =  MathLib::Abs(1.- (color.X)) * -32.;
+            color_selectionBox.RelativePosition.X =  MathLib::Abs(color.Y) * 32.;
+            color_selectionBox.RelativePosition.Y =  MathLib::Abs( (1. - color.Z)) * -32;
+            color_chooser.Colorize = HsvToRgb(<color.X, 1.,1.>);
+            hide(); 
+        }
+    }
+
+
+    if (Event.Type == CMlEvent::Type::EntrySubmit && Event.Control == color_h) {
+        color.X = TextLib::ToReal(color_h.Value);
+    }
+
+    if (Event.Type == CMlEvent::Type::EntrySubmit && Event.Control == color_s) {
+          color.Y = TextLib::ToReal(color_s.Value);
+    }
+
+    if (Event.Type == CMlEvent::Type::EntrySubmit && Event.Control == color_v) {
+         color.Z = TextLib::ToReal(color_v.Value);
+    }
+}
+
+
+if (MouseLeftButton && overColorElement) {
+            declare Real x = MouseX - color_preview.AbsolutePosition.X - 4;
+            declare Real y = MouseY - color_preview.AbsolutePosition.Y - 2;            
+
+            if (x < 0.) {
+                x = 0.;
+            }
+            if (x > 32.) {
+                x = 32.;
+            }
+            
+            if (y < -32.) {
+                y = -32.;
+            }            
+            
+            if (y > 0.) {
+                y = 0.;
+            }
+          
+            color_selectionBox.RelativePosition.X = x;
+            color_selectionBox.RelativePosition.Y = y;
+
+            color.Y = MathLib::Abs((MathLib::Abs(x)/32) );
+            color.Z = MathLib::Abs(1. - (MathLib::Abs(y)/32) );
+
+            color_h.Value = "" ^ color.X;
+            color_s.Value = "" ^ color.Y;
+            color_v.Value = "" ^ color.Z;
+
+            color_preview.BgColor = HsvToRgb(color);
+
+}
+
+if (MouseLeftButton && overHueElement) {
+            declare Real y = MouseY - color_hue.AbsolutePosition.Y;            
+            
+            if (y < -32.) {
+                y = -32.;
+            }            
+            
+            if (y > 0.) {
+                y = 0.;
+            }
+         
+            color_selectionBoxHue.RelativePosition.Y = y;
+
+
+            color.X = MathLib::Abs(1. - (MathLib::Abs(y)/32) );
+
+            color_h.Value = "" ^ color.X;
+
+            color_preview.BgColor = HsvToRgb(color);
+            color_chooser.Colorize = HsvToRgb(<color.X, 1.,1.>);
+
+}
