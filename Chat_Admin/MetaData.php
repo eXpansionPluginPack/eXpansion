@@ -13,11 +13,14 @@ namespace ManiaLivePlugins\eXpansion\Chat_Admin;
  *
  * @author Petri
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\Core\MetaData {
-    
-    public function onBeginLoad() {
-	parent::onBeginLoad();
-	$this->setName("Chat based administartion");
-	$this->setDescription("Adds chat based admin commands for you to use");
-    }
+class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
+{
+
+	public function onBeginLoad()
+	{
+		parent::onBeginLoad();
+		$this->setName("Chat based administartion");
+		$this->setDescription("Adds chat based admin commands for you to use");
+	}
+
 }
