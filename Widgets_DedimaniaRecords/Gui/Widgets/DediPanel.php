@@ -15,12 +15,13 @@ class DediPanel extends PlainPanel
 	function exp_onBeginConstruct()
 	{
 		parent::exp_onBeginConstruct();
+		/*
+		  $this->animation = new Animation();
+		  $this->registerScript($this->animation);
 
-		$this->animation = new Animation();
-		$this->registerScript($this->animation);
-
-		$this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
-		$this->registerScript($this->edgeWidget);
+		  $this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
+		  $this->registerScript($this->edgeWidget);
+		 */
 	}
 
 }

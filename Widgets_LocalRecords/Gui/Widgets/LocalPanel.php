@@ -13,12 +13,13 @@ class LocalPanel extends PlainPanel
 	{
 
 		parent::exp_onBeginConstruct();
-		
+		/*
 		$animation = new \ManiaLivePlugins\eXpansion\Gui\Script_libraries\Animation();
 		$this->registerScript($animation);
 		
 		$this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
 		$this->registerScript($this->edgeWidget);
+		 */
 	}
 
 }

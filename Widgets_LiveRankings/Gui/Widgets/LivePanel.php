@@ -12,13 +12,13 @@ class LivePanel extends PlainLivePanel
 	function exp_onBeginConstruct()
 	{
 		parent::exp_onBeginConstruct();
-		
+		/*
 		$this->animation = new \ManiaLivePlugins\eXpansion\Gui\Script_libraries\Animation();
 		$this->registerScript($this->animation);
 		
 		$this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
 		$this->registerScript($this->edgeWidget);
-		
+		*/
 	}
 
 }
