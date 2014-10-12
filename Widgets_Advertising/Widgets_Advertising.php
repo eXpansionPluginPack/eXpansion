@@ -42,14 +42,30 @@ class Widgets_Advertising extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 
 	public function displayWidget($login)
 	{
-		$widget = Gui\Widgets\WidgetAd::Create($login);
+		Gui\Widgets\WidgetAd::EraseAll();
 
-		$widget->setPosition($this->config->x, $this->config->y, -60);
-		$widget->setImage($this->config->imageUrl, $this->config->imageFocusUrl, $this->config->url);
-		$widget->setImageSize($this->config->imageSizeX, $this->config->imageSizeY, $this->config->size);
-		$widget->setPositionX($this->config->x);
-		$widget->setPositionY($this->config->y);
-		$widget->show();
+		for ($x = 1; $x <= 5; $x++) {
+			$varActive = "active_$x";
+			if(isset($this->config->$varActive) && $this->config->$varActive){
+				$widget = Gui\Widgets\WidgetAd::Create($login, false);
+
+				$varX = "x_$x";
+				$varY = "y_$x";
+				$varImageUrl = "imageUrl_$x";
+				$varImageFocusUrl = "imageFocusUrl_$x";
+				$varUrl = "url_$x";
+				$varSize = "size_$x";
+				$varImageSizeX = "imageSizeX_$x";
+				$varImageSizeY = "imageSizeY_$x";
+
+				$widget->setPosition($this->config->$varX, $this->config->$varY, -60);
+				$widget->setImage($this->config->$varImageUrl, $this->config->$varImageFocusUrl, $this->config->$varUrl);
+				$widget->setImageSize($this->config->$varImageSizeX, $this->config->$varImageSizeY, $this->config->$varSize);
+				$widget->setPositionX($this->config->$varX);
+				$widget->setPositionY($this->config->$varY);
+				$widget->show();
+			}
+		}
 	}
 	
 	public function exp_onUnload()
