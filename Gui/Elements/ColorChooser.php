@@ -58,11 +58,12 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 		$this->addComponent($this->inputbox);
 
 
-		$this->frame = new \ManiaLive\Gui\Controls\Frame(4, 2);
+		$this->frame = new \ManiaLive\Gui\Controls\Frame(6, 4);
 		$this->frame->setPosZ(10);
 		$this->addComponent($this->frame);
 
-		$this->bg = new Quad(64, 48);
+		$this->bg = new Quad(64, 42);
+		$this->bg->setPosition(-2,2);
 		$this->bg->setId("bg_" . $this->buttonId);
 		$this->bg->setHidden(true);
 		$this->bg->setAttribute("class", "colorSelection");
@@ -71,6 +72,7 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 
 
 		$this->preview = new Quad(32, 32);
+		$this->preview->setAlign("left","top");
 		$this->preview->setId("chooser_" . $this->buttonId);
 		$this->preview->setHidden(true);
 		$this->preview->setAttribute("class", "colorSelection");
@@ -79,6 +81,7 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 		$this->frame->addComponent($this->preview);
 
 		$this->color = new Quad(4, 32);
+		$this->color->setAlign("left","top");
 		$this->color->setId("hue_" . $this->buttonId);
 		$this->color->setPosition(36, 0);
 		$this->color->setHidden(true);
@@ -88,11 +91,10 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 		$this->frame->addComponent($this->color);
 
 
-		$select = new Quad(3, 3);
+		$select = new Quad(2, 2);
 		$select->setAlign("center", "center");
 		$select->setStyle("Bgs1InRace");
 		$select->setSubStyle("BgColorContour");
-		$select->setScale(0.5);
 		$select->setColorize("000");
 		$select->setId("selectionBox_" . $this->buttonId);
 		$select->setScriptEvents();

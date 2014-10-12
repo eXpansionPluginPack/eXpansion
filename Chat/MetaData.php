@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Chat;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 
 /**
@@ -30,15 +31,15 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(true);
 		$this->registerVariable($var);
 
-		$var = new String('publicChatColor', 'Public chat color for server', $config, false, false);
+		$var = new ColorCode('publicChatColor', 'Public chat color for server', $config, false, false);
 		$var->setDefaultValue('$ff0');
 		$this->registerVariable($var);
 
-		$var = new String('otherServerChatColor', 'Public chat color for relay server', $config, false, false);
+		$var = new ColorCode('otherServerChatColor', 'Public chat color for relay server', $config, false, false);
 		$var->setDefaultValue('$0d0');
 		$this->registerVariable($var);
 
-		$var = new String('adminChatColor', 'Chat color for server administrators', $config, false, false);
+		$var = new ColorCode('adminChatColor', 'Chat color for server administrators', $config, false, false);
 		$var->setDefaultValue('$ff0');
 		$this->registerVariable($var);
 

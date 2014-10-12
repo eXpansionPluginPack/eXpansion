@@ -50,9 +50,8 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		//$this->registerChatCommand("starttest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		//\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
-
-	//	$window = Gui\testWindow::Create("reaby");
-	//	$window->show();
+		$window = Gui\testWindow::Create();
+		$window->show();
 	}
 
 	public function exp_onUnload()

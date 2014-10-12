@@ -395,6 +395,27 @@ Vec3 exp_RgbToHsv(Vec3 _RGB) {
 
 }
 
+Text exp_DecToHex(Integer _Dec) {
+    declare Boolean divideActive = True;
+    declare Text[] hexes = Text[]; 
+    declare Integer seed = _Dec;
+    declare Text out = "";
+    while (divideActive) {
+        declare Integer reminder =  seed % 16 ;
+        declare Integer division = seed / 16;
+        // log ("seed:" ^ seed ^ ", reminder:" ^ reminder ^", divis:" ^ division);
+        // hexes.add(DecToHex(reminder));
+        out = DecToHex(reminder) ^ out;
+        if (division <= 0 && reminder <= 16) {
+            divideActive = False;          
+        }   
+        seed = division;
+    }
+
+    return out;
+}
+
+
 declare CMlQuad color_preview;
 declare CMlEntry color_output;
 

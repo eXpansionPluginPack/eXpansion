@@ -101,12 +101,13 @@ foreach (Event in PendingEvents) {
 
 
 if (MouseLeftButton && overColorElement) {
-            declare Real x = MouseX - color_preview.AbsolutePosition.X - 4;
-            declare Real y = MouseY - color_preview.AbsolutePosition.Y - 2;            
+            declare Real x = MouseX - color_preview.AbsolutePosition.X - 6;
+            declare Real y = MouseY - color_preview.AbsolutePosition.Y - 4;            
 
             if (x < 0.) {
                 x = 0.;
             }
+
             if (x > 32.) {
                 x = 32.;
             }
@@ -118,7 +119,8 @@ if (MouseLeftButton && overColorElement) {
             if (y > 0.) {
                 y = 0.;
             }
-          
+           
+            log ("x: " ^ x  ^ " y: " ^ y);
             color_selectionBox.RelativePosition.X = x;
             color_selectionBox.RelativePosition.Y = y;
 
