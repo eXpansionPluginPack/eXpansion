@@ -29,9 +29,8 @@ use ManiaLive\DedicatedApi\Callback\Listener as ServerEventListener;
 use ManiaLive\DedicatedApi\Callback\SMapInfo;
 use ManiaLive\DedicatedApi\Callback\SPlayerInfo;
 use ManiaLive\DedicatedApi\Callback\SPlayerRanking;
-use ManiaLive\DedicatedApi\Callback\StatsName;
-use ManiaLive\DedicatedApi\Callback\StatusCode;
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent as Event;
 use Maniaplanet\DedicatedServer\Connection;
 
@@ -48,11 +47,10 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	private $connection;
 
-	function __construct($connetcion)
+	function __construct($connection)
 	{
-		$this->connection = $connetcion;
-		$this->connection->setModeScriptSettings(array('S_UseScriptCallbacks' => true));
-
+		$this->connection = $connection;
+		$this->connection->setModeScriptSettings(array('S_UseScriptCallbacks' => true, 'S_UseLegacyCallbacks' => false));
 
 		Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
 	}
@@ -61,67 +59,97 @@ class ScriptEventDispatcher implements ServerEventListener
 	{
 
 		/* echo "\n". $param1."\n";
-		print_r($param2);
-		
+		  print_r($param2);
 
-		$this->connection->chatSend($param1, null, true);
-		$this->connection->chatSend(print_r($param2, true), null, true);
-		*/
-		
+
+		  $this->connection->chatSend($param1, null, true);
+		  $this->connection->chatSend(print_r($param2, true), null, true);
+		 */
+		echo "script callback: " . $param1 . "\n";
+		$this->connection->chatSendServerMessage('$0d0' . $param1);
+
 		switch ($param1) {
 			case 'LibXmlRpc_BeginMap':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginMap, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginMap, $param2);
 				break;
 			case 'LibXmlRpc_BeginMatch':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginMatch, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginMatch, $param2);
 				break;
 			case 'LibXmlRpc_BeginRound':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginRound, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginRound, $param2);
 				break;
 			case 'LibXmlRpc_BeginSubmatch':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginSubmatch, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginSubmatch, $param2);
 				break;
 			case 'LibXmlRpc_BeginTurn':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginTurn, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginTurn, $param2);
 				break;
 			case 'LibXmlRpc_BeginWarmUp':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginWarmUp, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginWarmUp, $param2);
 				break;
 			case 'LibXmlRpc_LoadingMap':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_LoadingMap, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_LoadingMap, $param2);
 				break;
 			case 'LibXmlRpc_OnGiveUp':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnGiveUp, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_OnGiveUp, $param2);
 				break;
 			case 'LibXmlRpc_OnRespawn':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnRespawn, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_OnRespawn, $param2);
 				break;
 			case 'LibXmlRpc_OnStartLine':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnStartLine, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_OnStartLine, $param2);
 				break;
 			case 'LibXmlRpc_OnStunt':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnStunt, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_OnStunt, $param2);
 				break;
 			case 'LibXmlRpc_OnWayPoint':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnWayPoint, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_OnWayPoint, $param2);
 				break;
 			case 'LibXmlRpc_PlayerRanking':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_PlayerRanking, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_PlayerRanking, $param2);
 				break;
 			case 'LibAFK_IsAFK':
-				$this->dispatchSciptEvent(Event::LibAFK_IsAFK, $param2);
+				$this->dispatchScriptEvent(Event::LibAFK_IsAFK, $param2);
 				break;
 			case 'LibAFK_Properties':
-				$this->dispatchSciptEvent(Event::LibAFK_Properties, $param2);
+				$this->dispatchScriptEvent(Event::LibAFK_Properties, $param2);
 				break;
 			case 'LibXmlRpc_Scores':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_Scores, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_Scores, $param2);
 				break;
 			case 'LibXmlRpc_Rankings':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_Rankings, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_Rankings, $param2);
 				break;
 			case 'LibXmlRpc_OnCapture':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnCapture, $param2);
+				$this->dispatchScriptEvent(Event::LibXmlRpc_OnCapture, $param2);
+				break;
+			case 'LibXmlRpc_BeginPlaying':
+				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginPlaying, $param2);
+				break;
+			case 'LibXmlRpc_EndPlaying':
+				$this->dispatchScriptEvent(Event::LibXmlRpc_EndPlaying, $param2);
+				break;
+			case 'LibXmlRpc_BeginPodium':
+				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginPodium, $param2);
+				break;
+			case 'LibXmlRpc_EndPodium':
+				$this->dispatchScriptEvent(Event::LibXmlRpc_EndPodium, $param2);
+				break;
+			case 'LibXmlRpc_EndMap':
+				$this->dispatchScriptEvent(Event::LibXmlRpc_EndMap, $param2);
+				break;
+			case 'LibXmlRpc_UnloadingMap':
+				$this->dispatchScriptEvent(Event::LibXmlRpc_UnloadingMap, $param2);
+				break;
+			case 'LibXmlRpc_OnStartCountdown':
+				$this->dispatchScriptEvent(Event::LibXmlRpc_OnStartCountdown, $param2);
+				break;
+			case 'LibXmlRpc_EndRound':
+				$this->dispatchScriptEvent(Event::LibXmlRpc_EndRound, $param2);
+				break;
+			default:
+				echo "\nCatched not implemented script callback: " . $param1 . "\n";
+				$this->connection->chatSendServerMessage('Catched not implemented script callback: $d00' . $param1);
 				break;
 		}
 	}
@@ -132,11 +160,10 @@ class ScriptEventDispatcher implements ServerEventListener
 	 * @param $event The code of the event
 	 * @param $param The parameters of the event
 	 */
-	protected
-			function dispatchSciptEvent($event, $param)
+	protected function dispatchScriptEvent($event, $param)
 	{
-		\ManiaLive\Event\Dispatcher::dispatch(
-				new \ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent($event, $param)
+		Dispatcher::dispatch(
+				new ScriptmodeEvent($event, $param)
 		);
 	}
 

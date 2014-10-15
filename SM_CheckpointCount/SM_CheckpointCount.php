@@ -41,7 +41,7 @@ class SM_CheckpointCount extends ExpPlugin
 		$info->show();
 	}
 
-	public function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
+	public function Script_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
 	{
 		$cp = $cpIndex;
 		if ($isEndBlock)
@@ -49,7 +49,7 @@ class SM_CheckpointCount extends ExpPlugin
 		$this->displayWidget($login, $cp);
 	}
 
-	public function onEndMatch($rankings, $winnerTeamOrMap)
+	public function Script_onEndMatch($rankings, $winnerTeamOrMap)
 	{
 		CPPanel::EraseAll();
 	}

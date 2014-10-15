@@ -815,6 +815,166 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 			
 		}
 
+		/**
+		 * @param PlayerNetInfo[] $players
+		 */
+		public function onPlayerNetLost($players)
+		{
+
+		}
+
+		//////////////// Script events after this line
+
+		public function LibAFK_IsAFK($login)
+		{
+			
+		}
+
+		public function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec)
+		{
+
+		}
+
+		public function Script_PlayerRanking($rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone)
+		{
+			
+		}
+
+		public function Script_Rankings($array)
+		{
+
+		}
+
+		public function Script_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2)
+		{
+			
+		}
+
+		public function Script_onBeginMap($number)
+		{
+
+		}
+
+		public function Script_onBeginMatch($number)
+		{
+			
+		}
+
+		public function Script_onBeginPlaying()
+		{
+
+		}
+
+		public function Script_onBeginPodium()
+		{
+			
+		}
+
+		public function Script_onBeginRound($number)
+		{
+
+		}
+
+		public function Script_onBeginSubmatch($number)
+		{
+			
+		}
+
+		public function Script_onBeginTurn($number)
+		{
+
+		}
+
+		public function Script_onBeginWarmUp()
+		{
+			
+		}
+
+		public function Script_onCapture($login)
+		{
+
+		}
+
+		public function Script_onEndMap($number)
+		{
+			
+		}
+
+		public function Script_onEndMatch($number)
+		{
+
+		}
+
+		public function Script_onEndPlaying()
+		{
+			
+		}
+
+		public function Script_onEndPodium()
+		{
+
+		}
+
+		public function Script_onEndRound($number)
+		{
+			
+		}
+
+		public function Script_onEndSubmatch($number)
+		{
+
+		}
+
+		public function Script_onEndTurn($number)
+		{
+			
+		}
+
+		public function Script_onEndWarmUp()
+		{
+
+		}
+
+		public function Script_onGiveUp($login)
+		{
+			
+		}
+
+		public function Script_onLoadingMap($number)
+		{
+
+		}
+
+		public function Script_onRespawn($login)
+		{
+			
+		}
+
+		public function Script_onStartLine($login)
+		{
+
+		}
+
+		public function Script_onStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump)
+		{
+			
+		}
+
+		public function Script_onUnloadingMap($mapNumber)
+		{
+
+		}
+
+		public function Script_onWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
+		{
+			
+		}
+
+		public function WarmUp_Status($status)
+		{
+
+		}
+
 		public function onMapRestart()
 		{
 			
@@ -825,143 +985,9 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 			
 		}
 
-		public function LibAFK_IsAFK($login)
+		public function Script_onStartCountdown($login)
 		{
-			
-		}
 
-		public function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginMap($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginMatch($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginRound($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginSubmatch($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginTurn($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginWarmUp()
-		{
-			
-		}
-
-		public function LibXmlRpc_EndMap($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_EndMatch($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_EndRound($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_EndSubmatch($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_EndTurn($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_EndWarmUp()
-		{
-			
-		}
-
-		public function LibXmlRpc_LoadingMap($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_OnGiveUp($login)
-		{
-			
-		}
-
-		public function LibXmlRpc_OnRespawn($login)
-		{
-			
-		}
-
-		public function LibXmlRpc_OnStartLine($login)
-		{
-			
-		}
-
-		public function LibXmlRpc_OnStunt(
-		$login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump
-		)
-		{
-			
-		}
-
-		public function LibXmlRpc_OnWayPoint(
-		$login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
-		)
-		{
-			
-		}
-
-		public function LibXmlRpc_PlayerRanking(
-		$rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone
-		)
-		{
-			
-		}
-
-		public function LibXmlRpc_Rankings($array)
-		{
-			
-		}
-
-		public function LibXmlRpc_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2)
-		{
-			
-		}
-
-		public function WarmUp_Status($status)
-		{
-			
-		}
-
-		/**
-		 * @param PlayerNetInfo[] $players
-		 */
-		public function onPlayerNetLost($players)
-		{
-			
-		}
-
-		function LibXmlRpc_OnCapture($login)
-		{
-			
 		}
 
 	}

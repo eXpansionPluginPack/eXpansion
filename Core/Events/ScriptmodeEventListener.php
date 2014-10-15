@@ -31,41 +31,41 @@ namespace ManiaLivePlugins\eXpansion\Core\Events;
 interface ScriptmodeEventListener
 {
 
-	function LibXmlRpc_BeginMatch($number);
+	function Script_onBeginMatch($number);
 
-	function LibXmlRpc_LoadingMap($number);
+	function Script_onLoadingMap($number);
 
-	function LibXmlRpc_BeginMap($number);
+	function Script_onBeginMap($number);
 
-	function LibXmlRpc_BeginSubmatch($number);
+	function Script_onBeginSubmatch($number);
 
-	function LibXmlRpc_BeginRound($number);
+	function Script_onBeginRound($number);
 
-	function LibXmlRpc_BeginTurn($number);
+	function Script_onBeginTurn($number);
 
-	function LibXmlRpc_EndTurn($number);
+	function Script_onEndTurn($number);
 
-	function LibXmlRpc_EndRound($number);
+	function Script_onEndRound($number);
 
-	function LibXmlRpc_EndSubmatch($number);
+	function Script_onEndSubmatch($number);
 
-	function LibXmlRpc_EndMap($number);
+	function Script_onEndMap($number);
 
-	function LibXmlRpc_EndMatch($number);
+	function Script_onEndMatch($number);
 
-	function LibXmlRpc_BeginWarmUp();
+	function Script_onBeginWarmUp();
 
-	function LibXmlRpc_EndWarmUp();
+	function Script_onEndWarmUp();
 
 	/* storm common */
 
-	function LibXmlRpc_Rankings($array);
+	function Script_Rankings($array);
 
-	function LibXmlRpc_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2);
+	function Script_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2);
 
-	function LibXmlRpc_PlayerRanking($rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone);
+	function Script_PlayerRanking($rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone);
 
-	function LibXmlRpc_OnCapture($login);
+	function Script_onCapture($login);
 
 	function WarmUp_Status($status);
 
@@ -73,19 +73,31 @@ interface ScriptmodeEventListener
 
 	function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec);
 
-
-
 	/* tm common */
 
-	function LibXmlRpc_OnStartLine($login);
+	function Script_onStartLine($login);
 
-	function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd);
+	function Script_onWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd);
 
-	function LibXmlRpc_OnGiveUp($login);
+	function Script_onGiveUp($login);
 
-	function LibXmlRpc_OnRespawn($login);
+	function Script_onRespawn($login);
 
-	function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump);
+	function Script_onStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump);
+
+	/* more events */
+
+	function Script_onBeginPlaying();
+
+	function Script_onEndPlaying();
+
+	function Script_onUnloadingMap($mapNumber);
+
+	function Script_onBeginPodium();
+
+	function Script_onEndPodium();
+
+	function Script_onStartCountdown($login);
 }
 
 ?>

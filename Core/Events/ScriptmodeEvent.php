@@ -60,7 +60,7 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 
 	const LibXmlRpc_OnStunt = 0x24;
 
-	/* more storm events */
+	/* more events */
 
 	const LibXmlRpc_OnCapture = 0x25;
 
@@ -73,6 +73,8 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 	const LibXmlRpc_BeginPodium = 0x29;
 
 	const LibXmlRpc_EndPodium = 0x30;
+
+	const LibXmlRpc_OnStartCountdown = 0x31;
 
 	protected $params;
 
@@ -102,51 +104,51 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 
 		switch ($this->onWhat) {
 			case self::LibXmlRpc_BeginMatch:
-				$listener->LibXmlRpc_BeginMatch($array[0]);
+				$listener->Script_onBeginMatch($array[0]);
 				break;
 			case self::LibXmlRpc_LoadingMap:
-				$listener->LibXmlRpc_LoadingMap($array[0]);
+				$listener->Script_onLoadingMap($array[0]);
 				break;
 			case self::LibXmlRpc_BeginMap:
-				$listener->LibXmlRpc_BeginMap($array[0]);
+				$listener->Script_onBeginMap($array[0]);
 				break;
 			case self::LibXmlRpc_BeginSubmatch:
-				$listener->LibXmlRpc_BeginSubmatch($array[0]);
+				$listener->Script_onBeginSubmatch($array[0]);
 				break;
 			case self::LibXmlRpc_BeginRound:
-				$listener->LibXmlRpc_BeginRound($array[0]);
+				$listener->Script_onBeginRound($array[0]);
 				break;
 			case self::LibXmlRpc_BeginTurn:
-				$listener->LibXmlRpc_BeginTurn($array[0]);
+				$listener->Script_onBeginTurn($array[0]);
 				break;
 			case self::LibXmlRpc_EndTurn:
-				$listener->LibXmlRpc_EndTurn($array[0]);
+				$listener->Script_onEndTurn($array[0]);
 				break;
 			case self::LibXmlRpc_EndRound:
-				$listener->LibXmlRpc_EndRound($array[0]);
+				$listener->Script_onEndRound($array[0]);
 				break;
 			case self::LibXmlRpc_EndSubmatch:
-				$listener->meLibXmlRpc_EndSubmatch($array[0]);
+				$listener->Script_onEndSubmatch($array[0]);
 				break;
 			case self::LibXmlRpc_EndMap:
-				$listener->LibXmlRpc_EndMap($array[0]);
+				$listener->Script_onEndMap($array[0]);
 				break;
 			case self::LibXmlRpc_EndMatch:
-				$listener->LibXmlRpc_EndMatch($array[0]);
+				$listener->Script_onEndMatch($array[0]);
 				break;
 			case self::LibXmlRpc_BeginWarmUp:
-				$listener->LibXmlRpc_BeginWarmUp();
+				$listener->Script_onBeginWarmUp();
 				break;
 			case self::LibXmlRpc_EndWarmUp:
-				$listener->LibXmlRpc_EndWarmUp();
+				$listener->Script_onEndWarmUp();
 				break;
 			case self::LibXmlRpc_Rankings:
 				// Example : ["Login1:Score1;Login2:Score2;Login3:Score3;LoginN:ScoreN"]
-				$listener->LibXmlRpc_Rankings($array);
+				$listener->Script_Rankings($array);
 				break;
 			case self::LibXmlRpc_Scores:
 				// Note : ["MatchScoreClan1", "MatchScoreClan2", "MapScoreClan1", "MapScoreClan2"]
-				$listener->LibXmlRpc_Scores($array[0], $array[1], $array[2], $array[3]);
+				$listener->Script_Scores($array[0], $array[1], $array[2], $array[3]);
 				break;
 			case self::WarmUp_Status:
 				//  Example : ["True"]
@@ -167,33 +169,52 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 				break;
 
 			case self::LibXmlRpc_OnStartLine:
-				$listener->LibXmlRpc_OnStartLine($array[0]);
+
+				$listener->Script_onStartLine($array[0]);
 				break;
 			case self::LibXmlRpc_OnWayPoint:
 				//			  login  , #blockid , time   ,index, endblock, , laptime, lapCpIndex, lapEnd
 				// Example : ["Login", "#123456", "21723", "7", "False", "6164", "1", "False"]		
 				// Data : the id of the waypoint block, the current race time, the waypoint number in the race, if the waypoint is the end of the race, the current lap time, the waypoint number in the lap and if the waypoint is the end of the lap.
-				$listener->LibXmlRpc_OnWayPoint($array[0], $array[1], $array[2], $array[3], $array[4], $array[5], $array[6], $array[7]);
+				$listener->Script_onWayPoint($array[0], $array[1], $array[2], $array[3], $array[4], $array[5], $array[6], $array[7]);
 				break;
 			case self::LibXmlRpc_OnGiveUp:
-				$listener->LibXmlRpc_OnGiveUp($array[0]);
+				$listener->Script_onGiveUp($array[0]);
 				break;
 			case self::LibXmlRpc_OnRespawn:
-				$listener->LibXmlRpc_OnRespawn($array[0]);
+				$listener->Script_onRespawn($array[0]);
 				break;
 			case self::LibXmlRpc_OnStunt:
-				$listener->LibXmlRpc_OnStunt($array[0], $array[1], $array[2], $array[3], $array[4], $array[5], $array[6], $array[7], $array[8], $array[9]);
+				$listener->Script_onStunt($array[0], $array[1], $array[2], $array[3], $array[4], $array[5], $array[6], $array[7], $array[8], $array[9]);
 				break;
 			case self::LibXmlRpc_PlayerRanking:
 				// * Note : [Rank, Login, NickName, TeamId, IsSpectator, IsAway, BestTime, Zone]
-				$listener->LibXmlRpc_PlayerRanking($array[0], $array[1], $array[2], $array[3], $array[4], $array[5], $array[6], $array[7]);
+				$listener->Script_PlayerRanking($array[0], $array[1], $array[2], $array[3], $array[4], $array[5], $array[6], $array[7]);
 				break;
 			case self::LibXmlRpc_OnCapture:
 				// * Note : Login
-				$listener->LibXmlRpc_OnCapture($array[0]);
+				$listener->Script_onCapture($array[0]);
+				break;
+			case self::LibXmlRpc_BeginPlaying:
+				$listener->Script_onBeginPlaying();
+				break;
+			case self::LibXmlRpc_EndPlaying:
+				$listener->Script_onEndPlaying();
+				break;
+			case self::LibXmlRpc_UnloadingMap:
+				// * Note: An array with the number of the map
+				$listener->Script_onUnloadingMap($array[0]);
+				break;
+			case self::LibXmlRpc_BeginPodium:
+				$listener->Script_onBeginPodium();
+				break;
+			case self::LibXmlRpc_EndPodium:
+				$listener->Script_onEndPodium();
+				break;
+			case self::LibXmlRpc_OnStartCountdown:
+				$listener->Script_onStartCountdown($array[0]);
 				break;
 		}
-		return;
 	}
 
 }

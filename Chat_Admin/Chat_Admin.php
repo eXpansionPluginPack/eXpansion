@@ -597,10 +597,7 @@ Other server might use the same blacklist file!!');
 
 		try {
 			$command = array_shift($params);
-			switch (strtolower($command)) {
-				case "name":
-					$this->setScriptName($fromLogin, $params);
-					break;
+			switch (strtolower($command)) {				
 				case "load":
 					$this->loadScript($fromLogin, $params);
 					break;
@@ -1205,17 +1202,16 @@ Other server might use the same blacklist file!!');
 	{
 		$mapsDir = Helper::getPaths()->getDefaultMapPath();
 		$mode = "TrackMania";
-		if (Core::$isSMServer)
+		if ($this->expStorage->simpleEnviTitle == "SM")
 			$mode = "ShootMania";
 
 		$scriptName = dirname($mapsDir) . "/Scripts/Modes/" . $mode . "/" . $params[0];
 
 		if (file_exists($scriptName)) {
 			$data = file_get_contents($scriptName);
-			$this->exp_chatSendServerMessage("Script loaded to server runtime: " . $params[0]);
-			$this->connection->setScriptName($params[0]);
+			$this->exp_chatSendServerMessage("Script loaded: " . $params[0]);
 			$this->connection->setModeScriptText($data);
-
+			// $this->connection->setScriptName($params[0]);
 			return;
 		}
 		$this->exp_chatSendServerMessage("File not found: " . $params[0]);
