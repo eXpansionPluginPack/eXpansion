@@ -1,3 +1,5 @@
+if (InputPlayer == Null) continue;
+
 if( (Now - lastupdate) >= 30){
         if (InputPlayer.DisplaySpeed <= 50) {                 
             particleOpacity += 0.025;
@@ -21,9 +23,7 @@ if( (Now - lastupdate) >= 30){
                 particleMeta[i].Y -= (MathLib::Cos(angle + particleDensity[i]) + 1. + particleMeta[i].Z/2.) * 0.3 ;
                 particleMeta[i].X += MathLib::Sin(angle) * 1.5 * 0.3;
               
-                
-                //Sending flakes back from the top when it exits
-                //Lets make it a bit more organic and let flakes enter from the left and right also.
+               
                 if(particleMeta[i].X > 165. || particleMeta[i].X < -165. || particleMeta[i].Y < -90.)
                 {
                         if(i%3 > 0) //66.67% of the flakes
@@ -55,9 +55,7 @@ if( (Now - lastupdate) >= 30){
                 if (a > 360) {
                     a = 0.;
                 }
-                particle[i].RelativeRotation = a;
-                
-          
+                particle[i].RelativeRotation = a;         
                 particle[i].Opacity = particleOpacity;
 
     }
