@@ -1,0 +1,24 @@
+declare lastupdate = 0;
+declare Real angle = 0.;
+declare Integer particleCount = <?php echo $this->particleCount; ?>;
+declare CMlQuad[] particle = CMlQuad[];
+
+declare Vec3[] particleMeta = Vec3[];
+declare Real[] particleDensity = Real[];
+declare Boolean visible = True;
+declare Real particleOpacity = 1.0;
+
+declare Integer i = 0;
+for (i, 0, particleCount-1) {
+    declare CMlQuad quad <=> (Page.GetFirstChild("p"^i) as CMlQuad);
+    particle.add(quad);
+    
+    declare Real pX = MathLib::Rand(-160, 160)*1.01;
+    declare Real pY = MathLib::Rand(90, 110)*1.01;
+    declare Real pRadius = MathLib::Rand(0.5,1.5)*1.01;
+
+    particleMeta.add(<pX, pY, pRadius>);
+    particle[i].RelativeScale = pRadius;
+    particle[i].RelativeRotation = MathLib::Rand(0, 360)*1.01;
+    particleDensity.add(MathLib::Rand(1, i)*1.01);
+}

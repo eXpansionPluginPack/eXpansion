@@ -1,0 +1,416 @@
+//// ColorScript.txt
+/**
+ *	Multi Clans library
+ *	Handle more than 2 clans in a game
+ */
+
+#Const Version		"2013-11-29"
+#Const ScriptName	"Color.Script.txt"
+
+#Include "TextLib" as TextLib
+#Include "MathLib" as MathLib
+
+//  //
+// Settings
+//  //
+
+
+//  //
+// Globales
+//  //
+#Const C_GoldenRatioInverse 0.618033988749895
+
+declare Real[Text] G_ColorHue;	///< Last generated hue for clan color
+
+//  //
+// Functions
+//  //
+
+//  //
+/** Return the version number of the script
+ *
+ *	@return		The version number of the script
+ */
+Text GetScriptVersion() {
+	return Version;
+}
+
+//  //
+/** Return the name of the script
+ *
+ *	@return		The name of the script
+ */
+Text GetScriptName() {
+	return ScriptName;
+}
+
+//  //
+/// Unload the library
+Void Unload() {
+	G_ColorHue.clear();
+}
+
+//  //
+/// Load the library
+Void Load() {
+	Unload();
+	G_ColorHue["LibColor_DefaultSet"] = MathLib::Rand(0., 1.);
+}
+
+//  //
+/** Convert a HSV color to a RGB color
+ *
+ *	@param	_HSV	The HSV values [0.-1.[
+ *
+ *	@return		The RGB values [0.-1.[
+ */
+Vec3 HsvToRgb(Vec3 _HSV) {
+	declare RGB = <0., 0., 0.>;
+	declare H = _HSV.X;
+	declare S = _HSV.Y;
+	declare V = _HSV.Z;
+	
+	declare Hi = MathLib::FloorInteger(H * 6.);
+	declare F = (H * 6.) - Hi;
+	declare P = V * (1. - S);
+	declare Q = V * (1. - (F * S));
+	declare T = V * (1. - ((1. - F) * S));
+	
+	switch(Hi) {
+		case 0: RGB = <V, T, P>;
+		case 1: RGB = <Q, V, P>;
+		case 2: RGB = <P, V, T>;
+		case 3: RGB = <P, Q, V>;
+		case 4: RGB = <T, P, V>;
+		default: RGB = <V, P, Q>;
+	}
+	
+	return RGB;
+}
+
+//  //
+/** Convert a RGB color to a HSV color
+ *
+ *	@param	_RGB	The RGB values [0.-1.[
+ *
+ *	@return		The HSV values [0.-1.[
+ */
+Vec3 RgbToHsv(Vec3 _RGB) {
+	declare HSV = <0., 0., 0.>;
+	declare RGB = [_RGB.X, _RGB.Y, _RGB.Z];
+	declare Min = 1.;
+	declare Max = 0.;
+	
+	foreach (Value in RGB) {
+		if (Value < Min) Min = Value;
+		if (Value > Max) Max = Value;
+	}
+	HSV.Z = Max;
+	
+	declare Delta = Max - Min;
+	
+	if (Max != 0.) {
+		HSV.Y = Delta / Max;
+	} else {
+		// Error
+		HSV.Z = 0.;
+		return HSV;
+	}
+	
+	if (_RGB.X == Max) HSV.X = (_RGB.Y - _RGB.Z) / Delta;
+	else if (_RGB.Y == Max) HSV.X = 2 + ((_RGB.Y - _RGB.X) / Delta);
+	else HSV.X = 4 + ((_RGB.X - _RGB.Y) / Delta);
+	
+	HSV.X *= 60;
+	if (HSV.X < 0) HSV.X += 360.;
+	HSV.X /= 360.;
+	
+	return HSV;
+}
+
+//  //
+/** Convert a value betwwen 0 and 15 to an hexadecimal value 
+ *
+ *	@param	_Dec	A decimal value [0 - 15]
+ *
+ *	@return		An hexadecimal value [0-F]
+ */
+Text DecToHex(Integer _Dec) {
+	declare Hex = "F";
+	
+	if (_Dec >= 0 && _Dec <= 9) Hex = TextLib::ToText(_Dec);
+	else {
+		switch (_Dec) {
+			case 10: Hex = "A";
+			case 11: Hex = "B";
+			case 12: Hex = "C";
+			case 13: Hex = "D";
+			case 14: Hex = "E";
+			case 15: Hex = "F";
+			default: Hex = "F";
+		}
+	}
+	
+	return Hex;
+}
+
+//  //
+/** Convert a RGB color to a Hexadecimal RGB code
+ *
+ *	@param	_RGB	The RGB color [0., 1.[
+ *
+ *	@return		The RGB hexadecimal code
+ */
+Text RgbToHex(Vec3 _RGB) {
+	declare Hex = "000";
+	declare Ri = MathLib::NearestInteger(_RGB.X * 15.);
+	declare Gi = MathLib::NearestInteger(_RGB.Y * 15.);
+	declare Bi = MathLib::NearestInteger(_RGB.Z * 15.);
+	declare R = DecToHex(Ri);
+	declare G = DecToHex(Gi);
+	declare B = DecToHex(Bi);
+	
+	Hex = R^G^B;
+	
+	return Hex;
+}
+
+//  //
+/** Convert a RGB color to a Hexadecimal RGB code
+ *
+ *	@param	_RGB	The RGB color [0., 1.[
+ *
+ *	@return		The RGB hexadecimal code
+ */
+Text RgbToHex_New(Vec3 _RGB) {
+	return TextLib::ColorToText(_RGB);
+}
+
+//  //
+/** Convert a HSV color to a Hexadecimal RGB code
+ *
+ *	@param	_HSV	The HSV color [0., 1.[
+ *
+ *	@return		The RGB hexadecimal code
+ */
+Text HsvToHex(Vec3 _HSV) {
+	return RgbToHex(HsvToRgb(_HSV));
+}
+
+//  //
+/** Convert an Hexadecimal RGB color to an RGB code
+ *
+ *	@param	_Hex	The RGB hexadecimal code
+ *
+ *	@return		The RGB color [0., 1.[
+ */
+Vec3 HexToRgb(Text _Hex) {
+	return TextLib::ToColor(_Hex);
+}
+
+//  //
+/** Convert an Hexadecimal RGB color to an HSV code
+ *
+ *	@param	_Hex	The RGB hexadecimal code
+ *
+ *	@return		The HSV color [0., 1.[
+ */
+Vec3 HexToHsv(Text _Hex) {
+	return RgbToHsv(HexToRgb(_Hex));
+}
+
+//  //
+/** Create a new color set
+ *
+ *	@param	_SetName	The name of the new set
+ */
+Void CreateSet(Text _SetName) {
+	G_ColorHue[_SetName] = MathLib::Rand(0., 1.);
+}
+
+//  //
+/** Destroy a color set
+ *
+ *	@param	_SetName	The name of the set
+ */
+Void DestroySet(Text _SetName) {
+	declare Removed = G_ColorHue.removekey(_SetName);
+}
+
+//  //
+/** Darken an HSV color
+ *
+ *	@param	_Color	The HSV color to darken
+ *	@param	_Power	The power of the darkening, from 0. to 1.
+ *
+ *	@return			The darkened HSV color
+ */
+Vec3 Darken(Vec3 _Color, Real _Power) {
+	declare NewColor = _Color;
+	NewColor.Z -= _Power;
+	return NewColor;
+}
+
+//  //
+/** Generate a new color
+ *	The generated colors are evenly distributed
+ *
+ *	@param	_Set	The set to use
+ *
+ *	@return		A RGB color
+ */
+Vec3 GetNewColor(Text _Set) {
+	if (!G_ColorHue.existskey(_Set)) CreateSet(_Set);
+	
+	declare RGB = <0., 0., 0.>;
+	
+	G_ColorHue[_Set] += C_GoldenRatioInverse;
+	G_ColorHue[_Set] = G_ColorHue[_Set] - (MathLib::FloorInteger(G_ColorHue[_Set])); ///< G_ColorHue %= 1;
+	declare ColorSaturation = MathLib::Rand(0.6, 0.8);
+	declare ColorValue = 0.8;
+	RGB = HsvToRgb(<G_ColorHue[_Set], ColorSaturation, ColorValue>);
+	
+	return RGB;
+}
+
+//  //
+/** Generate a new color in a specific range [0..1[
+ *	The generated colors are evenly distributed
+ *
+ *	@param	_Set		The set to use
+ *	@param	_RangeMin	The start of the range
+ *	@param	_RangeMax	The end of the range
+ *
+ *	@return		A RGB color
+ */
+Vec3 GetNewColor(Text _Set, Real _RangeMin, Real _RangeMax) {
+	if (!G_ColorHue.existskey(_Set)) CreateSet(_Set);
+	
+	declare RGB = <0., 0., 0.>;
+	declare Range = _RangeMax - _RangeMin;
+	if (Range < 0) Range = 0.;
+	
+	G_ColorHue[_Set] += C_GoldenRatioInverse;
+	G_ColorHue[_Set] = G_ColorHue[_Set] - (MathLib::FloorInteger(G_ColorHue[_Set])); ///< G_ColorHue %= 1;
+	declare ColorHue = _RangeMin + (G_ColorHue[_Set] * Range);
+	declare ColorSaturation = MathLib::Rand(0.6, 0.8);
+	declare ColorValue = 0.8;
+	
+	RGB = HsvToRgb(<ColorHue, ColorSaturation, ColorValue>);
+	
+	return RGB;
+}
+
+//  //
+/// Get a new color in the default set
+Vec3 GetNewColor() {
+	return GetNewColor("LibColor_DefaultSet");
+}
+
+
+
+//// end ColorScript.txt
+Real HexToDec(Text _Hex) {
+        declare Real dec = 0.;  
+  
+	switch (_Hex) {
+            case "0": dec = 0.;	
+            case "1": dec = 1.;	
+            case "2": dec = 2.;	
+            case "3": dec = 3.;	
+            case "4": dec = 4.;	
+            case "5": dec = 5.;	
+            case "6": dec = 6.;	
+            case "7": dec = 7.;	
+            case "8": dec = 8.;	
+            case "9": dec = 9.;	
+            case "a": dec = 10.;	
+            case "b": dec = 11.;	
+            case "c": dec = 12.;	
+            case "d": dec = 13.;	
+            case "e": dec = 14.;	
+            case "f": dec = 15.;
+            default: dec = 0.;
+		}
+        return dec / 15.;
+}
+
+Vec3 convert(Text _Hex) {
+    declare x = TextLib::SubString(_Hex, 0,1); 
+    declare y = TextLib::SubString(_Hex, 1,1);
+    declare z = TextLib::SubString(_Hex, 2,1);
+
+    return <HexToDec(x),HexToDec(y),HexToDec(z)>;
+}   
+
+
+Vec3 exp_RgbToHsv(Vec3 _RGB) {
+        
+	declare RGB = [_RGB.X, _RGB.Y, _RGB.Z];
+        declare r =_RGB.X;
+        declare g =_RGB.Y;
+        declare b =_RGB.Z;
+ 
+	declare Min = 1.;
+	declare Max = 0.;
+	
+	foreach (Value in RGB) {
+		if (Value < Min) Min = Value;
+		if (Value > Max) Max = Value;
+	}
+
+	
+	declare d = Max - Min;
+        declare h = Max;
+        declare s = Max;
+        declare v = Max;
+
+        s = 0.;
+        if (Max != 0.) {
+            s = d / Max;
+        }
+
+       if(Max == Min){
+            h = 0.; // achromatic
+        } else {
+        declare val = 0.;        
+        
+
+        if (Max == r) {
+            if (g < b) {
+                val = 6.;
+            }
+            h = (g - b) / d + val;         
+        } else if (Max == g) {
+             h = (b - r) / d + 2.;
+        }
+        else if (Max == b) {
+            h = (r - g) / d + 4.;
+        }
+
+        h /= 6.;
+    }
+    
+        return <h,s,v>;
+
+}
+
+Text exp_DecToHex(Integer _Dec) {
+    declare Boolean divideActive = True;
+    declare Text[] hexes = Text[]; 
+    declare Integer seed = _Dec;
+    declare Text out = "";
+    while (divideActive) {
+        declare Integer reminder =  seed % 16 ;
+        declare Integer division = seed / 16;
+        // log ("seed:" ^ seed ^ ", reminder:" ^ reminder ^", divis:" ^ division);
+        // hexes.add(DecToHex(reminder));
+        out = DecToHex(reminder) ^ out;
+        if (division <= 0 && reminder <= 16) {
+            divideActive = False;          
+        }   
+        seed = division;
+    }
+
+    return out;
+}
