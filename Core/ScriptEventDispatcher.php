@@ -65,8 +65,8 @@ class ScriptEventDispatcher implements ServerEventListener
 		  $this->connection->chatSend($param1, null, true);
 		  $this->connection->chatSend(print_r($param2, true), null, true);
 		 */
-		echo "script callback: " . $param1 . "\n";
-		$this->connection->chatSendServerMessage('$0d0' . $param1);
+//		echo "script callback: " . $param1 . "\n";
+//		$this->connection->chatSendServerMessage('$0d0' . $param1);
 
 		switch ($param1) {
 			case 'LibXmlRpc_BeginMap':
