@@ -41,17 +41,19 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	public function exp_onReady()
 	{
-		$this->enableTickerEvent();
+		//$this->enableTickerEvent();
 		$this->enableDedicatedEvents();
+		$this->enableScriptEvents();
 		//if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
-		//	$this->enableScriptEvents();
 
+		$this->registerChatCommand("generate", "generate", 0, false, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		//$this->registerChatCommand("starttest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		//\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
-		$window = Gui\testWindow::Create();
-		$window->show();
+		//$window = Gui\testWindow::Create();
+		//$window->show();
+		//$this->generate();
 	}
 
 	public function exp_onUnload()
@@ -115,9 +117,15 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		}
 	}
 
-	function Script_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
+	function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
 	{
-	//	echo "$login: cpindex: $cpIndex with $time\n";
+		echo "$login: cpindex: $cpIndex with $time\n";
+		$this->connection->chatSendServerMessage("cp:" . $cpIndex);
+	}
+
+	function LibXmlRpc_onStartCountdown($login)
+	{
+		$this->connection->chatSendServerMessage("Startline:" . $login);
 	}
 
 	function test($login)
@@ -133,6 +141,40 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		//\ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
 		print "\n" . $mem . "\n";
 		$this->connection->chatSend($mem);
+	}
+
+	function generate()
+	{
+		$this->connection->triggerModeScriptEvent("LibXmlRpc_ListCallbacks");
+		$this->connection->triggerModeScriptEvent("LibXmlRpc_GetCallbackHelp");
+	}
+
+	public function onModeScriptCallback($param1, $param2)
+	{
+
+
+		if ($param1 == "LibXmlRpc_Callbacks") {
+			$interface = "";
+			$eventListener = "";
+			$eventListenerConstants = "";
+
+			$rc = new \ReflectionClass(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass());
+			$const = $rc->getConstants();
+
+			$count = count($const);
+			foreach ($param2 as $index => $cb) {
+				if (!array_key_exists($cb, $const)) {
+					$interface .= "function " . $cb . "();\n";
+					$eventListenerConstants .= 'const ' . $cb . " = 0x" . ($count++) . ";\n";
+					$eventListener .= 'case self::' . $cb . ':
+				$listener->' . $cb . '($array[0]);
+				break;' . "\n";
+				}
+			}
+			file_put_contents("interface.txt", $interface);
+			file_put_contents("eventListenerConstants.txt", $eventListenerConstants);
+			file_put_contents("eventListener.txt", $eventListener);
+		}
 	}
 
 }

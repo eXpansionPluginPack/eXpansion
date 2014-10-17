@@ -18,10 +18,12 @@
 
 namespace ManiaLivePlugins\eXpansion\AutoQueue;
 
+use Exception;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AutoQueue\Classes\Queue;
 use ManiaLivePlugins\eXpansion\AutoQueue\Gui\Widgets\EnterQueueWidget;
 use ManiaLivePlugins\eXpansion\AutoQueue\Gui\Widgets\QueueList;
+use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use Maniaplanet\DedicatedServer\Structures\PlayerInfo;
 use Maniaplanet\DedicatedServer\Structures\Status;
@@ -46,6 +48,7 @@ class AutoQueue extends ExpPlugin
 	public function exp_onReady()
 	{
 		$this->enableDedicatedEvents();
+		$this->enableScriptEvents(ScriptmodeEvent::LibXmlRpc_BeginMatch | ScriptmodeEvent::LibXmlRpc_BeginRound);
 		$this->queue = new Queue();
 
 		foreach ($this->storage->spectators as $login => $player) {
@@ -79,7 +82,7 @@ class AutoQueue extends ExpPlugin
 			if ($player->hasPlayerSlot) {
 				try {
 					$this->connection->spectatorReleasePlayerSlot($login);
-				} catch (\Exception $e) {
+				} catch (Exception $e) {
 					
 				}
 			}
@@ -106,12 +109,12 @@ class AutoQueue extends ExpPlugin
 		$this->queueReleaseNext();
 	}
 
-	function onBeginMatch()
+	function LibXmlRpc_onBeginMatch()
 	{
 		$this->queRealeseAvailable();
 	}
 
-	function onBeginRound()
+	function LibXmlRpc_onBeginRound()
 	{
 		$this->queRealeseAvailable();
 	}

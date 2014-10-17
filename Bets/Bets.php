@@ -23,6 +23,7 @@ use ManiaLive\Data\Player;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Bets\Classes\BetCounter;
 use ManiaLivePlugins\eXpansion\Bets\Gui\Widgets\BetWidget;
+use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
 use ManiaLivePlugins\eXpansion\Core\types\Bill;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 
@@ -68,8 +69,9 @@ class Bets extends ExpPlugin
 
 	public function exp_onReady()
 	{
-		$this->enableDedicatedEvents();
+		//	$this->enableDedicatedEvents();
 		$this->enableTickerEvent();
+		$this->enableScriptEvents(ScriptmodeEvent::LibXmlRpc_BeginMatch | ScriptmodeEvent::LibXmlRpc_EndMatch);
 
 		$ah = ActionHandler::getInstance();
 		BetWidget::$action_setAmount = $ah->createAction(array($this, "setBetAmount"));
@@ -86,12 +88,12 @@ class Bets extends ExpPlugin
 		}
 	}
 
-	public function onBeginMatch()
+	public function LibXmlRpc_BeginMatch()
 	{
 		$this->start(Config::getInstance()->timeoutSetBet);
 	}
 
-	public function onEndMatch($rankings, $winnerTeamOrMap)
+	public function LibXmlRpc_EndMatch()
 	{
 		switch (self::$state) {
 
@@ -152,7 +154,7 @@ class Bets extends ExpPlugin
 
 	/**
 	 * 	this called when recieves the a bet from server 
-	 * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
+	 * @param Bill $bill
 	 */
 	public function billPaySuccess(Bill $bill)
 	{
@@ -162,7 +164,7 @@ class Bets extends ExpPlugin
 
 	/**
 	 * 	this called when player accepts a bet 
-	 * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
+	 * @param Bill $bill
 	 */
 	public function billAcceptSuccess(Bill $bill)
 	{
@@ -175,7 +177,7 @@ class Bets extends ExpPlugin
 
 	/**
 	 * This is called when initial bet is accepted and planets has been transferred
-	 * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
+	 * @param Bill $bill
 	 */
 	public function billSetSuccess(Bill $bill)
 	{

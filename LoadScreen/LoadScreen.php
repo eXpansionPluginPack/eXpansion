@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\LoadScreen;
 
 use Exception;
 use ManiaLivePlugins\eXpansion\Core\DataAccess;
+use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
@@ -48,8 +49,9 @@ class LoadScreen extends ExpPlugin
 
 	public function exp_onReady()
 	{
-		$this->enableDedicatedEvents();
+	//	$this->enableDedicatedEvents();
 		$this->enableTickerEvent();
+		$this->enableScriptEvents(ScriptmodeEvent::LibXmlRpc_BeginMap|ScriptmodeEvent::LibXmlRpc_BeginMatch|ScriptmodeEvent::LibXmlRpc_EndMatch);
 		$this->dataAccess = DataAccess::getInstance();
 		$config = Config::getInstance();
 		foreach ($config->screens as $url) {
@@ -101,19 +103,19 @@ class LoadScreen extends ExpPlugin
 		}
 	}
 
-	public function onEndMatch($rankings, $winnerTeamOrMap)
+	public function LibXmlRpc_EndMatch($value)
 	{
 		$this->startTime = time();
 		$this->isActive = true;
 	}
 
-	public function onBeginMap($map, $warmUp, $matchContinuation)
+	public function LibXmlRpc_BeginMap($number)
 	{
 		$this->isActive = false;
 		LScreen::EraseAll();
 	}
 
-	public function onBeginMatch()
+	public function LibXmlRpc_BeginMatch()
 	{
 
 		$this->isActive = false;

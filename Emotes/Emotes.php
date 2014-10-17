@@ -15,7 +15,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     public static $action_Bg;
 
     function exp_onLoad() {
-	$this->enableDedicatedEvents();
+	$this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_PLAYER_DISCONNECT);
 	EmotePanel::$emotePlugin = $this;
 	$this->config = Config::getInstance();
 

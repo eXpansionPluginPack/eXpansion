@@ -108,7 +108,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		unset($this->expStorage->dbPlayers[$login]);
     }
 
-    function onEndMatch($rankings, $winnerTeamOrMap)
+    function LibXmlRpc_EndMatch($value)
     {
         foreach ($this->storage->players as $login => $player) { // get players
             $this->updatePlayTime($player);

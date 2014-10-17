@@ -117,18 +117,21 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		// end of ladder points
 		// server password
 		$this->serverPass = new Inputbox("serverPass");
+		$this->serverPass->setTextFormat("password");
 		$this->serverPass->setLabel(__("Password for server", $this->getRecipient()));
 		$this->serverPass->setText($this->connection->getServerPassword());
 		$this->frameInputbox->addComponent($this->serverPass);
 
 		// spectator password
 		$this->serverSpecPass = new Inputbox("serverSpecPass");
+		$this->serverSpecPass->setTextFormat("password");
 		$this->serverSpecPass->setLabel(__("Password for spectators", $this->getRecipient()));
 		$this->serverSpecPass->setText($this->connection->getServerPasswordForSpectator());
 		$this->frameInputbox->addComponent($this->serverSpecPass);
 
 		// referee password
 		$this->refereePass = new Inputbox("refereePass");
+		$this->refereePass->setTextFormat("password");
 		$this->refereePass->setLabel(__("Referee password", $this->getRecipient()));
 		$this->refereePass->setText($this->connection->getRefereePassword());
 		$this->frameInputbox->addComponent($this->refereePass);

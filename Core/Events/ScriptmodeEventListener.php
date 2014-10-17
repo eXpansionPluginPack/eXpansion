@@ -31,41 +31,41 @@ namespace ManiaLivePlugins\eXpansion\Core\Events;
 interface ScriptmodeEventListener
 {
 
-	function Script_onBeginMatch($number);
+	function LibXmlRpc_BeginMatch($number);
 
-	function Script_onLoadingMap($number);
+	function LibXmlRpc_LoadingMap($number);
 
-	function Script_onBeginMap($number);
+	function LibXmlRpc_BeginMap($number);
 
-	function Script_onBeginSubmatch($number);
+	function LibXmlRpc_BeginSubmatch($number);
 
-	function Script_onBeginRound($number);
+	function LibXmlRpc_BeginRound($number);
 
-	function Script_onBeginTurn($number);
+	function LibXmlRpc_BeginTurn($number);
 
-	function Script_onEndTurn($number);
+	function LibXmlRpc_EndTurn($number);
 
-	function Script_onEndRound($number);
+	function LibXmlRpc_EndRound($number);
 
-	function Script_onEndSubmatch($number);
+	function LibXmlRpc_EndSubmatch($number);
 
-	function Script_onEndMap($number);
+	function LibXmlRpc_EndMap($number);
 
-	function Script_onEndMatch($number);
+	function LibXmlRpc_EndMatch($number);
 
-	function Script_onBeginWarmUp();
+	function LibXmlRpc_BeginWarmUp();
 
-	function Script_onEndWarmUp();
+	function LibXmlRpc_EndWarmUp();
 
 	/* storm common */
 
-	function Script_Rankings($array);
+	function LibXmlRpc_Rankings($array);
 
-	function Script_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2);
+	function LibXmlRpc_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2);
 
-	function Script_PlayerRanking($rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone);
+	function LibXmlRpc_PlayerRanking($rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone);
 
-	function Script_onCapture($login);
+	function LibXmlRpc_OnCapture($login);
 
 	function WarmUp_Status($status);
 
@@ -75,29 +75,80 @@ interface ScriptmodeEventListener
 
 	/* tm common */
 
-	function Script_onStartLine($login);
+	function LibXmlRpc_OnStartLine($login);
 
-	function Script_onWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd);
+	function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd);
 
-	function Script_onGiveUp($login);
+	function LibXmlRpc_OnGiveUp($login);
 
-	function Script_onRespawn($login);
+	function LibXmlRpc_OnRespawn($login);
 
-	function Script_onStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump);
+	function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump);
 
 	/* more events */
 
-	function Script_onBeginPlaying();
+	function LibXmlRpc_BeginPlaying();
 
-	function Script_onEndPlaying();
+	function LibXmlRpc_EndPlaying();
 
-	function Script_onUnloadingMap($mapNumber);
+	function LibXmlRpc_UnloadingMap($mapNumber);
 
-	function Script_onBeginPodium();
+	function LibXmlRpc_BeginPodium();
 
-	function Script_onEndPodium();
+	function LibXmlRpc_EndPodium();
 
-	function Script_onStartCountdown($login);
+	function LibXmlRpc_OnStartCountdown($login);
+
+	/* generated */
+
+	function LibXmlRpc_Callbacks($value);
+
+	function LibXmlRpc_CallbackHelp($value);
+
+	function LibXmlRpc_BlockedCallbacks($value);
+
+	function LibXmlRpc_BeginServer($value);
+
+	function LibXmlRpc_BeginServerStop($value);
+
+	function LibXmlRpc_BeginMatchStop($value);
+
+	function LibXmlRpc_BeginMapStop($value);
+
+	function LibXmlRpc_BeginSubmatchStop($value);
+
+	function LibXmlRpc_BeginRoundStop($value);
+
+	function LibXmlRpc_BeginTurnStop($value);
+
+	function LibXmlRpc_EndTurnStop($value);
+
+	function LibXmlRpc_EndRoundStop($value);
+
+	function LibXmlRpc_EndSubmatchStop($value);
+
+	function LibXmlRpc_EndMapStop($value);
+
+	function LibXmlRpc_EndMatchStop($value);
+
+	function LibXmlRpc_EndServer($value);
+
+	function LibXmlRpc_EndServerStop($value);
+
+	function LibXmlRpc_PlayersRanking($value);
+
+	function LibXmlRpc_PlayersScores($value);
+
+	function LibXmlRpc_PlayersTimes($value);
+
+	function LibXmlRpc_TeamsScores($value);
+
+	function LibXmlRpc_WarmUp($value);
+
+	function LibXmlRpc_TeamsMode($value);
+
+	function UI_Properties($value);
+	
 }
 
 ?>

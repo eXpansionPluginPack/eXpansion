@@ -2,6 +2,8 @@
 
 /**
  * @author       Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Petri Järvisalo (petri.jarvisalo at gmail.com)
+ *
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -35,7 +37,7 @@ use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent as Event;
 use Maniaplanet\DedicatedServer\Connection;
 
 /**
- * Transforms script callbacks to nicer Elite events
+ * Transforms script callbacks
  *
  * @package ManiaLivePlugins\eXpansion\Core
  */
@@ -47,110 +49,28 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	private $connection;
 
+	private $internalCallbacks = array();
+
 	function __construct($connection)
 	{
 		$this->connection = $connection;
-		$this->connection->setModeScriptSettings(array('S_UseScriptCallbacks' => true, 'S_UseLegacyCallbacks' => false));
-
+		// $this->connection->setModeScriptSettings(array('S_UseScriptCallbacks' => true, 'S_UseLegacyCallbacks' => false));
 		Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
+		$rc = new \ReflectionClass(ScriptmodeEvent::getClass());
+		$this->internalCallbacks = $rc->getConstants();
 	}
 
 	public function onModeScriptCallback($param1, $param2)
 	{
 
-		/* echo "\n". $param1."\n";
-		  print_r($param2);
-
-
-		  $this->connection->chatSend($param1, null, true);
-		  $this->connection->chatSend(print_r($param2, true), null, true);
-		 */
-//		echo "script callback: " . $param1 . "\n";
+		//echo "\n" . $param1 . "\n";
+		//print_r($param2);
 //		$this->connection->chatSendServerMessage('$0d0' . $param1);
-
-		switch ($param1) {
-			case 'LibXmlRpc_BeginMap':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginMap, $param2);
-				break;
-			case 'LibXmlRpc_BeginMatch':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginMatch, $param2);
-				break;
-			case 'LibXmlRpc_BeginRound':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginRound, $param2);
-				break;
-			case 'LibXmlRpc_BeginSubmatch':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginSubmatch, $param2);
-				break;
-			case 'LibXmlRpc_BeginTurn':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginTurn, $param2);
-				break;
-			case 'LibXmlRpc_BeginWarmUp':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginWarmUp, $param2);
-				break;
-			case 'LibXmlRpc_LoadingMap':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_LoadingMap, $param2);
-				break;
-			case 'LibXmlRpc_OnGiveUp':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_OnGiveUp, $param2);
-				break;
-			case 'LibXmlRpc_OnRespawn':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_OnRespawn, $param2);
-				break;
-			case 'LibXmlRpc_OnStartLine':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_OnStartLine, $param2);
-				break;
-			case 'LibXmlRpc_OnStunt':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_OnStunt, $param2);
-				break;
-			case 'LibXmlRpc_OnWayPoint':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_OnWayPoint, $param2);
-				break;
-			case 'LibXmlRpc_PlayerRanking':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_PlayerRanking, $param2);
-				break;
-			case 'LibAFK_IsAFK':
-				$this->dispatchScriptEvent(Event::LibAFK_IsAFK, $param2);
-				break;
-			case 'LibAFK_Properties':
-				$this->dispatchScriptEvent(Event::LibAFK_Properties, $param2);
-				break;
-			case 'LibXmlRpc_Scores':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_Scores, $param2);
-				break;
-			case 'LibXmlRpc_Rankings':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_Rankings, $param2);
-				break;
-			case 'LibXmlRpc_OnCapture':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_OnCapture, $param2);
-				break;
-			case 'LibXmlRpc_BeginPlaying':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginPlaying, $param2);
-				break;
-			case 'LibXmlRpc_EndPlaying':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_EndPlaying, $param2);
-				break;
-			case 'LibXmlRpc_BeginPodium':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_BeginPodium, $param2);
-				break;
-			case 'LibXmlRpc_EndPodium':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_EndPodium, $param2);
-				break;
-			case 'LibXmlRpc_EndMap':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_EndMap, $param2);
-				break;
-			case 'LibXmlRpc_UnloadingMap':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_UnloadingMap, $param2);
-				break;
-			case 'LibXmlRpc_OnStartCountdown':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_OnStartCountdown, $param2);
-				break;
-			case 'LibXmlRpc_EndRound':
-				$this->dispatchScriptEvent(Event::LibXmlRpc_EndRound, $param2);
-				break;
-			default:
-				echo "\nCatched not implemented script callback: " . $param1 . "\n";
-				$this->connection->chatSendServerMessage('Catched not implemented script callback: $d00' . $param1);
-				break;
+		if (array_key_exists($param1, $this->internalCallbacks)) {
+			$this->dispatchScriptEvent($this->internalCallbacks[$param1], $param2);
+		}
+		else {
+			echo "unimplemented Scritp callback: " . $param1 . "\n";
 		}
 	}
 

@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\JoinLeaveMessage;
 
 use DateTime;
 use Exception;
+use ManiaLive\DedicatedApi\Callback\Event;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
@@ -18,7 +19,7 @@ class JoinLeaveMessage extends ExpPlugin
 
     public function exp_onLoad()
     {
-        $this->enableDedicatedEvents();
+        $this->enableDedicatedEvents(Event::ON_PLAYER_CONNECT|Event::ON_PLAYER_DISCONNECT);
 
         $this->joinMsg = exp_getMessage('#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s');
         $this->joinMsgTime = exp_getMessage('#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s Total Playtime: #variable#%6$s');

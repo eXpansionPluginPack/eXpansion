@@ -3,8 +3,11 @@
 namespace ManiaLivePlugins\eXpansion\ForceMod;
 
 use Exception;
+use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
+use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\ForceMod\Config;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use Maniaplanet\DedicatedServer\Structures\Mod;
 
 /**
@@ -21,7 +24,8 @@ class ForceMod extends ExpPlugin
 
 	public function exp_onReady()
 	{
-		$this->enableDedicatedEvents();
+		//$this->enableDedicatedEvents();
+		$this->enableScriptEvents(ScriptmodeEvent::LibXmlRpc_EndMap);
 		$this->forceMods();
 	}
 
@@ -89,17 +93,17 @@ class ForceMod extends ExpPlugin
 			}
 			return $mods;
 		} catch (Exception $e) {
-			\ManiaLivePlugins\eXpansion\Helpers\Helper::logError("Error while forcemod:" . $e->getMessage());
+			Helper::logError("Error while forcemod:" . $e->getMessage());
 			return array();
 		}
 	}
 
-	public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
+	public function onSettingsChanged(Variable $var)
 	{
 		
 	}
 
-	public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
+	public function LibXmlRpc_EndMap($number)
 	{
 		$this->forceMods();
 	}

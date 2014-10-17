@@ -19,7 +19,6 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @return void
      */
     function exp_onLoad() {
-	$this->enableDedicatedEvents();
 	$this->config = Config::getInstance();
 	DonatePanelWindow::$donatePlugin = $this;
 

@@ -145,7 +145,7 @@ class Core extends types\ExpPlugin
 		//Start multi lang system for eXpansion. Gogo languages
 		i18n::getInstance()->start();
 
-		//Started paralel download utility, thanks to xymph and other devs to have coded it. it rocks
+		//Started paralel download utility, thanks to xymph, slig and other devs to have coded it. it rocks
 		DataAccess::getInstance()->start();
 
 		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
@@ -456,7 +456,7 @@ EOT;
 	 * @param bool $warmUp
 	 * @param bool $matchContinuation
 	 */
-	public function Script_onLoadingMap($number)
+	public function LibXmlRpc_onLoadingMap($number)
 	{
 		// this is for syncing storage against script!
 		/*$map = $this->connection->getCurrentMapInfo()->toArray();
@@ -1006,12 +1006,7 @@ EOT;
 		$this->expPlayers[$login]->curCpIndex = $checkpointIndex;
 		$this->expPlayers[$login]->curLap = $curLap;
 	}
-
-	function onBeginMatch()
-	{
-		
-	}
-
+	
 	public function onBeginRound()
 	{
 		$this->update = true;

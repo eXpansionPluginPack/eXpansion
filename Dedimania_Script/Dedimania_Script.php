@@ -16,7 +16,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAb
         $this->enableScriptEvents();
     }
 
-    public function Script_BeginMap($number)
+    public function LibXmlRpc_BeginMap($number)
     {
         if (!$this->running)
             return;
@@ -27,7 +27,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAb
         $this->gReplay  = "";
     }
 
-    public function Script_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
+    public function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
     {
         if (!$this->running)
             return;
@@ -164,7 +164,7 @@ class Dedimania_Script extends \ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAb
      * @param string $winnerTeamOrMap
      *
      */
-    public function Script_EndMatch($number)
+    public function LibXmlRpc_EndMatch($number)
     {
         if (!$this->running)
             return;

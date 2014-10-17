@@ -32,7 +32,6 @@ class Gui extends ExpPlugin
 
 	private $preloader;
 
-	
 	/**
 	 * base directory is defined at Config::GetInstance()->uiTextureBase;
 	 * 
@@ -73,7 +72,7 @@ class Gui extends ExpPlugin
 
 	public function exp_onReady()
 	{
-		$this->enableDedicatedEvents();
+		$this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_PLAYER_CONNECT);
 		$this->enableTickerEvent();
 		$this->registerChatCommand("hud", "hudCommands", 0, true);
 		$this->registerChatCommand("hud", "hudCommands", 1, true);
@@ -109,10 +108,10 @@ class Gui extends ExpPlugin
 		}
 
 		$this->loadWidgetConfigs();
-		
-	/*	$edge = Widgets\Edge::Create(null);
-		$edge->setPosition(160,-90);
-		$edge->show(); */
+
+		/* 	$edge = Widgets\Edge::Create(null);
+		  $edge->setPosition(160,-90);
+		  $edge->show(); */
 	}
 
 	public static function getScaledSize($sizes, $totalSize)
@@ -197,11 +196,6 @@ class Gui extends ExpPlugin
 		} catch (Exception $e) {
 			Helper::log("[Gui]Error while disabling alt menu : " . $e->getMessage());
 		}
-	}
-
-	function onPlayerDisconnect($login, $reason = null)
-	{
-		
 	}
 
 	function hudCommands($login, $param = "null")
