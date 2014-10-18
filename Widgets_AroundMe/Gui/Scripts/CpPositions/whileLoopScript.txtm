@@ -50,6 +50,19 @@ foreach (Player in Players) {
     }
 }
 
+//Get player being spectated if possible
+if (GUIPlayer != Null) {
+    currentPlayerName = GUIPlayer.Name;
+} else {
+    currentPlayerName = LocalUser.Name;
+}
+
+//Refresh Widget if spectating player has changed
+if (currentPlayerName != prevPlayerName){
+    prevPlayerName = currentPlayerName;
+    needUpdate = True;
+}
+
 if(!needUpdate){
     lastUpdateTime = Now;
 }
@@ -70,26 +83,23 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
             playerTimes[cpIndex] = playerTimes[cpIndex].sort();
             declare Players2 = playerTimes[cpIndex];
             foreach(p => Score in Players2){
-                if (LocalUser != Null) {
 
-                    //Player behind me
-                    if(myDiff != -1 && worseDiff == -1){
-                        worseDiff =  Score - bestCps[cpIndex];
-                        break;
-                    }
-
-                    //Me
-                    if (playerNickNames[cpIndex][p] == LocalUser.Name) {
-                        myDiff =  Score - bestCps[cpIndex];
-                    }
-
-                    //Player infront of me
-                    if(myDiff == -1){
-                        betterDiff = Score - bestCps[cpIndex];
-                    }
-
-
+                //Player behind me
+                if(myDiff != -1 && worseDiff == -1){
+                    worseDiff =  Score - bestCps[cpIndex];
+                    break;
                 }
+
+                //Me
+                if (playerNickNames[cpIndex][p] == currentPlayerName) {
+                    myDiff =  Score - bestCps[cpIndex];
+                }
+
+                //Player infront of me
+                if(myDiff == -1){
+                    betterDiff = Score - bestCps[cpIndex];
+                }
+
                 i += 1;
             }
             if(myDiff != -1 && worseDiff != -1 && betterDiff!= -1){
@@ -117,7 +127,7 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
             }else if(diff < frontLastDif && frontLastDif != -1){
                 frontLastColor = 1;
                 frontLabel.SetText("$0F0"^TimeToText(diff));
-            }else if(frontLastDif != -1){
+            }else if(diff > frontLastDif && frontLastDif != -1){
                 frontLastColor = 2;
                 frontLabel.SetText("$F00"^TimeToText(diff));
             }else{
@@ -156,9 +166,6 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
             behindLastColor = -1;
             behindLastDif = -1;
          }
-
     }
-
-
 }
 

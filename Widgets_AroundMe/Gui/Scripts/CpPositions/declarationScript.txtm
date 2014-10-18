@@ -31,3 +31,6 @@ declare frontLastDif = -1;
 declare frontLastColor = -1;
 declare behindLastDif = -1;
 declare behindLastColor = -1;
+
+declare currentPlayerName = "";
+declare prevPlayerName = "";
