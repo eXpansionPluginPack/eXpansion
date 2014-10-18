@@ -42,3 +42,6 @@ foreach (Login => Score in playerTimes) {
 
 playerTimes.clear();
 playerTimes = origPlayerTimes;*/
+
+declare currentPlayerName = "";
+declare prevPlayerName = "";
