@@ -50,9 +50,23 @@ foreach (Player in Players) {
     }
 }
 
+//Get player being spectated if possible
+if (GUIPlayer != Null) {
+    currentPlayerName = GUIPlayer.Name;
+} else {
+    currentPlayerName = LocalUser.Name;
+}
+
+//Refresh Widget if spectating player has changed
+if (currentPlayerName != prevPlayerName){
+    prevPlayerName = currentPlayerName;
+    needUpdate = True;
+}
+
 if(!needUpdate){
     lastUpdateTime = Now;
 }
+
 if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered && exp_widgetLayersBuffered == activeLayer) || exp_widgetVisibilityChanged)) {
     lastUpdateTime = Now;
 
@@ -78,7 +92,7 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 			declare Players2 = playerTimes[cpIndex];
 			foreach(p => Score in Players2){
 				if (LocalUser != Null) {
-					if (playerNickNames[cpIndex][p] == LocalUser.Name) {
+					if (playerNickNames[cpIndex][p] == currentPlayerName) {
 						myRank = i;
 					}
 				}
@@ -143,7 +157,7 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 				declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
                                 playerScoreRanks.add(p);
 
-				if (playerNickNames[cpIndex][p] == LocalUser.Name) {
+				if (playerNickNames[cpIndex][p] == currentPlayerName) {
 				showed = True;
 				}
 
