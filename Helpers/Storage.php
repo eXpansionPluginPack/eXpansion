@@ -119,6 +119,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 
 		$this->connection = Singletons::getInstance()->getDediConnection();
 
+		$this->relay = RelayLink::getInstance();
+		
 		$this->storage = \ManiaLive\Data\Storage::getInstance();
 
 		$this->version = $this->connection->getVersion();
@@ -130,9 +132,7 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 		$this->simpleEnviTitle = $this->getSimpleTitleByEnvironment($this->storage->currentMap->environnement);
 
 		$this->baseMapType = $this->getSimpleMapType($this->storage->currentMap->mapType);
-
-		$this->relay = RelayLink::getInstance();
-
+		
 		$this->startTime = time();
 
 		if (DedicatedConfig::getInstance()->host == "localhost" || DedicatedConfig::getInstance()->host == "127.0.0.1")

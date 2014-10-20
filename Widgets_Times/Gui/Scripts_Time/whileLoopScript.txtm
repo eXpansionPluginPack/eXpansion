@@ -1,3 +1,7 @@
+if (target == "") {
+    target = GUIPlayer.Login;
+}
+
 foreach (Player in Players) {
     if (Player.Login == target) {
     

@@ -162,7 +162,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 					}
 					else {
 						$color = $config->publicChatColor;
-						if ($source_player->isManagedByAnOtherServer) {
+						if ($this->expStorage->isRelay) {
 							$color = $config->otherServerChatColor;
 						}
 						$this->connection->chatSendServerMessage(

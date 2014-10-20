@@ -1,0 +1,14 @@
+
+if( (Now - lastupdate) >= 4000 ){
+        lastupdate = Now;
+        Page.GetClassChildren("lineElement", Page.MainFrame, True);
+        declare CMlControl control;
+        declare Integer x = 0;
+
+        foreach (control in Page.GetClassChildren_Result) {
+    
+            declare Vec3 color = <MathLib::Rand(0, 100)/100., 1.,1.>;
+            declare CMlQuad quad <=> (control as CMlQuad);  
+            quad.Colorize = HsvToRgb(color);
+        }
+}

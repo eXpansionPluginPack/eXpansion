@@ -2,16 +2,25 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted as Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
+use ManiaLib\Gui\Elements\Bgs1;
+use ManiaLib\Gui\Elements\Icons64x64_1;
+use ManiaLib\Gui\Elements\Quad;
+use ManiaLib\Gui\Layouts\Column;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Data\Storage;
+use ManiaLive\DedicatedApi\Config;
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use \ManiaLive\Gui\Controls\Pager;
-use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted as Checkbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\InputboxMasked;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
+use Maniaplanet\DedicatedServer\Connection;
+use Maniaplanet\DedicatedServer\Structures\ServerOptions as ServerOptions2;
 
-class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class ServerOptions extends Window
 {
 
 	private $serverName, $serverComment, $maxPlayers, $maxSpec, $minLadder, $maxLadder, $serverPass, $serverSpecPass, $refereePass;
@@ -24,7 +33,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	private $buttonOK, $buttonCancel;
 
-	/** @var \Maniaplanet\DedicatedServer\Connection */
+	/** @var Connection */
 	private $connection;
 
 	private $actionOK, $actionCancel;
@@ -34,8 +43,8 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	function onConstruct()
 	{
 		parent::onConstruct();
-		$config = \ManiaLive\DedicatedApi\Config::getInstance();
-		$this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
+		$config = Config::getInstance();
+		$this->connection = Connection::factory($config->host, $config->port);
 		$this->actionOK = $this->createAction(array($this, "serverOptionsOk"));
 		$this->actionCancel = $this->createAction(array($this, "serverOptionsCancel"));
 
@@ -52,12 +61,12 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	private function inputboxes()
 	{
 
-		/** @var \Maniaplanet\DedicatedServer\Structures\ServerOptions */
+		/** @var ServerOptions */
 		$server = $this->connection->getServerOptions();
 
-		$this->frameInputbox = new \ManiaLive\Gui\Controls\Frame();
+		$this->frameInputbox = new Frame();
 		$this->frameInputbox->setAlign("left", "top");
-		$column = new \ManiaLib\Gui\Layouts\Column();
+		$column = new Column();
 		$column->setMargin(2, 1);
 		$this->frameInputbox->setLayout($column);
 
@@ -74,8 +83,8 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 
 		// Players Min & Max goes to same row
-		$this->framePlayers = new \ManiaLive\Gui\Controls\Frame();
-		$this->framePlayers->setLayout(new \ManiaLib\Gui\Layouts\Line());
+		$this->framePlayers = new Frame();
+		$this->framePlayers->setLayout(new Line());
 		$this->framePlayers->setSize(100, 11);
 
 		$this->maxPlayers = new Inputbox("maxPlayers", 12);
@@ -83,8 +92,8 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->maxPlayers->setText($server->nextMaxPlayers);
 		$this->framePlayers->addComponent($this->maxPlayers);
 
-		$spacer = new \ManiaLib\Gui\Elements\Quad(3, 6);
-		$spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+		$spacer = new Quad(3, 6);
+		$spacer->setStyle(Icons64x64_1::EmptyIcon);
 		$this->framePlayers->addComponent($spacer);
 
 		$this->maxSpec = new Inputbox("maxSpec", 12);
@@ -95,8 +104,8 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->frameInputbox->addComponent($this->framePlayers);
 		// end of players
 		// Ladder Points goes to same row
-		$this->frameLadder = new \ManiaLive\Gui\Controls\Frame();
-		$this->frameLadder->setLayout(new \ManiaLib\Gui\Layouts\Line());
+		$this->frameLadder = new Frame();
+		$this->frameLadder->setLayout(new Line());
 		$this->frameLadder->setSize(100, 11);
 
 		$this->minLadder = new Inputbox("ladderMin");
@@ -104,8 +113,8 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->minLadder->setText($server->ladderServerLimitMin);
 		$this->frameLadder->addComponent($this->minLadder);
 
-		$spacer = new \ManiaLib\Gui\Elements\Quad(3, 6);
-		$spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+		$spacer = new Quad(3, 6);
+		$spacer->setStyle(Icons64x64_1::EmptyIcon);
 		$this->frameLadder->addComponent($spacer);
 
 		$this->maxLadder = new Inputbox("ladderMax");
@@ -116,34 +125,37 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->frameInputbox->addComponent($this->frameLadder);
 		// end of ladder points
 		// server password
-		$this->serverPass = new Inputbox("serverPass");
+		$this->serverPass = new InputboxMasked("serverPass");
 		$this->serverPass->setLabel(__("Password for server", $this->getRecipient()));
 		$this->serverPass->setText($this->connection->getServerPassword());
+		$this->serverPass->setShowClearText();
 		$this->frameInputbox->addComponent($this->serverPass);
 
 		// spectator password
-		$this->serverSpecPass = new Inputbox("serverSpecPass");
+		$this->serverSpecPass = new InputboxMasked("serverSpecPass");
 		$this->serverSpecPass->setLabel(__("Password for spectators", $this->getRecipient()));
 		$this->serverSpecPass->setText($this->connection->getServerPasswordForSpectator());
+		$this->serverSpecPass->setShowClearText();
 		$this->frameInputbox->addComponent($this->serverSpecPass);
 
 		// referee password
-		$this->refereePass = new Inputbox("refereePass");
+		$this->refereePass = new InputboxMasked("refereePass");
 		$this->refereePass->setLabel(__("Referee password", $this->getRecipient()));
 		$this->refereePass->setText($this->connection->getRefereePassword());
+		$this->refereePass->setShowClearText();
 		$this->frameInputbox->addComponent($this->refereePass);
 	}
 
 // Generate all checkboxes
 	private function checkboxes()
 	{
-		/** @var \Maniaplanet\DedicatedServer\Structures\ServerOptions */
+		/** @var ServerOptions2 */
 		$server = $this->connection->getServerOptions();
 		$login = $this->getRecipient();
 
-		$this->frameCb = new \ManiaLive\Gui\Controls\Frame();
+		$this->frameCb = new Frame();
 		$this->frameCb->setAlign("left", "top");
-		$this->frameCb->setLayout(new \ManiaLib\Gui\Layouts\Column());
+		$this->frameCb->setLayout(new Column());
 
 		// checkbox for public server 
 		$publicServer = true;
@@ -210,15 +222,15 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->frameCb->addComponent($this->e['KeepPlayerSlots']);
 
 		// spacer
-		$quad = new \ManiaLib\Gui\Elements\Quad(20, 16);
-		$quad->setStyle(\ManiaLib\Gui\Elements\Bgs1::BgEmpty);
+		$quad = new Quad(20, 16);
+		$quad->setStyle(Bgs1::BgEmpty);
 		$this->frameCb->addComponent($quad);
 
 		// Ok and Cancel buttons goes for own row
-		$frame = new \ManiaLive\Gui\Controls\Frame();
+		$frame = new Frame();
 		$frame->setAlign("left", "top");
 		$frame->setSize(40, 20);
-		$frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+		$frame->setLayout(new Line());
 
 		$this->buttonOK = new OkButton();
 		$this->buttonOK->setText(__("Apply", $this->getRecipient()));
@@ -303,7 +315,7 @@ class ServerOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	public function serverOptionsOk($login, $args)
 	{
 
-		$server = \ManiaLive\Data\Storage::getInstance()->server;
+		$server = Storage::getInstance()->server;
 
 		foreach ($this->frameCb->getComponents() as $component) {
 			if ($component instanceof Checkbox) {

@@ -1,0 +1,63 @@
+if (InputPlayer == Null) continue;
+
+if( (Now - lastupdate) >= 30){
+        if (InputPlayer.DisplaySpeed <= 50) {                 
+            particleOpacity += 0.025;
+        } else {
+            particleOpacity -= 0.025;
+        }
+        if (particleOpacity < 0) {
+            particleOpacity = 0.;
+        }
+
+        if (particleOpacity > 1.) {
+            particleOpacity = 1.;
+        }
+
+        lastupdate = Now;
+
+        angle += 0.01;
+        i = 0;
+        for(i, 0, particleCount-1)
+        {              
+                particleMeta[i].Y -= (MathLib::Cos(angle + particleDensity[i]) + 1. + particleMeta[i].Z/2.) * 0.3 ;
+                particleMeta[i].X += MathLib::Sin(angle) * 1.5 * 0.3;
+              
+               
+                if(particleMeta[i].X > 165. || particleMeta[i].X < -165. || particleMeta[i].Y < -90.)
+                {
+                        if(i%3 > 0) //66.67% of the flakes
+                        {
+                                particleMeta[i].X = MathLib::Rand(-160,160)*1.01;
+                               particleMeta[i].Y = MathLib::Rand(90,100)*1.01;                  
+                        }
+                        else
+                        {
+                                //If the flake is exitting from the right
+                                if(MathLib::Sin(angle) > 0)
+                                {
+                                        //Enter from the left
+                                        particleMeta[i].X = MathLib::Rand(-160,0)*1.01;                                     
+                                        particleMeta[i].Y = MathLib::Rand(90,100)*1.01;                                               
+                                }
+                                else
+                                {
+                                        particleMeta[i].X = MathLib::Rand(0,160)*1.01;                                     
+                                        particleMeta[i].Y = MathLib::Rand(90,100)*1.01;
+                                }
+                        }
+                }
+
+                particle[i].RelativePosition.X =  particleMeta[i].X;
+                particle[i].RelativePosition.Y =  particleMeta[i].Y;
+                declare Real a = particle[i].RelativeRotation;
+                a += 0.5;
+                if (a > 360) {
+                    a = 0.;
+                }
+                particle[i].RelativeRotation = a;         
+                particle[i].Opacity = particleOpacity;
+
+    }
+
+}

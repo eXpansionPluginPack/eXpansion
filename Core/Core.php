@@ -839,7 +839,7 @@ EOT;
 	public function onPostLoop()
 	{
 		// check for update conditions
-		if ($this->enableCalculation == false)
+		if ($this->enableCalculation == false || $this->expStorage->isRelay)
 			return;
 		if ($this->storage->serverStatus->code == 4 && $this->update && (microtime(true) - $this->loopTimer) > 0.35) {
 			$this->update = false;
@@ -938,7 +938,7 @@ EOT;
 	 */
 	public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex)
 	{
-		if ($this->enableCalculation == false)
+		if ($this->enableCalculation == false || $this->expStorage->isRelay)
 			return;
 
 		$this->update = true;
@@ -976,7 +976,7 @@ EOT;
 	 */
 	public function onPlayerInfoChanged($playerInfo)
 	{
-		if ($this->enableCalculation == false)
+		if ($this->enableCalculation == false || $this->expStorage->isRelay)
 			return;
 
 		$this->update = true;
@@ -1071,7 +1071,7 @@ EOT;
 
 	public function onPlayerFinish($playerUid, $login, $timeOrScore)
 	{
-		if ($this->enableCalculation == false)
+		if ($this->enableCalculation == false || $this->expStorage->isRelay)
 			return;
 
 		// handle onPlayerfinish @ start from server.
