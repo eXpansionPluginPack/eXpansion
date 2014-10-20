@@ -125,7 +125,7 @@ class JoinLeaveMessage extends ExpPlugin
 			}else{
 				$this->exp_chatSendServerMessage($this->joinMsg, null, array($nick, $login, $country, $spec, $grpName));
 			}
-            $this->exp_chatSendServerMessage($this->tabNoticeMsg, $login);
+            // $this->exp_chatSendServerMessage($this->tabNoticeMsg, $login);
         } catch (Exception $e) {
             $this->console($e->getLine() . ":" . $e->getMessage());
         }

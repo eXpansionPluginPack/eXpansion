@@ -182,12 +182,12 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
 		$this->connectedRelays = array();
 		foreach ($this->connection->getPlayerList(-1, 0, 2) as $spec) {
-			if ($spec->isServer && $spec->login != $this->relayMaster && $spec->login != $this->storage->serverLogin) {
+			if ($spec->isServer == true && $spec->login != $this->relayMaster && $spec->login != $this->storage->serverLogin) {
 				print('[eXpansion Pack] Found a relay, Login:		' . $spec->login . "\n");
 				print('[eXpansion Pack] Found a relay, ServerName:	' . $spec->nickName . "\n");
 				$this->connectedRelays[] = $spec->login;
 			}
-			if ($spec->isServer && $spec->login == $this->relayMaster) {
+			if ($spec->isServer == true && $spec->login == $this->relayMaster) {
 				print('[eXpansion Pack] Found a master, Login:		' . $spec->login . "\n");
 				print('[eXpansion Pack] Found a master, ServerName:	' . $spec->nickName . "\n");
 			}
