@@ -28,7 +28,7 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->label->setAlign('left', 'center');
         $this->label->setStyle("TextRaceChat");
         $this->label->setScale(0.75);
-        $this->label->setText(number_format($rank->tscore, 2));
+        $this->label->setText(number_format($rank->tscore + 1, 2));
         $this->label->setTextColor('ff0');
         $this->addComponent($this->label);
 
