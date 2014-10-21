@@ -49,7 +49,7 @@ class RankItem extends \ManiaLive\Gui\Control {
         $this->label_score = new \ManiaLib\Gui\Elements\Label(10, 6);
         $this->label_score->setAlign('left', 'center');
         $this->label_score->setScale(1);
-        $this->label_score->setText($rank->tscore+1);
+        $this->label_score->setText(number_format($rank->tscore + 1, 2));
         $this->frame->addComponent($this->label_score);
 
         $this->label_finish = new \ManiaLib\Gui\Elements\Label(10, 6);
