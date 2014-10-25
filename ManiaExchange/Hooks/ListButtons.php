@@ -36,7 +36,6 @@ class ListButtons extends \ManiaLive\Event\Event
 	 * @param $login
 	 */
 	function __construct($onWhat, $buttons, $login) {
-		echo $onWhat;
 		parent::__construct($onWhat);
 
 		$this->buttons = $buttons;
