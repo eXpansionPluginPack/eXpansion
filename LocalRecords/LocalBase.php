@@ -944,6 +944,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 			$record->nickName = $data->player_nickname;
 			$record->time = $data->record_score;
 			$record->nbFinish = $data->record_nbFinish;
+			$record->date = $data->record_date;
 			$record->avgScore = $data->record_avgScore;
 			$record->nation = $data->player_nation;
 			$record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
@@ -1093,6 +1094,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 			$record->nickName = $data->player_nickname;
 			$record->time = $data->record_score;
 			$record->nbFinish = $data->record_nbFinish;
+			$record->date = $data->record_date;
 			$record->avgScore = $data->record_avgScore;
 			$record->nation = $data->player_nation;
 			$record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
