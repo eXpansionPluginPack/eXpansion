@@ -28,6 +28,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var = new String("mxKarmaServerLogin", "MxKarma serverlogin", $config, false, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
+
+		$this->setRelaySupport(false);
 	}
 
 }

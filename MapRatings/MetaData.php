@@ -43,6 +43,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(30);
 		$this->registerVariable($var);
 
+		$this->setRelaySupport(false);
 	}
 
 }

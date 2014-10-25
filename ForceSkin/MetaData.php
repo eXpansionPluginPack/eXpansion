@@ -27,6 +27,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var = new String("name", "set name for the skin", $config, false, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
+
+		$this->setRelaySupport(false);
 	}
 
 }

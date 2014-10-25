@@ -32,5 +32,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->setName("Chat Enhancement Widget");
 		$this->setDescription("Provides ");
 		$this->setGroups(array("Chat"));
+
+		$this->setRelaySupport(false);
 	}
 } 
