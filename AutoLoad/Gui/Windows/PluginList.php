@@ -130,7 +130,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->label_group->setScale(0.8);
 		$this->mainFrame->addComponent($this->label_group);
 
-		$this->select_group = new Dropdown("group", array('All'), 0, 25);
+		$this->select_group = new Dropdown("group", array('Select Group'), 0, 25);
 		$this->select_group->setPositionX(49);
 		$this->mainFrame->addComponent($this->select_group);
 
@@ -183,6 +183,8 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 		$i = 0;
 
+		$groups['All'] = true;
+
 		foreach ($availablePlugins as $metaData) {
 			if($this->firstDisplay){
 				foreach($metaData->getGroups() as $name){
@@ -190,13 +192,15 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 				}
 			}
 
-			if(!empty($this->value_name) && strpos(strtoupper($metaData->getName()), strtoupper($this->input_name->getText())) === false)
+			$text = $this->input_name->getText();
+			if(!empty($text) && strpos(strtoupper($metaData->getName()), strtoupper($text)) === false)
 				continue;
 
-			if(!empty($this->value_author) && strpos(strtoupper($metaData->getAuthor()), strtoupper(strtoupper($this->input_author->getText()))) === false)
+			$text = $this->input_author->getText();
+			if(!empty($text) && strpos(strtoupper($metaData->getAuthor()), strtoupper($text)) === false)
 				continue;
 
-			if(!empty($this->value_group) && !in_array($this->value_group, $metaData->getGroups())){
+			if(!empty($this->value_group) && $this->value_group != "All" && !in_array($this->value_group, $metaData->getGroups())){
 				continue;
 			}
 
@@ -233,16 +237,9 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	public function doSearch($login, $params)
 	{
-
-		print_r($params);
-
-		print_r($this->elements);
-
 		$this->input_name->setText($params['name']);
 		$this->input_author->setText($params['author']);
 		$this->value_group = $params['group'] == "" ? "" : $this->elements[$params['group']];
-
-		echo $this->value_group;
 
 		$this->select_group->setSelected($params['group']);
 
