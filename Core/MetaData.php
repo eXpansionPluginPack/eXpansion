@@ -23,6 +23,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("eXpansion Core");
 		$this->setDescription("Core plugin, all other plugins depend on this");
+		$this->setGroups(array('Core'));
 
 		$config = Config::getInstance();
 

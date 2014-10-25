@@ -15,6 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Best Checkpoints widget (top of screen)");
 		$this->setDescription("Provides Best checkpoints widget");
+		$this->setGroups(array('UI', 'Widgets'));
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");

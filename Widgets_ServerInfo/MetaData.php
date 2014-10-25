@@ -15,6 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Server infos widget");
 		$this->setDescription("Provides server infos widget");
+		$this->setGroups(array('UI', 'Widgets'));
 	}
 
 }

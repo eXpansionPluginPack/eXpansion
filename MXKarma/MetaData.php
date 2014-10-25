@@ -18,6 +18,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("MX karma");
 		$this->setDescription("Provides integration for Karma.Mania-Exchange.com");
+		$this->setGroups(array('Maps'));
 
 		$config = Config::getInstance();
 

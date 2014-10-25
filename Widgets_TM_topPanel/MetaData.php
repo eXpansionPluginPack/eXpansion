@@ -15,6 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Top panel");
 		$this->setDescription("Top panel");
+		$this->setGroups(array('UI', 'Widgets'));
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");

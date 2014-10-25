@@ -17,6 +17,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Dedimania (script mode)");
 		$this->setDescription("Dedimania, Global world records system integration");
+		$this->setGroups(array('Records'));
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");

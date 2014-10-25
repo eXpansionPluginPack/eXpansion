@@ -24,6 +24,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$this->setName("Local Scores widgets");
 		$this->setDescription("Provides local scores widget");
+		$this->setGroups(array('UI', 'Widgets', 'Records'));
 
 		//$this->setEnviAsTitle(true);
 		//$this->addTitleSupport('SM');

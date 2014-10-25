@@ -17,6 +17,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Admin groups");
 		$this->setDescription("Provides admin groups operations, all plugins need this");
+		$this->setGroups(array('Core', 'Admin'));
 
 		$var = new String('fileName', 'Admin Groups data file', Config::getInstance());
 		$var->setDescription("If left empty the name will be generated using the server login.");

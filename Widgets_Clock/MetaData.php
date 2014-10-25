@@ -15,6 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Clock and Mapinfos widget");
 		$this->setDescription("Provides clock and map infos widget");
+		$this->setGroups(array('UI', 'Widgets'));
 	}
 
 }

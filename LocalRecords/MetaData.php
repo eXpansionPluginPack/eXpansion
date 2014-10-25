@@ -19,6 +19,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	{
 		parent::onBeginLoad();
 
+		$this->setGroups(array('Records'));
+
 		$this->initName();
 
 		$this->initCompatibility();

@@ -20,6 +20,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$this->setName("Widget buttons");
 		$this->setDescription("Widget buttons");
+		$this->setGroups(array('UI', 'Widgets'));
 
 		$contentType = new Int("", "", null);
 		$config = Config::getInstance();

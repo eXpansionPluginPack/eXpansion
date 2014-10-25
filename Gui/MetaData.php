@@ -19,6 +19,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Graphical user interface");
 		$this->setDescription("");
+		$this->setGroups(array('UI'));
 
 		$config = Config::getInstance();
 		$var = new String("uiTextureBase", "Texture base for ui ", $config);

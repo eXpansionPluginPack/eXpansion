@@ -35,6 +35,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Voip Widgets");
 		$this->setDescription("Provides a Widget to join your favourite voip server");
+		$this->setGroups(array('UI', 'Widgets'));
+
 		$config = Config::getInstance();
 		$providers = array("mumble", "ts");
 		for ($x = 1; $x <= 2; $x++) {
