@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config;
 use ManiaLive\Data\Storage;
 use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 /**
@@ -77,9 +78,14 @@ abstract class MetaData
 	private $scriptCompatibiliyMode = true;
 
 	/**
-	 * @var The list of Titles the plugin support or exact title name chack
+	 * @var String[] The list of Titles the plugin support or exact title name chack
 	 */
 	private $titleSupport = array();
+
+	/**
+	 * @var Boolean Relay support
+	 */
+	private $relaySupport = true;
 
 	/**
 	 * @var Whatever plugins support soft title name, or
@@ -338,6 +344,26 @@ abstract class MetaData
 	}
 
 	/**
+	 * Does this plugin support Relay Mode
+	 *
+	 * @return bool
+	 */
+	protected function getRelaySupport()
+	{
+		return $this->relaySupport;
+	}
+
+	/**
+	 * Change relay mode support of the plugin
+	 *
+	 * @var bool $relaySupport Relay support
+	 */
+	protected function setRelaySupport($relaySupport)
+	{
+		$this->relaySupport = $relaySupport;
+	}
+
+	/**
 	 * @param boolean $enviAsTitle
 	 */
 	public function setEnviAsTitle($enviAsTitle)
@@ -439,6 +465,11 @@ abstract class MetaData
 
 	public function checkOtherCompatibility()
 	{
+		/** @var \ManiaLivePlugins\eXpansion\Helpers\Storage $expStorage */
+		$expStorage = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance();
+		if ($expStorage->isRelay && !$this->getRelaySupport()) {
+			return array('This plugin don\'t support Relay servers');
+		}
 		return array();
 	}
 
