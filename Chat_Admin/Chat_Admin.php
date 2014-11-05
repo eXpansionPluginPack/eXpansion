@@ -1205,7 +1205,7 @@ Other server might use the same blacklist file!!');
 	{
 		$mapsDir = Helper::getPaths()->getDefaultMapPath();
 		$mode = "TrackMania";
-		if (Core::$isSMServer)
+		if ($this->expStorage->simpleEnviTitle == "SM")
 			$mode = "ShootMania";
 
 		$scriptName = dirname($mapsDir) . "/Scripts/Modes/" . $mode . "/" . $params[0];
