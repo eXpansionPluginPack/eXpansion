@@ -19,6 +19,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$this->setName("Server Control panel");
 		$this->setDescription("Easy and graphical way of configuring your server.");
+		$this->setGroups(array('UI', 'Widgets', 'Chat'));
 
 		$this->setGroups(array('Core', 'Admin'));
 

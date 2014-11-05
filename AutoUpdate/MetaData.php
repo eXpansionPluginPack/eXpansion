@@ -18,6 +18,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Auto Update service");
 		$this->setDescription("Provides auto update service requests and ingame updates");
+		$this->setGroups(array('Core'));
 
 		$config = Config::getInstance();
 		$var = new Boolean("autoCheckUpdates", "Auto check updates when administator connects ?", $config);

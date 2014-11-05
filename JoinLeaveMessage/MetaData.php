@@ -16,6 +16,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->setName("Join and Leave messages");
 		$this->setDescription("Provides chat messages for joining and leaving players");
 
+		$this->setRelaySupport(false);
 	}
 
 }

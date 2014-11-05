@@ -18,6 +18,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("MX karma");
 		$this->setDescription("Provides integration for Karma.Mania-Exchange.com");
+		$this->setGroups(array('Maps'));
 
 		$config = Config::getInstance();
 
@@ -28,6 +29,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var = new String("mxKarmaServerLogin", "MxKarma serverlogin", $config, false, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
+
+		$this->setRelaySupport(false);
 	}
 
 }

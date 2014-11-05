@@ -23,6 +23,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Dedimania");
 		$this->setDescription("Dedimania, Global world records system integration");
+		$this->setGroups(array('Records'));
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");
@@ -44,5 +45,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var = new String("code", 'Dedimania $l[http://dedimania.net/tm2stats/?do=register]server code$l', $config, false, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
+
+		$this->setRelaySupport(false);
 	}
 }

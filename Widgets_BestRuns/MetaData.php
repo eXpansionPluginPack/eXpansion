@@ -23,6 +23,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Best Runs widget (top of screen)");
 		$this->setDescription("Provides Best runs widget");
+		$this->setGroups(array('UI', 'Widgets'));
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");

@@ -15,6 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Local Records widgets");
 		$this->setDescription("Provides local records widget");
+		$this->setGroups(array('UI', 'Widgets', 'Records'));
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");

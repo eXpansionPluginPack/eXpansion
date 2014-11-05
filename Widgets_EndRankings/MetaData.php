@@ -15,6 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("End map rankings widget");
 		$this->setDescription("Provides end map rankings widget");
+		$this->setGroups(array('UI', 'Widgets'));
 
 		//Important for all eXpansion plugins.
 		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);

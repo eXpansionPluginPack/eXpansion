@@ -19,6 +19,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Chat Customization");
 		$this->setDescription('Reroute chat to controller and customize the chat colors and look!');
+		$this->setGroups(array('Chat'));
 
 		$config = Config::getInstance();
 

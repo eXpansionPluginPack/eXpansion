@@ -17,6 +17,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Dedimania Records widgets");
 		$this->setDescription("Provides dedimania records widget");
+		$this->setGroups(array('UI', 'Widgets', 'Records'));
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");
@@ -34,6 +35,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 	public function checkOtherCompatibility()
 	{
+		$errors = parent::checkOtherCompatibility();
+
 		$dedi1 = '\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania';
 		$dedi2 = '\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script';
 
@@ -41,11 +44,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$phandler = PluginHandler::getInstance();
 
 		if ($phandler->isLoaded($dedi1)) {
-			return array();
+			return $errors;
 		} elseif ($phandler->isLoaded($dedi2)) {
-			return array();
+			return $errors;
 		}
 
-		return array('Dedimania Records Panel needs a running Dedimania plugin!!');
+		$errors[] = 'Dedimania Records Panel needs a running Dedimania plugin!!';
+
+		return $errors;
 	}
 }

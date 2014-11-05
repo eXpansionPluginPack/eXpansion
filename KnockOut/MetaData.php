@@ -30,6 +30,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var = new ColorCode("koColor", "Color for knockout", $configInstance, false, false);
 		$var->setDefaultValue('$0d0');
 		$this->registerVariable($var);
+
+		$this->setRelaySupport(false);
 	}
 
 }

@@ -78,7 +78,6 @@ class Helper
 	public static function getBuildDate()
 	{
 		if (self::$buildData == null) {
-			echo "\n" . dirname(__DIR__) . "\n";
 			self::$buildData = self::rBuildDate(dirname(__DIR__) . '/');
 		}
 		return self::$buildData;

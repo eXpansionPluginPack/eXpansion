@@ -17,6 +17,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Netlost status widget");
 		$this->setDescription("Provides netlost infos");
+		$this->setGroups(array('UI', 'Widgets'));
 
 		$configInstance = Config::getInstance();
 

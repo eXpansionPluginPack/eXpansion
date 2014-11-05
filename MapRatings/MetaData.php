@@ -18,6 +18,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Map Ratings");
 		$this->setDescription("Provides ratings for maps");
+		$this->setGroups(array('Maps'));
 
 		$config = Config::getInstance();
 
@@ -43,6 +44,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(30);
 		$this->registerVariable($var);
 
+		$this->setRelaySupport(false);
 	}
 
 }

@@ -638,6 +638,11 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 						"[eXp][DEBUG][LocalRecords:RECS]$login new rec Rank found" . $nrecord->place . " Old was : " . $recordrank_old
 				);
 
+			//If relay don't send message, host server will send one.
+			if ($this->expStorage->isRelay) {
+				return;
+			}
+
 			/*
 			 * Found new Rank sending message
 			 */
@@ -771,6 +776,10 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	 */
 	protected function updateRecordInDatabase(Record $record, $nbLaps)
 	{
+		//If relay server host will save records no need to do it here
+		if ($this->expStorage->isRelay) {
+			return;
+		}
 
 		//print_r($record);
 		//$uid = $this->storage->currentMap->uId;
@@ -844,6 +853,10 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 	public function deleteRecordOfPlayerOnMap($adminLogin, $login)
 	{
+		if ($this->expStorage->isRelay) {
+			$this->exp_chatSendServerMessage("#admin_error#Can't delete a record on Relay server.", $adminLogin);
+		}
+
 		if (isset($this->currentChallengePlayerRecords[$login])) {
 			$record = $this->currentChallengePlayerRecords[$login];
 
@@ -870,6 +883,10 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	 */
 	protected function updateCurrentChallengeRecords()
 	{
+		//If relay server host will save records no need to do it here
+		if ($this->expStorage->isRelay) {
+			return;
+		}
 
 		$this->currentChallangeSectorTimes = array();
 		$this->currentChallangeSectorsCps = $this->calcCP($this->storage->currentMap->nbCheckpoints);
@@ -944,6 +961,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 			$record->nickName = $data->player_nickname;
 			$record->time = $data->record_score;
 			$record->nbFinish = $data->record_nbFinish;
+			$record->date = $data->record_date;
 			$record->avgScore = $data->record_avgScore;
 			$record->nation = $data->player_nation;
 			$record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
@@ -1093,6 +1111,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 			$record->nickName = $data->player_nickname;
 			$record->time = $data->record_score;
 			$record->nbFinish = $data->record_nbFinish;
+			$record->date = $data->record_date;
 			$record->avgScore = $data->record_avgScore;
 			$record->nation = $data->player_nation;
 			$record->ScoreCheckpoints = explode(",", $data->record_checkpoints);
@@ -1372,6 +1391,11 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 	protected function resetRanks()
 	{
+		//If relay server host can't reset ranks
+		if ($this->expStorage->isRelay) {
+			return;
+		}
+
 		$fullStart = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Reseting Ranks");
 		$delete = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Deleting existing Ranks");
 
@@ -1392,6 +1416,11 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 	protected function updateRanks($challengeId, $nbLaps, $log = true)
 	{
+		//If relay server don't update ranks
+		if ($this->expStorage->isRelay) {
+			return;
+		}
+
 		$id = -1;
 		if ($log) {
 			$id = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer(

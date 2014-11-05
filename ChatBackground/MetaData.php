@@ -24,6 +24,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Chat Background");
 		$this->setDescription("Background box for chat");
+		$this->setGroups(array('Chat'));
 
 		$config = Config::getInstance();
 

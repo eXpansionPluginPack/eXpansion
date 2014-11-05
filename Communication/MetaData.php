@@ -15,6 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName('Communication Plugin');
 		$this->setDescription('Provides nextgen commmunication platform for serverside personal messaging.');
+		$this->setGroups(array('Chat'));
 	}
 
 }
