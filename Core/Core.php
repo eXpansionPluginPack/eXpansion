@@ -97,6 +97,8 @@ class Core extends types\ExpPlugin
 
 	private $quitDialogXml = "";
 
+	private $analytics;
+
 	/**
 	 * Declares what is necessary for expansion ro run.
 	 */
@@ -324,6 +326,10 @@ EOT;
 		// this is a fix for servers with a password, if player chooses to spectate, he can now enter back to play,
 		// which is not needed anymore as of 09/2014
 		// $this->connection->keepPlayerSlots(true);
+
+		echo "\n\n\n";
+		echo "Start Analytics\n";
+		$this->analytics = new Analytics();
 	}
 
 	public function onSettingsChanged(types\config\Variable $var)
