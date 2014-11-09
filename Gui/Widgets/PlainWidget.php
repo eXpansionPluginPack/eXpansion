@@ -197,6 +197,10 @@ class PlainWidget extends \ManiaLive\Gui\Window
 		return "False";
 	}
 
+	public function isDestroyed(){
+		return !isset($this->_scripts);
+	}
+
 }
 
 ?>
