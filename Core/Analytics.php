@@ -90,7 +90,7 @@ class Analytics implements \ManiaLive\Features\Tick\Listener{
 
 		$data = array(
 			'page'=>'handshake',
-			'login' => $this->storage->serverLogin
+			'server-login' => $this->storage->serverLogin
 		);
 
 		$url = $this->url."?".$this->generate($data);
