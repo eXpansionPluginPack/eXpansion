@@ -30,8 +30,8 @@ use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 class Analytics implements \ManiaLive\Features\Tick\Listener{
 
-	const ACTIVE_PING = 300;
-	const NOT_ACTIVE_PING = 3600;
+	const ACTIVE_PING = 1800; //Every 30 minutes is enought
+	const NOT_ACTIVE_PING = 7200; //If issue try in 3 hours again.
 
 	private $url = 'http://server1.oliver-decramer.com/exp/input.php';
 
