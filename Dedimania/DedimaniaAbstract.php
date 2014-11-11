@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania;
 
+use ManiaLive\Application\ErrorHandling;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection as DediConnection;
@@ -214,7 +215,6 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 			$record->place = $i;
 			// if record holder is at server, then we must check for additional
 			if ($record->login == $login) {
-				echo "login: $login\n";
 				// if record is greater than players max rank, don't allow
 				if ($record->place > $maxrank) {
 					$this->debug_max_ranks("record place: " . $record->place . " is greater than max rank: " . $maxrank);
@@ -222,9 +222,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 					continue;
 				}
 
-				echo "\n DEDIRECORD ADDED.\n";
-				// update checkpoints for the record
 
+				// update checkpoints for the record
 				$playerinfo = \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo;
 
 				$record->checkpoints = implode(",", $playerinfo[$login]->checkpoints);
@@ -432,7 +431,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 			$window->setSize(120, 100);
 			$window->show();
 		} catch (\Exception $e) {
-			echo $e->getFile() . ":" . $e->getLine();
+			ErrorHandling::displayAndLogError($e);
 		}
 	}
 
@@ -452,7 +451,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 			$window->setSize(170, 110);
 			$window->show();
 		} catch (\Exception $e) {
-			echo $e->getFile() . ":" . $e->getLine();
+			ErrorHandling::displayAndLogError($e);
 		}
 	}
 

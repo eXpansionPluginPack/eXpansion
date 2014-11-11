@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords;
 
+use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Core\i18n\Message;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
@@ -389,7 +390,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		}
 
 		if (($this->debug & self::DEBUG_LAPS) == self::DEBUG_LAPS)
-			echo "[DEBUG LocalRecs]Nb Laps : " . $nbLaps . "\n";
+			Console::println("[DEBUG LocalRecs]Nb Laps : " . $nbLaps);
 
 		//Sending begin map messages
 		if (sizeof($this->currentChallengeRecords) == 0 && $this->config->sendBeginMapNotices) {
@@ -437,7 +438,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		}
 
 		if (($this->debug & self::DEBUG_LAPS) == self::DEBUG_LAPS)
-			echo "[DEBUG LocalRecs]Nb Laps : " . $nbLaps . "\n";
+			Console::println("[DEBUG LocalRecs]Nb Laps : " . $nbLaps);
 
 		$updated = false;
 

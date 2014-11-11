@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Mumble;
 
+use ManiaLive\Application\ErrorHandling;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Mumble\Config;
 
@@ -56,7 +57,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->mumble_feed = json_decode(file_get_contents($config->url), true);
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage('%server%Mumble Error: $fff�� %error%' . utf8_encode($e->getMessage()));
-            echo $e->getMessage();
+            ErrorHandling::displayAndLogError($e);
             $this->enabled = false;
         }	
 	 $this->connection->chatSendServerMessage("Mumble Loaded"); //debug
@@ -83,7 +84,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$this->mumble_feed = json_decode(file_get_contents($config->url), true);
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage('%server%Mumble Error: $fff�� %error%' . utf8_encode($e->getMessage()));
-            echo $e->getMessage();
+            ErrorHandling::displayAndLogError($e);
             $this->enabled = false;
 		}
         foreach ($this->storage->players as $login => $player) {

@@ -139,9 +139,9 @@ class Core extends types\ExpPlugin
 	 */
 	function exp_onLoad()
 	{
-
 		//Listen to all dedicated events
 		$this->enableDedicatedEvents();
+		/** @var Config $config */
 		$config = Config::getInstance();
 
 		//Start multi lang system for eXpansion. Gogo languages
@@ -220,7 +220,7 @@ EOT;
 			$bExitApp = true;
 		}
 
-		$this->console('Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . '  $n build ' . date(
+		$this->console('Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . ' build ' . date(
 						"Y-m-d h:i:s A", Helper::getBuildDate()
 				) . ''
 		);

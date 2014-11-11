@@ -172,7 +172,6 @@ class Maps extends ExpPlugin
 		$this->msg_errMxId = exp_getMessage("#admin_error#You must include a MX map ID!");
 		$this->msg_mapAdd = exp_getMessage('#admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s');
 		$this->enableDedicatedEvents();
-		$this->console("jukeOnLoad");
 	}
 
 	/**

@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\TMKarma;
 
+use ManiaLive\Application\ErrorHandling;
 use ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma;
 use ManiaLivePlugins\eXpansion\TMKarma\Gui\Windows\Widget;
 use ManiaLivePlugins\eXpansion\TMKarma\Data;
@@ -75,8 +76,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
                 $this->writeConsole('ERROR: Could not authenticate at the tm-karma webservice!');
             }
         } catch (\Exception $e) {
-            echo "TmKarma error: ". $e->getMessage() ."\n";
-	    echo $e->getFile() . ":" . $e->getLine();
+            ErrorHandling::displayAndLogError($e);
 	    
             return;
         }
