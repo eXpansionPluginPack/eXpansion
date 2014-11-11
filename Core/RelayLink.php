@@ -31,8 +31,22 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 		Dispatcher::register(dediEvent::getClass(), $this, dediEvent::ALL, 1);
 		$this->relayMaster = $this->connection->getMainServerPlayerInfo();
 		$this->onPlayerConnect(null, true);
+		$this->syncCarData();
 		$this->queryMaster("syncMap", array(null), "xSyncMap");
 		$this->queryMaster("syncMapNext", array(null), "xSyncMapNext");
+	}
+
+	public function syncCarData()
+	{
+		try {
+			$gbxMap = new \ManiaLivePlugins\eXpansion\Helpers\GbxReader\Map();
+			$infoCurrent = $gbxMap->read($this->connection->getMapsDirectory() . DIRECTORY_SEPARATOR . $this->storage->currentMap->fileName);
+			$this->storage->currentMap->playerModel = $infoCurrent->playerModel;
+			$infoNext = $gbxMap->read($this->connection->getMapsDirectory() . DIRECTORY_SEPARATOR . $this->storage->nextMap->fileName);
+			$this->storage->currentMap->playerModel = $infoNext->playerModel;
+		} catch (\Exception $e) {
+			echo "error while reading mapData" . $e->getMessage();
+		}
 	}
 
 	public function sendRelay($data)
@@ -54,7 +68,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 	{
 		if ($this->isMaster())
 			return;
-		echo "Querying: $method";
+		//	echo "Querying: $method";
 
 		$data = gzdeflate(serialize(new Query($method, $value, $callback, $this->storage->serverLogin)));
 		$this->connection->tunnelSendData($this->relayMaster, $data);
@@ -68,7 +82,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 	private function syncMap($params)
 	{
 
-		echo "onSync Map:" . $params;
+		//	echo "onSync Map:" . $params;
 		$this->storage = \ManiaLive\Data\Storage::getInstance();
 		//var_dump($this->storage->currentMap);
 		return $this->storage->currentMap;
@@ -76,7 +90,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
 	private function syncMapNext($params)
 	{
-		echo "onSync Nextmap:" . $params;
+		//	echo "onSync Nextmap:" . $params;
 		$this->storage = \ManiaLive\Data\Storage::getInstance();
 		//var_dump($this->storage->nextMap);
 		return $this->storage->nextMap;
@@ -84,7 +98,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
 	private function xSyncMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
 	{
-		echo "xSyncmap: " . $map->name . "\n";
+		//	echo "xSyncmap: " . $map->name . "\n";
 		///var_dump($map);
 		$this->storage = \ManiaLive\Data\Storage::getInstance();
 		$this->storage->currentMap = $map;
@@ -92,7 +106,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
 	private function xSyncMapNext(\Maniaplanet\DedicatedServer\Structures\Map $map)
 	{
-		echo "xSyncNextmap: " . $map->name . "\n";
+		//	echo "xSyncNextmap: " . $map->name . "\n";
 		//var_dump($map);
 
 		$this->storage = \ManiaLive\Data\Storage::getInstance();
@@ -108,6 +122,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
 	final public function onBeginMap($map, $warmUp, $matchContinuation)
 	{
+		$this->syncCarData();
 		$this->queryMaster("syncMap", array(null), "xSyncMap");
 		$this->queryMaster("syncMapNext", array(null), "xSyncMapNext");
 	}
@@ -235,23 +250,20 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 	}
 
 	final public function onTunnelDataReceived($playerUid, $login, $data)
-	{			
+	{
 		$obj = unserialize(gzinflate($data));
-
-		echo "recieved tunnelData!!";
-	//	var_dump($obj);
 
 		if ($obj instanceof \ManiaLivePlugins\eXpansion\Core\Structures\Callback) {
 			try {
-				echo "Callback:";
-			//	var_dump($obj);
+				//		echo "Callback:";
+				//	var_dump($obj);
 
 				if (is_array($obj->method)) {
-					echo "trying to call";
+					//			echo "trying to call";
 					call_user_func_array($obj->method, $obj->params);
 				}
 				else {
-					echo "trying to call:" . $obj->method;
+					//			echo "trying to call:" . $obj->method;
 					call_user_func_array(array($this, $obj->method), $obj->params);
 				}
 			} catch (\Exception $e) {
@@ -264,7 +276,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 				return;
 
 			try {
-				echo "Query:" . $login;
+				//	echo "Query:" . $login;
 				$ret = "not defined";
 				if (is_array($obj->method)) {
 					$ret = call_user_func_array($obj->method, $obj->params);
@@ -272,8 +284,8 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 				else {
 					$ret = call_user_func_array(array($this, $obj->method), $obj->params);
 				}
-				echo "RETRURNING: to " . $obj->from . "\n";
-			//	var_dump($ret);
+				//		echo "RETRURNING: to " . $obj->from . "\n";
+				//	var_dump($ret);
 
 				$data = gzdeflate(serialize(new Callback($obj->callback, array($ret))));
 				$this->connection->tunnelSendData($obj->from, $data);

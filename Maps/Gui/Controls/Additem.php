@@ -35,7 +35,7 @@ class Additem extends \ManiaLive\Gui\Control
 		$sizeY = 6;
 
 		try {
-			$gbx->processFile($filename);
+			$map = $gbx->read($filename);
 		} catch (Exception $e) {
 			Helper::log("[Maps/Additem]Error processing file : " . $e->getMessage());
 			return;
@@ -43,7 +43,7 @@ class Additem extends \ManiaLive\Gui\Control
 		$this->addMapAction = $this->createAction(array($controller, 'addMap'), array($filename, $gbx->name));
 		$this->deleteActionf = $this->createAction(array($controller, 'deleteMap'), $filename);
 		$this->deleteAction = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->deleteActionf);
-		
+
 		$this->frame = new \ManiaLive\Gui\Controls\Frame();
 		$this->frame->setSize($sizeX, $sizeY);
 		$layout = new \ManiaLib\Gui\Layouts\Line();
@@ -67,27 +67,42 @@ class Additem extends \ManiaLive\Gui\Control
 
 		$this->label = new \ManiaLib\Gui\Elements\Label(90, 4);
 		$this->label->setAlign('left', 'center');
-		$this->label->setText(Gui::fixString($gbx->name));
+		$this->label->setText(Gui::fixString($map->name));
 		$this->label->setScale(0.8);
 		$this->frame->addComponent($this->label);
 
 		$this->mapNick = new \ManiaLib\Gui\Elements\Label(50, 4);
 		$this->mapNick->setAlign('left', 'center');
-
-		$this->mapNick->setText(Gui::fixString($gbx->authorNick));
+		
+		$author = $map->author->login;
+		if ($map->author->nickname) {
+			$author = $map->author->nickname;
+		}
+		$this->mapNick->setText(Gui::fixString($author));
 		$this->mapNick->setScale(0.8);
 		$this->frame->addComponent($this->mapNick);
 
 		$this->time = new \ManiaLib\Gui\Elements\Label(16, 4);
 		$this->time->setAlign('left', 'center');
 		$this->time->setScale(0.8);
-		$this->time->setText(\ManiaLive\Utilities\Time::fromTM($gbx->authorTime));
+		$this->time->setText(\ManiaLive\Utilities\Time::fromTM($map->authorTime));
 		$this->frame->addComponent($this->time);
 
+		$this->time = new \ManiaLib\Gui\Elements\Label(16, 4);
+		$this->time->setAlign('left', 'center');
+		$this->time->setScale(0.8);
+		$this->time->setText($map->environment);
+		$this->frame->addComponent($this->time);
+
+		$this->time = new \ManiaLib\Gui\Elements\Label(16, 4);
+		$this->time->setAlign('left', 'center');
+		$this->time->setScale(0.8);
+		$this->time->setText($map->playerModel);
+		$this->frame->addComponent($this->time);
+		
 		$spacer = new \ManiaLib\Gui\Elements\Quad();
 		$spacer->setSize(4, 4);
 		$spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-
 		$this->frame->addComponent($spacer);
 
 
@@ -107,8 +122,6 @@ class Additem extends \ManiaLive\Gui\Control
 
 		$this->addComponent($this->frame);
 		$this->setSize($sizeX, $sizeY);
-
-		unset($gbx);
 	}
 
 	protected function onResize($oldX, $oldY)
@@ -120,9 +133,8 @@ class Additem extends \ManiaLive\Gui\Control
 // manialive 3.1 override to do nothing.
 	function destroy()
 	{
-		
+
 		ActionHandler::getInstance()->deleteAction($this->deleteAction);
-		
 	}
 
 	/*

@@ -157,7 +157,7 @@ class Maps extends ExpPlugin
 		$this->showNextMapWidget(null);
 
 		$this->preloadHistory();
-		//$this->showMapList("oliverde8");
+		//$this->showMapList("oliverde8");	
 	}
 
 	public function exp_onLoad()
