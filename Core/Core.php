@@ -97,6 +97,7 @@ class Core extends types\ExpPlugin
 
 	private $quitDialogXml = "";
 
+	/** @var  Analytics */
 	private $analytics;
 
 	/**
@@ -327,9 +328,12 @@ EOT;
 		// which is not needed anymore as of 09/2014
 		// $this->connection->keepPlayerSlots(true);
 
-		echo "\n\n\n";
-		echo "Start Analytics\n";
 		$this->analytics = new Analytics();
+		if ($this->config->analytics) {
+			$this->analytics->enable();
+		} else {
+			$this->analytics->disable();
+		}
 	}
 
 	public function onSettingsChanged(types\config\Variable $var)
@@ -343,6 +347,12 @@ EOT;
 					$this->doWhitelist();
 				}
 				break;
+			case "analytics" :
+				if ($var->getRawValue()) {
+					$this->analytics->enable();
+				} else {
+					$this->analytics->disable();
+				}
 		}
 	}
 

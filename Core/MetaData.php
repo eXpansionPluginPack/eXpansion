@@ -193,7 +193,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDescription("Kicks everybody else from server, than players in quest list");
 		$var->setDefaultValue(false);
 		$this->registerVariable($var);
-		
+
+		$var = new Boolean('analytics', 'Send analytic data to eXpansion server', $config, false);
+		$var->setDescription("All data are anonymous.");
+		$var->setGroup("General");
+		$var->setDefaultValue(true);
+		$this->registerVariable($var);
 	}
 
 }

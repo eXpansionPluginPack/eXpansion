@@ -26,14 +26,24 @@ use ManiaLive\Data\Storage;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Features\Tick\Event as TickEvent;
 use ManiaLive\PluginHandler\PluginHandler;
+use ManiaLive\Utilities\Console;
+use ManiaLive\Utilities\Logger;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
-class Analytics implements \ManiaLive\Features\Tick\Listener{
+/**
+ * Class Analytics, sends anonymous data to eXpansion analytics server in order to check eXpansion usage.
+ *
+ * @package ManiaLivePlugins\eXpansion\Core
+ */
+class Analytics implements \ManiaLive\Features\Tick\Listener
+{
 
-	const ACTIVE_PING = 1800; //Every 30 minutes is enought
-	const NOT_ACTIVE_PING = 7200; //If issue try in 3 hours again.
+	const ACTIVE_PING = 600; //Every 10 minutes is enought
+	const NOT_ACTIVE_PING = 14400; //If issue try in 4 hours again.
 
 	private $url = 'http://server1.oliver-decramer.com/exp/input.php';
+
+	private $enable = false;
 
 	private $lasPing = 0;
 	private $active = false;
@@ -52,10 +62,52 @@ class Analytics implements \ManiaLive\Features\Tick\Listener{
 
 	function __construct()
 	{
-		Dispatcher::register(TickEvent::getClass(), $this);
 		$this->storage = Storage::getInstance();
 		$this->expStorage = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance();
 		$this->pluginHandler = PluginHandler::getInstance();
+	}
+
+	public function enable()
+	{
+		if ($this->enable) {
+			return;
+		}
+
+		$this->console('');
+		$this->console('-------------------------------------------------------------------------------');
+		$this->console('');
+		$this->console('                  Enabling eXpansion Analytics Tool : ');
+		$this->console('This will gather some anonymous data from you server in order to improve');
+		$this->console('eXpansion and it\'s components. It can always be disabled in the settings.');
+		$this->console('We would appreciate it if you let it run. Thanks');
+		$this->console('eXpansion Dev Team.');
+		$this->console('');
+		$this->console('-------------------------------------------------------------------------------');
+		$this->console('');
+
+
+		Dispatcher::register(TickEvent::getClass(), $this);
+		$this->enable = true;
+	}
+
+	public function disable()
+	{
+		if (!$this->enable) {
+			return;
+		}
+
+		$this->console('');
+		$this->console('-------------------------------------------------------------------------------');
+		$this->console('');
+		$this->console('                   Disablin eXpansion Analytics Tool : ');
+		$this->console('We are sorry that you have disabled analytics tool. ');
+		$this->console('eXpansion Dev Team.');
+		$this->console('');
+		$this->console('-------------------------------------------------------------------------------');
+		$this->console('');
+
+		Dispatcher::unregister(TickEvent::getClass(), $this);
+		$this->enable = false;
 	}
 
 	public function destroy()
@@ -117,7 +169,6 @@ class Analytics implements \ManiaLive\Features\Tick\Listener{
 
 	public function ping()
 	{
-
 		/** @var DataAccess $access */
 		$access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
 
@@ -132,13 +183,16 @@ class Analytics implements \ManiaLive\Features\Tick\Listener{
 			'page'=>'ping',
 			'key' => $this->key,
 			'nbPlayers' => count($this->storage->players) + count($this->storage->spectators),
-			'country' => '', //@TODO
+			'country' => $this->expStorage->serverAccount->path,
 			'version' => Core::EXP_VERSION,
+			'php_version' => phpversion(),
+			'memory' => memory_get_usage(),
+			'memory_peak' => memory_get_peak_usage(),
 			'build' => $this->getDateTime($buildDate),
 			'game' => $this->expStorage->simpleEnviTitle,
 			'title' => str_replace('@', '_', $this->expStorage->titleId),
 			'mode' => $this->storage->gameInfos->gameMode == 0 ? $this->storage->gameInfos->scriptName : $this->storage->gameInfos->gameMode,
-			'plugins' => implode(',',$plugins),
+			'plugins' => implode(',',$this->pluginHandler->getLoadedPluginsList()),
 		);
 
 		$url = $this->url."?".$this->generate($data);
@@ -163,5 +217,15 @@ class Analytics implements \ManiaLive\Features\Tick\Listener{
 
 	private function getDateTime($time) {
 		return date('Y-m-d',($time)).'T'.date('H:i:s', ($time)).'Z';
+	}
+
+	protected function console($message) {
+		$logFile = $this->storage->serverLogin . ".console.log";
+		/** @var Logger */
+		$logger = Logger::getLog("eXpansion");
+
+		Console::println($message);
+		$logger::log($message, true, $logFile);
+
 	}
 }

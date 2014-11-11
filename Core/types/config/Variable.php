@@ -302,7 +302,6 @@ abstract class Variable
 				}
 
 				Dispatcher::dispatch(new PluginSettingChange(PluginSettingChange::ON_SETTINGS_CHANGE, $this->pluginId, $this));
-
 			}
 		} else {
 			$this->value = $value;
