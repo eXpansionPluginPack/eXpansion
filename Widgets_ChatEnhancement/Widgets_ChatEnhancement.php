@@ -63,7 +63,7 @@ class Widgets_ChatEnhancement extends \ManiaLivePlugins\eXpansion\Core\types\Exp
 			$panelMain = Gui\Widgets\Chat::Create($login, true, $this->action_chatLog, $this->action_chatStatus);
 			$panelMain->setPosition(-161,-66);
 			$panelMain->show();
-		} else if (isset($localRecs[0])) {
+		} else if (isset($localRecs[0]) && !$localRecs[0]->isDestroyed()) {
 			$localRecs[0]->show($login);
 		}
 	}

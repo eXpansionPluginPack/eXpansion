@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Core\types\config;
 use ManiaLib\Utils\Singleton;
 use ManiaLive\Event\Dispatcher;
+use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Events\PluginSettingChange;
 
 /**
@@ -298,11 +299,10 @@ abstract class Variable
 				try {
 					$phandler->callPublicMethod($core, $this->pluginId, 'onSettingsChanged', array($this));
 				} catch (\Exception $ex) {
-					echo "error on settings change!". $ex->getMessage()."\n";
+					Console::println("error on settings change!". $ex->getMessage());
 				}
 
 				Dispatcher::dispatch(new PluginSettingChange(PluginSettingChange::ON_SETTINGS_CHANGE, $this->pluginId, $this));
-
 			}
 		} else {
 			$this->value = $value;

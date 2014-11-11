@@ -149,7 +149,6 @@ class IrcBot
 				break;
 			case "PRIVMSG":
 				if ($this->getIrcNick($messages[1]) == $this->config->nickname) {
-					echo "message from self, ignore\n";
 					break;
 				}
 				if ($messages[3] == $this->config->channel) {

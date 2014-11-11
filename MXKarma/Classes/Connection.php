@@ -77,7 +77,6 @@ class Connection
 	{
 
 		if ($httpCode != 200) {
-			echo "http error" . $httpCode . "\n";
 			return;
 		}
 
@@ -101,7 +100,6 @@ class Connection
 	{
 
 		if ($httpCode != 200) {
-			echo "http error" . $httpCode . "\n";
 			return;
 		}
 
@@ -142,7 +140,6 @@ class Connection
 	{
 
 		if ($httpCode != 200) {
-			echo "http error" . $httpCode . "\n";
 			return;
 		}
 
@@ -160,7 +157,6 @@ class Connection
 	{
 
 		if ($httpCode != 200) {
-			echo "http error" . $httpCode . "\n";
 			return;
 		}
 

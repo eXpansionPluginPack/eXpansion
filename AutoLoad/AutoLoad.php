@@ -256,8 +256,6 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	 */
 	public function tooglePlugin($login, MetaDataType $metaData)
 	{
-
-		$this->logMemory();
 		/**
 		 * @var PluginHandler $pHandler
 		 */
@@ -297,8 +295,6 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			ConfigManager::getInstance()->registerValueChange($this->getMetaData()->getVariable('plugins'));
 			ConfigManager::getInstance()->check();
 		}
-
-		$this->logMemory();
 
 		$this->showPluginsWindow($login);
 		$this->configPlugins = $this->config->plugins;

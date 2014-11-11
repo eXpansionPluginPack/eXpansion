@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Core;
 class Config extends \ManiaLib\Utils\Singleton
 {
 	public $debug = false;
+	public $analytics = true;
 	public $language = null;
 	public $defaultLanguage = null;
 	public $Colors_admin_error = '$d44'; // error message color for admin

@@ -97,6 +97,9 @@ class Core extends types\ExpPlugin
 
 	private $quitDialogXml = "";
 
+	/** @var  Analytics */
+	private $analytics;
+
 	/**
 	 * Declares what is necessary for expansion ro run.
 	 */
@@ -136,9 +139,9 @@ class Core extends types\ExpPlugin
 	 */
 	function exp_onLoad()
 	{
-
 		//Listen to all dedicated events
 		$this->enableDedicatedEvents();
+		/** @var Config $config */
 		$config = Config::getInstance();
 
 		//Start multi lang system for eXpansion. Gogo languages
@@ -217,7 +220,7 @@ EOT;
 			$bExitApp = true;
 		}
 
-		$this->console('Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . '  $n build ' . date(
+		$this->console('Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . ' build ' . date(
 						"Y-m-d h:i:s A", Helper::getBuildDate()
 				) . ''
 		);
@@ -324,6 +327,13 @@ EOT;
 		// this is a fix for servers with a password, if player chooses to spectate, he can now enter back to play,
 		// which is not needed anymore as of 09/2014
 		// $this->connection->keepPlayerSlots(true);
+
+		$this->analytics = new Analytics();
+		if ($this->config->analytics) {
+			$this->analytics->enable();
+		} else {
+			$this->analytics->disable();
+		}
 	}
 
 	public function onSettingsChanged(types\config\Variable $var)
@@ -337,6 +347,12 @@ EOT;
 					$this->doWhitelist();
 				}
 				break;
+			case "analytics" :
+				if ($var->getRawValue()) {
+					$this->analytics->enable();
+				} else {
+					$this->analytics->disable();
+				}
 		}
 	}
 

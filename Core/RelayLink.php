@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Core;
 
+use ManiaLive\Application\ErrorHandling;
 use ManiaLive\DedicatedApi\Callback\Event as dediEvent;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Utilities\Console;
@@ -257,7 +258,6 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 			try {
 				//		echo "Callback:";
 				//	var_dump($obj);
-
 				if (is_array($obj->method)) {
 					//			echo "trying to call";
 					call_user_func_array($obj->method, $obj->params);
@@ -267,7 +267,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 					call_user_func_array(array($this, $obj->method), $obj->params);
 				}
 			} catch (\Exception $e) {
-				echo "Couldn't execute! " . $e->getMessage();
+				ErrorHandling::displayAndLogError($e);
 			}
 		}
 

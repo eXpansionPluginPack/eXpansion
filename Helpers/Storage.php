@@ -101,6 +101,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 	 */
 	public $relay;
 
+	/** @var \Maniaplanet\DedicatedServer\Structures\PlayerDetailedInfo */
+	public $serverAccount = null;
+
 	/**
 	 * is this eXpansion running locally on server (true)
 	 * or 
@@ -134,6 +137,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 		$this->baseMapType = $this->getSimpleMapType($this->storage->currentMap->mapType);
 		
 		$this->startTime = time();
+
+		$this->serverAccount = $this->connection->getDetailedPlayerInfo($this->storage->serverLogin);
 
 		if (DedicatedConfig::getInstance()->host == "localhost" || DedicatedConfig::getInstance()->host == "127.0.0.1")
 			$this->isRemoteControlled = false;

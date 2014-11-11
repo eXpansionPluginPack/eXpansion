@@ -43,98 +43,124 @@ class Dedimania extends DedimaniaAbstract
         if (DediConnection::$players[$login]->banned)
             return;
 
-        // if current map doesn't have records, create one.
-        if (count($this->records) == 0) {
-            $player = $this->connection->getCurrentRankingForLogin($login);
+		if (self::exp_getCurrentCompatibilityGameMode() == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) {
+			return;
+		}
 
-            // map first array entry to player object;
-            $player = $player[0];
-            if ($this->storage->players[$login]->bestCheckpoints !== $player->bestCheckpoints) {
-                Helper::log("[DediMania]Player CP mismatch");
-            }
-
-            $this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, $player->bestCheckpoints);
-            $this->reArrage($login);
-            \ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login]));
-
-            return;
-        }
-
-        // if last record is not set, don't continue.
-        if (!is_object($this->lastRecord)) {
-            return;
-        }
-
-        // so if the time is better than the last entry or the count of records
-
-        $maxrank = DediConnection::$serverMaxRank;
-        if (DediConnection::$players[$login]->maxRank > $maxrank) {
-            $maxrank = DediConnection::$players[$login]->maxRank;
-        }
-
-        if ($time <= $this->lastRecord->time || count($this->records) <= $maxrank) {
-
-            //  print "times matches!";
-            // if player exists on the list... see if he got better time
-
-            $player = $this->storage->getPlayerObject($login);
-
-            if (array_key_exists($login, $this->records)) {
-
-
-                if ($this->records[$login]->time > $time) {
-                    $oldRecord = $this->records[$login];
-
-                    $this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, array());
-
-                    // if new records count is greater than old count, and doesn't exceed the maxrank of the server
-                    $oldCount = count($this->records);
-                    if ((count(
-                                $this->records
-                            ) > $oldCount) && ((DediConnection::$dediMap->mapMaxRank + 1) < DediConnection::$serverMaxRank)
-                    ) {
-                        //print "increasing maxrank! \n";
-                        DediConnection::$dediMap->mapMaxRank++;
-                    }
-                    $this->reArrage($login);
-                    // have to recheck if the player is still at the dedi array
-                    if (array_key_exists(
-                        $login,
-                        $this->records
-                    )
-                    ) // have to recheck if the player is still at the dedi array
-                        \ManiaLive\Event\Dispatcher::dispatch(
-                            new DediEvent(DediEvent::ON_DEDI_RECORD, $this->records[$login], $oldRecord)
-                        );
-
-                    return;
-                }
-
-                // if not, add the player to records table
-            } else {
-                $oldCount              = count($this->records);
-                $this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, array());
-                // if new records count is greater than old count, increase the map records limit
-
-                if ((count(
-                            $this->records
-                        ) > $oldCount) && ((DediConnection::$dediMap->mapMaxRank + 1) < DediConnection::$serverMaxRank)
-                ) {
-
-                    DediConnection::$dediMap->mapMaxRank++;
-                }
-                $this->reArrage($login);
-
-                // have to recheck if the player is still at the dedi array
-                if (array_key_exists($login, $this->records))
-                    \ManiaLive\Event\Dispatcher::dispatch(
-                        new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login])
-                    );
-
-                return;
-            }
-        }
+		$this->handlePlayerFinish($playerUid, $login, $time);
     }
+
+	/**
+	 * @param \ManiaLive\Data\Player $player
+	 * @param $time
+	 * @param $checkpoints
+	 * @param int $nbLap
+	 */
+	public function onPlayerFinishLap($player, $time, $checkpoints, $nbLap)
+	{
+		$gamemode = self::exp_getCurrentCompatibilityGameMode();
+
+		if ($gamemode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) {
+			return;
+		}
+
+		$this->handlePlayerFinish($player->playerId, $player->login, $time);
+	}
+
+
+	public function handlePlayerFinish($playerUid, $login, $time)
+	{
+
+		// if current map doesn't have records, create one.
+		if (count($this->records) == 0) {
+			$player = $this->connection->getCurrentRankingForLogin($login);
+
+			// map first array entry to player object;
+			$player = $player[0];
+			if ($this->storage->players[$login]->bestCheckpoints !== $player->bestCheckpoints) {
+				Helper::log("[DediMania]Player CP mismatch");
+			}
+
+			$this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, $player->bestCheckpoints);
+			$this->reArrage($login);
+			\ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login]));
+
+			return;
+		}
+
+		// if last record is not set, don't continue.
+		if (!is_object($this->lastRecord)) {
+			return;
+		}
+
+		// so if the time is better than the last entry or the count of records
+
+		$maxrank = DediConnection::$serverMaxRank;
+		if (DediConnection::$players[$login]->maxRank > $maxrank) {
+			$maxrank = DediConnection::$players[$login]->maxRank;
+		}
+
+		if ($time <= $this->lastRecord->time || count($this->records) <= $maxrank) {
+
+			//  print "times matches!";
+			// if player exists on the list... see if he got better time
+
+			$player = $this->storage->getPlayerObject($login);
+
+			if (array_key_exists($login, $this->records)) {
+				if ($this->records[$login]->time > $time) {
+					$oldRecord = $this->records[$login];
+
+					$this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, array());
+
+					// if new records count is greater than old count, and doesn't exceed the maxrank of the server
+					$oldCount = count($this->records);
+					if ((count(
+								$this->records
+							) > $oldCount) && ((DediConnection::$dediMap->mapMaxRank + 1) < DediConnection::$serverMaxRank)
+					) {
+						//print "increasing maxrank! \n";
+						DediConnection::$dediMap->mapMaxRank++;
+					}
+					$this->reArrage($login);
+					// have to recheck if the player is still at the dedi array
+					if (array_key_exists(
+						$login,
+						$this->records
+					)
+					) // have to recheck if the player is still at the dedi array
+						\ManiaLive\Event\Dispatcher::dispatch(
+							new DediEvent(DediEvent::ON_DEDI_RECORD, $this->records[$login], $oldRecord)
+						);
+
+					return;
+				}
+
+				// if not, add the player to records table
+			} else {
+				$oldCount              = count($this->records);
+				$this->records[$login] = new Structures\DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, array());
+				// if new records count is greater than old count, increase the map records limit
+
+				if ((count(
+							$this->records
+						) > $oldCount) && ((DediConnection::$dediMap->mapMaxRank + 1) < DediConnection::$serverMaxRank)
+				) {
+
+					DediConnection::$dediMap->mapMaxRank++;
+				}
+				$this->reArrage($login);
+
+				// have to recheck if the player is still at the dedi array
+				if (array_key_exists($login, $this->records))
+					\ManiaLive\Event\Dispatcher::dispatch(
+						new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login])
+					);
+
+				return;
+			}
+		}
+	}
 
     /**
      *

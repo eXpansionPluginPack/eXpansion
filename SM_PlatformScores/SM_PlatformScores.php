@@ -65,7 +65,6 @@ class SM_PlatformScores extends LocalBase {
 				$this->lastCpNum[$login] = $cpIndex;
 			}
 		}
-		echo "\nScore : $login: cpindex: $cpIndex with $time \n";
 	}
 
 	public function onEndMatch($rankings, $winnerTeamOrMap)
