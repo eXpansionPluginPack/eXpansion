@@ -97,7 +97,7 @@ class Additem extends \ManiaLive\Gui\Control
 		$this->time = new \ManiaLib\Gui\Elements\Label(16, 4);
 		$this->time->setAlign('left', 'center');
 		$this->time->setScale(0.8);
-		$this->time->setText($map->playerModel);
+		$this->time->setText(isset($map->playerModel) ? $map->playerModel : "");
 		$this->frame->addComponent($this->time);
 		
 		$spacer = new \ManiaLib\Gui\Elements\Quad();

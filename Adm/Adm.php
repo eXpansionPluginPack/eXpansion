@@ -295,8 +295,13 @@ class Adm extends ExpPlugin
 
 
 			if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
-				$ipoints = implode(",", $intPoints);
-				$this->connection->triggerModeScriptEventArray('Rounds_SetPointsRepartition', $ipoints);
+				$points = $intPoints;
+				foreach ($points as &$num) {
+					settype($num, 'string');
+				}
+				unset($num);
+				$this->connection->triggerModeScriptEventArray('Rounds_SetPointsRepartition', $points);
+				$this->connection->setRoundCustomPoints($intPoints);
 			}
 			else {
 				$this->connection->setRoundCustomPoints($intPoints);

@@ -95,7 +95,7 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
     {
-	$this->environment->setText($map->environnement . " / " . $map->playerModel);
+	$this->environment->setText($map->environnement . " / " . isset($map->playerModel) ? $map->playerModel : "");
 	if ($map->author == "Nadeo") {
 	    $this->country->setImage("http://reaby.kapsi.fi/ml/flags/France.dds", true);
 	}
