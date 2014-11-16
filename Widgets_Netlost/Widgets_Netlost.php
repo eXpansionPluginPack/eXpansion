@@ -41,7 +41,7 @@ class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\A
 
 		foreach ($players as $player) {
 			$pla = $this->storage->getPlayerObject($player->login);
-			$out .= $comma . '"' . Gui::fixString($pla->nickName) . ' $z$s(' . Gui::fixString($player->login) . ') "';
+			$out .= $comma . '"' . Gui::fixString($player->nickName) . ' $z$s(' . Gui::fixString($player->login) . ') "';
 			$comma = ", ";
 		}
 
