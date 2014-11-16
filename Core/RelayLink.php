@@ -252,7 +252,16 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
 	final public function onTunnelDataReceived($playerUid, $login, $data)
 	{
-		$obj = unserialize(gzinflate($data));
+		if (is_object($data)) {
+			try {
+				$data = (string) $data;
+				$obj = unserialize(gzinflate($data));
+			} catch (\Exception $e) {
+				$obj = $data;
+			}
+		} else {
+			$obj = unserialize(gzinflate($data));
+		}
 
 		if ($obj instanceof \ManiaLivePlugins\eXpansion\Core\Structures\Callback) {
 			try {
