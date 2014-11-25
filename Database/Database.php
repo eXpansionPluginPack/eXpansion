@@ -213,7 +213,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                                 " . $this->db->quote($data->goldTime) . ",
                                 " . $this->db->quote($data->authorTime) . ",
                                 " . $this->db->quote($data->copperPrice) . ",
-                                " . $this->db->quote($data->lapRace) . ",
+                                " . $this->db->quote($data->lapRace ? 1 : 0) . ",
                                 " . $this->db->quote($data->nbLaps) . ",
                                 " . $this->db->quote($data->nbCheckpoints) . ",
                                 " . $this->db->quote($login) . ",
