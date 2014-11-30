@@ -104,6 +104,15 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 	/** @var \Maniaplanet\DedicatedServer\Structures\PlayerDetailedInfo */
 	public $serverAccount = null;
 
+	/** @var string Just the country in which the server is */
+	public $serverCountry = '';
+
+	/** @var string Just php version without compilation iformation */
+	public $cleanPhpVersion = '';
+
+	/** @var string Os of the server */
+	public $serverOs = '';
+
 	/**
 	 * is this eXpansion running locally on server (true)
 	 * or 
@@ -116,6 +125,7 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 	private $startTime;
 
 	private $dediUpTime;
+
 
 	protected function __construct()
 	{
@@ -150,6 +160,20 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener
 			$this->connection->chatSend('[notice] $$Exp_storage->isRemoteControlled is forced to True!', null, true);
 		}
 		$this->dediUpTime = $this->connection->getNetworkStats()->uptime;
+
+		$formatter = \ManiaLivePlugins\eXpansion\Gui\Formaters\Country::getInstance();
+		$this->serverCountry = $formatter->format($this->serverAccount->path);
+
+		$version = explode('-', phpversion());
+		$this->cleanPhpVersion = $version[0];
+
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			$this->serverOs = "Windows";
+		} else if (strtoupper(substr(PHP_OS, 0, 3)) === 'MAC') {
+			$this->serverOs = "Mac";
+		} else {
+			$this->serverOs = "Linux";
+		}
 	}
 
 	protected function getSimpleMapType($type)

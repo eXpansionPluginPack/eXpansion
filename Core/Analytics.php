@@ -183,9 +183,9 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 			'page'=>'ping',
 			'key' => $this->key,
 			'nbPlayers' => count($this->storage->players) + count($this->storage->spectators),
-			'country' => $this->expStorage->serverAccount->path,
+			'country' => $this->expStorage->serverCountry,
 			'version' => Core::EXP_VERSION,
-			'php_version' => phpversion(),
+			'php_version' => $this->expStorage->cleanPhpVersion,
 			'memory' => memory_get_usage(),
 			'memory_peak' => memory_get_peak_usage(),
 			'build' => $this->getDateTime($buildDate),
@@ -193,6 +193,7 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 			'title' => str_replace('@', '_', $this->expStorage->titleId),
 			'mode' => $this->storage->gameInfos->gameMode == 0 ? $this->storage->gameInfos->scriptName : $this->storage->gameInfos->gameMode,
 			'plugins' => implode(',',$this->pluginHandler->getLoadedPluginsList()),
+			'serverOs' => $this->expStorage->serverOs,
 		);
 
 		$url = $this->url."?".$this->generate($data);
