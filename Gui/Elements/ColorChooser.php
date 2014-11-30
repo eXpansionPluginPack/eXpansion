@@ -52,7 +52,7 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 
 
 		$this->inputbox = new Inputbox($inputboxName, $sizeX - 4, true);
-		$this->inputbox->setPosX(4);
+		$this->inputbox->setPosition(4, 7);
 		$this->inputbox->setId("output_" . $this->buttonId);
 		$this->inputbox->setClass("color_input");
 		$this->addComponent($this->inputbox);

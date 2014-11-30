@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
+use Exception;
 use ManiaLib\Gui\Elements\Bgs1;
 use ManiaLib\Gui\Elements\Icons64x64_1;
 use ManiaLib\Gui\Elements\Quad;
@@ -14,8 +15,10 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted as Checkbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Editbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\InputboxMasked;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use Maniaplanet\DedicatedServer\Connection;
 use Maniaplanet\DedicatedServer\Structures\ServerOptions as ServerOptions2;
@@ -53,8 +56,8 @@ class ServerOptions extends Window
 		$this->inputboxes();
 		$this->checkboxes();
 
-		$this->mainFrame->addComponent($this->frameCb);
-		$this->mainFrame->addComponent($this->frameInputbox);
+		$this->addComponent($this->frameCb);
+		$this->addComponent($this->frameInputbox);
 	}
 
 	// Generate all inputboxes
@@ -75,10 +78,10 @@ class ServerOptions extends Window
 		$this->serverName->setText($this->connection->getServerName());
 		$this->frameInputbox->addComponent($this->serverName);
 
-
-		$this->serverComment = new Inputbox("serverComment");
-		$this->serverComment->setLabel(__("Server comment", $this->getRecipient()));
+		$this->serverComment = new Editbox("serverComment", 60, 26);
+		$this->serverComment->setLabel(__("Server Comment", $this->getRecipient()));
 		$this->serverComment->setText($this->connection->getServerComment());
+		$this->serverComment->setName("serverComment");
 		$this->frameInputbox->addComponent($this->serverComment);
 
 
@@ -103,6 +106,7 @@ class ServerOptions extends Window
 
 		$this->frameInputbox->addComponent($this->framePlayers);
 		// end of players
+		
 		// Ladder Points goes to same row
 		$this->frameLadder = new Frame();
 		$this->frameLadder->setLayout(new Line());
@@ -111,6 +115,7 @@ class ServerOptions extends Window
 		$this->minLadder = new Inputbox("ladderMin");
 		$this->minLadder->setLabel(__("Ladderpoints minimum", $this->getRecipient()));
 		$this->minLadder->setText($server->ladderServerLimitMin);
+		$this->minLadder->setEditable(false);
 		$this->frameLadder->addComponent($this->minLadder);
 
 		$spacer = new Quad(3, 6);
@@ -120,10 +125,13 @@ class ServerOptions extends Window
 		$this->maxLadder = new Inputbox("ladderMax");
 		$this->maxLadder->setLabel(__("Ladderpoints Maximum", $this->getRecipient()));
 		$this->maxLadder->setText($server->ladderServerLimitMax);
+		$this->maxLadder->setEditable(false);
 		$this->frameLadder->addComponent($this->maxLadder);
 
 		$this->frameInputbox->addComponent($this->frameLadder);
 		// end of ladder points
+
+		
 		// server password
 		$this->serverPass = new InputboxMasked("serverPass");
 		$this->serverPass->setLabel(__("Password for server", $this->getRecipient()));
@@ -253,8 +261,8 @@ class ServerOptions extends Window
 		$this->serverComment->setEditable(AdminGroups::hasPermission($login, Permission::server_comment));
 		$this->maxPlayers->setEditable(AdminGroups::hasPermission($login, Permission::server_maxplayer));
 		$this->maxSpec->setEditable(AdminGroups::hasPermission($login, Permission::server_maxspec));
-		$this->minLadder->setEditable(AdminGroups::hasPermission($login, Permission::server_ladder));
-		$this->maxLadder->setEditable(AdminGroups::hasPermission($login, Permission::server_ladder));
+		//$this->minLadder->setEditable(AdminGroups::hasPermission($login, Permission::server_ladder));
+		//$this->maxLadder->setEditable(AdminGroups::hasPermission($login, Permission::server_ladder));
 		$this->serverPass->setVisibility(AdminGroups::hasPermission($login, Permission::server_password));
 		$this->serverSpecPass->setVisibility(AdminGroups::hasPermission($login, Permission::server_specpwd));
 		$this->refereePass->setVisibility(AdminGroups::hasPermission($login, Permission::server_refpwd));
@@ -302,12 +310,13 @@ class ServerOptions extends Window
 		parent::onResize($oldX, $oldY);
 		//   $this->pager->setSize($this->sizeX - 4, $this->sizeY -12);
 		$this->serverName->setSizeX($this->sizeX - 8);
-		$this->serverComment->setSizeX($this->sizeX - 8);
+		$this->serverComment->setSizeX($this->sizeX - 70);
 		$this->serverPass->setSizeX(($this->sizeX - 8) / 2);
 		$this->serverSpecPass->setSizeX(($this->sizeX - 8) / 2);
 		$this->refereePass->setSizeX(($this->sizeX - 8) / 2);
-		$this->frameInputbox->setPosition(0, -4);
+		$this->frameInputbox->setPosition(0, -2);
 		$this->frameCb->setPosition($this->sizeX / 2 + 20, -25);
+		
 		$this->buttonOK->setPosition($this->sizeX - $this->buttonCancel->sizeX - $this->buttonOK->sizeX, -$this->sizeY);
 		$this->buttonCancel->setPosition($this->sizeX - $this->buttonCancel->sizeX, -$this->sizeY);
 	}
@@ -322,6 +331,8 @@ class ServerOptions extends Window
 				$component->setArgs($args);
 			}
 		}
+
+		print_r($args);
 
 		$serverOptions = Array(
 			"Name" => !AdminGroups::hasPermission($login, Permission::server_name) ? $server->name : $args['serverName'],
@@ -344,16 +355,20 @@ class ServerOptions extends Window
 			"KeepPlayerSlots" => $this->e['KeepPlayerSlots']->getStatus()
 		);
 
-		$this->connection->setServerOptions($serverOptions);
-	
-		$this->connection->keepPlayerSlots($this->e['KeepPlayerSlots']->getStatus());
-		
-		if (AdminGroups::hasPermission($login, Permission::server_maxplayer)) {
-			$this->connection->setMaxPlayers(intval($args['maxPlayers']));
-		}
+		try {
+			$this->connection->setServerOptions($serverOptions);
+			$this->connection->keepPlayerSlots($this->e['KeepPlayerSlots']->getStatus());
 
-		if (AdminGroups::hasPermission($login, Permission::server_maxspec)) {
-			$this->connection->setMaxSpectators(intval($args['maxSpec']));
+			if (AdminGroups::hasPermission($login, Permission::server_maxplayer)) {
+				$this->connection->setMaxPlayers(intval($args['maxPlayers']));
+			}
+
+			if (AdminGroups::hasPermission($login, Permission::server_maxspec)) {
+				$this->connection->setMaxSpectators(intval($args['maxSpec']));
+			}
+		} catch (Exception $e) {
+			$this->connection->chatSendServerMessage("Error: " . $e->getMessage());
+			$this->connection->chatSendServerMessage(__("Settings not changed.", $login));
 		}
 
 		$this->Erase($this->getRecipient());

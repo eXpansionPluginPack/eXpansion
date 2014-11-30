@@ -125,6 +125,10 @@ class Map extends FileStructure
 			$map->bronzeTime = (int) $header->times->attributes()->bronze;
 			if (property_exists($header, "playermodel")) {
 				$map->playerModel = (string) $header->playermodel->attributes()->id;
+
+				if (trim($map->playerModel) == "") {
+					$map->playerModel = $map->environment . "Car";
+				}
 			}
 			else {
 				$map->playerModel = $map->environment . "Car";
