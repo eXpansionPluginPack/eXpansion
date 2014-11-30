@@ -63,8 +63,8 @@ class Editbox extends Control
 
 	protected function onResize($oldX, $oldY)
 	{
-		$this->button->setSize($this->getSizeX(), $this->getSizeY() - 4);
-		$this->button->setPosition(0, -4);
+		$this->button->setSize($this->getSizeX(), $this->getSizeY() - 5);
+		$this->button->setPosition(0, 0);
 
 		/* 	$this->bgleft->setSize(3, $this->getSizeY());
 		  $this->bgleft->setPosX(3);
@@ -76,7 +76,7 @@ class Editbox extends Control
 		  $this->bgright->setPosX($this->getSizeX() - 3); */
 
 		$this->label->setSize($this->getSizeX(), 3);
-		$this->label->setPosition(1, 0);
+		$this->label->setPosition(1, 5);
 		$this->bg->setSize($this->sizeX, $this->sizeY);
 
 		parent::onResize($oldX, $oldY);

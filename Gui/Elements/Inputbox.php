@@ -54,13 +54,9 @@ class Inputbox extends \ManiaLive\Gui\Control
 	protected function onDraw()
 	{
 
-		if ($this->label->getText() == "") {
-			$yOffset = 0;
-		}
-		else {
-			$yOffset = -7;
-		}
 
+		$yOffset = 0;
+		
 		$this->button->setSize($this->getSizeX() - 8, 5);
 		$this->button->setPosition(2, $yOffset);
 
@@ -74,7 +70,7 @@ class Inputbox extends \ManiaLive\Gui\Control
 		$this->bgright->setPosition($this->getSizeX() - 3, $yOffset);
 
 		$this->label->setSize($this->getSizeX(), 3);
-		$this->label->setPosition(1, 0);
+		$this->label->setPosition(1, 5);
 
 		$this->bg->setSize($this->sizeX, $this->sizeY);
 

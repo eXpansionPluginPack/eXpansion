@@ -78,7 +78,7 @@ class ServerOptions extends Window
 		$this->serverName->setText($this->connection->getServerName());
 		$this->frameInputbox->addComponent($this->serverName);
 
-		$this->serverComment = new Editbox("serverComment", 60, 26);
+		$this->serverComment = new Inputbox("serverComment", 60, 26);
 		$this->serverComment->setLabel(__("Server Comment", $this->getRecipient()));
 		$this->serverComment->setText($this->connection->getServerComment());
 		$this->serverComment->setName("serverComment");
@@ -309,12 +309,12 @@ class ServerOptions extends Window
 	{
 		parent::onResize($oldX, $oldY);
 		//   $this->pager->setSize($this->sizeX - 4, $this->sizeY -12);
-		$this->serverName->setSizeX($this->sizeX - 8);
+		$this->serverName->setSize($this->sizeX - 8, 8);
 		$this->serverComment->setSizeX($this->sizeX - 70);
 		$this->serverPass->setSizeX(($this->sizeX - 8) / 2);
 		$this->serverSpecPass->setSizeX(($this->sizeX - 8) / 2);
 		$this->refereePass->setSizeX(($this->sizeX - 8) / 2);
-		$this->frameInputbox->setPosition(0, -2);
+		$this->frameInputbox->setPosition(0, -6);
 		$this->frameCb->setPosition($this->sizeX / 2 + 20, -25);
 		
 		$this->buttonOK->setPosition($this->sizeX - $this->buttonCancel->sizeX - $this->buttonOK->sizeX, -$this->sizeY);
@@ -331,9 +331,7 @@ class ServerOptions extends Window
 				$component->setArgs($args);
 			}
 		}
-
-		print_r($args);
-
+		
 		$serverOptions = Array(
 			"Name" => !AdminGroups::hasPermission($login, Permission::server_name) ? $server->name : $args['serverName'],
 			"Comment" => !AdminGroups::hasPermission($login, Permission::server_comment) ? $server->comment : $args['serverComment'],

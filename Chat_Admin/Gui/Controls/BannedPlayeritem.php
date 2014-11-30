@@ -22,7 +22,7 @@ class BannedPlayeritem extends \ManiaLive\Gui\Control
 
 	function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\PlayerBan $player, $controller, $login)
 	{
-		$sizeX = 120;
+		$sizeX = 80;
 		$sizeY = 6;
 		$this->player = $player;
 
@@ -32,10 +32,10 @@ class BannedPlayeritem extends \ManiaLive\Gui\Control
 		$this->frame->setSize($sizeX, $sizeY);
 		$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
-		$this->login = new \ManiaLib\Gui\Elements\Label(20, 4);
+		$this->login = new \ManiaLib\Gui\Elements\Label(50, 4);
 		$this->login->setAlign('left', 'center');
 		$this->login->setText($player->login);
-		$this->login->setScale(0.8);
+	
 		$this->frame->addComponent($this->login);
 
 
@@ -45,10 +45,9 @@ class BannedPlayeritem extends \ManiaLive\Gui\Control
 
 		$this->frame->addComponent($spacer);
 
-		$this->unbanButton = new MyButton(16, 6);
-		$this->unbanButton->setText(__("unBan"));
+		$this->unbanButton = new MyButton();
+		$this->unbanButton->setText(__("Remove"));
 		$this->unbanButton->setAction($this->unbanAction);
-		$this->unbanButton->setScale(0.6);
 		$this->frame->addComponent($this->unbanButton);
 
 

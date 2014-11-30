@@ -142,7 +142,7 @@ Other server might use the same blacklist file!!');
 				->setMinParam(0);
 		AdminGroups::addAlias($cmd, "cleanbanlist"); // xaseco & fast
 
-		$cmd = AdminGroups::addAdminCommand('get banlist', $this, 'showBanlist', Permission::server_genericOptions);
+		$cmd = AdminGroups::addAdminCommand('get banlist', $this, 'showBanList', Permission::server_genericOptions);
 		$cmd->setHelp('shows the current banlist of players')
 				->setMinParam(0);
 		AdminGroups::addAlias($cmd, "getbanlist");
@@ -154,17 +154,17 @@ Other server might use the same blacklist file!!');
 				->setMinParam(0);
 		AdminGroups::addAlias($cmd, "cleanblacklist");
 
-		$cmd = AdminGroups::addAdminCommand('get blacklist', $this, 'showBlacklist', Permission::server_genericOptions);
+		$cmd = AdminGroups::addAdminCommand('get blacklist', $this, 'showBlackList', Permission::server_genericOptions);
 		$cmd->setHelp('shows the current banlist of players')
 				->setMinParam(0);
 		AdminGroups::addAlias($cmd, "getblacklist");
 
-		$cmd = AdminGroups::addAdminCommand('get guestlist', $this, 'showGuestlist', Permission::server_genericOptions);
+		$cmd = AdminGroups::addAdminCommand('get guestlist', $this, 'showGuestList', Permission::server_genericOptions);
 		$cmd->setHelp('shows the current guest of players')
 				->setMinParam(0);
 		AdminGroups::addAlias($cmd, "getguestlist");
 
-		$cmd = AdminGroups::addAdminCommand('get ignorelist', $this, 'showIgnorelist', Permission::player_ignore);
+		$cmd = AdminGroups::addAdminCommand('get ignorelist', $this, 'showIgnoreList', Permission::player_ignore);
 		$cmd->setHelp('shows the current ignorelist of players')
 				->setMinParam(0);
 		AdminGroups::addAlias($cmd, "getignorelist");
@@ -520,15 +520,15 @@ Other server might use the same blacklist file!!');
 
 		$this->enableDatabase();
 		$this->enableTickerEvent();
+		self::$showActions['ignore'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showIgnoreList'));
+		self::$showActions['ban'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showBanList'));
+		self::$showActions['black'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showBlackList'));
+		self::$showActions['guest'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showGuestList'));
 	}
 
 	public function exp_onReady()
 	{
 		$this->enableDedicatedEvents();
-		self::$showActions['ignore'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showIgnoreList'));
-		self::$showActions['ban'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showBanList'));
-		self::$showActions['black'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showBlackList'));
-		self::$showActions['guest'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showGuestList'));
 	}
 
 	public function onTick()
@@ -1739,7 +1739,7 @@ Other server might use the same blacklist file!!');
 				$items[] = new BannedPlayeritem($indexNumber, $player, $this, $login);
 			}
 			$window->populateList($items);
-			$window->setSize(120, 100);
+			$window->setSize(90, 120);
 			$window->centerOnScreen();
 			$window->show();
 		} catch (Exception $e) {
@@ -1751,7 +1751,7 @@ Other server might use the same blacklist file!!');
 	{
 		GenericPlayerList::Erase($login);
 
-		try {
+	//	try {
 			$window = GenericPlayerList::Create($login);
 			$window->setTitle(__('Blacklisted Players on the server', $login));
 			$indexNumber = 0;
@@ -1764,12 +1764,12 @@ Other server might use the same blacklist file!!');
 				$items[] = new BlacklistPlayeritem($indexNumber, $player, $this, $login);
 			}
 			$window->populateList($items);
-			$window->setSize(120, 100);
+			$window->setSize(90, 120);
 			$window->centerOnScreen();
 			$window->show();
-		} catch (Exception $e) {
-			$this->sendErrorChat($login, $e->getMessage());
-		}
+		//} catch (Exception $e) {
+	//		$this->sendErrorChat($login, "".$e->getMessage());
+//		}
 	}
 
 	function showGuestList($login)
@@ -1789,7 +1789,7 @@ Other server might use the same blacklist file!!');
 				$items[] = new GuestPlayeritem($indexNumber, $player, $this, $login);
 			}
 			$window->populateList($items);
-			$window->setSize(120, 100);
+			$window->setSize(90, 120);
 			$window->centerOnScreen();
 			$window->show();
 		} catch (Exception $e) {
@@ -1814,7 +1814,7 @@ Other server might use the same blacklist file!!');
 				$items[] = new IgnoredPlayeritem($indexNumber, $player, $this, $login);
 			}
 			$window->populateList($items);
-			$window->setSize(120, 100);
+			$window->setSize(90, 120);
 			$window->centerOnScreen();
 			$window->show();
 		} catch (Exception $e) {

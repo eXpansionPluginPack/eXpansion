@@ -18,7 +18,7 @@ class GuestPlayeritem extends \ManiaLive\Gui\Control {
     private $frame;
 
     function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login) {
-        $sizeX = 120;
+        $sizeX = 80;
         $sizeY = 6;        
         $this->player = $player;
 
@@ -31,7 +31,7 @@ class GuestPlayeritem extends \ManiaLive\Gui\Control {
         $this->login = new \ManiaLib\Gui\Elements\Label(20, 4);
         $this->login->setAlign('left', 'center');
         $this->login->setText($player->login);
-        $this->login->setScale(0.8);
+  
         $this->frame->addComponent($this->login);
 
 
@@ -41,7 +41,7 @@ class GuestPlayeritem extends \ManiaLive\Gui\Control {
 
         $this->frame->addComponent($spacer);
 
-        $this->removeButton = new MyButton(16, 6);
+        $this->removeButton = new MyButton();
         $this->removeButton->setText(__("Remove"));
         $this->removeButton->setAction($this->removeAction);
         $this->removeButton->setScale(0.6);
