@@ -91,7 +91,7 @@ class ExpSetting extends Control
 			if ($var instanceof Boolean) {
 				$this->input = new CheckboxScripted(5, 5);
 				$this->input->setStatus($var->getRawValue());
-				$this->input->setPosY(-2);
+				$this->input->setPosY(-1);
 				$this->input->setPosX(7);
 				$this->addComponent($this->input);
 			}
@@ -105,7 +105,7 @@ class ExpSetting extends Control
 			else {
 				$this->input = new Inputbox($var->getName());
 				$this->input->setText($var->getRawValue());
-				$this->input->setPosY(5);
+				$this->input->setPosY(-2);
 				$this->input->setPosX(7);
 				$this->addComponent($this->input);
 			}
