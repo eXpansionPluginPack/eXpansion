@@ -252,6 +252,7 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
 	public function exp_onUnload()
 	{
 		\ManiaLive\Event\Dispatcher::unregister(MXKarmaEvent::getClass(), $this);
+		MXRatingsWidget::EraseAll();
 		unset($this->mxConnection);
 		parent::exp_onUnload();
 	}

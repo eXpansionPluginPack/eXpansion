@@ -130,7 +130,7 @@ class Widgets_ChatEnhancement extends \ManiaLivePlugins\eXpansion\Core\types\Exp
 		$actionH->deleteAction($this->action_chatLog);
 		$actionH->deleteAction($this->action_chatStatus);
 
-		Gui\Widgets\AroundMe::EraseAll();
+		Gui\Widgets\Chat::EraseAll();
 		Dispatcher::unregister(PluginSettingChange::getClass(), $this);
 	}
 }
