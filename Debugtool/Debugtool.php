@@ -21,6 +21,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Debugtool;
 
+use ManiaLive\Event\Dispatcher;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 /**
@@ -30,12 +31,7 @@ use Maniaplanet\DedicatedServer\Structures\GameInfos;
  */
 class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
-
-	private $counter = 0;
-
 	private $ticker = 0;
-
-	private $login = null;
 
 	private $testActive = false;
 
@@ -48,10 +44,8 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 		$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-		//$this->registerChatCommand("starttest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-		//\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
-		$window = Gui\testWindow::Create();
-		$window->show();
+		$this->registerChatCommand("profiler_enable", "profilere", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+		$this->registerChatCommand("test", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 	}
 
 	public function exp_onUnload()
@@ -63,40 +57,15 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	function onTick()
 	{
-
-		if ($this->ticker > 5) {
-			$this->ticker = 0;
-			\ManiaLivePlugins\eXpansion\DebugTool\Gui\testWidget::EraseAll();
-			$widget = \ManiaLivePlugins\eXpansion\DebugTool\Gui\testWidget::Create();
-			$widget->setPosition(60, 0);
-			$widget->setData($this->connection->getPlayerList(20, 0));
-			$widget->show();
-			return;
-		}
-
 		if ($this->testActive) {
-			echo $this->counter . "\n";
-			\ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist::EraseAll();
-			\ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist::EraseAll();
-			\ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Records::EraseAll();
-			\ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWindow::EraseAll();
-			\ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\StatsWindow::EraseAll();
-
-			if ($this->counter > 50) {
-				$this->counter = 0;
-				$this->testActive = false;
-				return;
+			if ($this->ticker < 30) {
+				$this->connection->connectFakePlayer();
+			} else {
+				$this->ticker = 0;
+				$this->connection->disconnectFakePlayer("*");
 			}
-			$login = $this->login;
-			$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Players\\Players", "showPlayerList", $login);
-			$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps", "showMapList", $login);
-			$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, Null);
-			$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Faq\\Faq", "showFaq", $login, "toc", null);
-			$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Statistics\\Statistics", "showTopWinners", $login);
-			$this->logMemory();
-			$this->counter++;
+			$this->ticker++;
 		}
-		$this->ticker++;
 	}
 
 	function connect($login, $playercount)
@@ -115,6 +84,11 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		}
 	}
 
+	public function profilere()
+	{
+		Dispatcher::setApplicationListener(new Profiler());
+	}
+
 	function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
 	{
 	//	echo "$login: cpindex: $cpIndex with $time\n";
@@ -122,8 +96,6 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	function test($login)
 	{
-		$this->login = $login;
-		$this->counter = 0;
 		$this->testActive = true;
 	}
 
