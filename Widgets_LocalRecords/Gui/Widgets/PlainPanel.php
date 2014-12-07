@@ -92,7 +92,8 @@ class PlainPanel extends Widget
 	protected function getScript()
 	{
 		$script = "";
-		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
+		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT && \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId != 'Platform@nadeolive')
+		{
 			$script = new PlayerFinish_Optimized();
 		} else {
 			$script = new PlayerFinish();

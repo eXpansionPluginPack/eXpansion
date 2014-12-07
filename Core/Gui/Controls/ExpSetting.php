@@ -58,7 +58,7 @@ class ExpSetting extends Control
 
 			$this->label_varValue = new Label(40, 5);
 			$this->label_varValue->setScale(0.9);
-			$this->label_varValue->setPosX(10);
+			$this->label_varValue->setPosX(15);
 			$this->label_varValue->setId('column_' . $indexNumber . '_1');
 			$this->label_varValue->setText($var->getPreviewValues());
 			$this->addComponent($this->label_varValue);
@@ -122,15 +122,18 @@ class ExpSetting extends Control
 		}
 		$this->addComponent($this->icon_global);
 
-		$this->setScale(0.8);
-		$this->setSize(117, 8);
+	//	$this->setScale(0.8);
+		$this->sizeX = 130;
+		$this->sizeY = 10;
+
+		$this->setSize(130, 10);
 	}
 
 	protected function onResize($oldX, $oldY)
 	{
-		parent::onResize($oldX, $oldY);
+		
 		$this->label_varName->setSizeX($this->getSizeX() - 27);
-		$this->bg->setSize($this->getSizeX() + 2, $this->getSizeY() + 2);
+		$this->bg->setSize($this->getSizeX(), $this->getSizeY());
 
 		$this->button_reset->setPosition($this->getSizeX() - 7, 0);
 
@@ -139,13 +142,14 @@ class ExpSetting extends Control
 			$this->button_reset->setPosition($this->getSizeX() - $this->button_change->getSizeX() - 4, 0);
 		}
 		if ($this->label_varValue != null) {
-			$this->label_varValue->setSizeX($this->getSizeX() - 27);
-			$this->label_varValue->setPosition(5, -1);
+			$this->label_varValue->setSizeX($this->getSizeX() - 30);
+			$this->label_varValue->setPosition(7, -1);
 		}
 
 		if ($this->input != null) {
 			$this->input->setSizeX($this->getSizeX() - 20);
 		}
+		parent::onResize($oldX, $oldY);
 	}
 
 	public function getNbTextColumns()

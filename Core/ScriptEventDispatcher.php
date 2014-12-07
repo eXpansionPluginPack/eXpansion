@@ -32,7 +32,9 @@ use ManiaLive\DedicatedApi\Callback\SPlayerRanking;
 use ManiaLive\DedicatedApi\Callback\StatsName;
 use ManiaLive\DedicatedApi\Callback\StatusCode;
 use ManiaLive\Event\Dispatcher;
+use ManiaLive\Utilities\Logger;
 use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent as Event;
+use ManiaLivePlugins\eXpansion\TMKarma\Exception;
 use Maniaplanet\DedicatedServer\Connection;
 
 /**
@@ -50,11 +52,15 @@ class ScriptEventDispatcher implements ServerEventListener
 
 	function __construct($connetcion)
 	{
-		$this->connection = $connetcion;
-		$this->connection->setModeScriptSettings(array('S_UseScriptCallbacks' => true));
+		try {
+			$this->connection = $connetcion;
+			$this->connection->setModeScriptSettings(array('S_UseScriptCallbacks' => true));
 
 
-		Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
+			Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
+		} catch (\Exception $ex) {
+			Logger::error("Strange script mode, couldn't use S_UseScriptCallbacks. HATE Nadeo");
+		}
 	}
 
 	public function onModeScriptCallback($param1, $param2)

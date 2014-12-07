@@ -40,9 +40,9 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 		$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
 		$this->mainFrame->addComponent($this->pager);
-		$this->widths = array(1, 8, 6, 5);
+		$this->widths = array(1, 8, 6, 6);
 
-		$line = new \ManiaLive\Gui\Controls\Frame(23, 0);
+		$line = new \ManiaLive\Gui\Controls\Frame(18, 0);
 		$line->setLayout(new \ManiaLib\Gui\Layouts\Line());
 		if (AdminGroups::hasPermission($login, Permission::player_ignore)) {
 			$btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
@@ -78,7 +78,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$textStyle = "TextCardRaceRank";
 		$textColor = "fff";
 		$textSize = 2.5;
-		$scaledSizes = Gui::getScaledSize($this->widths, $this->sizeX / .8);
+		$scaledSizes = Gui::getScaledSize($this->widths, $this->sizeX);
 	}
 
 	function ignorePlayer($login, $target)
@@ -173,8 +173,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	function onResize($oldX, $oldY)
 	{
 		parent::onResize($oldX, $oldY);
-		$this->pager->setSize($this->sizeX - 5, $this->sizeY - 10);
-		$this->pager->setPosition(2, -1);
+		$this->pager->setSize($this->sizeX, $this->sizeY - 10);
+	
 	}
 
 	function onDraw()

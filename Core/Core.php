@@ -22,7 +22,7 @@ use Maniaplanet\DedicatedServer\Structures\ServerOptions;
 class Core extends types\ExpPlugin
 {
 
-	const EXP_VERSION = "0.9.7";
+	const EXP_VERSION = "0.9.8.1";
 
 	const EXP_REQUIRE_MANIALIVE = "4.0.0";
 
@@ -331,7 +331,8 @@ EOT;
 		$this->analytics = new Analytics();
 		if ($this->config->analytics) {
 			$this->analytics->enable();
-		} else {
+		}
+		else {
 			$this->analytics->disable();
 		}
 	}
@@ -350,7 +351,8 @@ EOT;
 			case "analytics" :
 				if ($var->getRawValue()) {
 					$this->analytics->enable();
-				} else {
+				}
+				else {
 					$this->analytics->disable();
 				}
 		}
@@ -553,98 +555,65 @@ EOT;
 			return;
 
 		try {
-			$path = Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile;
+		$path = Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile;
+		if (!file_exists($path))
+			return;
+		/** @var SimpleXMLElement */
+		$oldXml = simplexml_load_file($path);
 
-			Helper::log('[Core]Saving server settings to : ' . $path);
+		$adapter = array("name" => "name",
+			"password" => "password",
+			"comment" => "comment",
+			"passwordForSpectator" => "password_spectator",
+			"hideServer" => "hide_server",
+			"nextMaxPlayers" => "max_players",
+			"nextMaxSpectatos" => "max_spectators",
+			"isP2PUpload" => "enable_p2p_upload",
+			"isP2PDownload" => "enable_p2p_download",
+			"nextLadderMode" => "ladder_mode",
+			//	"ladderServerLimitMax" => "ladder_serverlimit_max",
+			//	"ladderServerLimitMin" => "ladder_serverlimit_min",
+			"nextCallVoteTimeOut" => "callvote_timeout",
+			"callVoteRatio" => "callvote_ratio",
+			"allowMapDownload" => "allow_map_download",
+			"autoSaveReplays" => "autosave_replays",
+			"autoSaveValidationReplays" => "autosave_validation_replays",
+			"refereePassword" => "referee_password",
+			"refereeMode" => "referee_validation_mode",
+			"disableHorns" => "disable_horns",
+			"clientInputsMaxLatency" => "clientinputs_maxlatency",
+			"keepPlayerSlots" => "keep_player_slots"
+		);
 
-			if (file_exists($path)) {
-				$oldXml = simplexml_load_file($path);
+		foreach ($new as $key => $value) {
 
-				$xml = '<?xml version="1.0" encoding="utf-8" ?>
-<dedicated>
-		' . $oldXml->authorization_levels->asXml() . '
-	
- 	<masterserver_account>
-		<login>' . $this->storage->serverLogin . '</login>
-		<password>' . $oldXml->masterserver_account->password . '</password>
-		<validation_key>' . $oldXml->masterserver_account->validation_key . '</validation_key>
-	</masterserver_account>
-	
-	<server_options>
-		<name>' . $new->name . '</name>
-		<comment>' . $new->comment . '</comment>
-		<hide_server>' . ($new->hideServer ? 1 : 0) . '</hide_server>					<!-- value is 0 (always shown), 1 (always hidden), 2 (hidden from nations) -->
-
-		<max_players>' . $new->nextMaxPlayers . '</max_players>
-		<password>' . $new->password . '</password>
-		
-		<max_spectators>' . $new->nextMaxSpectators . '</max_spectators>
-		<password_spectator>' . $new->passwordForSpectator . '</password_spectator>
-	
-		<keep_player_slots>' . ($new->keepPlayerSlots ? 'True' : 'False') . '</keep_player_slots>			<!-- when a player changes to spectator, hould the server keep if player slots/scores etc.. or not. --> 	
-		<ladder_mode>' . $new->nextLadderMode . '</ladder_mode>				<!-- value between \'inactive\', \'forced\' (or \'0\', \'1\') -->
-		
-		<enable_p2p_upload>' . ($new->isP2PUpload ? 'True' : 'False') . '</enable_p2p_upload>
-		<enable_p2p_download>' . ($new->isP2PDownload ? 'True' : 'False') . '</enable_p2p_download>
-		
-		<callvote_timeout>' . $new->nextCallVoteTimeOut . '</callvote_timeout>
-		<callvote_ratio>' . $new->callVoteRatio . '</callvote_ratio>				<!-- default ratio. value in [0..1], or -1 to forbid. -->
-
-		' . $oldXml->server_options->callvote_ratios->asXml() . '
-
-		<allow_map_download>' . ($new->allowMapDownload ? 'True' : 'False') . '</allow_map_download>
-		<autosave_replays>' . ($new->autoSaveReplays ? 'True' : 'False') . '</autosave_replays>
-		<autosave_validation_replays>' . ($new->autoSaveValidationReplays ? 'True' : 'False') . '</autosave_validation_replays>
-
-		<referee_password>' . $new->refereePassword . '</referee_password>
-		<referee_validation_mode>' . $new->refereeMode . '</referee_validation_mode>		<!-- value is 0 (only validate top3 players),  1 (validate all players) -->
-
-		<disable_horns>' . ($new->disableHorns ? 'True' : 'False') . '</disable_horns>
-		<clientinputs_maxlatency>' . ($new->clientInputsMaxLatency ? 'True' : 'False') . '</clientinputs_maxlatency>		<!-- 0 mean automatic adjustement -->
-	</server_options>
-	
-	<system_config>
-		<connection_uploadrate>' . $oldXml->system_config->connection_uploadrate . '</connection_uploadrate>		<!-- Kbits per second -->
-		<connection_downloadrate>' . $oldXml->system_config->connection_downloadrate . '</connection_downloadrate>		<!-- Kbits per second -->
-
-		<allow_spectator_relays>' . $oldXml->system_config->allow_spectator_relays . '</allow_spectator_relays>
-
-		<p2p_cache_size>' . $oldXml->system_config->p2p_cache_size . '</p2p_cache_size>
-
-		<force_ip_address' . $oldXml->system_config->force_ip_address . '></force_ip_address>
-		<server_port>' . $oldXml->system_config->server_port . '</server_port>
-		<server_p2p_port>' . $oldXml->system_config->server_p2p_port . '</server_p2p_port>
-		<client_port>' . $oldXml->system_config->client_port . '</client_port>
-		<bind_ip_address>' . $oldXml->system_config->bind_ip_address . '</bind_ip_address>
-		<use_nat_upnp>' . $oldXml->system_config->use_nat_upnp . '</use_nat_upnp>
-
-		<gsp_name>' . $oldXml->system_config->gsp_name . '</gsp_name>						<!-- Game Server Provider name and info url -->
-		<gsp_url>' . $oldXml->system_config->gsp_url . '</gsp_url>						<!-- If you\'re a server hoster, you can use this to advertise your services -->
-
-		<xmlrpc_port>' . $oldXml->system_config->xmlrpc_port . '</xmlrpc_port>
-		<xmlrpc_allowremote>' . $oldXml->system_config->xmlrpc_allowremote . '</xmlrpc_allowremote>			<!-- If you specify an ip adress here, it\'ll be the only accepted adress. this will improve security. -->
-		
-		<blacklist_url>' . $oldXml->system_config->blacklist_url . '</blacklist_url>
-		<guestlist_filename>' . $oldXml->system_config->guestlist_filename . '</guestlist_filename>
-		<blacklist_filename>' . $oldXml->system_config->blacklist_filename . '</blacklist_filename>
-		
-		<title>' . $this->connection->getVersion()->titleId . '</title>		<!-- SMStorm, TMCanyon, ... -->
-
-		<minimum_client_build>' . $oldXml->system_config->minimum_client_build . '</minimum_client_build>			<!-- Only accept updated client to a specific version. ex: 2011-10-06 -->
-
-		<disable_coherence_checks>' . $oldXml->system_config->disable_coherence_checks . '</disable_coherence_checks>	<!-- disable internal checks to detect issues/cheats, and reject race times -->
-
-		<use_proxy>' . $oldXml->system_config->use_proxy . '</use_proxy>
-		<proxy_login>' . $oldXml->system_config->proxy_login . '</proxy_login>
-		<proxy_password>' . $oldXml->system_config->proxy_password . '</proxy_password>
-	</system_config>
-</dedicated>
-';
-				file_put_contents($path, $xml);
+			$search = $key;
+			if (array_key_exists($key, $adapter)) {
+				$search = $adapter[$key];
 			}
-		} catch (\Exception $ex) {
-			$this->console("[Core]Error writing ServerSettings : " . $path . " - " . $ex->getMessage());
+			else
+				continue;
+
+			echo $key . " -> " . $search . "\n";
+
+			$out = $new->{$key};
+			if (is_bool($value)) {
+				$out = "False";
+				if ($value)
+					$out = "True";
+			}
+
+
+			$oldXml->server_options->{$search}[0] = $out;
 		}
+
+		Helper::log('[Core]Saving server settings to : ' . $path);
+		$xml = $oldXml->asXML();
+		file_put_contents($path, $xml);
+		 } catch (\Exception $ex) {
+		//  print_r($ex);
+		  $this->console("[Core]Error writing ServerSettings : " . $path . " - " . $ex->getMessage());
+		  } 
 	}
 
 	/**
@@ -846,7 +815,7 @@ EOT;
 			$win = Gui\Windows\ExpSettings::Create($login);
 			$win->setTitle("Expansion Settings");
 			$win->centerOnScreen();
-			$win->setSize(140, 100);
+			$win->setSize(170, 100);
 			$win->populate($this->configManager, 'General', $confName);
 			$win->show();
 		}
@@ -911,13 +880,13 @@ EOT;
 
 		if ($loginDisconnecting !== false && array_key_exists($loginDisconnecting, $playerArray))
 			unset($playerArray[$loginDisconnecting]);
-		
+
 		foreach ($playerArray as $login => $player) {
 			if (AdminGroups::hasPermission($login, Permission::player_kick)) {
 				$hasAdmin = "true";
 			}
 		}
-		
+
 		$this->connection->setServerTag("server.isAdminPresent", $hasAdmin);
 	}
 

@@ -23,7 +23,7 @@ class IgnoredPlayeritem extends Control
 
     function __construct($indexNumber, Player $player, $controller, $login)
     {
-	$sizeX = 120;
+	$sizeX = 80;
 	$sizeY = 6;
 	$this->player = $player;
 
@@ -32,7 +32,7 @@ class IgnoredPlayeritem extends Control
 	$this->frame->setSize($sizeX, $sizeY);
 	$this->frame->setLayout(new Line());
 
-	$this->login = new Label(20, 4);
+	$this->login = new Label(50, 4);
 	$this->login->setAlign('left', 'center');
 	$this->login->setText($player->login);
 	$this->login->setScale(0.8);
@@ -45,8 +45,8 @@ class IgnoredPlayeritem extends Control
 
 	$this->frame->addComponent($spacer);
 
-	$this->unignoreButton = new Button(16, 6);
-	$this->unignoreButton->setText(__("unIgnore"));
+	$this->unignoreButton = new Button();
+	$this->unignoreButton->setText(__("Remove"));
 	$this->unignoreButton->setAction($this->unignoreAction);
 	$this->frame->addComponent($this->unignoreButton);
 

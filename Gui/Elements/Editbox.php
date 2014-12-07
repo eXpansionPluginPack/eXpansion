@@ -9,72 +9,75 @@ use ManiaLive\Gui\Container;
 use ManiaLive\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class InputboxMasked extends Control
+class Editbox extends Control
 {
 
 	private $label;
 
 	private $button;
 
-	/** @var Button */
-	private $nonHidden;
-
 	private $name;
 
 	private $bgleft, $bgcenter, $bgright;
 
-	function __construct($name, $sizeX = 35, $editable = true)
+	private $bg;
+
+	function __construct($name, $sizeX = 100, $sizeY = 30, $editable = true)
 	{
+
 		$config = Config::getInstance();
 		$this->name = $name;
 
 		$this->createButton($editable);
 
-		$this->label = new Label(30, 3);
-		$this->label->setAlign('left', 'center');
+		$this->bg = new WidgetBackGround(100, 30);
+	//	$this->addComponent($this->bg);
+		
+		$this->label = new Label($sizeX, 4);
+		$this->label->setAlign('left', 'top');
 		$this->label->setTextSize(1);
-		$this->label->setStyle("TextCardMediumWhite");
+		$this->label->setStyle("TextCardScores2");
 		$this->label->setTextEmboss();
 		$this->addComponent($this->label);
 
-		$this->bgleft = new Quad(3, 6);
-		$this->bgleft->setAlign("right", "center");
-		$this->bgleft->setImage($config->getImage("inputbox", "left.png"), true);
-		$this->addComponent($this->bgleft);
+		/* 	$this->bgleft = new Quad(3, 6);
+		  $this->bgleft->setAlign("right", "top");
+		  $this->bgleft->setImage($config->getImage("inputbox", "left.png"), true);
+		  $this->addComponent($this->bgleft);
 
-		$this->bgcenter = new Quad(3, 6);
-		$this->bgcenter->setAlign("left", "center");
-		$this->bgcenter->setImage($config->getImage("inputbox", "center.png"), true);
-		$this->addComponent($this->bgcenter);
+		  $this->bgcenter = new Quad(3, 6);
+		  $this->bgcenter->setAlign("left", "top");
+		  $this->bgcenter->setImage($config->getImage("inputbox", "center.png"), true);
+		  $this->addComponent($this->bgcenter);
 
-		$this->bgright = new Quad(3, 6);
-		$this->bgright->setAlign("left", "center");
-		$this->bgright->setImage($config->getImage("inputbox", "right.png"), true);
-		$this->addComponent($this->bgright);
+		  $this->bgright = new Quad(3, 6);
+		  $this->bgright->setAlign("left", "top");
+		  $this->bgright->setImage($config->getImage("inputbox", "right.png"), true);
+		  $this->addComponent($this->bgright); */
 
-		$this->setSize($sizeX, 12);
+		$this->sizeX = $sizeX;
+		$this->sizeY = $sizeY;
+
+		$this->setSize($sizeX, $sizeY);
 	}
 
 	protected function onResize($oldX, $oldY)
 	{
-		$yOffset = -7;
+		$this->button->setSize($this->getSizeX(), $this->getSizeY() - 5);
+		$this->button->setPosition(0, 0);
 
-		$this->button->setSize($this->getSizeX() - 8, 5);
-		$this->button->setPosition(2, $yOffset);
+		/* 	$this->bgleft->setSize(3, $this->getSizeY());
+		  $this->bgleft->setPosX(3);
 
-		$this->bgleft->setSize(3, 6);
-		$this->bgleft->setPosition(3, $yOffset);
+		  $this->bgcenter->setSize($this->getSizeX() - 6, $this->getSizeY());
+		  $this->bgcenter->setPosX(3);
 
-		$this->bgcenter->setSize($this->getSizeX() - 6, 6);
-		$this->bgcenter->setPosition(3, $yOffset);
-
-		$this->bgright->setSize(3, 6);
-		$this->bgright->setPosition($this->getSizeX() - 3, $yOffset);
+		  $this->bgright->setSize(3, $this->getSizeY());
+		  $this->bgright->setPosX($this->getSizeX() - 3); */
 
 		$this->label->setSize($this->getSizeX(), 3);
-		$this->label->setPosition(1, 0);
-
-		// $this->bg->setSize($this->sizeX, $this->sizeY);
+		$this->label->setPosition(1, 5);
+		$this->bg->setSize($this->sizeX, $this->sizeY);
 
 		parent::onResize($oldX, $oldY);
 	}
@@ -88,29 +91,23 @@ class InputboxMasked extends Control
 		}
 
 		if ($editable) {
-			$this->button = new Entry($this->sizeX, 4.5);
+			$this->button = new TextEdit($this->name, $this->sizeX, $this->sizeY);
 			$this->button->setAttribute("class", "isTabIndex isEditable");
-			$this->button->setAttribute("textformat", "password");
 			$this->button->setName($this->name);
 			$this->button->setId($this->name);
-			$this->button->setDefault($text);
+			$this->button->setText($text);
+
 			$this->button->setScriptEvents(true);
-			$this->button->setStyle("TextValueMedium");
-			$this->button->setTextSize(1);
-			$this->button->setFocusAreaColor1("0000");
-			$this->button->setFocusAreaColor2("0000");
 		}
 		else {
 			$this->button = new Label($this->sizeX, 5);
 			$this->button->setText($text);
+			$this->button->setTextColor('fff');
 			$this->button->setTextSize(1.5);
 		}
 
-		$this->button->setAlign('left', 'center');
-		$this->button->setTextColor('fff');
-
-		$this->button->setPosition(2, -7);
-		$this->button->setSize($this->getSizeX() - 3, 4);
+		$this->button->setAlign('left', 'top');
+		$this->button->setPosX(2);
 		$this->addComponent($this->button);
 	}
 
@@ -121,18 +118,6 @@ class InputboxMasked extends Control
 		}
 		elseif (!$state && $this->button instanceof Entry) {
 			$this->createButton($state);
-		}
-	}
-
-	function setShowClearText()
-	{
-		if ($this->nonHidden == null) {
-			$this->nonHidden = New Button(3, 3);
-			$this->nonHidden->setIcon("Icons64x64_1", "ClipPause");
-			$this->nonHidden->setPosition(-4, 0);
-			$this->nonHidden->setId($this->name . "_1");
-			$this->nonHidden->setDescription($this->getText());
-			$this->addComponent($this->nonHidden);
 		}
 	}
 
