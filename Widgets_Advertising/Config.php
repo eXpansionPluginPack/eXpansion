@@ -7,6 +7,7 @@ class Config extends \ManiaLib\Utils\Singleton {
 	//Setting _1
 	public $active_1 = true;
 	public $url_1 = "http://www.ml-expansion.com";
+	public $manialink_1 = "";
 	public $imageUrl_1 = "http://reaby.kapsi.fi/ml/exp_small.png";
 	public $imageFocusUrl_1 = "http://reaby.kapsi.fi/ml/exp_small.png";
 
@@ -20,7 +21,8 @@ class Config extends \ManiaLib\Utils\Singleton {
 
 	//Setting _2
 	public $active_2 = false;
-	public $url_2 = "http://www.ml-expansion.com";
+	public $url_2 = "";
+	public $manialink_2 = "";
 	public $imageUrl_2 = "http://reaby.kapsi.fi/ml/exp_small.png";
 	public $imageFocusUrl_2 = "http://reaby.kapsi.fi/ml/exp_small.png";
 
@@ -34,7 +36,8 @@ class Config extends \ManiaLib\Utils\Singleton {
 
 	//Setting _3
 	public $active_3 = false;
-	public $url_3 = "http://www.ml-expansion.com";
+	public $url_3 = "";
+	public $manialink_3 = "";
 	public $imageUrl_3 = "http://reaby.kapsi.fi/ml/exp_small.png";
 	public $imageFocusUrl_3 = "http://reaby.kapsi.fi/ml/exp_small.png";
 
@@ -48,7 +51,8 @@ class Config extends \ManiaLib\Utils\Singleton {
 
 	//Setting _4
 	public $active_4 = false;
-	public $url_4 = "http://www.ml-expansion.com";
+	public $url_4 = "";
+	public $manialink_4 = "";
 	public $imageUrl_4 = "http://reaby.kapsi.fi/ml/exp_small.png";
 	public $imageFocusUrl_4 = "http://reaby.kapsi.fi/ml/exp_small.png";
 
@@ -62,7 +66,8 @@ class Config extends \ManiaLib\Utils\Singleton {
 
 	//Setting _5
 	public $active_5 = false;
-	public $url_5 = "http://www.ml-expansion.com";
+	public $url_5 = "";
+	public $manialink_5 = "";
 	public $imageUrl_5 = "http://reaby.kapsi.fi/ml/exp_small.png";
 	public $imageFocusUrl_5 = "http://reaby.kapsi.fi/ml/exp_small.png";
 

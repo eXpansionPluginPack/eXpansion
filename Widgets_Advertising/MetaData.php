@@ -55,19 +55,32 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 			$var->setGroup("Widget#$x");
 			$this->registerVariable($var);
 
+
+			$var = new String('url_' . $x, 'External link URL for click', $config, false, false);
+			$var->setDefaultValue('');
+			$var->setGroup("Widget#$x");
+			$this->registerVariable($var);
+
+
+			$var = new String('manialink_' . $x, 'Manialink URL for click', $config, false, false);
+			$var->setDefaultValue('');
+			$var->setGroup("Widget#$x");
+			$this->registerVariable($var);
+
+
 			$var = new Int('imageSizeX_' . $x, 'Image Size X', $config, false, false);
 			$var->setDescription('In Px');
 			$var->setDefaultValue('512');
 			$var->setGroup("Widget#$x");
 			$this->registerVariable($var);
 
-			$var = new Int('imageSizeY_' . $x, 'Image Size X', $config, false, false);
+			$var = new Int('imageSizeY_' . $x, 'Image Size Y', $config, false, false);
 			$var->setDescription('In Px');
 			$var->setDefaultValue('128');
 			$var->setGroup("Widget#$x");
 			$this->registerVariable($var);
 
-			$var = new Int('size_' . $x, 'Display Size X', $config, false, false);
+			$var = new Int('size_' . $x, 'Display Size', $config, false, false);
 			$var->setDescription('In maniaplanet display units');
 			$var->setDefaultValue('30');
 			$var->setGroup("Widget#$x");
