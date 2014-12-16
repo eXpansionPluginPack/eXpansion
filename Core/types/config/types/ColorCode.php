@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
  *
  * @author De Cramer Oliver
  */
-class ColorCode extends String{
+class ColorCode extends String {
     
     private $sample = "Sample Text ...";
     
