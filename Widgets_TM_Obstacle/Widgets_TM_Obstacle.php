@@ -24,30 +24,37 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TM_Obstacle;
  *
  * @author Petri
  */
-class Widgets_TM_Obstacle extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Widgets_TM_Obstacle extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+{
 
-    public function exp_onReady() {
-	$this->enableDedicatedEvents();
-	$this->displayWidget();
-    }
+	public function exp_onReady()
+	{
+		$this->enableDedicatedEvents();
+		$this->displayWidget();
+	}
 
-    private function displayWidget() {
-	$info = Gui\Widgets\CpProgress::Create(null);
-	$info->setSize(70, 60);
-	$info->setPosition(55, 0);
-	$info->show();
-    }
+	private function displayWidget()
+	{
+		Gui\Widgets\CpProgress::EraseAll();
+		$info = Gui\Widgets\CpProgress::Create(null);
+		$info->setSize(70, 60);
+		$info->setPosition(55, 0);
+		$info->show();
+	}
 
-    public function onBeginMap($map, $warmUp, $matchContinuation) {
-	$this->displayWidget();
-    }
+	public function onBeginMap($map, $warmUp, $matchContinuation)
+	{
+		$this->displayWidget();
+	}
 
-    public function onEndMatch($rankings, $winnerTeamOrMap) {
-	Gui\Widgets\CpProgress::EraseAll();
-    }
+	public function onEndMatch($rankings, $winnerTeamOrMap)
+	{
+		Gui\Widgets\CpProgress::EraseAll();
+	}
 
-    public function exp_onUnload() {
-	Gui\Widgets\CpProgress::EraseAll();
-    }
+	public function exp_onUnload()
+	{
+		Gui\Widgets\CpProgress::EraseAll();
+	}
 
 }

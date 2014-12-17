@@ -6,23 +6,25 @@ declare Integer curCp = 0;
 declare Boolean Started = False;
 declare Integer x = 1;
 
+declare Text[Text] nicks = Text[Text];
+declare Text[Text] cps = Text[Text];
+declare Real[Text] ratios = Real[Text];
+
 if (totalCheckpoints >= 1) {    
     divGrad = 1.0 / totalCheckpoints;    
 }
-
-x = 1;
 
 declare myGauge = (Page.GetFirstChild("gauge_0") as CMlGauge);
 declare myNick = (Page.GetFirstChild("player_0") as CMlLabel);
 declare myCp = (Page.GetFirstChild("cp_0") as CMlLabel);
 
-for (i,1, 9) {
+for (i,0, 9) {
     declare gauge = (Page.GetFirstChild("gauge_"^i) as CMlGauge);
     declare nick = (Page.GetFirstChild("player_"^i) as CMlLabel);
     declare cp = (Page.GetFirstChild("cp_"^i) as CMlLabel);
-    gauge.Hide();
-    nick.Hide();
-    cp.Hide();
+    gauge.Visible = False;
+    nick.Opacity = 0.0;
+    cp.Opacity = 0.0;
 }
 
 if (InputPlayer != Null) {
@@ -31,14 +33,15 @@ declare ratio = (InputPlayer.CurRace.Checkpoints.count % totalCheckpoints) * div
             if(ratio > 1.0){
                 ratio = 1.0;
             }
-            myNick.Value = InputPlayer.Name;
-            myGauge.Ratio =  ratio;
-            myCp.Value = InputPlayer.CurRace.Checkpoints.count ^ "/" ^ totalCheckpoints;
+            nicks[InputPlayer.Login] = InputPlayer.Name;
+            ratios[InputPlayer.Login] = ratio;
+            cps[InputPlayer.Login] = InputPlayer.CurRace.Checkpoints.count ^ "/" ^ totalCheckpoints;
 
-
+x = 1;
 foreach (Player in Players) { 
-        declare ObstacleProgressCount for Player = Player.CurRace.Checkpoints.count -1;
-        if (x <= playerCount && Player.Login != InputPlayer.Login && Player.Login != serverLogin) {
+        declare ObstacleProgressCount for Player = -1;
+
+        if (x <= playerCount && Player.IsSpawned && Player.Login != InputPlayer.Login && Player.Login != serverLogin) {
             declare gauge = (Page.GetFirstChild("gauge_"^x) as CMlGauge);
             declare nick = (Page.GetFirstChild("player_"^x) as CMlLabel);
             declare cp = (Page.GetFirstChild("cp_"^x) as CMlLabel);
@@ -48,12 +51,10 @@ foreach (Player in Players) {
             if(ratio > 1.0){
                 ratio = 1.0;
             }
-            nick.Show();
-            nick.Value = Player.Name;
-            gauge.Show();
-            gauge.Ratio =  ratio;
-            cp.Show();
-            cp.Value = curCp ^ "/" ^ totalCheckpoints;
+
+            nicks[Player.Login] = Player.Name;
+            ratios[Player.Login] = ratio;
+            cps[Player.Login] = curCp ^ "/" ^ totalCheckpoints;
             x += 1;
             }
     }
