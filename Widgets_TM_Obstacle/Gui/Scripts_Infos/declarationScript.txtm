@@ -1,11 +1,20 @@
 declare Integer totalCheckpoints = <?php echo $this->totalCp; ?>;
 declare Integer playerCount = <?php echo $this->playerCount; ?>;
+declare Text serverLogin = "<?php echo $this->serverLogin; ?>";
 declare Real divGrad = 1.0;
 declare Integer curCp = 0;
+declare Boolean Started = False;
+declare Integer x = 1;
 
 if (totalCheckpoints >= 1) {    
     divGrad = 1.0 / totalCheckpoints;    
 }
+
+x = 1;
+
+declare myGauge = (Page.GetFirstChild("gauge_0") as CMlGauge);
+declare myNick = (Page.GetFirstChild("player_0") as CMlLabel);
+declare myCp = (Page.GetFirstChild("cp_0") as CMlLabel);
 
 for (i,1, 9) {
     declare gauge = (Page.GetFirstChild("gauge_"^i) as CMlGauge);
@@ -16,9 +25,8 @@ for (i,1, 9) {
     cp.Hide();
 }
 
-declare myGauge = (Page.GetFirstChild("gauge_0") as CMlGauge);
-declare myNick = (Page.GetFirstChild("player_0") as CMlLabel);
-declare myCp = (Page.GetFirstChild("cp_0") as CMlLabel);
+if (InputPlayer != Null) {
+
 declare ratio = (InputPlayer.CurRace.Checkpoints.count % totalCheckpoints) * divGrad;
             if(ratio > 1.0){
                 ratio = 1.0;
@@ -26,3 +34,30 @@ declare ratio = (InputPlayer.CurRace.Checkpoints.count % totalCheckpoints) * div
             myNick.Value = InputPlayer.Name;
             myGauge.Ratio =  ratio;
             myCp.Value = InputPlayer.CurRace.Checkpoints.count ^ "/" ^ totalCheckpoints;
+
+
+foreach (Player in Players) { 
+        declare ObstacleProgressCount for Player = Player.CurRace.Checkpoints.count -1;
+        if (x <= playerCount && Player.Login != InputPlayer.Login && Player.Login != serverLogin) {
+            declare gauge = (Page.GetFirstChild("gauge_"^x) as CMlGauge);
+            declare nick = (Page.GetFirstChild("player_"^x) as CMlLabel);
+            declare cp = (Page.GetFirstChild("cp_"^x) as CMlLabel);
+            curCp = Player.CurRace.Checkpoints.count;            
+       
+            declare ratio = (curCp % totalCheckpoints) * divGrad;
+            if(ratio > 1.0){
+                ratio = 1.0;
+            }
+            nick.Show();
+            nick.Value = Player.Name;
+            gauge.Show();
+            gauge.Ratio =  ratio;
+            cp.Show();
+            cp.Value = curCp ^ "/" ^ totalCheckpoints;
+            x += 1;
+            }
+    }
+
+}
+
+

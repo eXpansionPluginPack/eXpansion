@@ -65,6 +65,7 @@ class CpProgress extends Widget
 		$script = new Script("Widgets_TM_Obstacle\Gui\Scripts_Infos");
 		$script->setParam("playerCount", $x);
 		$script->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
+		$script->setParam("serverLogin", $this->storage->serverLogin);
 		$this->registerScript($script);
 	}
 
