@@ -1,0 +1,59 @@
+declare Integer x = 1;
+
+
+for (i,1, 9) {
+    declare gauge = (Page.GetFirstChild("gauge_"^i) as CMlGauge);
+    declare nick = (Page.GetFirstChild("player_"^i) as CMlLabel);
+    declare cp = (Page.GetFirstChild("cp_"^i) as CMlLabel);
+    gauge.Hide();
+    nick.Hide();
+    cp.Hide();
+}
+
+x = 1;
+
+foreach (Player in Players) { 
+        declare ObstacleProgressCount for Player = -1;
+
+        if (Player.Login == CurrentServerLogin)  { 
+              continue; 
+        }
+     
+        if (ObstacleProgressCount != Player.CurRace.Checkpoints.count) {
+            ObstacleProgressCount = Player.CurRace.Checkpoints.count;
+            curCp = Player.CurRace.Checkpoints.count;            
+
+        if (x < playerCount && Player.Login != InputPlayer.Login) {
+            declare gauge = (Page.GetFirstChild("gauge_"^x) as CMlGauge);
+            declare nick = (Page.GetFirstChild("player_"^x) as CMlLabel);
+            declare cp = (Page.GetFirstChild("cp_"^x) as CMlLabel);
+            
+            declare ratio = (curCp % totalCheckpoints) * divGrad;
+            if(ratio > 1.0){
+                ratio = 1.0;
+            }
+            nick.Show();
+            nick.Value = Player.Name;
+            gauge.Show();
+            gauge.Ratio =  ratio;
+            cp.Show();
+            cp.Value = curCp ^ "/" ^ totalCheckpoints;
+ 
+            }
+        
+        
+        if (Player.Login == InputPlayer.Login) {
+            declare ratio = (curCp % totalCheckpoints) * divGrad;
+            if(ratio > 1.0){
+                ratio = 1.0;
+            }
+            myNick.Value = Player.Name;
+            myGauge.Ratio =  ratio;
+            myCp.Value = curCp ^ "/" ^ totalCheckpoints;
+        } else {
+            x += 1;
+        }
+    }
+
+}
+

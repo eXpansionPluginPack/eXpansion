@@ -1,0 +1,28 @@
+declare Integer totalCheckpoints = <?php echo $this->totalCp; ?>;
+declare Integer playerCount = <?php echo $this->playerCount; ?>;
+declare Real divGrad = 1.0;
+declare Integer curCp = 0;
+
+if (totalCheckpoints >= 1) {    
+    divGrad = 1.0 / totalCheckpoints;    
+}
+
+for (i,1, 9) {
+    declare gauge = (Page.GetFirstChild("gauge_"^i) as CMlGauge);
+    declare nick = (Page.GetFirstChild("player_"^i) as CMlLabel);
+    declare cp = (Page.GetFirstChild("cp_"^i) as CMlLabel);
+    gauge.Hide();
+    nick.Hide();
+    cp.Hide();
+}
+
+declare myGauge = (Page.GetFirstChild("gauge_0") as CMlGauge);
+declare myNick = (Page.GetFirstChild("player_0") as CMlLabel);
+declare myCp = (Page.GetFirstChild("cp_0") as CMlLabel);
+declare ratio = (InputPlayer.CurRace.Checkpoints.count % totalCheckpoints) * divGrad;
+            if(ratio > 1.0){
+                ratio = 1.0;
+            }
+            myNick.Value = InputPlayer.Name;
+            myGauge.Ratio =  ratio;
+            myCp.Value = InputPlayer.CurRace.Checkpoints.count ^ "/" ^ totalCheckpoints;
