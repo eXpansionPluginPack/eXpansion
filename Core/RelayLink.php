@@ -46,7 +46,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 			$infoNext = $gbxMap->read($this->connection->getMapsDirectory() . DIRECTORY_SEPARATOR . $this->storage->nextMap->fileName);
 			$this->storage->currentMap->playerModel = $infoNext->playerModel;
 		} catch (\Exception $e) {
-			echo "error while reading mapData" . $e->getMessage();
+			echo "error while reading mapData " . $e->getMessage();
 		}
 	}
 

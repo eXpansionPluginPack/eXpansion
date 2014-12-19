@@ -26,19 +26,18 @@ class Widgets_Advertising extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 	{
 		$name = $var->getName();
 
-		if(isset($this->config->$name)){
+		if (isset($this->config->$name)) {
 			$this->settingsChanged = true;
 		}
 	}
 
 	function onPreLoop()
 	{
-		if($this->settingsChanged){
+		if ($this->settingsChanged) {
 			$this->displayWidget(null);
 			$this->settingsChanged = false;
 		}
 	}
-
 
 	public function displayWidget($login)
 	{
@@ -46,7 +45,7 @@ class Widgets_Advertising extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 
 		for ($x = 1; $x <= 5; $x++) {
 			$varActive = "active_$x";
-			if(isset($this->config->$varActive) && $this->config->$varActive){
+			if (isset($this->config->$varActive) && $this->config->$varActive) {
 				$widget = Gui\Widgets\WidgetAd::Create($login, false);
 
 				$varX = "x_$x";
@@ -54,12 +53,15 @@ class Widgets_Advertising extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 				$varImageUrl = "imageUrl_$x";
 				$varImageFocusUrl = "imageFocusUrl_$x";
 				$varUrl = "url_$x";
+				$varManialink = "manialink_$x";
 				$varSize = "size_$x";
 				$varImageSizeX = "imageSizeX_$x";
 				$varImageSizeY = "imageSizeY_$x";
 
 				$widget->setPosition($this->config->$varX, $this->config->$varY, -60);
-				$widget->setImage($this->config->$varImageUrl, $this->config->$varImageFocusUrl, $this->config->$varUrl);
+				$widget->setImage($this->config->$varImageUrl, $this->config->$varImageFocusUrl);
+				$widget->setManialink($this->config->$varManialink);
+				$widget->setUrl($this->config->$varUrl);
 				$widget->setImageSize($this->config->$varImageSizeX, $this->config->$varImageSizeY, $this->config->$varSize);
 				$widget->setPositionX($this->config->$varX);
 				$widget->setPositionY($this->config->$varY);
@@ -67,7 +69,7 @@ class Widgets_Advertising extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 			}
 		}
 	}
-	
+
 	public function exp_onUnload()
 	{
 		Gui\Widgets\WidgetAd::EraseAll();

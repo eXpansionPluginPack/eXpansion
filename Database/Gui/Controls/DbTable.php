@@ -2,81 +2,79 @@
 
 namespace ManiaLivePlugins\eXpansion\Database\Gui\Controls;
 
-class DbTable extends \ManiaLive\Gui\Control {
+use ManiaLib\Gui\Elements\Icons64x64_1;
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Elements\Quad;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Gui\Control;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
-    private $bg;
-    private $label;
-    private $inputbox;
-    private $frame;
-    public $checkBox = null;
-    public $tableName;
-    public $type = null;
+class DbTable extends Control
+{
 
-    /**
-     * 
-     * @param int $indexNumber
-     * @param string $settingName
-     * @param mixed $value
-     * @param int $sizeX
-     */
-    function __construct($indexNumber, $tableName, $sizeX) {
-        $sizeY = 6;
-        $this->tableName = $tableName;
+	private $bg;
 
+	private $label;
 
-        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX - 8, $sizeY);
-        $this->addComponent($this->bg);
+	private $inputbox;
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame(2,0);
-        $this->frame->setSize($sizeX, $sizeY);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+	private $frame;
 
-        $this->checkBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 1);
-        $this->frame->addComponent($this->checkBox);
+	public $checkBox = null;
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(120, 4);
-        $this->label->setAlign('left', 'center');
-        $this->label->setText($tableName);
-        $this->label->setScale(0.8);
-        $this->frame->addComponent($this->label);
+	public $tableName;
 
+	public $type = null;
 
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-
-        $this->frame->addComponent($spacer);
+	/**
+	 * 
+	 * @param int $indexNumber
+	 * @param string $settingName
+	 * @param mixed $value
+	 * @param int $sizeX
+	 */
+	function __construct($indexNumber, $tableName, $sizeX)
+	{
+		$sizeY = 6;
+		$this->tableName = $tableName;
 
 
+		$this->bg = new ListBackGround($indexNumber, $sizeX - 8, $sizeY);
+		$this->addComponent($this->bg);
+		
+		$this->checkBox = new CheckboxScripted(4, 4, 1);
+		$this->addComponent($this->checkBox);
 
+		$this->label = new Label(120, 4);
+		$this->label->setPosX(6);
+		$this->label->setAlign('left', 'center');
+		$this->label->setText($tableName);
+		$this->label->setScale(0.8);
+		$this->addComponent($this->label);
 
-        $this->addComponent($this->frame);
+		$this->sizeX = $sizeX;
+		$this->sizeY = $sizeY;
+		$this->setSize($sizeX, $sizeY);
+	}
 
-        $this->sizeX = $sizeX;
-        $this->sizeY = $sizeY;
-        $this->setSize($sizeX, $sizeY);
-    }
+	// manialive 3.1 override to do nothing.
+	function destroy()
+	{
 
-    protected function onResize($oldX, $oldY) {        
-        $this->frame->setSize($this->sizeX, $this->sizeY);
-    }
+	}
 
-    // manialive 3.1 override to do nothing.
-    function destroy() {
-        
-    }
+	/*
+	 * custom function to remove contents.
+	 */
 
-    /*
-     * custom function to remove contents.
-     */
-
-    function erase() {
-        $this->checkBox->destroy();
-        $this->frame->clearComponents();
-        $this->frame->destroy();
-        $this->clearComponents();
-        parent::destroy();
-    }
+	function erase()
+	{
+		$this->checkBox->destroy();		
+		$this->clearComponents();
+		parent::destroy();
+	}
 
 }
 ?>

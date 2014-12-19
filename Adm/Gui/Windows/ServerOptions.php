@@ -21,7 +21,7 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\InputboxMasked;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use Maniaplanet\DedicatedServer\Connection;
-use Maniaplanet\DedicatedServer\Structures\ServerOptions as ServerOptions2;
+use Maniaplanet\DedicatedServer\Structures\ServerOptions as Dedicated_ServerOptions;
 
 class ServerOptions extends Window
 {
@@ -106,7 +106,6 @@ class ServerOptions extends Window
 
 		$this->frameInputbox->addComponent($this->framePlayers);
 		// end of players
-		
 		// Ladder Points goes to same row
 		$this->frameLadder = new Frame();
 		$this->frameLadder->setLayout(new Line());
@@ -130,8 +129,6 @@ class ServerOptions extends Window
 
 		$this->frameInputbox->addComponent($this->frameLadder);
 		// end of ladder points
-
-		
 		// server password
 		$this->serverPass = new InputboxMasked("serverPass");
 		$this->serverPass->setLabel(__("Password for server", $this->getRecipient()));
@@ -316,7 +313,7 @@ class ServerOptions extends Window
 		$this->refereePass->setSizeX(($this->sizeX - 8) / 2);
 		$this->frameInputbox->setPosition(0, -6);
 		$this->frameCb->setPosition($this->sizeX / 2 + 20, -25);
-		
+
 		$this->buttonOK->setPosition($this->sizeX - $this->buttonCancel->sizeX - $this->buttonOK->sizeX, -$this->sizeY);
 		$this->buttonCancel->setPosition($this->sizeX - $this->buttonCancel->sizeX, -$this->sizeY);
 	}
@@ -331,7 +328,7 @@ class ServerOptions extends Window
 				$component->setArgs($args);
 			}
 		}
-		
+
 		$serverOptions = Array(
 			"Name" => !AdminGroups::hasPermission($login, Permission::server_name) ? $server->name : $args['serverName'],
 			"Comment" => !AdminGroups::hasPermission($login, Permission::server_comment) ? $server->comment : $args['serverComment'],
@@ -352,9 +349,9 @@ class ServerOptions extends Window
 			"DisableServiceAnnounces" => $this->e['DisableAnnounces']->getStatus(),
 			"KeepPlayerSlots" => $this->e['KeepPlayerSlots']->getStatus()
 		);
-
+		
 		try {
-			$this->connection->setServerOptions($serverOptions);
+			$this->connection->setServerOptions(Dedicated_ServerOptions::fromArray($serverOptions));
 			$this->connection->keepPlayerSlots($this->e['KeepPlayerSlots']->getStatus());
 
 			if (AdminGroups::hasPermission($login, Permission::server_maxplayer)) {

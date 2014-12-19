@@ -1,0 +1,99 @@
+
+//**********************************
+// Sync buffers
+//**********************************
+
+x = 1;
+
+foreach (Player in Players) { 
+        declare ObstacleProgressCount for Player = -1;
+     
+        if (ObstacleProgressCount != Player.CurRace.Checkpoints.count) {
+            ObstacleProgressCount = Player.CurRace.Checkpoints.count;
+            curCp = Player.CurRace.Checkpoints.count;            
+            
+        if (Player.Login == InputPlayer.Login) {
+            declare ratio = (curCp % totalCheckpoints) * divGrad;
+            if(ratio > 1.0){
+                ratio = 1.0;
+            }
+            nicks[Player.Login] = Player.Name;
+            ratios[Player.Login] = ratio;
+            cps[Player.Login] = curCp ^ "/" ^ totalCheckpoints;
+        } 
+
+        if (x < playerCount && Player.IsSpawned && Player.Login != InputPlayer.Login && Player.Login != serverLogin) {
+            declare gauge = (Page.GetFirstChild("gauge_"^x) as CMlGauge);
+            declare nick = (Page.GetFirstChild("player_"^x) as CMlLabel);
+            declare cp = (Page.GetFirstChild("cp_"^x) as CMlLabel);
+            
+            declare ratio = (curCp % totalCheckpoints) * divGrad;
+            if(ratio > 1.0){
+                ratio = 1.0;
+            }
+            nicks[Player.Login] = Player.Name;
+            ratios[Player.Login] = ratio;
+            cps[Player.Login] = curCp ^ "/" ^ totalCheckpoints;
+            x += 1;
+            }    
+    }
+}
+
+//**********************************
+// sync disconnected players
+//**********************************
+if ( (Players.count-1) != nicks.count) {
+declare Text[Text] nicksNew = Text[Text];
+declare Text[Text] cpsNew = Text[Text];
+declare Real[Text] ratiosNew = Real[Text];
+
+    foreach (Player in Players) {
+        declare key = Player.Login;
+        if (nicks.existskey(key) ) {
+            nicksNew[key] = nicks[key];
+            cpsNew[key] = cps[key];
+            ratiosNew[key] = ratios[key];
+        }
+    }
+    nicks = nicksNew;
+    cps = cpsNew;
+    ratios = ratiosNew;
+}
+
+
+//**********************************
+// redraw widget
+//**********************************
+for (o, 0, playerCount - 1) {
+                declare gauge = (Page.GetFirstChild("gauge_"^o) as CMlGauge);
+                declare nick = (Page.GetFirstChild("player_"^o) as CMlLabel);
+                declare cp = (Page.GetFirstChild("cp_"^o) as CMlLabel);
+                gauge.Visible = False;
+                nick.Opacity = 0.0;
+                cp.Opacity = 0.0;   
+}
+
+
+declare i = 0;
+foreach (key => value in nicks) {
+
+    if (i < playerCount) {
+            declare gauge = (Page.GetFirstChild("gauge_"^i) as CMlGauge);
+            declare nick = (Page.GetFirstChild("player_"^i) as CMlLabel);
+            declare cp = (Page.GetFirstChild("cp_"^i) as CMlLabel);
+            gauge.Ratio = ratios[key];
+            nick.Value = nicks[key];
+            cp.Value = cps[key];
+            gauge.Visible = True;
+            nick.Opacity = 1.0;
+            cp.Opacity =1.0;   
+            if (key == InputPlayer.Login) {
+                gauge.Color = TextLib::ToColor("0d0");
+            } else {
+                gauge.Color = TextLib::ToColor("3af");
+            }
+      
+    }    
+      i += 1; 
+}
+

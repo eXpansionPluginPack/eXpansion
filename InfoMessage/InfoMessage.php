@@ -15,16 +15,20 @@ class InfoMessage extends ExpPlugin
 	function exp_onReady()
 	{
 		$this->enableTickerEvent();
-		$this->config = Config::getInstance();
 	}
 
 	function onTick()
 	{
+		$this->config = Config::getInstance();
+
+		if (count($this->config->infoMessages) < 1)
+			return;
+
 		$interval = TimeConversion::MStoTM($this->config->infoInterval) / 1000;
-		
+
 		if ((time() % $interval) == 0) {
 			$i = rand(0, count($this->config->infoMessages) - 1);
-			$this->connection->chatSendServerMessage($this->config->infoMessages[$i]);
+			$this->connection->chatSendServerMessage($this->config->infoMessageColor . $this->config->infoMessages[$i]);
 		}
 	}
 

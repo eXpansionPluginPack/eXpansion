@@ -1,0 +1,64 @@
+declare Integer totalCheckpoints = <?php echo $this->totalCp; ?>;
+declare Integer playerCount = <?php echo $this->playerCount; ?>;
+declare Text serverLogin = "<?php echo $this->serverLogin; ?>";
+declare Real divGrad = 1.0;
+declare Integer curCp = 0;
+declare Boolean Started = False;
+declare Integer x = 1;
+
+declare Text[Text] nicks = Text[Text];
+declare Text[Text] cps = Text[Text];
+declare Real[Text] ratios = Real[Text];
+
+if (totalCheckpoints >= 1) {    
+    divGrad = 1.0 / totalCheckpoints;    
+}
+
+declare myGauge = (Page.GetFirstChild("gauge_0") as CMlGauge);
+declare myNick = (Page.GetFirstChild("player_0") as CMlLabel);
+declare myCp = (Page.GetFirstChild("cp_0") as CMlLabel);
+
+for (i,0, 9) {
+    declare gauge = (Page.GetFirstChild("gauge_"^i) as CMlGauge);
+    declare nick = (Page.GetFirstChild("player_"^i) as CMlLabel);
+    declare cp = (Page.GetFirstChild("cp_"^i) as CMlLabel);
+    gauge.Visible = False;
+    nick.Opacity = 0.0;
+    cp.Opacity = 0.0;
+}
+
+if (InputPlayer != Null) {
+
+declare ratio = (InputPlayer.CurRace.Checkpoints.count % totalCheckpoints) * divGrad;
+            if(ratio > 1.0){
+                ratio = 1.0;
+            }
+            nicks[InputPlayer.Login] = InputPlayer.Name;
+            ratios[InputPlayer.Login] = ratio;
+            cps[InputPlayer.Login] = InputPlayer.CurRace.Checkpoints.count ^ "/" ^ totalCheckpoints;
+
+x = 1;
+foreach (Player in Players) { 
+        declare ObstacleProgressCount for Player = -1;
+
+        if (x <= playerCount && Player.IsSpawned && Player.Login != InputPlayer.Login && Player.Login != serverLogin) {
+            declare gauge = (Page.GetFirstChild("gauge_"^x) as CMlGauge);
+            declare nick = (Page.GetFirstChild("player_"^x) as CMlLabel);
+            declare cp = (Page.GetFirstChild("cp_"^x) as CMlLabel);
+            curCp = Player.CurRace.Checkpoints.count;            
+       
+            declare ratio = (curCp % totalCheckpoints) * divGrad;
+            if(ratio > 1.0){
+                ratio = 1.0;
+            }
+
+            nicks[Player.Login] = Player.Name;
+            ratios[Player.Login] = ratio;
+            cps[Player.Login] = curCp ^ "/" ^ totalCheckpoints;
+            x += 1;
+            }
+    }
+
+}
+
+

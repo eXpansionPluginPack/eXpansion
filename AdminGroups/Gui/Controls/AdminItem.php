@@ -7,79 +7,84 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\AdminGroups\Admin;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+
 /**
  * Description of GroupItem
  *
  * @author oliverde8
  */
-class AdminItem extends \ManiaLive\Gui\Control {
+class AdminItem extends \ManiaLive\Gui\Control
+{
 
-    private $admin;
-    private $action_remove;
-    private $plistButton;
+	private $admin;
 
-    function __construct($indexNumber, Admin $admin, $controller, $login) {
-        $this->group = $admin;
-        $sizeX = 75;
-        $sizeY = 6;
+	private $action_remove;
 
-        $this->action_remove = $this->createAction(array($controller, 'click_remove'), $admin);
+	private $plistButton;
 
-        $frame = new \ManiaLive\Gui\Controls\Frame();
-        $frame->setSize($sizeX, $sizeY);
-        $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+	function __construct($indexNumber, Admin $admin, $controller, $login)
+	{
+		$this->group = $admin;
+		$sizeX = 75;
+		$sizeY = 6;
 
-        $this->addComponent(new ListBackGround($indexNumber, $sizeX, $sizeY));
+		$this->action_remove = $this->createAction(array($controller, 'click_remove'), $admin);
 
-        $gui_name = new \ManiaLib\Gui\Elements\Label(40, 4);
-        $gui_name->setAlign('left', 'center');
-        $gui_name->setText($admin->getLogin());
-        $gui_name->setScale(0.8);
-        $frame->addComponent($gui_name);
+		$frame = new \ManiaLive\Gui\Controls\Frame();
+		$frame->setSize($sizeX, $sizeY);
+		$frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
-        $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($admin->getLogin());
-        $gui_nick = new \ManiaLib\Gui\Elements\Label(32, 4);
-        $gui_nick->setAlign('left', 'center');
-        $gui_nick->setText($player != null ? $player->nickName : "");
-	$gui_nick->setTextColor("fff");
-        $gui_nick->setScale(0.8);
+		$this->addComponent(new ListBackGround($indexNumber, $sizeX, $sizeY));
 
-        $frame->addComponent($gui_nick);
+		$gui_name = new \ManiaLib\Gui\Elements\Label(40, 4);
+		$gui_name->setAlign('left', 'center');
+		$gui_name->setText($admin->getLogin());
+		$gui_name->setScale(0.8);
+		$frame->addComponent($gui_name);
 
-        if (AdminGroups::hasPermission($login, Permission::admingroups_adminAllGroups) && !$admin->isReadOnly()) {
+		$player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($admin->getLogin());
+		$gui_nick = new \ManiaLib\Gui\Elements\Label(32, 4);
+		$gui_nick->setAlign('left', 'center');
+		$gui_nick->setText($player != null ? $player->nickName : "");
+		$gui_nick->setTextColor("fff");
+		$gui_nick->setScale(0.8);
 
-            $this->plistButton = new MyButton(30, 4);
-            $this->plistButton->setAction($this->action_remove);
-            $this->plistButton->setText(__(AdminGroups::$txt_rmPlayer, $login));
-            $this->plistButton->setScale(0.6);
-            $frame->addComponent($this->plistButton);
-        }
+		$frame->addComponent($gui_nick);
 
-        $this->addComponent($frame);
+		if (AdminGroups::hasPermission($login, Permission::admingroups_adminAllGroups) && !$admin->isReadOnly()) {
 
-        $this->sizeX = $sizeX;
-        $this->sizeY = $sizeY;
-        $this->setSize($sizeX, $sizeY);
-    }
+			$this->plistButton = new MyButton(30, 4);
+			$this->plistButton->setAction($this->action_remove);
+			$this->plistButton->setText(__(AdminGroups::$txt_rmPlayer, $login));
+			$this->plistButton->setScale(0.6);
+			$frame->addComponent($this->plistButton);
+		}
 
-    
+		$this->addComponent($frame);
 
-    // manialive 3.1 override to do nothing.
-    function destroy() {
-        
-    }
+		$this->sizeX = $sizeX;
+		$this->sizeY = $sizeY;
+		$this->setSize($sizeX, $sizeY);
+	}
 
-    /*
-     * custom function to remove contents.
-     */
+	// manialive 3.1 override to do nothing.
+	function destroy()
+	{
 
-    public function erase() {
-        if ($this->plistButton != null)
-            $this->plistButton->destroy();
-        $this->plistButton = null;
-        $this->clearComponents();
-        parent::destroy();
-    }
+	}
+
+	/*
+	 * custom function to remove contents.
+	 */
+
+	public function erase()
+	{
+		if ($this->plistButton != null)
+			$this->plistButton->destroy();
+		$this->plistButton = null;
+		$this->clearComponents();
+		parent::destroy();
+	}
 
 }
 

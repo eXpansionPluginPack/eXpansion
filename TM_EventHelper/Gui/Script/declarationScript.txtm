@@ -1,0 +1,2 @@
+declare Text respawnAction = "<?php echo $this->respawnAction; ?>";
+log("start");

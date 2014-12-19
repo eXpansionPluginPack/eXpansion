@@ -46,7 +46,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	function __construct($sizeX = 32, $sizeY = 6)
 	{
 
-		if (self::$script == null) {
+		if (self::$script === null) {
 			self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\ButtonScript();
 		}
 
@@ -65,14 +65,17 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 		$this->backGround->setAlign('left', 'center2');
 		//$this->backGround->setStyle("BgsButtons");
 		//$this->backGround->setSubStyle("BgButtonSmall");
-		$this->backGround->setImage($config->getImage("button", "normal.png"),true);
-		$this->backGround->setImageFocus($config->getImage("button", "focus.png"),true);
-		$this->backGround->setScriptEvents(true);
-		$this->backGround->setColorize("2af");
-	//	$this->backGround->setAttribute("class", "isTabIndex");
-		$this->addComponent($this->backGround);
-	
+		$this->backGround->setImage($config->getImage("button", "normal.png"), true);
+		$this->backGround->setImageFocus($config->getImage("button", "focus.png"), true);
+
+		$this->backGround->setId("Icon_" . $this->buttonId);
+		$this->backGround->setScriptEvents();
 		
+		$this->backGround->setColorize("2af");
+		//	$this->backGround->setAttribute("class", "isTabIndex");
+		$this->addComponent($this->backGround);
+
+
 		$this->label = new \ManiaLib\Gui\Elements\Label($sizeX, $sizeY - 2);
 		$this->label->setAlign('center', 'center2');
 		$this->label->setStyle("TextValueSmallSm");
@@ -82,7 +85,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 
 		$this->frameDescription = new \ManiaLive\Gui\Controls\Frame();
 		//$this->frameDescription->setId("Desc_Icon_" . $this->buttonId);
-		$this->frameDescription->setPositionZ(10);
+		$this->frameDescription->setPositionZ($this->getPosZ() + 10);
 		$this->frameDescription->setHidden(true);
 		$this->frameDescription->setAttribute('class', 'exp_button');
 
@@ -99,7 +102,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 		$this->backGroundDesc->setId("eXp_ButtonDescBg_Icon_" . $this->buttonId);
 		$this->backGroundDesc->setStyle('Bgs1');
 		$this->backGroundDesc->setSubStyle('BgMetalBar');
-	// $this->backGroundDesc->setImage($config->getImage("button", "normal.png"),true);
+		// $this->backGroundDesc->setImage($config->getImage("button", "normal.png"),true);
 		$this->backGroundDesc->setColorize("fff");
 		//$this->backGroundDesc->setOpacity(0.75);
 		$this->backGroundDesc->setPosition(5, 3);
@@ -140,7 +143,6 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 
 		if ($this->icon == null) {
 			$this->addComponent($this->backGround);
-		
 		}
 
 		if (!empty($this->text)) {
@@ -171,10 +173,10 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	{
 		$this->description = "$000" . $description;
 		$this->labelDesc->setSizeX($sizeX);
-		$this->labelDesc->setSizeY($sizeY*$maxLine);
+		$this->labelDesc->setSizeY($sizeY * $maxLine);
 		$this->labelDesc->setMaxline($maxLine);
 		$this->backGroundDesc->setSizeX($sizeX + 4);
-		$this->backGroundDesc->setSizeY($sizeY*$maxLine);
+		$this->backGroundDesc->setSizeY($sizeY * $maxLine);
 	}
 
 	public function getDescription()
@@ -264,6 +266,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	{
 		//parent::setId($id);
 		$this->buttonId = $id;
+		
 		if ($this->icon != null) {
 			$this->icon->setId($this->buttonId);
 		}
