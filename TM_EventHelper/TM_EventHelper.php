@@ -58,7 +58,6 @@ class TM_EventHelper extends ExpPlugin
 	
 	public function invokeRespawn($login)
 	{
-		$this->exp_chatSendServerMessage("invoke $login");
 		Dispatcher::dispatch(
 				new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnRespawn, array($login))
 		);
