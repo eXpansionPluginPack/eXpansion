@@ -70,9 +70,7 @@ main () {
     declare Boolean mouseButton for Page;
     declare Integer tabIndex = -1;
 
-    declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");   
-
-    declare windowFrame <=> Page.GetFirstChild("windowFrame");
+    declare Window <=> (Page.GetFirstChild("<?php echo $win->getId() ?>") as CMlFrame);
     declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);    
 
     declare MoveWindow = False;
@@ -96,8 +94,8 @@ main () {
     declare Text id = "<?php echo $this->name ?>";
     declare Boolean forceReset = <?php echo $this->forceReset; ?>;
     declare Text version = "<?php echo $this->version; ?>";
-    declare Boolean disableAnimations = <?php echo $this->disableAnimations; ?>;
-    
+    // declare Boolean disableAnimations = <?php echo $this->disableAnimations; ?>;
+    declare Boolean disableAnimations = True;
     declare persistent Vec3[Text][Text] exp_windowLastPosRel;
     declare Text[] exp_windowStack for UI = Text[];
     declare Boolean exp_updateStack for UI = False;
@@ -122,8 +120,7 @@ main () {
     Window.RelativePosition = exp_windowLastPosRel[version][id];
     
     if (!disableAnimations && !stackContainsWindow(id) ) {
-        Window.RelativePosition.X = 0.;
-        Window.RelativePosition.Y = 0.;
+        Window.RelativePosition.Z = 0.;
         Window.Scale = 0.0;
         openWindow = True;
     }
@@ -140,8 +137,8 @@ main () {
             openWindow = False;
             declare Real winX = exp_windowLastPosRel[version][id].X;
             declare Real winY = exp_windowLastPosRel[version][id].Y;
-            declare Text pos = winX ^ " " ^ winY;
-            LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"1\" id=\"" ^ windowId ^ "\" />", 250, "EaseInLinear");
+            declare Text pos = winX ^ " " ^ winY;            
+            //LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"1\" id=\"" ^ windowId ^ "\" />", 250, "EaseInLinear");
         }	
 
 	if (closeWindow && closeCounter + 350 <= Now ) {	    
@@ -152,10 +149,12 @@ main () {
 	}
 
 	if (exp_updateStack == True) {
-	    foreach (key => value in exp_windowStack) {		
-		if (id == value) {
-		 Window.RelativePosition.Z = zIndex - (5*key);		 		 
-		}
+	    foreach (key => value in exp_windowStack) {	               
+		if (id == value) {             
+                 Window.RelativePosition.Z = zIndex - ( 5. * key);    
+                 //TitlebarText.Value = "id: " ^ id ^ " value: " ^value ^ " z: " ^ Window.RelativePosition.Z;
+	        }
+               
 	    }	    
 	    
 	    if (exp_stackCounter + 100 <= Now) {
@@ -219,7 +218,7 @@ main () {
                             declare Real winX = 0.;
                             declare Real winY = 0.;
                             declare Text pos = winX ^ " " ^ winY;
-                            LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"0\" id=\"" ^ windowId ^ "\" />", 250, "EaseOutLinear");
+                           // LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"0\" id=\"" ^ windowId ^ "\" />", 250, "EaseOutLinear");
                             closeWindow = True;
                             closeCounter = Now;	  	
                           }
@@ -265,6 +264,7 @@ main () {
 	    }
 
 	}
-	LibManialink_AnimLoop();
+        
+	// LibManialink_AnimLoop();
 }  //end of window
 --></script>

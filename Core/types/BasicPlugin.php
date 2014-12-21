@@ -197,8 +197,12 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		{
 			if (!$this->_isScriptEventsEnabled) {
 				$this->_isScriptEventsEnabled = true;
-				$this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => true));
-				Dispatcher::register(ScriptmodeEvent::getClass(), $this);
+				try {
+					$this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => true));
+				} catch (\Exception $e) {
+					$this->console("Can't enable S_UseScriptCallbacks, due no support for basemodescripts.");
+				}
+				Dispatcher::register(ScriptmodeEvent::getClass(), $this, ScriptmodeEvent::ALL);
 			}
 		}
 
@@ -825,9 +829,17 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 			
 		}
 
-		public function LibAFK_IsAFK($login)
+		/**
+		 * @param PlayerNetInfo[] $players
+		 */
+		public function onPlayerNetLost($players)
 		{
 			
+		}
+
+		public function LibAFK_IsAFK($login)
+		{
+
 		}
 
 		public function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec)
@@ -837,67 +849,177 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 		public function LibXmlRpc_BeginMap($number)
 		{
+
+		}
+
+		public function LibXmlRpc_BeginMapStop($value)
+		{
 			
 		}
 
 		public function LibXmlRpc_BeginMatch($number)
+		{
+
+		}
+
+		public function LibXmlRpc_BeginMatchStop($value)
+		{
+			
+		}
+
+		public function LibXmlRpc_BeginPlaying()
+		{
+
+		}
+
+		public function LibXmlRpc_BeginPodium()
 		{
 			
 		}
 
 		public function LibXmlRpc_BeginRound($number)
 		{
+
+		}
+
+		public function LibXmlRpc_BeginRoundStop($value)
+		{
+			
+		}
+
+		public function LibXmlRpc_BeginServer()
+		{
+
+		}
+
+		public function LibXmlRpc_BeginServerStop()
+		{
 			
 		}
 
 		public function LibXmlRpc_BeginSubmatch($number)
+		{
+
+		}
+
+		public function LibXmlRpc_BeginSubmatchStop($value)
 		{
 			
 		}
 
 		public function LibXmlRpc_BeginTurn($number)
 		{
+
+		}
+
+		public function LibXmlRpc_BeginTurnStop($value)
+		{
 			
 		}
 
 		public function LibXmlRpc_BeginWarmUp()
+		{
+
+		}
+
+		public function LibXmlRpc_BlockedCallbacks($value)
+		{
+			
+		}
+
+		public function LibXmlRpc_CallbackHelp($value)
+		{
+
+		}
+
+		public function LibXmlRpc_Callbacks($value)
 		{
 			
 		}
 
 		public function LibXmlRpc_EndMap($number)
 		{
+
+		}
+
+		public function LibXmlRpc_EndMapStop($value)
+		{
 			
 		}
 
 		public function LibXmlRpc_EndMatch($number)
+		{
+
+		}
+
+		public function LibXmlRpc_EndMatchStop($value)
+		{
+			
+		}
+
+		public function LibXmlRpc_EndPlaying()
+		{
+
+		}
+
+		public function LibXmlRpc_EndPodium()
 		{
 			
 		}
 
 		public function LibXmlRpc_EndRound($number)
 		{
+
+		}
+
+		public function LibXmlRpc_EndRoundStop($value)
+		{
+			
+		}
+
+		public function LibXmlRpc_EndServer()
+		{
+
+		}
+
+		public function LibXmlRpc_EndServerStop()
+		{
 			
 		}
 
 		public function LibXmlRpc_EndSubmatch($number)
+		{
+
+		}
+
+		public function LibXmlRpc_EndSubmatchStop($value)
 		{
 			
 		}
 
 		public function LibXmlRpc_EndTurn($number)
 		{
+
+		}
+
+		public function LibXmlRpc_EndTurnStop($value)
+		{
 			
 		}
 
 		public function LibXmlRpc_EndWarmUp()
 		{
-			
+
 		}
 
 		public function LibXmlRpc_LoadingMap($number)
 		{
 			
+		}
+
+		public function LibXmlRpc_OnCapture($login)
+		{
+
 		}
 
 		public function LibXmlRpc_OnGiveUp($login)
@@ -907,33 +1029,47 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 		public function LibXmlRpc_OnRespawn($login)
 		{
+
+		}
+
+		public function LibXmlRpc_OnStartCountdown($login)
+		{
 			
 		}
 
 		public function LibXmlRpc_OnStartLine($login)
 		{
-			
+
 		}
 
-		public function LibXmlRpc_OnStunt(
-		$login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump
-		)
+		public function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump)
 		{
 			
 		}
 
-		public function LibXmlRpc_OnWayPoint(
-		$login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
-		)
+		public function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
+		{
+
+		}
+
+		public function LibXmlRpc_PlayerRanking($rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone)
 		{
 			
 		}
 
-		public function LibXmlRpc_PlayerRanking(
-		$rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone
-		)
+		public function LibXmlRpc_PlayersRanking($value)
+		{
+
+		}
+
+		public function LibXmlRpc_PlayersScores($value)
 		{
 			
+		}
+
+		public function LibXmlRpc_PlayersTimes($value)
+		{
+
 		}
 
 		public function LibXmlRpc_Rankings($array)
@@ -943,25 +1079,37 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 		public function LibXmlRpc_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2)
 		{
+
+		}
+
+		public function LibXmlRpc_TeamsMode($value)
+		{
+			
+		}
+
+		public function LibXmlRpc_TeamsScores($value)
+		{
+
+		}
+
+		public function LibXmlRpc_UnloadingMap($mapNumber)
+		{
+			
+		}
+
+		public function LibXmlRpc_WarmUp($value)
+		{
+
+		}
+
+		public function UI_Properties($value)
+		{
 			
 		}
 
 		public function WarmUp_Status($status)
 		{
-			
-		}
 
-		/**
-		 * @param PlayerNetInfo[] $players
-		 */
-		public function onPlayerNetLost($players)
-		{
-			
-		}
-
-		function LibXmlRpc_OnCapture($login)
-		{
-			
 		}
 
 	}

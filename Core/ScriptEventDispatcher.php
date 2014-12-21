@@ -2,6 +2,8 @@
 
 /**
  * @author       Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Petri Järvisalo (petri.jarvisalo at gmail.com)
+ *
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -29,16 +31,13 @@ use ManiaLive\DedicatedApi\Callback\Listener as ServerEventListener;
 use ManiaLive\DedicatedApi\Callback\SMapInfo;
 use ManiaLive\DedicatedApi\Callback\SPlayerInfo;
 use ManiaLive\DedicatedApi\Callback\SPlayerRanking;
-use ManiaLive\DedicatedApi\Callback\StatsName;
-use ManiaLive\DedicatedApi\Callback\StatusCode;
 use ManiaLive\Event\Dispatcher;
-use ManiaLive\Utilities\Logger;
-use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent as Event;
-use ManiaLivePlugins\eXpansion\TMKarma\Exception;
+use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
 use Maniaplanet\DedicatedServer\Connection;
+use ReflectionClass;
 
 /**
- * Transforms script callbacks to nicer Elite events
+ * Transforms script callbacks
  *
  * @package ManiaLivePlugins\eXpansion\Core
  */
@@ -50,100 +49,28 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	private $connection;
 
-	function __construct($connetcion)
+	private $constants;
+
+	function __construct($connection)
 	{
-		try {
-			$this->connection = $connetcion;
-			$this->connection->setModeScriptSettings(array('S_UseScriptCallbacks' => true));
-
-
-			Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
-		} catch (\Exception $ex) {
-			Logger::error("Strange script mode, couldn't use S_UseScriptCallbacks. HATE Nadeo");
-		}
+		$this->connection = $connection;
+		Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
+		$rc = new ReflectionClass('ManiaLivePlugins\\eXpansion\\Core\\Events\\ScriptmodeEvent');
+		$this->constants = $rc->getConstants();
 	}
 
 	public function onModeScriptCallback($param1, $param2)
 	{
 
-		/* echo "\n". $param1."\n";
-		print_r($param2);
-		
-
-		$this->connection->chatSend($param1, null, true);
-		$this->connection->chatSend(print_r($param2, true), null, true);
-		*/
-		
-		switch ($param1) {
-			case 'LibXmlRpc_BeginMap':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginMap, $param2);
-				break;
-			case 'LibXmlRpc_BeginMatch':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginMatch, $param2);
-				break;
-			case 'LibXmlRpc_BeginRound':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginRound, $param2);
-				break;
-			case 'LibXmlRpc_BeginSubmatch':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginSubmatch, $param2);
-				break;
-			case 'LibXmlRpc_BeginTurn':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginTurn, $param2);
-				break;
-			case 'LibXmlRpc_BeginWarmUp':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_BeginWarmUp, $param2);
-				break;
-			case 'LibXmlRpc_LoadingMap':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_LoadingMap, $param2);
-				break;
-			case 'LibXmlRpc_OnGiveUp':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnGiveUp, $param2);
-				break;
-			case 'LibXmlRpc_OnRespawn':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnRespawn, $param2);
-				break;
-			case 'LibXmlRpc_OnStartLine':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnStartLine, $param2);
-				break;
-			case 'LibXmlRpc_OnStunt':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnStunt, $param2);
-				break;
-			case 'LibXmlRpc_OnWayPoint':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnWayPoint, $param2);
-				break;
-			case 'LibXmlRpc_PlayerRanking':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_PlayerRanking, $param2);
-				break;
-			case 'LibAFK_IsAFK':
-				$this->dispatchSciptEvent(Event::LibAFK_IsAFK, $param2);
-				break;
-			case 'LibAFK_Properties':
-				$this->dispatchSciptEvent(Event::LibAFK_Properties, $param2);
-				break;
-			case 'LibXmlRpc_Scores':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_Scores, $param2);
-				break;
-			case 'LibXmlRpc_Rankings':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_Rankings, $param2);
-				break;
-			case 'LibXmlRpc_OnCapture':
-				$this->dispatchSciptEvent(Event::LibXmlRpc_OnCapture, $param2);
-				break;
+//echo "\n" . $param1 . "\n";
+//print_r($param2);
+	//	$this->connection->chatSendServerMessage('$0d0' . $param1);
+		if (array_key_exists($param1, $this->constants)) {
+			Dispatcher::dispatch(new ScriptmodeEvent($this->constants[$param1], $param2));
 		}
-	}
-
-	/**
-	 * Dispatches a script event.
-	 *
-	 * @param $event The code of the event
-	 * @param $param The parameters of the event
-	 */
-	protected
-			function dispatchSciptEvent($event, $param)
-	{
-		\ManiaLive\Event\Dispatcher::dispatch(
-				new \ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent($event, $param)
-		);
+		else {
+			\ManiaLivePlugins\eXpansion\Helpers\Helper::log("[Core] Notice: Script mode callback not implemented: " . $param1);
+		}
 	}
 
 	/**
@@ -164,7 +91,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerDisconnect($login, $disconnectionReason)
 	{
-		
+
 	}
 
 	/**
@@ -190,7 +117,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries)
 	{
-		
+
 	}
 
 	/**
@@ -209,7 +136,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onServerStart()
 	{
-		
+
 	}
 
 	/**
@@ -225,7 +152,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onBeginMatch()
 	{
-		
+
 	}
 
 	/**
@@ -263,7 +190,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onBeginMap($map, $warmUp, $matchContinuation)
 	{
-		
+
 	}
 
 	/**
@@ -285,7 +212,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onBeginRound()
 	{
-		
+
 	}
 
 	/**
@@ -304,7 +231,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onStatusChanged($statusCode, $statusName)
 	{
-		
+
 	}
 
 	/**
@@ -330,7 +257,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerFinish($playerUid, $login, $timeOrScore)
 	{
-		
+
 	}
 
 	/**
@@ -354,7 +281,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onBillUpdated($billId, $state, $stateName, $transactionId)
 	{
-		
+
 	}
 
 	/**
@@ -378,7 +305,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onMapListModified($curMapIndex, $nextMapIndex, $isListModified)
 	{
-		
+
 	}
 
 	/**
@@ -398,7 +325,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onManualFlowControlTransition($transition)
 	{
-		
+
 	}
 
 	/**
@@ -421,7 +348,7 @@ class ScriptEventDispatcher implements ServerEventListener
 	 */
 	function onPlayerAlliesChanged($login)
 	{
-		
+
 	}
 
 }

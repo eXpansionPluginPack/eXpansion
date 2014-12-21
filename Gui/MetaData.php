@@ -24,7 +24,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$config = Config::getInstance();
 		$var = new String("uiTextureBase", "Texture base for ui ", $config);
 		$var->setGroup("Look & Feel");
-		$var->setDefaultValue("http://reaby.kapsi.fi/ml/ui");
+		$var->setDefaultValue("http://reaby.kapsi.fi/ml/ui2/");
 		$this->registerVariable($var);
 
 		$var = new String("windowTitleColor", "Color for window titlebar", $config);

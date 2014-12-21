@@ -18,9 +18,14 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	private $plugins;
 
 	/**
-	 * @var MetaDataType[]
+	 * @var ManiaLivePlugins\eXpansion\Core\types\config\MetaData[]
 	 */
 	private $availablePlugins;
+
+	/**
+	 * @var ManiaLivePlugins\eXpansion\Core\types\config\MetaData[]
+	 */
+	private static $allAvailablePlugins;
 
 	/**
 	 * @var Config
@@ -45,14 +50,14 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 		//List of plugins that must be loaded always !!
 		$this->plugins = array('\ManiaLivePlugins\eXpansion\Core\Core'
-		, '\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups'
-		, '\ManiaLivePlugins\eXpansion\AutoUpdate\AutoUpdate'
-		, '\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin'
-		, '\ManiaLivePlugins\eXpansion\Gui\Gui'
-		, '\ManiaLivePlugins\eXpansion\Menu\Menu'
-		, '\ManiaLivePlugins\eXpansion\Adm\Adm'
-		, '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad'
-		, '\ManiaLivePlugins\eXpansion\Database\Database');
+			, '\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups'
+			, '\ManiaLivePlugins\eXpansion\AutoUpdate\AutoUpdate'
+			, '\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin'
+			, '\ManiaLivePlugins\eXpansion\Gui\Gui'
+			, '\ManiaLivePlugins\eXpansion\Menu\Menu'
+			, '\ManiaLivePlugins\eXpansion\Adm\Adm'
+			, '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad'
+			, '\ManiaLivePlugins\eXpansion\Database\Database');
 
 		$this->findAvailablePlugins();
 		ConfigManager::getInstance()->loadSettings();
@@ -139,10 +144,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		if (!empty($recheck)) {
 			//$this->dumpException("Couldn't Autoload all required plugins", new \Maniaplanet\WebServices\Exception("Autoload failed."));
 			$this->exp_chatSendServerMessage(
-				"couldn't Autoload all required plugins, see console log for more details."
+					"couldn't Autoload all required plugins, see console log for more details."
 			);
 			$this->console(
-				"Not all required plugins were loaded, due to unmet dependencies or errors. list of not loaded plugins: "
+					"Not all required plugins were loaded, due to unmet dependencies or errors. list of not loaded plugins: "
 			);
 			foreach ($recheck as $pname) {
 				$this->console($pname);
@@ -187,7 +192,8 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			if (!$pHandler->isLoaded($pname)) {
 				if (in_array($pname, $disabled)) {
 					$this->console("[" . $pname . "]..............................Disabled -> not loading");
-				} else {
+				}
+				else {
 					$status = true;
 					if (!class_exists($pname)) {
 						$this->console("[" . $pname . "]..............................Doesen't exist -> not loading");
@@ -199,6 +205,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 					$metaData = $pname::getMetaData();
 
 					$this->availablePlugins[$pname] = $metaData;
+					self::$allAvailablePlugins[$pname] = $metaData;
 
 					if ($metaData->checkAll()) {
 						try {
@@ -217,11 +224,13 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 							$this->console("[" . $pname . "]..............................FAIL -> will retry");
 							//Helper::log("[AutoLoad]".ErrorHandling::computeMessage($ex));
 							$recheck[] = $pname;
-						} else {
+						}
+						else {
 							$this->debug("[" . $pname . "]..............................SUCCESS");
 							//   $this->connection->chatSendServerMessage('Starting ' . $pname . '........$0f0 Success');
 						}
-					} else {
+					}
+					else {
 						$otherCheckResults = $metaData->checkAll();
 						if (!empty($otherCheckResults)) {
 							return false;
@@ -265,10 +274,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		if ($this->isInStartList($pluginId) || $pHandler->isLoaded($pluginId)) {
 			if (in_array($pluginId, $this->plugins)) {
 				$this->exp_chatSendServerMessage(
-					"#admin_error#This plugin is a core element of eXpansion. It cant be unloaded",
-					$login
+						"#admin_error#This plugin is a core element of eXpansion. It cant be unloaded", $login
 				);
-			} else {
+			}
+			else {
 				$pos = array_search($pluginId, Config::getInstance()->plugins);
 				if ($pos !== false) {
 					unset($this->config->plugins[$pos]);
@@ -283,10 +292,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			if ($this->loadPlugin($pluginId, $pHandler)) {
 				$pHandler->ready($pluginId);
 				$this->exp_chatSendServerMessage("#admin_action#Plugin started with success", $login);
-			} else {
+			}
+			else {
 				$this->exp_chatSendServerMessage(
-					"#admin_error#This plugin contains errors that prevented it from starting",
-					$login
+						"#admin_error#This plugin contains errors that prevented it from starting", $login
 				);
 			}
 
@@ -298,7 +307,6 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 		$this->showPluginsWindow($login);
 		$this->configPlugins = $this->config->plugins;
-
 	}
 
 	/**
@@ -330,13 +338,13 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 				if (in_array('MetaData.php', $subFiles)) {
 					$this->loadAvailablePluginMetaDataFromPath($path);
 				}
-			} else {
+			}
+			else {
 				foreach ($subFiles as $file) {
 					if (is_dir($path . '/' . $file))
 						$this->findAvailablePluginsInPath($path . '/' . $file, $depth - 1);
 				}
 			}
-
 		} else {
 			$this->console("Unknown plugin path : $path");
 		}
@@ -361,14 +369,17 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$metaData = $className::getInstance($pluginId);
 			if ($metaData->getPlugin() == null) {
 				$metaData->setPlugin($pluginId);
-			} else {
+			}
+			else {
 				$pluginId = $metaData->getPlugin();
 			}
 
 			$this->availablePlugins[$pluginId] = $metaData;
+			self::$allAvailablePlugins[$pluginId] = $metaData;
 		}
 
 		uasort($this->availablePlugins, array($this, 'pluginNameCmp'));
+		uasort(self::$allAvailablePlugins, array($this, 'pluginNameCmp'));
 	}
 
 	public function pluginNameCmp(MetaDataType $a, MetaDataType $b)
@@ -394,6 +405,16 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		return in_array($pluginId, $this->plugins) || in_array($pluginId, Config::getInstance()->plugins);
 	}
+
+	/**
+	 *
+	 * @return ManiaLivePlugins\eXpansion\Core\types\config\MetaData[]
+	 */
+	public static function getAvailablePlugins()
+	{
+		return self::$allAvailablePlugins;
+	}
+
 }
 
 ?>

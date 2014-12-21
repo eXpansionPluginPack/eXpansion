@@ -11,7 +11,7 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $buttonActive = "http://reaby.kapsi.fi/ml/button2_active.png";
 
-	public $uiTextureBase = "http://reaby.kapsi.fi/ml/ui/";
+	public $uiTextureBase = "http://reaby.kapsi.fi/ml/ui2/";
 
 	public $uiTextures_Window = array("top_left.png", "top_center.png", "top_left.png", "left.png", "bg.png", "right.png", "bottom_left.png", "bottom_center.png", "bottom_right.png");
 

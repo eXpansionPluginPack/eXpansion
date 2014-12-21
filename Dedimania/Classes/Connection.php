@@ -484,22 +484,22 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function detectScriptName()
     {
-        $name = $this->connection->getScriptName();
-        $mode = $name['CurrentValue'];
+        $name = $this->connection->getScriptName();		
+        $mode = strtolower($name['CurrentValue']);
         switch ($mode) {
-            case "TimeAttack.Script.txt":
+            case "timeattack.script.txt":
                 return "TA";
                 break;
-            case "Laps.Script.txt":
+            case "laps.script.txt":
                 return "TA";
                 break;
-            case "Rounds.Script.txt":
+            case "rounds.script.txt":
                 return "Rounds";
                 break;
-            case "Team.Script.txt":
+            case "team.script.txt":
                 return "Rounds";
                 break;
-            case "Cup.Script.txt":
+            case "cup.script.txt":
                 return "Rounds";
                 break;
             default:

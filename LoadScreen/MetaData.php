@@ -20,6 +20,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Loading Screen");
 		$this->setDescription("Provides customizable loadingscreens");
+		$this->setGroups(array('Tools'));
+		
 		$config = Config::getInstance();
 
 		$var = new BasicList("screens", "List of LoadingScreens", $config, false, false);

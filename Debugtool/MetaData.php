@@ -16,6 +16,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData{
 	parent::onBeginLoad();
 	$this->setName("DebugTool");
 	$this->setDescription('Connect / disconnect npc with ease!!');
+	$this->setGroups(array('Tools'));
 	
     }
 }
