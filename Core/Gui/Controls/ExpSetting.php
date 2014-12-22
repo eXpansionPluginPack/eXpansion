@@ -89,9 +89,10 @@ class ExpSetting extends Control
 		}
 		else {
 			if ($var instanceof Boolean) {
-				$this->input = new CheckboxScripted(5, 5);
+				$this->input = new CheckboxScripted(10, 5);
+                                $this->input->setSkin();                               
 				$this->input->setStatus($var->getRawValue());
-				$this->input->setPosY(-1);
+				$this->input->setPosY(-2);
 				$this->input->setPosX(7);
 				$this->addComponent($this->input);
 			}

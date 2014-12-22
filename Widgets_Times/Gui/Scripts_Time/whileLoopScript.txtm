@@ -1,5 +1,7 @@
 if (target == "") {
-    target = GUIPlayer.Login;
+    if (GUIPlayer != Null) {
+       target = GUIPlayer.Login;
+    }
 }
 
 foreach (Player in Players) {

@@ -23,7 +23,7 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $uiTextures_checkbox = array("normal_on.png", "normal_off.png", "disabled_on.png", "disabled_off.png");
 
-	public $uiTextures_ratiobutton = array("normal_on.png", "normal_off.png");
+	public $uiTextures_ratiobutton = array("normal_on.png", "normal_off.png", "disabled_on.png", "disabled_off.png");
 
 	public $uiTextures_colorchooser = array("1.png", "2.png");
 
