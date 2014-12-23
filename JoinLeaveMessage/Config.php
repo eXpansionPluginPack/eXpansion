@@ -28,5 +28,7 @@ use ManiaLib\Utils\Singleton;
 class Config extends Singleton{
 
 	public $showTotalPlayOnJoin = true;
+	public $showLeaveMessage = true;
+	
 
 } 

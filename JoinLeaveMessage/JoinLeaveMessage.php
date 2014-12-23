@@ -13,9 +13,6 @@ class JoinLeaveMessage extends ExpPlugin
 
     private $joinMsg, $joinMsgTime, $leaveMsg, $tabNoticeMsg, $playtimeMsg;
 
-	/** @var  Config */
-	private $config;
-
     public function exp_onLoad()
     {
         $this->enableDedicatedEvents();
@@ -38,7 +35,6 @@ class JoinLeaveMessage extends ExpPlugin
         foreach ($this->storage->spectators as $login => $player)
             $this->setJoinTime($login);
 
-		$this->config = Config::getInstance();
     }
 
     public function setJoinTime($login)
@@ -97,12 +93,12 @@ class JoinLeaveMessage extends ExpPlugin
 
     public function showPlayTime($login)
     {
-
         $this->exp_chatSendServerMessage($this->playtimeMsg, $login, array($this->getSessionTime($login), $this->getTotalPlaytime($login)));
     }
-
+	
     public function onPlayerConnect($login, $isSpectator)
     {
+
         try {
             $player = $this->storage->getPlayerObject($login);
             $this->setJoinTime($login);
@@ -118,9 +114,9 @@ class JoinLeaveMessage extends ExpPlugin
 
             $grpName = AdminGroups::getGroupName($login);
 
-			if($this->config->showTotalPlayOnJoin){
+			$config = Config::getInstance();
+			if($config->showTotalPlayOnJoin){
 				$playTime = Helper::formatPastTime($this->expStorage->getDbPlayer($login)->getPlayTime(), 2);
-
             	$this->exp_chatSendServerMessage($this->joinMsgTime, null, array($nick, $login, $country, $spec, $grpName, $playTime));
 			}else{
 				$this->exp_chatSendServerMessage($this->joinMsg, null, array($nick, $login, $country, $spec, $grpName));
@@ -133,6 +129,9 @@ class JoinLeaveMessage extends ExpPlugin
 
     public function onPlayerDisconnect($login, $disconnectionReason = null)
     {
+		$config = Config::getInstance();
+		if ($config->showLeaveMessage == false) return;
+		
         try {
             $player = $this->storage->getPlayerObject($login);
             $nick = $player->nickName;
