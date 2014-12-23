@@ -44,7 +44,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 				TimePanel::$localrecords = $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
 			} catch (\Exception $e) {
 				TimePanel::$localrecords = array();
-			}
+			} 
 		}
 
 		$this->showToAll();
@@ -126,7 +126,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$info = TimePanel::Create($login);
 		$info->setSize(30, 6);
 		$info->setPosition(-16, 46);
-	//	$info->setTarget($spectatorTarget);
+		$info->setTarget($spectatorTarget);
 		$info->setMapInfo($this->storage->currentMap);
 		$info->show();
 	}
@@ -190,7 +190,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	public function onPersonalBestRecord($data)
 	{
-		//$this->showPanel($data->login, false);
+		$this->showPanel($data->login, false);
 	}
 
 	public function onDedimaniaPlayerConnect($data)
