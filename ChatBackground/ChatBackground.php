@@ -8,7 +8,12 @@ class ChatBackground extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $window = Gui\Windows\BoxWindow::Create(null);     
         $window->show();
     }
-	
+
+	public function exp_onUnload()
+	{
+		Gui\Windows\BoxWindow::EraseAll();
+		parent::exp_onUnload();
+	}
 }
 
 ?>
