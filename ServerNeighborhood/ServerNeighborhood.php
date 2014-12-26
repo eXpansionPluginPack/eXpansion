@@ -45,144 +45,158 @@ use ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Windows\ServerList;
 class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    public static $gamemodes = array(
-        0 => array('name' => 'SCRIPT', 'icon' => 'RT_Script'),
-        1 => array('name' => 'ROUNDS', 'icon' => 'RT_Rounds'),
-        2 => array('name' => 'TIME_ATTACK', 'icon' => 'RT_TimeAttack'),
-        3 => array('name' => 'TEAM', 'icon' => 'RT_Team'),
-        4 => array('name' => 'LAPS', 'icon' => 'RT_Laps'),
-        5 => array('name' => 'CUP', 'icon' => 'RT_Cup'),
-        6 => array('name' => 'STUNTS', 'icon' => 'RT_Stunts'),
-    );
+	public static $gamemodes = array(
+		0 => array('name' => 'SCRIPT', 'icon' => 'RT_Script'),
+		1 => array('name' => 'ROUNDS', 'icon' => 'RT_Rounds'),
+		2 => array('name' => 'TIME_ATTACK', 'icon' => 'RT_TimeAttack'),
+		3 => array('name' => 'TEAM', 'icon' => 'RT_Team'),
+		4 => array('name' => 'LAPS', 'icon' => 'RT_Laps'),
+		5 => array('name' => 'CUP', 'icon' => 'RT_Cup'),
+		6 => array('name' => 'STUNTS', 'icon' => 'RT_Stunts'),
+	);
 
-    private $server;
-    private $servers = array();
-    private $lastSent = 0;
-    private $config;
+	private $server;
 
-    public function exp_onInit()
-    {
-        $this->setVersion("1.0");
-        $this->config = Config::getInstance();
-    }
+	private $servers = array();
 
-    public function exp_onReady()
-    {
-        $this->server = new Server();
-        $this->server->create_fromConnection($this->connection, $this->storage);
+	private $lastSent = 0;
 
-        $this->registerChatCommand('servers', 'showServerList', 0, true);
+	private $config;
 
-        $this->enableTickerEvent();
-    }
+	public function exp_onInit()
+	{
+		$this->setVersion("1.0");
+		$this->config = Config::getInstance();
+	}
 
-    public function onSettingsChanged(Variable $var){
-        if($var->getName() == 'storing_path'){
-            $status = $this->saveData($this->server->createXML($this->connection, $this->storage));
-            $this->lastSent = time();
+	public function exp_onReady()
+	{
+		$this->server = new Server();
+		$this->server->create_fromConnection($this->connection, $this->storage);
 
-            if(!$status){
-                $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
-                $admins->announceToPermission(Permission::expansion_pluginSettings, "#admin_error#[ServerNeighborhoo]Storage path is wrong. Can't write!!");
-            }
-        }
-    }
+		$this->registerChatCommand('servers', 'showServerList', 0, true);
 
-    public function onTick()
-    {
-        parent::onTick();
-        if ((time() - $this->lastSent) > Config::getInstance()->refresh_interval) {
-            $this->saveData($this->server->createXML($this->connection, $this->storage));
-            $this->lastSent = time();
+		$this->enableTickerEvent();
+	}
 
-            if (sizeof($this->storage->players) > 0 || sizeof($this->storage->spectators) > 0) {
-                $this->getData();
-                $this->showWidget($this->servers);
-            }
-        }
-    }
+	public function onSettingsChanged(Variable $var)
+	{
+		if ($var->getName() == 'storing_path') {
+			$status = $this->saveData($this->server->createXML($this->connection, $this->storage));
+			$this->lastSent = time();
 
-    public function saveData($data)
-    {
-        $filename = Config::getInstance()->storing_path . $this->storage->serverLogin . '_serverinfo.xml';
+			if (!$status) {
+				$admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
+				$admins->announceToPermission(Permission::expansion_pluginSettings, "#admin_error#[ServerNeighborhoo]Storage path is wrong. Can't write!!");
+			}
+		}
 
-        // Opens the file for writing and truncates it to zero length
-        // Try min. 40 times to open if it fails (write block)
-        $tries = 0;
+		if ($var->getName() == 'snwidget_isDockable') {
+			$this->getData();
+			ServerPanel::EraseAll();
+			$this->showWidget($this->servers);
+			$this->lastSent = time();
+		}
+	}
 
-        try {
-            $fh = fopen($filename, "w", 0, stream_context_create(array('ftp' => array('overwrite' => true))));
-        } catch (\Exception $ex) {
-            $fh = false;
-        }
-        while ($fh === false) {
-            if ($tries > 40) {
-                break;
-            }
-            $tries++;
-            try {
-                $fh = fopen($filename, "w", 0, $this->stream_context);
-            } catch (\Exception $ex) {
-                $fh = false;
-            }
-        }
-        if ($tries >= 40) {
-            $this->console('[server_neighborhood] Could not open file " ' . $filename . '" to store the Server Information!');
-            return false;
-        } else {
-            fwrite($fh, $data);
-            fclose($fh);
-        }
-        return true;
-    }
+	public function onTick()
+	{
+		parent::onTick();
+		if ((time() - $this->lastSent) > Config::getInstance()->refresh_interval) {
+			$this->saveData($this->server->createXML($this->connection, $this->storage));
+			$this->lastSent = time();
 
-    public function getData()
-    {
+			if (sizeof($this->storage->players) > 0 || sizeof($this->storage->spectators) > 0) {
+				$this->getData();
+				$this->showWidget($this->servers);
+			}
+		}
+	}
 
-        $i = 0;
-        foreach ($this->config->servers as $serverPath) {
+	public function saveData($data)
+	{
+		$filename = Config::getInstance()->storing_path . $this->storage->serverLogin . '_serverinfo.xml';
 
-            try {
-                $data = file_get_contents($serverPath);
+		// Opens the file for writing and truncates it to zero length
+		// Try min. 40 times to open if it fails (write block)
+		$tries = 0;
 
-                if (isset($this->servers[$i])) {
-                    $server = $this->servers[$i];
-                } else {
-                    $server            = new Server();
-                    $this->servers[$i] = $server;
-                }
-                $server->setServer_data(simplexml_load_string($data));
-                $i++;
-            } catch (\Exception $ex) {
-                //\ManiaLive\Utilities\Console::println('[server_neighborhood] Error loading : '.$server_xml->path);
-            }
-        }
-    }
+		try {
+			$fh = fopen($filename, "w", 0, stream_context_create(array('ftp' => array('overwrite' => true))));
+		} catch (\Exception $ex) {
+			$fh = false;
+		}
+		while ($fh === false) {
+			if ($tries > 40) {
+				break;
+			}
+			$tries++;
+			try {
+				$fh = fopen($filename, "w", 0, $this->stream_context);
+			} catch (\Exception $ex) {
+				$fh = false;
+			}
+		}
+		if ($tries >= 40) {
+			$this->console('[server_neighborhood] Could not open file " ' . $filename . '" to store the Server Information!');
+			return false;
+		}
+		else {
+			fwrite($fh, $data);
+			fclose($fh);
+		}
+		return true;
+	}
 
-    public function showWidget($servers)
-    {
-        $windows = ServerPanel::GetAll();
-        if (empty($windows)) {
-            $window    = ServerPanel::Create(null);
-            $windows[] = $window;
-            $window->setSize(33, 25);
-            $window->setPosZ(50);
-            $window->setPosition(-193,72);
-            $window->update($servers);
-            $window->show();
-        }else
-            foreach ($windows as $window) {
-                $window->redraw();
-            }
-    }
+	public function getData()
+	{
 
-    public function exp_onUnload()
-    {
-        ServerPanel::EraseAll();
-        ServerList::EraseAll();
-        PlayerList::EraseAll();
-    }
+		$i = 0;
+		foreach ($this->config->servers as $serverPath) {
 
+			try {
+				$data = file_get_contents($serverPath);
+
+				if (isset($this->servers[$i])) {
+					$server = $this->servers[$i];
+				}
+				else {
+					$server = new Server();
+					$this->servers[$i] = $server;
+				}
+				$server->setServer_data(simplexml_load_string($data));
+				$i++;
+			} catch (\Exception $ex) {
+				//\ManiaLive\Utilities\Console::println('[server_neighborhood] Error loading : '.$server_xml->path);
+			}
+		}
+	}
+
+	public function showWidget($servers)
+	{
+		$windows = ServerPanel::GetAll();
+		if (empty($windows)) {
+			$window = ServerPanel::Create(null);
+			$windows[] = $window;
+			$window->setSize(33, 25);
+			$window->setPosZ(50);
+			$window->setPosition(-160, -20);
+			$window->update($servers);
+			$window->show();
+		}
+		else {
+			foreach ($windows as $window) {
+				$window->redraw();
+			}
+		}
+	}
+
+	public function exp_onUnload()
+	{
+		ServerPanel::EraseAll();
+		ServerList::EraseAll();
+		PlayerList::EraseAll();
+	}
 
 }
 
