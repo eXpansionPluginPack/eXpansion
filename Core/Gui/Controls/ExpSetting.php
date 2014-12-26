@@ -97,7 +97,7 @@ class ExpSetting extends Control
 				$this->addComponent($this->input);
 			}
 			else if ($var instanceof ColorCode) {
-				$this->input = new \ManiaLivePlugins\eXpansion\Gui\Elements\ColorChooser($var->getName());
+				$this->input = new \ManiaLivePlugins\eXpansion\Gui\Elements\ColorChooser($var->getName(), 35, $var->getUseFullHex(), $var->getUsePrefix());
 				$this->input->setColor($var->getRawValue());
 				$this->input->setPosY(-2);
 				$this->input->setPosX(7);

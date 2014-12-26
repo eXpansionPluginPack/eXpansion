@@ -1,8 +1,4 @@
 //// ColorScript.txt
-/**
- *	Multi Clans library
- *	Handle more than 2 clans in a game
- */
 
 #Const Version		"2013-11-29"
 #Const ScriptName	"Color.Script.txt"
@@ -335,7 +331,7 @@ Real HexToDec(Text _Hex) {
         return dec / 15.;
 }
 
-Vec3 convert(Text _Hex) {
+Vec3 convert3(Text _Hex) {
     declare x = TextLib::SubString(_Hex, 0,1); 
     declare y = TextLib::SubString(_Hex, 1,1);
     declare z = TextLib::SubString(_Hex, 2,1);
@@ -343,6 +339,20 @@ Vec3 convert(Text _Hex) {
     return <HexToDec(x),HexToDec(y),HexToDec(z)>;
 }   
 
+Vec3 convert6(Text _Hex) {
+    declare x = TextLib::SubString(_Hex, 0,2); 
+    declare y = TextLib::SubString(_Hex, 2,2);
+    declare z = TextLib::SubString(_Hex, 4,2);
+
+    return <HexToDec(x),HexToDec(y),HexToDec(z)>;
+}   
+
+Vec3 convert(Text _Hex) {
+    if (TextLib::Length(_Hex) <= 4) {
+        return convert3(_Hex);
+    }
+    return convert6(_Hex);
+}
 
 Vec3 exp_RgbToHsv(Vec3 _RGB) {
         
@@ -430,6 +440,9 @@ declare CMlQuad color_cancel;
 declare CMlEntry color_h;
 declare CMlEntry color_s;
 declare CMlEntry color_v;
+declare CMlEntry color_settings;
+declare Boolean usePrefix;
+declare Boolean useFullHex;
 declare Vec3 color;
 
 
@@ -448,6 +461,20 @@ Void setActive(Integer id) {
         color_h <=>(Page.GetFirstChild("h_"^id) as CMlEntry);
         color_s <=> (Page.GetFirstChild("s_"^id) as CMlEntry);
         color_v <=>(Page.GetFirstChild("v_"^id) as CMlEntry);
+
+        color_settings <=> (Page.GetFirstChild("settings_"^id) as CMlEntry);
+        declare Text[] settings = TextLib::Split(",", color_settings.Value);    
+
+        log(settings);
+
+        usePrefix = False;
+        if (settings[0] == "1") {
+            usePrefix = True;
+        }       
+        useFullHex = False;
+        if (settings[1] == "6") {
+            useFullHex = True;
+        }
 }
 
 Void show() {
@@ -471,4 +498,10 @@ Void hide() {
       }
 }
 
+Text pad(Text _value) {
+    if (TextLib::Length(_value) == 1) {
+        return "0" ^ _value;
+    }
+    return "" ^ _value;
+}
 

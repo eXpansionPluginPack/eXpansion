@@ -61,10 +61,23 @@ foreach (Event in PendingEvents) {
 
         if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == color_ok.ControlId ) {
             declare prefix = "";
+
             if (usePrefix) {
                 prefix = "$";
             }
-            color_output.Value = prefix ^ TextLib::ColorToText(HsvToRgb(color));
+            declare Text outColor = "";
+            if (useFullHex) {
+                declare rgbColor = HsvToRgb(color);
+                declare Integer r = MathLib::NearestInteger(rgbColor.X*255);
+                declare Integer g = MathLib::NearestInteger(rgbColor.Y*255);
+                declare Integer b = MathLib::NearestInteger(rgbColor.Z*255);
+
+                outColor = pad(exp_DecToHex(r)) ^ pad(exp_DecToHex(g)) ^ pad(exp_DecToHex(b));
+            }  
+            else {
+                outColor = TextLib::ColorToText(HsvToRgb(color));
+            }
+            color_output.Value = prefix ^ outColor;
             hide(); 
         }
 
@@ -119,8 +132,7 @@ if (MouseLeftButton && overColorElement) {
             if (y > 0.) {
                 y = 0.;
             }
-           
-            log ("x: " ^ x  ^ " y: " ^ y);
+
             color_selectionBox.RelativePosition.X = x;
             color_selectionBox.RelativePosition.Y = y;
 
