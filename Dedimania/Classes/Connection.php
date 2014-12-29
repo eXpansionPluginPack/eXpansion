@@ -112,7 +112,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         if (empty($config->code))
             throw new \Exception("[Dedimania] Server code is not configured! \n");
 
-        if ($serverInfo->login != $config->login)
+        if (strtolower($serverInfo->login) != strtolower($config->login))
             throw new \Exception("[Dedimania] Your dedicated server login differs from configured server login, please check your configuration.");
 
         if ($packmask == "") {
@@ -139,7 +139,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
         $args = array(array(
             "Game" => "TM2",
-            "Login" => $config->login,
+            "Login" => strtolower($config->login),
             "Code" => $config->code,
             "Tool" => "eXpansion",
             "Version" => \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION,

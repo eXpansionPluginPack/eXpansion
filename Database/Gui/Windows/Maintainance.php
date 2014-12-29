@@ -222,7 +222,8 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	function syncCheckboxItem(&$item, $args)
 	{
-		foreach ($item->getComponents() as &$component) {
+		$components = $item->getComponents();
+		foreach ($components as &$component) {
 			if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted) {
 				$component->setArgs($args);
 			}
