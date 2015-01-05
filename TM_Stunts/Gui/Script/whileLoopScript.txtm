@@ -1,0 +1,16 @@
+if (InputPlayer == Null) continue;
+
+if (! Hidden) {    
+    if( (Now - Anim_StartTime) >= 3500 ) {
+        Hidden = True;
+        Anim_StartTime = Now;   
+    } else {
+    declare i = AL::Ease("QuadOut", (Now - Anim_StartTime) * 1., 0., 1., Anim_Duration * 1.);
+    Label.Opacity = i;
+    Label.RelativeScale = ( (1 - i) + 1)* 1.25;
+    }
+} else {
+     declare i = AL::Ease("QuadOut", (Now - Anim_StartTime) * 1., 0., 1., Anim_Duration2 * 1.);
+     Label.Opacity = 1 - i;   
+     Label.RelativeScale = 1 - i;  
+}

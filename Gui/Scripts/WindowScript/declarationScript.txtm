@@ -9,10 +9,12 @@ $startPosY = intval($win->getSizeY() / 2) . ".0";
 <script><!--
 #Include "MathLib" as MathLib
 #Include "TextLib" as TextLib
+#Include "AnimLib" as AnimLib
 
 // do not remvove, this is for animation and draggable libraries
 #Include "MathLib" as ML
 #Include "TextLib" as TL
+#Include "AnimLib" as AL
 
 //Function definitions
 <?php echo $this->scriptLib ?>

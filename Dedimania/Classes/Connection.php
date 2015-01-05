@@ -130,7 +130,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
                 $packmask = "Valley";
                 break;
             case "Trackmania_2@nadeolabs":
-                $packmask = "Trackmania_2@nadeolabs";
+                $packmask = "United";
                 break;
             default:
                 $packmask = "";
