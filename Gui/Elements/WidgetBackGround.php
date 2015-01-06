@@ -48,7 +48,7 @@ class WidgetBackGround extends \ManiaLive\Gui\Control
 		$this->bgborder->setPosition($config->style_widget_bgXOffset, $config->style_widget_bgYOffset);
 
 
-		$this->addComponent($this->bgborder);
+	//	$this->addComponent($this->bgborder);
 		$this->addComponent($this->bg);
 
 
@@ -86,13 +86,13 @@ class WidgetBackGround extends \ManiaLive\Gui\Control
 	public function setHidden($hidden)
 	{
 		$this->bg->setHidden($hidden);
-		$this->bgborder->setHidden($hidden);
+	//	$this->bgborder->setHidden($hidden);
 	}
 
 	public function setId($id)
 	{
 		$this->bg->setId($id);
-		$this->bgborder->setId($id);
+		//$this->bgborder->setId($id);
 	}
 
 }

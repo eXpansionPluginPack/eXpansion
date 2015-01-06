@@ -29,6 +29,17 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(array(0));
 		$this->registerVariable($var);
 
+		$var = new Int("bufferSize", "Map Buffer size", $config, false, false);
+		$var->setGroup("Buffers");
+		$var->setDefaultValue(5);
+		$this->registerVariable($var);
+
+
+		$var = new Int("historySize", "Map History size", $config, false, false);
+		$var->setGroup("Buffers");
+		$var->setDefaultValue(7);
+		$this->registerVariable($var);
+
 		$var = new Boolean("showNextMapWidget", "Show next map widget", $config, false, false);
 		$var->setGroup("Widgets");
 		$var->setDefaultValue(true);
@@ -38,6 +49,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("Chat Messages");
 		$var->setDefaultValue(true);
 		$this->registerVariable($var);
+
+
 	}
 
 }
