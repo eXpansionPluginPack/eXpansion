@@ -11,7 +11,7 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $buttonActive = "http://reaby.kapsi.fi/ml/button2_active.png";
 
-	public $uiTextureBase = "http://reaby.kapsi.fi/ml/ui2/";
+	public $uiTextureBase = "http://reaby.kapsi.fi/ml/ui3/";
 
 	public $uiTextures_Window = array("top_left.png", "top_center.png", "top_left.png", "left.png", "bg.png", "right.png", "bottom_left.png", "bottom_center.png", "bottom_right.png");
 
@@ -37,9 +37,15 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $uiTextures_listitem = array("normal_left.png", "normal_center.png", "normal_right.png", "odd_left.png", "odd_center.png", "odd_right.png", "even_left.png", "even_center.png", "even_right.png");
 
-	public $windowTitleColor = "000d";
+	public $windowTitleColor = "000";
+	
+	public $windowTitleBackgroundColor = "aaa";
+	
+	public $windowBackgroundColor = "2b3746";
 
-	public $buttonTitleColor = "fffd";
+	public $buttonTitleColor = "e4f6fe";
+
+	public $buttonBackgroundColor = "42a5fa";
 
 	public $style_list_bgColor = array('aaa8', 'eee8');
 
@@ -75,15 +81,15 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $style_widget_bgSubStyle = 'BgRacePlayerName'; // BgList
 
-	public $style_widget_bgColorize = '000'; // BgList
+	public $style_widget_bgColorize = '2b3746'; // BgList
 
-	public $style_widget_bgOpacity = 0.9;
+	public $style_widget_bgOpacity = 0.8;
 
 	public $style_widget_bgXOffset = 0;
 
 	public $style_widget_bgYOffset = 0;
 
-	public $style_widget_title_bgColorize = '3af'; // BgList
+	public $style_widget_title_bgColorize = '42a5fa'; // BgList
 
 	public $style_widget_title_bgOpacity = 0.6;
 

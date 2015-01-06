@@ -22,7 +22,8 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     /** @var Config */
     private $config;
-
+	private $panelSizeX = 42;
+	
     public function exp_onLoad()
     {
 
@@ -48,7 +49,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             //Gui\Widgets\LivePanel::EraseAll();
             $panelMain = Gui\Widgets\LivePanel::Create($login);
             $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-            $panelMain->setSizeX(40);
+            $panelMain->setSizeX($this->panelSizeX);
             $this->widgetIds["LivePanel"] = $panelMain;
             $this->widgetIds["LivePanel"]->update();
             $this->widgetIds["LivePanel"]->show();
@@ -63,7 +64,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             $panelScore = Gui\Widgets\LivePanel2::Create($login);
             $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
             $panelScore->setVisibleLayer("scorestable");
-            $panelScore->setSizeX(40);
+            $panelScore->setSizeX($this->panelSizeX);
             $this->widgetIds["LivePanel2"] = $panelScore;
             $this->widgetIds["LivePanel2"]->update();
             $this->widgetIds["LivePanel2"]->show();

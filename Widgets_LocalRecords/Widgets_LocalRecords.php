@@ -21,7 +21,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     /** @var Config */
     private $config;
-
+	private $panelSizeX = 42;
     public function exp_onInit(){
         $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }
@@ -59,7 +59,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             if ($login == null) {
                 //Gui\Widgets\LocalPanel::EraseAll();
                 $panelMain = Gui\Widgets\LocalPanel::Create($login);
-                $panelMain->setSizeX(40);
+                $panelMain->setSizeX($this->panelSizeX);
                 $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
                 $this->widgetIds["LocalPanel"] = $panelMain;
                 $this->widgetIds["LocalPanel"]->update();
@@ -73,7 +73,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             if ($login == null) {
                 //Gui\Widgets\LocalPanel2::EraseAll();
                 $panelScore = Gui\Widgets\LocalPanel2::Create($login);
-                $panelScore->setSizeX(40);
+                $panelScore->setSizeX($this->panelSizeX);
                 $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
                 $panelScore->setVisibleLayer("scorestable");
 

@@ -75,6 +75,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_bg->setId("MainWindow");
 		$this->_bg->setImage($windowUrl . "bg.png", true);
 		$this->_bg->setScriptEvents(true);
+		$this->_bg->setColorize($config->windowBackgroundColor);
 		$this->_windowFrame->addComponent($this->_bg);
 
 		$this->_topleft = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
@@ -82,6 +83,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_topleft->setScriptEvents(true);
 		$this->_topleft->setId("MainWindow");
 		$this->_topleft->setImage($windowUrl . "top_left.png", true);
+		$this->_topleft->setColorize($config->windowTitleBackgroundColor);
 		$this->_windowFrame->addComponent($this->_topleft);
 
 		$this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->element);
@@ -89,6 +91,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_titlebar->setAlign("left", "bottom");
 		$this->_titlebar->setImage($windowUrl . "top_center.png", true);
 		$this->_titlebar->setScriptEvents(true);
+		$this->_titlebar->setColorize($config->windowTitleBackgroundColor);
 		$this->_windowFrame->addComponent($this->_titlebar);
 
 		$this->_title = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(60, 4);
@@ -97,7 +100,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_title->setStyle("TextRaceMessageBig");
 		$this->_title->setTextColor($config->windowTitleColor);
 		$this->_title->setTextSize(1);
-		$this->_title->setTextEmboss();
+		//$this->_title->setTextEmboss();
 		$this->_windowFrame->addComponent($this->_title);
 
 
@@ -105,6 +108,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_topright->setAlign("left", "bottom");
 		$this->_topright->setImage($windowUrl . "top_right.png", true);
 		$this->_topright->setScriptEvents(true);
+		$this->_topright->setColorize($config->windowTitleBackgroundColor);
 		$this->_windowFrame->addComponent($this->_topright);
 
 // center		
@@ -112,6 +116,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_right->setAlign("left", "top");
 		$this->_right->setImage($windowUrl . "right.png", true);
 		$this->_right->setScriptEvents(true);
+		$this->_right->setColorize($config->windowBackgroundColor);
 		$this->_right->setId("MainWindow");
 
 		$this->_windowFrame->addComponent($this->_right);
@@ -122,6 +127,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_left->setImage($windowUrl . "left.png", true);
 		$this->_left->setScriptEvents(true);
 		$this->_left->setId("MainWindow");
+		$this->_left->setColorize($config->windowBackgroundColor);
 		$this->_windowFrame->addComponent($this->_left);
 // bottom
 
@@ -131,6 +137,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_bottomleft->setAlign("right", "top");
 		$this->_bottomleft->setImage($windowUrl . "bottom_left.png", true);
 		$this->_bottomleft->setScriptEvents(true);
+		$this->_bottomleft->setColorize($config->windowBackgroundColor);
 		$this->_windowFrame->addComponent($this->_bottomleft);
 
 		$this->_bottomcenter = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
@@ -138,12 +145,14 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_bottomcenter->setImage($windowUrl . "bottom_center.png", true);
 		$this->_bottomcenter->setScriptEvents(true);
 		$this->_bottomcenter->setId("MainWindow");
+		$this->_bottomcenter->setColorize($config->windowBackgroundColor);
 		$this->_windowFrame->addComponent($this->_bottomcenter);
 
 		$this->_bottomright = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_bottomright->setAlign("left", "top");
 		$this->_bottomright->setImage($windowUrl . "bottom_right.png", true);
 		$this->_bottomright->setScriptEvents(true);
+		$this->_bottomright->setColorize($config->windowBackgroundColor);
 		$this->_windowFrame->addComponent($this->_bottomright);
 
 

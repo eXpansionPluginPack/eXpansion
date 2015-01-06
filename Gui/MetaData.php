@@ -32,7 +32,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$var = new String("uiTextureBase", "Texture base for ui ", $config);
 		$var->setGroup("GUI");
-		$var->setDefaultValue("http://reaby.kapsi.fi/ml/ui2/");
+		$var->setDefaultValue("http://reaby.kapsi.fi/ml/ui3/");
 		$this->registerVariable($var);
 
 		$var = new ColorCode("windowTitleColor", "Window Title Text color", $config);
@@ -40,15 +40,42 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("000a");
+		$var->setDefaultValue("000");
 		$this->registerVariable($var);
+
+		$var = new ColorCode("windowTitleBackgroundColor", "Window Title Background color", $config);
+		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("aaa");
+		$this->registerVariable($var);
+
+
+		$var = new ColorCode("windowBackgroundColor", "Window Background color", $config);
+		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("2b3746");
+		$this->registerVariable($var);
+
 
 		$var = new ColorCode("buttonTitleColor", "Button Text color", $config);
 		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("000");
+		$var->setDefaultValue("e4f6fe");
+		$this->registerVariable($var);
+
+
+		$var = new ColorCode("buttonBackgroundColor", "Button Background color", $config);
+		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("42a5fa");
 		$this->registerVariable($var);
 
 
@@ -74,21 +101,28 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("000");
+		$var->setDefaultValue("2b3746");
 		$this->registerVariable($var);
 
 		$var = new BoundedFloat("style_widget_bgOpacity", "Widget Background Opacity", $config);
 		$var->setGroup("GUI");
 		$var->setMin(0.0);
 		$var->setMax(1.0);
-		$var->setDefaultValue(1.0);
+		$var->setDefaultValue(0.75);
 		$this->registerVariable($var);
 
-		$var = new ColorCode("style_widget_title_bgColorize", "Widget Titlebar color", $config);
+		$var = new ColorCode("style_widget_title_bgColorize", "Widget Titlebar Background color", $config);
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("3af");
+		$var->setDefaultValue("42a5fa");
+		$this->registerVariable($var);
+
+		$var = new ColorCode("style_widget_title_lbColor", "Widget Titlebar Text color", $config);
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("fff");
 		$this->registerVariable($var);
 
 		$var = new String("style_widget_title_lbStyle", "Widget Titlebar font", $config);

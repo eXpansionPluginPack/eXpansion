@@ -30,7 +30,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
     /** @var Config */
     private $config;
-
+	private $panelSizeX = 42;
     public function exp_onLoad()
     {
         if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania') || $this->isPluginLoaded(
@@ -88,7 +88,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
                     //Gui\Widgets\DediPanel::EraseAll();
                     $panelMain = Gui\Widgets\DediPanel::Create($login);
                     $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-                    $panelMain->setSizeX(40);
+                    $panelMain->setSizeX($this->panelSizeX);
                     $this->widgetIds["DediPanel"] = $panelMain;
                     $this->widgetIds["DediPanel"]->update();
                     $this->widgetIds["DediPanel"]->show();
@@ -103,7 +103,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
                     $panelScore = Gui\Widgets\DediPanel2::Create($login);
                     $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
                     $panelScore->setVisibleLayer("scorestable");
-                    $panelScore->setSizeX(40);
+                    $panelScore->setSizeX($this->panelSizeX);
                     $this->widgetIds["DediPanel2"] = $panelScore;
                     $this->widgetIds["DediPanel2"]->update();
                     $this->widgetIds["DediPanel2"]->show();

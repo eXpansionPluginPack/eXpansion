@@ -71,7 +71,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 		$this->backGround->setId("Icon_" . $this->buttonId);
 		$this->backGround->setScriptEvents();
 		
-		$this->backGround->setColorize("2af");
+		$this->backGround->setColorize($config->buttonBackgroundColor);
 		//	$this->backGround->setAttribute("class", "isTabIndex");
 		$this->addComponent($this->backGround);
 
