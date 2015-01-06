@@ -297,6 +297,7 @@ class Maps extends ExpPlugin
 
 	public function onEndMatch($rankings, $winnerTeamOrMap)
 	{
+		$this->config = Config::getInstance();
 		if ($this->wasWarmup)
 			return;
 
@@ -513,6 +514,8 @@ class Maps extends ExpPlugin
 	 */
 	public function checkQueuMap($login, Map $map, $sendMessages = false)
 	{
+		$this->config = Config::getInstance();
+		
 		if ($this->storage->currentMap->uId == $map->uId) {
 			$msg = exp_getMessage('#admin_error# $iThis map is currently playing...');
 			if ($sendMessages)
