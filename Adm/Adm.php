@@ -87,16 +87,12 @@ class Adm extends ExpPlugin
 			return;
 
 		if (AdminGroups::isInList($login)) {
+			echo "$login is in the list!";
 			$widget = AdminPanel::Create($login);
 			$widget->setSize(40, 7);
 			$widget->setDisableAxis("x");
-			$widget->show();
+			$widget->show($login);
 		}
-	}
-
-	public function onPlayerDisconnect($login, $reason = null)
-	{
-		AdminPanel::Erase($login);
 	}
 
 	public function serverOptions($login)
@@ -290,7 +286,7 @@ class Adm extends ExpPlugin
 
 			$var = \ManiaLivePlugins\eXpansion\Core\MetaData::getInstance()->getVariable('roundsPoints');
 			$var->setRawValue($intPoints);
-			
+
 			\ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance()->check();
 
 
