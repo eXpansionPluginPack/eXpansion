@@ -87,7 +87,6 @@ class Adm extends ExpPlugin
 			return;
 
 		if (AdminGroups::isInList($login)) {
-			echo "$login is in the list!";
 			$widget = AdminPanel::Create($login);
 			$widget->setSize(40, 7);
 			$widget->setDisableAxis("x");

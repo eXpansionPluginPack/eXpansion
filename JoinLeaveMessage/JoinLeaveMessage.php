@@ -167,7 +167,7 @@ class JoinLeaveMessage extends ExpPlugin
 	{
 		$path = str_replace("World|", "", $player->path);
 		$country = explode("|", $path);
-		if (sizeof($country) < 0) {
+		if (sizeof($country) > 0) {
 			$country = $country[1];
 		}
 		else {
