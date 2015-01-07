@@ -65,16 +65,25 @@ class Scoretable
     </properties>
      <columns>	
 		<column id="LibST_TMBestTime" action="create">
-			<width>8.</width>
+			<width>12.</width>
 			<defaultvalue>--:--.---</defaultvalue>
 			<textalign>right</textalign>
-		</column>		
+		</column>
+		<column id="LibST_Avatar" action="create">
+			<width>6.</width>
+			<textalign>center</textalign>
+		</column>
 		<column id="LibST_Name" action="create">			
-			<width>24.</width>
+			<width>32.</width>
 			<textalign>left</textalign>
-		</column>		
+		</column>
+		<column id="LibST_ManiaStars" action="create">
+			<width>3.</width>
+			<textalign>center</textalign>
+		</column>
 		<column id="LibST_Tools" action="create">			
-			<width>4.</width>
+			<width>3.</width>
+			<textalign>right</textalign>
 		</column>
 	 </columns>
 
