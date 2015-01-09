@@ -93,6 +93,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 		private $_isReady = false;
 
+		private $_scriptEventsEnabled = false;
+
 		/**
 		 *
 		 * @var MetaData
@@ -205,8 +207,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 			if ($callback === false) {
 				throw new Exception('$this->enableScriptEvents($callback) needs a value for whitelisting...');
 			}
+			$this->enableDedicatedEvents(ServerEvent::ON_MODE_SCRIPT_CALLBACK);
+			$this->_scriptEventsEnabled = true;
 			Core::enableScriptCallback($callback);
-		//	Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
+			//	Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
 		}
 
 		public final function onLoad()
@@ -254,9 +258,9 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 			// to save resources disable triggering scriptmode events from all plugins automatically
 			// you have to use $this->enableScriptCallbacks(array("callbackname1","callbackname2") to enable them!
-			/*if (get_called_class() != "ManiaLivePlugins\\eXpansion\\Core\\Core") {
+			if ($this->_scriptEventsEnabled === false) {
 				$this->disableDedicatedEvents(ServerEvent::ON_MODE_SCRIPT_CALLBACK);
-			}*/
+			}
 		}
 
 		/**
@@ -275,8 +279,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 * @param string|array $param2
 		 */
 		final public function onModeScriptCallback($param1, $param2)
-		{
-			echo "rok";
+		{					
 			$out = array();
 			foreach ($param2 as $value) {
 				if (is_numeric($value)) {
@@ -292,8 +295,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 					$out[] = $value;
 				}
 			}
-			
-			if (method_exists($this, $param1)) {				
+
+			if (method_exists($this, $param1)) {
 				call_user_func_array(array($this, $param1), $out);
 			}
 			else {
