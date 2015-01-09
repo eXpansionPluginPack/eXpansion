@@ -100,6 +100,12 @@ class Core extends types\ExpPlugin
 	/** @var  Analytics */
 	private $analytics;
 
+	private static $availableCallbacks = array();
+
+	private static $enabledCallbacks = array();
+
+	public static $optimizeEnabled = false;
+
 	/**
 	 * Declares what is necessary for expansion ro run.
 	 */
@@ -129,8 +135,6 @@ class Core extends types\ExpPlugin
 		//Loading the settings
 		$this->configManager->loadSettings();
 
-		$this->connection;
-
 		self::$core = $this;
 	}
 
@@ -149,17 +153,6 @@ class Core extends types\ExpPlugin
 
 		//Started paralel download utility, thanks to xymph and other devs to have coded it. it rocks
 		DataAccess::getInstance()->start();
-
-		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
-			if ($this->expStorage->version->titleId == 'SMStormElite@nadeolabs') {
-				//Elite needs special dispatcher, it is stupid.
-				$this->scriptDispatcher = new EliteEventDispatcher($this->connection);
-			}
-			else {
-				//Normak script dispatcher
-				$this->scriptDispatcher = new ScriptEventDispatcher($this->connection);
-			}
-		}
 
 		$expansion = <<<'EOT'
    
@@ -264,6 +257,16 @@ EOT;
 		if (DEBUG) {
 			$this->connection->chatSendServerMessage('$f00$w DEBUG MODE enabled');
 		}
+
+		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
+			try {
+				$this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => true));
+			} catch (Exception $ex) {
+				Helper::log("[Core] script mode running, but can't enable 'S_UseScriptCallbacks'... perhaps non-nadeo script running ?");
+			}
+			$this->connection->triggerModeScriptEvent("LibXmlRpc_UnblockAllCallbacks", "");
+			$this->enableScriptEvents("LibXmlRpc_Callbacks");
+		}
 	}
 
 	/**
@@ -335,6 +338,17 @@ EOT;
 		else {
 			$this->analytics->disable();
 		}
+
+		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
+			$this->connection->triggerModeScriptEvent("LibXmlRpc_ListCallbacks", "");
+		}
+	}
+
+	public function LibXmlRpc_Callbacks()
+	{		
+		$params = func_get_args();
+		self::$availableCallbacks = $params;
+		self::optimizeScriptCallbacks();
 	}
 
 	public function onSettingsChanged(types\config\Variable $var)
@@ -355,6 +369,37 @@ EOT;
 				else {
 					$this->analytics->disable();
 				}
+		}
+	}
+
+	/**
+	 *  optimizes the script callbacks
+	 */
+	static public function optimizeScriptCallbacks()
+	{
+		$connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();		
+		if (sizeof(self::$enabledCallbacks) > 0) {
+			$connection->triggerModeScriptEvent("LibXmlRpc_BlockAllCallbacks", "");
+			foreach (self::$enabledCallbacks as $callback) {				
+				$connection->triggerModeScriptEvent("LibXmlRpc_UnblockCallback", $callback);
+			}
+		}
+	}
+
+	/**
+	 * enables callback from block
+	 * @param array|string $callback
+	 */
+	static public function enableScriptCallback($callback)
+	{
+		if (is_string($callback)) {
+			self::$enabledCallbacks[$callback] = $callback;
+		}
+
+		if (is_array($callback)) {
+			foreach ($callback as $value) {
+				self::$enabledCallbacks[$value] = $value;
+			}
 		}
 	}
 
@@ -555,65 +600,65 @@ EOT;
 			return;
 
 		try {
-		$path = Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile;
-		if (!file_exists($path))
-			return;
-		/** @var SimpleXMLElement */
-		$oldXml = simplexml_load_file($path);
+			$path = Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile;
+			if (!file_exists($path))
+				return;
+			/** @var SimpleXMLElement */
+			$oldXml = simplexml_load_file($path);
 
-		$adapter = array("name" => "name",
-			"password" => "password",
-			"comment" => "comment",
-			"passwordForSpectator" => "password_spectator",
-			"hideServer" => "hide_server",
-			"nextMaxPlayers" => "max_players",
-			"nextMaxSpectatos" => "max_spectators",
-			"isP2PUpload" => "enable_p2p_upload",
-			"isP2PDownload" => "enable_p2p_download",
-			"nextLadderMode" => "ladder_mode",
-			//	"ladderServerLimitMax" => "ladder_serverlimit_max",
-			//	"ladderServerLimitMin" => "ladder_serverlimit_min",
-			"nextCallVoteTimeOut" => "callvote_timeout",
-			"callVoteRatio" => "callvote_ratio",
-			"allowMapDownload" => "allow_map_download",
-			"autoSaveReplays" => "autosave_replays",
-			"autoSaveValidationReplays" => "autosave_validation_replays",
-			"refereePassword" => "referee_password",
-			"refereeMode" => "referee_validation_mode",
-			"disableHorns" => "disable_horns",
-			"clientInputsMaxLatency" => "clientinputs_maxlatency",
-			"keepPlayerSlots" => "keep_player_slots"
-		);
+			$adapter = array("name" => "name",
+				"password" => "password",
+				"comment" => "comment",
+				"passwordForSpectator" => "password_spectator",
+				"hideServer" => "hide_server",
+				"nextMaxPlayers" => "max_players",
+				"nextMaxSpectatos" => "max_spectators",
+				"isP2PUpload" => "enable_p2p_upload",
+				"isP2PDownload" => "enable_p2p_download",
+				"nextLadderMode" => "ladder_mode",
+				//	"ladderServerLimitMax" => "ladder_serverlimit_max",
+				//	"ladderServerLimitMin" => "ladder_serverlimit_min",
+				"nextCallVoteTimeOut" => "callvote_timeout",
+				"callVoteRatio" => "callvote_ratio",
+				"allowMapDownload" => "allow_map_download",
+				"autoSaveReplays" => "autosave_replays",
+				"autoSaveValidationReplays" => "autosave_validation_replays",
+				"refereePassword" => "referee_password",
+				"refereeMode" => "referee_validation_mode",
+				"disableHorns" => "disable_horns",
+				"clientInputsMaxLatency" => "clientinputs_maxlatency",
+				"keepPlayerSlots" => "keep_player_slots"
+			);
 
-		foreach ($new as $key => $value) {
+			foreach ($new as $key => $value) {
 
-			$search = $key;
-			if (array_key_exists($key, $adapter)) {
-				$search = $adapter[$key];
+				$search = $key;
+				if (array_key_exists($key, $adapter)) {
+					$search = $adapter[$key];
+				}
+				else
+					continue;
+
+				//			echo $key . " -> " . $search . "\n";
+
+				$out = $new->{$key};
+				if (is_bool($value)) {
+					$out = "False";
+					if ($value)
+						$out = "True";
+				}
+
+
+				$oldXml->server_options->{$search}[0] = $out;
 			}
-			else
-				continue;
 
-			echo $key . " -> " . $search . "\n";
-
-			$out = $new->{$key};
-			if (is_bool($value)) {
-				$out = "False";
-				if ($value)
-					$out = "True";
-			}
-
-
-			$oldXml->server_options->{$search}[0] = $out;
+			Helper::log('[Core]Saving server settings to : ' . $path);
+			$xml = $oldXml->asXML();
+			file_put_contents($path, $xml);
+		} catch (\Exception $ex) {
+			//  print_r($ex);
+			$this->console("[Core]Error writing ServerSettings : " . $path . " - " . $ex->getMessage());
 		}
-
-		Helper::log('[Core]Saving server settings to : ' . $path);
-		$xml = $oldXml->asXML();
-		file_put_contents($path, $xml);
-		 } catch (\Exception $ex) {
-		//  print_r($ex);
-		  $this->console("[Core]Error writing ServerSettings : " . $path . " - " . $ex->getMessage());
-		  } 
 	}
 
 	/**

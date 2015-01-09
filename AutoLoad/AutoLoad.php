@@ -82,7 +82,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			ConfigManager::getInstance()->registerValueChange($this->getMetaData()->getVariable('plugins'));
 			ConfigManager::getInstance()->check();
 		}
-		$this->configPlugins = $this->config->plugins;
+		$this->configPlugins = $this->config->plugins;			
 	}
 
 	public function onConfigFileLoaded()

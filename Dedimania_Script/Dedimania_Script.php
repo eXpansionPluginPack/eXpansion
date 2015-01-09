@@ -16,10 +16,10 @@ class Dedimania_Script extends DedimaniaAbstract
 
 	private $endmatchTriggered = false;
 
-	public function exp_onReady()
+	public function exp_onLoad()
 	{
-		parent::exp_onReady();
-		$this->enableScriptEvents();
+		parent::exp_onLoad();
+		$this->enableScriptEvents(array("LibXmlRpc_BeginMap", "LibXmlRpc_OnWayPoint", "LibXmlRpc_EndMatch"));
 	}
 
 	public function LibXmlRpc_BeginMap($number)
@@ -35,7 +35,7 @@ class Dedimania_Script extends DedimaniaAbstract
 	}
 
 	public function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
-	{
+	{		
 		if (!$this->running)
 			return;
 		if ($time == 0)
