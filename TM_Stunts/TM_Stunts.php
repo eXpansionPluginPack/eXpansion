@@ -40,7 +40,7 @@ class TM_Stunts extends ExpPlugin
 
 	public function exp_onReady()
 	{
-		//$this->enableTickerEvent();
+		$this->enableTickerEvent();
 		$this->stuntWindow = Gui\Widgets\StuntWidget::Create(null, false);
 		$this->stuntWindow->setSize(60, 12);
 		$this->stuntWindow->setPosition(-30, 58);
@@ -50,7 +50,7 @@ class TM_Stunts extends ExpPlugin
 	{
 		if ($this->counter % 10 == 0) {
 			$this->stuntWindow->setLabels("StuntName 180", "");
-			//	$this->stuntWindow->show("reaby");
+				$this->stuntWindow->show("reaby");
 		}
 
 		$this->counter++;
@@ -58,6 +58,8 @@ class TM_Stunts extends ExpPlugin
 
 	public function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump)
 	{
+		var_dump(func_get_args());
+
 		$stuntname = str_replace("::EStuntFigure::", "", $stuntname);
 
 		if ($angle || ($stuntname != "StraightJump" && $stuntname != "RespawnPenalty")) {

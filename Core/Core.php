@@ -135,6 +135,8 @@ class Core extends types\ExpPlugin
 		//Loading the settings
 		$this->configManager->loadSettings();
 
+		$this->connection;
+
 		self::$core = $this;
 	}
 
@@ -259,6 +261,7 @@ EOT;
 		}
 
 		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
+			$this->connection->triggerModeScriptEvent("LibXmlRpc_UnblockAllCallbacks", "");
 			try {
 				$this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => true));
 			} catch (Exception $ex) {
