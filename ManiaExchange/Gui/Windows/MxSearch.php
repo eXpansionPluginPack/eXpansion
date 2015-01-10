@@ -45,6 +45,8 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	private $header;
 
 	private $style;
+	
+	private $awards;
 
 	private $lenght;
 
@@ -84,8 +86,13 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 		$items = array("All", "15sec", "30sec", "45sec", "1min");
 		$this->lenght = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("length", $items);
-
 		$this->searchframe->addComponent($this->lenght);
+		
+		$items = array("All", "Awards Most", "Awards Least");
+		$this->awards = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("awards", $items);
+		$this->searchframe->addComponent($this->awards);
+
+
 
 		$spacer = new \ManiaLib\Gui\Elements\Quad();
 		$spacer->setSize(10, 4);
@@ -131,7 +138,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->mxPlugin = $plugin;
 	}
 
-	public function search($login, $trackname = "", $author = "", $style = null, $length = null)
+	public function search($login, $trackname = "", $author = "", $style = null, $length = null, $awards = null)
 	{
 		foreach ($this->items as $item)
 			$item->erase();
@@ -185,8 +192,16 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			if ($length != null) {
 				$out .= "&length=" . $length . "&lengthop=0";
 			}
-
-			$query .= '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . $out . '&mtype=All&priord=2&limit=100';
+			
+			$priory = "";
+			if ($awards  != NULL) {
+			$priory .= "&priord=9";
+			}
+			if ($awards  == NULL) {
+			$priory .= "&priord=8";
+			}
+			var_dump($priory);
+			$query .= '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . $out . '&mtype=All&secord=2'.$priory.'&limit=100';
 		}
 		/*
 		  $ch = curl_init($query);
@@ -208,11 +223,14 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		 */
 		$query = $query . "&" . \ManiaLivePlugins\eXpansion\ManiaExchange\ManiaExchange::$betakey;
 		$access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
+		var_dump($query);
 		$access->httpGet($query, Array($this, "xSearch"), null, "Manialive/eXpansion MXapi [search] ver 0.2", "application/json");
 		if ($length !== null)
 			$this->lenght->setSelected(intval($length) + 1);
 		if ($style !== null)
 			$this->style->setSelected(intval($style));
+		if ($awards !== null)
+			$this->awards->setSelected(intval($awards));
 		return;
 	}
 
@@ -310,8 +328,12 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	function actionOk($login, $args)
 	{
+	var_dump($args);
+	
 		$style = null;
 		$length = null;
+		$awards = null;
+		
 		if ($args['style']) {
 			$style = intval($args['style']);
 		}
@@ -319,8 +341,12 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		if (intval($args['length']) != 0) {
 			$length = intval($args['length']) - 1;
 		}
+		
+		if (intval($args['awards']) != 0) {
+			$awards = intval($args['awards']) - 1;
+		}
 
-		$this->search($login, $args['mapName'], $args['author'], $style, $length);
+		$this->search($login, $args['mapName'], $args['author'], $style, $length, $awards);
 	}
 
 	function destroy()
@@ -332,6 +358,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->maps = null;
 		$this->style->destroy();
 		$this->lenght->destroy();
+		$this->awards->destroy();
 		$this->inputMapName->destroy();
 		$this->inputAuthor->destroy();
 		// $this->header->destroy();
