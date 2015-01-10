@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
-class Playeritem extends \ManiaLive\Gui\Control
+class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	protected $bg;
@@ -241,7 +241,7 @@ class Playeritem extends \ManiaLive\Gui\Control
 		if (is_object($this->ignoreButton))
 			$this->ignoreButton->destroy();
 
-		$this->clearComponents();
+		$this->destroyComponents();
 
 		parent::destroy();
 	}

@@ -15,7 +15,7 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  *
  * @author oliverde8
  */
-class RecItem extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\OptimizedPagerElement
+class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\OptimizedPagerElement
 {
 
 	/** @var \ManiaLib\Gui\Elements\Label  */

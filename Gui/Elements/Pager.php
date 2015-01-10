@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  *
  * @author Petri
  */
-class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
+class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
 	private $pager;

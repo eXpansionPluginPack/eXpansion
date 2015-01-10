@@ -169,7 +169,7 @@ class MxMap extends Control
 		$this->line1->destroy();
 		$this->line2->clearComponents();
 		$this->line2->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

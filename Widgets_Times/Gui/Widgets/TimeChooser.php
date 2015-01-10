@@ -183,7 +183,7 @@ class TimeChooser extends \ManiaLive\Gui\Window {
     }
 
     function destroy() {
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

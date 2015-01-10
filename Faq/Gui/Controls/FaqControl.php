@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Faq\Gui\Controls;
 /**
  * @abstract
  */
-abstract class FaqControl extends \ManiaLive\Gui\Control {
+abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     /** @var ManiaLib\Gui\Elements\Label */
     protected $label;
@@ -51,7 +51,7 @@ abstract class FaqControl extends \ManiaLive\Gui\Control {
     }
 
     protected function onDraw() {        
-        $this->clearComponents();
+        $this->destroyComponents();
         $this->addComponent($this->label);
     }
 

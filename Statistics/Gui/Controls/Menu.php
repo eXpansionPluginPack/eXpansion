@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Controls;
 
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 
-class Menu extends \ManiaLive\Gui\Control {
+class Menu extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     public $frame;
     

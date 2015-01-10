@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_EndRankings\Gui\Controls;
 
-class RankItem extends \ManiaLive\Gui\Control {
+class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg;
     private $nick;
@@ -55,7 +55,7 @@ class RankItem extends \ManiaLive\Gui\Control {
     }
 
     public function destroy() {
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

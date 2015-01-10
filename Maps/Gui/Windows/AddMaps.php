@@ -148,7 +148,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->connection = null;
 		$this->storage = null;
 		$this->pager->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 
 		parent::destroy();
 	}

@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
  *
  * @author oliverde8
  */
-class ListBackGround extends \ManiaLive\Gui\Control {
+class ListBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control {
     
     private $bg;
     private $config;

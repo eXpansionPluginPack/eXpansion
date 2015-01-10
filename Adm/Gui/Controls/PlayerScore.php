@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
-class PlayerScore extends \ManiaLive\Gui\Control {
+class PlayerScore extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg;
     private $label;
@@ -76,7 +76,7 @@ class PlayerScore extends \ManiaLive\Gui\Control {
         $this->inputbox->destroy();
         $this->frame->clearComponents();
         $this->frame->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

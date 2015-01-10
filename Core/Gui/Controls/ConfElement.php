@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\Core\MetaData;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
-class ConfElement extends \ManiaLive\Gui\Control
+class ConfElement extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
     private $bg;

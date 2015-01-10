@@ -33,7 +33,7 @@ use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
-class Plugin extends \ManiaLive\Gui\Control
+class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	/**

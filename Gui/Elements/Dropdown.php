@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
-class Dropdown extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
+class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
 	private $items = array();

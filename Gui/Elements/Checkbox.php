@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLive\Gui\ActionHandler;
 
-class Checkbox extends \ManiaLive\Gui\Control
+class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	private $label;

@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 
-class Playeritem extends \ManiaLive\Gui\Control {
+class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $sendButton;
     private $login;

@@ -80,7 +80,7 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         unset($this->label_pos);
         $this->items = null;
         $this->pager->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

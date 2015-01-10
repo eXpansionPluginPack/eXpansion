@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
 
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 
-class ExpSettingsMenu extends \ManiaLive\Gui\Control {
+class ExpSettingsMenu extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     public $frame;
     

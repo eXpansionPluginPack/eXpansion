@@ -6,7 +6,7 @@ use ManiaLivePlugins\eXpansion\Widgets_Record\Config;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
 use ManiaLivePlugins\eXpansion\Helpers\Countries;
 
-class TeamItem extends \ManiaLive\Gui\Control {
+class TeamItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg, $bg2;
     private $nick;
@@ -72,7 +72,7 @@ class TeamItem extends \ManiaLive\Gui\Control {
     public function destroy() {
 	// $this->frame->clearComponents();
 	// $this->frame->destroy();
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

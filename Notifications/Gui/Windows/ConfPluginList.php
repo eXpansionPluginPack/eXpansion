@@ -128,7 +128,7 @@ class ConfPluginList extends Window
 		}
 		$this->items = null;
 		$this->pagerFrame->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

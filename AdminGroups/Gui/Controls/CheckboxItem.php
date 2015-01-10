@@ -11,7 +11,7 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
  *
  * @author Reaby
  */
-class CheckboxItem extends \ManiaLive\Gui\Control {
+class CheckboxItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $frame;
 

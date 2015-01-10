@@ -67,7 +67,7 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->items = array();
         $this->pager->destroy();
         //$this->ok->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

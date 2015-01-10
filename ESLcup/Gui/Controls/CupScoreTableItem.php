@@ -13,7 +13,7 @@ namespace ManiaLivePlugins\eXpansion\ESLcup\Gui\Controls;
  *
  * @author Reaby
  */
-class CupScoreTableItem extends \ManiaLive\Gui\Control {
+class CupScoreTableItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $bg, $bgg, $quit, $rank, $frame, $nickname, $score, $finalist, $winner;
 

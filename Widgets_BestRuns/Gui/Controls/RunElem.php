@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_BestRuns\Gui\Controls;
 
-class RunElem extends \ManiaLive\Gui\Control {
+class RunElem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $container;
     protected $frame;
@@ -39,7 +39,7 @@ class RunElem extends \ManiaLive\Gui\Control {
 	    $item->destroy();
 	}
 	$this->cps = array();
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

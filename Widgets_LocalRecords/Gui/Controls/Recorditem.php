@@ -6,7 +6,7 @@ use ManiaLivePlugins\eXpansion\Widgets_Record\Config;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
 use ManiaLivePlugins\eXpansion\Helpers\Countries;
 
-class Recorditem extends \ManiaLive\Gui\Control
+class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	private $bg, $bg2;
@@ -152,7 +152,7 @@ class Recorditem extends \ManiaLive\Gui\Control
 	{
 		// $this->frame->clearComponents();
 		// $this->frame->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Controls;
 
 use \ManiaLib\Utils\Formatting;
 
-class RatingsItem extends \ManiaLive\Gui\Control {
+class RatingsItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg;
     private $label;
@@ -88,7 +88,7 @@ class RatingsItem extends \ManiaLive\Gui\Control {
         }
         $this->frame->clearComponents();
         $this->frame->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

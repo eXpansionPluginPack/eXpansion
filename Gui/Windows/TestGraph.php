@@ -33,7 +33,7 @@ class TestGraph extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
     
     function destroy() {
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

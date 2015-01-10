@@ -12,7 +12,7 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  *
  * @author reaby
  */
-class TopsumItem extends \ManiaLive\Gui\Control
+class TopsumItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish, $label_login;

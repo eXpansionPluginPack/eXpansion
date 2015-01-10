@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class WidgetButton extends \ManiaLive\Gui\Control
+class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	protected $button;

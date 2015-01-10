@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_BestRuns\Gui\Controls;
 
-class RunCpElem extends \ManiaLive\Gui\Control {
+class RunCpElem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $bg;
     protected $time;

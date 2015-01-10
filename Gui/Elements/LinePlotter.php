@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class LinePlotter extends \ManiaLive\Gui\Control {
+class LinePlotter extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $label_minX;
     protected $label_maxX;

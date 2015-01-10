@@ -72,7 +72,7 @@ class DbTable extends Control
 	function erase()
 	{
 		$this->checkBox->destroy();		
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

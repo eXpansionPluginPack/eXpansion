@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  *
  * @author De Cramer Oliver
  */
-class CheckboxScripted extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer {
+class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer {
 
     private static $counter = 0;
     private static $script = null;

@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Votes\Gui\Controls;
 
-class ManagedVoteControl extends \ManiaLive\Gui\Control {
+class ManagedVoteControl extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg;
     private $label;
@@ -77,7 +77,7 @@ class ManagedVoteControl extends \ManiaLive\Gui\Control {
 
 	$this->frame->clearComponents();
 	$this->frame->destroy();
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

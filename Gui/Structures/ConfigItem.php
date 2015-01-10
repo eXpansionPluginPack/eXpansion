@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Structures;
  *
  * @author Reaby
  */
-class ConfigItem extends \ManiaLive\Gui\Control {
+class ConfigItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     /** @var string $id */
     public $id;

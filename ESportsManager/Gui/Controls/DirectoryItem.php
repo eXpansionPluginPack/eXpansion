@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls;
 
 use \ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus;
 
-class DirectoryItem extends \ManiaLive\Gui\Control {
+class DirectoryItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $bg;
     protected $label;

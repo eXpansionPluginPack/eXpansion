@@ -63,7 +63,7 @@ class TopSumsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	public function destroy()
 	{
 		$this->pager->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

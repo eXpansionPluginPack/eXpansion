@@ -7,7 +7,7 @@ use \ManiaLib\Utils\Formatting;
 use \ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
-class Additem extends \ManiaLive\Gui\Control
+class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	private $bg;
@@ -148,7 +148,7 @@ class Additem extends \ManiaLive\Gui\Control
 		$this->addButton->destroy();
 		$this->deleteButton->destroy();
 
-		$this->clearComponents();
+		$this->destroyComponents();
 
 		$this->destroy();
 		parent::destroy();

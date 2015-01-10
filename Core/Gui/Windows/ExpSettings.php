@@ -129,7 +129,7 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		}
 		$this->items = null;
 		$this->pagerFrame->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

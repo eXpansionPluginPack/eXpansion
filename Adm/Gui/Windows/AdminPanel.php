@@ -163,7 +163,7 @@ class AdminPanel extends Widget
 
     function destroy()
     {
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

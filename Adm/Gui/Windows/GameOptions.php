@@ -429,7 +429,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->frameGeneral->clearComponents();
         $this->frameGeneral->destroy();
 
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

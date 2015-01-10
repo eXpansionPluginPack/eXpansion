@@ -8,7 +8,7 @@ use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 use \ManiaLib\Utils\Formatting;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
-class PlayerItem extends \ManiaLive\Gui\Control {
+class PlayerItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $bg;
     protected $label_index, $label_nickname, $label_time, $label_diff, $label_points;
@@ -145,7 +145,7 @@ class PlayerItem extends \ManiaLive\Gui\Control {
      */
 
     function erase() {
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

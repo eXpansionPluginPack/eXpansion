@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\ServerStatistics\Gui\Controls;
  *
  * @author De Cramer Oliver
  */
-class InfoLine extends \ManiaLive\Gui\Control {
+class InfoLine extends \ManiaLivePlugins\eXpansion\Gui\Control {
    
     
     public function __construct($sizeY, $title, $data, $i){

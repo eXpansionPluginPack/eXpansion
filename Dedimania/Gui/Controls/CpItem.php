@@ -10,7 +10,7 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  *
  * @author reaby
  */
-class CpItem extends \ManiaLive\Gui\Control
+class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish, $label_login;

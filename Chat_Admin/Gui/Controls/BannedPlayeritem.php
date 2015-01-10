@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 
-class BannedPlayeritem extends \ManiaLive\Gui\Control
+class BannedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	private $bg;

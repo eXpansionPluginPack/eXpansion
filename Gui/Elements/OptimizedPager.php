@@ -6,7 +6,7 @@ use \ManiaLive\DedicatedApi\Callback\Event;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
+class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
 	private $frame;
@@ -158,8 +158,10 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 
 	public function destroy()
 	{
+		$this->frame->destroyComponents();
 		$this->clearItems();
-		//  $this->pager->destroy();
+		unset($this->script);
+		
 		parent::destroy();
 	}
 

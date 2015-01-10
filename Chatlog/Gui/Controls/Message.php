@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Chatlog\Gui\Controls;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
-class Message extends \ManiaLive\Gui\Control {
+class Message extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $bg;
     protected $label_time, $label_nickname, $label_text;
@@ -79,7 +79,7 @@ class Message extends \ManiaLive\Gui\Control {
     function erase() {
         $this->frame->clearComponents();
         $this->frame->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

@@ -12,7 +12,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd;
  *
  * @author oliverde8
  */
-class HelpItem extends \ManiaLive\Gui\Control {
+class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $moreButton;
     private $bg;
@@ -60,7 +60,7 @@ class HelpItem extends \ManiaLive\Gui\Control {
 
     public function erase() {
         $this->moreButton->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

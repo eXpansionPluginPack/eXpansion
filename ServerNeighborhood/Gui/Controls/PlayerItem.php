@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
  *
  * @author oliverde8
  */
-class PlayerItem extends \ManiaLive\Gui\Control {
+class PlayerItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private static $bgStyle = 'Bgs1';
     private static $bgStyles = array('BgList', 'BgListLine');

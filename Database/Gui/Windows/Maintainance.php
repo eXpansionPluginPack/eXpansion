@@ -216,7 +216,7 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->cancel->destroy();
 		$this->connection = null;
 		$this->storage = null;
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

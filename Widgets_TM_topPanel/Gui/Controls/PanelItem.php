@@ -7,7 +7,7 @@ use \ManiaLib\Utils\Formatting;
 use \ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
-class PanelItem extends \ManiaLive\Gui\Control
+class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	public $quad, $lbl_title, $lbl_value;

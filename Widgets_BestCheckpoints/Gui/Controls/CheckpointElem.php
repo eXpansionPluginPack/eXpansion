@@ -76,7 +76,7 @@ class CheckpointElem extends Control
 	public function destroy()
 	{
 		try {
-			$this->clearComponents();
+			$this->destroyComponents();
 		} catch (Exception $e) {
 
 		}

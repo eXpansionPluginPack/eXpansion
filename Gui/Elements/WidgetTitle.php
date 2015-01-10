@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  *
  * @author oliverde8
  */
-class WidgetTitle extends \ManiaLive\Gui\Control
+class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	private $bg, $bg_left, $bg_right, $lbl_title;

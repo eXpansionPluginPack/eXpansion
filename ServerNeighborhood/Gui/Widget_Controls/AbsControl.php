@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\ServerNeighborhood\Server;
  *
  * @author oliverde8
  */
-abstract class AbsControl extends \ManiaLive\Gui\Control {
+abstract class AbsControl extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     public $server;
 

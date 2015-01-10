@@ -71,7 +71,7 @@ class ResSkipButtons extends Widget {
     }
 
     function destroy() {
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

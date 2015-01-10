@@ -123,7 +123,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		}
 		$this->items = null;
 		$this->pager->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

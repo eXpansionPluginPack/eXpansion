@@ -228,7 +228,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		}
 		$this->items = null;
 		$this->pagerFrame->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 
 		$this->autoLoad = null;
 

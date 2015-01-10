@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
-class ExpSettingListElement extends \ManiaLive\Gui\Control
+class ExpSettingListElement extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	private $bg;

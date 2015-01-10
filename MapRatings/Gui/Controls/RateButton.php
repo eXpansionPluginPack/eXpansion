@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Controls;
 
-class RateButton extends \ManiaLive\Gui\Control {
+class RateButton extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $label;
     protected $frame;

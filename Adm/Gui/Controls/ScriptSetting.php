@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
-class ScriptSetting extends \ManiaLive\Gui\Control {
+class ScriptSetting extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg;
     private $label;
@@ -89,7 +89,7 @@ class ScriptSetting extends \ManiaLive\Gui\Control {
 
         $this->frame->clearComponents();
         $this->frame->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

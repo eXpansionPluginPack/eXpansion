@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
+class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
 	private static $counter = 0;
@@ -136,7 +136,7 @@ class Button extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansi
 	function onDraw()
 	{
 		self::$script->reset();
-		$this->clearComponents();
+		$this->destroyComponents();
 
 		if ($this->isActive)
 			$this->addComponent($this->activeFrame);

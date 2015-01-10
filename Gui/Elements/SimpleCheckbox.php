@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLive\Gui\ActionHandler;
 
-class SimpleCheckbox extends \ManiaLive\Gui\Control {
+class SimpleCheckbox extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $button;
     private $active = false;

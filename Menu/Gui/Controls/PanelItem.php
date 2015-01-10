@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Menu\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class PanelItem extends \ManiaLive\Gui\Control
+class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	/** @var \ManiaLib\Gui\Elements\Quad */

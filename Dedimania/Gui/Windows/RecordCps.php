@@ -104,7 +104,7 @@ class RecordCps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->recs = null;
 
 		$this->pager->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

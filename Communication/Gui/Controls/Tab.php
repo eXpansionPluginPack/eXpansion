@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
  *
  * @author reaby
  */
-class Tab extends \ManiaLive\Gui\Control {
+class Tab extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     function __construct($idx) {
 	$sizeX = 22;
@@ -45,7 +45,7 @@ class Tab extends \ManiaLive\Gui\Control {
     }
 
     function destroy() {
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

@@ -50,8 +50,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	public function exp_onUnload()
 	{
-		$this->disableTickerEvent();
-		\ManiaLivePlugins\eXpansion\DebugTool\Gui\testWidget::EraseAll();
+		$this->disableTickerEvent();		
 		parent::exp_onUnload();
 	}
 
