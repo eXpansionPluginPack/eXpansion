@@ -110,9 +110,28 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			if ($this->isPluginLoaded($plugin)) {
 				if (in_array($plugin, $config->redirectedPlugins)) {
 					$this->callPublicMethod((string) $plugin, 'exp_activateChatRedirect', array($this, 'send'));
-				} else {
+				}
+				else {
 					$this->callPublicMethod((string) $plugin, 'exp_deactivateChatRedirect', array($this, 'send'));
 				}
+			}
+		}
+	}
+
+	public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
+	{
+		if ($var->getName() == "redirectedPlugins") {
+			$this->checkRedirect();
+		}
+	}
+
+	public function exp_onUnload()
+	{
+		parent::exp_onUnload();
+		NotificationPanel::EraseAll();
+		foreach (\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad::getAvailablePlugins() as $plugin => $meta) {
+			if ($this->isPluginLoaded($plugin)) {
+				$this->callPublicMethod((string) $plugin, 'exp_deactivateChatRedirect', array($this, 'send'));
 			}
 		}
 	}
