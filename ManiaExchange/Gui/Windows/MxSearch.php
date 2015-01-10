@@ -200,7 +200,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			if ($awards  == NULL) {
 			$priory .= "&priord=8";
 			}
-			var_dump($priory);
+			//var_dump($priory);
 			$query .= '&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . $out . '&mtype=All&secord=2'.$priory.'&limit=100';
 		}
 		/*
@@ -223,7 +223,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		 */
 		$query = $query . "&" . \ManiaLivePlugins\eXpansion\ManiaExchange\ManiaExchange::$betakey;
 		$access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
-		var_dump($query);
+		//var_dump($query);
 		$access->httpGet($query, Array($this, "xSearch"), null, "Manialive/eXpansion MXapi [search] ver 0.2", "application/json");
 		if ($length !== null)
 			$this->lenght->setSelected(intval($length) + 1);
