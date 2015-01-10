@@ -45,7 +45,8 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("profiler_enable", "profilere", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-		$this->registerChatCommand("test", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+		// $this->registerChatCommand("test", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+		$this->registerChatCommand("mem", "mem", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 	}
 
 	public function exp_onUnload()
@@ -106,4 +107,10 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$this->connection->chatSend($mem);
 	}
 
+	function mem($login) {
+		Gui\debugWidget::EraseAll();
+		$widget = Gui\debugWidget::Create(null);
+		$widget->setPosition(155,80);
+		$widget->show();
+	}
 }
