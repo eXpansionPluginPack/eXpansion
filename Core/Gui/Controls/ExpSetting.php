@@ -203,9 +203,10 @@ class ExpSetting extends Control
 	}
 
 	public function destroy()
-	{
-		$this->win = null;
+	{		
 		parent::destroy();
+		// disabling for now, since reset didn't work...
+		// $this->win = null;
 	}
 
 }
