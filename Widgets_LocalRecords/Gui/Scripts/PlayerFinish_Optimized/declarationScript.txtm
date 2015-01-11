@@ -29,6 +29,9 @@ declare Boolean needUpdate = True;
 declare lastUpdateTime = 0;
 declare lastCheckTime = 0;
 
+declare animStart = Now;
+declare Boolean start = True;
+
 if(getCurrentTimes){
     //sleep(1000);
 }
@@ -61,3 +64,16 @@ foreach (Player in Players) {
         playerNickName[Player.Login] = Player.Name;
     }
 }
+
+for (i, 1, nbFields ) {
+        declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
+	declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
+	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
+        rank.Opacity = 0.;
+        timeLabel.Opacity = 0.;
+        nickLabel.Opacity = 0.;       
+}
+
+
+start = True;
+animStart = Now;

@@ -1,4 +1,26 @@
 
+if (start) {    
+    declare delay = 100;
+    for (i, 1, nbFields ) {
+        declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
+	declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
+	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
+        declare time = (Now - animStart - delay);
+        if (time < 0) {            
+            time = 0;
+        }
+        timeLabel.Opacity = AL::Ease("LinearOut", time * 1., 0., 1., 500.);
+        nickLabel.Opacity = AL::Ease("LinearOut", time * 1., 0., 1., 500.);      
+        rank.Opacity = AL::Ease("LinearOut", time * 1., 0., 1., 500.);      
+        delay += 100;
+    }
+    
+}
+
+if (start && animStart + 10000 <= Now ) {        
+    start = False;
+}
+
 foreach (Player in Players) {
 
     declare <?php echo $this->varName ?> for Player = -1;

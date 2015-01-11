@@ -7,11 +7,11 @@ Void putRecordTo(Integer i, Integer Rank, Integer Score, Text Login, Text nick, 
 	declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
 	
 	if(nickLabel != Null){
-		nickLabel.SetText(nick);
-		timeLabel.SetText(TimeToText(Score));
+		nickLabel.Value = nick;
+		timeLabel.Value = TimeToText(Score);
 
 		declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
-		rank.SetText(""^Rank);
+		rank.Value = ""^Rank;
 
 		declare bg = (Page.GetFirstChild("RecBgBlink_"^i) as CMlQuad);
 
@@ -20,6 +20,6 @@ Void putRecordTo(Integer i, Integer Rank, Integer Score, Text Login, Text nick, 
 			bg.Show();
 		}else{
 			bg.Hide();
-		}
+		}                
 	}
 }
