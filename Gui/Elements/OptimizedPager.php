@@ -123,9 +123,9 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
 		$this->sizeY = $args[1];
 		$this->scroll->setPosition($this->sizeX - 3, 0);
 		$this->scrollBg->setPosition($this->sizeX - 3);
-		$this->scrollBg->setSizeY($this->sizeY-4);
+		$this->scrollBg->setSizeY($this->sizeY - 4);
 
-		$this->scrollDown->setPosition($this->sizeX - 5, -($this->sizeY-4));
+		$this->scrollDown->setPosition($this->sizeX - 5, -($this->sizeY - 4));
 		$this->scrollUp->setPosition($this->sizeX - 5, 0);
 	}
 
@@ -158,10 +158,12 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
 
 	public function destroy()
 	{
-		$this->frame->destroyComponents();
+		if (isset($this->frame) && $this->frame !== null) {
+			$this->frame->destroyComponents();
+		}
 		$this->clearItems();
 		unset($this->script);
-		
+
 		parent::destroy();
 	}
 
