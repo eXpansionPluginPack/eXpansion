@@ -3,92 +3,107 @@
 namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
-use ManiaLivePlugins\eXpansion\MapRatings\Gui\Controls\RateButton;
+use ManiaLivePlugins\eXpansion\MapRatings\Gui\Controls\RateButton2;
 
-class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
+class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
+{
 
-    protected $label, $xml, $frame, $bg, $titlebg;
-    protected $b0, $b1, $b2, $b3, $b4, $b5;
-    public static $parentPlugin;
-    private $script;
-    
-    protected function onConstruct() {
-	parent::onConstruct();
+	protected $label, $xml, $frame, $bg, $titlebg, $labelMap;
 
-	$bg = new \ManiaLib\Gui\Elements\Quad(140, 20);
-	$bg->setStyle("UiSMSpectatorScoreBig");
-	$bg->setSubStyle("PlayerSlot");
-	$bg->setAlign("center", "top");
-	$this->bg = $bg;
-	$this->addComponent($this->bg);
+	protected $b0, $b1, $b2, $b3, $b4, $b5;
 
-	$bg = new \ManiaLib\Gui\Elements\Quad(100, 8);
-	$bg->setStyle("UiSMSpectatorScoreBig");
-	$bg->setSubStyle("PlayerSlotCenter");
-	$bg->setColorize('0f0');
-	$bg->setAlign("center", "top");
-	$bg->setPosY(2);
-	$this->titlebg = $bg;
-	$this->addComponent($this->titlebg);
+	public static $parentPlugin;
+
+	private $script;
+
+	protected function onConstruct()
+	{
+		parent::onConstruct();
+
+		$this->setName("Map ratings (endmap)");
+		$sizeX = 90;
+		$sizeY = 23;
+		
+		$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround($sizeX, $sizeY);
+		$bg->setAlign("left", "top");
+		$this->bg = $bg;
+		$this->addComponent($this->bg);
+		
+
+		$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle($sizeX, 6);
+		$bg->setAlign("center", "top");
+		$bg->setPosX($sizeX/2);
+		$this->titlebg = $bg;
+		$this->addComponent($this->titlebg);
+
+		
+		$this->label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel($sizeX-10, 9);
+		$this->label->setStyle("TextCardSmallScores2");
+		$this->label->setTextSize(2);
+		$this->label->setTextEmboss(true);
+		$this->label->setAlign("center", "top");
+		$this->label->setPosX(($sizeX)/2);
+		$this->label->setPosY(-1);
+		$this->addComponent($this->label);
 
 
-	$this->label = new \ManiaLib\Gui\Elements\Label(90, 9);
-	$this->label->setStyle("TextCardSmallScores2");
-	$this->label->setTextSize(3);
-	$this->label->setTextEmboss(true);
-	$this->label->setText("mapname goes here!");
-	$this->label->setAlign("center", "top");
-	$this->label->setPosY(0);
-	$this->addComponent($this->label);
+		$this->labelMap = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel($sizeX-10, 9);
+		$this->labelMap->setStyle("TextCardSmallScores2");
+		$this->labelMap->setTextSize(3);
+		$this->labelMap->setTextEmboss(true);
+		$this->labelMap->setAlign("center", "top");
+		$this->labelMap->setPosX(($sizeX)/2);
+		$this->labelMap->setPosY(-6);
+		$this->addComponent($this->labelMap);
 
-	$this->frame = new \ManiaLive\Gui\Controls\Frame(0, -10);
-	$this->frame->setSize(70, 30);
-	$this->frame->setAlign("center", "top");
-	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-	$this->addComponent($this->frame);
 
-	$this->b0 = new RateButton(0);
-	$this->frame->addComponent($this->b0);
 
-	$this->b1 = new RateButton(1);
-	$this->frame->addComponent($this->b1);
+		$this->frame = new \ManiaLive\Gui\Controls\Frame(27, -16);
+		$this->frame->setAlign("left", "top");
+		$line = new \ManiaLib\Gui\Layouts\Line();
+		$line->setMargin(8,0);
+		$this->frame->setLayout($line);
+		$this->addComponent($this->frame);
 
-	$this->b2 = new RateButton(2);
-	$this->frame->addComponent($this->b2);
+		$this->b0 = new RateButton2(0);
+		$this->frame->addComponent($this->b0);
 
-	$this->b3 = new RateButton(3);
-	$this->frame->addComponent($this->b3);
+		/* $this->b1 = new RateButton(1);
+		$this->frame->addComponent($this->b1);
 
-	$this->b4 = new RateButton(4);
-	$this->frame->addComponent($this->b4);
+		$this->b2 = new RateButton(2);
+		$this->frame->addComponent($this->b2);
 
-	$this->b5 = new RateButton(5);
-	$this->frame->addComponent($this->b5);
+		$this->b3 = new RateButton(3);
+		$this->frame->addComponent($this->b3);
 
-	$this->setSize(120, 20);
-	$this->setAlign("left", "top");
-	$this->setPosition(0, -56);
-	$this->setScale(0.7);
+		$this->b4 = new RateButton(4);
+		$this->frame->addComponent($this->b4); */
 
-	$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("MapRatings\Gui\Script");		
-	for ($x = 0; $x < 6; $x++) {
-	    $action = $this->createAction(array(self::$parentPlugin, "saveRating"), $x);
-	    $this->script->setParam("rate_" . $x, $action);
+		$this->b5 = new RateButton2(5);
+		$this->frame->addComponent($this->b5);
+
+
+		$this->setPosition(-45, -42);
+
+		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("MapRatings\Gui\Script");
+		$action = $this->createAction(array(self::$parentPlugin, "saveRating"), 0);
+		$this->script->setParam("rate_" . 0, $action);
+
+		$action = $this->createAction(array(self::$parentPlugin, "saveRating"), 5);
+		$this->script->setParam("rate_" . 5, $action);
+
+
+		$this->registerScript($this->script);
+		$this->setSize($sizeX, $sizeY);
 	}
-	$this->registerScript($this->script);
-	
-	
-	$this->setName("Map ratings (endmap)");
-    }
 
-    function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
-	$this->frame->setPosX(-($this->frame->sizeX / 2) + 4);
-    }
-
-    function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map) {
-	$this->label->setText($map->author . " - " . $map->name);
-    }
+	function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
+	{
+		$msg = exp_getMessage("Did you like the map ?");
+		$this->label->setText($msg);
+		$this->labelMap->setText(\ManiaLib\Utils\Formatting::stripCodes($map->name, "wosn"));
+	}
 
 }
 ?>

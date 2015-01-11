@@ -1,25 +1,41 @@
 foreach (Event in PendingEvents) {
+    
+    if (Event.Type == CMlEvent::Type::MouseOver) {
+         if (Event.ControlId == "button_0") {
+            declare CMlQuad quad <=> (Page.GetFirstChild("rate_0") as CMlQuad);            
+            declare CMlLabel label <=> (Page.GetFirstChild("label_0") as CMlLabel);            
+            label.RelativeScale = 1.5;
+            quad.RelativeScale = 1.5;
+        }
+        
+        if (Event.ControlId == "button_5") {
+            declare CMlQuad quad <=> (Page.GetFirstChild("rate_5") as CMlQuad);            
+            declare CMlLabel label <=> (Page.GetFirstChild("label_5") as CMlLabel);            
+            label.RelativeScale = 1.5;
+            quad.RelativeScale = 1.5;
+        }
+
+    } 
+    
+    if (Event.Type == CMlEvent::Type::MouseOut) {
+        if (Event.ControlId == "button_0" || Event.ControlId == "button_5") {	
+            declare CMlQuad quad <=> (Page.GetFirstChild("rate_5") as CMlQuad);
+            declare CMlQuad quad2 <=> (Page.GetFirstChild("rate_0") as CMlQuad);
+
+            declare CMlLabel label <=> (Page.GetFirstChild("label_5") as CMlLabel);   
+            declare CMlLabel label2 <=> (Page.GetFirstChild("label_0") as CMlLabel);   
+            quad.RelativeScale = 1.0;
+            quad2.RelativeScale = 1.0;
+            label.RelativeScale = 1.0;
+            label2.RelativeScale = 1.0;
+        }
+    } 
+
     if (Event.Type == CMlEvent::Type::MouseClick) {    
 	if (Event.ControlId == "rate_0") {	
 	    TriggerPageAction(rate_0);    
 	    Window.Hide();	
-	}    
-	if (Event.ControlId == "rate_1") {	
-	    TriggerPageAction(rate_1);    
-	    Window.Hide();	
-	}    
-	if (Event.ControlId == "rate_2") {	
-	    TriggerPageAction(rate_2);    
-	    Window.Hide();	
-	}    
-	if (Event.ControlId == "rate_3") {	
-	    TriggerPageAction(rate_3);    
-	    Window.Hide();	
-	}    
-	if (Event.ControlId == "rate_4") {	
-	    TriggerPageAction(rate_4);    
-	    Window.Hide();	
-	}    
+	}    	
 	if (Event.ControlId == "rate_5") {	
 	    TriggerPageAction(rate_5);    
 	    Window.Hide();	
