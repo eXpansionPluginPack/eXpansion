@@ -32,11 +32,11 @@ foreach (Event in PendingEvents) {
     } 
 
     if (Event.Type == CMlEvent::Type::MouseClick) {    
-	if (Event.ControlId == "rate_0") {	
+	if (Event.ControlId == "button_0") {	
 	    TriggerPageAction(rate_0);    
 	    Window.Hide();	
 	}    	
-	if (Event.ControlId == "rate_5") {	
+	if (Event.ControlId == "button_5") {	
 	    TriggerPageAction(rate_5);    
 	    Window.Hide();	
 	}    

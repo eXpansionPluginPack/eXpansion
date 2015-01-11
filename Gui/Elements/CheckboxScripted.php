@@ -11,8 +11,8 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  */
 class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer {
 
-    protected static $counter = 0;
-    protected static $script = null;
+    private static $counter = 0;
+    private static $script = null;
     protected $checkboxId;
     protected $label;
     protected $button;
