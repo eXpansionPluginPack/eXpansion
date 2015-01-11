@@ -68,7 +68,7 @@ Boolean stackContainsWindow(Text window) {
 //Main Function
 main () {
 
-    declare Integer closeCounter = 0;
+    declare Integer lastAction = Now;
     declare Boolean mouseButton for Page;
     declare Integer tabIndex = -1;
 
@@ -96,8 +96,8 @@ main () {
     declare Text id = "<?php echo $this->name ?>";
     declare Boolean forceReset = <?php echo $this->forceReset; ?>;
     declare Text version = "<?php echo $this->version; ?>";
-    // declare Boolean disableAnimations = <?php echo $this->disableAnimations; ?>;
-    declare Boolean disableAnimations = True;
+    declare Boolean disableAnimations = <?php echo $this->disableAnimations; ?>;
+    //declare Boolean disableAnimations = True;
     declare persistent Vec3[Text][Text] exp_windowLastPosRel;
     declare Text[] exp_windowStack for UI = Text[];
     declare Boolean exp_updateStack for UI = False;
@@ -136,17 +136,27 @@ main () {
         <?php echo $this->wLoop ?>
 
         if (openWindow) {
+            Window.RelativeScale = AL::Ease("ElasticOut2", (Now - lastAction) * 1., 0., 1., 400.);
+        }
+
+        if (closeWindow) {
+          Window.RelativeScale = 1. - AL::Ease("QuadOut", (Now - lastAction) * 1., 0., 1., 250.);
+        }
+
+        if (openWindow && lastAction + 400 <= Now ) {            
             openWindow = False;
-            declare Real winX = exp_windowLastPosRel[version][id].X;
-            declare Real winY = exp_windowLastPosRel[version][id].Y;
-            declare Text pos = winX ^ " " ^ winY;            
-            //LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"1\" id=\"" ^ windowId ^ "\" />", 250, "EaseInLinear");
+            
+            //declare Real winX = exp_windowLastPosRel[version][id].X;
+            //declare Real winY = exp_windowLastPosRel[version][id].Y;
+            //declare Text pos = winX ^ " " ^ winY;                        
+            lastAction = 0;
         }	
 
-	if (closeWindow && closeCounter + 350 <= Now ) {	    
-	    stackRemoveWindow(id);
-	    TriggerPageAction(closeAction);
-	    closeWindow = False;	    
+	if (closeWindow && lastAction + 150 <= Now ) {	    
+            closeWindow = False;
+            Window.Hide();
+            stackRemoveWindow(id);
+	    TriggerPageAction(closeAction);	    
 	    continue;
 	}
 
@@ -222,7 +232,7 @@ main () {
                             declare Text pos = winX ^ " " ^ winY;
                            // LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\"0\" id=\"" ^ windowId ^ "\" />", 250, "EaseOutLinear");
                             closeWindow = True;
-                            closeCounter = Now;	  	
+                            lastAction = Now;	  	
                           }
                          }
                      }

@@ -1,4 +1,5 @@
 declare CMlLabel lbl_clock <=> (Page.GetFirstChild("clock") as CMlLabel);
 declare mapName <=> (Page.GetFirstChild("mapName") as CMlLabel);
 declare mapAuthor <=> (Page.GetFirstChild("mapAuthor") as CMlLabel);
+declare authorTime <=> (Page.GetFirstChild("authorTime") as CMlLabel);
 declare eXp_lastClockUpdate = 0;

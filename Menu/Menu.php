@@ -269,25 +269,6 @@ class Menu extends ExpPlugin
 			}
 		}
 
-		if (AdminGroups::hasPermission($login, Permission::team_balance) || AdminGroups::hasPermission($login, Permission::map_endRound) || AdminGroups::hasPermission($login, Permission::map_restart) || AdminGroups::hasPermission($login, Permission::map_skip)) {
-			$adm = $submenu->addSubMenu($menu, __("Fast Admin", $login), null);
-
-			if (AdminGroups::hasPermission($login, Permission::map_restart))
-				$submenu->addItem($adm, __("Instant Restart", $login), $this->actions['admres']);
-
-			if (AdminGroups::hasPermission($login, Permission::map_restart))
-				$submenu->addItem($adm, __("Replay", $login), $this->actions['admreplay']);
-
-			if (AdminGroups::hasPermission($login, Permission::map_skip))
-				$submenu->addItem($adm, __("Skip", $login), $this->actions['admskip']);
-
-			if (AdminGroups::hasPermission($login, Permission::map_endRound))
-				$submenu->addItem($adm, __("End Round", $login), $this->actions['admer']);
-
-			if (AdminGroups::hasPermission($login, Permission::team_balance))
-				$submenu->addItem($adm, __("Balance Teams", $login), $this->actions['teambalance']);
-		}
-
 		if ($this->exp_isPluginLoaded("LocalRecords") || $this->exp_isPluginLoaded("Dedimania") || $this->exp_isPluginLoaded("Dedimania_Script")) {
 			$localRecs = null;
 			if ($this->exp_isPluginLoaded("LocalRecords")) {
@@ -305,8 +286,6 @@ class Menu extends ExpPlugin
 				$submenu->addItem($records, __("Dedimania", $login), $this->actions['dedirecs']);
 			}
 		}
-
-
 
 
 		$statAction = null;
@@ -334,7 +313,24 @@ class Menu extends ExpPlugin
 			$submenu->addItem($votes, __("Config", $login), $this->actions['adm_votes']);
 		}
 
+		if (AdminGroups::hasPermission($login, Permission::team_balance) || AdminGroups::hasPermission($login, Permission::map_endRound) || AdminGroups::hasPermission($login, Permission::map_restart) || AdminGroups::hasPermission($login, Permission::map_skip)) {
+			$adm = $submenu->addSubMenu($menu, __("Admin", $login), null);
 
+			if (AdminGroups::hasPermission($login, Permission::map_restart))
+				$submenu->addItem($adm, __("Instant Restart", $login), $this->actions['admres']);
+
+			if (AdminGroups::hasPermission($login, Permission::map_restart))
+				$submenu->addItem($adm, __("Replay", $login), $this->actions['admreplay']);
+
+			if (AdminGroups::hasPermission($login, Permission::map_skip))
+				$submenu->addItem($adm, __("Skip", $login), $this->actions['admskip']);
+
+			if (AdminGroups::hasPermission($login, Permission::map_endRound))
+				$submenu->addItem($adm, __("End Round", $login), $this->actions['admer']);
+
+			if (AdminGroups::hasPermission($login, Permission::team_balance))
+				$submenu->addItem($adm, __("Balance Teams", $login), $this->actions['teambalance']);
+		}
 
 
 		if (AdminGroups::hasPermission($login, Permission::server_controlPanel)) {
