@@ -112,10 +112,10 @@ if (needUpdate) {
         //log("Show"^ Now);
         needHidden = True;
         Page.GetClassChildren("menuitem" , Menu , True);
-         declare Integer delay = 0;  
+        declare Integer delay = 0;  
         foreach (control in Page.GetClassChildren_Result) { 
-        	LibManialink_AnimInsert("<quad scale=\"1\" opacity=\"1\" id=\""^ control.ControlId ^ "\" />", delay,200 ,"EaseInLinear");
-        	LibManialink_AnimInsert("<quad scale=\"1\" opacity=\"1\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 200, "EaseInLinear");
+        	LibManialink_AnimInsert("<quad opacity=\"1\" id=\""^ control.ControlId ^ "\" />", delay,200 ,"EaseInLinear");
+        	LibManialink_AnimInsert("<quad opacity=\"1\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 200, "EaseInLinear");
                 delay += 20;
 	}
 
@@ -132,8 +132,8 @@ if (needUpdate) {
             //   declare CMlLabel lbl  <=> (Page.GetFirstChild(control.ControlId^"_lbl") as CMlLabel);
             //   lbl.Opacity = 0.0;
             //   lbl.Scale = 0.0;
-                LibManialink_AnimInsert("<quad scale=\"0\" opacity=\"0\" id=\""^ control.ControlId ^ "\" />", delay, 200 ,"EaseInLinear");
-        	LibManialink_AnimInsert("<quad scale=\"0\" opacity=\"0\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 200, "EaseInLinear");
+                LibManialink_AnimInsert("<quad opacity=\"0\" id=\""^ control.ControlId ^ "\" />", delay, 200 ,"EaseInLinear");
+        	LibManialink_AnimInsert("<quad opacity=\"0\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 200, "EaseInLinear");
                 delay -= 20;
             }
        

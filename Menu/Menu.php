@@ -54,17 +54,18 @@ class Menu extends ExpPlugin
 		$this->actions['serverinfo'] = $actionHandler->createAction(array($this, "actions"), "serverinfo");
 		$this->actions['admreplay'] = $actionHandler->createAction(array($this, "actions"), "admreplay");
 		$this->actions['serverranks'] = $actionHandler->createAction(array($this, "actions"), "serverranks");
+		$this->actions['topsums'] = $actionHandler->createAction(array($this, "actions"), "topsums");
 		$this->actions['teambalance'] = $actionHandler->createAction(array($this, "actions"), "teambalance");
 		$this->actions['localcps'] = $actionHandler->createAction(array($this, "actions"), "localcps");
 		$this->actions['dedicps'] = $actionHandler->createAction(array($this, "actions"), "dedicps");
 		$this->actions['dedirecs'] = $actionHandler->createAction(array($this, "actions"), "dedirecs");
 
-		foreach ($this->storage->players as $login => $player) {
-			$this->onPlayerConnect($login, null);
-		}
-		foreach ($this->storage->spectators as $login => $player) {
-			$this->onPlayerConnect($login, null);
-		}
+
+		$this->actions['adm_groups'] = $actionHandler->createAction(array($this, "actions"), "adm_groups");
+		$this->actions['adm_plugins'] = $actionHandler->createAction(array($this, "actions"), "adm_plugins");
+		$this->actions['adm_votes'] = $actionHandler->createAction(array($this, "actions"), "adm_votes");
+		$this->actions['adm_settings'] = $actionHandler->createAction(array($this, "actions"), "adm_settings");
+		$this->actions['adm_update'] = $actionHandler->createAction(array($this, "actions"), "adm_update");
 	}
 
 	private function getPluginName($plugin)
@@ -164,12 +165,32 @@ class Menu extends ExpPlugin
 				case "serverranks":
 					$this->callPublicMethod($this->getPluginName("LocalRecords"), "showRanksWindow", $login);
 					break;
+				case "topsums":
+					$this->callPublicMethod($this->getPluginName("LocalRecords"), "showTopSums", $login);
+					break;
 				case "admreplay":
 					$adminGrp->adminCmd($login, "replay");
 					break;
 				case "teambalance":
 					$adminGrp->adminCmd($login, "setTeamBalance");
 					break;
+
+				case "adm_plugins":
+					$adminGrp->adminCmd($login, "plugins");
+					break;
+				case "adm_settings":
+					$adminGrp->adminCmd($login, "setexp");
+					break;
+				case "adm_votes":
+					$adminGrp->adminCmd($login, "votes");
+					break;
+				case "adm_groups":
+					$adminGrp->adminCmd($login, "groups");
+					break;
+				case "adm_update":
+					$adminGrp->adminCmd($login, "update");
+					break;
+
 				case "localcps":
 					$this->callPublicMethod($this->getPluginName("LocalRecords"), "showCpWindow", $login);
 					break;
@@ -221,62 +242,35 @@ class Menu extends ExpPlugin
 			$submenu->addItem($menu, __("Help", $login), $this->actions['help']);
 		}
 
-		if ($this->exp_isPluginLoaded("Maps"))
-			$submenu->addItem($menu, __("Show Maplist", $login), $this->actions['maplist']);
-		if ($this->exp_isPluginLoaded("LocalRecords") || $this->exp_isPluginLoaded("Dedimania") || $this->exp_isPluginLoaded("Dedimania_Script")) {
-			$records = $submenu->addSubMenu($menu, __("Records", $login));
-
-			if ($this->exp_isPluginLoaded("LocalRecords")) {
-				$submenu->addItem($records, __("Local Records", $login), $this->actions['maprecords']);
-			}
-			if ($this->exp_isPluginLoaded("Dedimania") || $this->exp_isPluginLoaded("Dedimania_Script")) {
-				$submenu->addItem($records, __("Dedimania Records", $login), $this->actions['dedirecs']);
-			}
-		}
-
 		if ($this->exp_isPluginLoaded("Players"))
-			$submenu->addItem($menu, __("Show Players", $login), $this->actions['playerlist']);
+			$submenu->addItem($menu, __("Players", $login), $this->actions['playerlist']);
 
-		if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps") && AdminGroups::hasPermission($login, Permission::map_addLocal) || AdminGroups::hasPermission($login, Permission::map_addMX) || AdminGroups::hasPermission($login, Permission::map_removeMap)) {
-			$maps = $submenu->addSubMenu($menu, __("Map", $login));
-			if (AdminGroups::hasPermission($login, Permission::map_addLocal)) {
-				if ($this->expStorage->isRemoteControlled == false) {
-					$submenu->addItem($maps, __("Add local map", $login), $this->actions['addMaps']);
+		$mapAction = null;
+		$mapText = "";
+		if ($this->exp_isPluginLoaded("Maps")) {
+			$mapAction = $this->actions['maplist'];
+			$maps = $submenu->addSubMenu($menu, __("Maps", $login), $mapAction);
+
+			if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps") && AdminGroups::hasPermission($login, Permission::map_addLocal) || AdminGroups::hasPermission($login, Permission::map_addMX) || AdminGroups::hasPermission($login, Permission::map_removeMap)) {
+				if (AdminGroups::hasPermission($login, Permission::map_addLocal)) {
+					if ($this->expStorage->isRemoteControlled == false) {
+						$submenu->addItem($maps, __("Add local map", $login), $this->actions['addMaps']);
+					}
+				}
+				if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\ManiaExchange\\ManiaExchange") && AdminGroups::hasPermission($login, Permission::map_addMX)) {
+					$submenu->addItem($maps, __("Mania-Exchange", $login), $this->actions['admmx']);
+				}
+
+				if (AdminGroups::hasPermission($login, Permission::map_removeMap)) {
+					$submenu->addItem($maps, "", null);
+					$submenu->addItem($maps, __("Remove this", $login), $this->actions['admremovemap']);
+					$submenu->addItem($maps, __("Trash this", $login), $this->actions['admtrashmap']);
 				}
 			}
-			if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\ManiaExchange\\ManiaExchange") && AdminGroups::hasPermission($login, Permission::map_addMX)) {
-				$submenu->addItem($maps, __("Mania-Exchange", $login), $this->actions['admmx']);
-			}
-
-			if (AdminGroups::hasPermission($login, Permission::map_removeMap)) {
-				$submenu->addItem($maps, "", null);
-				$submenu->addItem($maps, __("Remove this", $login), $this->actions['admremovemap']);
-				$submenu->addItem($maps, __("Trash this", $login), $this->actions['admtrashmap']);
-			}
 		}
-		$stats = $submenu->addSubMenu($menu, __("Statistics", $login));
-		if ($this->exp_isPluginLoaded("LocalRecords"))
-			$submenu->addItem($stats, __("Top 100 Ranks...", $login), $this->actions['serverranks']);
-		$submenu->addItem($stats, "", null);
-		if ($this->exp_isPluginLoaded("Statistics"))
-			$submenu->addItem($stats, __("Statistics...", $login), $this->actions['stats']);
-		$submenu->addItem($stats, __("Server info...", $login), $this->actions['serverinfo']);
-
-		$hud = $submenu->addSubMenu($menu, __("Hud", $login));
-		$submenu->addItem($hud, __("Move Positions", $login), $this->actions['hudMove']);
-		$submenu->addItem($hud, __("Lock Positions", $login), $this->actions['hudLock']);
-		$submenu->addItem($hud, __("Show/Hide widgets...", $login), $this->actions['hudConfig']);
-		$submenu->addItem($hud, __("Reset Positions", $login), $this->actions['hudReset']);
-
-		$votes = $submenu->addSubMenu($menu, __("Votes", $login));
-		$submenu->addItem($votes, __("Vote Restart", $login), $this->actions['voteres']);
-		$submenu->addItem($votes, __("Vote Skip", $login), $this->actions['voteskip']);
-
-		if (AdminGroups::hasPermission($login, Permission::server_votes))
-			$submenu->addItem($votes, __("Cancel Vote", $login), $this->actions['admcancel']);
 
 		if (AdminGroups::hasPermission($login, Permission::team_balance) || AdminGroups::hasPermission($login, Permission::map_endRound) || AdminGroups::hasPermission($login, Permission::map_restart) || AdminGroups::hasPermission($login, Permission::map_skip)) {
-			$adm = $submenu->addSubMenu($menu, __("Admin", $login));
+			$adm = $submenu->addSubMenu($menu, __("Fast Admin", $login), null);
 
 			if (AdminGroups::hasPermission($login, Permission::map_restart))
 				$submenu->addItem($adm, __("Instant Restart", $login), $this->actions['admres']);
@@ -294,10 +288,66 @@ class Menu extends ExpPlugin
 				$submenu->addItem($adm, __("Balance Teams", $login), $this->actions['teambalance']);
 		}
 
-		if (AdminGroups::hasPermission($login, Permission::server_controlPanel)) {
-			$submenu->addItem($menu, __("Server Controls", $login), $this->actions['admcontrol']);
+		if ($this->exp_isPluginLoaded("LocalRecords") || $this->exp_isPluginLoaded("Dedimania") || $this->exp_isPluginLoaded("Dedimania_Script")) {
+			$localRecs = null;
+			if ($this->exp_isPluginLoaded("LocalRecords")) {
+				$localRecs = $this->actions['maprecords'];
+			}
+
+			$records = $submenu->addSubMenu($menu, __("Records", $login), $localRecs);
+
+			if ($this->exp_isPluginLoaded("LocalRecords")) {
+				$submenu->addItem($records, __("Hall of Fame", $login), $this->actions['topsums']);
+				$submenu->addItem($records, __("Server Ranks", $login), $this->actions['serverranks']);
+			}
+
+			if ($this->exp_isPluginLoaded("Dedimania") || $this->exp_isPluginLoaded("Dedimania_Script")) {
+				$submenu->addItem($records, __("Dedimania", $login), $this->actions['dedirecs']);
+			}
 		}
 
+
+
+
+		$statAction = null;
+		if ($this->exp_isPluginLoaded("Statistics"))
+			$statAction = $this->actions['stats'];
+		//$submenu->addItem($stats, __("Statistics...", $login), $this->actions['stats']);
+
+		$stats = $submenu->addSubMenu($menu, __("Statistics", $login), $statAction);
+
+		$hud = $submenu->addSubMenu($menu, __("Hud", $login));
+		$submenu->addItem($hud, __("Move", $login), $this->actions['hudMove']);
+		$submenu->addItem($hud, __("Lock", $login), $this->actions['hudLock']);
+		$submenu->addItem($hud, __("Reset", $login), $this->actions['hudReset']);
+		$submenu->addItem($hud, __("Config...", $login), $this->actions['hudConfig']);
+
+
+		$votes = $submenu->addSubMenu($menu, __("Vote", $login));
+
+		$submenu->addItem($votes, __("Restart", $login), $this->actions['voteres']);
+		$submenu->addItem($votes, __("Skip", $login), $this->actions['voteskip']);
+
+		if (AdminGroups::hasPermission($login, Permission::server_votes)) {
+			$submenu->addItem($votes, "", null);
+			$submenu->addItem($votes, __("Cancel", $login), $this->actions['admcancel']);
+			$submenu->addItem($votes, __("Config", $login), $this->actions['adm_votes']);
+		}
+
+
+
+
+		if (AdminGroups::hasPermission($login, Permission::server_controlPanel)) {
+			$server = $submenu->addSubMenu($menu, __("Server Control", $login), $this->actions['admcontrol']);
+
+			$submenu->addItem($server, __("Admin Groups", $login), $this->actions['adm_groups']);
+			$submenu->addItem($server, __("Plugins", $login), $this->actions['adm_plugins']);
+			$submenu->addItem($server, __("Settings", $login), $this->actions['adm_settings']);
+			$submenu->addItem($server, "", null);
+			$submenu->addItem($server, __("Update", $login), $this->actions['adm_update']);
+		}
+
+		$info = $submenu->addItem($menu, __("Server Info", $login), $this->actions['serverinfo']);
 		$submenu->show();
 	}
 
@@ -314,7 +364,7 @@ class Menu extends ExpPlugin
 	public function onTick()
 	{
 		if ($this->doCheck) {
-			if ($this->counter > 2) {
+			if ($this->counter > 1) {
 				$this->counter = 0;
 				$this->doCheck = false;
 

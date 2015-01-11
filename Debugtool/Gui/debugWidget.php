@@ -39,8 +39,7 @@ class debugWidget extends PlainWidget
 	function onTick()
 	{
 
-		if ($this->lastUpdate + 3 < time()) {
-			echo ".";
+		if ($this->lastUpdate + 3 < time()) {			
 			$value = "mem usage: " . round((memory_get_usage() / 1024 / 1024), 3) . " Mb";
 			if ($value == $this->lastValue) {
 				$this->label->setTextColor("fff");

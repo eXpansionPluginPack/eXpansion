@@ -61,7 +61,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		foreach ($this->items as $item) {
 			$item->setSize($this->sizeX, $this->sizeY);
 		}
-		$this->pager->setSize($this->sizeX - 6, $this->sizeY - 12);
+		$this->pager->setSize($this->sizeX, $this->sizeY - 12);
 		$this->btnAddAll->setPosition(4, -$this->sizeY + 6);
 		parent::onResize($oldX, $oldY);
 	}

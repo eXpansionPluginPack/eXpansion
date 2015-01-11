@@ -52,8 +52,8 @@ Menu.RelativePosition.Z = 30.0;
   foreach (control in Page.GetClassChildren_Result) { 
              declare CMlQuad quad  <=> (Page.GetFirstChild(control.ControlId) as CMlQuad);
              quad.Opacity = 0.0;
-             quad.Scale = 0.0;
+             //quad.Scale = 0.0;
              declare CMlLabel lbl  <=> (Page.GetFirstChild(control.ControlId^"_lbl") as CMlLabel);
              lbl.Opacity = 0.0;
-             lbl.Scale = 0.0;
+             //lbl.Scale = 0.0;
 }

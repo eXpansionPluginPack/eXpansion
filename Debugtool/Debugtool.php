@@ -110,7 +110,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	function mem($login) {
 		Gui\debugWidget::EraseAll();
 		$widget = Gui\debugWidget::Create(null);
-		$widget->setPosition(155,80);
+		$widget->setPosition(155,78);
 		$widget->show();
 	}
 }

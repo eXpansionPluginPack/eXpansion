@@ -149,7 +149,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		$this->setPublicMethod("showRecsWindow");
 		$this->setPublicMethod("showRanksWindow");
 		$this->setPublicMethod("showCpWindow");
-
+		$this->setPublicMethod("showTopSums");
+		
 		//The Database plugin is needed.
 		$this->addDependency(
 				new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\Database\Database")

@@ -1036,7 +1036,7 @@ class Maps extends ExpPlugin
 		$window = Gui\Windows\AddMaps::Create($login);
 		$window->setTitle('Add Maps on server');
 		$window->centerOnScreen();
-		$window->setSize(180, 100);
+		$window->setSize(200, 100);
 		$window->show();
 	}
 
