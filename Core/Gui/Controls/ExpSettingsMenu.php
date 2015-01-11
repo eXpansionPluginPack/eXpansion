@@ -23,7 +23,7 @@ class ExpSettingsMenu extends \ManiaLivePlugins\eXpansion\Gui\Control {
     }
     
     public function reset(){
-	$this->frame->clearComponents();
+	$this->frame->destroyComponents();
     }
 
     public function addItem($label, $action, $color = null){

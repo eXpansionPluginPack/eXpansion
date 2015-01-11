@@ -9,8 +9,8 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
  */
 class ListBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control {
     
-    private $bg;
-    private $config;
+    protected $bg;
+    protected $config;
     
     public function __construct($indexNumber, $sizeX, $sizeY) {
         $config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();

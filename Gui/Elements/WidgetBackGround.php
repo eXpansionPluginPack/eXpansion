@@ -10,9 +10,9 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 class WidgetBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-	private $bg, $bgborder;
+	protected $bg, $bgborder;
 
-	private $config;
+	protected $config;
 
 	public function __construct($sizeX, $sizeY)
 	{

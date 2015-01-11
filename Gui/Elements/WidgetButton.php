@@ -11,11 +11,11 @@ class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 	protected $quad;
 
-	private $text;
+	protected $text;
 
-	private $value;
+	protected $value;
 
-	private $isActive = false;
+	protected $isActive = false;
 
 	/**
 	 * Button

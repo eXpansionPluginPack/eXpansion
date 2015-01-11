@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
@@ -21,7 +22,6 @@
  */
 
 namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Windows;
-
 
 use ManiaLib\Gui\Elements\Label;
 use ManiaLive\PluginHandler\PluginHandler;
@@ -88,22 +88,22 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	/**
 	 * @var PluginHandler
 	 */
-	private $pluginHandler = null;
+	protected $pluginHandler = null;
 
 	/**
 	 * @var Plugin[]
 	 */
-	private $items = array();
+	protected $items = array();
 
 	/**
 	 * @var MetaData[]
 	 */
-	private $pluginList = array();
+	protected $pluginList = array();
 
 	/**
 	 * @var AutoLoad
 	 */
-	private $autoLoad;
+	protected $autoLoad;
 
 	public $firstDisplay = true;
 
@@ -175,8 +175,13 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 		$this->pluginList = $availablePlugins;
 		$this->autoLoad = $autoLoader;
+		foreach ($this->items as $item) {
+			$item->destroy();
+		} 
+		 $this->items = null;
 
 		$this->pagerFrame->clearItems();
+
 		$this->items = array();
 
 		$groups = array();
@@ -186,25 +191,25 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$groups['All'] = true;
 
 		foreach ($availablePlugins as $metaData) {
-			if($this->firstDisplay){
-				foreach($metaData->getGroups() as $name){
+			if ($this->firstDisplay) {
+				foreach ($metaData->getGroups() as $name) {
 					$groups[$name] = true;
 				}
 			}
 
 			$text = $this->input_name->getText();
-			if(!empty($text) && strpos(strtoupper($metaData->getName()), strtoupper($text)) === false)
+			if (!empty($text) && strpos(strtoupper($metaData->getName()), strtoupper($text)) === false)
 				continue;
 
 			$text = $this->input_author->getText();
-			if(!empty($text) && strpos(strtoupper($metaData->getAuthor()), strtoupper($text)) === false)
+			if (!empty($text) && strpos(strtoupper($metaData->getAuthor()), strtoupper($text)) === false)
 				continue;
 
-			if(!empty($this->value_group) && $this->value_group != "All" && !in_array($this->value_group, $metaData->getGroups())){
+			if (!empty($this->value_group) && $this->value_group != "All" && !in_array($this->value_group, $metaData->getGroups())) {
 				continue;
 			}
 
-			if(!$this->input_compatible->getStatus() && !$metaData->checkAll())
+			if (!$this->input_compatible->getStatus() && !$metaData->checkAll())
 				continue;
 
 			$control = new Plugin($i++, $autoLoader, $metaData, $this->getRecipient(), $this->pluginHandler->isLoaded($metaData->getPlugin()));
@@ -212,7 +217,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			$this->pagerFrame->addItem($control);
 		}
 
-		if($this->firstDisplay){
+		if ($this->firstDisplay) {
 			$groups = array_keys($groups);
 			$this->select_group->addItems($groups);
 			$this->elements = $groups;
@@ -248,4 +253,5 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->populate($this->autoLoad, $this->pluginList);
 		$this->redraw($login);
 	}
+
 }

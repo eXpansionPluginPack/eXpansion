@@ -7,13 +7,13 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-	private $label;
+	protected $label;
 
-	private $button;
+	protected $button;
 
-	private $name;
+	protected $name;
 
-	private $bgleft, $bgcenter, $bgright;
+	protected $bgleft, $bgcenter, $bgright;
 
 	function __construct($name, $sizeX = 35, $editable = true)
 	{

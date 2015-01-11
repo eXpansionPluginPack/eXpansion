@@ -11,17 +11,17 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  */
 class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer {
 
-    private static $counter = 0;
-    private static $script = null;
-    private $checkboxId;
-    private $label;
-    private $button;
-    private $entry;
-    private $active = false;
-    private $enabled = true;
-    private $textWidth;
-    private $skin = "checkbox";
-    private $skinWidth = 5;
+    protected static $counter = 0;
+    protected static $script = null;
+    protected $checkboxId;
+    protected $label;
+    protected $button;
+    protected $entry;
+    protected $active = false;
+    protected $enabled = true;
+    protected $textWidth;
+    protected $skin = "checkbox";
+    protected $skinWidth = 5;
 
     function __construct($sizeX = 4, $sizeY = 4, $textWidth = 25) {
         $this->textWidth = $textWidth;

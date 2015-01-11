@@ -12,9 +12,9 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-	private $bg, $bg_left, $bg_right, $lbl_title;
+	protected $bg, $bg_left, $bg_right, $lbl_title;
 
-	private $config;
+	protected $config;
 
 	public function __construct($sizeX, $sizeY)
 	{

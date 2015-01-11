@@ -7,9 +7,9 @@ use ManiaLive\Gui\ActionHandler;
 
 class SimpleCheckbox extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
-    private $button;
-    private $active = false;
-    private $action;
+    protected $button;
+    protected $active = false;
+    protected $action;
 
     function __construct($sizeX = 4, $sizeY = 4) {
         $this->action = $this->createAction(array($this, 'toggleActive'));

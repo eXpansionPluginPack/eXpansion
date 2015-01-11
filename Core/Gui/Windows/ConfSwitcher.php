@@ -47,10 +47,10 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     /**
      * @var Plugin[]
      */
-    private $items = array();
+    protected $items = array();
 
-    private $input;
-    private $buttonSave;
+    protected $input;
+    protected $buttonSave;
 
     protected function onConstruct()
     {
@@ -90,6 +90,11 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function populate(Variable $var)
     {
+		foreach ($this->items as $item) {
+			$item->destroy();
+		}
+		$this->items = null;
+		
         $this->pagerFrame->clearItems();
         $this->items = array();
 

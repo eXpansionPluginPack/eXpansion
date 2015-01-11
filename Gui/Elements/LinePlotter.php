@@ -14,11 +14,11 @@ class LinePlotter extends \ManiaLivePlugins\eXpansion\Gui\Control {
     protected $label_graphtitle;
     protected $graph_element;
     protected $graph;
-    private $plots = array();
-    private $limits = array();
-    private $colors = array();
-    private $sizes = array();
-    private $tickSize = 4;
+    protected $plots = array();
+    protected $limits = array();
+    protected $colors = array();
+    protected $sizes = array();
+    protected $tickSize = 4;
 
     /**
      * Button

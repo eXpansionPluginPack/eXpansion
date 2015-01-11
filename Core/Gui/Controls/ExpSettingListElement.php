@@ -8,10 +8,10 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 class ExpSettingListElement extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-	private $bg;
-	private $label_key;
-	private $label_value;
-	private $button_remove;
+	protected $bg;
+	protected $label_key;
+	protected $label_value;
+	protected $button_remove;
 	public static $large = false;
 
 	function __construct($indexNumber, $login, $action)

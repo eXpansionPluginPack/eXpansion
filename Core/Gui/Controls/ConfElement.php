@@ -10,19 +10,19 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 class ConfElement extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $bg;
-    private $label_name;
+    protected $bg;
+    protected $label_name;
 
     /**
      * @var \ManiaLivePlugins\eXpansion\Gui\Elements\Button | null
      */
-    private $button_save = null;
-    private $button_load = null;
-    private $button_select = null;
+    protected $button_save = null;
+    protected $button_load = null;
+    protected $button_select = null;
 
-    private $path;
+    protected $path;
 
-    private $input;
+    protected $input;
 
     function __construct($indexNumber, $name, $isCurrent, $modify, $login, $path)
     {

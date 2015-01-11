@@ -5,14 +5,14 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
-	private $items = array();
-	private $dropdown;
-	private $output;
-	private $frame;
-	private $label;
-	private $xml;
-	private $values;
-	private $name;
+	protected $items = array();
+	protected $dropdown;
+	protected $output;
+	protected $frame;
+	protected $label;
+	protected $xml;
+	protected $values;
+	protected $name;
 
 	/** @var \ManiaLivePlugins\eXpansion\Gui\Structures\Script */
 	private $script = null;
@@ -109,7 +109,7 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
 
 	function onIsRemoved(\ManiaLive\Gui\Container $target)
 	{
-		parent::onIsRemoved($target);
+		parent::onIsRemoved($target);		
 		$this->destroy();
 	}
 

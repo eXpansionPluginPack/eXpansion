@@ -9,27 +9,27 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
-	private $frame;
+	protected $frame;
 
-	private $clickAction;
+	protected $clickAction;
 
-	private $iitems = array();
+	protected $iitems = array();
 
-	private $data = array();
+	protected $data = array();
 
-	private $scroll, $bg, $scrollBg;
+	protected $scroll, $bg, $scrollBg;
 
-	private $scrollDown, $scrollUp;
+	protected $scrollDown, $scrollUp;
 
-	private $myScript;
+	protected $myScript;
 
-	private $ContentLayout;
+	protected $ContentLayout;
 
-	private $nbElemParColumn;
+	protected $nbElemParColumn;
 
-	private $index = 0;
+	protected $index = 0;
 
-	private $rowPerPage = 1;
+	protected $rowPerPage = 1;
 
 	function __construct()
 	{
@@ -142,7 +142,7 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
 
 		$sizeY = $layout->getSizeY() * ($layout->getScale() == 0.0 ? 1 : $layout->getScale());
 
-		$this->frame->clearComponents();
+		$this->frame->destroyComponents();
 		$layout = null;
 
 		$limit = (int) ($this->getSizeY() / $sizeY);

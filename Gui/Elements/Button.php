@@ -7,9 +7,9 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
-	private static $counter = 0;
+	protected static $counter = 0;
 
-	private static $script = null;
+	protected static $script = null;
 
 	protected $label;
 
@@ -17,7 +17,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
 	protected $activeFrame;
 
-	private $backGround;
+	protected $backGround;
 
 	protected $backGroundDesc;
 
@@ -25,17 +25,17 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
 	protected $icon;
 
-	private $buttonId;
+	protected $buttonId;
 
-	private $text;
+	protected $text;
 
-	private $description;
+	protected $description;
 
-	private $value;
+	protected $value;
 
-	private $isActive = false;
+	protected $isActive = false;
 
-	private $action = 0;
+	protected $action = 0;
 
 	/**
 	 * Button

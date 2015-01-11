@@ -12,16 +12,16 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class InputboxMasked extends Control
 {
 
-	private $label;
+	protected $label;
 
-	private $button;
+	protected $button;
 
 	/** @var Button */
-	private $nonHidden;
+	protected $nonHidden;
 
-	private $name;
+	protected $name;
 
-	private $bgleft, $bgcenter, $bgright;
+	protected $bgleft, $bgcenter, $bgright;
 
 	function __construct($name, $sizeX = 35, $editable = true)
 	{

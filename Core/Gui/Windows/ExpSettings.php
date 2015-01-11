@@ -21,12 +21,12 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	public $actions = array();
 	public $items = array();
 	public $configManager;
-	private $currentGroup = "";
-	private $first = false;
-	private $confName = "main";
+	protected $currentGroup = "";
+	protected $first = false;
+	protected $confName = "main";
 
-	private $button_validate = null;
-	private $button_cancel = null;
+	protected $button_validate = null;
+	protected $button_cancel = null;
 
 	protected function onConstruct()
 	{
@@ -76,6 +76,12 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	}
 
 	public function refreshInfo(){
+
+
+		foreach ($this->items as $item) {
+			$item->destroy();
+		}
+		$this->items = null;
 		$this->pagerFrame->clearItems();
 
 		$groupVars = $this->configManager->getGroupedVariables($this->confName);
@@ -127,9 +133,7 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		foreach ($this->items as $item) {
 			$item->destroy();
 		}
-		$this->items = null;
-		$this->pagerFrame->destroy();
-		$this->destroyComponents();
+		$this->items = null;		
 		parent::destroy();
 	}
 

@@ -9,22 +9,22 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
-	private $inputbox, $preview, $openButton, $frame, $bg, $ok, $cancel;
+	protected $inputbox, $preview, $openButton, $frame, $bg, $ok, $cancel;
 
-	private $settings;
-
-	/** @var int */
-	private $buttonId;
+	protected $settings;
 
 	/** @var int */
-	private static $counter = 0;
+	protected $buttonId;
+
+	/** @var int */
+	protected static $counter = 0;
 
 	/** @var \ManiaLivePlugins\eXpansion\Gui\Structures\Script */
-	private static $script = null;
+	protected static $script = null;
 
-	private $digits = 3;
+	protected $digits = 3;
 
-	private $prefix = 1;
+	protected $prefix = 1;
 
 	/**
 	 *

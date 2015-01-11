@@ -9,8 +9,8 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
  */
 class TitleBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
-    private $bg;
-    private $config;
+    protected $bg;
+    protected $config;
 
     public function __construct($sizeX, $sizeY) {
         $config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();

@@ -22,23 +22,23 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 class ExpSetting extends Control
 {
 
-	private $bg;
+	protected $bg;
 
-	private $label_varName;
+	protected $label_varName;
 
-	private $label_varValue;
+	protected $label_varValue;
 
-	private $button_change = null;
+	protected $button_change = null;
 
-	private $button_reset = null;
+	protected $button_reset = null;
 
-	private $icon_global = null;
+	protected $icon_global = null;
 
-	private $input;
+	protected $input;
 
-	private $var;
+	protected $var;
 
-	private $win;
+	protected $win;
 
 	function __construct($indexNumber, Variable $var, $login, ExpSettings $win)
 	{
@@ -175,8 +175,7 @@ class ExpSetting extends Control
 	}
 
 	public function reset($login)
-	{
-		print_r($this->var->getDefaultValue());
+	{		
 		$this->var->setRawValue($this->var->getDefaultValue());
 		$this->win->refreshInfo();
 		$this->win->redraw();
@@ -201,6 +200,12 @@ class ExpSetting extends Control
 				return isset($options[$this->var->getName()]) ? $options[$this->var->getName()] : null;
 			}
 		}
+	}
+
+	public function destroy()
+	{
+		$this->win = null;
+		parent::destroy();
 	}
 
 }
