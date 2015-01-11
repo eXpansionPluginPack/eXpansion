@@ -120,7 +120,7 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
 
 	public function clearItems()
 	{
-		if (property_exists($this, "pager")) {
+		if (isset($this->pager) && $this->pager != null) {
 			$this->pager->destroyComponents();
 			$this->items = array();
 		}
@@ -136,9 +136,10 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
 
 	public function destroy()
 	{
-		if (property_exists($this, "pager")) {
+		if (isset($this->pager) && $this->pager != null) {
 			$this->pager->destroyComponents();
 			$this->pager->destroy();
+			$this->items = array();
 		}
 		parent::destroy();
 	}
