@@ -131,7 +131,7 @@ if(!disablePersonalHud){
 	    <?php echo $deltaX ?>
 	    <?php echo $deltaY ?>
 	    LastDelta += DeltaPos;
-	    //LastDelta.Z = -3.0;
+	    LastDelta.Z = 0.0;
 	    Window.RelativePosition = LastDelta;
 	    eXp_widgetLastPos[version][id][gameMode] = Window.AbsolutePosition;
 	    eXp_widgetLastPosRel[version][id][gameMode] = Window.RelativePosition;
