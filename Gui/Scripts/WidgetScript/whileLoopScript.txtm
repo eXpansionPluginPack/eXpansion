@@ -53,7 +53,7 @@ if(!disablePersonalHud){
 		    eXp_widgetLastPos[version][id] = Vec3[Text];
 	    }
 	    if (!eXp_widgetLastPos[version][id].existskey(gameMode) ) {
-		    eXp_widgetLastPos[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, 0.0>;
+		    eXp_widgetLastPos[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, -3.0>;
 	    }
 
 	    if (!eXp_widgetLastPosRel.existskey(version)) {
@@ -65,7 +65,7 @@ if(!disablePersonalHud){
 	    }
 
 	    if (!eXp_widgetLastPosRel[version][id].existskey(gameMode)) {
-		    eXp_widgetLastPosRel[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, 0.0>;
+		    eXp_widgetLastPosRel[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, -3.0>;
 	    }
 
 	 if (eXp_widgetVisible[version][id][gameMode] == True && eXp_widgetLayers[version][id][gameMode] == visibleLayerInit && exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode]) {
@@ -112,12 +112,14 @@ if(!disablePersonalHud){
     }
 
 //    foreach (Event in PendingEvents) {
-//	if (Event.Type == CMlEvent::Type::MouseOver ) {
+	//if (Event.Type == CMlEvent::Type::MouseOver ) {
 //	    if(Event.Control != Null ){
 //	       element = Event.Control;
 //	       element.RelativeScale = 1.1;	   
+              // ClientUI.StatusMessage = "id: " ^Event.ControlId ^ "  z:" ^ LastDelta.Z;
 //	    }	
 //	}
+//    }
 //	else {
 //	      if (element != Null){ 	   	    
 //		element.RelativeScale = 1.0;	  
@@ -129,7 +131,7 @@ if(!disablePersonalHud){
 	    <?php echo $deltaX ?>
 	    <?php echo $deltaY ?>
 	    LastDelta += DeltaPos;
-	    //LastDelta.Z = 3.0;
+	    //LastDelta.Z = -3.0;
 	    Window.RelativePosition = LastDelta;
 	    eXp_widgetLastPos[version][id][gameMode] = Window.AbsolutePosition;
 	    eXp_widgetLastPosRel[version][id][gameMode] = Window.RelativePosition;

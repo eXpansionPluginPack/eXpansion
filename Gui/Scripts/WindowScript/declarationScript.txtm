@@ -67,8 +67,7 @@ Boolean stackContainsWindow(Text window) {
 
 //Main Function
 main () {
-
-    declare Integer lastAction = Now;
+    
     declare Boolean mouseButton for Page;
     declare Integer tabIndex = -1;
 
@@ -127,8 +126,8 @@ main () {
         openWindow = True;
     }
     
-    stackActivateWindow(id);
-    
+    stackActivateWindow(id);    
+    declare Integer lastAction = Now;
 
     while(True) {
 	yield;
@@ -136,14 +135,14 @@ main () {
         <?php echo $this->wLoop ?>
 
         if (openWindow) {
-            Window.RelativeScale = AL::Ease("ElasticOut2", (Now - lastAction) * 1., 0., 1., 400.);
+            Window.RelativeScale = AL::Ease("SincOut", (Now - lastAction) * 1., 0.5, 0.5, 200.);
         }
 
         if (closeWindow) {
-          Window.RelativeScale = 1. - AL::Ease("QuadOut", (Now - lastAction) * 1., 0., 1., 250.);
+          Window.RelativeScale = 1. - AL::Ease("SincOut", (Now - lastAction) * 1., 0., 0.5, 200.);
         }
 
-        if (openWindow && lastAction + 400 <= Now ) {            
+        if (openWindow && lastAction + 200 <= Now ) {            
             openWindow = False;
             
             //declare Real winX = exp_windowLastPosRel[version][id].X;
@@ -152,7 +151,7 @@ main () {
             lastAction = 0;
         }	
 
-	if (closeWindow && lastAction + 150 <= Now ) {	    
+	if (closeWindow && lastAction + 200 <= Now ) {	    
             closeWindow = False;
             Window.Hide();
             stackRemoveWindow(id);
@@ -164,7 +163,7 @@ main () {
 	    foreach (key => value in exp_windowStack) {	               
 		if (id == value) {             
                  Window.RelativePosition.Z = zIndex - ( 5. * key);    
-                 //TitlebarText.Value = "id: " ^ id ^ " value: " ^value ^ " z: " ^ Window.RelativePosition.Z;
+                 // TitlebarText.Value = "id: " ^ id ^ " value: " ^value ^ " z: " ^ Window.RelativePosition.Z;
 	        }
                
 	    }	    
