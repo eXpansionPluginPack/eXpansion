@@ -31,14 +31,14 @@ use ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Hooks\HookElement;
 class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
 
-	private $bg, $logo;
+	protected $bg, $logo;
 
-	private $frameRight, $frameLeft;
+	protected $frameRight, $frameLeft;
 
-	private $script;
+	protected $script;
 
 	/** @var \ManiaLive\Data\Storage 	 */
-	private $storage;
+	protected $storage;
 
 	protected function onConstruct()
 	{
@@ -96,18 +96,18 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		$elements = array();
 
 
-		$elements['serverName'] = new HookElement($this->getServerNameItem(), 1000);
+   $elements['serverName'] = new HookElement($this->getServerNameItem(), 1000);
 	//	$elements['gameInfo'] = new HookElement($this->getGameModeItem(), 50);
-	//	$elements['mapInfo'] = new HookElement($this->getMapInfo(), 40);
+	//	$elements['clock'] = new HookElement($this->getClock());
 	//	$elements['nbPlayer'] = new HookElement($this->getNbPlayer(), 30);
 	//	$elements['nbSpec'] = new HookElement($this->getNbSpectators(), 20);
 
 		$hook = new HookData();
 		$hook->data = $elements;
 
-		\ManiaLive\Event\Dispatcher::dispatch(
-			new BarElements(BarElements::ON_LEFT_CREATE, $hook, 'test')
-		);
+		//\ManiaLive\Event\Dispatcher::dispatch(
+		//	new BarElements(BarElements::ON_LEFT_CREATE, $hook, 'test')
+		//);
 
 		usort($hook->data, array($this, 'cmp'));
 		return $hook->data;
@@ -120,15 +120,15 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
 		$elements = array();
 
-
-		$elements['clock'] = new HookElement($this->getClock());
+		$elements['mapInfo'] = new HookElement($this->getMapInfo(), 999);
+		
 
 		$hook = new HookData();
 		$hook->data = $elements;
 
-		\ManiaLive\Event\Dispatcher::dispatch(
-			new BarElements(BarElements::ON_LEFT_CREATE, $hook, 'test')
-		);
+		//\ManiaLive\Event\Dispatcher::dispatch(
+		//	new BarElements(BarElements::ON_LEFT_CREATE, $hook, 'test')
+		//);
 
 		usort($hook->data, array($this, 'cmp'));
 		return $hook->data;
@@ -188,7 +188,7 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 	}
 
 	protected function getMapInfo(){
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\MapInfoItem("", "", 48, "Icons128x128_1", "Race");
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\MapInfoItem("", "", 32, "Icons128x128_1", "Race");
 		$item->setId('mapName');
 		$item->setIdTitle('mapAuthor');
 		$item->setQuadId("mapIcon");
