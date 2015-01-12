@@ -33,6 +33,7 @@ class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$this->button->setAlign('center', 'top');
 		$this->button->setBgcolor("0000");
 		$this->button->setBgcolorFocus("fff6");
+		$this->button->setScriptEvents();
 		$this->addComponent($this->button);
 
 		$this->sizeX = $sizeX;

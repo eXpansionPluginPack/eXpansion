@@ -1,4 +1,3 @@
-
 foreach (Event in PendingEvents) {                                                
     if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "Edge" )) {	
         
@@ -13,12 +12,12 @@ foreach (Event in PendingEvents) {
            else {             
              // Edge.Style = "Icons64x64_1";
              // Edge.Substyle = "LvlRed";            
-Edge.BgColor = <0.,.8,0.>;
+            Edge.BgColor = <0.,.8,0.>;
                 
            }
 
-           foreach (widgetid => value in edge_animatedId) {
-                edge_animatedId[widgetid] = True;
-            }
+         //  foreach (widgetid => value in edge_animatedId) {
+         //       edge_animatedId[widgetid] = True;
+         //   }
     }                                       
 }

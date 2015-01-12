@@ -18,10 +18,10 @@ class DediPanel extends PlainPanel
 		/*
 		  $this->animation = new Animation();
 		  $this->registerScript($this->animation);
-
+		*/
 		  $this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
 		  $this->registerScript($this->edgeWidget);
-		 */
+
 	}
 
 }

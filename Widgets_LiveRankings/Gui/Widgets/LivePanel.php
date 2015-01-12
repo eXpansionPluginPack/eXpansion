@@ -15,8 +15,8 @@ class LivePanel extends PlainLivePanel
 		/*
 		$this->animation = new \ManiaLivePlugins\eXpansion\Gui\Script_libraries\Animation();
 		$this->registerScript($this->animation);
-		
-		$this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
+		*/
+		/*$this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
 		$this->registerScript($this->edgeWidget);
 		*/
 	}

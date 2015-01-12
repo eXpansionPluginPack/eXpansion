@@ -27,8 +27,11 @@ declare Player = Null;
 declare Boolean needUpdate = True;
 declare lastUpdateTime = 0;
 
-declare animStart = Now;
-declare Boolean start = True;
+declare Integer animStart = Now;
+declare Boolean isStart = True;
+declare Boolean isZoom = True;
+declare Integer zoomId = -1;
+declare Integer lastZoomId = -2;
 
 if(getCurrentTimes){
 //sleep(1000);
@@ -72,5 +75,5 @@ for (i, 1, nbFields ) {
         nickLabel.Opacity = 0.;       
 }
 
-start = True;
+isStart = True;
 animStart = Now;

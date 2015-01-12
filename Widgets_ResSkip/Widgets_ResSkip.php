@@ -76,7 +76,11 @@ class Widgets_ResSkip extends ExpPlugin
 		if ($this->expStorage->isRelay)
 			return;
 
+		
+
 		$widget = ResSkipButtons::Create($login);
+
+		$login = strval($login);
 		$widget->setActions($this->actions['res'], $this->actions['skip']);
 		$widget->setServerInfo($this->storage->serverLogin);
 		$widget->setSize(32.0, 10.0);
@@ -84,31 +88,20 @@ class Widgets_ResSkip extends ExpPlugin
 
 		$nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
 
-		if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] != -1) {
-			$amount = $this->config->publicSkipAmount[$nbSkips];
-			$widget->setSkipAmount($amount);
+		if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] > 0) {
+			$widget->setSkipAmount($this->config->publicSkipAmount[$nbSkips]);
 		}
 		else {
-			if ($nbSkips >= count($this->config->publicSkipAmount)) {
-				$widget->setSkipAmount("max");
-			}
-			else {
-				$widget->setSkipAmount("no");
-			}
+			$widget->setSkipAmount("max");
 		}
 
-		if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] != -1) {
-			$amount = $this->config->publicResAmount[$this->resCount];
-			$widget->setResAmount($amount);
+		if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] > 0) {
+			$widget->setResAmount($this->config->publicResAmount[$this->resCount]);
 		}
 		else {
-			if ($this->resCount >= count($this->config->publicResAmount)) {
-				$widget->setResAmount("max");
-			}
-			else {
-				$widget->setResAmount("no");
-			}
+			$widget->setResAmount("max");
 		}
+		
 		$widget->show();
 	}
 
