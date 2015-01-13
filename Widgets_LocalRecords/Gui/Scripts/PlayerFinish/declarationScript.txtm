@@ -33,6 +33,9 @@ declare Boolean isZoom = True;
 declare Boolean triggerBegin = True;
 declare Integer zoomId = -1;
 declare Integer lastZoomId = -2;
+declare test = UI.UISequence;
+
+log(Now ^ ": " ^test );
 
 if(getCurrentTimes){
 //sleep(1000);

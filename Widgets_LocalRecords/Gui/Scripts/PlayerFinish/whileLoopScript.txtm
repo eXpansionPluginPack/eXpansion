@@ -1,3 +1,8 @@
+if (test != UI.UISequence) {
+    test = UI.UISequence;
+    log(test);
+}
+
 if (UI.UISequence == CUIConfig::EUISequence::Playing && triggerBegin == True) {
     triggerBegin = False;
     isStart = True;
