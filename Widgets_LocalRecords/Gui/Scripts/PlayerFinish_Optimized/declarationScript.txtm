@@ -29,8 +29,13 @@ declare Boolean needUpdate = True;
 declare lastUpdateTime = 0;
 declare lastCheckTime = 0;
 
-declare animStart = Now;
-declare Boolean start = True;
+// animations
+declare Integer animStart = Now;
+declare Boolean isStart = False;
+declare Boolean isZoom = True;
+declare Boolean triggerBegin = True;
+declare Integer zoomId = -1;
+declare Integer lastZoomId = -2;
 
 if(getCurrentTimes){
     //sleep(1000);
@@ -73,7 +78,3 @@ for (i, 1, nbFields ) {
         timeLabel.Opacity = 0.;
         nickLabel.Opacity = 0.;       
 }
-
-
-start = True;
-animStart = Now;

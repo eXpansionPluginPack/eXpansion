@@ -43,7 +43,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	 *
 	 * @var type int
 	 */
-	protected $debug = self::DEBUG_ALL;
+	protected $debug = self::DEBUG_NONE;
 
 	/**
 	 * List of the records for the current track

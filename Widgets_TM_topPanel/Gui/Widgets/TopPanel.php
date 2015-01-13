@@ -105,9 +105,9 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		$hook = new HookData();
 		$hook->data = $elements;
 
-		//\ManiaLive\Event\Dispatcher::dispatch(
-		//	new BarElements(BarElements::ON_LEFT_CREATE, $hook, 'test')
-		//);
+		\ManiaLive\Event\Dispatcher::dispatch(
+			new BarElements(BarElements::ON_LEFT_CREATE, $hook, 'test')
+		);
 
 		usort($hook->data, array($this, 'cmp'));
 		return $hook->data;
@@ -126,9 +126,9 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		$hook = new HookData();
 		$hook->data = $elements;
 
-		//\ManiaLive\Event\Dispatcher::dispatch(
-		//	new BarElements(BarElements::ON_LEFT_CREATE, $hook, 'test')
-		//);
+		\ManiaLive\Event\Dispatcher::dispatch(
+			new BarElements(BarElements::ON_LEFT_CREATE, $hook, 'test')
+		);
 
 		usort($hook->data, array($this, 'cmp'));
 		return $hook->data;

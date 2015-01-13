@@ -44,6 +44,7 @@ class Widgets_TM_topPanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 		}
 
 		$this->enableDedicatedEvents();
+		
 		$widget = Gui\Widgets\TopPanel::Create(null);
 		$widget->show();
 	}

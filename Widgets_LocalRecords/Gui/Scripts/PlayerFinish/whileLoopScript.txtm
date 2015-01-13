@@ -1,3 +1,8 @@
+if (UI.UISequence == CUIConfig::EUISequence::Playing && triggerBegin == True) {
+    triggerBegin = False;
+    isStart = True;
+    animStart = Now;   
+} 
 
 if (isStart) {    
     declare delay = 100;
