@@ -1,4 +1,4 @@
-if( edge_isLockedVisible == False && (Now - eXp_lastClockUpdate) >= 500 ) {
+if( edge_isLockedVisible2 == False && (Now - eXp_lastClockUpdate) >= 500 ) {
 
 declare Real Speed = InputPlayer.Speed*3.6;
 

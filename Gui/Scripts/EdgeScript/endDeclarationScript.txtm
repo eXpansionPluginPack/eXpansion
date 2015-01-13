@@ -4,12 +4,12 @@ declare  CMlQuad Edge <=> (Page.GetFirstChild("Edge") as CMlQuad);
 declare  Boolean edge_isMinimized for UI = False;
 declare Boolean edge_isAnimated for UI= False;
 declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
-declare persistent Boolean edge_isLockedVisible = False;
+declare persistent Boolean edge_isLockedVisible2 = True;
 
 edge_isAnimated = False;
 edge_animatedId.clear();
 
- if (edge_isLockedVisible) {
+ if (edge_isLockedVisible2) {
     //Edge.Style = "Icons64x64_1";
     //Edge.Substyle = "LvlGreen";
      Edge.BgColor = <0.8,0.,0.>;
@@ -17,6 +17,6 @@ edge_animatedId.clear();
 else {             
      // Edge.Style = "Icons64x64_1";
     // Edge.Substyle = "LvlRed";   
-Edge.BgColor = <0.,0.8,0.>;          
+    Edge.BgColor = <0.,0.8,0.>;          
        
 }
