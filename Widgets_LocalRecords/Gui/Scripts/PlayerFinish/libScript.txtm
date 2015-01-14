@@ -7,11 +7,11 @@ Void putRecordTo(Integer i, Integer Rank, Integer Score, Text Login, Text nick, 
 	declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
 	
 	if(nickLabel != Null){
-		nickLabel.Value = nick;
+		nickLabel.Value = TextLib::Trim(TextLib::StripFormatting(nick));
 		timeLabel.Value = TimeToText(Score);
 
 		declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
-		rank.Value = ""^Rank;
+		rank.SetText(""^Rank^".");
 
 		declare bg = (Page.GetFirstChild("RecBgBlink_"^i) as CMlQuad);
 

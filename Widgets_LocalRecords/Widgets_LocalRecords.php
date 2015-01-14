@@ -11,6 +11,7 @@ use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\LocalPanel2;
 class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
+    public static $me = null;
 	public static $localrecords = array();
 
 	public static $secondMap = false;
@@ -43,11 +44,13 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 	{
 		$this->enableDedicatedEvents();
 
+        $this->lastUpdate = time();
 		if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'))
 			self::$localrecords = $this->callPublicMethod(
 					"\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords"
 			);
 		$this->updateLocalPanel();
+        self::$me = $this;
 	}
 
 	public function updateLocalPanel($login = null)
@@ -153,6 +156,8 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 	public function onRecordsLoaded($data)
 	{
 		self::$localrecords = $data;
+        $this->local        = true;
+        $this->needUpdate   = self::$localrecords;
 	}
 
 	public function onPlayerConnect($login, $isSpectator)
