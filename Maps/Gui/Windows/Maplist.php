@@ -418,7 +418,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		if (is_object($this->btnRemoveAll))
 			$this->btnRemoveAll->destroy();
 		$this->pager->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 
 		ActionHandler::getInstance()->deleteAction($this->actionRemoveAll);
 		ActionHandler::getInstance()->deleteAction($this->actionRemoveAllf);

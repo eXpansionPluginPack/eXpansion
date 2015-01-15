@@ -4,16 +4,16 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class Inputbox extends \ManiaLive\Gui\Control
+class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-	private $label;
+	protected $label;
 
-	private $button;
+	protected $button;
 
-	private $name;
+	protected $name;
 
-	private $bgleft, $bgcenter, $bgright;
+	protected $bgleft, $bgcenter, $bgright;
 
 	function __construct($name, $sizeX = 35, $editable = true)
 	{
@@ -93,7 +93,7 @@ class Inputbox extends \ManiaLive\Gui\Control
 			$this->button->setId($this->name);
 			$this->button->setDefault($text);
 			$this->button->setScriptEvents(true);
-			$this->button->setStyle("TextCardSmall");
+			$this->button->setStyle("TrackerText");
 			$this->button->setTextSize(1);
 			$this->button->setFocusAreaColor1("0000");
 			$this->button->setFocusAreaColor2("0000");

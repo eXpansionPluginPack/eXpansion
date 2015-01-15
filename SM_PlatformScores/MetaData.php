@@ -26,7 +26,6 @@ namespace ManiaLivePlugins\eXpansion\SM_PlatformScores;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
-use ManiaLivePlugins\eXpansion\LocalRecords\Config;
 
 /**
  * Same Meta data as the local records just name and compatibility changes settings are common
@@ -36,15 +35,11 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Config;
 class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData
 {
 
-	protected function initName()
+	public function onBeginLoad()
 	{
+		parent::onBeginLoad();
 		$this->setName('Local Scores');
-
 		$this->setDescription('Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. Higher scores are better.');
-	}
-
-	protected function initCompatibility()
-	{
 		$this->addTitleSupport('PlatformBeta@nadeolabs');
 		$this->setEnviAsTitle(false);
 	}

@@ -14,9 +14,9 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $Colors_admin_action = '$6af'; // admin actions color
 	public $Colors_variable = '$eee'; // generic variable color
 
-	public $Colors_record = '$0bb'; // all other local records
+	public $Colors_record = '$3af'; // all other local records
 	public $Colors_record_top = '$1F0'; // top5 local records
-	public $Colors_dedirecord = '$0af'; // dedimania records
+	public $Colors_dedirecord = '$3af'; // dedimania records
 	public $Colors_rank = '$ff0'; // used in record messages for rank
 	public $Colors_time = '$fff';
 
@@ -48,7 +48,8 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $mapBase = "";
 	public $defaultMatchSettingsFile = "eXpansion_autosave.txt";
 	public $dedicatedConfigFile = "dedicated_cfg.txt";
-    	public $saveSettingsFile = "casualRace";
+    public $saveSettingsFile = "casualRace";
+	
 
 	public $contact = "YOUR@EMAIL.COM";
 
@@ -57,8 +58,6 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $netLostTime = 4000;   // time in milliseconds for lastresponse time, used to determine netlost 
 	
 	public $roundsPoints = array(10,8,6,5,4,3,2,1);
-
-	public $modeTeamSupport = array('Team.Script.txt','Siege.Script.txt','Battle.Script.txt','ShootMania\\Elite.Script.txt');
 	
 	public $quitDialogManialink = "";
 	

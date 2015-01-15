@@ -104,7 +104,7 @@ class RecordCps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->recs = null;
 
 		$this->pager->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 
@@ -115,15 +115,10 @@ class RecordCps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 		$login = $this->getRecipient();
 		foreach ($recs as $rec) {
-			$this->items[$x] = new CpItem($x, $login, $rec, $this->widths, 0);
-			$this->pager->addItem($this->items[$x]);
+			$this->items[$x] = new CpItem($x, $login, $rec, $this->widths, 0);		
 			$x++;
 		}
-
-		if (count($recs) < $this->itemsPerPage) {
-			$this->prevButton->setVisibility(false);
-			$this->nextButton->setVisibility(false);
-		}
+		$this->updatePage(0);		
 	}
 
 	public function nextPage($offset)
@@ -151,7 +146,13 @@ class RecordCps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	{
 		$this->pager->clearItems();
 
-		$this->frameCP->clearComponents();
+		foreach ($this->items as $item) {
+			$item->erase();
+		}
+
+		$this->items = array();
+
+		$this->frameCP->destroyComponents();
 
 		for ($x = $this->offset; $x <= $this->offset + $this->itemsPerPage; $x++) {
 			$label = new \ManiaLib\Gui\Elements\Label(15, 6);
@@ -160,21 +161,32 @@ class RecordCps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			$this->frameCP->addComponent($label);
 		}
 
+		$this->prevButton = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(6, 6);
+		$this->prevButton->setIcon("Icons64x64_1", "ArrowPrev");
+		$this->prevButton->setAction($this->createAction(array($this, "prevPage")));
+		$this->frameCP->addComponent($this->prevButton);
+
+		$this->nextButton = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(6, 6);
+		$this->nextButton->setIcon("Icons64x64_1", "ArrowNext");
+		$this->nextButton->setAction($this->createAction(array($this, "nextPage")));
+		$this->frameCP->addComponent($this->nextButton);
+
+
 		$this->frameCP->addComponent($this->prevButton);
 		$this->frameCP->addComponent($this->nextButton);
 
 		$this->nextButton->setVisibility(true);
 
-
-		if (count($this->recs) <= ($this->offset + $this->itemsPerPage)) {
+		if ($offset < $this->itemsPerPage) {
+			$this->prevButton->setVisibility(false);
 			$this->nextButton->setVisibility(false);
 		}
 
-		foreach ($this->items as $item) {
-			$item->erase();
+		if ($offset <= ($this->offset + $this->itemsPerPage)) {
+			$this->nextButton->setVisibility(false);
 		}
 
-		$this->items = array();
+
 
 		$x = 0;
 		foreach ($this->recs as $rec) {

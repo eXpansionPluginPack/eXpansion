@@ -25,8 +25,8 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 class Dico
 {
 
-    private $xml = "";
-    private $messages = array();
+    protected $xml = "";
+    protected $messages = array();
 
     public function __construct($dicoText = array())
     {

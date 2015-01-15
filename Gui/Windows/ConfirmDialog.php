@@ -68,7 +68,7 @@ class ConfirmDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function destroy() {
 	$this->ok->destroy();
 	$this->cancel->destroy();
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

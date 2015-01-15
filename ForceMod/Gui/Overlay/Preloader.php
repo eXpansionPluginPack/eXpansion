@@ -29,7 +29,7 @@ class Preloader extends \ManiaLive\Gui\Window {
     function destroy() {
 	$this->frame->clearComponents();
 	$this->frame->destroy();
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

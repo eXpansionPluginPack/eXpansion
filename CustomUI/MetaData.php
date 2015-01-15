@@ -17,7 +17,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Game UI Elements Customizer");
 		$this->setDescription("Enables you to hide game ui elements");
-		$this->setGroups(array('UI'));
+		$this->setGroups(array('UI', 'Tools'));
 
 		$config = Config::getInstance();
 

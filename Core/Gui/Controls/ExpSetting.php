@@ -22,23 +22,23 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 class ExpSetting extends Control
 {
 
-	private $bg;
+	protected $bg;
 
-	private $label_varName;
+	protected $label_varName;
 
-	private $label_varValue;
+	protected $label_varValue;
 
-	private $button_change = null;
+	protected $button_change = null;
 
-	private $button_reset = null;
+	protected $button_reset = null;
 
-	private $icon_global = null;
+	protected $icon_global = null;
 
-	private $input;
+	protected $input;
 
-	private $var;
+	protected $var;
 
-	private $win;
+	protected $win;
 
 	function __construct($indexNumber, Variable $var, $login, ExpSettings $win)
 	{
@@ -89,14 +89,15 @@ class ExpSetting extends Control
 		}
 		else {
 			if ($var instanceof Boolean) {
-				$this->input = new CheckboxScripted(5, 5);
+				$this->input = new CheckboxScripted(10, 5);
+                                $this->input->setSkin();                               
 				$this->input->setStatus($var->getRawValue());
-				$this->input->setPosY(-1);
+				$this->input->setPosY(-2);
 				$this->input->setPosX(7);
 				$this->addComponent($this->input);
 			}
 			else if ($var instanceof ColorCode) {
-				$this->input = new \ManiaLivePlugins\eXpansion\Gui\Elements\ColorChooser($var->getName());
+				$this->input = new \ManiaLivePlugins\eXpansion\Gui\Elements\ColorChooser($var->getName(), 35, $var->getUseFullHex(), $var->getUsePrefix());
 				$this->input->setColor($var->getRawValue());
 				$this->input->setPosY(-2);
 				$this->input->setPosX(7);
@@ -174,8 +175,7 @@ class ExpSetting extends Control
 	}
 
 	public function reset($login)
-	{
-		print_r($this->var->getDefaultValue());
+	{		
 		$this->var->setRawValue($this->var->getDefaultValue());
 		$this->win->refreshInfo();
 		$this->win->redraw();
@@ -200,6 +200,13 @@ class ExpSetting extends Control
 				return isset($options[$this->var->getName()]) ? $options[$this->var->getName()] : null;
 			}
 		}
+	}
+
+	public function destroy()
+	{		
+		parent::destroy();
+		// disabling for now, since reset didn't work...
+		// $this->win = null;
 	}
 
 }

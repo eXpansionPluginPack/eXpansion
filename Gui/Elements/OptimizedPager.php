@@ -6,30 +6,30 @@ use \ManiaLive\DedicatedApi\Callback\Event;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
+class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
-	private $frame;
+	protected $frame;
 
-	private $clickAction;
+	protected $clickAction;
 
-	private $iitems = array();
+	protected $iitems = array();
 
-	private $data = array();
+	protected $data = array();
 
-	private $scroll, $bg, $scrollBg;
+	protected $scroll, $bg, $scrollBg;
 
-	private $scrollDown, $scrollUp;
+	protected $scrollDown, $scrollUp;
 
-	private $myScript;
+	protected $myScript;
 
-	private $ContentLayout;
+	protected $ContentLayout;
 
-	private $nbElemParColumn;
+	protected $nbElemParColumn;
 
-	private $index = 0;
+	protected $index = 0;
 
-	private $rowPerPage = 1;
+	protected $rowPerPage = 1;
 
 	function __construct()
 	{
@@ -123,9 +123,9 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 		$this->sizeY = $args[1];
 		$this->scroll->setPosition($this->sizeX - 3, 0);
 		$this->scrollBg->setPosition($this->sizeX - 3);
-		$this->scrollBg->setSizeY($this->sizeY-4);
+		$this->scrollBg->setSizeY($this->sizeY - 4);
 
-		$this->scrollDown->setPosition($this->sizeX - 5, -($this->sizeY-4));
+		$this->scrollDown->setPosition($this->sizeX - 5, -($this->sizeY - 4));
 		$this->scrollUp->setPosition($this->sizeX - 5, 0);
 	}
 
@@ -142,7 +142,7 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 
 		$sizeY = $layout->getSizeY() * ($layout->getScale() == 0.0 ? 1 : $layout->getScale());
 
-		$this->frame->clearComponents();
+		$this->frame->destroyComponents();
 		$layout = null;
 
 		$limit = (int) ($this->getSizeY() / $sizeY);
@@ -158,8 +158,12 @@ class OptimizedPager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins
 
 	public function destroy()
 	{
+		if (isset($this->frame) && $this->frame !== null) {
+			$this->frame->destroyComponents();
+		}
 		$this->clearItems();
-		//  $this->pager->destroy();
+		unset($this->script);
+
 		parent::destroy();
 	}
 

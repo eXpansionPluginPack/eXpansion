@@ -34,7 +34,8 @@ class Widgets_TM_topPanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 	{
 
 		$this->pluginhandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
-		$pluginsToUnload = array("Widgets_ServerInfo", "Widgets_Clock", "Widgets_BestCheckpoints");
+		//$pluginsToUnload = array("Widgets_ServerInfo", "Widgets_Clock", "Widgets_BestCheckpoints");
+		$pluginsToUnload = array("Widgets_ServerInfo", "Widgets_Clock");
 
 		foreach ($pluginsToUnload as $plugin) {
 			if ($this->isPluginLoaded($this->getPluginId($plugin))) {
@@ -43,6 +44,7 @@ class Widgets_TM_topPanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 		}
 
 		$this->enableDedicatedEvents();
+		
 		$widget = Gui\Widgets\TopPanel::Create(null);
 		$widget->show();
 	}

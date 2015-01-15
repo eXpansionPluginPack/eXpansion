@@ -26,7 +26,6 @@ namespace ManiaLivePlugins\eXpansion\SM_ObstaclesScores;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
-use ManiaLivePlugins\eXpansion\LocalRecords\Config;
 
 /**
  * Same Meta data as the local records just name and compatibility changes settings are common
@@ -35,18 +34,17 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Config;
  */
 class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData {
 
-	protected function initName()
+	public function onBeginLoad()
 	{
+		parent::onBeginLoad();
 		$this->setName('Obstacles records');
 		$this->setDescription('Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. Higher scores are better.');
 		$this->setGroups(array('UI', 'Widgets'));
-	}
-
-	protected function initCompatibility()
-	{
 		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, 'Obstacle.Script.txt');
 
 		$this->setEnviAsTitle(false);
 		$this->addTitleSupport("Obstacle@steeffeen");
+
 	}
+	
 }

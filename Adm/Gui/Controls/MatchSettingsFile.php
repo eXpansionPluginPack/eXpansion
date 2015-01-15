@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
-class MatchSettingsFile extends \ManiaLive\Gui\Control
+class MatchSettingsFile extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	private $bg;
@@ -141,7 +141,7 @@ class MatchSettingsFile extends \ManiaLive\Gui\Control
 		$this->loadButton->destroy();
 		$this->frame->clearComponents();
 		$this->frame->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 
 		parent::destroy();
 	}

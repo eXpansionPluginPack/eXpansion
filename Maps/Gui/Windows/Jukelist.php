@@ -72,7 +72,7 @@ class Jukelist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 	if (is_object($this->btnRemoveAll))
 	    $this->btnRemoveAll->destroy();
 	$this->pager->destroy();
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

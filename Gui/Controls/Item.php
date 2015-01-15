@@ -11,7 +11,7 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  *
  * @author oliverde8
  */
-class Item extends \ManiaLive\Gui\Control {
+class Item extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $labels;
     private $bg;

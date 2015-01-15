@@ -12,15 +12,15 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class Editbox extends Control
 {
 
-	private $label;
+	protected $label;
 
-	private $button;
+	protected $button;
 
-	private $name;
+	protected $name;
 
-	private $bgleft, $bgcenter, $bgright;
+	protected $bgleft, $bgcenter, $bgright;
 
-	private $bg;
+	protected $bg;
 
 	function __construct($name, $sizeX = 100, $sizeY = 30, $editable = true)
 	{

@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
-class ScriptSetting extends \ManiaLive\Gui\Control {
+class ScriptSetting extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg;
     private $label;
@@ -81,15 +81,7 @@ class ScriptSetting extends \ManiaLive\Gui\Control {
     }
     
 
-    function destroy() {
-        if (is_object($this->inputbox))
-            $this->inputbox->destroy();
-        if (is_object($this->checkBox))
-            $this->checkBox->destroy();
-
-        $this->frame->clearComponents();
-        $this->frame->destroy();
-        $this->clearComponents();
+    function destroy() {           
         parent::destroy();
     }
 

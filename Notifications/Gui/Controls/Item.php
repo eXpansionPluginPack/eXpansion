@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Notifications\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 
-class Item extends \ManiaLive\Gui\Control {
+class Item extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $label;
     protected $frame;

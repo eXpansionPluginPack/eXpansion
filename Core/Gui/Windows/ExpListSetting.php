@@ -17,12 +17,19 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	 * @var \ManiaLivePlugins\eXpansion\Core\Gui\Controls\ExpSettingsMenu
 	 */
 	public $pagerFrame = null;
+
 	public $insertFrame = null;
+
 	public $input_key = null;
+
 	public $input_value = null;
+
 	public $buttonAdd = null;
+
 	public $actions = array();
+
 	public $items = array();
+
 	public $var = null;
 
 	protected function onConstruct()
@@ -55,7 +62,8 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->buttonAdd->setPosX($this->getSizeX() - 23);
 		if ($this->input_key == null) {
 			$this->input_value->setSizeX($this->getSizeX() - 25);
-		} else {
+		}
+		else {
 			$this->input_value->setSizeX(($this->getSizeX() - 25) / 2);
 			$this->input_value->setPosX(($this->getSizeX() - 25) / 2 + 1);
 			$this->input_value->setSizeX(($this->getSizeX() - 25) / 2 - 1);
@@ -65,6 +73,12 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	public function populate(Variable $var)
 	{
 		$this->var = $var;
+
+		foreach ($this->items as $item) {
+			$item->destroy();
+		}
+		$this->items = null;
+
 		$this->pagerFrame->clearItems();
 		$this->items = array();
 
@@ -80,7 +94,8 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			$this->input_value->setSizeX(($this->getSizeX() - 25) / 2 - 1);
 
 			\ManiaLivePlugins\eXpansion\Core\Gui\Controls\ExpSettingListElement::$large = true;
-		} else {
+		}
+		else {
 			if ($this->input_key != null) {
 				$this->removeComponent($this->input_key);
 				$this->input_key->destroy();
@@ -143,13 +158,18 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	public function destroy()
 	{
-		parent::destroy();
+		foreach ($this->items as $item) {
+			$item->destroy();
+		}
+		$this->items = null;
+
 		if (!empty($this->actions)) {
 			$actionHandler = \ManiaLive\Gui\ActionHandler::getInstance();
 			foreach ($this->actions as $action) {
 				$actionHandler->deleteAction($action);
 			}
 		}
+		parent::destroy();
 	}
 
 }

@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 
-class Header extends \ManiaLive\Gui\Control {
+class Header extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $label;
     private $time;
@@ -82,7 +82,7 @@ class Header extends \ManiaLive\Gui\Control {
     public function destroy() {
         $this->frame->clearComponents();
         $this->frame->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

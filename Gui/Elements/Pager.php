@@ -9,20 +9,20 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  *
  * @author Petri
  */
-class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
+class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
-	private $pager;
+	protected $pager;
 
-	private $items = array();
+	protected $items = array();
 
-	private $scroll;
+	protected $scroll;
 
-	private $scrollBg, $scrollUp, $scrollDown, $barFrame;
+	protected $scrollBg, $scrollUp, $scrollDown, $barFrame;
 
-	private $itemSizeY = 6;
+	protected $itemSizeY = 6;
 
-	private $myScript;
+	protected $myScript;
 
 	public function __construct()
 	{
@@ -120,11 +120,10 @@ class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansio
 
 	public function clearItems()
 	{
-		foreach ($this->items as $item) {
-			$this->pager->removeComponent($item);
-			$item->destroy();
+		if (isset($this->pager) && $this->pager != null) {
+			$this->pager->destroyComponents();
+			$this->items = array();
 		}
-		$this->items = array();
 	}
 
 	public function removeItem(\ManiaLib\Gui\Component $item)
@@ -137,8 +136,11 @@ class Pager extends \ManiaLive\Gui\Control implements \ManiaLivePlugins\eXpansio
 
 	public function destroy()
 	{
-		$this->clearItems();
-		$this->pager->destroy();
+		if (isset($this->pager) && $this->pager != null) {
+			$this->pager->destroyComponents();
+			$this->pager->destroy();
+			$this->items = array();
+		}
 		parent::destroy();
 	}
 

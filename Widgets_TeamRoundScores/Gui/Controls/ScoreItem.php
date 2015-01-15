@@ -90,7 +90,7 @@ class ScoreItem extends Control {
     }
 
     public function destroy() {
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

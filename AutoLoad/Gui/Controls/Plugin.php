@@ -33,43 +33,43 @@ use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
-class Plugin extends \ManiaLive\Gui\Control
+class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	/**
 	 * @var AutoLoad
 	 */
-	private $autoLoad;
+	protected $autoLoad;
 
 	/**
 	 * @var MetaData
 	 */
-	private $metaData;
+	protected $metaData;
 
 	/**
 	 * @var Button
 	 */
-	private $button_running, $button_titleComp, $button_gameComp, $button_otherComp, $button_more, $button_start;
+	protected $button_running, $button_titleComp, $button_gameComp, $button_otherComp, $button_more, $button_start;
 
 	/**
 	 * @var \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround
 	 */
-	private $bg;
+	protected $bg;
 
 	/**
 	 * @var Label
 	 */
-	private $label_name, $label_author;
+	protected $label_name, $label_author;
 
 	/**
 	 * @var Quad
 	 */
-	private $icon_name, $icon_author;
+	protected $icon_name, $icon_author;
 
 	/**
 	 * @var ConfigManager
 	 */
-	private $configManger = null;
+	protected $configManger = null;
 
 	function __construct($indexNumber, AutoLoad $autoload, MetaData $plugin, $login, $isLoaded)
 	{
@@ -228,5 +228,7 @@ class Plugin extends \ManiaLive\Gui\Control
 		$win->populate($this->configManger, 'General', $this->metaData->getPlugin());
 		$win->show();
 	}
+
+
 
 }

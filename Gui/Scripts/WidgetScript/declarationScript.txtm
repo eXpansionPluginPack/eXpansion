@@ -24,8 +24,8 @@ declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");
 // set hidden to reduce flicker
 declare MoveWindow = False;
 declare CMlQuad  quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);
-declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, 0.0>;
-declare Vec3 DeltaPos = <0.0, 0.0, 0.0>;
+declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, -3.0>;
+declare Vec3 DeltaPos = <0.0, 0.0, -3.0>;
 declare Real lastMouseX = 0.0;
 declare Real lastMouseY = 0.0;
 declare CMlControl element;
@@ -89,7 +89,7 @@ if (!eXp_widgetLastPos[version].existskey(id) || forceReset) {
 	eXp_widgetLastPos[version][id] = Vec3[Text];
 }
 if (!eXp_widgetLastPos[version][id].existskey(gameMode) ) {
-	eXp_widgetLastPos[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, 0.0>;
+	eXp_widgetLastPos[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, -3.0>;
 }
 
 if (!eXp_widgetLastPosRel.existskey(version)) {
@@ -101,7 +101,7 @@ if (!eXp_widgetLastPosRel[version].existskey(id) || forceReset) {
 }
 
 if (!eXp_widgetLastPosRel[version][id].existskey(gameMode)) {
-	eXp_widgetLastPosRel[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, 0.0>;
+	eXp_widgetLastPosRel[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, -3.0>;
 }
 
 if(!disablePersonalHud){

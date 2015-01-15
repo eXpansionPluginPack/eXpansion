@@ -43,7 +43,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 	 *
 	 * @var type int
 	 */
-	protected $debug = self::DEBUG_ALL;
+	protected $debug = self::DEBUG_NONE;
 
 	/**
 	 * List of the records for the current track
@@ -149,7 +149,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		$this->setPublicMethod("showRecsWindow");
 		$this->setPublicMethod("showRanksWindow");
 		$this->setPublicMethod("showCpWindow");
-
+		$this->setPublicMethod("showTopSums");
+		
 		//The Database plugin is needed.
 		$this->addDependency(
 				new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\Database\Database")

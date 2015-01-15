@@ -34,31 +34,39 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$this->author->setTextPrefix('$s');
 		$this->addComponent($this->author);
 
+		$this->author = new \ManiaLib\Gui\Elements\Label(60, 6);
+		$this->author->setId('authorTime');
+		$this->author->setAlign("right", "top");
+		$this->author->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
+		$this->author->setTextSize(2);
+		$this->author->setPosition(58, -9);
+		$this->author->setTextColor('fff');
+		$this->author->setTextPrefix('$s');
+		$this->addComponent($this->author);
 
-		$line = new \ManiaLive\Gui\Controls\Frame(40, -10.5);
-		$line->setAlign("right", "top");
+		$line = new \ManiaLive\Gui\Controls\Frame(36, -14.5);
+		$line->setAlign("left", "top");
 		$layout = new \ManiaLib\Gui\Layouts\Line();
 		$layout->setMargin(1);
 		$line->setLayout($layout);
 		$icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
-
-		$clock = new \ManiaLib\Gui\Elements\Label(14, 6);
-		$clock->setAlign("left", "center");
-		$clock->setId('clock');
-		$clock->setTextColor('fff');
-		$clock->setTextSize(2);
-		$clock->setStyle('TextCardScores2');
-		//$clock->setTextPrefix('$s');
-		$line->addComponent($clock);
-
 		$icon->setStyle("Icons128x32_1");
 		$icon->setAlign("left", "center");
 		$icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::RT_TimeAttack);
 		$line->addComponent($icon);
 
+		$clock = new \ManiaLib\Gui\Elements\Label(20, 8);
+		$clock->setAlign("left", "center");
+		$clock->setId('clock');
+		$clock->setTextColor('fff');
+		$clock->setTextSize(2);
+		$clock->setStyle('TextRaceMessageBig');
+		$clock->setTextPrefix('$s');
+		$line->addComponent($clock);
 
+	
 		$this->frame = $line;
-		$this->addComponent($this->frame);
+	// 	$this->addComponent($this->frame);
 		$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Clock\Gui\Scripts_Clock");
 		$this->registerScript($script);
 
@@ -72,7 +80,7 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
 	function destroy()
 	{
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

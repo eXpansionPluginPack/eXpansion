@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
-class InfoItem extends \ManiaLive\Gui\Control
+class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	private $bg;
@@ -67,7 +67,7 @@ class InfoItem extends \ManiaLive\Gui\Control
 		$this->bg->destroy();
 		$this->frame->clearComponents();
 		$this->frame->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 
 		parent::destroy();
 	}

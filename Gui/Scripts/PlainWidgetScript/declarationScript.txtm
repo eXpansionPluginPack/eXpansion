@@ -1,10 +1,12 @@
 <script><!--
 #Include "TextLib" as TextLib
 #Include "MathLib" as MathLib
+#Include "AnimLib" as AnimLib
 
 // do not remvove, this is for animation and draggable libraries
 #Include "MathLib" as ML
 #Include "TextLib" as TL
+#Include "AnimLib" as AL
 
 //Function definitions
 <?php echo $this->scriptLib ?>

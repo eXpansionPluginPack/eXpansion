@@ -9,16 +9,22 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
-	private $inputbox, $preview, $openButton, $frame, $bg, $ok, $cancel;
+	protected $inputbox, $preview, $openButton, $frame, $bg, $ok, $cancel;
+
+	protected $settings;
 
 	/** @var int */
-	private $buttonId;
+	protected $buttonId;
 
 	/** @var int */
-	private static $counter = 0;
+	protected static $counter = 0;
 
 	/** @var \ManiaLivePlugins\eXpansion\Gui\Structures\Script */
-	private static $script = null;
+	protected static $script = null;
+
+	protected $digits = 3;
+
+	protected $prefix = 1;
 
 	/**
 	 *
@@ -40,8 +46,9 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 		if (self::$counter > 100000)
 			self::$counter = 0;
 
-		$this->setUsePrefix($hasPrefix);
-		
+		$this->digits = $output;
+		$this->prefix = $hasPrefix ? 1 : 0;
+
 		$this->openButton = new Quad(4, 4);
 		$this->openButton->setAlign("left", "center");
 		$this->openButton->setBgcolor("000");
@@ -63,7 +70,7 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 		$this->addComponent($this->frame);
 
 		$this->bg = new Quad(64, 42);
-		$this->bg->setPosition(-2,2);
+		$this->bg->setPosition(-2, 2);
 		$this->bg->setId("bg_" . $this->buttonId);
 		$this->bg->setHidden(true);
 		$this->bg->setAttribute("class", "colorSelection");
@@ -72,7 +79,7 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 
 
 		$this->preview = new Quad(32, 32);
-		$this->preview->setAlign("left","top");
+		$this->preview->setAlign("left", "top");
 		$this->preview->setId("chooser_" . $this->buttonId);
 		$this->preview->setHidden(true);
 		$this->preview->setAttribute("class", "colorSelection");
@@ -81,7 +88,7 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 		$this->frame->addComponent($this->preview);
 
 		$this->color = new Quad(4, 32);
-		$this->color->setAlign("left","top");
+		$this->color->setAlign("left", "top");
 		$this->color->setId("hue_" . $this->buttonId);
 		$this->color->setPosition(36, 0);
 		$this->color->setHidden(true);
@@ -173,6 +180,12 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 		$v->setAttribute("class", "colorSelection");
 		$helper->addComponent($v);
 
+		$this->settings = new \ManiaLib\Gui\Elements\Entry(8, 6);
+		$this->settings->setId("settings_" . $this->buttonId);
+		$this->settings->setHidden(true);
+		$this->settings->setDefault($this->prefix.",".$this->digits);
+		$this->settings->setAttribute("class", "colorSelection");
+		$helper->addComponent($this->settings);
 
 		$this->frame->addComponent($helper);
 	}
@@ -187,15 +200,6 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 	{
 		return self::$script;
 	}
-
-	public function setUsePrefix($boolean) {
-		self::$script->setParam("usePrefix", \ManiaLivePlugins\eXpansion\Helpers\Maniascript::getBoolean($boolean));
-
-
-	}
-
-
-
 
 }
 

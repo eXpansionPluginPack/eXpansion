@@ -12,7 +12,7 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
  *
  * @author oliverde8
  */
-class SecItem extends \ManiaLive\Gui\Control
+class SecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
     private $label_rank, $label_nick, $label_time, $frames;

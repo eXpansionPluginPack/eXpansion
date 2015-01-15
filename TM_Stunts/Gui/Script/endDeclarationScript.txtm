@@ -1,0 +1,8 @@
+declare CMlLabel Label <=> (Page.GetFirstChild("stuntname_1") as CMlLabel);
+declare origPos = Label.RelativePosition;
+declare Boolean Hidden = False;
+declare Anim_StartTime = Now;
+declare Anim_Duration = 500.;
+declare Anim_Duration2 = 500.;
+Label.Opacity = 0.;
+Hidden = False;

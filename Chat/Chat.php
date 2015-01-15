@@ -162,7 +162,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 							$color = $config->otherServerChatColor;
 						}
 						$this->connection->chatSendServerMessage(
-								'$fff$<' . $config->adminSign . '' . $nick . '$z$s ' . $config->chatSeparator . '$>' . $color . $force . $text
+								$config->adminSign . '$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text
 						);
 					}
 					else {
@@ -170,9 +170,9 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 						if ($this->expStorage->isRelay) {
 							$color = $config->otherServerChatColor;
 						}
+						
 						$this->connection->chatSendServerMessage(
-								'$<$fff' . $nick . '$z$s ' . $config->chatSeparator . '$>' . $color . $force . $text
-						);
+								'$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text);
 					}
 					$nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);
 

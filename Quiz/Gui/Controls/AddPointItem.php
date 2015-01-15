@@ -6,7 +6,7 @@ use ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 
-class AddPointItem extends \ManiaLive\Gui\Control
+class AddPointItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	private $bg;
@@ -129,7 +129,7 @@ class AddPointItem extends \ManiaLive\Gui\Control
 			$this->removepointButton->destroy();
 
 		$this->frame->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

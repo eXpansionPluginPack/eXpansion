@@ -28,7 +28,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $btnX = 40;
         $btnY = 5.5;
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame(0, -1);
+        $this->frame = new \ManiaLive\Gui\Controls\Frame(0, -7);
 		$flow = new \ManiaLib\Gui\Layouts\Flow(150, $btnY + 2);
 		$flow->setMargin(2,1);
 		
@@ -115,7 +115,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $this->frame->addComponent($btn);
         }
 
-        $this->mainFrame->addComponent($this->frame);
+        $this->addComponent($this->frame);
 
     }
 

@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
-class CustomPointctrl extends \ManiaLive\Gui\Control {
+class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg;
     private $label;
@@ -86,7 +86,7 @@ class CustomPointctrl extends \ManiaLive\Gui\Control {
         $this->button->destroy();
         $this->frame->clearComponents();
         $this->frame->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

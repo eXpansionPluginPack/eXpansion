@@ -8,11 +8,15 @@ use ManiaLivePlugins\eXpansion\SM_CheckpointCount\Gui\Widgets\CPPanel;
 class SM_CheckpointCount extends ExpPlugin
 {
 
+	public function exp_onLoad()
+	{
+		$this->enableScriptEvents("LibXmlRpc_OnWayPoint");
+	}
+
 	public function exp_onReady()
 	{
 		$this->enableDedicatedEvents();
-		$this->enableScriptEvents();
-
+		
 		foreach ($this->storage->players as $player)
 			$this->onPlayerConnect($player->login, false);
 		foreach ($this->storage->spectators as $player)

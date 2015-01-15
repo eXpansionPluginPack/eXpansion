@@ -25,7 +25,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
 
 use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ConfSwitcher;
 
-class ConfigFile extends String{
+class ConfigFile extends String {
 
     public function showConfWindow($login){
         ConfSwitcher::Erase($login);

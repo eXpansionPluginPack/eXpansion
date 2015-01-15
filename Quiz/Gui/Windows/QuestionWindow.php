@@ -120,7 +120,7 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 		$this->ok->destroy();
 		$this->cancel->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

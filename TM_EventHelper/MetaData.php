@@ -22,7 +22,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	
 	$this->setName("Event Helper (Trackmania)");
 	$this->setDescription("Trackmania event helper");
-	
+	$this->setGroups(array('Helpers'));
     }
 
 }

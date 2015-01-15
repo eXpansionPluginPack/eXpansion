@@ -56,15 +56,16 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$baseUrl = trim($config->uiTextureBase, "/");
 		$windowUrl = $baseUrl . '/window/';
 		$closeUrl = $baseUrl . '/closebutton/';
-		
+
 		$this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
 
 		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WindowScript");
 
-		$lib = new \ManiaLivePlugins\eXpansion\Gui\Script_libraries\Animation();
-		$this->registerScript($lib);
+		//$lib = new \ManiaLivePlugins\eXpansion\Gui\Script_libraries\Animation();
+		//$this->registerScript($lib);
 
 		$this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
+		$this->_windowFrame->setPosZ(-0.1);
 		$this->_windowFrame->setId("windowFrame");
 		$this->_windowFrame->setScriptEvents(true);
 		$this->_windowFrame->setAlign("left", "top");
@@ -73,11 +74,16 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_bg->setAlign("left", "top");
 		$this->_bg->setId("MainWindow");
 		$this->_bg->setImage($windowUrl . "bg.png", true);
+		$this->_bg->setScriptEvents(true);
+		$this->_bg->setColorize($config->windowBackgroundColor);
 		$this->_windowFrame->addComponent($this->_bg);
 
 		$this->_topleft = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_topleft->setAlign("right", "bottom");
+		$this->_topleft->setScriptEvents(true);
+		$this->_topleft->setId("MainWindow");
 		$this->_topleft->setImage($windowUrl . "top_left.png", true);
+		$this->_topleft->setColorize($config->windowTitleBackgroundColor);
 		$this->_windowFrame->addComponent($this->_topleft);
 
 		$this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->element);
@@ -85,6 +91,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_titlebar->setAlign("left", "bottom");
 		$this->_titlebar->setImage($windowUrl . "top_center.png", true);
 		$this->_titlebar->setScriptEvents(true);
+		$this->_titlebar->setColorize($config->windowTitleBackgroundColor);
 		$this->_windowFrame->addComponent($this->_titlebar);
 
 		$this->_title = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(60, 4);
@@ -93,25 +100,34 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_title->setStyle("TextRaceMessageBig");
 		$this->_title->setTextColor($config->windowTitleColor);
 		$this->_title->setTextSize(1);
-		$this->_title->setTextEmboss();
+		//$this->_title->setTextEmboss();
 		$this->_windowFrame->addComponent($this->_title);
-	
-		
+
+
 		$this->_topright = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_topright->setAlign("left", "bottom");
 		$this->_topright->setImage($windowUrl . "top_right.png", true);
+		$this->_topright->setScriptEvents(true);
+		$this->_topright->setColorize($config->windowTitleBackgroundColor);
 		$this->_windowFrame->addComponent($this->_topright);
 
 // center		
 		$this->_right = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_right->setAlign("left", "top");
 		$this->_right->setImage($windowUrl . "right.png", true);
+		$this->_right->setScriptEvents(true);
+		$this->_right->setColorize($config->windowBackgroundColor);
+		$this->_right->setId("MainWindow");
+
 		$this->_windowFrame->addComponent($this->_right);
 
 
 		$this->_left = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_left->setAlign("right", "top");
 		$this->_left->setImage($windowUrl . "left.png", true);
+		$this->_left->setScriptEvents(true);
+		$this->_left->setId("MainWindow");
+		$this->_left->setColorize($config->windowBackgroundColor);
 		$this->_windowFrame->addComponent($this->_left);
 // bottom
 
@@ -120,16 +136,23 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_bottomleft = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_bottomleft->setAlign("right", "top");
 		$this->_bottomleft->setImage($windowUrl . "bottom_left.png", true);
+		$this->_bottomleft->setScriptEvents(true);
+		$this->_bottomleft->setColorize($config->windowBackgroundColor);
 		$this->_windowFrame->addComponent($this->_bottomleft);
-		
+
 		$this->_bottomcenter = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_bottomcenter->setAlign("left", "top");
 		$this->_bottomcenter->setImage($windowUrl . "bottom_center.png", true);
+		$this->_bottomcenter->setScriptEvents(true);
+		$this->_bottomcenter->setId("MainWindow");
+		$this->_bottomcenter->setColorize($config->windowBackgroundColor);
 		$this->_windowFrame->addComponent($this->_bottomcenter);
 
 		$this->_bottomright = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
 		$this->_bottomright->setAlign("left", "top");
 		$this->_bottomright->setImage($windowUrl . "bottom_right.png", true);
+		$this->_bottomright->setScriptEvents(true);
+		$this->_bottomright->setColorize($config->windowBackgroundColor);
 		$this->_windowFrame->addComponent($this->_bottomright);
 
 
@@ -148,6 +171,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
 		$this->addComponent($this->_windowFrame);
 
+
 		$this->xml = new \ManiaLive\Gui\Elements\Xml();
 	}
 
@@ -159,7 +183,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$y = $this->sizeY;
 
 		$this->_windowFrame->setSize($x, $y);
-		
+
 		$this->_bg->setSize($x, $y);
 		$this->_bg->setPosition(0, 0);
 
@@ -186,11 +210,9 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
 		$this->_bottomright->setSize($element, $element);
 		$this->_bottomright->setPosition($x, -$y);
-		
+
 		$this->_title->setPosition($x / 2, 1);
-		$this->_closebutton->setPosition($x+3, 0.5);
-		
-		
+		$this->_closebutton->setPosition($x + 3, 0.5);
 	}
 
 	private function detectElements($components)
@@ -312,9 +334,37 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 		$this->_windowFrame->destroy();
 		$this->mainFrame->destroy();
 
-		$this->clearComponents();
+		$this->destroyComponents();
 		$this->_closeAction = null;
+
 		parent::destroy();
+		
+// echo "window: #";
+		foreach ($this as $index => $value) {
+			if (\is_object($value)) {
+
+				if ($value instanceof \ManiaLive\Gui\Containable || $value instanceof \ManiaLive\Gui\Container) {
+	//			echo "!";
+					$value->destroyComponents();
+					$value->destroy();
+					unset($this->$index);
+					continue;
+				}
+				if ($value instanceof \ManiaLive\Gui\Control) {
+	//				echo "*";
+					$value->destroy();
+					unset($this->$index);
+					continue;
+				}
+
+				unset($this->$index);
+			}
+			else {
+	//			echo ".";
+				unset($this->$index);
+			}
+		}
+	//	echo "\n";
 	}
 
 	/**

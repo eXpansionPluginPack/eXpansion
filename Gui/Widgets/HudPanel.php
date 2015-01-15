@@ -104,7 +104,7 @@ class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     function destroy() {
         $this->frame->clearComponents();
         $this->frame->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

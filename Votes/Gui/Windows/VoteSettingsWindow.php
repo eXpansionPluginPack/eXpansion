@@ -58,8 +58,8 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		parent::onResize($oldX, $oldY);
 		$this->pager->setSize($this->sizeX - 5, $this->sizeY - 12);
 
-		$this->ok->setPosition($this->sizeX - 38, -$this->sizeY + 3);
-		$this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 3);
+		$this->ok->setPosition($this->sizeX - 50, -$this->sizeY + 3);
+		$this->cancel->setPosition($this->sizeX - 24, -$this->sizeY + 3);
 	}
 
 	/**
@@ -125,7 +125,7 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->cancel->destroy();
 		$this->connection = null;
 		$this->storage = null;
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

@@ -7,24 +7,29 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
 class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-	const Mode_BestOfAll = 1;
-	const Mode_PersonalBest = 2;
-	const Mode_None = 3;
-	const Mode_All = 4;
-
 	protected $checkpoint;
+
 	protected $time;
+
 	protected $audio;
+
 	protected $frame;
+
 	protected $position;
+
 	protected $top1;
+
 	private $totalCp = 0;
+
 	private $lapRace = false;
+
 	private $nScript;
+
 	private $target = "";
 
 	/** @var \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record[] */
 	public static $localrecords = array();
+
 	public static $dedirecords = array();
 
 	protected function exp_onBeginConstruct()
@@ -98,15 +103,16 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 	function onDraw()
 	{
 		$record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->target);
+
 		$checkpoints = "[ -1 ]";
-		if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record && sizeof($record->ScoreCheckpoints) > $this->totalCp - 1) {
-			if($this->lapRace)
-				$checkpoints = "[" . $record->time . "," . implode(",", $record->ScoreCheckpoints) . "]";
-			else
+		if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record) {
+			if (sizeof($record->ScoreCheckpoints) == $this->totalCp) {
 				$checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . "]";
-		} else {
+			}
+		}
+		else {
 			$checkpoints = '[';
-			for ($i = 0; $i < $this->totalCp + 2; $i++) {
+			for ($i = 0; $i < $this->totalCp; $i++) {
 				if ($i > 0) {
 					$checkpoints .= ', ';
 				}
@@ -118,9 +124,10 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		if (sizeof(self::$dedirecords) > 0) {
 			$record = self::$dedirecords[0];
 			$dediTime = '[' . $record['Checks'] . ']';
-		} else {
+		}
+		else {
 			$dediTime = '[';
-			for ($i = 0; $i < $this->totalCp + 2; $i++) {
+			for ($i = 0; $i < $this->totalCp; $i++) {
 				if ($i > 0) {
 					$dediTime .= ', ';
 				}
@@ -143,7 +150,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
 	function destroy()
 	{
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

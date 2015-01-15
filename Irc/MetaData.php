@@ -19,7 +19,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Internet Relay Chat");
 		$this->setDescription("Provides IRC link for chatting and remote administration, needs php_sockets extension.");
-
+		$this->setGroups(array('Tools'));	
 		$config = Config::getInstance();
 
 		$var = new String("hostname", "hostname", $config, true, false);

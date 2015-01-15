@@ -31,14 +31,14 @@ use ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Hooks\HookElement;
 class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
 
-	private $bg, $logo;
+	protected $bg, $logo;
 
-	private $frameRight, $frameLeft;
+	protected $frameRight, $frameLeft;
 
-	private $script;
+	protected $script;
 
 	/** @var \ManiaLive\Data\Storage 	 */
-	private $storage;
+	protected $storage;
 
 	protected function onConstruct()
 	{
@@ -48,8 +48,8 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		$this->setName("Top Panel");
 		$this->storage = \ManiaLive\Data\Storage::getInstance();
 
-		$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle(320, 9);
-		$this->bg->setOpacity(0.5);
+		$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(320, 9);
+		//$this->bg->setOpacity(0.5);
 		$this->addComponent($this->bg);
 
 		$config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
@@ -96,11 +96,11 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		$elements = array();
 
 
-		$elements['serverName'] = new HookElement($this->getServerNameItem(), 1000);
-		$elements['gameInfo'] = new HookElement($this->getGameModeItem(), 50);
-		$elements['mapInfo'] = new HookElement($this->getMapInfo(), 40);
-		$elements['nbPlayer'] = new HookElement($this->getNbPlayer(), 30);
-		$elements['nbSpec'] = new HookElement($this->getNbSpectators(), 20);
+   $elements['serverName'] = new HookElement($this->getServerNameItem(), 1000);
+	//	$elements['gameInfo'] = new HookElement($this->getGameModeItem(), 50);
+	//	$elements['clock'] = new HookElement($this->getClock());
+	//	$elements['nbPlayer'] = new HookElement($this->getNbPlayer(), 30);
+	//	$elements['nbSpec'] = new HookElement($this->getNbSpectators(), 20);
 
 		$hook = new HookData();
 		$hook->data = $elements;
@@ -120,8 +120,8 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
 		$elements = array();
 
-
-		$elements['clock'] = new HookElement($this->getClock());
+		$elements['mapInfo'] = new HookElement($this->getMapInfo(), 999);
+		
 
 		$hook = new HookData();
 		$hook->data = $elements;
@@ -136,7 +136,7 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
 	protected function getServerNameItem(){
 		$ladder = "Ladder limits " . ( $this->storage->server->ladderServerLimitMin / 1000 ) . " - " . ( $this->storage->server->ladderServerLimitMax / 1000 ) . "k";
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\ServerInfoItem($ladder, "", 48, "Icons64x64_1", "ToolLeague1");
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\ServerInfoItem($ladder, "", 64, "Icons64x64_1", "ToolLeague1");
 		$item->setId('serverName');
 
 		return $item;
@@ -188,7 +188,7 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 	}
 
 	protected function getMapInfo(){
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\MapInfoItem("", "", 48, "Icons128x128_1", "Race");
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\MapInfoItem("", "", 32, "Icons128x128_1", "Race");
 		$item->setId('mapName');
 		$item->setIdTitle('mapAuthor');
 		$item->setQuadId("mapIcon");
@@ -196,19 +196,19 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 	}
 
 	protected function getNbPlayer(){
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\NbPlayerItem("Players", "", 16, "Icons64x64_1", "Buddy");
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\NbPlayerItem("Players", "", 16);
 		$item->setId('nbPlayer');
 		return $item;
 	}
 
 	protected function getNbSpectators(){
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\NbSpecItem("Spectators", "", 16, "Icons64x64_1", "TV");
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\NbSpecItem("Spectators", "", 16);
 		$item->setId('nbSpec');
 		return $item;
 	}
 
 	protected function getClock(){
-		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\ClockItem("Local Time", "", 16, "BgRaceScore2", "SendScore");
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\ClockItem("Current Time", "", 24);
 		$item->setId('clock');
 		return $item;
 	}

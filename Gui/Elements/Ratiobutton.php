@@ -5,14 +5,14 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLive\Gui\ActionHandler;
 
-class Ratiobutton extends \ManiaLive\Gui\Control {
+class Ratiobutton extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
-    private $label;
-    private $button;
-    private $active = false;
-    private $textWidth;
-    private $action;
-    private $buttonac;
+    protected $label;
+    protected $button;
+    protected $active = false;
+    protected $textWidth;
+    protected $action;
+    protected $buttonac;
 
     function __construct($sizeX = 3, $sizeY = 3, $textWidth = 25) {
         $this->textWidth = $textWidth;

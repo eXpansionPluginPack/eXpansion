@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Database\Gui\Controls;
 
-class SqlFile extends \ManiaLive\Gui\Control {
+class SqlFile extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg;
     private $label;
@@ -94,7 +94,7 @@ class SqlFile extends \ManiaLive\Gui\Control {
 
 	$this->frame->clearComponents();
 	$this->frame->destroy();
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

@@ -200,7 +200,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->pager->destroy();
 		$this->group_add->destroy();
 		$this->button_add->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

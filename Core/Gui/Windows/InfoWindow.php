@@ -126,7 +126,7 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     function destroy() {
 	$this->connection = null;
 	$this->storage = null;
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

@@ -12,43 +12,43 @@ use ManiaLive\Gui\ActionHandler;
 class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-	private $pager;
+	protected $pager;
 
 	/** @var \Maniaplanet\DedicatedServer\Connection */
-	private $connection;
+	protected $connection;
 
 	/** @var \ManiaLive\Data\Storage */
-	private $storage;
+	protected $storage;
 
 	/** @var \ManiaLivePlugins\eXpansion\Database\Gui\Controls\DbTable[] */
-	private $items = array();
+	protected $items = array();
 
-	private $frame;
+	protected $frame;
 
-	private $ok;
+	protected $ok;
 
-	private $optimize;
+	protected $optimize;
 
-	private $backup;
+	protected $backup;
 
-	private $cancel;
+	protected $cancel;
 
-	private $truncate;
+	protected $truncate;
 
-	private $actionRepair;
+	protected $actionRepair;
 
-	private $actionOptimize;
+	protected $actionOptimize;
 
-	private $actionCancel;
+	protected $actionCancel;
 
-	private $actionBackup;
+	protected $actionBackup;
 
-	private $actionConfirmTruncate;
+	protected $actionConfirmTruncate;
 
-	private $actionTruncate;
+	protected $actionTruncate;
 
 	/** @var  \ManiaLive\Database\Connection */
-	private $db;
+	protected $db;
 
 	protected function onConstruct()
 	{
@@ -188,7 +188,7 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			$this->syncCheckboxItem($item, $args);
 			if ($item->checkBox->getStatus()) {
 				// repair table
-				$status = $this->db->execute("OPTIMIZE TABLE " . $item->tableName . "`;")->fetchObject();
+				$status = $this->db->execute("OPTIMIZE TABLE `" . $item->tableName . "`;")->fetchObject();
 				$this->connection->chatSendServerMessage("Table " . $status->Table . " Optimized with " . $status->Msg_type . ":" . $status->Msg_text, $login);
 			}
 		}
@@ -206,23 +206,16 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			$item->erase();
 
 		$this->db = null;
-		$this->frame->destroy();
-		$this->items = array();
-		$this->pager->destroy();
-		$this->ok->destroy();
-		$this->optimize->destroy();
-		$this->backup->destroy();
-
-		$this->cancel->destroy();
 		$this->connection = null;
 		$this->storage = null;
-		$this->clearComponents();
+		
 		parent::destroy();
 	}
 
 	function syncCheckboxItem(&$item, $args)
 	{
-		foreach ($item->getComponents() as &$component) {
+		$components = $item->getComponents();
+		foreach ($components as &$component) {
 			if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted) {
 				$component->setArgs($args);
 			}

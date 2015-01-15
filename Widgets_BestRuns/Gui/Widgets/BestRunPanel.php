@@ -33,7 +33,7 @@ class BestRunPanel extends \ManiaLive\Gui\Window {
 	    $cp->destroy();
 	}
 	$this->lines = array();
-	$this->clearComponents();
+	$this->destroyComponents();
 
 	parent::destroy();
     }

@@ -53,7 +53,7 @@ class Notice extends Window
 	function destroy()
 	{
 		$this->ok->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

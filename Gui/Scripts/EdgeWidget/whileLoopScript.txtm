@@ -1,53 +1,68 @@
-if( edge_isLockedVisible == False && (Now - eXp_lastClockUpdate) >= 500 ) {
+if( edge_isLockedVisible2 == False && (Now - eXp_lastClockUpdate) >= 500 ) {
 
-declare Real Speed = GUIPlayer.Speed*3.6;
-if (Speed < 100.0) {
-    if (lastValue == True) {
-        edge_isMinimized = False;
-        lastValue = False;
-    
-        foreach (widgetid => value in edge_animatedId) {
-            edge_animatedId[widgetid] = True;
-        }
-     }
-}
+if (InputPlayer != Null) {
+    declare Real Speed = InputPlayer.Speed*3.6;
+
+    if (Speed < 50.0 || InputPlayer.RaceState == CTmMlPlayer::ERaceState::Finished) {
+        if (lastValue == True) {
+            edge_isMinimized = False;
+            lastValue = False;    
+            edge_animatedId[id] = True;
+         }
+    }
 
 
-if (Speed > 101.0) {
-    if (lastValue == False) {
-        edge_isMinimized = True;
-        lastValue = True;
-        foreach (widgetid => value in edge_animatedId) {
-            edge_animatedId[widgetid] = True;
+    if (Speed > 51.0 && InputPlayer.RaceState != CTmMlPlayer::ERaceState::Finished) {
+        if (lastValue == False) {
+            edge_isMinimized = True;
+            lastValue = True;
+            edge_animatedId[id] = True;
         }
     }
 }
 
-
 eXp_lastClockUpdate = Now;
-
 }
 
 if (edge_animatedId[id] == True) {
-    edge_animatedId[id] = False;
-
-    p = eXp_widgetLastPosRel[version][id][gameMode];
-    declare Text pos = "";
-    declare Text scale = "1.";
     
-    declare Text edge = "-200";
-    if (p.X > 1) {
-       edge = "200";
+    if (animActive == False) {
+        animActive = True;
+        edgeStart = Now;
     }
+    
+    if (animActive && edgeStart + 1000 <= Now ) {   
+        edge_animatedId[id] = False;
+        animActive = False;        
+    }     
 
-    if (edge_isMinimized) {
-        pos = edge ^ " " ^ p.Y ^ " " ^ p.Z ;
-        scale = "1.0";
-        LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\""^ scale ^"\" id=\"" ^ Page.MainFrame.ControlId ^ "\" />", 1000, "EaseInCirc");       
+    if (animActive) {
+        p = eXp_widgetLastPosRel[version][id][gameMode];
+        declare Text pos = "";
+        declare Text scale = "1.";
+
+        declare Real edge = -200.;
+        if (p.X > 1) {
+           edge = 200.;
+        }
+
+        if (edge_isMinimized) {
+            //pos = edge ^ " " ^ p.Y ^ " " ^ p.Z ;
+            //scale = "1.0";
+            declare value = edge * AL::Ease("EaseInCirc", (Now - edgeStart) * 1., 0., 1., 1000.); 
+            //LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\""^ scale ^"\" id=\"" ^ Page.MainFrame.ControlId ^ "\" />", 1000, "EaseInCirc");       
+             Window.RelativePosition.X = p.X + value;
+
+        }
+        else {      
+            declare value = edge * AL::Ease("EaseOutCirc", (Now - edgeStart) * 1., 1., -1., 1000.);
+//            pos = p.X ^ " " ^ p.Y ^ " " ^ p.Z ;
+//            scale = "1.0";      
+//            LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\""^ scale ^"\" id=\"" ^ Page.MainFrame.ControlId ^ "\" />", 100, "EaseOutCirc");
+              Window.RelativePosition.X = p.X + value;
+        }
+
     }
-    else {  
-        pos = p.X ^ " " ^ p.Y ^ " " ^ p.Z ;
-        scale = "1.0";      
-        LibManialink_Anim("<frame posn=\"" ^ pos ^ "\" scale=\""^ scale ^"\" id=\"" ^ Page.MainFrame.ControlId ^ "\" />", 100, "EaseOutCirc");
-    }
+} else {
+    animActive = False;
 }

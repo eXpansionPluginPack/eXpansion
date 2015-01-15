@@ -298,7 +298,7 @@ class ServerOptions extends Window
 		$this->frameCb->destroy();
 		$this->frameInputbox->clearComponents();
 		$this->frameInputbox->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

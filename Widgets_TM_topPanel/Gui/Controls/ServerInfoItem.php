@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author      Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
@@ -22,11 +23,20 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls;
 
-
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 
-class ServerInfoItem extends PanelItem implements ScriptedContainer{
+class ServerInfoItem extends PanelItem implements ScriptedContainer
+{
+
+	public function __construct($title, $value, $sizeX = 20, $StyleorUrl = null, $iconSubStyle = null)
+	{
+		parent::__construct($title, $value, $sizeX, $StyleorUrl, $iconSubStyle);
+		$this->lbl_value->setStyle("TextRaceMessageBig");
+		$this->lbl_value->setTextSize(3);
+		//$this->lbl_value->setPosition(9, 1);
+		//$this->lbl_title->setPosition(9, -2);
+	}
 
 	/**
 	 * @return Script the script this container needs
@@ -36,4 +46,5 @@ class ServerInfoItem extends PanelItem implements ScriptedContainer{
 		$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\Gui\Scripts\serverInfo");
 		return $script;
 	}
+
 }

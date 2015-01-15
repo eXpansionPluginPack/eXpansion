@@ -255,7 +255,7 @@ class Widget extends \ManiaLive\Gui\Window {
     }
 
     public function destroy() {
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

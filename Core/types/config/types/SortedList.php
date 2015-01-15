@@ -60,7 +60,12 @@ class SortedList extends BasicList
 
 	public function getPreviewValues()
 	{
-		return implode(",", $this->getRawValue());
+		if ($this->getRawValue() === null) {
+			return "";
+		}
+		else {
+			return implode(",", $this->getRawValue());
+		}
 	}
 
 	/**

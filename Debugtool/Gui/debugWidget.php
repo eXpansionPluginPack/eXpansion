@@ -1,0 +1,70 @@
+<?php
+
+namespace ManiaLivePlugins\eXpansion\Debugtool\Gui;
+
+use ManiaLib\Gui\Elements\Label;
+use ManiaLive\Event\Dispatcher;
+use ManiaLive\Features\Tick\Event as TickEvent;
+use ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget;
+
+/**
+ * Description of widget_netstat
+ *
+ * @author Petri
+ */
+class debugWidget extends PlainWidget
+{
+
+	public $label;
+
+	public $lastUpdate;
+
+	public $lastValue = 0;
+
+	protected function onConstruct()
+	{
+		parent::onConstruct();
+		$this->lastUpdate = 0;
+		Dispatcher::register(TickEvent::getClass(), $this);
+
+		$this->setName("Debug widget");
+
+
+		$this->label = new Label(60);
+		$this->label->setAlign("right", "top");
+		$this->label->setPosX(0);		
+		$this->addComponent($this->label);
+	}
+
+	function onTick()
+	{
+
+		if ($this->lastUpdate + 3 < time()) {			
+			$value = "mem usage: " . round((memory_get_usage() / 1024 / 1024), 3) . " Mb";
+			if ($value == $this->lastValue) {
+				$this->label->setTextColor("fff");
+			}
+			else {
+				if ($value > $this->lastValue) {
+					$this->label->setTextColor('d22');
+				}
+				else {
+					$this->label->setTextColor('2d2');
+				}
+			}
+			$this->label->setText($value);
+			$this->RedrawAll();
+			$this->lastUpdate = time();
+			$this->lastValue = $value;
+		}
+	}
+
+	public function destroy()
+	{
+		parent::destroy();
+		Dispatcher::unregister(TickEvent::getClass(), $this);
+	}
+
+}
+
+?>

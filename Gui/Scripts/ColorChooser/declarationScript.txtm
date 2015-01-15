@@ -1,4 +1,3 @@
 declare Integer cid = -1;
 declare Boolean overColorElement = False;
 declare Boolean overHueElement = False;
-declare Boolean usePrefix = <?php echo $this->usePrefix; ?>;

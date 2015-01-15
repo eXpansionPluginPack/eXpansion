@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 
 /**
@@ -22,74 +23,120 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->setGroups(array('UI'));
 
 		$config = Config::getInstance();
+
+		$var = new Boolean("disablePersonalHud", "Disable personalized hud", $config);
+		$var->setDescription("if disable this, server admin defined positions are forced to all players");
+		$var->setGroup("GUI");
+		$var->setDefaultValue(false);
+		$this->registerVariable($var);
+
 		$var = new String("uiTextureBase", "Texture base for ui ", $config);
-		$var->setGroup("Look & Feel");
-		$var->setDefaultValue("http://reaby.kapsi.fi/ml/ui");
+		$var->setGroup("GUI");
+		$var->setDefaultValue("http://reaby.kapsi.fi/ml/ui3/");
 		$this->registerVariable($var);
 
-		$var = new String("windowTitleColor", "Color for window titlebar", $config);
+		$var = new ColorCode("windowTitleColor", "Window Title Text color", $config);
 		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
-		$var->setGroup("Look & Feel");
-		$var->setDefaultValue("000a");
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("000");
 		$this->registerVariable($var);
 
-		$var = new String("buttonTitleColor", "Color for button texts", $config);
+		$var = new ColorCode("windowTitleBackgroundColor", "Window Title Background color", $config);
 		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
-		$var->setGroup("Look & Feel");
-		$var->setDefaultValue("000a");
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("aaa");
+		$this->registerVariable($var);
+
+
+		$var = new ColorCode("windowBackgroundColor", "Window Background color", $config);
+		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("2b3746");
+		$this->registerVariable($var);
+
+
+		$var = new ColorCode("buttonTitleColor", "Button Text color", $config);
+		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("e4f6fe");
+		$this->registerVariable($var);
+
+
+		$var = new ColorCode("buttonBackgroundColor", "Button Background color", $config);
+		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("42a5fa");
 		$this->registerVariable($var);
 
 
 		$var = new Boolean("disableAnimations", "Disable window animations", $config);
-		$var->setGroup("Look & Feel");
+		$var->setGroup("GUI");
 		$var->setDefaultValue(false);
-		$this->registerVariable($var);
-
-		$var = new Boolean("disablePersonalHud", "Disable personalized hud", $config);
-		$var->setDescription("if disable this, server admin defined positions are forced to all players");
-		$var->setGroup("Look & Feel");
-		$var->setDefaultValue(false);
+		$var->setVisible(false);
 		$this->registerVariable($var);
 
 		$var = new String("style_widget_bgStyle", "background style", $config);
-		$var->setGroup("Widgets");
+		$var->setGroup("GUI");
 		$var->setDefaultValue("BgsPlayerCard");
+		$var->setVisible(false);
 		$this->registerVariable($var);
 
 		$var = new String("style_widget_bgSubStyle", "background substyle", $config);
-		$var->setGroup("Widgets");
+		$var->setGroup("GUI");
 		$var->setDefaultValue("BgRacePlayerName");
+		$var->setVisible(false);
 		$this->registerVariable($var);
 
-		$var = new String("style_widget_bgColorize", "background color", $config);
-		$var->setGroup("Widgets");
-		$var->setDefaultValue("000");
+		$var = new ColorCode("style_widget_bgColorize", "Widget Background", $config);
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("2b3746");
 		$this->registerVariable($var);
 
-		$var = new BoundedFloat("style_widget_bgOpacity", "background opacity", $config);
-		$var->setGroup("Widgets");
+		$var = new BoundedFloat("style_widget_bgOpacity", "Widget Background Opacity", $config);
+		$var->setGroup("GUI");
 		$var->setMin(0.0);
 		$var->setMax(1.0);
-		$var->setDefaultValue(1.0);
+		$var->setDefaultValue(0.75);
 		$this->registerVariable($var);
 
-		$var = new String("style_widget_title_bgColorize", "Title background color", $config);
-		$var->setGroup("Widgets");
-		$var->setDefaultValue("3af");
+		$var = new ColorCode("style_widget_title_bgColorize", "Widget Titlebar Background color", $config);
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("42a5fa");
 		$this->registerVariable($var);
 
-		$var = new String("style_widget_title_lbStyle", "Title label style", $config);
-		$var->setGroup("Widgets");
+		$var = new ColorCode("style_widget_title_lbColor", "Widget Titlebar Text color", $config);
+		$var->setGroup("GUI");
+		$var->setUsePrefix(false);
+		$var->setUseFullHex(true);
+		$var->setDefaultValue("fff");
+		$this->registerVariable($var);
+
+		$var = new String("style_widget_title_lbStyle", "Widget Titlebar font", $config);
+		$var->setGroup("GUI");
+		$var->setDescription('see the $hstyles$h for available fonts');
 		$var->setDefaultValue("TextCardScores2");
 		$this->registerVariable($var);
 
-		$var = new BoundedFloat("style_widget_title_lbSize", "Title label size", $config);
-		$var->setGroup("Widgets");
+		$var = new BoundedFloat("style_widget_title_lbSize", "Widget Titlebar font size", $config);
+		$var->setGroup("GUI");
 		$var->setMin(0.5);
 		$var->setMax(5.0);
 		$var->setDefaultValue(1);
 		$this->registerVariable($var);
-
 	}
 
 }

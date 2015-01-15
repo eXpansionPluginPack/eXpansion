@@ -5,20 +5,20 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLive\Gui\ActionHandler;
 
-class Checkbox extends \ManiaLive\Gui\Control
+class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-	private $label;
+	protected $label;
 
-	private $button;
+	protected $button;
 
-	private $active = false;
+	protected $active = false;
 
-	private $textWidth;
+	protected $textWidth;
 
-	private $action;
+	protected $action;
 
-	private $toToggle = null;
+	protected $toToggle = null;
 
 	function __construct($sizeX = 5, $sizeY = 5, $textWidth = 25, Checkbox $toToggle = null)
 	{

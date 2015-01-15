@@ -58,16 +58,7 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->rpoints[] = new CustomPoint('Superstars', array(20, 15, 12, 10, 8, 6, 4, 3, 2, 1));
 		$this->rpoints[] = new CustomPoint('Simple 5', array(5, 4, 3, 2, 1));
 		$this->rpoints[] = new CustomPoint('Simple 10', array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1));
-
-		$config = Config::getInstance();
-
-		for ($i = 0; $i < 20; $i++) {
-			$name = 'customPoints' . ($i + 1);
-			$points = $config->$name;
-			if (!empty($points)) {
-				$this->rpoints[] = new CustomPoint('Custom ' . ($i + 1), $points);
-			}
-		}
+		
 	}
 
 	function onResize($oldX, $oldY)
@@ -136,7 +127,7 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->cancel->destroy();
 		$this->connection = null;
 		$this->storage = null;
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

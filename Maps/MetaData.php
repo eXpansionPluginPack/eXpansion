@@ -23,20 +23,34 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$config = Config::getInstance();
 
-		$var = new SortedList("publicQueueAmount", "Set Planets amounts for jukeboxing a map", $config);
+		$var = new SortedList("publicQueueAmount", "Jukeboxing costs", $config, false, true);
+		$var->setGroup('Planets');
 		$var->setType(new Int("", "", null));
 		$var->setDefaultValue(array(0));
 		$this->registerVariable($var);
 
-		$var = new Boolean("showNextMapWidget", "Show next map widget ?", $config, true, false);
+		$var = new Int("bufferSize", "Map Buffer size", $config, false, false);
+		$var->setGroup("Buffers");
+		$var->setDefaultValue(5);
+		$this->registerVariable($var);
+
+
+		$var = new Int("historySize", "Map History size", $config, false, false);
+		$var->setGroup("Buffers");
+		$var->setDefaultValue(7);
+		$this->registerVariable($var);
+
+		$var = new Boolean("showNextMapWidget", "Show next map widget", $config, false, false);
 		$var->setGroup("Widgets");
 		$var->setDefaultValue(true);
 		$this->registerVariable($var);
 
-		$var = new Boolean("showEndMatchNotices", "Show end map notices ?", $config, true, false);
+		$var = new Boolean("showEndMatchNotices", "Show end map notices", $config, false, false);
 		$var->setGroup("Chat Messages");
 		$var->setDefaultValue(true);
 		$this->registerVariable($var);
+
+
 	}
 
 }

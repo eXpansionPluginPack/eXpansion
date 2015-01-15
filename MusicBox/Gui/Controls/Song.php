@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 use \ManiaLib\Utils\Formatting;
 
-class Song extends \ManiaLive\Gui\Control {
+class Song extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg;
     private $queueButton;
@@ -94,7 +94,7 @@ class Song extends \ManiaLive\Gui\Control {
 
     function erase() {
         $this->queueButton->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

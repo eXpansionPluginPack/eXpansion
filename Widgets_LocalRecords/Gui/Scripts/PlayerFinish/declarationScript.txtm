@@ -27,6 +27,13 @@ declare Player = Null;
 declare Boolean needUpdate = True;
 declare lastUpdateTime = 0;
 
+declare Integer animStart = Now;
+declare Boolean isStart = False;
+declare Boolean isZoom = True;
+declare Boolean triggerBegin = True;
+declare Integer zoomId = -1;
+declare Integer lastZoomId = -2;
+
 if(getCurrentTimes){
 //sleep(1000);
 }
@@ -60,4 +67,11 @@ foreach (Player in Players) {
 }
 
 
-
+for (i, 1, nbFields ) {
+        declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
+	declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
+	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
+        rank.Opacity = 0.;
+        timeLabel.Opacity = 0.;
+        nickLabel.Opacity = 0.;       
+}

@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
-class CustomPointEntry extends \ManiaLive\Gui\Control
+class CustomPointEntry extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	private $bg;
@@ -90,9 +90,9 @@ class CustomPointEntry extends \ManiaLive\Gui\Control
 	function erase()
 	{
 		$this->button->destroy();
-		$this->frame->clearComponents();
+		$this->frame->destroyComponents();
 		$this->frame->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

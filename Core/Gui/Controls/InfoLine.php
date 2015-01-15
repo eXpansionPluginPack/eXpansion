@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
  *
  * @author Reaby
  */
-class InfoLine extends \ManiaLive\Gui\Control {
+class InfoLine extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     /** @var ManiaLib\Gui\Elements\Label */
     protected $label;

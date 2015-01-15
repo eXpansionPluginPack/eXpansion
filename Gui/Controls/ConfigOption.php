@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Controls;
  *
  * @author Reaby
  */
-class ConfigOption extends \ManiaLive\Gui\Control {
+class ConfigOption extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $cb_item;
     private $status;
@@ -57,7 +57,7 @@ class ConfigOption extends \ManiaLive\Gui\Control {
     }
 
     public function erase() {
-	$this->clearComponents();
+	$this->destroyComponents();
 	parent::destroy();
     }
 

@@ -1,0 +1,6 @@
+declare CMlQuad quad <=> (Page.GetFirstChild("quad") as CMlQuad);
+declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");
+declare Integer Duration = <?php echo $this->duration; ?>;
+declare Text action = "<?php echo $this->action; ?>";
+declare Boolean canClick = True;
+declare Integer StartTime = Now;

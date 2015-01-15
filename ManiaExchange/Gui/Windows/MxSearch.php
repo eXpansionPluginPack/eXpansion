@@ -340,7 +340,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->storage = null;
 		$this->searchframe->clearComponents();
 		$this->searchframe->destroy();
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

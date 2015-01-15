@@ -7,36 +7,36 @@ use \ManiaLib\Utils\Formatting;
 use \ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
-class PanelItem extends \ManiaLive\Gui\Control
+class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-	private $quad, $lbl_title, $lbl_value;
+	public $quad, $lbl_title, $lbl_value;
 
 	function __construct($title, $value, $sizeX = 20, $StyleorUrl = null, $iconSubStyle = null)
 	{
 		$this->quad = new \ManiaLib\Gui\Elements\Quad(8, 8);
-		//$this->quad->setColorize("fff");		
+		//$this->quad->setColorize("fff");
 		$this->quad->setPosY(0.5);
 		$this->quad->setStyle($StyleorUrl);
 		$this->quad->setSubStyle($iconSubStyle);
-		$this->addComponent($this->quad);
+	//	$this->addComponent($this->quad);
 
 		$this->lbl_title = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel($sizeX, 4);
 		$this->lbl_title->setText($title);
-		$this->lbl_title->setPosition(9, -4);
+		$this->lbl_title->setPosition(0, -4);
 		$this->lbl_title->setStyle("TextCardSmallScores2");
 		$this->addComponent($this->lbl_title);
 
 
 		$this->lbl_value = new \ManiaLib\Gui\Elements\Label($sizeX, 4);
 		$this->lbl_value->setText($value);
-		$this->lbl_value->setPosition(9, 0);
+		$this->lbl_value->setPosition(0, 0);
 		$this->lbl_value->setStyle("TextCardSmallScores2");
 
 		$this->addComponent($this->lbl_value);
 
-		$this->setSize($sizeX + 9, 8);
-		$this->setScale(0.8);
+		$this->setSize($sizeX + 6, 8);
+		$this->setScale(0.9);
 	}
 
 	function setId($id)

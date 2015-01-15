@@ -40,18 +40,17 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 	use Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException;
 	use Phine\Exception\Exception as Exception2;
 	use \ManiaLive\DedicatedApi\Config as DedicatedConfig;
+	use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
 
 	/**
 	 * Description of BasicPlugin
 	 *
 	 * @author oliverde8
 	 */
-	class BasicPlugin extends Plugin implements WaitingCompliant, GameSettingsEventListener, PlayerEventListener, GlobalEventListener, ScriptmodeEventListener
+	class BasicPlugin extends Plugin implements WaitingCompliant, GameSettingsEventListener, PlayerEventListener, GlobalEventListener
 	{
 
 		public static $plugins_list;
-
-		private $_isScriptEventsEnabled = false;
 
 		/**
 		 * The list of Plugin id's that may need to be started
@@ -93,6 +92,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		protected $colorParser;
 
 		private $_isReady = false;
+
+		private $_scriptEventsEnabled = false;
 
 		/**
 		 *
@@ -192,14 +193,24 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 		/**
 		 * enables eXpansion modescript bidings
+		 *
+		 * example:
+		 * 
+		 * $this->enableScriptEvents("LibXmlRpc_OnStunt");
+		 * $this->enableScriptEvents(array("LibXmlRpc_OnStunt", "LibXmlRpc_OnWaypoint"));
+		 *
+		 * @param string|array $callback this can be either one callback or array of callbacks
+		 *
 		 */
-		public final function enableScriptEvents()
+		public final function enableScriptEvents($callback = false)
 		{
-			if (!$this->_isScriptEventsEnabled) {
-				$this->_isScriptEventsEnabled = true;
-				$this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => true));
-				Dispatcher::register(ScriptmodeEvent::getClass(), $this);
+			if ($callback === false) {
+				throw new Exception('$this->enableScriptEvents($callback) needs a value for whitelisting...');
 			}
+			$this->enableDedicatedEvents(ServerEvent::ON_MODE_SCRIPT_CALLBACK);
+			$this->_scriptEventsEnabled = true;
+			Core::enableScriptCallback($callback);
+			//	Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
 		}
 
 		public final function onLoad()
@@ -244,6 +255,12 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 			if (self::$exp_billManager == null) {
 				self::$exp_billManager = new BillManager($this->connection, $this->db, $this);
 			}
+
+			// to save resources disable triggering scriptmode events from all plugins automatically
+			// you have to use $this->enableScriptCallbacks(array("callbackname1","callbackname2") to enable them!
+			if ($this->_scriptEventsEnabled === false) {
+				$this->disableDedicatedEvents(ServerEvent::ON_MODE_SCRIPT_CALLBACK);
+			}
 		}
 
 		/**
@@ -256,17 +273,51 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 			
 		}
 
+		/**
+		 * Overwritten modescript callback to trigger modescript functions
+		 * @param string $param1
+		 * @param string|array $param2
+		 */
+		final public function onModeScriptCallback($param1, $param2)
+		{					
+			$out = array();
+			foreach ($param2 as $value) {
+				if (is_numeric($value)) {
+					$out[] = floatval($value);
+				}
+				else if ($value == "False") {
+					$out[] = false;
+				}
+				else if ($value == "True") {
+					$out[] = true;
+				}
+				else {
+					$out[] = $value;
+				}
+			}
+
+			if (method_exists($this, $param1)) {
+				call_user_func_array(array($this, $param1), $out);
+			}
+			else {
+				$this->exp_onModeScriptCallback($param1, $out);
+			}
+		}
+
+		/**
+		 * redirected onModeScriptCallback
+		 * @param string $param1
+		 * @param string|array $param2
+		 */
+		public function exp_onModeScriptCallback($param1, $param2)
+		{
+
+		}
+
 		final public function onUnload()
 		{
 			Dispatcher::unregister(GameSettingsEvent::getClass(), $this);
 			Dispatcher::unregister(PlayerEvent::getClass(), $this);
-			try {
-				if ($this->_isScriptEventsEnabled) {
-					Dispatcher::unregister(ScriptmodeEvent::getClass(), $this);
-				}
-			} catch (Exception $ex) {
-				Helper::log("[BasicPlugin]Dispather exception:" . $this->getId() . " -> " . $e->getMessage() . "\n");
-			}
 			Dispatcher::unregister(GlobalEvent::getClass(), $this);
 
 			try {
@@ -825,141 +876,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 			
 		}
 
-		public function LibAFK_IsAFK($login)
-		{
-			
-		}
-
-		public function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginMap($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginMatch($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginRound($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginSubmatch($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginTurn($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_BeginWarmUp()
-		{
-			
-		}
-
-		public function LibXmlRpc_EndMap($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_EndMatch($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_EndRound($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_EndSubmatch($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_EndTurn($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_EndWarmUp()
-		{
-			
-		}
-
-		public function LibXmlRpc_LoadingMap($number)
-		{
-			
-		}
-
-		public function LibXmlRpc_OnGiveUp($login)
-		{
-			
-		}
-
-		public function LibXmlRpc_OnRespawn($login)
-		{
-			
-		}
-
-		public function LibXmlRpc_OnStartLine($login)
-		{
-			
-		}
-
-		public function LibXmlRpc_OnStunt(
-		$login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump
-		)
-		{
-			
-		}
-
-		public function LibXmlRpc_OnWayPoint(
-		$login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
-		)
-		{
-			
-		}
-
-		public function LibXmlRpc_PlayerRanking(
-		$rank, $login, $nickName, $teamId, $isSpectator, $isAway, $currentPoints, $zone
-		)
-		{
-			
-		}
-
-		public function LibXmlRpc_Rankings($array)
-		{
-			
-		}
-
-		public function LibXmlRpc_Scores($MatchScoreClan1, $MatchScoreClan2, $MapScoreClan1, $MapScoreClan2)
-		{
-			
-		}
-
-		public function WarmUp_Status($status)
-		{
-			
-		}
-
 		/**
 		 * @param PlayerNetInfo[] $players
 		 */
 		public function onPlayerNetLost($players)
-		{
-			
-		}
-
-		function LibXmlRpc_OnCapture($login)
 		{
 			
 		}

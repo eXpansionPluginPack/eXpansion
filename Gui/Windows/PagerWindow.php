@@ -85,7 +85,7 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
         $this->items = null;
         $this->pager->destroy();
         $this->labels = null;
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

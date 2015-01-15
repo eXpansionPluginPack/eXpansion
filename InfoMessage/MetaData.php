@@ -22,7 +22,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Info Messages");
 		$this->setDescription("Send informatic chat message every now and then");
-
+		$this->setGroups(array('Tools'));
+		
 		$config = Config::getInstance();
 
 		$var = new BasicList("infoMessages", "Messages", $config, false, false);

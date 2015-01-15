@@ -11,7 +11,7 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  *
  * @author oliverde8
  */
-class RankItem extends \ManiaLive\Gui\Control {
+class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $label_rank, $label_nick, $label_wins, $label_score, $label_finish, $label_lastRec;
     private $bg;

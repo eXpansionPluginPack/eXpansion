@@ -13,7 +13,7 @@ use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
  *
  * @author oliverde8
  */
-class AdminItem extends \ManiaLive\Gui\Control
+class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	private $admin;
@@ -82,7 +82,7 @@ class AdminItem extends \ManiaLive\Gui\Control
 		if ($this->plistButton != null)
 			$this->plistButton->destroy();
 		$this->plistButton = null;
-		$this->clearComponents();
+		$this->destroyComponents();
 		parent::destroy();
 	}
 

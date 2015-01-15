@@ -4,18 +4,18 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class WidgetButton extends \ManiaLive\Gui\Control
+class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	protected $button;
 
 	protected $quad;
 
-	private $text;
+	protected $text;
 
-	private $value;
+	protected $value;
 
-	private $isActive = false;
+	protected $isActive = false;
 
 	/**
 	 * Button
@@ -33,6 +33,7 @@ class WidgetButton extends \ManiaLive\Gui\Control
 		$this->button->setAlign('center', 'top');
 		$this->button->setBgcolor("0000");
 		$this->button->setBgcolorFocus("fff6");
+		$this->button->setScriptEvents();
 		$this->addComponent($this->button);
 
 		$this->sizeX = $sizeX;

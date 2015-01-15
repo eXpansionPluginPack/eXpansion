@@ -1,3 +1,49 @@
+if (UI.UISequence == CUIConfig::EUISequence::Playing && triggerBegin == True) {
+    triggerBegin = False;
+    isStart = True;
+    animStart = Now;   
+} 
+
+if (isStart) {    
+    declare delay = 100;
+    for (i, 1, nbFields ) {
+        declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
+	declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
+	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
+        declare time = (Now - animStart - delay);
+        if (time < 0) {            
+            time = 0;
+        }
+        timeLabel.Opacity = AL::Ease("LinearOut", time * 1., 0., 1., 500.);
+        nickLabel.Opacity = AL::Ease("LinearOut", time * 1., 0., 1., 500.);      
+        rank.Opacity = AL::Ease("LinearOut", time * 1., 0., 1., 500.);      
+        delay += 100;
+    }
+    
+}
+
+if (isZoom) {    
+    if (zoomId != -1) {
+    declare rank = (Page.GetFirstChild("RecRank_"^zoomId) as CMlLabel);
+    declare nickLabel = (Page.GetFirstChild("RecNick_"^zoomId) as CMlLabel);
+    declare timeLabel = (Page.GetFirstChild("RecTime_"^zoomId) as CMlLabel);
+    declare time = (Now - animStart);
+    timeLabel.RelativeScale = 2. - AL::Ease("LinearInOut", time * 1., 0., 1., 500.);
+    nickLabel.RelativeScale = 2. - AL::Ease("LinearInOut", time * 1., 0., 1., 500.);      
+    rank.RelativeScale = 2. - AL::Ease("LinearInOut", time * 1., 0., 1., 500.);      
+    }
+}
+if (isStart && animStart + 3000 <= Now ) {        
+    isStart = False;
+
+    // added for debug
+    isZoom = True;
+    animStart = Now;
+}
+
+if (isZoom && animStart + 2000 <= Now ) {        
+    isZoom = False;
+}
 
 
 if((Now - lastCheckTime) > 50){
@@ -48,8 +94,9 @@ if((Now - lastCheckTime) > 50){
                         if (Login == Score.User.Login) {
                             //It's our player
                             if(inRank <= maxRank){
-                                log("Dedimania Record not to be ignored");
+                                // log("Dedimania Record not to be ignored");
                                 keepRecord = True;
+
                             }
                         }
                         inRank += 1;
@@ -151,6 +198,12 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 		putRecordTo(i, nbRec, Score, Login, playerNickName[Login], Login == LocalUser.Login);
 		if (Login == LocalUser.Login) {
 		    showed = True;
+                    zoomId = i;                    
+                    if (lastZoomId != zoomId) {
+                        isZoom = True;        
+                        animStart = Now;    
+                        lastZoomId = zoomId;
+                    }
 		}
 	    }
 	    i += 1;

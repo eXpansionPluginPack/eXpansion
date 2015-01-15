@@ -107,7 +107,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
 	function destroy()
 	{
-		$this->clearComponents();
+		$this->destroyComponents();
 		unset($this->script);
 		parent::destroy();
 	}

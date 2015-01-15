@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 
-class MxInfo extends \ManiaLive\Gui\Control {
+class MxInfo extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg;
     private $label;
@@ -65,7 +65,7 @@ class MxInfo extends \ManiaLive\Gui\Control {
     function erase() {        
         $this->frame->clearComponents();
         $this->frame->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

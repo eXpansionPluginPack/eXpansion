@@ -28,7 +28,7 @@ class InfoMessage extends ExpPlugin
 
 		if ((time() % $interval) == 0) {
 			$i = rand(0, count($this->config->infoMessages) - 1);
-			$this->connection->chatSendServerMessage($this->config->infoMessageColor . $this->config->infoMessages[$i]);
+			$this->exp_chatSendServerMessage($this->config->infoMessageColor . $this->config->infoMessages[$i]);
 		}
 	}
 

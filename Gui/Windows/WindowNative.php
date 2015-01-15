@@ -327,7 +327,7 @@ abstract class WindowNative extends \ManiaLive\Gui\Window
 		$this->_windowFrame->destroy();
 		$this->mainFrame->destroy();
 
-		$this->clearComponents();
+		$this->destroyComponents();
 		$this->_closeAction = null;
 		parent::destroy();
 	}

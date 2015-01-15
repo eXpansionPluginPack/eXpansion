@@ -13,7 +13,7 @@ use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
  *
  * @author oliverde8
  */
-class GroupItem extends \ManiaLive\Gui\Control {
+class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $group;
     
@@ -110,7 +110,7 @@ class GroupItem extends \ManiaLive\Gui\Control {
         $this->permiButton=null;
         $this->plistButton=null;
         $this->deleteButton=null;
-        $this->clearComponents();
+        $this->destroyComponents();
 	\ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_deleteGroupf);
 	\ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_deleteGroup);
 

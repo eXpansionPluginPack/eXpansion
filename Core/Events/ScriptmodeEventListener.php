@@ -73,8 +73,6 @@ interface ScriptmodeEventListener
 
 	function LibAFK_Properties($idleTimelimit, $spawnTimeLimit, $checkInterval, $forceSpec);
 
-
-
 	/* tm common */
 
 	function LibXmlRpc_OnStartLine($login);
@@ -86,6 +84,71 @@ interface ScriptmodeEventListener
 	function LibXmlRpc_OnRespawn($login);
 
 	function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump);
+
+	/* more events */
+
+	function LibXmlRpc_BeginPlaying();
+
+	function LibXmlRpc_EndPlaying();
+
+	function LibXmlRpc_UnloadingMap($mapNumber);
+
+	function LibXmlRpc_BeginPodium();
+
+	function LibXmlRpc_EndPodium();
+
+	function LibXmlRpc_OnStartCountdown($login);
+
+	/* generated */
+
+	function LibXmlRpc_Callbacks($value);
+
+	function LibXmlRpc_CallbackHelp($value);
+
+	function LibXmlRpc_BlockedCallbacks($value);
+
+	function LibXmlRpc_BeginServer();
+
+	function LibXmlRpc_BeginServerStop();
+
+	function LibXmlRpc_BeginMatchStop($value);
+
+	function LibXmlRpc_BeginMapStop($value);
+
+	function LibXmlRpc_BeginSubmatchStop($value);
+
+	function LibXmlRpc_BeginRoundStop($value);
+
+	function LibXmlRpc_BeginTurnStop($value);
+
+	function LibXmlRpc_EndTurnStop($value);
+
+	function LibXmlRpc_EndRoundStop($value);
+
+	function LibXmlRpc_EndSubmatchStop($value);
+
+	function LibXmlRpc_EndMapStop($value);
+
+	function LibXmlRpc_EndMatchStop($value);
+
+	function LibXmlRpc_EndServer();
+
+	function LibXmlRpc_EndServerStop();
+
+	function LibXmlRpc_PlayersRanking($value);
+
+	function LibXmlRpc_PlayersScores($value);
+
+	function LibXmlRpc_PlayersTimes($value);
+
+	function LibXmlRpc_TeamsScores($value);
+
+	function LibXmlRpc_WarmUp($value);
+
+	function LibXmlRpc_TeamsMode($value);
+
+	function UI_Properties($value);
+	
 }
 
 ?>

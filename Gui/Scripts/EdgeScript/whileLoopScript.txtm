@@ -1,11 +1,10 @@
-
 foreach (Event in PendingEvents) {                                                
     if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "Edge" )) {	
         
-           edge_isLockedVisible = !edge_isLockedVisible;
+           edge_isLockedVisible2 = !edge_isLockedVisible2;
 
-           if (edge_isLockedVisible) {
-              edge_isMinimized = False;
+           if (edge_isLockedVisible2) {
+                edge_isMinimized = False;
              // Edge.Style = "Icons64x64_1";
              // Edge.Substyle = "LvlGreen";
                Edge.BgColor = <0.8,0.,0.>;
@@ -13,12 +12,12 @@ foreach (Event in PendingEvents) {
            else {             
              // Edge.Style = "Icons64x64_1";
              // Edge.Substyle = "LvlRed";            
-Edge.BgColor = <0.,.8,0.>;
+            Edge.BgColor = <0.,.8,0.>;
                 
            }
 
-           foreach (widgetid => value in edge_animatedId) {
-                edge_animatedId[widgetid] = True;
-            }
+         //  foreach (widgetid => value in edge_animatedId) {
+         //       edge_animatedId[widgetid] = True;
+         //   }
     }                                       
 }

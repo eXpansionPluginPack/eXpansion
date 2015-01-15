@@ -16,7 +16,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("AutoQueue");
 		$this->setDescription('AutoQueue for servers which has lot of players');
-
+		$this->setGroups(array('Tools'));
 		$config = Config::getInstance();
 	}
 

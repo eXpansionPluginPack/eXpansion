@@ -56,7 +56,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		$menu->addComponent($this->item[$nb]);
 	}
 
-	public function addSubMenu(&$menu, $text)
+	public function addSubMenu(&$menu, $text, $action = null)
 	{
 		$mb = count($this->submenu) + 1;
 		$this->submenu[$mb] = new \ManiaLive\Gui\Controls\Frame(29.5, 5.5);
@@ -64,7 +64,8 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		$this->submenu[$mb]->setId("submenu_" . $mb);
 		$this->submenu[$mb]->setScriptEvents();
 		// add item to menu
-		$this->addItem($menu, $text . " » ", null, $mb);
+		// $this->addItem($menu, $text . " » ", $action, $mb);
+		$this->addItem($menu, $text, $action, $mb);
 		// add component to menu
 		$menu->addComponent($this->submenu[$mb]);
 
@@ -103,7 +104,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		$storage = \ManiaLive\Data\Storage::getInstance();
 
 		$this->item[0]->setTop();
-		$this->item[count($this->item) - 1]->setBottom();
+		$this->item[count($this->item) - 1]->setBottom(); 
 
 		foreach ($this->submenu as &$item) {
 			$comp = $item->getComponents();
@@ -111,7 +112,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 				continue;
 			reset($comp);
 			current($comp)->setTop();
-			end($comp)->setBottom();
+			end($comp)->setBottom(); 
 		}
 
 		$count = count($this->submenu);

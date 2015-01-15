@@ -17,7 +17,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("Force Skin");
 		$this->setDescription("Forces a skin to be used for all player on a server");
-
+		$this->setGroups(array('Mods', 'Tools'));
+	
 		$config = Config::getInstance();
 
 		$var = new String("skinUrl", "skin url address", $config, false, false);

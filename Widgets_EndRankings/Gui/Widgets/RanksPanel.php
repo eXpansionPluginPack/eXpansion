@@ -61,7 +61,7 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 	    $item->destroy();
 	}
 	$this->items = array();
-	$this->clearComponents();
+	$this->destroyComponents();
 
 	parent::destroy();
     }

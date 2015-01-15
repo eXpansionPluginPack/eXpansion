@@ -7,11 +7,11 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
  *
  * @author oliverde8
  */
-class Title extends \ManiaLive\Gui\Control {
+class Title extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
-    private $bg;
-    private $label;
-    private $config;
+    protected $bg;
+    protected $label;
+    protected $config;
 
     public function __construct($sizeX, $sizeY) {
         $config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();

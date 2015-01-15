@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
 
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 
-class ExpSettingsMenu extends \ManiaLive\Gui\Control {
+class ExpSettingsMenu extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     public $frame;
     
@@ -23,7 +23,7 @@ class ExpSettingsMenu extends \ManiaLive\Gui\Control {
     }
     
     public function reset(){
-	$this->frame->clearComponents();
+	$this->frame->destroyComponents();
     }
 
     public function addItem($label, $action, $color = null){

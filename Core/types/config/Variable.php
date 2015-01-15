@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Core\types\config;
+
 use ManiaLib\Utils\Singleton;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Utilities\Console;
@@ -15,7 +16,9 @@ abstract class Variable
 {
 
 	const SCOPE_GLOBAL = 0;
+
 	const SCOPE_SERVER = 1;
+
 	const SCOPE_FILE = 2;
 
 	private $name;
@@ -136,7 +139,6 @@ abstract class Variable
 		$this->group = $name;
 	}
 
-
 	public function setPluginId($id)
 	{
 		$this->pluginId = $id;
@@ -170,7 +172,8 @@ abstract class Variable
 	{
 		if (is_int($scope)) {
 			$this->scope = $scope;
-		} else {
+		}
+		else {
 			$this->scope = $scope ? self::SCOPE_GLOBAL : self::SCOPE_SERVER;
 		}
 		if ($this->scopeHandler != null) {
@@ -228,7 +231,6 @@ abstract class Variable
 		return $this->visibleName;
 	}
 
-
 	public function getDescription()
 	{
 		return $this->description;
@@ -238,7 +240,6 @@ abstract class Variable
 	{
 		$this->description = $description;
 	}
-
 
 	/**
 	 * For easier acces the settings will be grouped in the configuration interface. The name of the group
@@ -250,11 +251,19 @@ abstract class Variable
 		return $this->group;
 	}
 
+	/**
+	 * Sets visibility of the config variable
+	 * @return bool $visible
+	 */
 	public function getVisible()
 	{
 		return $this->visible;
 	}
 
+	/**
+	 * Sets visibility of the config variable
+	 * @param bool $visible
+	 */
 	public function setVisible($visible)
 	{
 		$this->visible = $visible;
@@ -269,7 +278,6 @@ abstract class Variable
 	{
 		return $this->defaultValue;
 	}
-
 
 	public function getConfigInstance()
 	{
@@ -299,12 +307,13 @@ abstract class Variable
 				try {
 					$phandler->callPublicMethod($core, $this->pluginId, 'onSettingsChanged', array($this));
 				} catch (\Exception $ex) {
-					Console::println("error on settings change!". $ex->getMessage());
+					Console::println("error on settings change!" . $ex->getMessage());
 				}
 
 				Dispatcher::dispatch(new PluginSettingChange(PluginSettingChange::ON_SETTINGS_CHANGE, $this->pluginId, $this));
 			}
-		} else {
+		}
+		else {
 			$this->value = $value;
 		}
 		return true;
@@ -320,7 +329,8 @@ abstract class Variable
 		if ($this->configInstance != null) {
 			$name = $this->name;
 			return isset($this->configInstance->$name) ? $this->configInstance->$name : null;
-		} else {
+		}
+		else {
 			return $this->value;
 		}
 	}

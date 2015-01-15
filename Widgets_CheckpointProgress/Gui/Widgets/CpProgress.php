@@ -46,7 +46,7 @@ class CpProgress extends Widget {
     }
 
     function destroy() {
-	$this->clearComponents();
+	$this->destroyComponents();
 	$this->storage = null;
 	parent::destroy();
     }

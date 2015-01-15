@@ -8,7 +8,7 @@ use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 use \ManiaLib\Utils\Formatting;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
-class Wishitem extends \ManiaLive\Gui\Control {
+class Wishitem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     protected $bg;
     protected $queueButton;
@@ -116,7 +116,7 @@ class Wishitem extends \ManiaLive\Gui\Control {
         if (is_object($this->removeButton))
             $this->removeButton->destroy();
 
-        $this->clearComponents();
+        $this->destroyComponents();
         parent::destroy();
     }
 

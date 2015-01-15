@@ -8,7 +8,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $historySize = 7;
     public $showNextMapWidget = true;
     public $showEndMatchNotices = true;
-    public $publicQueueAmount = array(20, 25, 30, 50, 75, 100, 150, 200);
+    public $publicQueueAmount = array(0);
 
 }
 

@@ -2,79 +2,133 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Events;
 
-use \ManiaLivePlugins\eXpansion\Core\Structures\JsonCallbacks;
-
 class ScriptmodeEvent extends \ManiaLive\Event\Event
 {
-	/* general */
+	/*
+	 *  when in need to add more suppport for events, just add constant missing event constant here and implement method at the interface :)
+	 */
 
-	const LibXmlRpc_BeginMatch = 0x1;
+	const LibXmlRpc_BeginMatch = 1;
 
-	const LibXmlRpc_LoadingMap = 0x2;
+	const LibXmlRpc_LoadingMap = 2;
 
-	const LibXmlRpc_BeginMap = 0x3;
+	const LibXmlRpc_BeginMap = 3;
 
-	const LibXmlRpc_BeginSubmatch = 0x4;
+	const LibXmlRpc_BeginSubmatch = 4;
 
-	const LibXmlRpc_BeginRound = 0x5;
+	const LibXmlRpc_BeginRound = 5;
 
-	const LibXmlRpc_BeginTurn = 0x6;
+	const LibXmlRpc_BeginTurn = 6;
 
-	const LibXmlRpc_EndTurn = 0x7;
+	const LibXmlRpc_EndTurn = 7;
 
-	const LibXmlRpc_EndRound = 0x8;
+	const LibXmlRpc_EndRound = 8;
 
-	const LibXmlRpc_EndSubmatch = 0x9;
+	const LibXmlRpc_EndSubmatch = 9;
 
-	const LibXmlRpc_EndMap = 0x10;
+	const LibXmlRpc_EndMap = 10;
 
-	const LibXmlRpc_EndMatch = 0x11;
+	const LibXmlRpc_EndMatch = 11;
 
-	const LibXmlRpc_BeginWarmUp = 0x12;
+	const LibXmlRpc_BeginWarmUp = 12;
 
-	const LibXmlRpc_EndWarmUp = 0x13;
+	const LibXmlRpc_EndWarmUp = 13;
 
 	/* storm common */
 
-	const LibXmlRpc_Rankings = 0x14;
+	const LibXmlRpc_Rankings = 14;
 
-	const LibXmlRpc_Scores = 0x15;
+	const LibXmlRpc_Scores = 15;
 
-	const LibXmlRpc_PlayerRanking = 0x16;
+	const LibXmlRpc_PlayerRanking = 16;
 
-	const WarmUp_Status = 0x17;
+	const WarmUp_Status = 17;
 
-	const LibAFK_IsAFK = 0x18;
+	const LibAFK_IsAFK = 18;
 
-	const LibAFK_Properties = 0x19;
+	const LibAFK_Properties = 19;
 
 	/* tm common */
 
-	const LibXmlRpc_OnStartLine = 0x20;
+	const LibXmlRpc_OnStartLine = 20;
 
-	const LibXmlRpc_OnWayPoint = 0x21;
+	const LibXmlRpc_OnWayPoint = 21;
 
-	const LibXmlRpc_OnGiveUp = 0x22;
+	const LibXmlRpc_OnGiveUp = 22;
 
-	const LibXmlRpc_OnRespawn = 0x23;
+	const LibXmlRpc_OnRespawn = 23;
 
-	const LibXmlRpc_OnStunt = 0x24;
+	const LibXmlRpc_OnStunt = 24;
 
-	/* more storm events */
+	/* more events */
 
-	const LibXmlRpc_OnCapture = 0x25;
+	const LibXmlRpc_OnCapture = 25;
 
-	const LibXmlRpc_BeginPlaying = 0x26;
+	const LibXmlRpc_BeginPlaying = 26;
 
-	const LibXmlRpc_EndPlaying = 0x27;
+	const LibXmlRpc_EndPlaying = 27;
 
-	const LibXmlRpc_UnloadingMap = 0x28;
+	const LibXmlRpc_UnloadingMap = 28;
 
-	const LibXmlRpc_BeginPodium = 0x29;
+	const LibXmlRpc_BeginPodium = 29;
 
-	const LibXmlRpc_EndPodium = 0x30;
+	const LibXmlRpc_EndPodium = 30;
+
+	const LibXmlRpc_OnStartCountdown = 31;
+
+	/* import from scriptmode */
+
+	const LibXmlRpc_Callbacks = 32;
+
+	const LibXmlRpc_CallbackHelp = 33;
+
+	const LibXmlRpc_BlockedCallbacks = 34;
+
+	const LibXmlRpc_BeginServer = 35;
+
+	const LibXmlRpc_BeginServerStop = 36;
+
+	const LibXmlRpc_BeginMatchStop = 37;
+
+	const LibXmlRpc_BeginMapStop = 38;
+
+	const LibXmlRpc_BeginSubmatchStop = 39;
+
+	const LibXmlRpc_BeginRoundStop = 40;
+
+	const LibXmlRpc_BeginTurnStop = 41;
+
+	const LibXmlRpc_EndTurnStop = 42;
+
+	const LibXmlRpc_EndRoundStop = 43;
+
+	const LibXmlRpc_EndSubmatchStop = 44;
+
+	const LibXmlRpc_EndMapStop = 45;
+
+	const LibXmlRpc_EndMatchStop = 46;
+
+	const LibXmlRpc_EndServer = 47;
+
+	const LibXmlRpc_EndServerStop = 48;
+
+	const LibXmlRpc_PlayersRanking = 49;
+
+	const LibXmlRpc_PlayersScores = 50;
+
+	const LibXmlRpc_PlayersTimes = 51;
+
+	const LibXmlRpc_TeamsScores = 52;
+
+	const LibXmlRpc_WarmUp = 53;
+
+	const LibXmlRpc_TeamsMode = 54;
+
+	const UI_Properties = 55;
 
 	protected $params;
+
+	protected $const = array();
 
 	function __construct($onWhat)
 	{
@@ -82,6 +136,11 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 		$params = func_get_args();
 		array_shift($params);
 		$this->params = $params;
+		$rc = new \ReflectionClass($this);
+
+		foreach ($rc->getConstants() as $key => $value) {
+			$this->const[intval($value)] = strval($key);
+		}
 	}
 
 	function fixBooleans(&$array)
@@ -97,103 +156,9 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 	function fireDo($listener)
 	{
 		$p = $this->params;
-		$array = $p[0];
-		$this->fixBooleans($array);
-
-		switch ($this->onWhat) {
-			case self::LibXmlRpc_BeginMatch:
-				$listener->LibXmlRpc_BeginMatch($array[0]);
-				break;
-			case self::LibXmlRpc_LoadingMap:
-				$listener->LibXmlRpc_LoadingMap($array[0]);
-				break;
-			case self::LibXmlRpc_BeginMap:
-				$listener->LibXmlRpc_BeginMap($array[0]);
-				break;
-			case self::LibXmlRpc_BeginSubmatch:
-				$listener->LibXmlRpc_BeginSubmatch($array[0]);
-				break;
-			case self::LibXmlRpc_BeginRound:
-				$listener->LibXmlRpc_BeginRound($array[0]);
-				break;
-			case self::LibXmlRpc_BeginTurn:
-				$listener->LibXmlRpc_BeginTurn($array[0]);
-				break;
-			case self::LibXmlRpc_EndTurn:
-				$listener->LibXmlRpc_EndTurn($array[0]);
-				break;
-			case self::LibXmlRpc_EndRound:
-				$listener->LibXmlRpc_EndRound($array[0]);
-				break;
-			case self::LibXmlRpc_EndSubmatch:
-				$listener->meLibXmlRpc_EndSubmatch($array[0]);
-				break;
-			case self::LibXmlRpc_EndMap:
-				$listener->LibXmlRpc_EndMap($array[0]);
-				break;
-			case self::LibXmlRpc_EndMatch:
-				$listener->LibXmlRpc_EndMatch($array[0]);
-				break;
-			case self::LibXmlRpc_BeginWarmUp:
-				$listener->LibXmlRpc_BeginWarmUp();
-				break;
-			case self::LibXmlRpc_EndWarmUp:
-				$listener->LibXmlRpc_EndWarmUp();
-				break;
-			case self::LibXmlRpc_Rankings:
-				// Example : ["Login1:Score1;Login2:Score2;Login3:Score3;LoginN:ScoreN"]
-				$listener->LibXmlRpc_Rankings($array);
-				break;
-			case self::LibXmlRpc_Scores:
-				// Note : ["MatchScoreClan1", "MatchScoreClan2", "MapScoreClan1", "MapScoreClan2"]
-				$listener->LibXmlRpc_Scores($array[0], $array[1], $array[2], $array[3]);
-				break;
-			case self::WarmUp_Status:
-				//  Example : ["True"]
-				// * Note : This callback is sent after using the `WarmUp_GetStatus` method
-				$listener->WarmUp_Status($array[0]);
-				break;
-			case self::LibAFK_IsAFK:
-				/* Data : An array with the login of the AFK player
-				 * Example : ["Login"]
-				 * Note : This callback is sent when the AFK library detects an AFK player, it will be sent until the player is forced into spectator mode
-				 */
-				$listener->LibAFK_IsAFK($array[0]);
-				break;
-			case self::LibAFK_Properties:
-				// Example : ["90000", "15000", "10000", "True"]
-				// IdleTimelimit, SpanTimeLimit, CheckInterval, ForceSpec
-				$listener->LibAFK_Properties($array[0], $array[1], $array[2], $array[3]);
-				break;
-
-			case self::LibXmlRpc_OnStartLine:
-				$listener->LibXmlRpc_OnStartLine($array[0]);
-				break;
-			case self::LibXmlRpc_OnWayPoint:
-				//			  login  , #blockid , time   ,index, endblock, , laptime, lapCpIndex, lapEnd
-				// Example : ["Login", "#123456", "21723", "7", "False", "6164", "1", "False"]		
-				// Data : the id of the waypoint block, the current race time, the waypoint number in the race, if the waypoint is the end of the race, the current lap time, the waypoint number in the lap and if the waypoint is the end of the lap.
-				$listener->LibXmlRpc_OnWayPoint($array[0], $array[1], $array[2], $array[3], $array[4], $array[5], $array[6], $array[7]);
-				break;
-			case self::LibXmlRpc_OnGiveUp:
-				$listener->LibXmlRpc_OnGiveUp($array[0]);
-				break;
-			case self::LibXmlRpc_OnRespawn:
-				$listener->LibXmlRpc_OnRespawn($array[0]);
-				break;
-			case self::LibXmlRpc_OnStunt:
-				$listener->LibXmlRpc_OnStunt($array[0], $array[1], $array[2], $array[3], $array[4], $array[5], $array[6], $array[7], $array[8], $array[9]);
-				break;
-			case self::LibXmlRpc_PlayerRanking:
-				// * Note : [Rank, Login, NickName, TeamId, IsSpectator, IsAway, BestTime, Zone]
-				$listener->LibXmlRpc_PlayerRanking($array[0], $array[1], $array[2], $array[3], $array[4], $array[5], $array[6], $array[7]);
-				break;
-			case self::LibXmlRpc_OnCapture:
-				// * Note : Login
-				$listener->LibXmlRpc_OnCapture($array[0]);
-				break;
-		}
-		return;
+		$params = $p[0];
+		$this->fixBooleans($params);
+		call_user_method_array($this->const[$this->onWhat], $listener, $params);
 	}
 
 }

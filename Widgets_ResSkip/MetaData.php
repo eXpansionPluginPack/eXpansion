@@ -18,22 +18,23 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	{
 		parent::onBeginLoad();
 
-		$this->setName("Widget buttons");
+		$this->setName("Widged buttons: Res/skip/Fav");
 		$this->setDescription("Widget buttons");
 		$this->setGroups(array('UI', 'Widgets'));
-
-		$contentType = new Int("", "", null);
+		
 		$config = Config::getInstance();
 
-		$var = new SortedList('publicResAmount', 'Amount needed to restart a map', $config, true, false);
+		$var = new SortedList('publicResAmount', 'Amount needed to restart a map', $config, false, true);
 		$var->setDescription("If you use a negative value it will disable this feature.");
-		$var->setType($contentType);
+		$var->setGroup("Planets");
+		$var->setType(new Int("", "", null));
 		$var->setDefaultValue(array(0 => 500));
 		$this->registerVariable($var);
 
-		$var = new SortedList('publicSkipAmount', 'Amount needed to skip a map', $config, true, false);
+		$var = new SortedList('publicSkipAmount', 'Amount needed to skip a map', $config, false, true);
 		$var->setDescription("If you use a negative value it will disable this feature.");
-		$var->setType($contentType);
+		$var->setGroup("Planets");
+		$var->setType(new Int("", "", null));
 		$var->setDefaultValue(array(0 => 750));
 		$this->registerVariable($var);
 	}

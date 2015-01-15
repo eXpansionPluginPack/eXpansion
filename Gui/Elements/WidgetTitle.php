@@ -9,12 +9,12 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  *
  * @author oliverde8
  */
-class WidgetTitle extends \ManiaLive\Gui\Control
+class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-	private $bg, $bg_left, $bg_right, $lbl_title;
+	protected $bg, $bg_left, $bg_right, $lbl_title;
 
-	private $config;
+	protected $config;
 
 	public function __construct($sizeX, $sizeY)
 	{
@@ -54,8 +54,10 @@ class WidgetTitle extends \ManiaLive\Gui\Control
 	{
 		$this->bg_left->setSize(2, $this->sizeY + 1);
 		$this->bg_left->setPosX(0);
+
 		$this->bg->setSize($this->sizeX - 4, $this->sizeY + 1);
-		$this->bg->setPosX(2);
+		$this->bg->setPosX(1.99);
+
 		$this->bg_right->setSize(2, $this->sizeY + 1);
 		$this->bg_right->setPosX($this->sizeX);
 		

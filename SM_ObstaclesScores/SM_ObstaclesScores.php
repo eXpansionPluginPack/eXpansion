@@ -53,7 +53,8 @@ class SM_ObstaclesScores extends LocalBase {
 	{
 		parent::exp_onReady();
 
-		Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
+		$this->enableScriptEvents(array("onCheckpoint", "playerFinish"));
+		// Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
 
 		$cmd = AdminGroups::addAdminCommand("jumpto", $this, "jumpto", self::PERM_JUMTO);
 		$cmd->setMinParam(1);
@@ -82,7 +83,7 @@ class SM_ObstaclesScores extends LocalBase {
 		echo "\nScore : $login: cpindex: $cpIndex with $time \n";
 	}*/
 
-	public function onModeScriptCallback($param1, $param2)
+	public function exp_onModeScriptCallback($param1, $param2)
 	{
 
 		switch ($param1) {

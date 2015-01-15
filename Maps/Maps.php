@@ -88,6 +88,8 @@ class Maps extends ExpPlugin
 	 */
 	private $cmd_remove, $cmd_erease, $cmd_replay;
 
+	private $isRestartMap = false;
+
 	public function exp_onInit()
 	{
 
@@ -230,7 +232,13 @@ class Maps extends ExpPlugin
 						$this->exp_chatSendServerMessage(__("Error: %s", $login, $e->getMessage()));
 					}
 				}
-				array_shift($this->queue);
+				if ($this->isRestartMap == false) {
+					echo "[maps] shifting queue! \n";
+					array_shift($this->queue);
+				}
+				else {
+					echo "[maps] not shifting queue, since restart! \n";
+				}
 			}
 			else {
 				if ($this->tries < 3) {
@@ -238,7 +246,13 @@ class Maps extends ExpPlugin
 				}
 				else {
 					$this->tries = 0;
-					array_shift($this->queue);
+					if ($this->isRestartMap == false) {
+						echo "[maps] shifting queue! \n";
+						array_shift($this->queue);
+					}
+					else {
+						echo "[maps] not shifting queue, since restart! \n";
+					}
 				}
 			}
 		}
@@ -249,11 +263,13 @@ class Maps extends ExpPlugin
 			$this->nextMap = $queue->map;
 		}
 
-
-		array_unshift($this->history, $this->storage->currentMap);
-		if (count($this->history) > $this->config->historySize) {
-			array_pop($this->history);
+		if ($this->isRestartMap == false) {
+			array_unshift($this->history, $this->storage->currentMap);
+			if (count($this->history) > $this->config->historySize) {
+				array_pop($this->history);
+			}
 		}
+		$this->isRestartMap = false;
 		$this->showCurrentMapWidget(null);
 		$this->showNextMapWidget(null);
 	}
@@ -267,6 +283,7 @@ class Maps extends ExpPlugin
 
 	public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
 	{
+		$this->isRestartMap = $restartMap;
 		//$this->redrawNextMapWidget();
 	}
 
@@ -297,6 +314,7 @@ class Maps extends ExpPlugin
 
 	public function onEndMatch($rankings, $winnerTeamOrMap)
 	{
+		$this->config = Config::getInstance();
 		if ($this->wasWarmup)
 			return;
 
@@ -513,6 +531,8 @@ class Maps extends ExpPlugin
 	 */
 	public function checkQueuMap($login, Map $map, $sendMessages = false)
 	{
+		$this->config = Config::getInstance();
+
 		if ($this->storage->currentMap->uId == $map->uId) {
 			$msg = exp_getMessage('#admin_error# $iThis map is currently playing...');
 			if ($sendMessages)
@@ -1033,7 +1053,7 @@ class Maps extends ExpPlugin
 		$window = Gui\Windows\AddMaps::Create($login);
 		$window->setTitle('Add Maps on server');
 		$window->centerOnScreen();
-		$window->setSize(180, 100);
+		$window->setSize(200, 100);
 		$window->show();
 	}
 

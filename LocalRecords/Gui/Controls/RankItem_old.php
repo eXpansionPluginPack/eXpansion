@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 
-class RankItem_old extends \ManiaLive\Gui\Control {
+class RankItem_old extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $bg;
     private $nbrec;
@@ -100,7 +100,7 @@ class RankItem_old extends \ManiaLive\Gui\Control {
     function destroy() {
         $this->frame->clearComponents();
         $this->frame->destroy();
-        $this->clearComponents();
+        $this->destroyComponents();
 
         parent::destroy();
     }

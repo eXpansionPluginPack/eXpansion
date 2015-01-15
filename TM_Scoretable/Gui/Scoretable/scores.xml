@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scorestable version="1">
+    <styles>
+        <style id="LibST_Reset" />
+        <style id="LibST_Base" />
+    </styles>
+    <properties>
+        <position x="0." y="45." z="-30." />
+        <tablesize x="' . $x . '." y="' . $y . '." />
+        <taleformat columns="' . $config->tm_score_columns . '." lines="' . $config->tm_score_lines . '."/>
+    </properties>
+    <background>
+        <size width="'.$x.'." height="'.$y.'." />
+    </background>
+    <images>
+        <playercard>
+            <quad path="file://Media/Manialinks/Trackmania/ScoresTable/playerline-square.dds" />
+            <left path="file://Media/Manialinks/Trackmania/ScoresTable/playerline-left.dds" />
+            <right path="file://Media/Manialinks/Trackmania/ScoresTable/playerline-right.dds" />
+        </playercard>
+    </images>
+</scorestable>

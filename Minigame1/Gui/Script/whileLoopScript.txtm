@@ -1,0 +1,19 @@
+
+foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::MouseClick) {        
+        log (Now ^ " " ^ Event.ControlId);
+        if (canClick) {
+            canClick = False;
+            TriggerPageAction(action);
+            quad.Hide();
+        }       
+    }  	
+}
+
+
+if (Now - StartTime > Duration) {
+        if (quad.Visible) {
+            quad.Hide();       
+            log(Now ^ " unload!");
+        }
+ }
