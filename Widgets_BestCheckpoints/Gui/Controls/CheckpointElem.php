@@ -59,7 +59,7 @@ class CheckpointElem extends Control
 		$this->nick = new Label(21, 4);
 		$this->nick->setAlign('left', 'center');
 		$this->nick->setTextSize(1);
-		$this->nick->setPosX(11.5);
+		$this->nick->setPosX(12);
 		$this->nick->setId("CpNick_" . $x);		
 		$this->addComponent($this->nick);
 
