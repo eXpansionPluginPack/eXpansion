@@ -25,12 +25,14 @@ if (UI.UISequence == CUIConfig::EUISequence::Playing) {
                 cpTimes[cpIndex] = time;
 
                 declare nickLabel = (Page.GetFirstChild("CpNick_"^cpIndex) as CMlLabel);
+                declare posLabel = (Page.GetFirstChild("CpPos"^cpIndex) as CMlLabel);
                 declare timeLabel = (Page.GetFirstChild("CpTime"^cpIndex) as CMlLabel);
                 declare background = (Page.GetFirstChild("Bg"^cpIndex) as CMlQuad);
 
                 if(nickLabel != Null){		
-                    nickLabel.SetText(Player.Name);
-                    timeLabel.SetText("$ff0" ^ (cpIndex + 1 ) ^ " $fff" ^ TimeToText(cpTimes[cpIndex]) );
+                    nickLabel.Value = Player.Name;
+                    posLabel.Value = (cpIndex + 1) ^ ".";
+                    timeLabel.Value = TimeToText(cpTimes[cpIndex]);
                     background.Show();
                 }
             }

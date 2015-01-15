@@ -39,27 +39,28 @@ class CheckpointElem extends Control
 		$this->bg->setHidden(1);
 		$this->addComponent($this->bg);
 
-
-		$this->label = new Label(10, 3);
+		$this->label = new Label(3, 4);
+		$this->label->setAlign('right', 'center');
+		$this->label->setTextSize(1);
+		$this->label->setId("CpPos" . $x);
+		$this->label->setPosX(2);
+		$this->label->setTextColor($this->getColor("#rank#"));
+		$this->addComponent($this->label);
+		
+		$this->label = new Label(9, 4);
 		$this->label->setAlign('left', 'center');
 		$this->label->setTextSize(1);
 		$this->label->setId("CpTime" . $x);
-		$this->label->setPosX(0);
-		if ($cp != null && $cp->time != 0)
-			$this->label->setText('$ff0' . ($cp->index + 1 ) . ' $fff' . Time::fromTM($cp->time));
-
+		$this->label->setPosX(2.5);
+		$this->label->setTextColor($this->getColor("#time#"));		
 		$this->addComponent($this->label);
 
 
-		$this->nick = new Label(20, 4);
+		$this->nick = new Label(21, 4);
 		$this->nick->setAlign('left', 'center');
 		$this->nick->setTextSize(1);
-		$this->nick->setPosX(11);
-		$this->nick->setId("CpNick_" . $x);
-		if ($cp != null) {
-			$nickname = Formatting::stripCodes($cp->nickname, "wosnm");
-			$this->nick->setText('$fff' . $nickname);
-		}
+		$this->nick->setPosX(11.5);
+		$this->nick->setId("CpNick_" . $x);		
 		$this->addComponent($this->nick);
 
 		$this->sizeX = $sizeX;
@@ -71,6 +72,12 @@ class CheckpointElem extends Control
 	{
 		parent::onIsRemoved($target);
 		$this->destroy();
+	}
+
+	private function getColor($var)
+	{
+		$colors = \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance();
+		return str_replace('$', "", $colors->getColor($var));
 	}
 
 	public function destroy()

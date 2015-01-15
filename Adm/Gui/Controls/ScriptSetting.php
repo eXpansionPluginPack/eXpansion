@@ -81,15 +81,7 @@ class ScriptSetting extends \ManiaLivePlugins\eXpansion\Gui\Control {
     }
     
 
-    function destroy() {
-        if (is_object($this->inputbox))
-            $this->inputbox->destroy();
-        if (is_object($this->checkBox))
-            $this->checkBox->destroy();
-
-        $this->frame->clearComponents();
-        $this->frame->destroy();
-        $this->destroyComponents();
+    function destroy() {           
         parent::destroy();
     }
 

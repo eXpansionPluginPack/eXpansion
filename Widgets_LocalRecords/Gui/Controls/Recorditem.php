@@ -63,7 +63,7 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$this->label->setId("RecRank_" . $index);
 		$this->label->setTextSize(1.5);
 		$this->label->setTextEmboss();
-		$this->label->setTextColor($this->getColor("#variable#"));
+		$this->label->setTextColor($this->getColor("#rank#"));
 		$this->addComponent($this->label);
 
 
@@ -72,7 +72,7 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$this->label->setId("RecTime_" . $index);
 		$this->label->setPosition(3.5, 0);
 		$this->label->setAlign('left', 'center');
-		$this->label->setTextColor($this->getColor("#rank#"));
+		$this->label->setTextColor($this->getColor("#time#"));
 		$this->label->setStyle("TextRaceChat");
 		$this->label->setTextSize(1);
 		$this->addComponent($this->label);
