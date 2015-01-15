@@ -40,7 +40,7 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$this->addComponent($this->bg);
 
 		// hilight of server record
-		$this->bg2 = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+		$this->bg2 = new \ManiaLib\Gui\Elements\Quad($sizeX + 1, $sizeY - 0.5);
 		//$this->bg2->setStyle("BgsPlayerCard");
 		//$this->bg2->setSubStyle("BgRacePlayerLine");
 		$this->bg2->setOpacity(0.55);
@@ -89,9 +89,6 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$this->nick->setScriptEvents();
 		//$this->nick->setText("#######################################################");
 		$this->addComponent($this->nick);
-
-
-
 
 		if ($moreInfo) {
 			$this->label = new \ManiaLib\Gui\Elements\Label(6, 4);
