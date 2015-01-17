@@ -13,7 +13,7 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
 
     private static $counter = 0;
     private static $script = null;
-    protected $checkboxId;
+    private $checkboxId;
     protected $label;
     protected $button;
     protected $entry;

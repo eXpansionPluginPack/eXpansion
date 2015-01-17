@@ -84,7 +84,6 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 		//$this->registerChatCommand("test", "onEndMatch", 0, false);
 		$this->affectAllRatings();
-		
 	}
 
 	public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified)
@@ -190,6 +189,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$this->db->execute($sqlInsert);
 			$this->pendingRatings = array();
 		} catch (\Exception $e) {
+			$this->pendingRatings = array();
 			$this->console("Error in MapRating: " . $e->getMessage());
 		}
 	}
@@ -376,18 +376,28 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 			$logins = array();
 			foreach ($this->storage->players as $login => $player) {
-				if (!array_key_exists($login, $ratings) && !isset($this->pendingRatings[$login])) {
-					$logins[] = $login;
+				if (array_key_exists($login, $ratings) == false) {
+					$logins[$login] = $login;
 				}
+				if (array_key_exists($login, $this->pendingRatings))
+					unset($logins[$login]);
 			}
-
+			foreach ($this->storage->spectators as $login => $player) {
+				if (array_key_exists($login, $ratings) == false) {
+					$logins[$login] = $login;
+				}
+				if (array_key_exists($login, $this->pendingRatings))
+					unset($logins[$login]);
+			}
+			
 
 			if (sizeof($logins) > 0) {
+				\ManiaLive\Gui\Group::Erase("mapratings");
 				$group = \ManiaLive\Gui\Group::Create("mapratings", $logins);
 				EndMapRatings::EraseAll();
-				$widget = EndMapRatings::Create($group);
+				$widget = EndMapRatings::Create(null);
 				$widget->setMap($this->storage->currentMap);
-				$widget->show();
+				$widget->show($group);
 			}
 		}
 	}

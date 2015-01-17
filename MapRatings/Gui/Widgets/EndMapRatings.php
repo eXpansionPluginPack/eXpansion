@@ -22,7 +22,7 @@ class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
 		$this->setName("Map ratings (endmap)");
 		$sizeX = 90;
-		$sizeY = 23;
+		$sizeY = 25;
 		
 		$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround($sizeX, $sizeY);
 		$bg->setAlign("left", "top");
@@ -30,7 +30,7 @@ class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$this->addComponent($this->bg);
 		
 
-		$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle($sizeX, 6);
+		$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle($sizeX, 4.6);
 		$bg->setAlign("center", "top");
 		$bg->setPosX($sizeX/2);
 		$this->titlebg = $bg;
@@ -43,7 +43,7 @@ class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$this->label->setTextEmboss(true);
 		$this->label->setAlign("center", "top");
 		$this->label->setPosX(($sizeX)/2);
-		$this->label->setPosY(-1);
+		$this->label->setPosY(-0.5);
 		$this->addComponent($this->label);
 
 

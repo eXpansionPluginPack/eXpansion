@@ -95,7 +95,7 @@ class InputboxMasked extends Control
 			$this->button->setId($this->name);
 			$this->button->setDefault($text);
 			$this->button->setScriptEvents(true);
-			$this->button->setStyle("TextValueMedium");
+			$this->button->setStyle("TrackerText");
 			$this->button->setTextSize(1);
 			$this->button->setFocusAreaColor1("0000");
 			$this->button->setFocusAreaColor2("0000");

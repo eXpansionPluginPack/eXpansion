@@ -419,7 +419,7 @@ class Maps extends ExpPlugin
 		else {
 			Maplist::$localrecordsLoaded = false;
 		}
-
+		
 		$window->centerOnScreen();
 		$window->setSize(180, 100);
 		$window->updateList($login);
@@ -433,11 +433,11 @@ class Maps extends ExpPlugin
 		$window = Maplist::Create($login);
 		$window->setHistory($this->history);
 		$window->setTitle(__('History of Maps', $login));
-		if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
-			$window->setRecords($this->callPublicMethod('\ManiaLivePlugins\eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
+		if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords')) {
+			$window->setRecords($this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
 		}
-		if ($this->isPluginLoaded('eXpansion\MapRatings')) {
-			$window->setRatings($this->callPublicMethod('\ManiaLivePlugins\eXpansion\MapRatings', 'getRatings'));
+		if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings')) {
+			$window->setRatings($this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings', 'getRatings'));
 		}
 
 		$window->centerOnScreen();

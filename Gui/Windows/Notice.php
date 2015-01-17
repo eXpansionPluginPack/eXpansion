@@ -15,7 +15,7 @@ class Notice extends Window
 
 	protected $actionOk;
 
-	private $label;
+	protected $label;
 
 	protected $title;
 
@@ -24,16 +24,19 @@ class Notice extends Window
 		parent::onConstruct();
 		$login = $this->getRecipient();
 		$this->actionOk = $this->createAction(array($this, "Ok"));
-		$this->setSize(57, 28);
+		$this->setSize(60, 25);
 
 		$this->ok = new OkButton();
-		$this->ok->colorize("0d0");
-		$this->ok->setPosition(28, -20);
+		//$this->ok->colorize("0d0");
+		$this->ok->setPosition(30, -18);
 		$this->ok->setText(__("Close", $login));
 		$this->ok->setAction($this->actionOk);
+		$this->ok->setAlign("center", "top");
 		$this->mainFrame->addComponent($this->ok);
 
 		$this->label = new DicoLabel(50, 20);
+		$this->label->setPosition(30,-5);
+		$this->label->setAlign("center", "center");
 		$this->mainFrame->addComponent($this->label);
 
 
