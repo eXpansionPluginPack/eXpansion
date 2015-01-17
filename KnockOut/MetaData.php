@@ -20,7 +20,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		parent::onBeginLoad();
 		$this->setName("GameMode: KnockOut!");
 		$this->setDescription("Provides Knockout Virtual Game mode");
-
+		
+		$this->addTitleSupport("TM");
+		$this->addTitleSupport("Trackmania");
 		$this->setScriptCompatibilityMode(false);
 		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
 		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);

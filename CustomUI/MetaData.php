@@ -15,9 +15,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Game UI Elements Customizer");
-		$this->setDescription("Enables you to hide game ui elements");
-		$this->setGroups(array('UI', 'Tools'));
+		$this->setName("Tools: Game UI Elements");
+		$this->setDescription("Enables you to showw/hide ingame hud elements");
+		$this->setGroups(array('Tools'));
 
 		$config = Config::getInstance();
 

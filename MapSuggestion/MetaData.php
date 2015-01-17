@@ -13,8 +13,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Map suggestions");
-		$this->setDescription("Provides an easy way for players to suggest maps for the server");
+		$this->setName("Maps: suggestions");
+		$this->setDescription("Provides map suggestion core");
 		$this->setGroups(array('Maps'));
 
 	}

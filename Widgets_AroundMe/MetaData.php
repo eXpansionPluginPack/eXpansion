@@ -13,9 +13,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Around Me widget");
-		$this->setDescription("Provides ");
-		$this->setGroups(array('UI', 'Widgets'));
+		$this->setName("Widget: Around Me");
+		$this->setDescription("Provides Around Me time display widget");
+		$this->setGroups(array('Records', 'Widgets'));
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");

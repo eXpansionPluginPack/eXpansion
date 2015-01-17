@@ -95,6 +95,7 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
 		$x++;
 
 		$this->script->setParam("values", $this->values);
+		
 	}
 
 	public function getDropdownItems()
@@ -105,6 +106,7 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
 	public function setSelected($index)
 	{
 		$this->label->setText($this->values[intval($index)]);
+		$this->script->setParam("selected", intval($index));
 	}
 
 	function onIsRemoved(\ManiaLive\Gui\Container $target)

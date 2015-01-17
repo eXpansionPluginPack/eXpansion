@@ -13,9 +13,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Snow for your server");
-		$this->setDescription("Snow");
-		$this->setGroups(array('UI'));
+		$this->setName("Widget: Snow");
+		$this->setDescription("Seasonal widget: creates a slow falling snow effect");
+		$this->setGroups(array('Widgets'));
 
 	}
 

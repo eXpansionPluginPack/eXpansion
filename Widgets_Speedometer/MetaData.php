@@ -13,9 +13,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Speedometer");
+		$this->setName("Widget: Speedometer");
 		$this->setDescription("Provides speedometer");
-		$this->setGroups(array('UI', 'Widgets'));
+		$this->setGroups(array('Widgets'));
 	}
 
 }

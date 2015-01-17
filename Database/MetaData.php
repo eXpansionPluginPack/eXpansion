@@ -19,7 +19,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Database interface");
+		$this->setName("Core: Database");
 		$this->setDescription("Handles eXpansion database tables versions, backups, restores and repairs etc");
 		$this->setGroups(array('Core'));
 

@@ -13,9 +13,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Checkpoint Progress Widget");
+		$this->setName("Widget: Checkpoints Progressbar");
 		$this->setDescription("Provides Checkpoint progress widget");
-		$this->setGroups(array('UI', 'Widgets'));
+		$this->setGroups(array('Widgets'));
 	}
 
 }

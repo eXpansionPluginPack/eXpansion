@@ -13,9 +13,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Live Rankings widgets");
-		$this->setDescription("Provides live rankings for all game modes in live using maniascript to update. ");
-		$this->setGroups(array('UI', 'Widgets'));
+		$this->setName("Widget: Live Rankings");
+		$this->setDescription("Provides live rankings for all Trackmania game modes.");
+		$this->setGroups(array('Records', 'Widgets'));
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");

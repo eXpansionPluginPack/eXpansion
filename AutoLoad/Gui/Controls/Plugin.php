@@ -79,10 +79,10 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$toggleAction = $this->createAction(array($this, "togglePlugin"));
 		$this->configManger = ConfigManager::getInstance();
 
-		$this->bg = new ListBackGround($indexNumber, 100, 4);
+		$this->bg = new ListBackGround($indexNumber, 120, 4);
 		$this->addComponent($this->bg);
 		$guiConfig = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
-		
+
 		$titleCompatible = $plugin->checkTitleCompatibility();
 		$gameCompatible = $plugin->checkGameCompatibility();
 		$otherCompatible = $plugin->checkOtherCompatibility();
@@ -100,15 +100,18 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$this->addComponent($this->button_running);
 
 		$this->label_name = new Label(40, 4);
-		$this->label_name->setScale(0.8);
+		//$this->label_name->setScale(0.8);
+		$this->label_name->setTextSize(2);
 		$this->label_name->setText($plugin->getName() == "" ? $plugin->getPlugin() : $plugin->getName());
 		$this->label_name->setPosition(8, 3);
 		$this->addComponent($this->label_name);
 
 		$this->label_author = new Label(40, 4);
-		$this->label_author->setScale(0.6);
-		$this->label_author->setText($plugin->getAuthor());
-		$this->label_author->setPosition(8, -1);
+		$this->label_author->setStyle("TextCardScores2");
+		$this->label_author->setTextSize(1);
+		//$this->label_author->setScale(0.8);
+		$this->label_author->setText('$i' . $plugin->getDescription());
+		$this->label_author->setPosition(8, -0.5);
 		$this->addComponent($this->label_author);
 
 		$this->button_titleComp = new Button(7, 7);
@@ -135,39 +138,42 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 			$this->button_otherComp->setIcon($guiConfig->getImage("statusbuttons", "1_on.png"));
 		$this->addComponent($this->button_otherComp);
 
-		$this->button_more = new Button(8, 8);
-		$this->button_more->setIcon("Icons128x128_1", "Options");
+		$this->button_more = new Button(22, 7);
+		//$this->button_more->setIcon("Icons128x128_1", "Options");
+		$this->button_more->setText(__("Settings", $login));
 		$this->button_more->setAction($this->createAction(array($this, 'showPluginSettings')));
 		$configs = $this->configManger->getGroupedVariables($this->metaData->getPlugin());
-		if(!empty($configs))
+		if (!empty($configs))
 			$this->addComponent($this->button_more);
 
-		$this->button_start = new Button(12, 5);
+		$this->button_start = new Button(14, 7);
 		$this->button_start->setAction($toggleAction);
 		$this->button_start->setText(__($this->getStartText($isLoaded, $isInStart), $login));
 
 		if ($this->getStartText($isLoaded, $isInStart) == "Start") {
 			$this->button_start->colorize("0D0");
-		} else {
+		}
+		else {
 			$this->button_start->colorize("F00");
 		}
 		$this->addComponent($this->button_start);
 
-		$this->setSize(117, 8);
+		$this->setSize(122, 8);
 	}
 
 	protected function onResize($oldX, $oldY)
 	{
-		$this->label_name->setSizeX(($this->getSizeX() - $this->label_name->getPosX() - 6 * 4 - 5) / $this->label_name->getScale());
-		$this->label_author->setSizeX(($this->getSizeX() - $this->label_author->getPosX() - 6 * 4 - 5) / $this->label_author->getScale());
+		$this->label_name->setSizeX(($this->getSizeX() - $this->label_name->getPosX() - 5 * 8 - 7) / 1);
+		$this->label_author->setSizeX(($this->getSizeX() - $this->label_author->getPosX() - 5 * 8 - 7) / 1);
 
 		$this->bg->setSize($this->getSizeX() + 3, $this->getSizeY());
 
-		$this->button_titleComp->setPositionX($this->getSizeX() - 5 * 5 - 5);
-		$this->button_gameComp->setPositionX($this->getSizeX() - 5 * 4 - 4);
-		$this->button_otherComp->setPositionX($this->getSizeX() - 5 * 3 - 3);
-		$this->button_more->setPositionX($this->getSizeX() - 5 * 2 - 4);
-		$this->button_start->setPositionX($this->getSizeX() - 8 * 1 - 1);
+		$this->button_titleComp->setPositionX($this->getSizeX() - 5 * 5 - 4);
+		$this->button_gameComp->setPositionX($this->getSizeX() - 5 * 4 - 3);
+		$this->button_otherComp->setPositionX($this->getSizeX() - 5 * 3 - 2);
+
+		$this->button_more->setPositionX($this->getSizeX() - 5 * 8 - 7);
+		$this->button_start->setPositionX($this->getSizeX() - 8 * 1 - 2);
 	}
 
 	private function getRunningDescriptionText($runnig, $inStart)
@@ -208,7 +214,8 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 	{
 		if ($instart || $started) {
 			return "Stop";
-		} else {
+		}
+		else {
 			return "Start";
 		}
 	}
@@ -218,7 +225,8 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$this->autoLoad->tooglePlugin($login, $this->metaData);
 	}
 
-	public function showPluginSettings($login){
+	public function showPluginSettings($login)
+	{
 		ExpSettings::Erase($login);
 		/** @var ExpSettings $win */
 		$win = ExpSettings::Create($login);
@@ -228,7 +236,5 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$win->populate($this->configManger, 'General', $this->metaData->getPlugin());
 		$win->show();
 	}
-
-
 
 }

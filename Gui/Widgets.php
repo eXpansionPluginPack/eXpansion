@@ -146,8 +146,8 @@ class Widgets extends \ManiaLib\Utils\Singleton
     public $RoundScoreWidget_posX = array(self::config_default => -126);
     public $RoundScoreWidget_posY = array(self::config_default => 58);
 
-	public $ClockAndMapinfoWidget_posX = array(self::config_default => 115);
-	public $ClockAndMapinfoWidget_posY = array(self::config_default => 88);
+	public $MapinfoWidget_posX = array(self::config_default => 115);
+	public $MapinfoWidget_posY = array(self::config_default => 88);
 
 	public $ServerinfoWidget_posX = array(self::config_default => -160);
 	public $ServerinfoWidget_posY = array(self::config_default => 88);

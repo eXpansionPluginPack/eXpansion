@@ -17,7 +17,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Stunts figures for TM");
+		$this->setName("Widget: Stunts Figures");
 		$this->setDescription("Displays the stunts you made for TM");
 		$this->setGroups(array('Widgets'));
 

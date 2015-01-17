@@ -13,7 +13,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Beginner server");
+		$this->setName("Tools: Beginner server");
 		$this->setDescription("Denies high ranked players from playing");
 	}
 

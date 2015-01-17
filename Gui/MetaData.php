@@ -18,9 +18,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Graphical user interface");
+		$this->setName("Core: Graphical User Interface");
 		$this->setDescription("");
-		$this->setGroups(array('UI'));
+		$this->setGroups(array('Core'));
 
 		$config = Config::getInstance();
 

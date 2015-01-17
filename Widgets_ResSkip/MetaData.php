@@ -18,9 +18,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	{
 		parent::onBeginLoad();
 
-		$this->setName("Widged buttons: Res/skip/Fav");
+		$this->setName("Widged: Res/Skip/Fav buttons");
 		$this->setDescription("Widget buttons");
-		$this->setGroups(array('UI', 'Widgets'));
+		$this->setGroups(array('Widgets'));
 		
 		$config = Config::getInstance();
 

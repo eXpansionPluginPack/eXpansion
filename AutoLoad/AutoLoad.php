@@ -396,7 +396,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$win = PluginList::Create($login);
 		$win->setTitle("Plugin List");
 		$win->centerOnScreen();
-		$win->setSize(100, 100);
+		$win->setSize(140, 100);
 		$win->populate($this, $this->availablePlugins);
 		$win->show();
 	}

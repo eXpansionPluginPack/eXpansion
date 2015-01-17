@@ -21,8 +21,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Votes");
-		$this->setDescription("Provides Custom Votes handler for eXpansion");
+		$this->setName("Tools: Votes");
+		$this->setDescription("Provides Votes handler");
+		$this->setGroups(array('Tools'));
+		
 		$config = Config::getInstance();
 
 		$var = new Boolean("use_votes", "Enable managed voting for this server ?", $config, false, false);

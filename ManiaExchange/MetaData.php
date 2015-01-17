@@ -17,9 +17,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Mania-Exchange");
+		$this->setName("Maps: Mania-Exchange integration");
 		$this->setDescription("Provides integration for Mania-Exchange.com");
-		$this->setGroups(array('Maps'));
+		$this->setGroups(array('Maps', 'Connectivity'));
 
 		$config = Config::getInstance();
 

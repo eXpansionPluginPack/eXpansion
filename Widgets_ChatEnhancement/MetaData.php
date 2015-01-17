@@ -29,10 +29,11 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Chat Enhancement Widget");
-		$this->setDescription("Provides ");
-		$this->setGroups(array("Chat"));
+		$this->setName("Chat: History and PublicChat control buttons");
+		$this->setDescription("Provides a fast access to disable public chat and to view a chatlog.");
+		$this->setGroups(array("Chat", "Widgets"));
 
 		$this->setRelaySupport(false);
 	}
+	
 } 

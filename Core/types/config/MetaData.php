@@ -55,11 +55,10 @@ abstract class MetaData
 	 */
 	private $core = false;
 
-    /**
-     * @var Variable[]
-     */
-    private $variables = array();
-
+	/**
+	 * @var Variable[]
+	 */
+	private $variables = array();
 
 	/**
 	 * @var String[] The List of GameModes the plugins support
@@ -109,7 +108,7 @@ abstract class MetaData
 		if (!isset(self::$_instances[$class])) {
 			self::$_instances[$class] = new $class($pluginId);
 		} /* else if ($plugin != null)
-	  self::$_instances[$class]->setPlugin($pluginId); */
+		  self::$_instances[$class]->setPlugin($pluginId); */
 
 		return self::$_instances[$class];
 	}
@@ -213,9 +212,9 @@ abstract class MetaData
 
 	public function setName($name)
 	{
-		/*if (!$name instanceof String) {
-			$name = new String($name, "", null);
-		}*/
+		/* if (!$name instanceof String) {
+		  $name = new String($name, "", null);
+		  } */
 		$this->name = $name;
 	}
 
@@ -238,7 +237,10 @@ abstract class MetaData
 	public function setDescription($description)
 	{
 		if (!$description instanceof String) {
-			$description = new String($description, "", null);
+			$value = new String("Description", $description, null);
+			$value->setValue($description);
+			$description = $value;
+
 		}
 		$this->description = $description;
 	}
@@ -249,6 +251,9 @@ abstract class MetaData
 	public function setGroups($groups)
 	{
 		$this->groups = $groups;
+		if (!is_array($groups)) {
+			$this->groups = array($groups);
+		}
 	}
 
 	/**
@@ -258,8 +263,6 @@ abstract class MetaData
 	{
 		return $this->groups;
 	}
-
-
 
 	public function isCorePlugin()
 	{
@@ -379,7 +382,6 @@ abstract class MetaData
 		return $this->enviAsTitle;
 	}
 
-
 	/**
 	 * See if this plugin is compatible with the current game mode.
 	 * You can pass a game mod in parameter to check if it is compatible with that one
@@ -408,7 +410,8 @@ abstract class MetaData
 			}
 
 			return isset($this->gameModeSupport[$gamemode]) ? $this->gameModeSupport[$gamemode] : false;
-		} else {
+		}
+		else {
 			//No rules for game compatibility, this plugin supports all modes
 			return true;
 		}
@@ -425,7 +428,8 @@ abstract class MetaData
 			foreach ($this->gameModeSupport[0] as $supportedScript) {
 				if ($this->softScriptCompatibility && strpos($scriptName, $supportedScript) !== false) {
 					return true;
-				} else if ($scriptName == $supportedScript) {
+				}
+				else if ($scriptName == $supportedScript) {
 					return true;
 				}
 			}
@@ -441,7 +445,7 @@ abstract class MetaData
 				/**
 				 * @var Storage $storage
 				 */
-				if($this->checkTitleCompatibility(\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId))
+				if ($this->checkTitleCompatibility(\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId))
 					return true;
 				$titleName = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->simpleEnviTitle;
 			} else {
@@ -453,7 +457,8 @@ abstract class MetaData
 			foreach ($this->titleSupport as $supportedTitle) {
 				if ($this->softTitleSupport && strpos($titleName, $supportedTitle) !== false) {
 					return true;
-				} else if ($titleName == $supportedTitle) {
+				}
+				else if ($titleName == $supportedTitle) {
 					return true;
 				}
 			}
@@ -473,12 +478,12 @@ abstract class MetaData
 		return array();
 	}
 
-
 	public function checkAll()
 	{
 		$errors = $this->checkOtherCompatibility();
 		return $this->checkGameCompatibility() && $this->checkTitleCompatibility() && empty($errors);
 	}
+
 }
 
 ?>

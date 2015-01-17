@@ -16,7 +16,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Map Ratings");
+		$this->setName("Maps: Local Ratings");
 		$this->setDescription("Provides ratings for maps");
 		$this->setGroups(array('Maps'));
 

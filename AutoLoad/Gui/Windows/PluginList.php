@@ -66,16 +66,6 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	protected $elements = array();
 
 	/**
-	 * @var CheckboxScripted
-	 */
-	protected $input_compatible;
-
-	/**
-	 * @var Label
-	 */
-	protected $label_compatible;
-
-	/**
 	 * @var Button
 	 */
 	protected $button_search;
@@ -130,20 +120,9 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->label_group->setScale(0.8);
 		$this->mainFrame->addComponent($this->label_group);
 
-		$this->select_group = new Dropdown("group", array('Select Group'), 0, 25);
+		$this->select_group = new Dropdown("group", array('Select'), 0, 25);
 		$this->select_group->setPositionX(49);
 		$this->mainFrame->addComponent($this->select_group);
-
-		$this->label_compatible = new Label();
-		$this->label_compatible->setText(__("Show All", $login));
-		$this->label_compatible->setPosition(75, 4);
-		$this->label_compatible->setScale(0.8);
-		$this->mainFrame->addComponent($this->label_compatible);
-
-		$this->input_compatible = new CheckboxScripted();
-		$this->input_compatible->setStatus(true);
-		$this->input_compatible->setPositionX(75);
-		$this->mainFrame->addComponent($this->input_compatible);
 
 		$this->button_search = new Button(20);
 		$this->button_search->setPositionX(87);
@@ -177,8 +156,8 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->autoLoad = $autoLoader;
 		foreach ($this->items as $item) {
 			$item->destroy();
-		} 
-		 $this->items = null;
+		}
+		$this->items = null;
 
 		$this->pagerFrame->clearItems();
 
@@ -193,7 +172,9 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		foreach ($availablePlugins as $metaData) {
 			if ($this->firstDisplay) {
 				foreach ($metaData->getGroups() as $name) {
-					$groups[$name] = true;
+					if ($name != "Core") {
+						$groups[$name] = true;
+					}
 				}
 			}
 
@@ -209,9 +190,11 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 				continue;
 			}
 
-			if (!$this->input_compatible->getStatus() && !$metaData->checkAll())
+			// hide core plugins as you can't really load/unload them
+			if (in_array("Core", $metaData->getGroups()))
 				continue;
 
+			$metaData->checkAll();
 			$control = new Plugin($i++, $autoLoader, $metaData, $this->getRecipient(), $this->pluginHandler->isLoaded($metaData->getPlugin()));
 			$this->items[] = $control;
 			$this->pagerFrame->addItem($control);
@@ -219,6 +202,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 		if ($this->firstDisplay) {
 			$groups = array_keys($groups);
+			asort($groups, SORT_STRING);
 			$this->select_group->addItems($groups);
 			$this->elements = $groups;
 		}
@@ -245,12 +229,9 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		$this->input_name->setText($params['name']);
 		$this->input_author->setText($params['author']);
 		$this->value_group = $params['group'] == "" ? "" : $this->elements[$params['group']];
-
-		$this->select_group->setSelected($params['group']);
-
-		$this->input_compatible->setArgs($params);
-
+		
 		$this->populate($this->autoLoad, $this->pluginList);
+		$this->select_group->setSelected($params['group']);
 		$this->redraw($login);
 	}
 

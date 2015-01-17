@@ -14,10 +14,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	{
 		parent::onBeginLoad();
 
-		$this->setName("Checkpoint Counter (storm)");
+		$this->setName("Widget: Checkpoint Counter");
 		$this->setDescription("Checkpoint counter for storm");
-		$this->setGroups(array('UI', 'Widgets'));
-
+		$this->setGroups(array('Widgets', 'Records'));
+		$this->addTitleSupport("SM");
 	}
 
 }

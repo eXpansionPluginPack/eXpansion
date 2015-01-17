@@ -35,6 +35,10 @@ class String extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
 		return $this->getRawValue();
 	}
 
+	public function __toString()
+	{
+		return strval($this->getRawValue());
+	}
 }
 
 ?>

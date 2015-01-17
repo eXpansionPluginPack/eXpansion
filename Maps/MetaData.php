@@ -17,8 +17,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Maps");
-		$this->setDescription("Provides common functions for maps, add,remove and list");
+		$this->setName("Maps: Generic Management and Jukebox");
+		$this->setDescription("Provides common functions for maps, add,remove and list and jukebox");
 		$this->setGroups(array('Maps'));
 
 		$config = Config::getInstance();

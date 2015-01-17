@@ -22,9 +22,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 
-		$this->setName("Local Scores widgets");
-		$this->setDescription("Provides local scores widget");
-		$this->setGroups(array('UI', 'Widgets', 'Records'));
+		$this->setName("Widget: Local Scores");
+		$this->setDescription("Local scores widget, can be used when local records are in points instead of time");
+		$this->setGroups(array('Widgets', 'Records'));
 
 		//$this->setEnviAsTitle(true);
 		//$this->addTitleSupport('SM');

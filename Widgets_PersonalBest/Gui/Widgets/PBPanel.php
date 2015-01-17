@@ -4,13 +4,13 @@ namespace ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Gui\Widgets;
 
 class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
-    private $record;
-    private $pb;
-    private $avg;
-    private $wins;
-    private $finish;
-    private $rank;
-    private $rankLoading;
+    protected $record;
+    protected $pb;
+    protected $avg;
+    protected $wins;
+    protected $finish;
+    protected $rank;
+    protected $rankLoading;
 
     protected function onConstruct() {
         parent::onConstruct();

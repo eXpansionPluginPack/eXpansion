@@ -18,7 +18,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Loading Screen");
+		$this->setName("Tools: Loading Screen");
 		$this->setDescription("Provides customizable loadingscreens");
 		$this->setGroups(array('Tools'));
 		

@@ -15,9 +15,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Dedimania Records widgets");
+		$this->setName("Widget: Dedimania Records");
 		$this->setDescription("Provides dedimania records widget");
-		$this->setGroups(array('UI', 'Widgets', 'Records'));
+		$this->setGroups(array('Widgets', 'Records'));
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");

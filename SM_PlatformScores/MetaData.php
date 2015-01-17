@@ -38,10 +38,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName('Local Scores');
+		$this->setName('Records: PlatformBeta@nadeolabs');
 		$this->setDescription('Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. Higher scores are better.');
 		$this->addTitleSupport('PlatformBeta@nadeolabs');
-		$this->setEnviAsTitle(false);
+		$this->setEnviAsTitle(false);		
+		$this->setGroups(array('Records'));
+
+
+
 	}
 
 }

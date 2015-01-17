@@ -19,9 +19,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Player donates");
+		$this->setName("Widget: Donates panel");
 		$this->setDescription("Donates for players to send for server or eachother");
-
+		$this->setGroups(array('Widgets'));
 		$config = Config::getInstance();
 		$var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\Int("donateAmountForGlobalMsg", "Treshold to show public message on donation", $config, false, true);
 		$var->setGroup("Planets");

@@ -29,7 +29,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	}
 
 	protected function initName(){
-		$this->setName("Records");
+		$this->setName("Records: Local records Trackmania modes");
 		$this->setDescription("Provides local records for the server, uses mysql database to store records");
 	}
 

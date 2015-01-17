@@ -37,10 +37,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData {
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName('Obstacles records');
+		$this->setName('Records: Obstacle@steeffeen');
 		$this->setDescription('Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. Higher scores are better.');
-		$this->setGroups(array('UI', 'Widgets'));
+		$this->setGroups(array('Records'));
+		$this->addTitleSupport("SM");
+		
+		$this->setRelaySupport(false);
 		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, 'Obstacle.Script.txt');
+		$this->setScriptCompatibilityMode(false);
 
 		$this->setEnviAsTitle(false);
 		$this->addTitleSupport("Obstacle@steeffeen");

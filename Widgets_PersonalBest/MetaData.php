@@ -13,9 +13,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Personal best widget");
+		$this->setName("Widget: Personal best");
 		$this->setDescription("Provides personal best widget");
-		$this->setGroups(array('UI', 'Widgets'));
+		$this->setGroups(array('Widgets', 'Records'));
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");

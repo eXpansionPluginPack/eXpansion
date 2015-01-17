@@ -15,14 +15,18 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
  *
  * @author Petri
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
+class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
+{
 
-    public function onBeginLoad() {
-	parent::onBeginLoad();
-	
-	$this->setName("Event Helper");
-	$this->setDescription("Storm event helper");
-	$this->setGroups(array('Helpers'));
-    }
+	public function onBeginLoad()
+	{
+		parent::onBeginLoad();
+
+		$this->setName("Helper: used for PlatformBeta@nadeolabs events");
+		$this->setDescription("Event helper, needed for the platform scores to work");
+		$this->setGroups(array('Helpers'));
+
+		$this->addTitleSupport("SM");
+	}
 
 }

@@ -19,9 +19,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Server Neighborhood");
+		$this->setName("Tools: Server Neighborhood");
 		$this->setDescription('Connects to other server to show information');
-
+		$this->setGroups(array("Widgets", "Connectivity", "Tools"));
 		$config = Config::getInstance();
 
 		$var = new Boolean("snwidget_isDockable", "Display Widget as Dock", $config, false, false);

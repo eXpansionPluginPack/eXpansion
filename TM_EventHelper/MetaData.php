@@ -15,14 +15,19 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
  *
  * @author Petri
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
+class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
+{
 
-    public function onBeginLoad() {
-	parent::onBeginLoad();
-	
-	$this->setName("Event Helper (Trackmania)");
-	$this->setDescription("Trackmania event helper");
-	$this->setGroups(array('Helpers'));
-    }
+	public function onBeginLoad()
+	{
+		parent::onBeginLoad();
+
+		$this->setName("Helper: Trackmania events");
+		$this->setDescription("Normally you don't need this");
+		$this->setGroups(array('Helpers'));
+
+		$this->addTitleSupport("TM");
+		$this->addTitleSupport("Trackmania");
+	}
 
 }

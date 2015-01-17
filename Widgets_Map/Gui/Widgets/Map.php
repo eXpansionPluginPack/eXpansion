@@ -1,12 +1,12 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Widgets_Clock\Gui\Widgets;
+namespace ManiaLivePlugins\eXpansion\Widgets_Map\Gui\Widgets;
 
-class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
+class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
 	protected $clockBg;
-	private $frame, $players, $specs, $map, $author;
+	protected $frame, $players, $specs, $map, $author;
 
 	protected function exp_onBeginConstruct()
 	{
@@ -67,10 +67,10 @@ class Clock extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 	
 		$this->frame = $line;
 	// 	$this->addComponent($this->frame);
-		$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Clock\Gui\Scripts_Clock");
+		$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Map\Gui\Scripts_Map");
 		$this->registerScript($script);
 
-		$this->setName("Clock And Mapinfo Widget");
+		$this->setName("Mapinfo Widget");
 	}
 
 	public function setServerName($name)

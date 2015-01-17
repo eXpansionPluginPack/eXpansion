@@ -33,9 +33,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	public function onBeginLoad()
 	{
 		parent::onBeginLoad();
-		$this->setName("Voip Widgets");
+		$this->setName('Widget: Mumle/Teamspeak join buttons');
 		$this->setDescription("Provides a Widget to join your favourite voip server");
-		$this->setGroups(array('UI', 'Widgets'));
+		$this->setGroups(array('Widgets', 'Connectivity'));
 
 		$config = Config::getInstance();
 		$providers = array("mumble", "ts");
