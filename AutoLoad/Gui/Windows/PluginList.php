@@ -202,7 +202,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 		if ($this->firstDisplay) {
 			$groups = array_keys($groups);
-			asort($groups, SORT_STRING);
+			sort($groups, SORT_STRING);
 			$this->select_group->addItems($groups);
 			$this->elements = $groups;
 		}
