@@ -9,12 +9,13 @@
 
 #dedirecord#Thank You for supporting Dedimania!  Your max record ranking is set at #rank#%s$1#dedirecord#.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..
 #dedirecord#Takk for din støtte til Dedimania!  Din rekordgrense er satt #rank#%s$1#dedirecord#.  $l[http://dedimania.net/tm2stats/?do=donation]Trykk her$l for mer info..
-#dedirecord#No dedimania records found for the map!
+
 #translate# #dedirecord#No dedimania records found for the map!
+
 
 #dedirecord#No dedimania records found for the map!
 #translate# #dedirecord#No dedimania records found for the map!
 
-#dedirecord#No dedimania records found for the map!
-#translate# #dedirecord#No dedimania records found for the map!
+Cps
+#translate# Cps
 

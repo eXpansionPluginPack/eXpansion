@@ -33,3 +33,12 @@ Kartat joilla oli huono arvio on nyt poistettu.
 
 Ratings Manager
 Kartta-arvioiden hallinta
+
+No
+Ei
+
+Yes
+Kyllä
+
+Did you like the map ?
+Oliko kartta mieluinen ?

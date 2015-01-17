@@ -85,3 +85,6 @@ Sektor
 CheckPoint Times
 Zwischenzeiten
 
+Cps
+#translate# Cps
+

@@ -19,3 +19,9 @@ Copy
 Add to Fav's
 #translate# Add to Fav's
 
+Settings are now saved!
+#translate# Settings are now saved!
+
+Close
+#translate# Close
+

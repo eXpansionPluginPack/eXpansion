@@ -1,24 +1,26 @@
-﻿Apply
-
-Käytä
 Apply
-#translate# Apply
+Käytä
 
 Server Stats
-#translate# Server Stats
+Palvelimen statit
 
 Global Setting, Saved for all servers sharing this configuration
-#translate# Global Setting, Saved for all servers sharing this configuration
+Yhteinen asetus, kaikki palvelimet jakavat tämän asetuksen
 
 Server Setting, Saved for this server only
-#translate# Server Setting, Saved for this server only
+Paikallinen asetus, tallennettu vain tälle palvelimelle
 
 Save
-#translate# Save
+Tallenna
 
 Copy
-#translate# Copy
+Kopioi
 
 Add to Fav's
-#translate# Add to Fav's
+Lisää suosikkeihin
 
+Settings are now saved!
+Asetukset tallenettu!
+
+Close
+Sulje

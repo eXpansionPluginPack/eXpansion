@@ -319,3 +319,24 @@ Plugins
 Configure Votes
 Votes
 
+Custom point
+Custom point
+
+Load MatchSettings by name
+Load MatchSettings by name
+
+File listing disabled since you are running remote
+File listing disabled since you are running remote
+
+You can tho save and load files from server by the filename!
+You can tho save and load files from server by the filename!
+
+Server Comment
+Server Comment
+
+Keep Player Slots
+Keep Player Slots
+
+Settings not changed.
+Settings not changed.
+

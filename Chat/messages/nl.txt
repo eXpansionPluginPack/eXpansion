@@ -1,3 +1,2 @@
 [eXpansion|Chat] Couldn't initialize chat. Error from server: %s
 [eXpansion|Chat] Initialiseren chat niet gelukt. Fout van de server: %s
-

@@ -1,0 +1,41 @@
+Hud positions reset! Please reconnect to server :)
+Widgetien paikat on nollattu, ole hyvä ja yhdistä uudelleen palvelimeen :)
+
+Configure HUD
+Säädä widgettejä
+
+Apply
+Käytä
+
+Cancel
+Peruuta
+
+possible parameters: move, lock, reset
+Mahdolliset arvot: move, lock, reset
+
+#error#Server Admin has disabled personal huds. Sorry!
+#error#Palvelimen ylläpitäjä on määrittänyt widgettien paikat!
+
+Hud reset done!
+Widgettien paikat nollattu!
+
+Starting hud reset, please wait
+Aloitetaan widgettien nollaus, odota...
+
+Yes
+Kyllä
+
+No
+Ei
+
+Really do this ?
+Oletko varma ?
+
+Hello World
+Hei maailma
+
+Close
+Sulje
+
+Notice
+Huomio

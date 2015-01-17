@@ -165,8 +165,15 @@ Ete vous sure de vouloir faire jouer ce circuit
 
 #admin_error# $iYOu can't wish for a map at the moment.
 #admin_error# $iVous ne pouvez pas souhaiter un circuit en ce moment
-Sort By Add Date
+
 #translate# Sort By Add Date
+
+
+#translate# Now Playing
+
+
+#translate# Next Map
+
 
 Now Playing
 #translate# Now Playing
@@ -174,15 +181,30 @@ Now Playing
 Next Map
 #translate# Next Map
 
-Sort By Add Date
-#translate# Sort By Add Date
+File listing disabled since you are running eXpansion remote
+#translate# File listing disabled since you are running eXpansion remote
 
-Now Playing
-#translate# Now Playing
-
-Next Map
-#translate# Next Map
+#admin_error#This instance of eXpansion is runnin remotelly! Can't delete file #variable#'%s'
+#translate# #admin_error#This instance of eXpansion is runnin remotelly! Can't delete file #variable#'%s'
 
 Sort By Add Date
 #translate# Sort By Add Date
+
+Erases current map from the playlist.
+#translate# Erases current map from the playlist.
+
+#admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from playlist!
+#translate# #admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from playlist!
+
+#admin_error#Map #variable#%3$s #admin_error# not found at playlist, perhaps it was already removed ?
+#translate# #admin_error#Map #variable#%3$s #admin_error# not found at playlist, perhaps it was already removed ?
+
+#admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s by %4$s #admin_action# from %5$s
+#translate# #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s by %4$s #admin_action# from %5$s
+
+#admin_error#Nothing to do, the map has been removed already from playlist and from disk!
+#translate# #admin_error#Nothing to do, the map has been removed already from playlist and from disk!
+
+#admin_error#Can't continue, since this instance of eXpansion is running remote agains the server
+#translate# #admin_error#Can't continue, since this instance of eXpansion is running remote agains the server
 

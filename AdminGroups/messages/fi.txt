@@ -1,4 +1,4 @@
-﻿#admin_action#You need to be an Admin to use that command
+#admin_action#You need to be an Admin to use that command
 #admin_action#Sinulla täytyy olla ylläpito-oikeudet tämän komennon suorittamiseen
 
 #admin_error#That Admin command doesen't exist. Use #variable#\admin help #admin_error#to see all commands
@@ -67,20 +67,11 @@ Tämä komento edellyttää vähintään yhtä valitsinta
 #admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
 #admin_error#Ylläpitokomentoa ei ole. Kirjoita #variable#/admin help #admin_error#nähdäksesi kaikki komennot
 
-#admin_error#You don't have the permission to use that admin command
-#admin_error#Sinulla ei ole oikeutta käyttää tätä ylläpitokomentoa
-
 #admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s
 #admin_action#Pelaaja #variable# %1$s #admin_action#on lisätty ylläpitoryhmään #variable#%2$s
 
-#admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
-#admin_error#Olet #variable#%1$s #admin_error#Et voi poistaa itseäsi ryhmästä
-
 #admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s
 #admin_action#Player : #variable#%1$s #admin_action#on poistettu ylläpitoryhmästä #variable#%2$s
-
-#admin_error#Player #variable#%1$s #admin_action#isn't in the group
-#admin_error#Pelaaja #variable#%1$s #admin_action#isn't in the group
 
 #admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
 #admin_error#Master admin #variable#%1$s on määritetty jo manialiven config.ini:ssä, ei eXpansionissa. Ei voi poistaa!

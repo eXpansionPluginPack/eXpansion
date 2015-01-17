@@ -253,9 +253,6 @@ Tout : durée d'echaufement
 All: Finish Timeout
 Tout: Finish Timeout
 
-All: Finish Timeout
-Tout: Finish Timeout
-
 TimeAttack: Time Limit
 TimeAttack: Limité du temps
 
@@ -316,16 +313,32 @@ Laps: Time Limit
 #error#The map has already been restarted. Limit reached!
 #error#Le circuit a déjà été redémarrer. Limite atteinte!
 
-Laps: Time Limit
-Laps: Time Limit
+#translate# Set
 
-#error#The map has already been restarted. Limit reached!
-#translate# #error# Le circuit a déjà été redémarrer. Limite atteinte!
 
-Laps: Time Limit
-#translate# Laps: Time Limit
+#translate# eXpansion Settings
+
+
+#translate# Plugin Management
+
+
+#translate# Configure Votes
+
+
 Set
 #translate# Set
+
+Custom point
+#translate# Custom point
+
+Load MatchSettings by name
+#translate# Load MatchSettings by name
+
+File listing disabled since you are running remote
+#translate# File listing disabled since you are running remote
+
+You can tho save and load files from server by the filename!
+#translate# You can tho save and load files from server by the filename!
 
 eXpansion Settings
 #translate# eXpansion Settings
@@ -336,27 +349,12 @@ Plugin Management
 Configure Votes
 #translate# Configure Votes
 
-Set
-#translate# Set
+Server Comment
+#translate# Server Comment
 
-eXpansion Settings
-#translate# eXpansion Settings
+Keep Player Slots
+#translate# Keep Player Slots
 
-Plugin Management
-#translate# Plugin Management
-
-Configure Votes
-#translate# Configure Votes
-
-Set
-#translate# Set
-
-eXpansion Settings
-#translate# eXpansion Settings
-
-Plugin Management
-#translate# Plugin Management
-
-Configure Votes
-#translate# Configure Votes
+Settings not changed.
+#translate# Settings not changed.
 

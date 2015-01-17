@@ -104,7 +104,7 @@ Lenght
 Pituus
 
 Records
-Oma ennätys
+Ennätykset
 
 Ratings
 Arvio
@@ -177,3 +177,28 @@ Tämä kartta
 
 Next Map
 Seuraava kartta
+
+File listing disabled since you are running eXpansion remote
+Tiedostolistaus on poistettu käytöstä sillä, eXpansionia käytetään etänä palvelimeen nähden.
+
+#admin_error#This instance of eXpansion is runnin remotelly! Can't delete file #variable#'%s'
+#admin_error#Tämä eXpansion on etäkäytössä palvelimeen nähden. Tiedostoa #variable#'%s' #admin_error#ei voida poistaa.
+
+Erases current map from the playlist.
+Poistaa nykyisen kartan karttalistalta.
+
+#admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from playlist!
+#admin_action#Ylläpitäjä #variable#%1$s #admin_action#poisti kartan #variable#%3$s #admin_action# karttaluettelosta!
+
+#admin_error#Map #variable#%3$s #admin_error# not found at playlist, perhaps it was already removed ?
+#admin_error#Kartta #variable#%3$s #admin_error# ei löytynyt karttaluettelosta, ehkäpä se on jo poistettu ?
+
+#admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s by %4$s #admin_action# from %5$s
+#admin_action#Ylläpitäjä #variable#%1$s #admin_action#poisti kartan #variable#%3$s, tekijä %4$s #admin_action#: %5$s
+
+#admin_error#Nothing to do, the map has been removed already from playlist and from disk!
+#admin_error#Mitään ei ole tehtävissä, kartta on poistettu jo luettelosta sekä palvelimelta!
+
+#admin_error#Can't continue, since this instance of eXpansion is running remote agains the server
+#admin_error#Ei voitu jatkaa, tämä eXpansion-instanssi on etäkäytössä palvelimeen nähden
+

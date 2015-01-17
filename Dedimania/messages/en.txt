@@ -12,3 +12,7 @@
 
 #dedirecord#Thank You for supporting Dedimania!  Your max record ranking is set at #rank#%s$1#dedirecord#.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..
 #dedirecord#Thank You for supporting Dedimania!  Your max record ranking is set at #rank#%s$1#dedirecord#.  $l[http://dedimania.net/tm2stats/?do=donation]Click here$l for more info..
+
+Cps
+Cps
+

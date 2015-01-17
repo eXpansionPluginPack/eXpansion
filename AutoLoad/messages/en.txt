@@ -28,6 +28,18 @@ This plugin isn't compatible with the current Game mode
 This plugin is is compatible with current installation
 This plugin is is compatible with current installation
 
+Settings
+Settings
 
+Name
+Name
 
+Author
+Author
+
+Group
+Group
+
+Search
+Search
 

@@ -52,28 +52,12 @@ Kann die Daten von ManiaExchange nicht empfangen!
 Map %s $z$s$fff added from MX Succesfully
 Map %s $z$s$fff von MX erfolgreich hinzugefügt
 
-
 Author
-Autor
+#translate# Author
 
-Author
-Autor
-
-Author
-Autor
+The Map is not compatible with current server settings, map not added.
+#translate# The Map is not compatible with current server settings, map not added.
 
 Map is not compatible with current server settings, map not added.
-Diese Map ist nicht mit den Servereinstellungen kompatibel und wurde nicht hinzugefügt.
-
-Author
-autor
-
-Map is not compatible with current server settings, map not added.
-Diese Map ist nicht mit den Servereinstellungen kompatibel und wurde nicht hinzugefügt.
-
-Author
-Autor
-
-Map is not compatible with current server settings, map not added.
-Diese Map ist nicht mit den Servereinstellungen kompatibel und wurde nicht hinzugefügt.
+#translate# Map is not compatible with current server settings, map not added.
 

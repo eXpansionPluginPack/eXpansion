@@ -5,16 +5,16 @@ Kick
 Potkaise
 
 Ban
-Bän
+Bännää
 
 Blacklist
-Blacklist
+Mustalista
 
 Release Spec
-Vapauta Spec
+Vapauta Katsojasta
 
 Force Spec
-Pakota Spec
+Pakota Katsojaksi
 
 $ff3$iYou are not allowed to do that!
 $ff3$iSinulla ei oikeuksia tehdä tätä!
@@ -38,7 +38,7 @@ Admin has released you from specate to play.
 Admin on vapauttanut sinut katsojasta pelaajaksi.
 
 Players
-pelaajat
+Pelaajat
 
 Show Players
 Näytä pelaajat
@@ -53,17 +53,17 @@ Error:
 Virhe:
 
 %s$1 $z$s$fff is $f00broadcasting$fff at $lwww.twitch.tv$l, say hello to all the viewers :)
-%s$1 $z$s$fff $f00lähettää streamia$fff $lwww.twitch.tv$l:ssä, sano hei katsojille :)
+%s$1 $z$s$fff $f00lähettää streamia$fff $lwww.twitch.tv$l:ssä, sano hei kaikille katsojille :)
 
 Ignore List
-#translate# Ignore List
+Hiljennetyt-lista
 
 Guest List
-#translate# Guest List
+Vieraslista
 
 Ban List
-#translate# Ban List
+Ban-lista
 
 Black List
-#translate# Black List
+Mustalista
 

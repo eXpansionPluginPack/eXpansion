@@ -217,36 +217,6 @@ Team: use new rules
 Round points
 #translate# Round points
 
-ForceScores can be used only with rounds or team mode
-#translate# ForceScores can be used only with rounds or team mode
-
-ScriptSettings available only in script mode
-#translate# ScriptSettings available only in script mode
-
-Database plugin not loaded!
-#translate# Database plugin not loaded!
-
-#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
-#translate# #admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
-
-All Warmup Duration
-#translate# All Warmup Duration
-
-roundsPointsLimitNewRules
-#translate# roundsPointsLimitNewRules
-
-teamPointsLimitNewRules
-#translate# teamPointsLimitNewRules
-
-Rounds: use new rules
-#translate# Rounds: use new rules
-
-Team: use new rules
-#translate# Team: use new rules
-
-Round points
-#translate# Round points
-
 The restart of this track is in progress!
 #translate# The restart of this track is in progress!
 
@@ -348,4 +318,25 @@ Plugin Management
 
 Configure Votes
 #translate# Configure Votes
+
+Custom point
+#translate# Custom point
+
+Load MatchSettings by name
+#translate# Load MatchSettings by name
+
+File listing disabled since you are running remote
+#translate# File listing disabled since you are running remote
+
+You can tho save and load files from server by the filename!
+#translate# You can tho save and load files from server by the filename!
+
+Server Comment
+#translate# Server Comment
+
+Keep Player Slots
+#translate# Keep Player Slots
+
+Settings not changed.
+#translate# Settings not changed.
 

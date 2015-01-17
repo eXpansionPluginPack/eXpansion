@@ -85,3 +85,6 @@ Secteur
 CheckPoint Times
 Temps des CheckPoints
 
+Cps
+#translate# Cps
+

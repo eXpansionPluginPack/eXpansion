@@ -15,3 +15,4 @@ Sélectionner un jouer pour envoyer un message
 
 #personalmessage#Usage /pm [login] your personal message here
 #personalmessage#Utilisation /pm [login] votre message personnalisé
+

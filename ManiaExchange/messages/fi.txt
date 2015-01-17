@@ -57,3 +57,7 @@ Author
 
 Map is not compatible with current server settings, map not added.
 Karttaa ei lisätty, sillä se ei ole yhteensopiva nykyisten palvelimen asetusten kanssa. 
+
+The Map is not compatible with current server settings, map not added.
+Kartta ei ole yhteensopiva palvelinasetusten kanssa, joten sitä ei lisätty.
+

@@ -13,9 +13,6 @@ Schließen
 possible parameters: move, lock, reset
 Mögliche Parameter: move, lock, reset
 
-possible parameters: move, lock, reset
-Mögliche Parameter: move, lock, reset
-
 #error#Server Admin has disabled personal huds. Sorry!
 #error#Server Admin hat die persönliche Benutzeroberfläche (HUD) deaktiviert. Sorry!
 
@@ -34,72 +31,12 @@ Nein
 Really do this ?
 Möchtes du das wirklich tun?
 
-possible parameters: move, lock, reset
-Mögliche Parameter: move, lock, reset
-
-#error#Server Admin has disabled personal huds. Sorry!
-#error#Server Admin hat die persönliche Benutzeroberfläche (HUD) deaktiviert. Sorry!
-
-Hud reset done!
-Persönliche Benutzeroberfläche (HUD) zurückgesetzt!
-
-Starting hud reset, please wait
-Persönliche Benutzeroberfläche (HUD) wird zurückgesetzt. Bitte warten ...
-
-Yes
-Ja
-
-No
-Nein
-
-Really do this ?
-Möchtes du das wirklich tun?
-
 Hello World
 Hallo Welt
 
-possible parameters: move, lock, reset
-Mögliche Parameter: move, lock, reset
+Close
+#translate# Close
 
-#error#Server Admin has disabled personal huds. Sorry!
-#error#Server Admin hat die persönliche Benutzeroberfläche (HUD) deaktiviert. Sorry!
-
-Hud reset done!
-Persönliche Benutzeroberfläche (HUD) zurückgesetzt!
-
-Starting hud reset, please wait
-Persönliche Benutzeroberfläche (HUD) wird zurückgesetzt. Bitte warten ...
-
-Yes
-Ja
-
-No
-Nein
-
-Really do this ?
-Möchtes du das wirklich tun?
-
-Hello World
-Hallo Welt
-
-possible parameters: move, lock, reset
-Mögliche Parameter: move, lock, reset
-
-#error#Server Admin has disabled personal huds. Sorry!
-#error#Server Admin hat die persönliche Benutzeroberfläche (HUD) deaktiviert. Sorry!
-
-Hud reset done!
-Persönliche Benutzeroberfläche (HUD) zurückgesetzt!
-
-Starting hud reset, please wait
-Persönliche Benutzeroberfläche (HUD) wird zurückgesetzt. Bitte warten ...
-
-Yes
-Ja
-
-No
-Nein
-
-Really do this ?
-Möchtes du das wirklich tun?
+Notice
+#translate# Notice
 

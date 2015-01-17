@@ -109,3 +109,63 @@ Mania-Exchange
 Statistics
 Statistiken
 
+Maps
+#translate# Maps
+
+Records
+#translate# Records
+
+Hall of Fame
+#translate# Hall of Fame
+
+Server Ranks
+#translate# Server Ranks
+
+Dedimania
+#translate# Dedimania
+
+Move
+#translate# Move
+
+Lock
+#translate# Lock
+
+Reset
+#translate# Reset
+
+Config...
+#translate# Config...
+
+Vote
+#translate# Vote
+
+Restart
+#translate# Restart
+
+Cancel
+#translate# Cancel
+
+Config
+#translate# Config
+
+Balance Teams
+#translate# Balance Teams
+
+Server Control
+#translate# Server Control
+
+Admin Groups
+#translate# Admin Groups
+
+Plugins
+#translate# Plugins
+
+Settings
+#translate# Settings
+
+Update
+#translate# Update
+
+Server Info
+#translate# Server Info
+

@@ -1,11 +1,11 @@
-﻿Question
 Question
+Kysymys
 
 Answer
-Answer
+Vastaus
 
 Apply
-Apply
+Käytä
 
 Cancel
 Peruuta
@@ -48,3 +48,16 @@ Oikein
 
 New question
 Kysymys
+
+Question
+Kysymys
+
+Url for image
+Kuvan www-osoite
+
+#question#%s?
+#question#%s?
+
+#quiz#$Displaying image not possible, due unsupported media type was detected.
+#quiz#Kuvan näyttäminen ei valitettavasi onnistu, väärä kuvaformaatti havaittu.
+

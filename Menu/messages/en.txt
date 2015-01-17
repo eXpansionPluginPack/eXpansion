@@ -108,3 +108,64 @@ Mania-Exchange
 
 Statistics
 Statistics
+
+Maps
+Maps
+
+Records
+Records
+
+Hall of Fame
+Hall of Fame
+
+Server Ranks
+Server Ranks
+
+Dedimania
+Dedimania
+
+Move
+Move
+
+Lock
+Lock
+
+Reset
+Reset
+
+Config...
+Config...
+
+Vote
+Vote
+
+Restart
+Restart
+
+Cancel
+Cancel
+
+Config
+Config
+
+Balance Teams
+Balance Teams
+
+Server Control
+Server Control
+
+Admin Groups
+Admin Groups
+
+Plugins
+Plugins
+
+Settings
+Settings
+
+Update
+Update
+
+Server Info
+Server Info
+

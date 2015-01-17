@@ -88,24 +88,6 @@ Abbrechen
 Login : 
 Login : 
 
-#admin_error#That Admin command doesen't exist. Use #variable#/admin help #admin_error#to see all commands
-#admin_error#Dieser Admin-Befehl existiert nicht. Verwende #variable#/admin help #admin_error#um eine Liste aller verfügbaren Befehlen zu sehen
-
-#admin_error#You don't have the permission to use that admin command
-#admin_error#Du hast keine Berechtigung diesen Admin-Befehl zu nutzen
-
-#admin_error#Your are #variable#%1$s #admin_error#You can't remove yourself from a group
-#admin_error#Du bist #variable#%1$s #admin_error#Du kannst dich nicht selber aus einer Gruppe entfernen
-
-#admin_error#Player #variable#%1$s #admin_action#isn't in the group
-#admin_error#Spieler #variable#%1$s #admin_action#ist nicht in der Gruppe
-
-#admin_error#Master Admins has all rights. You can't change that!
-#admin_error#Master Admins haben alle Rechte, das kannst du nicht ändern!
-
-#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can't remove!
-#admin_error#Master Admin #variable#%1$s wurde in der config.ini eingestellt und nicht durch eXpansion. Kann ihn nicht entfernen
-
 Inherits
 Erbt Rechte von
 
@@ -120,4 +102,3 @@ Permission_
 
 Select
 Auswählen
-

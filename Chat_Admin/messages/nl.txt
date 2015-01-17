@@ -43,3 +43,8 @@ Ok
 Cancel
 #translate# Cancel
 
+possible parameters: balance, limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap
+#translate# possible parameters: balance, limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap
+
+#admin_action#Admin #variable#%1$s $z$s#admin_action#shuffles the maps list!
+#translate# #admin_action#Admin #variable#%1$s $z$s#admin_action#shuffles the maps list!

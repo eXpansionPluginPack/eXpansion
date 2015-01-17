@@ -31,3 +31,12 @@ Maps with bad rating removed successfully.
 Ratings Manager
 Ratings Manager
 
+No
+No
+
+Yes
+Yes
+
+Did you like the map ?
+Did you like the map ?
+

@@ -19,15 +19,6 @@ votes
 Map Rating
 #translate# Map Rating
 
-Map Rating
-#translate# Map Rating
-
-Map Rating
-#translate# Map Rating
-
-Map Rating
-#translate# Map Rating
-
 Remove
 #translate# Remove
 
@@ -39,4 +30,13 @@ Maps with bad rating removed successfully.
 
 Ratings Manager
 #translate# Ratings Manager
+
+No
+#translate# No
+
+Yes
+#translate# Yes
+
+Did you like the map ?
+#translate# Did you like the map ?
 

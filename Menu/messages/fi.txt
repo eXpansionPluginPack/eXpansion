@@ -44,7 +44,7 @@ Rage Quit...
 Lopeta karjuen...
 
 Hud
-Näkymä
+Widgetit
 
 Move Positions
 Siirrä paikkoja
@@ -74,13 +74,13 @@ Admin
 Admin
 
 Instant Restart
-Uudelleen aloita heti!
+Aloita heti!
 
 Replay
-Uudelleenaloita viiveellä
+Aloita viiveellä
 
 Skip
-Vaihda kartta
+Seuraava kartta
 
 End Round
 Päätä kierros
@@ -108,3 +108,64 @@ Mania-Exchange
 
 Statistics
 Statistiikat
+
+Maps
+Kartat
+
+Records
+Ennätykset
+
+Hall of Fame
+Hall of Fame
+
+Server Ranks
+Palvelimen ranking
+
+Dedimania
+Dedimania
+
+Move
+Siirrä
+
+Lock
+Lukitse
+
+Reset
+Nollaa
+
+Config...
+Asetukset...
+
+Vote
+Äänestys
+
+Restart
+Uudestaan
+
+Cancel
+Peruuta
+
+Config
+Asetukset
+
+Balance Teams
+Balansoi Tiimit
+
+Server Control
+Palvelinasetukset
+
+Admin Groups
+Ylläpitoryhmät
+
+Plugins
+Pluginit
+
+Settings
+Asetukset
+
+Update
+Päivitä
+
+Server Info
+Tietoja
+

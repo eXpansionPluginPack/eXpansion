@@ -51,3 +51,10 @@ Neue Frage
 
 #question#%s?
 #question#%s?
+
+Url for image
+#translate# Url for image
+
+#quiz#$Displaying image not possible, due unsupported media type was detected.
+#translate# #quiz#$Displaying image not possible, due unsupported media type was detected.
+

@@ -178,3 +178,27 @@ Now Playing
 Next Map
 Next Map
 
+File listing disabled since you are running eXpansion remote
+File listing disabled since you are running eXpansion remote
+
+#admin_error#This instance of eXpansion is runnin remotelly! Can't delete file #variable#'%s'
+#admin_error#This instance of eXpansion is runnin remotelly! Can't delete file #variable#'%s'
+
+Erases current map from the playlist.
+Erases current map from the playlist.
+
+#admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from playlist!
+#admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from playlist!
+
+#admin_error#Map #variable#%3$s #admin_error# not found at playlist, perhaps it was already removed ?
+#admin_error#Map #variable#%3$s #admin_error# not found at playlist, perhaps it was already removed ?
+
+#admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s by %4$s #admin_action# from %5$s
+#admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s by %4$s #admin_action# from %5$s
+
+#admin_error#Nothing to do, the map has been removed already from playlist and from disk!
+#admin_error#Nothing to do, the map has been removed already from playlist and from disk!
+
+#admin_error#Can't continue, since this instance of eXpansion is running remote agains the server
+#admin_error#Can't continue, since this instance of eXpansion is running remote agains the server
+

@@ -314,7 +314,28 @@ eXpansion Settings
 eXpansionin Asetukset
 
 Plugin Management
-Plugin Asetukset
+Plugin -hallinta
 
 Configure Votes
 Äänestyksen Ylläpito
+
+Custom point
+Omavalintaiset pisteet
+
+Load MatchSettings by name
+Lataa Karttalista nimellä
+
+File listing disabled since you are running remote
+Tiedostolistaus on poistettu käytöstä sillä etäkäyttö palvelimeen nähden
+
+You can tho save and load files from server by the filename!
+Voit kuitenkin ladata ja tallentaa tiedostoja palvelimelta tiedostonimeä käyttämällä!
+
+Server Comment
+Kommentti
+
+Keep Player Slots
+Pidä pelaajapaikat
+
+Settings not changed.
+Asetuksia ei tallennettu.

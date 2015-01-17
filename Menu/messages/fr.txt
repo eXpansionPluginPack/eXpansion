@@ -87,37 +87,12 @@ Fin du ROund
 
 Server Controls
 Control du ServeurHelp
-#translate# Help
-
-Show Maplist
-#translate# Show Maplist
-
-Show Records
-#translate# Show Records
-
-Show Players
-#translate# Show Players
-
-Add local map
-#translate# Add local map
-
-Mania-Exchange
-#translate# Mania-Exchange
-
-Statistics
-#translate# Statistics
 
 Help
 #translate# Help
 
-Show Maplist
-#translate# Show Maplist
-
-Show Records
-#translate# Show Records
-
-Show Players
-#translate# Show Players
+Maps
+#translate# Maps
 
 Add local map
 #translate# Add local map
@@ -125,27 +100,63 @@ Add local map
 Mania-Exchange
 #translate# Mania-Exchange
 
-Statistics
-#translate# Statistics
+Records
+#translate# Records
 
-Help
-#translate# Help
+Hall of Fame
+#translate# Hall of Fame
 
-Show Maplist
-#translate# Show Maplist
+Server Ranks
+#translate# Server Ranks
 
-Show Records
-#translate# Show Records
-
-Show Players
-#translate# Show Players
-
-Add local map
-#translate# Add local map
-
-Mania-Exchange
-#translate# Mania-Exchange
+Dedimania
+#translate# Dedimania
 
 Statistics
 #translate# Statistics
+
+Move
+#translate# Move
+
+Lock
+#translate# Lock
+
+Reset
+#translate# Reset
+
+Config...
+#translate# Config...
+
+Vote
+#translate# Vote
+
+Restart
+#translate# Restart
+
+Cancel
+#translate# Cancel
+
+Config
+#translate# Config
+
+Balance Teams
+#translate# Balance Teams
+
+Server Control
+#translate# Server Control
+
+Admin Groups
+#translate# Admin Groups
+
+Plugins
+#translate# Plugins
+
+Settings
+#translate# Settings
+
+Update
+#translate# Update
+
+Server Info
+#translate# Server Info
 

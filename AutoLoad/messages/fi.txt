@@ -3,3 +3,18 @@ Käynnistä
 
 Stop
 Pysäytä
+
+Settings
+Asetukset
+
+Name
+Nimi
+
+Author
+Tekijä
+
+Group
+Ryhmä
+
+Search
+Etsi

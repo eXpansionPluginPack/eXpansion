@@ -34,3 +34,9 @@ Really do this ?
 Hello World
 #translate# Hello World
 
+Close
+#translate# Close
+
+Notice
+#translate# Notice
+

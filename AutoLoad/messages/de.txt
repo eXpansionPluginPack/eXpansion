@@ -28,6 +28,18 @@ Dieses Plugin ist nicht mit dem aktuellen Spielmodus kompatibel
 This plugin is is compatible with current installation
 Dieses Plugin ist kompatibel mit der aktuellen Installation (Version)
 
+Settings
+#translate# Settings
 
+Name
+#translate# Name
 
+Author
+#translate# Author
+
+Group
+#translate# Group
+
+Search
+#translate# Search
 

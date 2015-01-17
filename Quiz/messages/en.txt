@@ -52,3 +52,9 @@ New question
 #question#%s?
 #question#%s?
 
+Url for image
+Url for image
+
+#quiz#$Displaying image not possible, due unsupported media type was detected.
+#quiz#$Displaying image not possible, due unsupported media type was detected.
+

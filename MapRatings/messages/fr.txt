@@ -18,41 +18,27 @@ votes
 
 Map Rating
 Note de la carte
-Remove
+
 #translate# Remove
 
-Close
+
 #translate# Close
 
-Maps with bad rating removed successfully.
+
 #translate# Maps with bad rating removed successfully.
 
-Ratings Manager
+
 #translate# Ratings Manager
 
-Remove
-#translate# Remove
 
-Close
-#translate# Close
+No
+#translate# No
 
-Maps with bad rating removed successfully.
-#translate# Maps with bad rating removed successfully.
+Yes
+#translate# Yes
 
-Ratings Manager
-#translate# Ratings Manager
-
-Remove
-#translate# Remove
-
-Close
-#translate# Close
-
-Maps with bad rating removed successfully.
-#translate# Maps with bad rating removed successfully.
-
-Ratings Manager
-#translate# Ratings Manager
+Did you like the map ?
+#translate# Did you like the map ?
 
 Remove
 #translate# Remove

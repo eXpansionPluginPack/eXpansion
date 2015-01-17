@@ -12,10 +12,7 @@ foreach ($iterator as $dir) {
 		$newmessages = array(); // this hold the new messages
 		$filedata = file($messagedir . DIRECTORY_SEPARATOR . $newMessagesFileName);
 		foreach ($filedata as $message) {
-			$message = str_replace("\r", "", $message);
-			$message = str_replace("\n", "", $message);
-			$message = str_replace("\'", "'", $message);
-			$message = str_replace('\"', '"', $message);
+			$message = fixMessage($message);
 			if (trim($message) == "")
 				continue;
 			if (!array_key_exists($message, $newmessages))
@@ -31,19 +28,17 @@ foreach ($iterator as $dir) {
 			if ($filename == $newMessagesFileName)
 				continue;
 
-			$filedata = file($localefile);
+			$filedata = file($localefile, FILE_IGNORE_NEW_LINES);
 
 			for ($i = 0; $i < count($filedata); $i +=3) {
-				$message = $filedata[$i];
-				$message = str_replace("\r", "", $message);
-				$message = str_replace("\n", "", $message);
-				$message = str_replace("\'", "'", $message);
-				$message = str_replace('\"', '"', $message);
+				$message = fixMessage($filedata[$i]);
 				if (trim($message) == "")
 					continue;
 
+				$translation = fixMessage($filedata[$i + 1]);
+
 				if (!array_key_exists($message, $pluginMessages))
-					$pluginMessages[$message] = $message;
+					$pluginMessages[$message] = $translation;
 			}
 
 			$old = 0;
@@ -57,6 +52,8 @@ foreach ($iterator as $dir) {
 				$outBuffer = "\r\n";
 
 			foreach ($newmessages as $newmessage) {
+				$newmessage = fixMessage($newmessage);
+				
 				if (array_key_exists($newmessage, $pluginMessages)) {
 					$old++;
 				}
@@ -75,12 +72,19 @@ foreach ($iterator as $dir) {
 			echo $filename . "  old: " . $old . " new:" . $new . "\n";
 			// save file
 			foreach ($pluginMessages as $key => $value) {
-				$outputBuffer .= $key . "\r\n". $value . "\r\n\r\n";
+				$outputBuffer .= $key . "\r\n" . $value . "\r\n\r\n";
 			}
-			file_put_contents($localefile, $outputBuffer, FILE_APPEND);
+			file_put_contents($localefile, $outputBuffer);
 		}
 		echo "Removing the temporarily diff file..\n";
 		unlink($messagedir . DIRECTORY_SEPARATOR . $newMessagesFileName);
 	}
 }
 
+function fixMessage($message)
+{
+	$message = rtrim($message,"\r\n");
+	$message = str_replace("\'", "'", $message);
+	$message = str_replace('\"', '"', $message);
+	return $message;
+}

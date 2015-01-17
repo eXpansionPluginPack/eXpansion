@@ -19,3 +19,9 @@ Kopieren
 Add to Fav's
 To Favoriten hinzufügen
 
+Settings are now saved!
+#translate# Settings are now saved!
+
+Close
+#translate# Close
+

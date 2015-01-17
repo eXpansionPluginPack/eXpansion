@@ -85,3 +85,6 @@ Sector
 CheckPoint Times
 #translate# CheckPoint Times
 
+Cps
+#translate# Cps
+

@@ -58,3 +58,6 @@ Author
 Map is not compatible with current server settings, map not added.
 Map is not compatible with current server settings, map not added.
 
+The Map is not compatible with current server settings, map not added.
+The Map is not compatible with current server settings, map not added.
+
