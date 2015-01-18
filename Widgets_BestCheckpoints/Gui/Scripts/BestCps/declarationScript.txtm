@@ -11,39 +11,41 @@ foreach (Player in Players) {
     declare playerCp for Player = -1;
     playerCp = -1;
     playerCheckPoint[Player.Login] = -1;
+    
+    if (Player.Score.BestRace != Null) {
+        for (i, 0, Player.Score.BestRace.Checkpoints.count-1) {
+            declare curCp = i;
 
-    for (i, 0, Player.Score.BestRace.Checkpoints.count-1) {
-        declare curCp = i;
-        
-        declare cpIndex = (curCp % totalCp)-1;
-        declare Integer lastCpIndex = totalCp - 1;
-        declare time = 0;
+            declare cpIndex = (curCp % totalCp)-1;
+            declare Integer lastCpIndex = totalCp - 1;
+            declare time = 0;
 
-        if( curCp > totalCp){
-            time = Player.Score.BestRace.Checkpoints[curCp-1] - Player.Score.BestRace.Checkpoints[lastCpIndex];
-        } else if(curCp > 0){
-            time = Player.Score.BestRace.Checkpoints[curCp-1];
-        }
-        
-        if (!cpTimes.existskey(cpIndex)) {
-            cpTimes[cpIndex] = 0;
-        }
-        
-        //Check if better
-        if(cpIndex >= 0 && cpIndex < maxCpIndex && (cpTimes[cpIndex] > time || cpTimes[cpIndex] == 0)) {
-            cpTimes[cpIndex] = time;
-
-            declare nickLabel = (Page.GetFirstChild("CpNick_"^cpIndex) as CMlLabel);
-            declare posLabel = (Page.GetFirstChild("CpPos"^cpIndex) as CMlLabel);
-            declare timeLabel = (Page.GetFirstChild("CpTime"^cpIndex) as CMlLabel);
-            declare background = (Page.GetFirstChild("Bg"^cpIndex) as CMlQuad);
-
-            if(nickLabel != Null){		
-                nickLabel.Value = Player.Name;
-                posLabel.Value = (cpIndex + 1) ^ ".";
-                timeLabel.Value = TimeToText(cpTimes[cpIndex]);
-                background.Show();
+            if( curCp > totalCp){
+                time = Player.Score.BestRace.Checkpoints[curCp-1] - Player.Score.BestRace.Checkpoints[lastCpIndex];
+            } else if(curCp > 0){
+                time = Player.Score.BestRace.Checkpoints[curCp-1];
             }
-        }
+
+            if (!cpTimes.existskey(cpIndex)) {
+                cpTimes[cpIndex] = 0;
+            }
+
+            //Check if better
+            if(cpIndex >= 0 && cpIndex < maxCpIndex && (cpTimes[cpIndex] > time || cpTimes[cpIndex] == 0)) {
+                cpTimes[cpIndex] = time;
+
+                declare nickLabel = (Page.GetFirstChild("CpNick_"^cpIndex) as CMlLabel);
+                declare posLabel = (Page.GetFirstChild("CpPos"^cpIndex) as CMlLabel);
+                declare timeLabel = (Page.GetFirstChild("CpTime"^cpIndex) as CMlLabel);
+                declare background = (Page.GetFirstChild("Bg"^cpIndex) as CMlQuad);
+
+                if(nickLabel != Null){		
+                    nickLabel.Value = Player.Name;
+                    posLabel.Value = (cpIndex + 1) ^ ".";
+                    timeLabel.Value = TimeToText(cpTimes[cpIndex]);
+                    background.Show();
+                }
+              }
+        }   
     }
 }

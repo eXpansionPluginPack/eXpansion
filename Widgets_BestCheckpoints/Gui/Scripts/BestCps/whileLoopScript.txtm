@@ -18,7 +18,10 @@ if (UI.UISequence == CUIConfig::EUISequence::Playing) {
             } else if(curCp > 0){
                 time = Player.CurRace.Checkpoints[curCp-1];
             }
-
+            
+            if (!cpTimes.existskey(cpIndex)) {
+                cpTimes[cpIndex] = 0;
+            }
             //Check if better
             if(cpIndex >= 0 && cpIndex < maxCpIndex && (cpTimes[cpIndex] > time || cpTimes[cpIndex] == 0)) {
                 cpTimes[cpIndex] = time;
