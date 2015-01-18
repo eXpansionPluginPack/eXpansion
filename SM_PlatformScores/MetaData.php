@@ -34,18 +34,16 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
  */
 class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData
 {
-
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
+	protected function initName(){
 		$this->setName('Records: PlatformBeta@nadeolabs');
 		$this->setDescription('Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. Higher scores are better.');
+	}
+
+	protected function initCompatibility()
+	{
 		$this->addTitleSupport('PlatformBeta@nadeolabs');
-		$this->setEnviAsTitle(false);		
+		$this->setEnviAsTitle(false);
 		$this->setGroups(array('Records'));
-
-
-
 	}
 
 }

@@ -34,21 +34,23 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
  */
 class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData {
 
-	public function onBeginLoad()
+	public function initName()
 	{
-		parent::onBeginLoad();
 		$this->setName('Records: Obstacle@steeffeen');
 		$this->setDescription('Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. Higher scores are better.');
 		$this->setGroups(array('Records'));
+	}
+
+	protected function initCompatibility()
+	{
 		$this->addTitleSupport("SM");
-		
+
 		$this->setRelaySupport(false);
 		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, 'Obstacle.Script.txt');
 		$this->setScriptCompatibilityMode(false);
 
 		$this->setEnviAsTitle(false);
 		$this->addTitleSupport("Obstacle@steeffeen");
-
 	}
 	
 }

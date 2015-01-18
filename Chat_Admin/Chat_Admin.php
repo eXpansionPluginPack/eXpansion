@@ -6,6 +6,7 @@ use Exception;
 use ManiaLib\Utils\Formatting;
 use ManiaLib\Utils\Path;
 use ManiaLive\Application\Application;
+use ManiaLive\Event\Dispatcher;
 use ManiaLive\PluginHandler\Dependency;
 use ManiaLive\Utilities\Time;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
@@ -22,6 +23,7 @@ use ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Windows\ParameterDialog;
 use ManiaLivePlugins\eXpansion\Chat_Admin\Structures\ActionDuration;
 use ManiaLivePlugins\eXpansion\Core\Config;
 use ManiaLivePlugins\eXpansion\Core\Core;
+use ManiaLivePlugins\eXpansion\Core\Events\ExpansionEvent;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
@@ -1549,6 +1551,8 @@ Other server might use the same blacklist file!!');
 
 	function restartManiaLive($fromLogin, $params)
 	{
+		Dispatcher::dispatch(new ExpansionEvent(ExpansionEvent::ON_RESTART_START));
+
 		$this->connection->chatSendServerMessage("[Notice] restarting eXpansion...");
 		$this->connection->sendHideManialinkPage();
 		$this->connection->chatEnableManualRouting(false);
@@ -1596,6 +1600,7 @@ Other server might use the same blacklist file!!');
 			exec("cd " . $path->getRoot(true) . "; " . $cmd . " >> /tmp/manialive.log 2>&1 &");
 		}
 		$this->console("eXpansion will restart!!This instance is stopping now!!");
+		Dispatcher::dispatch(new ExpansionEvent(ExpansionEvent::ON_RESTART_END));
 		exit();
 	}
 

@@ -2,8 +2,11 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords;
 
+use ManiaLive\Event\Dispatcher;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\Core\Events\ExpansionEvent;
+use ManiaLivePlugins\eXpansion\Core\Events\ExpansionEventListener;
 use ManiaLivePlugins\eXpansion\Core\i18n\Message;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event;
@@ -13,7 +16,7 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Records;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Sector;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 
-abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements ExpansionEventListener
 {
 
 	//This numbers are important do not change. THey are using binarie thinking.
@@ -114,6 +117,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 			$msg_noPB, $msg_showRank, $msg_noRank, $msg_secure_top1, $msg_secure_top5, $msg_new_top1,
 			$msg_new_top5, $msg_improved_top1, $msg_improved_top5, $msg_admin_savedRecs, $msg_equals, $msg_equals_top5, $msg_equals_top1;
 
+	protected $lastSave = 0;
+
 	public static $txt_rank, $txt_nick, $txt_score, $txt_sector, $txt_cp,
 			$txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
@@ -200,6 +205,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		$this->enableStorageEvents();
 		$this->enableDedicatedEvents();
 		$this->enableDatabase();
+		$this->enableTickerEvent();
+		Dispatcher::register(ExpansionEvent::getClass(), $this);
 
 		//List of all records
 		$cmd = $this->registerChatCommand("recs", "showRecsWindow", 0, true);
@@ -374,9 +381,19 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		}
 	}
 
+	function onTick()
+	{
+		if ($this->config->saveRecFrequency != 0) {
+			if ((time() - $this->lastSave) > ($this->config->saveRecFrequency * 60)) {
+				$this->onEndMatch(array(), array());
+				$this->lastSave = time();
+			}
+		}
+	}
+
+
 	public function onBeginMap($map, $warmUp, $matchContinuation)
 	{
-
 		//We get all the records
 		$this->updateCurrentChallengeRecords();
 		//New map, so map count ++
@@ -422,11 +439,13 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 			foreach ($this->storage->spectators as $login => $player)
 				$this->chat_showRank($login);
 		}
+
+		// Consider save done.
+		$this->lastSave = time();
 	}
 
 	public function onEndMatch($rankings, $winnerTeamOrMap)
 	{
-
 		$cons = "";
 		//Checking for lap constraints
 		if ($this->useLapsConstraints()) {
@@ -1710,8 +1729,20 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		return trim($uids, ",");
 	}
 
+	function eXp_onRestartStart()
+	{
+		$this->onEndMatch(array(), array());
+	}
+
+	function eXp_onRestartEnd()
+	{
+	}
+
+
 	function exp_onUnload()
 	{
+		Dispatcher::unregister(ExpansionEvent::ON_RESTART_START, $this);
+		$this->onEndMatch(array(), array());
 		Sector::EraseAll();
 		Cps::EraseAll();
 		Ranks::EraseAll();

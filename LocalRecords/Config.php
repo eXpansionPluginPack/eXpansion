@@ -12,6 +12,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $nbMap_rankProcess = 500;
     public $ranking = true;
     public $resetRanks = false;
+	public $saveRecFrequency = 0;
     public $msg_secure = '#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)';  // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
     public $msg_new = '#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #time#%3$s';  // %1$s - nickname; %2$s - rank; %3$s - time
     public $msg_equals = '#variable#%1$s  #record#equals their #rank#%2$s#record#. Local Record! #time#%3$s';  // %1$s - nickname; %2$s - rank; %3$s - time
@@ -30,7 +31,6 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $msg_noPB = '#admin_error# $iYou have not finished this map yet..';
     public $msg_showRank = '#record#Server rank: #rank#%1$s#record#/#rank#%2$s';  // %1$s - server rank, %2$s - total # of ranks
     public $msg_noRank = '#admin_error#$iNot enough local records to obtain ranking yet..';
-
 }
 
 ?>

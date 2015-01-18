@@ -13,9 +13,10 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
  */
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
-
-
-	public function onBeginLoad()
+	/**
+	 * Do not change, if you use this you break compatibility. Plz fixing this on the other plugins for the third time now
+	 */
+	final public function onBeginLoad()
 	{
 		parent::onBeginLoad();
 
@@ -93,6 +94,11 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var = new Boolean("sendRankingNotices", "Localrecords: Personal rankings messages at begin map", $config, true, false);
 		$var->setGroup("Chat Messages");
 		$var->setDefaultValue(false);
+		$this->registerVariable($var);
+
+		$var = new Int('saveRecFrequency', 'Records save Frequency', $config, true, false);
+		$var->setDefaultValue(0);
+		$var->setDescription('Save every X minutes records. If 0 then will save on match end Only.');
 		$this->registerVariable($var);
 	}
 
