@@ -8,15 +8,12 @@ use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Controls\CheckpointEl
 class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-	private $cps = array();
-	private $maxCpIndex = 18;
+	protected $cps = array();
+	protected $maxCpIndex = 12;
 
-
-	/** @var \ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint[] */
-	public static $bestTimes;
-	private $frame;
-	private $storage;
-	private $timeScript;
+	protected $frame;
+	protected $storage;
+	protected $timeScript;
 
 	protected function exp_onBeginConstruct()
 	{
@@ -44,42 +41,11 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$this->cps = array();
 		$this->frame->clearComponents();
 
-		$x = 0;
-
-		$timeData = "";
-		$nickData = "";
-
-		foreach (self::$bestTimes as $cp) {
-			$this->cps[$x] = new CheckpointElem($x, $cp);
-			$this->frame->addComponent($this->cps[$x]);
-
-			if ($x > 0) {
-				$timeData .= ', ';
-				$nickData .= ', ';
-			}
-			$timeData .= '' . $x . '=>' . $cp->time;
-			$nickData .= '' . $x . '=>"' . Gui::fixString($cp->nickname) . '"';
-			$x++;
-		}
-
-		for (; $x < 24 && $x < $this->storage->currentMap->nbCheckpoints; $x++) {
-			$timeData .= '' . $x . '=>0';
-			$nickData .= '' . $x . '=>"-"';
-
+		for ($x = 0 ; $x < 24 && $x < $this->storage->currentMap->nbCheckpoints; $x++) {
 			$this->cps[$x] = new CheckpointElem($x);
 			$this->frame->addComponent($this->cps[$x]);
 		}
-
-		if (empty($timeData)) {
-			$timeData = 'Integer[Integer]';
-			$nickData = 'Text[Integer]';
-		} else {
-			$timeData = '[' . $timeData . ']';
-			$nickData = '[' . Gui::fixString($nickData) . ']';
-		}
-
-		$this->timeScript->setParam("cpTimes", $timeData);
-		$this->timeScript->setParam("playerNicks", $nickData);
+		
 		$this->timeScript->setParam("maxCpIndex", $this->maxCpIndex);
 		parent::onDraw();
 	}

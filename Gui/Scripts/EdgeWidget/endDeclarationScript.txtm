@@ -10,7 +10,6 @@ declare Boolean lastValue = edge_isMinimized;
 declare Integer edgeStart = Now;
 declare Boolean animActive = False;
 
-
 if (!edge_animatedId.existskey(id) ) {
     edge_animatedId[id] = edge_isMinimized;
 }

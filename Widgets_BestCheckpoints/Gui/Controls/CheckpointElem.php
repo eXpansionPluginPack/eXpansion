@@ -15,13 +15,13 @@ use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint;
 class CheckpointElem extends Control
 {
 
-	private $bg;
+	protected $bg;
 
-	private $label;
+	protected $label;
 
-	private $nick;
+	protected $nick;
 
-	private $time;
+	protected $time;
 
 	function __construct($x, Checkpoint $cp = null)
 	{
@@ -46,13 +46,13 @@ class CheckpointElem extends Control
 		$this->label->setPosX(2);
 		$this->label->setTextColor($this->getColor("#rank#"));
 		$this->addComponent($this->label);
-		
+
 		$this->label = new Label(9, 4);
 		$this->label->setAlign('left', 'center');
 		$this->label->setTextSize(1);
 		$this->label->setId("CpTime" . $x);
 		$this->label->setPosX(2.5);
-		$this->label->setTextColor($this->getColor("#time#"));		
+		$this->label->setTextColor($this->getColor("#time#"));
 		$this->addComponent($this->label);
 
 
@@ -60,7 +60,7 @@ class CheckpointElem extends Control
 		$this->nick->setAlign('left', 'center');
 		$this->nick->setTextSize(1);
 		$this->nick->setPosX(12);
-		$this->nick->setId("CpNick_" . $x);		
+		$this->nick->setId("CpNick_" . $x);
 		$this->addComponent($this->nick);
 
 		$this->sizeX = $sizeX;
@@ -78,16 +78,6 @@ class CheckpointElem extends Control
 	{
 		$colors = \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance();
 		return str_replace('$', "", $colors->getColor($var));
-	}
-
-	public function destroy()
-	{
-		try {
-			$this->destroyComponents();
-		} catch (Exception $e) {
-
-		}
-		parent::destroy();
 	}
 
 }

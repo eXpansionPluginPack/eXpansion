@@ -10,6 +10,7 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
 	protected function exp_onBeginConstruct()
 	{
+		$this->setName("Mapinfo Widget");
 		$clockBg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 6);
 		$clockBg->setAction(\ManiaLivePlugins\eXpansion\Core\Core::$action_serverInfo);
 		//$this->addComponent($clockBg);
@@ -70,7 +71,6 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Map\Gui\Scripts_Map");
 		$this->registerScript($script);
 
-		$this->setName("Mapinfo Widget");
 	}
 
 	public function setServerName($name)
