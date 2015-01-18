@@ -53,13 +53,12 @@ class Queue
 		$player = $this->storage->getPlayerObject($login);
 
 		if (!array_key_exists($login, $this->queue)) {
-			if ($player->ladderScore >= $this->storage->server->ladderServerLimitMin) {
+			//if ($player->ladderScore >= $this->storage->server->ladderServerLimitMin) {
 				$qPlayer = QueuePlayer::fromArray($player->toArray());
 				$qPlayer->queuePosition = count($this->queue);
 				$this->queue[$login] = $qPlayer;
-			}
-		}
-		
+			//}
+		}		
 	}
 
 	public function remove($login)

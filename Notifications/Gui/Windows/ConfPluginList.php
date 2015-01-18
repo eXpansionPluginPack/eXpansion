@@ -113,7 +113,7 @@ class ConfPluginList extends Window
 			}
 		}
 
-		print_r($outArray);
+		//print_r($outArray);
 
 		$var = MetaData::getInstance()->getVariable('redirectedPlugins');
 		$var->setRawValue($outArray);
