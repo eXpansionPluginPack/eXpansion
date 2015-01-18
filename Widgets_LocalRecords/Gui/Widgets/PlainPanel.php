@@ -164,9 +164,7 @@ class PlainPanel extends Widget
 		$this->frame->clearComponents();
 
 		$index = 1;
-
 		$this->bgTitle->setText(exp_getMessage('Local Records'));
-
 
 		$recsData = "";
 		$nickData = "";

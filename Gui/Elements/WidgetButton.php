@@ -57,7 +57,7 @@ class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
 		if (is_array($text)) {
 			$y = 0.5;
 			foreach ($text as $row) {
-				$label = new \ManiaLib\Gui\Elements\Label($this->sizeX - 2, 3);
+				$label = new DicoLabel($this->sizeX - 2, 3);
 				$label->setAlign('center', 'center2');
 				//$label->setStyle("TextValueMedium");
 				$label->setTextSize(1);
@@ -70,7 +70,7 @@ class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
 			$this->text = rtrim($this->text);
 		}
 		else {
-			$label = new \ManiaLib\Gui\Elements\Label($this->sizeX - 2, 2);
+			$label = new DicoLabel($this->sizeX - 2, 2);
 			$label->setAlign('center', 'center');
 			$label->setStyle("TextValueMedium");
 			$label->setTextSize(1);

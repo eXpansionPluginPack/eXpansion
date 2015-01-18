@@ -30,7 +30,13 @@ class ResSkipButtons extends Widget
 
 		$this->btn_fav = new WidgetButton(10, 10);
 		$this->btn_fav->setPositionZ(-1);
-		$this->btn_fav->setText(array('$s$fffAdd', '$s$fffto', '$s$fffFav\'s'));
+		$this->btn_fav->setText(
+			array(
+				exp_getMessage('AddToFav:$s$fffAdd'),
+				exp_getMessage('AddToFav:$s$fffto'),
+				exp_getMessage('AddToFav:$s$fffFav\'s')
+			)
+		);
 		$line->addComponent($this->btn_fav);
 
 		$this->addComponent($line);
@@ -47,11 +53,21 @@ class ResSkipButtons extends Widget
 	public function setResAmount($amount)
 	{
 		if (is_numeric($amount)) {
-			$this->btn_res->setText(array('$ff0Buy', '$fffRestart', '$ff0' . $amount . 'p'));
+			$this->btn_res->setText(
+				array(
+					exp_getMessage('AddToFav:$ff0Buy'),
+					exp_getMessage('AddToFav:$fffRestart'),
+					'$ff0' . $amount . 'p'));
 		}
 
 		if ($amount == "max") {
-			$this->btn_res->setText(array('$ff0Max', '$fffrestarts', '$ff0reached'));
+			$this->btn_res->setText(
+				array(
+					exp_getMessage('AddToFav:$ff0Max'),
+					exp_getMessage('AddToFav:$fffrestarts'),
+					exp_getMessage('AddToFav:$ff0reached')
+				)
+			);
 			$this->btn_res->setAction(null);
 		}
 	}
@@ -59,11 +75,22 @@ class ResSkipButtons extends Widget
 	public function setSkipAmount($amount)
 	{
 		if (is_numeric($amount)) {
-			$this->btn_skip->setText(array('$ff0Buy', '$fffSkip', '$ff0' . $amount . 'p'));
+			$this->btn_skip->setText(
+				array(
+					exp_getMessage('AddToFav:$ff0Buy'),
+					exp_getMessage('AddToFav:$fffSkip'),
+					'$ff0' . $amount . 'p')
+			);
 		}
 		
 		if ($amount == "max") {
-			$this->btn_skip->setText(array('$ff0Max', '$fffskips', '$ff0reached'));
+			$this->btn_skip->setText(
+				array(
+					exp_getMessage('AddToFav:$ff0Max'),
+					exp_getMessage('AddToFav:$fffskips'),
+					exp_getMessage('AddToFav:$ff0reached')
+				)
+			);
 			$this->btn_skip->setAction(null);
 		}
 	}
