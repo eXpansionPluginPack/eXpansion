@@ -121,7 +121,7 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 				$action = $this->createAction(array($this, 'removeValue'), $key);
 				$this->actions[] = $action;
 				$this->pagerFrame->addSimpleItems(array($key => -1,
-					$value => -1,
+					$value." " => -1,
 					'deleteAction' => $action));
 			}
 		}
