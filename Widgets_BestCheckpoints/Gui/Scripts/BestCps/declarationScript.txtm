@@ -12,7 +12,7 @@ foreach (Player in Players) {
     playerCp = -1;
     playerCheckPoint[Player.Login] = -1;
     
-    if (Player.Score.BestRace != Null) {
+    if (Player.Score != Null) {
         for (i, 0, Player.Score.BestRace.Checkpoints.count-1) {
             declare curCp = i;
 
