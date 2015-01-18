@@ -111,11 +111,11 @@ if((Now - lastCheckTime) > 50){
                     playerTimes[Score.User.Login] = time;
                 }
 
+                <?php echo $this->varName ?> = time;
                 needUpdate = True;
-            }else{
+            } else {
                 <?php echo $this->varName ?> = playerTime;
             }
-
         }
     }
 }
