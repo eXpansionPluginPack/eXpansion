@@ -111,7 +111,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             foreach ($this->getMusicCsv() as $music)
                 $this->songs[] = Structures\Song::fromArray($music);
         } catch (\Exception $e) {
-            $this->connection->exp_chatSendServerMessage('MusicBox $fff»» #error#' . utf8_encode($e->getMessage()));
+            $this->exp_chatSendServerMessage('MusicBox $fff»» #error#' . utf8_encode($e->getMessage()));
             $this->enabled = false;
         }
 
