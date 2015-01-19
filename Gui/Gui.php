@@ -96,9 +96,7 @@ class Gui extends ExpPlugin
 				Preloader::add(trim($config->uiTextureBase, "/") . '/' . $folder . '/' . $file);
 			}
 		}
-
-
-
+		
 		$this->preloader->show();
 
 		foreach ($this->storage->players as $player) {
@@ -111,7 +109,7 @@ class Gui extends ExpPlugin
 		$this->loadWidgetConfigs();
 		
 		$edge = Widgets\Edge::Create(null);
-		$edge->setPosition(160,-90);
+		$edge->setPosition(-160,-35);
 		$edge->show(); 
 	}
 

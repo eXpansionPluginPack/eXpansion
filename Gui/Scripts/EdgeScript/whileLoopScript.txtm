@@ -5,14 +5,10 @@ foreach (Event in PendingEvents) {
 
            if (edge_isLockedVisible2) {
                 edge_isMinimized = False;
-             // Edge.Style = "Icons64x64_1";
-             // Edge.Substyle = "LvlGreen";
-               Edge.BgColor = <0.8,0.,0.>;
+                 Edge.ImageUrl = imageOff;
             }
-           else {             
-             // Edge.Style = "Icons64x64_1";
-             // Edge.Substyle = "LvlRed";            
-            Edge.BgColor = <0.,.8,0.>;
+           else {                          
+                Edge.ImageUrl = imageOn;
                 
            }
 
