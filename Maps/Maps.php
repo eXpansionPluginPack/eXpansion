@@ -90,6 +90,10 @@ class Maps extends ExpPlugin
 
 	private $isRestartMap = false;
 
+	private $is_onBeginMatch = false;
+
+	private $is_onEndMatch = false;
+
 	public function exp_onInit()
 	{
 
@@ -159,7 +163,9 @@ class Maps extends ExpPlugin
 		$this->showNextMapWidget(null);
 
 		$this->preloadHistory();
-		//$this->showMapList("oliverde8");	
+		
+		// this is for fixes to storm gamemodes
+		$this->enableScriptEvents(array("LibXmlRpc_BeginMap", "LibXmlRpc_EndMap", "LibXmlRpc_BeginPodium"));
 	}
 
 	public function exp_onLoad()
@@ -215,8 +221,27 @@ class Maps extends ExpPlugin
 		}
 	}
 
+	/**
+	 *	is a fix for storm gamemodes, which all doesn't emit onBeginMatch event.
+	 */
+	function LibXmlRpc_BeginMap()
+	{
+		$this->is_onEndMatch = false;
+
+		if (!$this->is_onBeginMatch) {
+			$this->onBeginMatch();
+			$this->is_onBeginMatch = true;
+		}
+	}
+
 	function onBeginMatch()
 	{
+		$this->is_onEndMatch = false;
+		if ($this->is_onBeginMatch) {
+			return;
+		}
+		$this->is_onBeginMatch = true;
+
 		$this->atPodium = false;
 
 		$this->nextMap = $this->storage->nextMap;
@@ -276,6 +301,8 @@ class Maps extends ExpPlugin
 
 	public function onBeginMap($map, $warmUp, $matchContinuation)
 	{
+		$this->is_onEndMatch = false;
+		$this->is_onBeginMatch = false;
 		$this->showCurrentMapWidget(null);
 		$this->showNextMapWidget(null);
 		CustomUI::HideForAll(CustomUI::CHALLENGE_INFO);
@@ -312,8 +339,38 @@ class Maps extends ExpPlugin
 		}
 	}
 
+	/**
+	 * is a fix for storm gamemodes, which all doesn't emit onEndMatch
+	 */
+	public function LibXmlRpc_EndMap()
+	{
+		$this->is_onBeginMatch = false;
+		if (!$this->is_onEndMatch) {
+			$this->onEndMatch(null, null);
+			$this->is_onEndMatch = true;
+		}
+	}
+
+	/**
+	 * is a fix for storm gamemodes, which all doesn't emit onEndMatch
+	 */
+	public function LibXmlRpc_BeginPodium()
+	{
+		$this->is_onBeginMatch = false;
+		if (!$this->is_onEndMatch) {
+			$this->onEndMatch(null, null);
+			$this->is_onEndMatch = true;
+		}
+	}
+
 	public function onEndMatch($rankings, $winnerTeamOrMap)
 	{
+		$this->is_onBeginMatch = false;
+		if ($this->is_onEndMatch) {
+			return;
+		}
+		$this->is_onEndMatch = true;
+
 		$this->config = Config::getInstance();
 		if ($this->wasWarmup)
 			return;
@@ -419,7 +476,7 @@ class Maps extends ExpPlugin
 		else {
 			Maplist::$localrecordsLoaded = false;
 		}
-		
+
 		$window->centerOnScreen();
 		$window->setSize(180, 100);
 		$window->updateList($login);
