@@ -1,8 +1,8 @@
-if (UI.UISequence == CUIConfig::EUISequence::Playing && triggerBegin == True) {
-    triggerBegin = False;
-    isStart = True;
-    animStart = Now;   
-} 
+// if (UI.UISequence == CUIConfig::EUISequence::Playing && triggerBegin == True) {
+//    triggerBegin = False;
+//    isStart = True;
+//    animStart = Now;   
+// } 
 
 if (isStart) {    
     declare delay = 100;
@@ -33,12 +33,23 @@ if (isZoom) {
     rank.RelativeScale = 2. - AL::Ease("LinearInOut", time * 1., 0., 1., 500.);      
     }
 }
+
 if (isStart && animStart + 3000 <= Now ) {        
     isStart = False;
 
     // added for debug
     isZoom = True;
     animStart = Now;
+    
+    // just a failsafe to force visibility, if animation fails for some reason
+    for (i, 1, nbFields ) {
+        declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
+	declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
+	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
+        timeLabel.Opacity = 1.;
+        nickLabel.Opacity = 1.;
+        rank.Opacity = 1.;
+    }
 }
 
 if (isZoom && animStart + 2000 <= Now ) {        

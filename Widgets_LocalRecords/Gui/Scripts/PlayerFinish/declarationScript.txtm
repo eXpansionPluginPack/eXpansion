@@ -75,3 +75,6 @@ for (i, 1, nbFields ) {
         timeLabel.Opacity = 0.;
         nickLabel.Opacity = 0.;       
 }
+
+isStart = True;
+animStart = Now;
