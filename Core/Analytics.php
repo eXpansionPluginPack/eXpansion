@@ -22,6 +22,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Core;
 
+use ManiaLib\Utils\Path;
+use ManiaLive\Application\ErrorHandling;
 use ManiaLive\Data\Storage;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Features\Tick\Event as TickEvent;
@@ -38,6 +40,7 @@ use ManiaLivePlugins\eXpansion\Helpers\Helper;
 class Analytics implements \ManiaLive\Features\Tick\Listener
 {
 
+	const ERROR_LIMIT = 10;
 	const ACTIVE_PING = 600; //Every 10 minutes is enought
 	const NOT_ACTIVE_PING = 14400; //If issue try in 4 hours again.
 
@@ -59,6 +62,8 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 
 	/** @var PluginHandler */
 	private $pluginHandler = null;
+
+	private $nbError = 0;
 
 	function __construct()
 	{
@@ -85,6 +90,7 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 		$this->console('-------------------------------------------------------------------------------');
 		$this->console('');
 
+		ErrorHandling::$errorReporter = $this;
 
 		Dispatcher::register(TickEvent::getClass(), $this);
 		$this->enable = true;
@@ -105,6 +111,8 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 		$this->console('');
 		$this->console('-------------------------------------------------------------------------------');
 		$this->console('');
+
+		ErrorHandling::$errorReporter = null;
 
 		Dispatcher::unregister(TickEvent::getClass(), $this);
 		$this->enable = false;
@@ -150,8 +158,8 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 		$access->httpGet($url, Array($this, "completeHandshake"), $data, "Manialive/eXpansion", "application/json");
 	}
 
-	public function completeHandshake($data){
-
+	public function completeHandshake($data)
+	{
 		$this->running = false;
 		if (!$data)
 			return;
@@ -161,13 +169,15 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 		if(isset($json->key) && !empty($json->key)) {
 			$this->active = true;
 			$this->key = $json->key;
-
 			$this->lasPing = time();
 			$this->ping();
 		}
 	}
 
-	public function ping()
+	/**
+	 * @param \Exception $exception to log
+	 */
+	public function ping($error = null)
 	{
 		/** @var DataAccess $access */
 		$access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
@@ -196,9 +206,35 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 			'serverOs' => $this->expStorage->serverOs,
 		);
 
-		$url = $this->url."?".$this->generate($data);
+		if (!is_null($error)) {
+			$this->nbError++;
+			if ($this->nbError > self::ERROR_LIMIT) {
+				return;
+			}
+			$data['page'] = 'error';
+			/** @var \Exception $error */
+			$data['error_file'] = $this->removeRoot($error->getFile());
+			$data['error_line'] = $error->getLine();
+			$data['error_msg'] = $error->getMessage();
+			$data['error_stack'] = $error->getTraceAsString();
 
-		$access->httpGet($url, Array($this, "completePing"), $data, "Manialive/eXpansion", "application/json");
+			$url = $this->url."?".$this->generate($data);
+
+			$access->httpGet($url, Array($this, "completeError"), $data, "Manialive/eXpansion", "application/json");
+		} else {
+			$url = $this->url."?".$this->generate($data);
+			$access->httpGet($url, Array($this, "completePing"), $data, "Manialive/eXpansion", "application/json");
+		}
+	}
+
+	private function removeRoot($fileName)
+	{
+		$fileName = realpath($fileName);
+		/** @var Path $path */
+		$path = Path::getInstance();
+		$dir = realpath($path->getRoot(true));
+
+		return str_replace($dir, '', $fileName);
 	}
 
 	private function generate($mapping) {
@@ -213,6 +249,10 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 	public function completePing($data)
 	{
 		$this->running = false;
+	}
+
+	public function completeError($data)
+	{
 	}
 
 

@@ -42,6 +42,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		//if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
 		//	$this->enableScriptEvents();
 
+		//$this->registerChatCommand("crash", "crash", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("profiler_enable", "profilere", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
@@ -113,5 +114,9 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$widget = Gui\debugWidget::Create(null);
 		$widget->setPosition(155,-45);
 		$widget->show();
+	}
+
+	function crash() {
+		throw new \Exception("Crash Test");
 	}
 }
