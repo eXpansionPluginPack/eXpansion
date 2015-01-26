@@ -88,12 +88,6 @@ class Maps extends ExpPlugin
 	 */
 	private $cmd_remove, $cmd_erease, $cmd_replay;
 
-	private $isRestartMap = false;
-
-	private $is_onBeginMatch = false;
-
-	private $is_onEndMatch = false;
-
 	public function exp_onInit()
 	{
 
@@ -163,14 +157,12 @@ class Maps extends ExpPlugin
 		$this->showNextMapWidget(null);
 
 		$this->preloadHistory();
-		
-		// this is for fixes to storm gamemodes
-		$this->enableScriptEvents(array("LibXmlRpc_BeginMap", "LibXmlRpc_EndMap", "LibXmlRpc_BeginPodium"));
+		//$this->showMapList("oliverde8");	
 	}
 
 	public function exp_onLoad()
 	{
-		$this->msg_addQueue = exp_getMessage('#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position'); // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login, '%5$s' = # in queue
+		$this->msg_addQueue = exp_getMessage('#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in #queue#position #variable#%5$s'); // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login, '%5$s' = # in queue
 		$this->msg_nextQueue = exp_getMessage('#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s'); // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
 		$this->msg_nextMap = exp_getMessage('#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#'); // '%1$s' = Map Name, '%2$s' = Map author
 		$this->msg_queueNow = exp_getMessage('#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s'); // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
@@ -221,27 +213,8 @@ class Maps extends ExpPlugin
 		}
 	}
 
-	/**
-	 *	is a fix for storm gamemodes, which all doesn't emit onBeginMatch event.
-	 */
-	function LibXmlRpc_BeginMap()
-	{
-		$this->is_onEndMatch = false;
-
-		if (!$this->is_onBeginMatch) {
-			$this->onBeginMatch();
-			$this->is_onBeginMatch = true;
-		}
-	}
-
 	function onBeginMatch()
 	{
-		$this->is_onEndMatch = false;
-		if ($this->is_onBeginMatch) {
-			return;
-		}
-		$this->is_onBeginMatch = true;
-
 		$this->atPodium = false;
 
 		$this->nextMap = $this->storage->nextMap;
@@ -257,13 +230,7 @@ class Maps extends ExpPlugin
 						$this->exp_chatSendServerMessage(__("Error: %s", $login, $e->getMessage()));
 					}
 				}
-				if ($this->isRestartMap == false) {
-					echo "[maps] shifting queue! \n";
-					array_shift($this->queue);
-				}
-				else {
-					echo "[maps] not shifting queue, since restart! \n";
-				}
+				array_shift($this->queue);
 			}
 			else {
 				if ($this->tries < 3) {
@@ -271,13 +238,7 @@ class Maps extends ExpPlugin
 				}
 				else {
 					$this->tries = 0;
-					if ($this->isRestartMap == false) {
-						echo "[maps] shifting queue! \n";
-						array_shift($this->queue);
-					}
-					else {
-						echo "[maps] not shifting queue, since restart! \n";
-					}
+					array_shift($this->queue);
 				}
 			}
 		}
@@ -288,21 +249,17 @@ class Maps extends ExpPlugin
 			$this->nextMap = $queue->map;
 		}
 
-		if ($this->isRestartMap == false) {
-			array_unshift($this->history, $this->storage->currentMap);
-			if (count($this->history) > $this->config->historySize) {
-				array_pop($this->history);
-			}
+
+		array_unshift($this->history, $this->storage->currentMap);
+		if (count($this->history) > $this->config->historySize) {
+			array_pop($this->history);
 		}
-		$this->isRestartMap = false;
 		$this->showCurrentMapWidget(null);
 		$this->showNextMapWidget(null);
 	}
 
 	public function onBeginMap($map, $warmUp, $matchContinuation)
 	{
-		$this->is_onEndMatch = false;
-		$this->is_onBeginMatch = false;
 		$this->showCurrentMapWidget(null);
 		$this->showNextMapWidget(null);
 		CustomUI::HideForAll(CustomUI::CHALLENGE_INFO);
@@ -310,7 +267,6 @@ class Maps extends ExpPlugin
 
 	public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
 	{
-		$this->isRestartMap = $restartMap;
 		//$this->redrawNextMapWidget();
 	}
 
@@ -339,38 +295,8 @@ class Maps extends ExpPlugin
 		}
 	}
 
-	/**
-	 * is a fix for storm gamemodes, which all doesn't emit onEndMatch
-	 */
-	public function LibXmlRpc_EndMap()
-	{
-		$this->is_onBeginMatch = false;
-		if (!$this->is_onEndMatch) {
-			$this->onEndMatch(null, null);
-			$this->is_onEndMatch = true;
-		}
-	}
-
-	/**
-	 * is a fix for storm gamemodes, which all doesn't emit onEndMatch
-	 */
-	public function LibXmlRpc_BeginPodium()
-	{
-		$this->is_onBeginMatch = false;
-		if (!$this->is_onEndMatch) {
-			$this->onEndMatch(null, null);
-			$this->is_onEndMatch = true;
-		}
-	}
-
 	public function onEndMatch($rankings, $winnerTeamOrMap)
 	{
-		$this->is_onBeginMatch = false;
-		if ($this->is_onEndMatch) {
-			return;
-		}
-		$this->is_onEndMatch = true;
-
 		$this->config = Config::getInstance();
 		if ($this->wasWarmup)
 			return;
@@ -490,11 +416,11 @@ class Maps extends ExpPlugin
 		$window = Maplist::Create($login);
 		$window->setHistory($this->history);
 		$window->setTitle(__('History of Maps', $login));
-		if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords')) {
-			$window->setRecords($this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
+		if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
+			$window->setRecords($this->callPublicMethod('\ManiaLivePlugins\eXpansion\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
 		}
-		if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings')) {
-			$window->setRatings($this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings', 'getRatings'));
+		if ($this->isPluginLoaded('eXpansion\MapRatings')) {
+			$window->setRatings($this->callPublicMethod('\ManiaLivePlugins\eXpansion\MapRatings', 'getRatings'));
 		}
 
 		$window->centerOnScreen();
@@ -589,7 +515,7 @@ class Maps extends ExpPlugin
 	public function checkQueuMap($login, Map $map, $sendMessages = false)
 	{
 		$this->config = Config::getInstance();
-
+		
 		if ($this->storage->currentMap->uId == $map->uId) {
 			$msg = exp_getMessage('#admin_error# $iThis map is currently playing...');
 			if ($sendMessages)
