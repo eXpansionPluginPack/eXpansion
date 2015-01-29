@@ -335,7 +335,12 @@ Other server might use the same blacklist file!!');
 		AdminGroups::addAlias($cmd, 'restart'); // fast
 		AdminGroups::addAlias($cmd, 'restartmap'); //xaseco
 
-
+		$cmd = AdminGroups::addAdminCommand('rskip', $this, 'skipScoreReset', Permission::map_skip);
+		$cmd->setHelp("Skips the current track and reset scores");
+		
+		$cmd = AdminGroups::addAdminCommand('rres', $this, 'restartScoreReset', Permission::map_restart);
+		$cmd->setHelp("Restarts this map and resets the scores");
+		
 		$cmd = AdminGroups::addAdminCommand('set game mode', $this, 'setGameMode', Permission::game_gamemode);
 		$cmd->setHelp('Sets next mode {ta,rounds,team,laps,stunts,cup}')
 				->addLineHelpMore('$w\admin set game mode ta$z will change gamemode to TimeAttack.')
@@ -705,6 +710,12 @@ Other server might use the same blacklist file!!');
 				case "finishtimeout":
 					$this->setFinishTimeout($fromLogin, $params);
 					break;
+				case "skip":
+					$this->skipScoreReset($fromLogin, $params);
+					break;
+				case "res":
+					$this->restartScoreReset($fromLogin, $params);
+					break;
 				default:
 					$msg = exp_getMessage("possible parameters: pointslimit, newrules, wu, fto, ftimeout");
 					$this->exp_chatSendServerMessage($msg, $fromLogin);
@@ -746,6 +757,12 @@ Other server might use the same blacklist file!!');
 				case "ftimeout":
 				case "finishtimeout":
 					$this->setFinishTimeout($fromLogin, $params);
+					break;
+				case "skip":
+					$this->skipScoreReset($fromLogin, $params);
+					break;
+				case "res":
+					$this->restartScoreReset($fromLogin, $params);
 					break;
 				default:
 					$msg = exp_getMessage("possible parameters: limit, rounds, nbwin, wu, fto, ftimeout");
@@ -795,6 +812,12 @@ Other server might use the same blacklist file!!');
 					break;
 				case "balance":
 					$this->setTeamBalance($fromLogin, $params);
+					break;
+				case "skip":
+					$this->skipScoreReset($fromLogin, $params);
+					break;
+				case "res":
+					$this->restartScoreReset($fromLogin, $params);
 					break;
 				default:
 					$msg = exp_getMessage("possible parameters: balance, limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap");
@@ -1633,6 +1656,36 @@ Other server might use the same blacklist file!!');
 		}
 	}
 
+	function skipScoreReset($fromLogin, $params)
+	{
+		try {
+			\ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_SKIP));
+			$this->connection->nextMap(false);
+			$admin = $this->storage->getPlayerObject($fromLogin);
+			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#skips the challenge!', null, array($admin->nickName));
+		} catch (Exception $e) {
+			$this->sendErrorChat($fromLogin, $e->getMessage());
+		}
+	}
+
+	function restartScoreReset($fromLogin, $params)
+	{
+		try {
+			$admin = $this->storage->getPlayerObject($fromLogin);
+			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
+			if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Maps\Maps')) {
+				\ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_RESTART));
+				$this->callPublicMethod('\ManiaLivePlugins\eXpansion\Maps\Maps', "replayScoreReset");
+				return;
+			}
+			\ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_RESTART));
+			$this->connection->restartMap(false);
+		} catch (Exception $e) {
+			$this->sendErrorChat($fromLogin, $e->getMessage());
+		}
+	}
+
+
 	function setGameMode($fromLogin, $params)
 	{
 		$gamemode = NULL;
@@ -1756,24 +1809,24 @@ Other server might use the same blacklist file!!');
 	{
 		GenericPlayerList::Erase($login);
 
-	//	try {
-			$window = GenericPlayerList::Create($login);
-			$window->setTitle(__('Blacklisted Players on the server', $login));
-			$indexNumber = 0;
-			$items = array();
+		//	try {
+		$window = GenericPlayerList::Create($login);
+		$window->setTitle(__('Blacklisted Players on the server', $login));
+		$indexNumber = 0;
+		$items = array();
 
-			/**
-			 * @var Player
-			 */
-			foreach ($this->connection->getBlackList(-1, 0) as $player) {
-				$items[] = new BlacklistPlayeritem($indexNumber, $player, $this, $login);
-			}
-			$window->populateList($items);
-			$window->setSize(90, 120);
-			$window->centerOnScreen();
-			$window->show();
+		/**
+		 * @var Player
+		 */
+		foreach ($this->connection->getBlackList(-1, 0) as $player) {
+			$items[] = new BlacklistPlayeritem($indexNumber, $player, $this, $login);
+		}
+		$window->populateList($items);
+		$window->setSize(90, 120);
+		$window->centerOnScreen();
+		$window->show();
 		//} catch (Exception $e) {
-	//		$this->sendErrorChat($login, "".$e->getMessage());
+		//		$this->sendErrorChat($login, "".$e->getMessage());
 //		}
 	}
 

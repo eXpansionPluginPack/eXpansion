@@ -107,6 +107,7 @@ class Maps extends ExpPlugin
 		$this->setPublicMethod("queueMxMap");
 		$this->setPublicMethod("replayMap");
 		$this->setPublicMethod("replayMapInstant");
+		$this->setPublicMethod("replayScoreReset");
 		$this->setPublicMethod("returnQueue");
 		$this->setPublicMethod("showMapList");
 		if ($this->expStorage->isRemoteControlled == false) {
@@ -163,7 +164,7 @@ class Maps extends ExpPlugin
 		$this->showNextMapWidget(null);
 
 		$this->preloadHistory();
-		
+
 		// this is for fixes to storm gamemodes
 		$this->enableScriptEvents(array("LibXmlRpc_BeginMap", "LibXmlRpc_EndMap", "LibXmlRpc_BeginPodium"));
 	}
@@ -222,7 +223,7 @@ class Maps extends ExpPlugin
 	}
 
 	/**
-	 *	is a fix for storm gamemodes, which all doesn't emit onBeginMatch event.
+	 * 	is a fix for storm gamemodes, which all doesn't emit onBeginMatch event.
 	 */
 	function LibXmlRpc_BeginMap()
 	{
@@ -1056,6 +1057,21 @@ class Maps extends ExpPlugin
 			$widget->redraw($widget->getRecipient());
 		}
 		$this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
+	}
+
+	/**
+	 * Restart the current map
+	 *
+	 * @param $login
+	 */
+	function replayScoreReset($login)
+	{
+		$this->instantReplay = true;
+		foreach (NextMapWidget::getAll() as $widget) {
+			$widget->setMap($this->storage->currentMap);
+			$widget->redraw($widget->getRecipient());
+		}
+		$this->connection->restartMap(false);
 	}
 
 	/**
