@@ -285,13 +285,15 @@ class Gui extends ExpPlugin
 	 *
 	 * @return string cleaned up string
 	 */
-	public static function fixString($string)
+	public static function fixString($string, $multiline = false)
 	{
-
-		$out = str_replace('"', "'", $string);
+		$out = str_replace("\r", '__', $string);
+		if (!$multiline) {
+			$out = str_replace("\n", '', $out);
+		}
+		$out = str_replace('"', "'", $out);
 		$out = str_replace('\\', '\\\\', $out);
-		$out = str_replace('-', '–', $out);
-
+		$out = str_replace('-', '–', $out);;
 		return $out;
 	}
 

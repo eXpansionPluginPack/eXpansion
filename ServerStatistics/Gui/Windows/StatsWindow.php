@@ -71,7 +71,7 @@ class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->mainFrame->addComponent($this->contentFrame);
 		$this->contentFrame->setPositionY(5);
 
-        $this->contentFrame->addComponent(new InfoLine(25, 'Comment', \ManiaLivePlugins\eXpansion\Gui\Gui::fixString($storage->server->comment),0));
+        $this->contentFrame->addComponent(new InfoLine(25, 'Comment', \ManiaLivePlugins\eXpansion\Gui\Gui::fixString($storage->server->comment, true),0));
         $this->contentFrame->addComponent(new InfoLine(5, 'Dedicated Up Time', $data['upTimeDedi'],0));
         $this->contentFrame->addComponent(new InfoLine(5, 'eXpansaion Up Time', $data['upTime'],0));
         $this->contentFrame->addComponent(new InfoLine(5, 'Map Count', sizeof($storage->maps),0));
