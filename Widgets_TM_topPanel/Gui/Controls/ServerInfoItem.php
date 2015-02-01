@@ -26,16 +26,35 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 
-class ServerInfoItem extends PanelItem implements ScriptedContainer
+class ServerInfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements ScriptedContainer
 {
 
-	public function __construct($title, $value, $sizeX = 20, $StyleorUrl = null, $iconSubStyle = null)
+	protected $lbl_value, $lbl_title;
+
+	public function __construct($sizeX, $sizeY = 9)
 	{
-		parent::__construct($title, $value, $sizeX, $StyleorUrl, $iconSubStyle);
+		$this->lbl_title = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel($sizeX, 4-5);
+		$this->lbl_title->setPosition(0, -6.25);
+		$this->lbl_title->setTextSize(1);
+		$this->lbl_title->setAlign("center", "center");
+		$this->addComponent($this->lbl_title);
+
+
+		$this->lbl_value = new \ManiaLib\Gui\Elements\Label($sizeX, 4.5);
 		$this->lbl_value->setStyle("TextRaceMessageBig");
 		$this->lbl_value->setTextSize(3);
-		//$this->lbl_value->setPosition(9, 1);
-		//$this->lbl_title->setPosition(9, -2);
+		$this->lbl_value->setPosition(0, -2.25);
+		$this->lbl_value->setAlign("center", "center");
+		$this->lbl_value->setId("serverName");
+		$this->addComponent($this->lbl_value);
+		
+		$this->setSize($sizeX, $sizeY);
+
+	}
+
+	public function setText($title)
+	{
+		$this->lbl_title->setText($title);
 	}
 
 	/**

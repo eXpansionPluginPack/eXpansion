@@ -23,25 +23,44 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Elements\Quad;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 
-class MapInfoItem extends PanelItem implements ScriptedContainer
+class MapInfoItem extends Control implements ScriptedContainer
 {
 
-	function __construct($title, $value, $sizeX = 20, $StyleorUrl = null, $iconSubStyle = null)
+	protected $quad, $map, $author;
+
+	function __construct($sizeX, $sizeY = 9)
 	{
-		parent::__construct($title, $value, $sizeX, $StyleorUrl, $iconSubStyle);
-		$this->quad = new \ManiaLib\Gui\Elements\Quad(8, 8);
-		//$this->quad->setColorize("fff");
-		$this->quad->setPosY(0.5);
-		$this->quad->setStyle($StyleorUrl);
-		$this->quad->setSubStyle($iconSubStyle);
+
+		$this->quad = new Quad($sizeY, $sizeY);
+		$this->quad->setAlign("right", "top");
+		$this->quad->setPosition($sizeX);
+		$this->quad->setId("mapIcon");
 		$this->addComponent($this->quad);
 
-		$this->lbl_title->setPosX(9);
-		$this->lbl_value->setPosX(9);
-		$this->setSizeX($this->getSizeX() + 9);
+		$this->map = new Label($sizeX - $sizeY -1, 4.5);
+		$this->map->setId("mapName");
+		$this->map->setPosition($sizeX - $sizeY -1, -2.25);
+		$this->map->setAlign("right", "center");
+		$this->map->setTextSize(2);
+		$this->addComponent($this->map);
+
+
+		$this->author = new Label($sizeX - $sizeY -1, 4.5);
+		$this->author->setId("mapAuthor");
+		$this->author->setPosition($sizeX - $sizeY - 1, -6.25);
+		$this->author->setAlign("right", "center");
+		$this->author->setTextSize(1);
+		$this->addComponent($this->author);
+
+
+
+		$this->setSize($sizeX, $sizeY);
 	}
 
 	/**
@@ -49,8 +68,14 @@ class MapInfoItem extends PanelItem implements ScriptedContainer
 	 */
 	public function getScript()
 	{
-		$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\Gui\Scripts\mapInfo");
+		$script = new Script("Widgets_TM_topPanel\Gui\Scripts\mapInfo");
 		return $script;
+	}
+
+	public function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
+	{
+		$this->map->setText(\ManiaLib\Utils\Formatting::stripCodes($map->name, "wosn"));
+		$this->author->setText(\ManiaLib\Utils\Formatting::stripCodes($map->author, "wosn"));
 	}
 
 }

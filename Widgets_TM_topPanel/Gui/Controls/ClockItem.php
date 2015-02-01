@@ -23,19 +23,34 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLivePlugins\eXpansion\Gui\Control;
+use ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 
-class ClockItem extends PanelItem implements ScriptedContainer
+class ClockItem extends Control implements ScriptedContainer
 {
 
-	public function __construct($title, $value, $sizeX = 20, $StyleorUrl = null, $iconSubStyle = null)
+	protected $lbl_value, $lbl_title;
+
+	public function __construct($sizeX, $sizeY = 9)
 	{
-		parent::__construct($title, $value, $sizeX, $StyleorUrl, $iconSubStyle);
-		$this->lbl_value->setStyle("TextRaceMessageBig");
-		$this->lbl_value->setTextSize(3.5);
-		$this->lbl_value->setPosition(9, -3);
-		$this->lbl_title->setPosition(9, 1);
+		$this->lbl_title = new DicoLabel($sizeX, 4.5);
+		$this->lbl_title->setText("Time");
+		$this->lbl_title->setPosition(0, -2.25);
+		$this->lbl_title->setTextSize(1);
+		$this->lbl_title->setAlign("left", "center");
+		$this->addComponent($this->lbl_title);
+
+		$this->lbl_value = new Label($sizeX, 4.5);
+		$this->lbl_value->setPosition(0, -6.25);
+		$this->lbl_value->setId("clock");
+		$this->lbl_value->setAlign("left", "center");
+		$this->lbl_value->setStyle("TextValueSmallSm");
+		$this->addComponent($this->lbl_value);
+
+		$this->setSize($sizeX, $sizeY);
 	}
 
 	/**
@@ -43,7 +58,7 @@ class ClockItem extends PanelItem implements ScriptedContainer
 	 */
 	public function getScript()
 	{
-		$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\Gui\Scripts\clock");
+		$script = new Script("Widgets_TM_topPanel\Gui\Scripts\clock");
 		return $script;
 	}
 

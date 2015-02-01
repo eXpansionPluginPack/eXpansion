@@ -1,15 +1,25 @@
-
 if( (Now - eXp_lastNbPlayerUpdate) >= 1000 ){
-    declare nbPlayer = 0;
+    declare Integer nbPlayer = 0;
+    declare Integer nbSpec = 0;
 
     foreach (Player in Players) {
         if(Player.Login != CurrentServerLogin){
             if(!Player.RequestsSpectate){
                 nbPlayer += 1;
+            } 
+            if(Player.RequestsSpectate) {
+                nbSpec += 1;
             }
         }
     }
     playerLabel.SetText("" ^ nbPlayer ^ "/" ^ maxPlayers);
+    specsLabel.SetText("" ^ nbSpec ^ "/" ^ maxSpecs);
+    declare Real pp;
+    declare Real sp;
 
+    pp = (1. * nbPlayer) / (1. * maxPlayers);
+    sp = (1.* nbSpec) / (1. * maxSpecs);
+    playerQ.Size.X = pp*div;
+    specQ.Size.X = sp*div;
     eXp_lastNbPlayerUpdate = Now;
 }
