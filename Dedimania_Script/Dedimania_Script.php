@@ -51,7 +51,7 @@ class Dedimania_Script extends DedimaniaAbstract
 		if ($this->storage->currentMap->nbCheckpoints == 1)
 			return;
 
-		if (!array_key_exists($login, DediConnection::$players))
+		if (!$login || !array_key_exists($login, DediConnection::$players))
 			return;
 
 		// if player is banned from dedimania, don't send his time.
@@ -108,6 +108,10 @@ class Dedimania_Script extends DedimaniaAbstract
 			// if player exists on the list... see if he got better time
 
 			$player = $this->storage->getPlayerObject($login);
+
+			if (is_null($player)) {
+				return;
+			}
 
 			if (array_key_exists($login, $this->records)) {
 

@@ -75,7 +75,11 @@ class AutoQueue extends ExpPlugin
 		$login = $player->login;
 
 		if ($player->spectator) {
-			$this->connection->forceSpectator($login, 1);
+			try {
+				$this->connection->forceSpectator($login, 1);
+			} catch (\Exception $ex) {
+
+			}
 			if ($player->hasPlayerSlot) {
 				try {
 					$this->connection->spectatorReleasePlayerSlot($login);

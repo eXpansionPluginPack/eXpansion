@@ -129,7 +129,7 @@ class Bets extends ExpPlugin
 	public function setBetAmount($login, $data)
 	{
 		$amount = $data['betAmount'];
-		if (!is_numeric($amount)) {
+		if (!is_numeric($amount) || empty($amount) || $amount < 1) {
 			$this->exp_chatSendServerMessage('#error#Can not place a bet, the value: "#variable#%1$s#error#" is not numeric value!', $login, array($amount));
 			return;
 		}

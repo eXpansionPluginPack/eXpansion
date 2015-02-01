@@ -191,6 +191,17 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		}
 	}
 
+	public function showServerList($login)
+	{
+		ServerList::Erase($login);
+		$w = ServerList::Create($login);
+		$w->setTitle('ServerNeighborhood - Server List');
+		$w->setSize(120, 105);
+		$w->setServers($this->servers);
+		$w->centerOnScreen();
+		$w->show();
+	}
+
 	public function exp_onUnload()
 	{
 		ServerPanel::EraseAll();
