@@ -238,7 +238,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			}
 			if ($playerRating === null) {
 				$query = $this->db->execute("SELECT rating AS playerRating FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . " AND `login`=" . $this->db->quote($login) . ";")->fetchObject();
-				if ($query === false) {
+				if (!$query || !isset( $query->playerRating)) {
 					$playerRating = '-';
 				}
 				else {
