@@ -155,10 +155,16 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 						. " WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";")->fetchObject();
 		$this->rating = 0;
 		$this->ratingTotal = 0;
-		if ($database !== false) {
+		if ($database) {
 			$this->rating = $database->rating;
 			$this->ratingTotal = $database->ratingTotal;
 			$this->oldRatings = $this->getVotesForMap($this->storage->currentMap->uId);
+			foreach ($this->storage->maps as $map) {
+				if ($map->uId == $this->storage->currentMap->uId) {
+					$map->mapRating =
+						new Structures\Rating($database->rating, $database->ratingTotal, $this->storage->currentMap->uId);
+				}
+			}
 		}
 	}
 
