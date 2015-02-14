@@ -35,7 +35,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 	const DEBUG_RECPROCESSTIME = 16; //10000
 
-	const DEBUG_ALL = 31; //11111
+	const DEBUG_ALL = 31; //11111currentMap
 
 	const SCORE_TYPE_TIME = 'time';
 
@@ -464,9 +464,16 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 		//We update the database
 		//Firs of the best records
-		$this->storage->currentMap->localRecords = array();
+		$currentMap = $this->storage->currentMap;
+		foreach ($this->storage->maps as $map) {
+			if ($map->uId == $this->storage->currentMap->uId) {
+				$currentMap = $map;
+				break;
+			}
+		}
+		$currentMap->localRecords = array();
 		foreach ($this->currentChallengeRecords as $i => $record) {
-			$this->storage->currentMap->localRecords[$record->login] = $record->place;
+			$currentMap->localRecords[$record->login] = $record->place;
 			$newUpdate = $this->updateRecordInDatabase($record, $nbLaps);
 			$updated = $updated || $newUpdate;
 		}
