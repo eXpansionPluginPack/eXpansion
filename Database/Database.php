@@ -111,10 +111,13 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	function onEndMatch($rankings, $winnerTeamOrMap)
 	{
+		$firstFound = false;
 		foreach ($this->storage->players as $login => $player) { // get players
 			$this->updatePlayTime($player);
-			if ($player->rank == 1 && sizeof($this->storage->players) > 1)
+			if ($player->rank == 1 && sizeof($this->storage->players) > 1 && !$firstFound) {
 				$this->incrementWins($player);
+				$firstFound = true;
+			}
 		}
 
 		foreach ($this->storage->spectators as $login => $player) { // get spectators
