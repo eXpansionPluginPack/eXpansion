@@ -60,6 +60,7 @@ class MinigameWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		$this->quad->setImageFocus($this->config->mg1_imageFocusUrl, true);
 		$this->quad->setId("quad");
 		$this->quad->setScriptEvents();
+		$this->quad->setAttribute('hidden', '1');
 		$this->addComponent($this->quad);
 
 		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Minigame1/Gui/Script");
