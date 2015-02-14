@@ -35,7 +35,7 @@ class Widgets_TM_topPanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 
 		$this->pluginhandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 		$pluginsToUnload = array("Widgets_ServerInfo", "Widgets_Clock", "Widgets_BestCheckpoints");
-// $pluginsToUnload = array("Widgets_ServerInfo", "Widgets_Clock");
+		// $pluginsToUnload = array("Widgets_ServerInfo", "Widgets_Clock");
 
 		foreach ($pluginsToUnload as $plugin) {
 			if ($this->isPluginLoaded($this->getPluginId($plugin))) {
@@ -43,17 +43,39 @@ class Widgets_TM_topPanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 			}
 		}
 
+		if ($this->isPluginLoaded($this->getPluginId("MapRatings"))) {
+			\ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\MapRatings\Events\Event::getClass(), $this);
+		}
+
 		$this->enableDedicatedEvents();
 
-		$widget = Gui\Widgets\TopPanel::Create(null);
-		$widget->show();
+		$this->show();
 	}
 
-	public function onBeginMap($map, $warmUp, $matchContinuation)
+	public function onBeginMatch()
+	{
+		$this->show();
+	}
+
+	public function show($ratings = null)
 	{
 		Gui\Widgets\TopPanel::EraseAll();
 		$widget = Gui\Widgets\TopPanel::Create(null);
+		if ($ratings) {
+			$widget->setRatings($ratings);
+		}
+		else {
+			$widget->setRatings($this->getRatings());
+		}
 		$widget->show();
+	}
+
+	private function getRatings()
+	{
+		if ($this->isPluginLoaded($this->getPluginId("MapRatings"))) {
+			return $this->callPublicMethod($this->getPluginId("MapRatings"), "getVotesForMap");
+		}
+		return array();
 	}
 
 	private function getPluginId($plugin)
@@ -64,6 +86,17 @@ class Widgets_TM_topPanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 	public function exp_onUnload()
 	{
 		Gui\Widgets\TopPanel::EraseAll();
+	}
+
+	/**
+	 *
+	 * @param \ManiaLivePlugins\eXpansion\MapRatings\Structures\PlayerVote[] $rating
+	 */
+	public function onRatingsSave($rating)
+	{
+		print_r($rating);
+
+		// $this->show($rating);
 	}
 
 }

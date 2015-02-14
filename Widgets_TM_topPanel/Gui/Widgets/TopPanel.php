@@ -42,6 +42,10 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
 	protected $divBase = 12;
 
+	protected $rating = false;
+
+	protected $mapRatings;
+
 	private function getBaseSize()
 	{
 		return (320 / $this->divBase);
@@ -98,9 +102,13 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		/*		 * **********************************
 		 * Right components
 		 * ********************************** */
+
+		$this->mapRatings = $this->getMapRatings(2 * $z);
+
+		$this->frameRight->addComponent($this->mapRatings);
 		$this->frameRight->addComponent($this->getMapInfo(2 * $z));
 
-		$this->frameRight->setPosX(160 - (2 * $z));
+		$this->frameRight->setPosX(160 - (4 * $z));
 	}
 
 	protected function getServerNameItem($size)
@@ -117,6 +125,12 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 		return $item;
 	}
 
+	protected function getMapRatings($size)
+	{
+		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\MapRatings($size);
+		return $item;
+	}
+
 	protected function getPlayerInfo($sizeX)
 	{
 		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\NbPlayerItem($sizeX);
@@ -127,6 +141,28 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 	{
 		$item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\ClockItem($sizeX);
 		return $item;
+	}
+
+	/**
+	 *
+	 * @param \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating $ratings
+	 * @return \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Structures\Rating;
+	 */
+	public function setRatings($ratings)
+	{
+		$out = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Structures\Rating();
+		$total = 0;
+		foreach ($ratings as $rating) {
+			if ($rating->rating >= 3)
+				$out->yes++;
+			else {
+				$out->no++;
+			}
+			$total++;
+		}
+		$out->total = $total;
+		$this->rating = $out;
+		$this->mapRatings->setRating($out);
 	}
 
 }

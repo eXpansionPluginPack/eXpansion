@@ -1,3 +1,0 @@
-declare specLabel = (Page.GetFirstChild("nbSpec") as CMlLabel);
-declare maxSpec = "<?php echo $this->maxPlayers; ?>";
-declare eXp_lastNbSpecUpdate = 0;

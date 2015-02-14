@@ -2,15 +2,18 @@
 
 namespace ManiaLivePlugins\eXpansion\MapRatings\Structures;
 
-class PlayerVote extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
+class PlayerVote extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+{
 
-    public $login;
-    public $vote;
+	public $login;
 
-    function __construct($login = null, $vote = null) {
-        $this->login = $login;
-        $this->vote = $vote;
-    }
+	public $rating;
+
+	function __construct($login = null, $vote = null)
+	{
+		$this->login = $login;
+		$this->rating = $vote;
+	}
 
 }
 
