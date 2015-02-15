@@ -32,14 +32,12 @@ class TM_Scoretable extends ExpPlugin
 
 	public function exp_onReady()
 	{
-		$this->sendScoretable();	
+		$this->sendScoretable();
 	}
 
 	public function sendScoretable()
 	{
-		$style = new Scoretable();
-		//echo $style->getXml();
-		$this->connection->triggerModeScriptEvent("LibScoresTable2_SetStyleFromXml", array("TM", $style->getXml()));
+		$this->connection->triggerModeScriptEvent("LibScoresTable2_SetStyleFromXml", array("TM", $this->getXML()));
 	}
 
 	public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
@@ -52,6 +50,70 @@ class TM_Scoretable extends ExpPlugin
 	public function exp_onUnload()
 	{
 		parent::exp_onUnload();
+	}
+
+	protected function getXML()
+	{
+		//$this->xml = file_get_contents(__DIR__ . "/scores.xml");
+		$config = Config::getInstance();
+
+		$x = 140 + (20 * $config->tm_score_columns - 2);
+		$y = (8 * $config->tm_score_lines);
+
+		if ($y < 50) {
+			$y = 50;
+		}
+
+		if ($y > 90) {
+			$y = 90;
+		}
+		if ($x > 230) {
+			$x = 230;
+		}
+		return '
+<?xml version="1.0" encoding="utf-8"?>
+<scorestable version="1">
+    <styles>
+        <style id="LibST_Reset" />
+		<style id="LibST_TMWithLegends" />
+    </styles>
+    <properties>
+        <position x="0." y="45." z="-30." />
+        <tablesize x="' . $x . '." y="' . $y . '." />
+        <taleformat columns="' . $config->tm_score_columns . '" lines="' . $config->tm_score_lines . '"/>
+    </properties>
+     <columns>
+		<column id="LibST_TMBestTime" action="create">
+			<width>12.</width>
+			<defaultvalue>--:--.---</defaultvalue>
+			<textalign>right</textalign>
+		</column>
+		<column id="LibST_Avatar" action="create">
+			<width>6.</width>
+			<textalign>center</textalign>
+		</column>
+		<column id="LibST_Name" action="create">
+			<width>32.</width>
+			<textalign>left</textalign>
+		</column>
+		<column id="LibST_ManiaStars" action="create">
+			<width>3.</width>
+			<textalign>center</textalign>
+		</column>
+		<column id="LibST_Tools" action="create">
+			<width>3.</width>
+			<textalign>right</textalign>
+		</column>
+	 </columns>
+
+    <images>
+        <playercard>
+            <quad path="file://Media/Manialinks/Trackmania/ScoresTable/playerline-square.dds" />
+            <left path="file://Media/Manialinks/Trackmania/ScoresTable/playerline-left.dds" />
+            <right path="file://Media/Manialinks/Trackmania/ScoresTable/playerline-right.dds" />
+        </playercard>
+    </images>
+</scorestable>';
 	}
 
 }
