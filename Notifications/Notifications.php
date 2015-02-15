@@ -71,6 +71,11 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 				$messages = array_slice($messages, 0, 6);
 				$messages = array_reverse($messages);
 
+				/** @var Config $config */
+				$config = Config::getInstance();
+
+				$window->setPositionX($config->posX);
+				$window->setPositionY($config->posY);
 				$window->setMessages($messages);
 				$window->redraw();
 			}
@@ -81,6 +86,9 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 	function onPlayerConnect($login, $isSpectator)
 	{
+		/** @var Config $config */
+		$config = Config::getInstance();
+
 		NotificationPanel::Erase($login);
 
 		if (array_key_exists($login, $this->personalMessages)) {
@@ -90,7 +98,7 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$info = NotificationPanel::Create($login, true);
 		$info->setSize(100, 40);
 		$info->setMessages($this->publicMessages);
-		$info->setPosition(40, -40);
+		$info->setPosition($config->posX, $config->posY);
 		$info->show();
 	}
 
@@ -122,6 +130,8 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		if ($var->getName() == "redirectedPlugins") {
 			$this->checkRedirect();
+		} else if ($var->getName() == "posY") {
+			$this->reDraw();
 		}
 	}
 
