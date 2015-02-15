@@ -13,7 +13,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
 	const havePermission = "y";
+
 	const noPermission = "n";
+
 	const unknownPermission = "u";
 
 	/**
@@ -46,6 +48,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	 * @var AdminCmd[]
 	 */
 	static private $commands = array();
+
 	static private $shortCommands = array();
 
 	/**
@@ -84,35 +87,67 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	 * All messages & text needed
 	 */
 	private $msg_needBeAdmin;
+
 	private $msg_cmdDontEx;
+
 	private $msg_neeMorPerm;
+
 	private $msg_aInGroup;
+
 	private $msg_paddSuc;
+
 	private $msg_paddFai;
+
 	private $msg_premoveSelf;
+
 	private $msg_pRemoveSuc;
+
 	private $msg_pRemoveFa;
+
 	private $msg_masterMasterE;
+
+	private $adminIps = array();
+
 	static public $txt_msg_cmdDontEx;
+
 	static public $txt_groupsTitle;
+
 	static public $txt_helpTitle;
+
 	static public $txt_permissionsTitle;
+
 	static public $txt_playersTitle;
+
 	static public $txt_nwGroupNameL;
+
 	static public $txt_add;
+
 	static public $txt_inherits;
+
 	static public $txt_inheritsTitle;
+
 	static public $txt_groupName;
+
 	static public $txt_nbPlayers;
+
 	static public $txt_playerList;
+
 	static public $txt_permissionList;
+
 	static public $txt_deletegroup;
+
 	static public $txt_rmPlayer;
+
 	static public $txt_command;
+
 	static public $txt_description;
+
 	static public $txt_descMore;
+
 	static public $txt_aliases;
+
 	static public $txt_noPermissionMsg;
+
 	static public $txt_permissions = array();
 
 	public function exp_onInit()
@@ -123,7 +158,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		//Recovering the configuration
 		$this->config = Config::getInstance();
 
+
+		$this->loadIps();
 		$this->loadAdmins();
+
 		$this->saveFile();
 	}
 
@@ -200,10 +238,48 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			if ($time > $this->readTime) {
 				$this->loadAdmins();
 			}
-		} else {
+		}
+		else {
 			touch($filename);
 			$this->loadAdmins();
 		}
+	}
+
+	/**
+	 * loads the ip addresses of the admins
+	 */
+	public function loadIps()
+	{
+		try {
+
+			$filename = "config/exp_admin_ip.ini";
+			if (file_exists($filename) && is_readable($filename)) {
+				$values = \parse_ini_file($filename, true);
+
+				foreach ($values as $login => $ips) {
+					$this->adminIps[$login] = $ips;
+				}
+			}
+			else {
+				touch($filename);
+			}
+		} catch (\Exception $e) {
+			$this->console("Error while loading allowed admin ips from file: " . $e->getMessage());
+		}
+	}
+
+	
+	/**
+	 * Gets allowed ips for the login
+	 * @param string $login
+	 * @return false|string[]
+	 */
+	public function getAllowedIp($login)
+	{
+		if (array_key_exists($login, $this->adminIps)) {
+			return $this->adminIps[$login];
+		}
+		return false;
 	}
 
 	/**
@@ -233,13 +309,15 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			foreach ($values as $key => $value) {
 				//THe settings
 				if ($key == 'Settings') {
-
-				} else {
+					
+				}
+				else {
 					$param = explode(": ", $key);
 
 					if ($param[0] == 'MasterAdmin') {
 						$this->parseMaster($param[1], $value);
-					} else if ($param[0] == 'Group') {
+					}
+					else if ($param[0] == 'Group') {
 						//We have found a Admin group, lets see the permissions of
 						//the group and the players that is part of it
 						$inheritances[$param[1]] = $this->parseGroup($param[1], $value);
@@ -285,6 +363,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		foreach (\ManiaLive\Features\Admin\AdminGroup::get() as $login) {
 			$admin = new Admin($login, $masterGroup);
 			$admin->setReadOnly(true);
+			$admin->setAllowedIP($this->getAllowedIp($login));
 			if (isset(self::$admins[$login])) {
 				self::$admins[$login]->getGroup()->removeAdmin($admin->getLogin());
 				unset(self::$admins[$login]);
@@ -363,7 +442,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 					self::$permissionList[$param[1]] = true;
 					$group->addPermission($param[1], $this->entryCheck($val));
 				}
-			} elseif ($param[0] == 'settings') {
+			}
+			elseif ($param[0] == 'settings') {
 				//
 			}
 		}
@@ -375,6 +455,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		if (isset($value["login"])) {
 			foreach ($value["login"] as $login) {
 				$admin = new Admin($login, $group);
+				$admin->setAllowedIP($this->getAllowedIp($login));
 				if (!isset(self::$admins[$login])) {
 					self::$admins[$login] = $admin;
 					$group->addAdmin($admin);
@@ -407,7 +488,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		if (isset($permissions["login"])) {
 			foreach ($permissions["login"] as $login) {
 				$admin = new Admin($login, $group);
+				$admin->setAllowedIP($this->getAllowedIp($login));
 				$group->addAdmin($admin);
+
 				self::$admins[$login] = $admin;
 			}
 		}
@@ -424,7 +507,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 				$string .= ";MasterAdmin is a special group that has all permissions. \n";
 				$string .= ";No need to specify permissions. But we will to show all permissions\n";
 				$string .= "\n\n[MasterAdmin: " . $group->getGroupName() . "]\n";
-			} else {
+			}
+			else {
 				$string .= "\n\n[Group: " . $group->getGroupName() . "]\n";
 			}
 
@@ -480,7 +564,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		if (isset(self::$admins[$login])) {
 			//Does he has this permission
 			return self::$admins[$login]->hasPermission($permissionName);
-		} else {
+		}
+		else {
 			return false;
 		}
 	}
@@ -517,10 +602,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			//Does he has this permission
 			if (self::$admins[$login]->hasPermission($permissionName)) {
 				return true;
-			} else {
+			}
+			else {
 				$this->exp_chatSendServerMessage($this->msg_neeMorPerm, $login);
 			}
-		} else {
+		}
+		else {
 			$this->exp_chatSendServerMessage($this->msg_needBeAdmin, $login);
 			return false;
 		}
@@ -720,18 +807,19 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$matches = array();
 			preg_match_all('/(?!\\\\)"((?:\\\\"|[^"])+)"?|([^\s]+)/', $params, $matches);
 			$args = array_map(
-				function ($str, $word) {
-					$temp = str_replace('\"', '"', $str != '' ? $str : $word);
-					if ($temp == '""')
-						return "";
-					return $temp;
-				}, $matches[1], $matches[2]);
+					function ($str, $word) {
+				$temp = str_replace('\"', '"', $str != '' ? $str : $word);
+				if ($temp == '""')
+					return "";
+				return $temp;
+			}, $matches[1], $matches[2]);
 
 			//Lets see if the command is correct
 			$arg = strtolower(array_shift($args));
 			if (isset($cmds[$arg])) {
 				$this->doAdminCmd($cmds[$arg], $args, $login);
-			} else if ($errors) {
+			}
+			else if ($errors) {
 				$this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
 			}
 		}
@@ -754,14 +842,17 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			} else {
 				$this->exp_chatSendServerMessage($this->msg_neeMorPerm, $login);
 			}
-		} else if (isset($chats[0])) {
+		}
+		else if (isset($chats[0])) {
 			$chat = strtolower(array_shift($chats));
 			if (is_array($commands) && isset($commands[$chat])) {
 				$this->doAdminCmd($commands[$chat], $chats, $login);
-			} else {
+			}
+			else {
 				$this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
 			}
-		} else {
+		}
+		else {
 			$this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
 		}
 	}
@@ -793,7 +884,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 		if (isset(self::$admins[$login2])) {
 			$this->exp_chatSendServerMessage($this->msg_aInGroup, $login, array($login2, $group->getGroupName()));
-		} else {
+		}
+		else {
 			$this->reLoadAdmins();
 
 
@@ -801,6 +893,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			foreach (self::$groupList as $id => $groupp) {
 				if ($groupp->getGroupName() === $group->getGroupName()) {
 					$admin = new Admin($login2, $groupp);
+					$admin->setAllowedIP($this->getAllowedIp($login));
 					$groupp->addAdmin($admin);
 					self::$admins[$login2] = $admin;
 					$this->saveFile();
@@ -828,9 +921,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 		if (isset(self::$admins[$login]) && $admin->getLogin() == $login) {
 			$this->exp_chatSendServerMessage($this->msg_premoveSelf, $login, array($login));
-		} else if ($admin->isReadOnly()) {
+		}
+		else if ($admin->isReadOnly()) {
 			$this->exp_chatSendServerMessage($this->msg_removeMlAdmin, $login, array($admin->getLogin()));
-		} else if (isset(self::$admins[$login]) && $group->removeAdmin($admin->getLogin())) {
+		}
+		else if (isset(self::$admins[$login]) && $group->removeAdmin($admin->getLogin())) {
 			$this->reLoadAdmins();
 
 			foreach (self::$groupList as $id => $groupp) {
@@ -844,7 +939,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$this->exp_chatSendServerMessage($this->msg_pRemoveSuc, null, array($admin->getLogin(), $group->getGroupName()));
 
 			$this->saveFile();
-		} else {
+		}
+		else {
 			$this->exp_chatSendServerMessage($this->msg_pRemoveFa, $login, array($admin->getLogin()));
 		}
 	}
@@ -896,7 +992,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		if ($group->isMaster()) {
 			$this->exp_chatSendServerMessage($this->msg_masterMasterE, $login);
-		} else {
+		}
+		else {
 			$this->reLoadAdmins();
 
 			foreach (self::$groupList as $id => $groupp) {
@@ -922,7 +1019,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		if ($group->isMaster()) {
 			$this->exp_chatSendServerMessage($this->msg_masterMasterE, $login);
-		} else {
+		}
+		else {
 			$this->reLoadAdmins();
 
 			foreach (self::$groupList as $id => $groupp) {
