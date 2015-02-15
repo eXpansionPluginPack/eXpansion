@@ -29,7 +29,6 @@ foreach (Player in Players) {
 			if(!playerTimes.existskey(curCp)){
 				//Is it first player throught this checkpoint?
 				playerTimes[curCp] = Integer[Text];
-				playerNickNames[curCp] = Text[Text];
 				bestCps[curCp] = Player.CurRace.Checkpoints[curCp];
 			}else{
 				if(bestCps[curCp] > Player.CurRace.Checkpoints[curCp]){
@@ -37,13 +36,12 @@ foreach (Player in Players) {
 				}
 			}
 			playerTimes[curCp][Player.Login] = Player.CurRace.Checkpoints[curCp];
-			playerNickNames[curCp][Player.Login] = Player.Name;
+			playerNickNames[Player.Login] = Player.Name;
 			updatedPlayers[Player.Login] = True;
 			//Remove from older checkpoint
 			if(curCp > 0){
 				if(playerTimes.existskey(curCp-1)){
 					playerTimes[curCp-1].removekey(Player.Login);
-					playerNickNames[curCp-1].removekey(Player.Login);
 				}
 			}
 		}
@@ -52,9 +50,9 @@ foreach (Player in Players) {
 
 //Get player being spectated if possible
 if (GUIPlayer != Null) {
-    currentPlayerName = GUIPlayer.Name;
+    currentPlayerName = GUIPlayer.Login;
 } else {
-    currentPlayerName = LocalUser.Name;
+    currentPlayerName = LocalUser.Login;
 }
 
 //Refresh Widget if spectating player has changed
@@ -92,7 +90,7 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 			declare Players2 = playerTimes[cpIndex];
 			foreach(p => Score in Players2){
 				if (LocalUser != Null) {
-					if (playerNickNames[cpIndex][p] == currentPlayerName) {
+					if (p == currentPlayerName) {
 						myRank = i;
 					}
 				}
@@ -157,11 +155,11 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 				declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
                                 playerScoreRanks.add(p);
 
-				if (playerNickNames[cpIndex][p] == currentPlayerName) {
-				showed = True;
+				if (p == currentPlayerName) {
+				    showed = True;
 				}
 
-				nickLabel.SetText(playerNickNames[cpIndex][p]);
+				nickLabel.SetText(playerNickNames[p]);
 
 				if(isTeam){
 					if(playersTeam[p] == 1){
@@ -261,7 +259,7 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 
 				declare bg = (Page.GetFirstChild("RecBgBlink_"^i) as CMlQuad);
 
-				if(playerNickNames[cpIndex][p] == LocalUser.Name){
+				if(p == LocalUser.Login){
 					highliteQuad.Hide();    
 					bg.Show();
 				}else{

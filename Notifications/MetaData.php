@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Notifications;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\Float;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
 
 /**
@@ -26,7 +26,17 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setType(new String(""));
 		$var->setDefaultValue(array());
 		$this->registerVariable($var);
-		
+
+		$var = new Float("posX", "Pos X", $config, false,false);
+		$var->setDefaultValue(40);
+		$var->setDefaultValue(array());
+		$this->registerVariable($var);
+
+		$var = new Float("posY", "Pos Y", $config, false,false);
+		$var->setDefaultValue(-40);
+		$var->setDefaultValue(array());
+		$this->registerVariable($var);
+
 	}
 
 }

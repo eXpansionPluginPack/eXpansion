@@ -155,10 +155,16 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 						. " WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";")->fetchObject();
 		$this->rating = 0;
 		$this->ratingTotal = 0;
-		if ($database !== false) {
+		if ($database) {
 			$this->rating = $database->rating;
 			$this->ratingTotal = $database->ratingTotal;
 			$this->oldRatings = $this->getVotesForMap($this->storage->currentMap->uId);
+			foreach ($this->storage->maps as $map) {
+				if ($map->uId == $this->storage->currentMap->uId) {
+					$map->mapRating =
+						new Structures\Rating($database->rating, $database->ratingTotal, $this->storage->currentMap->uId);
+				}
+			}
 		}
 	}
 
@@ -238,7 +244,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			}
 			if ($playerRating === null) {
 				$query = $this->db->execute("SELECT rating AS playerRating FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . " AND `login`=" . $this->db->quote($login) . ";")->fetchObject();
-				if ($query === false) {
+				if (!$query || !isset( $query->playerRating)) {
 					$playerRating = '-';
 				}
 				else {

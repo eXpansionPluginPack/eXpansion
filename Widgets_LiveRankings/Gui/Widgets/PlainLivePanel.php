@@ -42,7 +42,7 @@ class PlainLivePanel extends PlainPanel
 			$this->timeScript->setParam("nbFirstFields", 5);
 			$this->timeScript->setParam('varName', 'LiveTime1');
 			$this->timeScript->setParam("playerTimes", 'Integer[Text][Integer]');
-			$this->timeScript->setParam("nickNames", 'Text[Text][Integer]');
+			$this->timeScript->setParam("nickNames", 'Text[Text]');
 			$this->timeScript->setParam("bestCps", 'Integer[Integer]');
 			$this->timeScript->setParam("maxCp", -1);
 
@@ -230,6 +230,8 @@ class PlainLivePanel extends PlainPanel
 
 		foreach (Core::$playerInfo as $login => $player) {
 			$lastCpIndex = count($player->checkpoints) - 1;
+			$playerNickNames[$player->login] = $player->nickName;
+
 			if ($player->isPlaying && $lastCpIndex >= 0 && isset($player->checkpoints[$lastCpIndex]) && $player->checkpoints[$lastCpIndex] > 0) {
 
 				if ($lastCpIndex > $biggestCp)
@@ -238,7 +240,6 @@ class PlainLivePanel extends PlainPanel
 				$lastCpTime = $player->checkpoints[$lastCpIndex];
 				$player = $this->storage->getPlayerObject($login);
 				$playerCps[$lastCpIndex][$login] = $lastCpTime;
-				$playerNickNames[$lastCpIndex][$player->login] = Formatting::stripColors($player->nickName);
 				$playerTeams[$login] = $player->teamId;
 			}
 		}
@@ -253,6 +254,16 @@ class PlainLivePanel extends PlainPanel
 		$NickNames = "[";
 		$teams = "[";
 
+		$index = 1;
+		foreach ($playerNickNames as $login => $nickname) {
+			if ($index > 1) {
+				$NickNames .= ', ';
+			}
+			$NickNames .= '"' . Gui::fixString($login) . '"=>"' . Gui::fixString($nickname) . '"';
+			$index++;
+		}
+		$NickNames .= "]";
+
 		$cpCount = 0;
 		$teamCont = 0;
 		foreach ($newPlayerCps as $cpIndex => $cpTimes) {
@@ -261,20 +272,17 @@ class PlainLivePanel extends PlainPanel
 				$NickNames .= ", ";
 			}
 			$playerTimes .= $cpIndex . "=>[";
-			$NickNames .= $cpIndex . "=>[";
 
 			$cCount = 0;
 			$nbCheckpoints[$cpIndex] = 0;
 			foreach ($cpTimes as $login => $score) {
 				if ($cCount != 0) {
 					$playerTimes .= ", ";
-					$NickNames .= ", ";
 				}
 				if ($teamCont != 0) {
 					$teams .= ", ";
 				}
 				$playerTimes .= '"' . $login . "\"=>" . $score;
-				$NickNames .= '"' . $login . "\"=>\"" . Gui::fixString($playerNickNames[$cpIndex][$login]) . "\"";
 				$teams .= '"' . $login . "\"=>" . ($playerTeams[$login] == 1 ? 0 : 1);
 				$nbCheckpoints[$cpIndex]++;
 				$cCount++;
@@ -286,12 +294,10 @@ class PlainLivePanel extends PlainPanel
 			}
 
 			$playerTimes .= "]";
-			$NickNames .= "]";
 			$cpCount++;
 
 		}
 		$playerTimes .= "]";
-		$NickNames .= "]";
 		$teams .= "]";
 
 		$bestCpsText = '';
@@ -316,7 +322,7 @@ class PlainLivePanel extends PlainPanel
 			$this->timeScript->setParam("bestCps", $bestCps);
 		} else {
 			$this->timeScript->setParam("playerTimes", 'Integer[Text][Integer]');
-			$this->timeScript->setParam("nickNames", 'Text[Text][Integer]');
+			$this->timeScript->setParam("nickNames", 'Text[Text]');
 			$this->timeScript->setParam("maxCp", -1);
 		}
 	}
