@@ -39,6 +39,10 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         CurrentTrackWidget::EraseAll();
         MusicListWindow::EraseAll();
+
+		CurrentTrackWidget::$musicBoxPlugin = null;
+		Gui\Windows\MusicListWindow::$musicPlugin = null;
+
         $this->connection->setForcedMusic(false, "");
     }
 
