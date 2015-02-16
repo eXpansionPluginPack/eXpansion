@@ -44,7 +44,7 @@ class TopsumItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 		$this->label_nick = new \ManiaLib\Gui\Elements\Label(60, 4);
 		$this->label_nick->setAlign('left', 'center');
-		$this->label_nick->setText($data->nickName);
+		// $this->label_nick->setText($data->nickName);
 		$this->frame->addComponent($this->label_nick);
 
 		$frameCP = new \ManiaLive\Gui\Controls\Frame();
