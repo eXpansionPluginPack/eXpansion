@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_MapSuggestion;
 
 use ManiaLive\Gui\ActionHandler;
+use ManiaLive\PluginHandler\Dependency;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Widgets_MapSuggestion\Gui\Widgets\MapSuggestionButton;
 
@@ -10,7 +11,12 @@ class Widgets_MapSuggestion extends ExpPlugin
 {
 
 	private $action;
-	
+
+	public function exp_onInit()
+	{
+		$this->addDependency(new Dependency('\\ManiaLivePlugins\\eXpansion\\MapSuggestion\\MapSuggestion'));
+	}
+
 	public function exp_onReady()
 	{
 		$ahandler = ActionHandler::getInstance();
