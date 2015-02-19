@@ -54,6 +54,10 @@ class Dedimania_Script extends DedimaniaAbstract
 		if (!$login || !array_key_exists($login, DediConnection::$players))
 			return;
 
+		if(!isset($playerinfo[$login])) {
+			return;
+		}
+
 		// if player is banned from dedimania, don't send his time.
 		if (DediConnection::$players[$login]->banned)
 			return;
