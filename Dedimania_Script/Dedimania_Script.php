@@ -51,7 +51,11 @@ class Dedimania_Script extends DedimaniaAbstract
 		if ($this->storage->currentMap->nbCheckpoints == 1)
 			return;
 
-		if (!$login || !array_key_exists($login, DediConnection::$players))
+		if (empty($login) || !is_string($login)) {
+			return;
+		}
+
+		if (!array_key_exists($login, DediConnection::$players))
 			return;
 
 		if(!isset($playerinfo[$login])) {
