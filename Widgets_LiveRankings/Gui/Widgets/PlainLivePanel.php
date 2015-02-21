@@ -269,7 +269,6 @@ class PlainLivePanel extends PlainPanel
 		foreach ($newPlayerCps as $cpIndex => $cpTimes) {
 			if ($cpCount != 0) {
 				$playerTimes .= ", ";
-				$NickNames .= ", ";
 			}
 			$playerTimes .= $cpIndex . "=>[";
 
