@@ -282,7 +282,9 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		{					
 			$out = array();
 			foreach ($param2 as $value) {
-				if (is_numeric($value)) {
+				if (filter_var($value, FILTER_VALIDATE_INT)) {
+					$out[] = intval($value);
+				} else if (is_numeric($value)) {
 					$out[] = floatval($value);
 				}
 				else if ($value == "False") {
