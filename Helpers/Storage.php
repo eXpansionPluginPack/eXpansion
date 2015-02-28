@@ -218,7 +218,6 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 		$this->players = array();
 		foreach ($this->storage->players as $player) {
 			if ($player->isConnected) {
-				$this->nbPlayer++;
 				$this->players[$player->login] = $player->login;
 			}
 		}
