@@ -131,7 +131,7 @@ class AutoQueue extends ExpPlugin
 	public function queueReleaseNext()
 	{
 		$player = $this->queue->getNextPlayer();
-		if ($player) {
+		if ($player && ($this->storage->server->currentMaxPlayers-2) > count($this->expStorage->players)) {
 			$this->connection->forceSpectator($player->login, 2);
 			$this->connection->forceSpectator($player->login, 0);
 			$msg = exp_getMessage('You got free spot, good luck and have fun!');
