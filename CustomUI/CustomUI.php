@@ -27,7 +27,7 @@ class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 	{
 		Customizer::EraseAll();
 		$info = Customizer::Create(null);
-		$info->update();
+		$info->update($this->getMetaData()->getAllVariables());
 		$info->setSize(60, 15);
 		$info->show();
 	}

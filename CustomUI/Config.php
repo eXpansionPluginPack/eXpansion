@@ -8,11 +8,13 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $overlayHideMapInfo = false;
 
+	public $overlayHideMultilapInfos = false; //
+
 	public $overlayHideOpponentsInfo = false;
 
-	public $overlayHideChat = false;
-
 	public $overlayHideCheckPointList = false;
+
+	public $overlayHideCheckPointTime = false;
 
 	public $overlayHideRoundScores = false;
 
@@ -34,11 +36,19 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $overlayHidePosition = false;
 
-	public $overlayHideCheckPointTime = false;
+	public $overlayHideChat = false;
 
 	public $overlayChatHideAvatar = false;
 
 	public $overlayChatLineCount = 7;
+
+	public $overlayChatOffset = array(); //
+
+	public $overlayHideBackground = false; //
+
+	public $overlayHideEndMapLadderRecap = false; //
+
+
 
 }
 

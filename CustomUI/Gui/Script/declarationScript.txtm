@@ -1,18 +1,1 @@
-ClientUI.OverlayHideNotices = <?php echo $this->OverlayHideNotices; ?>;
-ClientUI.OverlayHideMapInfo = <?php echo $this->OverlayHideMapInfo; ?>;
-ClientUI.OverlayHideOpponentsInfo = <?php echo $this->OverlayHideOpponentsInfo; ?>;
-ClientUI.OverlayHideChat = <?php echo $this->OverlayHideChat; ?>;
-ClientUI.OverlayHideCheckPointList = <?php echo $this->OverlayHideCheckPointList; ?>;
-ClientUI.OverlayHideRoundScores = <?php echo $this->OverlayHideRoundScores; ?>;
-ClientUI.OverlayHideCountdown = <?php echo $this->OverlayHideCountdown; ?>;
-ClientUI.OverlayHideCrosshair = <?php echo $this->OverlayHideCrosshair; ?>;
-ClientUI.OverlayHideGauges = <?php echo $this->OverlayHideGauges; ?>;
-ClientUI.OverlayHideConsumables = <?php echo $this->OverlayHideConsumables; ?>;
-ClientUI.OverlayHide321Go = <?php echo $this->OverlayHide321Go; ?>;
-ClientUI.OverlayHideChrono = <?php echo $this->OverlayHideChrono; ?>;
-ClientUI.OverlayHideSpeedAndDist = <?php echo $this->OverlayHideSpeedAndDist; ?>;
-ClientUI.OverlayHidePersonnalBestAndRank = <?php echo $this->OverlayHidePersonnalBestAndRank; ?>;
-ClientUI.OverlayHidePosition = <?php echo $this->OverlayHidePosition; ?>;
-ClientUI.OverlayHideCheckPointTime = <?php echo $this->OverlayHideCheckPointTime; ?>;
-ClientUI.OverlayChatHideAvatar = <?php echo $this->OverlayChatHideAvatar; ?>;
-ClientUI.OverlayChatLineCount = <?php echo $this->OverlayChatLineCount; ?>;
+<?php echo $this->code; ?>

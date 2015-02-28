@@ -2,7 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\CustomUI;
 
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\Float;
 
 /**
  * Description of MetaData
@@ -26,6 +28,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->registerVariable($var);
 
 		$var = new Boolean("overlayHideMapInfo", "Hide Map Info", $config, false, false);
+		$var->setDefaultValue(false);
+		$this->registerVariable($var);
+
+		$var = new Boolean("overlayHideMultilapInfos", "Hide Multilap Info", $config, false, false);
 		$var->setDefaultValue(false);
 		$this->registerVariable($var);
 
@@ -85,8 +91,21 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(false);
 		$this->registerVariable($var);
 
+		$var = new Boolean("overlayHideBackground", "Hide Background", $config, false, false);
+		$var->setDefaultValue(false);
+		$this->registerVariable($var);
+
+		$var = new Boolean("overlayHideEndMapLadderRecap", "Hide End Map Ladder Recap", $config, false, false);
+		$var->setDefaultValue(false);
+		$this->registerVariable($var);
+
 		$var = new Boolean("overlayChatHideAvatar", "Hide Chat Avatar", $config, false, false);
 		$var->setDefaultValue(false);
+		$this->registerVariable($var);
+
+		$var = new BasicList("overlayChatOffset", "Chat Offset", $config, false, false);
+		$var->setType(new Float(''));
+		$var->setDefaultValue(array(0,0));
 		$this->registerVariable($var);
 
 		$var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\Int("overlayChatLineCount", "Chat Line Count", $config, false, false);
