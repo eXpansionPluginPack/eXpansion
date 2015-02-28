@@ -159,7 +159,11 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 				    showed = True;
 				}
 
-				nickLabel.SetText(playerNickNames[p]);
+                if(playerNickNames.existskey(p)){
+				    nickLabel.SetText(playerNickNames[p]);
+                } else {
+                    nickLabel.SetText(p);
+                }
 
 				if(isTeam){
 					if(playersTeam[p] == 1){

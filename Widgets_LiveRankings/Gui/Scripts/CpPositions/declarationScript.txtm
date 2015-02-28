@@ -8,7 +8,7 @@ declare playerTimes	= <?php echo $this->playerTimes ?>;
 declare playerNickNames	= <?php echo $this->nickNames ?>;
 declare bestCps	= <?php echo $this->bestCps ?>;
 
-//The latest chackpoint the player past
+//The latest checkpoint the player past
 declare playersOnServer = Text[Text];
 declare playersTeam = <?php echo $this->playerTeams ?>;
 declare maxCp = <?php echo $this->maxCp ?>;
