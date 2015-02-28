@@ -128,7 +128,7 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 
 	protected $params;
 
-	protected $const = array();
+	protected static $const = array();
 
 	function __construct($onWhat)
 	{
@@ -136,10 +136,13 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 		$params = func_get_args();
 		array_shift($params);
 		$this->params = $params;
-		$rc = new \ReflectionClass($this);
 
-		foreach ($rc->getConstants() as $key => $value) {
-			$this->const[intval($value)] = strval($key);
+		if (empty(self::$const)) {
+			$rc = new \ReflectionClass($this);
+
+			foreach ($rc->getConstants() as $key => $value) {
+				self::$const[intval($value)] = strval($key);
+			}
 		}
 	}
 
@@ -158,7 +161,9 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 		$p = $this->params;
 		$params = $p[0];
 		$this->fixBooleans($params);
-		call_user_method_array($this->const[$this->onWhat], $listener, $params);
+		if (method_exists($listener, self::$const[$this->onWhat])) {
+			call_user_func_array(array($listener, self::$const[$this->onWhat]), $params);
+		}
 	}
 
 }
