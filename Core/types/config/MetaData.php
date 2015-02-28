@@ -191,6 +191,15 @@ abstract class MetaData
 	{
 		return isset($this->variables[$name]) ? $this->variables[$name] : null;
 	}
+	/**
+	 * Returns the variables of the plugin
+	 *
+	 * @return Variable[]
+	 */
+	public function getAllVariables()
+	{
+		return $this->variables;
+	}
 
 	/**
 	 * The name is it should be seen in by players
