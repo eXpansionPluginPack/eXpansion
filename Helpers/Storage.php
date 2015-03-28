@@ -118,7 +118,7 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 	public $players = array();
 
 	/** @var Player[] */
-	public $spectetors = array();
+	public $spectators = array();
 
 	/**
 	 * is this eXpansion running locally on server (true)
