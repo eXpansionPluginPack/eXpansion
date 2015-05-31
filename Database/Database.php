@@ -163,8 +163,10 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 
 		while ($data = $query->fetchStdObject()) {
-			$mapsByUid[$data->challenge_uid]->addTime = $data->challenge_addtime;
-			unset($mapsByUid[$data->challenge_uid]);
+			if (isset($mapsByUid[$data->challenge_uid])) {
+				$mapsByUid[$data->challenge_uid]->addTime = $data->challenge_addtime;
+				unset($mapsByUid[$data->challenge_uid]);
+			}
 		}
 
 		if (!empty($mapsByUid)) {
