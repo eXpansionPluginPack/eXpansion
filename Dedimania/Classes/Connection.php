@@ -121,19 +121,52 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
         switch ($packmask) {
             case "TMStadium":
+            case 'BaF1@mcrobert':
+            case 'Dirt_World_TM2@bernatf':
+            case 'Dirt_@mr.dvd':
+            case 'edenia@nexxusdrako':
+            case 'ESLTitlePack@nilakite2':
+            case 'Nations_Forever@citiroller':
+            case 'Nations_ESWC@tm-jinzo':
+            case 'Minimalize@mvv0105':
+            case 'only_stadium_car@adamkooo':
+            case 'RPG@tmrpg':
+            case 'SRE@tm-nascar':
+            case 'StadiumPlatform@darkpuddle_':
+            case 'Ultimate_Challenge_2@mr.dvd':
                 $packmask = "Stadium";
                 break;
             case "TMCanyon":
+			case "Acrobatic@mr.dvd":
+			case "_f00Canyon_00fStar@mcmart1":
+			case 'CanyonCity@darkpuddle_':
+			case 'Canyon_Inverted_edk@edk':
+			case 'DD_RailwaySystem@divingduck':
+			case 'Glide@darmaya':
+			case 'LEGO_Racing@macio6':
+			case 'POLSO@darmaya':
+			case 'Raid@meuh21':
+			case 'TM2_Canyon_Sparkstedition@sparkster':
+			case 'Mr.DvDCanyon_dvd@mr.dvd':
+			case 'Wastelands@mpmandark':
+			case 'wtc@woutre':
                 $packmask = "Canyon";
                 break;
             case "TMValley":
+            case 'adrenalin@flighthigh':
+            case 'endless_Valley@flighthigh':
+            case 'F1_Abu_Dhabi@darkpuddle_':
+            case 'miniahoy3@kaeptniglu':
+            case 'RaidValley@meuh21':
+            case 'ValleyCity@darkpuddle_':
+            case 'Valley_Extensions@dag_bert':
                 $packmask = "Valley";
                 break;
-            case "Trackmania_2@nadeolabs":
-                $packmask = "United";
-                break;
-            default:
-                $packmask = "";
+
+			// Trust eXpansion that the plugin won't run on Shootmania :D.
+			case "Trackmania_2@nadeolabs" :
+            default :
+                $packmask = "Trackmania_2@nadeolabs";
                 break;
         }
 
