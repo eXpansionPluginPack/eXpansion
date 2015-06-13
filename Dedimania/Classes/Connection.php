@@ -484,9 +484,18 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     function detectScriptName()
     {
-        $name = $this->connection->getScriptName();		
-        $mode = strtolower($name['CurrentValue']);
-        switch ($mode) {
+        $name = $this->connection->getScriptName();
+
+		$scriptNameArr = $this->connection->getScriptName();
+		$scriptName = $scriptNameArr['CurrentValue'];
+
+		// Workaround for a 'bug' in setModeScriptText.
+		if ($scriptName === '<in-development>') {
+			$scriptName = $scriptNameArr['NextValue'];
+		}
+
+		$scriptName = strtolower($scriptName);
+        switch ($scriptName) {
             case "timeattack.script.txt":
                 return "TA";
                 break;
