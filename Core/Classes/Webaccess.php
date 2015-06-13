@@ -117,7 +117,7 @@ class Webaccess
 		list($host, $port, $path) = getHostPortPath($url);
 
 		if ($host === false)
-			print_r('*Webaccess request(): Bad url: ' . $url);
+			print_r('*Webaccess request(): Bad url: ' . $url . "\n");
 
 		else {
 			$server = $host . ':' . $port;
@@ -149,7 +149,7 @@ class Webaccess
 	{
 		list($host, $port, $path) = getHostPortPath($url);
 		if ($host === false)
-			print_r('*Webaccess retry(): Bad url: ' . $url);
+			print_r('*Webaccess retry(): Bad url: ' . $url . "\r");
 		else {
 			$server = $host . ':' . $port;
 			if (isset($this->_WebaccessList[$server]))
@@ -400,7 +400,7 @@ class WebaccessUrl
 	function _bad($errstr, $isbad = true)
 	{
 		global $_web_access_retry_timeout;
-		print_r('*' . $this->_webaccess_str . $errstr);
+		print_r('*' . $this->_webaccess_str . $errstr . "\n");
 
 		$this->infos();
 
@@ -459,7 +459,7 @@ class WebaccessUrl
 		if (($query['Callback'] != null) && ($this->_state == 'BAD')) {
 			if ($this->_bad_timeout > $_web_access_retry_timeout_max) {
 				print_r(
-						'*' . $this->_webaccess_str . 'Request refused for consecutive errors (' . $this->_bad_timeout . " / " . $_web_access_retry_timeout_max . ")"
+						'*' . $this->_webaccess_str . 'Request refused for consecutive errors (' . $this->_bad_timeout . " / " . $_web_access_retry_timeout_max . ")\n"
 				);
 
 				return false;
@@ -917,7 +917,7 @@ class WebaccessUrl
 			if ($this->_spool[0]['Retries'] > 2) {
 				// 3 tries failed, remode entry from spool
 				print_r(
-						'*' . $this->_webaccess_str . " Failed {$this->_spool[0]['Retries']} times : skip current request."
+						'*' . $this->_webaccess_str . " Failed {$this->_spool[0]['Retries']} times : skip current request.\n"
 				);
 				array_shift($this->_spool);
 			}
