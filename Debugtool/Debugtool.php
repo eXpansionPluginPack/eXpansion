@@ -46,7 +46,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("profiler_enable", "profilere", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-		// $this->registerChatCommand("test", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+		$this->registerChatCommand("gofaketest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->registerChatCommand("mem", "mem", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
 		$this->mem(null);
 	}
