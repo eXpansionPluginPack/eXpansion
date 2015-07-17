@@ -30,14 +30,17 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
 		$this->button->setAlign('left', 'center2');
 		$this->button->setAction($this->action);
+                $this->button->setStyle('Icons64x64_1');
+                $this->button->setSubStyle('GenericButton');
+
 		$this->button->setScriptEvents(true);
 		$this->addComponent($this->button);
-		
+
 		$this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 6);
 		$this->label->setAlign('left', 'center');
 		$this->label->setTextSize(1);
 		$this->label->setScale(1.1);
-		$this->label->setStyle("TextCardInfoSmall");		                
+		$this->label->setStyle("TextCardInfoSmall");
 		$this->addComponent($this->label);
 
 		$this->setSize($sizeX + $textWidth, $sizeY);
@@ -80,18 +83,19 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 		if ($this->button->getAction() == -1) {
 			if ($this->active) {
-				$this->button->setImage($config->getImage("checkbox", "disabled_on.png"), true);
+
+                                $this->button->setModulateColor("afa");
 			}
 			else {
-				$this->button->setImage($config->getImage("checkbox", "disabled_off.png"), true);
+				$this->button->setModulateColor("faa");
 			}
 		}
 		else {
 			if ($this->active) {
-				$this->button->setImage($config->getImage("checkbox", "normal_on.png"), true);
+				$this->button->setModulateColor("0f0");
 			}
 			else {
-				$this->button->setImage($config->getImage("checkbox", "normal_off.png"), true);
+				$this->button->setModulateColor("f00");
 			}
 		}
 	}

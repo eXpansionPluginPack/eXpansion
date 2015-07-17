@@ -28,12 +28,12 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
 
         $config = Config::getInstance();
         $this->checkboxId = self::$counter++;
-        if (self::$counter > 100000)
-            self::$counter = 0;
+        if (self::$counter > 100000) self::$counter = 0;
 
         $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->button->setAlign('left', 'center2');
-        $this->button->setImage($config->getImage($this->skin, "normal_off.png"), true);
+        $this->button->setStyle('Icons64x64_1');
+        $this->button->setSubStyle('GenericButton');
         $this->button->setId('eXp_CheckboxQ_' . $this->checkboxId);
         $this->button->setScriptEvents(true);
         $this->addComponent($this->button);
@@ -50,10 +50,10 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
 
         if (self::$script == null) {
             self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\CheckboxScript();
-            self::$script->setParam("disabledActiveUrl", $config->getImage($this->skin, "disabled_on.png"));
-            self::$script->setParam("disabledUrl", $config->getImage($this->skin, "disabled_off.png"));
-            self::$script->setParam("ActiveUrl", $config->getImage($this->skin, "normal_on.png"));
-            self::$script->setParam("InactiveUrl", $config->getImage($this->skin, "normal_off.png"));
+            self::$script->setParam("disabledActiveUrl", "<1.,0.5,0.5>");
+            self::$script->setParam("disabledUrl", "<0.5,1.,0.5>");
+            self::$script->setParam("ActiveUrl", "<1.,0.,0.>");
+            self::$script->setParam("InactiveUrl", "<0.,1.,0.>");
         }
 
         $this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 4);
@@ -89,28 +89,31 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
 
         if (!$this->enabled) {
             if ($this->active) {
-                $this->button->setImage($config->getImage($this->skin, "disabled_on.png"), true);
-            } else {
-                $this->button->setImage($config->getImage($this->skin, "disabled_off.png"), true);
+                $this->button->setColorize("7f7");
             }
-        } else {
+            else {
+                $this->button->setColorize("f77");
+            }
+        }
+        else {
             if ($this->active) {
-                $this->button->setImage($config->getImage($this->skin, "normal_on.png"), true);
-            } else {
-                $this->button->setImage($config->getImage($this->skin, "normal_off.png"), true);
+                $this->button->setColorize("0f0");
+            }
+            else {
+                $this->button->setColorize("f00");
             }
         }
     }
 
     function setSkin($value = "ratiobutton", $width = 10) {
         $this->skin = $value;
-        $this->skinWidth = $width;
+        $this->skinWidth = 5;
         if (is_object(self::$script)) {
             $config = Config::getInstance();
-            self::$script->setParam("disabledActiveUrl", $config->getImage($this->skin, "disabled_on.png"));
-            self::$script->setParam("disabledUrl", $config->getImage($this->skin, "disabled_off.png"));
-            self::$script->setParam("ActiveUrl", $config->getImage($this->skin, "normal_on.png"));
-            self::$script->setParam("InactiveUrl", $config->getImage($this->skin, "normal_off.png"));
+            self::$script->setParam("disabledActiveUrl", "<1.,0.5,0.5>");
+            self::$script->setParam("disabledUrl", "<0.5,1.,0.5>");
+            self::$script->setParam("ActiveUrl", "<1.,0.,0.>");
+            self::$script->setParam("InactiveUrl", "<0.,1.,0.>");
         }
     }
 
@@ -133,8 +136,7 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
 
     function toggleActive($login) {
         $this->active = !$this->active;
-        if ($this->toToggle != null)
-            $this->toToggle->ToogleIsWorking($login);
+        if ($this->toToggle != null) $this->toToggle->ToogleIsWorking($login);
         $this->entry->setDefault($this->active ? "1" : "0");
         $this->redraw();
     }
@@ -149,18 +151,15 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
     }
 
     public function getScript() {
-        if ($this->enabled)
-            return self::$script;
-        else
-            return null;
+        if ($this->enabled) return self::$script;
+        else return null;
     }
 
     public function setArgs($args) {
         if (isset($args['eXp_CheckboxE_' . $this->checkboxId])) {
             $active = $args['eXp_CheckboxE_' . $this->checkboxId] == '1';
             $out = true;
-            if ($active == 0 || empty($active))
-                $out = false;
+            if ($active == 0 || empty($active)) $out = false;
             $this->setStatus($out);
         }
     }

@@ -11,7 +11,7 @@ class ResSkipButtons extends Widget
 	/**
 	 * @var WidgetButton
 	 */
-	public $btn_res, $btn_skip, $btn_fav;
+	public $btn_res, $btn_skip, $btn_fav, $edgeWidget;
 
 	protected function exp_onBeginConstruct()
 	{
@@ -42,6 +42,11 @@ class ResSkipButtons extends Widget
 		$this->addComponent($line);
 
 		$this->setName("Skip and Res Buttons");
+
+                $this->edgeWidget = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui/Scripts/EdgeWidget");
+		$this->registerScript($this->edgeWidget);
+
+
 	}
 
 	public function setActions($res, $skip)
@@ -82,7 +87,7 @@ class ResSkipButtons extends Widget
 					'$ff0' . $amount . 'p')
 			);
 		}
-		
+
 		if ($amount == "max") {
 			$this->btn_skip->setText(
 				array(
@@ -102,7 +107,7 @@ class ResSkipButtons extends Widget
 	}
 
 	function destroy()
-	{		
+	{
 		parent::destroy();
 	}
 

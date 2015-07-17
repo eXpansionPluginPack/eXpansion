@@ -51,31 +51,32 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
 
 		$this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 40);
 		$this->scrollBg->setAlign("center", "top");
-		$this->scrollBg->setImage($config->getImage("scrollbar", "background.png"), true);
+		$this->scrollBg->setStyle("Bgs1InRace");
+                $this->scrollBg->setSubStyle('BgPlayerCard');
 		$this->scrollBg->setId("ScrollBg");
 		$this->scrollBg->setOpacity(0.9);
-		//$this->scrollBg->setScriptEvents();
 		$this->addComponent($this->scrollBg);
 
 		$this->scroll = new \ManiaLib\Gui\Elements\Quad(3, 15);
 		$this->scroll->setAlign("center", "top");
-		$this->scroll->setImage($config->getImage("scrollbar", "scrollbar.png"), true);
+		$this->scroll->setStyle("BgsPlayerCard");
+                $this->scroll->setSubStyle('BgRacePlayerName');
 		$this->scroll->setId("ScrollBar");
 		$this->scroll->setScriptEvents();
 		$this->addComponent($this->scroll);
 
-		$this->scrollDown = new \ManiaLib\Gui\Elements\Quad(4, 4);
+		$this->scrollDown = new \ManiaLib\Gui\Elements\Quad(6, 6);
 		$this->scrollDown->setAlign("left", "top");
-		$this->scrollDown->setImage($config->getImage("scrollbar", "downButton_on.png"), true);
-		$this->scrollDown->setImageFocus($config->getImage("scrollbar", "downButton_focus.png"), true);
+		$this->scrollDown->setStyle("Icons64x64_1");
+		$this->scrollDown->setSubStyle("ArrowDown");
 		$this->scrollDown->setId("ScrollDown");
 		$this->scrollDown->setScriptEvents();
 		$this->addComponent($this->scrollDown);
 
-		$this->scrollUp = new \ManiaLib\Gui\Elements\Quad(4, 4);
+		$this->scrollUp = new \ManiaLib\Gui\Elements\Quad(6, 6);
 		$this->scrollUp->setAlign("left", "bottom");
-		$this->scrollUp->setImage($config->getImage("scrollbar", "upButton_on.png"), true);
-		$this->scrollUp->setImageFocus($config->getImage("scrollbar", "upButton_focus.png"), true);
+		$this->scrollUp->setStyle("Icons64x64_1");
+		$this->scrollUp->setSubStyle("ArrowUp");
 		$this->scrollUp->setId("ScrollUp");
 		$this->scrollUp->setScriptEvents();
 		$this->addComponent($this->scrollUp);

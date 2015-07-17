@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-	protected $frame, $starFrame, $move, $gauge;
+	protected $frame, $starFrame, $move, $gauge, $edgeWidget;
 
 	protected $stars = array();
 
@@ -37,7 +37,7 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		  $label->setTextSize(1.5);
 		  $this->addComponent($label);
 		 */
-		
+
 		$this->starFrame = new \ManiaLive\Gui\Controls\Frame();
 		$this->starFrame->setPosition(2, -2);
 		$this->starFrame->setSize(34, 4);
@@ -45,6 +45,10 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$this->gauge = new \ManiaLive\Gui\Elements\Xml();
 
 		$this->setName("Map Ratings Widget");
+
+                $this->edgeWidget = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui/Scripts/EdgeWidget");
+		$this->registerScript($this->edgeWidget);
+
 	}
 
 	function onResize($oldX, $oldY)

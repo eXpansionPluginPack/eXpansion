@@ -16,7 +16,8 @@ class SimpleCheckbox extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $config = Config::getInstance();
         $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->button->setAlign('left', 'center2');
-        $this->button->setImage($config->checkbox, true);
+        $this->button->setStyle('Icons64x64_1');
+        $this->button->setSubStyle('GenericButton');
         $this->button->setAction($this->action);
         $this->button->setScriptEvents(true);
         $this->addComponent($this->button);
@@ -33,9 +34,10 @@ class SimpleCheckbox extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $config = Config::getInstance();
 
         if ($this->active) {
-            $this->button->setImage($config->checkboxActive, true);
-        } else {
-            $this->button->setImage($config->checkbox, true);
+            $this->button->setColorize("0f0");
+        }
+        else {
+            $this->button->setColorize("f00");
         }
     }
 

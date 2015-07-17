@@ -24,9 +24,7 @@ class WidgetBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
 		// $this->bg->setBgcolor($config->style_widget_bgColor);
 		// $this->bg->setBgcolor($config->style_widget_bgColorize);
 		$this->bg->setOpacity($config->style_widget_bgOpacity);
-		$this->bg->setStyle("BgsPlayerCard");
-		$this->bg->setSubStyle("BgRacePlayerName");
-		$this->bg->setColorize($config->style_widget_bgColorize);
+		$this->bg->setBgcolor($config->style_widget_bgColorize);
 
 		/* if (!empty($config->style_widget_bgSubStyle)) {
 		  $this->bg->setStyle($config->style_widget_bgStyle);
@@ -39,7 +37,7 @@ class WidgetBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 
 		$this->bgborder = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-		$this->bgborder->setColorize($config->style_widget_title_bgColorize);
+		//$this->bgborder->setColorize($config->style_widget_title_bgColorize);
 		$this->bgborder->setStyle("BgsPlayerCard");
 		$this->bgborder->setSubStyle("BgRacePlayerLine");
 		$this->bgborder->setAttribute("rot", 180);
@@ -47,8 +45,7 @@ class WidgetBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$this->bgborder->setOpacity($config->style_widget_bgOpacity - 0.25);
 		$this->bgborder->setPosition($config->style_widget_bgXOffset, $config->style_widget_bgYOffset);
 
-
-	//	$this->addComponent($this->bgborder);
+		//$this->addComponent($this->bgborder);
 		$this->addComponent($this->bg);
 
 

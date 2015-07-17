@@ -89,13 +89,14 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$isInStart = $autoload->isInStartList($plugin->getPlugin());
 
 		$this->button_running = new Button(8, 8);
+                $this->button_running->setIcon('Icons64x64_1', 'GenericButton');
 		$this->button_running->setDescription(__($this->getRunningDescriptionText($isLoaded, $isInStart), $login), 120);
 		if ($isLoaded)
-			$this->button_running->setIcon($guiConfig->getImage("statusbuttons", "3_on.png"));
+			$this->button_running->colorize('0f0');
 		else if ($isInStart)
-			$this->button_running->setIcon($guiConfig->getImage("statusbuttons", "2_on.png"));
+			$this->button_running->colorize('ff0');
 		else
-			$this->button_running->setIcon($guiConfig->getImage("statusbuttons", "1_off.png"));
+			$this->button_running->colorize('f00');
 		$this->button_running->setAction($toggleAction);
 		$this->addComponent($this->button_running);
 
@@ -115,27 +116,30 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$this->addComponent($this->label_author);
 
 		$this->button_titleComp = new Button(7, 7);
+                $this->button_titleComp->setIcon('Icons64x64_1', 'GenericButton');
 		$this->button_titleComp->setDescription(__($this->getTitleDescriptionText($titleCompatible), $login), 100);
 		if ($titleCompatible)
-			$this->button_titleComp->setIcon($guiConfig->getImage("statusbuttons", "3_off.png"));
+			$this->button_titleComp->colorize('090');
 		else
-			$this->button_titleComp->setIcon($guiConfig->getImage("statusbuttons", "1_on.png"));
+			$this->button_titleComp->colorize('f00');
 		$this->addComponent($this->button_titleComp);
 
 		$this->button_gameComp = new Button(7, 7);
+                $this->button_gameComp->setIcon('Icons64x64_1', 'GenericButton');
 		$this->button_gameComp->setDescription(__($this->getGameDescriptionText($gameCompatible), $login), 100);
 		if ($gameCompatible)
-			$this->button_gameComp->setIcon($guiConfig->getImage("statusbuttons", "3_off.png"));
+			$this->button_gameComp->colorize('090');
 		else
-			$this->button_gameComp->setIcon($guiConfig->getImage("statusbuttons", "1_on.png"));
+			$this->button_gameComp->colorize('f00');
 		$this->addComponent($this->button_gameComp);
 
 		$this->button_otherComp = new Button(7, 7);
+                $this->button_otherComp->setIcon('Icons64x64_1', 'GenericButton');
 		$this->button_otherComp->setDescription(__($this->getOtherDescriptionText($otherCompatible), $login), 100, 5, sizeof($otherCompatible) + 1);
 		if (empty($otherCompatible))
-			$this->button_otherComp->setIcon($guiConfig->getImage("statusbuttons", "3_off.png"));
+			$this->button_otherComp->colorize('090');
 		else
-			$this->button_otherComp->setIcon($guiConfig->getImage("statusbuttons", "1_on.png"));
+			$this->button_otherComp->colorize('f00');
 		$this->addComponent($this->button_otherComp);
 
 		$this->button_more = new Button(22, 7);

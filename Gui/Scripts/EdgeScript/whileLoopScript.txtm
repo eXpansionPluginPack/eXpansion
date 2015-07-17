@@ -1,19 +1,19 @@
-foreach (Event in PendingEvents) {                                                
-    if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "Edge" )) {	
-        
+foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "Edge" )) {
+
            edge_isLockedVisible2 = !edge_isLockedVisible2;
 
            if (edge_isLockedVisible2) {
                 edge_isMinimized = False;
-                 Edge.ImageUrl = imageOff;
+                 Edge.Colorize = imageOff;
             }
-           else {                          
-                Edge.ImageUrl = imageOn;
+           else {
+                Edge.Colorize = imageOn;
                 
            }
 
          //  foreach (widgetid => value in edge_animatedId) {
          //       edge_animatedId[widgetid] = True;
          //   }
-    }                                       
+    }
 }

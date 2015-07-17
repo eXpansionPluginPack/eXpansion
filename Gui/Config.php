@@ -7,15 +7,11 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $logo = "http://reaby.kapsi.fi/ml/exp.png";
 
-	public $button = "http://reaby.kapsi.fi/ml/button2.png";
-
-	public $buttonActive = "http://reaby.kapsi.fi/ml/button2_active.png";
-
 	public $uiTextureBase = "http://reaby.kapsi.fi/ml/ui3/";
 
-	public $uiTextures_Window = array("top_left.png", "top_center.png", "top_left.png", "left.png", "bg.png", "right.png", "bottom_left.png", "bottom_center.png", "bottom_right.png");
+	//public $uiTextures_Window = array("top_left.png", "top_center.png", "top_left.png", "left.png", "bg.png", "right.png", "bottom_left.png", "bottom_center.png", "bottom_right.png");
 
-	public $uiTextures_statusButtons = array("1_on.png", "1_off.png", "2_on.png", "2_off.png", "3_on.png", "3_off.png",);
+	/* public $uiTextures_statusButtons = array("1_on.png", "1_off.png", "2_on.png", "2_off.png", "3_on.png", "3_off.png",);
 
 	public $uiTextures_closeButton = array("normal.png", "focus.png");
 
@@ -36,11 +32,12 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $uiTextures_menu = array("top_on.png", "top_off.png", "middle_on.png", "middle_off.png", "bottom_on.png", "bottom_off.png");
 
 	public $uiTextures_listitem = array("normal_left.png", "normal_center.png", "normal_right.png", "odd_left.png", "odd_center.png", "odd_right.png", "even_left.png", "even_center.png", "even_right.png");
+        */
 
 	public $windowTitleColor = "000";
-	
+
 	public $windowTitleBackgroundColor = "aaa";
-	
+
 	public $windowBackgroundColor = "2b3746";
 
 	public $buttonTitleColor = "e4f6fe";
@@ -93,9 +90,9 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $style_widget_title_bgOpacity = 0.6;
 
-	public $style_widget_title_bgXOffset = 0;
+	public $style_widget_title_bgXOffset = -0.1;
 
-	public $style_widget_title_bgYOffset = 0.75;
+	public $style_widget_title_bgYOffset = 0.25;
 
 	public $style_widget_title_lbStyle = 'TextCardScores2';
 
@@ -107,7 +104,7 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $disablePersonalHud = false;
 
-	public function getImage($folder, $image)
+	 public function getImage($folder, $image)
 	{
 		return trim($this->uiTextureBase, "/") . '/' . $folder . '/' . $image;
 	}

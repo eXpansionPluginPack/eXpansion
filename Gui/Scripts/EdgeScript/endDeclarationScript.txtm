@@ -3,16 +3,16 @@ declare  Boolean edge_isMinimized for UI = False;
 declare Boolean edge_isAnimated for UI= False;
 declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
 declare persistent Boolean edge_isLockedVisible2 = True;
-declare Text imageOn = "<?php echo $this->imageOn; ?>";
-declare Text imageOff = "<?php echo $this->imageOff; ?>";
+declare imageOn = <?php echo $this->imageOn; ?>;
+declare imageOff = <?php echo $this->imageOff; ?>;
 
 edge_isAnimated = False;
 edge_animatedId.clear();
 
- if (edge_isLockedVisible2) {    
-     Edge.ImageUrl = imageOff;
+ if (edge_isLockedVisible2) {
+     Edge.Colorize = imageOff;
 }
-else {                  
-    Edge.ImageUrl = imageOn;
-       
+else {
+    Edge.Colorize = imageOn;
+
 }

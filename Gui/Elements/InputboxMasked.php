@@ -9,185 +9,149 @@ use ManiaLive\Gui\Container;
 use ManiaLive\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class InputboxMasked extends Control
-{
+class InputboxMasked extends Control {
 
-	protected $label;
+    protected $label;
+    protected $button;
 
-	protected $button;
+    /** @var Button */
+    protected $nonHidden;
+    protected $name;
+    protected $bgleft, $bgcenter, $bgright;
 
-	/** @var Button */
-	protected $nonHidden;
+    function __construct($name, $sizeX = 35, $editable = true) {
+        $config = Config::getInstance();
+        $this->name = $name;
 
-	protected $name;
+        $this->createButton($editable);
 
-	protected $bgleft, $bgcenter, $bgright;
+        $this->label = new Label(30, 3);
+        $this->label->setAlign('left', 'center');
+        $this->label->setTextSize(1);
+        $this->label->setStyle("TextCardMediumWhite");
+        $this->label->setTextEmboss();
+        $this->addComponent($this->label);
 
-	function __construct($name, $sizeX = 35, $editable = true)
-	{
-		$config = Config::getInstance();
-		$this->name = $name;
+        $this->bgcenter = new Quad(3, 6);
+        $this->bgcenter->setAlign("left", "center");
+        $this->bgcenter->setStyle("Bgs1InRace");
+        $this->bgcenter->setSubStyle("BgColorContour");
+        $this->addComponent($this->bgcenter);
 
-		$this->createButton($editable);
+        $this->setSize($sizeX, 12);
+    }
 
-		$this->label = new Label(30, 3);
-		$this->label->setAlign('left', 'center');
-		$this->label->setTextSize(1);
-		$this->label->setStyle("TextCardMediumWhite");
-		$this->label->setTextEmboss();
-		$this->addComponent($this->label);
+    protected function onResize($oldX, $oldY) {
+        $yOffset = -7;
 
-		$this->bgleft = new Quad(3, 6);
-		$this->bgleft->setAlign("right", "center");
-		$this->bgleft->setImage($config->getImage("inputbox", "left.png"), true);
-		$this->addComponent($this->bgleft);
+        $this->button->setSize($this->getSizeX() - 2, 5);
+        $this->button->setPosition(1, $yOffset);
 
-		$this->bgcenter = new Quad(3, 6);
-		$this->bgcenter->setAlign("left", "center");
-		$this->bgcenter->setImage($config->getImage("inputbox", "center.png"), true);
-		$this->addComponent($this->bgcenter);
+        $this->bgcenter->setSize($this->getSizeX(), 6);
+        $this->bgcenter->setPosition(0, $yOffset);
 
-		$this->bgright = new Quad(3, 6);
-		$this->bgright->setAlign("left", "center");
-		$this->bgright->setImage($config->getImage("inputbox", "right.png"), true);
-		$this->addComponent($this->bgright);
 
-		$this->setSize($sizeX, 12);
-	}
+        $this->label->setSize($this->getSizeX(), 3);
+        $this->label->setPosition(1, 0);
 
-	protected function onResize($oldX, $oldY)
-	{
-		$yOffset = -7;
+        // $this->bg->setSize($this->sizeX, $this->sizeY);
 
-		$this->button->setSize($this->getSizeX() - 8, 5);
-		$this->button->setPosition(2, $yOffset);
+        parent::onResize($oldX, $oldY);
+    }
 
-		$this->bgleft->setSize(3, 6);
-		$this->bgleft->setPosition(3, $yOffset);
+    protected function createButton($editable) {
+        $text = "";
+        if ($this->button != null) {
+            $this->removeComponent($this->button);
+            $text = $this->getText();
+        }
 
-		$this->bgcenter->setSize($this->getSizeX() - 6, 6);
-		$this->bgcenter->setPosition(3, $yOffset);
+        if ($editable) {
+            $this->button = new Entry($this->sizeX, 4.5);
+            $this->button->setAttribute("class", "isTabIndex isEditable");
+            $this->button->setAttribute("textformat", "password");
+            $this->button->setName($this->name);
+            $this->button->setId($this->name);
+            $this->button->setDefault($text);
+            $this->button->setScriptEvents(true);
+            $this->button->setStyle("TextValueSmall");
+            $this->button->setTextSize(1);
+            $this->button->setFocusAreaColor1("0000");
+            $this->button->setFocusAreaColor2("0000");
+        }
+        else {
+            $this->button = new Label($this->sizeX, 5);
+            $this->button->setText($text);
+            $this->button->setTextSize(1.5);
+        }
 
-		$this->bgright->setSize(3, 6);
-		$this->bgright->setPosition($this->getSizeX() - 3, $yOffset);
+        $this->button->setAlign('left', 'center');
+        $this->button->setTextColor('fff');
 
-		$this->label->setSize($this->getSizeX(), 3);
-		$this->label->setPosition(1, 0);
+        $this->button->setPosition(2, -7);
+        $this->button->setSize($this->getSizeX() - 3, 4);
+        $this->addComponent($this->button);
+    }
 
-		// $this->bg->setSize($this->sizeX, $this->sizeY);
+    public function setEditable($state) {
+        if ($state && $this->button instanceof Label) {
+            $this->createButton($state);
+        }
+        elseif (!$state && $this->button instanceof Entry) {
+            $this->createButton($state);
+        }
+    }
 
-		parent::onResize($oldX, $oldY);
-	}
+    function setShowClearText() {
+        if ($this->nonHidden == null) {
+            $this->nonHidden = New Button(3, 3);
+            $this->nonHidden->setIcon("Icons64x64_1", "ClipPause");
+            $this->nonHidden->setPosition(-4, 0);
+            $this->nonHidden->setId($this->name . "_1");
+            $this->nonHidden->setDescription($this->getText());
+            $this->addComponent($this->nonHidden);
+        }
+    }
 
-	protected function createButton($editable)
-	{
-		$text = "";
-		if ($this->button != null) {
-			$this->removeComponent($this->button);
-			$text = $this->getText();
-		}
+    function getLabel() {
+        return $this->label->getText();
+    }
 
-		if ($editable) {
-			$this->button = new Entry($this->sizeX, 4.5);
-			$this->button->setAttribute("class", "isTabIndex isEditable");
-			$this->button->setAttribute("textformat", "password");
-			$this->button->setName($this->name);
-			$this->button->setId($this->name);
-			$this->button->setDefault($text);
-			$this->button->setScriptEvents(true);
-			$this->button->setStyle("TrackerText");
-			$this->button->setTextSize(1);
-			$this->button->setFocusAreaColor1("0000");
-			$this->button->setFocusAreaColor2("0000");
-		}
-		else {
-			$this->button = new Label($this->sizeX, 5);
-			$this->button->setText($text);
-			$this->button->setTextSize(1.5);
-		}
+    function setLabel($text) {
+        $this->label->setText($text);
+    }
 
-		$this->button->setAlign('left', 'center');
-		$this->button->setTextColor('fff');
+    function getText() {
+        if ($this->button instanceof Entry) return $this->button->getDefault();
+        else return $this->button->getText();
+    }
 
-		$this->button->setPosition(2, -7);
-		$this->button->setSize($this->getSizeX() - 3, 4);
-		$this->addComponent($this->button);
-	}
+    function setText($text) {
+        if ($this->button instanceof Entry) $this->button->setDefault($text);
+        else $this->button->setText($text);
+    }
 
-	public function setEditable($state)
-	{
-		if ($state && $this->button instanceof Label) {
-			$this->createButton($state);
-		}
-		elseif (!$state && $this->button instanceof Entry) {
-			$this->createButton($state);
-		}
-	}
+    function getName() {
+        return $this->button->getName();
+    }
 
-	function setShowClearText()
-	{
-		if ($this->nonHidden == null) {
-			$this->nonHidden = New Button(3, 3);
-			$this->nonHidden->setIcon("Icons64x64_1", "ClipPause");
-			$this->nonHidden->setPosition(-4, 0);
-			$this->nonHidden->setId($this->name . "_1");
-			$this->nonHidden->setDescription($this->getText());
-			$this->addComponent($this->nonHidden);
-		}
-	}
+    function setName($text) {
+        $this->button->setName($text);
+    }
 
-	function getLabel()
-	{
-		return $this->label->getText();
-	}
+    function setId($id) {
+        $this->button->setId($id);
+        $this->button->setScriptEvents();
+    }
 
-	function setLabel($text)
-	{
-		$this->label->setText($text);
-	}
+    function setClass($class) {
+        $this->button->setAttribute("class", "isTabIndex isEditable " . $class);
+    }
 
-	function getText()
-	{
-		if ($this->button instanceof Entry)
-			return $this->button->getDefault();
-		else
-			return $this->button->getText();
-	}
-
-	function setText($text)
-	{
-		if ($this->button instanceof Entry)
-			$this->button->setDefault($text);
-		else
-			$this->button->setText($text);
-	}
-
-	function getName()
-	{
-		return $this->button->getName();
-	}
-
-	function setName($text)
-	{
-		$this->button->setName($text);
-	}
-
-	function setId($id)
-	{
-		$this->button->setId($id);
-		$this->button->setScriptEvents();
-	}
-
-	function setClass($class)
-	{
-		$this->button->setAttribute("class", "isTabIndex isEditable " . $class);
-	}
-
-	function onIsRemoved(Container $target)
-	{
-		parent::onIsRemoved($target);
-		parent::destroy();
-	}
+    function onIsRemoved(Container $target) {
+        parent::onIsRemoved($target);
+        parent::destroy();
+    }
 
 }
 

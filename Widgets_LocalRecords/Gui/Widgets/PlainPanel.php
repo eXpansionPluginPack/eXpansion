@@ -67,7 +67,7 @@ class PlainPanel extends Widget
 		$this->bg->setAction(\ManiaLivePlugins\eXpansion\LocalRecords\LocalBase::$openRecordsAction);
 		$this->_windowFrame->addComponent($this->bg);
 
-		$this->bgTitle = new WidgetTitle($sizeX, $sizeY + 2);
+		$this->bgTitle = new WidgetTitle($sizeX, 4);
 		$this->_windowFrame->addComponent($this->bgTitle);
 
 		$this->bgFirst = new Quad($sizeX, $sizeY);
@@ -150,7 +150,7 @@ class PlainPanel extends Widget
 
 		$this->bg->setSize($this->sizeX, $this->sizeY + 1.5);
 
-		$this->bgTitle->setSize($this->sizeX, 4.2);
+		$this->bgTitle->setSize($this->sizeX, 4);
 
 		$this->frame->setPosition(($this->sizeX / 2) + 1, -5.5);
 		$this->layer->setPosition($this->sizeX - 6, -2);

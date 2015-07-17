@@ -9,15 +9,15 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
 	/** @var \ManiaLib\Gui\Elements\Quad */
-	private $bg;
+	protected $bg;
 
-	private $nick;
+	protected $nick;
 
-	private $label;
+	protected $label;
 
-	private $time;
+	protected $time;
 
-	private $frame;
+	protected $frame;
 
 	function __construct()
 	{
@@ -29,9 +29,11 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 		$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
 		$this->bg->setAlign("left", "top");
-		$this->bg->setImage($config->getImage("menu", "middle_off.png"), true);
-		$this->bg->setImageFocus($config->getImage("menu", "middle_on.png"), true);
-		$this->bg->setOpacity(0.8);
+                $this->bg->setStyle('Bgs1InRace');
+                $this->bg->setStyle('BgEmpty');
+		$this->bg->setBgcolor($config->windowBackgroundColor);
+                $this->bg->setBgcolorFocus($config->windowTitleBackgroundColor);
+		$this->bg->setOpacity(0.75);
 		$this->bg->setScriptEvents();
 		$this->addComponent($this->bg);
 
@@ -40,7 +42,7 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 		$this->label->setPosY(-1.5);
 		$this->label->setAlign("center", "top");
 		$this->label->setTextEmboss();
-		
+
 		$this->addComponent($this->label);
 		$this->setSize($sizeX, $sizeY);
 	}
@@ -80,16 +82,12 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 	function setTop()
 	{
-		$config = Config::getInstance();
-		$this->bg->setImage($config->getImage("menu", "top_off.png"), true);
-		$this->bg->setImageFocus($config->getImage("menu", "top_on.png"), true);
+        // deprecated
 	}
 
 	function setBottom()
 	{
-		$config = Config::getInstance();
-		$this->bg->setImage($config->getImage("menu", "bottom_off.png"), true);
-		$this->bg->setImageFocus($config->getImage("menu", "bottom_on.png"), true);
+	// deprecated
 	}
 
 }
