@@ -34,15 +34,15 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $uiTextures_listitem = array("normal_left.png", "normal_center.png", "normal_right.png", "odd_left.png", "odd_center.png", "odd_right.png", "even_left.png", "even_center.png", "even_right.png");
         */
 
-	public $windowTitleColor = "000";
+	public $windowTitleColor = "FFFE";
 
-	public $windowTitleBackgroundColor = "aaa";
+	public $windowTitleBackgroundColor = "0199FF";
 
-	public $windowBackgroundColor = "2b3746";
+	public $windowBackgroundColor = "3B3B3B";
 
-	public $buttonTitleColor = "e4f6fe";
+	public $buttonTitleColor = "fffe";
 
-	public $buttonBackgroundColor = "42a5fa";
+	public $buttonBackgroundColor = "aa9";
 
 	public $style_list_bgColor = array('aaa8', 'eee8');
 
@@ -78,9 +78,9 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $style_widget_bgSubStyle = 'BgRacePlayerName'; // BgList
 
-	public $style_widget_bgColorize = '2b3746'; // BgList
+	public $style_widget_bgColorize = '191919'; // BgList
 
-	public $style_widget_bgOpacity = 0.8;
+	public $style_widget_bgOpacity = 0.6;
 
 	public $style_widget_bgXOffset = 0;
 
