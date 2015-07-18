@@ -65,16 +65,16 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
 		$this->scroll->setScriptEvents();
 		$this->addComponent($this->scroll);
 
-		$this->scrollDown = new \ManiaLib\Gui\Elements\Quad(6, 6);
-		$this->scrollDown->setAlign("left", "top");
+		$this->scrollDown = new \ManiaLib\Gui\Elements\Quad(6.5, 6.5);
+		$this->scrollDown->setAlign("center", "top");
 		$this->scrollDown->setStyle("Icons64x64_1");
 		$this->scrollDown->setSubStyle("ArrowDown");
 		$this->scrollDown->setId("ScrollDown");
 		$this->scrollDown->setScriptEvents();
 		$this->addComponent($this->scrollDown);
 
-		$this->scrollUp = new \ManiaLib\Gui\Elements\Quad(6, 6);
-		$this->scrollUp->setAlign("left", "bottom");
+		$this->scrollUp = new \ManiaLib\Gui\Elements\Quad(6.5, 6.5);
+		$this->scrollUp->setAlign("center", "bottom");
 		$this->scrollUp->setStyle("Icons64x64_1");
 		$this->scrollUp->setSubStyle("ArrowUp");
 		$this->scrollUp->setId("ScrollUp");
@@ -126,8 +126,8 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
 		$this->scrollBg->setPosition($this->sizeX - 3);
 		$this->scrollBg->setSizeY($this->sizeY - 4);
 
-		$this->scrollDown->setPosition($this->sizeX - 5, -($this->sizeY - 4));
-		$this->scrollUp->setPosition($this->sizeX - 5, 0);
+		$this->scrollDown->setPosition($this->sizeX - 3, -($this->sizeY -5));
+		$this->scrollUp->setPosition($this->sizeX - 3, -1);
 	}
 
 	public function setContentLayout($className)

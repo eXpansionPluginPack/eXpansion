@@ -50,10 +50,10 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
 
         if (self::$script == null) {
             self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\CheckboxScript();
-            self::$script->setParam("disabledActiveUrl", "<1.,0.5,0.5>");
-            self::$script->setParam("disabledUrl", "<0.5,1.,0.5>");
-            self::$script->setParam("ActiveUrl", "<1.,0.,0.>");
-            self::$script->setParam("InactiveUrl", "<0.,1.,0.>");
+            self::$script->setParam("disabledActiveUrl", "<0.5,1.0,0.5>");
+            self::$script->setParam("disabledUrl", "<1.0,0.5,0.5>");
+            self::$script->setParam("ActiveUrl", "<0.,1.,0.>");
+            self::$script->setParam("InactiveUrl", "<1.,0.,0.>");
         }
 
         $this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 4);
@@ -110,10 +110,10 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         $this->skinWidth = 5;
         if (is_object(self::$script)) {
             $config = Config::getInstance();
-            self::$script->setParam("disabledActiveUrl", "<1.,0.5,0.5>");
-            self::$script->setParam("disabledUrl", "<0.5,1.,0.5>");
-            self::$script->setParam("ActiveUrl", "<1.,0.,0.>");
-            self::$script->setParam("InactiveUrl", "<0.,1.,0.>");
+            self::$script->setParam("disabledActiveUrl", "<0.5,1.,0.5>");
+            self::$script->setParam("disabledUrl", "<1.,0.5,0.5>");
+            self::$script->setParam("ActiveUrl", "<0.,1.,0.>");
+            self::$script->setParam("InactiveUrl", "<1.,0.,0.>");
         }
     }
 

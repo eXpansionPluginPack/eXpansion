@@ -67,10 +67,13 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
         $this->backGround = new \ManiaLib\Gui\Elements\Quad($sizeX + 2, $sizeY + 1);
         $this->backGround->setAlign('left', 'center2');
-        $this->backGround->setStyle('Bgs1InRace');
-        $this->backGround->setSubStyle('BgCard');
+        //$this->backGround->setStyle('Bgs1InRace');
+        //$this->backGround->setSubStyle('BgCard');
+	$this->backGround->setImage("file://Media/Manialinks/Common/Demo/demo-button-green.png", true);
+	$this->backGround->setImageFocus("file://Media/Manialinks/Common/Demo/demo-button-green-focus.png", true);
+
+
         $this->backGround->setId("backGround_" . $this->buttonId);
-        $this->backGround->setOpacity(0.75);
         $this->backGround->setScriptEvents();
         $this->backGround->setColorize($config->buttonBackgroundColor);
 
@@ -123,7 +126,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
         if ($this->icon == null) {
             $this->addComponent($this->backGround);
-            $this->addComponent($this->bgFrame);
+          //  $this->addComponent($this->bgFrame);
         }
         if ($this->isActive) $this->addComponent($this->activeFrame);
 
