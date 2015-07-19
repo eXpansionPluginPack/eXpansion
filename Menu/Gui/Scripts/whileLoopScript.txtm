@@ -1,5 +1,5 @@
 if( eXp_tabPressed == True && (Now - eXp_tabTime) > 50) {
-eXp_tabPressed = False;
+    eXp_tabPressed = False;
 }
 
 foreach (Event in PendingEvents) {
@@ -61,27 +61,38 @@ if(eXp_tabPressed){
 
 if (toggleSubmenu) {
 	foreach (Event in PendingEvents) {
+            if (Event.Type == CMlEvent::Type::MouseClick) {
+                outText = "";
+                foreach (idd => dump in eXp_widgetVisible[version]) {
+                    if (!eXp_widgetVisible[version][idd].existskey(gameMode)) {
+                        continue;
+                    }
+                        declare status = eXp_widgetVisible[version][idd][gameMode];
+                        declare Text bool = "0";
+                        if (status == True) {
+                                bool = "1";
+                            }
+                            outText = outText ^ idd ^ ":" ^ gameMode ^ ":" ^ bool ^ "|";
+
+                    }
+                    // log(outText);
+                    widgetStatus.Value = outText;
+                    declare item = Page.GetFirstChild(Event.ControlId);
+
+                    if (item.DataAttributeExists("action") ) {
+                        TriggerPageAction(item.DataAttributeGet("action"));
+                        toggleSubmenu = False;
+                        needUpdate = True;
+                        showStatus = False;
+                    }
+                }
+
 	    if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {
 			if(Page.GetFirstChild("submenu_"^ TextLib::SubText(Event.ControlId,4,1)) != Null ) {
 				if (currentButton != Null && currentButton.ControlId != "submenu_"^ TextLib::SubText(Event.ControlId,4,1)) {
 					currentButton.Hide();
                                         }
 				//log ("hovering: submenu_"^ TextLib::SubText(Event.ControlId,4,1));
-				outText = "";
-				foreach (idd => dump in eXp_widgetVisible[version]) {
-				    if (!eXp_widgetVisible[version][idd].existskey(gameMode)) {
-					continue;
-				    }
-					declare status = eXp_widgetVisible[version][idd][gameMode];
-					declare Text bool = "0";
-					if (status == True) {
-        				    	bool = "1";
-					    }
-					    outText = outText ^ idd ^ ":" ^ gameMode ^ ":" ^ bool ^ "|";
-
-				    }
-				    // log(outText);
-				    widgetStatus.Value = outText;
 
 				currentButton = (Page.GetFirstChild("submenu_"^ TextLib::SubText(Event.ControlId,4,1)) as CMlFrame);
 				currentButton.Show();
@@ -96,14 +107,6 @@ if (toggleSubmenu) {
 	}
 }
 
-
-if (MouseLeftButton) {
-	toggleSubmenu = False;
-        needUpdate = True;
-        showStatus = False;
-}
-
-
 if (needUpdate) {
     needUpdate = False;
 
@@ -113,9 +116,9 @@ if (needUpdate) {
         needHidden = True;
         Page.GetClassChildren("menuitem" , Menu , True);
         declare Integer delay = 0;
-        foreach (control in Page.GetClassChildren_Result) { 
+        foreach (control in Page.GetClassChildren_Result) {
         	LibManialink_AnimInsert("<quad opacity=\"0.75\" id=\""^ control.ControlId ^ "\" />", delay,300 ,"EaseInLinear");
-        	LibManialink_AnimInsert("<quad opacity=\"0.75\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 300, "EaseInLinear");
+        	LibManialink_AnimInsert("<quad opacity=\"1.\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 300, "EaseInLinear");
                 delay += 20;
 	}
 
@@ -123,15 +126,10 @@ if (needUpdate) {
         if (needHidden) {
             hideStamp = Now;
             needHidden = False;
+            toggleSubmenu = False;
             declare Integer delay = 0;
             Page.GetClassChildren("menuitem" , Menu , True);
             foreach (control in Page.GetClassChildren_Result) {
-            // declare CMlQuad quad  <=> (Page.GetFirstChild(control.ControlId) as CMlQuad);
-            //  quad.Opacity = 0.0;
-            //  quad.Scale = 0.0;
-            //   declare CMlLabel lbl  <=> (Page.GetFirstChild(control.ControlId^"_lbl") as CMlLabel);
-            //   lbl.Opacity = 0.0;
-            //   lbl.Scale = 0.0;
                 LibManialink_AnimInsert("<quad opacity=\"0\" id=\""^ control.ControlId ^ "\" />", delay, 300 ,"EaseInLinear");
         	LibManialink_AnimInsert("<quad opacity=\"0\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 300, "EaseInLinear");
                 delay += 20;
@@ -148,4 +146,9 @@ if(!toggleSubmenu && Menu.Visible && (Now - hideStamp) > 300) {
         currentButton.Hide();
         currentButton = Null;
     }
+}
+
+if (MouseLeftButton) {
+        needUpdate = True;
+        showStatus = False;
 }

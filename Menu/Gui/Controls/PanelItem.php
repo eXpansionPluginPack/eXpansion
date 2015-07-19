@@ -23,27 +23,27 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 	{
 		$config = Config::getInstance();
 
-		$sizeX = 30;
+		$sizeX = 29;
 		$sizeY = 5.5;
 		$this->setAlign("left", "top");
 
 		$this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-		$this->bg->setAlign("left", "top");
-                $this->bg->setStyle('Bgs1InRace');
-                $this->bg->setStyle('BgEmpty');
+		$this->bg->setAlign("left", "top");         
 		$this->bg->setBgcolor($config->windowBackgroundColor);
-                $this->bg->setBgcolorFocus($config->windowTitleBackgroundColor);
+                $this->bg->setBgcolorFocus($config->style_widget_title_bgColorize);
 		$this->bg->setOpacity(0.75);
 		$this->bg->setScriptEvents();
 		$this->addComponent($this->bg);
 
 		$this->label = new \ManiaLib\Gui\Elements\Label($sizeX, $sizeY);
+		$this->label->setStyle("TextCardScores2");
+		$this->label->setTextSize(1);
 		$this->label->setPosX($sizeX / 2);
-		$this->label->setPosY(-1.5);
-		$this->label->setAlign("center", "top");
+		$this->label->setPosY(-$sizeY / 2);
+		$this->label->setAlign("center", "center");
 		$this->label->setTextEmboss();
-
 		$this->addComponent($this->label);
+
 		$this->setSize($sizeX, $sizeY);
 	}
 
@@ -66,7 +66,7 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 	function setAction($action)
 	{
-		$this->bg->setAction($action);
+		$this->bg->setAttribute('data-action', $action);
 	}
 
 	function onIsRemoved(\ManiaLive\Gui\Container $target)
