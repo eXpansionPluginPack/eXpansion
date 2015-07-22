@@ -1,0 +1,50 @@
+//Minimap.WorldPosition = GUIPlayer.Position;
+//Minimap.MapPosition = <0.5, 0.5>;
+//Minimap.ZoomFactor = 5.;
+
+Minimap.WorldPosition = <0., 0., 1.>;
+Minimap.MapPosition = <1., 0.>;
+Minimap.ZoomFactor = 1.;
+
+if( (Now - eXp_lastClockUpdate) >= 1000 ){
+    declare nbSpecNew = 0;
+    declare nbPlayerNew = 0;
+    foreach (Player in Players) {
+        if(Player.Login != CurrentServerLogin){
+            if(!Player.RequestsSpectate){
+                //log(Player.Login^"Is Player");
+                nbPlayerNew += 1;
+            }else{
+                //log(Player.Login^"Is Spec");
+                nbSpecNew += 1;
+            }
+        }
+    }
+
+    if (nbSpecNew != nbSpec) {
+        NeedUpdate = True;
+    }
+
+    if (nbPlayerNew != nbPlayer) {
+        NeedUpdate = True;
+    }
+
+    nbSpec = nbSpecNew;
+    nbPlayer = nbPlayerNew;
+
+    eXp_lastClockUpdate = Now;
+}
+
+if (NeedUpdate) {
+    NeedUpdate = False;
+    ClientUI.MarkersXML = "";
+    foreach (cpPos in MapCheckpointPos) {
+        ClientUI.MarkersXML ^= """<marker pos="{{{cpPos[0]}}} {{{cpPos[1]}}} {{{cpPos[2]}}}" visibility="Never" minimapclass="true" isturning="1" minimapId="map" minimapvisibility="WhenInFrame" imageurl="file://Media/Manialinks/Common/Colorize.dds" />""";
+    }
+
+    foreach (Player in Players) {
+        if (Player.RequestsSpectate == False) {
+            ClientUI.MarkersXML ^= """<marker playerlogin="{{{Player.Login}}}" imageurl="file://Media/Manialinks/Common/Pointer.dds" visibility="Never" minimapId="map" minimapvisibility="WhenInFrame" minimapclass="true" isturning="1" />""";
+        }
+    }
+}

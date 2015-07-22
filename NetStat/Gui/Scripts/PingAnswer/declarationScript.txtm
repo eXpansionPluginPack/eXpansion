@@ -1,0 +1,5 @@
+declare exp_NetstatAnswer for UI = True;
+declare Integer exp_RecvStamp for UI = 0;
+
+exp_NetstatAnswer = True;
+exp_RecvStamp = <?php echo $this->stamp; ?>;

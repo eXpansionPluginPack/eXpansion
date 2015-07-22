@@ -1,0 +1,11 @@
+if (exp_NetstatAnswer == True) {
+   exp_NetstatAnswer = False;
+   diff = Now - exp_RecvStamp;
+}
+
+if( (Now - eXp_lastClockUpdate) >= updateFreq ){
+    sendStamp.Value = "" ^ Now;
+    latency.Value = "" ^ diff;
+    TriggerPageAction(action);
+    eXp_lastClockUpdate = Now;
+}

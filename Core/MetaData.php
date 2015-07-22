@@ -97,7 +97,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue('$0af');
 		$this->registerVariable($var);
 
-		$var = new ColorCode('Colors_player', 'Color code for player messages', $config, false, true);
+		$var = new ColorCode('Colors_player', 'Color code for join/leave messages', $config, false, true);
 		$var->setGroup("Chat Messages");
 		$var->setDefaultValue('$z$s$0af');
 		$this->registerVariable($var);

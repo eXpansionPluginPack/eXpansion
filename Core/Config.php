@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Core;
 
 class Config extends \ManiaLib\Utils\Singleton
 {
-	public $debug = false;
+	public $debug = true;
 	public $analytics = true;
 	public $language = null;
 	public $defaultLanguage = null;

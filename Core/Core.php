@@ -77,7 +77,7 @@ class Core extends types\ExpPlugin
 	private $enableCalculation = true;
 
 	private $loopTimer = 0;
-
+	private $postLoopStamp = 0;
 	private $lastTick = 0;
 
 	public static $action_serverInfo = -1;
@@ -344,8 +344,10 @@ EOT;
 
 		if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
 			$this->connection->triggerModeScriptEvent("LibXmlRpc_ListCallbacks", "");
-		}
+		}		
 	}
+
+	
 
 	public function LibXmlRpc_Callbacks()
 	{		
@@ -879,6 +881,7 @@ EOT;
 			$this->loopTimer = microtime(true);
 			$this->calculatePositions();
 		}
+		$this->postLoopStamp = microtime(true);
 	}
 
 	/**

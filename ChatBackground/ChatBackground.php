@@ -2,18 +2,30 @@
 
 namespace ManiaLivePlugins\eXpansion\ChatBackground;
 
-class ChatBackground extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
-	
+use ManiaLivePlugins\eXpansion\ChatBackground\Gui\Windows\BoxWindow;
+use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
+use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+
+class ChatBackground extends ExpPlugin {
+
     public function exp_onReady() {
-        $window = Gui\Windows\BoxWindow::Create(null);     
-        $window->show();
+	$window = BoxWindow::Create(null);
+	$window->show();
     }
 
-	public function exp_onUnload()
-	{
-		Gui\Windows\BoxWindow::EraseAll();
-		parent::exp_onUnload();
+    public function onSettingsChanged(Variable $var) {
+	if ($var->getPluginId() === $this->getId()) {
+	    BoxWindow::EraseAll();
+	    $window = BoxWindow::Create(null);
+	    $window->show();
 	}
+    }
+
+    public function exp_onUnload() {
+	BoxWindow::EraseAll();
+	parent::exp_onUnload();
+    }
+
 }
 
 ?>
