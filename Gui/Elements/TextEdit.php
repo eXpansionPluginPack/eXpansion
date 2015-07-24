@@ -2,66 +2,79 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
-class TextEdit extends \ManiaLib\Gui\Element
-{
+class TextEdit extends \ManiaLib\Gui\Element {
 
-	protected $xmlTagName = 'textedit';
+    const TEXTFORMAT_Default = "default";
+    const TEXTFORMAT_Script = "script";
 
-	protected $posX = 0;
+    protected $xmlTagName = 'textedit';
+    protected $posX = 0;
+    protected $posY = 0;
+    protected $posZ = 0;
+    protected $default = "";
+    protected $showlinenumbers = false;
+    protected $textformat = self::TEXTFORMAT_Default;
+    protected $autonewline = false;
+    protected $name = "";
 
-	protected $posY = 0;
+    function __construct($name, $sizeX = 100, $sizeY = 100) {
+	$this->sizeX = $sizeX;
+	$this->sizeY = $sizeY;
+	$this->name = $name;
+    }
 
-	protected $posZ = 0;
+    public function setShowLineNumbers($boolean = true) {
+	$this->showlinenumbers = $boolean;
+    }
 
-	protected $default = "";
+    public function getShowLineNumbers() {
+	return $this->showlinenumbers;
+    }
 
-	protected $showlinenumbers = false;
+    public function setTextFormat($textFormat = "default") {
+	$this->textformat = $textFormat;
+    }
 
-	protected $textformat = "default";
+    public function getTextFormat() {
+	return $this->textformat;
+    }
 
-	protected $autonewline = false;
+    public function setText($text) {
+	$this->default = $text;
+    }
 
-	protected $name = "";
+    public function getAutoNewline() {
+	return $this->autonewline;
+    }
 
-	function __construct($name, $sizeX = 100, $sizeY = 100)
-	{
-		$this->sizeX = $sizeX;
-		$this->sizeY = $sizeY;
-		$this->name = $name;
-	}
+    public function setAutoNewline($boolean = true) {
+	$this->autonewline = $boolean;
+    }
 
-	public function setText($text)
-	{
-		$this->default = $text;
-	}
+    public function getText() {
+	return $this->default;
+    }
 
-	public function getText()
-	{
-		return $this->default;
-	}
+    public function setName($text) {
+	$this->name = $text;
+    }
 
-	public function setName($text)
-	{
-		$this->name = $text;
-	}
+    public function getName() {
+	return $this->name;
+    }
 
-	public function getName()
-	{
-		return $this->name;
-	}
+    protected function postFilter() {
+	if ($this->default !== null)
+	    $this->xml->setAttribute('default', $this->default);
 
-	protected function postFilter()
-	{
-		if ($this->default !== null)
-			$this->xml->setAttribute('default', $this->default);
+	if ($this->textformat !== null)
+	    $this->xml->setAttribute('textformat', $this->textformat);
 
-		if ($this->textformat !== null)
-			$this->xml->setAttribute('textformat', $this->textformat);
-		if ($this->name !== null)
-			$this->xml->setAttribute('name', $this->name);
+	if ($this->name !== null)
+	    $this->xml->setAttribute('name', $this->name);
 
-		$this->xml->setAttribute('showlinenumbers', $this->showlinenumbers ? 1 : 0 );
-		$this->xml->setAttribute('autonewline', $this->autonewline ? 1 : 0 );
-	}
+	$this->xml->setAttribute('showlinenumbers', $this->showlinenumbers ? 1 : 0 );
+	$this->xml->setAttribute('autonewline', $this->autonewline ? 1 : 0 );
+    }
 
 }

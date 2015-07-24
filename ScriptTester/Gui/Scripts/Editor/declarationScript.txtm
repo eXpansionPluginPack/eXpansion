@@ -1,0 +1,5 @@
+declare input_maniascript <=> (Page.GetFirstChild("input_maniascript") as CMlEntry);
+declare input_manialink <=> (Page.GetFirstChild("input_manialink") as CMlEntry);
+declare editor_maniascript <=> (Page.GetFirstChild("editor_maniascript") as CMlTextEdit);
+declare editor_manialink <=> (Page.GetFirstChild("editor_manialink") as CMlTextEdit);
+declare Text actionId = "<?php echo $this->actionId; ?>";

@@ -1,0 +1,11 @@
+
+foreach (Event in PendingEvents) {
+
+    if(Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "apply"){
+
+        input_maniascript.Value = editor_maniascript.Value;
+        input_manialink.Value = editor_manialink.Value;
+        TriggerPageAction(actionId);
+
+    }
+}

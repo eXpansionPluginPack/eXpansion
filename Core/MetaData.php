@@ -189,6 +189,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(false);
 		$this->registerVariable($var);
 
+		$var = new Boolean('debug', 'Enable Debug-mode', $config, false, true);
+		$var->setDefaultValue(false);
+		$this->registerVariable($var);
+
 		$var = new Boolean('analytics', 'Send analytic data to eXpansion server', $config, false);
 		$var->setDescription("All data are anonymous.");
 		$var->setGroup("General");

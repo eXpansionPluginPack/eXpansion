@@ -135,7 +135,10 @@ class Core extends types\ExpPlugin
 		//Loading the settings
 		$this->configManager->loadSettings();
 
-		$this->connection;
+		if (!defined("DEBUG")) {
+		    $config = Config::getInstance();
+		    define("DEBUG", filter_var($config->debug, FILTER_VALIDATE_BOOLEAN));
+		}
 
 		self::$core = $this;
 	}

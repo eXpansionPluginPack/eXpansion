@@ -929,10 +929,12 @@ namespace {
 
 	set_error_handler('\\ManiaLivePlugins\\eXpansion\\Core\\types\\ErrorHandler::createExceptionFromError');
 
-	if (!defined("DEBUG")) {
+	/* 
+	// moved to core exp_onInit
+	  if (!defined("DEBUG")) {
 		$config = ManiaLivePlugins\eXpansion\Core\Config::getInstance();
 		define("DEBUG", filter_var($config->debug, FILTER_VALIDATE_BOOLEAN));
-	}
+	} */
 
 
 	if (!function_exists('__')) {
