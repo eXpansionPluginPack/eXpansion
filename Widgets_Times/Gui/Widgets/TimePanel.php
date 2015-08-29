@@ -105,12 +105,24 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->target);
 
 		$checkpoints = "[ -1 ]";
+		$noRecs = TRUE;
+
+		// Add record information for MS usage.
 		if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record) {
+			// Normally all CP even last one should be in the object, but not in databases imported from XAseco where last CP is missing.
 			if (sizeof($record->ScoreCheckpoints) == $this->totalCp) {
+				// Normal DB entry with all CP's.
 				$checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . "]";
+				$noRecs = FALSE;
+				// XAseco entry missing last CP. Add the record time as it is the the same value.
+			} elseif (sizeof($record->ScoreCheckpoints) == $this->totalCp - 1) {
+				$checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . ", ". $record->time . "]";
+				$noRecs = FALSE;
 			}
 		}
-		else {
+
+		// If CP in database don't match Map or no records send empty CP information.
+		if ($noRecs) {
 			$checkpoints = '[';
 			for ($i = 0; $i < $this->totalCp; $i++) {
 				if ($i > 0) {
@@ -120,7 +132,9 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 			}
 			$checkpoints .= ']';
 		}
-		$dediTime = "[ -1 ]";
+
+		// Send data for the dedimania records.
+		$dediTime = "";
 		if (sizeof(self::$dedirecords) > 0) {
 			$record = self::$dedirecords[0];
 			$dediTime = '[' . $record['Checks'] . ']';

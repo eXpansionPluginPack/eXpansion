@@ -80,7 +80,6 @@ foreach (Player in Players) {
                     }
 
                     if(diff < 0){
-                        //log("New Best TIme");
                         //New Best time
                         for(i, 0, totalCp-1) {
                             //log(i);
