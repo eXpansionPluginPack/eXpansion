@@ -281,20 +281,19 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		final public function onModeScriptCallback($param1, $param2)
 		{					
 			$out = array();
-			foreach ($param2 as $value) {
-				if (filter_var($value, FILTER_VALIDATE_INT)) {
-					$out[] = intval($value);
-				} else if (is_numeric($value)) {
-					$out[] = floatval($value);
-				}
-				else if ($value == "False") {
-					$out[] = false;
-				}
-				else if ($value == "True") {
-					$out[] = true;
-				}
-				else {
-					$out[] = $value;
+			if (is_array($param2)) {
+				foreach ($param2 as $value) {
+					if (filter_var($value, FILTER_VALIDATE_INT)) {
+						$out[] = intval($value);
+					} else if (is_numeric($value)) {
+						$out[] = floatval($value);
+					} else if ($value == "False") {
+						$out[] = false;
+					} else if ($value == "True") {
+						$out[] = true;
+					} else {
+						$out[] = $value;
+					}
 				}
 			}
 
