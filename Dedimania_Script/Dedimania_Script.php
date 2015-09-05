@@ -62,6 +62,10 @@ class Dedimania_Script extends DedimaniaAbstract
 			return;
 		}
 
+		if (is_null(DediConnection::$dediMap)) {
+			return;
+		}
+
 		// if player is banned from dedimania, don't send his time.
 		if (DediConnection::$players[$login]->banned)
 			return;

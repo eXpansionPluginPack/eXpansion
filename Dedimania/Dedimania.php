@@ -70,6 +70,9 @@ class Dedimania extends DedimaniaAbstract
 
 	public function handlePlayerFinish($playerUid, $login, $time, $checkpoints)
 	{
+        if (is_null(DediConnection::$dediMap)) {
+            return;
+        }
 
 		// if current map doesn't have records, create one.
 		if (count($this->records) == 0) {
