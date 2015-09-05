@@ -164,10 +164,16 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 					$server = new Server();
 					$this->servers[$i] = $server;
 				}
-				$server->setServer_data(simplexml_load_string($data));
+				$xml = simplexml_load_string($data);
+
+				if (!$xml) {
+					\ManiaLive\Utilities\Console::println('[server_neighborhood] Error loading : '.$serverPath . ' invalid XML?');
+				} else {
+					$server->setServer_data();
+				}
 				$i++;
 			} catch (\Exception $ex) {
-				//\ManiaLive\Utilities\Console::println('[server_neighborhood] Error loading : '.$server_xml->path);
+				\ManiaLive\Utilities\Console::println('[server_neighborhood] Error loading : '.$serverPath);
 			}
 		}
 	}
