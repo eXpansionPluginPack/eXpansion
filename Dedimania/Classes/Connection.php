@@ -134,6 +134,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
             case 'SRE@tm-nascar':
             case 'StadiumPlatform@darkpuddle_':
             case 'Ultimate_Challenge_2@mr.dvd':
+            case 'esl_comp@lt_forever':
                 $packmask = "Stadium";
                 break;
             case "TMCanyon":

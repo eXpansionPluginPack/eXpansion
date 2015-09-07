@@ -27,7 +27,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$this->addTitleSupport("TM");
 		$this->addTitleSupport("Trackmania");
-		$this->setEnviAsTitle(false);
+		$this->setEnviAsTitle(true);
 
 		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
 		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
