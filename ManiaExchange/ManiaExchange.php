@@ -49,6 +49,7 @@ class ManiaExchange extends ExpPlugin
 		$this->registerChatCommand("mx", "chatMX", 1, true);
 		$this->registerChatCommand("mx", "chatMX", 0, true);
 		$this->setPublicMethod("mxSearch");
+
 		$cmd = AdminGroups::addAdminCommand('add', $this, 'addMap', 'server_maps'); //
 		$cmd->setHelp('Adds a map from ManiaExchange');
 		$cmd->setHelpMore('$w/admin add #id$z will add a map with id fron ManiaExchange');

@@ -45,11 +45,11 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
     }
     
     public function setPagerPosition($posX, $posY){
-        $this->pager->setPosX($posX);
-        $this->pager->setPosY($posY-4);
+        $this->pager->setPosX($posX + 5);
+        $this->pager->setPosY($posY);
         
-        $this->frame->setPosX($posX);
-        $this->frame->setPosY($posY);
+        $this->frame->setPosX($posX + 5);
+        $this->frame->setPosY($posY + 2);
         
         $this->onResize($this->getSizeX(), $this->getSizeY());
     }
@@ -57,7 +57,7 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
     public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         
-        $sizeX = $this->getSizeX() - $this->pager->getPosX() - 2;
+        $sizeX = $this->getSizeX() - $this->pager->getPosX() + 2;
         $this->pager->setSize($sizeX, $this->getSizeY() - 15 - $this->pager->getPosY());
         
         $scaledSizes = Gui::getScaledSize($this->getWidths(), $sizeX);
