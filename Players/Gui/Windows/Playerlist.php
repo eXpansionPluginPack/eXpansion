@@ -71,7 +71,6 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 			$line->addComponent($btn);
 		}
 
-
 		$this->mainFrame->addComponent($line);
 
 
@@ -138,6 +137,16 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	{
 		try {
 			AdminGroups::getInstance()->adminCmd($login, "black " . $target);
+		} catch (\Exception $e) {
+			//  $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
+			Helper::logError("Error:" . $e->getMessage());
+		}
+	}
+
+	function guestlistPlayer($login, $target)
+	{
+		try {
+			AdminGroups::getInstance()->adminCmd($login, "guest " . $target);
 		} catch (\Exception $e) {
 			//  $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
 			Helper::logError("Error:" . $e->getMessage());

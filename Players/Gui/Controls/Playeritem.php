@@ -36,6 +36,8 @@ class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 	private $forceAction;
 
+	private $guestAction;
+
 	protected $frame;
 
 	private $recipient;
@@ -65,6 +67,7 @@ class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 			$this->banAction = $this->createAction(array($controller, 'banPlayer'), $player->login);
 			$this->blacklistAction = $this->createAction(array($controller, 'blacklistPlayer'), $player->login);
 			$this->forceAction = $this->createAction(array($controller, 'toggleSpec'), $player->login);
+			$this->guestAction = $this->createAction(array($controller, 'guestlistPlayer'), $player->login);
 			$this->toggleTeam = $this->createAction(array($controller, 'toggleTeam'), $player->login);
 		}
 
@@ -190,6 +193,15 @@ class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 				$this->forceButton->setDescription(__('Force %1$s to play', $login, $player->login), 50);
 				$this->frame->addComponent($this->forceButton);
 			}
+
+			if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::player_guest)) {
+				$this->guestButton = new MyButton(6, 5);
+				$this->guestButton->setAction($this->guestAction);
+				$this->guestButton->colorize("2f2");
+				$this->guestButton->setIcon('Icons128x128_1', 'Buddies');
+				$this->guestButton->setDescription(__('Add to guest list', $login, $player->login), 50);
+				$this->frame->addComponent($this->guestButton);
+			}
 		}
 
 		$this->addComponent($this->frame);
@@ -240,6 +252,8 @@ class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 			$this->blacklistButton->destroy();
 		if (is_object($this->ignoreButton))
 			$this->ignoreButton->destroy();
+		if (is_object($this->guestButton))
+			$this->guestButton->destroy();
 
 		$this->destroyComponents();
 

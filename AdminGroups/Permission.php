@@ -14,6 +14,7 @@ class Permission {
     const player_ignore = 'player_ignore';
     const player_forcespec = 'player_forcespec';
     const player_kick = 'player_kick';
+    const player_guest = 'player_guest';
     const player_changeTeam = 'player_changeTeam';
     
     //concerning Server Settings

@@ -115,6 +115,20 @@ A kicked player may return to the server whanever he desires.');
 		$cmd->setMinParam(1);
 		AdminGroups::addAlias($cmd, "kick"); // xaseco & fast
 
+
+		$cmd = AdminGroups::addAdminCommand('player guest', $this, 'guest', Permission::player_kick); //
+		$cmd->setHelp('guest the player from the server');
+		$cmd->setHelpMore('$w/admin player guest #login$z will guest the player from the server.
+A guest player doesen\'t need to enter passwords to enter the server.');
+		$cmd->setMinParam(1);
+		AdminGroups::addAlias($cmd, "guest"); // xaseco & fast
+
+		$cmd = AdminGroups::addAdminCommand('player remove guest', $this, 'guestRemove', Permission::player_kick); //
+		$cmd->setHelp('remove the guest status of the player');
+		$cmd->setHelpMore('$w/admin remove guest #login$z will remove the guest status of the player.
+A guest player doesen\'t need to enter passwords to enter the server.');
+		$cmd->setMinParam(1);
+
 		$cmd = AdminGroups::addAdminCommand('player ban', $this, 'ban', Permission::player_ban);
 		$cmd->setHelp('Ban the player from the server');
 		$cmd->setHelpMore('$w/admin player ban #login$z will ban  the player from the server.
@@ -1396,6 +1410,42 @@ Other server might use the same blacklist file!!');
 		}
 	}
 
+	function guest($fromLogin, $params)
+	{
+		$target = array_shift($params);
+		$player = $this->storage->getPlayerObject($target);
+		if ($player == null) {
+			$this->exp_chatSendServerMessage('#admin_error#Player #variable# %s doesn\' exist.', $fromLogin, array($target));
+			return;
+		}
+
+		$admin = $this->storage->getPlayerObject($fromLogin);
+		try {
+			$this->connection->addGuest($player);
+			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#add as guest the player#variable# %s', null, array($admin->nickName, $player->nickName));
+		} catch (Exception $e) {
+			$this->sendErrorChat($fromLogin, $e->getMessage());
+		}
+	}
+
+	function guestRemove($fromLogin, $params)
+	{
+		$target = array_shift($params);
+		$player = $this->storage->getPlayerObject($target);
+		if ($player == null) {
+			$this->exp_chatSendServerMessage('#admin_error#Player #variable# %s doesn\' exist.', $fromLogin, array($target));
+			return;
+		}
+
+		$admin = $this->storage->getPlayerObject($fromLogin);
+		try {
+			$this->connection->removeGuest($player);
+			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#removed guest status of the player#variable# %s', null, array($admin->nickName, $player->nickName));
+		} catch (Exception $e) {
+			$this->sendErrorChat($fromLogin, $e->getMessage());
+		}
+	}
+
 	function forceSpec($fromLogin, $params)
 	{
 		$player = $this->storage->getPlayerObject($params[0]);
@@ -1893,6 +1943,7 @@ Other server might use the same blacklist file!!');
 			$window->centerOnScreen();
 			$window->show();
 		} catch (Exception $e) {
+			throw $e;
 			$this->sendErrorChat($login, $e->getMessage());
 		}
 	}
