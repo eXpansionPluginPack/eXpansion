@@ -1,0 +1,4 @@
+for (i, 0, objCount-1) {
+        spider[i].RelativePosition.Y = AL::Ease("ElasticOut", (Now - (startStamp + (i * 550)) )  * 1., 110., -yPos[i], 6000.)+10;
+        rope[i].RelativePosition.Y = AL::Ease("ElasticOut", (Now - (startStamp + (i * 550)) ) * 1., 110.,-yPos[i], 6000.);
+}

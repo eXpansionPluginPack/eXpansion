@@ -1,0 +1,18 @@
+declare objCount = <?php echo $this->spiderCount; ?>;
+
+declare CMlQuad[] spider;
+declare CMlQuad[] rope;
+declare Real[] yPos;
+ declare Real[] xPos;
+
+declare startStamp = Now;
+for (i, 0, objCount-1) {
+    declare CMlQuad spQuad <=> (Page.GetFirstChild("spider"^(i+1)) as CMlQuad);
+    spider.add(spQuad);
+    declare CMlQuad roQuad <=> (Page.GetFirstChild("rope"^(i+1)) as CMlQuad);
+    rope.add(roQuad);
+    yPos.add(ML::Rand(30,120)*1.);
+    declare posX = ML::Rand(-160,160)*1.;
+    spQuad.RelativePosition.X = posX;
+    roQuad.RelativePosition.X = posX;
+}
