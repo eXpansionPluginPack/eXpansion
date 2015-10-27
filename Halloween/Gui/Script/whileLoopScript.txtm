@@ -1,4 +1,24 @@
 for (i, 0, objCount-1) {
         spider[i].RelativePosition.Y = AL::Ease("ElasticOut", (Now - (startStamp + (i * 550)) )  * 1., 110., -yPos[i], 6000.)+10;
         rope[i].RelativePosition.Y = AL::Ease("ElasticOut", (Now - (startStamp + (i * 550)) ) * 1., 110.,-yPos[i], 6000.);
+
+            declare Vec3 color = <1., 1., 0.>;
+            declare time = Now - spiderStamp[i];
+
+            if (time >= 0) {
+                 color = <0.1, 0.1, 0.1>;
+            }
+            if (time >= 500) {
+                    color = <1., 1., 0.>;
+            }
+           spider[i].Colorize = color;
+
+        if (time >= 4000) {
+                spiderStamp[i] = Now +  ML::Rand(2000,5000);
+            }
+}
+
+if (needUpdate) {
+    needUpdate = False;
+    updateStamp = Now;
 }

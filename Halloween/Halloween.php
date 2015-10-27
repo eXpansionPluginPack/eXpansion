@@ -14,7 +14,7 @@ class Halloween extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
 	$config = Config::getInstance();
 	\ManiaLivePlugins\eXpansion\Gui\Gui::preloadImage($config->texture);
 	\ManiaLivePlugins\eXpansion\Gui\Gui::preloadUpdate();
-	}
+    }
 
     public function onBeginMap($map, $warmUp, $matchContinuation) {
 	Gui\Widget\SpiderWidget::EraseAll();
