@@ -353,27 +353,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 		private function exp_getdir()
 		{
-			$trim = false;
-			if ($this->exp_dir == null) {
-				$exploded = explode("\\", get_class($this));
-				$trim = false;
-				$this->exp_dir = "libraries/";
-				if (!is_dir("libraries/ManiaLivePlugins/eXpansion/Core")) {
-					$trim = true;
-					$this->exp_dir = "vendor/ml-expansion/";
-				}
-				$i = 0;
-				while ($i < sizeof($exploded) - 2) {
-					$this->exp_dir .= $exploded[$i] . "/";
-					$i++;
-				}
-				$this->exp_dir .= $exploded[$i];
-			}
-			if ($trim) {
-				$this->exp_dir = str_replace("\\ManiaLivePlugins/", "", $this->exp_dir);
-				$this->exp_dir = str_replace("eXpansion", "expansion", $this->exp_dir);
-			}
+			$reflector = new \ReflectionClass(get_class($this));
+			$file = $reflector->getFileName();
 
+			$this->exp_dir = dirname($file);
 			return $this->exp_dir;
 		}
 
