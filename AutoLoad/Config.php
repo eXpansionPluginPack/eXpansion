@@ -31,7 +31,10 @@ class Config extends \ManiaLib\Utils\Singleton {
 	, '\ManiaLivePlugins\eXpansion\Widgets_Dedimania\Widgets_Dedimania'
     );
 
-    public $pluginPaths = array('libraries/ManiaLivePlugins' => 2);
+    public $pluginPaths = array(
+		'libraries/ManiaLivePlugins' => 2,
+		'vendor' => 4,
+	);
 
 }
 
