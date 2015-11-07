@@ -71,14 +71,14 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$this->onGoing = true;
 
 		if ($this->config->useGit) {
-			$cmds = array('php composer.phar update --prefer-source --no-interaction --dry-run --ansi');
+			$cmds = array(PHP_BINARY . ' composer.phar update --prefer-source --no-interaction --dry-run');
 		} else {
-			$cmds = array('php composer.phar update --prefer-dist --no-interaction --dry-run --ansi');
+			$cmds = array(PHP_BINARY . ' composer.phar update --prefer-dist --no-interaction --dry-run');
 		}
 
 		$AdminGroups->announceToPermission(Permission::server_update, '#admin_action#[#variable#AutoUpdate#admin_action#] Checking updates for #variable#eXpansion & Components');
 
-		$exec = new ParalelExecution($cmds, array($this, 'checkExecuted'));
+		$exec = new ParalelExecution($cmds, array($this, 'checkExecuted'), 'eXpansion_update_check');
 		$exec->setValue('login', $this->currentLogin);
 		$exec->start();
 	}
@@ -129,14 +129,14 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$this->onGoing = true;
 
 		if ($this->config->useGit) {
-			$cmds = array('php composer.phar update --no-interaction --prefer-source');
+			$cmds = array(PHP_BINARY . ' composer.phar update --no-interaction --prefer-source');
 		} else {
-			$cmds = array('php composer.phar update --no-interaction --prefer-dist');
+			$cmds = array(PHP_BINARY . ' composer.phar update --no-interaction --prefer-dist');
 		}
 
 		$AdminGroups->announceToPermission(Permission::server_update, '#admin_action#[#variable#AutoUpdate#admin_action#] Updating #variable#eXpansion & Components');
 
-		$exec = new ParalelExecution($cmds, array($this, 'updateExecuted'));
+		$exec = new ParalelExecution($cmds, array($this, 'updateExecuted'), 'eXpansion_update');
 		$exec->setValue('login', $this->currentLogin);
 		$exec->start();
 	}
