@@ -23,7 +23,8 @@
         "php": ">=5.4",
         "ext-curl": "*",
         "ext-json": "*",
-        "maniaplanet/manialive-lib": "dev-dev"
+        "maniaplanet/manialive-lib": "dev-dev",
+        "monolog/monolog": "1.0.*"
     },
     "autoload": {
         "psr-4": {
