@@ -83,7 +83,7 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 		$this->preview->setId("chooser_" . $this->buttonId);
 		$this->preview->setHidden(true);
 		$this->preview->setAttribute("class", "colorSelection");
-		$this->preview->setImage($config->getImage("colorchooser", "1.png"), true);
+		$this->preview->setImage($config->colorPreview, true);
 		$this->preview->setScriptEvents();
 		$this->frame->addComponent($this->preview);
 
@@ -93,7 +93,7 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 		$this->color->setPosition(36, 0);
 		$this->color->setHidden(true);
 		$this->color->setAttribute("class", "colorSelection");
-		$this->color->setImage($config->getImage("colorchooser", "2.png"), true);
+		$this->color->setImage($config->colorHue, true);
 		$this->color->setScriptEvents();
 		$this->frame->addComponent($this->color);
 
