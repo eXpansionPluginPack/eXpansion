@@ -2,7 +2,7 @@
     "name": "ml-expansion/expansion",
     "type": "library",
     "description": "Plugin pack for manialive server controler",
-    "keywords": ["maniaplanet", "shootmania", "trackmania", "application", "xml-rpc", "socket"],
+    "keywords": ["maniaplanet", "shootmania", "trackmania", "application", "manialive", "next gen controller"],
     "homepage": "http://www.ml-expansion.com/",
     "license": "LGPL-3.0",
     "authors": [
@@ -16,16 +16,14 @@
             "homepage": "http://www.oliver-decramer.com"
         }
     ],
-        "support": {
+    "support": {
         "forum": "https://github.com/eXpansionPluginPack/eXpansion"
     },
     "require": {
         "php": ">=5.4",
         "ext-curl": "*",
-        "ext-json": "*"
-    },
-     "require": {
-        "maniaplanet/manialive": "dev-master"
+        "ext-json": "*",
+        "maniaplanet/manialive-lib": "dev-dev"
     },
     "autoload": {
         "psr-4": {
