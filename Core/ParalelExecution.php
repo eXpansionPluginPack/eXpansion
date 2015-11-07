@@ -48,8 +48,12 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 
     private $values;
 
+    private $executionName;
 
-    function __construct($cmds, $callback)
+    private $fileName;
+
+
+    function __construct($cmds, $callback, $executionName = "")
     {
         $this->id = time() . '.' . rand(0, 100000);
         $this->callback = $callback;
@@ -59,6 +63,13 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 
         $this->cmds = $cmds;
 
+        $this->executionName = $executionName;
+
+        if (empty($this->executionName)) {
+            $this->fileName = $this->id.'log';
+        } else {
+            $this->fileName = $this->executionName . '.' . time() . '.log';
+        }
     }
 
     public function start()
@@ -73,7 +84,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             Dispatcher::unregister(TickEvent::getClass(), $this);
-            $command = $cmd . ' > tmp/' . $this->id . '.txt 2>&1';
+            $command = $cmd . ' > tmp/' . $this->fileName . ' 2>&1';
             exec($command, $results, $return);
 
             $this->return = $return;
@@ -86,7 +97,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
             }
             return;
         } else {
-            $command = 'nohup ' . $cmd . ' >> tmp/' . $this->id . '.txt 2>&1 & echo $!';
+            $command = 'nohup ' . $cmd . ' >> tmp/' . $this->fileName . ' 2>&1 & echo $!';
             exec($command, $results, $return);
             $this->pid = $results[0];
         }
@@ -102,9 +113,8 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 
     public function call($results = array())
     {
-        if (empty($results) && file_exists('tmp/' . $this->id . '.txt')) {
-            $results = explode("\n", file_get_contents('tmp/' . $this->id . '.txt'));
-            unlink('tmp/' . $this->id . '.txt');
+        if (empty($results) && file_exists('tmp/' . $this->fileName)) {
+            $results = explode("\n", file_get_contents('tmp/' . $this->fileName));
         }
         call_user_func($this->callback, $this, $results, $this->return);
     }
