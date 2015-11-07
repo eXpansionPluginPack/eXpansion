@@ -1668,7 +1668,7 @@ Other server might use the same blacklist file!!');
 	{
 		Dispatcher::dispatch(new ExpansionEvent(ExpansionEvent::ON_RESTART_START));
 
-		$this->connection->chatSendServerMessage("[Notice] restarting eXpansion...");
+		$this->exp_chatSendServerMessage("[Notice] restarting eXpansion...");
 		$this->connection->sendHideManialinkPage();
 		$this->connection->chatEnableManualRouting(false);
 
