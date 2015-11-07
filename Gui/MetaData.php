@@ -30,11 +30,6 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(false);
 		$this->registerVariable($var);
 
-		$var = new String("uiTextureBase", "Texture base for ui ", $config);
-		$var->setGroup("GUI");
-		$var->setDefaultValue("http://reaby.kapsi.fi/ml/ui3/");
-		$this->registerVariable($var);
-
 		$var = new ColorCode("windowTitleColor", "Window Title Text color", $config);
 		$var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");
 		$var->setGroup("GUI");

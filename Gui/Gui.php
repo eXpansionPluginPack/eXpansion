@@ -64,20 +64,6 @@ class Gui extends ExpPlugin {
         $this->msg_disabled = exp_getMessage("#error#Server Admin has disabled personal huds. Sorry!");
 
         $this->preloader = Preloader::Create(null);
-
-        /* foreach (Config::getInstance() as $property => $value) {
-            if (is_string($value) && substr($value, 0, 7) == "http://" && substr($value, -4) == ".png") {
-                Preloader::add($value);
-            }
-        } */
-        $config = Config::getInstance();
-
-        foreach ($this->textures as $folder => $data) {
-            foreach ($data as $file) {
-                Preloader::add(trim($config->uiTextureBase, "/") . '/' . $folder . '/' . $file);
-            }
-        }
-
         $this->preloader->show();
 
         foreach ($this->storage->players as $player) {
