@@ -147,7 +147,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$this->msg_format = exp_getMessage("#error#Question needs to be at the right format!");
 		$this->msg_reset = exp_getMessage("#quiz#Quiz has been reset!");
 		$this->msg_correct = exp_getMessage("Correct from");
-		$this->msg_correctAnswer = exp_getMessage("#quiz#Correct! #question# %s$1 \$z\$s#quiz# Well Done,\$z\$s#variable# %s$2 \$z\$s#quiz#!");
+		$this->msg_correctAnswer = exp_getMessage("#quiz#Correct! #question# %s$1 #quiz# Well Done,#variable# %s$2 #quiz#!");
 		$this->msg_rightAnswer = exp_getMessage('#quiz#Right answers: $o#question#%s');
 		$this->msg_answerMissing = exp_getMessage("#error#Aswer is missing from the question!");
 		$this->msg_questionMissing = exp_getMessage("#error#Question is missing from the question!");
@@ -434,15 +434,15 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$xRatio = $maxWidth / $width;
 			$yRatio = $maxHeight / $height;
 
-			$newHeight = 20;
-			$newWidth = 20;
+			$newHeight = 20.0;
+			$newWidth = 20.0;
 
 			if (($xRatio * $height) < $maxHeight) {
-				$newHeight = ceil($xRatio * $height);
+				$newHeight = $xRatio * $height;
 				$newWidth = $maxWidth;
 			}
 			else {
-				$newWidth = ceil($yRatio * $width);
+				$newWidth = $yRatio * $width;
 				$newHeight = $maxHeight;
 			}
 
