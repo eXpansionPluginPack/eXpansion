@@ -75,6 +75,29 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         //We Need the plugin Handler
         $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
+        // Normalize plugin names.
+        $plugins = array();
+        $changed = true;
+        foreach ($this->config->plugins as $pname) {
+            if ($pname[0] != '\\') {
+                $pname = '\\' . $pname;
+                $changed = true;
+            }
+            $plugins[] = $pname;
+        }
+
+        if ($changed) {
+            $this->config->plugins = $plugins;
+            // Save new settings
+            ConfigManager::getInstance()->registerValueChange($this->getMetaData()->getVariable('plugins'));
+            ConfigManager::getInstance()->check();
+
+            // Log possible crash.
+            $this->console('');
+            $this->console('Settings updated !!');
+            $this->console('eXpansion might crash at this point, please restart it.');
+        }
+
         $this->autoLoadPlugins($this->config->plugins, $pHandler);
 
         if (!empty($this->toBeRemoved)) {
@@ -361,6 +384,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         array_pop($exploded);
         $size = sizeof($exploded);
         $pluginId = implode('\\', $exploded) . '\\' . $exploded[$size - 1];
+
+        if ($pluginId[0] != '\\') {
+            $pluginId = '\\' . $pluginId;
+        }
 
         if (class_exists($pluginId)) {
             /**
