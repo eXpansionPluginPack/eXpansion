@@ -80,7 +80,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$this->labelPlayer->setAction($this->actionPlayers);
 		$frame->addComponent($this->labelPlayer);
 
-		$this->inputboxMessage = new \ManiaLib\Gui\Elements\Entry(85, 6);
+		$this->inputboxMessage = new \ManiaLib\Gui\Elements\Entry(78, 6);
 		$this->inputboxMessage->setAlign("left", "top");
 		$this->inputboxMessage->setId("messagebox");
 		$this->inputboxMessage->setName("message");
