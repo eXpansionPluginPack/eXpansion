@@ -32,22 +32,28 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 	public $var = null;
 
+        public $label_help;
+
 	protected function onConstruct()
 	{
 		parent::onConstruct();
 
 		$this->pagerFrame = new \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager();
-		$this->pagerFrame->setPosY(-9);
+		$this->pagerFrame->setPosY(-14);
 		$this->mainFrame->addComponent($this->pagerFrame);
+
+                $this->label_help = new \ManiaLib\Gui\Elements\Label(120,8);
+                $this->label_help->setPosY(5);
+		$this->mainFrame->addComponent($this->label_help);
 
 		$this->input_value = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("value");
 		$this->input_value->setLabel('Value');
-		$this->input_value->setPosY(-2);
+		$this->input_value->setPosY(-5);
 		$this->mainFrame->addComponent($this->input_value);
 
 		$this->buttonAdd = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
 		$this->buttonAdd->setText("Add");
-		$this->buttonAdd->setPosY(-2);
+		$this->buttonAdd->setPosY(-5);
 		$this->buttonAdd->setAction($this->createAction(array($this, "addValue")));
 		$this->mainFrame->addComponent($this->buttonAdd);
 	}
@@ -57,7 +63,7 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		parent::onResize($oldX, $oldY);
 
 		$this->pagerFrame->setPosX(0);
-		$this->pagerFrame->setSize($this->getSizeX() - 3, $this->getSizeY() - 11);
+		$this->pagerFrame->setSize($this->getSizeX() - 3, $this->getSizeY() - 16);
 
 		$this->buttonAdd->setPosX($this->getSizeX() - 23);
 		if ($this->input_key == null) {
@@ -73,6 +79,8 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	public function populate(Variable $var)
 	{
 		$this->var = $var;
+                
+                $this->label_help->setText($var->getDescription());
 
 		foreach ($this->items as $item) {
 			$item->destroy();
@@ -85,7 +93,7 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 		if ($var instanceof \ManiaLivePlugins\eXpansion\Core\types\config\types\HashList) {
 			if ($this->input_key == null) {
 				$this->input_key = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("key", 50);
-				$this->input_key->setPosY(-2);
+				$this->input_key->setPosY(-5);
 				$this->input_key->setLabel('Key');
 				$this->mainFrame->addComponent($this->input_key);
 			}

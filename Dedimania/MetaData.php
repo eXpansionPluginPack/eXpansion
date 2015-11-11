@@ -38,11 +38,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$config = Config::getInstance();
 
-		$var = new String("login", "Dedimania server login (use this server login)", $config, false, false);
+		$var = new String("login", "Dedimania server login (use this server current login)", $config, false, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
 
-		$var = new String("code", 'Dedimania $l[http://dedimania.net/tm2stats/?do=register]server code$l', $config, false, false);
+		$var = new String("code", 'Dedimania server code, $l[http://dedimania.net/tm2stats/?do=register]click this text to register$l', $config, false, false);
+                $var->setDescription('For server code: click the header or visit http://dedimania.net');
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
 

@@ -166,7 +166,7 @@ class ExpSetting extends Control
 		else {
 			ExpListSetting::Erase($login);
 			$win = ExpListSetting::Create($login);
-			$win->setTitle("Expansion Settings : " . $var->getVisibleName());
+			$win->setTitle("Expansion Settings: " . $var->getVisibleName());
 			$win->centerOnScreen();
 			$win->setSize(140, 100);
 			$win->populate($var);

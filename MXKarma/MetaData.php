@@ -22,12 +22,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$config = Config::getInstance();
 
-		$var = new String("mxKarmaApiKey", "MxKarma apikey", $config, false, false);
+		$var = new String("mxKarmaServerLogin", "MxKarma serverlogin", $config, false, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
 
-		$var = new String("mxKarmaServerLogin", "MxKarma serverlogin", $config, false, false);
-		$var->setDefaultValue("");
+		$var = new String("mxKarmaApiKey", 'MxKarma apikey, $l[http://karma.mania-exchange.com]click this text to register$l', $config, false, false);
+                $var->setDescription('For apikey: click the header or visit http://karma.mania-exchange.com');
+                $var->setDefaultValue("");
 		$this->registerVariable($var);
 
 		$this->setRelaySupport(false);
