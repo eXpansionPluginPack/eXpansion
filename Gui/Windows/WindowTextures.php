@@ -35,10 +35,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window {
     protected function onConstruct() {
 	parent::onConstruct();
 	$config = Config::getInstance();
-	$baseUrl = trim($config->uiTextureBase, "/");
-	$windowUrl = $baseUrl . '/window/';
-	$closeUrl = $baseUrl . '/closebutton/';
-
+        
 	$this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
 
 	$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WindowScript");
