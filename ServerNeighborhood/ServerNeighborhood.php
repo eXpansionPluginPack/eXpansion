@@ -157,7 +157,7 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 			try {
 				$data = file_get_contents($serverPath);
 
-				if (isset($this->servers[$i])) {
+				if (isset($this->servers[$i]) && is_object($this->servers[$i])) {
 					$server = $this->servers[$i];
 				}
 				else {
@@ -169,7 +169,7 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 				if (!$xml) {
 					\ManiaLive\Utilities\Console::println('[server_neighborhood] Error loading : '.$serverPath . ' invalid XML?');
 				} else {
-					$server->setServer_data();
+					$server->setServer_data($xml);
 				}
 				$i++;
 			} catch (\Exception $ex) {
