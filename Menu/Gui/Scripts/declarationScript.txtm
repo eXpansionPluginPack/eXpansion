@@ -1,14 +1,14 @@
 
-declare CMlFrame Menu <=> (Page.GetFirstChild("Submenu") as CMlFrame);   
+declare CMlFrame Menu <=> (Page.GetFirstChild("Submenu") as CMlFrame);
 
 Menu.Hide(); // reduce flicker on refresh
 
 declare CMlEntry widgetStatus <=> (Page.GetFirstChild("widgetStatus") as CMlEntry);
 declare Text outText = "";
 declare Boolean toggleSubmenu = False;
-declare CMlFrame currentButton = Null; 
-declare CMlFrame previousButton = Null; 
-declare persistent Boolean[Text][Text][Text] eXp_widgetVisible;    
+declare CMlFrame currentButton = Null;
+declare CMlFrame previousButton = Null;
+declare persistent Boolean[Text][Text][Text] eXp_widgetVisible;
 declare Text version = "<?php echo $this->version ?>";
 declare Text id = "<?php echo $this->name ?>";
 declare Text gameMode = "<?php echo $this->gameMode; ?>";
@@ -24,10 +24,10 @@ declare eXp_mouseMiddleTime = 0;
 
 declare hideStamp = 0;
 
-declare Boolean exp_enableHudMove for UI = False;     
+declare Boolean exp_enableHudMove for UI = False;
 declare Boolean exp_needToCheckPersistentVars for UI = False;
 declare Boolean showStatus = False;
-declare Boolean needUpdate = True;		
+declare Boolean needUpdate = True;
 declare Boolean needHidden = False;
 
 if (!eXp_widgetVisible.existskey(version) ) {
@@ -46,14 +46,16 @@ for(i, 1, menuCount) {
     Page.GetFirstChild("submenu_"^i).Hide();
 }
 
-Menu.RelativePosition.Z = 30.0;     
+Menu.RelativePosition.Z = 30.0;
 
  Page.GetClassChildren("menuitem" , Menu , True);
-  foreach (control in Page.GetClassChildren_Result) { 
+  foreach (control in Page.GetClassChildren_Result) {
              declare CMlQuad quad  <=> (Page.GetFirstChild(control.ControlId) as CMlQuad);
              quad.Opacity = 0.0;
-             //quad.Scale = 0.0;
              declare CMlLabel lbl  <=> (Page.GetFirstChild(control.ControlId^"_lbl") as CMlLabel);
              lbl.Opacity = 0.0;
-             //lbl.Scale = 0.0;
+             declare CMlQuad icon  <=> (Page.GetFirstChild(control.ControlId^"_icon") as CMlQuad);
+             if (icon != Null) {
+                icon.Opacity = 0.0;
+             }
 }
