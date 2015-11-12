@@ -9,8 +9,8 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
 class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
     protected $frame;
-    protected $label_rank, $label_nick, $label_score;
-    protected $widths = array(1, 6, 6);
+    protected $label_rank, $label_nick, $label_login, $label_score;
+    protected $widths = array(1, 3, 4, 4, 1);
     protected $pager;
     protected $items  = array();
     protected $label_visit;
@@ -35,20 +35,22 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $this->label_rank = new \ManiaLib\Gui\Elements\Label($scaledSizes[0], 6);
         $this->label_rank->setAlign('left', 'center');
-
         $this->frame->addComponent($this->label_rank);
 
-        $this->label_nick = new \ManiaLib\Gui\Elements\Label($scaledSizes[1], 6);
-        $this->label_nick->setAlign('left', 'center');
-
-        $this->frame->addComponent($this->label_nick);
-        $this->label_score = new \ManiaLib\Gui\Elements\Label($scaledSizes[2], 6);
+        $this->label_score = new \ManiaLib\Gui\Elements\Label($scaledSizes[1], 6);
         $this->label_score->setAlign('left', 'center');
-
         $this->frame->addComponent($this->label_score);
 
+        $this->label_nick = new \ManiaLib\Gui\Elements\Label($scaledSizes[2], 6);
+        $this->label_nick->setAlign('left', 'center');
+        $this->frame->addComponent($this->label_nick);
+
+        $this->label_login = new \ManiaLib\Gui\Elements\Label($scaledSizes[3], 6);
+        $this->label_login->setAlign('left', 'center');
+        $this->frame->addComponent($this->label_login);
+
         $this->button_cps = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(30, 5);
-        $this->button_cps->setText("Cp Times");
+        $this->button_cps->setText(__("Checkpoints", $login));
         $this->button_cps->setAction(\ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAbstract::$actionOpenCps);
         $this->mainFrame->addComponent($this->button_cps);
 
@@ -63,8 +65,10 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX()) - 5);
 
         $this->label_rank->setSizeX($scaledSizes[0]);
-        $this->label_nick->setSizeX($scaledSizes[1]);
-        $this->label_score->setSizeX($scaledSizes[2]);
+        $this->label_score->setSizeX($scaledSizes[1]);
+        $this->label_nick->setSizeX($scaledSizes[2]);
+        $this->label_login->setSizeX($scaledSizes[3]);
+
         $this->button_cps->setPosition($this->getSizeX() - 30, -$this->getSizeY() + 6);
         $this->label_visit->setPosition($this->getSizeX() - 72, -$this->getSizeY() + 6);
 
@@ -77,6 +81,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->label_rank->setText(__(LocalRecords::$txt_rank, $this->getRecipient()));
         $this->label_nick->setText(__(LocalRecords::$txt_nick, $this->getRecipient()));
+        $this->label_login->setText(__(LocalRecords::$txt_login, $this->getRecipient()));
         $this->label_score->setText(__(LocalRecords::$txt_score, $this->getRecipient()));
     }
 
@@ -107,7 +112,6 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->label_visit->setUrl($url);
         $this->label_visit->setScriptEvents();
-        
     }
 }
 ?>
