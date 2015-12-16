@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) Error: on line 4, column 33 in Templates/Licenses/license-gpl20.txt
   The string doesn't match the expected date/time format. The string to parse was: "7.2.2014". The expected format was: "dd-MMM-yyyy". Petri
@@ -31,92 +30,100 @@ use Maniaplanet\DedicatedServer\Structures\GameInfos;
  */
 class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
-	private $ticker = 0;
+    private $ticker     = 0;
+    private $testActive = false;
 
-	private $testActive = false;
+    public function exp_onReady()
+    {
+        $this->enableTickerEvent();
+        $this->enableDedicatedEvents();
+        //if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
+        //	$this->enableScriptEvents();
+        //$this->registerChatCommand("crash", "crash", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
+        $this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
+        $this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+        $this->registerChatCommand("profiler_enable", "profilere", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+        $this->registerChatCommand("gofaketest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+        $this->registerChatCommand("test", "testWin", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+        $this->registerChatCommand("mem", "mem", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+        $this->mem(null);
+    }
 
-	public function exp_onReady()
-	{
-		$this->enableTickerEvent();
-		$this->enableDedicatedEvents();
-		//if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
-		//	$this->enableScriptEvents();
+    public function exp_onUnload()
+    {
+        $this->disableTickerEvent();
+        parent::exp_onUnload();
+    }
 
-		//$this->registerChatCommand("crash", "crash", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
-		$this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
-		$this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-		$this->registerChatCommand("profiler_enable", "profilere", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-		$this->registerChatCommand("gofaketest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-		$this->registerChatCommand("mem", "mem", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-		$this->mem(null);
-	}
+    function onTick()
+    {
+        if ($this->testActive) {
+            if ($this->ticker < 30) {
+                $this->connection->connectFakePlayer();
+            } else {
+                $this->ticker = 0;
+                $this->connection->disconnectFakePlayer("*");
+            }
+            $this->ticker++;
+        }
+    }
 
-	public function exp_onUnload()
-	{
-		$this->disableTickerEvent();		
-		parent::exp_onUnload();
-	}
+    function testWin($login)
+    {
+        $win = Gui\testWindow::create($login);
+        $win->setSize(120, 60);
+        $win->show($login);
+    }
 
-	function onTick()
-	{
-		if ($this->testActive) {
-			if ($this->ticker < 30) {
-				$this->connection->connectFakePlayer();
-			} else {
-				$this->ticker = 0;
-				$this->connection->disconnectFakePlayer("*");
-			}
-			$this->ticker++;
-		}
-	}
+    function connect($login, $playercount)
+    {
+        for ($x = 0; $x < $playercount; $x++) {
+            $this->connection->connectFakePlayer();
+        }
+    }
 
-	function connect($login, $playercount)
-	{
-		for ($x = 0; $x < $playercount; $x++) {
-			$this->connection->connectFakePlayer();
-		}
-	}
+    function disconnect($login)
+    {
+        try {
+            $this->connection->disconnectFakePlayer("*");
+        } catch (\Exception $e) {
+            echo "error disconnecting;";
+        }
+    }
 
-	function disconnect($login)
-	{
-		try {
-			$this->connection->disconnectFakePlayer("*");
-		} catch (\Exception $e) {
-			echo "error disconnecting;";
-		}
-	}
+    public function profilere()
+    {
+        Dispatcher::setApplicationListener(new Profiler());
+    }
 
-	public function profilere()
-	{
-		Dispatcher::setApplicationListener(new Profiler());
-	}
+    function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
+    {
+        //	echo "$login: cpindex: $cpIndex with $time\n";
+    }
 
-	function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
-	{
-	//	echo "$login: cpindex: $cpIndex with $time\n";
-	}
+    function test($login)
+    {
+        $this->testActive = true;
+    }
 
-	function test($login)
-	{
-		$this->testActive = true;
-	}
+    function logMemory()
+    {
+        $mem = "Memory Usage: ".round(memory_get_usage() / 1024 / 1024)."Kb";
+        //\ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
+        print "\n".$mem."\n";
+        $this->connection->chatSend($mem);
+    }
 
-	function logMemory()
-	{
-		$mem = "Memory Usage: " . round(memory_get_usage() / 1024 / 1024) . "Kb";
-		//\ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
-		print "\n" . $mem . "\n";
-		$this->connection->chatSend($mem);
-	}
+    function mem($login)
+    {
+        Gui\debugWidget::EraseAll();
+        $widget = Gui\debugWidget::Create(null);
+        $widget->setPosition(155, -45);
+        $widget->show();
+    }
 
-	function mem($login) {
-		Gui\debugWidget::EraseAll();
-		$widget = Gui\debugWidget::Create(null);
-		$widget->setPosition(155,-45);
-		$widget->show();
-	}
-
-	function crash() {
-		throw new \Exception("Crash Test");
-	}
+    function crash()
+    {
+        throw new \Exception("Crash Test");
+    }
 }

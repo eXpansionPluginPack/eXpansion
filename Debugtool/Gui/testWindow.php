@@ -10,37 +10,13 @@ namespace ManiaLivePlugins\eXpansion\Debugtool\Gui;
 class testWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-	protected $entries = array();
+    protected function onConstruct()
+    {
+        parent::onConstruct();
+        $quad = new \ManiaLib\Gui\Elements\Quad(50,25);
+        $quad->setImage("file://media/images/test.png",false);
+        $this->addComponent($quad);
 
-	protected function onConstruct()
-	{
-		parent::onConstruct();
-
-		$frame = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
-		$frame->setSize(120, 40);
-
-		for ($x = 0; $x < 2; $x++) {
-			$this->entries[$x] = new \ManiaLivePlugins\eXpansion\Gui\Elements\ColorChooser("e" . $x);
-			$this->entries[$x]->setColor('$f00');
-			$frame->addItem($this->entries[$x]);
-		}
-		$this->addComponent($frame);
-
-		$button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-		$button->setPosition(-30, 0);
-		$button->setText("submit");
-		$button->setAction($this->createAction(array($this, "submit")));
-		$this->addComponent($button);
-
-
-		$this->setSize(120, 60);
-		$this->setTitle("testwidnow");
-	}
-
-	function submit($login, $entries)
-	{
-		print_r($entries);
-		print "total:" . count($entries);
-	}
-
+        $this->setTitle("testwindow");
+    }
 }
