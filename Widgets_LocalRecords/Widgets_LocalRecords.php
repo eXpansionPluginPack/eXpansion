@@ -45,6 +45,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     }
 
     public function updateLocalPanel($login = null) {
+        $gui = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
 
 	if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords')) {
 	    /** @var LocalPanel $localRecs */
@@ -53,6 +54,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 		$panelMain = Gui\Widgets\LocalPanel::Create($login);
 		$panelMain->setSizeX($this->panelSizeX);
 		$panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+                $panelMain->setDirection("left");
 		$this->widgetIds["LocalPanel"] = $panelMain;
 		$this->widgetIds["LocalPanel"]->update();
 		$this->widgetIds["LocalPanel"]->show();
@@ -61,7 +63,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 		$localRecs[0]->show($login);
 	    }
 	 
-	    if (!DEBUG) {
+	    if (!$gui->disablePersonalHud) {
 		$localRecs = LocalPanel2::GetAll();
 		if ($login == null) {
 		    $panelScore = Gui\Widgets\LocalPanel2::Create($login);

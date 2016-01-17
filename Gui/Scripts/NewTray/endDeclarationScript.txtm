@@ -1,0 +1,18 @@
+declare Integer eXp_lastClockUpdate = Now;
+declare Integer start = Now-2000;
+declare persistent Boolean[Text] exp_trayId = Boolean[Text];
+declare Vec3 p = eXp_widgetLastPosRel[version][id][gameMode];
+
+
+if (!exp_trayId.existskey(id) ) {
+    exp_trayId[id] = True;
+}
+
+declare Real diff = -(Window.Size.X / 2) + 8;
+    if (Window.RelativePosition.X > 1) {
+       diff = (Window.Size.X / 2) - 10 ;
+    }
+
+if (exp_trayId[id]) {
+    Window.RelativePosition.X = p.X + diff;
+}

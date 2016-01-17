@@ -1,0 +1,21 @@
+foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "myWindow" || Event.ControlId == "minimizeButton" )) {
+		if(eXp_lastClockUpdate != Now) {
+                     exp_trayId[id] = !exp_trayId[id];
+                     start = Now;
+        }
+        eXp_lastClockUpdate = Now;
+    }
+}
+
+if (exp_trayId[id]) {
+            declare Real value = diff * AL::Ease("EaseInCirc", (Now - start) * 1., 0., 1., 1000.);
+            Window.RelativePosition.X = p.X + value;
+        }
+        else {
+            declare Real value = diff * AL::Ease("EaseOutCirc", (Now - start) * 1., 1., -1., 1000.);
+            Window.RelativePosition.X =  p.X + value;
+}
+
+
+

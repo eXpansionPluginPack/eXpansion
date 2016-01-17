@@ -72,7 +72,8 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
 	$dedi1 = '\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania';
 	$dedi2 = '\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script';
-
+        $gui = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
+        
 	try {
 	    if (($this->isPluginLoaded($dedi1) && $this->callPublicMethod(
 			    $dedi1, 'isRunning'
@@ -84,6 +85,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 		    $panelMain = Gui\Widgets\DediPanel::Create($login);
 		    $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
 		    $panelMain->setSizeX($this->panelSizeX);
+                    $panelMain->setDirection("right");
 		    $this->widgetIds["DediPanel"] = $panelMain;
 		    $this->widgetIds["DediPanel"]->update();
 		    $this->widgetIds["DediPanel"]->show();
@@ -91,7 +93,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 		    $localRecs[0]->update();
 		    $localRecs[0]->show($login);
 		}
-		if (!DEBUG) {
+		if (!$gui->disablePersonalHud) {
 		    $localRecs = DediPanel2::GetAll();
 		    if (!isset($localRecs[0])) {
 			//Gui\Widgets\DediPanel2::EraseAll();

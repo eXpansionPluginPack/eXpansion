@@ -67,7 +67,8 @@ class PlainPanel extends Widget
 		$this->bg->setAction(\ManiaLivePlugins\eXpansion\LocalRecords\LocalBase::$openRecordsAction);
 		$this->_windowFrame->addComponent($this->bg);
 
-		$this->bgTitle = new WidgetTitle($sizeX, 4);
+		$this->bgTitle = new WidgetTitle($sizeX, $sizeY);
+                $this->bgTitle->setId("minimizeButton");
 		$this->_windowFrame->addComponent($this->bgTitle);
 
 		$this->bgFirst = new Quad($sizeX, $sizeY);
@@ -85,7 +86,9 @@ class PlainPanel extends Widget
 		$this->layer->setId("setLayer");
 		$this->layer->setDescription("Switch from Race view to Score View(Visible on Tab)", 75);
 		$this->addComponent($this->layer);
-
+                
+                $this->setDisableAxis("x");
+                
 		parent::exp_onBeginConstruct();
 	}
 
@@ -115,6 +118,10 @@ class PlainPanel extends Widget
 
 		return $script;
 	}
+
+        public function setDirection($dir) {
+            $this->bgTitle->setDirection($dir);
+        }
 
 	protected function autoSetPositions()
 	{
@@ -150,7 +157,7 @@ class PlainPanel extends Widget
 
 		$this->bg->setSize($this->sizeX, $this->sizeY + 1.5);
 
-		$this->bgTitle->setSize($this->sizeX, 4);
+		$this->bgTitle->setSize($this->sizeX, $this->sizeY);
 
 		$this->frame->setPosition(($this->sizeX / 2) + 1, -5.5);
 		$this->layer->setPosition($this->sizeX - 6, -2);
