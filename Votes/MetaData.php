@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Votes;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\HashList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
@@ -63,7 +63,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$var = new HashList("managedVote_ratios", "Managed vote ratios", $config, false, false);
 		$var->setDescription("set ratio -1 for disable, and ratio between 0 to 1");
-		$type = new BoundedFloat("", "", null);
+		$type = new BoundedTypeFloat("", "", null);
 		$type->setMin(-1.0);
 		$type->setMax(1.0);
 		$var->setVisible(false);

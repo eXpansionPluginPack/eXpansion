@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\ManiaExchange;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
 
 /**
@@ -33,7 +33,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(false);
 		$this->registerVariable($var);
 
-		$var = new BoundedFloat("mxVote_ratio", "MXVote ratio for adding map", $config, true, false);
+		$var = new BoundedTypeFloat("mxVote_ratio", "MXVote ratio for adding map", $config, true, false);
 		$var->setGroup("Voting");
 		$var->setMin(-1.0);
 		$var->setMax(1.0);

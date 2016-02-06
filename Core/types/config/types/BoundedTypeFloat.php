@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
  *
  * @author De Cramer Oliver
  */
-class BoundedFloat extends Float{
+class BoundedTypeFloat extends TypeFloat{
     
     /**
      * @var int the Maximum value allowed

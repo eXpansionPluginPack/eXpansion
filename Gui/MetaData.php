@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Gui;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
@@ -99,7 +99,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue("2b3746");
 		$this->registerVariable($var);
 
-		$var = new BoundedFloat("style_widget_bgOpacity", "Widget Background Opacity", $config);
+		$var = new BoundedTypeFloat("style_widget_bgOpacity", "Widget Background Opacity", $config);
 		$var->setGroup("GUI");
 		$var->setMin(0.0);
 		$var->setMax(1.0);
@@ -126,7 +126,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue("TextCardScores2");
 		$this->registerVariable($var);
 
-		$var = new BoundedFloat("style_widget_title_lbSize", "Widget Titlebar font size", $config);
+		$var = new BoundedTypeFloat("style_widget_title_lbSize", "Widget Titlebar font size", $config);
 		$var->setGroup("GUI");
 		$var->setMin(0.5);
 		$var->setMax(5.0);

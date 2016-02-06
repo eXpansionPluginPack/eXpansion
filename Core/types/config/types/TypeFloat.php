@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
  *
  * @author De Cramer Oliver
  */
-class Float extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable {
+class TypeFloat extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable {
 
     public function setValue($value) {
 	if ($this->basicValueCheck($value))

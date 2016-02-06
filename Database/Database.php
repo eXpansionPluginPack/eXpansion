@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Database;
 
-use ManiaLib\Utils\Formatting as String;
+use ManiaLib\Utils\Formatting as StringFormatting;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
 

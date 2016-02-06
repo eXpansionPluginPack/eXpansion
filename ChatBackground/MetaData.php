@@ -8,7 +8,7 @@
 
 namespace ManiaLivePlugins\eXpansion\ChatBackground;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
 
 /**
@@ -26,7 +26,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 
 	$config = Config::getInstance();
 
-	$var = new BoundedFloat('opacity', 'Box Opacity', $config, false, false);
+	$var = new BoundedTypeFloat('opacity', 'Box Opacity', $config, false, false);
 	$var->setDefaultValue(0.9);
 	$var->setMax(1.0);
 	$var->setMin(0.0);

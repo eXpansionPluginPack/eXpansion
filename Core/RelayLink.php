@@ -52,27 +52,27 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
 	public function sendRelay($data)
 	{
-		$data = gzdeflate(serialize($data));
-		$this->connection->tunnelSendData(implode(",", $this->connectedRelays), $data);
+		/*$data = gzdeflate(serialize($data));
+		$this->connection->tunnelSendData(implode(",", $this->connectedRelays), $data);*/
 	}
 
 	public function sendMaster($data)
 	{
-		if (!$this->isMaster())
+		/*if (!$this->isMaster())
 			return;
 
 		$data = gzdeflate(serialize($data));
-		$this->connection->tunnelSendData($this->relayMaster, $data);
+		$this->connection->tunnelSendData($this->relayMaster, $data);*/
 	}
 
 	public function queryMaster($method, $value, $callback)
 	{
-		if ($this->isMaster())
+		/*if ($this->isMaster())
 			return;
 		//	echo "Querying: $method";
 
 		$data = gzdeflate(serialize(new Query($method, $value, $callback, $this->storage->serverLogin)));
-		$this->connection->tunnelSendData($this->relayMaster, $data);
+		$this->connection->tunnelSendData($this->relayMaster, $data);*/
 	}
 
 	public function queryRelay($method, $data, $callback)
@@ -252,7 +252,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
 	final public function onTunnelDataReceived($playerUid, $login, $data)
 	{
-		if (is_object($data)) {
+		/*if (is_object($data)) {
 			try {
 				$data = (string) $data;
 				$obj = unserialize(gzinflate($data));
@@ -301,7 +301,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 			} catch (\Exception $e) {
 				echo "Couldn't query! " . $e->getMessage();
 			}
-		}
+		}*/
 	}
 
 	final public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam)
