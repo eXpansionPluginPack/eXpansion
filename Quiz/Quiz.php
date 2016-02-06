@@ -254,7 +254,13 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 				$nicklen = strlen(\ManiaLib\Utils\Formatting::stripColors($player->nickName));
 				$header = '#quiz#$o' . str_repeat("*", 45);
 				$this->connection->chatSendServerMessage($this->colorParser->parseColors($header));
-				$this->exp_chatSendServerMessage($this->msg_correctAnswer, null, array($text, $player->nickName));
+                                $answer = "";
+                                foreach ($this->currentQuestion->answer as $ans) {
+                                    $answer .= " " . $ans->answer . ",";
+        			}
+                		$answer = trim($answer, ", ");
+
+				$this->exp_chatSendServerMessage($this->msg_correctAnswer, null, array($answer, $player->nickName));
 				$this->connection->chatSendServerMessage($this->colorParser->parseColors($header));
 
 				$this->addPoint(null, $login);
@@ -481,7 +487,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 				$window->setQuestion($question);
 			}
 
-			$window->setSize(240, 120);
+			$window->setSize(90, 120);
 			$window->centerOnScreen();
 			$window->setTitle(__("New question", $login));
 			$window->Show();

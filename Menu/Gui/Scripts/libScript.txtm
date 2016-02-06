@@ -1,10 +1,10 @@
 Void closeSubmenu(Text menuClass, CMlFrame Menu) {
 
-    log("closing: " ^ menuClass);
+   // log("closing: " ^ menuClass);
     declare submenuOpened for Page = "";
-    Page.GetClassChildren(menuClass , Menu , True); 
-    declare Integer delay = 200;  
-    foreach (control in Page.GetClassChildren_Result) { 
+    Page.GetClassChildren(menuClass , Menu , True);
+    declare Integer delay = 200;
+    foreach (control in Page.GetClassChildren_Result) {
             LibManialink_AnimInsert("<quad scale=\"0\" opacity=\"0\" id=\""^ control.ControlId ^ "\" />", delay,250 ,"EaseInLinear");
             LibManialink_AnimInsert("<quad scale=\"0\" opacity=\"0\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 250, "EaseInLinear");
             delay -= 25;
@@ -14,15 +14,15 @@ Void closeSubmenu(Text menuClass, CMlFrame Menu) {
 
 Void openSubmenu(Text menuClass, CMlFrame Menu) {
     declare submenuOpened for Page = "";
-    declare Integer delay = 0;      
+    declare Integer delay = 0;
     if (submenuOpened != menuClass) {
         closeSubmenu(submenuOpened, Menu);
         delay = 200;
     }
-    log("opening: " ^ menuClass);
-    Page.GetClassChildren(menuClass , Menu , True); 
-    
-    foreach (control in Page.GetClassChildren_Result) { 
+  //  log("opening: " ^ menuClass);
+    Page.GetClassChildren(menuClass , Menu , True);
+
+    foreach (control in Page.GetClassChildren_Result) {
             LibManialink_AnimInsert("<quad scale=\"1\" opacity=\"1\" id=\""^ control.ControlId ^ "\" />", delay,350 ,"EaseInLinear");
             LibManialink_AnimInsert("<quad scale=\"1\" opacity=\"1\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 350, "EaseInLinear");
             delay += 25;

@@ -119,6 +119,7 @@ if (needUpdate) {
         foreach (control in Page.GetClassChildren_Result) {
         	LibManialink_AnimInsert("<quad opacity=\"0.75\" id=\""^ control.ControlId ^ "\" />", delay,300 ,"EaseInLinear");
         	LibManialink_AnimInsert("<quad opacity=\"1.\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 300, "EaseInLinear");
+        	LibManialink_AnimInsert("<quad opacity=\"1.\" id=\""^ control.ControlId ^ "_icon\" />", delay, 300, "EaseInLinear");
                 delay += 20;
 	}
 
@@ -132,6 +133,7 @@ if (needUpdate) {
             foreach (control in Page.GetClassChildren_Result) {
                 LibManialink_AnimInsert("<quad opacity=\"0\" id=\""^ control.ControlId ^ "\" />", delay, 300 ,"EaseInLinear");
         	LibManialink_AnimInsert("<quad opacity=\"0\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 300, "EaseInLinear");
+        	LibManialink_AnimInsert("<quad opacity=\"0\" id=\""^ control.ControlId ^ "_icon\" />", delay, 300, "EaseInLinear");
                 delay += 20;
             }
 

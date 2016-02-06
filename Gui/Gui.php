@@ -27,16 +27,6 @@ class Gui extends ExpPlugin {
     private $counter = 0;
     private $preloader;
 
-    /**
-     * base directory is defined at Config::GetInstance()->uiTextureBase;
-     *
-     * array keys are folders relative to base and values are files in the folder...
-     * this is used to preload textures
-     *
-     * @var String[]
-     */
-    private $textures = array();
-
     public function exp_onInit() {
         $this->setVersion("0.1");
     }
@@ -75,9 +65,9 @@ class Gui extends ExpPlugin {
 
         $this->loadWidgetConfigs();
 
-        $edge = Widgets\Edge::Create(null);
+       /* $edge = Widgets\Edge::Create(null);
         $edge->setPosition(-160, -35);
-        $edge->show();
+        $edge->show(); */
     }
 
     public static function getScaledSize($sizes, $totalSize) {

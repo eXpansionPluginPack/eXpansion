@@ -24,16 +24,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		
 		$config = Config::getInstance();
 
-		$var = new SortedList('publicResAmount', 'Amount needed to restart a map', $config, false, true);
+		$var = new SortedList('publicResAmount', 'Amount needed to restart a map', $config, false, false);
 		$var->setDescription("If you use a negative value it will disable this feature.");
-		$var->setGroup("Planets");
 		$var->setType(new Int("", "", null));
 		$var->setDefaultValue(array(0 => 500));
 		$this->registerVariable($var);
 
-		$var = new SortedList('publicSkipAmount', 'Amount needed to skip a map', $config, false, true);
+		$var = new SortedList('publicSkipAmount', 'Amount needed to skip a map', $config, false, false);
 		$var->setDescription("If you use a negative value it will disable this feature.");
-		$var->setGroup("Planets");
 		$var->setType(new Int("", "", null));
 		$var->setDefaultValue(array(0 => 750));
 		$this->registerVariable($var);

@@ -36,7 +36,7 @@ class Widget extends PlainWidget
         $this->registerScript($this->script);
 
         $this->move = new \ManiaLib\Gui\Elements\Quad(45, 7);
-        $this->move->setStyle("Icons128x128_Blink");
+        $this->move->setStyle("Icons128x128_1");
         $this->move->setSubStyle("ShareBlink");
         $this->move->setScriptEvents();
         $this->move->setId("enableMove");

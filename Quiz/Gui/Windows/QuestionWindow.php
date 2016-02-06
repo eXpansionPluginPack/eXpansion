@@ -38,21 +38,21 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 
 		$this->frame = new \ManiaLive\Gui\Controls\Frame(0, -6);
-		$this->frame->setSize(240, 120);
-		$this->frame->setLayout(New \ManiaLib\Gui\Layouts\Column(240, 6));
+		$this->frame->setSize(90, 120);
+		$this->frame->setLayout(New \ManiaLib\Gui\Layouts\Column(90, 6));
 
 
-		$this->IBQuestion = new Inputbox("question", 235);
+		$this->IBQuestion = new Inputbox("question", 80);
 		$this->IBQuestion->setLabel(__("Question", $login), $login);
 		$this->frame->addComponent($this->IBQuestion);
 
 		for ($x = 0; $x < $this->answerCount; $x++) {
-			$this->IBanswers[$x] = new Inputbox("answer." . $x, 235);
+			$this->IBanswers[$x] = new Inputbox("answer." . $x, 80);
 			$this->IBanswers[$x]->setLabel(__("Answer", $login) . ($x + 1), $login);
 			$this->frame->addComponent($this->IBanswers[$x]);
 		}
 
-		$this->IBimageUrl = new Inputbox("imageUrl", 235);
+		$this->IBimageUrl = new Inputbox("imageUrl", 80);
 		$this->IBimageUrl->setLabel(__("Url for image", $login), $login);
 		$this->frame->addComponent($this->IBimageUrl);
 
@@ -77,8 +77,8 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	{
 		parent::onResize($oldX, $oldY);
 
-		$this->ok->setPosition($this->sizeX - 38, -$this->sizeY + 6);
-		$this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
+		$this->ok->setPosition($this->sizeX - 50, -$this->sizeY + 9);
+		$this->cancel->setPosition($this->sizeX - 24, -$this->sizeY + 9);
 	}
 
 	function setQuestion(\ManiaLivePlugins\eXpansion\Quiz\Structures\Question $question)

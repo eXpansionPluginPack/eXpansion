@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) 2014 Reaby
  *
@@ -37,144 +36,146 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
  *
  * @author Reaby
  */
-class BetWidget extends Widget {
-
+class BetWidget extends Widget
+{
     public static $action_acceptBet, $action_setAmount;
     protected $frame, $labelAccept;
     protected $bg, $header, $closeButton, $buttonAccept;
     protected $script;
 
-    protected function exp_onBeginConstruct() {
-	$sX = 42;
-	$this->setName("Bet widget");
-	$login = $this->getRecipient();
+    protected function exp_onBeginConstruct()
+    {
+        $sX    = 42;
+        $this->setName("Bet widget");
+        $login = $this->getRecipient();
 
-	$this->bg = new WidgetBackGround($sX, 20);
-	$this->addComponent($this->bg);
+        $this->bg = new WidgetBackGround($sX, 20);
+        $this->addComponent($this->bg);
 
-	$this->header = new WidgetTitle($sX, 4);
-	$this->addComponent($this->header);
+        $this->header = new WidgetTitle($sX, 4);
+        $this->addComponent($this->header);
 
-	$this->frame = new Frame(1, -8);
-	$this->frame->setLayout(new Column());
-	$this->addComponent($this->frame);
+        $this->frame = new Frame(1, -8);
+        $this->frame->setLayout(new Column());
+        $this->addComponent($this->frame);
 
-	$this->labelAccept = new DicoLabel();
-	$this->script = new Script("Bets/Gui/Scripts");
-	$this->script->setParam("hideFor", "Text[]");	
-	$this->registerScript($this->script);
+        $this->labelAccept = new DicoLabel();
+        $this->script      = new Script("Bets/Gui/Scripts");
+        $this->script->setParam("hideFor", "Text[]");
+        $this->registerScript($this->script);
     }
 
-    protected function exp_onEndConstruct() {	
-	$this->setPosition(-40, 60);
+    protected function exp_onEndConstruct()
+    {
+        $this->setPosition(-40, 60);
     }
 
-    public function onResize($oldX, $oldY) {
-	$this->header->setSize($this->sizeX, 4);
-	$this->bg->setSize($this->sizeX, $this->sizeY);
-	parent::onResize($oldX, $oldY);
+    public function onResize($oldX, $oldY)
+    {
+        $this->header->setSize($this->sizeX, 4);
+        $this->bg->setSize($this->sizeX, $this->sizeY);
+        parent::onResize($oldX, $oldY);
     }
 
-    public function onDraw() {
-	if (Bets::$state == Bets::state_setBets)
-	    $this->setBets();
-	if (Bets::$state == Bets::state_acceptMoreBets)
-	    $this->acceptBets();
+    public function onDraw()
+    {
+        if (Bets::$state == Bets::state_setBets) $this->setBets();
+        if (Bets::$state == Bets::state_acceptMoreBets) $this->acceptBets();
 
-	parent::onDraw();
+        parent::onDraw();
     }
 
-    public function acceptBets() {
-	$this->frame->clearComponents();
-	$this->header->setText(exp_getMessage("Accept Bet"));
-	$line = new Frame();
-	$line->setLayout(new Flow());
-	$line->setSize(80, 12);
+    public function acceptBets()
+    {
+        $this->frame->clearComponents();
+        $this->header->setText(exp_getMessage("Accept Bet"));
+        $line = new Frame();
+        $line->setLayout(new Flow());
+        $line->setSize(80, 12);
 
-	$this->labelAccept->setText(exp_getMessage('Accept bet for %1$s planets ?'), array("" . Bets::$betAmount));
-	$line->addComponent($this->labelAccept);
+        $this->labelAccept->setText(exp_getMessage('Accept bet for %1$s planets ?'), array("".Bets::$betAmount));
+        $line->addComponent($this->labelAccept);
 
-	$button = new Button();
-	$button->setText("Accept");
-	$button->setAction(self::$action_acceptBet);
+        $button = new Button();
+        $button->setText("Accept");
+        $button->setAction(self::$action_acceptBet);
 
-	$line->addComponent($button);
-	$this->frame->addComponent($line);
+        $line->addComponent($button);
+        $this->frame->addComponent($line);
     }
 
-    public function setBets() {
-	$this->frame->clearComponents();
-	
-	$this->script->setParam("action", self::$action_setAmount);
-	
-	$this->header->setText(exp_getMessage("Start Bet"));
+    public function setBets()
+    {
+        $this->frame->clearComponents();
 
-	$line = new Frame();
-	$line->setLayout(new Flow());
-	$line->setSize(80, 6);
+        $this->script->setParam("action", self::$action_setAmount);
 
-	$line2 = clone $line;
+        $this->header->setText(exp_getMessage("Start Bet"));
 
-	$config = Config::getInstance();
+        $line = new Frame();
+        $line->setLayout(new Flow());
+        $line->setSize(80, 6);
 
-	/*foreach ($config->betAmounts as $amount) {
+        $line2 = clone $line;
 
-	    $button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-	    $button->setAttribute('data-amount', $amount);
-	    $button->setAttribute('class', 'exp_button bet');
-	    $button->setScale(0.6);
-	    $button->setText($amount);
+        $config = Config::getInstance();
 
-	    $quad = new \ManiaLib\Gui\Elements\Quad(4,4);
-	    $quad->setStyle("ManiaPlanetLogos");
-	    $quad->setSubStyle('IconPlanets');
-	    $quad->setAlign("left", "center");
-	    $quad->setPosX(-17);
-	    $line2->addComponent($button);
-	    $line2->addComponent($quad);	    
-	}
-	*/
-	
-	$label = new DicoLabel(22, 6);
-	$label->setAlign("left", "center2");
-	$label->setText(exp_getMessage("Custom amount"));
-	$line->addComponent($label);
+        /* foreach ($config->betAmounts as $amount) {
 
-	$inputbox = new Inputbox("betAmount", 12);
-	$line->addComponent($inputbox);
+          $button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+          $button->setAttribute('data-amount', $amount);
+          $button->setAttribute('class', 'exp_button bet');
+          $button->setScale(0.6);
+          $button->setText($amount);
 
-	$button = new Button();
-	$button->setText("Accept");
-	$button->colorize("0d0");
-	$button->setAction(self::$action_setAmount);
-	$this->buttonAccept = $button;
-    	$line->addComponent($this->buttonAccept);
+          $quad = new \ManiaLib\Gui\Elements\Quad(4,4);
+          $quad->setStyle("ManiaPlanetLogos");
+          $quad->setSubStyle('IconPlanets');
+          $quad->setAlign("left", "center");
+          $quad->setPosX(-17);
+          $line2->addComponent($button);
+          $line2->addComponent($quad);
+          }
+         */
 
-	$button = new Button();
-	$button->setPosition($this->sizeX-28, -$this->sizeY+3);
-	$button->setText("Close");
-	$button->setAction($this->createAction(array($this, 'close')));
-	$this->closeButton = $button;
-	$this->addComponent($this->closeButton);
+        $label = new DicoLabel(22, 6);
+        $label->setAlign("left", "center2");
+        $label->setText(exp_getMessage("Custom amount"));
+        $line->addComponent($label);
 
-	$this->frame->addComponent($line);
-	$this->frame->addComponent($line2);
-	
+        $inputbox = new Inputbox("betAmount", 12);
+        $line->addComponent($inputbox);
+
+        $button             = new Button();
+        $button->setText("Accept");
+        $button->colorize("0d0");
+        $button->setAction(self::$action_setAmount);
+        $this->buttonAccept = $button;
+        $line->addComponent($this->buttonAccept);
+
+        $button            = new Button();
+        $button->setPosition($this->sizeX - 28, -$this->sizeY + 3);
+        $button->setText("Close");
+        $button->setId("closeButton");
+        $button->setScriptEvents();
+        // $button->setAction($this->createAction(array($this, 'close')));
+        $this->closeButton = $button;
+        $this->addComponent($this->closeButton);
+
+        $this->frame->addComponent($line);
+        $this->frame->addComponent($line2);
     }
 
     /**
      * set logins to maniascritp to hide the widget...
      * @param string[] $players
      */
-    public function setToHide($players) {
-	$out = \ManiaLivePlugins\eXpansion\Helpers\Maniascript::stringifyAsList($players);
-	if (count($players) == 0) {
-	    $out = "Text[]";
-	}
-	$this->script->setParam("hideFor", $out);
-    }
-
-    public function close() {
-	$this->closeWindow();
+    public function setToHide($players)
+    {
+        $out = \ManiaLivePlugins\eXpansion\Helpers\Maniascript::stringifyAsList($players);
+        if (count($players) == 0) {
+            $out = "Text[]";
+        }
+        $this->script->setParam("hideFor", $out);
     }
 }

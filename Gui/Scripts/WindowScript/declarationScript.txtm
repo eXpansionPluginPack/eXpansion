@@ -239,11 +239,7 @@ main () {
                 if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "MainWindow" || Event.ControlId == "Titlebar" ) ) {
                     stackActivateWindow(id);
                 }
-                // tab handler
-                if (Event.Type == CMlEvent::Type::KeyPress) {
-                    log(Event.KeyCode);
-                }
-
+           
                 if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 123) {
 		    if (exp_windowStack.count > 0)
                     {

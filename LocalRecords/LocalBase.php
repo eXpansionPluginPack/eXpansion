@@ -119,7 +119,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
 	protected $lastSave = 0;
 
-	public static $txt_rank, $txt_nick, $txt_score, $txt_sector, $txt_cp,
+	public static $txt_rank, $txt_nick, $txt_score, $txt_sector, $txt_cp, $txt_login,
 			$txt_avgScore, $txt_nbFinish, $txt_wins, $txt_lastRec, $txt_ptime, $txt_nbRecords;
 
 	public static $openSectorsAction = -1;
@@ -201,6 +201,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 		self::$txt_lastRec = exp_getMessage("Last Rec Date");
 		self::$txt_ptime = exp_getMessage("Play Time");
 		self::$txt_nbRecords = exp_getMessage("nb Rec");
+                self::$txt_login = exp_getMessage("Login");
 
 		$this->enableStorageEvents();
 		$this->enableDedicatedEvents();

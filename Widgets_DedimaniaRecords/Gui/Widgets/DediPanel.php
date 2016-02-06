@@ -7,23 +7,17 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 
 class DediPanel extends PlainPanel
 {
+    protected $trayWidget;
 
-	private $edgeWidget;
-
-	private $animation;
-
-	function exp_onBeginConstruct()
-	{
-		parent::exp_onBeginConstruct();
-		/*
-		  $this->animation = new Animation();
-		  $this->registerScript($this->animation);
-		*/
-		  $this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
-		  $this->registerScript($this->edgeWidget);
-
-	}
-
+    function exp_onBeginConstruct()
+    {
+        parent::exp_onBeginConstruct();
+        /*
+          $this->animation = new Animation();
+          $this->registerScript($this->animation);
+         */
+        $this->trayWidget = new Script("Gui/Scripts/NewTray");
+        $this->registerScript($this->trayWidget);
+    }
 }
-
 ?>
