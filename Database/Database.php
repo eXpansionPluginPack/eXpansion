@@ -72,7 +72,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         `player_onlinerights`, `player_nation`, `player_wins`, `player_timeplayed`)
                     VALUES (" . $this->db->quote($player->login) . ",
                             " . $this->db->quote($player->nickName) . ",
-                            " . $this->db->quote(String::stripColors($player->nickName)) . ",
+                            " . $this->db->quote(StringFormatting::stripColors($player->nickName)) . ",
                             " . $this->db->quote($time) . ",
                             " . $this->db->quote($player->iPAddress) . ",
                             " . $this->db->quote($player->onlineRights) . ",
@@ -88,7 +88,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$q = "UPDATE `exp_players`
              SET
                 `player_nickname` = " . $this->db->quote($player->nickName) . ",
-                `player_nicknameStripped` = " . $this->db->quote(String::stripColors($player->nickName)) . ",
+                `player_nicknameStripped` = " . $this->db->quote(StringFormatting::stripColors($player->nickName)) . ",
                 `player_updated` = " . $this->db->quote($time) . ",
                 `player_ip` =  " . $this->db->quote($player->iPAddress) . ",
                 `player_onlinerights` = " . $this->db->quote($player->onlineRights) . "
@@ -208,7 +208,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                                     )
                                 VALUES (" . $this->db->quote($data->uId) . ",
                                 " . $this->db->quote($data->name) . ",
-                                " . $this->db->quote(String::stripColors($data->name)) . ",
+                                " . $this->db->quote(StringFormatting::stripColors($data->name)) . ",
                                 " . $this->db->quote($data->fileName) . ",
                                 " . $this->db->quote($data->author) . ",
                                 " . $this->db->quote($data->environnement) . ",
