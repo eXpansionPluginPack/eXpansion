@@ -5,10 +5,10 @@ namespace ManiaLivePlugins\eXpansion\Votes;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\HashList;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
  * Description of MetaData
@@ -31,7 +31,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(true);
 		$this->registerVariable($var);
 
-		$var = new Int("limit_votes", "Limit voting for a player on map", $config, false, false);
+		$var = new TypeInt("limit_votes", "Limit voting for a player on map", $config, false, false);
 		$var->setDescription("-1 to disable, othervice number of vote start");
 		$var->setDefaultValue(1);
 		$this->registerVariable($var);
@@ -55,7 +55,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->registerVariable($var);
 
 		$var = new BasicList("managedVote_commands", "Managed vote commands", $config, false, false);
-		$type = new String("", "", null);
+		$type = new TypeString("", "", null);
 		$var->setType($type);
 		$var->setVisible(false);
 		$var->setDefaultValue(array("NextMap", "RestartMap", "Kick", "Ban", "SetModeScriptSettingsAndCommands", "JumpToMapIndex", "SetNextMapIndex", "AutoTeamBalance"));
@@ -80,7 +80,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$var = new HashList("managedVote_timeouts", "Managed vote timeouts", $config, false, false);
 		$var->setDescription("time in seconds");
-		$type = new Int("", "", null);
+		$type = new TypeInt("", "", null);
 		$var->setType($type);
 		$var->setVisible(false);
 		$var->setDefaultValue(array("NextMap" => 30,
@@ -94,7 +94,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->registerVariable($var);
 
 		$var = new HashList("managedVote_voters", "Managed vote voters", $config, false, false);
-		$type = new BoundedInt("", "", null);
+		$type = new BoundedTypeInt("", "", null);
 		$type->setMin(0);
 		$type->setMax(2);
 		$var->setVisible(false);

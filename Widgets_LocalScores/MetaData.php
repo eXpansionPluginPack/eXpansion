@@ -3,11 +3,11 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_LocalScores;
 
 use ManiaLive\PluginHandler\PluginHandler;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Float;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
 

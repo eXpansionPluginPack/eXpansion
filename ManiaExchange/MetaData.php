@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
 
 /**
  * Description of MetaData
@@ -40,7 +40,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(0.5);
 		$this->registerVariable($var);
 
-		$var = new BoundedInt("mxVote_timeout", "MXVote Timeout in seconds", $config, true, false);
+		$var = new BoundedTypeInt("mxVote_timeout", "MXVote Timeout in seconds", $config, true, false);
 		$var->setDescription("Min: 30, Max: 360");
 		$var->setGroup("Voting");
 		$var->setMin(30);
@@ -49,7 +49,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->registerVariable($var);
 
 
-		$var = new BoundedInt("mxVote_voters", "MXVote Limit", $config, true, false);
+		$var = new BoundedTypeInt("mxVote_voters", "MXVote Limit", $config, true, false);
 		$var->setGroup("Voting");
 		$var->setMin(0);
 		$var->setMax(2);

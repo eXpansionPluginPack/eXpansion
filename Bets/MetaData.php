@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Bets;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
 
 /**
  * Description of MetaData
@@ -21,7 +21,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->setGroups(array("Games"));
 		$configInstance = Config::getInstance();
 
-		$var = new BoundedInt("timeoutSetBet", "Bet Accept timeout (in seconds)", $configInstance, false, false);
+		$var = new BoundedTypeInt("timeoutSetBet", "Bet Accept timeout (in seconds)", $configInstance, false, false);
 		$var->setMin(20);		
 		$var->setDefaultValue(60);
 		$this->registerVariable($var);

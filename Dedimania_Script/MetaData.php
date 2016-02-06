@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania_Script;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
  * Description of MetaData
@@ -32,11 +32,11 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$config = \ManiaLivePlugins\eXpansion\Dedimania\Config::getInstance();
 
-		$var = new String("login", "Dedimania server login (use this server login)", $config, false, false);
+		$var = new TypeString("login", "Dedimania server login (use this server login)", $config, false, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
 
-		$var = new String("code", 'Dedimania $l[http://dedimania.net/tm2stats/?do=register]server code$l', $config, false, false);
+		$var = new TypeString("code", 'Dedimania $l[http://dedimania.net/tm2stats/?do=register]server code$l', $config, false, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
 

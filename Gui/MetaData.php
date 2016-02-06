@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
  * Description of MetaData
@@ -80,13 +80,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setVisible(false);
 		$this->registerVariable($var);
 
-		$var = new String("style_widget_bgStyle", "background style", $config);
+		$var = new TypeString("style_widget_bgStyle", "background style", $config);
 		$var->setGroup("GUI");
 		$var->setDefaultValue("BgsPlayerCard");
 		$var->setVisible(false);
 		$this->registerVariable($var);
 
-		$var = new String("style_widget_bgSubStyle", "background substyle", $config);
+		$var = new TypeString("style_widget_bgSubStyle", "background substyle", $config);
 		$var->setGroup("GUI");
 		$var->setDefaultValue("BgRacePlayerName");
 		$var->setVisible(false);
@@ -120,7 +120,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue("fff");
 		$this->registerVariable($var);
 
-		$var = new String("style_widget_title_lbStyle", "Widget Titlebar font", $config);
+		$var = new TypeString("style_widget_title_lbStyle", "Widget Titlebar font", $config);
 		$var->setGroup("GUI");
 		$var->setDescription('see the $hstyles$h for available fonts');
 		$var->setDefaultValue("TextCardScores2");

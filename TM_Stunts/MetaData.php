@@ -2,9 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\TM_Stunts;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
  * Description of MetaData

@@ -8,7 +8,7 @@
 
 namespace ManiaLivePlugins\eXpansion\IdleKick;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
  * Description of MetaData

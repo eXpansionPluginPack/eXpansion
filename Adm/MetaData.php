@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
 
 /**

@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config;
 
 use ManiaLive\Data\Storage;
 use ManiaLivePlugins\eXpansion\Core\Core;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
@@ -245,8 +245,8 @@ abstract class MetaData
 
 	public function setDescription($description)
 	{
-		if (!$description instanceof String) {
-			$value = new String("Description", $description, null);
+		if (!$description instanceof TypeString) {
+			$value = new TypeString("Description", $description, null);
 			$value->setValue($description);
 			$description = $value;
 

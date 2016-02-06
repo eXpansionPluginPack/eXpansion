@@ -6,9 +6,9 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ConfigFile;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
  * Description of MetaData
@@ -137,12 +137,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue('$f00');
 		$this->registerVariable($var);
 
-		$var = new String('time_dynamic_max', 'Max time for dynamic TA limit, use format mm:ss', $config, false);
+		$var = new TypeString('time_dynamic_max', 'Max time for dynamic TA limit, use format mm:ss', $config, false);
 		$var->setGroup("Misc");
 		$var->setDefaultValue('7:00');
 		$this->registerVariable($var);
 
-		$var = new String('time_dynamic_min', 'Min time for dynamic TA limit, use format mm:ss', $config, false);
+		$var = new TypeString('time_dynamic_min', 'Min time for dynamic TA limit, use format mm:ss', $config, false);
 		$var->setGroup("Misc");
 		$var->setDefaultValue('4:00');
 		$this->registerVariable($var);
@@ -152,12 +152,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(true);
 		$this->registerVariable($var);
 
-		$var = new String('defaultMatchSettingsFile', 'This servers autosave matchsettings file', $config, false);
+		$var = new TypeString('defaultMatchSettingsFile', 'This servers autosave matchsettings file', $config, false);
 		$var->setGroup("Config Files");
 		$var->setDefaultValue('eXpansion_autosave.txt');
 		$this->registerVariable($var);
 
-		$var = new String('dedicatedConfigFile', 'This servers autosave dedicated config file', $config, false);
+		$var = new TypeString('dedicatedConfigFile', 'This servers autosave dedicated config file', $config, false);
 		$var->setGroup("Config Files");
 		$var->setDefaultValue('dedicated_cfg.txt');
 		$this->registerVariable($var);
@@ -167,19 +167,19 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue('casualRace');
 		$this->registerVariable($var);
 
-		$var = new String('contact', 'Server administrators contact info (displayed at serverinfo window)', $config, false);
+		$var = new TypeString('contact', 'Server administrators contact info (displayed at serverinfo window)', $config, false);
 		$var->setDefaultValue('YOUR@EMAIL.COM');
 		$this->registerVariable($var);
 		
 		$var = new SortedList('roundsPoints', 'Round points', $config, false);
 		$var->setVisible(false);
 		$var->setGroup("Misc");
-		$var->setType(new Int(""));
+		$var->setType(new TypeInt(""));
 		$var->setOrder("desc");
 		$var->setDefaultValue(array(10, 8, 7, 6, 5, 4, 3, 2, 1));
 		$this->registerVariable($var);
 
-		$var = new String('quitDialogManialink', 'Quit dialog customization, use url with custom manialink.xml', $config, false);
+		$var = new TypeString('quitDialogManialink', 'Quit dialog customization, use url with custom manialink.xml', $config, false);
 		$var->setGroup('GUI');
 		$var->setDefaultValue('');
 		$this->registerVariable($var);

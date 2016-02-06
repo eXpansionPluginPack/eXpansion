@@ -18,12 +18,12 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $plugins;
 
     /**
-     * @var ManiaLivePlugins\eXpansion\Core\types\config\MetaData[]
+     * @var  \ManiaLivePlugins\eXpansion\Core\types\config\MetaData[]
      */
     private $availablePlugins;
 
     /**
-     * @var ManiaLivePlugins\eXpansion\Core\types\config\MetaData[]
+     * @var \ManiaLivePlugins\eXpansion\Core\types\config\MetaData[]
      */
     private static $allAvailablePlugins;
 

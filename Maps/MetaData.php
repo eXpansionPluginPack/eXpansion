@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Maps;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
 
 /**
@@ -25,17 +25,17 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$var = new SortedList("publicQueueAmount", "Jukeboxing costs", $config, false, true);
 		$var->setGroup('Planets');
-		$var->setType(new Int("", "", null));
+		$var->setType(new TypeInt("", "", null));
 		$var->setDefaultValue(array(0));
 		$this->registerVariable($var);
 
-		$var = new Int("bufferSize", "Map Buffer size", $config, false, false);
+		$var = new TypeInt("bufferSize", "Map Buffer size", $config, false, false);
 		$var->setGroup("Buffers");
 		$var->setDefaultValue(5);
 		$this->registerVariable($var);
 
 
-		$var = new Int("historySize", "Map History size", $config, false, false);
+		$var = new TypeInt("historySize", "Map History size", $config, false, false);
 		$var->setGroup("Buffers");
 		$var->setDefaultValue(7);
 		$this->registerVariable($var);

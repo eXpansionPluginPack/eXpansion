@@ -3,8 +3,8 @@
 namespace ManiaLivePlugins\eXpansion\LocalRecords;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 
 /**
  * Description of MetaData
@@ -52,13 +52,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	protected function initSettings(){
 		$config = Config::getInstance();
 
-		$var = new BoundedInt("recordsCount", "Localrecords: records count (min: 30)", $config, true, false);
+		$var = new BoundedTypeInt("recordsCount", "Localrecords: records count (min: 30)", $config, true, false);
 		$var->setMin(30);
 		$var->setMax(1000);
 		$var->setDefaultValue(100);
 		$this->registerVariable($var);
 
-		$var = new BoundedInt("recordPublicMsgTreshold", "Localrecords: Public chat messages to TOP x", $config, true, false);
+		$var = new BoundedTypeInt("recordPublicMsgTreshold", "Localrecords: Public chat messages to TOP x", $config, true, false);
 		$var->setDescription("to show always public messages, set this to same value as recordsCount");
 		$var->setMin(1);
 		$var->setMax(1000);
@@ -76,7 +76,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->registerVariable($var);
 
 
-		$var = new Int("nbMap_rankProcess", "Number of Maps to Process", $config);
+		$var = new TypeInt("nbMap_rankProcess", "Number of Maps to Process", $config);
 		$var->setDescription("Number of consecutive maps for which ranking will be calculated at first start", true, false);
 		$var->setDefaultValue(500);
 		$this->registerVariable($var);
@@ -96,7 +96,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(false);
 		$this->registerVariable($var);
 
-		$var = new Int('saveRecFrequency', 'Records save Frequency', $config, true, false);
+		$var = new TypeInt('saveRecFrequency', 'Records save Frequency', $config, true, false);
 		$var->setDefaultValue(0);
 		$var->setDescription('Save every X minutes records. If 0 then will save on match end Only.');
 		$this->registerVariable($var);

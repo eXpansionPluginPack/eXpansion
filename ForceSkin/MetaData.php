@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\ForceSkin;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
  * Description of MetaData
@@ -21,11 +21,11 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 	
 		$config = Config::getInstance();
 
-		$var = new String("skinUrl", "skin url address", $config, false, false);
+		$var = new TypeString("skinUrl", "skin url address", $config, false, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
 
-		$var = new String("name", "set name for the skin", $config, false, false);
+		$var = new TypeString("name", "set name for the skin", $config, false, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
 

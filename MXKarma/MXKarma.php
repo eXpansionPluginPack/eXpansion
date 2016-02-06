@@ -22,7 +22,7 @@ namespace ManiaLivePlugins\eXpansion\MXKarma;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj;
 use ManiaLivePlugins\eXpansion\MXKarma\Classes\Connection as mxConnection;

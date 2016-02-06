@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
  *
  * @author De Cramer Oliver
  */
-class String extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
+class TypeString extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
 {
 
 	/**

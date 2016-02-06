@@ -32,7 +32,7 @@ class NotificationPluginlist extends \ManiaLivePlugins\eXpansion\Core\types\conf
 	public function __construct($name, $visibleName = "", $configInstance = null, $scope = false, $showMain = false)
 	{
 		parent::__construct($name, $visibleName, $configInstance, $scope, $showMain);
-		$this->setType(new \ManiaLivePlugins\eXpansion\Core\types\config\types\String(""));
+		$this->setType(new \ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString(""));
 	}
 
 	public function showConfWindow($login)
