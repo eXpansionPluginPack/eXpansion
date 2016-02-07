@@ -30,11 +30,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 	use ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
 	use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
 	use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
-	use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+	use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 	use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 	use ManiaLivePlugins\eXpansion\Helpers\Helper;
 	use ManiaLivePlugins\eXpansion\Helpers\Storage;
-	use ManiaLivePlugins\Standard\TeamSpeak\TeamSpeak3\Helper\String;
 	use Maniaplanet\DedicatedServer\Structures\GameInfos;
 	use Maniaplanet\DedicatedServer\Structures\PlayerNetInfo;
 	use Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException;
@@ -80,7 +79,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		/**
 		 * The path to the directory of this plugin
 		 *
-		 * @var String
+		 * @var string
 		 */
 		private $exp_dir = null;
 
@@ -368,7 +367,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 		 * to send login:
 		 * exp_chatSendServerMessage("Message with parameters %1$s %2$s", $login, array("parameter1","parameter2));
 		 *
-		 * @param string|MultiLangMsg $msg String or MultiLangMsg to sent
+		 * @param string|MultiLangMsg $msg string or MultiLangMsg to sent
 		 * @param null|string $login       null for everybody, string for individual
 		 * @param array $args              simple array of parameters
 		 */

@@ -2,8 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Notifications;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Float;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeFloat;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
  * Description of MetaData
@@ -23,16 +23,16 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$config = Config::getInstance();
 
 		$var = new \ManiaLivePlugins\eXpansion\Notifications\types\NotificationPluginlist("redirectedPlugins", "plugins to redirect", $config, false,false);
-		$var->setType(new String(""));
+		$var->setType(new TypeString(""));
 		$var->setDefaultValue(array());
 		$this->registerVariable($var);
 
-		$var = new Float("posX", "Pos X", $config, false,false);
+		$var = new TypeFloat("posX", "Pos X", $config, false,false);
 		$var->setDefaultValue(40);
 		$var->setDefaultValue(array());
 		$this->registerVariable($var);
 
-		$var = new Float("posY", "Pos Y", $config, false,false);
+		$var = new TypeFloat("posY", "Pos Y", $config, false,false);
 		$var->setDefaultValue(-40);
 		$var->setDefaultValue(array());
 		$this->registerVariable($var);

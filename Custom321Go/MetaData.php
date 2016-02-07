@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Custom321Go;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\HashList;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
  * Description of MetaData
@@ -19,12 +19,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 	$this->setGroups(array(' Tools'));
 	$config = Config::getInstance();
 
-	$var = new String("sprite1", "3-2-1", $config, false, false);
+	$var = new TypeString("sprite1", "3-2-1", $config, false, false);
 	$var->setDescription("image for 3-2-1");
 	$var->setDefaultValue("http://reaby.kapsi.fi/ml/ghost.png");
 	$this->registerVariable($var);
 
-	$var = new String("sprite2", "GO!", $config, false, false);
+	$var = new TypeString("sprite2", "GO!", $config, false, false);
 	$var->setDescription("image for go");
 	$var->setDefaultValue("http://reaby.kapsi.fi/ml/boo.png");
 	$this->registerVariable($var);

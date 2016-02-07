@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Core;
 
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Core\Events\ConfigLoadEvent;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 
 /**
@@ -146,7 +146,7 @@ class ConfigManager
                 $this->configurations[$class] = $config;
             }
 
-            $scopeVar = new Int($class . $var->getName(), "", Config::getInstance(), Variable::SCOPE_SERVER, false);
+            $scopeVar = new TypeInt($class . $var->getName(), "", Config::getInstance(), Variable::SCOPE_SERVER, false);
             $var->setScopeHandler($scopeVar);
             if (!isset($this->variables[get_class(Config::getInstance())]))
                 $this->variables[get_class(Config::getInstance())] = array();

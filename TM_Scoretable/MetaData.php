@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\TM_Scoretable;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 /**
@@ -32,13 +32,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$config = Config::getInstance();
 
 
-		$var = new BoundedInt("tm_score_columns", "Scoretable columns number", $config, false, false);
+		$var = new BoundedTypeInt("tm_score_columns", "Scoretable columns number", $config, false, false);
 		$var->setMax(10);
 		$var->setMin(2);
 		$var->setDefaultValue(2);
 		$this->registerVariable($var);
 
-		$var = new BoundedInt("tm_score_lines", "Lines per column", $config, false, false);
+		$var = new BoundedTypeInt("tm_score_lines", "Lines per column", $config, false, false);
 		$var->setMax(20);
 		$var->setMin(5);
 		$var->setDefaultValue(8);

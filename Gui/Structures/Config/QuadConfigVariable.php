@@ -24,10 +24,10 @@ namespace ManiaLivePlugins\eXpansion\Gui\Structures\Config;
 
 
 use ManiaLib\Utils\Singleton;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Float;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeFloat;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\MultiField;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 class QuadConfigVariable extends MultiField{
 
@@ -54,8 +54,8 @@ class QuadConfigVariable extends MultiField{
 	{
 		parent::__construct($name, $visibleName, $configInstance, $scope, $showMain);
 
-		$floatType = new Float('float');
-		$stringType = new String('string');
+		$floatType = new TypeFloat('float');
+		$stringType = new TypeString('string');
 
 		//Declare sub variables
 		$this->registerNewType(self::VAR_STYLE, $stringType);

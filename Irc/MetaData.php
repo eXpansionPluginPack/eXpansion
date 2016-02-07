@@ -2,9 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Irc;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 
 /**
  * Description of MetaData
@@ -22,45 +22,45 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->setGroups(array('Connectivity', 'Chat', 'Tools'));
 		$config = Config::getInstance();
 
-		$var = new String("hostname", "hostname", $config, true, false);
+		$var = new TypeString("hostname", "hostname", $config, true, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
 
-		$var = new String("server", "irc server to connect", $config, true, false);
+		$var = new TypeString("server", "irc server to connect", $config, true, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
 
-		$var = new Int("port", "connection port for the server", $config, true, false);
+		$var = new TypeInt("port", "connection port for the server", $config, true, false);
 		$var->setDefaultValue(6667);
 		$this->registerVariable($var);
 
-		$var = new String("serverPass", "password for server", $config, true, false);
+		$var = new TypeString("serverPass", "password for server", $config, true, false);
 		$var->setDefaultValue("");
 
 		$this->registerVariable($var);
 
-		$var = new String("realname", "Ircbot realname", $config, false, false);
+		$var = new TypeString("realname", "Ircbot realname", $config, false, false);
 		$var->setDefaultValue("ManiaPlanet bot");
 		$this->registerVariable($var);
 
-		$var = new String("nickname", "Ircbot nickname", $config, false, false);
+		$var = new TypeString("nickname", "Ircbot nickname", $config, false, false);
 		$var->setDefaultValue("maniaplanet_bot");
 		$this->registerVariable($var);
 
-		$var = new String("ident", "ident for bot", $config, false, false);
+		$var = new TypeString("ident", "ident for bot", $config, false, false);
 		$var->setDefaultValue("maniaplanet_bot");
 		$this->registerVariable($var);
 
-		$var = new String("channel", "irc channel to join", $config, false, false);
+		$var = new TypeString("channel", "irc channel to join", $config, false, false);
 		$var->setDefaultValue("#bots");
 		$this->registerVariable($var);
 
-		$var = new String("channelKey", "irc channel key", $config, false, false);
+		$var = new TypeString("channelKey", "irc channel key", $config, false, false);
 		$var->setDefaultValue("");
 		$this->registerVariable($var);
 
 		$var = new BasicList("allowedIrcLogins", "Allowed Irc nicknames to use admin commands", $config, false, false);
-		$var->setType(new String(""));
+		$var->setType(new TypeString(""));
 		$var->setDefaultValue(array());
 		$this->registerVariable($var);
 	}

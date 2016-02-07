@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\CustomUI\Gui;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\CustomUI\Config;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
@@ -35,7 +35,7 @@ class Customizer extends PlainWidget
 			$varName = 'ClientUI.'.ucfirst($variable->getName());
 			if ($variable instanceof Boolean) {
 				$code .= $varName . ' = ' . (($variable->getRawValue()) ? 'True' : 'False') . ";\n";
-			} else if ($variable instanceof Int) {
+			} else if ($variable instanceof TypeInt) {
 				$code .= $varName . ' = ' . $variable->getRawValue() . ";\n";
 			} else if ($variable instanceof BasicList) {
 				$value = $variable->getRawValue();

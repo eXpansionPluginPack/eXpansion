@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\MapRatings;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
 
 /**
  * Description of MetaData
@@ -30,13 +30,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(true);
 		$this->registerVariable($var);
 
-		$var = new BoundedInt("minVotes", "Map Autoremoval required minimum votes (min: 5)", $config, true, false);
+		$var = new BoundedTypeInt("minVotes", "Map Autoremoval required minimum votes (min: 5)", $config, true, false);
 		$var->setGroup("Voting");
 		$var->setMin(5);
 		$var->setDefaultValue(10);
 		$this->registerVariable($var);
 
-		$var = new BoundedInt("removeTresholdPercentage", "Map ratings autoremove percentage", $config, true, false);
+		$var = new BoundedTypeInt("removeTresholdPercentage", "Map ratings autoremove percentage", $config, true, false);
 		$var->setDescription("%-value for autoremove treshold (min: 10, max:60)");
 		$var->setGroup("Voting");
 		$var->setMin(10);

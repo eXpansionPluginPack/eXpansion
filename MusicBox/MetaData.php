@@ -3,7 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\MusicBox;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
  * Description of MetaData
@@ -26,7 +26,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(true);
 		$this->registerVariable($var);
 
-		$var = new String("url", "Enter tracklist index.csv url for musicbox ", $config, false, false);
+		$var = new TypeString("url", "Enter tracklist index.csv url for musicbox ", $config, false, false);
 		$var->setDefaultValue("http://reaby.kapsi.fi/ml/musictest");
 		$this->registerVariable($var);
 	}

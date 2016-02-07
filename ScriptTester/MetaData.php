@@ -8,7 +8,7 @@
 
 namespace ManiaLivePlugins\eXpansion\ScriptTester;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
  * Description of MetaData
@@ -25,12 +25,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
 
 	$config = Config::getInstance();
 
-	$var = new String("tester_maniascript", "ManiaScript", $config, false, false);
+	$var = new TypeString("tester_maniascript", "ManiaScript", $config, false, false);
 	$var->setVisible(false);
 	$var->setValue("");
 	$this->registerVariable($var);
 
-	$var = new String("tester_manialink", "ManiaLink", $config, false, false);
+	$var = new TypeString("tester_manialink", "ManiaLink", $config, false, false);
 	$var->setVisible(false);
 	$var->setValue("");
 	$this->registerVariable($var);

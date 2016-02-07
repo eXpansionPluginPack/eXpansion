@@ -8,7 +8,7 @@
 
 namespace ManiaLivePlugins\eXpansion\NetStat;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedFloat;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
 
 /**

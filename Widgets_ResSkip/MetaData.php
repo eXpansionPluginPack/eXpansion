@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_ResSkip;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
 
 
@@ -26,13 +26,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 		$var = new SortedList('publicResAmount', 'Amount needed to restart a map', $config, false, false);
 		$var->setDescription("If you use a negative value it will disable this feature.");
-		$var->setType(new Int("", "", null));
+		$var->setType(new TypeInt("", "", null));
 		$var->setDefaultValue(array(0 => 500));
 		$this->registerVariable($var);
 
 		$var = new SortedList('publicSkipAmount', 'Amount needed to skip a map', $config, false, false);
 		$var->setDescription("If you use a negative value it will disable this feature.");
-		$var->setType(new Int("", "", null));
+		$var->setType(new TypeInt("", "", null));
 		$var->setDefaultValue(array(0 => 750));
 		$this->registerVariable($var);
 	}

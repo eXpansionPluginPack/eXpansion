@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\CustomUI;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Float;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeFloat;
 
 /**
  * Description of MetaData
@@ -104,11 +104,11 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->registerVariable($var);
 
 		$var = new BasicList("overlayChatOffset", "Chat Offset", $config, false, false);
-		$var->setType(new Float(''));
+		$var->setType(new TypeFloat(''));
 		$var->setDefaultValue(array(0,0));
 		$this->registerVariable($var);
 
-		$var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\Int("overlayChatLineCount", "Chat Line Count", $config, false, false);
+		$var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt("overlayChatLineCount", "Chat Line Count", $config, false, false);
 		$var->setDefaultValue(7);
 		$this->registerVariable($var);
 	}

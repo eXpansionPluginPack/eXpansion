@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
  *
  * @author De Cramer Oliver
  */
-class BoundedFloat extends Float{
+class BoundedTypeFloat extends TypeFloat{
     
     /**
      * @var int the Maximum value allowed
@@ -37,7 +37,7 @@ class BoundedFloat extends Float{
      * Prevents values of the Variable to be greater then this value
      * 
      * @param int $max Sets the maximum value allowed
-     * @return \ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt
+     * @return \ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt
      */
     public function setMax($max) {
 	$this->max = $max;
@@ -48,7 +48,7 @@ class BoundedFloat extends Float{
      * Prevents values of the Variable to be smaller then this value
      * 
      * @param int $min Sets the minumum value allowed
-     * @return \ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt
+     * @return \ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt
      */
     public function setMin($min) {
 	$this->min = $min;

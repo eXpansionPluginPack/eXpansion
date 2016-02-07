@@ -24,8 +24,8 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_Voip;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
@@ -48,18 +48,18 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 			$this->registerVariable($var);
 
 
-			$var = new String($provider . 'Host', 'Host', $config, false, false);
+			$var = new TypeString($provider . 'Host', 'Host', $config, false, false);
 			$var->setDefaultValue('');
 			$var->setGroup($provider);
 			$this->registerVariable($var);
 
-			$var = new Int($provider . 'Port', 'Port', $config, false, false);
+			$var = new TypeInt($provider . 'Port', 'Port', $config, false, false);
 			$var->setDefaultValue('50490');
 			$var->setGroup($provider);
 			$this->registerVariable($var);
 
 
-			$var = new String($provider . 'ImageUrl', 'Image Url', $config, false, false);
+			$var = new TypeString($provider . 'ImageUrl', 'Image Url', $config, false, false);
 			$var->setDefaultValue('http://reaby.kapsi.fi/ml/logos/' . $provider . '.png');
 			$var->setGroup($provider);
 			$this->registerVariable($var);
@@ -68,35 +68,35 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 
 
-			$var = new String($provider . 'ImageFocusUrl', 'Image Url on Focus', $config, false, false);
+			$var = new TypeString($provider . 'ImageFocusUrl', 'Image Url on Focus', $config, false, false);
 			$var->setDefaultValue('http://reaby.kapsi.fi/ml/logos/' . $provider . '_focus.png');
 			$var->setGroup($provider);
 			$this->registerVariable($var);
 
-			$var = new Int($provider . 'ImageSizeX', 'Image Size X', $config, false, false);
+			$var = new TypeInt($provider . 'ImageSizeX', 'Image Size X', $config, false, false);
 			$var->setDescription('In Px');
 			$var->setDefaultValue(128);
 			$var->setGroup($provider);
 			$this->registerVariable($var);
 
-			$var = new Int($provider . 'ImageSizeY', 'Image Size X', $config, false, false);
+			$var = new TypeInt($provider . 'ImageSizeY', 'Image Size X', $config, false, false);
 			$var->setDescription('In Px');
 			$var->setDefaultValue(128);
 			$var->setGroup($provider);
 			$this->registerVariable($var);
 
-			$var = new Int($provider . 'Size', 'Display Size X', $config, false, false);
+			$var = new TypeInt($provider . 'Size', 'Display Size X', $config, false, false);
 			$var->setDescription('In maniaplanet display units');
 			$var->setDefaultValue(30);
 			$var->setGroup($provider);
 			$this->registerVariable($var);
 
-			$var = new Int($provider . 'X', 'Position X', $config, false, false);
+			$var = new TypeInt($provider . 'X', 'Position X', $config, false, false);
 			$var->setDefaultValue(-30);
 			$var->setGroup($provider);
 			$this->registerVariable($var);
 
-			$var = new Int($provider . 'Y', 'Position Y', $config, false, false);
+			$var = new TypeInt($provider . 'Y', 'Position Y', $config, false, false);
 			$var->setDefaultValue(90);
 			$var->setGroup($provider);
 			$this->registerVariable($var);

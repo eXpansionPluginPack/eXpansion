@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Chatlog;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 
 /**
  * Description of MetaData
@@ -20,7 +20,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->setGroups(array('Chat'));
 
 		$config = Config::getInstance();
-		$var = new Int("historyLenght", "Chatlog history lenght", $config, false, false);
+		$var = new TypeInt("historyLenght", "Chatlog history lenght", $config, false, false);
 		$var->setCanBeNull(false)
 			->setDefaultValue(100);
 		$this->registerVariable($var);

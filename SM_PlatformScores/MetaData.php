@@ -24,8 +24,8 @@
 namespace ManiaLivePlugins\eXpansion\SM_PlatformScores;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedInt;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 
 /**
  * Same Meta data as the local records just name and compatibility changes settings are common
