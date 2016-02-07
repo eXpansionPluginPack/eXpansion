@@ -114,6 +114,12 @@ class Maps extends ExpPlugin
         AdminGroups::addAlias($cmd, "replay");
         $this->cmd_replay = $cmd;
 
+        $cmd              = AdminGroups::addAdminCommand('previous', $this, 'previousMap', Permission::map_restart);
+        $cmd->setHelp(exp_getMessage('Adds previous map back to the Jukebox.'));
+        $cmd->setMinParam(0);
+        AdminGroups::addAlias($cmd, "prev");
+        $this->cmd_prev = $cmd;
+
         $this->registerChatCommand('list', "showMapList", 0, true);
         $this->registerChatCommand('maps', "showMapList", 0, true);
         $this->registerChatCommand('mapinfo', "showMapInfo", 0, true);
@@ -1076,6 +1082,41 @@ class Maps extends ExpPlugin
         if ($this->config->showNextMapWidget && !$this->atPodium) {
             $this->nextMap = $this->storage->currentMap;
             $this->redrawNextMapWidget();
+        }
+    }
+
+    public function previousMap($login) {
+        $player = $this->storage->getPlayerObject($login);
+
+        if (count($this->queue) > 0) {
+            reset($this->queue);
+            $queue = current($this->queue);
+            if ($queue->map->uId == $this->storage->currentMap->uId) {
+                $msg = exp_getMessage('#admin_error# $iChallenge already set to be replayed!');
+                $this->exp_chatSendServerMessage($msg, $login, array(Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+                return;
+            }
+        }
+
+        if (isset($this->history[1])) {
+            $map = $this->history[1];
+            array_unshift($this->queue, new MapWish($player, $map, false));
+
+            $msg    = exp_getMessage('#admin_action#Admin #variable#%1$s #admin_action#added previous map #variable#%3$s #admin_action# to the playlist');
+            $this->exp_chatSendServerMessage(
+                $msg,
+                null,
+                array(
+                    Formatting::stripCodes($player->nickName, 'wosnm'),
+                    null,
+                    Formatting::stripCodes($map->name, 'wosnm'),
+                    $map->author
+                )
+            );
+
+        } else {
+            $msg = exp_getMessage('#admin_error# $iThere are no previously played challenge!');
+            $this->exp_chatSendServerMessage($msg, $login, array(Formatting::stripCodes($player->nickName, 'wosnm'), $login));
         }
     }
 
