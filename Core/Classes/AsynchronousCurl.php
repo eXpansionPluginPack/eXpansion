@@ -27,7 +27,7 @@ use ManiaLive\Features\Tick\Event as TickEvent;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Core\types\AsynchronousCurlData;
 
-class AsynchronousCurl implements \ManiaLive\Application\Listener, \ManiaLive\Features\Tick\Listener
+class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\Application\Listener, \ManiaLive\Features\Tick\Listener
 {
     protected $handle;
 
@@ -37,11 +37,18 @@ class AsynchronousCurl implements \ManiaLive\Application\Listener, \ManiaLive\Fe
     public function start()
     {
         Dispatcher::register(AppEvent::getClass(), $this);
-        Dispatcher::register(TickEvent::getClass(), $this);
     }
 
-    public function query($url, $callback, $options = array(), $data = null) {
-
+    /**
+     * make a http query with options
+     * @param string $url
+     * @param callable $callback
+     * @param mixed $addionalData if you need to pass additional metadata with the query, like login do it here
+     * @param array $options  curl options array
+     */
+    public function query($url, $callback, $additionalData = null, $options = array())
+    {
+        $data = null;
         // Initialize Multi curl if none is running at the moment.
         if (empty($this->_queries)) {
             $this->handle = curl_multi_init();
@@ -52,10 +59,15 @@ class AsynchronousCurl implements \ManiaLive\Application\Listener, \ManiaLive\Fe
         curl_setopt($ch, CURLOPT_URL, $url);
 
         $data = new AsynchronousCurlData($callback, $data);
-
+        if ($additionalData) {
+            $data->setMeta($additionalData);
+        }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_USERAGENT, "eXpansionPluginPack v ".\ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
+
         if (!empty($options)) {
-            curl_setopt_array($ch, $options);
+            curl_setopt_array($ch, $options);          
         }
         curl_multi_add_handle($this->handle, $ch);
 
@@ -67,34 +79,38 @@ class AsynchronousCurl implements \ManiaLive\Application\Listener, \ManiaLive\Fe
      */
     function onTick()
     {
+
+    }
+
+    function onInit()
+    {
+
+    }
+
+    function onRun()
+    {
+
+    }
+
+    function onPreLoop()
+    {
+        
+    }
+
+    function onPostLoop()
+    {
+        // note: had to move this here, since slow internet connections downloading a single map took 2 minutes...
         if (!empty($this->_queries)) {
             curl_multi_exec($this->handle, $active);
-
             if ($state = curl_multi_info_read($this->handle)) {
                 $id = (string) $state['handle'];
-
+                
                 if (isset($this->_queries[$id])) {
                     $this->_queries[$id]->finalize($state['handle']);
                     unset($this->_queries[$id]);
                 }
             }
         }
-    }
-
-    function onInit()
-    {
-    }
-
-    function onRun()
-    {
-    }
-
-    function onPreLoop()
-    {
-    }
-
-    function onPostLoop()
-    {
     }
 
     function onTerminate()

@@ -22,15 +22,16 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\types;
 
-
 class AsynchronousCurlData
 {
-
     /** @var callable */
     protected $callback;
 
     /** @var  mixed */
     protected $data;
+
+    /** @var mixed */
+    protected $meta = null;
 
     /**
      * AsynchronousCurlData constructor.
@@ -38,12 +39,11 @@ class AsynchronousCurlData
      * @param callable $callback
      * @param mixed $data
      */
-    public function __construct(callable $callback, $data)
+    public function __construct($callback, $data)
     {
         $this->callback = $callback;
-        $this->data = $data;
+        $this->data     = $data;
     }
-
 
     /**
      * @return callable
@@ -59,6 +59,17 @@ class AsynchronousCurlData
     public function setCallback($callback)
     {
         $this->callback = $callback;
+    }
+
+    /** @return mixed */
+    public function setMeta($data)
+    {
+        $this->meta = $data;
+    }
+
+    public function getMeta()
+    {
+        return $this->meta;
     }
 
     /**
@@ -80,7 +91,6 @@ class AsynchronousCurlData
     public function finalize($ch)
     {
         $content = curl_multi_getcontent($ch);
-
-        call_user_func_array($this->callback, array($content, $ch, $this->data));
+        call_user_func_array($this->callback, array($content, $ch, $this));
     }
 }
