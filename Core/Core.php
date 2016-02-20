@@ -201,11 +201,11 @@ EOT;
 
 
 		//Checking php version
-		if (version_compare(PHP_VERSION, '5.3.3') >= 0) {
-			$this->console('Minimum PHP version 5.3.3: Pass (' . PHP_VERSION . ')');
+		if (version_compare(PHP_VERSION, '5.4.3') >= 0) {
+			$this->console('Minimum PHP version 5.4.3: Pass (' . PHP_VERSION . ')');
 		}
 		else {
-			$this->console('Minimum PHP version 5.3.3: Fail (' . PHP_VERSION . ')');
+			$this->console('Minimum PHP version 5.4.3: Fail (' . PHP_VERSION . ')');
 			$bExitApp = true;
 		}
 
@@ -215,6 +215,10 @@ EOT;
 		}
 		else {
 			$this->console('Garbage Collector enabled: Fail )');
+			$bExitApp = true;
+		}
+
+		if (!$this->checkDirPermissions()) {
 			$bExitApp = true;
 		}
 
@@ -230,6 +234,9 @@ EOT;
 		);
 		$this->console('Enabling default locale: ' . $config->defaultLanguage . '');
 		i18n::getInstance()->setDefaultLanguage($config->defaultLanguage);
+
+		$this->console('');
+
 
 		//If debug stupid, debug declaration
 		$this->console('');
@@ -275,6 +282,37 @@ EOT;
 		}
 	}
 
+
+	protected function checkDirPermissions()
+	{
+		$dirs = array('tmp', 'tmp/' . $this->storage->serverLogin);
+		$status = true;
+
+		$this->console('');
+		$this->console('Checking write permission in directories : ');
+		foreach ($dirs as $dir) {
+			$dirStatus = true;
+			if (!is_dir($dir)) {
+				if (!mkdir($dir, 0777, true)) {
+					$this->console("Cant create directory : '$dir' Please check permissions");
+					$dirStatus = false;
+				}
+			}
+			if (!is_writable($dir)) {
+				$this->console("Missing write permission in directory : '$dir' Please check permissions");
+				$dirStatus = false;
+			}
+
+			if ($dirStatus) {
+				$this->console("Permissions are fine for directory : '$dir'");
+			}
+
+			$status = $status && $dirStatus;
+		}
+		$this->console('');
+
+		return $status;
+	}
 	/**
 	 * On Manialive stopped
 	 */
