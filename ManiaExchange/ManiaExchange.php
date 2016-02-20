@@ -8,6 +8,7 @@ use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Widgets\MxWidget;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Windows\MxSearch;
+use oliverde8\AsynchronousJobs\Job\Curl;
 
 class ManiaExchange extends ExpPlugin
 {
@@ -163,16 +164,21 @@ class ManiaExchange extends ExpPlugin
         $this->dataAccess->httpCurl($query, array($this, $redirect), array("login" => $login, "mxId" => $mxId), $options);
     }
 
-    // function xAddMapAdmin($data, $code, $login, $mxId)
-    function xAddMapAdmin($data, $ch, $asyncObj)
+    /**
+     * @param Curl $job
+     * @param $jobData
+     */
+    function xAddMapAdmin($job, $jobData)
     {
-        $info = curl_getinfo($ch);
+        $info = $job->getCurlInfo();
         $code = $info['http_code'];
 
-        $meta  = $asyncObj->getMeta();
-        $mxId  = $meta['mxId'];
-        $login = $meta['login'];
-        print_r($meta);
+        $additionalData = $job->__additionalData;
+
+        $mxId  = $additionalData['mxId'];
+        $login = $additionalData['login'];
+
+        $data = $job->getResponse();
 
         if ($code !== 200) {
             if ($code == 302) {
@@ -262,15 +268,21 @@ class ManiaExchange extends ExpPlugin
         }
     }
 
-    // function xQueue($data, $code, $login, $mxId)
-    function xQueue($data, $ch, $asyncObj)
+    /**
+     * @param Curl $job
+     * @param $jobData
+     */
+    function xQueue($job, $jobData)
     {
-        $info = curl_getinfo($ch);
+        $info = $job->getCurlInfo();
         $code = $info['http_code'];
 
-        $meta  = $asyncObj->getMeta();
-        $mxId  = $meta['mxId'];
-        $login = $meta['login'];
+        $additionalData = $job->__additionalData;
+
+        $mxId  = $additionalData['mxId'];
+        $login = $additionalData['login'];
+
+        $data = $job->getResponse();
 
         if ($code !== 200) {
             if ($code == 302) {
@@ -280,9 +292,6 @@ class ManiaExchange extends ExpPlugin
             $this->exp_chatSendServerMessage("MX returned error code $code", $login);
             return;
         }
-        /** @var \Maniaplanet\DedicatedServer\Structures\Version */
-        $game = $this->connection->getVersion();
-
 
         $file = Helper::getPaths()->getDownloadMapsPath().$mxId.".Map.Gbx";
 

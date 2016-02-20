@@ -15,6 +15,7 @@ use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxMap;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Hooks\ListButtons;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\HookData;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap as Map;
+use oliverde8\AsynchronousJobs\Job\Curl;
 
 class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
@@ -204,17 +205,22 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         return;
     }
 
-    function xSearch($data, $ch, $asyncObj)
+    /**
+     * @param Curl $job
+     * @param $jobData
+     */
+    function xSearch($job, $jobData)
     {
+        $info = $job->getCurlInfo();
+        $code = $info['http_code'];
+
+        $data = $job->getResponse();
+
         foreach ($this->items as $item)
             $item->erase();
 
         $this->pager->clearItems();
         $this->items = array();
-
-        $info = curl_getinfo($ch);
-
-        $code = $info['http_code'];
 
         if ($code !== 200) {
             $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0,

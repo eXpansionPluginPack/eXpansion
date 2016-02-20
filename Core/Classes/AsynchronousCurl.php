@@ -23,9 +23,12 @@
 namespace ManiaLivePlugins\eXpansion\Core\Classes;
 
 use ManiaLive\Application\Event as AppEvent;
+use ManiaLive\Data\Storage;
 use ManiaLive\Features\Tick\Event as TickEvent;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Core\types\AsynchronousCurlData;
+use oliverde8\AsynchronousJobs\Job\CallbackCurl;
+use oliverde8\AsynchronousJobs\JobRunner;
 
 class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\Application\Listener, \ManiaLive\Features\Tick\Listener
 {
@@ -37,6 +40,9 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
     public function start()
     {
         Dispatcher::register(AppEvent::getClass(), $this);
+        /** @var Storage $storage */
+        $storage = Storage::getInstance();
+        JobRunner::getInstance($storage->serverLogin, 'php', 'tmp/asnychronous/');
     }
 
     /**
@@ -48,30 +54,19 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
      */
     public function query($url, $callback, $additionalData = null, $options = array())
     {
-        $data = null;
-        // Initialize Multi curl if none is running at the moment.
-        if (empty($this->_queries)) {
-            $this->handle = curl_multi_init();
-        }
+        $curlJob = new CallbackCurl();
+        $curlJob->setCallback($callback);
+        $curlJob->setUrl($url);
 
-        //
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
+        $options = array(
+            CURLOPT_SSL_VERIFYPEER => FALSE,
+            CURLOPT_USERAGENT => "eXpansionPluginPack v ".\ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION
+        ) + $options;
 
-        $data = new AsynchronousCurlData($callback, $data);
-        if ($additionalData) {
-            $data->setMeta($additionalData);
-        }
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_USERAGENT, "eXpansionPluginPack v ".\ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
+        $curlJob->setOptions($options);
+        $curlJob->__additionalData = $additionalData;
 
-        if (!empty($options)) {
-            curl_setopt_array($ch, $options);          
-        }
-        curl_multi_add_handle($this->handle, $ch);
-
-        $this->_queries[(string) $ch] = $data;
+        $curlJob->start();
     }
 
     /**
@@ -79,7 +74,7 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
      */
     function onTick()
     {
-
+        JobRunner::getInstance()->proccess();
     }
 
     function onInit()
@@ -99,18 +94,7 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
 
     function onPostLoop()
     {
-        // note: had to move this here, since slow internet connections downloading a single map took 2 minutes...
-        if (!empty($this->_queries)) {
-            curl_multi_exec($this->handle, $active);
-            if ($state = curl_multi_info_read($this->handle)) {
-                $id = (string) $state['handle'];
-                
-                if (isset($this->_queries[$id])) {
-                    $this->_queries[$id]->finalize($state['handle']);
-                    unset($this->_queries[$id]);
-                }
-            }
-        }
+        JobRunner::getInstance()->proccess();
     }
 
     function onTerminate()
