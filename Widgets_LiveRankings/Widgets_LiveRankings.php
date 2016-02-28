@@ -38,7 +38,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
     {
         if ($var->getConfigInstance() instanceof Config) {
-            Gui\Widgets\LivePanel::EraseAll();            
+            Gui\Widgets\LivePanel::EraseAll();
             $this->updateLivePanel();
         }
     }
@@ -137,30 +137,31 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             //points = $this->connection->triggerModeScriptEvent('Rounds_GetPointsRepartition',"");
         }
     }
+    /*
+      public function onBeginMap($map, $warmUp, $matchContinuation)
+      {
+      if (self::$raceOn == True) return;
 
-    public function onBeginMap($map, $warmUp, $matchContinuation)
+      $this->getRoundsPoints();
+      self::$raceOn      = false;
+      $this->forceUpdate = true;
+      $this->hideLivePanel();
+      $this->updateLivePanel();
+      self::$secondMap   = true;
+      self::$raceOn      = true;
+      }
+     */
+
+    public function onStatusChanged($statusCode, $statusName)
     {
-        if (self::$raceOn == True) return;
-
-        $this->getRoundsPoints();
-        self::$raceOn      = false;
-        $this->forceUpdate = true;
-        $this->hideLivePanel();
-        $this->updateLivePanel();
-        self::$secondMap   = true;
-        self::$raceOn      = true;
-    }
-
-    public function onBeginMatch()
-    {
-        if (self::$raceOn == True) return;
-
-        self::$raceOn      = false;
-        $this->forceUpdate = true;
-        $this->hideLivePanel();
-        $this->updateLivePanel();
-        self::$secondMap   = true;
-        self::$raceOn      = true;
+        if ($statusCode == 4) {
+            self::$raceOn      = false;
+            $this->forceUpdate = true;
+            $this->hideLivePanel();
+            $this->updateLivePanel();
+            self::$secondMap   = true;
+            self::$raceOn      = true;
+        }
     }
 
     public function onEndRound()

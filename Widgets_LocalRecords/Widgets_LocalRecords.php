@@ -125,31 +125,32 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             Gui\Widgets\LocalPanel2::EraseAll();
         }
     }
+    /*
+      public function onBeginMap($map, $warmUp, $matchContinuation)
+      {
+      self::$raceOn      = false;
+      $this->forceUpdate = true;
+      $this->widgetIds   = array();
+      Gui\Widgets\LocalPanel::EraseAll();
+      Gui\Widgets\LocalPanel2::EraseAll();
+      $this->updateLocalPanel();
+      self::$secondMap   = true;
+      self::$raceOn      = true;
+      }
+     */
 
-    public function onBeginMap($map, $warmUp, $matchContinuation)
+    public function onStatusChanged($statusCode, $statusName)
     {
-        self::$raceOn      = false;
-        $this->forceUpdate = true;
-        $this->widgetIds   = array();
-        Gui\Widgets\LocalPanel::EraseAll();
-        Gui\Widgets\LocalPanel2::EraseAll();
-        $this->updateLocalPanel();
-        self::$secondMap   = true;
-        self::$raceOn      = true;
-    }
-
-    public function onBeginMatch()
-    {
-        if (self::$raceOn == true) return;
-
-        self::$raceOn      = false;
-        $this->forceUpdate = true;
-        $this->widgetIds   = array();
-        Gui\Widgets\LocalPanel::EraseAll();
-        Gui\Widgets\LocalPanel2::EraseAll();
-        $this->updateLocalPanel();
-        self::$secondMap   = true;
-        self::$raceOn      = true;
+        if ($statusCode == 4) {
+            self::$raceOn      = false;
+            $this->forceUpdate = true;
+            $this->widgetIds   = array();
+            Gui\Widgets\LocalPanel::EraseAll();
+            Gui\Widgets\LocalPanel2::EraseAll();
+            $this->updateLocalPanel();
+            self::$secondMap   = true;
+            self::$raceOn      = true;
+        }
     }
 
     public function onEndRound()
