@@ -15,6 +15,7 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
  *
  * @author Petri
  */
+
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 

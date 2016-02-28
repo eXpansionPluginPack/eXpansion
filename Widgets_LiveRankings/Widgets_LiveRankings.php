@@ -35,6 +35,14 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $this->getRoundsPoints();
     }
 
+    public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
+    {
+        if ($var->getConfigInstance() instanceof Config) {
+            Gui\Widgets\LivePanel::EraseAll();            
+            $this->updateLivePanel();
+        }
+    }
+
     public function updateLivePanel($login = null)
     {
         Gui\Widgets\LivePanel::$connection = $this->connection;
@@ -42,10 +50,12 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $localRecs                         = LivePanel::GetAll();
         if ($login == null) {
             //Gui\Widgets\LivePanel::EraseAll();
-            $panelMain                    = Gui\Widgets\LivePanel::Create($login);
+            $panelMain = Gui\Widgets\LivePanel::Create($login);
             $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
             $panelMain->setSizeX($this->panelSizeX);
-            $panelMain->setDirection("left");
+            if (!$this->config->isHorizontal) {
+                $panelMain->setDirection("left");
+            }
             $this->widgetIds["LivePanel"] = $panelMain;
             $this->widgetIds["LivePanel"]->update();
             $this->widgetIds["LivePanel"]->show();

@@ -651,7 +651,11 @@ EOT;
 				return;
 			/** @var SimpleXMLElement */
 			$oldXml = simplexml_load_file($path);
-
+                        if ($oldXml === FALSE) {
+                            $this->console("ERROR while loading Dedicated server config file: ". $this->config->dedicatedConfigFile);
+                            $this->console("your settings are NOT saved!");
+                            return;
+                        }
 			$adapter = array("name" => "name",
 				"password" => "password",
 				"comment" => "comment",
