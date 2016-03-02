@@ -11,7 +11,6 @@ class DediPanel extends PlainPanel
     function exp_onBeginConstruct()
     {
         parent::exp_onBeginConstruct();
-        
     }
 }
 ?>

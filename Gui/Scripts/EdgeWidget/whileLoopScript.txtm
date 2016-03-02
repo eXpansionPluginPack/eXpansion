@@ -1,11 +1,11 @@
-if( edge_isLockedVisible2 == False && (Now - eXp_lastClockUpdate) >= 500 ) {
+if( edge_isLockedVisible2 == False && (Now - eXp_lastClockUpdate2) >= 500 ) {
     if (InputPlayer != Null) {
         declare Real Speed = InputPlayer.Speed*3.6;
 
         if (Speed < 50.0 || InputPlayer.RaceState == CTmMlPlayer::ERaceState::Finished) {
             if (lastValue == True) {
                 edge_isMinimized = False;
-                lastValue = False;    
+                lastValue = False;
                 edge_animatedId[id] = True;
              }
         }
@@ -20,7 +20,7 @@ if( edge_isLockedVisible2 == False && (Now - eXp_lastClockUpdate) >= 500 ) {
         }
     }
 
-    eXp_lastClockUpdate = Now;
+    eXp_lastClockUpdate2 = Now;
 }
 
 if (!edge_animatedId.existskey(id) ) {
@@ -28,34 +28,34 @@ if (!edge_animatedId.existskey(id) ) {
 }
 
 if (edge_animatedId[id] == True) {
-    
+
     if (animActive == False) {
         animActive = True;
         edgeStart = Now;
     }
-    
-    if (animActive && edgeStart + 1000 <= Now ) {   
+
+    if (animActive && edgeStart + 1000 <= Now ) {
         edge_animatedId[id] = False;
-        animActive = False;        
-    }     
+        animActive = False;
+    }
 
     if (animActive) {
-        p = eXp_widgetLastPosRel[version][id][gameMode];
+        p2 = eXp_widgetLastPosRel[version][id][gameMode];
         declare Text pos = "";
         declare Text scale = "1.";
 
         declare Real edge = -200.;
-        if (p.X > 1) {
+        if (p2.X > 1) {
             edge = 200.;
         }
 
         if (edge_isMinimized) {
-            declare value = edge * AL::Ease("EaseInCirc", (Now - edgeStart) * 1., 0., 1., 1000.); 
-            Window.RelativePosition.X = p.X + value;
+            declare value = edge * AL::Ease("EaseInCirc", (Now - edgeStart) * 1., 0., 1., 1000.);
+            Window.RelativePosition.X = p2.X + value;
         }
-        else {      
+        else {
             declare value = edge * AL::Ease("EaseOutCirc", (Now - edgeStart) * 1., 1., -1., 1000.);
-            Window.RelativePosition.X = p.X + value;
+            Window.RelativePosition.X = p2.X + value;
         }
     }
 } else {

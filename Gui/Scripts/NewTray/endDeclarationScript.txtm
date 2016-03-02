@@ -3,6 +3,21 @@ declare Integer start = Now-2000;
 declare persistent Boolean[Text] exp_trayId = Boolean[Text];
 declare Vec3 p = eXp_widgetLastPosRel[version][id][gameMode];
 
+// from edge script
+declare Boolean edge_isMinimized for UI = False;
+declare Boolean edge_isAnimated for UI = False;
+declare persistent Boolean edge_isLockedVisible2 = True;
+
+declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
+declare Boolean lastValue = edge_isMinimized;
+
+declare Integer edgeStart = Now;
+declare Boolean animActive = False;
+declare Real value = 0.;
+
+if (!edge_animatedId.existskey(id) ) {
+    edge_animatedId[id] = edge_isMinimized;
+}
 
 if (!exp_trayId.existskey(id) ) {
     exp_trayId[id] = True;
@@ -16,3 +31,8 @@ declare Real diff = -(Window.Size.X / 2) + 8;
 if (exp_trayId[id]) {
     Window.RelativePosition.X = p.X + diff;
 }
+
+declare Real edge = -200.;
+    if (p.X > 1) {
+        edge = 200.;
+    }
