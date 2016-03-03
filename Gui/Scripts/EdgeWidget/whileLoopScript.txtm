@@ -50,11 +50,11 @@ if (edge_animatedId[id] == True) {
         }
 
         if (edge_isMinimized) {
-            declare value = edge * AL::Ease("EaseInCirc", (Now - edgeStart) * 1., 0., 1., 1000.);
+            declare value = edge * AL::Ease("EaseInCirc", (Now - edgeStart) * 1., 0., 1., 500.);
             Window.RelativePosition.X = p2.X + value;
         }
         else {
-            declare value = edge * AL::Ease("EaseOutCirc", (Now - edgeStart) * 1., 1., -1., 1000.);
+            declare value = edge * AL::Ease("EaseOutCirc", (Now - edgeStart) * 1., 1., -1., 500.);
             Window.RelativePosition.X = p2.X + value;
         }
     }

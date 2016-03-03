@@ -59,19 +59,19 @@ if (edge_animatedId[id] == True) {
         }
 
         if (edge_isMinimized) {
-            value = edge * AL::Ease("EaseInCirc", (Now - edgeStart) * 1., 0., 1., 1000.);
+            value = edge * AL::Ease("EaseInCirc", (Now - edgeStart) * 1., 0., 1., 250.);
         }
         else {
-            value = edge * AL::Ease("EaseOutCirc", (Now - edgeStart) * 1., 1., -1., 1000.);
+            value = edge * AL::Ease("EaseOutCirc", (Now - edgeStart) * 1., 1., -1., 250.);
         }
     }
 
 
  if (exp_trayId[id]) {
-            declare Real value2 = value + diff * AL::Ease("EaseInCirc", (Now - start) * 1., 0., 1., 1000.);
+            declare Real value2 = value + diff * AL::Ease("EaseInCirc", (Now - start) * 1., 0., 1., 250.);
             Window.RelativePosition.X = p.X + value2;
         }
         else {
-            declare Real value2 = value + diff * AL::Ease("EaseOutCirc", (Now - start) * 1., 1., -1., 1000.);
+            declare Real value2 = value + diff * AL::Ease("EaseOutCirc", (Now - start) * 1., 1., -1., 250.);
             Window.RelativePosition.X =  p.X + value2;
     }
