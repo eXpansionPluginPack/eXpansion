@@ -60,7 +60,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
                 $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
                 if (!$this->config->isHorizontal) {
                     $panelMain->setDirection("left");
-                    if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS)
+                    if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK)
                     {
                         $panelMain->setDirection("right");
                     }
