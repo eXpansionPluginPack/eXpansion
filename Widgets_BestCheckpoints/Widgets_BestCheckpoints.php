@@ -26,16 +26,17 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
         $info->show();
     }
 
-    public function onStatusChanged($statusCode, $statusName)
+    public function onBeginMatch()
     {
-        if ($statusCode == 4) {
-            $this->displayWidget(null);
-        }
+        $this->displayWidget(null);
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-        BestCpPanel::EraseAll();
+        if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS || $this->storage->gameInfos->scriptName
+            != "Rounds.Script.txt") {
+            BestCpPanel::EraseAll();
+        }
     }
 
     function exp_onUnload()
