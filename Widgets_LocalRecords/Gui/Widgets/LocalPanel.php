@@ -6,8 +6,7 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 
 class LocalPanel extends PlainPanel
 {
-    private $trayWidget;
-
+    
     protected function exp_onBeginConstruct()
     {
 
@@ -16,8 +15,6 @@ class LocalPanel extends PlainPanel
           $animation = new \ManiaLivePlugins\eXpansion\Gui\Script_libraries\Animation();
           $this->registerScript($animation);
          */
-        $this->trayWidget = new Script("Gui/Scripts/NewTray");
-        $this->registerScript($this->trayWidget);
     }
 }
 ?>
