@@ -38,6 +38,7 @@ use ManiaLivePlugins\eXpansion\Core\RelayLink;
 use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
 use Maniaplanet\DedicatedServer\Structures\Version;
 use ManiaLive\DedicatedApi\Config as DedicatedConfig;
+use ManiaLivePlugins\eXpansion\Core\MetaData as CoreMeta;
 
 class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerListener
 {
@@ -198,6 +199,30 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 		}
 	}
 
+	public function saveBlackList()
+	{
+		$file = CoreMeta::getInstance('expansion/core')->getVariable('blackListSettingsFile')->getRawValue();
+		$this->connection->saveBlackList($file);
+	}
+
+	public function loadBlackList()
+	{
+		$file = CoreMeta::getInstance('expansion/core')->getVariable('blackListSettingsFile')->getRawValue();
+		$this->connection->loadBlackList($file);
+	}
+
+	public function saveGuestList()
+	{
+		$file = CoreMeta::getInstance('expansion/core')->getVariable('guestListSettingsFile')->getRawValue();
+		$this->connection->saveGuestList($file);
+	}
+
+	public function loadGuestList()
+	{
+		$file = CoreMeta::getInstance('expansion/core')->getVariable('guestListSettingsFile')->getRawValue();
+		$this->connection->loadGuestList($file);
+	}
+
 	public function onPlayerConnect($login, $isSpectator)
 	{
 		if ($isSpectator) {
@@ -214,7 +239,6 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 
 	public function onBeginMap($map, $warmUp, $matchContinuation)
 	{
-
 		$this->players = array();
 		foreach ($this->storage->players as $player) {
 			if ($player->isConnected) {
@@ -228,6 +252,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 				$this->spectators[$player->login] = $player->login;
 			}
 		}
+
+		$this->loadBlackList();
+		$this->loadGuestList();
 	}
 
 	public function onPlayerInfoChanged($playerInfo)

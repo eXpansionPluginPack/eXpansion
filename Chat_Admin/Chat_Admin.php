@@ -1212,7 +1212,10 @@ Other server might use the same blacklist file!!');
 		}
 		$admin = $this->storage->getPlayerObject($fromLogin);
 		try {
+			$this->expStorage->loadBlackList();
 			$this->connection->banAndBlackList($target, $reason, true);
+			$this->expStorage->saveBlackList();
+
 			$this->exp_chatSendServerMessage('#admin_action#Admin #variable# %s #admin_action#blacklists the player #variable# %s', null, array($admin->nickName, $player->nickName));
 		} catch (Exception $e) {
 			$this->sendErrorChat($fromLogin, $e->getMessage());
@@ -1224,6 +1227,7 @@ Other server might use the same blacklist file!!');
 		$admin = $this->storage->getPlayerObject($fromLogin);
 		try {
 			$this->connection->cleanBlackList();
+			$this->expStorage->saveBlackList();
 			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#cleans the blacklist.', null, array($admin->nickName));
 		} catch (Exception $e) {
 			$this->sendErrorChat($fromLogin, $e->getMessage());
@@ -1307,7 +1311,10 @@ Other server might use the same blacklist file!!');
 
 		$admin = $this->storage->getPlayerObject($fromLogin);
 		try {
+			$this->expStorage->loadBlackList();
 			$this->connection->unBlackList($params[0]);
+			$this->expStorage->saveBlackList();
+
 			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#unblacklists the player %s', null, array($admin->nickName, $params[0]));
 		} catch (Exception $e) {
 			$this->sendErrorChat($fromLogin, $e->getMessage());
@@ -1421,7 +1428,10 @@ Other server might use the same blacklist file!!');
 
 		$admin = $this->storage->getPlayerObject($fromLogin);
 		try {
+			$this->expStorage->loadGuestList();
 			$this->connection->addGuest($player);
+			$this->expStorage->saveGuestList();
+
 			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#add as guest the player#variable# %s', null, array($admin->nickName, $player->nickName));
 		} catch (Exception $e) {
 			$this->sendErrorChat($fromLogin, $e->getMessage());
@@ -1439,7 +1449,10 @@ Other server might use the same blacklist file!!');
 
 		$admin = $this->storage->getPlayerObject($fromLogin);
 		try {
+			$this->expStorage->loadGuestList();
 			$this->connection->removeGuest($player);
+			$this->expStorage->saveGuestList();
+
 			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#removed guest status of the player#variable# %s', null, array($admin->nickName, $player->nickName));
 		} catch (Exception $e) {
 			$this->sendErrorChat($fromLogin, $e->getMessage());
