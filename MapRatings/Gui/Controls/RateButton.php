@@ -59,7 +59,7 @@ class RateButton extends \ManiaLivePlugins\eXpansion\Gui\Control
 		 */
 		$this->label = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
 		//$this->label->setIcon("BgRaceScore2", "Fame");
-		$this->label->$this->label->setAlign('center', 'center');
+		$this->label->setAlign('center', 'center');
 		$this->label->setText("+" . $number);
 		$this->label->setId("rate_" . $number);
 		$this->label->setAttribute("class", "rateButton");
