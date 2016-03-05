@@ -4,12 +4,12 @@ namespace ManiaLivePlugins\eXpansion\Widgets_EndRankings\Gui\Widgets;
 
 class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
 
-    private $frame;
-    private $items = array();
-    private $bg;
-    private $bgTitle;
-    private $quad;
-    private $lbl;
+    protected $frame;
+    protected $items = array();
+    protected $bg;
+    protected $bgTitle;
+    protected $quad;
+    protected $lbl;
 
     protected function onConstruct() {
 	
