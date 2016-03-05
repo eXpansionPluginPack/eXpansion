@@ -23,7 +23,7 @@
         "php": ">=5.4",
         "ext-curl": "*",
         "ext-json": "*",
-        "maniaplanet/manialive-lib": "dev-dev",
+        "maniaplanet/manialive-lib": "1.0.0.*",
         "monolog/monolog": "1.0.*",
         "oliverde8/asynchronous-jobs": "1.0.*"
     },
