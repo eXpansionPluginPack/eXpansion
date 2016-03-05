@@ -26,6 +26,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Advertising;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Int;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\String;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
+
 
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
@@ -37,6 +39,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$this->setDescription("Provides a Custom Widget to put your advertisement in");
 		$this->setGroups(array('Widgets', 'Tools'));
 		$config = Config::getInstance();
+
+                $var = new BasicList('noAdUsers', "Hide ads for users", $config, false, false);
+                $var->setGroup("Settings");
+                $var->setType(new String(""));
+                $var->setDefaultValue(array());
+                $this->registerVariable($var);
 
 		for ($x = 1; $x <= 5; $x++) {
 
