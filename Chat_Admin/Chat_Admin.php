@@ -1287,10 +1287,7 @@ Other server might use the same blacklist file!!');
 		if (strtolower(substr($scriptName, -11)) !== '.script.txt')
 			$scriptName .= '.Script.txt';
 
-		echo "\n\n\n".$scriptName."\n\n\n";
-
 		if (file_exists($scriptName)) {
-			echo "FOUND\n";
 			$data = file_get_contents($scriptName);
 
 			try {
