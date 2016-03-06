@@ -96,6 +96,8 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 		if ($ret != 0) {
 			$this->console('[eXpansion:AutoUpdate]Error while checking for updates eXpansion !!');
+                        $this->console($results);
+                        \ManiaLivePlugins\eXpansion\Gui\Gui::showError($results, AdminGroups::getAdminsByPermission(Permission::server_update));
 			$AdminGroups->announceToPermission(Permission::server_update, '#admin_error#Error while checking for updates of #variable#eXpansion & Components !!');
 		}
 		else {
@@ -155,6 +157,8 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 		if ($ret != 0) {
 			$this->console('[eXpansion:AutoUpdate]Error while updating eXpansion !!');
+                        $this->console($results);
+                        \ManiaLivePlugins\eXpansion\Gui\Gui::showError($results, AdminGroups::getAdminsByPermission(Permission::server_update));
 			$AdminGroups->announceToPermission(Permission::server_update, '#admin_error#Error while updating #variable#eXpansion & Components !!');
 		}
 		else {

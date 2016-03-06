@@ -232,14 +232,14 @@ class Gui extends ExpPlugin {
      * @return string cleaned up string
      */
     public static function fixString($string, $multiline = false) {
-        $out = str_replace("\r", '__', $string);
+        $out = str_replace("\r", '', $string);
         if (!$multiline) {
             $out = str_replace("\n", '', $out);
         }
         $out = str_replace('"', "'", $out);
         $out = str_replace('\\', '\\\\', $out);
         $out = str_replace('-', '–', $out);
-        ;
+        
         return $out;
     }
 
@@ -249,11 +249,37 @@ class Gui extends ExpPlugin {
         $window->show();
     }
 
-    public static function showNotice(Message $message, $login, $args = array()) {
-        $window = Notice::Create($login);
+    public static function showNotice($message, $login, $args = array()) {
+        $window = null;
+        if (is_array($login)) {
+            $grp = \ManiaLive\Gui\Group::Create("notice", $login);
+            $window = Notice::Create($grp);
+        }
+        else {
+            $window = Notice::Create($login);
+        }
+        
+        if (is_string($message))
+        {
+            $message = exp_getMessage($message);
+        }
         $window->setMessage($message, $args);
-        $window->show();
+        $window->show($login);
     }
+
+        public static function showError($message, $login) {
+        $window = null;
+        if (is_array($login)) {
+            $grp = \ManiaLive\Gui\Group::Create("error", $login);
+            $window = Windows\Error::Create($grp);
+        }
+        else {
+            $window = Windows\Error::Create($login);
+        }
+        $window->setMessage($message);
+        $window->show($login);
+    }
+
 
     /**
      * Preload image
