@@ -44,7 +44,8 @@ class PlainPanel extends Widget
     public $timeScript;
     protected $nbFields;
     public $trayWidget;
-    
+    public $edgeWidget;
+
     protected function exp_onBeginConstruct()
     {
         $sizeX         = 46;
@@ -86,7 +87,8 @@ class PlainPanel extends Widget
         $this->layer->setDescription("Switch from Race view to Score View(Visible on Tab)", 75);
         $this->addComponent($this->layer);
 
-        $this->setDisableAxis("x");
+        $this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
+        $this->registerScript($this->edgeWidget);
 
         parent::exp_onBeginConstruct();
     }
@@ -120,10 +122,13 @@ class PlainPanel extends Widget
 
     public function setDirection($dir)
     {
-
+        $this->setDisableAxis("x");
+        if ($this->edgeWidget) {
+            $this->unregisterScript($this->edgeWidget);
+        }
+        $this->setName($this->getName()." (new)");
         $this->trayWidget = new Script("Gui/Scripts/NewTray");
         $this->registerScript($this->trayWidget);
-
         $this->bgTitle->setDirection($dir);
     }
 

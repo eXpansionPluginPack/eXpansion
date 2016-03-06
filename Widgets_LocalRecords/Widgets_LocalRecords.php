@@ -80,7 +80,6 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
                     $panelScore->setSizeX($this->panelSizeX);
                     $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
                     $panelScore->setVisibleLayer("scorestable");
-
                     $this->widgetIds["LocalPanel2"] = $panelScore;
                     $this->widgetIds["LocalPanel2"]->update();
                     $this->widgetIds["LocalPanel2"]->show();
