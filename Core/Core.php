@@ -22,7 +22,7 @@ use Maniaplanet\DedicatedServer\Structures\ServerOptions;
 class Core extends types\ExpPlugin
 {
 
-	const EXP_VERSION = "1.0.0.0";
+	const EXP_VERSION = "1.0.0.3";
 
 	const EXP_REQUIRE_MANIALIVE = "4.0.0";
 
@@ -156,9 +156,6 @@ class Core extends types\ExpPlugin
 		//Start multi lang system for eXpansion. Gogo languages
 		i18n::getInstance()->start();
 
-		//Started paralel download utility, thanks to xymph and other devs to have coded it. it rocks
-		DataAccess::getInstance()->start();
-
 		$expansion = <<<'EOT'
    
    
@@ -222,6 +219,10 @@ EOT;
 			$bExitApp = true;
 		}
 
+		if (!$this->checkPhpExtensions()) {
+			$bExitApp = true;
+		}
+
 		$this->console('Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . ' build ' . date(
 						"Y-m-d h:i:s A", Helper::getBuildDate()
 				) . ''
@@ -274,18 +275,31 @@ EOT;
 			$this->connection->triggerModeScriptEvent("LibXmlRpc_UnblockAllCallbacks", "");
 			try {
 				$this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => true));
-			} catch (Exception $ex) {
+			} catch (\Exception $ex) {
 				Helper::log("[Core] script mode running, but can't enable 'S_UseScriptCallbacks'... perhaps non-nadeo script running ?");
 			}
 			$this->connection->triggerModeScriptEvent("LibXmlRpc_UnblockAllCallbacks", "");
 			$this->enableScriptEvents("LibXmlRpc_Callbacks");
 		}
+
+		//Started paralel download utility, thanks to xymph and other devs to have coded it. it rocks
+		DataAccess::getInstance()->start();
 	}
 
 
 	protected function checkDirPermissions()
 	{
-		$dirs = array('tmp', 'tmp/' . $this->storage->serverLogin);
+		$dirs = array(
+			'tmp',
+			'tmp/' . $this->storage->serverLogin
+		);
+
+		if (!$this->expStorage->isRemoteControlled) {
+			$dir[] = Helper::getPaths()->getDefaultMapPath();
+			$dir[] = Helper::getPaths()->getMapPath();
+			$dir[] = Helper::getPaths()->getMatchSettingPath();
+		}
+
 		$status = true;
 
 		$this->console('');
@@ -313,6 +327,41 @@ EOT;
 
 		return $status;
 	}
+
+	public function checkPhpExtensions()
+	{
+		$extensions = array(
+			'mysqli' => 'extension=php_mysqli.dll',
+			'openssl' => 'extension=php_openssl.dll',
+			'curl' => 'extension=curl.dll',
+		);
+
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			$extensions['com_dotnet'] = 'extension=php_com_dotnet.dll';
+		}
+		$recomend = array(
+			'xmlrpc' => "It will have better performances !",
+			'gd2' => '',
+		);
+
+		$status = true;
+
+		foreach ($extensions as $extension => $description) {
+			if (!extension_loaded($extension)) {
+				$this->console("eXpansion needs PHP extension $extension to run. Enable it to run eXpansion => " . $description);
+				$status = false;
+			}
+		}
+
+		foreach ($recomend as $extension => $reason) {
+			if (!extension_loaded($extension)) {
+				$this->console("eXpansion works better with PHP extension $extension : " . $reason);
+			}
+		}
+
+		return $status;
+	}
+
 	/**
 	 * On Manialive stopped
 	 */

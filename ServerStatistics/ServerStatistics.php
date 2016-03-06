@@ -35,24 +35,6 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 			$this->dumpException($message, new \Exception('`pcre` is missing'));
 			exit(1);
 		}
-		if (!class_exists("COM")) {
-			$extensions = get_loaded_extensions();
-			if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-				if (!in_array("php_com_dotnet", $extensions)) {
-					try {
-						if (!(bool)ini_get("enable_dl") || (bool)ini_get("safe_mode")) {
-							$phpPath = get_cfg_var('cfg_file_path');
-							$this->dumpException("Autoloading extensions is not enabled in php.ini.\n\n`php_com_dotnet` extension needs to be enabled for Windows-based systems.\n\nEdit following file $phpPath and set:\n\nenable_dl = On\n\nor add this line:\n\nextension=php_com_dotnet.dll", new \Maniaplanet\WebServices\Exception("Loading extensions is not permitted."));
-							exit(1);
-						}
-						dl("php_com_dotnet");
-					} catch (\Exception $e) {
-						$this->dumpException("Error while trying to autoload extension `php_com_dotnet`", $e);
-						exit(1);
-					}
-				}
-			}
-		}
 
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 			$this->metrics = new Stats\StatsWindows();

@@ -9,16 +9,16 @@ class Paths
     private $gameDataDirectory;
 
     /**
-     * @var \ManiaLib\Utils\Path $path;  
+     * @var \ManiaLib\Utils\Path $path ;
      */
     private $path;
 
     function __construct()
     {
-	$connection = Helper::getSingletons()->getDediConnection();
-	$this->mapsDirectory = $connection->getMapsDirectory();	
-	$this->gameDataDirectory = $connection->gameDataDirectory();
-	$this->path = \ManiaLib\Utils\Path::getInstance();
+        $connection = Helper::getSingletons()->getDediConnection();
+        $this->mapsDirectory = $connection->getMapsDirectory();
+        $this->gameDataDirectory = $connection->gameDataDirectory();
+        $this->path = \ManiaLib\Utils\Path::getInstance();
     }
 
     /**
@@ -27,37 +27,37 @@ class Paths
      */
     public function getManialiveRoot()
     {
-	return $this->path->getRoot();
+        return $this->path->getRoot();
     }
 
     protected function getBaseMap()
     {
-	/**
-	 * @var \ManiaLivePlugins\eXpansion\Core\Config $config
-	 */
-	$config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
+        /**
+         * @var \ManiaLivePlugins\eXpansion\Core\Config $config
+         */
+        $config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
 
-	return ($config->mapBase == "" ? "" : $config->mapBase . '/');
+        return ($config->mapBase == "" ? "" : $config->mapBase . '/');
     }
 
     public function getMapPath()
     {
-	return $this->mapsDirectory . $this->getBaseMap();
+        return $this->mapsDirectory . $this->getBaseMap();
     }
 
     public function getDefaultMapPath()
     {
-	return $this->mapsDirectory;
+        return $this->mapsDirectory;
     }
 
     public function getMatchSettingPath()
     {
-	return $this->mapsDirectory . $this->getBaseMap() . 'MatchSettings/';
+        return $this->mapsDirectory . $this->getBaseMap() . 'MatchSettings/';
     }
 
     public function getDownloadMapsPath()
     {
-	return $this->mapsDirectory . $this->getBaseMap() . 'Downloaded/';
+        return $this->mapsDirectory . $this->getBaseMap() . 'Downloaded/';
     }
 
     /**
@@ -66,12 +66,12 @@ class Paths
      */
     public function getGameDataPath()
     {
-	return $this->gameDataDirectory;
+        return $this->gameDataDirectory;
     }
 
     public function fileHasExtension($fileName, $extension)
     {
-	return $extension === "" || substr($fileName, -strlen($extension)) === $extension;
+        return $extension === "" || substr($fileName, -strlen($extension)) === $extension;
     }
 
 }
