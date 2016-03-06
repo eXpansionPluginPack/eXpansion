@@ -59,15 +59,20 @@ class BetWidget extends Widget
         $this->frame->setLayout(new Column());
         $this->addComponent($this->frame);
 
-        $this->labelAccept = new DicoLabel();
         $this->script      = new Script("Bets/Gui/Scripts");
         $this->script->setParam("hideFor", "Text[]");
         $this->registerScript($this->script);
+
+        $this->closeButton            = new Button();   
+        $this->closeButton->setText("Close");
+        $this->closeButton->setId("closeButton");
+        $this->closeButton->setScriptEvents();
+        $this->addComponent($this->closeButton);
     }
 
     protected function exp_onEndConstruct()
     {
-        $this->setPosition(-40, 60);
+        $this->setPosition(20, -65);
     }
 
     public function onResize($oldX, $oldY)
@@ -81,7 +86,7 @@ class BetWidget extends Widget
     {
         if (Bets::$state == Bets::state_setBets) $this->setBets();
         if (Bets::$state == Bets::state_acceptMoreBets) $this->acceptBets();
-
+        $this->closeButton->setPosition($this->sizeX - 28, -$this->sizeY + 5);
         parent::onDraw();
     }
 
@@ -92,12 +97,15 @@ class BetWidget extends Widget
         $line = new Frame();
         $line->setLayout(new Flow());
         $line->setSize(80, 12);
-
+        
+        $this->labelAccept = new DicoLabel(50);
+        $this->labelAccept->setPosition(5, -2);
         $this->labelAccept->setText(exp_getMessage('Accept bet for %1$s planets ?'), array("".Bets::$betAmount));
         $line->addComponent($this->labelAccept);
 
         $button = new Button();
         $button->setText("Accept");
+        $button->colorize('$0f0');
         $button->setAction(self::$action_acceptBet);
 
         $line->addComponent($button);
@@ -138,29 +146,22 @@ class BetWidget extends Widget
           }
          */
 
-        $label = new DicoLabel(22, 6);
+        $label = new DicoLabel(25, 6);
         $label->setAlign("left", "center2");
         $label->setText(exp_getMessage("Custom amount"));
         $line->addComponent($label);
 
-        $inputbox = new Inputbox("betAmount", 12);
+        $inputbox = new Inputbox("betAmount", 10);
         $line->addComponent($inputbox);
 
+
         $button             = new Button();
+        $button->setPosX(16);
         $button->setText("Accept");
         $button->colorize("0d0");
         $button->setAction(self::$action_setAmount);
         $this->buttonAccept = $button;
         $line->addComponent($this->buttonAccept);
-
-        $button            = new Button();
-        $button->setPosition($this->sizeX - 28, -$this->sizeY + 3);
-        $button->setText("Close");
-        $button->setId("closeButton");
-        $button->setScriptEvents();
-        // $button->setAction($this->createAction(array($this, 'close')));
-        $this->closeButton = $button;
-        $this->addComponent($this->closeButton);
 
         $this->frame->addComponent($line);
         $this->frame->addComponent($line2);
