@@ -356,7 +356,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
             if (isset($sortableMap->mapRating)) {
                 $rate = ($sortableMap->mapRating->rating / 5) * 100;
-                $rate = round($rate)."%";
+                $rate = round($rate)."%" .'  $n'."(" . $sortableMap->mapRating->totalvotes . ")";
                 if ($sortableMap->mapRating->rating == -1) $rate = " - ";
             } else {
                 $rate = " - ";

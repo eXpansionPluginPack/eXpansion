@@ -24,7 +24,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onConstruct();
         $login = $this->getRecipient();
 
-        $this->setTitle(__('Server Management', $login));
+        $this->setTitle(__('Control Panel', $login));
         $btnX = 40;
         $btnY = 5.5;
 

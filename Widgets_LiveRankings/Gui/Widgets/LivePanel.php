@@ -6,13 +6,9 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 
 class LivePanel extends PlainLivePanel
 {
-	
-	function exp_onBeginConstruct()
-	{
-		parent::exp_onBeginConstruct();
-                
-	}
-
+    function exp_onBeginConstruct()
+    {
+        parent::exp_onBeginConstruct();
+    }
 }
-
 ?>

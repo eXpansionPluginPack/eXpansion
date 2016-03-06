@@ -60,6 +60,10 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
                 $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
                 if (!$this->config->isHorizontal) {
                     $panelMain->setDirection("left");
+                    if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK)
+                    {
+                        $panelMain->setDirection("right");
+                    }
                 }
                 $this->widgetIds["LocalPanel"] = $panelMain;
                 $this->widgetIds["LocalPanel"]->update();
@@ -76,7 +80,6 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
                     $panelScore->setSizeX($this->panelSizeX);
                     $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
                     $panelScore->setVisibleLayer("scorestable");
-
                     $this->widgetIds["LocalPanel2"] = $panelScore;
                     $this->widgetIds["LocalPanel2"]->update();
                     $this->widgetIds["LocalPanel2"]->show();
@@ -125,31 +128,32 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             Gui\Widgets\LocalPanel2::EraseAll();
         }
     }
+    /*
+      public function onBeginMap($map, $warmUp, $matchContinuation)
+      {
+      self::$raceOn      = false;
+      $this->forceUpdate = true;
+      $this->widgetIds   = array();
+      Gui\Widgets\LocalPanel::EraseAll();
+      Gui\Widgets\LocalPanel2::EraseAll();
+      $this->updateLocalPanel();
+      self::$secondMap   = true;
+      self::$raceOn      = true;
+      }
+     */
 
-    public function onBeginMap($map, $warmUp, $matchContinuation)
+    public function onStatusChanged($statusCode, $statusName)
     {
-        self::$raceOn      = false;
-        $this->forceUpdate = true;
-        $this->widgetIds   = array();
-        Gui\Widgets\LocalPanel::EraseAll();
-        Gui\Widgets\LocalPanel2::EraseAll();
-        $this->updateLocalPanel();
-        self::$secondMap   = true;
-        self::$raceOn      = true;
-    }
-
-    public function onBeginMatch()
-    {
-        if (self::$raceOn == true) return;
-
-        self::$raceOn      = false;
-        $this->forceUpdate = true;
-        $this->widgetIds   = array();
-        Gui\Widgets\LocalPanel::EraseAll();
-        Gui\Widgets\LocalPanel2::EraseAll();
-        $this->updateLocalPanel();
-        self::$secondMap   = true;
-        self::$raceOn      = true;
+        if ($statusCode == 4) {
+            self::$raceOn      = false;
+            $this->forceUpdate = true;
+            $this->widgetIds   = array();
+            Gui\Widgets\LocalPanel::EraseAll();
+            Gui\Widgets\LocalPanel2::EraseAll();
+            $this->updateLocalPanel();
+            self::$secondMap   = true;
+            self::$raceOn      = true;
+        }
     }
 
     public function onEndRound()

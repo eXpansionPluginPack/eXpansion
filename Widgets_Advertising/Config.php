@@ -4,6 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Advertising;
 
 class Config extends \ManiaLib\Utils\Singleton {
 
+        public $noAdUsers = array();
+        
 	//Setting _1
 	public $active_1 = true;
 	public $url_1 = "http://www.ml-expansion.com";

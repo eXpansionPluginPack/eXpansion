@@ -333,9 +333,9 @@ class Menu extends ExpPlugin
 
         if (AdminGroups::hasPermission($login, Permission::server_controlPanel)) {
             $server = $submenu->addSubMenu($menu, __("Server Control", $login), null);
-            $submenu->addItem($server, __("Settings", $login), $this->actions['admcontrol']);
-            $submenu->addItem($server, "", null);
-            $submenu->addItem($server, __("Plugins", $login), $this->actions['adm_plugins']);
+            $submenu->addItem($server, __("Control Panel", $login), $this->actions['admcontrol']);
+            $submenu->addItem($server, __("eXpansion Config", $login), $this->actions['adm_settings']);
+            $submenu->addItem($server, __("Plugin Manager", $login), $this->actions['adm_plugins']);
         }
 
         $info = $submenu->addItem($menu, __("Server Info", $login), $this->actions['serverinfo']);

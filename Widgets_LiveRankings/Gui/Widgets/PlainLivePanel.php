@@ -190,9 +190,7 @@ class PlainLivePanel extends PlainPanel
 					$nickData .= ', ';
 				}
 				$recsData .= '"' . Gui::fixString($player->login) . '"=>' . $player->bestTime;
-				$nickData .= '"' . Gui::fixString($player->login) . '"=>"' . Gui::fixString(
-						Formatting::stripColors($player->nickName)
-					) . '"';
+				$nickData .= '"' . Gui::fixString($player->login) . '"=>"' . Gui::fixString($player->nickName) . '"';
 				$index++;
 			}
 		}

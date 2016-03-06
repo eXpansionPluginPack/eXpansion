@@ -1,3 +1,30 @@
+if( edge_isLockedVisible2 == False && (Now - eXp_lastClockUpdate) >= 500 ) {
+    if (InputPlayer != Null) {
+        declare Real Speed = InputPlayer.Speed*3.6;
+
+        if (Speed < 50.0 || InputPlayer.RaceState == CTmMlPlayer::ERaceState::Finished) {
+            if (lastValue == True) {
+                edge_isMinimized = False;
+                lastValue = False;
+
+                edge_animatedId[id] = True;
+             }
+        }
+
+
+        if (Speed > 51.0 && InputPlayer.RaceState != CTmMlPlayer::ERaceState::Finished) {
+            if (lastValue == False) {
+                edge_isMinimized = True;
+                lastValue = True;
+
+                edge_animatedId[id] = True;
+            }
+        }
+    }
+
+    eXp_lastClockUpdate = Now;
+}
+
 foreach (Event in PendingEvents) {
     if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "myWindow" || Event.ControlId == "minimizeButton" )) {
 		if(eXp_lastClockUpdate != Now) {
@@ -8,14 +35,43 @@ foreach (Event in PendingEvents) {
     }
 }
 
-if (exp_trayId[id]) {
-            declare Real value = diff * AL::Ease("EaseInCirc", (Now - start) * 1., 0., 1., 1000.);
-            Window.RelativePosition.X = p.X + value;
-        }
-        else {
-            declare Real value = diff * AL::Ease("EaseOutCirc", (Now - start) * 1., 1., -1., 1000.);
-            Window.RelativePosition.X =  p.X + value;
+if (!edge_animatedId.existskey(id) ) {
+    edge_animatedId[id] = edge_isMinimized;
 }
 
+if (edge_animatedId[id] == True) {
+
+    if (animActive == False) {
+        animActive = True;
+        edgeStart = Now;
+    }
+
+    if (animActive && edgeStart + 1000 <= Now ) {
+        edge_animatedId[id] = False;
+        animActive = False;
+    }
+
+        p = eXp_widgetLastPosRel[version][id][gameMode];
+
+        declare Real edge = -200.;
+        if (p.X > 1) {
+            edge = 200.;
+        }
+
+        if (edge_isMinimized) {
+            value = edge * AL::Ease("EaseInCirc", (Now - edgeStart) * 1., 0., 1., 250.);
+        }
+        else {
+            value = edge * AL::Ease("EaseOutCirc", (Now - edgeStart) * 1., 1., -1., 250.);
+        }
+    }
 
 
+ if (exp_trayId[id]) {
+            declare Real value2 = value + diff * AL::Ease("EaseInCirc", (Now - start) * 1., 0., 1., 250.);
+            Window.RelativePosition.X = p.X + value2;
+        }
+        else {
+            declare Real value2 = value + diff * AL::Ease("EaseOutCirc", (Now - start) * 1., 1., -1., 250.);
+            Window.RelativePosition.X =  p.X + value2;
+    }

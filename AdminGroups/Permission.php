@@ -55,14 +55,15 @@ class Permission {
     const map_removeMap = 'map_removeMap';
     const map_jukebox_admin = "map_jukebox_admin";
     const map_jukebox_free = "map_jukebox_free";
-//
+    
+    // special permissions
     const team_balance = 'team_balance';
     
     const chat_adminChannel = "chat_adminchat";
     const chat_onDisabled = "chat_onDisabled";
     const quiz_admin = "quiz_admin";
-
-	const localRecrods_delete = 'localRecords_delete';
+    
+    const localRecrods_delete = 'localRecords_delete';
     
 }
 

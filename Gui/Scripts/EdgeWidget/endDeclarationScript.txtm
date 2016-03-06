@@ -3,8 +3,8 @@ declare Boolean edge_isAnimated for UI = False;
 declare persistent Boolean edge_isLockedVisible2 = True;
 
 declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
-declare Integer eXp_lastClockUpdate = Now;
-declare Vec3 p = eXp_widgetLastPosRel[version][id][gameMode];
+declare Integer eXp_lastClockUpdate2 = Now;
+declare Vec3 p2 = eXp_widgetLastPosRel[version][id][gameMode];
 declare Boolean lastValue = edge_isMinimized;
 
 declare Integer edgeStart = Now;
@@ -15,7 +15,7 @@ if (!edge_animatedId.existskey(id) ) {
 }
 
 declare Real edgeR = -200.;
-    if (p.X > 1) {
+    if (p2.X > 1) {
        edgeR = 200.;
     }
 
