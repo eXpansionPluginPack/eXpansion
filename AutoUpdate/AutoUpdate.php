@@ -71,9 +71,9 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 		$this->onGoing = true;
 
 		if ($this->config->useGit) {
-			$cmds = array(PHP_BINARY . ' composer.phar update --prefer-source --no-interaction');
+			$cmds = array(PHP_BINARY . ' composer.phar update --prefer-source --no-interaction --dry-run');
 		} else {
-			$cmds = array(PHP_BINARY . ' composer.phar update --prefer-dist --no-interaction');
+			$cmds = array(PHP_BINARY . ' composer.phar update --prefer-dist --no-interaction --dry-run');
 		}
 
 		$AdminGroups->announceToPermission(Permission::server_update, '#admin_action#[#variable#AutoUpdate#admin_action#] Checking updates for #variable#eXpansion & Components');
