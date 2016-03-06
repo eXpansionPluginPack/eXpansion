@@ -125,8 +125,7 @@ class PlainPanel extends Widget
         $this->setDisableAxis("x");
         if ($this->edgeWidget) {
             $this->unregisterScript($this->edgeWidget);
-        }
-        $this->setName($this->getName()." (new)");
+        }        
         $this->trayWidget = new Script("Gui/Scripts/NewTray");
         $this->registerScript($this->trayWidget);
         $this->bgTitle->setDirection($dir);

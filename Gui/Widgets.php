@@ -115,7 +115,7 @@ class Widgets extends \ManiaLib\Utils\Singleton
     public $MapRatingsWidget_posY = array(self::config_default => 75,
 					  self::config_shootmania => 90);
    
-	public $MXMapRatingWidget_posX = array(
+    public $MXMapRatingWidget_posX = array(
 					  self::config_default => 128,
 					  self::config_shootmania => 38);
     public $MXMapRatingWidget_posY = array(
@@ -146,16 +146,16 @@ class Widgets extends \ManiaLib\Utils\Singleton
     public $RoundScoreWidget_posX = array(self::config_default => -126);
     public $RoundScoreWidget_posY = array(self::config_default => 58);
 
-	public $MapinfoWidget_posX = array(self::config_default => 115);
-	public $MapinfoWidget_posY = array(self::config_default => 88);
+    public $MapinfoWidget_posX = array(self::config_default => 115);
+    public $MapinfoWidget_posY = array(self::config_default => 88);
 
-	public $ServerinfoWidget_posX = array(self::config_default => -160);
-	public $ServerinfoWidget_posY = array(self::config_default => 88);
+    public $ServerinfoWidget_posX = array(self::config_default => -160);
+    public $ServerinfoWidget_posY = array(self::config_default => 88);
 
-	public $BestCheckPointsWidget_posX = array(self::config_default => -112);
-	public $BestCheckPointsWidget_posY = array(self::config_default =>90);
+    public $BestCheckPointsWidget_posX = array(self::config_default => -112);
+    public $BestCheckPointsWidget_posY = array(self::config_default =>90);
 
-	public $AroundMePanel_posX = array(self::config_default => -15);
-	public $AroundMePanel_posY = array(self::config_default => -70);
+    public $AroundMePanel_posX = array(self::config_default => -15);
+    public $AroundMePanel_posY = array(self::config_default => -70);
     
 }
