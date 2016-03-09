@@ -53,10 +53,14 @@ class Widgets_ResSkip extends ExpPlugin
 
 		$this->config = Config::getInstance();
 		$this->donateConfig = DonateConfig::getInstance();
-		$this->actions['skip_final'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
+		/* removing confirm dialog
+                $this->actions['skip_final'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
 		$this->actions['skip'] = Gui::createConfirm($this->actions['skip_final']);
 		$this->actions['res_final'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
 		$this->actions['res'] = Gui::createConfirm($this->actions['res_final']);
+                */
+                $this->actions['skip'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
+                $this->actions['res'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
 
 		$this->showResSkip(null);
 	}
@@ -115,7 +119,8 @@ class Widgets_ResSkip extends ExpPlugin
 	public function restartMap($login)
 	{
 
-		if (AdminGroups::hasPermission($login, Permission::map_restart)) {
+		/* if (AdminGroups::hasPermission($login, Permission::map_restart)) {
+
 			if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
 				$this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\Maps\\Maps', 'replayMap', $login);
 				return;
@@ -125,7 +130,7 @@ class Widgets_ResSkip extends ExpPlugin
 			$admin = $this->storage->getPlayerObject($login);
 			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
 		}
-		else {
+		else { */
 			//Player restart cost Planets
 			if ($this->resActive) {
 				//Already restarted no need to do
@@ -152,7 +157,7 @@ class Widgets_ResSkip extends ExpPlugin
 					$this->exp_chatSendServerMessage($this->msg_resMax, $login);
 				}
 			}
-		}
+		// }
 	}
 
 	public function publicRestartMap(Bill $bill)
@@ -183,11 +188,11 @@ class Widgets_ResSkip extends ExpPlugin
 	public function skipMap($login)
 	{
 
-		if (AdminGroups::hasPermission($login, Permission::map_skip)) {
+		/* if (AdminGroups::hasPermission($login, Permission::map_skip)) {
 			$adminGrp = AdminGroups::getInstance();
 			$adminGrp->adminCmd($login, "skip");
 			return;
-		}
+		} */
 
 		$nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
 
