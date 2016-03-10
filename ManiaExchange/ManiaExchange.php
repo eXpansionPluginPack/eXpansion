@@ -343,21 +343,25 @@ class ManiaExchange extends ExpPlugin
                 $query = 'https://tm.mania-exchange.com/api/tracks/get_track_info/id/'.$mxId;
                 break;
         }
+        
+        //$this->dataAccess->httpGet($query, Array($this, ), array($login, $mxId), "Manialive/eXpansion MXapi [search] ver 0.1",  "application/json");
 
-        $query = $query."?".self::$betakey;
-        $this->dataAccess->httpGet($query, Array($this, "xVote"), array($login, $mxId), "Manialive/eXpansion MXapi [search] ver 0.1",
-            "application/json");
+        $options = array(CURLOPT_HTTPHEADER => "X-ManiaPlanet-ServerLogin:".$this->storage->serverLogin);
+        $this->dataAccess->httpCurl($query, array($this, "xVote"), array("login" =>$login, "mxId" =>$mxId), $options);
     }
 
     //function xVote($data, $code, $login, $mxId)
-    function xVote($data, $ch, $asyncObj)
+    function xVote($job, $jobData)
     {
-        $info = curl_getinfo($ch);
+        $info = $job->getCurlInfo();
         $code = $info['http_code'];
 
-        $meta  = $asyncObj->getMeta();
-        $mxId  = $meta['mxId'];
-        $login = $meta['login'];
+        $additionalData = $job->__additionalData;
+
+        $mxId  = $additionalData['mxId'];
+        $login = $additionalData['login'];
+
+        $data = $job->getResponse();
 
         if ($code !== 200) {
             if ($code == 302) {
