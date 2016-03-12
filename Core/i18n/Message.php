@@ -65,12 +65,18 @@ class Message
 			$arrgs = $this->args;
 			array_unshift($arrgs, $msg);
 			$text = call_user_func_array('sprintf', $arrgs);
-			$out[] = array(
+			$out[$lang] = array(
 				"Lang" => lcfirst($lang),
 				"Text" => \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text)
 			);
 		}
-		return $out;
+
+		// Put en message last for unknown languages to see english.
+		$en = $out['en'];
+		unset($out['en']);
+		$out['en'] = $en;
+
+		return array_values($out);
 	}
 
 	/**
