@@ -197,7 +197,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
 
-        $options = array(CURLOPT_HTTPHEADER => "Content-Type: application/json");
+        $options = array(CURLOPT_HTTPHEADER => array("Content-Type" => "application/json"));
         if ($length !== null) $this->lenght->setSelected(intval($length) + 1);
         if ($style !== null) $this->style->setSelected(intval($style));
         $access->httpCurl($query, array($this, "xSearch"), null, $options);

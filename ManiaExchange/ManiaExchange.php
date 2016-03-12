@@ -160,7 +160,7 @@ class ManiaExchange extends ExpPlugin
 
         $this->exp_chatSendServerMessage("Download starting for: $mxId", $login);
         //$this->dataAccess->httpGet($query, array($this, $redirect), array($login, $mxId), "Manialive/eXpansion MXapi [getter] ver 0.1", "application/json");
-        $options = array(CURLOPT_HTTPHEADER => "X-ManiaPlanet-ServerLogin:".$this->storage->serverLogin);
+        $options = array(CURLOPT_HTTPHEADER => array("X-ManiaPlanet-ServerLogin" => $this->storage->serverLogin));
         $this->dataAccess->httpCurl($query, array($this, $redirect), array("login" => $login, "mxId" => $mxId), $options);
     }
 
