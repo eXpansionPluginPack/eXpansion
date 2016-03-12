@@ -31,12 +31,5 @@ Maps mit schlechter Bewertung erfolgreich entfernt.
 Ratings Manager
 Bewertungs Manager
 
-No
-#translate# No
-
-Yes
-#translate# Yes
-
 Did you like the map ?
 #translate# Did you like the map ?
-

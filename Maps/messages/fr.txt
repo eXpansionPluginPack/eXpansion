@@ -166,15 +166,6 @@ Ete vous sure de vouloir faire jouer ce circuit
 #admin_error# $iYOu can't wish for a map at the moment.
 #admin_error# $iVous ne pouvez pas souhaiter un circuit en ce moment
 
-#translate# Sort By Add Date
-
-
-#translate# Now Playing
-
-
-#translate# Next Map
-
-
 Now Playing
 #translate# Now Playing
 

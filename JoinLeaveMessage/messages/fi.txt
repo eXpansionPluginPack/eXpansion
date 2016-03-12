@@ -1,14 +1,11 @@
 $n(Spectator)
 $n(Katsojana)
 
-#variable#[Info] Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.
-#translate# #variable#[Info] Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.
-
 #player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s
 #player#%5$s #variable#%1$s #player# (#variable#%2$s#player#), #variable#%3$s #player# liittyi peliin! #variable#%4$s
 
 #player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) leaves!
-#translate# #player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) lähti pelistä!
+#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) lähti pelistä!
 
 #variable#[#error#Info#variable#] #variable#Press TAB to show records widget, use right mouse button for quick menu access.
 #translate# #variable#[#error#Info#variable#] #variable#Press TAB to show records widget, use right mouse button for quick menu access.

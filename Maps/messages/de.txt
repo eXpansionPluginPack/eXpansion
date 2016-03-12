@@ -133,102 +133,6 @@ Warteschlange
 #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s #admin_action# from playlist and from disk!
 #admin_action#Admin #variable#%1$s #admin_action#hat #variable#%3$s #admin_action# von der Mapliste entfernt und die Datei gelöscht!
 
-Titel
-
-
-Länge
-
-
-Rekord
-
-
-Bewertung
-
-
-Strecken durchsuchen
-
-
-Nach Strecke suchen
-
-
-Nach Autor suchen
-
-
-Streckenliste löschen
-
-
-#admin_error# $iA Bezahlung um sich eine Strecke zu wünschen ist in Bearbeitung. Bitte versuche es später erneut.
-
-
-Bist du dir sicher, dass du dir diese Strecke wünschen willst?
-
-
-#admin_error# $iDu kannst dir momentan leider keine Strecke wünschen.
-
-
-Maps Suchen
-
-
-Map suchen
-
-
-Autor suchen
-
-
-Mapliste leeren
-
-
-#admin_error# $iA Bezahlung für eine Map zu wünschen wird gerade durchgeführt. Bitte versuche es später noch einmal.
-
-
-Bist du dir sicher, dass du willst, dass diese Map gespielt werden soll?
-
-
-#admin_error# $iDu kannst dir derzeit keine Map wünschen.
-
-
-#translate# Title
-
-
-#translate# Length
-
-
-#translate# Record
-
-
-#translate# Rating
-
-
-#translate# Search maps
-
-
-#translate# Search Map
-
-
-#translate# Search Author
-
-
-#translate# Sort By Add Date
-
-
-#translate# Clear Maplist
-
-
-#translate# #admin_error# $iA payment for wishin a track is in progress please try later.
-
-
-#translate# Are you sure you want to wish this map to be played
-
-
-#translate# #admin_error# $iYOu can't wish for a map at the moment.
-
-
-#translate# Now Playing
-
-
-#translate# Next Map
-
-
 Now Playing
 #translate# Now Playing
 
@@ -242,28 +146,28 @@ File listing disabled since you are running eXpansion remote
 #translate# #admin_error#This instance of eXpansion is runnin remotelly! Can't delete file #variable#'%s'
 
 Title
-#translate# Title
+Titel
 
 Length
-#translate# Length
+Länge
 
 Record
-#translate# Record
+Rekord
 
 Rating
-#translate# Rating
+Bewertung
 
 Search maps
-#translate# Search maps
+Strecken durchsuchen
 
 Search Map
-#translate# Search Map
+Nach Strecke suchen
 
 Search Author
-#translate# Search Author
+Nach Autor suchen
 
 Sort By Add Date
-#translate# Sort By Add Date
+Streckenliste löschen
 
 Clear Maplist
 #translate# Clear Maplist
@@ -272,13 +176,13 @@ Erases current map from the playlist.
 #translate# Erases current map from the playlist.
 
 #admin_error# $iA payment for wishin a track is in progress please try later.
-#translate# #admin_error# $iA payment for wishin a track is in progress please try later.
+#admin_error# $iA Bezahlung um sich eine Strecke zu wünschen ist in Bearbeitung. Bitte versuche es später erneut.
 
 Are you sure you want to wish this map to be played
-#translate# Are you sure you want to wish this map to be played
+Bist du dir sicher, dass du dir diese Strecke wünschen willst?
 
 #admin_error# $iYOu can't wish for a map at the moment.
-#translate# #admin_error# $iYOu can't wish for a map at the moment.
+#admin_error# $iDu kannst dir momentan leider keine Strecke wünschen.
 
 #admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from playlist!
 #translate# #admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from playlist!

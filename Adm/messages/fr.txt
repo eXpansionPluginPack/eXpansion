@@ -313,18 +313,6 @@ Laps: Time Limit
 #error#The map has already been restarted. Limit reached!
 #error#Le circuit a déjà été redémarrer. Limite atteinte!
 
-#translate# Set
-
-
-#translate# eXpansion Settings
-
-
-#translate# Plugin Management
-
-
-#translate# Configure Votes
-
-
 Set
 #translate# Set
 
@@ -357,4 +345,3 @@ Keep Player Slots
 
 Settings not changed.
 #translate# Settings not changed.
-
