@@ -85,6 +85,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         parent::exp_onReady();
         $this->enableDedicatedEvents();
         $this->enableApplicationEvents();
+        $this->enableStorageEvents();
+        
         \ManiaLive\Event\Dispatcher::register(
             \ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this
         );
