@@ -14,29 +14,29 @@ possible parameters: move, lock, reset
 Paramètres possible: move, lock, reset
 
 #error#Server Admin has disabled personal huds. Sorry!
-#translate# #error#Server Admin has disabled personal huds. Sorry!
+L'Admin a désactivé les huds personnalisé. Pardon!
 
 Hud reset done!
-#translate# Hud reset done!
+Hud réinitialisé
 
 Starting hud reset, please wait
-#translate# Starting hud reset, please wait
+Démarrage de la réinitialisation du hud, s'il vous plaît patienter
 
 Yes
-#translate# Yes
+Oui
 
 No
-#translate# No
+Non
 
 Really do this ?
-#translate# Really do this ?
+Faire cela? Vraiment?
 
 Hello World
-#translate# Hello World
+Bonjour le monde
 
 Close
-#translate# Close
+Fermer
 
 Notice
-#translate# Notice
+Notice
 

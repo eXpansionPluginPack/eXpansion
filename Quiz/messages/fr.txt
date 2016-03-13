@@ -53,8 +53,8 @@ Nouvelle Question
 #question#%s?
 
 Url for image
-#translate# Url for image
+Url de l'image
 
 #quiz#$Displaying image not possible, due unsupported media type was detected.
-#translate# #quiz#$Displaying image not possible, due unsupported media type was detected.
+#quiz#$Impossible d'afficher l'image, type de support non pris en charge.
 

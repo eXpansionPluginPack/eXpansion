@@ -56,8 +56,8 @@ Author
 Auteur
 
 Map is not compatible with current server settings, map not added.
-#translate# Map is not compatible with current server settings, map not added.
+Le circuit n'est pas compatible avec les paramètres du serveur actuels, pas ajouté.
 
 The Map is not compatible with current server settings, map not added.
-#translate# The Map is not compatible with current server settings, map not added.
+Le circuit n'est pas compatible avec les paramètres du serveur actuels, pas ajouté.
 

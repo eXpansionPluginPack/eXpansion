@@ -167,35 +167,35 @@ Ete vous sure de vouloir faire jouer ce circuit
 #admin_error# $iVous ne pouvez pas souhaiter un circuit en ce moment
 
 Now Playing
-#translate# Now Playing
+Circuits en cours
 
 Next Map
-#translate# Next Map
+Carte suivante
 
 File listing disabled since you are running eXpansion remote
-#translate# File listing disabled since you are running eXpansion remote
+Liste des fichiers désactivé car vous utilisez une connection distante
 
 #admin_error#This instance of eXpansion is runnin remotelly! Can't delete file #variable#'%s'
-#translate# #admin_error#This instance of eXpansion is runnin remotelly! Can't delete file #variable#'%s'
+#admin_error#Cette instance de eXpansion est une exécution à distance! Vous ne pouvez pas supprimer le fichier #variable#'%s'
 
 Sort By Add Date
-#translate# Sort By Add Date
+Trier par date Ajout
 
 Erases current map from the playlist.
-#translate# Erases current map from the playlist.
+Efface le circuit actuelle de la playlist.
 
 #admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from playlist!
-#translate# #admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from playlist!
+#admin_action#L'Admin #variable#%1$s #admin_action#à supprimé le circuit #variable#%3$s #admin_action# de la playlist!
 
 #admin_error#Map #variable#%3$s #admin_error# not found at playlist, perhaps it was already removed ?
-#translate# #admin_error#Map #variable#%3$s #admin_error# not found at playlist, perhaps it was already removed ?
+#admin_error#Le circuit #variable#%3$s #admin_error# n'a pas été trouvé dans la playlist, peut-être qu'il a déjà été supprimé?
 
 #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s by %4$s #admin_action# from %5$s
-#translate# #admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s by %4$s #admin_action# from %5$s
+#admin_action#L'Admin #variable#%1$s #admin_action#a effacer le circuit #variable#%3$s by %4$s #admin_action# de %5$s
 
 #admin_error#Nothing to do, the map has been removed already from playlist and from disk!
-#translate# #admin_error#Nothing to do, the map has been removed already from playlist and from disk!
+#admin_error#Rien à faire, le circuit a déjà été retiré de playlist et à partir du disque!
 
 #admin_error#Can't continue, since this instance of eXpansion is running remote agains the server
-#translate# #admin_error#Can't continue, since this instance of eXpansion is running remote agains the server
+#admin_error#Vous ne pouvez pas continuer, car cette instance de eXpansion utilise une connection distante
 

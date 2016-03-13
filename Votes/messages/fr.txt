@@ -35,17 +35,17 @@ Annuler le Vote
 #vote_failure# $iLe vote a échoué!
 
 Apply
-#translate# Apply
+Appliquer
 
 Cancel
-#translate# Cancel
+Annuler
 
 #variable#%s #vote#initiated restart map vote..
-#translate# #variable#%s #vote#initiated restart map vote..
+#variable#%s #vote#Vote de redémarrage de la cart initié..
 
 Vote limit reached.
-#translate# Vote limit reached.
+limite de vote atteint.
 
 Configure Votes
-#translate# Configure Votes
+Configurer les votes
 

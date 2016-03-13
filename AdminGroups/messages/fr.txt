@@ -101,4 +101,4 @@ Permission_
 #admin_action#Le jouer #variable# %1$s #admin_action# n'a pas pus être ajoute au group #variable#%2$s
 
 Select
-#translate# Select
+Sélectionner

@@ -20,23 +20,23 @@ Map Rating
 Note de la carte
 
 No
-#translate# No
+No
 
 Yes
-#translate# Yes
+Oui
 
 Did you like the map ?
-#translate# Did you like the map ?
+Avez-vous aimé le circuit?
 
 Remove
-#translate# Remove
+Retirer
 
 Close
-#translate# Close
+Fermer
 
 Maps with bad rating removed successfully.
-#translate# Maps with bad rating removed successfully.
+Circuits avec mauvaise évaluation supprimés.
 
 Ratings Manager
-#translate# Ratings Manager
+Gestionnaire d'évaluations
 

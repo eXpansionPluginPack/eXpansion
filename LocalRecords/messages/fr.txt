@@ -86,7 +86,7 @@ CheckPoint Times
 Temps des CheckPoints
 
 Cps
-#translate# Cps
+Cps
 
 Local Records
 Record Locaux

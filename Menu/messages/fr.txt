@@ -89,74 +89,74 @@ Server Controls
 Control du ServeurHelp
 
 Help
-#translate# Help
+Aide
 
 Maps
-#translate# Maps
+Circuits
 
 Add local map
-#translate# Add local map
+Ajouter un circuit local
 
 Mania-Exchange
-#translate# Mania-Exchange
+Mania-Exchange
 
 Records
-#translate# Records
+Records
 
 Hall of Fame
-#translate# Hall of Fame
+Panthéon
 
 Server Ranks
-#translate# Server Ranks
+Rangs Serveur
 
 Dedimania
-#translate# Dedimania
+Dedimania
 
 Statistics
-#translate# Statistics
+Statistiques
 
 Move
-#translate# Move
+Déplacer
 
 Lock
-#translate# Lock
+Bloquer
 
 Reset
-#translate# Reset
+Réinitialiser
 
 Config...
-#translate# Config...
+Config...
 
 Vote
-#translate# Vote
+Vote
 
 Restart
-#translate# Restart
+Redémarrer
 
 Cancel
-#translate# Cancel
+Annuler
 
 Config
-#translate# Config
+Config
 
 Balance Teams
-#translate# Balance Teams
+Équilibrer les équipes
 
 Server Control
-#translate# Server Control
+Control Serveur
 
 Admin Groups
-#translate# Admin Groups
+Groupes d'administration
 
 Plugins
-#translate# Plugins
+Plugins
 
 Settings
-#translate# Settings
+Paramètres
 
 Update
-#translate# Update
+Mettre à jour
 
 Server Info
-#translate# Server Info
+Infos Serveur
 
