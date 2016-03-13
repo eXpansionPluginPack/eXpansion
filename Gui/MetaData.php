@@ -35,7 +35,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("000");
+		$var->setDefaultValue("FFFE");
 		$this->registerVariable($var);
 
 		$var = new ColorCode("windowTitleBackgroundColor", "Window Title Background color", $config);
@@ -43,7 +43,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("aaa");
+		$var->setDefaultValue("0199FF");
 		$this->registerVariable($var);
 
 
@@ -52,7 +52,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("2b3746");
+		$var->setDefaultValue("3B3B3B");
 		$this->registerVariable($var);
 
 
@@ -61,7 +61,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("e4f6fe");
+		$var->setDefaultValue("fffe");
 		$this->registerVariable($var);
 
 
@@ -70,7 +70,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("42a5fa");
+		$var->setDefaultValue("aa9");
 		$this->registerVariable($var);
 
 
@@ -96,14 +96,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("2b3746");
+		$var->setDefaultValue("191919");
 		$this->registerVariable($var);
 
 		$var = new BoundedTypeFloat("style_widget_bgOpacity", "Widget Background Opacity", $config);
 		$var->setGroup("GUI");
 		$var->setMin(0.0);
 		$var->setMax(1.0);
-		$var->setDefaultValue(0.75);
+		$var->setDefaultValue(0.6);
 		$this->registerVariable($var);
 
 		$var = new ColorCode("style_widget_title_bgColorize", "Widget Titlebar Background color", $config);
