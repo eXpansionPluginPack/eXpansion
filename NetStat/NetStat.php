@@ -52,7 +52,7 @@ class NetStat extends ExpPlugin {
     }
 
     public function showNetStat($login, $params) {
-	$window = \ManiaLivePlugins\eXpansion\NetStat\Gui\Windows\NetstatWindow::Create($login);
+	$window = \ManiaLivePlugins\eXpansion\NetStat\Gui\Windows\NetStatWindow::Create($login);
 	$window->setTitle("Network Status");
 	$window->setSize(140, 100);
 	$window->show();
