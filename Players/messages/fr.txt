@@ -47,7 +47,7 @@ NickName
 NickName
 
 Login
-#translate# Login
+Login
 
 Error:
 Error:
@@ -56,14 +56,14 @@ Error:
 %s$1 $z$s$fff est $f00broadcasting$fff à $lwww.twitch.tv$l, Dites bonjour au joueurs :)
 
 Ignore List
-#translate# Ignore List
+Liste des ignorés
 
 Guest List
-#translate# Guest List
+Liste des invités
 
 Ban List
-#translate# Ban List
+Liste des bannis
 
 Black List
-#translate# Black List
+Black List
 

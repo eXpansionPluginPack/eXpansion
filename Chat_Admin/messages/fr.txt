@@ -44,8 +44,8 @@ Cancel
 Annuler
 
 possible parameters: balance, limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap
-#translate# possible parameters: balance, limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap
+les paramètres possibles: balance, limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap
 
 #admin_action#Admin #variable#%1$s $z$s#admin_action#shuffles the maps list!
-#translate# #admin_action#Admin #variable#%1$s $z$s#admin_action#shuffles the maps list!
+#admin_action#L'Admin #variable#%1$s $z$s#admin_action#mélange les la liste des circuits!
 

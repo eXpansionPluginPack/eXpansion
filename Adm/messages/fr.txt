@@ -314,34 +314,34 @@ Laps: Time Limit
 #error#Le circuit a déjà été redémarrer. Limite atteinte!
 
 Set
-#translate# Set
+Set
 
 Custom point
-#translate# Custom point
+Point personnalisée
 
 Load MatchSettings by name
-#translate# Load MatchSettings by name
+Charger les MatchSettings par nom
 
 File listing disabled since you are running remote
-#translate# File listing disabled since you are running remote
+Liste des fichiers désactivé car vous utilisez une connection distante
 
 You can tho save and load files from server by the filename!
-#translate# You can tho save and load files from server by the filename!
+Vous pouvez enregistrer et charger des fichiers à partir du serveur apartir du nom de fichier!
 
 eXpansion Settings
-#translate# eXpansion Settings
+Paramètres d'eXpansion
 
 Plugin Management
-#translate# Plugin Management
+Gestion des plugins
 
 Configure Votes
-#translate# Configure Votes
+Gestion des votes
 
 Server Comment
-#translate# Server Comment
+Commentaire du Serveur
 
 Keep Player Slots
-#translate# Keep Player Slots
+Gardez les slots Joueur
 
 Settings not changed.
-#translate# Settings not changed.
+Paramètres inchangé

@@ -2,26 +2,26 @@ Apply
 Appliquer
 
 Server Stats
-#translate# Server Stats
+Stat du serveur
 
 Global Setting, Saved for all servers sharing this configuration
-#translate# Global Setting, Saved for all servers sharing this configuration
+Paramètres globaux, Enregistré pour tous les serveurs partageant cette configuration
 
 Server Setting, Saved for this server only
-#translate# Server Setting, Saved for this server only
+Réglage Serveur, Enregistré pour ce serveur seulement
 
 Save
-#translate# Save
+Enregistré
 
 Copy
-#translate# Copy
+Copie
 
 Add to Fav's
-#translate# Add to Fav's
+Ajouter aux fav's
 
 Settings are now saved!
-#translate# Settings are now saved!
+Les réglages sont maintenant sauvegardés!
 
 Close
-#translate# Close
+Fermer
 
