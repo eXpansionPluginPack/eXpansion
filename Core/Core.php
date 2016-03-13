@@ -475,7 +475,7 @@ EOT;
 		$connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();		
 		if (sizeof(self::$enabledCallbacks) > 0) {
 			$connection->triggerModeScriptEvent("LibXmlRpc_BlockAllCallbacks", "");
-			foreach (self::$enabledCallbacks as $callback) {				
+			foreach (self::$enabledCallbacks as $callback) {
 				$connection->triggerModeScriptEvent("LibXmlRpc_UnblockCallback", $callback);
 			}
 		}

@@ -44,7 +44,7 @@ class SM_PlatformScores extends LocalBase {
 
 	public function exp_onReady()
 	{
-		parent::exp_onReady();		
+		parent::exp_onReady();
 	}
 
 	public function LibXmlRpc_OnWayPoint(

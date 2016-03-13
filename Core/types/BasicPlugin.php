@@ -282,18 +282,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 			$out = array();
 			if (is_array($param2)) {
 				foreach ($param2 as $value) {
-					if (filter_var($value, FILTER_VALIDATE_INT)) {
-						$out[] = intval($value);
-					} else if (is_numeric($value)) {
-						$out[] = floatval($value);
-					} else if ($value == "False") {
-						$out[] = false;
-					} else if ($value == "True") {
-						$out[] = true;
-					} else {
-						$out[] = $value;
-					}
+					$out[] = $this->parseScriptValue($value);
 				}
+			} else {
+				$out = $this->parseScriptValue($param2);
 			}
 
 			if (method_exists($this, $param1)) {
@@ -301,6 +293,20 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 			}
 			else {
 				$this->exp_onModeScriptCallback($param1, $out);
+			}
+		}
+
+		protected function parseScriptValue($value) {
+			if (filter_var($value, FILTER_VALIDATE_INT)) {
+				return intval($value);
+			} else if (is_numeric($value)) {
+				return floatval($value);
+			} else if ($value == "False") {
+				return false;
+			} else if ($value == "True") {
+				return true;
+			} else {
+				return $value;
 			}
 		}
 

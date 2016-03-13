@@ -85,7 +85,6 @@ class SM_ObstaclesScores extends LocalBase {
 
 	public function exp_onModeScriptCallback($param1, $param2)
 	{
-
 		switch ($param1) {
 			case 'playerFinish' :
 				$params = explode('{:}', $param2);
