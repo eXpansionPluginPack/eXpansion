@@ -17,7 +17,7 @@ use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
  *
  * @author Petri
  */
-class NetstatWindow extends Window
+class NetStatWindow extends Window
 {
 
     protected $frame;
