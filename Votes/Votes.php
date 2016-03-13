@@ -79,6 +79,8 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $cmd->setMinParam(0);
 
 
+        $this->lastMapUid = $this->storage->currentMap->uId;
+        
         if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Maps\\Maps') && $this->config->restartVote_useQueue) {
             $this->useQueue = true;
             $this->debug("[exp\Votes] Restart votes set to queue");
@@ -139,9 +141,9 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             // if vote is not managed...
             if ($managedVotes['RestartMap']->managed == false) return;
 
-            if ($config->restartLimit != 0 && $config->restartLimit < $this->resCount) {
-                $msg = exp_getMessage("#vote#Vote map limit reached, currently at %s maps.");
-                    $this->exp_chatSendServerMessage($msg, null, array($this->config->restartLimit));
+            $config = Config::getInstance();  
+            if ($config->restartLimit != 0 && $config->restartLimit < $this->resCount) {                              
+                $this->exp_chatSendServerMessage(exp_getMessage("#error#Map limit for voting restart reached."), $login, array($this->config->restartLimit));
                 return;
             }
 
@@ -170,8 +172,6 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (!array_key_exists('NextMap', $managedVotes)) return;
             // if vote is not managed...
             if ($managedVotes['NextMap']->managed == false) return;
-
-            $config = Config::getInstance();           
 
             $this->voter       = $login;
             $vote              = $managedVotes['NextMap'];
