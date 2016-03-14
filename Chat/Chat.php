@@ -37,6 +37,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /** @var Config */
     private $config;
+    private $exclude = array();
 
     function exp_onReady()
     {
@@ -49,12 +50,33 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->connection->chatEnableManualRouting(true);
             $cmd = AdminGroups::addAdminCommand('chat', $this, 'adm_chat', Permission::game_settings);
             $cmd->setHelp('/adm chat enable or disable');
+            $this->registerChatCommand("chat", "cmd_chat", 1, true);
+            $this->registerChatCommand("chat", "cmd_chat", 0, true);
         } catch (\Exception $e) {
             $this->console("[eXpansion|Chat] Couldn't initialize chat. Error from server: ".$e->getMessage());
             $this->enabled = false;
         }
 
         $this->config = Config::getInstance();
+    }
+
+    public function cmd_chat($login, $params = "help")
+    {
+        switch (strtolower($params)) {
+            case "on":
+                if (array_key_exists($login, $this->exclude)) {
+                    unset($this->exclude[$login]);
+                }
+                $this->exp_chatSendServerMessage(exp_getMessage("Chat messages enabled."), $login);
+                break;
+            case "off":
+                $this->exclude[$login] = $login;
+                $this->exp_chatSendServerMessage(exp_getMessage("Chat messages disabled."), $login);
+                break;
+            default:
+                $this->exp_chatSendServerMessage(exp_getMessage("Usage: /chat on or /chat off."), $login);
+                break;
+        }
     }
 
     public function adm_chat($login, $params)
@@ -108,13 +130,13 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function getRecepients()
     {
 
-        $array      = array_values($this->storage->spectators + AdminGroups::getAdminsByPermission(Permission::chat_onDisabled));
+        $array = array_values($this->storage->spectators + AdminGroups::getAdminsByPermission(Permission::chat_onDisabled));
         foreach (\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo as $login => $playerinfo) {
             if ($playerinfo->hasRetired) {
                 $array[] = $playerinfo->login;
             }
         }
-        
+
         $recepients = array();
         foreach ($array as $player) {
             if ($player instanceof \ManiaLive\Data\Player) {
@@ -123,7 +145,12 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $recepients[$player] = $player;
             }
         }
-        
+
+        foreach ($this->exclude as $login => $player) {
+            if (array_key_exists($login, $recepients)) {
+                unset($recepients[$login]);
+            }
+        }
         return array_keys(array_intersect_key(($this->storage->players + $this->storage->spectators), $recepients));
     }
 
@@ -194,7 +221,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             } else {
                 // chat is disabled
                 $recepient = $this->getRecepients();
-                
+
                 if ($config->enableSpectatorChat) {
 
                     if (in_array($login, $recepient)) {
@@ -206,8 +233,8 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         $nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);
                         \ManiaLive\Utilities\Logger::getLog('chat')->write("[".$login."] ".$nickLog." - ".$text);
                     } else {
-                         $this->exp_chatSendServerMessage("#error#Chat is disabled at at the moment!!! You can chat when you retire or go spectator. You may still use PM messages",
-                        $login, array());
+                        $this->exp_chatSendServerMessage("#error#Chat is disabled at at the moment!!! You can chat when you retire or go spectator. You may still use PM messages",
+                            $login, array());
                     }
                 } else {
                     $this->exp_chatSendServerMessage("#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages",
