@@ -28,6 +28,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(true);
 		$this->registerVariable($var);
 
+                $var = new Boolean('enableSpectatorChat', 'Enable chat for spectators when othervice disabled', $config, false, false);
+		$var->setDefaultValue(false);
+		$this->registerVariable($var);
+
 		$var = new Boolean('allowMPcolors', 'Allow ManiaPlanet chatmessages colorbug for chat', $config, false, false);
 		$var->setDefaultValue(true);
 		$this->registerVariable($var);

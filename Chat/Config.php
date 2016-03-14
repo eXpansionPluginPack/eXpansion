@@ -11,7 +11,8 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $chatSeparator = '$0af»$z$s ';
     public $allowMPcolors = true;
     public $publicChatActive = true;
-
+    public $enableSpectatorChat = false;
+    
 }
 
 ?>
