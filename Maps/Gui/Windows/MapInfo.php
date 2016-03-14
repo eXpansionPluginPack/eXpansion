@@ -59,9 +59,6 @@ class MapInfo extends Window
         $this->frame->clearComponents();
         $this->frame2->clearComponents();
 
-        $storage = Storage::getInstance();
-
-
         $map           = ArrayOfObj::getObjbyPropValue($storage->maps, "uId", $uid);
         $map->{"nick"} = "n/a";
 
