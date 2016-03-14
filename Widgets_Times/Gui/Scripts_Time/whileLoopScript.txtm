@@ -6,7 +6,6 @@ if (target == "") {
 
 foreach (Player in Players) {
     if (Player.Login == target) {
-    
         declare PrevCheckpointCount for Player = -1;
         if (PrevCheckpointCount != Player.CurRace.Checkpoints.count) {
             PrevCheckpointCount = Player.CurRace.Checkpoints.count;
