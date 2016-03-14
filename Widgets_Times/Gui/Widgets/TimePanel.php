@@ -159,6 +159,8 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 		$this->nScript->setParam('totalCp', $this->totalCp);
 		$this->nScript->setParam('target', Gui::fixString($this->target));
 		$this->nScript->setParam('lapRace', $bool);
+                $this->nScript->setParam("playSound", 'True');
+                
 		parent::onDraw();
 	}
 

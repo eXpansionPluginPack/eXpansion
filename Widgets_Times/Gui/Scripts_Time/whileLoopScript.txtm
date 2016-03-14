@@ -12,6 +12,10 @@ foreach (Player in Players) {
             curCp = Player.CurRace.Checkpoints.count;
 
             if (curCp > 0 && curCp != totalCp) {
+
+            if (playSound) {
+                Audio.PlaySoundEvent(CAudioManager::ELibSound::Checkpoint  , 0, -0.5);
+            }
                     declare temp = (curCp % totalCp) - 1;
                     if(temp == -1) {
                         continue;
