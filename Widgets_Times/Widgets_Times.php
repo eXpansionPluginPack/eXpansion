@@ -109,7 +109,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function showPanel($login, $playerObject)
     {
-        echo "at showpanel\n";
+        
         $spectatorTarget = $login;
 
         if ($playerObject->currentTargetId) {
@@ -118,7 +118,6 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $spectatorTarget = $spec->login;
             }
         }
-        echo $login." -> ".$spectatorTarget."\n";
 
         TimePanel::Erase($login);
         $info = TimePanel::Create($login);

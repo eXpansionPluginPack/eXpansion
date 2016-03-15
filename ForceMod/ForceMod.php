@@ -46,7 +46,7 @@ class ForceMod extends ExpPlugin
 					if (count($mods) > 0) {
 						$index = mt_rand(0, (count($mods) - 1));
 						if (array_key_exists($index, $mods)) {
-							$rnd_mod[0] = $mods[$index];
+							$rnd_mod[] = $mods[$index];
 							$this->console("Enabling forced mod at url: " . $rnd_mod[0]->url);
 						}
 					}
@@ -61,6 +61,10 @@ class ForceMod extends ExpPlugin
 				$this->console("Force mods disabled, since there is no mods defined in config");
 			}
 
+                        echo "============ forcemod DEBUG info =============\n";
+                        print_r($rnd_mod);
+                        echo "================================\n";
+                        
 			$this->connection->setForcedMods(true, $rnd_mod);
 		} catch (Exception $e) {
 			$this->console("[eXp\\ForceMod] error while enabling the mod:" . $e->getMessage() . " line:" . $e->getLine());

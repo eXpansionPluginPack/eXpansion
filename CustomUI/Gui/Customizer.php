@@ -40,8 +40,8 @@ class Customizer extends PlainWidget
 			} else if ($variable instanceof BasicList) {
 				$value = $variable->getRawValue();
 				if (count($value) == 2) {
-					$code .= $varName . ".X" . ' = ' . Maniascript::convertType($value[0]) . ";\n";
-					$code .= $varName . ".Y" . ' = ' . Maniascript::convertType($value[1]) . ";\n";
+					$code .= $varName . ".X" . ' = ' . Maniascript::convertType((float)$value[0]) . ";\n";
+					$code .= $varName . ".Y" . ' = ' . Maniascript::convertType((float)$value[1]) . ";\n";
 				}
 			}
 		}

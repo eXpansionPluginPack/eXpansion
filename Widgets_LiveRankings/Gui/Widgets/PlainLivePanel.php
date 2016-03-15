@@ -13,16 +13,18 @@ use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\TeamItem;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\PlainPanel;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Widgets_LocalRecords;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
+use ManiaLivePlugins\eXpansion\Gui\Script_libraries\TextExt;
 
 class PlainLivePanel extends PlainPanel
 {
 
 	public static $connection;
-
+       
 	function exp_onBeginConstruct()
 	{
 		parent::exp_onBeginConstruct();
-		$this->setName("Live Rankings Panel");
+		$this->setName("Live Rankings Panel");                
+                $this->registerScript(new TextExt());                
 		$this->timeScript->setParam('varName', 'LiveTime1');
 		$this->timeScript->setParam('getCurrentTimes', 'True');
 		$this->bg->setAction(null);
@@ -190,7 +192,7 @@ class PlainLivePanel extends PlainPanel
 					$nickData .= ', ';
 				}
 				$recsData .= '"' . Gui::fixString($player->login) . '"=>' . $player->bestTime;
-				$nickData .= '"' . Gui::fixString($player->login) . '"=>"' . Gui::fixString($player->nickName) . '"';
+				$nickData .= '"' . Gui::fixString($player->login) . '"=>"' . Gui::fixString(Formatting::stripLinks($player->nickName)) . '"';
 				$index++;
 			}
 		}
@@ -257,7 +259,7 @@ class PlainLivePanel extends PlainPanel
 			if ($index > 1) {
 				$NickNames .= ', ';
 			}
-			$NickNames .= '"' . Gui::fixString($login) . '"=>"' . Gui::fixString($nickname) . '"';
+			$NickNames .= '"' . Gui::fixString($login) . '"=>"' . Gui::fixString(Formatting::stripLinks($nickname)) . '"';
 			$index++;
 		}
 		$NickNames .= "]";
