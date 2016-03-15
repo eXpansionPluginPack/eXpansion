@@ -1427,7 +1427,7 @@ Other server might use the same blacklist file!!');
 		$admin = $this->storage->getPlayerObject($fromLogin);
 		try {
 			$this->expStorage->loadGuestList();
-			$this->connection->addGuest($player);
+			$this->connection->addGuest($target);
 			$this->expStorage->saveGuestList();
 
 			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#add as guest the player#variable# %s', null, array($admin->nickName, $nick));
