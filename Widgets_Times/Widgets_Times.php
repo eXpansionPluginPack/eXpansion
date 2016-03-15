@@ -111,20 +111,25 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         echo "at showpanel\n";
         $spectatorTarget = $login;
-        
+
         if ($playerObject->currentTargetId) {
             $spec = $this->getPlayerObjectById($playerObject->currentTargetId);
             if ($spec->login) {
                 $spectatorTarget = $spec->login;
             }
         }
-        echo $login ." -> " . $spectatorTarget . "\n";
-        
+        echo $login." -> ".$spectatorTarget."\n";
+
         TimePanel::Erase($login);
         $info = TimePanel::Create($login);
         $info->setSize(30, 6);
         $info->setPosition(-16, 46);
-        $info->setTarget($spectatorTarget);
+        if (!$this->expStorage->isRelay) {
+            $info->setTarget($spectatorTarget);
+        } else {
+            $info->setTarget("");
+        }
+
         $info->setMapInfo($this->storage->currentMap);
         $info->show();
     }
