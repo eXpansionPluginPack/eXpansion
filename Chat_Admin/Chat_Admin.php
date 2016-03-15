@@ -1417,10 +1417,11 @@ Other server might use the same blacklist file!!');
 	function guest($fromLogin, $params)
 	{
 		$target = array_shift($params);
+
 		$player = $this->storage->getPlayerObject($target);
-		if ($player == null) {
-			$this->exp_chatSendServerMessage('#admin_error#Player #variable# %s doesn\' exist.', $fromLogin, array($target));
-			return;
+                $nick = $target;
+		if ($player != null) {
+			$nick = $player->nickName;
 		}
 
 		$admin = $this->storage->getPlayerObject($fromLogin);
@@ -1429,7 +1430,7 @@ Other server might use the same blacklist file!!');
 			$this->connection->addGuest($player);
 			$this->expStorage->saveGuestList();
 
-			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#add as guest the player#variable# %s', null, array($admin->nickName, $player->nickName));
+			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#add as guest the player#variable# %s', null, array($admin->nickName, $nick));
 		} catch (Exception $e) {
 			$this->sendErrorChat($fromLogin, $e->getMessage());
 		}
