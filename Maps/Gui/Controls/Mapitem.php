@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as MyButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
@@ -47,8 +47,8 @@ class Mapitem extends Control implements OptimizedPagerElement
         $this->label_map->setFocusAreaColor1('0000');
         $this->label_map->setFocusAreaColor2('0000');
         $this->label_map->setTextPrefix('$s');
-        $this->label_map->setId('column_'.$indexNumber.'_0');
         $this->label_map->setAction($action);
+        $this->label_map->setId('column_'.$indexNumber.'_0');
         $this->label_map->setAttribute("class", "eXpOptimizedPagerAction");
         $this->label_map->setScriptEvents(1);
         $this->frame->addComponent($this->label_map);

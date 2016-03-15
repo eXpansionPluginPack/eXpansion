@@ -137,7 +137,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             //points = $this->connection->triggerModeScriptEvent('Rounds_GetPointsRepartition',"");
         }
     }
-    /*
+
       public function onBeginMap($map, $warmUp, $matchContinuation)
       {
       if (self::$raceOn == True) return;
@@ -150,11 +150,11 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
       self::$secondMap   = true;
       self::$raceOn      = true;
       }
-     */
 
-    public function onStatusChanged($statusCode, $statusName)
+    public function onBeginMatch()
     {
-        if ($statusCode == 4) {
+        if (self::$raceOn == True) return;
+
             self::$raceOn      = false;
             $this->forceUpdate = true;
             $this->hideLivePanel();
@@ -162,7 +162,6 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             self::$secondMap   = true;
             self::$raceOn      = true;
         }
-    }
 
     public function onEndRound()
     {

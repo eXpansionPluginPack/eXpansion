@@ -134,7 +134,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
             Gui\Widgets\DediPanel2::EraseAll();
         }
     }
-    /*
+
       public function onBeginMap($map, $warmUp, $matchContinuation)
       {
       self::$raceOn      = false;
@@ -146,9 +146,8 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
       self::$secondMap   = true;
       self::$raceOn      = true;
       }
-     */
-    /*
-      function onBeginMatch()
+
+    public function onBeginMatch()
       {
       if (self::$secondMap) {
       $this->forceUpdate = true;
@@ -158,20 +157,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
       $this->updateDediPanel();
       }
       }
-     */
-
-    public function onStatusChanged($statusCode, $statusName)
-    {
-        if ($statusCode == 4) {
-            self::$raceOn      = false;
-            $this->forceUpdate = true;
-            $this->widgetIds   = array();
-            Gui\Widgets\DediPanel::EraseAll();
-            Gui\Widgets\DediPanel2::EraseAll();
-            $this->updateDediPanel();
-            self::$raceOn      = true;
-        }
-    }
+     
 
     public function onEndRound()
     {
@@ -180,12 +166,10 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
     public function onDedimaniaGetRecords($data)
     {
-        self::$dedirecords = $data['Records'];
-        if ($this->storage->serverStatus->code == 4) {
+        self::$dedirecords = $data['Records'];        
             Gui\Widgets\DediPanel::EraseAll();
             Gui\Widgets\DediPanel2::EraseAll();
-            $this->updateDediPanel();
-        }
+            $this->updateDediPanel();        
     }
 
     public function onPlayerConnect($login, $isSpectator)

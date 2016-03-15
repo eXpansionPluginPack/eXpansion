@@ -122,7 +122,7 @@ main () {
 
     if (!disableAnimations && !stackContainsWindow(id) ) {
         Window.RelativePosition.Z = 0.;
-        Window.Scale = 0.0;
+        Window.RelativeScale = 0.0;
         openWindow = True;
     }
 
@@ -239,7 +239,7 @@ main () {
                 if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "MainWindow" || Event.ControlId == "Titlebar" ) ) {
                     stackActivateWindow(id);
                 }
-           
+
                 if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 123) {
 		    if (exp_windowStack.count > 0)
                     {

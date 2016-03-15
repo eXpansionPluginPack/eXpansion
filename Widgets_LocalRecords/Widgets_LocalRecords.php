@@ -129,7 +129,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             Gui\Widgets\LocalPanel2::EraseAll();
         }
     }
-    /*
+
       public function onBeginMap($map, $warmUp, $matchContinuation)
       {
       self::$raceOn      = false;
@@ -141,11 +141,11 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
       self::$secondMap   = true;
       self::$raceOn      = true;
       }
-     */
 
-    public function onStatusChanged($statusCode, $statusName)
+    public function onBeginMatch()
     {
-        if ($statusCode == 4) {
+        if (self::$raceOn == true) return;
+
             self::$raceOn      = false;
             $this->forceUpdate = true;
             $this->widgetIds   = array();
@@ -155,7 +155,6 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             self::$secondMap   = true;
             self::$raceOn      = true;
         }
-    }
 
     public function onEndRound()
     {
