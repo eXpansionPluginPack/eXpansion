@@ -910,8 +910,8 @@ namespace {
 	error_reporting(E_ALL ^ E_DEPRECATED);
 	// do custom logging also
 	$limit = ini_get('memory_limit');
-	if (shorthand2bytes($limit) < 256 * 1048576)
-		ini_set('memory_limit', '256M');
+	if (shorthand2bytes($limit) < 512 * 1048576)
+		ini_set('memory_limit', '512M');
 
 	set_time_limit(0);
 

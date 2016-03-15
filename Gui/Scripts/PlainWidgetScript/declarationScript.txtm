@@ -14,11 +14,11 @@
 main () {
      // external declares
      <?php echo $this->dDeclares ?>
-			 
+
      // external declares ends
      while(True) {
-	yield;	
-        
+	yield;
+
 	// external loop stuff
         <?php echo  $this->wLoop ?>
     }

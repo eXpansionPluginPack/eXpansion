@@ -11,6 +11,11 @@ use ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Widgets\DediPanel2;
 
 class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
+    const None            = 0x0;
+    const Dedimania       = 0x2;
+    const Dedimania_force = 0x8;
+    const All             = 0x31;
+
     public static $me          = null;
     public static $dedirecords = array();
     public static $secondMap   = false;
@@ -39,8 +44,31 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
     public function exp_onReady()
     {
         $this->enableDedicatedEvents();
+
+        $this->lastUpdate = time();
+        $this->enableTickerEvent();
+
         $this->updateDediPanel();
         self::$me = $this;
+    }
+
+    public function onTick()
+    {
+
+        if ((time() - $this->lastUpdate) > 20) {
+
+            if (($this->needUpdate & self::Dedimania) == self::Dedimania || $this->forceUpdate || ($this->needUpdate & self::Dedimania_force)
+                == self::Dedimania_force) {
+                if ($this->dedi || $this->needUpdate == self::Dedimania_force) {
+                    $this->updateDediPanel();
+                    $this->dedi = false;
+                }
+            }
+
+            $this->lastUpdate  = time();
+            $this->forceUpdate = false;
+            $this->needUpdate  = false;
+        }
     }
 
     public function updateDediPanel($login = null)
@@ -149,16 +177,18 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
     public function onBeginMatch()
       {
-      if (self::$secondMap) {
+        if (self::$raceOn == true) return;
+
+        self::$raceOn      = false;
       $this->forceUpdate = true;
       $this->widgetIds   = array();
       Gui\Widgets\DediPanel::EraseAll();
       Gui\Widgets\DediPanel2::EraseAll();
       $this->updateDediPanel();
-      }
+        self::$secondMap   = true;
+        self::$raceOn      = true;
       }
      
-
     public function onEndRound()
     {
 
@@ -167,9 +197,8 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
     public function onDedimaniaGetRecords($data)
     {
         self::$dedirecords = $data['Records'];        
-            Gui\Widgets\DediPanel::EraseAll();
-            Gui\Widgets\DediPanel2::EraseAll();
-            $this->updateDediPanel();        
+        $this->dedi        = true;
+        $this->needUpdate  = self::Dedimania_force;
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -204,7 +233,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
     public function onDedimaniaPlayerConnect($data)
     {
         if ($data->maxRank > Connection::$serverMaxRank) {
-            $this->updateDediPanel();
+            $this->needUpdate = self::Dedimania_force;
         }
     }
 

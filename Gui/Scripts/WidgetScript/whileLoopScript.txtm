@@ -1,4 +1,4 @@
-<?php       
+<?php
 
     $deltaX = "DeltaPos.X = MouseX - lastMouseX;";
     $deltaY = "DeltaPos.Y = MouseY - lastMouseY;";
@@ -12,7 +12,7 @@
 
 if(!disablePersonalHud){
     //Check if persistent variables needs to be checked, or first loop
-    if(exp_needToCheckPersistentVars || !eXp_firstPersistentCheckDone) {        
+    if(exp_needToCheckPersistentVars || !eXp_firstPersistentCheckDone) {
 	exp_multipleCheckCount += 1;
 	eXp_firstPersistentCheckDone = True;
 
@@ -37,12 +37,12 @@ if(!disablePersonalHud){
 		    eXp_widgetLayers[version] = Text[Text][Text];
 	    }
 
-	    if (!eXp_widgetLayers[version].existskey(id) || forceReset) { 
+	    if (!eXp_widgetLayers[version].existskey(id) || forceReset) {
 		    eXp_widgetLayers[version][id] = Text[Text];
 	    }
 
-	    if (!eXp_widgetLayers[version][id].existskey(gameMode)) { 
-		    eXp_widgetLayers[version][id][gameMode] = activeLayer; 
+	    if (!eXp_widgetLayers[version][id].existskey(gameMode)) {
+		    eXp_widgetLayers[version][id][gameMode] = activeLayer;
 	    }
 
 	    if (!eXp_widgetLastPos.existskey(version)) {
@@ -58,7 +58,7 @@ if(!disablePersonalHud){
 
 	    if (!eXp_widgetLastPosRel.existskey(version)) {
 		    eXp_widgetLastPosRel[version] = Vec3[Text][Text];
-	    } 
+	    }
 
 	    if (!eXp_widgetLastPosRel[version].existskey(id) || forceReset) {
 		eXp_widgetLastPosRel[version][id] = Vec3[Text];
@@ -74,6 +74,8 @@ if(!disablePersonalHud){
 	} else if(exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode] || eXp_widgetLayers[version][id][gameMode] != activeLayer) {
 	    Window.Hide();
 	    exp_widgetCurrentVisible = False;
+            yield;
+            continue;
 	}
 
 	if (exp_enableHudMove == True) {
@@ -110,22 +112,6 @@ if(!disablePersonalHud){
     }else {
 	    MoveWindow = False;
     }
-
-//    foreach (Event in PendingEvents) {
-	//if (Event.Type == CMlEvent::Type::MouseOver ) {
-//	    if(Event.Control != Null ){
-//	       element = Event.Control;
-//	       element.RelativeScale = 1.1;	   
-              // ClientUI.StatusMessage = "id: " ^Event.ControlId ^ "  z:" ^ LastDelta.Z;
-//	    }	
-//	}
-//    }
-//	else {
-//	      if (element != Null){ 	   	    
-//		element.RelativeScale = 1.0;	  
-//	      }
-//	}
-//    }		  
 
     if (MoveWindow) {
 	    <?php echo $deltaX ?>
