@@ -39,13 +39,13 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->enableDedicatedEvents();
         //if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
         //	$this->enableScriptEvents();
-        //$this->registerChatCommand("crash", "crash", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
-        $this->registerChatCommand("connect", "connect", 1, true, \ManiaLive\Features\Admin\AdminGroup::get());
-        $this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-        $this->registerChatCommand("profiler_enable", "profilere", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-        $this->registerChatCommand("gofaketest", "test", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-        $this->registerChatCommand("test", "testWin", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
-        $this->registerChatCommand("mem", "mem", 0, true, \ManiaLive\Features\Admin\AdminGroup::get());
+        //$this->registerChatCommand("crash", "crash", 1, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
+        $this->registerChatCommand("connect", "connect", 1, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
+        $this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
+        //$this->registerChatCommand("profiler_enable", "profilere", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
+        //$this->registerChatCommand("gofaketest", "test", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
+        //$this->registerChatCommand("test", "testWin", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
+        //$this->registerChatCommand("mem", "mem", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
         $this->mem(null);
     }
 
