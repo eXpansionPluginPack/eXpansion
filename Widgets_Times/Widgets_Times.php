@@ -9,14 +9,7 @@ use ManiaLivePlugins\eXpansion\Widgets_Times\Gui\Widgets\TimePanel;
 
 class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
-    private $modes = array();
-    private $audio = array();
-
-    /** @var \Maniaplanet\DedicatedServer\Structures\Player[] */
-    private $spectatorTargets = array();
-
-    /** @var \Maniaplanet\DedicatedServer\Structures\Player[] */
-    private $checkpointPos = array();
+    protected $references = array();
 
     function exp_onInit()
     {
@@ -45,34 +38,31 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
         }
 
+        $this->registerChatCommand("cps", "chat_cps", 1, true);
         $this->showToAll();
+    }
+
+    public function chat_cps($login, $value)
+    {
+        if (!is_numeric($value)) {
+            $this->exp_chatSendServerMessage(exp_getMessage('#error#"%s" is not a numeric value!'), null, array($value));
+            return;
+        }
+
+        if ($value < 1) {
+            $this->exp_chatSendServerMessage(exp_getMessage('#error#"%s" is less than 1!'), null, array($value));
+            return;
+        }
+        
+        $this->exp_chatSendServerMessage(exp_getMessage('#info#New time reference point set to %s'), null, array($value));
+        $this->references[$login] = (int) $value;
+        $this->showPanel($login, $this->storage->getPlayerObject($login));
     }
 
     public function onPlayerInfoChanged($playerInfo)
     {
         $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
         $this->showPanel($player->login, $player);
-    }
-
-    public function onPlayerGiveup(\ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player)
-    {
-        if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
-            $this->spectatorTargets[$player->login] = $player;
-        }
-    }
-
-    public function setMode($login, $mode)
-    {
-        $this->modes[$login] = $mode;
-        $info                = Gui\Widgets\TimeChooser::Create($login);
-        $info->updatePanelMode($this->modes[$login], $this->audio[$login]);
-    }
-
-    public function setAudioMode($login, $audiomode)
-    {
-        $this->audio[$login] = $audiomode;
-        $info                = Gui\Widgets\TimeChooser::Create($login);
-        $info->updatePanelMode($this->modes[$login], $this->audio[$login]);
     }
 
     public function onBeginMatch()
@@ -92,7 +82,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-        // TimeChooser::EraseAll();
+        //TimeChooser::EraseAll();
         TimePanel::$dedirecords  = Array();
         TimePanel::$localrecords = Array();
     }
@@ -109,7 +99,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function showPanel($login, $playerObject)
     {
-        
+
         $spectatorTarget = $login;
 
         if ($playerObject->currentTargetId) {
@@ -128,6 +118,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         } else {
             $info->setTarget("");
         }
+        if (array_key_exists($login, $this->references)) $info->setReference($this->references[$login]);
 
         $info->setMapInfo($this->storage->currentMap);
         $info->show();
@@ -135,9 +126,6 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function onPlayerConnect($login, $isSpectator)
     {
-        //$audiopreload = Gui\Widgets\AudioPreload::Create($login);
-        //$audiopreload->show();
-
         $this->showPanel($login, $this->storage->getPlayerObject($login));
     }
 

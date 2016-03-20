@@ -28,6 +28,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $Colors_quiz = '$3e3'; // quiz
     public $Colors_question = '$fa0'; // quiz answer
     public $Colors_vote = '$0f0'; // votes
+    public $Colors_info = '$3af'; // votes
     public $Colors_vote_success = '$0f0'; // vote success
     public $Colors_vote_failure = '$f00'; // vote failure
     public $time_dynamic_max = '7:00'; // dynamic timelimit max time for /ta dynamic <x>

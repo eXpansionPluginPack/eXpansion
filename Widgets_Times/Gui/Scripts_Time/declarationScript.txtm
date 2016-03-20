@@ -9,5 +9,6 @@ declare Integer totalCp = <?php echo $this->totalCp ?>;
 declare Boolean lapRace = <?php echo $this->lapRace ?>;
 declare Text target = "<?php echo $this->target; ?>";
 declare Boolean playSound = <?php echo $this->playSound ?>;
+declare Integer reference = <?php echo $this->reference ?>;
 
 target = TextLib::Replace(target, "–", "-");

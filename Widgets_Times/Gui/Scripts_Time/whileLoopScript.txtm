@@ -64,7 +64,7 @@ foreach (Player in Players) {
                           color = "$00f$s";
                       }
                       DediLabel.SetText(color ^ TimeToText(diff));
-                      CpTop1.SetText("$fffDedi1");
+                      CpTop1.SetText("$fffDedi"^reference);
                 } else {
                       DediLabel.SetText("");
                       CpTop1.SetText("");
