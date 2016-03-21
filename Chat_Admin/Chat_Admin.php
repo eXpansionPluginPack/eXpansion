@@ -777,7 +777,7 @@ Other server might use the same blacklist file!!');
 				case "wud":
 				case "wu":
 				case "warmupduration":
-					$this->setAllWarmUpDuration($fromLogin, $params);
+					$this->setCupWarmUpDuration($fromLogin, $params);
 					break;
 				case "fto":
 				case "ftimeout":

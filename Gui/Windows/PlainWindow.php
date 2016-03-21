@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\expansion\Gui\Windows;
+namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
 /**
  * Description of PlainWindow

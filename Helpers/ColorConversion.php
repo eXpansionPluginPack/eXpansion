@@ -1,6 +1,6 @@
 <?php
 
-namespace libraries\ManiaLivePlugins\eXpansion\Helpers;
+namespace ManiaLivePlugins\eXpansion\Helpers;
 
 /**
  * Description of ColorConversion
@@ -10,14 +10,13 @@ namespace libraries\ManiaLivePlugins\eXpansion\Helpers;
 class ColorConversion
 {
 
-	//put your code here
 	/**
 	 * Originally from https://gist.github.com/brandonheyer/5254516#file-rgbtohsl-php
 	 * 
 	 * @param int $r
 	 * @param int $g
 	 * @param int $b
-	 * @return type
+	 * @return array(h,s,l);
 	 */
 	static function rgbToHsl($r, $g, $b)
 	{
@@ -59,10 +58,10 @@ class ColorConversion
 	/**
 	 * Originally from https://gist.github.com/brandonheyer/5254516#file-rgbtohsl-php
 	 *
-	 * @param type $h
-	 * @param type $s
-	 * @param type $l
-	 * @return type
+	 * @param int $h
+	 * @param int $s
+	 * @param int $l
+	 * @return array(r,g,b)
 	 */
 	static function hslToRgb($h, $s, $l)
 	{

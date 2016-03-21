@@ -11,6 +11,7 @@ namespace ManiaLivePlugins\eXpansion\Core;
 class ColorParser extends \ManiaLib\Utils\Singleton {
 
     /**
+     * Color codes
      * @type array
      */
     private $codes = array();
@@ -66,9 +67,12 @@ class ColorParser extends \ManiaLib\Utils\Singleton {
     /**
      * Register a new token and color code
      *
-     * @param string $token The key for the color code
-     * @param string $obj The object that contains the variable to use(allows the color code to be changed live)
-     * @param string $key The key in the object fhat contains this color code
+     * usage at plugin:
+     * $this->registerCode("server", Config::getInstance(), "Color_server");
+     *
+     * @param String $token The key for the color code
+     * @param Config $obj The configuration object that contains the variable to use(allows the color code to be changed live)
+     * @param String $key The key in the object that contains this color code
      */
     public function registerCode($token, $obj, $key) {
 	$this->codes[$token] = array($obj, $key);

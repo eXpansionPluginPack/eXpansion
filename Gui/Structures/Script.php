@@ -31,8 +31,9 @@ class Script
 		$path = str_replace("\\", DIRECTORY_SEPARATOR, $path);
 
 		$this->_relPath = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . $path;
-		if ($pluginsRoot)
-			$this->_relPath = dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . $path;
+		if ($pluginsRoot) {
+			$this->_relPath = realpath(APP_ROOT . DIRECTORY_SEPARATOR . $path);                                       
+                }
 	}
 
 	/**

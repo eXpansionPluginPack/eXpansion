@@ -6,7 +6,8 @@ use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
 use ManiaLive\Event\Dispatcher;
 
 /**
- *
+ * Admin Groups for eXpansion
+ * 
  * @author oliver
  */
 class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
@@ -61,6 +62,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * List of all Groups
+     *
+     * @var Group[]
      */
     static private $groupList = array();
 
@@ -74,7 +77,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * When was the configuration file loaded?
      *
-     * @var integer
+     * @var Integer
      */
     private $readTime = 0;
 
@@ -355,6 +358,15 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return $masterGroup;
     }
 
+    /**
+     * Announces a chat message to a certaint group
+     *
+     *  $ag = AdminGroups::getIntance();
+     *  $ag->announceToGroup($ag->getGroup("Admins"), exp_getMessage("your message here"));
+     *
+     * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
+     * @param String|\ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
+     */
     public function announceToGroup(Group $group, $msg)
     {
         foreach ($group->getGroupUsers() as $user) {
@@ -363,6 +375,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
+    /**
+     * Announces a chat message to certaint permission
+     * @param string $permission common usage would be to use Permission::constant
+     * @param String|\ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
+     */
     public function announceToPermission($permission, $msg)
     {
         foreach (self::$groupList as $group) {
@@ -370,6 +387,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
+    /**
+     * Gets group object by name
+     * 
+     * @param String $groupName
+     * @return Null|Group
+     */
     public function getGroup($groupName)
     {
         foreach (self::$groupList as $group) {
@@ -381,7 +404,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     /**
-     * Parsing a group
+     * Parse a group
      *
      * @param string $groupName The groups name
      * @param array $value
@@ -427,7 +450,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     /**
-     * Parsing the Master group
+     * Parse the Master admins group
      *
      * @param string $groupName The groups name
      * @param array $permissions
@@ -456,6 +479,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         self::$groupList[] = $group;
     }
 
+    /**
+     * Saves the AdminGroups settings file
+     * 
+     * @throws \Exception
+     */
     public function saveFile()
     {
         $string = "";
@@ -504,6 +532,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * Does the player has this permission
+     * Usage:
+     *       if (AdminGroups::hasPermission($login, Permission::server_admin) {
+     *          // do something
+     *      }
      *
      * @param string $login          The login of the player
      * @param string $permissionName The permission name
@@ -525,10 +557,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     /**
-     * returns group name for login, returns "player" for non-admins.
+     * Returns group name for login, returns "player" for non-admins.
      *
      * @param string $login
-     *
      * @return string containing "Player" for non-admingroup memebers, othervice returns the admin group name.
      */
     static public function getGroupName($login)
@@ -542,6 +573,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     /**
+     * Gets permission, and send error message on fail.
      *
      * @param string $login
      * @param string $permissionName
@@ -565,10 +597,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     /**
-     *
+     * Gets admin
      * @param string $login
      *
-     * @return Admin
+     * @return Admin|Null
      */
     public static function getAdmin($login)
     {
@@ -601,9 +633,21 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Add an admin command
      *
-     * @param string $cmd                                                     The string of the command
+     * usage at plugin:
+     *
+     * $cmd = AdminGroups::addAdminCommand('player kick', $this, 'kick', Permission::player_kick); //
+     * $cmd->setHelp('kick the player from the server');
+     * $cmd->setHelpMore('$w/admin player kick #login$z will kick the player from the server. A kicked player may return to the server whanever he desires.');
+     * $cmd->setMinParam(1);
+     * AdminGroups::addAlias($cmd, "kick"); // xaseco & fast
+     * AdminGroups::addAlias($cmd, "boot"); // just example on how to add multiple aliases
+     *
+     * function kick($fromLogin, $params)
+     * }
+     *
+     * @param String $cmd                                                     The string of the command
      * @param Object $class                                                   The object to call
-     * @param string $function                                                The name of the function to call
+     * @param String $function                                                The name of the function to call
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Permissions $permission The permission level needed to do the command.
      *                                                                        If null then an admin from any group can do the command
      *
@@ -692,6 +736,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return $adminCmd;
     }
 
+    /**
+     *  remove admin command, usually used exp_onUnload
+     *
+     * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd
+     */
     static public function removeAdminCommand(AdminCmd $adminCmd)
     {
         unset(self::$commandsList[$adminCmd->getCmd()]);
@@ -728,7 +777,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     /**
-     * Chat command
+     * Invoke admin Chat command
+     *
+     * usage at plugin:
+     *  $ag = AdminGroup::getInstance();
+     *  $ag->adminCmd($login, "remove this"); // works like $login player would write /adm remove this
      *
      * @param string $login
      * @param string $params
@@ -993,7 +1046,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Return the list of all admins and capabilities
      *
-     * @return array
+     * @return Admin[]
      */
     public function getAdmins()
     {
@@ -1013,13 +1066,19 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Return the list of all the permissions
      *
-     * @return type
+     * @return array
      */
     public function getPermissionList()
     {
         return self::$permissionList;
     }
 
+    /**
+     * Gets admin logins by permission
+     *
+     * @param String $permissionName
+     * @return String[String]
+     */
     public static function getAdminsByPermission($permissionName)
     {
         $admins = array();
@@ -1036,6 +1095,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * Return the list of all admins in manialive style
+     *
+     * usage:
+     *  $this->registerChatCommand("test", "test",0 , true, AdminGroups::get());
+     * 
      *
      * @return array of admins
      */
