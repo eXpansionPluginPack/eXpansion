@@ -12,13 +12,28 @@
     </target>
 
     <target name="qa" description="Launch quality analyse tools">
-        <phingcall target="phpmd" />
+        <phingcall target="phpcs" />
+        <!-- <phingcall target="phpmd" /> Disabled as it is to slow for now -->
+        <phingcall target="phploc" />
     </target>
     
     <target name="phpmd">
         <phpmd file="${project.basedir}/${source}">
             <formatter type="xml" outfile="${project.basedir}/build/phpmd/build.xml" />
         </phpmd>
+    </target>
+    
+    <target name="phploc">
+        <exec logoutput="true" dir="${project.basedir}" command="phploc --log-csv '${project.basedir}/build/logs/phploc.csv' '${project.basedir}/${source}'" escape="false" />
+    </target>
+    
+    <target name="phpcs">
+        <phpcodesniffer standard="Zend">
+            <fileset dir="${project.basedir}/${source}">
+                <include name="**/*.php"/>
+            </fileset>
+            <formatter type="checkstyle" outfile="${project.basedir}/build/logs/checkstyle.xml"/>
+        </phpcodesniffer>
     </target>
 
 </project>
