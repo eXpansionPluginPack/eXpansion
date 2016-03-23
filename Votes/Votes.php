@@ -9,12 +9,12 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
     /** @var Config */
     private $config;
-    private $useQueue = false;
-    private $timer = 0;
-    private $voter = "";
-    private $counters = array();
-    private $update = false;
-    private $resCount = 0;
+    private $useQueue   = false;
+    private $timer      = 0;
+    private $voter      = "";
+    private $counters   = array();
+    private $update     = false;
+    private $resCount   = 0;
     private $lastMapUid = "";
 
     function exp_onInit()
@@ -45,8 +45,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         parent::exp_onLoad();
 
-        $this->enableDedicatedEvents();
-        $this->enableTickerEvent();
+
 
         $cmd       = $this->registerChatCommand("replay", "vote_Restart", 0, true);
         $cmd->help = 'Start a vote to restart a map';
@@ -68,6 +67,9 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function exp_onReady()
     {
+        $this->enableDedicatedEvents();
+        $this->enableTickerEvent();
+
         $this->counters = array();
         $this->timer    = time();
         $this->setPublicMethod("vote_restart");
@@ -80,7 +82,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 
         $this->lastMapUid = $this->storage->currentMap->uId;
-        
+
         if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Maps\\Maps') && $this->config->restartVote_useQueue) {
             $this->useQueue = true;
             $this->debug("[exp\Votes] Restart votes set to queue");
@@ -88,7 +90,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->debug("[exp\Votes] Restart vote set to normal");
         }
 
-        $this->syncSettings();
+        $this->update = true;
     }
 
     public function syncSettings()
@@ -99,7 +101,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         foreach ($managedVotes as $cmd => $vote) {
             $ratios[] = new \Maniaplanet\DedicatedServer\Structures\VoteRatio($vote->command, $vote->ratio);
         }
-        $this->connection->setCallVoteRatios($ratios, false);
+        $this->connection->setCallVoteRatios($ratios, true);
         if ($this->config->use_votes == false) $this->connection->setCallVoteTimeOut(0);
         else {
             $this->connection->setCallVoteTimeOut(($this->config->global_timeout * 1000));
@@ -140,10 +142,14 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (!array_key_exists('RestartMap', $managedVotes)) return;
             // if vote is not managed...
             if ($managedVotes['RestartMap']->managed == false) return;
-
-            $config = Config::getInstance();  
-            if ($config->restartLimit != 0 && $config->restartLimit < $this->resCount) {                              
-                $this->exp_chatSendServerMessage(exp_getMessage("#error#Map limit for voting restart reached."), $login, array($this->config->restartLimit));
+            if ($managedVotes['RestartMap']->ratio == -1.) {
+                $this->exp_chatSendServerMessage(exp_getMessage("#error#Restart vote is disabled!"), $login);
+                return;
+            }
+            $config = Config::getInstance();
+            if ($config->restartLimit != 0 && $config->restartLimit < $this->resCount) {
+                $this->exp_chatSendServerMessage(exp_getMessage("#error#Map limit for voting restart reached."), $login,
+                    array($this->config->restartLimit));
                 return;
             }
 
@@ -172,6 +178,10 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (!array_key_exists('NextMap', $managedVotes)) return;
             // if vote is not managed...
             if ($managedVotes['NextMap']->managed == false) return;
+            if ($managedVotes['NextMap']->ratio == -1.) {
+                $this->exp_chatSendServerMessage(exp_getMessage("#error#Skip vote is disabled!"), $login);
+                return;
+            }
 
             $this->voter       = $login;
             $vote              = $managedVotes['NextMap'];
@@ -192,7 +202,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam)
     {
 
-        //$this->console("[exp\Votes] Vote Status: " . $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam);
+        //    $this->console("[exp\Votes] Vote Status: " . $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam);
 // in case managed votes are disabled, return..
         if ($this->config->use_votes == false) return;
 
@@ -219,7 +229,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             foreach ($managedVotes as $cmd => $vote) {
                 if ($cmdName == $cmd) {
                     if ($vote->ratio == -1.) {
-                        $this->cancelVote($login);
+                        $this->connection->cancelVote();
                     }
                 }
             }
