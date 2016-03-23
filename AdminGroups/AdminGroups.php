@@ -367,11 +367,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
      * @param String|\ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
      */
-    public function announceToGroup(Group $group, $msg)
+    public function announceToGroup(Group $group, $msg, $args = array())
     {
         foreach ($group->getGroupUsers() as $user) {
             $player = $this->storage->getPlayerObject($user->getLogin());
-            if ($player != null && $player->isConnected) $this->exp_chatSendServerMessage($msg, $user->getLogin());
+            if ($player != null && $player->isConnected) $this->exp_chatSendServerMessage($msg, $user->getLogin(), $args);
         }
     }
 
@@ -380,10 +380,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * @param string $permission common usage would be to use Permission::constant
      * @param String|\ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
      */
-    public function announceToPermission($permission, $msg)
+    public function announceToPermission($permission, $msg, $args = array())
     {
         foreach (self::$groupList as $group) {
-            if ($group->hasPermission($permission)) $this->announceToGroup($group, $msg);
+            if ($group->hasPermission($permission)) $this->announceToGroup($group, $msg, $args);
         }
     }
 

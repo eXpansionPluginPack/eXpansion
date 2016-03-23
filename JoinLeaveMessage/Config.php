@@ -29,6 +29,7 @@ class Config extends Singleton{
 
 	public $showTotalPlayOnJoin = true;
 	public $showLeaveMessage = true;
-	
+	public $hideFromPlayers = false;
+
 
 } 
