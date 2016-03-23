@@ -12,7 +12,13 @@
     </target>
 
     <target name="qa" description="Launch quality analyse tools">
-
+        <phingcall target="phpmd" />
+    </target>
+    
+    <target name="phpmd">
+        <phpmd file="${project.basedir}/${source}/www">
+            <formatter type="xml" outfile="${project.basedir}/build/phpmd.xml" />
+        </phpmd>
     </target>
 
 </project>
