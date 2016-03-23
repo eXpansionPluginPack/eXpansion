@@ -13,7 +13,7 @@
 
     <target name="qa" description="Launch quality analyse tools">
         <phingcall target="phpcs" />
-        <!-- <phingcall target="phpmd" /> Disabled as it is to slow for now -->
+        <phingcall target="phpmd" />
         <phingcall target="phploc" />
     </target>
     
