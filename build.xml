@@ -7,7 +7,7 @@
         depends="clean,qa"
     />
 
-    <target name="Delete unwanted files.">
+    <target name="clean" description="Delete unwanted files.">
 
     </target>
 
