@@ -17,7 +17,7 @@
     
     <target name="phpmd">
         <phpmd file="${project.basedir}/${source}/www">
-            <formatter type="xml" outfile="${project.basedir}/build/phpmd.xml" />
+            <formatter type="xml" outfile="${project.basedir}/build/phpmd/build.xml" />
         </phpmd>
     </target>
 
