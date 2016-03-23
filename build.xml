@@ -28,7 +28,7 @@
     </target>
     
     <target name="phpcs">
-        <phpcodesniffer standard="Zend">
+        <phpcodesniffer standard="PSR2">
             <fileset dir="${project.basedir}/${source}">
                 <include name="**/*.php"/>
             </fileset>
