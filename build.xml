@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="eXpansion" default="ci" basedir=".">
+    <property name="source" value="." />
+
+    <target name="ci"
+        description="Launch Jenkins targets"
+        depends="clean,qa"
+    />
+
+    <target name="Delete unwanted files.">
+
+    </target>
+
+    <target name="qa" description="Launch quality analyse tools">
+
+    </target>
+
+</project>
