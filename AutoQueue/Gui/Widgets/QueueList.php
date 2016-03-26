@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) 2014 Reaby
  *
@@ -19,69 +18,102 @@
 
 namespace ManiaLivePlugins\eXpansion\AutoQueue\Gui\Widgets;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\AutoQueue\Structures\QueuePlayer;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
+use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
+use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle;
+use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
+
 /**
  * Description of EnterQueueWidget
  *
  * @author Reaby
  */
-class QueueList extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
+class QueueList extends Widget
 {
+    public $frame;
 
-	public static $action_toggleQueue;
+    /** @var QueuePlayer[] */
+    public $queueplayers    = array();
+    protected $mainInstance = null;
+    protected $bg;
+    
+    protected function exp_onBeginConstruct()
+    {
+        $this->setName("Queue List");
+        $login = $this->getRecipient();
+        $this->bg    = new WidgetBackGround(62, 40);
+        $this->bg->setAction($this->createAction(array($this, "enterQueue")));
+        $this->addComponent($this->bg);
 
-	public $frame;
+        $header = new WidgetTitle(62, 40);
+        $header->setText(exp_getMessage("Waiting Queue"));
+        $this->addComponent($header);
 
-	/** @var \ManiaLivePlugins\eXpansion\AutoQueue\Structures\QueuePlayer[] */
-	public $queueplayers = array();
+        $this->frame = new Frame(1, -2);
+        $this->addComponent($this->frame);
+    }
 
-	protected function exp_onBeginConstruct()
-	{
-		$this->setName("Queue List");
-		$login = $this->getRecipient();
-		$bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(32, 40);
-		$bg->setAction($this->createAction(array($this, "enterQueue")));
-		$this->addComponent($bg);
+    protected function exp_onEndConstruct()
+    {
+        $this->setPosition(80, -30);
+        $this->setSize(62, 40);
+    }
 
-		$header = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle(32, 4);
-		$header->setText(exp_getMessage("Waiting Queue"));
-		$this->addComponent($header);
+    protected function onDraw()
+    {
 
-		$this->frame = new \ManiaLive\Gui\Controls\Frame(1, -8);
-		$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
-		$this->addComponent($this->frame);
-	}
 
-	protected function exp_onEndConstruct()
-	{
-		$this->setPosition(80, -30);
-		$this->setSize(32, 40);
-	}
+        parent::onDraw();
+    }
 
-	protected function onDraw()
-	{
+    public function setPlayers($players, $instance)
+    {
+        $this->queueplayers = $players;
+        $this->mainInstance = $instance;
 
-		$this->frame->clearComponents();
-		$x = 1;
-		foreach ($this->queueplayers as $player) {
-			$label = new \ManiaLib\Gui\Elements\Label(30, 4);
-			$label->setText($x . "." . $player->nickName);
-			$this->frame->addComponent($label);
-			$x++;
-			if ($x < 8)
-				break;
-		}
-		parent::onDraw();
-	}
+        $this->frame->clearComponents();
+        $x = 1;
+        
+        foreach ($this->queueplayers as $player) {
+            $label = new Label(30, 6);
+            $label->setAlign("left", "center2");
+            $label->setPosition(0, -($x * 6));
+            $label->setText($x.".  ".$player->nickName);
+            $this->frame->addComponent($label);
 
-	public function setPlayers($players)
-	{
-		$this->queueplayers = $players;
-	}
 
-	public function enterQueue($login)
-	{
-		$widget = EnterQueueWidget::Create($login);
-		$widget->show($login);
-	}
+            $button = new Button();
+            $button->setPosition(32, -($x * 6));
+            if ($player->login == $this->getRecipient()) {
+                $button->setText(__("Leave", $this->getRecipient()));
+                $button->setAction($this->createAction(array($this->mainInstance, "leaveQueue")));
+                $this->frame->addComponent($button);
+                $this->bg->setAction(null);
+            }
 
+            if ($player->login != $this->getRecipient() && AdminGroups::hasPermission($this->getRecipient(), Permission::server_admin)) {
+                $button->setText(__("Remove", $this->getRecipient()));
+                $button->setAction($this->createAction(array($this->mainInstance, "admRemoveQueue"), $player->login));
+                $this->frame->addComponent($button);
+            }
+            $x++;         
+            if ($x > 8) break;
+        }
+    }
+
+    public function enterQueue($login)
+    {
+        $widget = EnterQueueWidget::Create($login);
+        $widget->show($login);
+    }
+
+    public function destroy()
+    {      
+        parent::destroy();
+    }
 }

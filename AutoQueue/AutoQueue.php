@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,154 +32,174 @@ use Maniaplanet\DedicatedServer\Structures\Status;
  */
 class AutoQueue extends ExpPlugin
 {
+    /** @var Queue */
+    private $queue;
+    public static $enterAction;
+    public static $leaveAction;
 
-	/** @var Queue */
-	private $queue;
+    public function exp_onReady()
+    {
+        $this->enableDedicatedEvents();
+        $this->queue = new Queue();
 
-	public function exp_onLoad()
-	{
-		$aHandler = ActionHandler::getInstance();
-		EnterQueueWidget::$action_toggleQueue = $aHandler->CreateAction(array($this, "enterQueue"));
-	}
+        $ah                = ActionHandler::getInstance();
+        self::$enterAction = $ah->createAction(array($this, "enterQueue"));
+        self::$leaveAction = $ah->createAction(array($this, "leaveQueue"));
 
-	public function exp_onReady()
-	{
-		$this->enableDedicatedEvents();
-		$this->queue = new Queue();
+        foreach ($this->storage->spectators as $login => $player) {
+            $this->connection->forceSpectator($login, 1);
+            $this->showEnterQueue($login);
+        }
+        $this->widgetSyncList();
 
-		foreach ($this->storage->spectators as $login => $player) {
-			$this->connection->forceSpectator($login, 1);
-			$this->showEnterQueue($login);
-		}
-		$this->widgetSyncList();
+//$this->registerChatCommand("next", "queueReleaseNext", 0, true);
+    }
 
-		//$this->registerChatCommand("next", "queueReleaseNext", 0, true);
-	}
+    function onPlayerConnect($login, $isSpectator)
+    {
+        if ($isSpectator) {
+            $this->connection->forceSpectator($login, 1);
+            $this->showEnterQueue($login);
+            $this->widgetSyncList();
+        }
+    }
 
-	function onPlayerConnect($login, $isSpectator)
-	{
-		if ($isSpectator) {
-			$this->connection->forceSpectator($login, 1);
-			$this->showEnterQueue($login);
-			$this->widgetSyncList();
-		}
-	}
+    public function onPlayerInfoChanged($info)
+    {
+        if ($this->storage->serverStatus->code != Status::PLAY) return;
 
-	public function onPlayerInfoChanged($info)
-	{
-		if ($this->storage->serverStatus->code != Status::PLAY)
-			return;
+        $player = PlayerInfo::fromArray($info);
+        $login  = $player->login;
 
-		$player = PlayerInfo::fromArray($info);
-		$login = $player->login;
+        if (in_array($login, $this->queue->getLogins())) return;
 
-		if ($player->spectator) {
-			try {
-				$this->connection->forceSpectator($login, 1);
-			} catch (\Exception $ex) {
+        if ($player->spectator) {
+            $this->showEnterQueue($login);
+            $this->widgetSyncList();
 
-			}
-			if ($player->hasPlayerSlot) {
-				try {
-					$this->connection->spectatorReleasePlayerSlot($login);
-				} catch (\Exception $e) {
-					
-				}
-			}
-			$this->showEnterQueue($login);
+            try {
+                $this->connection->forceSpectator($login, 1);
+            } catch (\Exception $ex) {
+                
+            }
+            if ($player->hasPlayerSlot) {
+                try {
+                    $this->connection->spectatorReleasePlayerSlot($login);
+                } catch (\Exception $e) {
 
-			if ($this->storage->server->currentMaxPlayers > count($this->storage->players)) {
-				$this->queueReleaseNext();
-			}
-		}
-		else {
-			EnterQueueWidget::Erase($login);
-		}
+                }
+            }
+            
+            if ($this->storage->server->currentMaxPlayers > count($this->storage->players)) {
+                $this->queueReleaseNext();
+            }
+        } else {
+            $this->widgetSyncList();
+            EnterQueueWidget::Erase($login);
+        }
 
-		$this->widgetSyncList();
-	}
+        
+    }
 
-	public function onPlayerDisconnect($login, $disconnectionReason = null)
-	{
-	
-		
-		if (in_array($login, $this->queue->getLogins())) {
-			$this->queue->remove($login);
-		}
-		$this->queueReleaseNext();
-	}
+    public function onPlayerDisconnect($login, $disconnectionReason = null)
+    {
+        if (in_array($login, $this->queue->getLogins())) {
+            $this->queue->remove($login);
+        }
+        $this->queueReleaseNext();
+    }
 
-	function onBeginMatch()
-	{
-		$this->queRealeseAvailable();
-	}
+    function onBeginMatch()
+    {
+        $this->queRealeseAvailable();
+    }
 
-	function onBeginRound()
-	{
-		$this->queRealeseAvailable();
-	}
+    function onBeginRound()
+    {
+        $this->queRealeseAvailable();
+    }
 
-	public function queRealeseAvailable()
-	{
-		$count = $this->storage->server->currentMaxPlayers;
-		for ($i = 0; $i < $count; $i++) {
-			$this->queueReleaseNext();
-		}
-	}
+    public function queRealeseAvailable()
+    {
+        for ($i = 0; $i < $this->storage->server->currentMaxPlayers; $i++) {
+            $this->queueReleaseNext();
+        }
+    }
 
-	public function queueReleaseNext()
-	{
-		$player = $this->queue->getNextPlayer();
-		if ($player && ($this->storage->server->currentMaxPlayers-2) > count($this->expStorage->players)) {
-			$this->connection->forceSpectator($player->login, 2);
-			$this->connection->forceSpectator($player->login, 0);
-			$msg = exp_getMessage('You got free spot, good luck and have fun!');
-			$this->exp_chatSendServerMessage($msg, $player->login);
-		}
-		$this->widgetSyncList();
-	}
+    public function queueReleaseNext()
+    {
+        if (count($this->storage->players) < $this->storage->server->currentMaxPlayers) {
+            $player = $this->queue->getNextPlayer();
+            $this->connection->forceSpectator($player->login, 2);
+            $this->connection->forceSpectator($player->login, 0);
+            $msg    = exp_getMessage('You got free spot, good luck and have fun!');
+            $this->exp_chatSendServerMessage($msg, $player->login);
+        }
+        $this->widgetSyncList();
+    }
 
-	public function enterQueue($login)
-	{
-		$this->queue->add($login);
+    public function admRemoveQueue($login, $target)
+    {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login,
+                \ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin)) {
+            if (in_array($target, $this->queue->getLogins())) {
+                $this->queue->remove($target);
+                $this->exp_chatSendServerMessage(exp_getMessage("Admin has removed you from queue!", $target));
+                $this->exp_chatSendServerMessage(exp_getMessage('Removed player %s $z$ffffrom queue'), $login,
+                    array($this->storage->getPlayerObject($target)->nickName));
+            }
+        }
+        EnterQueueWidget::Erase($login);
+        $this->widgetSyncList();
+    }
 
-		if ($this->storage->server->currentMaxPlayers > count($this->storage->players)) {
-			$this->queueReleaseNext();
-		}
-		else {
-			EnterQueueWidget::Erase($login);
-			$this->widgetSyncList();
-		}
-	}
+    public function enterQueue($login)
+    {
+        $this->queue->add($login);
 
-	public function exp_onUnload()
-	{
-		EnterQueueWidget::$action_toggleQueue = null;
-		EnterQueueWidget::EraseAll();
-		QueueList::EraseAll();
-		$this->queue = null;
-	}
+        if ($this->storage->server->currentMaxPlayers > count($this->storage->players)) {
+            $this->queueReleaseNext();
+        }
 
-	public function widgetSyncList()
-	{
-		$this->queue->syncPlayers(array_keys($this->storage->players));
+        EnterQueueWidget::Erase($login);
+        $this->widgetSyncList();
+    }
 
-		QueueList::EraseAll();
+    public function leaveQueue($login)
+    {
+        $this->queue->remove($login);
+        $this->showEnterQueue($login);
+        $this->widgetSyncList();
+    }
 
-		foreach ($this->storage->spectators as $login => $player) {
-			$widget = QueueList::Create($login);
-			$widget->setPlayers($this->queue->getQueuedPlayers());
-			$widget->show();
-		}
-	}
+    public function exp_onUnload()
+    {
+        $ah                = ActionHandler::getInstance();
+        $ah->deleteAction(self::$enterAction);
+        $ah->deleteAction(self::$leaveAction);
+        self::$enterAction = null;
+        self::$leaveAction = null;
+        EnterQueueWidget::EraseAll();
+        QueueList::EraseAll();
+        $this->queue       = null;
+    }
 
-	public function showEnterQueue($login)
-	{
-		if (in_array($login, $this->queue->getLogins()))
-			return;
+    public function widgetSyncList()
+    {
+        $this->queue->syncPlayers(array_keys($this->storage->players));
 
-		$widget = EnterQueueWidget::Create($login);
-		$widget->show($login);
-	}
+        QueueList::EraseAll();
 
+        foreach ($this->storage->spectators as $login => $player) {
+            $widget = QueueList::Create($login);
+            $widget->setPlayers($this->queue->getQueuedPlayers(), $this);
+            $widget->show();
+        }
+    }
+
+    public function showEnterQueue($login)
+    {
+        $widget = EnterQueueWidget::Create($login);
+        $widget->show($login);
+    }
 }

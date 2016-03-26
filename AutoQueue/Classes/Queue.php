@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) 2014 Reaby
  *
@@ -29,72 +28,80 @@ use ManiaLivePlugins\eXpansion\AutoQueue\Structures\QueuePlayer;
  */
 class Queue
 {
+    /** @var \SplQueue */
+    private $queue;
 
-	/** @var QueuePlayer[] */
-	private $queue = array();
+    /** @var Storage */
+    private $storage;
 
-	/** @var Storage */
-	private $storage;
+    public function __construct()
+    {
+        $this->storage = Storage::getInstance();
+        $this->queue   = new \SplQueue();
+    }
 
-	public function __construct()
-	{
-		$this->storage = Storage::getInstance();
-	}
+    public function syncPlayers($logins)
+    {
+        if (is_array($logins)) {
+            array_map(array($this, "remove"), $logins);
+        } else {
+            $this->remove($login);
+        }
+    }
 
-	public function syncPlayers($logins)
-	{
-		if (is_array($logins)) {
-			array_map(array($this, "remove"), $logins);
-		}
-	}
+    public function add($login)
+    {
+        if (in_array($login, $this->getLogins())) {
+            //       echo "can't add, since player is already in queue\n";
+            return;
+        }
 
-	public function add($login)
-	{
-		$player = $this->storage->getPlayerObject($login);
+        $player = $this->storage->getPlayerObject($login);
+        $this->queue->enqueue($player);
+    }
 
-		if (!array_key_exists($login, $this->queue)) {
-			//if ($player->ladderScore >= $this->storage->server->ladderServerLimitMin) {
-				$qPlayer = QueuePlayer::fromArray($player->toArray());
-				$qPlayer->queuePosition = count($this->queue);
-				$this->queue[$login] = $qPlayer;
-			//}
-		}		
-	}
+    public function remove($login)
+    {
+        foreach ($this->queue as $idx => $player) {
+            if ($player->login == $login) {
+                if ($this->queue->offsetExists($idx)) {
+                    $this->queue->offsetUnset($idx);
+                }
+            }
+        }
+    }
 
-	public function remove($login)
-	{
-		if (array_key_exists($login, $this->queue)) {
-			unset($this->queue[$login]);
-		}
-		
-	}
+    /**
+     * gets first player out of the array :)
+     * @return null|QueuePlayer
+     */
+    public function getNextPlayer()
+    {
 
-	/**
-	 * gets first player out of the array :)
-	 * @return null|QueuePlayer
-	 */
-	public function getNextPlayer()
-	{
-		$player = array_shift($this->queue);
-		return $player;
-	}
+        if ($this->queue->count() > 0) {
+            return $this->queue->dequeue();
+        }
+    }
 
-	/**
-	 * gets list of queueplayer
-	 * @return QueuePlayer[] 
-	 */
-	public function getQueuedPlayers()
-	{
-		return $this->queue;
-	}
+    /**
+     * gets list of queueplayer
+     * @return QueuePlayer[]
+     */
+    public function getQueuedPlayers()
+    {
+        $out                 = array();
+        foreach ($this->queue as $player)
+            $out[$player->login] = $player;
 
-	/**
-	 * gets list of logins
-	 * @return string[]
-	 */
-	public function getLogins()
-	{
-		return array_keys($this->queue);
-	}
+        return $out;
+    }
 
+    /**
+     * gets list of logins
+     * @return string[]
+     */
+    public function getLogins()
+    {
+        return array_keys($this->getQueuedPlayers());
+    }
 }
