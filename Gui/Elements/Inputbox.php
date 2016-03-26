@@ -4,15 +4,16 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control {
-
+class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
     protected $label;
     protected $button;
     protected $name;
     protected $bgleft, $bgcenter, $bgright;
 
-    function __construct($name, $sizeX = 35, $editable = true) {
-        $config = Config::getInstance();
+    function __construct($name, $sizeX = 35, $editable = true)
+    {
+        $config     = Config::getInstance();
         $this->name = $name;
 
         $this->bg = new WidgetBackGround(100, 30);
@@ -25,12 +26,13 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->bgcenter->setSubStyle("BgColorContour");
         $this->bgcenter->setAlign("left", "center");
         //$this->bgcenter->setImage($config->getImage("inputbox", "center.png"), true);
-        $this->addComponent($this->bgcenter);
+        $this->bgcenter->setColorize("555");
+        //  $this->addComponent($this->bgcenter);
 
         $this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
         $this->label->setAlign('left', 'top');
         $this->label->setTextSize(1);
-        $this->label->setStyle("TextCardScores2");
+        $this->label->setStyle("SliderVolume");
         $this->label->setTextColor('fff');
         $this->label->setTextEmboss();
         $this->addComponent($this->label);
@@ -41,12 +43,13 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->setSize($sizeX, 12);
     }
 
-    protected function onDraw() {
+    protected function onDraw()
+    {
 
 
         $yOffset = 0;
 
-        $this->button->setSize($this->getSizeX()-2, 5);
+        $this->button->setSize($this->getSizeX() - 2, 5);
         $this->button->setPosition(1, $yOffset);
 
         $this->bgcenter->setSize($this->getSizeX(), 6);
@@ -60,7 +63,8 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control {
         parent::onDraw();
     }
 
-    private function createButton($editable) {
+    private function createButton($editable)
+    {
         $text = "";
         if ($this->button != null) {
             $this->removeComponent($this->button);
@@ -75,12 +79,11 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control {
             $this->button->setId($this->name);
             $this->button->setDefault($text);
             $this->button->setScriptEvents(true);
-            $this->button->setStyle("TextValueSmall");
+            //      $this->button->setStyle("TextValueSmall");
             $this->button->setTextSize(1);
-            $this->button->setFocusAreaColor1("0000");
-            $this->button->setFocusAreaColor2("0000");
-        }
-        else {
+            $this->button->setFocusAreaColor1("222");
+            $this->button->setFocusAreaColor2("000");
+        } else {
             $this->button = new \ManiaLib\Gui\Elements\Label($this->sizeX, 5);
             $this->button->setText($text);
             $this->button->setTextSize(2);
@@ -93,55 +96,62 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->addComponent($this->button);
     }
 
-    public function setEditable($state) {
+    public function setEditable($state)
+    {
         if ($state && $this->button instanceof \ManiaLib\Gui\Elements\Label) {
             $this->createButton($state);
-        }
-        elseif (!$state && $this->button instanceof \ManiaLib\Gui\Elements\Entry) {
+        } elseif (!$state && $this->button instanceof \ManiaLib\Gui\Elements\Entry) {
             $this->createButton($state);
         }
     }
 
-    function getLabel() {
+    function getLabel()
+    {
         return $this->label->getText();
     }
 
-    function setLabel($text) {
+    function setLabel($text)
+    {
         $this->label->setText($text);
     }
 
-    function getText() {
+    function getText()
+    {
         if ($this->button instanceof \ManiaLib\Gui\Elements\Entry) return $this->button->getDefault();
         else return $this->button->getText();
     }
 
-    function setText($text) {
+    function setText($text)
+    {
         if ($this->button instanceof \ManiaLib\Gui\Elements\Entry) $this->button->setDefault($text);
         else $this->button->setText($text);
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->button->getName();
     }
 
-    function setName($text) {
+    function setName($text)
+    {
         $this->button->setName($text);
     }
 
-    function setId($id) {
+    function setId($id)
+    {
         $this->button->setId($id);
         $this->button->setScriptEvents();
     }
 
-    function setClass($class) {
-        $this->button->setAttribute("class", "isTabIndex isEditable " . $class);
+    function setClass($class)
+    {
+        $this->button->setAttribute("class", "isTabIndex isEditable ".$class);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    {
         parent::onIsRemoved($target);
         parent::destroy();
     }
-
 }
-
 ?>

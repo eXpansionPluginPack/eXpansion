@@ -9,8 +9,8 @@ use ManiaLive\Gui\Container;
 use ManiaLive\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class InputboxMasked extends Control {
-
+class InputboxMasked extends Control
+{
     protected $label;
     protected $button;
 
@@ -19,8 +19,9 @@ class InputboxMasked extends Control {
     protected $name;
     protected $bgleft, $bgcenter, $bgright;
 
-    function __construct($name, $sizeX = 35, $editable = true) {
-        $config = Config::getInstance();
+    function __construct($name, $sizeX = 35, $editable = true)
+    {
+        $config     = Config::getInstance();
         $this->name = $name;
 
         $this->createButton($editable);
@@ -36,12 +37,14 @@ class InputboxMasked extends Control {
         $this->bgcenter->setAlign("left", "center");
         $this->bgcenter->setStyle("Bgs1InRace");
         $this->bgcenter->setSubStyle("BgColorContour");
-        $this->addComponent($this->bgcenter);
+        $this->bgcenter->setColorize("555");
+        //  $this->addComponent($this->bgcenter);
 
         $this->setSize($sizeX, 12);
     }
 
-    protected function onResize($oldX, $oldY) {
+    protected function onResize($oldX, $oldY)
+    {
         $yOffset = -7;
 
         $this->button->setSize($this->getSizeX() - 2, 5);
@@ -59,7 +62,8 @@ class InputboxMasked extends Control {
         parent::onResize($oldX, $oldY);
     }
 
-    protected function createButton($editable) {
+    protected function createButton($editable)
+    {
         $text = "";
         if ($this->button != null) {
             $this->removeComponent($this->button);
@@ -74,12 +78,11 @@ class InputboxMasked extends Control {
             $this->button->setId($this->name);
             $this->button->setDefault($text);
             $this->button->setScriptEvents(true);
-            $this->button->setStyle("TextValueSmall");
+            $this->button->setTextColor("000");
+            $this->button->setFocusAreaColor1("222");
+            $this->button->setFocusAreaColor2("000");
             $this->button->setTextSize(1);
-            $this->button->setFocusAreaColor1("0000");
-            $this->button->setFocusAreaColor2("0000");
-        }
-        else {
+        } else {
             $this->button = new Label($this->sizeX, 5);
             $this->button->setText($text);
             $this->button->setTextSize(1.5);
@@ -93,66 +96,74 @@ class InputboxMasked extends Control {
         $this->addComponent($this->button);
     }
 
-    public function setEditable($state) {
+    public function setEditable($state)
+    {
         if ($state && $this->button instanceof Label) {
             $this->createButton($state);
-        }
-        elseif (!$state && $this->button instanceof Entry) {
+        } elseif (!$state && $this->button instanceof Entry) {
             $this->createButton($state);
         }
     }
 
-    function setShowClearText() {
+    function setShowClearText()
+    {
         if ($this->nonHidden == null) {
             $this->nonHidden = New Button(3, 3);
             $this->nonHidden->setIcon("Icons64x64_1", "ClipPause");
             $this->nonHidden->setPosition(-4, 0);
-            $this->nonHidden->setId($this->name . "_1");
+            $this->nonHidden->setId($this->name."_1");
             $this->nonHidden->setDescription($this->getText());
             $this->addComponent($this->nonHidden);
         }
     }
 
-    function getLabel() {
+    function getLabel()
+    {
         return $this->label->getText();
     }
 
-    function setLabel($text) {
+    function setLabel($text)
+    {
         $this->label->setText($text);
     }
 
-    function getText() {
+    function getText()
+    {
         if ($this->button instanceof Entry) return $this->button->getDefault();
         else return $this->button->getText();
     }
 
-    function setText($text) {
+    function setText($text)
+    {
         if ($this->button instanceof Entry) $this->button->setDefault($text);
         else $this->button->setText($text);
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->button->getName();
     }
 
-    function setName($text) {
+    function setName($text)
+    {
         $this->button->setName($text);
     }
 
-    function setId($id) {
+    function setId($id)
+    {
         $this->button->setId($id);
         $this->button->setScriptEvents();
     }
 
-    function setClass($class) {
-        $this->button->setAttribute("class", "isTabIndex isEditable " . $class);
+    function setClass($class)
+    {
+        $this->button->setAttribute("class", "isTabIndex isEditable ".$class);
     }
 
-    function onIsRemoved(Container $target) {
+    function onIsRemoved(Container $target)
+    {
         parent::onIsRemoved($target);
         parent::destroy();
     }
-
 }
-
 ?>

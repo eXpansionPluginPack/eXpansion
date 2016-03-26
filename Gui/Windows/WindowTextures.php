@@ -52,11 +52,11 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
         $this->_bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_bg->setAlign("left", "top");
-        $this->_bg->setId("MainWindow");
+
         //$this->_bg->setStyle("Bgs1");
         //$this->_bg->setSubStyle("BgColorContour");
         $this->_bg->setBgcolor($config->windowBackgroundColor);
-        $this->_bg->setScriptEvents(true);   
+
         $this->_bg->setOpacity(0.9);
         $this->_windowFrame->addComponent($this->_bg);
 
@@ -66,6 +66,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_bgeff->setImage('file://Media/Manialinks/TrackMania/Window/tm-structure-background.png', true);
         //$this->_bgeff->setImage('file://Media/Images/Effects/Vignette.dds', true);
         $this->_bgeff->setAlign("left", "top");
+  
         $this->_bgeff->setColorize($config->windowBackgroundColor);
         $this->_windowFrame->addComponent($this->_bgeff);
 
@@ -85,6 +86,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_windowBorder->setStyle("Bgs1");
         $this->_windowBorder->setSubStyle("BgColorContour");
         $this->_windowBorder->setScriptEvents(true);
+        $this->_windowBorder->setId("MainWindow");
         $this->_windowBorder->setModulateColor($config->windowTitleBackgroundColor);
         $this->_windowFrame->addComponent($this->_windowBorder);
 
@@ -103,7 +105,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_title->setTextSize(1);
         //$this->_title->setTextEmboss();
         $this->_windowFrame->addComponent($this->_title);
-        
+
         $this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->element);
         $this->_titlebar->setId("Titlebar");
         $this->_titlebar->setAlign("left", "top");
@@ -158,8 +160,8 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_topcenter->setPosition(-$o, $o);
 
         $this->_bottomcenter->setSize($x + $o * 2, $o);
-        $this->_bottomcenter->setPosition(-$o, -($y+$o-2));
-        
+        $this->_bottomcenter->setPosition(-$o, -($y + $o - 2));
+
         $this->_title->setPosition(0, 1);
         $this->_closebutton->setPosition($x + 4, 1);
     }
