@@ -25,7 +25,7 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->bg->setAlign("left", "top");
-        $this->bg->setBgcolor($config->windowBackgroundColor);
+        $this->bg->setBgcolor($config->style_widget_bgColorize);
         $this->bg->setBgcolorFocus($config->style_widget_title_bgColorize);
         $this->bg->setOpacity(0.75);
         $this->bg->setScriptEvents();

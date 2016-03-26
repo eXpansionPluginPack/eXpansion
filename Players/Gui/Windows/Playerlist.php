@@ -38,7 +38,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->pager);        
         $this->setName("Players on server");
         
-        $line = new \ManiaLive\Gui\Controls\Frame(18, 0);
+        $line = new \ManiaLive\Gui\Controls\Frame(18, 2);
         $line->setLayout(new \ManiaLib\Gui\Layouts\Line());
         if (AdminGroups::hasPermission($login, Permission::player_ignore)) {
             $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
@@ -179,6 +179,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
+        $this->pager->setPosition(0, -6);
         $this->pager->setSize($this->sizeX, $this->sizeY - 10);
     }
 

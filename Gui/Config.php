@@ -6,8 +6,8 @@ class Config extends \ManiaLib\Utils\Singleton {
 
     public $logo = "http://reaby.kapsi.fi/ml/exp.png";
     public $windowTitleColor = "FFFE";
-    public $windowTitleBackgroundColor = "0199FF";
-    public $windowBackgroundColor = "3B3B3B";
+    public $windowTitleBackgroundColor = "0AA0F9";
+    public $windowBackgroundColor = "093055";
     public $buttonTitleColor = "fffe";
     public $buttonBackgroundColor = "aa9";
     public $style_list_bgColor = array('aaa8', 'eee8');

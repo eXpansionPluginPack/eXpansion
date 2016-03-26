@@ -43,7 +43,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("0199FF");
+		$var->setDefaultValue("0AA0F9");
 		$this->registerVariable($var);
 
 
@@ -52,7 +52,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("GUI");
 		$var->setUsePrefix(false);
 		$var->setUseFullHex(true);
-		$var->setDefaultValue("3B3B3B");
+		$var->setDefaultValue("093055");
 		$this->registerVariable($var);
 
 
@@ -103,7 +103,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setGroup("GUI");
 		$var->setMin(0.0);
 		$var->setMax(1.0);
-		$var->setDefaultValue(0.6);
+		$var->setDefaultValue(0.5);
 		$this->registerVariable($var);
 
 		$var = new ColorCode("style_widget_title_bgColorize", "Widget Titlebar Background color", $config);
