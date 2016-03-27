@@ -89,7 +89,7 @@ class AutoQueue extends ExpPlugin
 
                 }
             }
-            
+
             if ($this->storage->server->currentMaxPlayers > count($this->storage->players)) {
                 $this->queueReleaseNext();
             }
@@ -97,8 +97,6 @@ class AutoQueue extends ExpPlugin
             $this->widgetSyncList();
             EnterQueueWidget::Erase($login);
         }
-
-        
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason = null)
@@ -130,10 +128,12 @@ class AutoQueue extends ExpPlugin
     {
         if (count($this->storage->players) < $this->storage->server->currentMaxPlayers) {
             $player = $this->queue->getNextPlayer();
-            $this->connection->forceSpectator($player->login, 2);
-            $this->connection->forceSpectator($player->login, 0);
-            $msg    = exp_getMessage('You got free spot, good luck and have fun!');
-            $this->exp_chatSendServerMessage($msg, $player->login);
+            if ($player) {
+                $this->connection->forceSpectator($player->login, 2);
+                $this->connection->forceSpectator($player->login, 0);
+                $msg = exp_getMessage('You got free spot, good luck and have fun!');
+                $this->exp_chatSendServerMessage($msg, $player->login);
+            }
         }
         $this->widgetSyncList();
     }

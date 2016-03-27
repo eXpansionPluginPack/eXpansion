@@ -38,6 +38,12 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /** @var Config */
     private $config;
     private $exclude = array();
+    public $badWords = array();
+
+    function exp_onLoad()
+    {
+       // $this->loadProfanityList();
+    }
 
     function exp_onReady()
     {
@@ -58,6 +64,36 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
 
         $this->config = Config::getInstance();
+    }
+
+    private function loadProfanityList()
+    {
+        $ignore = array(".", "..", "LICENSE", "README.md", "USERS.md", ".git");
+        $file   = new \SplFileInfo(__FILE__);
+        $path   = $file->getPath().DIRECTORY_SEPARATOR."wordlist";
+
+        $dir = new \DirectoryIterator($path);
+        foreach ($dir as $file) {
+            if (!in_array($file->getBaseName(), $ignore)) {
+                foreach (file($file->getPathname()) as $line) {
+                    $this->badWords[] = strtolower(trim($line, "\r\n"));
+                }
+            }
+        }
+    }
+
+    public function applyFilter($text)
+    {
+        $out   = array();
+        $words = explode(" ", $text);
+        foreach ($words as $word) {
+            if (in_array(strtolower($word), $this->badWords)) {
+                $out[] = str_repeat("#", strlen($word));
+            } else {
+                $out[] = $word;
+            }
+        }
+        return implode(" ", $out);
     }
 
     public function cmd_chat($login, $params = "help")
@@ -179,6 +215,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     if ($color != '$>$') $force = str_replace('$>', "", $color);
                 }
             }
+            if ($config->useProfanityFilter) $text = $this->applyFilter($text);
 
             $source_player = $this->storage->getPlayerObject($login);
             if ($source_player == null) return;

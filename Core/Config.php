@@ -15,8 +15,8 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $Colors_record = '$0af'; // all other local records
     public $Colors_record_top = '$2d0'; // top5 local records
     public $Colors_dedirecord = '$0af'; // dedimania records
-    public $Colors_rank = '$fff'; // used in record messages and widgets for rank
-    public $Colors_time = '$ff0'; // used for record messages and widgets
+    public $Colors_rank = '$ff0'; // used in record messages and widgets for rank
+    public $Colors_time = '$fff'; // used for record messages and widgets
     public $Colors_rating = '$fb3'; // map ratings color
     public $Colors_queue = '$0af'; // map queue messages
     public $Colors_personalmessage = '$f90'; // personal messages

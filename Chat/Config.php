@@ -12,6 +12,7 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $allowMPcolors = true;
     public $publicChatActive = true;
     public $enableSpectatorChat = false;
+    public $useProfanityFilter = false;
     
 }
 

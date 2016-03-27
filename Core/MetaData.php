@@ -69,12 +69,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $var = new ColorCode('Colors_rank', 'Color code for rank in records messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$fff');
+        $var->setDefaultValue('$ff0');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_time', 'Color code for time in records messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$ff0');
+        $var->setDefaultValue('$fff');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_rating', 'Color code for map rating messages', $config, false, true);
