@@ -38,7 +38,13 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
  */
 class BetWidget extends Widget
 {
-    public static $action_acceptBet, $action_setAmount;
+    public static $action_acceptBet;
+    public static $action_setAmount;
+    public static $action_setAmount25;
+    public static $action_setAmount50;
+    public static $action_setAmount100;
+    public static $action_setAmount250;
+    public static $action_setAmount500;
     protected $frame, $labelAccept;
     protected $bg, $header, $closeButton, $buttonAccept;
     protected $script;
@@ -56,14 +62,14 @@ class BetWidget extends Widget
         $this->addComponent($this->header);
 
         $this->frame = new Frame(1, -8);
-        $this->frame->setLayout(new Column());
+       // $this->frame->setLayout(new Column());
         $this->addComponent($this->frame);
 
-        $this->script      = new Script("Bets/Gui/Scripts");
+        $this->script = new Script("Bets/Gui/Scripts");
         $this->script->setParam("hideFor", "Text[]");
         $this->registerScript($this->script);
 
-        $this->closeButton            = new Button();   
+        $this->closeButton = new Button();
         $this->closeButton->setText("Close");
         $this->closeButton->setId("closeButton");
         $this->closeButton->setScriptEvents();
@@ -97,7 +103,7 @@ class BetWidget extends Widget
         $line = new Frame();
         $line->setLayout(new Flow());
         $line->setSize(80, 12);
-        
+
         $this->labelAccept = new DicoLabel(50);
         $this->labelAccept->setPosition(5, -2);
         $this->labelAccept->setText(exp_getMessage('Accept bet for %1$s planets ?'), array("".Bets::$betAmount));
@@ -106,9 +112,10 @@ class BetWidget extends Widget
         $button = new Button();
         $button->setText("Accept");
         $button->colorize('$0f0');
+        $button->setPosition($this->sizeX - 28, -$this->sizeY + 12);
         $button->setAction(self::$action_acceptBet);
 
-        $line->addComponent($button);
+        $this->addComponent($button);
         $this->frame->addComponent($line);
     }
 
@@ -122,49 +129,31 @@ class BetWidget extends Widget
 
         $line = new Frame();
         $line->setLayout(new Flow());
-        $line->setSize(80, 6);
-
-        $line2 = clone $line;
+        $line->setSize(60, 6);
 
         $config = Config::getInstance();
 
-        /* foreach ($config->betAmounts as $amount) {
+        foreach (array(25, 50, 100, 250, 500) as $value) {
 
-          $button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-          $button->setAttribute('data-amount', $amount);
-          $button->setAttribute('class', 'exp_button bet');
-          $button->setScale(0.6);
-          $button->setText($amount);
+            $button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 6);
+            $var    = "action_setAmount".$value;
+            $button->setAction(self::$$var);
+            $button->setText($value);
+            $button->colorize("3af");
+            $line->addComponent($button);
+        }
 
-          $quad = new \ManiaLib\Gui\Elements\Quad(4,4);
-          $quad->setStyle("ManiaPlanetLogos");
-          $quad->setSubStyle('IconPlanets');
-          $quad->setAlign("left", "center");
-          $quad->setPosX(-17);
-          $line2->addComponent($button);
-          $line2->addComponent($quad);
-          }
-         */
-
-        $label = new DicoLabel(25, 6);
-        $label->setAlign("left", "center2");
-        $label->setText(exp_getMessage("Custom amount"));
-        $line->addComponent($label);
-
-        $inputbox = new Inputbox("betAmount", 10);
+        $inputbox = new Inputbox("betAmount", 18);
         $line->addComponent($inputbox);
 
-
         $button             = new Button();
-        $button->setPosX(16);
         $button->setText("Accept");
         $button->colorize("0d0");
         $button->setAction(self::$action_setAmount);
-        $this->buttonAccept = $button;
-        $line->addComponent($this->buttonAccept);
-
+        $button->setPosition($this->sizeX - 28, -$this->sizeY + 12);
+        $this->addComponent($button);
+        
         $this->frame->addComponent($line);
-        $this->frame->addComponent($line2);
     }
 
     /**
