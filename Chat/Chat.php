@@ -42,7 +42,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function exp_onLoad()
     {
-       // $this->loadProfanityList();
+        $this->loadProfanityList();
     }
 
     function exp_onReady()
@@ -69,14 +69,16 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private function loadProfanityList()
     {
         $ignore = array(".", "..", "LICENSE", "README.md", "USERS.md", ".git");
-        $file   = new \SplFileInfo(__FILE__);
-        $path   = $file->getPath().DIRECTORY_SEPARATOR."wordlist";
+        $path   = realpath(APP_ROOT).DIRECTORY_SEPARATOR."vendor".DIRECTORY_SEPARATOR."shutterstock".DIRECTORY_SEPARATOR."badwords";
+        if (is_dir($path)) {
 
-        $dir = new \DirectoryIterator($path);
-        foreach ($dir as $file) {
-            if (!in_array($file->getBaseName(), $ignore)) {
-                foreach (file($file->getPathname()) as $line) {
-                    $this->badWords[] = strtolower(trim($line, "\r\n"));
+            $this->console("[Chat] loading profanity filter words...");
+            $dir = new \DirectoryIterator($path);
+            foreach ($dir as $file) {
+                if (!in_array($file->getBaseName(), $ignore)) {
+                    foreach (file($file->getPathname()) as $line) {
+                        $this->badWords[] = strtolower(trim($line, "\r\n"));
+                    }
                 }
             }
         }

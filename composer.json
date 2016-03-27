@@ -19,13 +19,29 @@
     "support": {
         "forum": "https://github.com/eXpansionPluginPack/eXpansion"
     },
+    "repositories":
+            [
+                {
+                    "type": "package",
+                    "package": {
+                        "name": "shutterstock/badwords",
+                        "version": "master",
+                        "source": {
+                            "url": "https://github.com/shutterstock/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words",
+                            "type": "git",
+                            "reference": "master"
+                        }
+                    }
+                }
+            ],
     "require": {
         "php": ">=5.4",
         "ext-curl": "*",
         "ext-json": "*",
         "maniaplanet/manialive-lib": "1.0.0.*",
         "monolog/monolog": "1.0.*",
-        "oliverde8/asynchronous-jobs": "1.0.*"
+        "oliverde8/asynchronous-jobs": "1.0.*",
+        "shutterstock/badwords": "master"
     },
     "autoload": {
         "psr-4": {
