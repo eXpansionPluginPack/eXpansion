@@ -73,9 +73,7 @@ class Bets extends ExpPlugin
         BetWidget::$action_setAmount500 = $ah->createAction(array($this, "setBetAmount"), 500);
 
         BetWidget::$action_acceptBet = $ah->createAction(array($this, "acceptBet"));
-        $this->reset();
-
-        $this->start();
+        $this->reset();     
     }
 
     public function onTick()
