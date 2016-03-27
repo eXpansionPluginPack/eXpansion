@@ -41,7 +41,7 @@
         "maniaplanet/manialive-lib": "1.0.0.*",
         "monolog/monolog": "1.0.*",
         "oliverde8/asynchronous-jobs": "1.0.*",
-        "shutterstock/badwords": "master"
+        "shutterstock/badwords": "*"
     },
     "autoload": {
         "psr-4": {
