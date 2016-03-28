@@ -52,7 +52,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     public function addSubMenu(&$menu, $text, $action = null)
     {
         $mb                 = count($this->submenu) + 1;
-        $this->submenu[$mb] = new \ManiaLive\Gui\Controls\Frame(29.5, 5.5);
+        $this->submenu[$mb] = new \ManiaLive\Gui\Controls\Frame(29, 5.5);
         $this->submenu[$mb]->setLayout(new \ManiaLib\Gui\Layouts\Column());
         $this->submenu[$mb]->setId("submenu_".$mb);
         $this->submenu[$mb]->setScriptEvents();
@@ -91,9 +91,9 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $this->registerScript($this->myscript);
         
         $boundingBox    = new \ManiaLib\Gui\Elements\Quad(320, 180);
-        $boundingBox->setPosition(-160, 90, -70);
+        $boundingBox->setPosition(-160, 90, -50);
         $boundingBox->setId("boundingBox");
-        $boundingBox->setBgcolor(0000);
+        $boundingBox->setBgcolor('0000');
         $boundingBox->setScriptEvents();
         $this->addComponent($boundingBox);
     }

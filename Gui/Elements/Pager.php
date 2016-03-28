@@ -71,9 +71,8 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
 
         $this->pager->setSize($this->sizeX - 6, $this->sizeY);
 
-        $this->pager->setAttribute("clip","1");
-        $this->pager->setAttribute("clipsizen", ($this->sizeX - 6)." ". $this->sizeY);
-        $this->pager->setAttribute("clipposn", "0 -5");
+       // $this->pager->setAttribute("clip","1");
+       // $this->pager->setAttribute("clipsizen", ($this->sizeX - 6)." ". $this->sizeY);
         
         $this->myScript->setParam("pagerSizeY", $this->sizeY);
 

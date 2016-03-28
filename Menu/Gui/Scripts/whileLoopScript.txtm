@@ -13,7 +13,7 @@ foreach (Event in PendingEvents) {
     }
 
     if (Event.Type == CMlEvent::Type::MouseOut && Event.ControlId == "boundingBox") {
-        canToggle = False;
+       canToggle = False;
     }
 }
 
@@ -163,6 +163,6 @@ if(!toggleSubmenu && Menu.Visible && (Now - hideStamp) > 300) {
 }
 
 if (MouseLeftButton || (canToggle == False && MouseRightButton)) {
-        needUpdate = True;
-        showStatus = False;
+         showStatus = False;
+         needUpdate = True;
 }
