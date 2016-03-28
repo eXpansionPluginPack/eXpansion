@@ -1,8 +1,11 @@
-if (ContextMenu != Null) {
+if (Update) {
+    Update = False;
     if (showStatus) {
         ContextMenu.Show();
     } else {
-      ContextMenu.Hide();
+        foreach (C in Page.GetClassChildren_Result) {
+            C.Hide();
+        }
     }
 }
 
@@ -16,6 +19,7 @@ if (PendingEvents.count != 0) {
                     TriggerPageAction(str);
                     TitlebarText.Value = str;
                     showStatus = False;
+                    Update = True;
                     continue;
                 }
 
@@ -26,26 +30,33 @@ if (PendingEvents.count != 0) {
                     eventStatus = False;
                 }
 
-
-
             }
 }
 
 if (eventStatus) {
     if(MouseRightButton) {
         showStatus = True;
+        Update = True;
         selectedValue = selectedControl.DataAttributeGet("value");
         declare hash = selectedControl.DataAttributeGet("hash");
         TitlebarText.Value = hash;
-        ContextMenu <=> (Page.GetFirstChild("subMenu_"  ^ hash) as CMlFrame);
+        declare oldContextMenu = ContextMenu;
+        ContextMenu = (Page.GetFirstChild("subMenu_"  ^ hash) as CMlFrame);
         if (ContextMenu != Null) {
+            if (oldContextMenu != ContextMenu) {
+                foreach (C in Page.GetClassChildren_Result) {
+                    C.Hide();
+                }
+            }
             Offset2 = <Window.RelativePosition.X - MouseX, Window.RelativePosition.Y - MouseY>;
-            ContextMenu.RelativePosition.X = -Offset2.X;
-            ContextMenu.RelativePosition.Y = -Offset2.Y;
+            ContextMenu.RelativePosition.X = -Offset2.X-1.0;
+            ContextMenu.RelativePosition.Y = -Offset2.Y+0.5;
+            ContextMenu.RelativePosition.Z = Window.RelativePosition.Z + 1;
         }
    }
 }
 
 if (MouseLeftButton) {
    showStatus = False;
+   Update = True;
 }

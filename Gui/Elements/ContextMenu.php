@@ -36,8 +36,8 @@ class ContextMenu extends Control implements ScriptedContainer
         $this->frame = new Frame();
         $this->frame->setId("subMenu_".$this->hash);
         $this->frame->setAttribute("data-hash", $this->hash);
-
-        $this->frame->setAttribute("class", "contextMenu");
+        $this->frame->setAttribute("class", "contextMenu");  
+        $this->frame->setHidden(true);
         $this->frame->setPosition(0, 0);
         $this->frame->setAlign("left", "top");
         
@@ -60,9 +60,7 @@ class ContextMenu extends Control implements ScriptedContainer
     protected function onDraw()
     {
         $config = Config::getInstance();
-
-        $this->frame->clearComponents();
-        $this->frame->setPosZ($this->getPosZ() + 5);
+               
         $i = 0;
         foreach ($this->items as $itemHash => $item) {
             $quad = new \ManiaLib\Gui\Elements\Quad(30, 5);
