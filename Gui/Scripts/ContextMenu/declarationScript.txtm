@@ -4,4 +4,15 @@ declare Boolean showStatus = False;
 declare Boolean eventStatus = False;
 declare Text selectedValue = "";
 declare CMlControl selectedControl = CMlControl;
+declare CMlControl[] Array;
 
+Page.GetClassChildren("contextMenu", Window, True);
+foreach (C in Page.GetClassChildren_Result) {
+      // The next line force the alias to be "resolved",
+      // Tmp will points to Controls[X] instead of GetClassChildren_Result[X]
+      declare Tmp = C;
+      Tmp.Hide();
+      Array.add(Tmp);
+   }
+
+log(Array); // Logs: [(CGameManialinkControl*)#SOMEID]

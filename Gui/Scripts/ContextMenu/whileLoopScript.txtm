@@ -1,8 +1,8 @@
-if (showStatus) {
-    if (ContextMenu != Null) {
-    ContextMenu.Show();
+if (ContextMenu != Null) {
+    if (showStatus) {
+        ContextMenu.Show();
     } else {
-    ContextMenu.Hide();
+      ContextMenu.Hide();
     }
 }
 
