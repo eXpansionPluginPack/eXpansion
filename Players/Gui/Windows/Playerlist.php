@@ -223,7 +223,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $guestAction     = $this->createAction(array($this, 'guestlistPlayer'), $player->login);
             //$toggleTeam      = $this->createAction(array($this, 'toggleTeam'), $player->login);
 
-            $this->pager->addSimpleItems(array(Gui::fixString($player->nickName . " ") => -1,
+            $this->pager->addSimpleItems(array(Gui::fixString($player->nickName). " " => -1,
                 Gui::fixString($player->login) => -1,
                 "ignore" => $ignoreAction,
                 "kick" => $kickAction,
@@ -242,7 +242,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $forceAction     = $this->createAction(array($this, 'toggleSpec'), $player->login);
             $guestAction     = $this->createAction(array($this, 'guestlistPlayer'), $player->login);         
 
-            $this->pager->addSimpleItems(array(Gui::fixString($player->nickName) => -1,
+            $this->pager->addSimpleItems(array(Gui::fixString($player->nickName). " " => -1,
                 Gui::fixString($player->login) => -1,
                 "ignore" => $ignoreAction,
                 "kick" => $kickAction,
