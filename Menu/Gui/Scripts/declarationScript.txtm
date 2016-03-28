@@ -21,7 +21,8 @@ declare eXp_tabTime = 0;
 
 declare Boolean eXp_mouseMiddleState = False;
 declare eXp_mouseMiddleTime = 0;
-
+declare canToggle = False;
+declare lastMousePos = <0., 0.>;
 declare hideStamp = 0;
 
 declare Boolean exp_enableHudMove for UI = False;

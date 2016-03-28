@@ -4,12 +4,13 @@ namespace ManiaLivePlugins\eXpansion\Menu\Gui\Widgets;
 
 class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
-    private $menu, $debug, $bg;
+    protected $menu, $debug, $bg;
     public $myscript;
-    private $item = array();
-    private $submenu = array();
-    private $bgs = array();
-    private $storage;
+    protected $item    = array();
+    protected $submenu = array();
+    protected $bgs     = array();
+    protected $storage;
+    protected $boundingBox;
 
     public function addItem(&$menu, $text, $action = null, $submenuNb = false, $addArrow = false)
     {
@@ -88,6 +89,13 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
         $this->myscript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Menu\Gui\Scripts");
         $this->registerScript($this->myscript);
+        
+        $boundingBox    = new \ManiaLib\Gui\Elements\Quad(320, 180);
+        $boundingBox->setPosition(-160, 90, -70);
+        $boundingBox->setId("boundingBox");
+        $boundingBox->setBgcolor(0000);
+        $boundingBox->setScriptEvents();
+        $this->addComponent($boundingBox);
     }
 
     protected function onDraw()

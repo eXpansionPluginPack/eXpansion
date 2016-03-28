@@ -19,19 +19,24 @@ use ManiaLivePlugins\eXpansion\Gui\Windows\Notice;
 use ManiaLivePlugins\eXpansion\Gui\Windows\ResetHud;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
-class Gui extends ExpPlugin {
-
+class Gui extends ExpPlugin
+{
     private $titleId;
     private $msg_params, $msg_disabled;
     private $resetLogins = array();
-    private $counter = 0;
+    private $counter     = 0;
     private $preloader;
+    // next 2 is used by contextMenu
+    public static $items     = array();
+    public static $callbacks = array();
 
-    public function exp_onInit() {
+    public function exp_onInit()
+    {
         $this->setVersion("0.1");
     }
 
-    public function exp_onLoad() {
+    public function exp_onLoad()
+    {
         HudPanel::$mainPlugin = $this;
 
         if ($this->expStorage->simpleEnviTitle == "SM") {
@@ -42,7 +47,8 @@ class Gui extends ExpPlugin {
         $config = Config::getInstance();
     }
 
-    public function exp_onReady() {
+    public function exp_onReady()
+    {
         $this->enableDedicatedEvents();
         $this->enableTickerEvent();
         $this->registerChatCommand("hud", "hudCommands", 0, true);
@@ -50,7 +56,7 @@ class Gui extends ExpPlugin {
         $this->setPublicMethod("hudCommands");
         $this->setPublicMethod("showConfigWindow");
 
-        $this->msg_params = exp_getMessage("possible parameters: move, lock, reset");
+        $this->msg_params   = exp_getMessage("possible parameters: move, lock, reset");
         $this->msg_disabled = exp_getMessage("#error#Server Admin has disabled personal huds. Sorry!");
 
         $this->preloader = Preloader::Create(null);
@@ -67,10 +73,11 @@ class Gui extends ExpPlugin {
 
         $edge = Widgets\Edge::Create(null);
         $edge->setPosition(-160, -35);
-        $edge->show(); 
+        $edge->show();
     }
 
-    public static function getScaledSize($sizes, $totalSize) {
+    public static function getScaledSize($sizes, $totalSize)
+    {
         $nsize = array();
 
         $total = 0;
@@ -86,7 +93,8 @@ class Gui extends ExpPlugin {
         return $nsize;
     }
 
-    public function loadWidgetConfigs() {
+    public function loadWidgetConfigs()
+    {
         $config = WConfig::getInstance();
         foreach ($config as $confName => $values) {
 
@@ -99,7 +107,8 @@ class Gui extends ExpPlugin {
         }
     }
 
-    public function onTick() {
+    public function onTick()
+    {
         if (count($this->resetLogins) > 0) {
             /** @var GuiHandler */
             $guiHandler = GuiHandler::getInstance();
@@ -122,12 +131,15 @@ class Gui extends ExpPlugin {
             }
         }
         if ($this->counter != 0 && time() - $this->counter > 2) {
-            $this->connection->sendDisplayManialinkPage(null, "<manialinks><manialink id=\"0\"><quad></quad></manialink><custom_ui><altmenu_scores visible=\"false\" /></custom_ui></manialinks>", 0, false);
+            $this->connection->sendDisplayManialinkPage(null,
+                "<manialinks><manialink id=\"0\"><quad></quad></manialink><custom_ui><altmenu_scores visible=\"false\" /></custom_ui></manialinks>",
+                0, false);
             $this->counter = 0;
         }
     }
 
-    function onPlayerConnect($login, $isSpectator) {
+    function onPlayerConnect($login, $isSpectator)
+    {
 // remove f8 for hiding ui
 // 	\ManiaLive\Gui\Windows\Shortkey::Erase($login);
 
@@ -143,18 +155,22 @@ class Gui extends ExpPlugin {
             if ($this->expStorage->simpleEnviTitle == "SM") {
                 $this->counter = time();
                 $this->connection->TriggerModeScriptEvent("LibXmlRpc_DisableAltMenu", $login);
-                $this->connection->sendDisplayManialinkPage($login, "<manialinks><manialink id=\"0\"><quad></quad></manialink><custom_ui><altmenu_scores visible=\"false\" /></custom_ui></manialinks>", 0, false);
+                $this->connection->sendDisplayManialinkPage($login,
+                    "<manialinks><manialink id=\"0\"><quad></quad></manialink><custom_ui><altmenu_scores visible=\"false\" /></custom_ui></manialinks>",
+                    0, false);
             }
         } catch (Exception $e) {
-            Helper::log("[Gui]Error while disabling alt menu : " . $e->getMessage());
+            Helper::log("[Gui]Error while disabling alt menu : ".$e->getMessage());
         }
     }
 
-    function onPlayerDisconnect($login, $reason = null) {
+    function onPlayerDisconnect($login, $reason = null)
+    {
 
     }
 
-    function hudCommands($login, $param = "null") {
+    function hudCommands($login, $param = "null")
+    {
         switch ($param) {
             case "reset":
                 $this->resetHud($login);
@@ -171,33 +187,33 @@ class Gui extends ExpPlugin {
         }
     }
 
-    function enableHudMove($login) {
+    function enableHudMove($login)
+    {
         if (Config::getInstance()->disablePersonalHud) {
             $this->exp_chatSendServerMessage($this->msg_disabled, $login);
-        }
-        else {
+        } else {
             $window = HudMove::Create($login, false);
             $window->enable();
             $window->show();
         }
     }
 
-    function disableHudMove($login) {
+    function disableHudMove($login)
+    {
         if (Config::getInstance()->disablePersonalHud) {
             $this->exp_chatSendServerMessage($this->msg_disabled, $login);
-        }
-        else {
+        } else {
             $window = HudMove::Create($login, false);
             $window->disable();
             $window->show();
         }
     }
 
-    function showConfigWindow($login, $entries) {
+    function showConfigWindow($login, $entries)
+    {
         if (Config::getInstance()->disablePersonalHud) {
             $this->exp_chatSendServerMessage($this->msg_disabled, $login);
-        }
-        else {
+        } else {
             $window = Configuration::Create($login, true);
             $window->setSize(120, 90);
             $window->setData($entries);
@@ -205,12 +221,12 @@ class Gui extends ExpPlugin {
         }
     }
 
-    function resetHud($login) {
+    function resetHud($login)
+    {
         if (Config::getInstance()->disablePersonalHud) {
             $this->exp_chatSendServerMessage($this->msg_disabled, $login);
-        }
-        else {
-            $window = ResetHud::Create($login);
+        } else {
+            $window                    = ResetHud::Create($login);
             $window->setTimeout(1);
             $window->show();
             $this->resetLogins[$login] = 0;
@@ -218,10 +234,31 @@ class Gui extends ExpPlugin {
         }
     }
 
-    function logMemory() {
-        $mem = "Memory Usage: " . round(memory_get_usage() / 1024) . "Kb";
+    function logMemory()
+    {
+        $mem = "Memory Usage: ".round(memory_get_usage() / 1024)."Kb";
         Logger::getLog("memory")->write($mem);
-        print "\n" . $mem . "\n";
+        print "\n".$mem."\n";
+    }
+
+    public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries)
+    {
+        if (strpos($answer, "onMenuItemClick") !== false) {
+
+            $parseStr = str_replace("onMenuItemClick?", "", $answer);
+            $parsed   = array();
+            
+            parse_str($parseStr, $parsed);
+
+            if (!array_key_exists($parsed['hash'], self::$callbacks)) {             
+                return;
+            }
+            $item  = $parsed['item'];
+            $hash  = $parsed['hash'];
+            $value = $parsed['dataId'];
+
+            $test = \call_user_func(self::$callbacks[$hash], array($login, $item, self::$items[$hash][$value]->data));
+        }
     }
 
     /**
@@ -231,7 +268,8 @@ class Gui extends ExpPlugin {
      *
      * @return string cleaned up string
      */
-    public static function fixString($string, $multiline = false) {
+    public static function fixString($string, $multiline = false)
+    {
         $out = str_replace("\r", '', $string);
         if (!$multiline) {
             $out = str_replace("\n", '', $out);
@@ -239,79 +277,81 @@ class Gui extends ExpPlugin {
         $out = str_replace('"', "'", $out);
         $out = str_replace('\\', '\\\\', $out);
         $out = str_replace('-', '–', $out);
-        
+
         return $out;
     }
 
-    public static function showConfirmDialog($login, $actionId) {
+    public static function showConfirmDialog($login, $actionId)
+    {
         $window = ConfirmDialog::Create($login);
         $window->setInvokeAction($actionId);
         $window->show();
     }
 
-    public static function showNotice($message, $login, $args = array()) {
+    public static function showNotice($message, $login, $args = array())
+    {
         $window = null;
         if (is_array($login)) {
-            $grp = \ManiaLive\Gui\Group::Create("notice", $login);
+            $grp    = \ManiaLive\Gui\Group::Create("notice", $login);
             $window = Notice::Create($grp);
-        }
-        else {
+        } else {
             $window = Notice::Create($login);
         }
-        
-        if (is_string($message))
-        {
+
+        if (is_string($message)) {
             $message = exp_getMessage($message);
         }
         $window->setMessage($message, $args);
         $window->show($login);
     }
 
-        public static function showError($message, $login) {
+    public static function showError($message, $login)
+    {
         $window = null;
         if (is_array($login)) {
-            $grp = \ManiaLive\Gui\Group::Create("error", $login);
+            $grp    = \ManiaLive\Gui\Group::Create("error", $login);
             $window = Windows\Error::Create($grp);
-        }
-        else {
+        } else {
             $window = Windows\Error::Create($login);
         }
         $window->setMessage($message);
         $window->show($login);
     }
 
-
     /**
      * Preload image
      * @param type $url
      */
-    public static function preloadImage($url) {
-         Preloader::add($url);
+    public static function preloadImage($url)
+    {
+        Preloader::add($url);
     }
 
     /**
      * Preload image
      * @param type $url
      */
-    public static function preloadRemove($url) {
-        	Preloader::remove($url);
+    public static function preloadRemove($url)
+    {
+        Preloader::remove($url);
     }
 
-    public static function preloadUpdate() {
-        	$preloader = Preloader::Create(null);
-        	$preloader->show();
+    public static function preloadUpdate()
+    {
+        $preloader = Preloader::Create(null);
+        $preloader->show();
     }
 
     /**
      * Displays a Confirm Dialog for action.
      *
      */
-    public static function createConfirm($finalAction) {
+    public static function createConfirm($finalAction)
+    {
 //$finalAction = call_user_func_array(array(\ManiaLive\Gui\ActionHandler::getInstance(), 'createAction'), func_get_args());
-        $outAction = call_user_func_array(array(ActionHandler::getInstance(), 'createAction'), array(array(__NAMESPACE__ . '\Gui', 'showConfirmDialog'), $finalAction));
+        $outAction = call_user_func_array(array(ActionHandler::getInstance(), 'createAction'),
+            array(array(__NAMESPACE__.'\Gui', 'showConfirmDialog'), $finalAction));
         return $outAction;
     }
-
 }
-
 ?>

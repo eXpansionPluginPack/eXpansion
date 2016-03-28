@@ -1,0 +1,7 @@
+declare CMlFrame ContextMenu = Null;
+declare Offset2 = <0., 0.>;
+declare Boolean showStatus = False;
+declare Boolean eventStatus = False;
+declare Text selectedValue = "";
+declare CMlControl selectedControl = CMlControl;
+

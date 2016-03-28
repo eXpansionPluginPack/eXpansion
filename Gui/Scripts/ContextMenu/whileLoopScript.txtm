@@ -1,0 +1,51 @@
+if (showStatus) {
+    if (ContextMenu != Null) {
+    ContextMenu.Show();
+    } else {
+    ContextMenu.Hide();
+    }
+}
+
+if (PendingEvents.count != 0) {
+	    foreach (Event in PendingEvents) {
+
+                if (Event.ControlId == "menuItem" && Event.Type == CMlEvent::Type::MouseClick ) {
+                    declare value = Event.Control.DataAttributeGet("id");
+                    declare hash = Event.Control.DataAttributeGet("hash");
+                    declare str = "onMenuItemClick?item="^selectedValue^"&dataId="^value^"&hash="^hash;
+                    TriggerPageAction(str);
+                    TitlebarText.Value = str;
+                    showStatus = False;
+                    continue;
+                }
+
+		if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId == "contextMenu") {
+                    eventStatus = True;
+                    selectedControl = Event.Control;
+                } else {
+                    eventStatus = False;
+                }
+
+
+
+            }
+}
+
+if (eventStatus) {
+    if(MouseRightButton) {
+        showStatus = True;
+        selectedValue = selectedControl.DataAttributeGet("value");
+        declare hash = selectedControl.DataAttributeGet("hash");
+        TitlebarText.Value = hash;
+        ContextMenu <=> (Page.GetFirstChild("subMenu_"  ^ hash) as CMlFrame);
+        if (ContextMenu != Null) {
+            Offset2 = <Window.RelativePosition.X - MouseX, Window.RelativePosition.Y - MouseY>;
+            ContextMenu.RelativePosition.X = -Offset2.X;
+            ContextMenu.RelativePosition.Y = -Offset2.Y;
+        }
+   }
+}
+
+if (MouseLeftButton) {
+   showStatus = False;
+}
