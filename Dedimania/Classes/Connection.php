@@ -63,7 +63,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         // if you are developing change port to 8081, othervice use 8082
         $this->url        = "http://dedimania.net:8082/Dedimania";
         $config           = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
+        $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         $this->storage    = \ManiaLive\Data\Storage::getInstance();
         $this->read       = array();
         $this->write      = array();

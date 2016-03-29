@@ -24,7 +24,7 @@ class Widgets_Advertising extends ExpPlugin
 	public function exp_onReady()
 	{
 		$this->config = Config::GetInstance();
-		$this->displayWidget(null);
+		$this->displayWidget();
 		$this->enableApplicationEvents();             
 	}
 
@@ -40,19 +40,19 @@ class Widgets_Advertising extends ExpPlugin
 	function onPreLoop()
 	{
 		if ($this->settingsChanged) {
-			$this->displayWidget(null);
+			$this->displayWidget();
 			$this->settingsChanged = false;
 		}
 	}
 
-	public function displayWidget($login)
+	public function displayWidget()
 	{
 		WidgetAd::EraseAll();
 
                 for ($x = 1; $x <= 5; $x++) {
 			$varActive = "active_$x";
 			if (isset($this->config->$varActive) && $this->config->$varActive) {
-				$widget = WidgetAd::Create($login, false);
+				$widget = WidgetAd::Create(null, false);
 
 				$varX = "x_$x";
 				$varY = "y_$x";

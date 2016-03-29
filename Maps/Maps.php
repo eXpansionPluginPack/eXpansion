@@ -314,7 +314,7 @@ class Maps extends ExpPlugin
     public function showNextMapWidget($login)
     {
         if ($this->config->showNextMapWidget) {
-            $info = NextMapWidget::Create($login);
+            $info = NextMapWidget::Create(null);
             $info->setLayer(Window::LAYER_SCORES_TABLE);
             $info->setAction($this->actionShowJukeList);
             $info->setMap($this->nextMap);

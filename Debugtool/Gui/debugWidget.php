@@ -12,7 +12,7 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget;
  *
  * @author Petri
  */
-class debugWidget extends PlainWidget
+class debugWidget extends \ManiaLive\Gui\Window
 {
 
 	public $label;

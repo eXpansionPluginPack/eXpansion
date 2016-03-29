@@ -120,24 +120,13 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
 
         $this->music = $this->connection->getForcedMusic();
-
-        foreach ($this->storage->players as $login => $player) {
-            $this->showWidget($login);
-        }
-        foreach ($this->storage->spectators as $login => $player) {
-            $this->showWidget($login);
-        }
+        $this->showWidget();
     }
 
     public function onBeginMatch()
     {
         $this->music = $this->connection->getForcedMusic();
-        foreach ($this->storage->players as $login => $player) {
-            $this->showWidget($login);
-        }
-        foreach ($this->storage->spectators as $login => $player) {
-            $this->showWidget($login);
-        }
+        $this->showWidget();
     }
 
     function onEndMatch($rankings, $winnerTeamOrMap)
@@ -190,7 +179,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * @param mixed $music
      * @return void
      */
-    function showWidget($login)
+    function showWidget()
     {
         if (!$this->enabled)
             return;
@@ -212,7 +201,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
         }
 
-        $window = CurrentTrackWidget::Create($login);
+        $window = CurrentTrackWidget::Create(null);
         $window->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
         $window->setVisibleLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
         $window->setPosition(0, 80);
@@ -223,26 +212,6 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window->setSong($outsong);
         //$window->setValign("center");
         $window->show();
-    }
-
-    /**
-     * onPlayerConnect()
-     * Function called when a player connects.
-     *
-     * @param mixed $login
-     * @param mixed $isSpectator
-     * @return void
-     */
-    function onPlayerConnect($login, $isSpec)
-    {
-        if (!$this->enabled)
-            return;
-        $this->showWidget($login);
-    }
-
-    function onPlayerDisconnect($login, $reason = null)
-    {
-        CurrentTrackWidget::Erase($login);
     }
 
     /**

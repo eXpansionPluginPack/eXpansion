@@ -27,7 +27,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 	public function __construct()
 	{
 		$config = \ManiaLive\DedicatedApi\Config::getInstance();
-		$this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
+		$this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
 		$this->storage = \ManiaLive\Data\Storage::getInstance();
 		Dispatcher::register(dediEvent::getClass(), $this, dediEvent::ALL, 1);
 		$this->relayMaster = $this->connection->getMainServerPlayerInfo();
@@ -196,7 +196,9 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 	final public function onPlayerConnect($login, $isSpectator)
 	{
 
-		$this->connectedRelays = array();
+	/*	$this->connectedRelays = array();
+
+                $this->storage->getPlayerObject($login);
 		foreach ($this->connection->getPlayerList(-1, 0, 2) as $spec) {
 			if ($spec->isServer == true && $spec->login != $this->relayMaster && $spec->login != $this->storage->serverLogin) {
 				print('[eXpansion Pack] Found a relay, Login:		' . $spec->login . "\n");
@@ -207,7 +209,8 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 				print('[eXpansion Pack] Found a master, Login:		' . $spec->login . "\n");
 				print('[eXpansion Pack] Found a master, ServerName:	' . $spec->nickName . "\n");
 			}
-		}
+		} */
+            
 	}
 
 	final public function onPlayerDisconnect($login, $disconnectionReason)
@@ -237,7 +240,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
 	final public function onServerStart()
 	{
-		
+            
 	}
 
 	final public function onServerStop()

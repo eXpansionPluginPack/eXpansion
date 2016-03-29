@@ -32,7 +32,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 	{
 		parent::onConstruct();
 		$config = \ManiaLive\DedicatedApi\Config::getInstance();
-		$this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
+		$this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
 		$this->storage = \ManiaLive\Data\Storage::getInstance();
 		$this->gbx = new \ManiaLivePlugins\eXpansion\Helpers\GbxReader\Map();
 		$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();

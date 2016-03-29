@@ -24,7 +24,7 @@ class RanksWindow_old extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected function onConstruct() {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
+        $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
         $this->pager = new \ManiaLive\Gui\Controls\Pager();

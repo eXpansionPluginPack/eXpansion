@@ -106,6 +106,8 @@ class Core extends types\ExpPlugin
 
 	public static $optimizeEnabled = false;
 
+        public $updateServerTags = false;
+        
 	/**
 	 * Declares what is necessary for expansion ro run.
 	 */
@@ -908,7 +910,12 @@ EOT;
 
 		//every 5 seconds gogo
 		if (time() - $this->lastTick > 5) {
-			$outPlayers = array();
+                        if ($this->updateServerTags) {
+                            $this->updateServerTags = false;
+                            $this->syncAdminStatus();
+                        }
+
+                        $outPlayers = array();
 
 			$this->lastTick = time();
 			//Get network statistics from the server
@@ -999,7 +1006,7 @@ EOT;
 
 	public function onPlayerConnect($login, $isSpectator)
 	{
-		$this->syncAdminStatus();
+		$this->updateServerTags = true;
 		if ($this->config->useWhitelist) {
 			if (in_array($login, $guestList) || AdminGroups::getInstance()->isInList($login)) {
 				// do nothing
@@ -1054,7 +1061,7 @@ EOT;
 			$this->expPlayers[$login]->isPlaying = false;
 			unset($this->expPlayers[$login]);
 		}
-		$this->syncAdminStatus($login);
+		$this->updateServerTags = true;
 	}
 
 	/**
