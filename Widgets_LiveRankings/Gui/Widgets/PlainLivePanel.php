@@ -178,7 +178,7 @@ class PlainLivePanel extends PlainPanel
 		$index = 1;
 
 		try {
-			$players = Core::$playerInfo;
+			$players = self::$connection->getCurrentRanking(-1,0);
 		} catch (Exception $ex) {
 			$players = array();
 		}
