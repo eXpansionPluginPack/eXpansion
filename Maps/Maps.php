@@ -322,11 +322,13 @@ class Maps extends ExpPlugin
 
 	public function showCurrentMapWidget($login)
 	{
-		$info = CurrentMapWidget::Create(null);
-		$info->setMap($this->storage->currentMap);
-		$info->setLayer(Window::LAYER_SCORES_TABLE);
-		$info->setAction($this->actionShowMapList);
-		$info->show();
+		if ($this->config->showCurrentMapWidget) {
+			$info = CurrentMapWidget::Create(null);
+			$info->setMap($this->storage->currentMap);
+			$info->setLayer(Window::LAYER_SCORES_TABLE);
+			$info->setAction($this->actionShowMapList);
+			$info->show();
+		}
 	}
 
 	public function showNextMapWidget($login)
