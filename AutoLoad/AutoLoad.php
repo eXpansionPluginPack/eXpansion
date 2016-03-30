@@ -67,7 +67,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         $this->autoLoadPlugins($this->plugins, $pHandler);
 
-        AdminGroups::addAdminCommand('plugins', $this, 'showPluginsWindow', Permission::expansion_pluginStartStop);
+        
     }
 
     public function exp_onReady()
@@ -106,6 +106,8 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             ConfigManager::getInstance()->check();
         }
         $this->configPlugins = $this->config->plugins;
+
+        AdminGroups::addAdminCommand('plugins', $this, 'showPluginsWindow', Permission::expansion_pluginStartStop);
     }
 
     public function onConfigFileLoaded()

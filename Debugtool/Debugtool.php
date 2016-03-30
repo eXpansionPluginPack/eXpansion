@@ -32,6 +32,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
     private $ticker     = 0;
     private $testActive = false;
+    private $fakelogin  = "";
 
     public function exp_onReady()
     {
@@ -41,9 +42,9 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         //	$this->enableScriptEvents();
         //$this->registerChatCommand("crash", "crash", 1, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
         $this->registerChatCommand("connect", "connect", 1, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
-        $this->registerChatCommand("disconnect", "disconnect", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
+        $this->registerChatCommand("disconnect", "disconnect", 1, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
         //$this->registerChatCommand("profiler_enable", "profilere", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
-        //$this->registerChatCommand("gofaketest", "test", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
+        $this->registerChatCommand("faketest", "test", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
         //$this->registerChatCommand("test", "testWin", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
         //$this->registerChatCommand("mem", "mem", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
         $this->mem(null);
@@ -58,13 +59,14 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     function onTick()
     {
         if ($this->testActive) {
-            if ($this->ticker < 30) {
-                $this->connection->connectFakePlayer();
-            } else {
+            if ($this->ticker == 1) {
+               
+                $this->connection->disconnectFakePlayer($this->fakeLogin);                
                 $this->ticker = 0;
-                $this->connection->disconnectFakePlayer("*");
+            } else {
+                $this->fakeLogin = $this->connection->connectFakePlayer();               
+                $this->ticker    = 1;
             }
-            $this->ticker++;
         }
     }
 
@@ -82,10 +84,20 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function disconnect($login)
+    function disconnect($login, $amount)
     {
         try {
-            $this->connection->disconnectFakePlayer("*");
+            if (is_numeric($amount)) {
+                $x = 0;
+                foreach ($this->players as $login => $player) {
+                    if (strstr($login, "fakeplayer") !== false && $x < $amount) {
+                        $this->connection->connectFakePlayer($login);
+                    }
+                    $x++;
+                }
+            } else {
+                $this->connection->disconnectFakePlayer("*");
+            }
         } catch (\Exception $e) {
             echo "error disconnecting;";
         }
@@ -103,7 +115,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function test($login)
     {
-        $this->testActive = true;
+        $this->testActive = !$this->testActive;
     }
 
     function logMemory()
