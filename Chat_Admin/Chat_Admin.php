@@ -1026,8 +1026,8 @@ Other server might use the same blacklist file!!');
 	{
 		$admin = $this->storage->getPlayerObject($fromLogin);
 		try {
-			$this->connection->setCupWarmUpDuration(TimeConversion::MStoTM($params[0]));
-			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets use new warmup duration to#variable# %s #admin_action#.', null, array($admin->nickName, TimeConversion::MStoTM($params[0])));
+			$this->connection->setCupWarmUpDuration(intval($params[0]));
+			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets use new warmup duration to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
 		} catch (Exception $e) {
 			$this->sendErrorChat($fromLogin, $e->getMessage());
 		}

@@ -11,6 +11,8 @@ use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\LoadScreen\Config;
 use ManiaLivePlugins\eXpansion\LoadScreen\Gui\Windows\LScreen;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap;
+use ManiaLive\DedicatedApi\Callback\Event;
+use ManiaLive\Event\Dispatcher;
 
 /*
  * Copyright (C) 2014 Reaby
@@ -36,141 +38,134 @@ use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap;
  */
 class LoadScreen extends ExpPlugin
 {
+    private $startTime = 0;
+    private $isActive = false;
+    private $mxImage = "";
 
-	private $startTime = 0;
+    /** @var DataAccess */
+    private $dataAccess;
 
-	private $isActive = false;
+    public function exp_onReady()
+    {
+        $this->enableDedicatedEvents();
+        $this->enableTickerEvent();
+        $this->disableDedicatedEvents(Event::ON_END_MATCH);
+        Dispatcher::register(Event::getClass(), $this, Event::ON_END_MATCH, 10);
 
-	private $mxImage = "";
+        $this->dataAccess = DataAccess::getInstance();
+        $config           = Config::getInstance();
+        foreach ($config->screens as $url) {
+            Gui::preloadImage($url);
+        }
+        Gui::preloadUpdate();
 
-	/** @var DataAccess */
-	private $dataAccess;
+        if (Config::getInstance()->screensMx) $this->syncMxImage();
+    }
 
-	public function exp_onReady()
-	{
-		$this->enableDedicatedEvents();
-		$this->enableTickerEvent();
-		$this->dataAccess = DataAccess::getInstance();
-		$config = Config::getInstance();
-		foreach ($config->screens as $url) {
-			Gui::preloadImage($url);
-		}
-		Gui::preloadUpdate();
+    public function onSettingsChanged(Variable $var)
+    {
+        if ($var->getName() == "screens") {
+            $config = Config::getInstance();
+            foreach ($config->screens as $url) {
+                Gui::preloadImage($url);
+            }
+        }
+        Gui::preloadUpdate();
+    }
 
-		if (Config::getInstance()->screensMx)
-			$this->syncMxImage();
-	}
+    public function onTick()
+    {
 
-	public function onSettingsChanged(Variable $var)
-	{
-		if ($var->getName() == "screens") {
-			$config = Config::getInstance();
-			foreach ($config->screens as $url) {
-				Gui::preloadImage($url);
-			}
-		}
-		Gui::preloadUpdate();
-	}
-
-	public function onTick()
-	{
-
-		$delay = intval(Config::getInstance()->screensDelay);
-
+        $delay = intval(Config::getInstance()->screensDelay);
 
 
-		if ($this->isActive == true && time() > ($this->startTime + $delay)) {
 
-			$url = "";
-			$this->isActive = false;
-			$this->startTime = 0;
-			$config = Config::getInstance();
-			if (count($config->screens) > 0) {
-				$index = mt_rand(0, (count($config->screens) - 1));
-				$url = $config->screens[$index];
-			}
+        if ($this->isActive == true && time() > ($this->startTime + $delay)) {
 
-			if (Config::getInstance()->screensMx)
-				if (!empty($this->mxImage))
-					$url = $this->mxImage;
+            $url             = "";
+            $this->isActive  = false;
+            $this->startTime = 0;
+            $config          = Config::getInstance();
+            if (count($config->screens) > 0) {
+                $index = mt_rand(0, (count($config->screens) - 1));
+                $url   = $config->screens[$index];
+            }
 
-			$widget = LScreen::Create(null);
-			$widget->setName("loading Screen");
-			$widget->setImage($url);
-			$widget->show();
-		}
-	}
+            if (Config::getInstance()->screensMx) if (!empty($this->mxImage)) $url = $this->mxImage;
 
-	public function onEndMatch($rankings, $winnerTeamOrMap)
-	{
-		$this->startTime = time();
-		$this->isActive = true;
-	}
+            $widget = LScreen::Create(null);
+            $widget->setName("loading Screen");
+            $widget->setImage($url);
+            $widget->show();
+        }
+    }
 
-	public function onBeginMap($map, $warmUp, $matchContinuation)
-	{
-		$this->isActive = false;
-		LScreen::EraseAll();
-	}
+    public function onEndMatch($rankings, $winnerTeamOrMap)
+    {
+        $this->startTime = time();
+        $this->isActive  = true;
+    }
 
-	public function onBeginMatch()
-	{
+    public function onBeginMap($map, $warmUp, $matchContinuation)
+    {
+        $this->isActive = false;
+        LScreen::EraseAll();
+    }
 
-		$this->isActive = false;
-		LScreen::EraseAll();
-		Gui::preloadRemove($this->mxImage);
-		Gui::preloadUpdate();
+    public function onBeginMatch()
+    {
 
-		if (Config::getInstance()->screensMx)
-			$this->syncMxImage();
-	}
+        $this->isActive = false;
+        LScreen::EraseAll();
+        Gui::preloadRemove($this->mxImage);
+        Gui::preloadUpdate();
 
-	private function syncMxImage()
-	{
-		$uid = urlencode($this->storage->nextMap->uId);
+        if (Config::getInstance()->screensMx) $this->syncMxImage();
+    }
 
-		switch ($this->expStorage->simpleEnviTitle) {
-			case "SM":
-				$query = 'http://sm.mania-exchange.com/api/tracks/get_track_info/uid/' . $uid;
-				break;
-			case "TM":
-				$query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/uid/' . $uid;
-				break;
-		}
+    private function syncMxImage()
+    {
+        $uid = urlencode($this->storage->nextMap->uId);
 
-		$this->dataAccess->httpGet($query, array($this, "xGetImage"), null, "MX", "application/json");
-	}
+        switch ($this->expStorage->simpleEnviTitle) {
+            case "SM":
+                $query = 'http://sm.mania-exchange.com/api/tracks/get_track_info/uid/'.$uid;
+                break;
+            case "TM":
+                $query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/uid/'.$uid;
+                break;
+        }
 
-	public function xGetImage($data, $code, $params = null)
-	{
-		if ($code != 200)
-			return;
-		try {
-			$json = json_decode($data, true);
-			if ($json === null) {
-				$this->mxImage = "";
-				return;
-			}
-			$map = MxMap::fromArray($json);
-			$game = strtolower($this->expStorage->simpleEnviTitle);
+        $this->dataAccess->httpGet($query, array($this, "xGetImage"), null, "MX", "application/json");
+    }
 
-			if ($map->hasScreenshot) {
-				$this->mxImage = "http://" . $game . ".mania-exchange.com/tracks/screenshot/normal/" . $map->trackID . "?.png";
-				Gui::preloadImage($this->mxImage);
-				Gui::preloadUpdate();
-			}
-			else {
-				$this->mxImage = "";
-			}
-		} catch (Exception $e) {
-			Helper::logError("LoadScreen error: " . $e->getMessage() . " at line " . $e->getLine());
-			$this->mxImage = "";
-		}
-	}
+    public function xGetImage($data, $code, $params = null)
+    {
+        if ($code != 200) return;
+        try {
+            $json = json_decode($data, true);
+            if ($json === null) {
+                $this->mxImage = "";
+                return;
+            }
+            $map  = MxMap::fromArray($json);
+            $game = strtolower($this->expStorage->simpleEnviTitle);
 
-	public function exp_onUnload()
-	{
-		
-	}
+            if ($map->hasScreenshot) {
+                $this->mxImage = "http://".$game.".mania-exchange.com/tracks/screenshot/normal/".$map->trackID."?.png";
+                Gui::preloadImage($this->mxImage);
+                Gui::preloadUpdate();
+            } else {
+                $this->mxImage = "";
+            }
+        } catch (Exception $e) {
+            Helper::logError("LoadScreen error: ".$e->getMessage()." at line ".$e->getLine());
+            $this->mxImage = "";
+        }
+    }
 
+    public function exp_onUnload()
+    {
+          Dispatcher::unregister(Event::getClass(), $this, Event::ON_END_MATCH);
+    }
 }

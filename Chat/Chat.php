@@ -70,6 +70,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         $ignore = array(".", "..", "LICENSE", "README.md", "USERS.md", ".git");
         $path   = realpath(APP_ROOT).DIRECTORY_SEPARATOR."vendor".DIRECTORY_SEPARATOR."shutterstock".DIRECTORY_SEPARATOR."badwords";
+        
         if (is_dir($path)) {
 
             $this->console("[Chat] loading profanity filter words...");
