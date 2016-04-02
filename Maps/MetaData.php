@@ -40,6 +40,11 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 		$var->setDefaultValue(7);
 		$this->registerVariable($var);
 
+		$var = new Boolean("showCurrentMapWidget", "Show Now Playing map widget", $config, false, false);
+		$var->setGroup("Widgets");
+		$var->setDefaultValue(true);
+		$this->registerVariable($var);
+
 		$var = new Boolean("showNextMapWidget", "Show next map widget", $config, false, false);
 		$var->setGroup("Widgets");
 		$var->setDefaultValue(true);
