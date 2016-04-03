@@ -28,7 +28,7 @@ class Error extends Window
         if (is_array($message)) {
             $out = "";
             foreach ($message as $line) {
-                $out .= trim($line)."\n";
+                $out .= trim($line) . "\n";
             }
         }
 
@@ -45,4 +45,5 @@ class Error extends Window
         parent::destroy();
     }
 }
+
 ?>

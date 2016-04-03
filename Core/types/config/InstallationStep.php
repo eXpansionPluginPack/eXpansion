@@ -7,13 +7,15 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config;
  *
  * @author De Cramer Oliver
  */
-class InstallationStepss {
-    
-    function __construct($name) {
-	
+class InstallationStepss
+{
+
+    function __construct($name)
+    {
+
     }
 
-    
+
 }
 
 ?>

@@ -53,9 +53,9 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->exp_chatSendServerMessage(exp_getMessage('#error#"%s" is less than 1!'), null, array($value));
             return;
         }
-        
+
         $this->exp_chatSendServerMessage(exp_getMessage('#info#New time reference point set to %s'), null, array($value));
-        $this->references[$login] = (int) $value;
+        $this->references[$login] = (int)$value;
         $this->showPanel($login, $this->storage->getPlayerObject($login));
     }
 
@@ -83,7 +83,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
         //TimeChooser::EraseAll();
-        TimePanel::$dedirecords  = Array();
+        TimePanel::$dedirecords = Array();
         TimePanel::$localrecords = Array();
     }
 
@@ -166,7 +166,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onRecordPlayerFinished($login)
     {
-        
+
     }
 
     public function onDedimaniaOpenSession()
@@ -176,7 +176,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onNewRecord($data)
     {
-        
+
     }
 
     public function onPersonalBestRecord($data)
@@ -191,7 +191,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onDedimaniaPlayerDisconnect($login)
     {
-        
+
     }
 
     /**
@@ -234,5 +234,6 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         parent::exp_unload();
     }
 }
+
 ?>
 

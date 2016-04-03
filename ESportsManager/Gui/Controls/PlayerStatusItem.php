@@ -4,7 +4,8 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls;
 
 use \ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus;
 
-class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     protected $bg;
     protected $nickname;
@@ -21,7 +22,8 @@ class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
      * @param type $controller
      * @param int $sizeX
      */
-    function __construct($indexNumber, PlayerStatus $player, $controller, $gameMode, $isAdmin, $sizeX) {
+    function __construct($indexNumber, PlayerStatus $player, $controller, $gameMode, $isAdmin, $sizeX)
+    {
         $sizeY = 6;
         $login = $player->login;
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
@@ -30,7 +32,6 @@ class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-
 
 
         $this->team = new \ManiaLib\Gui\Elements\Quad();
@@ -93,7 +94,7 @@ class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->frame->addComponent($this->status);
 
         if ($isAdmin) {
-            $this->forceSpec = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(24,5);
+            $this->forceSpec = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(24, 5);
             $this->forceSpec->setText(__("Force Spec", $login));
             $this->forceSpec->setTextColor("f00");
             $this->forceSpec->setAction($this->createAction(array($controller, "forceSpec"), $login));
@@ -105,12 +106,14 @@ class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY) {
+    protected function onResize($oldX, $oldY)
+    {
         $this->bg->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
 }
+
 ?>
 

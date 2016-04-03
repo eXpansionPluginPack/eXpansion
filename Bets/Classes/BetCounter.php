@@ -27,45 +27,45 @@ namespace ManiaLivePlugins\eXpansion\Bets\Classes;
 class BetCounter
 {
 
-	private $endTimestamp = -1;
+    private $endTimestamp = -1;
 
-	private $callback = null;
+    private $callback = null;
 
-	private $param = null;
+    private $param = null;
 
-	private $active = false;
+    private $active = false;
 
-	public function __construct($timeout, $callback = Null, $param = null)
-	{
-		if (!is_numeric($timeout))
-			return;
+    public function __construct($timeout, $callback = Null, $param = null)
+    {
+        if (!is_numeric($timeout))
+            return;
 
-		$this->callback = $callback;
-		$this->endTimestamp = time() + intval($timeout);
-		$this->active = true;
-	}
+        $this->callback = $callback;
+        $this->endTimestamp = time() + intval($timeout);
+        $this->active = true;
+    }
 
-	public function check()
-	{
-		if ($this->active == false)
-			return false;
+    public function check()
+    {
+        if ($this->active == false)
+            return false;
 
 
-		if ($this->endTimestamp < time()) {
-			$this->active = false;
+        if ($this->endTimestamp < time()) {
+            $this->active = false;
 
-			try {
-				if ($this->callback) {
-					call_user_func($this->callback, $this->param);
-				}
-			} catch (\Exception $e) {			
-				\ManiaLivePlugins\eXpansion\Helpers\Helper::logError("invalid callback found at betcounter.php");
-				return true;
-			}
-			return true;
-		}
+            try {
+                if ($this->callback) {
+                    call_user_func($this->callback, $this->param);
+                }
+            } catch (\Exception $e) {
+                \ManiaLivePlugins\eXpansion\Helpers\Helper::logError("invalid callback found at betcounter.php");
+                return true;
+            }
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 }

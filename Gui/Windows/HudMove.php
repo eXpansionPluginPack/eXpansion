@@ -2,25 +2,30 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
-class HudMove extends \ManiaLive\Gui\Window {
+class HudMove extends \ManiaLive\Gui\Window
+{
 
     private $xml;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
     }
 
-    public function onDraw() {
+    public function onDraw()
+    {
         $this->removeComponent($this->xml);
         $this->addComponent($this->xml);
         parent::onDraw();
     }
 
-    public function enable() {
+    public function enable()
+    {
         $this->xml->setContent('    
         <script><!--
                        main () {     
@@ -33,7 +38,8 @@ class HudMove extends \ManiaLive\Gui\Window {
                 --></script>');
     }
 
-    public function disable() {
+    public function disable()
+    {
         $this->xml->setContent('    
         <script><!--
                        main () {
@@ -46,7 +52,8 @@ class HudMove extends \ManiaLive\Gui\Window {
                 --></script>');
     }
 
-    function destroy() {
+    function destroy()
+    {
         parent::destroy();
     }
 

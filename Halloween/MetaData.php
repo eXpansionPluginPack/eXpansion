@@ -7,26 +7,27 @@ namespace ManiaLivePlugins\eXpansion\Halloween;
  *
  * @author Petri
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
+class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
+{
 
-    public function onBeginLoad() {
-	parent::onBeginLoad();
-	$this->setName("Widget: Halloween");
-	$this->setDescription("Seasonal widget, creates spiders at podium!");
-	$this->setGroups(array('Widgets'));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Widget: Halloween");
+        $this->setDescription("Seasonal widget, creates spiders at podium!");
+        $this->setGroups(array('Widgets'));
 
-	$config = Config::getInstance();
+        $config = Config::getInstance();
 
 // $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\String("texture", $visibleName, $configInstance, $scope, $showMain)
 
-	$var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt("spriteCount", "Spiders count", $config, false, false);
-	$var->setMin(1);
-	$var->setMax(20);
-	$var->setDefaultValue(3);
+        $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt("spriteCount", "Spiders count", $config, false, false);
+        $var->setMin(1);
+        $var->setMax(20);
+        $var->setDefaultValue(3);
 
 
-
-	$this->registerVariable($var);
+        $this->registerVariable($var);
     }
 
 }

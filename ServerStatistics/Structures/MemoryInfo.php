@@ -7,12 +7,14 @@ namespace ManiaLivePlugins\eXpansion\ServerStatistics\Structures;
  *
  * @author Reaby
  */
-class MemoryInfo extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
+class MemoryInfo extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+{
 
     public $total;
     public $free;
 
-    public function __construct($total, $free) {
+    public function __construct($total, $free)
+    {
         $this->total = $total;
         $this->free = $free;
     }

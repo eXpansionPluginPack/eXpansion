@@ -21,7 +21,7 @@ class InputboxMasked extends Control
 
     function __construct($name, $sizeX = 35, $editable = true)
     {
-        $config     = Config::getInstance();
+        $config = Config::getInstance();
         $this->name = $name;
 
         $this->createButton($editable);
@@ -111,7 +111,7 @@ class InputboxMasked extends Control
             $this->nonHidden = New Button(3, 3);
             $this->nonHidden->setIcon("Icons64x64_1", "ClipPause");
             $this->nonHidden->setPosition(-4, 0);
-            $this->nonHidden->setId($this->name."_1");
+            $this->nonHidden->setId($this->name . "_1");
             $this->nonHidden->setDescription($this->getText());
             $this->addComponent($this->nonHidden);
         }
@@ -157,7 +157,7 @@ class InputboxMasked extends Control
 
     function setClass($class)
     {
-        $this->button->setAttribute("class", "isTabIndex isEditable ".$class);
+        $this->button->setAttribute("class", "isTabIndex isEditable " . $class);
     }
 
     function onIsRemoved(Container $target)
@@ -166,4 +166,5 @@ class InputboxMasked extends Control
         parent::destroy();
     }
 }
+
 ?>

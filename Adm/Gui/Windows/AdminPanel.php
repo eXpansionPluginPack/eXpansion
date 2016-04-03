@@ -36,11 +36,11 @@ class AdminPanel extends Widget
         parent::exp_onBeginConstruct();
         $this->setName("Admin Panel");
 
-        $this->actionEndRound   = $this->createAction(array($this, 'actions'), "forceEndRound");
+        $this->actionEndRound = $this->createAction(array($this, 'actions'), "forceEndRound");
         $this->actionCancelVote = $this->createAction(array($this, 'actions'), "cancelVote");
-        $this->actionSkip       = $this->createAction(array($this, 'actions'), "nextMap");
-        $this->actionRestart    = $this->createAction(array($this, 'actions'), "restartMap");
-        $this->actionBalance    = $this->createAction(array($this, 'actions'), "balanceTeams");
+        $this->actionSkip = $this->createAction(array($this, 'actions'), "nextMap");
+        $this->actionRestart = $this->createAction(array($this, 'actions'), "restartMap");
+        $this->actionBalance = $this->createAction(array($this, 'actions'), "balanceTeams");
 
         $this->setScriptEvents(true);
 
@@ -134,7 +134,7 @@ class AdminPanel extends Widget
                     break;
             }
         } catch (Exception $e) {
-            Helper::log('[Adm/AdminPanel]'.$e->getMessage());
+            Helper::log('[Adm/AdminPanel]' . $e->getMessage());
         }
     }
 
@@ -154,4 +154,5 @@ class AdminPanel extends Widget
         parent::destroy();
     }
 }
+
 ?>

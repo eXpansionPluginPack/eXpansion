@@ -12,4 +12,5 @@ class LocalPanel extends PlainPanel
         parent::exp_onBeginConstruct();
     }
 }
+
 ?>

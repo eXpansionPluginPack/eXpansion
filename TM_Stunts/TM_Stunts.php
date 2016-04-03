@@ -29,49 +29,49 @@ use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 class TM_Stunts extends ExpPlugin
 {
 
-	private $stuntWindow;
+    private $stuntWindow;
 
-	private $counter;
+    private $counter;
 
-	public function exp_onReady()
-	{
-		//	$this->enableTickerEvent();
-		$this->stuntWindow = Gui\Widgets\StuntWidget::Create(null, false);
-		$this->stuntWindow->setSize(60, 12);
-		$this->stuntWindow->setPosition(-30, 58);
-		$this->enableScriptEvents("LibXmlRpc_OnStunt");
-	}
+    public function exp_onReady()
+    {
+        //	$this->enableTickerEvent();
+        $this->stuntWindow = Gui\Widgets\StuntWidget::Create(null, false);
+        $this->stuntWindow->setSize(60, 12);
+        $this->stuntWindow->setPosition(-30, 58);
+        $this->enableScriptEvents("LibXmlRpc_OnStunt");
+    }
 
-	public function onTick()
-	{
-		if ($this->counter % 10 == 0) {
-			$this->stuntWindow->setLabels("StuntName 180", "");
-			$this->stuntWindow->show("reaby");
-		}
+    public function onTick()
+    {
+        if ($this->counter % 10 == 0) {
+            $this->stuntWindow->setLabels("StuntName 180", "");
+            $this->stuntWindow->show("reaby");
+        }
 
-		$this->counter++;
-	}
-	
-	public function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump)
-	{
-		$stuntname = str_replace("::EStuntFigure::", "", $stuntname);
+        $this->counter++;
+    }
 
-		if ($angle || ($stuntname != "StraightJump" && $stuntname != "RespawnPenalty")) {
-			if ($isReversed) {
-				$stuntname = "Reversed" . $stuntname;
-			}
-			if ($angle == 0)
-				$angle = "";
-			$split = preg_split('/(?=\p{Lu})/u', $stuntname);
-			$stuntname = implode(" ", $split) . " " . $angle;
-			$this->stuntWindow->setLabels($stuntname, $points);
-			$this->stuntWindow->show($login);
-		}
-	}
+    public function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump)
+    {
+        $stuntname = str_replace("::EStuntFigure::", "", $stuntname);
 
-	public function exp_onUnload()
-	{
-		parent::exp_onUnload();
-	}
+        if ($angle || ($stuntname != "StraightJump" && $stuntname != "RespawnPenalty")) {
+            if ($isReversed) {
+                $stuntname = "Reversed" . $stuntname;
+            }
+            if ($angle == 0)
+                $angle = "";
+            $split = preg_split('/(?=\p{Lu})/u', $stuntname);
+            $stuntname = implode(" ", $split) . " " . $angle;
+            $this->stuntWindow->setLabels($stuntname, $points);
+            $this->stuntWindow->show($login);
+        }
+    }
+
+    public function exp_onUnload()
+    {
+        parent::exp_onUnload();
+    }
 
 }

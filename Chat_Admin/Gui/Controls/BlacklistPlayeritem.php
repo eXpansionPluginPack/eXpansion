@@ -8,70 +8,71 @@ use \ManiaLib\Utils\Formatting;
 class BlacklistPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-	private $unblackButton;
+    private $unblackButton;
 
-	private $login;
+    private $login;
 
-	private $unbanAction;
+    private $unbanAction;
 
-	private $frame;
+    private $frame;
 
-	private $bg;
+    private $bg;
 
-	function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login)
-	{
-		$sizeX = 80;
-		$sizeY = 6;
-		$this->player = $player;
+    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login)
+    {
+        $sizeX = 80;
+        $sizeY = 6;
+        $this->player = $player;
 
-		$this->unblackAction = $this->createAction(array($controller, 'unBlacklist'), array($player->login));
+        $this->unblackAction = $this->createAction(array($controller, 'unBlacklist'), array($player->login));
 
-		$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
-		$this->addComponent($this->bg);
-		$this->frame = new \ManiaLive\Gui\Controls\Frame();
-		$this->frame->setSize($sizeX, $sizeY);
-		$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
+        $this->addComponent($this->bg);
+        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame->setSize($sizeX, $sizeY);
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
-		$this->login = new \ManiaLib\Gui\Elements\Label(50, 4);
-		$this->login->setAlign('left', 'center');
-		$this->login->setText($player->login);
-		$this->frame->addComponent($this->login);
-
-
-		$spacer = new \ManiaLib\Gui\Elements\Quad();
-		$spacer->setSize(4, 4);
-		$spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-
-		$this->frame->addComponent($spacer);
-
-		$this->unblackButton = new MyButton();
-		$this->unblackButton->setText(__("Remove"));
-		$this->unblackButton->setAction($this->unblackAction);
-		$this->frame->addComponent($this->unblackButton);
+        $this->login = new \ManiaLib\Gui\Elements\Label(50, 4);
+        $this->login->setAlign('left', 'center');
+        $this->login->setText($player->login);
+        $this->frame->addComponent($this->login);
 
 
-		$this->addComponent($this->frame);
+        $spacer = new \ManiaLib\Gui\Elements\Quad();
+        $spacer->setSize(4, 4);
+        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
 
-		$this->sizeX = $sizeX;
-		$this->sizeY = $sizeY;
-		$this->setSize($sizeX, $sizeY);
-	}
+        $this->frame->addComponent($spacer);
 
-	protected function onResize($oldX, $oldY)
-	{
+        $this->unblackButton = new MyButton();
+        $this->unblackButton->setText(__("Remove"));
+        $this->unblackButton->setAction($this->unblackAction);
+        $this->frame->addComponent($this->unblackButton);
 
-	}
 
-	function onDraw()
-	{
-		
-	}
+        $this->addComponent($this->frame);
 
-	function __destruct()
-	{
+        $this->sizeX = $sizeX;
+        $this->sizeY = $sizeY;
+        $this->setSize($sizeX, $sizeY);
+    }
 
-	}
+    protected function onResize($oldX, $oldY)
+    {
+
+    }
+
+    function onDraw()
+    {
+
+    }
+
+    function __destruct()
+    {
+
+    }
 
 }
+
 ?>
 

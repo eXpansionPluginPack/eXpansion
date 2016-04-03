@@ -27,38 +27,38 @@ namespace ManiaLivePlugins\eXpansion\TM_Stunts\Gui\Widgets;
 class StuntWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-	private $lbl_stuntName, $lbl_description, $frame, $script;
+    private $lbl_stuntName, $lbl_description, $frame, $script;
 
-	protected function exp_onBeginConstruct()
-	{
-		$this->setName("Stunts Widget");
-		
-		$this->frame = new \ManiaLive\Gui\Controls\Frame();
-		$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
-		$this->addComponent($this->frame);
+    protected function exp_onBeginConstruct()
+    {
+        $this->setName("Stunts Widget");
 
-		$this->lbl_stuntName = new \ManiaLib\Gui\Elements\Label(60, 6);
-		$this->lbl_stuntName->setStyle("TextRaceMessageBig");
-		$this->lbl_stuntName->setTextEmboss();
-		$this->lbl_stuntName->setTextSize(3);
-		$this->lbl_stuntName->setAlign("center", "center");
-		$this->lbl_stuntName->setPosX(30);
-		$this->lbl_stuntName->setId("stuntname_1");
-		$this->frame->addComponent($this->lbl_stuntName);
+        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
+        $this->addComponent($this->frame);
 
-		$this->lbl_description = new \ManiaLib\Gui\Elements\Label(120, 6);
-		$this->lbl_description->setAlign("center", "top");
-		$this->lbl_description->setPosX(30);
-		// $this->frame->addComponent($this->lbl_description);
+        $this->lbl_stuntName = new \ManiaLib\Gui\Elements\Label(60, 6);
+        $this->lbl_stuntName->setStyle("TextRaceMessageBig");
+        $this->lbl_stuntName->setTextEmboss();
+        $this->lbl_stuntName->setTextSize(3);
+        $this->lbl_stuntName->setAlign("center", "center");
+        $this->lbl_stuntName->setPosX(30);
+        $this->lbl_stuntName->setId("stuntname_1");
+        $this->frame->addComponent($this->lbl_stuntName);
 
-		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("TM_Stunts/Gui/Script");
-		$this->registerScript($this->script);
-	}
+        $this->lbl_description = new \ManiaLib\Gui\Elements\Label(120, 6);
+        $this->lbl_description->setAlign("center", "top");
+        $this->lbl_description->setPosX(30);
+        // $this->frame->addComponent($this->lbl_description);
 
-	public function setLabels($name, $description)
-	{
-		$this->lbl_stuntName->setText($name);
-		//$this->lbl_description->setText($description);
-	}
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("TM_Stunts/Gui/Script");
+        $this->registerScript($this->script);
+    }
+
+    public function setLabels($name, $description)
+    {
+        $this->lbl_stuntName->setText($name);
+        //$this->lbl_description->setText($description);
+    }
 
 }

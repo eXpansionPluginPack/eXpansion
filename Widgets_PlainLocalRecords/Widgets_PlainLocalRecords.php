@@ -28,7 +28,7 @@ class Widgets_PlainLocalRecords extends ExpPlugin implements Listener
         $this->enableDedicatedEvents();
 
         $this->lastUpdate = time();
-        
+
         if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\SM_ObstaclesScores\\SM_ObstaclesScores')) {
             self::$localrecords = $this->callPublicMethod(
                 "\\ManiaLivePlugins\\eXpansion\\SM_ObstaclesScores\\SM_ObstaclesScores", "getRecords"
@@ -73,7 +73,7 @@ class Widgets_PlainLocalRecords extends ExpPlugin implements Listener
 
     public function onPlayerDisconnect($login, $reason = null)
     {
-        
+
     }
 
     public function onUpdateRecords($data)
@@ -92,7 +92,7 @@ class Widgets_PlainLocalRecords extends ExpPlugin implements Listener
 
     public function onPersonalBestRecord($record)
     {
-        
+
     }
 
     public function onRecordPlayerFinished($record)
@@ -106,4 +106,5 @@ class Widgets_PlainLocalRecords extends ExpPlugin implements Listener
         $this->updateLocalPanel();
     }
 }
+
 ?>

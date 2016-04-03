@@ -7,10 +7,11 @@ namespace ManiaLivePlugins\eXpansion\Gui\Structures;
  *
  * @author De Cramer Oliver
  */
-interface OptimizedPagerElement{
-	
-	public function getNbTextColumns();	
-	
+interface OptimizedPagerElement
+{
+
+    public function getNbTextColumns();
+
 }
 
 ?>

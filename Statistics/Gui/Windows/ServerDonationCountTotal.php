@@ -3,8 +3,8 @@
 namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
-
-class ServerDonationCountTotal extends ServerDonationCount {
+class ServerDonationCountTotal extends ServerDonationCount
+{
 
 
 }

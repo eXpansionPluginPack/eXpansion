@@ -11,22 +11,22 @@ namespace ManiaLivePlugins\eXpansion\Helpers\GbxReader;
 
 class IncludedPack extends AbstractStructure
 {
-	public $name;
-	public $author;
-	public $manialink;
-	public $creationDate;
-	public $checksum;
+    public $name;
+    public $author;
+    public $manialink;
+    public $creationDate;
+    public $checksum;
 
-	final static function fetch($fp)
-	{
-		$includedPack = new self;
-		$includedPack->checksum = self::fetchChecksum($fp);
-		$includedPack->name = self::fetchString($fp);
-		$includedPack->author = Author::fetch($fp);
-		$includedPack->manialink = self::fetchString($fp);
-		$includedPack->creationDate = self::fetchChecksum($fp);
-		return $includedPack;
-	}
+    final static function fetch($fp)
+    {
+        $includedPack = new self;
+        $includedPack->checksum = self::fetchChecksum($fp);
+        $includedPack->name = self::fetchString($fp);
+        $includedPack->author = Author::fetch($fp);
+        $includedPack->manialink = self::fetchString($fp);
+        $includedPack->creationDate = self::fetchChecksum($fp);
+        return $includedPack;
+    }
 }
 
 ?>

@@ -2,19 +2,22 @@
 
 namespace ManiaLivePlugins\eXpansion\ServerStatistics\Stats;
 
-class StatsWindows implements AbstractStat {
+class StatsWindows implements AbstractStat
+{
 
     private $refresher;
     private $wmi;
     private $cpuValue;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->refresher = new \COM("WbemScripting.SWbemRefresher");
         $this->wmi = new \COM("winmgmts:{impersonationLevel=impersonate}//./root/cimv2");
         $this->cpuValue = $this->refresher->AddEnum($this->wmi, "Win32_PerfFormattedData_PerfOS_Processor");
     }
 
-    public function getAvgLoad() {
+    public function getAvgLoad()
+    {
         // testing query for perfmon data.. works but can't get load-average
         $loadArray = array();
         $this->refresher->Refresh();
@@ -26,7 +29,8 @@ class StatsWindows implements AbstractStat {
         return $loadArray[0];
     }
 
-    public function getFreeMemory() {
+    public function getFreeMemory()
+    {
         $total = 0;
         $free = 0;
 
@@ -42,7 +46,8 @@ class StatsWindows implements AbstractStat {
         return new \ManiaLivePlugins\eXpansion\ServerStatistics\Structures\MemoryInfo($total, $free);
     }
 
-    public function getUptime() {
+    public function getUptime()
+    {
         $boot = "";
         $ostime = "";
         foreach ($this->wmi->ExecQuery("SELECT LastBootUpTime FROM Win32_OperatingSystem") as $os) {

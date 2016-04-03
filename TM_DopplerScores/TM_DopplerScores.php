@@ -35,7 +35,8 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
  *
  * @package ManiaLivePlugins\eXpansion\SM\PlatformScores
  */
-class TM_DopplerScores extends LocalBase {
+class TM_DopplerScores extends LocalBase
+{
 
     /**
      * The last time of the players past the checkpoints
@@ -44,10 +45,11 @@ class TM_DopplerScores extends LocalBase {
      */
     protected $checkpoints = array();
 
-    public function exp_onReady() {
-	parent::exp_onReady();
+    public function exp_onReady()
+    {
+        parent::exp_onReady();
 
-	$this->enableScriptEvents(array("Doppler_onCheckpoint","LibXmlRpc_OnWayPoint" ,"playerFinish"));
+        $this->enableScriptEvents(array("Doppler_onCheckpoint", "LibXmlRpc_OnWayPoint", "playerFinish"));
     }
 
     /* public function LibXmlRpc_OnWayPoint(
@@ -73,22 +75,23 @@ class TM_DopplerScores extends LocalBase {
       echo "\nScore : $login: cpindex: $cpIndex with $time \n";
       } */
 
-    public function exp_onModeScriptCallback($param1, $param2) {
+    public function exp_onModeScriptCallback($param1, $param2)
+    {
 
-	switch ($param1) {
-	    case 'playerFinish' :
-		$params = explode('{:}', $param2);
-		$this->addRecord($params[1], $params[0], 0, $this->checkpoints[$params[1]]);
-		break;
-	    case 'LibXmlRpc_OnWayPoint':
-		print_r($params2);
-		break;
-	    case 'Doppler_onCheckpoint' :
-		$params = json_decode($param2);
-		print_r($params);
-		break;
-		//$this->playerCp($params->Player->Login, $params->Run->Time, $params->Run->CheckpointIndex);
-	}
+        switch ($param1) {
+            case 'playerFinish' :
+                $params = explode('{:}', $param2);
+                $this->addRecord($params[1], $params[0], 0, $this->checkpoints[$params[1]]);
+                break;
+            case 'LibXmlRpc_OnWayPoint':
+                print_r($params2);
+                break;
+            case 'Doppler_onCheckpoint' :
+                $params = json_decode($param2);
+                print_r($params);
+                break;
+            //$this->playerCp($params->Player->Login, $params->Run->Time, $params->Run->CheckpointIndex);
+        }
     }
 
     /**
@@ -100,58 +103,68 @@ class TM_DopplerScores extends LocalBase {
      *
      * turn void
      */
-    public function playerCp($login, $score, $checkpointIndex) {
-	$this->checkpoints[$login][$checkpointIndex] = $score;
+    public function playerCp($login, $score, $checkpointIndex)
+    {
+        $this->checkpoints[$login][$checkpointIndex] = $score;
     }
 
     /**
      * @param string $login
      * @param bool $isSpectator
      */
-    public function onPlayerConnect($login, $isSpectator) {
-	parent::onPlayerConnect($login, $isSpectator);
+    public function onPlayerConnect($login, $isSpectator)
+    {
+        parent::onPlayerConnect($login, $isSpectator);
 
-	$this->checkpoints[$login] = array();
+        $this->checkpoints[$login] = array();
     }
 
     /**
      * @param string $login
      * @param null $reason
      */
-    public function onPlayerDisconnect($login, $reason = null) {
-	parent::onPlayerDisconnect($login, $reason);
+    public function onPlayerDisconnect($login, $reason = null)
+    {
+        parent::onPlayerDisconnect($login, $reason);
 
-	//Remove all checkpoints data
-	$this->checkpoints[$login] = array();
-	unset($this->checkpoints[$login]);
+        //Remove all checkpoints data
+        $this->checkpoints[$login] = array();
+        unset($this->checkpoints[$login]);
     }
 
-    protected function getScoreType() {
-	return self::SCORE_TYPE_SCORE;
+    protected function getScoreType()
+    {
+        return self::SCORE_TYPE_SCORE;
     }
 
-    public function formatScore($score) {
-	return $score;
+    public function formatScore($score)
+    {
+        return $score;
     }
 
-    protected function isBetterTime($newTime, $oldTime) {
-	return $newTime <= $oldTime;
+    protected function isBetterTime($newTime, $oldTime)
+    {
+        return $newTime <= $oldTime;
     }
 
-    protected function secureBy($newTime, $oldTime) {
-	return ($newTime - $oldTime) . 'points';
+    protected function secureBy($newTime, $oldTime)
+    {
+        return ($newTime - $oldTime) . 'points';
     }
 
-    protected function getDbOrderCriteria() {
-	return '`record_score` DESC, `record_date` ASC ';
+    protected function getDbOrderCriteria()
+    {
+        return '`record_score` DESC, `record_date` ASC ';
     }
 
-    public function getNbOfLaps() {
-	return 1;
+    public function getNbOfLaps()
+    {
+        return 1;
     }
 
-    protected function array_sort($array, $on, $order = SORT_DESC) {
-	return parent::array_sort($array, $on, $order);
+    protected function array_sort($array, $on, $order = SORT_DESC)
+    {
+        return parent::array_sort($array, $on, $order);
     }
 
 }

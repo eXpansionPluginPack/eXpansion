@@ -27,17 +27,17 @@ namespace ManiaLivePlugins\eXpansion\KnockOut\Structures;
 class KOplayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
 {
 
-	public $isKnockout = false;
+    public $isKnockout = false;
 
-	public $login = "";
+    public $login = "";
 
-	public $nickName = "";
+    public $nickName = "";
 
-	public function __construct(\ManiaLive\Data\Player $player)
-	{
-		// $this->player = $player;
-		$this->login = $player->login;
-		$this->nickName = $player->nickName;
-	}
+    public function __construct(\ManiaLive\Data\Player $player)
+    {
+        // $this->player = $player;
+        $this->login = $player->login;
+        $this->nickName = $player->nickName;
+    }
 
 }

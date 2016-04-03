@@ -29,48 +29,48 @@ use ManiaLivePlugins\eXpansion\Minigame1\Config;
 class MinigameWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
 
-	public static $action = -1;
+    public static $action = -1;
 
-	private $quad;
+    private $quad;
 
-	/** @var Config */
-	private $config;
+    /** @var Config */
+    private $config;
 
-	private $script;
+    private $script;
 
-	protected function onConstruct()
-	{
-		parent::onConstruct();
-		
-		$this->config = Config::getInstance();
-		$this->setScriptEvents();
-		
-		$size = $this->config->mg1_imageSize;
+    protected function onConstruct()
+    {
+        parent::onConstruct();
 
-		$this->quad = new \ManiaLib\Gui\Elements\Quad();
-		$this->quad->setAlign("center", "center");
+        $this->config = Config::getInstance();
+        $this->setScriptEvents();
 
-		$x = rand(-160 + ($size / 2), 160 - ($size / 2));
-		$y = rand(-90 + ($size / 2), 90 - ($size / 2));
+        $size = $this->config->mg1_imageSize;
 
-		$this->quad->setPosition($x, $y);
-		$this->setPosZ(50);
-		$this->quad->setSize();
-		$this->quad->setImage($this->config->mg1_imageUrl, true);
-		$this->quad->setImageFocus($this->config->mg1_imageFocusUrl, true);
-		$this->quad->setId("quad");
-		$this->quad->setScriptEvents();
-		$this->quad->setAttribute('hidden', '1');
-		$this->addComponent($this->quad);
+        $this->quad = new \ManiaLib\Gui\Elements\Quad();
+        $this->quad->setAlign("center", "center");
 
-		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Minigame1/Gui/Script");
-		$this->script->setParam("action", self::$action);
-		$this->registerScript($this->script);
-	}
+        $x = rand(-160 + ($size / 2), 160 - ($size / 2));
+        $y = rand(-90 + ($size / 2), 90 - ($size / 2));
 
-	public function setDisplayDuration($duration)
-	{
-		$this->script->setParam("duration", $duration);
-	}
+        $this->quad->setPosition($x, $y);
+        $this->setPosZ(50);
+        $this->quad->setSize();
+        $this->quad->setImage($this->config->mg1_imageUrl, true);
+        $this->quad->setImageFocus($this->config->mg1_imageFocusUrl, true);
+        $this->quad->setId("quad");
+        $this->quad->setScriptEvents();
+        $this->quad->setAttribute('hidden', '1');
+        $this->addComponent($this->quad);
+
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Minigame1/Gui/Script");
+        $this->script->setParam("action", self::$action);
+        $this->registerScript($this->script);
+    }
+
+    public function setDisplayDuration($duration)
+    {
+        $this->script->setParam("duration", $duration);
+    }
 
 }

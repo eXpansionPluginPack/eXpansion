@@ -24,10 +24,10 @@ class Gui extends ExpPlugin
     private $titleId;
     private $msg_params, $msg_disabled;
     private $resetLogins = array();
-    private $counter     = 0;
+    private $counter = 0;
     private $preloader;
     // next 2 is used by contextMenu
-    public static $items     = array();
+    public static $items = array();
     public static $callbacks = array();
 
     public function exp_onInit()
@@ -56,7 +56,7 @@ class Gui extends ExpPlugin
         $this->setPublicMethod("hudCommands");
         $this->setPublicMethod("showConfigWindow");
 
-        $this->msg_params   = exp_getMessage("possible parameters: move, lock, reset");
+        $this->msg_params = exp_getMessage("possible parameters: move, lock, reset");
         $this->msg_disabled = exp_getMessage("#error#Server Admin has disabled personal huds. Sorry!");
 
         $this->preloader = Preloader::Create(null);
@@ -114,7 +114,7 @@ class Gui extends ExpPlugin
             $guiHandler = GuiHandler::getInstance();
             foreach ($this->resetLogins as $login => $value) {
 // delayed tick
-                $this->resetLogins[$login] ++;
+                $this->resetLogins[$login]++;
                 switch ($this->resetLogins[$login]) {
                     case 1:
                         ResetHud::Erase($login);
@@ -160,7 +160,7 @@ class Gui extends ExpPlugin
                     0, false);
             }
         } catch (Exception $e) {
-            Helper::log("[Gui]Error while disabling alt menu : ".$e->getMessage());
+            Helper::log("[Gui]Error while disabling alt menu : " . $e->getMessage());
         }
     }
 
@@ -226,7 +226,7 @@ class Gui extends ExpPlugin
         if (Config::getInstance()->disablePersonalHud) {
             $this->exp_chatSendServerMessage($this->msg_disabled, $login);
         } else {
-            $window                    = ResetHud::Create($login);
+            $window = ResetHud::Create($login);
             $window->setTimeout(1);
             $window->show();
             $this->resetLogins[$login] = 0;
@@ -236,9 +236,9 @@ class Gui extends ExpPlugin
 
     function logMemory()
     {
-        $mem = "Memory Usage: ".round(memory_get_usage() / 1024)."Kb";
+        $mem = "Memory Usage: " . round(memory_get_usage() / 1024) . "Kb";
         Logger::getLog("memory")->write($mem);
-        print "\n".$mem."\n";
+        print "\n" . $mem . "\n";
     }
 
     public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries)
@@ -246,15 +246,15 @@ class Gui extends ExpPlugin
         if (strpos($answer, "onMenuItemClick") !== false) {
 
             $parseStr = str_replace("onMenuItemClick?", "", $answer);
-            $parsed   = array();
-            
+            $parsed = array();
+
             parse_str($parseStr, $parsed);
 
-            if (!array_key_exists($parsed['hash'], self::$callbacks)) {             
+            if (!array_key_exists($parsed['hash'], self::$callbacks)) {
                 return;
             }
-            $item  = $parsed['item'];
-            $hash  = $parsed['hash'];
+            $item = $parsed['item'];
+            $hash = $parsed['hash'];
             $value = $parsed['dataId'];
 
             $test = \call_user_func(self::$callbacks[$hash], array($login, $item, self::$items[$hash][$value]->data));
@@ -292,7 +292,7 @@ class Gui extends ExpPlugin
     {
         $window = null;
         if (is_array($login)) {
-            $grp    = \ManiaLive\Gui\Group::Create("notice", $login);
+            $grp = \ManiaLive\Gui\Group::Create("notice", $login);
             $window = Notice::Create($grp);
         } else {
             $window = Notice::Create($login);
@@ -309,7 +309,7 @@ class Gui extends ExpPlugin
     {
         $window = null;
         if (is_array($login)) {
-            $grp    = \ManiaLive\Gui\Group::Create("error", $login);
+            $grp = \ManiaLive\Gui\Group::Create("error", $login);
             $window = Windows\Error::Create($grp);
         } else {
             $window = Windows\Error::Create($login);
@@ -350,8 +350,9 @@ class Gui extends ExpPlugin
     {
 //$finalAction = call_user_func_array(array(\ManiaLive\Gui\ActionHandler::getInstance(), 'createAction'), func_get_args());
         $outAction = call_user_func_array(array(ActionHandler::getInstance(), 'createAction'),
-            array(array(__NAMESPACE__.'\Gui', 'showConfirmDialog'), $finalAction));
+            array(array(__NAMESPACE__ . '\Gui', 'showConfirmDialog'), $finalAction));
         return $outAction;
     }
 }
+
 ?>

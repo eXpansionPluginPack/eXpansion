@@ -15,25 +15,27 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
  *
  * @author Petri
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
+class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
+{
 
-    public function onBeginLoad() {
-	parent::onBeginLoad();
-	$this->setName("Tool: ManiaScript editor");
-	$this->setDescription("provides script editor and testing widgets");
-	$this->setGroups(array('Tools'));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Tool: ManiaScript editor");
+        $this->setDescription("provides script editor and testing widgets");
+        $this->setGroups(array('Tools'));
 
-	$config = Config::getInstance();
+        $config = Config::getInstance();
 
-	$var = new TypeString("tester_maniascript", "ManiaScript", $config, false, false);
-	$var->setVisible(false);
-	$var->setValue("");
-	$this->registerVariable($var);
+        $var = new TypeString("tester_maniascript", "ManiaScript", $config, false, false);
+        $var->setVisible(false);
+        $var->setValue("");
+        $this->registerVariable($var);
 
-	$var = new TypeString("tester_manialink", "ManiaLink", $config, false, false);
-	$var->setVisible(false);
-	$var->setValue("");
-	$this->registerVariable($var);
+        $var = new TypeString("tester_manialink", "ManiaLink", $config, false, false);
+        $var->setVisible(false);
+        $var->setValue("");
+        $this->registerVariable($var);
     }
 
 }

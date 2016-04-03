@@ -10,12 +10,12 @@ namespace ManiaLivePlugins\eXpansion\Faq;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Help");
-		$this->setDescription("Provides ingame help with frequently asked question");
-		$this->setGroups(array("Core"));
-	}
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Help");
+        $this->setDescription("Provides ingame help with frequently asked question");
+        $this->setGroups(array("Core"));
+    }
 
 }

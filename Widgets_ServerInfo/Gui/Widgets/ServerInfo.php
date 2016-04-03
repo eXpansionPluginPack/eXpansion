@@ -39,7 +39,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 //	$this->addComponent($this->author);
 
 
-        $line   = new \ManiaLive\Gui\Controls\Frame(1, -6.5);
+        $line = new \ManiaLive\Gui\Controls\Frame(1, -6.5);
         $layout = new \ManiaLib\Gui\Layouts\Line();
         $layout->setMargin(1);
         $line->setLayout($layout);
@@ -103,7 +103,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     public function setLadderLimits($min, $max)
     {
-        $this->ladderMin->setText(($min / 1000)." - ".($max / 1000)."k");
+        $this->ladderMin->setText(($min / 1000) . " - " . ($max / 1000) . "k");
         $this->script->setParam("maxPlayers", \ManiaLive\Data\Storage::getInstance()->server->currentMaxPlayers);
         $this->script->setParam("maxSpec", \ManiaLive\Data\Storage::getInstance()->server->currentMaxSpectators);
     }
@@ -115,4 +115,5 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         parent::destroy();
     }
 }
+
 ?>

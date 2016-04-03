@@ -24,30 +24,36 @@ namespace ManiaLivePlugins\eXpansion\Widgets_CheckpointProgress;
  *
  * @author Petri
  */
-class Widgets_CheckpointProgress extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class Widgets_CheckpointProgress extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+{
 
-    public function exp_onReady() {
-	$this->enableDedicatedEvents();
-	$this->displayWidget();
+    public function exp_onReady()
+    {
+        $this->enableDedicatedEvents();
+        $this->displayWidget();
     }
 
-    private function displayWidget() {
-	$info = Gui\Widgets\CpProgress::Create(null);
-	$info->setSize(160, 15);
-	$info->setPosition(-80, -60);
-	$info->show();
+    private function displayWidget()
+    {
+        $info = Gui\Widgets\CpProgress::Create(null);
+        $info->setSize(160, 15);
+        $info->setPosition(-80, -60);
+        $info->show();
     }
 
-    public function onBeginMap($map, $warmUp, $matchContinuation) {
-	$this->displayWidget();
+    public function onBeginMap($map, $warmUp, $matchContinuation)
+    {
+        $this->displayWidget();
     }
 
-    public function onEndMatch($rankings, $winnerTeamOrMap) {
-	Gui\Widgets\CpProgress::EraseAll();
+    public function onEndMatch($rankings, $winnerTeamOrMap)
+    {
+        Gui\Widgets\CpProgress::EraseAll();
     }
 
-    public function exp_onUnload() {
-	Gui\Widgets\CpProgress::EraseAll();
+    public function exp_onUnload()
+    {
+        Gui\Widgets\CpProgress::EraseAll();
     }
 
 }

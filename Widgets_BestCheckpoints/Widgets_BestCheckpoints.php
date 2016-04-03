@@ -34,7 +34,8 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
         if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK || strtolower($this->storage->gameInfos->scriptName)
-            == "timeattack.script.txt") {
+            == "timeattack.script.txt"
+        ) {
             BestCpPanel::EraseAll();
         }
     }
@@ -45,5 +46,6 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
         parent::exp_onUnload();
     }
 }
+
 ?>
 

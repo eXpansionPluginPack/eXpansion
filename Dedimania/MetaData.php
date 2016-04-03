@@ -18,35 +18,35 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Records: Dedimania for Legacy modes");
-		$this->setDescription("Dedimania, Global world records system integration");
-		$this->setGroups(array('Records'));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Records: Dedimania for Legacy modes");
+        $this->setDescription("Dedimania, Global world records system integration");
+        $this->setGroups(array('Records'));
 
-		$this->addTitleSupport("TM");
-		$this->addTitleSupport("Trackmania");
-		$this->setEnviAsTitle(true);
+        $this->addTitleSupport("TM");
+        $this->addTitleSupport("Trackmania");
+        $this->setEnviAsTitle(true);
 
-		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
-		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
-		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
-		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
-		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
-		$this->setScriptCompatibilityMode(false);
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+        $this->setScriptCompatibilityMode(false);
 
-		$config = Config::getInstance();
+        $config = Config::getInstance();
 
-		$var = new TypeString("login", "Dedimania server login (use this server current login)", $config, false, false);
-		$var->setDefaultValue("");
-		$this->registerVariable($var);
+        $var = new TypeString("login", "Dedimania server login (use this server current login)", $config, false, false);
+        $var->setDefaultValue("");
+        $this->registerVariable($var);
 
-		$var = new TypeString("code", 'Dedimania server code, $l[http://dedimania.net/tm2stats/?do=register]click this text to register$l', $config, false, false);
-                $var->setDescription('For server code: click the header or visit http://dedimania.net');
-		$var->setDefaultValue("");
-		$this->registerVariable($var);
+        $var = new TypeString("code", 'Dedimania server code, $l[http://dedimania.net/tm2stats/?do=register]click this text to register$l', $config, false, false);
+        $var->setDescription('For server code: click the header or visit http://dedimania.net');
+        $var->setDefaultValue("");
+        $this->registerVariable($var);
 
-		$this->setRelaySupport(false);
-	}
+        $this->setRelaySupport(false);
+    }
 }

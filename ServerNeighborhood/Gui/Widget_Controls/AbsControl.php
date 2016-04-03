@@ -9,28 +9,33 @@ use ManiaLivePlugins\eXpansion\ServerNeighborhood\Server;
  *
  * @author oliverde8
  */
-abstract class AbsControl extends \ManiaLivePlugins\eXpansion\Gui\Control {
+abstract class AbsControl extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     public $server;
 
-    function __construct(Server $server) {
+    function __construct(Server $server)
+    {
         $this->server = $server;
         $this->onSetData($server);
     }
 
-    public function setData(Server $server) {
+    public function setData(Server $server)
+    {
         $this->server = $server;
         $this->onSetData($server);
     }
 
     public abstract function onSetData(Server $server);
 
-    public function destroy() {
+    public function destroy()
+    {
         parent::destroy();
         $this->server = null;
     }
 
-    public function showServerPlayers($login) {
+    public function showServerPlayers($login)
+    {
         \ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Windows\PlayerList::Erase($login);
         $w = \ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Windows\PlayerList::Create($login);
         $w->setTitle('ServerNeighborhood - Server Players');

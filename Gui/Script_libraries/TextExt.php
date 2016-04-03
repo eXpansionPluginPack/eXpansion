@@ -8,11 +8,13 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
  *
  * @author Petri Järvisalo
  */
-class TextExt extends Script {
-    
-    function __construct() {
+class TextExt extends Script
+{
+
+    function __construct()
+    {
         parent::__construct("Gui/Script_libraries/mQuery/TextExt");
-    }   
+    }
 }
 
 ?>

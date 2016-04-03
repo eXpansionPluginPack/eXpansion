@@ -30,37 +30,41 @@ use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
  *
  * @author De Cramer Oliver
  */
-class MultiField extends Variable{
+class MultiField extends Variable
+{
 
 
-	protected $variableType;
+    protected $variableType;
 
-	public function registerNewType($name, Variable $type){
-		$this->variableType[$name] = $type;
-	}
+    public function registerNewType($name, Variable $type)
+    {
+        $this->variableType[$name] = $type;
+    }
 
-	public function setValue($name, $value){
-		if (isset($this->variableType[$name]) && $this->variableType[$name]->basicValueCheck($value)) {
-			$values = $this->getRawValue();
-			$values[$name] = $value;
-			$this->setRawValue($value);
-			return true;
-		}
-		return false;
-	}
+    public function setValue($name, $value)
+    {
+        if (isset($this->variableType[$name]) && $this->variableType[$name]->basicValueCheck($value)) {
+            $values = $this->getRawValue();
+            $values[$name] = $value;
+            $this->setRawValue($value);
+            return true;
+        }
+        return false;
+    }
 
-	public function getValue($name){
-		return isset($this->variableType[$name]) ? $this->variableType[$name] : null;
-	}
+    public function getValue($name)
+    {
+        return isset($this->variableType[$name]) ? $this->variableType[$name] : null;
+    }
 
-	function getPreviewValues()
-	{
-		return '';
-	}
+    function getPreviewValues()
+    {
+        return '';
+    }
 
-	public function hasConfWindow()
-	{
-		return true;
-	}
+    public function hasConfWindow()
+    {
+        return true;
+    }
 
 }

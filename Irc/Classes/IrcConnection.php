@@ -23,39 +23,47 @@ namespace ManiaLivePlugins\eXpansion\Irc\Classes;
  *
  * @author Petri
  */
-class IrcConnection extends \ManiaLib\Utils\Singleton {
+class IrcConnection extends \ManiaLib\Utils\Singleton
+{
 
     private $irc;
 
     /**
-     * 
+     *
      * @param \ManiaLivePlugins\eXpansion\IRC\Classes\IrcConfig $config
      */
-    public function connect(IrcConfig $config) {
-	$this->irc = new IrcBot($config);	
+    public function connect(IrcConfig $config)
+    {
+        $this->irc = new IrcBot($config);
     }
 
-    public function registerCallbackClass($class) {
-	$this->irc->registerCallbackClass($class);
+    public function registerCallbackClass($class)
+    {
+        $this->irc->registerCallbackClass($class);
     }
 
-    public function disconnect() {
-	if ($this->irc->isConnected()) {
-	    $this->irc->disconnect();
-	}
+    public function disconnect()
+    {
+        if ($this->irc->isConnected()) {
+            $this->irc->disconnect();
+        }
     }
 
-    public function sendChat($message) {
-	$this->irc->sendPublicChat($message);
+    public function sendChat($message)
+    {
+        $this->irc->sendPublicChat($message);
     }
 
-    public function onTick() {
-	if ($this->irc instanceof IrcBot && $this->irc->isConnected()) {
-	    $this->irc->onTick();
-	}
+    public function onTick()
+    {
+        if ($this->irc instanceof IrcBot && $this->irc->isConnected()) {
+            $this->irc->onTick();
+        }
     }
-    public function getIrcNick($string) {
-	return $this->irc->getIrcNick($string);
+
+    public function getIrcNick($string)
+    {
+        return $this->irc->getIrcNick($string);
     }
 
 }

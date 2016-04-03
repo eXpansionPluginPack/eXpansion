@@ -7,20 +7,23 @@ namespace ManiaLivePlugins\eXpansion\NetStat\Gui\Widgets;
  *
  * @author Petri
  */
-class Helper_PingAnswer extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
+class Helper_PingAnswer extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
+{
 
     protected $script;
 
-    protected function onConstruct() {
-	parent::onConstruct();
-	$this->setName('Netstat PingAnswer');
+    protected function onConstruct()
+    {
+        parent::onConstruct();
+        $this->setName('Netstat PingAnswer');
 
-	$this->script = New \ManiaLivePlugins\eXpansion\Gui\Structures\Script("NetStat/Gui/Scripts/PingAnswer");
-	$this->registerScript($this->script);
+        $this->script = New \ManiaLivePlugins\eXpansion\Gui\Structures\Script("NetStat/Gui/Scripts/PingAnswer");
+        $this->registerScript($this->script);
     }
 
-    public function setStamp($value) {
-	$this->script->setParam('stamp', $value);
+    public function setStamp($value)
+    {
+        $this->script->setParam('stamp', $value);
     }
 }
 

@@ -11,19 +11,19 @@ use ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Widgets\DediPanel2;
 
 class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
-    const None            = 0x0;
-    const Dedimania       = 0x2;
+    const None = 0x0;
+    const Dedimania = 0x2;
     const Dedimania_force = 0x8;
-    const All             = 0x31;
+    const All = 0x31;
 
-    public static $me          = null;
+    public static $me = null;
     public static $dedirecords = array();
-    public static $secondMap   = false;
+    public static $secondMap = false;
     private $lastUpdate;
-    private $forceUpdate       = false;
-    private $needUpdate        = false;
-    private $dedi              = true;
-    private $widgetIds         = array();
+    private $forceUpdate = false;
+    private $needUpdate = false;
+    private $dedi = true;
+    private $widgetIds = array();
     public static $raceOn;
     public static $roundPoints;
 
@@ -58,16 +58,17 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
         if ((time() - $this->lastUpdate) > 20) {
 
             if (($this->needUpdate & self::Dedimania) == self::Dedimania || $this->forceUpdate || ($this->needUpdate & self::Dedimania_force)
-                == self::Dedimania_force) {
+                == self::Dedimania_force
+            ) {
                 if ($this->dedi || $this->needUpdate == self::Dedimania_force) {
                     $this->updateDediPanel();
                     $this->dedi = false;
                 }
             }
 
-            $this->lastUpdate  = time();
+            $this->lastUpdate = time();
             $this->forceUpdate = false;
-            $this->needUpdate  = false;
+            $this->needUpdate = false;
         }
     }
 
@@ -76,12 +77,12 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
         $dedi1 = '\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania';
         $dedi2 = '\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script';
-        $gui   = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
+        $gui = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
 
         try {
             if (($this->isPluginLoaded($dedi1) && $this->callPublicMethod(
-                    $dedi1, 'isRunning'
-                )) || ($this->isPluginLoaded($dedi2) && $this->callPublicMethod($dedi2, 'isRunning'))
+                        $dedi1, 'isRunning'
+                    )) || ($this->isPluginLoaded($dedi2) && $this->callPublicMethod($dedi2, 'isRunning'))
             ) {
                 $localRecs = DediPanel::GetAll();
                 if (!isset($localRecs[0])) {
@@ -103,7 +104,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
                     $localRecs = DediPanel2::GetAll();
                     if (!isset($localRecs[0])) {
                         //Gui\Widgets\DediPanel2::EraseAll();
-                        $panelScore                    = Gui\Widgets\DediPanel2::Create($login);
+                        $panelScore = Gui\Widgets\DediPanel2::Create($login);
                         $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
                         $panelScore->setVisibleLayer("scorestable");
                         $panelScore->setSizeX($this->panelSizeX);
@@ -137,7 +138,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
 
-        self::$raceOn    = false;
+        self::$raceOn = false;
         $this->widgetIds = array();
         Gui\Widgets\DediPanel::EraseAll();
         Gui\Widgets\DediPanel2::EraseAll();
@@ -149,46 +150,46 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
             self::$secondMap = true;
         }
         if ($wasWarmUp) {
-            self::$raceOn      = false;
+            self::$raceOn = false;
             $this->forceUpdate = true;
             $this->updateDediPanel();
-            self::$secondMap   = true;
-            self::$raceOn      = true;
+            self::$secondMap = true;
+            self::$raceOn = true;
         } else {
-            self::$secondMap   = false;
+            self::$secondMap = false;
             self::$dedirecords = array(); // reset
-            $this->widgetIds   = array();
+            $this->widgetIds = array();
             Gui\Widgets\DediPanel::EraseAll();
             Gui\Widgets\DediPanel2::EraseAll();
         }
     }
 
-      public function onBeginMap($map, $warmUp, $matchContinuation)
-      {
-      self::$raceOn      = false;
-      $this->forceUpdate = true;
-      $this->widgetIds   = array();
-      Gui\Widgets\DediPanel::EraseAll();
-      Gui\Widgets\DediPanel2::EraseAll();
-      $this->updateDediPanel();
-      self::$secondMap   = true;
-      self::$raceOn      = true;
-      }
+    public function onBeginMap($map, $warmUp, $matchContinuation)
+    {
+        self::$raceOn = false;
+        $this->forceUpdate = true;
+        $this->widgetIds = array();
+        Gui\Widgets\DediPanel::EraseAll();
+        Gui\Widgets\DediPanel2::EraseAll();
+        $this->updateDediPanel();
+        self::$secondMap = true;
+        self::$raceOn = true;
+    }
 
     public function onBeginMatch()
-      {
+    {
         if (self::$raceOn == true) return;
 
-        self::$raceOn      = false;
-      $this->forceUpdate = true;
-      $this->widgetIds   = array();
-      Gui\Widgets\DediPanel::EraseAll();
-      Gui\Widgets\DediPanel2::EraseAll();
-      $this->updateDediPanel();
-        self::$secondMap   = true;
-        self::$raceOn      = true;
-      }
-     
+        self::$raceOn = false;
+        $this->forceUpdate = true;
+        $this->widgetIds = array();
+        Gui\Widgets\DediPanel::EraseAll();
+        Gui\Widgets\DediPanel2::EraseAll();
+        $this->updateDediPanel();
+        self::$secondMap = true;
+        self::$raceOn = true;
+    }
+
     public function onEndRound()
     {
 
@@ -196,9 +197,9 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
     public function onDedimaniaGetRecords($data)
     {
-        self::$dedirecords = $data['Records'];        
-        $this->dedi        = true;
-        $this->needUpdate  = self::Dedimania_force;
+        self::$dedirecords = $data['Records'];
+        $this->dedi = true;
+        $this->needUpdate = self::Dedimania_force;
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -255,4 +256,5 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
         Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
     }
 }
+
 ?>

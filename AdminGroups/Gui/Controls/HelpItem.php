@@ -12,12 +12,14 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd;
  *
  * @author oliverde8
  */
-class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     private $moreButton;
     private $bg;
 
-    function __construct($indexNumber, AdminCmd $cmd, $controller, $login) {
+    function __construct($indexNumber, AdminCmd $cmd, $controller, $login)
+    {
         $this->action = $this->createAction(array($this, 'cmdMore'), $cmd);
 
         $this->setSize(116, 4);
@@ -35,7 +37,7 @@ class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
         $gui_desc = new \ManiaLib\Gui\Elements\Label(($this->getSizeX() - ($gui_cmd->getSizeX() / (.8 / .6))) * (1 / .6) - 8, 4);
         $gui_desc->setAlign('left', 'center');
-        if($cmd->getHelp() != null)
+        if ($cmd->getHelp() != null)
             $gui_desc->setText(__($cmd->getHelp(), $login));
         $gui_desc->setScale(0.6);
         $frame->addComponent($gui_desc);
@@ -50,22 +52,25 @@ class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy() {
-        
+    function destroy()
+    {
+
     }
 
     /*
      * custom function to remove contents.
      */
 
-    public function erase() {
+    public function erase()
+    {
         $this->moreButton->destroy();
         $this->destroyComponents();
         parent::destroy();
     }
 
 
-    public function cmdMore($login, $cmd) {
+    public function cmdMore($login, $cmd)
+    {
         \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\CmdMore::Erase($login);
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\CmdMore::Create($login);
         $window->setCommand($cmd);

@@ -51,7 +51,7 @@ class BetWidget extends Widget
 
     protected function exp_onBeginConstruct()
     {
-        $sX    = 42;
+        $sX = 42;
         $this->setName("Bet widget");
         $login = $this->getRecipient();
 
@@ -62,7 +62,7 @@ class BetWidget extends Widget
         $this->addComponent($this->header);
 
         $this->frame = new Frame(1, -8);
-       // $this->frame->setLayout(new Column());
+        // $this->frame->setLayout(new Column());
         $this->addComponent($this->frame);
 
         $this->script = new Script("Bets/Gui/Scripts");
@@ -106,7 +106,7 @@ class BetWidget extends Widget
 
         $this->labelAccept = new DicoLabel(50);
         $this->labelAccept->setPosition(5, -2);
-        $this->labelAccept->setText(exp_getMessage('Accept bet for %1$s planets ?'), array("".Bets::$betAmount));
+        $this->labelAccept->setText(exp_getMessage('Accept bet for %1$s planets ?'), array("" . Bets::$betAmount));
         $line->addComponent($this->labelAccept);
 
         $button = new Button();
@@ -136,7 +136,7 @@ class BetWidget extends Widget
         foreach (array(25, 50, 100, 250, 500) as $value) {
 
             $button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 6);
-            $var    = "action_setAmount".$value;
+            $var = "action_setAmount" . $value;
             $button->setAction(self::$$var);
             $button->setText($value);
             $button->colorize("3af");
@@ -146,13 +146,13 @@ class BetWidget extends Widget
         $inputbox = new Inputbox("betAmount", 18);
         $line->addComponent($inputbox);
 
-        $button             = new Button();
+        $button = new Button();
         $button->setText("Accept");
         $button->colorize("0d0");
         $button->setAction(self::$action_setAmount);
         $button->setPosition($this->sizeX - 28, -$this->sizeY + 12);
         $this->addComponent($button);
-        
+
         $this->frame->addComponent($line);
     }
 

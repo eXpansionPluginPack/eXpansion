@@ -10,7 +10,8 @@ use ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls\PlayerStatusItem;
  *
  * @author Reaby
  */
-class MatchReady extends \ManiaLive\Gui\Window {
+class MatchReady extends \ManiaLive\Gui\Window
+{
 
     public static $actions;
     protected $background, $lbl_nextMatch, $lbl_info, $btn_ready, $btn_wait, $btn_continue, $btn_spec, $btn_play;
@@ -21,7 +22,8 @@ class MatchReady extends \ManiaLive\Gui\Window {
     /** @var  \Maniaplanet\DedicatedServer\Connection */
     private $connection;
 
-    public function onConstruct() {
+    public function onConstruct()
+    {
         parent::onConstruct();
 
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
@@ -113,7 +115,8 @@ class MatchReady extends \ManiaLive\Gui\Window {
         $this->setAlign("center", "center");
     }
 
-    public function onDraw() {
+    public function onDraw()
+    {
         $login = $this->getRecipient();
         $isAdmin = false;
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::game_settings)) {
@@ -157,16 +160,19 @@ class MatchReady extends \ManiaLive\Gui\Window {
         parent::onDraw();
     }
 
-    public function forceSpec($login, $target) {
+    public function forceSpec($login, $target)
+    {
         $this->connection->forceSpectator($target, 1);
         $this->connection->forceSpectator($target, 0);
     }
 
-    public function setGamemode($gamemode) {
+    public function setGamemode($gamemode)
+    {
         $this->gameMode = $gamemode;
     }
 
-    public function onResize($oldX, $oldY) {
+    public function onResize($oldX, $oldY)
+    {
 
         $sX = $this->getSizeX();
         $sY = $this->getSizeY();

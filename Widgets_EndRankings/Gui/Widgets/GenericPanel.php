@@ -13,7 +13,7 @@ use ManiaLivePlugins\eXpansion\Widgets_EndRankings\Gui\Controls\GenericItem;
 class GenericPanel extends Widget
 {
     protected $frame;
-    protected $items      = array();
+    protected $items = array();
     protected $bg;
     protected $bgTitle;
     protected $quad;
@@ -54,12 +54,12 @@ class GenericPanel extends Widget
         $this->totalLines = $value;
         $this->sizeX = 40;
         $this->sizeY = ($this->lineHeight * $this->totalLines) + 5;
-        
+
         $this->setSize($this->sizeX, ($this->lineHeight * $this->totalLines) + 5);
     }
 
     function onResize($oldX, $oldY)
-    {    
+    {
         $this->bg->setSize($this->sizeX, ($this->lineHeight * $this->totalLines) + 5);
         $this->bgTitle->setSize($this->sizeX, 4.2);
         parent::onResize($oldX, $oldY);
@@ -98,4 +98,5 @@ class GenericPanel extends Widget
         parent::destroy();
     }
 }
+
 ?>

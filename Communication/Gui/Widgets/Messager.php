@@ -26,38 +26,44 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  *
  * @author Reaby
  */
-class Messager extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
+class Messager extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
+{
 
     private $script;
 
-    protected function onConstruct() {
-	parent::onConstruct();
-	$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Communication\Gui\Messager");
-	$this->registerScript($this->script);
+    protected function onConstruct()
+    {
+        parent::onConstruct();
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Communication\Gui\Messager");
+        $this->registerScript($this->script);
     }
 
-    public function sendChat($tab, $text) {
-	$this->script->setParam("action", "sendMessage");
-	$this->script->setParam("tab", Gui::fixString($tab));
-	$this->script->setParam("text", Gui::fixString($text));
+    public function sendChat($tab, $text)
+    {
+        $this->script->setParam("action", "sendMessage");
+        $this->script->setParam("tab", Gui::fixString($tab));
+        $this->script->setParam("text", Gui::fixString($text));
     }
 
-    public function clearMessages() {
-	$this->script->setParam("action", "clearMessages");
-	$this->script->setParam("tab", "");
-	$this->script->setParam("text", "");
+    public function clearMessages()
+    {
+        $this->script->setParam("action", "clearMessages");
+        $this->script->setParam("tab", "");
+        $this->script->setParam("text", "");
     }
 
-    public function closeTab($tab) {
-	$this->script->setParam("action", "closeTab");
-	$this->script->setParam("tab", Gui::fixString($tab));
-	$this->script->setParam("text", "");
+    public function closeTab($tab)
+    {
+        $this->script->setParam("action", "closeTab");
+        $this->script->setParam("tab", Gui::fixString($tab));
+        $this->script->setParam("text", "");
     }
 
-    public function openNewTab($tab) {
-	$this->script->setParam("action", "openTab");
-	$this->script->setParam("tab", Gui::fixString($tab));
-	$this->script->setParam("text", "");
+    public function openNewTab($tab)
+    {
+        $this->script->setParam("action", "openTab");
+        $this->script->setParam("tab", Gui::fixString($tab));
+        $this->script->setParam("text", "");
     }
 
 }

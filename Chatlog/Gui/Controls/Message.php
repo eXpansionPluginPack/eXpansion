@@ -5,7 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Chatlog\Gui\Controls;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
-class Message extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     protected $bg;
     protected $label_time, $label_nickname, $label_text;
@@ -14,12 +15,13 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control {
     private $widths = array();
 
     /**
-     * 
+     *
      * @param int $indexNumber
      * @param \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message
      * @param int $sizeX
      */
-    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message, $widths, $sizeX) {
+    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message, $widths, $sizeX)
+    {
         $sizeY = 6;
         $this->widths = $widths;
 
@@ -55,28 +57,31 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY) {
-        $this->bg->setSize($this->sizeX+6, $this->sizeY);
+    protected function onResize($oldX, $oldY)
+    {
+        $this->bg->setSize($this->sizeX + 6, $this->sizeY);
         $this->bg->setPosX(-2);
 
         $this->frame->setSize($this->sizeX, $this->sizeY);
 
         $totalWidths = Gui::getScaledSize($this->widths, $this->getSizeX());
-        $this->label_time->setSizeX($totalWidths[0]/.8);
-        $this->label_nickname->setSizeX($totalWidths[1]/.8);
-        $this->label_text->setSizeX($totalWidths[2]/.8 - 2);
+        $this->label_time->setSizeX($totalWidths[0] / .8);
+        $this->label_nickname->setSizeX($totalWidths[1] / .8);
+        $this->label_text->setSizeX($totalWidths[2] / .8 - 2);
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy() {
-        
+    function destroy()
+    {
+
     }
 
     /*
      * custom function to remove contents.
      */
 
-    function erase() {
+    function erase()
+    {
         $this->frame->clearComponents();
         $this->frame->destroy();
         $this->destroyComponents();
@@ -84,5 +89,6 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control {
     }
 
 }
+
 ?>
 

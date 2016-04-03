@@ -24,10 +24,11 @@
 
 namespace ManiaLivePlugins\eXpansion\KnockOut;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
 
     public $koColor = '$0d0';
-    
+
 
 }
 

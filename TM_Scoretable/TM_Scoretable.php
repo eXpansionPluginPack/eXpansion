@@ -30,47 +30,47 @@ use ManiaLivePlugins\eXpansion\TM_Scoretable\Gui\Scoretable\Scoretable;
 class TM_Scoretable extends ExpPlugin
 {
 
-	public function exp_onReady()
-	{
-		$this->sendScoretable();
-	}
+    public function exp_onReady()
+    {
+        $this->sendScoretable();
+    }
 
-	public function sendScoretable()
-	{
-		$this->connection->triggerModeScriptEvent("LibScoresTable2_SetStyleFromXml", array("TM", $this->getXML()));
-	}
+    public function sendScoretable()
+    {
+        $this->connection->triggerModeScriptEvent("LibScoresTable2_SetStyleFromXml", array("TM", $this->getXML()));
+    }
 
-	public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
-	{
-		if ($var->getName() == "tm_score_columns" || $var->getName() == "tm_score_lines") {
-			$this->sendScoretable();
-		}
-	}
+    public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
+    {
+        if ($var->getName() == "tm_score_columns" || $var->getName() == "tm_score_lines") {
+            $this->sendScoretable();
+        }
+    }
 
-	public function exp_onUnload()
-	{
-		parent::exp_onUnload();
-	}
+    public function exp_onUnload()
+    {
+        parent::exp_onUnload();
+    }
 
-	protected function getXML()
-	{
-		//$this->xml = file_get_contents(__DIR__ . "/scores.xml");
-		$config = Config::getInstance();
+    protected function getXML()
+    {
+        //$this->xml = file_get_contents(__DIR__ . "/scores.xml");
+        $config = Config::getInstance();
 
-		$x = 140 + (20 * $config->tm_score_columns - 2);
-		$y = (8 * $config->tm_score_lines);
+        $x = 140 + (20 * $config->tm_score_columns - 2);
+        $y = (8 * $config->tm_score_lines);
 
-		if ($y < 50) {
-			$y = 50;
-		}
+        if ($y < 50) {
+            $y = 50;
+        }
 
-		if ($y > 90) {
-			$y = 90;
-		}
-		if ($x > 230) {
-			$x = 230;
-		}
-		return '
+        if ($y > 90) {
+            $y = 90;
+        }
+        if ($x > 230) {
+            $x = 230;
+        }
+        return '
 <?xml version="1.0" encoding="utf-8"?>
 <scorestable version="1">
     <styles>
@@ -114,6 +114,6 @@ class TM_Scoretable extends ExpPlugin
         </playercard>
     </images>
 </scorestable>';
-	}
+    }
 
 }

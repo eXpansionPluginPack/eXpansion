@@ -17,7 +17,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
     function exp_onReady()
     {
         $this->enableDedicatedEvents();
-        $this->enableDatabase();   
+        $this->enableDatabase();
     }
 
     /**
@@ -51,14 +51,14 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
     function getTopDonators()
     {
         $this->storage->serverLogin;
-        $sql  = 'SELECT transaction_fromLogin as login, player_nickname as nickname, SUM(transaction_amount) as data'
-            .' FROM exp_planet_transaction, exp_players'
-            .' WHERE transaction_toLogin = '.$this->db->quote($this->storage->serverLogin).''
-            .' AND transaction_subject = \'server_donation\''
-            .' AND transaction_fromLogin = player_login'
-            .' GROUP BY transaction_fromLogin, player_nickname'
-            .' ORDER BY data DESC'
-            .' LIMIT 0, 100';
+        $sql = 'SELECT transaction_fromLogin as login, player_nickname as nickname, SUM(transaction_amount) as data'
+            . ' FROM exp_planet_transaction, exp_players'
+            . ' WHERE transaction_toLogin = ' . $this->db->quote($this->storage->serverLogin) . ''
+            . ' AND transaction_subject = \'server_donation\''
+            . ' AND transaction_fromLogin = player_login'
+            . ' GROUP BY transaction_fromLogin, player_nickname'
+            . ' ORDER BY data DESC'
+            . ' LIMIT 0, 100';
         $data = $this->db->execute($sql);
         return $data->fetchArrayOfObject();
     }
@@ -67,9 +67,9 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
     {
         $this->storage->serverLogin;
         $sql = 'SELECT player_nickname as nickname, player_timeplayed as longDate'
-            .' FROM exp_players'
-            .' ORDER BY longDate DESC'
-            .' LIMIT 0, 100';
+            . ' FROM exp_players'
+            . ' ORDER BY longDate DESC'
+            . ' LIMIT 0, 100';
 
         $data = $this->db->execute($sql);
         return $data->fetchArrayOfObject();
@@ -108,5 +108,6 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $this->hide();
     }
 }
+
 ?>
 

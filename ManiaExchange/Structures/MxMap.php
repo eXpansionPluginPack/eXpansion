@@ -49,85 +49,85 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange\Structures;
 class MxMap extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
 {
 
-	public $trackID;
+    public $trackID;
 
-	public $userID;
+    public $userID;
 
-	public $username;
+    public $username;
 
-	public $uploadedAt;
+    public $uploadedAt;
 
-	public $updatedAt;
+    public $updatedAt;
 
-	public $name;
+    public $name;
 
-	/** @var string contains mapname with color codes */
-	public $gbxMapName;
+    /** @var string contains mapname with color codes */
+    public $gbxMapName;
 
-	public $typeName;
+    public $typeName;
 
-	public $mapType;
+    public $mapType;
 
-	public $titlePack;
+    public $titlePack;
 
-	public $styleName;
+    public $styleName;
 
-	public $mood;
+    public $mood;
 
-	public $displayCost;
+    public $displayCost;
 
-	public $modName;
+    public $modName;
 
-	/** @var Lightmap version, currently 6 */
-	public $lightmap;
+    /** @var Lightmap version, currently 6 */
+    public $lightmap;
 
-	public $exeVersion;
+    public $exeVersion;
 
-	public $exeBuild;
+    public $exeBuild;
 
-	/** Canyon / Valley / Stadium */
-	public $environmentName;
+    /** Canyon / Valley / Stadium */
+    public $environmentName;
 
-	/** CanyonCar / ValleyCar / StadiumCar */
-	public $vehicleName;
+    /** CanyonCar / ValleyCar / StadiumCar */
+    public $vehicleName;
 
-	public $unlimiterRequired;
+    public $unlimiterRequired;
 
-	public $routeName;
+    public $routeName;
 
-	public $lengthName;
+    public $lengthName;
 
-	public $laps;
+    public $laps;
 
-	public $difficultyName;
+    public $difficultyName;
 
-	public $replayTypeName;
+    public $replayTypeName;
 
-	public $replayWRID;
+    public $replayWRID;
 
-	public $replayCount;
+    public $replayCount;
 
-	public $trackValue;
+    public $trackValue;
 
-	public $comments;
+    public $comments;
 
-	public $commentCount;
+    public $commentCount;
 
-	public $awardCount;
+    public $awardCount;
 
-	public $replayWRTime;
+    public $replayWRTime;
 
-	public $replayWRUserID;
+    public $replayWRUserID;
 
-	public $replayWRUsername;
+    public $replayWRUsername;
 
-	public $ratingVoteCount;
+    public $ratingVoteCount;
 
-	public $ratingVoteAverage;
+    public $ratingVoteAverage;
 
-	public $hasScreenshot;
+    public $hasScreenshot;
 
-	public $hasThumbnail;
+    public $hasThumbnail;
 
 }
 

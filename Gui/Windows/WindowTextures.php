@@ -21,16 +21,16 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
     protected $_windowFrame;
     private $_titlebar, $_bg, $_bgeff, $_topcenter, $_bottomcenter, $_windowBorder, $_title, $_titleBar;
     private $script;
-    private $_scripts      = array();
-    private $dDeclares     = "";
-    private $scriptLib     = "";
-    private $wLoop         = "";
-    private $dIndex        = 0;
-    private $_name         = "window";
-    private $dicoMessages  = array();
+    private $_scripts = array();
+    private $dDeclares = "";
+    private $scriptLib = "";
+    private $wLoop = "";
+    private $dIndex = 0;
+    private $_name = "window";
+    private $dicoMessages = array();
     private $calledScripts = array();
     private $xml;
-    private $element       = 14;
+    private $element = 14;
 
     protected function onConstruct()
     {
@@ -66,7 +66,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_bgeff->setImage('file://Media/Manialinks/TrackMania/Window/tm-structure-background.png', true);
         //$this->_bgeff->setImage('file://Media/Images/Effects/Vignette.dds', true);
         $this->_bgeff->setAlign("left", "top");
-  
+
         $this->_bgeff->setColorize($config->windowBackgroundColor);
         $this->_windowFrame->addComponent($this->_bgeff);
 
@@ -138,9 +138,9 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
     {
         parent::onResize($oldX, $oldY);
         $element = 12;
-        $x       = $this->sizeX;
-        $y       = $this->sizeY;
-        $o       = 6;
+        $x = $this->sizeX;
+        $y = $this->sizeY;
+        $o = 6;
 
         $this->_windowFrame->setSize($x, $y);
 
@@ -206,11 +206,11 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
     {
         parent::onDraw();
 
-        $this->nbButton      = 0;
-        $this->dIndex        = 0;
-        $this->dDeclares     = "";
-        $this->scriptLib     = "";
-        $this->wLoop         = "";
+        $this->nbButton = 0;
+        $this->dIndex = 0;
+        $this->dDeclares = "";
+        $this->scriptLib = "";
+        $this->wLoop = "";
         $this->calledScripts = array();
 
         $this->detectElements($this->getComponents());
@@ -253,7 +253,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
     function setTitle($text, $parameter = "")
     {
         $this->_name = $text;
-        $this->_title->setText($text." ".$parameter);
+        $this->_title->setText($text . " " . $parameter);
         // $this->_title2->setText($text . " " . $parameter);
     }
 
@@ -325,4 +325,5 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_scripts[] = $script;
     }
 }
+
 ?>

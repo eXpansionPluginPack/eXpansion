@@ -46,15 +46,15 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener
      * Creates a bill manager
      *
      * @param \Maniaplanet\DedicatedServer\Connection $connection connection to the dedicated server
-     * @param DbConnection                            $dbcon      The database connection
+     * @param DbConnection $dbcon The database connection
      * @param                                         $plugin     A plugin to have
      */
     function __construct(\Maniaplanet\DedicatedServer\Connection $connection, DbConnection $dbcon, $plugin)
     {
 
         $this->connection = $connection;
-        self::$instance   = $this;
-        $this->db         = $dbcon;
+        self::$instance = $this;
+        $this->db = $dbcon;
 
         $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
 
@@ -105,10 +105,10 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener
     /**
      * When a bill gets update by the dedicated even is sent
      *
-     * @param int    $billId        the identify of the bull
-     * @param int    $state         The current code of state of the bill
-     * @param string $stateName     the name of the state
-     * @param int    $transactionId the identification of the transaction
+     * @param int $billId the identify of the bull
+     * @param int $state The current code of state of the bill
+     * @param string $stateName the name of the state
+     * @param int $transactionId the identification of the transaction
      */
     public function onBillUpdated($billId, $state, $stateName, $transactionId)
     {

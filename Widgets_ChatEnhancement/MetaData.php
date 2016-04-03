@@ -26,14 +26,14 @@ namespace ManiaLivePlugins\eXpansion\Widgets_ChatEnhancement;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Chat: History and PublicChat control buttons");
-		$this->setDescription("Provides a fast access to disable public chat and to view a chatlog.");
-		$this->setGroups(array("Chat", "Widgets"));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Chat: History and PublicChat control buttons");
+        $this->setDescription("Provides a fast access to disable public chat and to view a chatlog.");
+        $this->setGroups(array("Chat", "Widgets"));
 
-		$this->setRelaySupport(false);
-	}
-	
+        $this->setRelaySupport(false);
+    }
+
 } 

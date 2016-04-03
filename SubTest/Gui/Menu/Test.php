@@ -40,7 +40,7 @@ class Test extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->setSize(90, 60);
 
         $storage = \ManiaLive\Data\Storage::getInstance();
-        $x       = 0;
+        $x = 0;
         foreach ($storage->players as $login => $player) {
             $label = new \ManiaLib\Gui\Elements\Label(60, 6);
             $label->setStyle("SliderSmall");

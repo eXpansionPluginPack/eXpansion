@@ -32,15 +32,15 @@ class ContextMenu extends Control implements ScriptedContainer
             self::$script = new Script("Gui/Scripts/ContextMenu");
         }
 
-        $this->hash  = spl_object_hash($this);
+        $this->hash = spl_object_hash($this);
         $this->frame = new Frame();
-        $this->frame->setId("subMenu_".$this->hash);
+        $this->frame->setId("subMenu_" . $this->hash);
         $this->frame->setAttribute("data-hash", $this->hash);
-        $this->frame->setAttribute("class", "contextMenu");  
+        $this->frame->setAttribute("class", "contextMenu");
         $this->frame->setHidden(true);
         $this->frame->setPosition(0, 0);
         $this->frame->setAlign("left", "top");
-        
+
         $this->addComponent($this->frame);
 
         $this->callback = $callback;
@@ -51,8 +51,8 @@ class ContextMenu extends Control implements ScriptedContainer
         if (is_string($label)) {
             $label = exp_getMessage($label);
         }
-        $elem               = new \ManiaLivePlugins\eXpansion\Gui\Structures\ContextMenuData($label, $itemValue);
-        $hash               = spl_object_hash($elem);
+        $elem = new \ManiaLivePlugins\eXpansion\Gui\Structures\ContextMenuData($label, $itemValue);
+        $hash = spl_object_hash($elem);
         $elem->setDataId($hash);
         $this->items[$hash] = $elem;
     }
@@ -60,7 +60,7 @@ class ContextMenu extends Control implements ScriptedContainer
     protected function onDraw()
     {
         $config = Config::getInstance();
-               
+
         $i = 0;
         foreach ($this->items as $itemHash => $item) {
             $quad = new \ManiaLib\Gui\Elements\Quad(30, 5);
@@ -88,7 +88,7 @@ class ContextMenu extends Control implements ScriptedContainer
 
         echo "adding items & callback!\n";
 
-        Gui::$items[$this->hash]     = $this->items;
+        Gui::$items[$this->hash] = $this->items;
         Gui::$callbacks[$this->hash] = $this->callback;
         parent::onDraw();
     }

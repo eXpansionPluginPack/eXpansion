@@ -2,32 +2,37 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania\Classes;
 
-class Request {
+class Request
+{
 
     private $requests = array();
 
-    function __construct($method, $args) {
+    function __construct($method, $args)
+    {
         $this->requests[] = $this->generate($method, $args);
     }
 
-    function add($method, $args) {
-        $this->requests[] = $this->generate($method, $args);        
+    function add($method, $args)
+    {
+        $this->requests[] = $this->generate($method, $args);
     }
-    
-    function generate($method, $args) {
+
+    function generate($method, $args)
+    {
         if ($args == null)
             return array('methodName' => $method);
         return array('methodName' => $method, 'params' => $args);
     }
 
-    function getXml() {
+    function getXml()
+    {
 
         $params = $this->requests;
 
         array_push($params, $this->generate("dedimania.WarningsAndTTR2", null));
 
         $xml = '<?xml version="1.0" encoding="UTF-8" ?>'
-                . "\n<methodCall>\n<methodName>system.multicall</methodName>\n<params>\n";
+            . "\n<methodCall>\n<methodName>system.multicall</methodName>\n<params>\n";
         foreach ($params as $key => $param) {
 
             $xml .= "<param>\n<value>";
@@ -51,24 +56,30 @@ class Request {
   Made available under the Artistic License: http://www.opensource.org/licenses/artistic-license.php
  * 	  
  */
-class IXR_Base64 {
-	private $data;
-        
-	function __construct($data) {
-		$this->data = $data;               
-	}
 
-	function getXml() {
-		return '<base64>'.base64_encode($this->data).'</base64>';
-	}
+class IXR_Base64
+{
+    private $data;
+
+    function __construct($data)
+    {
+        $this->data = $data;
+    }
+
+    function getXml()
+    {
+        return '<base64>' . base64_encode($this->data) . '</base64>';
+    }
 }
 
-class IXR_Value {
+class IXR_Value
+{
 
     private $data;
     private $type;
 
-    function __construct($data, $type = false) {
+    function __construct($data, $type = false)
+    {
         $this->data = $data;
         if (!$type) {
             $type = $this->calculateType();
@@ -91,7 +102,8 @@ class IXR_Value {
         }
     }
 
-    function calculateType() {
+    function calculateType()
+    {
         if ($this->data === true || $this->data === false) {
             return 'boolean';
         }
@@ -124,7 +136,8 @@ class IXR_Value {
         }
     }
 
-    function getXml() {
+    function getXml()
+    {
         // Return XML for this value
         switch ($this->type) {
             case 'boolean':
@@ -154,18 +167,19 @@ class IXR_Value {
                 return '<struct>' . $xml . '</struct>';
                 break;
             case 'date':
-            case 'base64':                
+            case 'base64':
                 return $this->data->getXml();
                 break;
         }
         return false;
     }
 
-    function isStruct($array) {
+    function isStruct($array)
+    {
         // Nasty function to check if an array is a struct or not
         $expected = 0;
         foreach ($array as $key => $value) {
-            if ((string) $key != (string) $expected) {
+            if ((string)$key != (string)$expected) {
                 return true;
             }
             $expected++;

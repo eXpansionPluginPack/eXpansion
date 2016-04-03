@@ -8,7 +8,8 @@ use \ManiaLivePlugins\eXpansion\ESportsManager\ESportsManager;
  *
  * @author Reaby
  */
-class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     protected $label_halt, $btn_apply, $btn_cancel, $label_reason, $frame, $line;
     private $organizers = array();
@@ -24,7 +25,8 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     /** @var GameInfos */
     private $nextGameInfo;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $login = $this->getRecipient();
 
@@ -52,36 +54,42 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->addComponent($this->btn_cancel);
     }
 
-    public function apply($login) {
+    public function apply($login)
+    {
         if (empty($this->settingsFile))
             return;
         $this->readSettingsFile($login, $this->settingsFile);
         $this->Erase($login);
     }
 
-    public function cancel($login) {
+    public function cancel($login)
+    {
         $this->Erase($login);
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
         $this->line->setPosX($this->sizeX / 2);
         $this->btn_apply->setPosition(($this->sizeX / 2) - 10, -$this->sizeY + 6);
         $this->btn_cancel->setPosition(($this->sizeX / 2) + 10, -$this->sizeY + 6);
     }
 
-    public function setDirectory($login, $dir) {
+    public function setDirectory($login, $dir)
+    {
         $this->settingsFile = '';
         $this->dir = $dir;
         $this->redraw($this->getRecipient());
     }
 
-    public function setFile($login, $dir) {
+    public function setFile($login, $dir)
+    {
         $this->settingsFile = $dir;
         $this->redraw($this->getRecipient());
     }
 
-    public function readSettingsFile($login, $file) {
+    public function readSettingsFile($login, $file)
+    {
         $ini = parse_ini_file($file, true);
         // return on error
         if (!$ini) {
@@ -107,7 +115,8 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    public function parseGameInfos($ini) {
+    public function parseGameInfos($ini)
+    {
         $infos = $this->connection->getCurrentGameInfo()->toArray();
 
         foreach ($ini['GameInfos'] as $setting => $value) {
@@ -132,7 +141,8 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         return $out;
     }
 
-    public function parseGameMode($var) {
+    public function parseGameMode($var)
+    {
         switch (strtolower($var)) {
             case "team":
                 return \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM;
@@ -160,7 +170,8 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         return null;
     }
 
-    public function parseValue($var) {
+    public function parseValue($var)
+    {
 
         if (strpos($var, ':') !== false) {
             return \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($var);
@@ -176,7 +187,8 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         return null;
     }
 
-    function onDraw() {
+    function onDraw()
+    {
         $this->line->clearComponents();
         $this->line->addComponent(new \ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls\DirectoryItem(new \SplFileInfo($this->rulesDir), $this, "", 50));
         $dirs = new \DirectoryIterator($this->dir);

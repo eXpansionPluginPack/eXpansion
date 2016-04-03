@@ -50,7 +50,7 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
      * @param string $url
      * @param callable $callback
      * @param mixed $addionalData if you need to pass additional metadata with the query, like login do it here
-     * @param array $options  curl options array
+     * @param array $options curl options array
      */
     public function query($url, $callback, $additionalData = null, $options = array())
     {
@@ -59,9 +59,9 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
         $curlJob->setUrl($url);
 
         $options = array(
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_USERAGENT => "eXpansionPluginPack v ".\ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION
-        ) + $options;
+                CURLOPT_SSL_VERIFYPEER => FALSE,
+                CURLOPT_USERAGENT => "eXpansionPluginPack v " . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION
+            ) + $options;
 
         $curlJob->setOptions($options);
         $curlJob->__additionalData = $additionalData;
@@ -89,7 +89,7 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
 
     function onPreLoop()
     {
-        
+
     }
 
     function onPostLoop()

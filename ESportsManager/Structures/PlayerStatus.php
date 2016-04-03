@@ -13,7 +13,8 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager\Structures;
  *
  * @author Reaby
  */
-class PlayerStatus extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
+class PlayerStatus extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+{
 
     const Ready = "ready";
     const NotReady = "notReady";
@@ -43,7 +44,8 @@ class PlayerStatus extends \Maniaplanet\DedicatedServer\Structures\AbstractStruc
      * @param \ManiaLive\Data\Player $player
      * @param mixed $status
      */
-    public function __construct(\ManiaLive\Data\Player $player) {
+    public function __construct(\ManiaLive\Data\Player $player)
+    {
         $player->skins = null;
 
         $this->player = $player;

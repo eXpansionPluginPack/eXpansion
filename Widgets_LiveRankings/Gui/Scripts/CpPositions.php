@@ -25,10 +25,12 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Gui\Scripts;
 
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts\CommonScript;
 
-class CpPositions extends CommonScript {
+class CpPositions extends CommonScript
+{
 
-    function __construct() {
-	parent::__construct("Widgets_LiveRankings/Gui/Scripts/CpPositions");
+    function __construct()
+    {
+        parent::__construct("Widgets_LiveRankings/Gui/Scripts/CpPositions");
     }
 
 }

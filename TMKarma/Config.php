@@ -2,9 +2,11 @@
 
 namespace ManiaLivePlugins\eXpansion\TMKarma;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
 
-    public $countryCode = ""; 
-    
+    public $countryCode = "";
+
 }
+
 ?>

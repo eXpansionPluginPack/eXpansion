@@ -12,36 +12,36 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 interface Listener extends EventListener
 {
 
-	/**
-	 * Event triggered on new record
-	 * 
-	 * @param Record $record
-	 * @param Record $oldRecord
-	 */
-	function onNewRecord($record, $oldRecord);
+    /**
+     * Event triggered on new record
+     *
+     * @param Record $record
+     * @param Record $oldRecord
+     */
+    function onNewRecord($record, $oldRecord);
 
-	/**
-	 * onUpdateRecords($record)
-	 *      
-	 * @param Record[] $record 
-	 */
-	function onUpdateRecords($records);
+    /**
+     * onUpdateRecords($record)
+     *
+     * @param Record[] $record
+     */
+    function onUpdateRecords($records);
 
-	/**
-	 * 
-	 * @param Record $record
-	 */
-	function onPersonalBestRecord($record);
+    /**
+     *
+     * @param Record $record
+     */
+    function onPersonalBestRecord($record);
 
-	/**
-	 * @param Record[] $records
-	 */
-	function onRecordsLoaded($records);
+    /**
+     * @param Record[] $records
+     */
+    function onRecordsLoaded($records);
 
-	/**
-	 * @param Record $record 
-	 */
-	function onRecordPlayerFinished($record);
+    /**
+     * @param Record $record
+     */
+    function onRecordPlayerFinished($record);
 }
 
 ?>

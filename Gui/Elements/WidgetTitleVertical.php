@@ -9,12 +9,14 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  *
  * @author oliverde8
  */
-class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     protected $bg, $bgStr, $lbl_title;
     protected $config;
 
-    public function __construct($sizeX, $sizeY) {
+    public function __construct($sizeX, $sizeY)
+    {
         /** @var Config $config */
         $config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
 
@@ -27,11 +29,11 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->bg = clone $quad;
         $this->bg->setStyle('Bgs1InRace');
         $this->bg->setSubStyle('BgWindow4');
-	$this->addComponent($this->bg);
+        $this->addComponent($this->bg);
 
-	//$this->bgStr = new \ManiaLib\Gui\Elements\Quad();
-	//$this->bgStr->setAlign("right", "center");
-	//$this->bgStr->setImage('file://Media/Manialinks/Common/WarmUp/Structure.dds', true);
+        //$this->bgStr = new \ManiaLib\Gui\Elements\Quad();
+        //$this->bgStr->setAlign("right", "center");
+        //$this->bgStr->setImage('file://Media/Manialinks/Common/WarmUp/Structure.dds', true);
         // $this->addComponent($this->bgStr);
 
         $this->lbl_title = new DicoLabel($sizeX, $sizeY);
@@ -44,26 +46,30 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    public function onResize($oldX, $oldY) {
+    public function onResize($oldX, $oldY)
+    {
 
         $config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
         $this->bg->setSize($this->sizeX, $this->sizeY);
         //$this->bgStr->setAttribute("rot", 180);
-	//$this->bgStr->setSize($this->sizeX, $this->sizeY + 6);
+        //$this->bgStr->setSize($this->sizeX, $this->sizeY + 6);
 
         $this->lbl_title->setSizeX($this->sizeX - 2);
         $this->lbl_title->setPosition(($this->sizeX / 2), -1.5);
     }
-    
-    public function setAction($action) {
+
+    public function setAction($action)
+    {
         $this->bg->setAction($action);
     }
 
-    public function setText($text) {
+    public function setText($text)
+    {
         $this->lbl_title->setText($text);
     }
 
-    public function setOpacity($opacity) {
+    public function setOpacity($opacity)
+    {
         $this->bg->setOpacity($opacity);
     }
 

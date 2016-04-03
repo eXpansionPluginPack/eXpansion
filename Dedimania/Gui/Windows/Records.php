@@ -12,19 +12,18 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $label_rank, $label_nick, $label_login, $label_score;
     protected $widths = array(1, 3, 4, 4, 1);
     protected $pager;
-    protected $items  = array();
+    protected $items = array();
     protected $label_visit;
 
     protected function onConstruct()
     {
         parent::onConstruct();
-        $login       = $this->getRecipient();
-        $sizeX       = 100;
+        $login = $this->getRecipient();
+        $sizeX = 100;
         $scaledSizes = Gui::getScaledSize($this->widths, $sizeX);
 
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
-
 
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
@@ -99,7 +98,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function populateList($recs)
     {
-        $x     = 0;
+        $x = 0;
         $login = $this->getRecipient();
         foreach ($recs as $rec) {
             $this->items[$x] = new RecItem($x, $login, $rec, $this->widths);
@@ -114,4 +113,5 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->label_visit->setScriptEvents();
     }
 }
+
 ?>

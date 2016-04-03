@@ -66,7 +66,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
         $this->executionName = $executionName;
 
         if (empty($this->executionName)) {
-            $this->fileName = $this->id.'log';
+            $this->fileName = $this->id . 'log';
         } else {
             $this->fileName = $this->executionName . '.' . time() . '.log';
         }

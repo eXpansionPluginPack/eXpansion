@@ -16,15 +16,17 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
  *
  * @author Petri
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
+class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
+{
 
-    public function onBeginLoad() {
-	parent::onBeginLoad();
-	$this->setName("Widget: Minimap");
-	$this->setDescription("Minimap for tm");
-	$this->setGroups(array('Widgets'));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Widget: Minimap");
+        $this->setDescription("Minimap for tm");
+        $this->setGroups(array('Widgets'));
 
-	$config = Config::getInstance();	
+        $config = Config::getInstance();
     }
 
 }

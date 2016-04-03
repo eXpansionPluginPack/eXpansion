@@ -24,7 +24,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Irc;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
 
     public $hostname = 0;
     public $server = "fi.quakenet.org";
@@ -36,9 +37,9 @@ class Config extends \ManiaLib\Utils\Singleton {
     public $channel = "#driftstation";
     public $channelKey = "";
     public $allowedIrcLogins = array();
-	
+
     public $plugins = array("AdminPrivateTriggers");
-    
+
 
 }
 

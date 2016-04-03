@@ -38,15 +38,15 @@ class QueueList extends Widget
     public $frame;
 
     /** @var QueuePlayer[] */
-    public $queueplayers    = array();
+    public $queueplayers = array();
     protected $mainInstance = null;
     protected $bg;
-    
+
     protected function exp_onBeginConstruct()
     {
         $this->setName("Queue List");
         $login = $this->getRecipient();
-        $this->bg    = new WidgetBackGround(62, 40);
+        $this->bg = new WidgetBackGround(62, 40);
         $this->bg->setAction($this->createAction(array($this, "enterQueue")));
         $this->addComponent($this->bg);
 
@@ -78,12 +78,12 @@ class QueueList extends Widget
 
         $this->frame->clearComponents();
         $x = 1;
-        
+
         foreach ($this->queueplayers as $player) {
             $label = new Label(30, 6);
             $label->setAlign("left", "center2");
             $label->setPosition(0, -($x * 6));
-            $label->setText($x.".  ".$player->nickName);
+            $label->setText($x . ".  " . $player->nickName);
             $this->frame->addComponent($label);
 
 
@@ -101,7 +101,7 @@ class QueueList extends Widget
                 $button->setAction($this->createAction(array($this->mainInstance, "admRemoveQueue"), $player->login));
                 $this->frame->addComponent($button);
             }
-            $x++;         
+            $x++;
             if ($x > 8) break;
         }
     }
@@ -113,7 +113,7 @@ class QueueList extends Widget
     }
 
     public function destroy()
-    {      
+    {
         parent::destroy();
     }
 }

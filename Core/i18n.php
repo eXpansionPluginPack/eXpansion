@@ -4,14 +4,15 @@ namespace ManiaLivePlugins\eXpansion\Core;
 
 /**
  * a simple internationalization class for string texts
- * 
+ *
  */
-class i18n extends \ManiaLib\Utils\Singleton {
+class i18n extends \ManiaLib\Utils\Singleton
+{
 
     /**
      * default language
      *
-     * @var string $language 
+     * @var string $language
      */
     private $defaultLanguage = null;
 
@@ -50,7 +51,8 @@ class i18n extends \ManiaLib\Utils\Singleton {
      *
      * @param $dir Directory
      */
-    public function registerDirectory($dir) {
+    public function registerDirectory($dir)
+    {
         if ($this->started) {
             $this->readFiles($dir);
             $this->supportedLocales = array_unique($this->supportedLocales);
@@ -62,7 +64,8 @@ class i18n extends \ManiaLib\Utils\Singleton {
     /**
      * Start loading the directories that are pending
      */
-    public function start() {
+    public function start()
+    {
         if (!empty($this->directorties)) {
             foreach ($this->directorties as $dir) {
                 $this->readFiles($dir);
@@ -77,21 +80,22 @@ class i18n extends \ManiaLib\Utils\Singleton {
      *
      * @param $dir the directory to load translations from
      */
-    protected function readFiles($dir) {
-        if(isset($this->handledDirectories[$dir]))
+    protected function readFiles($dir)
+    {
+        if (isset($this->handledDirectories[$dir]))
             return;
 
         $this->handledDirectories[$dir] = true;
 
         if (is_dir($dir . "/messages")) {
 
-            $langFiles = glob($dir . "/messages/*.txt", GLOB_MARK);	    
-            foreach ($langFiles as $file) {                
+            $langFiles = glob($dir . "/messages/*.txt", GLOB_MARK);
+            foreach ($langFiles as $file) {
                 $language = explode("/", $file);
                 $language = end($language);
                 $language = str_replace(".txt", "", $language);
                 if (empty($language))
-                    continue;                                                
+                    continue;
                 $this->supportedLocales[] = $language;
                 $data = file($file, FILE_IGNORE_NEW_LINES);
                 for ($x = 0; $x < count($data) - 1; $x += 3) {
@@ -114,7 +118,8 @@ class i18n extends \ManiaLib\Utils\Singleton {
      *
      * @param $language
      */
-    public function setDefaultLanguage($language) {
+    public function setDefaultLanguage($language)
+    {
         $this->defaultLanguage = $language;
     }
 
@@ -125,7 +130,8 @@ class i18n extends \ManiaLib\Utils\Singleton {
      *
      * @return i18n\Message FOund message, or new message
      */
-    public function getObject($string) {
+    public function getObject($string)
+    {
         if (isset($this->messages[$string])) {
             return $this->messages[$string];
         } else {
@@ -142,7 +148,8 @@ class i18n extends \ManiaLib\Utils\Singleton {
      *
      * @return string the translation, if none find the translation key
      */
-    public function getString($string, $fromLanguage = null) {
+    public function getString($string, $fromLanguage = null)
+    {
         if ($fromLanguage == null)
             return $this->translate($string, $this->defaultLanguage);
         return $this->translate($string, $fromLanguage);
@@ -153,7 +160,8 @@ class i18n extends \ManiaLib\Utils\Singleton {
      *
      * @return string[]
      */
-    public function getSupportedLocales() {
+    public function getSupportedLocales()
+    {
         return $this->supportedLocales;
     }
 
@@ -164,7 +172,8 @@ class i18n extends \ManiaLib\Utils\Singleton {
      * @return mixed
      * @todo check if this is actually used :S I don't understand what it does.
      */
-    private function translate($string, $language = null) {
+    private function translate($string, $language = null)
+    {
 
         if (isset($this->messages[$string])) {
             return $this->messages[$string]->getMessage($language);

@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
-class ScriptSetting extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class ScriptSetting extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     private $bg;
     private $label;
@@ -13,13 +14,14 @@ class ScriptSetting extends \ManiaLivePlugins\eXpansion\Gui\Control {
     public $type = null;
 
     /**
-     * 
+     *
      * @param int $indexNumber
      * @param string $settingName
      * @param mixed $value
      * @param int $sizeX
      */
-    function __construct($indexNumber, $settingName, $value, $sizeX) {
+    function __construct($indexNumber, $settingName, $value, $sizeX)
+    {
         $sizeY = 6;
         $this->settingName = $settingName;
         $this->type = gettype($value);
@@ -74,17 +76,20 @@ class ScriptSetting extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY) {
+    protected function onResize($oldX, $oldY)
+    {
         $this->bg->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
-    
 
-    function destroy() {           
+
+    function destroy()
+    {
         parent::destroy();
     }
 
 }
+
 ?>
 

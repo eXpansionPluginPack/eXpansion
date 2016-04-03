@@ -6,25 +6,25 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
     protected $menu, $debug, $bg;
     public $myscript;
-    protected $item    = array();
+    protected $item = array();
     protected $submenu = array();
-    protected $bgs     = array();
+    protected $bgs = array();
     protected $storage;
     protected $boundingBox;
 
     public function addItem(&$menu, $text, $action = null, $submenuNb = false, $addArrow = false)
     {
-        $nb              = count($this->item);
+        $nb = count($this->item);
         $this->item[$nb] = new \ManiaLivePlugins\eXpansion\Menu\Gui\Controls\PanelItem($addArrow);
 
         if (!empty($action)) {
             $this->item[$nb]->setAction($action);
         }
 
-        $this->item[$nb]->setText("  ".$text);
+        $this->item[$nb]->setText("  " . $text);
 
         if ($submenuNb !== false) {
-            $this->item[$nb]->setId("sub_".$submenuNb);
+            $this->item[$nb]->setId("sub_" . $submenuNb);
             $this->item[$nb]->setClass("menuitem");
             // $this->item[$nb]->setFocusAreaColor2("3afb");
         } else {
@@ -37,11 +37,11 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
                 }
             }
             if ($snb) {
-                $this->item[$nb]->setId("sub_".$snb."_item_".$nb);
+                $this->item[$nb]->setId("sub_" . $snb . "_item_" . $nb);
                 $this->item[$nb]->setAction($action);
                 $this->item[$nb]->setClass("subitem");
             } else {
-                $this->item[$nb]->setId("item_".$nb);
+                $this->item[$nb]->setId("item_" . $nb);
                 $this->item[$nb]->setClass("menuitem");
             }
         }
@@ -51,10 +51,10 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
     public function addSubMenu(&$menu, $text, $action = null)
     {
-        $mb                 = count($this->submenu) + 1;
+        $mb = count($this->submenu) + 1;
         $this->submenu[$mb] = new \ManiaLive\Gui\Controls\Frame(29, 5.5);
         $this->submenu[$mb]->setLayout(new \ManiaLib\Gui\Layouts\Column());
-        $this->submenu[$mb]->setId("submenu_".$mb);
+        $this->submenu[$mb]->setId("submenu_" . $mb);
         $this->submenu[$mb]->setScriptEvents();
         // add item to menu
         // $this->addItem($menu, $text . " » ", $action, $mb);
@@ -73,7 +73,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     {
         parent::onConstruct();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
-        $this->menu    = new \ManiaLive\Gui\Controls\Frame();
+        $this->menu = new \ManiaLive\Gui\Controls\Frame();
         $this->menu->setLayout(new \ManiaLib\Gui\Layouts\Column());
         $this->menu->setId("Submenu");
         $this->menu->setScriptEvents();
@@ -89,8 +89,8 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
         $this->myscript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Menu\Gui\Scripts");
         $this->registerScript($this->myscript);
-        
-        $boundingBox    = new \ManiaLib\Gui\Elements\Quad(320, 180);
+
+        $boundingBox = new \ManiaLib\Gui\Elements\Quad(320, 180);
         $boundingBox->setPosition(-160, 90, -50);
         $boundingBox->setId("boundingBox");
         $boundingBox->setBgcolor('0000');
@@ -113,7 +113,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
             end($comp)->setBottom();
         }
 
-        $count   = count($this->submenu);
+        $count = count($this->submenu);
         $version = \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION;
         $this->myscript->setParam("version", $version);
         $this->myscript->setParam("name", "Submenu");
@@ -142,4 +142,5 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         parent::destroy();
     }
 }
+
 ?>

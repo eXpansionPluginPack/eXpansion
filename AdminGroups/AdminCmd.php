@@ -7,7 +7,8 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups;
  *
  * @author oliver
  */
-class AdminCmd {
+class AdminCmd
+{
 
     private $class;
 
@@ -41,7 +42,8 @@ class AdminCmd {
     /** @var int */
     private $minParam = 0;
 
-    function __construct($cmd, $class, $function, $permission) {
+    function __construct($cmd, $class, $function, $permission)
+    {
         $this->cmd = $cmd;
         $this->class = $class;
         $this->function = $function;
@@ -49,12 +51,13 @@ class AdminCmd {
     }
 
     /**
-     * 
+     *
      * @param string $login
      * @param array $param
      * @return string
      */
-    public function cmd($login, $param) {
+    public function cmd($login, $param)
+    {
         if ($this->class != null && method_exists($this->class, $this->function)) {
 
             /*
@@ -86,34 +89,38 @@ class AdminCmd {
      * getCmd()
      * @return string
      */
-    public function getCmd() {
+    public function getCmd()
+    {
         return $this->cmd;
     }
 
     /**
      * @return int
      */
-    public function getMinParam() {
+    public function getMinParam()
+    {
         return $this->minParam;
     }
 
     /**
-     * 
+     *
      * @param int $minParam
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
-    public function setMinParam($minParam) {
+    public function setMinParam($minParam)
+    {
         $this->minParam = $minParam;
         return $this;
     }
 
     /**
-     * 
+     *
      * @param int $numParam
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker $check
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
-    public function addchecker($numParam, types\absChecker $check) {
+    public function addchecker($numParam, types\absChecker $check)
+    {
         $this->checker[$numParam - 1][] = $check;
         return $this;
     }
@@ -121,52 +128,58 @@ class AdminCmd {
     /**
      * @return string
      */
-    public function getPermission() {
+    public function getPermission()
+    {
         return $this->permission;
     }
 
     /**
-     * 
+     *
      * @return string
      */
-    public function getHelp() {
+    public function getHelp()
+    {
         return $this->help;
     }
 
     /**
-     * 
+     *
      * @param string $help
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
-    public function setHelp($help) {
+    public function setHelp($help)
+    {
         $this->help = $help;
         return $this;
     }
 
     /**
-     * 
+     *
      * @return string
      */
-    public function getHelpMore() {
+    public function getHelpMore()
+    {
         return $this->helpMore;
     }
 
     /**
-     * 
+     *
      * @param string $helpMore
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
-    public function setHelpMore($helpMore) {
+    public function setHelpMore($helpMore)
+    {
         $this->helpMore = $helpMore;
         return $this;
     }
 
     /**
-     * 
+     *
      * @param string $line
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
-    public function addLineHelpMore($line) {
+    public function addLineHelpMore($line)
+    {
         if ($this->helpMore == null)
             $this->helpMore = $line;
         else
@@ -174,15 +187,18 @@ class AdminCmd {
         return $this;
     }
 
-    public function addAlias($cmd) {
+    public function addAlias($cmd)
+    {
         $this->aliases[] = $cmd;
     }
 
-    public function getAliases() {
+    public function getAliases()
+    {
         return $this->aliases;
     }
 
-    public function deactivate(){
+    public function deactivate()
+    {
         $this->class = null;
     }
 

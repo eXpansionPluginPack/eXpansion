@@ -34,7 +34,7 @@ class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->updateAroundMe();
         self::$me = $this;
 
-		$this->getRoundsPoints();
+        $this->getRoundsPoints();
     }
 
 
@@ -79,11 +79,11 @@ class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
         if ($wasWarmUp) {
-            self::$raceOn      = false;
+            self::$raceOn = false;
             $this->forceUpdate = true;
             $this->updateAroundMe();
             self::$secondMap = true;
-            self::$raceOn    = true;
+            self::$raceOn = true;
         } else {
             $this->hideAroundMe();
         }
@@ -100,29 +100,29 @@ class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
         } else {
             self::$roundPoints = array(10, 6, 4, 3, 2, 1);
-			//points = $this->connection->triggerModeScriptEvent('Rounds_GetPointsRepartition',"");
+            //points = $this->connection->triggerModeScriptEvent('Rounds_GetPointsRepartition',"");
         }
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation)
     {
         $this->getRoundsPoints();
-        self::$raceOn      = false;
+        self::$raceOn = false;
         $this->forceUpdate = true;
         $this->hideAroundMe();
         $this->updateAroundMe();
         self::$secondMap = true;
-        self::$raceOn    = true;
+        self::$raceOn = true;
     }
 
     public function onBeginMatch()
     {
-        self::$raceOn      = false;
+        self::$raceOn = false;
         $this->forceUpdate = true;
         $this->hideAroundMe();
         $this->updateAroundMe();
         self::$secondMap = true;
-        self::$raceOn    = true;
+        self::$raceOn = true;
     }
 
     public function onEndRound()
@@ -154,7 +154,7 @@ class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     function exp_onUnload()
     {
         Gui\Widgets\AroundMe::EraseAll();
-		self::$me = null;
+        self::$me = null;
     }
 
 }

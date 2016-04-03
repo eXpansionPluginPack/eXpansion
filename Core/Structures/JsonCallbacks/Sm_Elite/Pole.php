@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Structures\JsonCallbacks;
 
-class Pole extends ManiaLiveDedicatedApiStructuresAbstractStructure {
+class Pole extends ManiaLiveDedicatedApiStructuresAbstractStructure
+{
 
     /** @var string */
     public $tag = "";

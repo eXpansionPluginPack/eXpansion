@@ -17,7 +17,7 @@ class Notice extends Window
     protected function onConstruct()
     {
         parent::onConstruct();
-        $login          = $this->getRecipient();
+        $login = $this->getRecipient();
         $this->actionOk = $this->createAction(array($this, "Ok"));
         $this->setSize(90, 60);
 
@@ -67,4 +67,5 @@ class Notice extends Window
         parent::destroy();
     }
 }
+
 ?>

@@ -26,7 +26,8 @@
  *
  * @author De Cramer Oliver
  */
-class test {
+class test
+{
     //put your code here
 }
 

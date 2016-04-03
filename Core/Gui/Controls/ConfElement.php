@@ -44,7 +44,7 @@ class ConfElement extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->button_load->setAction($this->createAction(array($this, "loadAction"), $name));
         $this->addComponent($this->button_load);
 
-        if($modify){
+        if ($modify) {
             $this->button_save = new Button(15, 6);
             $this->button_save->setText(__('Save', $login));
             $this->button_save->setDescription(__('Will save current configuration', $login), 40);
@@ -72,8 +72,8 @@ class ConfElement extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->button_load->setPosition(($this->getSizeX() - $this->button_load->getSizeX()) + 1, 0);
 
-        if($this->button_save != null)
-        $this->button_save->setPosition(($this->getSizeX() - $this->button_save->getSizeX()*2) + 5, 0);
+        if ($this->button_save != null)
+            $this->button_save->setPosition(($this->getSizeX() - $this->button_save->getSizeX() * 2) + 5, 0);
 
         if ($this->button_select != null) {
             $this->button_select->setPosition(($this->getSizeX() - $this->button_select->getSizeX() * 3) + 10, 0);
@@ -93,7 +93,7 @@ class ConfElement extends \ManiaLivePlugins\eXpansion\Gui\Control
         /** @var ConfigManager $confManager */
         $confManager = ConfigManager::getInstance();
 
-        $confManager->loadSettingsFrom($this->path.'/'.$name);
+        $confManager->loadSettingsFrom($this->path . '/' . $name);
     }
 
     public function selectAction($login, $name)

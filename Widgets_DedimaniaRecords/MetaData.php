@@ -13,52 +13,52 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Widget: Dedimania Records");
-		$this->setDescription("Provides dedimania records widget");
-		$this->setGroups(array('Widgets', 'Records'));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Widget: Dedimania Records");
+        $this->setDescription("Provides dedimania records widget");
+        $this->setGroups(array('Widgets', 'Records'));
 
-		$this->addTitleSupport("TM");
-		$this->addTitleSupport("Trackmania");
-		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
-		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
-		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
-		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
-		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
-		$this->addGameModeCompability(
-			\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT,
-			'TeamAttack.Script.txt'
-		);
+        $this->addTitleSupport("TM");
+        $this->addTitleSupport("Trackmania");
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK);
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
+        $this->addGameModeCompability(
+            \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT,
+            'TeamAttack.Script.txt'
+        );
 
-                $config = Config::getInstance();
-		$var = new Boolean("isHorizontal", "Use horizontal (old) widget style", $config, false, false);
-		$var->setDefaultValue(false);
-		$this->registerVariable($var);
-
-
-	}
+        $config = Config::getInstance();
+        $var = new Boolean("isHorizontal", "Use horizontal (old) widget style", $config, false, false);
+        $var->setDefaultValue(false);
+        $this->registerVariable($var);
 
 
-	public function checkOtherCompatibility()
-	{
-		$errors = parent::checkOtherCompatibility();
+    }
 
-		$dedi1 = '\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania';
-		$dedi2 = '\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script';
 
-		/** @var PluginHandler $phandler */
-		$phandler = PluginHandler::getInstance();
+    public function checkOtherCompatibility()
+    {
+        $errors = parent::checkOtherCompatibility();
 
-		if ($phandler->isLoaded($dedi1)) {
-			return $errors;
-		} elseif ($phandler->isLoaded($dedi2)) {
-			return $errors;
-		}
+        $dedi1 = '\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania';
+        $dedi2 = '\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script';
 
-		$errors[] = 'Dedimania Records Panel needs a running Dedimania plugin!!';
+        /** @var PluginHandler $phandler */
+        $phandler = PluginHandler::getInstance();
 
-		return $errors;
-	}
+        if ($phandler->isLoaded($dedi1)) {
+            return $errors;
+        } elseif ($phandler->isLoaded($dedi2)) {
+            return $errors;
+        }
+
+        $errors[] = 'Dedimania Records Panel needs a running Dedimania plugin!!';
+
+        return $errors;
+    }
 }

@@ -3,24 +3,28 @@
 namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
+class OnlineTime extends StatsWindow
+{
 
-class OnlineTime extends StatsWindow {
+    public static $labelTitles = array('#', 'NickName', 'Time Online');
 
-    public static $labelTitles = array('#','NickName', 'Time Online');
-    
-    protected function getKeys() {
+    protected function getKeys()
+    {
         return array(0, 'nickname', 'time');
     }
 
-    protected function getLabel($i) {
+    protected function getLabel($i)
+    {
         return isset(self::$labelTitles[$i]) ? self::$labelTitles[$i] : "";
     }
 
-    protected function getWidths() {
+    protected function getWidths()
+    {
         return array(1, 5, 3);
     }
-    
-    protected function getFormaters() {
+
+    protected function getFormaters()
+    {
         return array(null, null, \ManiaLivePlugins\eXpansion\Gui\Formaters\LongDate::getInstance());
     }
 

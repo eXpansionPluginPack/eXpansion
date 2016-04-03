@@ -7,7 +7,8 @@ namespace ManiaLivePlugins\eXpansion\ESLcup\Structures;
  *
  * @author Reaby
  */
-class CupScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
+class CupScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+{
 
     /** @var \Maniaplanet\DedicatedServer\Structures\Player */
     public $player;
@@ -22,7 +23,8 @@ class CupScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
     public $place = -1;
     public $isConnected = false;
 
-    public function __construct($playerId, $login, $nickname, $score) {
+    public function __construct($playerId, $login, $nickname, $score)
+    {
         $this->playerId = $playerId;
         $this->login = $login;
         $this->nickName = $nickname;

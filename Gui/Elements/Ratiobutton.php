@@ -5,7 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLive\Gui\ActionHandler;
 
-class Ratiobutton extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class Ratiobutton extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     protected $label;
     protected $button;
@@ -14,7 +15,8 @@ class Ratiobutton extends \ManiaLivePlugins\eXpansion\Gui\Control {
     protected $action;
     protected $buttonac;
 
-    function __construct($sizeX = 3, $sizeY = 3, $textWidth = 25) {
+    function __construct($sizeX = 3, $sizeY = 3, $textWidth = 25)
+    {
         $this->textWidth = $textWidth;
         $this->action = $this->createAction(array($this, 'toggleActive'));
         $config = Config::getInstance();
@@ -35,7 +37,8 @@ class Ratiobutton extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->setSize(10 + $textWidth, 5);
     }
 
-    protected function onResize($oldX, $oldY) {
+    protected function onResize($oldX, $oldY)
+    {
         parent::onResize($this->textWidth + 10, 5);
 
         $this->button->setSize(5, 5);
@@ -46,43 +49,50 @@ class Ratiobutton extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->label->setPosition(4, 0);
     }
 
-    function onDraw() {
+    function onDraw()
+    {
         $config = Config::getInstance();
 
         if ($this->active) {
-             $this->button->setColorize("0f0");
-        }
-        else {
-              $this->button->setColorize("f00");
+            $this->button->setColorize("0f0");
+        } else {
+            $this->button->setColorize("f00");
         }
     }
 
-    function setStatus($boolean) {
+    function setStatus($boolean)
+    {
         $this->active = $boolean;
     }
 
-    function getStatus() {
+    function getStatus()
+    {
         return $this->active;
     }
 
-    function getText() {
+    function getText()
+    {
         return $this->label->getText();
     }
 
-    function setText($text) {
+    function setText($text)
+    {
         $this->label->setText('$fff' . $text);
     }
 
-    function toggleActive($login) {
+    function toggleActive($login)
+    {
         $this->active = !$this->active;
         $this->redraw();
     }
 
-    function setAction($action) {
+    function setAction($action)
+    {
         $this->button->setAction($action);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    {
         parent::onIsRemoved($target);
         parent::destroy();
     }

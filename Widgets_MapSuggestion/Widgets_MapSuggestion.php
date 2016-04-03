@@ -10,37 +10,38 @@ use ManiaLivePlugins\eXpansion\Widgets_MapSuggestion\Gui\Widgets\MapSuggestionBu
 class Widgets_MapSuggestion extends ExpPlugin
 {
 
-	private $action;
+    private $action;
 
-	public function exp_onInit()
-	{
-		$this->addDependency(new Dependency('\\ManiaLivePlugins\\eXpansion\\MapSuggestion\\MapSuggestion'));
-	}
+    public function exp_onInit()
+    {
+        $this->addDependency(new Dependency('\\ManiaLivePlugins\\eXpansion\\MapSuggestion\\MapSuggestion'));
+    }
 
-	public function exp_onReady()
-	{
-		$ahandler = ActionHandler::getInstance();
-		$this->action = $ahandler->createAction(array($this, "invoke"));
+    public function exp_onReady()
+    {
+        $ahandler = ActionHandler::getInstance();
+        $this->action = $ahandler->createAction(array($this, "invoke"));
 
-		$button = MapSuggestionButton::Create();
-		$button->setActions($this->action);
-		$button->setPosition(120,-60);
-		$button->setSize(10.0, 10.0);
-		$button->show();
-	}
+        $button = MapSuggestionButton::Create();
+        $button->setActions($this->action);
+        $button->setPosition(120, -60);
+        $button->setSize(10.0, 10.0);
+        $button->show();
+    }
 
-	
-	public function invoke($login) {
-		$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\MapSuggestion\\MapSuggestion", "showMapWishWindow", $login);
-	}
-	
-	
-	public function exp_onUnload()
-	{
-		$ahandler = ActionHandler::getInstance();
-		$ahandler->deleteAction($this->action);
-		$this->action = null;
-		MapSuggestionButton::EraseAll();
-	}
+
+    public function invoke($login)
+    {
+        $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\MapSuggestion\\MapSuggestion", "showMapWishWindow", $login);
+    }
+
+
+    public function exp_onUnload()
+    {
+        $ahandler = ActionHandler::getInstance();
+        $ahandler->deleteAction($this->action);
+        $this->action = null;
+        MapSuggestionButton::EraseAll();
+    }
 
 }

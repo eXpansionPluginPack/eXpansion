@@ -13,17 +13,17 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
 
-		$this->setName("Core: Graphical Admin");
-		$this->setDescription("Easy and graphical way of configuring your server.");
-		$this->setGroups(array('Core'));
+        $this->setName("Core: Graphical Admin");
+        $this->setDescription("Easy and graphical way of configuring your server.");
+        $this->setGroups(array('Core'));
 
-		$config = Config::getInstance();
-		
-	}
+        $config = Config::getInstance();
+
+    }
 }
 
 ?>

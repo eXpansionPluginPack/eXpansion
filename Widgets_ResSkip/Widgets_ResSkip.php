@@ -15,236 +15,230 @@ use Maniaplanet\DedicatedServer\Structures\GameInfos;
 class Widgets_ResSkip extends ExpPlugin
 {
 
-	private $msg_resOnProgress, $msg_resUnused, $msg_resMax, $msg_skipUnused, $msg_skipMax, $msg_prestart, $msg_pskip;
+    private $msg_resOnProgress, $msg_resUnused, $msg_resMax, $msg_skipUnused, $msg_skipMax, $msg_prestart, $msg_pskip;
 
-	private $config;
+    private $config;
 
-	private $donateConfig;
+    private $donateConfig;
 
-	private $lastMapUid = null;
+    private $lastMapUid = null;
 
-	private $resCount = 0;
+    private $resCount = 0;
 
-	private $resActive;
+    private $resActive;
 
-	private $skipCount = 0;
+    private $skipCount = 0;
 
-	private $skipActive;
+    private $skipActive;
 
-	private $actions = array();
+    private $actions = array();
 
-	public function exp_onLoad()
-	{
-		$this->msg_resOnProgress = exp_getMessage("The restart of this track is in progress!");
-		$this->msg_prestart = exp_getMessage("#player#Player #variable# %s #player#pays and restarts the challenge!");
-		$this->msg_pskip = exp_getMessage('#player#Player#variable# %s #player#pays and skips the challenge!');
-		$this->msg_resUnused = exp_getMessage("#error#Player can't restart tracks on this server");
-		$this->msg_resMax = exp_getMessage("#error#The map has already been restarted. Limit reached!");
-		$this->msg_skipUnused = exp_getMessage("#error#You can't skip tracks on this server.");
-		$this->msg_skipMax = exp_getMessage("#error#You have skipped to many maps already!");
+    public function exp_onLoad()
+    {
+        $this->msg_resOnProgress = exp_getMessage("The restart of this track is in progress!");
+        $this->msg_prestart = exp_getMessage("#player#Player #variable# %s #player#pays and restarts the challenge!");
+        $this->msg_pskip = exp_getMessage('#player#Player#variable# %s #player#pays and skips the challenge!');
+        $this->msg_resUnused = exp_getMessage("#error#Player can't restart tracks on this server");
+        $this->msg_resMax = exp_getMessage("#error#The map has already been restarted. Limit reached!");
+        $this->msg_skipUnused = exp_getMessage("#error#You can't skip tracks on this server.");
+        $this->msg_skipMax = exp_getMessage("#error#You have skipped to many maps already!");
 
-		$this->setPublicMethod('isPublicResIsActive');
-		$this->setPublicMethod('isPublicSkipActive');
-	}
+        $this->setPublicMethod('isPublicResIsActive');
+        $this->setPublicMethod('isPublicSkipActive');
+    }
 
-	public function exp_onReady()
-	{
-		$this->enableDedicatedEvents();
+    public function exp_onReady()
+    {
+        $this->enableDedicatedEvents();
 
-		$this->config = Config::getInstance();
-		$this->donateConfig = DonateConfig::getInstance();
-		/* removing confirm dialog
+        $this->config = Config::getInstance();
+        $this->donateConfig = DonateConfig::getInstance();
+        /* removing confirm dialog
                 $this->actions['skip_final'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
-		$this->actions['skip'] = Gui::createConfirm($this->actions['skip_final']);
-		$this->actions['res_final'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
-		$this->actions['res'] = Gui::createConfirm($this->actions['res_final']);
+        $this->actions['skip'] = Gui::createConfirm($this->actions['skip_final']);
+        $this->actions['res_final'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
+        $this->actions['res'] = Gui::createConfirm($this->actions['res_final']);
                 */
-                $this->actions['skip'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
-                $this->actions['res'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
+        $this->actions['skip'] = ActionHandler::getInstance()->createAction(array($this, "skipMap"));
+        $this->actions['res'] = ActionHandler::getInstance()->createAction(array($this, "restartMap"));
 
-		$this->showResSkip(null);
-	}
+        $this->showResSkip(null);
+    }
 
-	public function isPublicResIsActive()
-	{
-		return !(empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1);
-	}
+    public function isPublicResIsActive()
+    {
+        return !(empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1);
+    }
 
-	public function isPublicSkipActive()
-	{
-		return !(empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1);
-	}
+    public function isPublicSkipActive()
+    {
+        return !(empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1);
+    }
 
-	public function showResSkip($login)
-	{
-		if ($this->expStorage->isRelay)
-			return;
-
-		
-
-		$widget = ResSkipButtons::Create($login);
-
-		$login = strval($login);
-		$widget->setActions($this->actions['res'], $this->actions['skip']);
-		$widget->setServerInfo($this->storage->serverLogin);
-		$widget->setSize(32.0, 10.0);
+    public function showResSkip($login)
+    {
+        if ($this->expStorage->isRelay)
+            return;
 
 
-		$nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
+        $widget = ResSkipButtons::Create($login);
 
-		if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] > 0) {
-			$widget->setSkipAmount($this->config->publicSkipAmount[$nbSkips]);
-		}
-		else {
-			$widget->setSkipAmount("max");
-		}
+        $login = strval($login);
+        $widget->setActions($this->actions['res'], $this->actions['skip']);
+        $widget->setServerInfo($this->storage->serverLogin);
+        $widget->setSize(32.0, 10.0);
 
-		if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] > 0) {
-			$widget->setResAmount($this->config->publicResAmount[$this->resCount]);
-		}
-		else {
-			$widget->setResAmount("max");
-		}
-		
-		$widget->show();
-	}
 
-	public function onPlayerDisconnect($login, $disconnectionReason = null)
-	{
-		if (isset($this->skipCount[$login]))
-			unset($this->skipCount[$login]);
-		ResSkipButtons::Erase($login);
-	}
+        $nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
 
-	public function restartMap($login)
-	{
+        if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] > 0) {
+            $widget->setSkipAmount($this->config->publicSkipAmount[$nbSkips]);
+        } else {
+            $widget->setSkipAmount("max");
+        }
 
-		/* if (AdminGroups::hasPermission($login, Permission::map_restart)) {
+        if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] > 0) {
+            $widget->setResAmount($this->config->publicResAmount[$this->resCount]);
+        } else {
+            $widget->setResAmount("max");
+        }
 
-			if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
-				$this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\Maps\\Maps', 'replayMap', $login);
-				return;
-			}
+        $widget->show();
+    }
 
-			$this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
-			$admin = $this->storage->getPlayerObject($login);
-			$this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
-		}
-		else { */
-			//Player restart cost Planets
-			if ($this->resActive) {
-				//Already restarted no need to do
-				$this->exp_chatSendServerMessage($this->msg_resOnProgress, $login);
-			}
-			else if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] != -1 && $this->resCount < count($this->config->publicResAmount)) {
-				$amount = $this->config->publicResAmount[$this->resCount];
-				$this->resActive = true;
+    public function onPlayerDisconnect($login, $disconnectionReason = null)
+    {
+        if (isset($this->skipCount[$login]))
+            unset($this->skipCount[$login]);
+        ResSkipButtons::Erase($login);
+    }
 
-				if (!empty($this->donateConfig->toLogin))
-					$toLogin = $this->donateConfig->toLogin;
-				else
-					$toLogin = $this->storage->serverLogin;
+    public function restartMap($login)
+    {
 
-				$bill = $this->exp_startBill($login, $toLogin, $amount, __("Are you sure you want to restart this map", $login), array($this, 'publicRestartMap'));
-				$bill->setSubject('map_restart');
-				$bill->setErrorCallback(5, array($this, 'failRestartMap'));
-				$bill->setErrorCallback(6, array($this, 'failRestartMap'));
-			}else {
-				if (empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1) {
-					$this->exp_chatSendServerMessage($this->msg_resUnused, $login);
-				}
-				else {
-					$this->exp_chatSendServerMessage($this->msg_resMax, $login);
-				}
-			}
-		// }
-	}
+        /* if (AdminGroups::hasPermission($login, Permission::map_restart)) {
 
-	public function publicRestartMap(Bill $bill)
-	{
-		$player = $this->storage->getPlayerObject($bill->getSource_login());
-		$this->exp_chatSendServerMessage($this->msg_prestart, null, array($player->nickName));
+            if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
+                $this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\Maps\\Maps', 'replayMap', $login);
+                return;
+            }
 
-		if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
-			$this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Maps\\Maps", "replayMap", $bill->getSource_login());
-			return;
-		}
-		$this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
-	}
+            $this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
+            $admin = $this->storage->getPlayerObject($login);
+            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
+        }
+        else { */
+        //Player restart cost Planets
+        if ($this->resActive) {
+            //Already restarted no need to do
+            $this->exp_chatSendServerMessage($this->msg_resOnProgress, $login);
+        } else if (isset($this->config->publicResAmount[$this->resCount]) && $this->config->publicResAmount[$this->resCount] != -1 && $this->resCount < count($this->config->publicResAmount)) {
+            $amount = $this->config->publicResAmount[$this->resCount];
+            $this->resActive = true;
 
-	public function failRestartMap(Bill $bill, $state, $stateName)
-	{
-		$this->resActive = false;
-	}
+            if (!empty($this->donateConfig->toLogin))
+                $toLogin = $this->donateConfig->toLogin;
+            else
+                $toLogin = $this->storage->serverLogin;
 
-	public function publicSkipMap(Bill $bill)
-	{
-		$this->skipActive = true;
-		$this->connection->nextMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
-		$player = $this->storage->getPlayerObject($bill->getSource_login());
-		$this->exp_chatSendServerMessage($this->msg_pskip, null, array($player->nickName));
-	}
+            $bill = $this->exp_startBill($login, $toLogin, $amount, __("Are you sure you want to restart this map", $login), array($this, 'publicRestartMap'));
+            $bill->setSubject('map_restart');
+            $bill->setErrorCallback(5, array($this, 'failRestartMap'));
+            $bill->setErrorCallback(6, array($this, 'failRestartMap'));
+        } else {
+            if (empty($this->config->publicResAmount) || $this->config->publicResAmount[0] == -1) {
+                $this->exp_chatSendServerMessage($this->msg_resUnused, $login);
+            } else {
+                $this->exp_chatSendServerMessage($this->msg_resMax, $login);
+            }
+        }
+        // }
+    }
 
-	public function skipMap($login)
-	{
+    public function publicRestartMap(Bill $bill)
+    {
+        $player = $this->storage->getPlayerObject($bill->getSource_login());
+        $this->exp_chatSendServerMessage($this->msg_prestart, null, array($player->nickName));
 
-		/* if (AdminGroups::hasPermission($login, Permission::map_skip)) {
-			$adminGrp = AdminGroups::getInstance();
-			$adminGrp->adminCmd($login, "skip");
-			return;
-		} */
+        if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\Maps\\Maps')) {
+            $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Maps\\Maps", "replayMap", $bill->getSource_login());
+            return;
+        }
+        $this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
+    }
 
-		$nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
+    public function failRestartMap(Bill $bill, $state, $stateName)
+    {
+        $this->resActive = false;
+    }
 
-		if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] != -1 && $nbSkips < count($this->config->publicSkipAmount)) {
-			$amount = $this->config->publicSkipAmount[$nbSkips];
+    public function publicSkipMap(Bill $bill)
+    {
+        $this->skipActive = true;
+        $this->connection->nextMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
+        $player = $this->storage->getPlayerObject($bill->getSource_login());
+        $this->exp_chatSendServerMessage($this->msg_pskip, null, array($player->nickName));
+    }
 
-			if (!empty($this->donateConfig->toLogin))
-				$toLogin = $this->donateConfig->toLogin;
-			else
-				$toLogin = $this->storage->serverLogin;
+    public function skipMap($login)
+    {
 
-			$bill = $this->exp_startBill($login, $toLogin, $amount, __("Are you sure you want to skip this map", $login), array($this, 'publicSkipMap'));
-			$bill->setSubject('map_skip');
-		} else {
-			if (empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1) {
-				$this->exp_chatSendServerMessage($this->msg_skipUnused, $login);
-			}
-			else {
-				$this->exp_chatSendServerMessage($this->msg_skipMax, $login);
-			}
-		}
-	}
+        /* if (AdminGroups::hasPermission($login, Permission::map_skip)) {
+            $adminGrp = AdminGroups::getInstance();
+            $adminGrp->adminCmd($login, "skip");
+            return;
+        } */
 
-	private function countMapRestart()
-	{
-		if ($this->storage->currentMap->uId == $this->lastMapUid)
-			$this->resCount++;
-		else {
-			$this->lastMapUid = $this->storage->currentMap->uId;
-			$this->resCount = 0;
-		}
-		$this->resActive = false;
+        $nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
 
-		if (!$this->skipActive) {
-			$this->skipCount = array();
-		}
-	}
+        if (isset($this->config->publicSkipAmount[$nbSkips]) && $this->config->publicSkipAmount[$nbSkips] != -1 && $nbSkips < count($this->config->publicSkipAmount)) {
+            $amount = $this->config->publicSkipAmount[$nbSkips];
 
-	public function onEndMatch($rankings, $winnerTeamOrMap)
-	{
-		ResSkipButtons::EraseAll();
-	}
+            if (!empty($this->donateConfig->toLogin))
+                $toLogin = $this->donateConfig->toLogin;
+            else
+                $toLogin = $this->storage->serverLogin;
 
-	public function onBeginMatch()
-	{
-		$this->countMapRestart();
-		$this->showResSkip(null);
-	}
+            $bill = $this->exp_startBill($login, $toLogin, $amount, __("Are you sure you want to skip this map", $login), array($this, 'publicSkipMap'));
+            $bill->setSubject('map_skip');
+        } else {
+            if (empty($this->config->publicSkipAmount) || $this->config->publicSkipAmount[0] == -1) {
+                $this->exp_chatSendServerMessage($this->msg_skipUnused, $login);
+            } else {
+                $this->exp_chatSendServerMessage($this->msg_skipMax, $login);
+            }
+        }
+    }
 
-	public function exp_onUnload()
-	{
-		ResSkipButtons::EraseAll();
-	}
+    private function countMapRestart()
+    {
+        if ($this->storage->currentMap->uId == $this->lastMapUid)
+            $this->resCount++;
+        else {
+            $this->lastMapUid = $this->storage->currentMap->uId;
+            $this->resCount = 0;
+        }
+        $this->resActive = false;
+
+        if (!$this->skipActive) {
+            $this->skipCount = array();
+        }
+    }
+
+    public function onEndMatch($rankings, $winnerTeamOrMap)
+    {
+        ResSkipButtons::EraseAll();
+    }
+
+    public function onBeginMatch()
+    {
+        $this->countMapRestart();
+        $this->showResSkip(null);
+    }
+
+    public function exp_onUnload()
+    {
+        ResSkipButtons::EraseAll();
+    }
 
 }

@@ -7,7 +7,8 @@ namespace ManiaLivePlugins\eXpansion\ESLcup\Gui\Widgets;
  *
  * @author Reaby
  */
-class Scoretable extends \ManiaLive\Gui\Window {
+class Scoretable extends \ManiaLive\Gui\Window
+{
 
     protected $background, $rankingslabel, $pointslimit, $gamemode, $next, $prev;
     protected $frame;
@@ -19,7 +20,8 @@ class Scoretable extends \ManiaLive\Gui\Window {
     private $actionNext;
     private $actionPrev;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         $this->sizeX = 165;
         $this->sizeY = 90;
 
@@ -76,7 +78,8 @@ class Scoretable extends \ManiaLive\Gui\Window {
         $this->addComponent($this->frame);
     }
 
-    public function next($login) {
+    public function next($login)
+    {
 
         $newstart = ($this->page + 1) * $this->itemsOnPage;
         if ($newstart < count($this->scores)) {
@@ -86,7 +89,8 @@ class Scoretable extends \ManiaLive\Gui\Window {
         $this->redraw($login);
     }
 
-    public function prev($login) {
+    public function prev($login)
+    {
         $this->page--;
         if ($this->page < 0)
             $this->page = 0;
@@ -94,7 +98,8 @@ class Scoretable extends \ManiaLive\Gui\Window {
         $this->redraw($login);
     }
 
-    protected function onDraw() {
+    protected function onDraw()
+    {
         $this->next->setHidden(false);
         $this->prev->setHidden(false);
 
@@ -137,7 +142,8 @@ class Scoretable extends \ManiaLive\Gui\Window {
     }
 
     public
-            function setData($scores, $limit, $winners) {
+    function setData($scores, $limit, $winners)
+    {
         $this->scores = $scores;
         $this->limit = $limit;
         $this->winners = $winners;

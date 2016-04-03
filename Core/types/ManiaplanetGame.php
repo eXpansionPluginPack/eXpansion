@@ -6,7 +6,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types;
  *
  * @author Reaby
  */
-class ManiaplanetGame {
+class ManiaplanetGame
+{
 
     const SHOOTMANIA = "ShootMania";
     const TRACKMANIA = "TrackMania";

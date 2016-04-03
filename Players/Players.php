@@ -104,4 +104,5 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         PlayerList::EraseAll();
     }
 }
+
 ?>

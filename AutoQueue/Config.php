@@ -2,9 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\AutoQueue;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
 
-   
 
 }
 

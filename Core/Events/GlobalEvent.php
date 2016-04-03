@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Events;
 
-class GlobalEvent extends \ManiaLive\Event\Event {
+class GlobalEvent extends \ManiaLive\Event\Event
+{
 
     const ON_ADMIN_RESTART = 1;
     const ON_ADMIN_SKIP = 2;
@@ -11,14 +12,16 @@ class GlobalEvent extends \ManiaLive\Event\Event {
 
     protected $params;
 
-    function __construct($onWhat) {
+    function __construct($onWhat)
+    {
         parent::__construct($onWhat);
         $params = func_get_args();
         array_shift($params);
         $this->params = $params;
     }
 
-    function fireDo($listener) {
+    function fireDo($listener)
+    {
         $p = $this->params;
         switch ($this->onWhat) {
             case self::ON_ADMIN_RESTART:

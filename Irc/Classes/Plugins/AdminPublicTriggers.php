@@ -26,7 +26,8 @@ use ManiaLivePlugins\eXpansion\Irc\Config;
  *
  * @author Petri
  */
-class AdminPublicTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\IrcListener {
+class AdminPublicTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\IrcListener
+{
 
     /** @var IrcBot */
     private $irc;
@@ -38,45 +39,50 @@ class AdminPublicTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Irc
     private $storage;
     private $allowedLogins = Array();
 
-    public function __construct() {
-	$config = \ManiaLive\DedicatedApi\Config::getInstance();
-	$this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-	$this->storage = \ManiaLive\Data\Storage::getInstance();
+    public function __construct()
+    {
+        $config = \ManiaLive\DedicatedApi\Config::getInstance();
+        $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
+        $this->storage = \ManiaLive\Data\Storage::getInstance();
     }
 
-    public function irc_onConnect($connection) {
-	$this->irc = $connection;
+    public function irc_onConnect($connection)
+    {
+        $this->irc = $connection;
     }
 
-    public function irc_onDisconnect() {
-	
+    public function irc_onDisconnect()
+    {
+
     }
 
-    public function irc_onPrivateMessage($connection, $nick, $message) {
-	
+    public function irc_onPrivateMessage($connection, $nick, $message)
+    {
+
     }
 
-    public function irc_onPublicChat($connection, $channel, $nick, $message) {
+    public function irc_onPublicChat($connection, $channel, $nick, $message)
+    {
 
-	if (substr($message, 0, 1) == "!") {
-	    if (!in_array($connection->getIrcNick($nick), Config::getInstance()->allowedIrcLogins)) {
-		$this->irc->sendPublicChat("You are not allowed to use ! commands.");
-		return;
-	    }
-	    $string = substr($message, 1);
-	    $params = explode(" ", $string);
-	    $command = array_shift($params);
+        if (substr($message, 0, 1) == "!") {
+            if (!in_array($connection->getIrcNick($nick), Config::getInstance()->allowedIrcLogins)) {
+                $this->irc->sendPublicChat("You are not allowed to use ! commands.");
+                return;
+            }
+            $string = substr($message, 1);
+            $params = explode(" ", $string);
+            $command = array_shift($params);
 
-	    switch ($command) {
-		case "kick":
-		    try {
-			$this->connection->kick($params[0]);
-			$this->irc->sendPublicChat("Kicked " . $params[0]);
-		    } catch (\Exception $e) {
-			$this->irc->sendPublicChat("Failed to kick:" . $e->getMessage());
-		    }
-	    }
-	}
+            switch ($command) {
+                case "kick":
+                    try {
+                        $this->connection->kick($params[0]);
+                        $this->irc->sendPublicChat("Kicked " . $params[0]);
+                    } catch (\Exception $e) {
+                        $this->irc->sendPublicChat("Failed to kick:" . $e->getMessage());
+                    }
+            }
+        }
     }
 
 }

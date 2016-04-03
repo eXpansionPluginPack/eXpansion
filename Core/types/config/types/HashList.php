@@ -12,79 +12,79 @@ use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 class HashList extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
 {
 
-	private $keyType = null;
+    private $keyType = null;
 
-	private $type;
+    private $type;
 
-	public function setType(Variable $type)
-	{
-		$this->type = $type;
-	}
+    public function setType(Variable $type)
+    {
+        $this->type = $type;
+    }
 
-	public function getType()
-	{
-		return $this->type;
-	}
+    public function getType()
+    {
+        return $this->type;
+    }
 
-	public function setKeyType(Variable $type)
-	{
-		$this->keyType = $type;
-	}
+    public function setKeyType(Variable $type)
+    {
+        $this->keyType = $type;
+    }
 
-	public function getKeyType()
-	{
-		return $this->keyType;
-	}
+    public function getKeyType()
+    {
+        return $this->keyType;
+    }
 
-	public function setValue($key, $value)
-	{
-		if ($this->keyType != null && !$this->keyType->basicValueCheck($key)) {
-			return false;
-		}
-		if (!$this->type->basicValueCheck($value)) {
-			return false;
-		}
+    public function setValue($key, $value)
+    {
+        if ($this->keyType != null && !$this->keyType->basicValueCheck($key)) {
+            return false;
+        }
+        if (!$this->type->basicValueCheck($value)) {
+            return false;
+        }
 
-		$list = $this->getRawValue();
-		if ($list == null)
-			$list = array();
-		$list[$key] = $this->type->castValue($value);
+        $list = $this->getRawValue();
+        if ($list == null)
+            $list = array();
+        $list[$key] = $this->type->castValue($value);
 
-		return $this->setRawValue($list);
-	}
+        return $this->setRawValue($list);
+    }
 
-	public function getValue($key)
-	{
-		$list = $this->getRawValue();
-		if ($list == null)
-			$list = array();
+    public function getValue($key)
+    {
+        $list = $this->getRawValue();
+        if ($list == null)
+            $list = array();
 
-		return isset($list[$key]) ? $list[$key] : null;
-	}
+        return isset($list[$key]) ? $list[$key] : null;
+    }
 
-	public function getPreviewValues()
-	{
-		return implode(",", $this->getRawValue());
-	}
+    public function getPreviewValues()
+    {
+        return implode(",", $this->getRawValue());
+    }
 
-	/**
-	 * Removes the value at the index and shifts all elements in array to fill in the gap
-	 * 
-	 * @param int $index The index at which the value must be removed
-	 */
-	public function removeValue($index)
-	{
-		$array = $this->getRawValue();
-		$i = 0;
-		foreach ($array as $key => $value) {
-			if ($i == $index) {
-				unset($array[$key]);
-				break;
-			}
-		}
-		
-		$this->setRawValue($array);
-	}
+    /**
+     * Removes the value at the index and shifts all elements in array to fill in the gap
+     *
+     * @param int $index The index at which the value must be removed
+     */
+    public function removeValue($index)
+    {
+        $array = $this->getRawValue();
+        $i = 0;
+        foreach ($array as $key => $value) {
+            if ($i == $index) {
+                unset($array[$key]);
+                break;
+            }
+        }
+
+        $this->setRawValue($array);
+    }
 
 }
 

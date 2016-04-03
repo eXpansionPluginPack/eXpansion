@@ -7,4 +7,5 @@ class Config extends \ManiaLib\Utils\Singleton
 
     public $showOnlyAdmins = true;
 }
+
 ?>

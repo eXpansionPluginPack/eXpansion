@@ -13,11 +13,13 @@ namespace ManiaLivePlugins\eXpansion\Overlay_Positions\Gui\Widgets;
  *
  * @author Reaby
  */
-class PositionPanel extends \ManiaLive\Gui\Window {
+class PositionPanel extends \ManiaLive\Gui\Window
+{
 
     protected $frame, $label;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
 
         $this->label = new \ManiaLib\Gui\Elements\Label(40, 6);
         $this->label->setPosY(6);
@@ -30,7 +32,7 @@ class PositionPanel extends \ManiaLive\Gui\Window {
         $this->bg->setSize(40, 6);
         $this->bg->setPosX(-3);
         $this->addComponent($this->bg);
-        
+
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
         $this->addComponent($this->frame);
@@ -39,7 +41,8 @@ class PositionPanel extends \ManiaLive\Gui\Window {
     /**
      * @param \ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer[] $expPlayer
      */
-    public function setData($expPlayer, $gamemode, $maxpoints) {
+    public function setData($expPlayer, $gamemode, $maxpoints)
+    {
         $this->frame->clearComponents();
         $x = 0;
         $total = 0;

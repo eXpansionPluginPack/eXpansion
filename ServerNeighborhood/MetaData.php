@@ -16,37 +16,37 @@ use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Tools: Server Neighborhood");
-		$this->setDescription('Connects to other server to show information');
-		$this->setGroups(array("Widgets", "Connectivity", "Tools"));
-		$config = Config::getInstance();
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Tools: Server Neighborhood");
+        $this->setDescription('Connects to other server to show information');
+        $this->setGroups(array("Widgets", "Connectivity", "Tools"));
+        $config = Config::getInstance();
 
-		$var = new Boolean("snwidget_isDockable", "Display Widget as Dock", $config, false, false);
-		$var->setDefaultValue(true);
-		$this->registerVariable($var);
+        $var = new Boolean("snwidget_isDockable", "Display Widget as Dock", $config, false, false);
+        $var->setDefaultValue(true);
+        $this->registerVariable($var);
 
 
-		$var = new TypeInt('refresh_interval', "Refresh the Panel every [INT] seconds", $config, Variable::SCOPE_GLOBAL, false);
-		$var->setDefaultValue(20);
-		$this->registerVariable($var);
+        $var = new TypeInt('refresh_interval', "Refresh the Panel every [INT] seconds", $config, Variable::SCOPE_GLOBAL, false);
+        $var->setDefaultValue(20);
+        $this->registerVariable($var);
 
-		$var = new TypeInt('nbElement', "Number of element in Widget", $config, Variable::SCOPE_GLOBAL, false);
-		$var->setDefaultValue(5);
-		$this->registerVariable($var);
+        $var = new TypeInt('nbElement', "Number of element in Widget", $config, Variable::SCOPE_GLOBAL, false);
+        $var->setDefaultValue(5);
+        $this->registerVariable($var);
 
-		$var = new TypeString('storing_path', "Path to store server information", $config, Variable::SCOPE_SERVER, false);
-		$var->setDefaultValue("../");
-		$this->registerVariable($var);
+        $var = new TypeString('storing_path', "Path to store server information", $config, Variable::SCOPE_SERVER, false);
+        $var->setDefaultValue("../");
+        $this->registerVariable($var);
 
-		$type = new TypeString("", "", null);
-		$var = new BasicList('servers', "Path to each server information", $config, Variable::SCOPE_SERVER, false);
-		$var->setType($type);
-		$var->setDefaultValue(array());
-		$this->registerVariable($var);
+        $type = new TypeString("", "", null);
+        $var = new BasicList('servers', "Path to each server information", $config, Variable::SCOPE_SERVER, false);
+        $var->setType($type);
+        $var->setDefaultValue(array());
+        $this->registerVariable($var);
 
-	}
+    }
 
 }

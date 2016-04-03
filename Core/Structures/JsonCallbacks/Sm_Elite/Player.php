@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Structures\JsonCallbacks;
 
-class Player extends ManiaLiveDedicatedApiStructuresAbstractStructure {
+class Player extends ManiaLiveDedicatedApiStructuresAbstractStructure
+{
 
     /** @var string */
     public $login = "";
@@ -30,8 +31,8 @@ class Player extends ManiaLiveDedicatedApiStructuresAbstractStructure {
 
     /** @var Score */
     public $score = null;
-    
+
     /** @var Array[][][] */
     public $position = array();
-    
+
 }

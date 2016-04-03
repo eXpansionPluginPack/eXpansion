@@ -13,29 +13,35 @@ namespace ManiaLivePlugins\eXpansion\ScriptTester\Gui;
  *
  * @author Petri
  */
-class TesterScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script{
+class TesterScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script
+{
 
     private $str;
 
-    public function __construct($script) {
-	$this->str = $script;
+    public function __construct($script)
+    {
+        $this->str = $script;
     }
 
-   
-    public function getlibScript($win, $component) {
-	return "";
+
+    public function getlibScript($win, $component)
+    {
+        return "";
     }
 
-    public function getDeclarationScript($win, $component) {
-	return "";
+    public function getDeclarationScript($win, $component)
+    {
+        return "";
     }
 
-    public function getEndScript($win) {
-	return $this->str;
+    public function getEndScript($win)
+    {
+        return $this->str;
     }
 
-    public function getWhileLoopScript($win, $component) {
-	return "";
+    public function getWhileLoopScript($win, $component)
+    {
+        return "";
     }
 
 }

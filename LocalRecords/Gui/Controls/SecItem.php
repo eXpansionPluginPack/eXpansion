@@ -22,8 +22,8 @@ class SecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     function __construct($indexNumber, $login, $rank, $widths, LocalBase $localBase)
     {
         $this->widths = $widths;
-        $this->sizeY  = 8;
-        $this->bg     = new ListBackGround($indexNumber, 100, 8);
+        $this->sizeY = 8;
+        $this->bg = new ListBackGround($indexNumber, 100, 8);
         $this->addComponent($this->bg);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();

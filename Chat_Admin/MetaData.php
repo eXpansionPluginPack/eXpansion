@@ -16,12 +16,12 @@ namespace ManiaLivePlugins\eXpansion\Chat_Admin;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Core: Chat based administartion");
-		$this->setDescription("Adds chat based admin commands for you to use");
-		$this->setGroups(array('Core', 'Chat'));
-	}
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Core: Chat based administartion");
+        $this->setDescription("Adds chat based admin commands for you to use");
+        $this->setGroups(array('Core', 'Chat'));
+    }
 
 }

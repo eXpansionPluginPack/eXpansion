@@ -10,14 +10,16 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  *
  * @author De Cramer Oliver
  */
-abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     private $frame;
     private $labels;
     private $pager;
     private $items = array();
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
 
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
@@ -43,34 +45,37 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
             $i++;
         }
     }
-    
-    public function setPagerPosition($posX, $posY){
+
+    public function setPagerPosition($posX, $posY)
+    {
         $this->pager->setPosX($posX + 5);
         $this->pager->setPosY($posY);
-        
+
         $this->frame->setPosX($posX + 5);
         $this->frame->setPosY($posY + 2);
-        
+
         $this->onResize($this->getSizeX(), $this->getSizeY());
     }
 
-    public function onResize($oldX, $oldY) {
+    public function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
-        
+
         $sizeX = $this->getSizeX() - $this->pager->getPosX() + 2;
         $this->pager->setSize($sizeX, $this->getSizeY() - 15 - $this->pager->getPosY());
-        
+
         $scaledSizes = Gui::getScaledSize($this->getWidths(), $sizeX);
         $i = 0;
         foreach ($scaledSizes as $x) {
             $this->labels[$i]->setSizeX($x);
             $i++;
-        }        
+        }
         foreach ($this->items as $item)
             $item->setSizeX($sizeX);
     }
 
-    public function onShow() {
+    public function onShow()
+    {
         $i = 0;
         foreach ($this->labels as $label) {
             $label->setText(__($this->getLabel($i), $this->getRecipient()));
@@ -78,7 +83,8 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
         }
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         foreach ($this->items as $item) {
             $item->erase();
         }
@@ -92,14 +98,16 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
     abstract protected function getWidths();
 
     abstract protected function getLabel($i);
-    
+
     abstract protected function getKeys();
-    
-    protected function getFormaters(){
+
+    protected function getFormaters()
+    {
         return array();
     }
-    
-    public function populateList($data) {
+
+    public function populateList($data)
+    {
         $x = 0;
         $login = $this->getRecipient();
 

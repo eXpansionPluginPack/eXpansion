@@ -10,12 +10,12 @@ namespace ManiaLivePlugins\eXpansion\Widgets_ServerInfo;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Widget: Server infos");
-		$this->setDescription("Provides server infos widget");
-		$this->setGroups(array('Widgets'));
-	}
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Widget: Server infos");
+        $this->setDescription("Provides server infos widget");
+        $this->setGroups(array('Widgets'));
+    }
 
 }

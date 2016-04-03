@@ -42,15 +42,16 @@ interface PlayerEventListener
     public function onPlayerPositionChange(ExpPlayer $player, $oldPos, $newPos);
 
     /**
-     * @param  ExpPlayer[]  $player array of logins
+     * @param  ExpPlayer[] $player array of logins
      */
     public function onPlayerGiveup(ExpPlayer $player);
 
     /** @param ExpPlayer[] $playerPositions newly calculated playerPositions */
     public function onPlayerNewPositions($playerPositions);
-    
-    /** @param PlayerNetInfo[] $players  */
+
+    /** @param PlayerNetInfo[] $players */
     public function onPlayerNetLost($players);
 }
+
 ?>
 

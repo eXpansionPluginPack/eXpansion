@@ -10,16 +10,16 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Widget: Top Info panel");
-		$this->setDescription("Top infos panel");
-		$this->setGroups(array('Widgets'));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Widget: Top Info panel");
+        $this->setDescription("Top infos panel");
+        $this->setGroups(array('Widgets'));
 
-		$this->addTitleSupport("TM");
-		$this->addTitleSupport("Trackmania");
+        $this->addTitleSupport("TM");
+        $this->addTitleSupport("Trackmania");
 
-	}
+    }
 
 }

@@ -7,10 +7,12 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 /**
  * @author Reaby
  */
-class Animation extends Script {
+class Animation extends Script
+{
 
-    function __construct() {
-	parent::__construct("Gui/Script_libraries/Animation");
+    function __construct()
+    {
+        parent::__construct("Gui/Script_libraries/Animation");
     }
 
 }

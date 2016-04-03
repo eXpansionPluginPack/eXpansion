@@ -59,7 +59,7 @@ class MapInfo extends Window
         $this->frame->clearComponents();
         $this->frame2->clearComponents();
 
-        $map           = ArrayOfObj::getObjbyPropValue($storage->maps, "uId", $uid);
+        $map = ArrayOfObj::getObjbyPropValue($storage->maps, "uId", $uid);
         $map->{"nick"} = "n/a";
 
         if ($map === false) {
@@ -80,23 +80,23 @@ class MapInfo extends Window
         $model = "commonCar";
         try {
             $connection = Singletons::getInstance()->getDediConnection();
-            $mapPath    = $connection->getMapsDirectory();
-            $gbxInfo    = Map::read($mapPath.DIRECTORY_SEPARATOR.$map->fileName);
+            $mapPath = $connection->getMapsDirectory();
+            $gbxInfo = Map::read($mapPath . DIRECTORY_SEPARATOR . $map->fileName);
             if ($gbxInfo) {
-                $model           = $gbxInfo->playerModel;
-                $map->mood       = $gbxInfo->mood;
-                $map->nbLaps     = $gbxInfo->nbLaps;
+                $model = $gbxInfo->playerModel;
+                $map->mood = $gbxInfo->mood;
+                $map->nbLaps = $gbxInfo->nbLaps;
                 $map->authorTime = $gbxInfo->authorTime;
                 $map->silverTime = $gbxInfo->silverTime;
                 $map->bronzeTime = $gbxInfo->bronzeTime;
                 //   $map->nbCheckpoints = $gbxInfo->nbCheckpoints;
-                $map->{"nick"}   = $gbxInfo->author->nickname;
+                $map->{"nick"} = $gbxInfo->author->nickname;
             }
         } catch (Exception $ex) {
             \ManiaLive\Utilities\Console::println("Info: Map not found or error while reading gbx info for map.");
         }
 
-        $y-=5;
+        $y -= 5;
         $mapData = array("fileName" => "File Name", "name" => "Name", "author" => "Author", "nick" => "Author Nick",
             "mood" => "Mood", "mapStyle" => "Map Style", "mapType" => "Map Type", "environnement" => "Environment");
 
@@ -110,7 +110,7 @@ class MapInfo extends Window
             $lbl->setPosition($x * 2, $y);
             $lbl->setText($map->{$field});
             $this->frame->addComponent($lbl);
-            $y-=5;
+            $y -= 5;
         }
 
         // player model
@@ -127,18 +127,18 @@ class MapInfo extends Window
         $y = 0;
 
 // add time
-        $lbl  = new Label($x, 6);
+        $lbl = new Label($x, 6);
         $lbl->setPosition($x, $y);
         $lbl->setText("Add Date");
         $this->frame2->addComponent($lbl);
-        $lbl  = new Label("", $x, 6);
+        $lbl = new Label("", $x, 6);
         $lbl->setPosition($x * 2, $y);
         $date = new \DateTime(now);
-        $date->setTimestamp((int) $map->addTime);
+        $date->setTimestamp((int)$map->addTime);
 
         $lbl->setText($date->format("d.m.Y"));
         $this->frame2->addComponent($lbl);
-        $y-=5;
+        $y -= 5;
 
         // time datas
         $mapData = array("authorTime" => "Author Time", "goldTime" => "Gold Time", "silverTime" => "Silver Time", "bronzeTime" => "Bronze Time");
@@ -151,7 +151,7 @@ class MapInfo extends Window
             $lbl->setPosition($x * 2, $y);
             $lbl->setText(Time::fromTM($map->{$field}));
             $this->frame2->addComponent($lbl);
-            $y-=5;
+            $y -= 5;
         }
 
         // integer values
@@ -165,7 +165,7 @@ class MapInfo extends Window
             $lbl->setPosition($x * 2, $y);
             $lbl->setText(strval($map->{$field}));
             $this->frame2->addComponent($lbl);
-            $y-=5;
+            $y -= 5;
         }
         return true;
     }

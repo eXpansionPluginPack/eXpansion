@@ -26,12 +26,13 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts;
 use ManiaLivePlugins\eXpansion\Gui\Script_libraries\TimeToText;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 
-class CommonScript extends Script {
+class CommonScript extends Script
+{
 
 
     function __construct($name)
     {
-	parent::__construct($name);
-	$this->addLibrary(new TimeToText());
+        parent::__construct($name);
+        $this->addLibrary(new TimeToText());
     }
 }

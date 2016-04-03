@@ -6,11 +6,12 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 
-class GuestPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class GuestPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     private $bg;
     private $removeButton;
- 
+
     private $login;
     private $nickname;
 
@@ -18,9 +19,10 @@ class GuestPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control {
 
     private $frame;
 
-    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login) {
+    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login)
+    {
         $sizeX = 80;
-        $sizeY = 6;        
+        $sizeY = 6;
         $this->player = $player;
 
         $this->removeAction = $this->createAction(array($this, 'removeGuest'), $player->login);
@@ -32,7 +34,7 @@ class GuestPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->login = new \ManiaLib\Gui\Elements\Label(20, 4);
         $this->login->setAlign('left', 'center');
         $this->login->setText($player->login);
-  
+
         $this->frame->addComponent($this->login);
 
 
@@ -56,22 +58,27 @@ class GuestPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY) {
-        
+    protected function onResize($oldX, $oldY)
+    {
+
     }
 
-    function onDraw() {
-        
+    function onDraw()
+    {
+
     }
 
-    function __destruct() {
-      
+    function __destruct()
+    {
+
     }
 
-    public function removeGuest($login, $target) {
+    public function removeGuest($login, $target)
+    {
         AdminGroups::getInstance()->adminCmd($login, 'player remove guest ' . $target);
     }
 
 }
+
 ?>
 

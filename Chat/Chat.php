@@ -59,7 +59,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->registerChatCommand("chat", "cmd_chat", 1, true);
             $this->registerChatCommand("chat", "cmd_chat", 0, true);
         } catch (\Exception $e) {
-            $this->console("[eXpansion|Chat] Couldn't initialize chat. Error from server: ".$e->getMessage());
+            $this->console("[eXpansion|Chat] Couldn't initialize chat. Error from server: " . $e->getMessage());
             $this->enabled = false;
         }
 
@@ -69,8 +69,8 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private function loadProfanityList()
     {
         $ignore = array(".", "..", "LICENSE", "README.md", "USERS.md", ".git");
-        $path   = realpath(APP_ROOT).DIRECTORY_SEPARATOR."vendor".DIRECTORY_SEPARATOR."shutterstock".DIRECTORY_SEPARATOR."badwords";
-        
+        $path = realpath(APP_ROOT) . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "shutterstock" . DIRECTORY_SEPARATOR . "badwords";
+
         if (is_dir($path)) {
 
             $this->console("[Chat] loading profanity filter words...");
@@ -87,7 +87,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function applyFilter($text)
     {
-        $out   = array();
+        $out = array();
         $words = explode(" ", $text);
         foreach ($words as $word) {
             if (in_array(strtolower($word), $this->badWords)) {
@@ -144,10 +144,10 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function onPlayerConnect($login, $isSpectator)
     {
-        $player  = $this->storage->getPlayerObject($login);
+        $player = $this->storage->getPlayerObject($login);
         $nickLog = \ManiaLib\Utils\Formatting::stripStyles($player->nickName);
         \ManiaLive\Utilities\Logger::getLog('chat')->write(
-            " (".$player->iPAddress.") [".$login."] Connect with nickname ".$nickLog
+            " (" . $player->iPAddress . ") [" . $login . "] Connect with nickname " . $nickLog
         );
     }
 
@@ -162,7 +162,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $player = $this->storage->getPlayerObject($login);
         if (empty($player)) return;
         \ManiaLive\Utilities\Logger::getLog('chat')->write(
-            " (".$player->iPAddress.") [".$login."] Disconnected"
+            " (" . $player->iPAddress . ") [" . $login . "] Disconnected"
         );
     }
 
@@ -208,13 +208,13 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if ($playerUid != 0 && substr($text, 0, 1) != "/" && $this->enabled) {
             $config = Config::getInstance();
-            $force  = "";
+            $force = "";
             if ($config->allowMPcolors) {
                 if (strstr($source_player->nickName, '$>')) {
 
-                    $pos   = strpos($source_player->nickName, '$>');
+                    $pos = strpos($source_player->nickName, '$>');
                     $color = substr($source_player->nickName, $pos);
-                    if (substr($nick, -1) == '$') $nick  = substr($nick, 0, -1);
+                    if (substr($nick, -1) == '$') $nick = substr($nick, 0, -1);
                     if ($color != '$>$') $force = str_replace('$>', "", $color);
                 }
             }
@@ -222,12 +222,12 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             $source_player = $this->storage->getPlayerObject($login);
             if ($source_player == null) return;
-            $nick          = $source_player->nickName;
-            $nick          = str_ireplace('$w', '', $nick);
-            $nick          = str_ireplace('$z', '$z$s', $nick);
+            $nick = $source_player->nickName;
+            $nick = str_ireplace('$w', '', $nick);
+            $nick = str_ireplace('$z', '$z$s', $nick);
             // fix for chat...
-            $nick          = str_replace('$<', '', $nick);
-            $text          = str_replace('$<', '', $text);
+            $nick = str_replace('$<', '', $nick);
+            $text = str_replace('$<', '', $text);
 
             if ($this->config->publicChatActive || AdminGroups::hasPermission($login, Permission::chat_onDisabled)) {
 
@@ -240,7 +240,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                             $color = $config->otherServerChatColor;
                         }
                         $this->connection->chatSendServerMessage(
-                            $config->adminSign.'$fff$<'.$nick.'$z$s$> '.$config->chatSeparator.$color.$force.$text
+                            $config->adminSign . '$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text
                         );
                     } else {
                         $color = $config->publicChatColor;
@@ -248,11 +248,11 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                             $color = $config->otherServerChatColor;
                         }
 
-                        $this->connection->chatSendServerMessage('$fff$<'.$nick.'$z$s$> '.$config->chatSeparator.$color.$force.$text);
+                        $this->connection->chatSendServerMessage('$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text);
                     }
                     $nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);
 
-                    \ManiaLive\Utilities\Logger::getLog('chat')->write("[".$login."] ".$nickLog." - ".$text);
+                    \ManiaLive\Utilities\Logger::getLog('chat')->write("[" . $login . "] " . $nickLog . " - " . $text);
                 } catch (\Exception $e) {
                     $this->console(
                         __('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage())
@@ -267,11 +267,11 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     if (in_array($login, $recepient)) {
 
 
-                        $color   = $config->otherServerChatColor;
-                        $this->connection->chatSendServerMessage('$fff$<'.$nick.'$z$s$> '.$config->chatSeparator.$color.$force.$text,
+                        $color = $config->otherServerChatColor;
+                        $this->connection->chatSendServerMessage('$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text,
                             $recepient);
                         $nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);
-                        \ManiaLive\Utilities\Logger::getLog('chat')->write("[".$login."] ".$nickLog." - ".$text);
+                        \ManiaLive\Utilities\Logger::getLog('chat')->write("[" . $login . "] " . $nickLog . " - " . $text);
                     } else {
                         $this->exp_chatSendServerMessage("#error#Chat is disabled at at the moment!!! You can chat when you retire or go spectator. You may still use PM messages",
                             $login, array());
@@ -296,4 +296,5 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->connection->chatEnableManualRouting(false);
     }
 }
+
 ?>

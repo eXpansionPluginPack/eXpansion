@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\ManiaExchange;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
 
     public $mxVote_enable = true;   // allow players/admins to queue tracks from MX
     public $mxVote_ratio = .5;      // vote ratio required to pass, 0.00 - 1.00

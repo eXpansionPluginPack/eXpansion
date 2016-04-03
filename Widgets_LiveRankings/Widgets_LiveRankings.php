@@ -8,11 +8,11 @@ use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
-    public static $me        = null;
+    public static $me = null;
     public static $secondMap = false;
-    private $forceUpdate     = false;
-    private $needUpdate      = false;
-    private $widgetIds       = array();
+    private $forceUpdate = false;
+    private $needUpdate = false;
+    private $widgetIds = array();
     public static $raceOn;
     public static $roundPoints;
 
@@ -46,8 +46,8 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     public function updateLivePanel($login = null)
     {
         Gui\Widgets\LivePanel::$connection = $this->connection;
-        $gui                               = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
-        $localRecs                         = LivePanel::GetAll();
+        $gui = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
+        $localRecs = LivePanel::GetAll();
         if ($login == null) {
             //Gui\Widgets\LivePanel::EraseAll();
             $panelMain = Gui\Widgets\LivePanel::Create($login);
@@ -68,7 +68,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             $localRecs = LivePanel2::GetAll();
             if ($login == null) {
                 //Gui\Widgets\LivePanel2::EraseAll();
-                $panelScore                    = Gui\Widgets\LivePanel2::Create($login);
+                $panelScore = Gui\Widgets\LivePanel2::Create($login);
                 $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
                 $panelScore->setVisibleLayer("scorestable");
                 $panelScore->setSizeX($this->panelSizeX);
@@ -113,11 +113,11 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
         if ($wasWarmUp) {
-            self::$raceOn      = false;
+            self::$raceOn = false;
             $this->forceUpdate = true;
             $this->updateLivePanel();
-            self::$secondMap   = true;
-            self::$raceOn      = true;
+            self::$secondMap = true;
+            self::$raceOn = true;
         } else {
             $this->hideLivePanel();
         }
@@ -138,30 +138,30 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         }
     }
 
-      public function onBeginMap($map, $warmUp, $matchContinuation)
-      {
-      if (self::$raceOn == True) return;
+    public function onBeginMap($map, $warmUp, $matchContinuation)
+    {
+        if (self::$raceOn == True) return;
 
-      $this->getRoundsPoints();
-      self::$raceOn      = false;
-      $this->forceUpdate = true;
-      $this->hideLivePanel();
-      $this->updateLivePanel();
-      self::$secondMap   = true;
-      self::$raceOn      = true;
-      }
+        $this->getRoundsPoints();
+        self::$raceOn = false;
+        $this->forceUpdate = true;
+        $this->hideLivePanel();
+        $this->updateLivePanel();
+        self::$secondMap = true;
+        self::$raceOn = true;
+    }
 
     public function onBeginMatch()
     {
         if (self::$raceOn == True) return;
 
-            self::$raceOn      = false;
-            $this->forceUpdate = true;
-            $this->hideLivePanel();
-            $this->updateLivePanel();
-            self::$secondMap   = true;
-            self::$raceOn      = true;
-        }
+        self::$raceOn = false;
+        $this->forceUpdate = true;
+        $this->hideLivePanel();
+        $this->updateLivePanel();
+        self::$secondMap = true;
+        self::$raceOn = true;
+    }
 
     public function onEndRound()
     {
@@ -195,4 +195,5 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         Gui\Widgets\LivePanel2::EraseAll();
     }
 }
+
 ?>

@@ -8,7 +8,8 @@ namespace ManiaLivePlugins\eXpansion\Core;
  *
  * @author oliverde8
  */
-class ColorParser extends \ManiaLib\Utils\Singleton {
+class ColorParser extends \ManiaLib\Utils\Singleton
+{
 
     /**
      * Color codes
@@ -24,12 +25,13 @@ class ColorParser extends \ManiaLib\Utils\Singleton {
      *
      * @return string
      */
-    public function parseColors($text) {
-	foreach ($this->codes as $code => $obj) {
-	    $key = $obj[1];
-	    $text = str_replace('#' . $code . '#', '$z$s' . $obj[0]->$key, $text);
-	}
-	return $text;
+    public function parseColors($text)
+    {
+        foreach ($this->codes as $code => $obj) {
+            $key = $obj[1];
+            $text = str_replace('#' . $code . '#', '$z$s' . $obj[0]->$key, $text);
+        }
+        return $text;
     }
 
     /**
@@ -39,29 +41,31 @@ class ColorParser extends \ManiaLib\Utils\Singleton {
      * @param string $value example: $value = $ColorParser->getColor("#record#");
      * @return string color code, example "$fff"
      */
-    public function getColor($value) {
-	$color = "";
-	$value = str_replace("#", "", $value);
-	if (array_key_exists($value, $this->codes)) {
-	    $obj = $this->codes[$value];
-	    $key = $obj[1];
-	    $color = $obj[0]->$key;
-	}
-	return $color;
+    public function getColor($value)
+    {
+        $color = "";
+        $value = str_replace("#", "", $value);
+        if (array_key_exists($value, $this->codes)) {
+            $obj = $this->codes[$value];
+            $key = $obj[1];
+            $color = $obj[0]->$key;
+        }
+        return $color;
     }
 
     /**
      * Loads the default color codes that are defined in the config
      */
-    public function __construct() {
-	foreach (Config::getInstance() as $name => $value) {
-	    $key = $name;
-	    $names = explode("_", $name);
-	    $name = array_shift($names);
-	    if ($name == "Colors") {
-		$this->registerCode(implode("_", $names), Config::getInstance(), $key);
-	    }
-	}
+    public function __construct()
+    {
+        foreach (Config::getInstance() as $name => $value) {
+            $key = $name;
+            $names = explode("_", $name);
+            $name = array_shift($names);
+            if ($name == "Colors") {
+                $this->registerCode(implode("_", $names), Config::getInstance(), $key);
+            }
+        }
     }
 
     /**
@@ -74,8 +78,9 @@ class ColorParser extends \ManiaLib\Utils\Singleton {
      * @param Config $obj The configuration object that contains the variable to use(allows the color code to be changed live)
      * @param String $key The key in the object that contains this color code
      */
-    public function registerCode($token, $obj, $key) {
-	$this->codes[$token] = array($obj, $key);
+    public function registerCode($token, $obj, $key)
+    {
+        $this->codes[$token] = array($obj, $key);
     }
 
 }

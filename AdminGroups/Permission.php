@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
-class Permission {
+class Permission
+{
 
     const admingroups_onlyOwnGroup = 'admingroups_onlyOwnGroup';
     const admingroups_adminAllGroups = "admingroups_adminAllGroups";
@@ -16,7 +17,7 @@ class Permission {
     const player_kick = 'player_kick';
     const player_guest = 'player_guest';
     const player_changeTeam = 'player_changeTeam';
-    
+
     //concerning Server Settings
     const server_admin = 'server_admin';
     const server_stopDedicated = 'server_stopDedicated';
@@ -55,16 +56,16 @@ class Permission {
     const map_removeMap = 'map_removeMap';
     const map_jukebox_admin = "map_jukebox_admin";
     const map_jukebox_free = "map_jukebox_free";
-    
+
     // special permissions
     const team_balance = 'team_balance';
-    
+
     const chat_adminChannel = "chat_adminchat";
     const chat_onDisabled = "chat_onDisabled";
     const quiz_admin = "quiz_admin";
-    
+
     const localRecrods_delete = 'localRecords_delete';
-    
+
 }
 
 ?>

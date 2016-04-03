@@ -10,7 +10,8 @@ use ManiaLive\Gui\ActionHandler;
 use ManiaLib\Utils\Formatting;
 use ManiaLivePlugins\eXpansion\Gui\Controls\Playeritem;
 
-class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     private $pager;
     private $connection;
@@ -19,29 +20,33 @@ class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $controller;
     private $items = array();
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
-	
+
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
-	
+
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY);
         $this->pager->setStretchContentX($this->sizeX);
         $this->pager->setPosition(0, 4);
     }
 
-    function onShow() {
+    function onShow()
+    {
 
     }
 
-    function populateList($callback, $text = "") {
+    function populateList($callback, $text = "")
+    {
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         foreach ($this->items as $item)
             $item->erase();
@@ -50,7 +55,7 @@ class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $x = 0;
         $login = $this->getRecipient();
-	//for($i =0; $i < 100; $i++){
+        //for($i =0; $i < 100; $i++){
         foreach ($this->storage->players as $player) {
 
             if ($player->login != $this->getRecipient()) {
@@ -59,7 +64,7 @@ class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
                 $x++;
             }
         }
-	//}
+        //}
         foreach ($this->storage->spectators as $player) {
             if ($player->login != $this->getRecipient()) {
                 $this->items[$x] = new Playeritem($x, $player, $callback, $text);
@@ -69,15 +74,18 @@ class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    function setMessage($message) {
+    function setMessage($message)
+    {
         $this->message = $message;
     }
 
-    function setController($obj) {
+    function setController($obj)
+    {
         $this->controller = $obj;
     }
 
-    function destroy() {
+    function destroy()
+    {
         foreach ($this->items as $item)
             $item->erase();
 

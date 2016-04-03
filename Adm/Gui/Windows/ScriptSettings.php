@@ -9,7 +9,8 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
 use ManiaLive\Gui\ActionHandler;
 
-class ScriptSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class ScriptSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     private $pager;
 
@@ -24,91 +25,98 @@ class ScriptSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $actionOk;
     private $actionCancel;
 
-    protected function onConstruct() {
-	parent::onConstruct();
-	$login = $this->getRecipient();
-	$config = \ManiaLive\DedicatedApi\Config::getInstance();
-	$this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-	$this->storage = \ManiaLive\Data\Storage::getInstance();
+    protected function onConstruct()
+    {
+        parent::onConstruct();
+        $login = $this->getRecipient();
+        $config = \ManiaLive\DedicatedApi\Config::getInstance();
+        $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
+        $this->storage = \ManiaLive\Data\Storage::getInstance();
 
-	$this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
-	$this->pager->setPosX(5);
-	$this->mainFrame->addComponent($this->pager);
-	$this->actionOk = $this->createAction(array($this, "Ok"));
-	$this->actionCancel = $this->createAction(array($this, "Cancel"));
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pager->setPosX(5);
+        $this->mainFrame->addComponent($this->pager);
+        $this->actionOk = $this->createAction(array($this, "Ok"));
+        $this->actionCancel = $this->createAction(array($this, "Cancel"));
 
-	$this->ok = new OkButton();
-	$this->ok->colorize("0d0");
-	$this->ok->setText(__("Apply", $login));
-	$this->ok->setAction($this->actionOk);
-	$this->mainFrame->addComponent($this->ok);
+        $this->ok = new OkButton();
+        $this->ok->colorize("0d0");
+        $this->ok->setText(__("Apply", $login));
+        $this->ok->setAction($this->actionOk);
+        $this->mainFrame->addComponent($this->ok);
 
-	$this->cancel = new OkButton();
-	$this->cancel->setText(__("Cancel", $login));
-	$this->cancel->setAction($this->actionCancel);
-	$this->mainFrame->addComponent($this->cancel);
+        $this->cancel = new OkButton();
+        $this->cancel->setText(__("Cancel", $login));
+        $this->cancel->setAction($this->actionCancel);
+        $this->mainFrame->addComponent($this->cancel);
     }
 
-    function onResize($oldX, $oldY) {
-	parent::onResize($oldX, $oldY);
-	$this->pager->setSize($this->sizeX-5, $this->sizeY - 8);
-	$this->pager->setStretchContentX($this->sizeX);
-	$this->ok->setPosition($this->sizeX - 38, -$this->sizeY + 6);
-	$this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
+    function onResize($oldX, $oldY)
+    {
+        parent::onResize($oldX, $oldY);
+        $this->pager->setSize($this->sizeX - 5, $this->sizeY - 8);
+        $this->pager->setStretchContentX($this->sizeX);
+        $this->ok->setPosition($this->sizeX - 38, -$this->sizeY + 6);
+        $this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
     }
 
-    function onShow() {
-	$this->populateList();
+    function onShow()
+    {
+        $this->populateList();
     }
 
-    function populateList() {
-	foreach ($this->items as $item)
-	    $item->erase();
-	$this->pager->clearItems();
-	$this->items = array();
+    function populateList()
+    {
+        foreach ($this->items as $item)
+            $item->erase();
+        $this->pager->clearItems();
+        $this->items = array();
 
-	$login = $this->getRecipient();
-	$x = 0;
-	$settings = $this->connection->getModeScriptSettings();
+        $login = $this->getRecipient();
+        $x = 0;
+        $settings = $this->connection->getModeScriptSettings();
 
-	foreach ($settings as $var => $setting) {
-	    $this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\ScriptSetting($x, $var, $setting, $this->sizeX);
-	    $this->pager->addItem($this->items[$x]);
-	    $x++;
-	}
+        foreach ($settings as $var => $setting) {
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\ScriptSetting($x, $var, $setting, $this->sizeX);
+            $this->pager->addItem($this->items[$x]);
+            $x++;
+        }
     }
 
-    function Ok($login, $settings) {
+    function Ok($login, $settings)
+    {
 
-	foreach ($this->items as $item) {
-	    if ($item->checkBox !== null) {
-		$settings[$item->settingName] = $item->checkBox->getStatus();
-	    } else {
-		settype($settings[$item->settingName], $item->type);
-	    }
-	}
+        foreach ($this->items as $item) {
+            if ($item->checkBox !== null) {
+                $settings[$item->settingName] = $item->checkBox->getStatus();
+            } else {
+                settype($settings[$item->settingName], $item->type);
+            }
+        }
 
-	$this->connection->setModeScriptSettings($settings);
+        $this->connection->setModeScriptSettings($settings);
 
-	$this->Erase($login);
+        $this->Erase($login);
     }
 
-    function Cancel($login) {
-	$this->Erase($login);
+    function Cancel($login)
+    {
+        $this->Erase($login);
     }
 
-    function destroy() {
-	foreach ($this->items as $item)
-	    $item->destroy();
+    function destroy()
+    {
+        foreach ($this->items as $item)
+            $item->destroy();
 
-	$this->items = array();
-	$this->pager->destroy();
-	$this->ok->destroy();
-	$this->cancel->destroy();
-	$this->connection = null;
-	$this->storage = null;
-	$this->destroyComponents();
-	parent::destroy();
+        $this->items = array();
+        $this->pager->destroy();
+        $this->ok->destroy();
+        $this->cancel->destroy();
+        $this->connection = null;
+        $this->storage = null;
+        $this->destroyComponents();
+        parent::destroy();
     }
 
 }

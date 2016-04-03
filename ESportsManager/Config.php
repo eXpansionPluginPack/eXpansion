@@ -13,7 +13,8 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager;
  *
  * @author Reaby
  */
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
 
     public $readyTimeout = 45;
 

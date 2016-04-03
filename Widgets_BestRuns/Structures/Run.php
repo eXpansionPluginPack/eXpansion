@@ -8,21 +8,21 @@ use Maniaplanet\DedicatedServer\Structures\PlayerRanking;
 class Run extends AbstractStructure
 {
 
-	public $totalTime = 0;
+    public $totalTime = 0;
 
-	public $nickname = "";
+    public $nickname = "";
 
-	public $player;
+    public $player;
 
-	public $checkpoints = array();
+    public $checkpoints = array();
 
-	function __construct(PlayerRanking $player)
-	{
-		$this->player = $player;
-		$this->totalTime = $player->bestTime;
-		$this->nickname = $player->nickName;
-		$this->checkpoints = $player->bestCheckpoints;
-	}
+    function __construct(PlayerRanking $player)
+    {
+        $this->player = $player;
+        $this->totalTime = $player->bestTime;
+        $this->nickname = $player->nickName;
+        $this->checkpoints = $player->bestCheckpoints;
+    }
 
 }
 

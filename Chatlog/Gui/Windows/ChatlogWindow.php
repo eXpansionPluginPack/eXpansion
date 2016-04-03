@@ -3,9 +3,10 @@
 namespace ManiaLivePlugins\eXpansion\Chatlog\Gui\Windows;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 
-class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
-	/** @var  \ManiaLivePlugins\eXpansion\Gui\Elements\Pager */
+    /** @var  \ManiaLivePlugins\eXpansion\Gui\Elements\Pager */
     protected $pager;
     private $items = array();
     protected $btn_close;
@@ -13,7 +14,8 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     protected $ok;
     private $widths = array(2, 5, 25);
 
-    function onConstruct() {
+    function onConstruct()
+    {
         parent::onConstruct();
         $login = $this->getRecipient();
 
@@ -28,19 +30,21 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->mainFrame->addComponent($this->ok);*/
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
-		$this->pager->setPositionY(6);
+        $this->pager->setPositionY(6);
         $this->pager->setSize($this->sizeX, $this->sizeY - 2);
         $this->pager->setStretchContentX($this->sizeX);
         //$this->ok->setPosition($this->sizeX - 20, -$this->sizeY + 6);
     }
 
     /**
-     * 
+     *
      * @param \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage[] $messages
      */
-    function populateList($messages) {
+    function populateList($messages)
+    {
         foreach ($this->items as $item)
             $item->erase();
         $this->pager->clearItems();
@@ -56,11 +60,13 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    function Close($login) {
+    function Close($login)
+    {
         $this->erase($login);
     }
 
-    function destroy() {
+    function destroy()
+    {
         foreach ($this->items as $item)
             $item->erase();
 

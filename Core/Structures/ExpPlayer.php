@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Structures;
 
-class ExpPlayer extends \ManiaLive\Data\Player {
+class ExpPlayer extends \ManiaLive\Data\Player
+{
 
     const Player_rank_position_change = 1;
     const Player_cp_position_change = 2;
@@ -34,7 +35,7 @@ class ExpPlayer extends \ManiaLive\Data\Player {
     /** @var int $matchScore cumulative score for teams mode in one map */
     public $matchScore = 0;
 
-    /** @var int $deltaTimeTop1  time difference to first player */
+    /** @var int $deltaTimeTop1 time difference to first player */
     public $deltaTimeTop1 = 0;
 
     /** @var int $deltaTimeTop1 checkpoint difference to first player */
@@ -50,7 +51,8 @@ class ExpPlayer extends \ManiaLive\Data\Player {
     public $isWaiting = false;
     public $isFinished = false;
 
-    static public function fromArray($array) {
+    static public function fromArray($array)
+    {
         $object = parent::fromArray($array);
         $object->skins = null;
         return $object;

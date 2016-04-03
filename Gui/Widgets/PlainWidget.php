@@ -11,11 +11,11 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
  */
 class PlainWidget extends \ManiaLive\Gui\Window
 {
-    private $dDeclares    = "";
-    private $scriptLib    = "";
-    private $wLoop        = "";
+    private $dDeclares = "";
+    private $scriptLib = "";
+    private $wLoop = "";
     private $_script;
-    private $_scripts     = array();
+    private $_scripts = array();
     private $dicoMessages = array();
 
     protected function onConstruct()
@@ -28,6 +28,7 @@ class PlainWidget extends \ManiaLive\Gui\Window
 
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
+
     private $calledScripts = array();
 
     private function detectElements($components)
@@ -67,7 +68,7 @@ class PlainWidget extends \ManiaLive\Gui\Window
     {
         $this->scriptLib = "";
         $this->dDeclares = "";
-        $this->wLoop     = "";
+        $this->wLoop = "";
 
         $this->calledScripts = array();
 
@@ -182,7 +183,7 @@ class PlainWidget extends \ManiaLive\Gui\Window
     {
         $outScripts = array();
         foreach ($this->_scripts as $class) {
-            if ($class->getRelPath() !== $script->getRelPath()) {               
+            if ($class->getRelPath() !== $script->getRelPath()) {
                 $outScripts[] = $class;
             }
         }
@@ -196,7 +197,7 @@ class PlainWidget extends \ManiaLive\Gui\Window
      */
     public function getNumber($number)
     {
-        return number_format((float) $number, 2, '.', '');
+        return number_format((float)$number, 2, '.', '');
     }
 
     public function getBoolean($boolean)
@@ -210,4 +211,5 @@ class PlainWidget extends \ManiaLive\Gui\Window
         return !isset($this->_scripts);
     }
 }
+
 ?>

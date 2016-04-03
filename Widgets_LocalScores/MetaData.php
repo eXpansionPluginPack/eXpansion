@@ -19,15 +19,15 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeFloat;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
+    public function onBeginLoad()
+    {
 
-		$this->setName("Widget: Local Scores");
-		$this->setDescription("Local scores widget, can be used when local records are in points instead of time");
-		$this->setGroups(array('Widgets', 'Records'));
+        $this->setName("Widget: Local Scores");
+        $this->setDescription("Local scores widget, can be used when local records are in points instead of time");
+        $this->setGroups(array('Widgets', 'Records'));
 
-		//$this->setEnviAsTitle(true);
-		//$this->addTitleSupport('SM');
-	}
+        //$this->setEnviAsTitle(true);
+        //$this->addTitleSupport('SM');
+    }
 
 }

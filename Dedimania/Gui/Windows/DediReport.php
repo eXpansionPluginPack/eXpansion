@@ -41,16 +41,16 @@ class DediReport extends Window
 
         $info = new Label(100, 32);
         $info->setTextSize(2);
-        $info->setText('$fffThen go click following link:$3af'."\n".'$lhttp://dedimania.net/SITE/forum/viewtopic.php?id=384$l '."\n".'$fffand post this information there.');
+        $info->setText('$fffThen go click following link:$3af' . "\n" . '$lhttp://dedimania.net/SITE/forum/viewtopic.php?id=384$l ' . "\n" . '$fffand post this information there.');
         $this->frame->addComponent($info);
     }
 
     public function setLogin($login)
     {
-        $text = "Login to check: ".$login."\n";
-        $text .= "Map: ".Storage::getInstance()->currentMap->uId."\n";
-        $text .= "Reason: *edit your reason here*"."\n";
-        $text .= "Reportee: ".$this->getRecipient()."\n";
+        $text = "Login to check: " . $login . "\n";
+        $text .= "Map: " . Storage::getInstance()->currentMap->uId . "\n";
+        $text .= "Reason: *edit your reason here*" . "\n";
+        $text .= "Reportee: " . $this->getRecipient() . "\n";
         $this->textedit->setText($text);
     }
 }

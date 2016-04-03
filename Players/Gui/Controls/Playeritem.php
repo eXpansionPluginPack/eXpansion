@@ -45,9 +45,9 @@ class Playeritem extends Control implements OptimizedPagerElement
     function __construct($indexNumber, $login, $action)
     {
         $this->recipient = $login;
-        $sizeY           = 6;
-        $sizeX           = 120;
-        $this->bg        = new ListBackGround($indexNumber, $sizeX, $sizeY);
+        $sizeY = 6;
+        $sizeX = 120;
+        $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
 
@@ -57,13 +57,13 @@ class Playeritem extends Control implements OptimizedPagerElement
 
         $this->nickname = new Label(50, 4);
         $this->nickname->setAlign('left', 'center');
-        $this->nickname->setId('column_'.$indexNumber.'_0');
+        $this->nickname->setId('column_' . $indexNumber . '_0');
         $this->nickname->setScriptEvents();
         $this->frame->addComponent($this->nickname);
 
         $this->login = new Label(30, 4);
         $this->login->setAlign('left', 'center');
-        $this->login->setId('column_'.$indexNumber.'_1');
+        $this->login->setId('column_' . $indexNumber . '_1');
         $this->frame->addComponent($this->login);
 
         $spacer = new Quad();
@@ -84,7 +84,7 @@ class Playeritem extends Control implements OptimizedPagerElement
                     $this->ignoreButton->setDescription(__('UnIgnore player', $login), 50);
                     $this->ignoreButton->setIcon('Icons128x128_1', 'Beginner');
                 } else $this->ignoreButton->setIcon('Icons128x128_1', 'Easy');
-                $this->ignoreButton->setId('column_'.$indexNumber.'_2');
+                $this->ignoreButton->setId('column_' . $indexNumber . '_2');
                 $this->ignoreButton->setClass("eXpOptimizedPagerAction");
                 $this->columnCount++;
                 $this->frame->addComponent($this->ignoreButton);
@@ -97,7 +97,7 @@ class Playeritem extends Control implements OptimizedPagerElement
                 $this->kickButton->colorize("a22");
                 $this->kickButton->setAction($action);
                 $this->kickButton->setIcon('Icons128x128_1', 'Medium');
-                $this->kickButton->setId('column_'.$indexNumber.'_3');
+                $this->kickButton->setId('column_' . $indexNumber . '_3');
                 $this->kickButton->setClass("eXpOptimizedPagerAction");
 
                 $this->columnCount++;
@@ -112,7 +112,7 @@ class Playeritem extends Control implements OptimizedPagerElement
                 $this->banButton->colorize("a22");
                 $this->banButton->setAction($action);
                 $this->banButton->setIcon('Icons128x128_1', 'Hard');
-                $this->banButton->setId('column_'.$indexNumber.'_4');
+                $this->banButton->setId('column_' . $indexNumber . '_4');
                 $this->banButton->setClass("eXpOptimizedPagerAction");
                 $this->columnCount++;
 
@@ -126,7 +126,7 @@ class Playeritem extends Control implements OptimizedPagerElement
                 $this->blacklistButton->colorize("a22");
                 $this->blacklistButton->setAction($this->blacklistAction);
                 $this->blacklistButton->setIcon('Icons128x128_1', 'Extreme');
-                $this->blacklistButton->setId('column_'.$indexNumber.'_5');
+                $this->blacklistButton->setId('column_' . $indexNumber . '_5');
 
                 $this->blacklistButton->setClass("eXpOptimizedPagerAction");
                 $this->columnCount++;
@@ -144,7 +144,7 @@ class Playeritem extends Control implements OptimizedPagerElement
                     $this->forceButton->setIcon('BgRaceScore2', 'Spectator');
                     $this->forceButton->setDescription(__('Force to spectate', $login), 50);
                 }
-                $this->forceButton->setId('column_'.$indexNumber.'_6');
+                $this->forceButton->setId('column_' . $indexNumber . '_6');
 
                 $this->forceButton->setClass("eXpOptimizedPagerAction");
                 $this->columnCount++;
@@ -157,7 +157,7 @@ class Playeritem extends Control implements OptimizedPagerElement
                 $this->guestButton->colorize("2f2");
                 $this->guestButton->setIcon('Icons128x128_1', 'Buddies');
                 $this->guestButton->setDescription(__('Add to guest list', $login), 50);
-                $this->guestButton->setId('column_'.$indexNumber.'_7');
+                $this->guestButton->setId('column_' . $indexNumber . '_7');
 
                 $this->guestButton->setClass("eXpOptimizedPagerAction");
                 $this->columnCount++;
@@ -198,5 +198,6 @@ class Playeritem extends Control implements OptimizedPagerElement
         return 2;
     }
 }
+
 ?>
 

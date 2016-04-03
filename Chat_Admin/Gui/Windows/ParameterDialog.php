@@ -9,7 +9,8 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Players\Gui\Controls\Playeritem;
 use ManiaLive\Gui\ActionHandler;
 
-class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     protected $inputbox, $btn_ok, $btn_cancel, $frame, $frm, $compobox;
     private $action, $adminAction, $adminParams;
@@ -17,7 +18,8 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     /** @var \ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin */
     public static $mainPlugin;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $login = $this->getRecipient();
 
@@ -56,26 +58,30 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->setSize(110, 20);
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         $this->frame->setSize($this->sizeX, $this->sizeY);
         $this->frame->setPosition($this->sizeX - 48, -$this->sizeY + 6);
         parent::onResize($oldX, $oldY);
     }
 
-    protected function onShow() {
+    protected function onShow()
+    {
         if ($this->adminAction != "kick") {
             $this->frm->addComponent($this->compobox);
         }
     }
 
-    function setData($action, $params) {
+    function setData($action, $params)
+    {
         $login = $this->getRecipient();
         $this->adminAction = $action;
         $this->adminParams = $params;
         $this->btn_ok->setText(__($action, $login));
     }
 
-    function ok($login, $inputbox) {
+    function ok($login, $inputbox)
+    {
         if ($this->adminAction == "kick") {
             $params = $this->adminAction . " " . $this->adminParams . " " . $inputbox['parameter'];
         } else {
@@ -87,14 +93,16 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             self::$mainPlugin->addActionDuration($prms[0], $this->adminAction, $items[$inputbox['select']]);
         }
         \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance()->adminCmd($login, $params);
-		$this->Erase($login);
-    }
-
-    function cancel($login) {
         $this->Erase($login);
     }
 
-    function destroy() {
+    function cancel($login)
+    {
+        $this->Erase($login);
+    }
+
+    function destroy()
+    {
         $this->btn_ok->destroy();
         $this->inputbox->destroy();
         $this->btn_cancel->destroy();

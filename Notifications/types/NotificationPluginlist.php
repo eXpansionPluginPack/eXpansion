@@ -29,31 +29,31 @@ use ManiaLivePlugins\eXpansion\Notifications\Gui\Windows\ConfPluginList;
 class NotificationPluginlist extends \ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList
 {
 
-	public function __construct($name, $visibleName = "", $configInstance = null, $scope = false, $showMain = false)
-	{
-		parent::__construct($name, $visibleName, $configInstance, $scope, $showMain);
-		$this->setType(new \ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString(""));
-	}
+    public function __construct($name, $visibleName = "", $configInstance = null, $scope = false, $showMain = false)
+    {
+        parent::__construct($name, $visibleName, $configInstance, $scope, $showMain);
+        $this->setType(new \ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString(""));
+    }
 
-	public function showConfWindow($login)
-	{
-		ConfPluginList::Erase($login);
-		$win = ConfPluginList::Create($login);
-		$win->setTitle("Config selection");
-		$win->centerOnScreen();
-		$win->setSize(100, 100);
-		$win->populate($this);
-		$win->show();
-	}
+    public function showConfWindow($login)
+    {
+        ConfPluginList::Erase($login);
+        $win = ConfPluginList::Create($login);
+        $win->setTitle("Config selection");
+        $win->centerOnScreen();
+        $win->setSize(100, 100);
+        $win->populate($this);
+        $win->show();
+    }
 
-	public function hideConfWindow($login)
-	{
-		ConfPluginList::Erase($login);
-	}
+    public function hideConfWindow($login)
+    {
+        ConfPluginList::Erase($login);
+    }
 
-	public function hasConfWindow()
-	{
-		return true;
-	}
+    public function hasConfWindow()
+    {
+        return true;
+    }
 
 }

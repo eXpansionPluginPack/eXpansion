@@ -42,4 +42,5 @@ class Xmas extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         parent::exp_onUnload();
     }
 }
+
 ?>

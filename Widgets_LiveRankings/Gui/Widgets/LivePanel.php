@@ -11,4 +11,5 @@ class LivePanel extends PlainLivePanel
         parent::exp_onBeginConstruct();
     }
 }
+
 ?>

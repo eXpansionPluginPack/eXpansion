@@ -10,10 +10,10 @@ namespace ManiaLivePlugins\eXpansion\Gui\Scripts;
 class ColorScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script
 {
 
-	function __construct()
-	{
-		parent::__construct("Gui/Scripts/ColorChooser");
-	}
+    function __construct()
+    {
+        parent::__construct("Gui/Scripts/ColorChooser");
+    }
 
 }
 

@@ -32,14 +32,14 @@ use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
  */
 class Bets extends ExpPlugin
 {
-    const state_off            = "off";
-    const state_setBets        = "set";
+    const state_off = "off";
+    const state_setBets = "set";
     const state_acceptMoreBets = "accept";
-    const state_running        = "running";
-    const state_nobets         = "nobets";
+    const state_running = "running";
+    const state_nobets = "nobets";
 
     private $msg_fail, $msg_billSuccess, $msg_billPaySuccess, $msg_totalStake, $msg_winner, $msg_payFail;
-    public static $state     = self::state_off;
+    public static $state = self::state_off;
     public static $betAmount = 0;
 
     /** @var BetCounter[] */
@@ -50,13 +50,13 @@ class Bets extends ExpPlugin
 
     public function exp_onLoad()
     {
-        $this->msg_fail           = exp_getMessage('#donate#No planets billed');
-        $this->msg_error          = exp_getMessage('#donate#Error: %1$s');
-        $this->msg_payFail        = exp_getMessage('#donate#The server was unable to pay your winning bet. Sorry.');
-        $this->msg_billSuccess    = exp_getMessage('#donate#Bet accepted for#variable# %1$s #donate#planets');
+        $this->msg_fail = exp_getMessage('#donate#No planets billed');
+        $this->msg_error = exp_getMessage('#donate#Error: %1$s');
+        $this->msg_payFail = exp_getMessage('#donate#The server was unable to pay your winning bet. Sorry.');
+        $this->msg_billSuccess = exp_getMessage('#donate#Bet accepted for#variable# %1$s #donate#planets');
         $this->msg_billPaySuccess = exp_getMessage('#donate#You will recieve#variable# %1$s #donate#planets from the server soon.');
-        $this->msg_totalStake     = exp_getMessage('#donate#The game is on as#variable# %1$s #donate#joins! Win stake of the bet is now#variable# %2$s #donate#planets');
-        $this->msg_winner         = exp_getMessage('#variable# %1$s #donate#wins the bet with #variable# %2$s #donate#planets, congratulations');
+        $this->msg_totalStake = exp_getMessage('#donate#The game is on as#variable# %1$s #donate#joins! Win stake of the bet is now#variable# %2$s #donate#planets');
+        $this->msg_winner = exp_getMessage('#variable# %1$s #donate#wins the bet with #variable# %2$s #donate#planets, congratulations');
     }
 
     public function exp_onReady()
@@ -64,16 +64,16 @@ class Bets extends ExpPlugin
         $this->enableDedicatedEvents();
         $this->enableTickerEvent();
 
-        $ah                             = ActionHandler::getInstance();
-        BetWidget::$action_setAmount    = $ah->createAction(array($this, "setBetAmount"), null);
-        BetWidget::$action_setAmount25  = $ah->createAction(array($this, "setBetAmount"), 25);
-        BetWidget::$action_setAmount50  = $ah->createAction(array($this, "setBetAmount"), 50);
+        $ah = ActionHandler::getInstance();
+        BetWidget::$action_setAmount = $ah->createAction(array($this, "setBetAmount"), null);
+        BetWidget::$action_setAmount25 = $ah->createAction(array($this, "setBetAmount"), 25);
+        BetWidget::$action_setAmount50 = $ah->createAction(array($this, "setBetAmount"), 50);
         BetWidget::$action_setAmount100 = $ah->createAction(array($this, "setBetAmount"), 100);
         BetWidget::$action_setAmount250 = $ah->createAction(array($this, "setBetAmount"), 250);
         BetWidget::$action_setAmount500 = $ah->createAction(array($this, "setBetAmount"), 500);
 
         BetWidget::$action_acceptBet = $ah->createAction(array($this, "acceptBet"));
-        $this->reset();     
+        $this->reset();
     }
 
     public function onTick()
@@ -109,11 +109,11 @@ class Bets extends ExpPlugin
     private function checkWinner()
     {
         $rankings = $this->connection->getCurrentRanking(-1, 0);
-        $total    = (count($this->players) * self::$betAmount);
+        $total = (count($this->players) * self::$betAmount);
 
         foreach ($rankings as $index => $player) {
             if (array_key_exists($player->login, $this->players)) {
-                $this->exp_chatSendServerMessage($this->msg_winner, null, array($player->nickName.'$z$s', $total));
+                $this->exp_chatSendServerMessage($this->msg_winner, null, array($player->nickName . '$z$s', $total));
                 $this->connection->pay($player->login, intval($total), 'Winner of the bet!');
                 return;
             }
@@ -136,9 +136,9 @@ class Bets extends ExpPlugin
                 array($amount));
             return;
         }
-        
+
         if ($amount < 100) {
-              $this->exp_chatSendServerMessage('#error#Custom value must be over 100 planets!', $login);
+            $this->exp_chatSendServerMessage('#error#Custom value must be over 100 planets!', $login);
             return;
         }
 
@@ -160,7 +160,7 @@ class Bets extends ExpPlugin
     }
 
     /**
-     * 	this called when recieves the a bet from server
+     *    this called when recieves the a bet from server
      * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
      */
     public function billPaySuccess(Bill $bill)
@@ -170,7 +170,7 @@ class Bets extends ExpPlugin
     }
 
     /**
-     * 	this called when player accepts a bet
+     *    this called when player accepts a bet
      * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
      */
     public function billAcceptSuccess(Bill $bill)
@@ -208,7 +208,7 @@ class Bets extends ExpPlugin
     public function announceTotal($login)
     {
         $total = (count($this->players) * self::$betAmount);
-        $nick  = $this->players[$login]->nickName.'$z$s';
+        $nick = $this->players[$login]->nickName . '$z$s';
         $this->exp_chatSendServerMessage($this->msg_totalStake, null, array($nick, $total));
     }
 
@@ -250,10 +250,10 @@ class Bets extends ExpPlugin
 
     private function reset()
     {
-        self::$state     = self::state_off;
+        self::$state = self::state_off;
         self::$betAmount = 0;
-        $this->counters  = array();
-        $this->players   = array();
+        $this->counters = array();
+        $this->players = array();
         BetWidget::EraseAll();
     }
 

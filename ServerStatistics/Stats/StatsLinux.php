@@ -2,18 +2,21 @@
 
 namespace ManiaLivePlugins\eXpansion\ServerStatistics\Stats;
 
-class StatsLinux implements AbstractStat {
+class StatsLinux implements AbstractStat
+{
 
     public $previousLoad = array();
 
-    public function __construct() {
+    public function __construct()
+    {
         $handle = fopen("/proc/stat", "r");
         $load = fscanf($handle, "%*s %Lf %Lf %Lf %Lf");
         fclose($handle);
         $this->previousLoad = $load;
     }
 
-    public function getAvgLoad() {
+    public function getAvgLoad()
+    {
         // get cpu usage
         $handle = fopen("/proc/stat", "r");
         // get the contents to array
@@ -28,11 +31,12 @@ class StatsLinux implements AbstractStat {
         return $loadAvg;
     }
 
-    public function getFreeMemory() {
+    public function getFreeMemory()
+    {
         $matches = array();
         $memVals = array();
         @preg_match_all('/^([^:]+)\:\s+(\d+)\s*(?:k[bB])?\s*/m', file_get_contents('/proc/meminfo'), $matches, PREG_SET_ORDER);
-        foreach ((array) $matches as $memInfo)
+        foreach ((array)$matches as $memInfo)
             $memVals[$memInfo[1]] = $memInfo[2];
 
         $total = $memVals['MemTotal'] * 1024;
@@ -41,7 +45,8 @@ class StatsLinux implements AbstractStat {
         return new \ManiaLivePlugins\eXpansion\ServerStatistics\Structures\MemoryInfo($total, $free);
     }
 
-    public function getUptime() {
+    public function getUptime()
+    {
         $contents = file_get_contents('/proc/uptime', false);
         list($seconds) = explode(' ', $contents, 1);
         return $seconds;

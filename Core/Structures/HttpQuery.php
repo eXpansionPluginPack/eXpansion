@@ -10,49 +10,48 @@ namespace ManiaLivePlugins\eXpansion\Core\Structures;
 class HttpQuery extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
 {
 
-	public $url;
+    public $url;
 
-	public $callback;
+    public $callback;
 
-	public $userAgent = "ManiaLive - eXpansionPluginPack";
+    public $userAgent = "ManiaLive - eXpansionPluginPack";
 
-	public $mimeType;
+    public $mimeType;
 
-	public $baseurl;
+    public $baseurl;
 
-	public $redirectCount = 0;
+    public $redirectCount = 0;
 
-	public $params = "";
+    public $params = "";
 
-	public $data = null;
+    public $data = null;
 
-	/** @var array */
-	public $callparams = array();
+    /** @var array */
+    public $callparams = array();
 
-	public function __construct($url, $callback, $callParams = array(), $userAgent = "ManiaLive - eXpansionPluginPack", $mimeType = "text/html")
-	{
-		$this->url = $url;
-		$pos = strpos($url, "?");
-		if ($pos) {
-			$this->baseurl = trim(substr($url, 0, $pos), "?");
-			$this->params = trim(substr($url, $pos), "?");
-		}
-		else {
-			$this->baseurl = $url;
-			$this->params = "";
-		}
-		$this->callback = $callback;
-		if (!is_array($callParams))
-			$callParams = array($callParams);
-		
-		$this->callparams = $callParams;
-		$this->userAgent = $userAgent;
-		$this->mimeType = $mimeType;
-	}
+    public function __construct($url, $callback, $callParams = array(), $userAgent = "ManiaLive - eXpansionPluginPack", $mimeType = "text/html")
+    {
+        $this->url = $url;
+        $pos = strpos($url, "?");
+        if ($pos) {
+            $this->baseurl = trim(substr($url, 0, $pos), "?");
+            $this->params = trim(substr($url, $pos), "?");
+        } else {
+            $this->baseurl = $url;
+            $this->params = "";
+        }
+        $this->callback = $callback;
+        if (!is_array($callParams))
+            $callParams = array($callParams);
 
-	public function setData($data)
-	{
-		$this->data = $data;
-	}
+        $this->callparams = $callParams;
+        $this->userAgent = $userAgent;
+        $this->mimeType = $mimeType;
+    }
+
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
 
 }

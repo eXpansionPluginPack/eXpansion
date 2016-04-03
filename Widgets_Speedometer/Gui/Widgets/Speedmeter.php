@@ -29,39 +29,39 @@ class Speedmeter extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     function exp_onBeginConstruct()
     {
-	$this->setName("Speed'o'meter");
-	
-	$label = new \ManiaLib\Gui\Elements\Label(20,6);
-	$label->setTextColor("fff");
-	$label->setTextSize(2);
-	$label->setId("speed");
-	$label->setText("");
-	$label->setAlign("center", "top");
-	$label->setPosition(0,-6);
-	$this->addComponent($label);	
-	
-	
-	/*$bg = new \ManiaLib\Gui\Elements\Quad(48,48);
-	$bg->setAlign("center", "center");
-	$bg->setImage("http://reaby.kapsi.fi/ml/speedbg.png", true);
-	$this->addComponent($bg);
-	
-	$needle = new \ManiaLib\Gui\Elements\Quad(48,48);
-	$needle->setAlign("center", "center");
-	$needle->setId("needle");
-	$needle->setImage("http://reaby.kapsi.fi/ml/speedneedle.png", true);
-	$this->addComponent($needle);	
-	*/
-	
-	$gauge = new \ManiaLivePlugins\eXpansion\Gui\Elements\Gauge(30,8);
-	$gauge->setStyle(\ManiaLivePlugins\eXpansion\Gui\Elements\Gauge::EnergyBar);
-	$gauge->setGrading(0);
-	$gauge->setId("bar");
-	$gauge->setColorize("3af");
-	$this->addComponent($gauge);
+        $this->setName("Speed'o'meter");
 
-	$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Speedometer\Gui\Script");
-	$this->registerScript($script);
+        $label = new \ManiaLib\Gui\Elements\Label(20, 6);
+        $label->setTextColor("fff");
+        $label->setTextSize(2);
+        $label->setId("speed");
+        $label->setText("");
+        $label->setAlign("center", "top");
+        $label->setPosition(0, -6);
+        $this->addComponent($label);
+
+
+        /*$bg = new \ManiaLib\Gui\Elements\Quad(48,48);
+        $bg->setAlign("center", "center");
+        $bg->setImage("http://reaby.kapsi.fi/ml/speedbg.png", true);
+        $this->addComponent($bg);
+
+        $needle = new \ManiaLib\Gui\Elements\Quad(48,48);
+        $needle->setAlign("center", "center");
+        $needle->setId("needle");
+        $needle->setImage("http://reaby.kapsi.fi/ml/speedneedle.png", true);
+        $this->addComponent($needle);
+        */
+
+        $gauge = new \ManiaLivePlugins\eXpansion\Gui\Elements\Gauge(30, 8);
+        $gauge->setStyle(\ManiaLivePlugins\eXpansion\Gui\Elements\Gauge::EnergyBar);
+        $gauge->setGrading(0);
+        $gauge->setId("bar");
+        $gauge->setColorize("3af");
+        $this->addComponent($gauge);
+
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Speedometer\Gui\Script");
+        $this->registerScript($script);
     }
 
 }

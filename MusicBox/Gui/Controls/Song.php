@@ -7,7 +7,8 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 use \ManiaLib\Utils\Formatting;
 
-class Song extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class Song extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     private $bg;
     private $queueButton;
@@ -16,7 +17,8 @@ class Song extends \ManiaLivePlugins\eXpansion\Gui\Control {
     private $queueSong;
     private $frame;
 
-    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\MusicBox\Structures\Song $song, $controller, $sizeX) {
+    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\MusicBox\Structures\Song $song, $controller, $sizeX)
+    {
         $sizeY = 6;
 
         $this->queueSong = $this->createAction(array($controller, 'queueSong'), $indexNumber + 1);
@@ -76,7 +78,8 @@ class Song extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->sizeY = $sizeY;
     }
 
-    protected function onResize($oldX, $oldY) {
+    protected function onResize($oldX, $oldY)
+    {
         $this->bg->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY);
@@ -86,12 +89,14 @@ class Song extends \ManiaLivePlugins\eXpansion\Gui\Control {
     /*
      * custom function to remove contents.
      */
-    function erase() {
+    function erase()
+    {
         $this->queueButton->destroy();
         $this->destroyComponents();
         parent::destroy();
     }
 
 }
+
 ?>
 

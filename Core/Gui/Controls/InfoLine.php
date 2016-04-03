@@ -7,12 +7,14 @@ namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
  *
  * @author Reaby
  */
-class InfoLine extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class InfoLine extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     /** @var ManiaLib\Gui\Elements\Label */
     protected $label;
 
-    public function __construct($text) {
+    public function __construct($text)
+    {
         $this->setSize(240, 4);
         $this->setAlign("left");
         $this->label = new \ManiaLib\Gui\Elements\Label(240, 5);
@@ -23,7 +25,8 @@ class InfoLine extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->addComponent($this->label);
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         parent::destroy();
     }
 

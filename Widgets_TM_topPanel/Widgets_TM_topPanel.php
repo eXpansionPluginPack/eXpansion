@@ -27,43 +27,43 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel;
 class Widgets_TM_topPanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-	/** @var  \ManiaLive\PluginHandler\PluginHandler */
-	private $pluginhandler;
+    /** @var  \ManiaLive\PluginHandler\PluginHandler */
+    private $pluginhandler;
 
-	public function exp_onReady()
-	{
+    public function exp_onReady()
+    {
 
-		$this->pluginhandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
-		$pluginsToUnload = array("Widgets_ServerInfo", "Widgets_Clock", "Widgets_BestCheckpoints");
+        $this->pluginhandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+        $pluginsToUnload = array("Widgets_ServerInfo", "Widgets_Clock", "Widgets_BestCheckpoints");
 // $pluginsToUnload = array("Widgets_ServerInfo", "Widgets_Clock");
 
-		foreach ($pluginsToUnload as $plugin) {
-			if ($this->isPluginLoaded($this->getPluginId($plugin))) {
-				$this->pluginhandler->unload($this->getPluginId($plugin));
-			}
-		}
+        foreach ($pluginsToUnload as $plugin) {
+            if ($this->isPluginLoaded($this->getPluginId($plugin))) {
+                $this->pluginhandler->unload($this->getPluginId($plugin));
+            }
+        }
 
-		$this->enableDedicatedEvents();
+        $this->enableDedicatedEvents();
 
-		$widget = Gui\Widgets\TopPanel::Create(null);
-		$widget->show();
-	}
+        $widget = Gui\Widgets\TopPanel::Create(null);
+        $widget->show();
+    }
 
-	public function onBeginMap($map, $warmUp, $matchContinuation)
-	{
-		Gui\Widgets\TopPanel::EraseAll();
-		$widget = Gui\Widgets\TopPanel::Create(null);
-		$widget->show();
-	}
+    public function onBeginMap($map, $warmUp, $matchContinuation)
+    {
+        Gui\Widgets\TopPanel::EraseAll();
+        $widget = Gui\Widgets\TopPanel::Create(null);
+        $widget->show();
+    }
 
-	private function getPluginId($plugin)
-	{
-		return '\\ManiaLivePlugins\\eXpansion\\' . $plugin . '\\' . $plugin;
-	}
+    private function getPluginId($plugin)
+    {
+        return '\\ManiaLivePlugins\\eXpansion\\' . $plugin . '\\' . $plugin;
+    }
 
-	public function exp_onUnload()
-	{
-		Gui\Widgets\TopPanel::EraseAll();
-	}
+    public function exp_onUnload()
+    {
+        Gui\Widgets\TopPanel::EraseAll();
+    }
 
 }

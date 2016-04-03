@@ -11,14 +11,14 @@ namespace ManiaLivePlugins\eXpansion\Helpers\GbxReader;
 
 abstract class FileStructure extends AbstractStructure
 {
-	final static function read($filename)
-	{
-		$fp = fopen($filename, 'rb');
-		$structure = static::fetch($fp);
-		fclose($fp);
-		
-		return $structure;
-	}
+    final static function read($filename)
+    {
+        $fp = fopen($filename, 'rb');
+        $structure = static::fetch($fp);
+        fclose($fp);
+
+        return $structure;
+    }
 }
 
 ?>

@@ -30,9 +30,9 @@ use Maniaplanet\DedicatedServer\Structures\GameInfos;
  */
 class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
-    private $ticker     = 0;
+    private $ticker = 0;
     private $testActive = false;
-    private $fakelogin  = "";
+    private $fakelogin = "";
 
     public function exp_onReady()
     {
@@ -60,12 +60,12 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if ($this->testActive) {
             if ($this->ticker == 1) {
-               
-                $this->connection->disconnectFakePlayer($this->fakeLogin);                
+
+                $this->connection->disconnectFakePlayer($this->fakeLogin);
                 $this->ticker = 0;
             } else {
-                $this->fakeLogin = $this->connection->connectFakePlayer();               
-                $this->ticker    = 1;
+                $this->fakeLogin = $this->connection->connectFakePlayer();
+                $this->ticker = 1;
             }
         }
     }
@@ -120,9 +120,9 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function logMemory()
     {
-        $mem = "Memory Usage: ".round(memory_get_usage() / 1024 / 1024)."Kb";
+        $mem = "Memory Usage: " . round(memory_get_usage() / 1024 / 1024) . "Kb";
         //\ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
-        print "\n".$mem."\n";
+        print "\n" . $mem . "\n";
         $this->connection->chatSend($mem);
     }
 

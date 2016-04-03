@@ -7,13 +7,15 @@ namespace ManiaLivePlugins\eXpansion\ServerStatistics\Gui\Windows;
  *
  * @author Reaby
  */
-class PlotterWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class PlotterWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     protected $ok;
     protected $cancel;
     protected $plotter;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $this->plotter = new \ManiaLivePlugins\eXpansion\Gui\Elements\LinePlotter(160, 100);
         $this->plotter->setPosY(-5);
@@ -23,7 +25,8 @@ class PlotterWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->plotter->setTickSize(5);
     }
 
-    function setDatas($datas) {
+    function setDatas($datas)
+    {
         foreach ($datas as $i => $data) {
             foreach ($data as $x => $val) {
                 $val = $this->getNumber($val);
@@ -32,27 +35,33 @@ class PlotterWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    function setLineColor($line, $color) {
+    function setLineColor($line, $color)
+    {
         $this->plotter->setLineColor($line, $color);
     }
 
-    function setLimit($x, $y) {
+    function setLimit($x, $y)
+    {
         $this->plotter->setLimits(0, 0, $x, $y);
     }
-    
-    function setXLabels($labels){
+
+    function setXLabels($labels)
+    {
         $this->plotter->setXLabels($labels);
     }
 
-    function setYLabels($labels){
+    function setYLabels($labels)
+    {
         $this->plotter->setYLabels($labels);
     }
-    
-    private function getNumber($number) {
-        return number_format((float) $number, 2, '.', '');
+
+    private function getNumber($number)
+    {
+        return number_format((float)$number, 2, '.', '');
     }
 
-    function destroy() {
+    function destroy()
+    {
         $this->destroyComponents();
         parent::destroy();
     }

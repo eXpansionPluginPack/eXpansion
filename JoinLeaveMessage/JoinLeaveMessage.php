@@ -16,11 +16,11 @@ class JoinLeaveMessage extends ExpPlugin
     {
         $this->enableDedicatedEvents();
 
-        $this->joinMsg      = exp_getMessage('#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s');
-        $this->joinMsgTime  = exp_getMessage('#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s Total Playtime: #variable#%6$s');
-        $this->leaveMsg     = exp_getMessage('#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# leaves! Playtime: #variable#%5$s');
+        $this->joinMsg = exp_getMessage('#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s');
+        $this->joinMsgTime = exp_getMessage('#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s Total Playtime: #variable#%6$s');
+        $this->leaveMsg = exp_getMessage('#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# leaves! Playtime: #variable#%5$s');
         $this->tabNoticeMsg = exp_getMessage('#variable#[#error#Info#variable#] #variable#Press TAB to show records widget, use right mouse button for quick menu access.');
-        $this->playtimeMsg  = exp_getMessage('#player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s');
+        $this->playtimeMsg = exp_getMessage('#player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s');
     }
 
     public function exp_onReady()
@@ -48,13 +48,13 @@ class JoinLeaveMessage extends ExpPlugin
         }
 
         $player = $this->storage->getPlayerObject($login);
-        $now    = new DateTime();
+        $now = new DateTime();
 
         if (property_exists($player, "sessionJoinTime")) {
             $diff = $now->diff($player->sessionJoinTime, true);
-            if ($diff->h) $playtime .= $diff->h." hours ";
-            if ($diff->i) $playtime .= $diff->i." min ";
-            if ($diff->s) $playtime .= $diff->s." sec ";
+            if ($diff->h) $playtime .= $diff->h . " hours ";
+            if ($diff->i) $playtime .= $diff->i . " min ";
+            if ($diff->s) $playtime .= $diff->s . " sec ";
         }
         return $playtime;
     }
@@ -66,7 +66,7 @@ class JoinLeaveMessage extends ExpPlugin
             return $playtime;
         }
 
-        $q      = "Select `player_timeplayed` as stamp from `exp_players` WHERE `player_login` = ".$this->db->quote($login).";";
+        $q = "Select `player_timeplayed` as stamp from `exp_players` WHERE `player_login` = " . $this->db->quote($login) . ";";
         $result = $this->db->execute($q);
 
         $stamp = intval($result->fetchObject()->stamp);
@@ -80,7 +80,7 @@ class JoinLeaveMessage extends ExpPlugin
 
             $diff = $time->diff($start);
 
-            $playtime = $diff->format("%m")." months ".$diff->format("%d")." days ".$diff->format("%H")." hours ".$diff->format("%i")." min ".$diff->format("%s")." sec";
+            $playtime = $diff->format("%m") . " months " . $diff->format("%d") . " days " . $diff->format("%H") . " hours " . $diff->format("%i") . " min " . $diff->format("%s") . " sec";
         }
 
         return $playtime;
@@ -100,13 +100,13 @@ class JoinLeaveMessage extends ExpPlugin
         try {
             $player = $this->storage->getPlayerObject($login);
             if ($player === null) {
-                $msg = "#admin_error#a player with login '#variable#".$login."#admin_error#' connected, but no player object for this login exist.";
+                $msg = "#admin_error#a player with login '#variable#" . $login . "#admin_error#' connected, but no player object for this login exist.";
                 AdminGroups::announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin, "");
                 return;
             }
             $this->setJoinTime($login);
 
-            $nick    = $player->nickName;
+            $nick = $player->nickName;
             $country = $this->getCountry($player);
 
             $spec = "";
@@ -114,10 +114,10 @@ class JoinLeaveMessage extends ExpPlugin
 
             $grpName = AdminGroups::getGroupName($login);
 
-            $config       = Config::getInstance();
-            $playTime     = Helper::formatPastTime($this->expStorage->getDbPlayer($login)->getPlayTime(), 2);
-            $joinTimeArgs = array('$z$s'.$nick.'$z$s', $login, $country, $spec, $grpName, $playTime);
-            $joinArgs     = array('$z$s'.$nick.'$z$s', $login, $country, $spec, $grpName);
+            $config = Config::getInstance();
+            $playTime = Helper::formatPastTime($this->expStorage->getDbPlayer($login)->getPlayTime(), 2);
+            $joinTimeArgs = array('$z$s' . $nick . '$z$s', $login, $country, $spec, $grpName, $playTime);
+            $joinArgs = array('$z$s' . $nick . '$z$s', $login, $country, $spec, $grpName);
 
             if ($config->hideFromPlayers) {
                 $ag = AdminGroups::getInstance();
@@ -136,7 +136,7 @@ class JoinLeaveMessage extends ExpPlugin
             }
             // $this->exp_chatSendServerMessage($this->tabNoticeMsg, $login);
         } catch (Exception $e) {
-            $this->console($e->getLine().":".$e->getMessage());
+            $this->console($e->getLine() . ":" . $e->getMessage());
         }
     }
 
@@ -152,8 +152,8 @@ class JoinLeaveMessage extends ExpPlugin
         try {
             $player = $this->storage->getPlayerObject($login);
             if ($player === null) {
-                $msg = "#admin_error#a player with login '#variable#".$login."#admin_error#' disconnected, but no player object for this login exist.";
-                $ag  = AdminGroups::getInstance();
+                $msg = "#admin_error#a player with login '#variable#" . $login . "#admin_error#' disconnected, but no player object for this login exist.";
+                $ag = AdminGroups::getInstance();
                 $ag->announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin, $msg);
                 return;
             }
@@ -164,7 +164,7 @@ class JoinLeaveMessage extends ExpPlugin
             $grpName = AdminGroups::getGroupName($login);
             $country = $this->getCountry($player);
 
-            $this->exp_chatSendServerMessage($this->leaveMsg, null, array('$z$s'.$nick.'$z$s', $login, $country, $grpName, $playtime));
+            $this->exp_chatSendServerMessage($this->leaveMsg, null, array('$z$s' . $nick . '$z$s', $login, $country, $grpName, $playtime));
         } catch (Exception $e) {
             Helper::log("[JoinLeaveMessage]Error while disconnecting : $login");
         }
@@ -172,7 +172,7 @@ class JoinLeaveMessage extends ExpPlugin
 
     private function getCountry($player)
     {
-        $path    = str_replace("World|", "", $player->path);
+        $path = str_replace("World|", "", $player->path);
         $country = explode("|", $path);
         if (sizeof($country) > 0) {
             $country = $country[1];

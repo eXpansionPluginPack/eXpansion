@@ -7,10 +7,11 @@ namespace ManiaLivePlugins\eXpansion\Maps\Structures;
  *
  * @author Reaby
  */
-class MapSortMode {
-    
+class MapSortMode
+{
+
     public $sortMode = 0;
-    public $column = "";                    
+    public $column = "";
 }
 
 ?>

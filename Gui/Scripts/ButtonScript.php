@@ -7,11 +7,13 @@ namespace ManiaLivePlugins\eXpansion\Gui\Scripts;
  *
  * @author De Cramer Oliver
  */
-class ButtonScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script{
-    
-    function __construct() {
+class ButtonScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script
+{
+
+    function __construct()
+    {
         parent::__construct("Gui/Scripts/Button");
-    }   
+    }
 }
 
 ?>

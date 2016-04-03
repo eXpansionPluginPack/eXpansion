@@ -40,233 +40,236 @@ use ManiaLivePlugins\eXpansion\Helpers\Helper;
 class Analytics implements \ManiaLive\Features\Tick\Listener
 {
 
-	const ERROR_LIMIT = 10;
-	const ACTIVE_PING = 600; //Every 10 minutes is enought
-	const NOT_ACTIVE_PING = 14400; //If issue try in 4 hours again.
+    const ERROR_LIMIT = 10;
+    const ACTIVE_PING = 600; //Every 10 minutes is enought
+    const NOT_ACTIVE_PING = 14400; //If issue try in 4 hours again.
 
-	private $url = 'http://server1.oliver-decramer.com/exp/input.php';
+    private $url = 'http://server1.oliver-decramer.com/exp/input.php';
 
-	private $enable = false;
+    private $enable = false;
 
-	private $lasPing = 0;
-	private $active = false;
-	private $key = null;
+    private $lasPing = 0;
+    private $active = false;
+    private $key = null;
 
-	private $running = false;
+    private $running = false;
 
-	/** @var Storage */
-	private $storage = null;
+    /** @var Storage */
+    private $storage = null;
 
-	/** @var \ManiaLivePlugins\eXpansion\Helpers\Storage */
-	private $expStorage = null;
+    /** @var \ManiaLivePlugins\eXpansion\Helpers\Storage */
+    private $expStorage = null;
 
-	/** @var PluginHandler */
-	private $pluginHandler = null;
+    /** @var PluginHandler */
+    private $pluginHandler = null;
 
-	private $nbError = 0;
+    private $nbError = 0;
 
-	function __construct()
-	{
-		$this->storage = Storage::getInstance();
-		$this->expStorage = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance();
-		$this->pluginHandler = PluginHandler::getInstance();
-	}
+    function __construct()
+    {
+        $this->storage = Storage::getInstance();
+        $this->expStorage = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance();
+        $this->pluginHandler = PluginHandler::getInstance();
+    }
 
-	public function enable()
-	{
-		if ($this->enable) {
-			return;
-		}
+    public function enable()
+    {
+        if ($this->enable) {
+            return;
+        }
 
-		$this->console('');
-		$this->console('-------------------------------------------------------------------------------');
-		$this->console('');
-		$this->console('                  Enabling eXpansion Analytics Tool : ');
-		$this->console('This will gather some anonymous data from you server in order to improve');
-		$this->console('eXpansion and it\'s components. It can always be disabled in the settings.');
-		$this->console('We would appreciate it if you let it run. Thanks');
-		$this->console('eXpansion Dev Team.');
-		$this->console('');
-		$this->console('-------------------------------------------------------------------------------');
-		$this->console('');
+        $this->console('');
+        $this->console('-------------------------------------------------------------------------------');
+        $this->console('');
+        $this->console('                  Enabling eXpansion Analytics Tool : ');
+        $this->console('This will gather some anonymous data from you server in order to improve');
+        $this->console('eXpansion and it\'s components. It can always be disabled in the settings.');
+        $this->console('We would appreciate it if you let it run. Thanks');
+        $this->console('eXpansion Dev Team.');
+        $this->console('');
+        $this->console('-------------------------------------------------------------------------------');
+        $this->console('');
 
-		ErrorHandling::$errorReporter = $this;
+        ErrorHandling::$errorReporter = $this;
 
-		Dispatcher::register(TickEvent::getClass(), $this);
-		$this->enable = true;
-	}
+        Dispatcher::register(TickEvent::getClass(), $this);
+        $this->enable = true;
+    }
 
-	public function disable()
-	{
-		if (!$this->enable) {
-			return;
-		}
+    public function disable()
+    {
+        if (!$this->enable) {
+            return;
+        }
 
-		$this->console('');
-		$this->console('-------------------------------------------------------------------------------');
-		$this->console('');
-		$this->console('                   Disablin eXpansion Analytics Tool : ');
-		$this->console('We are sorry that you have disabled analytics tool. ');
-		$this->console('eXpansion Dev Team.');
-		$this->console('');
-		$this->console('-------------------------------------------------------------------------------');
-		$this->console('');
+        $this->console('');
+        $this->console('-------------------------------------------------------------------------------');
+        $this->console('');
+        $this->console('                   Disablin eXpansion Analytics Tool : ');
+        $this->console('We are sorry that you have disabled analytics tool. ');
+        $this->console('eXpansion Dev Team.');
+        $this->console('');
+        $this->console('-------------------------------------------------------------------------------');
+        $this->console('');
 
-		ErrorHandling::$errorReporter = null;
+        ErrorHandling::$errorReporter = null;
 
-		Dispatcher::unregister(TickEvent::getClass(), $this);
-		$this->enable = false;
-	}
+        Dispatcher::unregister(TickEvent::getClass(), $this);
+        $this->enable = false;
+    }
 
-	public function destroy()
-	{
-		Dispatcher::unregister(TickEvent::getClass(), $this);
-	}
+    public function destroy()
+    {
+        Dispatcher::unregister(TickEvent::getClass(), $this);
+    }
 
-	/**
-	 * Event launch every seconds
-	 */
-	function onTick()
-	{
-		if (!$this->active || $this->key == null) {
-			if (!$this->running && $this->lasPing + self::NOT_ACTIVE_PING < time()) {
-				$this->lasPing = time();
-				$this->running = true;
-				$this->handshake();
-			}
-		} else {
-			if (!$this->running && $this->lasPing + self::ACTIVE_PING < time()) {
-				$this->lasPing = time();
-				$this->running = true;
-				$this->ping();
-			}
-		}
-	}
+    /**
+     * Event launch every seconds
+     */
+    function onTick()
+    {
+        if (!$this->active || $this->key == null) {
+            if (!$this->running && $this->lasPing + self::NOT_ACTIVE_PING < time()) {
+                $this->lasPing = time();
+                $this->running = true;
+                $this->handshake();
+            }
+        } else {
+            if (!$this->running && $this->lasPing + self::ACTIVE_PING < time()) {
+                $this->lasPing = time();
+                $this->running = true;
+                $this->ping();
+            }
+        }
+    }
 
-	public function handshake()
-	{
-		/** @var DataAccess $access */
-		$access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
+    public function handshake()
+    {
+        /** @var DataAccess $access */
+        $access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
 
-		$data = array(
-			'page'=>'handshake',
-			'server-login' => $this->storage->serverLogin
-		);
+        $data = array(
+            'page' => 'handshake',
+            'server-login' => $this->storage->serverLogin
+        );
 
-		$url = $this->url."?".$this->generate($data);
+        $url = $this->url . "?" . $this->generate($data);
 
-		$access->httpGet($url, Array($this, "completeHandshake"), $data, "Manialive/eXpansion", "application/json");
-	}
+        $access->httpGet($url, Array($this, "completeHandshake"), $data, "Manialive/eXpansion", "application/json");
+    }
 
-	public function completeHandshake($data)
-	{
-		$this->running = false;
-		if (!$data)
-			return;
+    public function completeHandshake($data)
+    {
+        $this->running = false;
+        if (!$data)
+            return;
 
-		$json = json_decode($data);
+        $json = json_decode($data);
 
-		if(isset($json->key) && !empty($json->key)) {
-			$this->active = true;
-			$this->key = $json->key;
-			$this->lasPing = time();
-			$this->ping();
-		}
-	}
+        if (isset($json->key) && !empty($json->key)) {
+            $this->active = true;
+            $this->key = $json->key;
+            $this->lasPing = time();
+            $this->ping();
+        }
+    }
 
-	/**
-	 * @param \Exception $exception to log
-	 */
-	public function ping($error = null)
-	{
-		/** @var DataAccess $access */
-		$access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
+    /**
+     * @param \Exception $exception to log
+     */
+    public function ping($error = null)
+    {
+        /** @var DataAccess $access */
+        $access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
 
-		$buildDate = Helper::getBuildDate();
+        $buildDate = Helper::getBuildDate();
 
-		$plugins = array();
-		foreach($this->pluginHandler->getLoadedPluginsList() as $plugin){
-			$plugins[] = str_replace('\\', '__', $plugin);
-		}
+        $plugins = array();
+        foreach ($this->pluginHandler->getLoadedPluginsList() as $plugin) {
+            $plugins[] = str_replace('\\', '__', $plugin);
+        }
 
-		$data = array(
-			'page'=>'ping',
-			'key' => $this->key,
-			'nbPlayers' => count($this->storage->players) + count($this->storage->spectators),
-			'country' => $this->expStorage->serverCountry,
-			'version' => Core::EXP_VERSION,
-			'php_version' => $this->expStorage->cleanPhpVersion,
-			'memory' => memory_get_usage(),
-			'memory_peak' => memory_get_peak_usage(),
-			'build' => $this->getDateTime($buildDate),
-			'game' => $this->expStorage->simpleEnviTitle,
-			'title' => str_replace('@', '_', $this->expStorage->titleId),
-			'mode' => $this->storage->gameInfos->gameMode == 0 ? $this->storage->gameInfos->scriptName : $this->storage->gameInfos->gameMode,
-			'plugins' => implode(',',$this->pluginHandler->getLoadedPluginsList()),
-			'serverOs' => $this->expStorage->serverOs,
-		);
+        $data = array(
+            'page' => 'ping',
+            'key' => $this->key,
+            'nbPlayers' => count($this->storage->players) + count($this->storage->spectators),
+            'country' => $this->expStorage->serverCountry,
+            'version' => Core::EXP_VERSION,
+            'php_version' => $this->expStorage->cleanPhpVersion,
+            'memory' => memory_get_usage(),
+            'memory_peak' => memory_get_peak_usage(),
+            'build' => $this->getDateTime($buildDate),
+            'game' => $this->expStorage->simpleEnviTitle,
+            'title' => str_replace('@', '_', $this->expStorage->titleId),
+            'mode' => $this->storage->gameInfos->gameMode == 0 ? $this->storage->gameInfos->scriptName : $this->storage->gameInfos->gameMode,
+            'plugins' => implode(',', $this->pluginHandler->getLoadedPluginsList()),
+            'serverOs' => $this->expStorage->serverOs,
+        );
 
-		if (!is_null($error)) {
-			$this->nbError++;
-			if ($this->nbError > self::ERROR_LIMIT) {
-				return;
-			}
-			$data['page'] = 'error';
-			/** @var \Exception $error */
-			$data['error_file'] = $this->removeRoot($error->getFile());
-			$data['error_line'] = $error->getLine();
-			$data['error_msg'] = $error->getMessage();
-			$data['error_stack'] = $error->getTraceAsString();
+        if (!is_null($error)) {
+            $this->nbError++;
+            if ($this->nbError > self::ERROR_LIMIT) {
+                return;
+            }
+            $data['page'] = 'error';
+            /** @var \Exception $error */
+            $data['error_file'] = $this->removeRoot($error->getFile());
+            $data['error_line'] = $error->getLine();
+            $data['error_msg'] = $error->getMessage();
+            $data['error_stack'] = $error->getTraceAsString();
 
-			$url = $this->url."?".$this->generate($data);
+            $url = $this->url . "?" . $this->generate($data);
 
-			$access->httpGet($url, Array($this, "completeError"), $data, "Manialive/eXpansion", "application/json");
-		} else {
-			$url = $this->url."?".$this->generate($data);
-			$access->httpGet($url, Array($this, "completePing"), $data, "Manialive/eXpansion", "application/json");
-		}
-	}
+            $access->httpGet($url, Array($this, "completeError"), $data, "Manialive/eXpansion", "application/json");
+        } else {
+            $url = $this->url . "?" . $this->generate($data);
+            $access->httpGet($url, Array($this, "completePing"), $data, "Manialive/eXpansion", "application/json");
+        }
+    }
 
-	private function removeRoot($fileName)
-	{
-		$fileName = realpath($fileName);
-		/** @var Path $path */
-		$path = Path::getInstance();
-		$dir = realpath($path->getRoot(true));
+    private function removeRoot($fileName)
+    {
+        $fileName = realpath($fileName);
+        /** @var Path $path */
+        $path = Path::getInstance();
+        $dir = realpath($path->getRoot(true));
 
-		return str_replace($dir, '', $fileName);
-	}
+        return str_replace($dir, '', $fileName);
+    }
 
-	private function generate($mapping) {
-		$url = '';
-		foreach($mapping as $key => $value){
-			$url .= "$key=".urlencode($value).'&';
-		}
+    private function generate($mapping)
+    {
+        $url = '';
+        foreach ($mapping as $key => $value) {
+            $url .= "$key=" . urlencode($value) . '&';
+        }
 
-		return $url;
-	}
+        return $url;
+    }
 
-	public function completePing($data)
-	{
-		$this->running = false;
-	}
+    public function completePing($data)
+    {
+        $this->running = false;
+    }
 
-	public function completeError($data)
-	{
-	}
+    public function completeError($data)
+    {
+    }
 
 
-	private function getDateTime($time) {
-		return date('Y-m-d',($time)).'T'.date('H:i:s', ($time)).'Z';
-	}
+    private function getDateTime($time)
+    {
+        return date('Y-m-d', ($time)) . 'T' . date('H:i:s', ($time)) . 'Z';
+    }
 
-	protected function console($message) {
-		$logFile = $this->storage->serverLogin . ".console.log";
-		/** @var Logger */
-		$logger = Logger::getLog("eXpansion");
+    protected function console($message)
+    {
+        $logFile = $this->storage->serverLogin . ".console.log";
+        /** @var Logger */
+        $logger = Logger::getLog("eXpansion");
 
-		Console::println($message);
-		$logger::log($message, true, $logFile);
+        Console::println($message);
+        $logger::log($message, true, $logFile);
 
-	}
+    }
 }

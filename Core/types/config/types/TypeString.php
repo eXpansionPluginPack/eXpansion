@@ -10,35 +10,35 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
 class TypeString extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
 {
 
-	/**
-	 * Sets the string value
-	 *
-	 * @param $value
-	 *
-	 * @return bool
-	 */
-	public function setValue($value)
-	{
-		if ($this->basicValueCheck($value))
-			return $this->setRawValue($value);
+    /**
+     * Sets the string value
+     *
+     * @param $value
+     *
+     * @return bool
+     */
+    public function setValue($value)
+    {
+        if ($this->basicValueCheck($value))
+            return $this->setRawValue($value);
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Returns value to preview;
-	 *
-	 * @return mixed
-	 */
-	public function getPreviewValues()
-	{
-		return $this->getRawValue();
-	}
+    /**
+     * Returns value to preview;
+     *
+     * @return mixed
+     */
+    public function getPreviewValues()
+    {
+        return $this->getRawValue();
+    }
 
-	public function __toString()
-	{
-		return strval($this->getRawValue());
-	}
+    public function __toString()
+    {
+        return strval($this->getRawValue());
+    }
 }
 
 ?>

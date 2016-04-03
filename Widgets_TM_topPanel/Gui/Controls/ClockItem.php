@@ -32,34 +32,34 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 class ClockItem extends Control implements ScriptedContainer
 {
 
-	protected $lbl_value, $lbl_title;
+    protected $lbl_value, $lbl_title;
 
-	public function __construct($sizeX, $sizeY = 9)
-	{
-		$this->lbl_title = new DicoLabel($sizeX, 4.5);
-		$this->lbl_title->setText("Time");
-		$this->lbl_title->setPosition(0, -2.25);
-		$this->lbl_title->setTextSize(1);
-		$this->lbl_title->setAlign("left", "center");
-		$this->addComponent($this->lbl_title);
+    public function __construct($sizeX, $sizeY = 9)
+    {
+        $this->lbl_title = new DicoLabel($sizeX, 4.5);
+        $this->lbl_title->setText("Time");
+        $this->lbl_title->setPosition(0, -2.25);
+        $this->lbl_title->setTextSize(1);
+        $this->lbl_title->setAlign("left", "center");
+        $this->addComponent($this->lbl_title);
 
-		$this->lbl_value = new Label($sizeX, 4.5);
-		$this->lbl_value->setPosition(0, -6.25);
-		$this->lbl_value->setId("clock");
-		$this->lbl_value->setAlign("left", "center");
-		$this->lbl_value->setStyle("TextValueSmallSm");
-		$this->addComponent($this->lbl_value);
+        $this->lbl_value = new Label($sizeX, 4.5);
+        $this->lbl_value->setPosition(0, -6.25);
+        $this->lbl_value->setId("clock");
+        $this->lbl_value->setAlign("left", "center");
+        $this->lbl_value->setStyle("TextValueSmallSm");
+        $this->addComponent($this->lbl_value);
 
-		$this->setSize($sizeX, $sizeY);
-	}
+        $this->setSize($sizeX, $sizeY);
+    }
 
-	/**
-	 * @return Script the script this container needs
-	 */
-	public function getScript()
-	{
-		$script = new Script("Widgets_TM_topPanel\Gui\Scripts\clock");
-		return $script;
-	}
+    /**
+     * @return Script the script this container needs
+     */
+    public function getScript()
+    {
+        $script = new Script("Widgets_TM_topPanel\Gui\Scripts\clock");
+        return $script;
+    }
 
 }

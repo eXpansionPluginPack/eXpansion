@@ -7,8 +7,9 @@ namespace ManiaLivePlugins\eXpansion\Gui\Formaters;
  *
  * @author De Cramer Oliver
  */
-abstract class AbstractFormater extends \ManiaLib\Utils\Singleton{
-    
+abstract class AbstractFormater extends \ManiaLib\Utils\Singleton
+{
+
     abstract public function format($val);
 
 }

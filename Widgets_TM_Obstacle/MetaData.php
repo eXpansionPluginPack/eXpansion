@@ -10,15 +10,15 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TM_Obstacle;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Widget: Obstacle Progress");
-		$this->setDescription("Shows Checkpoint progress for 10 players in a widget");
-		$this->setGroups(array('Widgets'));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Widget: Obstacle Progress");
+        $this->setDescription("Shows Checkpoint progress for 10 players in a widget");
+        $this->setGroups(array('Widgets'));
 
-		$this->addTitleSupport("TM");
-		$this->addTitleSupport("Trackmania");
-	}
+        $this->addTitleSupport("TM");
+        $this->addTitleSupport("Trackmania");
+    }
 
 }

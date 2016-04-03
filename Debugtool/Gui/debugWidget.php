@@ -37,8 +37,8 @@ class debugWidget extends \ManiaLive\Gui\Window
     function onPostLoop()
     {
         $startTime = microtime(true);
-        if ($startTime < $this->nextLoop) return;        
-        $value = "mem usage: ".round((memory_get_usage() / 1024 / 1024), 3)." Mb";
+        if ($startTime < $this->nextLoop) return;
+        $value = "mem usage: " . round((memory_get_usage() / 1024 / 1024), 3) . " Mb";
         if ($value == $this->lastValue) {
             $this->label->setTextColor("fff");
         } else {
@@ -51,9 +51,9 @@ class debugWidget extends \ManiaLive\Gui\Window
         $this->label->setText($value);
         $this->RedrawAll();
         $this->lastUpdate = time();
-        $this->lastValue  = $value;
+        $this->lastValue = $value;
 
-        $endTime        = microtime(true);
+        $endTime = microtime(true);
         $this->nextLoop = $endTime + 0.95;
     }
 
@@ -63,4 +63,5 @@ class debugWidget extends \ManiaLive\Gui\Window
         Dispatcher::unregister(TickEvent::getClass(), $this);
     }
 }
+
 ?>

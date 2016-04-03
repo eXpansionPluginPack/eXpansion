@@ -25,29 +25,30 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange\Hooks;
 
 class ListButtons extends \ManiaLive\Event\Event
 {
-	const ON_BUTTON_LIST_CREATE = 1;
+    const ON_BUTTON_LIST_CREATE = 1;
 
-	protected $buttons;
-	protected $login;
+    protected $buttons;
+    protected $login;
 
-	/**
-	 * @param $onWhat
-	 * @param $buttons
-	 * @param $login
-	 */
-	function __construct($onWhat, $buttons, $login) {
-		parent::__construct($onWhat);
+    /**
+     * @param $onWhat
+     * @param $buttons
+     * @param $login
+     */
+    function __construct($onWhat, $buttons, $login)
+    {
+        parent::__construct($onWhat);
 
-		$this->buttons = $buttons;
-		$this->login = $login;
-	}
+        $this->buttons = $buttons;
+        $this->login = $login;
+    }
 
-	function fireDo($listener)
-	{
-		switch ($this->onWhat) {
-			case self::ON_BUTTON_LIST_CREATE:
-				$listener->hook_ManiaExchangeListButtons($this->buttons, $this->login);
-				break;
-		}
-	}
+    function fireDo($listener)
+    {
+        switch ($this->onWhat) {
+            case self::ON_BUTTON_LIST_CREATE:
+                $listener->hook_ManiaExchangeListButtons($this->buttons, $this->login);
+                break;
+        }
+    }
 } 

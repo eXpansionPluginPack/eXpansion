@@ -5,14 +5,16 @@ namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 
-class RankItem_old extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class RankItem_old extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     private $bg;
     private $nbrec;
     private $nickname;
     private $frame;
 
-    function __construct($indexNumber, $nickname, $nbrec) {
+    function __construct($indexNumber, $nickname, $nbrec)
+    {
         $sizeX = 120;
         $sizeY = 6;
 
@@ -82,22 +84,25 @@ class RankItem_old extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $lbl->setText('$000' . $nbrec['3']);
         $lbl->setAlign('left', 'center');
         $this->frame->addComponent($lbl);
-        
+
         $this->addComponent($this->frame);
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY) {
-        
+    protected function onResize($oldX, $oldY)
+    {
+
     }
 
-    function onDraw() {
-        
+    function onDraw()
+    {
+
     }
 
-    function destroy() {
+    function destroy()
+    {
         $this->frame->clearComponents();
         $this->frame->destroy();
         $this->destroyComponents();
@@ -106,5 +111,6 @@ class RankItem_old extends \ManiaLivePlugins\eXpansion\Gui\Control {
     }
 
 }
+
 ?>
 

@@ -16,15 +16,17 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
  *
  * @author Petri
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData {
+class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
+{
 
-    public function onBeginLoad() {
-	parent::onBeginLoad();
-	$this->setName("Tool: Network lag");
-	$this->setDescription("Provides /adm lag command, for fullstack latency");
-	$this->setGroups(array('Tools'));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Tool: Network lag");
+        $this->setDescription("Provides /adm lag command, for fullstack latency");
+        $this->setGroups(array('Tools'));
 
-	$config = Config::getInstance();	
+        $config = Config::getInstance();
     }
 
 }

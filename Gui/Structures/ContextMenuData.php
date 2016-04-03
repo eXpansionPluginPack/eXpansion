@@ -33,7 +33,7 @@ class ContextMenuData
     public function __construct(\ManiaLivePlugins\eXpansion\Core\i18n\Message $message, $data)
     {
         $this->message = $message;
-        $this->data    = $data;
+        $this->data = $data;
     }
 
     public function getData()

@@ -4,7 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Notifications\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Notifications\Gui\Controls\Item;
 
-class Panel extends \ManiaLive\Gui\Window {
+class Panel extends \ManiaLive\Gui\Window
+{
 
     private $_windowFrame;
     private $_mainWindow;
@@ -12,7 +13,8 @@ class Panel extends \ManiaLive\Gui\Window {
     private $frame;
     public static $menuPlugin;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         /*    $config = Config::getInstance();
 
@@ -34,9 +36,9 @@ class Panel extends \ManiaLive\Gui\Window {
         $this->_mainWindow->setSubStyle("BgPlayerCardBig");
         $this->_mainWindow->setAlign("left", "bottom");
         $this->_mainWindow->setScriptEvents(true);
-        
+
         $this->_windowFrame->addComponent($this->_mainWindow);
-       
+
         $this->addComponent($this->_windowFrame);
 
         $xml = new \ManiaLive\Gui\Elements\Xml();
@@ -95,35 +97,39 @@ class Panel extends \ManiaLive\Gui\Window {
         $this->addComponent($xml);
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize(120, 40);
-        $this->_mainWindow->setSize(120, 45);        
+        $this->_mainWindow->setSize(120, 45);
     }
 
-    function onShow() {
-        
+    function onShow()
+    {
+
     }
 
-    function setItems(array $menuItems) {
-        if ($this->frame!= null)
+    function setItems(array $menuItems)
+    {
+        if ($this->frame != null)
             $this->_windowFrame->removeComponent($this->frame);
-        $this->frame = new \ManiaLive\Gui\Controls\Frame(100,40);
-        $this->frame->setAlign("left", "bottom");        
+        $this->frame = new \ManiaLive\Gui\Controls\Frame(100, 40);
+        $this->frame->setAlign("left", "bottom");
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(1));
-       // $menu = array_reverse($menuItems);
+        // $menu = array_reverse($menuItems);
         foreach ($menuItems as $menuItem) {
             $item = new Item($menuItem);
             $this->frame->addComponent($item);
         }
-        
-        $posY = abs(count($menuItems)*6);
-        
-        $this->frame->setPosition(6, $posY);        
+
+        $posY = abs(count($menuItems) * 6);
+
+        $this->frame->setPosition(6, $posY);
         $this->_windowFrame->addComponent($this->frame);
     }
 
-    function destroy() {
+    function destroy()
+    {
         parent::destroy();
     }
 

@@ -7,7 +7,8 @@ namespace ManiaLivePlugins\eXpansion\ServerStatistics\Stats;
  *
  * @author Reaby
  */
-interface AbstractStat {
+interface AbstractStat
+{
 
     function getAvgLoad();
 

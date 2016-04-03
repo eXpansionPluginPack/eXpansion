@@ -7,15 +7,17 @@ namespace ManiaLivePlugins\eXpansion\Helpers;
  *
  * @author Reaby
  */
-class PlayerObj {
+class PlayerObj
+{
 
     /**
      * Parses spectatorinfos from numeric value
-     * 
+     *
      * @param mixed|integer $spectatorInfo
      * @return \Maniaplanet\DedicatedServer\Structures\Player
      */
-    public static function parseSpecStatus($spectatorInfo) {
+    public static function parseSpecStatus($spectatorInfo)
+    {
         $number = 00000;
         if (is_object($spectatorInfo))
             $number = $spectatorInfo->spectatorStatus;

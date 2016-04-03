@@ -24,8 +24,9 @@ namespace ManiaLivePlugins\eXpansion\AutoQueue\Structures;
  *
  * @author Reaby
  */
-class QueuePlayer extends \ManiaLive\Data\Player {
+class QueuePlayer extends \ManiaLive\Data\Player
+{
 
-	public $isQueuable = false;
-	
+    public $isQueuable = false;
+
 }

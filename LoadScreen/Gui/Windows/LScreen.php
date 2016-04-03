@@ -9,25 +9,25 @@ use ManiaLivePlugins\eXpansion\LoadScreen\Config;
 class LScreen extends Window
 {
 
-	protected $frame;
+    protected $frame;
 
-	private $xml;
+    private $xml;
 
-	private $quad;
+    private $quad;
 
-	protected function onConstruct()
-	{
-		parent::onConstruct();
-		$this->setName("LoadingScreen");
-		$this->quad = new Quad(320, 180);
-		$this->quad->setAlign("top", "left");
-		$this->quad->setId("image");
-		$this->quad->setScriptEvents();
-		$this->addComponent($this->quad);
-		$this->setPosition(-160, 90);
-		$this->setScriptEvents();
-		$this->xml = new \ManiaLive\Gui\Elements\Xml();
-		$this->xml->setContent('
+    protected function onConstruct()
+    {
+        parent::onConstruct();
+        $this->setName("LoadingScreen");
+        $this->quad = new Quad(320, 180);
+        $this->quad->setAlign("top", "left");
+        $this->quad->setId("image");
+        $this->quad->setScriptEvents();
+        $this->addComponent($this->quad);
+        $this->setPosition(-160, 90);
+        $this->setScriptEvents();
+        $this->xml = new \ManiaLive\Gui\Elements\Xml();
+        $this->xml->setContent('
 				<script>
 				<!--
 				main() {
@@ -55,25 +55,25 @@ class LScreen extends Window
 				-->
 				</script>
 ');
-		$this->addComponent($this->xml);
-	}
+        $this->addComponent($this->xml);
+    }
 
-	protected function onDraw()
-	{
-		$this->quad->setPosZ(70);
-		parent::onDraw();
-	}
+    protected function onDraw()
+    {
+        $this->quad->setPosZ(70);
+        parent::onDraw();
+    }
 
-	public function setImage($url)
-	{
-		$this->quad->setImage($url, true);
-	}
+    public function setImage($url)
+    {
+        $this->quad->setImage($url, true);
+    }
 
-	function destroy()
-	{
-		$this->destroyComponents();
-		parent::destroy();
-	}
+    function destroy()
+    {
+        $this->destroyComponents();
+        parent::destroy();
+    }
 
 }
 

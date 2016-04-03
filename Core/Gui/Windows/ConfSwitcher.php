@@ -90,11 +90,11 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function populate(Variable $var)
     {
-		foreach ($this->items as $item) {
-			$item->destroy();
-		}
-		$this->items = null;
-		
+        foreach ($this->items as $item) {
+            $item->destroy();
+        }
+        $this->items = null;
+
         $this->pagerFrame->clearItems();
         $this->items = array();
 
@@ -102,12 +102,13 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->populateFromDir($var, 'libraries/ManiaLivePlugins/eXpansion/Core/defaultConfigs', false);
     }
 
-    public function populateFromDir($var, $dir, $diff){
+    public function populateFromDir($var, $dir, $diff)
+    {
         $helper = Helper::getPaths();
 
         if (is_dir($dir)) {
             $subFiles = scandir($dir);
-            $i        = 0;
+            $i = 0;
             foreach ($subFiles as $file) {
                 if ($helper->fileHasExtension($file, '.user.exp')) {
                     $item = new ConfElement($i, $file, $file == ($var->getRawValue() . '.user.exp'), $diff, $this->getRecipient(), $dir);
@@ -123,7 +124,7 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $name = $params['name'];
         if ($name != "") {
-            $name.='.user.exp';
+            $name .= '.user.exp';
             /** @var ConfigManager $confManager */
             $confManager = ConfigManager::getInstance();
 
@@ -134,7 +135,8 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         foreach ($this->items as $item) {
             $item->destroy();
         }

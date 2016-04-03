@@ -7,7 +7,8 @@ namespace ManiaLivePlugins\eXpansion\Votes\Structures;
  *
  * @author Petri
  */
-class ManagedVote extends \Maniaplanet\DedicatedServer\Structures\Vote {
+class ManagedVote extends \Maniaplanet\DedicatedServer\Structures\Vote
+{
 
     /** @var bool managed vote ? */
     public $managed = false;
@@ -36,8 +37,9 @@ class ManagedVote extends \Maniaplanet\DedicatedServer\Structures\Vote {
     /** @var mixed[] */
     public $cmdParam;
 
-    public function __construct($cmdName = '', $cmdParam = array()) {
-	parent::__construct($cmdName, $cmdParam);
+    public function __construct($cmdName = '', $cmdParam = array())
+    {
+        parent::__construct($cmdName, $cmdParam);
     }
 
 }

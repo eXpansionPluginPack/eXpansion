@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Core;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
 
     public $debug = false;
     public $analytics = true;

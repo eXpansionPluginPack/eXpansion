@@ -13,7 +13,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TeamPlayerScores\Structures;
  *
  * @author Petri
  */
-class PlayerScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
+class PlayerScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+{
 
     /**
      * Total Score of a player

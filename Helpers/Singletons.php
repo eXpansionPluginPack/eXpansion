@@ -28,22 +28,22 @@ use ManiaLib\Utils\Singleton;
 class Singletons extends Singleton
 {
 
-	/** @var \Maniaplanet\DedicatedServer\Connection  */
-	private $connection = null;
+    /** @var \Maniaplanet\DedicatedServer\Connection */
+    private $connection = null;
 
-	/**
-	 * @return \Maniaplanet\DedicatedServer\Connection Connection to the dedicated server
-	 */
-	public function getDediConnection()
-	{
-		if ($this->connection == null) {
-			/**
-			 * @var \ManiaLive\DedicatedApi\Config $config
-			 */
-			$config = \ManiaLive\DedicatedApi\Config::getInstance();
-			$this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
-		}
-		return $this->connection;
-	}
+    /**
+     * @return \Maniaplanet\DedicatedServer\Connection Connection to the dedicated server
+     */
+    public function getDediConnection()
+    {
+        if ($this->connection == null) {
+            /**
+             * @var \ManiaLive\DedicatedApi\Config $config
+             */
+            $config = \ManiaLive\DedicatedApi\Config::getInstance();
+            $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
+        }
+        return $this->connection;
+    }
 
 }

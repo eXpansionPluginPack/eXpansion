@@ -11,13 +11,15 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  *
  * @author oliverde8
  */
-class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     private $label_rank, $label_nick, $label_wins, $label_score, $label_finish, $label_lastRec;
     private $bg;
     private $widths;
 
-    function __construct($indexNumber, $login, $rank, $widths) {
+    function __construct($indexNumber, $login, $rank, $widths)
+    {
         $this->widths = $widths;
         $this->sizeY = 6;
         $this->bg = new ListBackGround($indexNumber, 100, 6);
@@ -77,9 +79,10 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->frame->addComponent($this->label_lastRec);
     }
 
-    public function onResize($oldX, $oldY) {
+    public function onResize($oldX, $oldY)
+    {
         $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / .8) - 5);
-        $this->bg->setSizeX($this->getSizeX()/$this->getScale() - 2);
+        $this->bg->setSizeX($this->getSizeX() / $this->getScale() - 2);
         $this->label_rank->setSizeX($scaledSizes[0]);
         $this->label_nick->setSizeX($scaledSizes[1]);
         $this->label_wins->setSizeX($scaledSizes[2]);
@@ -91,23 +94,26 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy() {
-        
+    function destroy()
+    {
+
     }
 
     /*
      * custom function to remove contents.
      */
 
-    function erase() {
+    function erase()
+    {
         parent::destroy();
     }
 
-    public function formatPTime($time) {
-        $min = (int) ($time / 60);
-        $hour = (int) ($min / 60);
+    public function formatPTime($time)
+    {
+        $min = (int)($time / 60);
+        $hour = (int)($min / 60);
         $min = $min % 60;
-        $day = (int) ($hour / 24);
+        $day = (int)($hour / 24);
         $hour = $hour % 24;
         return $day . 'd ' . $hour . 'h ' . $min . 'm';
     }

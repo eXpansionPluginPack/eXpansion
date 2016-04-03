@@ -36,95 +36,95 @@ use ManiaLivePlugins\eXpansion\MapSuggestion\MapSuggestion;
 class MapWish extends Window
 {
 
-	private $frame;
+    private $frame;
 
-	/** @var string $mxid */
-	private $mxid = "";
-	private $inputbox_mxid;
-	private $inputbox_description;
-	private $button_send;
-	private $button_cancel;
-	private $fromText = "";
+    /** @var string $mxid */
+    private $mxid = "";
+    private $inputbox_mxid;
+    private $inputbox_description;
+    private $button_send;
+    private $button_cancel;
+    private $fromText = "";
 
-	/**
-	 * @var MapSuggestion
-	 */
-	private $plugin;
+    /**
+     * @var MapSuggestion
+     */
+    private $plugin;
 
-	function onConstruct()
-	{
-		parent::onConstruct();
-		
-
-		$login = $this->getRecipient();
-		$player = Storage::getInstance()->getPlayerObject($login);
-		$this->fromText = $player->nickName . '$z$s$fff (' . $login . ')';
-		$this->setName("MapSuggestion window");
-		$this->setTitle( __("Wish a map", $login));
-		$this->setSize(90, 60);
-
-		$this->frame = new Frame(2, -6);
-		$this->frame->setLayout(new Column());
-		$this->mainFrame->addComponent($this->frame);
-
-		// frame with line layout, used for row template;
-		$row = new Frame();
-		$row->setLayout(new Line());
-
-		$lbl_login = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("from", 60, false);
-		$lbl_login->setLabel(__('From', $login));
-		$lbl_login->setText($this->fromText);
+    function onConstruct()
+    {
+        parent::onConstruct();
 
 
-		$this->frame->addComponent($lbl_login);
+        $login = $this->getRecipient();
+        $player = Storage::getInstance()->getPlayerObject($login);
+        $this->fromText = $player->nickName . '$z$s$fff (' . $login . ')';
+        $this->setName("MapSuggestion window");
+        $this->setTitle(__("Wish a map", $login));
+        $this->setSize(90, 60);
 
-		$this->inputbox_mxid = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("mxid", 60);
-		$this->inputbox_mxid->setLabel(__("Mania-Exchange ID-number for map wish", $login));
-		$this->inputbox_mxid->setText($this->mxid);
-		$this->frame->addComponent($this->inputbox_mxid);
+        $this->frame = new Frame(2, -6);
+        $this->frame->setLayout(new Column());
+        $this->mainFrame->addComponent($this->frame);
 
-		$this->inputbox_description = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("description", 60);
-		$this->inputbox_description->setLabel(__("Why you would like this map to be added ?", $login));
-		$this->frame->addComponent($this->inputbox_description);
+        // frame with line layout, used for row template;
+        $row = new Frame();
+        $row->setLayout(new Line());
 
-		$this->button_send = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-		$this->button_send->colorize("0d0");
-		$this->button_send->setAction($this->createAction(array($this, "apply")));
-		$this->button_send->setText(__("Apply", $login));
-		$row->addComponent($this->button_send);
+        $lbl_login = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("from", 60, false);
+        $lbl_login->setLabel(__('From', $login));
+        $lbl_login->setText($this->fromText);
 
-		$this->button_cancel = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-		$this->button_cancel->setAction($this->createAction(array($this, "cancel")));
-		$this->button_cancel->setText(__("Cancel", $login));
-		$row->addComponent($this->button_send);
 
-		$this->frame->addComponent($row);
-	}
+        $this->frame->addComponent($lbl_login);
 
-	/**
-	 * @param MapSuggestion $plugin
-	 */
-	public function setPlugin($plugin)
-	{
-		$this->plugin = $plugin;
-	}
+        $this->inputbox_mxid = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("mxid", 60);
+        $this->inputbox_mxid->setLabel(__("Mania-Exchange ID-number for map wish", $login));
+        $this->inputbox_mxid->setText($this->mxid);
+        $this->frame->addComponent($this->inputbox_mxid);
 
-	public function apply($login, $entries)
-	{
-		$mxid = $entries['mxid'];
-		$this->plugin->addMapToWish($login, $mxid, $entries['description']);
-	}
+        $this->inputbox_description = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("description", 60);
+        $this->inputbox_description->setLabel(__("Why you would like this map to be added ?", $login));
+        $this->frame->addComponent($this->inputbox_description);
 
-	public function cancel($login)
-	{
-		$this->Erase($login);
-	}
+        $this->button_send = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+        $this->button_send->colorize("0d0");
+        $this->button_send->setAction($this->createAction(array($this, "apply")));
+        $this->button_send->setText(__("Apply", $login));
+        $row->addComponent($this->button_send);
 
-	public function setMXid($mxid)
-	{
-		if (Validation::int($mxid, 1)) {
-			$this->mxid = "" . $mxid;
-		}
-	}
+        $this->button_cancel = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+        $this->button_cancel->setAction($this->createAction(array($this, "cancel")));
+        $this->button_cancel->setText(__("Cancel", $login));
+        $row->addComponent($this->button_send);
+
+        $this->frame->addComponent($row);
+    }
+
+    /**
+     * @param MapSuggestion $plugin
+     */
+    public function setPlugin($plugin)
+    {
+        $this->plugin = $plugin;
+    }
+
+    public function apply($login, $entries)
+    {
+        $mxid = $entries['mxid'];
+        $this->plugin->addMapToWish($login, $mxid, $entries['description']);
+    }
+
+    public function cancel($login)
+    {
+        $this->Erase($login);
+    }
+
+    public function setMXid($mxid)
+    {
+        if (Validation::int($mxid, 1)) {
+            $this->mxid = "" . $mxid;
+        }
+    }
 
 }

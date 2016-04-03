@@ -27,108 +27,108 @@ namespace ManiaLivePlugins\eXpansion\Helpers;
 class Maniascript
 {
 
-	/**
-	 * 	converts object, string or array to maniascript array
-	 * @param mixed $data
-	 */
-	static public function stringifyAsList($data)
-	{
+    /**
+     *    converts object, string or array to maniascript array
+     * @param mixed $data
+     */
+    static public function stringifyAsList($data)
+    {
 
-		if (is_object($data)) {
-			$data = (array) $data;
-		}
-		if (!is_array($data)) {
+        if (is_object($data)) {
+            $data = (array)$data;
+        }
+        if (!is_array($data)) {
 
-			return '[' . self::convertType($data) . ']';
-		}
-		$returnBuffer = "[";
-		$returnBuffer .= implode(",", array_map(array(__CLASS__, "convertType"), $data));
-		$returnBuffer .= ']';
+            return '[' . self::convertType($data) . ']';
+        }
+        $returnBuffer = "[";
+        $returnBuffer .= implode(",", array_map(array(__CLASS__, "convertType"), $data));
+        $returnBuffer .= ']';
 
-		return $returnBuffer;
-	}
+        return $returnBuffer;
+    }
 
-	/**
-	 * 	converts object, string or array to maniascript array
-	 *  @todo implement the converter
-	 * 
-	 * @param mixed $data
-	 */
-	static public function stringifyAsArray($data)
-	{
-		throw new Exception("not implemented yet");
-	}
+    /**
+     *    converts object, string or array to maniascript array
+     * @todo implement the converter
+     *
+     * @param mixed $data
+     */
+    static public function stringifyAsArray($data)
+    {
+        throw new Exception("not implemented yet");
+    }
 
-	/**
-	 * Converts mixed php variable types to maniascript equilable
-	 * supported php->maniascript types:
-	 * 
-	 * String, Boolean, Integer, Float, Null
-	 * 
-	 * @param  String|Boolean|Integer|Float|Null $var
-	 * @return string|numeric
-	 */
-	static public function convertType($var)
-	{
-		if (is_null($var)) {
-			return 'Null';
-		}
-		if (is_float($var)) {
-			return strval(number_format((float) $var, 2, '.', ''));
-		}
-		if (is_int($var)) {
-			return $var;
-		}
-		if (is_bool($var)) {
-			if ($var)
-				return 'True';
-			return 'False';
-		}
+    /**
+     * Converts mixed php variable types to maniascript equilable
+     * supported php->maniascript types:
+     *
+     * String, Boolean, Integer, Float, Null
+     *
+     * @param  String|Boolean|Integer|Float|Null $var
+     * @return string|numeric
+     */
+    static public function convertType($var)
+    {
+        if (is_null($var)) {
+            return 'Null';
+        }
+        if (is_float($var)) {
+            return strval(number_format((float)$var, 2, '.', ''));
+        }
+        if (is_int($var)) {
+            return $var;
+        }
+        if (is_bool($var)) {
+            if ($var)
+                return 'True';
+            return 'False';
+        }
 
-		if (is_string($var)) {
-			return '"' . addslashes(self::fixString($var)) . '"';
-		}
-	}
+        if (is_string($var)) {
+            return '"' . addslashes(self::fixString($var)) . '"';
+        }
+    }
 
-	/**
-	 * Cleans the string for manialink or maniascript purposes.
-	 *
-	 * @param string $string The string to clean
-	 *
-	 * @return string cleaned up string
-	 */
-	public static function fixString($string)
-	{
+    /**
+     * Cleans the string for manialink or maniascript purposes.
+     *
+     * @param string $string The string to clean
+     *
+     * @return string cleaned up string
+     */
+    public static function fixString($string)
+    {
 
-		$out = str_replace('"', "'", $string);
-		$out = str_replace('\\', '\\\\', $out);
-		$out = str_replace('-', '–', $out);
+        $out = str_replace('"', "'", $string);
+        $out = str_replace('\\', '\\\\', $out);
+        $out = str_replace('-', '–', $out);
 
-		return $out;
-	}
+        return $out;
+    }
 
-	/**
-	 * convert php numeric value to maniascript Real 
-	 * @param numeric $var
-	 * @return int|float
-	 */
-	public static function getReal($var)
-	{
-		if (is_numeric($var)) {
-			return strval(number_format((float) $var, 2, '.', ''));
-		}
-	}
+    /**
+     * convert php numeric value to maniascript Real
+     * @param numeric $var
+     * @return int|float
+     */
+    public static function getReal($var)
+    {
+        if (is_numeric($var)) {
+            return strval(number_format((float)$var, 2, '.', ''));
+        }
+    }
 
-	/**
-	 * convert php boolean to maniascript boolan
-	 * @param bool $boolean
-	 * @return string
-	 */
-	public static function getBoolean($boolean)
-	{
-		if ($boolean)
-			return "True";
-		return "False";
-	}
+    /**
+     * convert php boolean to maniascript boolan
+     * @param bool $boolean
+     * @return string
+     */
+    public static function getBoolean($boolean)
+    {
+        if ($boolean)
+            return "True";
+        return "False";
+    }
 
 }

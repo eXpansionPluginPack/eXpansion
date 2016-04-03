@@ -27,36 +27,35 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 class Control extends \ManiaLive\Gui\Control
 {
 
-	function destroy()
-	{
-		parent::destroy();
+    function destroy()
+    {
+        parent::destroy();
 
-		//echo "#";
-		foreach ($this as $index => $value) {
-			if (\is_object($value)) {
+        //echo "#";
+        foreach ($this as $index => $value) {
+            if (\is_object($value)) {
 
-				if ($value instanceof \ManiaLive\Gui\Containable || $value instanceof \ManiaLive\Gui\Container) {
-		//			echo "!";
-					$value->destroyComponents();
-					$value->destroy();
-					unset($this->$index);
-					continue;
-				}
-				if ($value instanceof \ManiaLive\Gui\Control) {
-		//			echo "*";
-					$value->destroy();
-					unset($this->$index);
-					continue;
-				}
-				
-				unset($this->$index);
-			}
-			else {
-		//		echo ".";
-				unset($this->$index);
-			}
-		}
-		// echo "\n";
-	}
+                if ($value instanceof \ManiaLive\Gui\Containable || $value instanceof \ManiaLive\Gui\Container) {
+                    //			echo "!";
+                    $value->destroyComponents();
+                    $value->destroy();
+                    unset($this->$index);
+                    continue;
+                }
+                if ($value instanceof \ManiaLive\Gui\Control) {
+                    //			echo "*";
+                    $value->destroy();
+                    unset($this->$index);
+                    continue;
+                }
+
+                unset($this->$index);
+            } else {
+                //		echo ".";
+                unset($this->$index);
+            }
+        }
+        // echo "\n";
+    }
 
 }

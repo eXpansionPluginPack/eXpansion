@@ -14,60 +14,65 @@ use \ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Controls\PlayerItem;
  *
  * @author oliverde8
  */
-class PlayerList extends Window{
-    
+class PlayerList extends Window
+{
+
     private $pager;
     private $items = array();
     private $serverItem;
-    
-    protected function onConstruct(){
+
+    protected function onConstruct()
+    {
         parent::onConstruct();
-        $this->pager = new Pager($this->getSizeX()-2, $this->getSizeY());
+        $this->pager = new Pager($this->getSizeX() - 2, $this->getSizeY());
         $this->pager->setPosY(-12);
         $this->pager->setPosX(1);
         $this->mainFrame->addComponent($this->pager);
     }
-    
-    public function setServer(Server $server){
-        
+
+    public function setServer(Server $server)
+    {
+
         $this->serverItem = new ServerItem(0, null, $server);
         $this->serverItem->setPosY(-8);
-        $this->serverItem->setSizeX($this->getSizeX()-2);
+        $this->serverItem->setSizeX($this->getSizeX() - 2);
         $this->addComponent($this->serverItem);
-        
-        
+
+
         $this->pager->clearItems();
         $this->items = array();
-        
+
         $i = 1;
         //for($ii = 0; $ii < 50; $ii++)
-        foreach($server->getServer_data()->current->players->player as $player){
+        foreach ($server->getServer_data()->current->players->player as $player) {
 
             $pitem = new PlayerItem($i, $this, $player);
-            $pitem->setSizeX($this->getSizeX()-2);
+            $pitem->setSizeX($this->getSizeX() - 2);
             $this->items[] = $pitem;
             $this->pager->addItem($pitem);
-        }      
+        }
 
     }
-    
-    public function onResize($oldX, $oldY) {
+
+    public function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->getSizeX()-2, $this->getSizeY()-18);
-         foreach ($this->items as $item) {
-            $item->setSizeX($this->getSizeX()-2);            
-        } 
-        if($this->serverItem != null)
-            $this->serverItem->setSizeX($this->getSizeX()-2);
+        $this->pager->setSize($this->getSizeX() - 2, $this->getSizeY() - 18);
+        foreach ($this->items as $item) {
+            $item->setSizeX($this->getSizeX() - 2);
+        }
+        if ($this->serverItem != null)
+            $this->serverItem->setSizeX($this->getSizeX() - 2);
     }
-    
-    public function destroy() {
+
+    public function destroy()
+    {
         $this->items = null;
         $this->pager->destroy();
         $this->serverItem->destroy();
         parent::destroy();
     }
-    
+
 }
 
 ?>

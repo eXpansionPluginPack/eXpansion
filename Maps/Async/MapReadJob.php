@@ -18,13 +18,13 @@ class MapReadJob extends Job
 {
 
     use Callback;
-    
+
     /** $var \ManiaLivePlugins\eXpansion\Helpers\GbxReader\Map[] */
     protected $result = array();
-    
+
     public function end(JobData $jobData)
     {
-        
+
     }
 
     public function run()
@@ -34,17 +34,17 @@ class MapReadJob extends Job
 
         /** @var Version */
         $game = $connection->getVersion();
-        $path = Helper::getPaths()->getDownloadMapsPath().$game->titleId."/*.Map.Gbx";
+        $path = Helper::getPaths()->getDownloadMapsPath() . $game->titleId . "/*.Map.Gbx";
         $gbx = new Map();
         $maps = glob($path);
-        $x    = 0;
+        $x = 0;
         if (count($maps) >= 1) {
             foreach ($maps as $filename) {
                 try {
                     $this->result[] = $gbx->read($filename);
                 } catch (Exception $e) {
-                    Helper::log("[Maps/Additem]Error processing file : ".$e->getMessage());
-                }                
+                    Helper::log("[Maps/Additem]Error processing file : " . $e->getMessage());
+                }
             }
         }
     }
@@ -53,7 +53,8 @@ class MapReadJob extends Job
      *
      * @return Map[]
      */
-    public function getResult() {
+    public function getResult()
+    {
         return $this->result;
     }
 }

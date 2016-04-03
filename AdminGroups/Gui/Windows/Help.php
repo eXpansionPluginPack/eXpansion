@@ -10,20 +10,22 @@ use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
  *
  * @author oliverde8
  */
-class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     private $adminGroups;
     private $pager;
     private $items = array();
-    
+
     private $label_cmd, $label_desc;
-    
-    protected function onConstruct() {
+
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $this->adminGroups = AdminGroups::getInstance();
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
-        
+
         $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setSize(120, 4);
         $frame->setPosY(0);
@@ -41,27 +43,30 @@ class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $frame->addComponent($this->label_desc);
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 13);
         $this->pager->setStretchContentX($this->sizeX - 4);
         $this->pager->setPosition(0, -4);
     }
 
-    function onShow() {
+    function onShow()
+    {
         foreach ($this->items as $item) {
-           $item->erase();
+            $item->erase();
         }
         $this->pager->clearItems();
         $this->items = array();
 
         $this->label_cmd->setText(__(AdminGroups::$txt_command, $this->getRecipient()));
         $this->label_desc->setText(__(AdminGroups::$txt_description, $this->getRecipient()));
-        
+
         $this->populateList();
     }
 
-    function populateList() {
+    function populateList()
+    {
 
         $x = 0;
         $login = $this->getRecipient();
@@ -71,15 +76,17 @@ class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
             $x++;
         }
     }
-    
-    public function destroy(){
+
+    public function destroy()
+    {
         foreach ($this->items as $item) {
-           $item->erase();            
-        }        
+            $item->erase();
+        }
         $this->items = null;
         $this->pager->destroy();
-        $this->destroyComponents();                
+        $this->destroyComponents();
         parent::destroy();
     }
 }
+
 ?>

@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
-class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     private $bg;
     private $label;
@@ -10,15 +11,16 @@ class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control {
     private $frame;
     private $action;
 
-    function __construct($indexNumber, $point, $plugin, $login, $sizeX) {
+    function __construct($indexNumber, $point, $plugin, $login, $sizeX)
+    {
         $sizeY = 6;
 
         $this->action = $this->createAction(array($plugin, "setPoints"), $point->points);
-        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX -8, $sizeY);
+        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX - 8, $sizeY);
         $this->addComponent($this->bg);
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame(2,0);
-        $this->frame->setSize($sizeX -8, $sizeY);
+        $this->frame = new \ManiaLive\Gui\Controls\Frame(2, 0);
+        $this->frame->setSize($sizeX - 8, $sizeY);
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
 
@@ -56,9 +58,9 @@ class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->addComponent($this->frame);
 
         $this->button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-        $this->button->setText(__("Set", $login));        
+        $this->button->setText(__("Set", $login));
         $this->button->setAction($this->action);
-	$this->button->setScale(0.6);
+        $this->button->setScale(0.6);
         $this->frame->addComponent($this->button);
 
         $this->addComponent($this->frame);
@@ -68,21 +70,24 @@ class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY) {
-         $this->frame->setSize($this->sizeX, $this->sizeY);
+    protected function onResize($oldX, $oldY)
+    {
+        $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
 
 // manialive 3.1 override to do nothing.
-    function destroy() {
-        
+    function destroy()
+    {
+
     }
 
     /*
      * custom function to remove contents.
      */
 
-    function erase() {
+    function erase()
+    {
         $this->button->destroy();
         $this->frame->clearComponents();
         $this->frame->destroy();
@@ -91,5 +96,6 @@ class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control {
     }
 
 }
+
 ?>
 

@@ -15,66 +15,66 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 class CpProgress extends Widget
 {
 
-	private $frame;
+    private $frame;
 
-	private $script;
+    private $script;
 
-	/** @var Storage; */
-	private $storage;
+    /** @var Storage; */
+    private $storage;
 
-	protected function exp_onBeginConstruct()
-	{
-		$this->setName("Obstacle progress Widget");
-		$this->storage = Storage::getInstance();
+    protected function exp_onBeginConstruct()
+    {
+        $this->setName("Obstacle progress Widget");
+        $this->storage = Storage::getInstance();
 
-		$this->frame = new Frame();
-		$this->frame->setLayout(new Column());
-		$this->addComponent($this->frame);
+        $this->frame = new Frame();
+        $this->frame->setLayout(new Column());
+        $this->addComponent($this->frame);
 
-		$x = 0;
-		for ($x = 0; $x < 10; $x++) {
-			$line = new Frame();
-			$line->setLayout(new Line());
-			$line->setSize(70, 6);
-			$line->setAlign("left", "top");
+        $x = 0;
+        for ($x = 0; $x < 10; $x++) {
+            $line = new Frame();
+            $line->setLayout(new Line());
+            $line->setSize(70, 6);
+            $line->setAlign("left", "top");
 
 
-			$label = new Label(30, 9);
-			$label->setPosX(30);
-			$label->setAlign("right", "top");
-			$label->setId("player_" . $x);
-			$label->setText("player_" . $x);
-			$line->addComponent($label);
+            $label = new Label(30, 9);
+            $label->setPosX(30);
+            $label->setAlign("right", "top");
+            $label->setId("player_" . $x);
+            $label->setText("player_" . $x);
+            $line->addComponent($label);
 
-			$gauge = new Gauge(30, 9);
-			$gauge->setPosY(-2);
-			$gauge->setAlign("left", "center2");
-			$gauge->setId("gauge_" . $x);
-			$gauge->setColorize("2f2");
-			$line->addComponent($gauge);
+            $gauge = new Gauge(30, 9);
+            $gauge->setPosY(-2);
+            $gauge->setAlign("left", "center2");
+            $gauge->setId("gauge_" . $x);
+            $gauge->setColorize("2f2");
+            $line->addComponent($gauge);
 
-			$label = new Label(10, 9);
-			$label->setAlign("left", "top");
-			$label->setId("cp_" . $x);
-			$label->setText("1");
-			$line->addComponent($label);
-			
-			$this->frame->addComponent($line);
-		}
+            $label = new Label(10, 9);
+            $label->setAlign("left", "top");
+            $label->setId("cp_" . $x);
+            $label->setText("1");
+            $line->addComponent($label);
 
-		$script = new Script("Widgets_TM_Obstacle\Gui\Scripts_Infos");
-		$script->setParam("playerCount", $x);
-		$script->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
-		$script->setParam("serverLogin", $this->storage->serverLogin);
-		$this->registerScript($script);
-	}
+            $this->frame->addComponent($line);
+        }
 
-	function destroy()
-	{
-		$this->destroyComponents();
-		$this->storage = null;
-		parent::destroy();
-	}
+        $script = new Script("Widgets_TM_Obstacle\Gui\Scripts_Infos");
+        $script->setParam("playerCount", $x);
+        $script->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
+        $script->setParam("serverLogin", $this->storage->serverLogin);
+        $this->registerScript($script);
+    }
+
+    function destroy()
+    {
+        $this->destroyComponents();
+        $this->storage = null;
+        parent::destroy();
+    }
 
 }
 

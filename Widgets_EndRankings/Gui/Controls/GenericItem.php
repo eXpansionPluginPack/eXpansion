@@ -6,7 +6,7 @@ class GenericItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
     protected $bg;
     protected $nick;
-    protected $label,  $label1;
+    protected $label, $label1;
     protected $time;
     protected $frame;
 
@@ -45,12 +45,10 @@ class GenericItem extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->removeComponent($this->label1);
             $this->nick->setSizeX(20);
             $this->nick->setPosX(12);
-        }
-        elseif (property_exists($item, 'timeData')){
-               $this->label->setText(\ManiaLive\Utilities\Time::fromTM($item->timeData));
-        }
-        else {
-              $this->label->setText($item->data);
+        } elseif (property_exists($item, 'timeData')) {
+            $this->label->setText(\ManiaLive\Utilities\Time::fromTM($item->timeData));
+        } else {
+            $this->label->setText($item->data);
         }
         $this->label->setTextColor('ff0');
         $this->addComponent($this->label);
@@ -71,5 +69,6 @@ class GenericItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         parent::destroy();
     }
 }
+
 ?>
 

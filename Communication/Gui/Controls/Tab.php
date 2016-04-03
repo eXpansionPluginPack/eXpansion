@@ -9,44 +9,47 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
  *
  * @author reaby
  */
-class Tab extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class Tab extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
-    function __construct($idx) {
-	$sizeX = 22;
-	$sizeY = 4;
+    function __construct($idx)
+    {
+        $sizeX = 22;
+        $sizeY = 4;
 
-	$background = new \ManiaLib\Gui\Elements\Quad(22, 5);
-	$background->setStyle("Bgs1");
-	$background->setSubStyle("BgCard3");
-	$background->setId("tabBg_" . $idx);
-	$background->setScriptEvents();
-	$this->addComponent($background);
+        $background = new \ManiaLib\Gui\Elements\Quad(22, 5);
+        $background->setStyle("Bgs1");
+        $background->setSubStyle("BgCard3");
+        $background->setId("tabBg_" . $idx);
+        $background->setScriptEvents();
+        $this->addComponent($background);
 
-	$label = new \ManiaLib\Gui\Elements\Label(20, 5);
-	$label->setPosition(1,-.5);
-	$label->setText("Tab " . $idx);
-	$label->setId("tablabel_" . $idx);
-	$label->setTextColor("fff");
-	$label->setStyle("TextCardScores2");
-	//$label->setScriptEvents();
-	$label->setTextSize(1);
-	$this->addComponent($label);
+        $label = new \ManiaLib\Gui\Elements\Label(20, 5);
+        $label->setPosition(1, -.5);
+        $label->setText("Tab " . $idx);
+        $label->setId("tablabel_" . $idx);
+        $label->setTextColor("fff");
+        $label->setStyle("TextCardScores2");
+        //$label->setScriptEvents();
+        $label->setTextSize(1);
+        $this->addComponent($label);
 
-	$closeButton = new \ManiaLib\Gui\Elements\Quad(4, 4);
-	$closeButton->setStyle("Icons128x32_1");
-	$closeButton->setSubStyle("Close");
-	$closeButton->setPosX(18);
-	$closeButton->setScriptEvents();
-	$closeButton->setId("closeButton_" . $idx);
-	$this->addComponent($closeButton);
+        $closeButton = new \ManiaLib\Gui\Elements\Quad(4, 4);
+        $closeButton->setStyle("Icons128x32_1");
+        $closeButton->setSubStyle("Close");
+        $closeButton->setPosX(18);
+        $closeButton->setScriptEvents();
+        $closeButton->setId("closeButton_" . $idx);
+        $this->addComponent($closeButton);
 
 
-	$this->setSize($sizeX, $sizeY);
+        $this->setSize($sizeX, $sizeY);
     }
 
-    function destroy() {
-	$this->destroyComponents();
-	parent::destroy();
+    function destroy()
+    {
+        $this->destroyComponents();
+        parent::destroy();
     }
 
 }

@@ -11,21 +11,21 @@ namespace ManiaLivePlugins\eXpansion\Helpers\GbxReader;
 
 class Author extends AbstractStructure
 {
-	public $login;
-	public $nickname;
-	public $zone;
-	public $extra;
-	
-	final static function fetch($fp)
-	{
-		self::ignore($fp, 4);
-		$author = new self;
-		$author->login = self::fetchString($fp);
-		$author->nickname = self::fetchString($fp);
-		$author->zone = self::fetchString($fp);
-		$author->extra = self::fetchString($fp);
-		return $author;
-	}
+    public $login;
+    public $nickname;
+    public $zone;
+    public $extra;
+
+    final static function fetch($fp)
+    {
+        self::ignore($fp, 4);
+        $author = new self;
+        $author->login = self::fetchString($fp);
+        $author->nickname = self::fetchString($fp);
+        $author->zone = self::fetchString($fp);
+        $author->extra = self::fetchString($fp);
+        return $author;
+    }
 }
 
 ?>

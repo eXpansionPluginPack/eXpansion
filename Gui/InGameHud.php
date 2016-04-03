@@ -27,76 +27,76 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 class InGameHud extends \ManiaLib\Utils\Singleton
 {
 
-	public $mapInfo = true;
+    public $mapInfo = true;
 
-	public $opponentInfo = true;
+    public $opponentInfo = true;
 
-	public $chat = true;
+    public $chat = true;
 
-	public $chatLines = 7;
+    public $chatLines = 7;
 
-	public $chatOffset = array(0, 0);
+    public $chatOffset = array(0, 0);
 
-	public $checkpointList = true;
+    public $checkpointList = true;
 
-	public $checkpointListPosition = array(40, -90, 5);
+    public $checkpointListPosition = array(40, -90, 5);
 
-	public $roundScores = true;
+    public $roundScores = true;
 
-	public $roundScoresPosition = array(104, 14, 5);
+    public $roundScoresPosition = array(104, 14, 5);
 
-	/** @var boolean Race time left displayed at the bottom right of the screen */
-	public $countdown = true;
+    /** @var boolean Race time left displayed at the bottom right of the screen */
+    public $countdown = true;
 
-	/** @var float[] position of Race time left displayed at the bottom right of the screen */
-	public $countdownPosition = array(154, -57, 5);
+    /** @var float[] position of Race time left displayed at the bottom right of the screen */
+    public $countdownPosition = array(154, -57, 5);
 
-	/** @var boolean 3, 2, 1, Go! message displayed on the middle of the screen when spawning */
-	public $go = true;
+    /** @var boolean 3, 2, 1, Go! message displayed on the middle of the screen when spawning */
+    public $go = true;
 
-	/** @var boolean  Current race chrono displayed at the bottom center of the screen  */
-	public $chrono = true;
+    /** @var boolean  Current race chrono displayed at the bottom center of the screen */
+    public $chrono = true;
 
-	public $chronoPosition = array(0, -80, 5);
+    public $chronoPosition = array(0, -80, 5);
 
-	/** @var boolean  Speed and distance raced displayed in the bottom right of the screen */
-	public $speedAndDistance = true;
+    /** @var boolean  Speed and distance raced displayed in the bottom right of the screen */
+    public $speedAndDistance = true;
 
-	public $speedAndDistancePosition = array(158, -79.5, 5);
+    public $speedAndDistancePosition = array(158, -79.5, 5);
 
-	/** @var boolean Previous and best times displayed at the bottom right of the screen */
-	public $personalBest = true;
+    /** @var boolean Previous and best times displayed at the bottom right of the screen */
+    public $personalBest = true;
 
-	/** @var float[] Position of Previous and best times displayed at the bottom right of the screen */
-	public $personalBestPosition = array(158, -61, 5);
+    /** @var float[] Position of Previous and best times displayed at the bottom right of the screen */
+    public $personalBestPosition = array(158, -61, 5);
 
-	/** @var boolean Current position in the map ranking displayed at the bottom right of the screen */
-	public $racePosition = true;
+    /** @var boolean Current position in the map ranking displayed at the bottom right of the screen */
+    public $racePosition = true;
 
-	/** @var boolean Checkpoint time information displayed in the middle of the screen when crossing a checkpoint */
-	public $checkpointTime = true;
+    /** @var boolean Checkpoint time information displayed in the middle of the screen when crossing a checkpoint */
+    public $checkpointTime = true;
 
-	public $checkpointTimePosition = array(-8, 31.8, -10);
+    public $checkpointTimePosition = array(-8, 31.8, -10);
 
-	/** @var boolean The avatar of the last player speaking in the chat displayed above the chat */
-	public $chatAvatar = true;
+    /** @var boolean The avatar of the last player speaking in the chat displayed above the chat */
+    public $chatAvatar = true;
 
-	/** @var boolean Warm-up progression displayed on the right of the screen during warm-up */
-	public $warmup = true;
+    /** @var boolean Warm-up progression displayed on the right of the screen during warm-up */
+    public $warmup = true;
 
-	public $wampupPosition = array(170, 27, 0);
+    public $wampupPosition = array(170, 27, 0);
 
-	function update()
-	{
-		/** @var  \Maniaplanet\DedicatedServer\Connection $connection */
-		$connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
+    function update()
+    {
+        /** @var  \Maniaplanet\DedicatedServer\Connection $connection */
+        $connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
 
-		$connection->triggerModeScriptEvent("UI_SetProperties", $this->genXml());
-	}
+        $connection->triggerModeScriptEvent("UI_SetProperties", $this->genXml());
+    }
 
-	private function genXml()
-	{
-		$xml = '<ui_properties>
+    private function genXml()
+    {
+        $xml = '<ui_properties>
 					  <map_info visible="' . $this->getBool("mapInfo") . '" />
 				      <opponents_info visible="' . $this->getBool("opponentsInfo") . '" />
 					   <chat visible="' . $this->getBool("chat") . '" offset="' . $this->getPosition('chatOffset') . '" linecount="' . $this->chatLines . '" />
@@ -114,30 +114,30 @@ class InGameHud extends \ManiaLib\Utils\Singleton
 				</ui_properties>';
 
 
-		return $xml;
-	}
+        return $xml;
+    }
 
-	private function getBool($var)
-	{
-		if ($this->{$var} === true) {
-			return "true";
-		}
-		return "false";
-	}
+    private function getBool($var)
+    {
+        if ($this->{$var} === true) {
+            return "true";
+        }
+        return "false";
+    }
 
-	private function getPosition($var)
-	{
-		if (count($this->{$var}) == 3) {
-			return $this->getNumber($this->{$var}[0]) . " " . $this->getNumber($this->{$var}[1]) . " " . $this->getNumber($this->{$var}[2]);
-		}
-		if (count($this->{$var}) == 2) {
-			return $this->getNumber($this->{$var}[0]) . " " . $this->getNumber($this->{$var}[1]);
-		}
-	}
+    private function getPosition($var)
+    {
+        if (count($this->{$var}) == 3) {
+            return $this->getNumber($this->{$var}[0]) . " " . $this->getNumber($this->{$var}[1]) . " " . $this->getNumber($this->{$var}[2]);
+        }
+        if (count($this->{$var}) == 2) {
+            return $this->getNumber($this->{$var}[0]) . " " . $this->getNumber($this->{$var}[1]);
+        }
+    }
 
-	private function getNumber($number)
-	{
-		return number_format((float) $number, 2, '.', '');
-	}
+    private function getNumber($number)
+    {
+        return number_format((float)$number, 2, '.', '');
+    }
 
 }

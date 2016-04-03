@@ -30,8 +30,9 @@ use Maniaplanet\DedicatedServer\Structures\ServerOptions;
  *
  * @author De Cramer Oliver
  */
-interface ServerSettingsEventListener {
-    
+interface ServerSettingsEventListener
+{
+
     public function onServerSettingsChange(ServerOptions $oldSettings, ServerOptions $newSettings, $changes);
 }
 

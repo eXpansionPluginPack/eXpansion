@@ -77,7 +77,7 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param string $direction, possible values "top", "left", "right", "bottom"
+     * @param string $direction , possible values "top", "left", "right", "bottom"
      */
     public function setDirection($direction = "top")
     {
@@ -106,4 +106,5 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg->setOpacity($opacity);
     }
 }
+
 ?>

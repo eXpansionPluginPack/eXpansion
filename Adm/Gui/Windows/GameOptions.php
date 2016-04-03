@@ -21,28 +21,28 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $actionOK, $actionCancel, $actionTA, $actionRounds, $actionLaps, $actionCup, $actionTeam;
     protected $btn_ta, $btn_rounds, $btn_cup, $btn_team, $btn_laps, $buttonOK, $buttonCancel;
     protected $frameGameMode, $frameGeneral, $frameCup, $frameTa, $frameRounds, $frameLaps, $frameContainer;
-    private $e        = array();
+    private $e = array();
     private $nextMode = null;
 
     function onConstruct()
     {
         parent::onConstruct();
-        $config           = \ManiaLive\DedicatedApi\Config::getInstance();
+        $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-        $this->storage    = \ManiaLive\Data\Storage::getInstance();
+        $this->storage = \ManiaLive\Data\Storage::getInstance();
 
-        $this->actionOK     = $this->createAction(array($this, "Ok"));
+        $this->actionOK = $this->createAction(array($this, "Ok"));
         $this->actionCancel = $this->createAction(array($this, "Cancel"));
-        $this->actionTA     = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_TIMEATTACK);
+        $this->actionTA = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_TIMEATTACK);
         $this->actionRounds = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_ROUNDS);
-        $this->actionLaps   = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_LAPS);
-        $this->actionCup    = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_CUP);
-        $this->actionTeam   = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_TEAM);
+        $this->actionLaps = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_LAPS);
+        $this->actionCup = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_CUP);
+        $this->actionTeam = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_TEAM);
 
         $this->setTitle(__('Game Options', $this->getRecipient()));
 
         $this->nextGameInfo = $this->connection->getNextGameInfo();
-        $this->nextMode     = $this->nextGameInfo->gameMode;
+        $this->nextMode = $this->nextGameInfo->gameMode;
 
         $this->buttonOK = new myButton();
         $this->buttonOK->setText(__("Apply", $this->getRecipient()));
@@ -60,7 +60,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     private function genGeneral()
     {
-        $login                = $this->getRecipient();
+        $login = $this->getRecipient();
         $this->frameContainer = new \ManiaLive\Gui\Controls\Frame();
         $this->frameContainer->setAlign("left", "top");
         $this->frameContainer->setLayout(new \ManiaLib\Gui\Layouts\Column());
@@ -237,7 +237,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 // Generate all inputboxes
     private function genGameModes()
     {
-        $login               = $this->getRecipient();
+        $login = $this->getRecipient();
         $this->frameGameMode = new \ManiaLive\Gui\Controls\Frame($this->sizeX - 40, 0);
         $this->frameGameMode->setAlign("left", "top");
         $this->frameGameMode->setLayout(new \ManiaLib\Gui\Layouts\Column());
@@ -346,45 +346,45 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         // general
         $gameInfos->allWarmUpDuration = intval($options['AllWarmupDuration']);
         $gameInfos->cupWarmUpDuration = intval($options['AllWarmupDuration']);
-        $gameInfos->finishTimeout     = intval(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['finishTimeOut']));
+        $gameInfos->finishTimeout = intval(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['finishTimeOut']));
 
         $gameInfos->chatTime = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['ChatTime']);
 
-        $gameInfos->disableRespawn        = $this->e['DisableRespawn']->getStatus();
+        $gameInfos->disableRespawn = $this->e['DisableRespawn']->getStatus();
         $gameInfos->forceShowAllOpponents = $this->e['ForceShowAllOpponents']->getStatus();
 
         $gameInfos->roundsUseNewRules = $this->e['roundsUseNewRules']->getStatus();
-        $gameInfos->teamUseNewRules   = $this->e['teamUseNewRules']->getStatus();
+        $gameInfos->teamUseNewRules = $this->e['teamUseNewRules']->getStatus();
 
         $gameInfos->gameMode = $this->nextMode;
 
         // ta
-        $gameInfos->timeAttackLimit            = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['timeAttackLimit']);
+        $gameInfos->timeAttackLimit = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['timeAttackLimit']);
         $gameInfos->timeAttackSynchStartPeriod = intval($options['timeAttackSynchStartPeriod']);
 
         // rounds
-        $gameInfos->roundsForcedLaps          = intval($options['roundsForcedLaps']);
-        $gameInfos->roundsPointsLimit         = intval($options['roundsPointsLimit']);
+        $gameInfos->roundsForcedLaps = intval($options['roundsForcedLaps']);
+        $gameInfos->roundsPointsLimit = intval($options['roundsPointsLimit']);
         $gameInfos->roundsPointsLimitNewRules = intval($options['roundsPointsLimitNewRules']);
 
         // team            
-        $gameInfos->teamPointsLimit         = intval($options['teamPointsLimit']);
+        $gameInfos->teamPointsLimit = intval($options['teamPointsLimit']);
         $gameInfos->teamPointsLimitNewRules = intval($options['teamPointsLimitNewRules']);
-        $gameInfos->teamMaxPoints           = intval($options['teamMaxPoints']);
+        $gameInfos->teamMaxPoints = intval($options['teamMaxPoints']);
 
         // cup
-        $gameInfos->cupNbWinners    = intval($options['cupNbWinners']);
-        $gameInfos->cupPointsLimit  = intval($options['cupPointsLimit']);
+        $gameInfos->cupNbWinners = intval($options['cupNbWinners']);
+        $gameInfos->cupPointsLimit = intval($options['cupPointsLimit']);
         $gameInfos->cupRoundsPerMap = intval($options['cupRoundsPerMap']);
 
         //laps
-        $gameInfos->lapsNbLaps    = intval($options['lapsNbLaps']);
+        $gameInfos->lapsNbLaps = intval($options['lapsNbLaps']);
         $gameInfos->lapsTimeLimit = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['lapsTimeLimit']);
         try {
             $this->connection->setGameInfos($gameInfos);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage('$f00Dedicated error: '.$e->getMessage(), $login);
-            \ManiaLib\Utils\Logger::error("Error while setGameInfos: ".$e->getMessage());
+            $this->connection->chatSendServerMessage('$f00Dedicated error: ' . $e->getMessage(), $login);
+            \ManiaLib\Utils\Logger::error("Error while setGameInfos: " . $e->getMessage());
         }
 
         $this->Erase($login);
@@ -398,7 +398,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     function destroy()
     {
         $this->connection = null;
-        $this->storage    = null;
+        $this->storage = null;
 
         $this->btn_cup->destroy();
         $this->btn_laps->destroy();

@@ -67,7 +67,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         $this->autoLoadPlugins($this->plugins, $pHandler);
 
-        
+
     }
 
     public function exp_onReady()
@@ -352,9 +352,9 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     protected function findAvailablePluginsInPath($path, $depth)
     {
-        if ($depth < 0)  {
+        if ($depth < 0) {
             return;
-        }else if (is_dir($path)) {
+        } else if (is_dir($path)) {
             $subFiles = scandir($path);
 
             if (in_array('MetaData.php', $subFiles)) {

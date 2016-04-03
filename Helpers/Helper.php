@@ -29,125 +29,125 @@ use ManiaLive\Utilities\Logger;
 class Helper
 {
 
-	private static $buildData = null;
-	private static $singletons;
-	private static $paths;
+    private static $buildData = null;
+    private static $singletons;
+    private static $paths;
 
-	/**
-	 * Returns helper that allows to get paths
-	 *
-	 * @return Paths
-	 */
-	public static function getPaths()
-	{
-		if (self::$paths == null)
-			self::$paths = new Paths();
-		return self::$paths;
-	}
+    /**
+     * Returns helper that allows to get paths
+     *
+     * @return Paths
+     */
+    public static function getPaths()
+    {
+        if (self::$paths == null)
+            self::$paths = new Paths();
+        return self::$paths;
+    }
 
-	/**
-	 * Returns instance of singleton instance.
-	 *
-	 * @return Singletons
-	 */
-	public static function getSingletons()
-	{
-		if (self::$singletons == null)
-			self::$singletons = Singletons::getInstance();
-		return self::$singletons;
-	}
+    /**
+     * Returns instance of singleton instance.
+     *
+     * @return Singletons
+     */
+    public static function getSingletons()
+    {
+        if (self::$singletons == null)
+            self::$singletons = Singletons::getInstance();
+        return self::$singletons;
+    }
 
-	public static function log($message)
-	{
-		Logger::info('[eXpansion][Adm/AdminPanel]' . $message);
-		Console::println('[eXpansion][Adm/AdminPanel]' . $message);
-	}
+    public static function log($message)
+    {
+        Logger::info('[eXpansion][Adm/AdminPanel]' . $message);
+        Console::println('[eXpansion][Adm/AdminPanel]' . $message);
+    }
 
-	public static function logInfo($message)
-	{
-		Logger::info('[eXpansion]' . $message);
-		Console::println('[eXpansion]' . $message);
-	}
+    public static function logInfo($message)
+    {
+        Logger::info('[eXpansion]' . $message);
+        Console::println('[eXpansion]' . $message);
+    }
 
-	public static function logError($message)
-	{
-		Logger::error('[eXpansion]' . $message);
-		Console::println('[eXpansion]' . $message);
-	}
+    public static function logError($message)
+    {
+        Logger::error('[eXpansion]' . $message);
+        Console::println('[eXpansion]' . $message);
+    }
 
-	public static function getBuildDate()
-	{
-		if (self::$buildData == null) {
-			self::$buildData = self::rBuildDate(dirname(__DIR__) . '/');
-		}
-		return self::$buildData;
-	}
+    public static function getBuildDate()
+    {
+        if (self::$buildData == null) {
+            self::$buildData = self::rBuildDate(dirname(__DIR__) . '/');
+        }
+        return self::$buildData;
+    }
 
-	protected static function rBuildDate($base = '')
-	{
+    protected static function rBuildDate($base = '')
+    {
 
-		$array = array_diff(scandir($base), array('.', '..', '.git'));
+        $array = array_diff(scandir($base), array('.', '..', '.git'));
 
-		$maxDate = 0;
+        $maxDate = 0;
 
-		foreach ($array as $value) {
+        foreach ($array as $value) {
 
-			$newDate = 0;
-			if (is_dir($base . $value)) {
-				$newDate = self::rBuildDate($base . $value . '/');
-			} elseif ($base . $value) {
-				$newDate = filemtime($base . $value);
-			}
+            $newDate = 0;
+            if (is_dir($base . $value)) {
+                $newDate = self::rBuildDate($base . $value . '/');
+            } elseif ($base . $value) {
+                $newDate = filemtime($base . $value);
+            }
 
-			if ($newDate > $maxDate)
-				$maxDate = $newDate;
-		}
+            if ($newDate > $maxDate)
+                $maxDate = $newDate;
+        }
 
-		return $maxDate;
-	}
+        return $maxDate;
+    }
 
-	public static function formatPastTime($time, $nbDetails)
-	{
-		$info = array();
+    public static function formatPastTime($time, $nbDetails)
+    {
+        $info = array();
 
-		$totalMinutes = ((int)($time/60));
+        $totalMinutes = ((int)($time / 60));
 
-		//Number of seconds
-		$info[] = $time - ($totalMinutes*60).' sec';
+        //Number of seconds
+        $info[] = $time - ($totalMinutes * 60) . ' sec';
 
-		if($totalMinutes > 0){
-			$totalHours = ((int)($totalMinutes/60));
+        if ($totalMinutes > 0) {
+            $totalHours = ((int)($totalMinutes / 60));
 
-			//Number of minutes
-			$info[] = $totalMinutes - ($totalHours*60).' min';
+            //Number of minutes
+            $info[] = $totalMinutes - ($totalHours * 60) . ' min';
 
-			if($totalHours > 0){
-				$totalDays = ((int)($totalHours/24));
+            if ($totalHours > 0) {
+                $totalDays = ((int)($totalHours / 24));
 
-				//number of hours
-				$info[] = $totalHours - ($totalDays*24).' hours';
+                //number of hours
+                $info[] = $totalHours - ($totalDays * 24) . ' hours';
 
-				if($totalDays > 0){
+                if ($totalDays > 0) {
 
-					$info[] = $totalDays.' days';
-				}
-			}
-		}
+                    $info[] = $totalDays . ' days';
+                }
+            }
+        }
 
-		$start = sizeof($info)-1;;
+        $start = sizeof($info) - 1;;
 
-		$stop = $start - $nbDetails;
-		if($stop < 0){
-			$stop = 0;
-		}
-		$stop++;
+        $stop = $start - $nbDetails;
+        if ($stop < 0) {
+            $stop = 0;
+        }
+        $stop++;
 
-		$content = '';
+        $content = '';
 
 
-		for($i = $start; $i >= $stop; $i--){
-			$content .= $info[$i].' ';
-		}
-		return $content;
-	}
+        for ($i = $start; $i >= $stop; $i--) {
+            $content .= $info[$i] . ' ';
+        }
+        return $content;
+    }
 }

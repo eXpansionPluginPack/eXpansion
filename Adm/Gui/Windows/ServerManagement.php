@@ -9,10 +9,11 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 /**
  * Server Controlpanel Main window
- * 
+ *
  * @author Petri
  */
-class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     /** @var \Maniaplanet\DedicatedServer\Connection */
     private $connection;
@@ -24,7 +25,8 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     private $actions;
     private $btn1, $btn2;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
@@ -35,8 +37,8 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
 
         $this->actions = new \stdClass();
         $this->actions->close = ActionHandler::getInstance()->createAction(array($this, "close"));
-	
-        $this->actions->stopServerf =  ActionHandler::getInstance()->createAction(array($this, "stopServer"));
+
+        $this->actions->stopServerf = ActionHandler::getInstance()->createAction(array($this, "stopServer"));
         $this->actions->stopServer = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions->stopServerf);
         $this->actions->stopManialivef = ActionHandler::getInstance()->createAction(array($this, "stopManialive"));
         $this->actions->stopManialive = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions->stopManialivef);
@@ -57,40 +59,46 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->addComponent($this->frame);
 
         $this->closeButton = new myButton(30, 6);
-        $this->closeButton->setText(__("Cancel",$this->getRecipient()));
+        $this->closeButton->setText(__("Cancel", $this->getRecipient()));
         $this->closeButton->setAction($this->actions->close);
         $this->addComponent($this->closeButton);
     }
-    
-    public function onDraw() {
-        
+
+    public function onDraw()
+    {
+
         $this->btn1->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::server_stopDedicated));
         $this->btn2->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::server_stopManialive));
-        
+
         parent::onDraw();
     }
 
-    function stopServer($login) {
+    function stopServer($login)
+    {
         $this->connection->stopServer();
     }
 
-    function stopManialive($login) {
-	$this->connection->chatSendServerMessage("[Notice] Stopping eXpansion...");
-	$this->connection->sendHideManialinkPage();       
-	\ManiaLive\Application\Application::getInstance()->kill();	
+    function stopManialive($login)
+    {
+        $this->connection->chatSendServerMessage("[Notice] Stopping eXpansion...");
+        $this->connection->sendHideManialinkPage();
+        \ManiaLive\Application\Application::getInstance()->kill();
     }
 
-    function close() {
+    function close()
+    {
         $this->Erase($this->getRecipient());
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
         $this->frame->setPosition(2, -6);
         $this->closeButton->setPosition($this->sizeX - 28, -($this->sizeY - 6));
     }
 
-    function destroy() {
+    function destroy()
+    {
         ActionHandler::getInstance()->deleteAction($this->actions->close);
         ActionHandler::getInstance()->deleteAction($this->actions->stopServer);
         ActionHandler::getInstance()->deleteAction($this->actions->stopServerf);

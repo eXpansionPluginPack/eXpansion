@@ -47,7 +47,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(true);
         $this->registerVariable($var);
 
-        $var  = new HashList("managedVote_enable", "Use eXp managed votes ?", $config, false, false);
+        $var = new HashList("managedVote_enable", "Use eXp managed votes ?", $config, false, false);
         $type = new Boolean("", "", null);
         $var->setType($type);
         $var->setVisible(false);
@@ -61,7 +61,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
             "AutoTeamBalance" => true));
         $this->registerVariable($var);
 
-        $var  = new BasicList("managedVote_commands", "Managed vote commands", $config, false, false);
+        $var = new BasicList("managedVote_commands", "Managed vote commands", $config, false, false);
         $type = new TypeString("", "", null);
         $var->setType($type);
         $var->setVisible(false);
@@ -69,7 +69,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
             "AutoTeamBalance"));
         $this->registerVariable($var);
 
-        $var  = new HashList("managedVote_ratios", "Managed vote ratios", $config, false, false);
+        $var = new HashList("managedVote_ratios", "Managed vote ratios", $config, false, false);
         $var->setDescription("set ratio -1 for disable, and ratio between 0 to 1");
         $type = new BoundedTypeFloat("", "", null);
         $type->setMin(-1.0);
@@ -86,7 +86,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
             "AutoTeamBalance" => 0.5));
         $this->registerVariable($var);
 
-        $var  = new HashList("managedVote_timeouts", "Managed vote timeouts", $config, false, false);
+        $var = new HashList("managedVote_timeouts", "Managed vote timeouts", $config, false, false);
         $var->setDescription("time in seconds");
         $type = new TypeInt("", "", null);
         $var->setType($type);
@@ -101,7 +101,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
             "AutoTeamBalance" => 30));
         $this->registerVariable($var);
 
-        $var  = new HashList("managedVote_voters", "Managed vote voters", $config, false, false);
+        $var = new HashList("managedVote_voters", "Managed vote voters", $config, false, false);
         $type = new BoundedTypeInt("", "", null);
         $type->setMin(0);
         $type->setMax(2);

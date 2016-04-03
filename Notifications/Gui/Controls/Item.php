@@ -4,12 +4,14 @@ namespace ManiaLivePlugins\eXpansion\Notifications\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 
-class Item extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class Item extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     protected $label;
     protected $frame;
 
-    function __construct($string) {
+    function __construct($string)
+    {
         $this->sizeX = 100;
         $this->sizeY = 3.5;
         $this->setAlign("left", "top");
@@ -22,19 +24,23 @@ class Item extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->addComponent($this->label);
     }
 
-    protected function onResize($oldX, $oldY) {
+    protected function onResize($oldX, $oldY)
+    {
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    {
         parent::onIsRemoved($target);
         $this->destroy();
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         parent::destroy();
     }
 
 }
+
 ?>
 

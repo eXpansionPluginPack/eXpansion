@@ -7,7 +7,8 @@ use ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma;
 use ManiaLivePlugins\eXpansion\TMKarma\Gui\Windows\Widget;
 use ManiaLivePlugins\eXpansion\TMKarma\Data;
 
-class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
+class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+{
 
     /**
      * These are public static values
@@ -40,7 +41,8 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     const VOTE_POOR = -2;
     const VOTE_WASTE = -3;
 
-    function exp_onInit() {
+    function exp_onInit()
+    {
         $this->config = Config::getInstance();
 
         // by default we set the server login as authentication login
@@ -48,7 +50,8 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         Service::$login = $this->storage->serverLogin;
     }
 
-    function exp_onReady() {
+    function exp_onReady()
+    {
         // check whether the location has been set in the config
         try {
             if (!empty($this->config->countryCode)) {
@@ -77,7 +80,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             }
         } catch (\Exception $e) {
             ErrorHandling::displayAndLogError($e);
-	    
+
             return;
         }
     }
@@ -86,12 +89,14 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * A new player is connecting to the server.
      * @see libraries/ManiaLive/PluginHandler/ManiaLive\PluginHandler.Plugin::onPlayerConnect()
      */
-    function onPlayerConnect($login, $isSpectator) {
+    function onPlayerConnect($login, $isSpectator)
+    {
         // display a widget with information
         $this->displayWidget($login);
     }
 
-    public function onBeginMap($map, $warmUp, $matchContinuation) {
+    public function onBeginMap($map, $warmUp, $matchContinuation)
+    {
         // load the new track's karma and stats
         $this->newVotes = array();
         $this->karma = Service::GetChallengeKarma($this->storage->currentMap, $this->storage->players);
@@ -103,7 +108,8 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
             $this->displayWidget($login);
     }
 
-    function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
+    function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
+    {
         if ($playerUid == 0)
             return;
 
@@ -138,7 +144,8 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * Displays the Karma Widget to the given player.
      * @param string $login
      */
-    protected function displayWidget($login) {
+    protected function displayWidget($login)
+    {
         // get the player's widget instance
         // configure and display
         $widget = Widget::Create($login);
@@ -150,7 +157,8 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
         $widget->show();
     }
 
-    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap) {
+    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
+    {
         Service::SendVotes($this->storage->currentMap, $this->newVotes);
     }
 
@@ -159,7 +167,8 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
      * @param string $login
      * @param integer $vote
      */
-    function doVote($login, $vote) {
+    function doVote($login, $vote)
+    {
         // we don't need to insert the same vote twice
         if (isset($this->karma->votes[$login]) && $this->karma->votes[$login] == $vote) {
             return;
@@ -183,14 +192,15 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin {
     }
 
     /**
-     * When this plugin is unloaded by ManiaLive.    
+     * When this plugin is unloaded by ManiaLive.
      */
-    function exp_onUnload() {
+    function exp_onUnload()
+    {
         // erase all widgets
         Widget::EraseAll();
 
         // and let ManiaLive do the rest
-       
+
     }
 
 }

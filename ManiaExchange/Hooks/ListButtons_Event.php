@@ -23,14 +23,15 @@
 namespace ManiaLivePlugins\eXpansion\ManiaExchange\Hooks;
 
 
-interface ListButtons_Event {
+interface ListButtons_Event
+{
 
-	/**
-	 *
-	 * @param $buttons
-	 * @param $login
-	 *
-	 * @return mixed
-	 */
-	public function hook_ManiaExchangeListButtons($buttons, $login);
+    /**
+     *
+     * @param $buttons
+     * @param $login
+     *
+     * @return mixed
+     */
+    public function hook_ManiaExchangeListButtons($buttons, $login);
 } 

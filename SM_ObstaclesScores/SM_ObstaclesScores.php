@@ -35,171 +35,179 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
  *
  * @package ManiaLivePlugins\eXpansion\SM\PlatformScores
  */
-class SM_ObstaclesScores extends LocalBase {
+class SM_ObstaclesScores extends LocalBase
+{
 
-	const PERM_JUMTO = "obstacles:jumpto";
+    const PERM_JUMTO = "obstacles:jumpto";
 
-	const CB_JUMPTO = 'Obstacle.JumpTo';
+    const CB_JUMPTO = 'Obstacle.JumpTo';
 
-	/**
-	 * The last time of the players past the checkpoints
-	 *
-	 * @var array login => array( int => int)
-	 */
-	protected $checkpoints = array();
-
-
-	public function exp_onReady()
-	{
-		parent::exp_onReady();
-
-		$this->enableScriptEvents(array("onCheckpoint", "playerFinish"));
-		// Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
-
-		$cmd = AdminGroups::addAdminCommand("jumpto", $this, "jumpto", self::PERM_JUMTO);
-		$cmd->setMinParam(1);
-	}
-
-	/*public function LibXmlRpc_OnWayPoint(
-		$login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
-	)
-	{
-		if($time > 0){
-			if($isEndBlock){
-				$this->addRecord($login, $time, 0, $this->cpScores[$login]);
-
-				$this->cpScores[$login] = array();
-			}else{
-				if(!isset($this->lastCpNum[$login]) || $this->lastCpNum[$login] < $cpIndex){
-					$this->cpScores[$login][$cpIndex] = $time;
-				}else{
-					//Respawned
-					$this->cpScores[$login] = array();
-				}
-
-				$this->lastCpNum[$login] = $cpIndex;
-			}
-		}
-		echo "\nScore : $login: cpindex: $cpIndex with $time \n";
-	}*/
-
-	public function exp_onModeScriptCallback($param1, $param2)
-	{
-		switch ($param1) {
-			case 'playerFinish' :
-				$params = explode('{:}', $param2);
-				$this->addRecord($params[1], $params[0], 0, $this->checkpoints[$params[1]]);
-				break;
-			case 'OnCheckpoint' :
-				$params = json_decode($param2);
-				$this->playerCp($params->Player->Login, $params->Run->Time, $params->Run->CheckpointIndex);
-		}
-	}
+    /**
+     * The last time of the players past the checkpoints
+     *
+     * @var array login => array( int => int)
+     */
+    protected $checkpoints = array();
 
 
-	/**
-	 * Function called when someone passes a checkpoint.
-	 *
-	 * @param $login
-	 * @param $score
-	 * @param $checkpointIndex
-	 *
-	 * turn void
-	 */
-	public function playerCp($login, $score, $checkpointIndex)
-	{
-		$this->checkpoints[$login][$checkpointIndex] = $score;
-	}
+    public function exp_onReady()
+    {
+        parent::exp_onReady();
 
-	/**
-	 * @param string $login
-	 * @param bool $isSpectator
-	 */
-	public function onPlayerConnect($login, $isSpectator)
-	{
-		parent::onPlayerConnect($login, $isSpectator);
+        $this->enableScriptEvents(array("onCheckpoint", "playerFinish"));
+        // Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
 
-		$this->checkpoints[$login] = array();
-	}
+        $cmd = AdminGroups::addAdminCommand("jumpto", $this, "jumpto", self::PERM_JUMTO);
+        $cmd->setMinParam(1);
+    }
 
-	/**
-	 * @param string $login
-	 * @param null $reason
-	 */
-	public function onPlayerDisconnect($login, $reason = null)
-	{
-		parent::onPlayerDisconnect($login, $reason);
+    /*public function LibXmlRpc_OnWayPoint(
+        $login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
+    )
+    {
+        if($time > 0){
+            if($isEndBlock){
+                $this->addRecord($login, $time, 0, $this->cpScores[$login]);
 
-		//Remove all checkpoints data
-		$this->checkpoints[$login] = array();
-		unset($this->checkpoints[$login]);
-	}
+                $this->cpScores[$login] = array();
+            }else{
+                if(!isset($this->lastCpNum[$login]) || $this->lastCpNum[$login] < $cpIndex){
+                    $this->cpScores[$login][$cpIndex] = $time;
+                }else{
+                    //Respawned
+                    $this->cpScores[$login] = array();
+                }
 
-	public function jumpto($login, $params){
-		$param = $login . ";" . $params[0] . ";";
-		$this->connection->triggerModeScriptEvent(self::CB_JUMPTO, $param);
-	}
+                $this->lastCpNum[$login] = $cpIndex;
+            }
+        }
+        echo "\nScore : $login: cpindex: $cpIndex with $time \n";
+    }*/
 
-	/**
-	 * @return string
-	 */
-	protected function getScoreType()
-	{
-		return self::SCORE_TYPE_TIME;
-	}
+    public function exp_onModeScriptCallback($param1, $param2)
+    {
+        switch ($param1) {
+            case 'playerFinish' :
+                $params = explode('{:}', $param2);
+                $this->addRecord($params[1], $params[0], 0, $this->checkpoints[$params[1]]);
+                break;
+            case 'OnCheckpoint' :
+                $params = json_decode($param2);
+                $this->playerCp($params->Player->Login, $params->Run->Time, $params->Run->CheckpointIndex);
+        }
+    }
 
 
-	/**
-	 * @param $score
-	 *
-	 * @return float|int|number|string
-	 */
-	public function formatScore($score){
-		$time = \ManiaLive\Utilities\Time::fromTM($score);
-		if (substr($time, 0, 2) === "0:") {
-			$time = substr($time, 2);
-		}
-		return $time;
-	}
+    /**
+     * Function called when someone passes a checkpoint.
+     *
+     * @param $login
+     * @param $score
+     * @param $checkpointIndex
+     *
+     * turn void
+     */
+    public function playerCp($login, $score, $checkpointIndex)
+    {
+        $this->checkpoints[$login][$checkpointIndex] = $score;
+    }
 
-	/**
-	 * @param $newTime
-	 * @param $oldTime
-	 *
-	 * @return bool
-	 */
-	protected function isBetterTime($newTime, $oldTime){
-		return $newTime <= $oldTime;
-	}
+    /**
+     * @param string $login
+     * @param bool $isSpectator
+     */
+    public function onPlayerConnect($login, $isSpectator)
+    {
+        parent::onPlayerConnect($login, $isSpectator);
 
-	/**
-	 * @param $newTime
-	 * @param $oldTime
-	 *
-	 * @return float|int|number|string
-	 */
-	protected function secureBy($newTime, $oldTime){
-		$securedBy = \ManiaLive\Utilities\Time::fromTM($newTime - $oldTime);
-		if (substr($securedBy, 0, 3) === "0:0") {
-			$securedBy = substr($securedBy, 3);
-		} else if (substr($securedBy, 0, 2) === "0:") {
-			$securedBy = substr($securedBy, 2);
-		}
-		return $securedBy;
-	}
+        $this->checkpoints[$login] = array();
+    }
 
-	/**
-	 * @return string
-	 */
-	protected function getDbOrderCriteria(){
-		return '`record_score` ASC, `record_date` ASC ';
-	}
+    /**
+     * @param string $login
+     * @param null $reason
+     */
+    public function onPlayerDisconnect($login, $reason = null)
+    {
+        parent::onPlayerDisconnect($login, $reason);
 
-	public function getNbOfLaps(){
-		return 1;
-	}
+        //Remove all checkpoints data
+        $this->checkpoints[$login] = array();
+        unset($this->checkpoints[$login]);
+    }
 
-	protected function array_sort($array, $on, $order = SORT_DESC){
-		return parent::array_sort($array, $on, $order);
-	}
+    public function jumpto($login, $params)
+    {
+        $param = $login . ";" . $params[0] . ";";
+        $this->connection->triggerModeScriptEvent(self::CB_JUMPTO, $param);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getScoreType()
+    {
+        return self::SCORE_TYPE_TIME;
+    }
+
+
+    /**
+     * @param $score
+     *
+     * @return float|int|number|string
+     */
+    public function formatScore($score)
+    {
+        $time = \ManiaLive\Utilities\Time::fromTM($score);
+        if (substr($time, 0, 2) === "0:") {
+            $time = substr($time, 2);
+        }
+        return $time;
+    }
+
+    /**
+     * @param $newTime
+     * @param $oldTime
+     *
+     * @return bool
+     */
+    protected function isBetterTime($newTime, $oldTime)
+    {
+        return $newTime <= $oldTime;
+    }
+
+    /**
+     * @param $newTime
+     * @param $oldTime
+     *
+     * @return float|int|number|string
+     */
+    protected function secureBy($newTime, $oldTime)
+    {
+        $securedBy = \ManiaLive\Utilities\Time::fromTM($newTime - $oldTime);
+        if (substr($securedBy, 0, 3) === "0:0") {
+            $securedBy = substr($securedBy, 3);
+        } else if (substr($securedBy, 0, 2) === "0:") {
+            $securedBy = substr($securedBy, 2);
+        }
+        return $securedBy;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDbOrderCriteria()
+    {
+        return '`record_score` ASC, `record_date` ASC ';
+    }
+
+    public function getNbOfLaps()
+    {
+        return 1;
+    }
+
+    protected function array_sort($array, $on, $order = SORT_DESC)
+    {
+        return parent::array_sort($array, $on, $order);
+    }
 }

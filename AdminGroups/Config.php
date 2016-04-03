@@ -7,7 +7,8 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups;
  *
  * @author oliverde8
  */
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
     public $fileName = null;
 }
 

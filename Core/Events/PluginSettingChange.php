@@ -23,29 +23,32 @@
 namespace ManiaLivePlugins\eXpansion\Core\Events;
 
 
-class PluginSettingChange extends \ManiaLive\Event\Event {
+class PluginSettingChange extends \ManiaLive\Event\Event
+{
 
-	const ON_SETTINGS_CHANGE = 1;
+    const ON_SETTINGS_CHANGE = 1;
 
-	protected $params;
+    protected $params;
 
-	function __construct($onWhat) {
-		parent::__construct($onWhat);
-		$params = func_get_args();
-		array_shift($params);
-		$this->params = $params;
-	}
+    function __construct($onWhat)
+    {
+        parent::__construct($onWhat);
+        $params = func_get_args();
+        array_shift($params);
+        $this->params = $params;
+    }
 
-	function fireDo($listener) {
-		$p = $this->params;
-		switch ($this->onWhat) {
-			case self::ON_SETTINGS_CHANGE:
-				/** PluginId, variable*/
-				$listener->onPluginSettingsChange($p[0], $p[1]);
-				break;
+    function fireDo($listener)
+    {
+        $p = $this->params;
+        switch ($this->onWhat) {
+            case self::ON_SETTINGS_CHANGE:
+                /** PluginId, variable*/
+                $listener->onPluginSettingsChange($p[0], $p[1]);
+                break;
 
-		}
-	}
+        }
+    }
 
 
 } 

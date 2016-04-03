@@ -10,12 +10,12 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Speedometer;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Widget: Speedometer");
-		$this->setDescription("Provides speedometer");
-		$this->setGroups(array('Widgets'));
-	}
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Widget: Speedometer");
+        $this->setDescription("Provides speedometer");
+        $this->setGroups(array('Widgets'));
+    }
 
 }

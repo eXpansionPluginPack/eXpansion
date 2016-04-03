@@ -7,7 +7,8 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager\Structures;
  *
  * @author Reaby
  */
-class MatchSetting extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
+class MatchSetting extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+{
 
     public $matchTitle = '';
     public $matchOrganizer = '';

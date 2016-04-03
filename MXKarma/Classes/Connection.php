@@ -36,215 +36,215 @@ use Maniaplanet\DedicatedServer\Structures\GameInfos;
 class Connection
 {
 
-	/** @var DataAccess */
-	public $dataAccess;
+    /** @var DataAccess */
+    public $dataAccess;
 
-	/** @var Storage */
-	public $storage;
+    /** @var Storage */
+    public $storage;
 
-	/** @var Storage2 */
-	public $expStorage;
+    /** @var Storage2 */
+    public $expStorage;
 
-	public $address = "http://karma.mania-exchange.com/api2/";
+    public $address = "http://karma.mania-exchange.com/api2/";
 
-	private $connected = false;
+    private $connected = false;
 
-	private $sessionKey = null;
+    private $sessionKey = null;
 
-	private $sessionSeed = null;
+    private $sessionSeed = null;
 
-	private $apikey = "";
+    private $apikey = "";
 
-	/** @var MXRating */
-	private $ratings = null;
+    /** @var MXRating */
+    private $ratings = null;
 
-	public function __construct()
-	{
-		$this->dataAccess = DataAccess::getInstance();
-		$this->storage = Storage::getInstance();
-		$this->expStorage = Storage2::getInstance();
-	}
+    public function __construct()
+    {
+        $this->dataAccess = DataAccess::getInstance();
+        $this->storage = Storage::getInstance();
+        $this->expStorage = Storage2::getInstance();
+    }
 
-	public function connect($serverLogin, $apikey)
-	{
-		$this->apikey = $apikey;
+    public function connect($serverLogin, $apikey)
+    {
+        $this->apikey = $apikey;
 
-		$params = array("serverLogin" => $serverLogin, "applicationIdentifier" => "eXpansion " . Core::EXP_VERSION, "testMode" => "false");
-		$this->dataAccess->httpGet($this->build("startSession", $params), array($this, "xConnect"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
-	}
+        $params = array("serverLogin" => $serverLogin, "applicationIdentifier" => "eXpansion " . Core::EXP_VERSION, "testMode" => "false");
+        $this->dataAccess->httpGet($this->build("startSession", $params), array($this, "xConnect"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
+    }
 
-	public function xConnect($answer, $httpCode)
-	{
+    public function xConnect($answer, $httpCode)
+    {
 
-		if ($httpCode != 200) {
-			return;
-		}
+        if ($httpCode != 200) {
+            return;
+        }
 
-		$data = $this->getObject($answer, "onConnect");
+        $data = $this->getObject($answer, "onConnect");
 
-		if ($data === null) {
-			// print_r($answer);
-			return;
-		}
+        if ($data === null) {
+            // print_r($answer);
+            return;
+        }
 
-		$this->sessionKey = $data->sessionKey;
-		$this->sessionSeed = $data->sessionSeed;
+        $this->sessionKey = $data->sessionKey;
+        $this->sessionSeed = $data->sessionSeed;
 
-		$outHash = hash("sha512", ($this->apikey . $this->sessionSeed));
+        $outHash = hash("sha512", ($this->apikey . $this->sessionSeed));
 
-		$params = array("sessionKey" => $this->sessionKey, "activationHash" => $outHash);
-		$this->dataAccess->httpGet($this->build("activateSession", $params), array($this, "xActivate"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
-	}
+        $params = array("sessionKey" => $this->sessionKey, "activationHash" => $outHash);
+        $this->dataAccess->httpGet($this->build("activateSession", $params), array($this, "xActivate"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
+    }
 
-	public function xActivate($answer, $httpCode)
-	{
+    public function xActivate($answer, $httpCode)
+    {
 
-		if ($httpCode != 200) {
-			return;
-		}
+        if ($httpCode != 200) {
+            return;
+        }
 
-		$data = $this->getObject($answer, "onActivate");
+        $data = $this->getObject($answer, "onActivate");
 
-		if ($data === null) {
-			// print_r($answer);
-			return;
-		}
+        if ($data === null) {
+            // print_r($answer);
+            return;
+        }
 
-		if ($data->activated) {
-			$this->connected = true;
-			Dispatcher::dispatch(new MXKarmaEvent(MXKarmaEvent::ON_CONNECTED));
-		}
-	}
+        if ($data->activated) {
+            $this->connected = true;
+            Dispatcher::dispatch(new MXKarmaEvent(MXKarmaEvent::ON_CONNECTED));
+        }
+    }
 
-	public function getRatings($players = array(), $getVotesOnly = false)
-	{
-		if (!$this->connected)
-			return;
+    public function getRatings($players = array(), $getVotesOnly = false)
+    {
+        if (!$this->connected)
+            return;
 
-		$params = array("sessionKey" => $this->sessionKey);
-		$postData = array("gamemode" => $this->getGameMode(), "titleid" => $this->expStorage->titleId, "mapuid" => $this->storage->currentMap->uId, "getvotesonly" => $getVotesOnly, "playerlogins" => $players);
-		$this->dataAccess->httpPost($this->build("getMapRating", $params), json_encode($postData), array($this, "xGetRatings"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
-	}
+        $params = array("sessionKey" => $this->sessionKey);
+        $postData = array("gamemode" => $this->getGameMode(), "titleid" => $this->expStorage->titleId, "mapuid" => $this->storage->currentMap->uId, "getvotesonly" => $getVotesOnly, "playerlogins" => $players);
+        $this->dataAccess->httpPost($this->build("getMapRating", $params), json_encode($postData), array($this, "xGetRatings"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
+    }
 
-	public function saveVotes(\Maniaplanet\DedicatedServer\Structures\Map $map, $time, $votes)
-	{
-		if (!$this->connected)
-			return;
+    public function saveVotes(\Maniaplanet\DedicatedServer\Structures\Map $map, $time, $votes)
+    {
+        if (!$this->connected)
+            return;
 
-		$params = array("sessionKey" => $this->sessionKey);
-		$postData = array("gamemode" => $this->getGameMode(), "titleid" => $this->expStorage->titleId, "mapuid" => $map->uId, "mapname" => $map->name, "mapauthor" => $map->author, "isimport" => false, "maptime" => $time, "votes" => $votes);
-		$this->dataAccess->httpPost($this->build("saveVotes", $params), json_encode($postData), array($this, "xSaveVotes"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
-	}
+        $params = array("sessionKey" => $this->sessionKey);
+        $postData = array("gamemode" => $this->getGameMode(), "titleid" => $this->expStorage->titleId, "mapuid" => $map->uId, "mapname" => $map->name, "mapauthor" => $map->author, "isimport" => false, "maptime" => $time, "votes" => $votes);
+        $this->dataAccess->httpPost($this->build("saveVotes", $params), json_encode($postData), array($this, "xSaveVotes"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
+    }
 
-	public function xSaveVotes($answer, $httpCode)
-	{
+    public function xSaveVotes($answer, $httpCode)
+    {
 
-		if ($httpCode != 200) {
-			return;
-		}
+        if ($httpCode != 200) {
+            return;
+        }
 
-		$data = $this->getObject($answer, "getRatings");
+        $data = $this->getObject($answer, "getRatings");
 
-		if ($data === null) {
-			// print_r($answer);
-			return;
-		}
+        if ($data === null) {
+            // print_r($answer);
+            return;
+        }
 
-		Dispatcher::dispatch(new MXKarmaEvent(MXKarmaEvent::ON_VOTE_SAVE, $data->updated));
-	}
+        Dispatcher::dispatch(new MXKarmaEvent(MXKarmaEvent::ON_VOTE_SAVE, $data->updated));
+    }
 
-	public function xGetRatings($answer, $httpCode)
-	{
+    public function xGetRatings($answer, $httpCode)
+    {
 
-		if ($httpCode != 200) {
-			return;
-		}
+        if ($httpCode != 200) {
+            return;
+        }
 
-		$data = $this->getObject($answer, "getRatings");
+        $data = $this->getObject($answer, "getRatings");
 
-		if ($data === null) {
-			// print_r($answer);
-			return;
-		}
+        if ($data === null) {
+            // print_r($answer);
+            return;
+        }
 
-		$this->ratings = new MXRating();
-		$this->ratings->append($data);
-		Dispatcher::dispatch(new MXKarmaEvent(MXKarmaEvent::ON_VOTES_RECIEVED, $this->ratings));
-	}
+        $this->ratings = new MXRating();
+        $this->ratings->append($data);
+        Dispatcher::dispatch(new MXKarmaEvent(MXKarmaEvent::ON_VOTES_RECIEVED, $this->ratings));
+    }
 
-	public function getGameMode()
-	{
-		switch ($this->storage->gameInfos->gameMode) {
-			case GameInfos::GAMEMODE_SCRIPT:
-				$gamemode = strtolower($this->storage->gameInfos->scriptName);
-				break;
-			case GameInfos::GAMEMODE_ROUNDS:
-				$gamemode = "Rounds";
-				break;
-			case GameInfos::GAMEMODE_TIMEATTACK:
-				$gamemode = "TimeAttack";
-				break;
-			case GameInfos::GAMEMODE_TEAM:
-				$gamemode = "Team";
-				break;
-			case GameInfos::GAMEMODE_LAPS:
-				$gamemode = "Laps";
-				break;
-			case GameInfos::GAMEMODE_CUP:
-				$gamemode = "Cup";
-				break;
-		}
-		return $gamemode;
-	}
+    public function getGameMode()
+    {
+        switch ($this->storage->gameInfos->gameMode) {
+            case GameInfos::GAMEMODE_SCRIPT:
+                $gamemode = strtolower($this->storage->gameInfos->scriptName);
+                break;
+            case GameInfos::GAMEMODE_ROUNDS:
+                $gamemode = "Rounds";
+                break;
+            case GameInfos::GAMEMODE_TIMEATTACK:
+                $gamemode = "TimeAttack";
+                break;
+            case GameInfos::GAMEMODE_TEAM:
+                $gamemode = "Team";
+                break;
+            case GameInfos::GAMEMODE_LAPS:
+                $gamemode = "Laps";
+                break;
+            case GameInfos::GAMEMODE_CUP:
+                $gamemode = "Cup";
+                break;
+        }
+        return $gamemode;
+    }
 
-	public function getObject($data, $origin = "onRecieve")
-	{
-		$obj = (object) json_decode($data);
-		if ($obj->success == false) {
-			$this->handleErrors($obj, $origin);
-			return null;
-		}
-		return $obj->data;
-	}
+    public function getObject($data, $origin = "onRecieve")
+    {
+        $obj = (object)json_decode($data);
+        if ($obj->success == false) {
+            $this->handleErrors($obj, $origin);
+            return null;
+        }
+        return $obj->data;
+    }
 
-	public function handleErrors($obj, $origin = "onRecieve")
-	{
-		switch ($obj->data->code) {
-			case 2:
-			case 4:
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-				$this->connected = false;
+    public function handleErrors($obj, $origin = "onRecieve")
+    {
+        switch ($obj->data->code) {
+            case 2:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                $this->connected = false;
 
-			default:
-				break;
-		}
+            default:
+                break;
+        }
 
-		Dispatcher::dispatch(new MXKarmaEvent(MXKarmaEvent::ON_ERROR, $origin, $obj->data->code, $obj->data->message));
-	}
+        Dispatcher::dispatch(new MXKarmaEvent(MXKarmaEvent::ON_ERROR, $origin, $obj->data->code, $obj->data->message));
+    }
 
-	private function build($method, $params)
-	{
-		$url = $this->address . $method;
-		$first = true;
-		$buffer = "";
-		foreach ($params as $key => $value) {
-			$prefix = "&";
-			if ($first) {
-				$first = false;
-				$prefix = "?";
-			}
-			$buffer .= $prefix . $key . "=" . rawurlencode($value);
-		}
+    private function build($method, $params)
+    {
+        $url = $this->address . $method;
+        $first = true;
+        $buffer = "";
+        foreach ($params as $key => $value) {
+            $prefix = "&";
+            if ($first) {
+                $first = false;
+                $prefix = "?";
+            }
+            $buffer .= $prefix . $key . "=" . rawurlencode($value);
+        }
 
-		return $url . $buffer;
-	}
+        return $url . $buffer;
+    }
 
-	public function isConnected()
-	{
-		return $this->connected;
-	}
+    public function isConnected()
+    {
+        return $this->connected;
+    }
 
 }

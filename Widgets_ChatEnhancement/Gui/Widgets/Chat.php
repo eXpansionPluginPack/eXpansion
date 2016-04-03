@@ -28,44 +28,46 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget;
 use ManiaLivePlugins\eXpansion\Chat\MetaData as ChatMetaData;
 
-class Chat extends PlainWidget{
+class Chat extends PlainWidget
+{
 
-	private $chatLogIcon;
-	private $chatState;
+    private $chatLogIcon;
+    private $chatState;
 
-	public function onConstruct(){
-		parent::onConstruct();
+    public function onConstruct()
+    {
+        parent::onConstruct();
 
-		/** @var PluginHandler $phandler */
-		$phandler = PluginHandler::getInstance();
+        /** @var PluginHandler $phandler */
+        $phandler = PluginHandler::getInstance();
 
-		$params = func_get_args();
+        $params = func_get_args();
 
-		if($phandler->isLoaded('\ManiaLivePlugins\eXpansion\Chatlog\Chatlog')){
-			$this->chatLogIcon = new Button(8,8);
-			$this->chatLogIcon->setIcon('UIConstruction_Buttons', 'Text');
-			$this->chatLogIcon->setDescription('Display Chat History');
-			$this->chatLogIcon->setAction($params[0]);
-			$this->addComponent($this->chatLogIcon);
-		}
+        if ($phandler->isLoaded('\ManiaLivePlugins\eXpansion\Chatlog\Chatlog')) {
+            $this->chatLogIcon = new Button(8, 8);
+            $this->chatLogIcon->setIcon('UIConstruction_Buttons', 'Text');
+            $this->chatLogIcon->setDescription('Display Chat History');
+            $this->chatLogIcon->setAction($params[0]);
+            $this->addComponent($this->chatLogIcon);
+        }
 
-		$chatEnabled = true;
-		if($phandler->isLoaded('\ManiaLivePlugins\eXpansion\Chat\Chat')){
-			/** @var ChatMetaData $chatMeta */
-			$chatMeta = ChatMetaData::getInstance();
-			if(!$chatMeta->getVariable('publicChatActive')->getRawValue()){
-				$chatEnabled = false;
-			}
-		}
+        $chatEnabled = true;
+        if ($phandler->isLoaded('\ManiaLivePlugins\eXpansion\Chat\Chat')) {
+            /** @var ChatMetaData $chatMeta */
+            $chatMeta = ChatMetaData::getInstance();
+            if (!$chatMeta->getVariable('publicChatActive')->getRawValue()) {
+                $chatEnabled = false;
+            }
+        }
 
-		$this->chatState = new Button(4,4);
-		$this->chatState->setIcon('Icons64x64_1', $chatEnabled ?'LvlGreen' : 'LvlRed');
-		$this->chatState->setDescription('Is public chat active');
-		$this->chatState->setAction($params[1]);
-		$this->chatState->setPositionX(2);
-		$this->chatState->setPositionY(-4);
-		$this->chatState->setPositionZ(30);
-		$this->addComponent($this->chatState);
-	}
+        $this->chatState = new Button(4, 4);
+        $this->chatState->setIcon('Icons64x64_1', $chatEnabled ? 'LvlGreen' : 'LvlRed');
+        $this->chatState->setDescription('Is public chat active');
+        $this->chatState->setAction($params[1]);
+        $this->chatState->setPositionX(2);
+        $this->chatState->setPositionY(-4);
+        $this->chatState->setPositionZ(30);
+        $this->addComponent($this->chatState);
+    }
 
 } 

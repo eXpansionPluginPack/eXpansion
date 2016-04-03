@@ -29,24 +29,25 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 
 /**
  * Same Meta data as the local records just name and compatibility changes settings are common
- * 
+ *
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData {
+class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData
+{
 
-	public function initName()
-	{
-		$this->setName('Records: Doppler@Nerpson');
-		$this->setDescription('Works like LocalRecords but instead of ordering times it orders scores. Higher scores are better.');
-		$this->setGroups(array('Records'));
-	}
+    public function initName()
+    {
+        $this->setName('Records: Doppler@Nerpson');
+        $this->setDescription('Works like LocalRecords but instead of ordering times it orders scores. Higher scores are better.');
+        $this->setGroups(array('Records'));
+    }
 
-	protected function initCompatibility()
-	{
-		$this->addTitleSupport("TM");
+    protected function initCompatibility()
+    {
+        $this->addTitleSupport("TM");
 
-		$this->setRelaySupport(false);
-		$this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, 'Doppler.Script.txt');
-		$this->setScriptCompatibilityMode(false);
-	}
-	
+        $this->setRelaySupport(false);
+        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, 'Doppler.Script.txt');
+        $this->setScriptCompatibilityMode(false);
+    }
+
 }

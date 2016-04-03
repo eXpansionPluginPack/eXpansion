@@ -9,7 +9,8 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  *
  * @author De Cramer Oliver
  */
-class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer {
+class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
+{
 
     private static $counter = 0;
     private static $script = null;
@@ -23,7 +24,8 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
     protected $skin = "checkbox";
     protected $skinWidth = 5;
 
-    function __construct($sizeX = 4, $sizeY = 4, $textWidth = 25) {
+    function __construct($sizeX = 4, $sizeY = 4, $textWidth = 25)
+    {
         $this->textWidth = $textWidth;
 
         $config = Config::getInstance();
@@ -67,15 +69,18 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         $this->setSize($sizeX + $textWidth, 6);
     }
 
-    public function SetIsWorking($state) {
+    public function SetIsWorking($state)
+    {
         $this->enabled = $state;
     }
 
-    public function ToogleIsWorking() {
+    public function ToogleIsWorking()
+    {
         $this->enabled = !$this->enabled;
     }
 
-    protected function onResize($oldX, $oldY) {
+    protected function onResize($oldX, $oldY)
+    {
         $this->button->setSize($this->skinWidth, 5);
         $this->button->setPosition(0, 0);
         $this->label->setSize($this->textWidth, 5);
@@ -83,29 +88,28 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         parent::onResize($this->textWidth + $this->skinWidth, 5);
     }
 
-    function onDraw() {
+    function onDraw()
+    {
         self::$script->reset();
         $config = Config::getInstance();
 
         if (!$this->enabled) {
             if ($this->active) {
                 $this->button->setColorize("7f7");
-            }
-            else {
+            } else {
                 $this->button->setColorize("f77");
             }
-        }
-        else {
+        } else {
             if ($this->active) {
                 $this->button->setColorize("0f0");
-            }
-            else {
+            } else {
                 $this->button->setColorize("f00");
             }
         }
     }
 
-    function setSkin($value = "ratiobutton", $width = 10) {
+    function setSkin($value = "ratiobutton", $width = 10)
+    {
         $this->skin = $value;
         $this->skinWidth = 5;
         if (is_object(self::$script)) {
@@ -117,45 +121,54 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         }
     }
 
-    function setStatus($boolean) {
+    function setStatus($boolean)
+    {
         $this->active = $boolean;
         $this->entry->setDefault($this->active ? "1" : "0");
     }
 
-    function getStatus() {
+    function getStatus()
+    {
         return $this->entry->getDefault() == "1" ? true : false;
     }
 
-    function getText() {
+    function getText()
+    {
         return $this->label->getText();
     }
 
-    function setText($text) {
+    function setText($text)
+    {
         $this->label->setText($text);
     }
 
-    function toggleActive($login) {
+    function toggleActive($login)
+    {
         $this->active = !$this->active;
         if ($this->toToggle != null) $this->toToggle->ToogleIsWorking($login);
         $this->entry->setDefault($this->active ? "1" : "0");
         $this->redraw();
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         parent::destroy();
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    {
         parent::onIsRemoved($target);
         $this->destroy();
     }
 
-    public function getScript() {
+    public function getScript()
+    {
         if ($this->enabled) return self::$script;
         else return null;
     }
 
-    public function setArgs($args) {
+    public function setArgs($args)
+    {
         if (isset($args['eXp_CheckboxE_' . $this->checkboxId])) {
             $active = $args['eXp_CheckboxE_' . $this->checkboxId] == '1';
             $out = true;

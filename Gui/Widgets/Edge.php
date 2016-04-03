@@ -14,7 +14,8 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
  *
  * @author reaby
  */
-class Edge extends Widget {
+class Edge extends Widget
+{
 
     protected $quad;
     protected $label;
@@ -24,7 +25,8 @@ class Edge extends Widget {
     protected $sscript;
     protected $widgetSize;
 
-    public function onConstruct() {
+    public function onConstruct()
+    {
         parent::onConstruct();
 
         $sizeX = 40;
@@ -86,12 +88,14 @@ class Edge extends Widget {
         $this->setSize($sizeX, $sizeY);
     }
 
-    public function onResize($oldX, $oldY) {
+    public function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
         $this->bg->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onIsRemoved(Container $target) {
+    function onIsRemoved(Container $target)
+    {
         parent::onIsRemoved($target);
         $this->destroy();
     }

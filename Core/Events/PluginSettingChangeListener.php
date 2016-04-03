@@ -25,14 +25,15 @@ namespace ManiaLivePlugins\eXpansion\Core\Events;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 
-interface PluginSettingChangeListener {
+interface PluginSettingChangeListener
+{
 
-	/**
-	 * @param string   $pluginId
-	 * @param Variable $var
-	 *
-	 * @return mixed
-	 */
-	public function onPluginSettingsChange($pluginId, Variable $var);
+    /**
+     * @param string $pluginId
+     * @param Variable $var
+     *
+     * @return mixed
+     */
+    public function onPluginSettingsChange($pluginId, Variable $var);
 
 } 

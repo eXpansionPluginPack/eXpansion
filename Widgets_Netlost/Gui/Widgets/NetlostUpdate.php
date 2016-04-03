@@ -10,22 +10,22 @@ class NetlostUpdate extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     private $script;
 
     protected function onConstruct()
-    {	
-	parent::onConstruct();
-	$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Netlost\Gui\Scripts_NetAnnounce");	
-	$this->registerScript($this->script);
-	$this->setName("NetLost Messaging");
+    {
+        parent::onConstruct();
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Netlost\Gui\Scripts_NetAnnounce");
+        $this->registerScript($this->script);
+        $this->setName("NetLost Messaging");
     }
 
     public function setPlayer($string)
     {
-	$this->script->setParam("players", $string);
+        $this->script->setParam("players", $string);
     }
 
     function destroy()
     {
-	$this->destroyComponents();
-	parent::destroy();
+        $this->destroyComponents();
+        parent::destroy();
     }
 
 }

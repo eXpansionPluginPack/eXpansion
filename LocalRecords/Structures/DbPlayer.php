@@ -2,24 +2,28 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Structures;
 
-class DbPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
+class DbPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+{
 
     public $login = "";
     public $nickname = "";
     public $nation = "";
     public $language = "en";
-    
-    function __construct() {
-        
+
+    function __construct()
+    {
+
     }
 
-    function fromPlayerObj(\Maniaplanet\DedicatedServer\Structures\Player $player) {
+    function fromPlayerObj(\Maniaplanet\DedicatedServer\Structures\Player $player)
+    {
         $this->nickname = $player->nickName;
         $this->login = $player->login;
-        $this->nation = $player->path;                
+        $this->nation = $player->path;
     }
 
-    function exportToDb() {
+    function exportToDb()
+    {
         $properties = get_object_vars($this);
         $keys = "";
         $values = "";

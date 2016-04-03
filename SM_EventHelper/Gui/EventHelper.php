@@ -29,39 +29,39 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget;
  */
 class EventHelper extends PlainWidget
 {
-	
-	private $script;
 
-	public static $actions = array();
-	
-	function onConstruct()
-	{
-		parent::onConstruct();
-		$this->setName("EventHelper");
-		$this->setPosition(0,900);
-		$entry = new \ManiaLib\Gui\Elements\Entry();
-		$entry->setPosition(0,0);
-		$entry->setId("timeOrScore");
-		$entry->setName("timeOrScore");
-		$this->addComponent($entry);
-		
-		
-		$entry = new \ManiaLib\Gui\Elements\Entry();
-		$entry->setPosition(0,-6);
-		$entry->setId("index");
-		$entry->setName("index");
-		$this->addComponent($entry);
-		
-		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("SM_EventHelper\Gui\Script");
-		$this->script->setParam("cpAction", self::$actions['checkpoint']);
-		$this->script->setParam("finishAction", self::$actions['finish']);
-		$this->registerScript($this->script);
-	}
-	
-	protected function onDraw()
-	{
-		$storage = \ManiaLive\Data\Storage::getInstance();
-		$this->script->setParam("cpCount",  $storage->currentMap->nbCheckpoints);
-		parent::onDraw();
-	}
+    private $script;
+
+    public static $actions = array();
+
+    function onConstruct()
+    {
+        parent::onConstruct();
+        $this->setName("EventHelper");
+        $this->setPosition(0, 900);
+        $entry = new \ManiaLib\Gui\Elements\Entry();
+        $entry->setPosition(0, 0);
+        $entry->setId("timeOrScore");
+        $entry->setName("timeOrScore");
+        $this->addComponent($entry);
+
+
+        $entry = new \ManiaLib\Gui\Elements\Entry();
+        $entry->setPosition(0, -6);
+        $entry->setId("index");
+        $entry->setName("index");
+        $this->addComponent($entry);
+
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("SM_EventHelper\Gui\Script");
+        $this->script->setParam("cpAction", self::$actions['checkpoint']);
+        $this->script->setParam("finishAction", self::$actions['finish']);
+        $this->registerScript($this->script);
+    }
+
+    protected function onDraw()
+    {
+        $storage = \ManiaLive\Data\Storage::getInstance();
+        $this->script->setParam("cpCount", $storage->currentMap->nbCheckpoints);
+        parent::onDraw();
+    }
 }

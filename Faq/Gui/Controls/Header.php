@@ -7,9 +7,11 @@ namespace ManiaLivePlugins\eXpansion\Faq\Gui\Controls;
  *
  * @author Reaby
  */
-class Header extends FaqControl {
+class Header extends FaqControl
+{
 
-    public function __construct($text) {
+    public function __construct($text)
+    {
         $text = str_replace("#", "", $text);
         parent::__construct($text);
         $this->label->setStyle("TextRaceMessageBig");

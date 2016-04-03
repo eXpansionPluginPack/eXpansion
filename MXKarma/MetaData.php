@@ -13,25 +13,25 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Maps: MX-karma");
-		$this->setDescription("Provides integration for Karma.Mania-Exchange.com");
-		$this->setGroups(array('Maps', 'Connectivity'));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Maps: MX-karma");
+        $this->setDescription("Provides integration for Karma.Mania-Exchange.com");
+        $this->setGroups(array('Maps', 'Connectivity'));
 
-		$config = Config::getInstance();
+        $config = Config::getInstance();
 
-		$var = new TypeString("mxKarmaServerLogin", "MxKarma serverlogin", $config, false, false);
-		$var->setDefaultValue("");
-		$this->registerVariable($var);
+        $var = new TypeString("mxKarmaServerLogin", "MxKarma serverlogin", $config, false, false);
+        $var->setDefaultValue("");
+        $this->registerVariable($var);
 
-		$var = new TypeString("mxKarmaApiKey", 'MxKarma apikey, $l[http://karma.mania-exchange.com]click this text to register$l', $config, false, false);
-                $var->setDescription('For apikey: click the header or visit http://karma.mania-exchange.com');
-                $var->setDefaultValue("");
-		$this->registerVariable($var);
+        $var = new TypeString("mxKarmaApiKey", 'MxKarma apikey, $l[http://karma.mania-exchange.com]click this text to register$l', $config, false, false);
+        $var->setDescription('For apikey: click the header or visit http://karma.mania-exchange.com');
+        $var->setDefaultValue("");
+        $this->registerVariable($var);
 
-		$this->setRelaySupport(false);
-	}
+        $this->setRelaySupport(false);
+    }
 
 }

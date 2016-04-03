@@ -26,17 +26,18 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 
-class NbSpecItem extends PanelItem implements ScriptedContainer{
+class NbSpecItem extends PanelItem implements ScriptedContainer
+{
 
-	/**
-	 * @return Script the script this container needs
-	 */
-	public function getScript()
-	{
-		/** @var \ManiaLive\Data\Storage $storage */
-		$storage = \ManiaLive\Data\Storage::getInstance();
-		$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\\Gui\\Scripts\\nbSpec");
-		$script->setParam('maxPlayers', $storage->server->currentMaxSpectators);
-		return $script;
-	}
+    /**
+     * @return Script the script this container needs
+     */
+    public function getScript()
+    {
+        /** @var \ManiaLive\Data\Storage $storage */
+        $storage = \ManiaLive\Data\Storage::getInstance();
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\\Gui\\Scripts\\nbSpec");
+        $script->setParam('maxPlayers', $storage->server->currentMaxSpectators);
+        return $script;
+    }
 }

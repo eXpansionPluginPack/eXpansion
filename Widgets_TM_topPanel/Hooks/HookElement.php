@@ -25,20 +25,21 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Hooks;
 
 use ManiaLib\Gui\Element;
 
-class HookElement {
+class HookElement
+{
 
-	public $priority = 0;
-	public $gui;
+    public $priority = 0;
+    public $gui;
 
-	/**
-	 * @param Element $gui
-	 * @param int 	  $priority
-	 */
-	function __construct($gui, $priority = 0)
-	{
-		$this->gui = $gui;
-		$this->priority = $priority;
-	}
+    /**
+     * @param Element $gui
+     * @param int $priority
+     */
+    function __construct($gui, $priority = 0)
+    {
+        $this->gui = $gui;
+        $this->priority = $priority;
+    }
 
 
 } 

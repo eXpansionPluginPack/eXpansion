@@ -4,7 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Core\Structures\JsonCallbacks;
 
 use ManiaLivePlugins\eXpansion\Core\Structures\RpcObject;
 
-class OnPlayerRequestRespawn extends RpcObject {
+class OnPlayerRequestRespawn extends RpcObject
+{
 
     /** @var integer */
     public $timestamp = 0;

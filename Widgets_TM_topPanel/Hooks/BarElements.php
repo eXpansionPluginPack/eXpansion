@@ -24,33 +24,34 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Hooks;
 
 class BarElements extends \ManiaLive\Event\Event
 {
-	const ON_LEFT_CREATE = 1;
-	const ON_RIGHT_CREATE = 2;
+    const ON_LEFT_CREATE = 1;
+    const ON_RIGHT_CREATE = 2;
 
-	protected $buttons;
-	protected $login;
+    protected $buttons;
+    protected $login;
 
-	/**
-	 * @param $onWhat
-	 * @param $buttons
-	 * @param $login
-	 */
-	function __construct($onWhat, $buttons, $login) {
-		parent::__construct($onWhat);
+    /**
+     * @param $onWhat
+     * @param $buttons
+     * @param $login
+     */
+    function __construct($onWhat, $buttons, $login)
+    {
+        parent::__construct($onWhat);
 
-		$this->buttons = $buttons;
-		$this->login = $login;
-	}
+        $this->buttons = $buttons;
+        $this->login = $login;
+    }
 
-	function fireDo($listener)
-	{
-		switch ($this->onWhat) {
-			case self::ON_LEFT_CREATE:
-				$listener->hook_topBarLeftBarCreate($this->buttons);
-				break;
-			case self::ON_RIGHT_CREATE:
-				$listener->hook_topBarRightBarCreate($this->buttons);
-				break;
-		}
-	}
+    function fireDo($listener)
+    {
+        switch ($this->onWhat) {
+            case self::ON_LEFT_CREATE:
+                $listener->hook_topBarLeftBarCreate($this->buttons);
+                break;
+            case self::ON_RIGHT_CREATE:
+                $listener->hook_topBarRightBarCreate($this->buttons);
+                break;
+        }
+    }
 } 

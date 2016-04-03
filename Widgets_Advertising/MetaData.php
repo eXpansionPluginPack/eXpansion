@@ -31,13 +31,13 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Widget: Simple Advert");
-		$this->setDescription("Provides a Custom Widget to put your advertisement in");
-		$this->setGroups(array('Widgets', 'Tools'));
-		$config = Config::getInstance();
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Widget: Simple Advert");
+        $this->setDescription("Provides a Custom Widget to put your advertisement in");
+        $this->setGroups(array('Widgets', 'Tools'));
+        $config = Config::getInstance();
 
         $var = new BasicList('noAdUsers', "Hide ads for users", $config, false, false);
         $var->setGroup("Settings");
@@ -45,64 +45,64 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(array());
         $this->registerVariable($var);
 
-		for ($x = 1; $x <= 5; $x++) {
+        for ($x = 1; $x <= 5; $x++) {
 
-			$var = new Boolean('active_' . $x, 'Active', $config, false, false);
-			$var->setDefaultValue($x == 1);
-			$var->setGroup("Widget#$x");
-			$this->registerVariable($var);
+            $var = new Boolean('active_' . $x, 'Active', $config, false, false);
+            $var->setDefaultValue($x == 1);
+            $var->setGroup("Widget#$x");
+            $this->registerVariable($var);
 
-			$var = new TypeString('imageUrl_' . $x, 'Image Url', $config, false, false);
-			$var->setDefaultValue('http://reaby.kapsi.fi/ml/exp_small.png');
-			$var->setGroup("Widget#$x");
-			$this->registerVariable($var);
+            $var = new TypeString('imageUrl_' . $x, 'Image Url', $config, false, false);
+            $var->setDefaultValue('http://reaby.kapsi.fi/ml/exp_small.png');
+            $var->setGroup("Widget#$x");
+            $this->registerVariable($var);
 
-			$var = new TypeString('imageFocusUrl_' . $x, 'Image Url on Focus', $config, false, false);
-			$var->setDefaultValue('http://reaby.kapsi.fi/ml/exp_small.png');
-			$var->setGroup("Widget#$x");
-			$this->registerVariable($var);
-
-
-			$var = new TypeString('url_' . $x, 'External link URL for click', $config, false, false);
-			$var->setDefaultValue('');
-			$var->setGroup("Widget#$x");
-			$this->registerVariable($var);
+            $var = new TypeString('imageFocusUrl_' . $x, 'Image Url on Focus', $config, false, false);
+            $var->setDefaultValue('http://reaby.kapsi.fi/ml/exp_small.png');
+            $var->setGroup("Widget#$x");
+            $this->registerVariable($var);
 
 
-			$var = new TypeString('manialink_' . $x, 'Manialink URL for click', $config, false, false);
-			$var->setDefaultValue('');
-			$var->setGroup("Widget#$x");
-			$this->registerVariable($var);
+            $var = new TypeString('url_' . $x, 'External link URL for click', $config, false, false);
+            $var->setDefaultValue('');
+            $var->setGroup("Widget#$x");
+            $this->registerVariable($var);
 
 
-			$var = new TypeInt('imageSizeX_' . $x, 'Image Size X', $config, false, false);
-			$var->setDescription('In Px');
-			$var->setDefaultValue('512');
-			$var->setGroup("Widget#$x");
-			$this->registerVariable($var);
+            $var = new TypeString('manialink_' . $x, 'Manialink URL for click', $config, false, false);
+            $var->setDefaultValue('');
+            $var->setGroup("Widget#$x");
+            $this->registerVariable($var);
 
-			$var = new TypeInt('imageSizeY_' . $x, 'Image Size Y', $config, false, false);
-			$var->setDescription('In Px');
-			$var->setDefaultValue('128');
-			$var->setGroup("Widget#$x");
-			$this->registerVariable($var);
 
-			$var = new TypeInt('size_' . $x, 'Display Size', $config, false, false);
-			$var->setDescription('In maniaplanet display units');
-			$var->setDefaultValue('30');
-			$var->setGroup("Widget#$x");
-			$this->registerVariable($var);
+            $var = new TypeInt('imageSizeX_' . $x, 'Image Size X', $config, false, false);
+            $var->setDescription('In Px');
+            $var->setDefaultValue('512');
+            $var->setGroup("Widget#$x");
+            $this->registerVariable($var);
 
-			$var = new TypeInt('x_' . $x, 'Position X', $config, false, false);
-			$var->setDefaultValue('-30');
-			$var->setGroup("Widget#$x");
-			$this->registerVariable($var);
+            $var = new TypeInt('imageSizeY_' . $x, 'Image Size Y', $config, false, false);
+            $var->setDescription('In Px');
+            $var->setDefaultValue('128');
+            $var->setGroup("Widget#$x");
+            $this->registerVariable($var);
 
-			$var = new TypeInt('y_' . $x, 'Position Y', $config, false, false);
-			$var->setDefaultValue('90');
-			$var->setGroup("Widget#$x");
-			$this->registerVariable($var);
-		}
+            $var = new TypeInt('size_' . $x, 'Display Size', $config, false, false);
+            $var->setDescription('In maniaplanet display units');
+            $var->setDefaultValue('30');
+            $var->setGroup("Widget#$x");
+            $this->registerVariable($var);
 
-	}
+            $var = new TypeInt('x_' . $x, 'Position X', $config, false, false);
+            $var->setDefaultValue('-30');
+            $var->setGroup("Widget#$x");
+            $this->registerVariable($var);
+
+            $var = new TypeInt('y_' . $x, 'Position Y', $config, false, false);
+            $var->setDefaultValue('90');
+            $var->setGroup("Widget#$x");
+            $this->registerVariable($var);
+        }
+
+    }
 } 

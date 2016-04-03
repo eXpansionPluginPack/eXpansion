@@ -47,7 +47,7 @@ class ManiaExchange extends ExpPlugin
         $this->registerChatCommand("mx", "chatMX", 0, true);
         $this->setPublicMethod("mxSearch");
 
-        $cmd           = AdminGroups::addAdminCommand('add', $this, 'addMap', 'server_maps'); //
+        $cmd = AdminGroups::addAdminCommand('add', $this, 'addMap', 'server_maps'); //
         $cmd->setHelp('Adds a map from ManiaExchange');
         $cmd->setHelpMore('$w/admin add #id$z will add a map with id fron ManiaExchange');
         $cmd->setMinParam(1);
@@ -63,7 +63,7 @@ class ManiaExchange extends ExpPlugin
             $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Search Maps'), null, array($this, 'mxSearch'), false);
         }
 
-        $version       = $this->connection->getVersion();
+        $version = $this->connection->getVersion();
         $this->titleId = $version->titleId;
         $this->enableDedicatedEvents();
 
@@ -151,10 +151,10 @@ class ManiaExchange extends ExpPlugin
         $query = "";
         switch ($this->expStorage->simpleEnviTitle) {
             case "SM":
-                $query = 'https://sm.mania-exchange.com/tracks/download/'.$mxId;
+                $query = 'https://sm.mania-exchange.com/tracks/download/' . $mxId;
                 break;
             case "TM":
-                $query = 'https://tm.mania-exchange.com/tracks/download/'.$mxId;
+                $query = 'https://tm.mania-exchange.com/tracks/download/' . $mxId;
                 break;
         }
 
@@ -175,7 +175,7 @@ class ManiaExchange extends ExpPlugin
 
         $additionalData = $job->__additionalData;
 
-        $mxId  = $additionalData['mxId'];
+        $mxId = $additionalData['mxId'];
         $login = $additionalData['login'];
 
         $data = $job->getResponse();
@@ -190,12 +190,12 @@ class ManiaExchange extends ExpPlugin
         }
         /** @var \Maniaplanet\DedicatedServer\Structures\Version */
         $game = $this->connection->getVersion();
-        $dir  = Helper::getPaths()->getDownloadMapsPath().$game->titleId;
+        $dir = Helper::getPaths()->getDownloadMapsPath() . $game->titleId;
         if ($this->expStorage->isRemoteControlled) {
-            $dir = "Downloaded/".$game->titleId;
+            $dir = "Downloaded/" . $game->titleId;
         }
 
-        $file = $dir."/".$mxId.".Map.Gbx";
+        $file = $dir . "/" . $mxId . ".Map.Gbx";
 
         if ($this->expStorage->isRemoteControlled) {
             $this->saveMapRemotelly($file, $dir, $data, $login);
@@ -227,10 +227,10 @@ class ManiaExchange extends ExpPlugin
                     $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
                 }
             } else {
-                $this->exp_chatSendServerMessage("Error while saving a map file at remote host: ".$file, $login);
+                $this->exp_chatSendServerMessage("Error while saving a map file at remote host: " . $file, $login);
             }
         } catch (Exception $ex) {
-            $this->exp_chatSendServerMessage("Error while saving a map file at remote host :".$e->getMessage(), $login);
+            $this->exp_chatSendServerMessage("Error while saving a map file at remote host :" . $e->getMessage(), $login);
         }
     }
 
@@ -264,7 +264,7 @@ class ManiaExchange extends ExpPlugin
                 $this->exp_chatSendServerMessage("Error while saving a map file. ", $login);
             }
         } catch (\Exception $ex) {
-            $this->exp_chatSendServerMessage("Error while saving a map file : ".$ex->getMessage(), $login);
+            $this->exp_chatSendServerMessage("Error while saving a map file : " . $ex->getMessage(), $login);
         }
     }
 
@@ -279,7 +279,7 @@ class ManiaExchange extends ExpPlugin
 
         $additionalData = $job->__additionalData;
 
-        $mxId  = $additionalData['mxId'];
+        $mxId = $additionalData['mxId'];
         $login = $additionalData['login'];
 
         $data = $job->getResponse();
@@ -293,7 +293,7 @@ class ManiaExchange extends ExpPlugin
             return;
         }
 
-        $file = Helper::getPaths()->getDownloadMapsPath().$mxId.".Map.Gbx";
+        $file = Helper::getPaths()->getDownloadMapsPath() . $mxId . ".Map.Gbx";
 
         if (!is_dir(Helper::getPaths()->getDownloadMapsPath())) {
             mkdir(Helper::getPaths()->getDownloadMapsPath(), 0775);
@@ -333,21 +333,20 @@ class ManiaExchange extends ExpPlugin
         }
 
 
-
         $query = "";
         switch ($this->expStorage->simpleEnviTitle) {
             case "SM":
-                $query = 'https://sm.mania-exchange.com/api/tracks/get_track_info/id/'.$mxId;
+                $query = 'https://sm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
                 break;
             case "TM":
-                $query = 'https://tm.mania-exchange.com/api/tracks/get_track_info/id/'.$mxId;
+                $query = 'https://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
                 break;
         }
-        
+
         //$this->dataAccess->httpGet($query, Array($this, ), array($login, $mxId), "Manialive/eXpansion MXapi [search] ver 0.1",  "application/json");
 
-        $options = array(CURLOPT_HTTPHEADER => "X-ManiaPlanet-ServerLogin:".$this->storage->serverLogin);
-        $this->dataAccess->httpCurl($query, array($this, "xVote"), array("login" =>$login, "mxId" =>$mxId), $options);
+        $options = array(CURLOPT_HTTPHEADER => "X-ManiaPlanet-ServerLogin:" . $this->storage->serverLogin);
+        $this->dataAccess->httpCurl($query, array($this, "xVote"), array("login" => $login, "mxId" => $mxId), $options);
     }
 
     //function xVote($data, $code, $login, $mxId)
@@ -358,7 +357,7 @@ class ManiaExchange extends ExpPlugin
 
         $additionalData = $job->__additionalData;
 
-        $mxId  = $additionalData['mxId'];
+        $mxId = $additionalData['mxId'];
         $login = $additionalData['login'];
 
         $data = $job->getResponse();
@@ -385,14 +384,14 @@ class ManiaExchange extends ExpPlugin
             return;
         }
 
-        $this->vote          = array();
+        $this->vote = array();
         $this->vote['login'] = $login;
-        $this->vote['mxId']  = $mxId;
+        $this->vote['mxId'] = $mxId;
 
-        $vote              = new \Maniaplanet\DedicatedServer\Structures\Vote();
+        $vote = new \Maniaplanet\DedicatedServer\Structures\Vote();
         $vote->callerLogin = $login;
-        $vote->cmdName     = '$0f0add $fff$o'.$map['Name'].'$o$0f0 by $eee'.$map['Username'].' $0f0';
-        $vote->cmdParam    = array('to the queue from MX?$3f3');
+        $vote->cmdName = '$0f0add $fff$o' . $map['Name'] . '$o$0f0 by $eee' . $map['Username'] . ' $0f0';
+        $vote->cmdParam = array('to the queue from MX?$3f3');
         $this->connection->callVote($vote, $this->config->mxVote_ratio, ($this->config->mxVote_timeout * 1000), $this->config->mxVote_voters);
     }
 
@@ -407,13 +406,13 @@ class ManiaExchange extends ExpPlugin
             case 'to the queue from MX?$3f3':
                 switch ($stateName) {
                     case "VotePassed":
-                        $msg        = exp_getMessage('#record# $iVote passed!');
+                        $msg = exp_getMessage('#record# $iVote passed!');
                         $this->exp_chatSendServerMessage($msg, null);
                         $this->mxQueue($this->vote['login'], $this->vote['mxId']);
                         $this->vote = array();
                         break;
                     case "VoteFailed":
-                        $msg        = exp_getMessage('#admin_error# $iVote failed!');
+                        $msg = exp_getMessage('#admin_error# $iVote failed!');
                         $this->exp_chatSendServerMessage($msg, null);
                         $this->vote = array();
                         break;
@@ -433,4 +432,5 @@ class ManiaExchange extends ExpPlugin
         AdminGroups::removeAdminCommand($this->cmd_add);
     }
 }
+
 ?>

@@ -2,14 +2,17 @@
 
 namespace ManiaLivePlugins\eXpansion\Menu\Structures;
 
-class Menuitem {
+class Menuitem
+{
 
     public $title;
     public $icon;
     public $callback;
     public $isAdmin;
     public $isSeparator;
-    public function __construct($title, $icon, $callback, $isAdmin, $isSeparator = false) {        
+
+    public function __construct($title, $icon, $callback, $isAdmin, $isSeparator = false)
+    {
         $this->title = $title;
         $this->icon = $icon;
         $this->callback = $callback;

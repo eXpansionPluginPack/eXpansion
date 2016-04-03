@@ -19,8 +19,8 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $record, $widths)
     {
         $this->widths = $widths;
-        $this->sizeY  = 6;
-        $this->bg     = new ListBackGround($indexNumber, 100, 6);
+        $this->sizeY = 6;
+        $this->bg = new ListBackGround($indexNumber, 100, 6);
         $this->addComponent($this->bg);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
@@ -32,7 +32,7 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label_rank = new \ManiaLib\Gui\Elements\Label(10, 6);
         $this->label_rank->setAlign('left', 'center');
         $this->label_rank->setScale(1);
-        $this->label_rank->setText(($indexNumber + 1).".");
+        $this->label_rank->setText(($indexNumber + 1) . ".");
         $this->frame->addComponent($this->label_rank);
 
         $this->label_score = new \ManiaLib\Gui\Elements\Label(10, 6);
@@ -53,7 +53,7 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label_login->setText($record->login);
         $this->frame->addComponent($this->label_login);
 
-        $this->button_report = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(6,6);
+        $this->button_report = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(6, 6);
         $this->button_report->setIcon("Icons64x64_2", "Disconnected");
         $this->button_report->setAction($this->createAction(array($this, "openRepWindow"), $record->login));
         $this->frame->addComponent($this->button_report);
@@ -64,7 +64,7 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $window = \ManiaLivePlugins\eXpansion\Dedimania\Gui\Windows\DediReport::Create($login);
         $window->setTitle("Report for Dedimania");
         $window->setLogin($reportLogin);
-        $window->setSize(100,100);
+        $window->setSize(100, 100);
         $window->show();
     }
 
@@ -82,8 +82,9 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     // manialive 3.1 override to do nothing.
     function destroy()
     {
-        
+
     }
+
     /*
      * custom function to remove contents.
      */
@@ -93,4 +94,5 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         parent::destroy();
     }
 }
+
 ?>

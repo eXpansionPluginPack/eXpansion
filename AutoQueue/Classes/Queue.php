@@ -37,7 +37,7 @@ class Queue
     public function __construct()
     {
         $this->storage = Storage::getInstance();
-        $this->queue   = new \SplQueue();
+        $this->queue = new \SplQueue();
     }
 
     public function syncPlayers($logins)
@@ -89,7 +89,7 @@ class Queue
      */
     public function getQueuedPlayers()
     {
-        $out                 = array();
+        $out = array();
         foreach ($this->queue as $player)
             $out[$player->login] = $player;
 

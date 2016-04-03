@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Xmas;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
 
     public $width = 64;
     public $height = 16;

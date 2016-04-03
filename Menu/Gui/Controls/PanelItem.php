@@ -59,9 +59,9 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     function setClass($value)
     {
         $this->bg->setAttribute("class", $value);
-        $this->label->setAttribute("class", $value."_lbl");
+        $this->label->setAttribute("class", $value . "_lbl");
         if ($this->icon !== null) {
-            $this->icon->setAttribute("class", $value."_icon");
+            $this->icon->setAttribute("class", $value . "_icon");
         }
     }
 
@@ -69,9 +69,9 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         $this->bg->setId($id);
         if ($this->icon !== null) {
-            $this->icon->setId($id."_icon");
+            $this->icon->setId($id . "_icon");
         }
-        $this->label->setId($id."_lbl");
+        $this->label->setId($id . "_lbl");
     }
 
     function setAction($action)
@@ -100,5 +100,6 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         // deprecated
     }
 }
+
 ?>
 

@@ -10,10 +10,10 @@ use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\LocalPanel2;
 
 class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
-    public static $me           = null;
+    public static $me = null;
     public static $localrecords = array();
-    public static $secondMap    = false;
-    private $widgetIds          = array();
+    public static $secondMap = false;
+    private $widgetIds = array();
     public static $raceOn;
     public static $roundPoints;
 
@@ -38,13 +38,13 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     {
         $this->enableDedicatedEvents();
 
-        $this->lastUpdate   = time();
+        $this->lastUpdate = time();
         if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'))
-                self::$localrecords = $this->callPublicMethod(
+            self::$localrecords = $this->callPublicMethod(
                 "\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords"
             );
         $this->updateLocalPanel();
-        self::$me           = $this;
+        self::$me = $this;
     }
 
     public function updateLocalPanel($login = null)
@@ -61,8 +61,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
                 if (!$this->config->isHorizontal) {
                     if ($this->exp_getCurrentCompatibilityGameMode() != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
                         $panelMain->setDirection("right");
-                    }
-                    else {
+                    } else {
                         $panelMain->setDirection("left");
                     }
                 }
@@ -108,7 +107,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
 
-        self::$raceOn    = false;
+        self::$raceOn = false;
         $this->widgetIds = array();
         Gui\Widgets\LocalPanel::EraseAll();
         Gui\Widgets\LocalPanel2::EraseAll();
@@ -117,44 +116,44 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
         if ($wasWarmUp) {
-            self::$raceOn      = false;
+            self::$raceOn = false;
             $this->forceUpdate = true;
             $this->updateLocalPanel();
-            self::$secondMap   = true;
-            self::$raceOn      = true;
+            self::$secondMap = true;
+            self::$raceOn = true;
         } else {
             self::$localrecords = array(); //  reset
-            $this->widgetIds    = array();
+            $this->widgetIds = array();
             Gui\Widgets\LocalPanel::EraseAll();
             Gui\Widgets\LocalPanel2::EraseAll();
         }
     }
 
-      public function onBeginMap($map, $warmUp, $matchContinuation)
-      {
-      self::$raceOn      = false;
-      $this->forceUpdate = true;
-      $this->widgetIds   = array();
-      Gui\Widgets\LocalPanel::EraseAll();
-      Gui\Widgets\LocalPanel2::EraseAll();
-      $this->updateLocalPanel();
-      self::$secondMap   = true;
-      self::$raceOn      = true;
-      }
+    public function onBeginMap($map, $warmUp, $matchContinuation)
+    {
+        self::$raceOn = false;
+        $this->forceUpdate = true;
+        $this->widgetIds = array();
+        Gui\Widgets\LocalPanel::EraseAll();
+        Gui\Widgets\LocalPanel2::EraseAll();
+        $this->updateLocalPanel();
+        self::$secondMap = true;
+        self::$raceOn = true;
+    }
 
     public function onBeginMatch()
     {
         if (self::$raceOn == true) return;
 
-            self::$raceOn      = false;
-            $this->forceUpdate = true;
-            $this->widgetIds   = array();
-            Gui\Widgets\LocalPanel::EraseAll();
-            Gui\Widgets\LocalPanel2::EraseAll();
-            $this->updateLocalPanel();
-            self::$secondMap   = true;
-            self::$raceOn      = true;
-        }
+        self::$raceOn = false;
+        $this->forceUpdate = true;
+        $this->widgetIds = array();
+        Gui\Widgets\LocalPanel::EraseAll();
+        Gui\Widgets\LocalPanel2::EraseAll();
+        $this->updateLocalPanel();
+        self::$secondMap = true;
+        self::$raceOn = true;
+    }
 
     public function onEndRound()
     {
@@ -164,8 +163,8 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     public function onRecordsLoaded($data)
     {
         self::$localrecords = $data;
-        $this->local        = true;
-        $this->needUpdate   = self::$localrecords;
+        $this->local = true;
+        $this->needUpdate = self::$localrecords;
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -192,4 +191,5 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
 }
+
 ?>

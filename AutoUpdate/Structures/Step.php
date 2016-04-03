@@ -23,7 +23,8 @@
 namespace ManiaLivePlugins\eXpansion\AutoUpdate\Structures;
 
 
-class Step {
+class Step
+{
 
     public $commands;
     public $function;

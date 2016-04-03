@@ -10,13 +10,13 @@ namespace ManiaLivePlugins\eXpansion\Players;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Core: Players");
-		$this->setDescription("Playerlist");
-		$this->setGroups(array('Core'));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Core: Players");
+        $this->setDescription("Playerlist");
+        $this->setGroups(array('Core'));
 
-	}
+    }
 
 }

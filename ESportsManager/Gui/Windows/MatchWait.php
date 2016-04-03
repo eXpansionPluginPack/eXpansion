@@ -7,13 +7,15 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager\Gui\Windows;
  *
  * @author Reaby
  */
-class MatchWait extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class MatchWait extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     protected $label_halt, $label_reason, $frame, $btn_continue, $btn_select;
     private $admin = false;
     private $action;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $login = $this->getRecipient();
         $this->setTitle(__("Wait", $login));
@@ -49,7 +51,8 @@ class MatchWait extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->setAlign("center");
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         $this->label_halt->setPosX($this->sizeX / 2);
         $this->label_reason->setPosX($this->sizeX / 2);
         $this->btn_select->setPosX(($this->sizeX / 2));
@@ -58,7 +61,8 @@ class MatchWait extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         parent::onResize($oldX, $oldY);
     }
 
-    function setAdminAction($select, $continue) {
+    function setAdminAction($select, $continue)
+    {
         $this->admin = true;
         $this->btn_select->setAction($select);
         $this->frame->addComponent($this->btn_select);

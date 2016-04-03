@@ -27,68 +27,70 @@ use ManiaLive\Application\Event as mainEvent;
 use ManiaLive\Application\ApplicationListener;
 use ManiaLive\Data\Storage;
 
-class Profiler implements ApplicationListener{
+class Profiler implements ApplicationListener
+{
 
-	protected $totalMemoryPerClass = array();
-	protected $lastMemory = 0;
+    protected $totalMemoryPerClass = array();
+    protected $lastMemory = 0;
 
-	private $client;
-	/** @var  Storage */
-	private $storage;
+    private $client;
+    /** @var  Storage */
+    private $storage;
 
-	public function __construct()
-	{
-		$this->client = new \Elasticsearch\Client();
-		$this->storage = Storage::getInstance();
-	}
+    public function __construct()
+    {
+        $this->client = new \Elasticsearch\Client();
+        $this->storage = Storage::getInstance();
+    }
 
-	public function beforeFireDo($listener, $event)
-	{
-		$this->lastMemory = memory_get_usage();
-	}
+    public function beforeFireDo($listener, $event)
+    {
+        $this->lastMemory = memory_get_usage();
+    }
 
 
-	public function afterFireDo($listener, $event)
-	{
-		$newMemoryUsage = memory_get_usage();
+    public function afterFireDo($listener, $event)
+    {
+        $newMemoryUsage = memory_get_usage();
 
-		$class = get_class($listener);
+        $class = get_class($listener);
 
-		if(!isset($this->totalMemoryPerClass[$class])) {
-			$this->totalMemoryPerClass[$class] = 0;
-		}
+        if (!isset($this->totalMemoryPerClass[$class])) {
+            $this->totalMemoryPerClass[$class] = 0;
+        }
 
-		$diff = $newMemoryUsage - $this->lastMemory;
+        $diff = $newMemoryUsage - $this->lastMemory;
 
-		if (abs($diff) > 10) {
-			$this->totalMemoryPerClass[$class] += $diff;
-			echo "Mem diff for : $class : " . $diff . " | TOTAL : $newMemoryUsage\n";
+        if (abs($diff) > 10) {
+            $this->totalMemoryPerClass[$class] += $diff;
+            echo "Mem diff for : $class : " . $diff . " | TOTAL : $newMemoryUsage\n";
 
-			$index = "expansion-profiler";
+            $index = "expansion-profiler";
 
-			$params['body'] = array(
-				'nbPlayers' => count($this->storage->players),
-				'@timestamp' => $this->getCurrentTimeStamp(time()),
-				'class' => $this->getClassName($class),
-				'memory_total' => $newMemoryUsage,
-				'memory_usage' => $this->totalMemoryPerClass[$class],
-				'memory_diff' => $diff,
-				'event_class' => $this->getClassName(get_class($event)),
-				'event_id' => $event->getMethod(),
-			);
-			$params['index'] = $index;
-			$params['type'] = 'memory_log';
+            $params['body'] = array(
+                'nbPlayers' => count($this->storage->players),
+                '@timestamp' => $this->getCurrentTimeStamp(time()),
+                'class' => $this->getClassName($class),
+                'memory_total' => $newMemoryUsage,
+                'memory_usage' => $this->totalMemoryPerClass[$class],
+                'memory_diff' => $diff,
+                'event_class' => $this->getClassName(get_class($event)),
+                'event_id' => $event->getMethod(),
+            );
+            $params['index'] = $index;
+            $params['type'] = 'memory_log';
 
-			$this->client->index($params);
-		}
-	}
+            $this->client->index($params);
+        }
+    }
 
-	function getClassName($class)
-	{
-		return str_replace('\\', '', $class);
-	}
+    function getClassName($class)
+    {
+        return str_replace('\\', '', $class);
+    }
 
-	function getCurrentTimeStamp($time) {
-		return date('Y-m-d',($time)).'T'.date('H:i:s', ($time)).'Z';
-	}
+    function getCurrentTimeStamp($time)
+    {
+        return date('Y-m-d', ($time)) . 'T' . date('H:i:s', ($time)) . 'Z';
+    }
 }

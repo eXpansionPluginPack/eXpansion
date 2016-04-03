@@ -49,12 +49,12 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->author->setTextPrefix('$s');
         $this->addComponent($this->author);
 
-        $line   = new \ManiaLive\Gui\Controls\Frame(36, -14.5);
+        $line = new \ManiaLive\Gui\Controls\Frame(36, -14.5);
         $line->setAlign("left", "top");
         $layout = new \ManiaLib\Gui\Layouts\Line();
         $layout->setMargin(1);
         $line->setLayout($layout);
-        $icon   = new \ManiaLib\Gui\Elements\Quad(5, 5);
+        $icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
         $icon->setStyle("Icons128x32_1");
         $icon->setAlign("left", "center");
         $icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::RT_TimeAttack);
@@ -72,7 +72,7 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
         $this->frame = $line;
         // 	$this->addComponent($this->frame);
-        $script      = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Map\Gui\Scripts_Map");
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Map\Gui\Scripts_Map");
         $this->registerScript($script);
     }
 
@@ -83,7 +83,7 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     public function showMapInfo($login)
     {
-        $window =  \ManiaLivePlugins\eXpansion\Maps\Gui\Windows\MapInfo::create($login);
+        $window = \ManiaLivePlugins\eXpansion\Maps\Gui\Windows\MapInfo::create($login);
         $window->setMap(null);
         $window->setSize(160, 90);
         $window->show($login);
@@ -95,4 +95,5 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         parent::destroy();
     }
 }
+
 ?>

@@ -15,100 +15,100 @@ use Maniaplanet\DedicatedServer\Structures\PlayerNetInfo;
 class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\Events\Listener
 {
 
-	private $buffer = "";
+    private $buffer = "";
 
-	private $group;
+    private $group;
 
-	function exp_onLoad()
-	{
-		$this->enableDedicatedEvents();
-		$this->updateGroup();
-	}
+    function exp_onLoad()
+    {
+        $this->enableDedicatedEvents();
+        $this->updateGroup();
+    }
 
-	function exp_onReady()
-	{
-		Dispatcher::register(AdminGroupEvent::getClass(), $this);
-		$this->displayWidget();
-	}
+    function exp_onReady()
+    {
+        Dispatcher::register(AdminGroupEvent::getClass(), $this);
+        $this->displayWidget();
+    }
 
-	/**
-	 * @param PlayerNetInfo[] $players
-	 */
-	public function onPlayerNetLost($players)
-	{
-		$out = "";
-		$comma = "";
+    /**
+     * @param PlayerNetInfo[] $players
+     */
+    public function onPlayerNetLost($players)
+    {
+        $out = "";
+        $comma = "";
 
-		foreach ($players as $player) {
-			$pla = $this->storage->getPlayerObject($player->login);
-			$out .= $comma . '"' . Gui::fixString($pla->nickName) . ' $z$s(' . Gui::fixString($pla->login) . ') "';
-			$comma = ", ";
-		}
+        foreach ($players as $player) {
+            $pla = $this->storage->getPlayerObject($player->login);
+            $out .= $comma . '"' . Gui::fixString($pla->nickName) . ' $z$s(' . Gui::fixString($pla->login) . ') "';
+            $comma = ", ";
+        }
 
-		if (empty($out)) {
-			$out = "Text[]";
-		}
-		else {
-			$out = "[" . $out . "]";
-		}
+        if (empty($out)) {
+            $out = "Text[]";
+        } else {
+            $out = "[" . $out . "]";
+        }
 
-		if ($this->buffer !== $out) {
+        if ($this->buffer !== $out) {
 
-			$recepient = null;
-			if (Config::getInstance()->showOnlyAdmins)
-				$recepient = $this->group;
+            $recepient = null;
+            if (Config::getInstance()->showOnlyAdmins)
+                $recepient = $this->group;
 
-			$update = NetlostUpdate::Create($recepient);
-			$update->setPlayer($out);
-			$update->setTimeout(2);
-			$update->show();
-			$this->buffer = $out;
-		}
-	}
+            $update = NetlostUpdate::Create($recepient);
+            $update->setPlayer($out);
+            $update->setTimeout(2);
+            $update->show();
+            $this->buffer = $out;
+        }
+    }
 
-	public function updateGroup()
-	{
-		$adminlist = AdminGroups::getInstance()->get();
-		$this->group = Group::Create("netlost_admins", $adminlist);
-		$this->displayWidget();
-	}
+    public function updateGroup()
+    {
+        $adminlist = AdminGroups::getInstance()->get();
+        $this->group = Group::Create("netlost_admins", $adminlist);
+        $this->displayWidget();
+    }
 
-	/**
-	 * displayWidget(string $login)
-	 * @param string $login
-	 */
-	function displayWidget()
-	{
-		$recepient = null;
-		if (Config::getInstance()->showOnlyAdmins)
-			$recepient = $this->group;
+    /**
+     * displayWidget(string $login)
+     * @param string $login
+     */
+    function displayWidget()
+    {
+        $recepient = null;
+        if (Config::getInstance()->showOnlyAdmins)
+            $recepient = $this->group;
 
-		$info = Netlost::Create($recepient);
-		$info->setSize(200, 12);
-		$info->setPosition(-115, -50);
-		$info->show();
-	}
+        $info = Netlost::Create($recepient);
+        $info->setSize(200, 12);
+        $info->setPosition(-115, -50);
+        $info->show();
+    }
 
-	function exp_onUnload()
-	{
-		Dispatcher::unregister(AdminGroupEvent::getClass(), $this);
-		Netlost::EraseAll();
-		NetlostUpdate::EraseAll();
-		Group::Erase("netlost_admins");
-		$this->group = null;
-	}
+    function exp_onUnload()
+    {
+        Dispatcher::unregister(AdminGroupEvent::getClass(), $this);
+        Netlost::EraseAll();
+        NetlostUpdate::EraseAll();
+        Group::Erase("netlost_admins");
+        $this->group = null;
+    }
 
-	public function exp_admin_added($login)
-	{
-		$this->updateGroup();
-	}
+    public function exp_admin_added($login)
+    {
+        $this->updateGroup();
+    }
 
-	public function exp_admin_removed($login)
-	{
-		$this->updateGroup();
-		Netlost::Erase($login);
-	}
+    public function exp_admin_removed($login)
+    {
+        $this->updateGroup();
+        Netlost::Erase($login);
+    }
 
 }
+
 ?>
 

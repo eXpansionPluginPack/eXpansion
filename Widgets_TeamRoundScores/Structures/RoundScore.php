@@ -13,12 +13,13 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TeamRoundScores\Structures;
  *
  * @author Petri
  */
-class RoundScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
+class RoundScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+{
 
     /**
      * Summed score of the round for teams
      * $score[teamId] = value
-     * @var int[]  
+     * @var int[]
      */
     public $score = array(0 => 0, 1 => 0);
 

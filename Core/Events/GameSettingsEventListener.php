@@ -30,10 +30,11 @@ use Maniaplanet\DedicatedServer\Structures\GameInfos;
  *
  * @author De Cramer Oliver
  */
-interface GameSettingsEventListener {
-    
+interface GameSettingsEventListener
+{
+
     public function onGameModeChange($oldGameMode, $newGameMode);
-    
+
     public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes);
 }
 

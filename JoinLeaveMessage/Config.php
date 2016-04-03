@@ -25,11 +25,12 @@ namespace ManiaLivePlugins\eXpansion\JoinLeaveMessage;
 
 use ManiaLib\Utils\Singleton;
 
-class Config extends Singleton{
+class Config extends Singleton
+{
 
-	public $showTotalPlayOnJoin = true;
-	public $showLeaveMessage = true;
-	public $hideFromPlayers = false;
+    public $showTotalPlayOnJoin = true;
+    public $showLeaveMessage = true;
+    public $hideFromPlayers = false;
 
 
 } 

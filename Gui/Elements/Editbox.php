@@ -12,167 +12,165 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class Editbox extends Control
 {
 
-	protected $label;
+    protected $label;
 
-	protected $button;
+    protected $button;
 
-	protected $name;
+    protected $name;
 
-	protected $bgleft, $bgcenter, $bgright;
+    protected $bgleft, $bgcenter, $bgright;
 
-	protected $bg;
+    protected $bg;
 
-	function __construct($name, $sizeX = 100, $sizeY = 30, $editable = true)
-	{
+    function __construct($name, $sizeX = 100, $sizeY = 30, $editable = true)
+    {
 
-		$config = Config::getInstance();
-		$this->name = $name;
+        $config = Config::getInstance();
+        $this->name = $name;
 
-		$this->createButton($editable);
+        $this->createButton($editable);
 
-		$this->bg = new WidgetBackGround(100, 30);
-	//	$this->addComponent($this->bg);
-		
-		$this->label = new Label($sizeX, 4);
-		$this->label->setAlign('left', 'top');
-		$this->label->setTextSize(1);
-		$this->label->setStyle("TextCardScores2");
-		$this->label->setTextEmboss();
-		$this->addComponent($this->label);
+        $this->bg = new WidgetBackGround(100, 30);
+        //	$this->addComponent($this->bg);
 
-		/* 	$this->bgleft = new Quad(3, 6);
-		  $this->bgleft->setAlign("right", "top");
-		  $this->bgleft->setImage($config->getImage("inputbox", "left.png"), true);
-		  $this->addComponent($this->bgleft);
+        $this->label = new Label($sizeX, 4);
+        $this->label->setAlign('left', 'top');
+        $this->label->setTextSize(1);
+        $this->label->setStyle("TextCardScores2");
+        $this->label->setTextEmboss();
+        $this->addComponent($this->label);
 
-		  $this->bgcenter = new Quad(3, 6);
-		  $this->bgcenter->setAlign("left", "top");
-		  $this->bgcenter->setImage($config->getImage("inputbox", "center.png"), true);
-		  $this->addComponent($this->bgcenter);
+        /* 	$this->bgleft = new Quad(3, 6);
+          $this->bgleft->setAlign("right", "top");
+          $this->bgleft->setImage($config->getImage("inputbox", "left.png"), true);
+          $this->addComponent($this->bgleft);
 
-		  $this->bgright = new Quad(3, 6);
-		  $this->bgright->setAlign("left", "top");
-		  $this->bgright->setImage($config->getImage("inputbox", "right.png"), true);
-		  $this->addComponent($this->bgright); */
+          $this->bgcenter = new Quad(3, 6);
+          $this->bgcenter->setAlign("left", "top");
+          $this->bgcenter->setImage($config->getImage("inputbox", "center.png"), true);
+          $this->addComponent($this->bgcenter);
 
-		$this->sizeX = $sizeX;
-		$this->sizeY = $sizeY;
+          $this->bgright = new Quad(3, 6);
+          $this->bgright->setAlign("left", "top");
+          $this->bgright->setImage($config->getImage("inputbox", "right.png"), true);
+          $this->addComponent($this->bgright); */
 
-		$this->setSize($sizeX, $sizeY);
-	}
+        $this->sizeX = $sizeX;
+        $this->sizeY = $sizeY;
 
-	protected function onResize($oldX, $oldY)
-	{
-		$this->button->setSize($this->getSizeX(), $this->getSizeY() - 5);
-		$this->button->setPosition(0, 0);
+        $this->setSize($sizeX, $sizeY);
+    }
 
-		/* 	$this->bgleft->setSize(3, $this->getSizeY());
-		  $this->bgleft->setPosX(3);
+    protected function onResize($oldX, $oldY)
+    {
+        $this->button->setSize($this->getSizeX(), $this->getSizeY() - 5);
+        $this->button->setPosition(0, 0);
 
-		  $this->bgcenter->setSize($this->getSizeX() - 6, $this->getSizeY());
-		  $this->bgcenter->setPosX(3);
+        /* 	$this->bgleft->setSize(3, $this->getSizeY());
+          $this->bgleft->setPosX(3);
 
-		  $this->bgright->setSize(3, $this->getSizeY());
-		  $this->bgright->setPosX($this->getSizeX() - 3); */
+          $this->bgcenter->setSize($this->getSizeX() - 6, $this->getSizeY());
+          $this->bgcenter->setPosX(3);
 
-		$this->label->setSize($this->getSizeX(), 3);
-		$this->label->setPosition(1, 5);
-		$this->bg->setSize($this->sizeX, $this->sizeY);
+          $this->bgright->setSize(3, $this->getSizeY());
+          $this->bgright->setPosX($this->getSizeX() - 3); */
 
-		parent::onResize($oldX, $oldY);
-	}
+        $this->label->setSize($this->getSizeX(), 3);
+        $this->label->setPosition(1, 5);
+        $this->bg->setSize($this->sizeX, $this->sizeY);
 
-	protected function createButton($editable)
-	{
-		$text = "";
-		if ($this->button != null) {
-			$this->removeComponent($this->button);
-			$text = $this->getText();
-		}
+        parent::onResize($oldX, $oldY);
+    }
 
-		if ($editable) {
-			$this->button = new TextEdit($this->name, $this->sizeX, $this->sizeY);
-			$this->button->setAttribute("class", "isTabIndex isEditable");
-			$this->button->setName($this->name);
-			$this->button->setId($this->name);
-			$this->button->setText($text);
+    protected function createButton($editable)
+    {
+        $text = "";
+        if ($this->button != null) {
+            $this->removeComponent($this->button);
+            $text = $this->getText();
+        }
 
-			$this->button->setScriptEvents(true);
-		}
-		else {
-			$this->button = new Label($this->sizeX, 5);
-			$this->button->setText($text);
-			$this->button->setTextColor('fff');
-			$this->button->setTextSize(1.5);
-		}
+        if ($editable) {
+            $this->button = new TextEdit($this->name, $this->sizeX, $this->sizeY);
+            $this->button->setAttribute("class", "isTabIndex isEditable");
+            $this->button->setName($this->name);
+            $this->button->setId($this->name);
+            $this->button->setText($text);
 
-		$this->button->setAlign('left', 'top');
-		$this->button->setPosX(2);
-		$this->addComponent($this->button);
-	}
+            $this->button->setScriptEvents(true);
+        } else {
+            $this->button = new Label($this->sizeX, 5);
+            $this->button->setText($text);
+            $this->button->setTextColor('fff');
+            $this->button->setTextSize(1.5);
+        }
 
-	public function setEditable($state)
-	{
-		if ($state && $this->button instanceof Label) {
-			$this->createButton($state);
-		}
-		elseif (!$state && $this->button instanceof Entry) {
-			$this->createButton($state);
-		}
-	}
+        $this->button->setAlign('left', 'top');
+        $this->button->setPosX(2);
+        $this->addComponent($this->button);
+    }
 
-	function getLabel()
-	{
-		return $this->label->getText();
-	}
+    public function setEditable($state)
+    {
+        if ($state && $this->button instanceof Label) {
+            $this->createButton($state);
+        } elseif (!$state && $this->button instanceof Entry) {
+            $this->createButton($state);
+        }
+    }
 
-	function setLabel($text)
-	{
-		$this->label->setText($text);
-	}
+    function getLabel()
+    {
+        return $this->label->getText();
+    }
 
-	function getText()
-	{
-		if ($this->button instanceof Entry)
-			return $this->button->getDefault();
-		else
-			return $this->button->getText();
-	}
+    function setLabel($text)
+    {
+        $this->label->setText($text);
+    }
 
-	function setText($text)
-	{
-		if ($this->button instanceof Entry)
-			$this->button->setDefault($text);
-		else
-			$this->button->setText($text);
-	}
+    function getText()
+    {
+        if ($this->button instanceof Entry)
+            return $this->button->getDefault();
+        else
+            return $this->button->getText();
+    }
 
-	function getName()
-	{
-		return $this->button->getName();
-	}
+    function setText($text)
+    {
+        if ($this->button instanceof Entry)
+            $this->button->setDefault($text);
+        else
+            $this->button->setText($text);
+    }
 
-	function setName($text)
-	{
-		$this->button->setName($text);
-	}
+    function getName()
+    {
+        return $this->button->getName();
+    }
 
-	function setId($id)
-	{
-		$this->button->setId($id);
-		$this->button->setScriptEvents();
-	}
+    function setName($text)
+    {
+        $this->button->setName($text);
+    }
 
-	function setClass($class)
-	{
-		$this->button->setAttribute("class", "isTabIndex isEditable " . $class);
-	}
+    function setId($id)
+    {
+        $this->button->setId($id);
+        $this->button->setScriptEvents();
+    }
 
-	function onIsRemoved(Container $target)
-	{
-		parent::onIsRemoved($target);
-		parent::destroy();
-	}
+    function setClass($class)
+    {
+        $this->button->setAttribute("class", "isTabIndex isEditable " . $class);
+    }
+
+    function onIsRemoved(Container $target)
+    {
+        parent::onIsRemoved($target);
+        parent::destroy();
+    }
 
 }
 

@@ -80,7 +80,7 @@ class EnterQueueWidget extends Widget
     }
 
     public function onDraw()
-    {     
+    {
         $this->button->setAction(AutoQueue::$enterAction);
         parent::onDraw();
     }

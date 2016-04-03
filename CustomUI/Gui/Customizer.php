@@ -13,47 +13,47 @@ use ManiaLivePlugins\eXpansion\Helpers\Maniascript;
 
 class Customizer extends PlainWidget
 {
-	/** @var  Script */
-	private $script;
+    /** @var  Script */
+    private $script;
 
-	protected function onConstruct()
-	{
-		parent::onConstruct();
-		$this->setName("Customizer");
-		$this->script = new Script("CustomUI\\Gui\\Script");
-		$this->registerScript($this->script);
-	}
+    protected function onConstruct()
+    {
+        parent::onConstruct();
+        $this->setName("Customizer");
+        $this->script = new Script("CustomUI\\Gui\\Script");
+        $this->registerScript($this->script);
+    }
 
-	/**
-	 * @param Variable[] $variables
-	 */
-	public function update($variables)
-	{
-		$code = "";
+    /**
+     * @param Variable[] $variables
+     */
+    public function update($variables)
+    {
+        $code = "";
 
-		foreach ($variables as $variable) {
-			$varName = 'ClientUI.'.ucfirst($variable->getName());
-			if ($variable instanceof Boolean) {
-				$code .= $varName . ' = ' . (($variable->getRawValue()) ? 'True' : 'False') . ";\n";
-			} else if ($variable instanceof TypeInt) {
-				$code .= $varName . ' = ' . $variable->getRawValue() . ";\n";
-			} else if ($variable instanceof BasicList) {
-				$value = $variable->getRawValue();
-				if (count($value) == 2) {
-					$code .= $varName . ".X" . ' = ' . Maniascript::convertType((float)$value[0]) . ";\n";
-					$code .= $varName . ".Y" . ' = ' . Maniascript::convertType((float)$value[1]) . ";\n";
-				}
-			}
-		}
+        foreach ($variables as $variable) {
+            $varName = 'ClientUI.' . ucfirst($variable->getName());
+            if ($variable instanceof Boolean) {
+                $code .= $varName . ' = ' . (($variable->getRawValue()) ? 'True' : 'False') . ";\n";
+            } else if ($variable instanceof TypeInt) {
+                $code .= $varName . ' = ' . $variable->getRawValue() . ";\n";
+            } else if ($variable instanceof BasicList) {
+                $value = $variable->getRawValue();
+                if (count($value) == 2) {
+                    $code .= $varName . ".X" . ' = ' . Maniascript::convertType((float)$value[0]) . ";\n";
+                    $code .= $varName . ".Y" . ' = ' . Maniascript::convertType((float)$value[1]) . ";\n";
+                }
+            }
+        }
 
-		$this->script->setParam('code', $code);
-	}
+        $this->script->setParam('code', $code);
+    }
 
-	function destroy()
-	{
-		$this->destroyComponents();
-		parent::destroy();
-	}
+    function destroy()
+    {
+        $this->destroyComponents();
+        parent::destroy();
+    }
 
 }
 

@@ -27,47 +27,47 @@ class Menu extends ExpPlugin
 
         $actionHandler = ActionHandler::getInstance();
 
-        $this->actions['playerlist']   = $actionHandler->createAction(array($this, "actions"), "playerlist");
-        $this->actions['maplist']      = $actionHandler->createAction(array($this, "actions"), "maplist");
-        $this->actions['maprecords']   = $actionHandler->createAction(array($this, "actions"), "maprecords");
-        $this->actions['addMaps']      = $actionHandler->createAction(array($this, "actions"), "addMaps");
-        $this->actions['voteres']      = $actionHandler->createAction(array($this, "actions"), "voteres");
-        $this->actions['voteskip']     = $actionHandler->createAction(array($this, "actions"), "voteskip");
-        $this->actions['admres']       = $actionHandler->createAction(array($this, "actions"), "admres");
-        $this->actions['admskip']      = $actionHandler->createAction(array($this, "actions"), "admskip");
-        $this->actions['admer']        = $actionHandler->createAction(array($this, "actions"), "admer");
-        $this->actions['admcancel']    = $actionHandler->createAction(array($this, "actions"), "admcancel");
+        $this->actions['playerlist'] = $actionHandler->createAction(array($this, "actions"), "playerlist");
+        $this->actions['maplist'] = $actionHandler->createAction(array($this, "actions"), "maplist");
+        $this->actions['maprecords'] = $actionHandler->createAction(array($this, "actions"), "maprecords");
+        $this->actions['addMaps'] = $actionHandler->createAction(array($this, "actions"), "addMaps");
+        $this->actions['voteres'] = $actionHandler->createAction(array($this, "actions"), "voteres");
+        $this->actions['voteskip'] = $actionHandler->createAction(array($this, "actions"), "voteskip");
+        $this->actions['admres'] = $actionHandler->createAction(array($this, "actions"), "admres");
+        $this->actions['admskip'] = $actionHandler->createAction(array($this, "actions"), "admskip");
+        $this->actions['admer'] = $actionHandler->createAction(array($this, "actions"), "admer");
+        $this->actions['admcancel'] = $actionHandler->createAction(array($this, "actions"), "admcancel");
         $this->actions['admremovemap'] = $actionHandler->createAction(array($this, "actions"), "admremovemap");
-        $this->actions['admtrashmap']  = $actionHandler->createAction(array($this, "actions"), "admtrashmap");
-        $this->actions['admmx']        = $actionHandler->createAction(array($this, "actions"), "admmx");
-        $this->actions['admcontrol']   = $actionHandler->createAction(array($this, "actions"), "admcontrol");
-        $this->actions['quit']         = $actionHandler->createAction(array($this, "actions"), "quit");
-        $this->actions['help']         = $actionHandler->createAction(array($this, "actions"), "help");
-        $this->actions['hudMove']      = $actionHandler->createAction(array($this, "actions"), "hudMove");
-        $this->actions['hudLock']      = $actionHandler->createAction(array($this, "actions"), "hudLock");
-        $this->actions['hudConfig']    = $actionHandler->createAction(array($this, "actions"), "hudConfig");
-        $this->actions['hudReset']     = $actionHandler->createAction(array($this, "actions"), "hudReset");
-        $this->actions['stats']        = $actionHandler->createAction(array($this, "actions"), "stats");
-        $this->actions['serverinfo']   = $actionHandler->createAction(array($this, "actions"), "serverinfo");
-        $this->actions['admreplay']    = $actionHandler->createAction(array($this, "actions"), "admreplay");
-        $this->actions['serverranks']  = $actionHandler->createAction(array($this, "actions"), "serverranks");
-        $this->actions['topsums']      = $actionHandler->createAction(array($this, "actions"), "topsums");
-        $this->actions['teambalance']  = $actionHandler->createAction(array($this, "actions"), "teambalance");
-        $this->actions['localcps']     = $actionHandler->createAction(array($this, "actions"), "localcps");
-        $this->actions['dedicps']      = $actionHandler->createAction(array($this, "actions"), "dedicps");
-        $this->actions['dedirecs']     = $actionHandler->createAction(array($this, "actions"), "dedirecs");
+        $this->actions['admtrashmap'] = $actionHandler->createAction(array($this, "actions"), "admtrashmap");
+        $this->actions['admmx'] = $actionHandler->createAction(array($this, "actions"), "admmx");
+        $this->actions['admcontrol'] = $actionHandler->createAction(array($this, "actions"), "admcontrol");
+        $this->actions['quit'] = $actionHandler->createAction(array($this, "actions"), "quit");
+        $this->actions['help'] = $actionHandler->createAction(array($this, "actions"), "help");
+        $this->actions['hudMove'] = $actionHandler->createAction(array($this, "actions"), "hudMove");
+        $this->actions['hudLock'] = $actionHandler->createAction(array($this, "actions"), "hudLock");
+        $this->actions['hudConfig'] = $actionHandler->createAction(array($this, "actions"), "hudConfig");
+        $this->actions['hudReset'] = $actionHandler->createAction(array($this, "actions"), "hudReset");
+        $this->actions['stats'] = $actionHandler->createAction(array($this, "actions"), "stats");
+        $this->actions['serverinfo'] = $actionHandler->createAction(array($this, "actions"), "serverinfo");
+        $this->actions['admreplay'] = $actionHandler->createAction(array($this, "actions"), "admreplay");
+        $this->actions['serverranks'] = $actionHandler->createAction(array($this, "actions"), "serverranks");
+        $this->actions['topsums'] = $actionHandler->createAction(array($this, "actions"), "topsums");
+        $this->actions['teambalance'] = $actionHandler->createAction(array($this, "actions"), "teambalance");
+        $this->actions['localcps'] = $actionHandler->createAction(array($this, "actions"), "localcps");
+        $this->actions['dedicps'] = $actionHandler->createAction(array($this, "actions"), "dedicps");
+        $this->actions['dedirecs'] = $actionHandler->createAction(array($this, "actions"), "dedirecs");
 
 
-        $this->actions['adm_groups']   = $actionHandler->createAction(array($this, "actions"), "adm_groups");
-        $this->actions['adm_plugins']  = $actionHandler->createAction(array($this, "actions"), "adm_plugins");
-        $this->actions['adm_votes']    = $actionHandler->createAction(array($this, "actions"), "adm_votes");
+        $this->actions['adm_groups'] = $actionHandler->createAction(array($this, "actions"), "adm_groups");
+        $this->actions['adm_plugins'] = $actionHandler->createAction(array($this, "actions"), "adm_plugins");
+        $this->actions['adm_votes'] = $actionHandler->createAction(array($this, "actions"), "adm_votes");
         $this->actions['adm_settings'] = $actionHandler->createAction(array($this, "actions"), "adm_settings");
-        $this->actions['adm_update']   = $actionHandler->createAction(array($this, "actions"), "adm_update");
+        $this->actions['adm_update'] = $actionHandler->createAction(array($this, "actions"), "adm_update");
     }
 
     private function getPluginName($plugin)
     {
-        return "\\ManiaLivePlugins\\eXpansion\\".$plugin."\\".$plugin;
+        return "\\ManiaLivePlugins\\eXpansion\\" . $plugin . "\\" . $plugin;
     }
 
     private function exp_isPluginLoaded($plugin)
@@ -211,7 +211,7 @@ class Menu extends ExpPlugin
                     break;
             }
         } catch (Exception $e) {
-            Logger::error("Error in Menu while running action : ".$action);
+            Logger::error("Error in Menu while running action : " . $action);
         }
     }
 
@@ -231,7 +231,7 @@ class Menu extends ExpPlugin
     {
 
         $submenu = Submenu::Create($login);
-        $menu    = $submenu->getMenu();
+        $menu = $submenu->getMenu();
 
         if ($this->exp_isPluginLoaded('Faq')) {
             $submenu->addItem($menu, __("Help", $login), $this->actions['help']);
@@ -242,7 +242,7 @@ class Menu extends ExpPlugin
         }
 
         $mapAction = null;
-        $mapText   = "";
+        $mapText = "";
         if ($this->exp_isPluginLoaded("Maps")) {
             $maps = $submenu->addSubMenu($menu, __("Maps", $login));
 
@@ -250,14 +250,16 @@ class Menu extends ExpPlugin
 
             if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Maps\\Maps") && AdminGroups::hasPermission($login,
                     Permission::map_addLocal) || AdminGroups::hasPermission($login, Permission::map_addMX) || AdminGroups::hasPermission($login,
-                    Permission::map_removeMap)) {
+                    Permission::map_removeMap)
+            ) {
                 if (AdminGroups::hasPermission($login, Permission::map_addLocal)) {
                     if ($this->expStorage->isRemoteControlled == false) {
                         $submenu->addItem($maps, __("Add local map", $login), $this->actions['addMaps']);
                     }
                 }
                 if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\ManiaExchange\\ManiaExchange") && AdminGroups::hasPermission($login,
-                        Permission::map_addMX)) {
+                        Permission::map_addMX)
+                ) {
                     $submenu->addItem($maps, __("Mania-Exchange", $login), $this->actions['admmx']);
                 }
 
@@ -311,23 +313,24 @@ class Menu extends ExpPlugin
         }
 
         if (AdminGroups::hasPermission($login, Permission::team_balance) || AdminGroups::hasPermission($login, Permission::map_endRound) || AdminGroups::hasPermission($login,
-                Permission::map_restart) || AdminGroups::hasPermission($login, Permission::map_skip)) {
+                Permission::map_restart) || AdminGroups::hasPermission($login, Permission::map_skip)
+        ) {
             $adm = $submenu->addSubMenu($menu, __("Admin", $login), null);
 
             if (AdminGroups::hasPermission($login, Permission::map_restart))
-                    $submenu->addItem($adm, __("Instant Restart", $login), $this->actions['admres']);
+                $submenu->addItem($adm, __("Instant Restart", $login), $this->actions['admres']);
 
             if (AdminGroups::hasPermission($login, Permission::map_restart))
-                    $submenu->addItem($adm, __("Replay", $login), $this->actions['admreplay']);
+                $submenu->addItem($adm, __("Replay", $login), $this->actions['admreplay']);
 
             if (AdminGroups::hasPermission($login, Permission::map_skip))
-                    $submenu->addItem($adm, __("Skip", $login), $this->actions['admskip']);
+                $submenu->addItem($adm, __("Skip", $login), $this->actions['admskip']);
 
             if (AdminGroups::hasPermission($login, Permission::map_endRound))
-                    $submenu->addItem($adm, __("End Round", $login), $this->actions['admer']);
+                $submenu->addItem($adm, __("End Round", $login), $this->actions['admer']);
 
             if (AdminGroups::hasPermission($login, Permission::team_balance))
-                    $submenu->addItem($adm, __("Balance Teams", $login), $this->actions['teambalance']);
+                $submenu->addItem($adm, __("Balance Teams", $login), $this->actions['teambalance']);
         }
 
 
@@ -373,4 +376,5 @@ class Menu extends ExpPlugin
         }
     }
 }
+
 ?>

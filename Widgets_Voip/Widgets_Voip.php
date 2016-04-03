@@ -17,111 +17,111 @@ use ManiaLivePlugins\eXpansion\Widgets_Voip\Gui\Widgets\Widget;
 class Widgets_Voip extends ExpPlugin
 {
 
-	/** @var Config */
-	private $config;
+    /** @var Config */
+    private $config;
 
-	private $settingsChanged = false;
+    private $settingsChanged = false;
 
-	static public $GotoMumble = -1;
+    static public $GotoMumble = -1;
 
-	static public $GotoTs = -1;
+    static public $GotoTs = -1;
 
-	public function exp_onReady()
-	{
+    public function exp_onReady()
+    {
 
-		$actionHandler = ActionHandler::getInstance();
-		self::$GotoMumble = $actionHandler->createAction(array($this, "gotoMumble"));
-		self::$GotoTs = $actionHandler->createAction(array($this, "gotoTs"));
-		$this->config = Config::GetInstance();
-		Gui::preloadImage($this->config->mumbleImageUrl);
-		Gui::preloadImage($this->config->mumbleImageFocusUrl);
-		Gui::preloadImage($this->config->tsImageUrl);
-		Gui::preloadImage($this->config->tsImageFocusUrl);
-		Gui::preloadUpdate();
-		
-		$this->displayWidget(null);
-		$this->enableApplicationEvents();
-	}
+        $actionHandler = ActionHandler::getInstance();
+        self::$GotoMumble = $actionHandler->createAction(array($this, "gotoMumble"));
+        self::$GotoTs = $actionHandler->createAction(array($this, "gotoTs"));
+        $this->config = Config::GetInstance();
+        Gui::preloadImage($this->config->mumbleImageUrl);
+        Gui::preloadImage($this->config->mumbleImageFocusUrl);
+        Gui::preloadImage($this->config->tsImageUrl);
+        Gui::preloadImage($this->config->tsImageFocusUrl);
+        Gui::preloadUpdate();
 
-	public function onSettingsChanged(Variable $var)
-	{
-		$name = $var->getName();
+        $this->displayWidget(null);
+        $this->enableApplicationEvents();
+    }
 
-		if (isset($this->config->$name)) {
-			$this->settingsChanged = true;
-		}
-	}
+    public function onSettingsChanged(Variable $var)
+    {
+        $name = $var->getName();
 
-	function onPreLoop()
-	{
-		if ($this->settingsChanged) {
-			$this->displayWidget(null);
-			$this->settingsChanged = false;
-		}
-	}
+        if (isset($this->config->$name)) {
+            $this->settingsChanged = true;
+        }
+    }
 
-	public function displayWidget($login)
-	{
-		Widget::EraseAll();
-		$providers = array("mumble", "ts");
+    function onPreLoop()
+    {
+        if ($this->settingsChanged) {
+            $this->displayWidget(null);
+            $this->settingsChanged = false;
+        }
+    }
 
-		for ($x = 1; $x <= 2; $x++) {
-			$provider = $providers[$x - 1];
+    public function displayWidget($login)
+    {
+        Widget::EraseAll();
+        $providers = array("mumble", "ts");
 
-			$varActive = $provider . "Active";
-			if (isset($this->config->$varActive) && $this->config->$varActive) {
-				$widget = Widget::Create($login, false);
+        for ($x = 1; $x <= 2; $x++) {
+            $provider = $providers[$x - 1];
 
-				$varX = $provider . "X";
-				$varY = $provider . "Y";
-				$varImageUrl = $provider . "ImageUrl";
-				$varImageFocusUrl = $provider . "ImageFocusUrl";
-				$varUrl = "";
-				$varSize = $provider . "Size";
-				$varImageSizeX = $provider . "ImageSizeX";
-				$varImageSizeY = $provider . "ImageSizeY";
+            $varActive = $provider . "Active";
+            if (isset($this->config->$varActive) && $this->config->$varActive) {
+                $widget = Widget::Create($login, false);
 
-				$widget->setPosition($this->config->$varX, $this->config->$varY, -60);
-				$action = self::$GotoTs;
-				if ($provider == "mumble")
-					$action = self::$GotoMumble;
+                $varX = $provider . "X";
+                $varY = $provider . "Y";
+                $varImageUrl = $provider . "ImageUrl";
+                $varImageFocusUrl = $provider . "ImageFocusUrl";
+                $varUrl = "";
+                $varSize = $provider . "Size";
+                $varImageSizeX = $provider . "ImageSizeX";
+                $varImageSizeY = $provider . "ImageSizeY";
 
-				$widget->setImage($this->config->$varImageUrl, $this->config->$varImageFocusUrl, $action);
-				$widget->setImageSize($this->config->$varImageSizeX, $this->config->$varImageSizeY, $this->config->$varSize);
-				$widget->setPositionX($this->config->$varX);
-				$widget->setPositionY($this->config->$varY);
-				$widget->show();
-			}
-		}
-	}
+                $widget->setPosition($this->config->$varX, $this->config->$varY, -60);
+                $action = self::$GotoTs;
+                if ($provider == "mumble")
+                    $action = self::$GotoMumble;
 
-	public function getNick($login)
-	{
-		$player = $this->storage->getPlayerObject($login);
-		$nick = Formatting::stripStyles($player->nickName);
-		return $nick;
-		//return mb_convert_encoding($nick, "latin-1", "UTF-8");
-	}
+                $widget->setImage($this->config->$varImageUrl, $this->config->$varImageFocusUrl, $action);
+                $widget->setImageSize($this->config->$varImageSizeX, $this->config->$varImageSizeY, $this->config->$varSize);
+                $widget->setPositionX($this->config->$varX);
+                $widget->setPositionY($this->config->$varY);
+                $widget->show();
+            }
+        }
+    }
 
-	public function gotoMumble($login)
-	{
-		$link = "mumble://" . rawurlencode($this->getNick($login)) . "@" . $this->config->mumbleHost . ":" . $this->config->mumblePort;
-		$this->connection->sendOpenLink($login, $link, 0);
-	}
+    public function getNick($login)
+    {
+        $player = $this->storage->getPlayerObject($login);
+        $nick = Formatting::stripStyles($player->nickName);
+        return $nick;
+        //return mb_convert_encoding($nick, "latin-1", "UTF-8");
+    }
 
-	public function gotoTs($login)
-	{
-		$link = "ts3server://" . $this->config->tsHost . "?port=" . $this->config->tsPort . "&nickname=" . rawurlencode($this->getNick($login));
-		$this->connection->sendOpenLink($login, $link, 0);
-	}
+    public function gotoMumble($login)
+    {
+        $link = "mumble://" . rawurlencode($this->getNick($login)) . "@" . $this->config->mumbleHost . ":" . $this->config->mumblePort;
+        $this->connection->sendOpenLink($login, $link, 0);
+    }
 
-	public function exp_onUnload()
-	{
-		Widget::EraseAll();
-		self::$GotoMumble = -1;
-		self::$GotoTs = -1;
-		
-		parent::exp_onUnload();
-	}
+    public function gotoTs($login)
+    {
+        $link = "ts3server://" . $this->config->tsHost . "?port=" . $this->config->tsPort . "&nickname=" . rawurlencode($this->getNick($login));
+        $this->connection->sendOpenLink($login, $link, 0);
+    }
+
+    public function exp_onUnload()
+    {
+        Widget::EraseAll();
+        self::$GotoMumble = -1;
+        self::$GotoTs = -1;
+
+        parent::exp_onUnload();
+    }
 
 }

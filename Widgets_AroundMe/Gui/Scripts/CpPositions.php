@@ -28,9 +28,9 @@ use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts\CommonScript;
 class CpPositions extends CommonScript
 {
 
-	function __construct()
-	{
-		parent::__construct("Widgets_AroundMe/Gui/Scripts/CpPositions");
-	}
+    function __construct()
+    {
+        parent::__construct("Widgets_AroundMe/Gui/Scripts/CpPositions");
+    }
 
 }

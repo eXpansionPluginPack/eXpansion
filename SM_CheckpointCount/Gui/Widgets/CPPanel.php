@@ -9,59 +9,59 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 class CPPanel extends Widget
 {
 
-	private $label;
+    private $label;
 
-	private $cplabel;
+    private $cplabel;
 
-	private $bg;
+    private $bg;
 
-	protected function exp_onBeginConstruct()
-	{
-		$this->setName("Checkpoint counter (storm)");
-	}
+    protected function exp_onBeginConstruct()
+    {
+        $this->setName("Checkpoint counter (storm)");
+    }
 
-	protected function exp_onEndConstruct()
-	{
+    protected function exp_onEndConstruct()
+    {
 
-		$this->bg = new \ManiaLib\Gui\Elements\Quad(30, 10);
-		$this->bg->setStyle("EnergyBar");
-		$this->bg->setSubStyle("EnergyBar");
-		$this->addComponent($this->bg);
-		/*
-		  $this->cplabel = new DicoLabel();
-		  $this->cplabel->setText(exp_getMessage('Checkpoints'));
-		  $this->cplabel->setAlign("center", "top");
-		  $this->addComponent($this->cplabel); */
+        $this->bg = new \ManiaLib\Gui\Elements\Quad(30, 10);
+        $this->bg->setStyle("EnergyBar");
+        $this->bg->setSubStyle("EnergyBar");
+        $this->addComponent($this->bg);
+        /*
+          $this->cplabel = new DicoLabel();
+          $this->cplabel->setText(exp_getMessage('Checkpoints'));
+          $this->cplabel->setAlign("center", "top");
+          $this->addComponent($this->cplabel); */
 
-		$this->label = new Label(16, 4);
-		$this->label->setAlign("center", "top");
-		$this->label->setStyle("TextRaceMessageBig");
-		$this->label->setTextSize(2);
-		$this->addComponent($this->label);
-	}
+        $this->label = new Label(16, 4);
+        $this->label->setAlign("center", "top");
+        $this->label->setStyle("TextRaceMessageBig");
+        $this->label->setTextSize(2);
+        $this->addComponent($this->label);
+    }
 
-	function onResize($oldX, $oldY)
-	{
-		parent::onResize($oldX, $oldY);
-		//$this->cplabel->setPosition(($this->sizeX / 2), -1);
-		$this->label->setPosition(($this->sizeX / 2), -1.5);
-		$this->bg->setSize($this->sizeX, $this->sizeY);
-	}
+    function onResize($oldX, $oldY)
+    {
+        parent::onResize($oldX, $oldY);
+        //$this->cplabel->setPosition(($this->sizeX / 2), -1);
+        $this->label->setPosition(($this->sizeX / 2), -1.5);
+        $this->bg->setSize($this->sizeX, $this->sizeY);
+    }
 
-	/**
-	 * SetText(string $text)
-	 * Sets the text used in the widget
-	 * @param string $text
-	 */
-	public function setText($text)
-	{
-		$this->label->setText($text);
-	}
+    /**
+     * SetText(string $text)
+     * Sets the text used in the widget
+     * @param string $text
+     */
+    public function setText($text)
+    {
+        $this->label->setText($text);
+    }
 
-	function destroy()
-	{
-		parent::destroy();
-	}
+    function destroy()
+    {
+        parent::destroy();
+    }
 
 }
 

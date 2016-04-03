@@ -5,7 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Gui\Controls;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use \ManiaLib\Utils\Formatting;
 
-class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     private $sendButton;
     private $login;
@@ -13,7 +14,8 @@ class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control {
     private $sendAction;
     private $frame;
 
-    function __construct($indexNumber, \ManiaLive\Data\Player $player, $callback, $text) {
+    function __construct($indexNumber, \ManiaLive\Data\Player $player, $callback, $text)
+    {
         $sizeX = 60;
         $sizeY = 6;
         $this->player = $player;
@@ -68,16 +70,19 @@ class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY) {
+    protected function onResize($oldX, $oldY)
+    {
 
     }
 
-    function onDraw() {
+    function onDraw()
+    {
 
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy() {
+    function destroy()
+    {
 
     }
 
@@ -85,15 +90,18 @@ class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control {
      * custom function to remove contents.
      */
 
-    function erase() {
-	$this->sendButton->destroy();
+    function erase()
+    {
+        $this->sendButton->destroy();
         parent::destroy();
     }
 
-    function __destruct() {
+    function __destruct()
+    {
         //       \ManiaLive\Gui\ActionHandler::getInstance()->removeAction($this->chooseNextMap);
     }
 
 }
+
 ?>
 

@@ -15,9 +15,9 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
         parent::exp_onBeginConstruct();
         $this->setName("Dedimania Panel");
         $this->timeScript->setParam("acceptMinCp", 1);
-		$this->timeScript->setParam('varName', 'DediTime1');
-		$this->timeScript->setParam("acceptMaxServerRank",  Connection::$serverMaxRank);
-		$this->bg->setAction(\ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAbstract::$actionOpenRecs);
+        $this->timeScript->setParam('varName', 'DediTime1');
+        $this->timeScript->setParam("acceptMaxServerRank", Connection::$serverMaxRank);
+        $this->bg->setAction(\ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAbstract::$actionOpenRecs);
     }
 
     function update()

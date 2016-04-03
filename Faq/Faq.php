@@ -9,17 +9,19 @@ use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWidget;
 use ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWindow;
 
-class Faq extends ExpPlugin {
+class Faq extends ExpPlugin
+{
 
     private $msg_admin_redirect, $msg_admin_info;
     public static $availableLanguages = array();
 
-    public function exp_onLoad() {
+    public function exp_onLoad()
+    {
         $this->enableDedicatedEvents();
         $this->msg_admin_redirect = exp_getMessage('Notice: a help page is displayed by an admin!');
         $this->msg_admin_info = exp_getMessage('Notice: Displaying a help page "%1$s" to "%2$s"');
         $this->setPublicMethod("showFaq");
-                
+
         $langs = new DirectoryIterator(__DIR__ . DIRECTORY_SEPARATOR . "Topics");
 
         foreach ($langs as $lang) {
@@ -32,22 +34,24 @@ class Faq extends ExpPlugin {
             }
         }
     }
-    
-    public function exp_onReady() {
+
+    public function exp_onReady()
+    {
         $this->registerChatCommand("faq", "showFaq", 0, true);
         $this->registerChatCommand("faq", "showFaq", 1, true);
         $this->registerChatCommand("faq", "showFaq", 2, true);
         FaqWindow::$mainPlugin = $this;
         FaqWidget::$mainPlugin = $this;
-	
+
         /*$window = FaqWidget::Create(null);
         $window->setSize(7, 5);
 	$window->setDisableAxis("x");
         $window->show();*/
-      
+
     }
 
-    public function showFaq($login, $topic = "toc", $recipient = null) {
+    public function showFaq($login, $topic = "toc", $recipient = null)
+    {
 
         $showTo = $login;
         if (AdminGroups::hasPermission($login, Permission::game_settings)) {
@@ -67,9 +71,10 @@ class Faq extends ExpPlugin {
         $window->show();
     }
 
-    function exp_onUnload() {
-	FaqWindow::EraseAll();
-	FaqWidget::EraseAll();
+    function exp_onUnload()
+    {
+        FaqWindow::EraseAll();
+        FaqWidget::EraseAll();
     }
 }
 

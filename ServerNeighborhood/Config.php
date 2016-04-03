@@ -16,8 +16,7 @@ class Config extends \ManiaLib\Utils\Singleton
 
     public $servers = array('../oliverde8-server2_serverinfo.xml', '../oliverde8-server2_serverinfo.xml', '../oliverde8-server2_serverinfo.xml', '../oliverde8-server2_serverinfo.xml', '../oliverde8-server2_serverinfo.xml', '../oliverde8-server2_serverinfo.xml', '../oliverde8-server2_serverinfo.xml', '../oliverde8-server2_serverinfo.xml');
 
-	public $snwidget_isDockable = true;
-	
+    public $snwidget_isDockable = true;
 
 
 }

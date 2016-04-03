@@ -9,77 +9,79 @@ use ManiaLivePlugins\eXpansion\Core\Core;
  *
  * @author Petri
  */
-class Widget_Netstat extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget {
+class Widget_Netstat extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
+{
 
     private $frame;
 
     /** @var \ManiaLive\Data\Storage */
     private $storage;
 
-    protected function onConstruct() {
-	parent::onConstruct();
-	
-	// $this->setName("Network Status Widget");
-	
-	$this->storage = \ManiaLive\Data\Storage::getInstance();
+    protected function onConstruct()
+    {
+        parent::onConstruct();
 
-	$this->frame = new \ManiaLive\Gui\Controls\Frame(0, -3);
-	$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(60, 4));
-	$this->addComponent($this->frame);
+        // $this->setName("Network Status Widget");
 
-	$label = new \ManiaLib\Gui\Elements\Label(60);
-	$label->setAlign("left", "top");
-	$label->setPosX(42);
-	$label->setText('$fffNetwork Status');
-	
-	$this->addComponent($label);
+        $this->storage = \ManiaLive\Data\Storage::getInstance();
 
-	foreach (Core::$netStat as $login => $stat) {
-	    //if ($stat->updateLatency >= 160 || $stat->updatePeriod >= 400) {
-	    $frame = new \ManiaLive\Gui\Controls\Frame();
-	    $frame->setSize(120, 5);
-	    $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $this->frame = new \ManiaLive\Gui\Controls\Frame(0, -3);
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(60, 4));
+        $this->addComponent($this->frame);
 
-	    $player = new \ManiaLib\Gui\Elements\Label(35, 6);
-	    if (isset($this->storage->players[$login])) {
-		$player->setText($this->storage->players[$login]->nickName);
-	    } else {
-		$player->setText($login);
-	    }
-	    $frame->addComponent($player);
+        $label = new \ManiaLib\Gui\Elements\Label(60);
+        $label->setAlign("left", "top");
+        $label->setPosX(42);
+        $label->setText('$fffNetwork Status');
 
-	    $status = new \ManiaLib\Gui\Elements\Label(16, 6);
-	    $color = '$f00';
-	    if ($stat->updateLatency < 300) {
-		$color = '$0f0';
-	    }
+        $this->addComponent($label);
 
-	    $status->setText($color . $stat->updateLatency . "ms");
-	    $frame->addComponent($status);
+        foreach (Core::$netStat as $login => $stat) {
+            //if ($stat->updateLatency >= 160 || $stat->updatePeriod >= 400) {
+            $frame = new \ManiaLive\Gui\Controls\Frame();
+            $frame->setSize(120, 5);
+            $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
-	    $status = new \ManiaLib\Gui\Elements\Label();
-	    $color = '$f00';
-	    if ($stat->updatePeriod < 600) {
-		$color = '$0f0';
-	    }
-	    $status->setText('$fffper: ' . $color . $stat->updatePeriod);
-	    $frame->addComponent($status);
+            $player = new \ManiaLib\Gui\Elements\Label(35, 6);
+            if (isset($this->storage->players[$login])) {
+                $player->setText($this->storage->players[$login]->nickName);
+            } else {
+                $player->setText($login);
+            }
+            $frame->addComponent($player);
 
-	    $this->frame->addComponent($frame);
+            $status = new \ManiaLib\Gui\Elements\Label(16, 6);
+            $color = '$f00';
+            if ($stat->updateLatency < 300) {
+                $color = '$0f0';
+            }
 
-	    $status = new \ManiaLib\Gui\Elements\Label(20, 6);
-	    $color = '$ff0';
-	    $status->setText('$fffact: ' . $color . $stat->latestNetworkActivity);
-	    $frame->addComponent($status);
+            $status->setText($color . $stat->updateLatency . "ms");
+            $frame->addComponent($status);
 
-	    $status = new \ManiaLib\Gui\Elements\Label(20, 6);
-	    $color = '$ff0';
-	    $status->setText('$fffloss: ' . $color . $stat->packetLossRate);
-	    $frame->addComponent($status);
+            $status = new \ManiaLib\Gui\Elements\Label();
+            $color = '$f00';
+            if ($stat->updatePeriod < 600) {
+                $color = '$0f0';
+            }
+            $status->setText('$fffper: ' . $color . $stat->updatePeriod);
+            $frame->addComponent($status);
+
+            $this->frame->addComponent($frame);
+
+            $status = new \ManiaLib\Gui\Elements\Label(20, 6);
+            $color = '$ff0';
+            $status->setText('$fffact: ' . $color . $stat->latestNetworkActivity);
+            $frame->addComponent($status);
+
+            $status = new \ManiaLib\Gui\Elements\Label(20, 6);
+            $color = '$ff0';
+            $status->setText('$fffloss: ' . $color . $stat->packetLossRate);
+            $frame->addComponent($status);
 
 
-	    //  }
-	}
+            //  }
+        }
     }
 
 }

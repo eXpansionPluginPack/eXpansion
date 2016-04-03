@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_EndRankings\Gui\Controls;
 
-class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     protected $bg;
     protected $nick;
@@ -10,7 +11,8 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
     protected $time;
     protected $frame;
 
-    function __construct($index, $rank) {
+    function __construct($index, $rank)
+    {
         $sizeX = 36;
         $sizeY = 3;
 
@@ -33,7 +35,6 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->addComponent($this->label);
 
 
-
         $this->nick = new \ManiaLib\Gui\Elements\Label(30, 4);
         $this->nick->setPosition(8, 0);
         $this->nick->setAlign('left', 'center');
@@ -49,16 +50,19 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
         $this->sizeY = $sizeY;
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    {
         parent::onIsRemoved($target);
         $this->destroy();
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         $this->destroyComponents();
         parent::destroy();
     }
 
 }
+
 ?>
 

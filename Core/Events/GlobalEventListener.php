@@ -7,12 +7,14 @@ namespace ManiaLivePlugins\eXpansion\Core\Events;
  *
  * @author reaby
  */
-interface GlobalEventListener {
+interface GlobalEventListener
+{
 
     public function onMapRestart();
 
     public function onMapSkip();
-    
+
 }
+
 ?>
 

@@ -7,7 +7,8 @@ namespace ManiaLivePlugins\eXpansion\Gui\Structures;
  *
  * @author Reaby
  */
-class ConfigItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class ConfigItem extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     /** @var string $id */
     public $id;
@@ -16,14 +17,15 @@ class ConfigItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
     public $value = true;
 
     public $gameMode = "";
-    
-    public function __construct($id, $gamemode, $value) {
-	$this->id = $id;
-	$this->gameMode = $gamemode;
-	$outval = true;
-	if ($value == "0")
-	    $outval = false;
-	$this->value = $outval;
+
+    public function __construct($id, $gamemode, $value)
+    {
+        $this->id = $id;
+        $this->gameMode = $gamemode;
+        $outval = true;
+        if ($value == "0")
+            $outval = false;
+        $this->value = $outval;
     }
 
 }

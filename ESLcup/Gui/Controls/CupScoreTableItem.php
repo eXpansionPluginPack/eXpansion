@@ -13,11 +13,13 @@ namespace ManiaLivePlugins\eXpansion\ESLcup\Gui\Controls;
  *
  * @author Reaby
  */
-class CupScoreTableItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
+class CupScoreTableItem extends \ManiaLivePlugins\eXpansion\Gui\Control
+{
 
     protected $bg, $bgg, $quit, $rank, $frame, $nickname, $score, $finalist, $winner;
 
-    public function __construct($index, \ManiaLivePlugins\eXpansion\ESLcup\Structures\CupScore $score, $place) {
+    public function __construct($index, \ManiaLivePlugins\eXpansion\ESLcup\Structures\CupScore $score, $place)
+    {
         $this->setSize(80, 10);
 
         $this->bgg = new \ManiaLib\Gui\Elements\Quad(80, 10);
@@ -48,7 +50,6 @@ class CupScoreTableItem extends \ManiaLivePlugins\eXpansion\Gui\Control {
         }
 
         $this->addComponent($this->bg);
-
 
 
         $this->rank = new \ManiaLib\Gui\Elements\Label(10, 5);

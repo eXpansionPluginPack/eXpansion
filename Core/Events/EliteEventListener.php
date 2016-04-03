@@ -45,101 +45,101 @@ use ManiaLivePlugins\eXpansion\Core\Structures\JsonCallbacks\Score;
  */
 interface EliteEventListener
 {
-	/**
-	 * @param BeginMatch $beginMatch
-	 *
-	 * @return void
-	 */
-	public function elite_onBeginMatch(BeginMatch $beginMatch);
+    /**
+     * @param BeginMatch $beginMatch
+     *
+     * @return void
+     */
+    public function elite_onBeginMatch(BeginMatch $beginMatch);
 
-	/**
-	 * @param BeginMap $beginMap
-	 *
-	 * @return void
-	 */
-	public function elite_onBeginMap(BeginMap $beginMap);
+    /**
+     * @param BeginMap $beginMap
+     *
+     * @return void
+     */
+    public function elite_onBeginMap(BeginMap $beginMap);
 
-	/**
-	 * @param BeginWarmup $beginWarmup
-	 *
-	 * @return void
-	 */
-	public function elite_onBeginWarmup(BeginWarmup $beginWarmup);
+    /**
+     * @param BeginWarmup $beginWarmup
+     *
+     * @return void
+     */
+    public function elite_onBeginWarmup(BeginWarmup $beginWarmup);
 
-	/**
-	 * @param EndWarmup $endWarmup
-	 *
-	 * @return void
-	 */
-	public function elite_onEndWarmup(EndWarmup $endWarmup);
+    /**
+     * @param EndWarmup $endWarmup
+     *
+     * @return void
+     */
+    public function elite_onEndWarmup(EndWarmup $endWarmup);
 
-	/**
-	 * @param BeginTurn $beginTurn
-	 *
-	 * @return void
-	 */
-	public function elite_onBeginTurn(BeginTurn $beginTurn);
+    /**
+     * @param BeginTurn $beginTurn
+     *
+     * @return void
+     */
+    public function elite_onBeginTurn(BeginTurn $beginTurn);
 
-	/**
-	 * @param OnShoot $onShoot
-	 *
-	 * @return void
-	 */
-	public function elite_onShoot(OnShoot $onShoot);
+    /**
+     * @param OnShoot $onShoot
+     *
+     * @return void
+     */
+    public function elite_onShoot(OnShoot $onShoot);
 
-	/**
-	 * @param OnHit $onHit
-	 *
-	 * @return void
-	 */
-	public function elite_onHit(OnHit$onHit);
+    /**
+     * @param OnHit $onHit
+     *
+     * @return void
+     */
+    public function elite_onHit(OnHit $onHit);
 
-	/**
-	 * @param OnCapture $onCapture
-	 *
-	 * @return void
-	 */
-	public function elite_onCapture(OnCapture $onCapture);
+    /**
+     * @param OnCapture $onCapture
+     *
+     * @return void
+     */
+    public function elite_onCapture(OnCapture $onCapture);
 
-	/**
-	 * @param OnArmorEmpty $onArmorEmpty
-	 *
-	 * @return void
-	 */
-	public function elite_onArmoryEmpty(OnArmorEmpty $onArmorEmpty);
+    /**
+     * @param OnArmorEmpty $onArmorEmpty
+     *
+     * @return void
+     */
+    public function elite_onArmoryEmpty(OnArmorEmpty $onArmorEmpty);
 
-	/**
-	 * @param OnNearMiss $onNearMiss
-	 *
-	 * @return void
-	 */
-	public function elite_onNearMiss(OnNearMiss $onNearMiss);
+    /**
+     * @param OnNearMiss $onNearMiss
+     *
+     * @return void
+     */
+    public function elite_onNearMiss(OnNearMiss $onNearMiss);
 
-	/**
-	 * @param EndTurn $endTurn
-	 *
-	 * @return void
-	 */
-	public function elite_onEndTurn(EndTurn $endTurn);
+    /**
+     * @param EndTurn $endTurn
+     *
+     * @return void
+     */
+    public function elite_onEndTurn(EndTurn $endTurn);
 
-	/**
-	 * @param EndMatch $endMatch
-	 *
-	 * @return void
-	 */
-	public function elite_onEndMatch(EndMatch $endMatch);
+    /**
+     * @param EndMatch $endMatch
+     *
+     * @return void
+     */
+    public function elite_onEndMatch(EndMatch $endMatch);
 
-	/**
-	 * @param EndMap $endMap
-	 *
-	 * @return void
-	 */
-	public function elite_onEndMap(EndMap $endMap);
+    /**
+     * @param EndMap $endMap
+     *
+     * @return void
+     */
+    public function elite_onEndMap(EndMap $endMap);
 
-	/**
-	 * @param Score $score
-	 *
-	 * @return void
-	 */
-	public function elite_onScores(Score $score);
+    /**
+     * @param Score $score
+     *
+     * @return void
+     */
+    public function elite_onScores(Score $score);
 } 

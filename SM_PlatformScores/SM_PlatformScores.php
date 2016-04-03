@@ -32,80 +32,87 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
  *
  * @package ManiaLivePlugins\eXpansion\SM\PlatformScores
  */
-class SM_PlatformScores extends LocalBase {
+class SM_PlatformScores extends LocalBase
+{
 
-	private $lastCpNum = array();
-	private $cpScores = array();
+    private $lastCpNum = array();
+    private $cpScores = array();
 
-	public function exp_onLoad()
-	{
-		$this->enableScriptEvents("LibXmlRpc_OnWayPoint");
-	}
+    public function exp_onLoad()
+    {
+        $this->enableScriptEvents("LibXmlRpc_OnWayPoint");
+    }
 
-	public function exp_onReady()
-	{
-		parent::exp_onReady();
-	}
+    public function exp_onReady()
+    {
+        parent::exp_onReady();
+    }
 
-	public function LibXmlRpc_OnWayPoint(
-		$login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
-	)
-	{
-		if($time > 0){
-			if($isEndBlock){
-				$this->addRecord($login, $time, 0, $this->cpScores[$login]);
+    public function LibXmlRpc_OnWayPoint(
+        $login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
+    )
+    {
+        if ($time > 0) {
+            if ($isEndBlock) {
+                $this->addRecord($login, $time, 0, $this->cpScores[$login]);
 
-				$this->cpScores[$login] = array();
-			}else{
-				if(!isset($this->lastCpNum[$login]) || $this->lastCpNum[$login] < $cpIndex){
-					$this->cpScores[$login][$cpIndex] = $time;
-				}else{
-					//Respawned
-					$this->cpScores[$login] = array();
-				}
+                $this->cpScores[$login] = array();
+            } else {
+                if (!isset($this->lastCpNum[$login]) || $this->lastCpNum[$login] < $cpIndex) {
+                    $this->cpScores[$login][$cpIndex] = $time;
+                } else {
+                    //Respawned
+                    $this->cpScores[$login] = array();
+                }
 
-				$this->lastCpNum[$login] = $cpIndex;
-			}
-		}
-	}
+                $this->lastCpNum[$login] = $cpIndex;
+            }
+        }
+    }
 
-	public function onEndMatch($rankings, $winnerTeamOrMap)
-	{
-		foreach($this->cpScores as $login => $scores){
-			if(!empty($scores) && isset($this->lastCpNum[$login]) && isset($scores[$this->lastCpNum[$login]]))
-				$this->addRecord($login, $scores[$this->lastCpNum[$login]], 0, $scores);
-		}
+    public function onEndMatch($rankings, $winnerTeamOrMap)
+    {
+        foreach ($this->cpScores as $login => $scores) {
+            if (!empty($scores) && isset($this->lastCpNum[$login]) && isset($scores[$this->lastCpNum[$login]]))
+                $this->addRecord($login, $scores[$this->lastCpNum[$login]], 0, $scores);
+        }
 
-		parent::onEndMatch($rankings, $winnerTeamOrMap);
-	}
+        parent::onEndMatch($rankings, $winnerTeamOrMap);
+    }
 
 
-	protected  function getScoreType()
-	{
-		return self::SCORE_TYPE_SCORE;
-	}
+    protected function getScoreType()
+    {
+        return self::SCORE_TYPE_SCORE;
+    }
 
-	public function formatScore($score){
-		return $score;
-	}
+    public function formatScore($score)
+    {
+        return $score;
+    }
 
-	protected function isBetterTime($newTime, $oldTime){
-		return $newTime >= $oldTime;
-	}
+    protected function isBetterTime($newTime, $oldTime)
+    {
+        return $newTime >= $oldTime;
+    }
 
-	protected function secureBy($newTime, $oldTime){
-		return ($newTime - $oldTime).'points';
-	}
+    protected function secureBy($newTime, $oldTime)
+    {
+        return ($newTime - $oldTime) . 'points';
+    }
 
-	protected function getDbOrderCriteria(){
-		return '`record_score` DESC, `record_date` ASC ';
-	}
+    protected function getDbOrderCriteria()
+    {
+        return '`record_score` DESC, `record_date` ASC ';
+    }
 
-	public function getNbOfLaps(){
-		return 1;
-	}
+    public function getNbOfLaps()
+    {
+        return 1;
+    }
 
-	protected function array_sort($array, $on, $order = SORT_DESC){
-		return parent::array_sort($array, $on, $order);
-	}
+    protected function array_sort($array, $on, $order = SORT_DESC)
+    {
+        return parent::array_sort($array, $on, $order);
+    }
 }

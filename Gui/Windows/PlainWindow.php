@@ -10,9 +10,9 @@ namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 class PlainWindow extends \ManiaLive\Gui\Window
 {
 
-    
+
     protected $xml;
-    
+
     protected function onConstruct()
     {
         parent::onConstruct();

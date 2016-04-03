@@ -22,17 +22,17 @@ namespace ManiaLivePlugins\eXpansion\MXKarma\Structures;
 class MXVote extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
 {
 
-	public $login;
+    public $login;
 
-	public $nickName;
+    public $nickName;
 
-	public $vote;
+    public $vote;
 
-	public function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player, $vote)
-	{
-		$this->login = $player->login;
-		$this->nickName = $player->nickName;
-		$this->vote = intval($vote);
-	}
+    public function __construct(\Maniaplanet\DedicatedServer\Structures\Player $player, $vote)
+    {
+        $this->login = $player->login;
+        $this->nickName = $player->nickName;
+        $this->vote = intval($vote);
+    }
 
 }

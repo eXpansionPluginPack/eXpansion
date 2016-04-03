@@ -25,11 +25,12 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts;
 
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 
-class PlayerFinish extends CommonScript{
+class PlayerFinish extends CommonScript
+{
 
 
     function __construct()
     {
-	parent::__construct("Widgets_LocalRecords/Gui/Scripts/PlayerFinish");
+        parent::__construct("Widgets_LocalRecords/Gui/Scripts/PlayerFinish");
     }
 }

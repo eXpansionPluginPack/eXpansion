@@ -9,14 +9,16 @@ use ManiaLive\Utilities\Console;
  *
  * @author Reaby
  */
-class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     public static $mainPlugin;
     private $userLanguage = "en";
     protected $elements = array();
     protected $frame;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $this->setTitle("Frequently asked questions");
         $this->frame = new \ManiaLive\Gui\Controls\Frame(6, -4);
@@ -25,13 +27,15 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     }
 
 
-    public function setLanguage($language) {
+    public function setLanguage($language)
+    {
         $this->userLanguage = "en";
         if (in_array($language, \ManiaLivePlugins\eXpansion\Faq\Faq::$availableLanguages))
             $this->userLanguage = $language;
     }
 
-    public function setTopic($topic) {
+    public function setTopic($topic)
+    {
         $this->frame->clearComponents();
         foreach ($this->elements as $elem) {
             $elem->destroy();
@@ -40,9 +44,10 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->elements = array();
         try {
             if (strpos($topic, '../') !== false ||
-                    strpos($topic, "..\\") !== false ||
-                    strpos($topic, '/..') !== false ||
-                    strpos($topic, '\..') !== false) {
+                strpos($topic, "..\\") !== false ||
+                strpos($topic, '/..') !== false ||
+                strpos($topic, '\..') !== false
+            ) {
                 $topic = "toc";
             }
             $file = file_get_contents(dirname(dirname(__DIR__)) . "/Topics/" . $this->userLanguage . "/" . $topic . ".txt");
@@ -56,7 +61,8 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    public function parse($file) {
+    public function parse($file)
+    {
         $data = explode("\n", $file);
         $topic = true;
         $x = 0;

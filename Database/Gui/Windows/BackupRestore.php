@@ -9,7 +9,8 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
 use ManiaLive\Gui\ActionHandler;
 
-class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
+class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+{
 
     private $pager;
 
@@ -30,7 +31,8 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
     /** @var  \ManiaLive\Database\Connection */
     private $db;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
@@ -54,7 +56,8 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->mainFrame->addComponent($this->cancel);
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX, $this->sizeY - 8);
         $this->pager->setStretchContentX($this->sizeX);
@@ -63,14 +66,16 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
     }
 
-    function onShow() {
+    function onShow()
+    {
         $this->populateList();
     }
 
-    function populateList() {
+    function populateList()
+    {
 
         foreach ($this->items as $item)
-           $item->erase();
+            $item->erase();
         $this->pager->clearItems();
         $this->items = array();
 
@@ -89,11 +94,13 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    function init(\ManiaLive\Database\Connection $db) {
+    function init(\ManiaLive\Database\Connection $db)
+    {
         $this->db = $db;
     }
 
-    function write($string) {
+    function write($string)
+    {
         if ($this->fileHandler === false)
             return;
 
@@ -102,7 +109,8 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         }
     }
 
-    function getPath() {
+    function getPath()
+    {
         $path = $this->connection->GameDataDirectory();
         $path = dirname($path) . "/backup";
         if (!is_dir($path)) {
@@ -114,7 +122,8 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         return $path;
     }
 
-    function Backup($login, $inputboxes = "") {
+    function Backup($login, $inputboxes = "")
+    {
         if (empty($inputboxes['filename'])) {
             $this->connection->chatSendServerMessage("No backup filename given, canceling backup!", $login);
         }
@@ -153,14 +162,16 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->populateList();
         $this->RedrawAll();
     }
-    
-    /** @todo imlement restore from .sql file*/
-    function restoreFile($login, $file) {
-       $this->connection->chatSendServerMessage("Not implemented yet...");
-       
+
+    /** @todo imlement restore from .sql file */
+    function restoreFile($login, $file)
+    {
+        $this->connection->chatSendServerMessage("Not implemented yet...");
+
     }
 
-    function deleteFile($login, $file) {
+    function deleteFile($login, $file)
+    {
 
         unlink($file);
         $this->connection->chatSendServerMessage("Deleted.", $login);
@@ -168,13 +179,15 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window {
         $this->RedrawAll();
     }
 
-    function Cancel($login) {
+    function Cancel($login)
+    {
         $this->erase($login);
     }
 
-    function destroy() {
+    function destroy()
+    {
         foreach ($this->items as $item)
-           $item->erase();
+            $item->erase();
 
         $this->db = null;
         $this->items = array();

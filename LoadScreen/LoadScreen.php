@@ -53,7 +53,7 @@ class LoadScreen extends ExpPlugin
         Dispatcher::register(Event::getClass(), $this, Event::ON_END_MATCH, 10);
 
         $this->dataAccess = DataAccess::getInstance();
-        $config           = Config::getInstance();
+        $config = Config::getInstance();
         foreach ($config->screens as $url) {
             Gui::preloadImage($url);
         }
@@ -79,16 +79,15 @@ class LoadScreen extends ExpPlugin
         $delay = intval(Config::getInstance()->screensDelay);
 
 
-
         if ($this->isActive == true && time() > ($this->startTime + $delay)) {
 
-            $url             = "";
-            $this->isActive  = false;
+            $url = "";
+            $this->isActive = false;
             $this->startTime = 0;
-            $config          = Config::getInstance();
+            $config = Config::getInstance();
             if (count($config->screens) > 0) {
                 $index = mt_rand(0, (count($config->screens) - 1));
-                $url   = $config->screens[$index];
+                $url = $config->screens[$index];
             }
 
             if (Config::getInstance()->screensMx) if (!empty($this->mxImage)) $url = $this->mxImage;
@@ -103,7 +102,7 @@ class LoadScreen extends ExpPlugin
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
         $this->startTime = time();
-        $this->isActive  = true;
+        $this->isActive = true;
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation)
@@ -129,10 +128,10 @@ class LoadScreen extends ExpPlugin
 
         switch ($this->expStorage->simpleEnviTitle) {
             case "SM":
-                $query = 'http://sm.mania-exchange.com/api/tracks/get_track_info/uid/'.$uid;
+                $query = 'http://sm.mania-exchange.com/api/tracks/get_track_info/uid/' . $uid;
                 break;
             case "TM":
-                $query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/uid/'.$uid;
+                $query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/uid/' . $uid;
                 break;
         }
 
@@ -148,24 +147,24 @@ class LoadScreen extends ExpPlugin
                 $this->mxImage = "";
                 return;
             }
-            $map  = MxMap::fromArray($json);
+            $map = MxMap::fromArray($json);
             $game = strtolower($this->expStorage->simpleEnviTitle);
 
             if ($map->hasScreenshot) {
-                $this->mxImage = "http://".$game.".mania-exchange.com/tracks/screenshot/normal/".$map->trackID."?.png";
+                $this->mxImage = "http://" . $game . ".mania-exchange.com/tracks/screenshot/normal/" . $map->trackID . "?.png";
                 Gui::preloadImage($this->mxImage);
                 Gui::preloadUpdate();
             } else {
                 $this->mxImage = "";
             }
         } catch (Exception $e) {
-            Helper::logError("LoadScreen error: ".$e->getMessage()." at line ".$e->getLine());
+            Helper::logError("LoadScreen error: " . $e->getMessage() . " at line " . $e->getLine());
             $this->mxImage = "";
         }
     }
 
     public function exp_onUnload()
     {
-          Dispatcher::unregister(Event::getClass(), $this, Event::ON_END_MATCH);
+        Dispatcher::unregister(Event::getClass(), $this, Event::ON_END_MATCH);
     }
 }

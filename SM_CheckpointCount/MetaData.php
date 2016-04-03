@@ -10,14 +10,14 @@ namespace ManiaLivePlugins\eXpansion\SM_CheckpointCount;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
 
-		$this->setName("Widget: Checkpoint Counter");
-		$this->setDescription("Checkpoint counter for storm");
-		$this->setGroups(array('Widgets', 'Records'));
-		$this->addTitleSupport("SM");
-	}
+        $this->setName("Widget: Checkpoint Counter");
+        $this->setDescription("Checkpoint counter for storm");
+        $this->setGroups(array('Widgets', 'Records'));
+        $this->addTitleSupport("SM");
+    }
 
 }

@@ -7,11 +7,13 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
  *
  * @author Reaby
  */
-class Draggable extends Script {
-    
-    function __construct() {
+class Draggable extends Script
+{
+
+    function __construct()
+    {
         parent::__construct("Gui/Script_libraries/Draggable");
-    }   
+    }
 }
 
 ?>

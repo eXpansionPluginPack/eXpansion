@@ -22,10 +22,14 @@ namespace ManiaLivePlugins\eXpansion\Irc\Classes;
  * @author Petri
  */
 
-interface IrcListener {
-              
-    function irc_onPublicChat($connection, $channel, $host, $message);    
+interface IrcListener
+{
+
+    function irc_onPublicChat($connection, $channel, $host, $message);
+
     function irc_onPrivateMessage($connection, $host, $message);
+
     function irc_onConnect($connection);
-    function irc_onDisconnect();    
+
+    function irc_onDisconnect();
 }

@@ -27,93 +27,95 @@ namespace ManiaLivePlugins\eXpansion\Database\Structures;
  *
  * @package ManiaLivePlugins\eXpansion\Database\Structures
  */
-class DbPlayer {
+class DbPlayer
+{
 
-	/**
-	 * @var String
-	 */
-	private $login;
+    /**
+     * @var String
+     */
+    private $login;
 
-	/**
-	 * @var int
-	 */
-	private $playerUpdated;
+    /**
+     * @var int
+     */
+    private $playerUpdated;
 
-	/**
-	 * @var int
-	 */
-	private $playerWins;
+    /**
+     * @var int
+     */
+    private $playerWins;
 
-	/**
-	 * @var int
-	 */
-	private $lastPlayTime;
+    /**
+     * @var int
+     */
+    private $lastPlayTime;
 
-	/**
-	 * @var int
-	 */
-	private $objectCreationTime;
+    /**
+     * @var int
+     */
+    private $objectCreationTime;
 
-	/**
-	 * @param $login
-	 * @param $lastPlayTime
-	 * @param $playerUpdated
-	 * @param $playerWins
-	 */
-	function __construct($login, $lastPlayTime, $playerUpdated, $playerWins)
-	{
-		$this->lastPlayTime = $lastPlayTime;
-		$this->login = $login;
-		$this->playerUpdated = $playerUpdated;
-		$this->playerWins = $playerWins;
+    /**
+     * @param $login
+     * @param $lastPlayTime
+     * @param $playerUpdated
+     * @param $playerWins
+     */
+    function __construct($login, $lastPlayTime, $playerUpdated, $playerWins)
+    {
+        $this->lastPlayTime = $lastPlayTime;
+        $this->login = $login;
+        $this->playerUpdated = $playerUpdated;
+        $this->playerWins = $playerWins;
 
-		$this->objectCreationTime = time();
-	}
+        $this->objectCreationTime = time();
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getLastPlayTime()
-	{
-		return $this->lastPlayTime;
-	}
+    /**
+     * @return int
+     */
+    public function getLastPlayTime()
+    {
+        return $this->lastPlayTime;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getPlayTime(){
-		return (time() - $this->objectCreationTime) + $this->lastPlayTime;
-	}
+    /**
+     * @return int
+     */
+    public function getPlayTime()
+    {
+        return (time() - $this->objectCreationTime) + $this->lastPlayTime;
+    }
 
-	/**
-	 * @return String
-	 */
-	public function getLogin()
-	{
-		return $this->login;
-	}
+    /**
+     * @return String
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getPlayerUpdated()
-	{
-		return $this->playerUpdated;
-	}
+    /**
+     * @return int
+     */
+    public function getPlayerUpdated()
+    {
+        return $this->playerUpdated;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getPlayerWins()
-	{
-		return $this->playerWins;
-	}
+    /**
+     * @return int
+     */
+    public function getPlayerWins()
+    {
+        return $this->playerWins;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getObjectCreationTime()
-	{
-		return $this->objectCreationTime;
-	}
+    /**
+     * @return int
+     */
+    public function getObjectCreationTime()
+    {
+        return $this->objectCreationTime;
+    }
 }

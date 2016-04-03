@@ -42,7 +42,7 @@ class AutoQueue extends ExpPlugin
         $this->enableDedicatedEvents();
         $this->queue = new Queue();
 
-        $ah                = ActionHandler::getInstance();
+        $ah = ActionHandler::getInstance();
         self::$enterAction = $ah->createAction(array($this, "enterQueue"));
         self::$leaveAction = $ah->createAction(array($this, "leaveQueue"));
 
@@ -69,7 +69,7 @@ class AutoQueue extends ExpPlugin
         if ($this->storage->serverStatus->code != Status::PLAY) return;
 
         $player = PlayerInfo::fromArray($info);
-        $login  = $player->login;
+        $login = $player->login;
 
         if (in_array($login, $this->queue->getLogins())) return;
 
@@ -80,7 +80,7 @@ class AutoQueue extends ExpPlugin
             try {
                 $this->connection->forceSpectator($login, 1);
             } catch (\Exception $ex) {
-                
+
             }
             if ($player->hasPlayerSlot) {
                 try {
@@ -141,7 +141,8 @@ class AutoQueue extends ExpPlugin
     public function admRemoveQueue($login, $target)
     {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login,
-                \ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin)) {
+            \ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin)
+        ) {
             if (in_array($target, $this->queue->getLogins())) {
                 $this->queue->remove($target);
                 $this->exp_chatSendServerMessage(exp_getMessage("Admin has removed you from queue!", $target));
@@ -174,14 +175,14 @@ class AutoQueue extends ExpPlugin
 
     public function exp_onUnload()
     {
-        $ah                = ActionHandler::getInstance();
+        $ah = ActionHandler::getInstance();
         $ah->deleteAction(self::$enterAction);
         $ah->deleteAction(self::$leaveAction);
         self::$enterAction = null;
         self::$leaveAction = null;
         EnterQueueWidget::EraseAll();
         QueueList::EraseAll();
-        $this->queue       = null;
+        $this->queue = null;
     }
 
     public function widgetSyncList()

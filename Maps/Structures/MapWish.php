@@ -7,7 +7,8 @@ namespace ManiaLivePlugins\eXpansion\Maps\Structures;
  *
  * @author Reaby
  */
-class MapWish {
+class MapWish
+{
 
     /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     public $map;
@@ -24,7 +25,8 @@ class MapWish {
      * @param \Maniaplanet\DedicatedServer\Structures\Map $map
      * @param bool $isTemp
      */
-    public function __construct(\ManiaLive\Data\Player $player, \Maniaplanet\DedicatedServer\Structures\Map $map, $isTemp = false) {
+    public function __construct(\ManiaLive\Data\Player $player, \Maniaplanet\DedicatedServer\Structures\Map $map, $isTemp = false)
+    {
         $this->map = $map;
         $this->player = $player;
         $this->isTemp = $isTemp;

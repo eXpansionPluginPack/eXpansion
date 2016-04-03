@@ -18,14 +18,14 @@ if ($lang == "*") {
 $dirs = scandir(".");
 foreach ($dirs as $dir) {
     if ($lang == "*") {
-	$options  = array();
-	$zip->addGlob($dir . '/messages/*.txt', GLOB_BRACE, $options);
+        $options = array();
+        $zip->addGlob($dir . '/messages/*.txt', GLOB_BRACE, $options);
     } else {
-	$localName = $dir . '/messages/' . $lang . '.txt';
-	if (file_exists($localName)) {
-	    echo $localName . "\n";
-	    $zip->addFile($localName, $localName);
-	}
+        $localName = $dir . '/messages/' . $lang . '.txt';
+        if (file_exists($localName)) {
+            echo $localName . "\n";
+            $zip->addFile($localName, $localName);
+        }
     }
 }
 

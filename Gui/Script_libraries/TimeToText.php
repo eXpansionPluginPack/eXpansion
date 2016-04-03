@@ -8,11 +8,13 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
  *
  * @author De Cramer Oliver
  */
-class TimeToText extends Script {
-    
-    function __construct() {
+class TimeToText extends Script
+{
+
+    function __construct()
+    {
         parent::__construct("Gui/Script_libraries/TimeToText");
-    }   
+    }
 }
 
 ?>

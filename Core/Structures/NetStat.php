@@ -7,7 +7,8 @@ namespace ManiaLivePlugins\eXpansion\Core\Structures;
  *
  * @author Petri
  */
-class NetStat extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
+class NetStat extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+{
     public $login;
     public $updateLatency;
     public $updatePeriod;
@@ -15,13 +16,14 @@ class NetStat extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure 
     public $latestNetworkActivity;
     public $ipAddress;
 
-    public function __construct(\Maniaplanet\DedicatedServer\Structures\PlayerNetInfo $player) {
-	$this->login = $player->login;
-	$this->updateLatency = $player->stateUpdateLatency;
-	$this->updatePeriod = $player->stateUpdatePeriod;
-	$this->packetLossRate = $player->packetLossRate;
-	$this->latestNetworkActivity = $player->latestNetworkActivity;
-	$this->ipAddress = $player->iPAddress;
+    public function __construct(\Maniaplanet\DedicatedServer\Structures\PlayerNetInfo $player)
+    {
+        $this->login = $player->login;
+        $this->updateLatency = $player->stateUpdateLatency;
+        $this->updatePeriod = $player->stateUpdatePeriod;
+        $this->packetLossRate = $player->packetLossRate;
+        $this->latestNetworkActivity = $player->latestNetworkActivity;
+        $this->ipAddress = $player->iPAddress;
     }
 
 

@@ -5,9 +5,10 @@ namespace ManiaLivePlugins\eXpansion\ServerNeighborhood;
 use \Maniaplanet\DedicatedServer\Connection;
 use \ManiaLive\Utilities\Time as TmTime;
 
-class Server {
+class Server
+{
 
-    
+
     private $server_titleId;
     private $server_login;
     private $server_path;
@@ -18,25 +19,28 @@ class Server {
     private $server_ladder_min;
 
     private $server_oldOnline;
-    
+
     private $inDb = false;
-    
-    function __construct() {
-        $this->server_oldOnline = time()-10;
+
+    function __construct()
+    {
+        $this->server_oldOnline = time() - 10;
     }
 
-    public function create_fromConnection(Connection $connection, \ManiaLive\Data\Storage $storage) {
+    public function create_fromConnection(Connection $connection, \ManiaLive\Data\Storage $storage)
+    {
 
         $this->server_titleId = $connection->getVersion()->titleId;
         $this->server_login = $storage->serverLogin;
         $this->server_path = $connection->getDetailedPlayerInfo($storage->serverLogin)->path;
 
         $ladders = $connection->getLadderServerLimits();
-        $this->server_ladder_min = $ladders->ladderServerLimitMin/1000;
-        $this->server_ladder_max = $ladders->ladderServerLimitMax/1000;
+        $this->server_ladder_min = $ladders->ladderServerLimitMin / 1000;
+        $this->server_ladder_max = $ladders->ladderServerLimitMax / 1000;
     }
 
-    public function createXML(Connection $connection, \ManiaLive\Data\Storage $storage) {
+    public function createXML(Connection $connection, \ManiaLive\Data\Storage $storage)
+    {
 
         $serverName = $storage->server->name;
         $serverName = \ManiaLib\Utils\Formatting::stripCodes($serverName, 'l');
@@ -52,8 +56,8 @@ class Server {
         $xml .= '  <private>' . ($storage->server->password == "" ? 'false' : 'true') . '</private>' . "\n";
         $xml .= '  <game>MP</game>' . "\n";
         $xml .= '  <gamemode>' . $storage->gameInfos->gameMode . '</gamemode>' . "\n";
-        $xml .= '  <title>'.$this->server_titleId.'</title>' . "\n";
-        $xml .= '  <packmask>'.$this->server_titleId.'</packmask>' . "\n";
+        $xml .= '  <title>' . $this->server_titleId . '</title>' . "\n";
+        $xml .= '  <packmask>' . $this->server_titleId . '</packmask>' . "\n";
         $xml .= '  <players>' . "\n";
         $xml .= '   <current>' . sizeof($storage->players) . '</current>' . "\n";
         $xml .= '   <maximum>' . $storage->server->currentMaxPlayers . '</maximum>' . "\n";
@@ -63,8 +67,8 @@ class Server {
         $xml .= '   <maximum>' . $storage->server->currentMaxSpectators . '</maximum>' . "\n";
         $xml .= '  </spectators>' . "\n";
         $xml .= '  <ladder>' . "\n";
-        $xml .= '   <minimum>'.$this->server_ladder_min.'</minimum>' . "\n";
-        $xml .= '   <maximum>'.$this->server_ladder_max.'</maximum>' . "\n";
+        $xml .= '   <minimum>' . $this->server_ladder_min . '</minimum>' . "\n";
+        $xml .= '   <maximum>' . $this->server_ladder_max . '</maximum>' . "\n";
         $xml .= '  </ladder>' . "\n";
         $xml .= ' </server>' . "\n";
         $xml .= ' <current>' . "\n";
@@ -111,7 +115,8 @@ class Server {
         return $xml;
     }
 
-    public function saveToDb(\ManiaLive\Database\Connection $db, \Connection $connection, \ManiaLive\Data\Storage $storage) {
+    public function saveToDb(\ManiaLive\Database\Connection $db, \Connection $connection, \ManiaLive\Data\Storage $storage)
+    {
 
         $data = $this->createXML($connection, $storage);
 
@@ -135,9 +140,10 @@ class Server {
                     WHERE server_login = ' . $db->quote($storage->serverLogin) . '';
         $db->query($sql);
     }
-   
 
-    private function removespecials($text) {
+
+    private function removespecials($text)
+    {
         $text = str_ireplace('$S', '', $text);        // Remove $S (case-insensitive)
         $text = str_replace('&', '&amp;', $text);     // Convert &
         $text = str_replace('"', '&quot;', $text); // Convert "
@@ -146,29 +152,32 @@ class Server {
         $text = str_replace('<', '&lt;', $text);      // Convert <
         return $text;
     }
-    
-    public function setServer_data($server_data) {
+
+    public function setServer_data($server_data)
+    {
         $this->server_data = $server_data;
-        $this->server_isOnline = (($this->server_oldOnline < (int)$this->server_data->server->last_modified) 
-                || $this->server_data->server->last_modified + 3600 > time());
+        $this->server_isOnline = (($this->server_oldOnline < (int)$this->server_data->server->last_modified)
+            || $this->server_data->server->last_modified + 3600 > time());
         $this->server_oldOnline = (int)$this->server_data->server->last_modified;
-        
-        if(isset($this->server_data->server->packmask) && !isset($this->server_data->server->title)){
+
+        if (isset($this->server_data->server->packmask) && !isset($this->server_data->server->title)) {
             $this->server_data->server->title = $this->server_data->server->packmask;
             $a = $this->server_data->server->packmask;
-            if (strpos($a,'TM') === false && strpos($a,'SM') === false && strpos($a,'QM') === false) {
+            if (strpos($a, 'TM') === false && strpos($a, 'SM') === false && strpos($a, 'QM') === false) {
                 $a = strtolower($a);
                 $a[0] = strtoupper($a[0]);
-                $this->server_data->server->title = 'TM'.$a;
+                $this->server_data->server->title = 'TM' . $a;
             }
         }
     }
-    
-    public function getServer_data() {
+
+    public function getServer_data()
+    {
         return $this->server_data;
     }
 
-    public function isOnline(){
+    public function isOnline()
+    {
         return $this->server_isOnline;
     }
 }

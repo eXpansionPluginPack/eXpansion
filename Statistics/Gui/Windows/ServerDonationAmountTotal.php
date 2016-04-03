@@ -3,8 +3,8 @@
 namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
 
-
-class ServerDonationAmountTotal extends ServerDonationAmount {
+class ServerDonationAmountTotal extends ServerDonationAmount
+{
 }
 
 ?>

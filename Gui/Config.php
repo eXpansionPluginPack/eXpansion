@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
 
     public $logo = "http://reaby.kapsi.fi/ml/exp.png";
     public $windowTitleColor = "FFFE";

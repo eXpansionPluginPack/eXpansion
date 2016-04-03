@@ -13,13 +13,15 @@ namespace ManiaLivePlugins\eXpansion\Chat_Admin\Structures;
  *
  * @author Reaby
  */
-class ActionDuration extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
+class ActionDuration extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+{
 
     public $login;
     public $action;
     public $stamp;
 
-    public function __construct($login, $action, $duration) {
+    public function __construct($login, $action, $duration)
+    {
         $this->login = $login;
         $this->action = $action;
         $this->stamp = strtotime($duration);

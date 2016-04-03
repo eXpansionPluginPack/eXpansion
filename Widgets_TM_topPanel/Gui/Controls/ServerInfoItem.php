@@ -29,41 +29,41 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 class ServerInfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements ScriptedContainer
 {
 
-	protected $lbl_value, $lbl_title;
+    protected $lbl_value, $lbl_title;
 
-	public function __construct($sizeX, $sizeY = 9)
-	{
-		$this->lbl_title = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel($sizeX, 4-5);
-		$this->lbl_title->setPosition(0, -6.25);
-		$this->lbl_title->setTextSize(1);
-		$this->lbl_title->setAlign("center", "center");
-		$this->addComponent($this->lbl_title);
+    public function __construct($sizeX, $sizeY = 9)
+    {
+        $this->lbl_title = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel($sizeX, 4 - 5);
+        $this->lbl_title->setPosition(0, -6.25);
+        $this->lbl_title->setTextSize(1);
+        $this->lbl_title->setAlign("center", "center");
+        $this->addComponent($this->lbl_title);
 
 
-		$this->lbl_value = new \ManiaLib\Gui\Elements\Label($sizeX, 4.5);
-		$this->lbl_value->setStyle("TextRaceMessageBig");
-		$this->lbl_value->setTextSize(3);
-		$this->lbl_value->setPosition(0, -2.25);
-		$this->lbl_value->setAlign("center", "center");
-		$this->lbl_value->setId("serverName");
-		$this->addComponent($this->lbl_value);
-		
-		$this->setSize($sizeX, $sizeY);
+        $this->lbl_value = new \ManiaLib\Gui\Elements\Label($sizeX, 4.5);
+        $this->lbl_value->setStyle("TextRaceMessageBig");
+        $this->lbl_value->setTextSize(3);
+        $this->lbl_value->setPosition(0, -2.25);
+        $this->lbl_value->setAlign("center", "center");
+        $this->lbl_value->setId("serverName");
+        $this->addComponent($this->lbl_value);
 
-	}
+        $this->setSize($sizeX, $sizeY);
 
-	public function setText($title)
-	{
-		$this->lbl_title->setText($title);
-	}
+    }
 
-	/**
-	 * @return Script the script this container needs
-	 */
-	public function getScript()
-	{
-		$script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\Gui\Scripts\serverInfo");
-		return $script;
-	}
+    public function setText($title)
+    {
+        $this->lbl_title->setText($title);
+    }
+
+    /**
+     * @return Script the script this container needs
+     */
+    public function getScript()
+    {
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\Gui\Scripts\serverInfo");
+        return $script;
+    }
 
 }

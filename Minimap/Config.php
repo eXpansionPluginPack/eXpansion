@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Minimap;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
 
     public $width = 60;
     public $height = 60;

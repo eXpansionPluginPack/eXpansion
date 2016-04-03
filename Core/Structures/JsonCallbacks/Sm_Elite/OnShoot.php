@@ -4,7 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Core\Structures\JsonCallbacks;
 
 use ManiaLivePlugins\eXpansion\Core\Structures\RpcObject;
 
-class OnShoot extends RpcObject {
+class OnShoot extends RpcObject
+{
 
     /** @var integer */
     public $timestamp = 0;

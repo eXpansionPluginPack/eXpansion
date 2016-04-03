@@ -2,11 +2,12 @@
 
 namespace ManiaLivePlugins\eXpansion\LoadScreen;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
     public $screens = array();
-	public $screensDelay = 12;
-	public $screensMx = false;
-	
+    public $screensDelay = 12;
+    public $screensMx = false;
+
 }
 
 ?>

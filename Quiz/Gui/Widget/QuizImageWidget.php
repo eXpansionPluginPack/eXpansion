@@ -27,43 +27,45 @@ namespace ManiaLivePlugins\eXpansion\Quiz\Gui\Widget;
 class QuizImageWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-	private $quad, $title, $bg, $script;
+    private $quad, $title, $bg, $script;
 
-	protected function exp_onBeginConstruct()
-	{
-		$this->setName("Quiz Widget");
+    protected function exp_onBeginConstruct()
+    {
+        $this->setName("Quiz Widget");
 
-		$this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(24, 22);
-		$this->addComponent($this->bg);
+        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(24, 22);
+        $this->addComponent($this->bg);
 
-		$this->title = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle(24, 4);
-		$this->title->setText(exp_getMessage("Question"));
-		$this->addComponent($this->title);
+        $this->title = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle(24, 4);
+        $this->title->setText(exp_getMessage("Question"));
+        $this->addComponent($this->title);
 
-		$this->quad = new \ManiaLib\Gui\Elements\Quad(24, 16);
-		$this->quad->setId("image");
-		$this->quad->setScriptEvents();
-		$this->quad->setPosition(2, -4);
-		$this->addComponent($this->quad);
-		
-		$this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Quiz/Gui/Scripts");
-		$this->registerScript($this->script);
-		
-		
-	}
+        $this->quad = new \ManiaLib\Gui\Elements\Quad(24, 16);
+        $this->quad->setId("image");
+        $this->quad->setScriptEvents();
+        $this->quad->setPosition(2, -4);
+        $this->addComponent($this->quad);
 
-	protected function exp_onEndConstruct()
-	{
-		$this->setSize(24, 24);
-		$this->setPosition(-152, 80);
-	}
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Quiz/Gui/Scripts");
+        $this->registerScript($this->script);
 
-	public function setImage($url)
-	{
-		$this->quad->setImage($url, true);
-	}
-	public function setImageSize($width, $height) {
-		$this->quad->setSize($width, $height);
-	}
+
+    }
+
+    protected function exp_onEndConstruct()
+    {
+        $this->setSize(24, 24);
+        $this->setPosition(-152, 80);
+    }
+
+    public function setImage($url)
+    {
+        $this->quad->setImage($url, true);
+    }
+
+    public function setImageSize($width, $height)
+    {
+        $this->quad->setSize($width, $height);
+    }
 
 }

@@ -12,15 +12,15 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     protected $frame;
     protected $position;
     protected $top1;
-    protected $totalCp   = 0;
-    protected $lapRace   = false;
+    protected $totalCp = 0;
+    protected $lapRace = false;
     protected $nScript;
-    protected $target    = "";
+    protected $target = "";
     protected $reference = 1;
 
     /** @var \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record[] */
     public static $localrecords = array();
-    public static $dedirecords  = array();
+    public static $dedirecords = array();
 
     protected function exp_onBeginConstruct()
     {
@@ -83,7 +83,9 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     {
         $this->target = Gui::fixString($login);
     }
-    function setReference($val) {
+
+    function setReference($val)
+    {
         $this->reference = $val;
     }
 
@@ -98,19 +100,19 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->target);
 
         $checkpoints = "[ -1 ]";
-        $noRecs      = TRUE;
+        $noRecs = TRUE;
 
         // Add record information for MS usage.
         if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record) {
             // Normally all CP even last one should be in the object, but not in databases imported from XAseco where last CP is missing.
             if (sizeof($record->ScoreCheckpoints) == $this->totalCp) {
                 // Normal DB entry with all CP's.
-                $checkpoints = "[".implode(",", $record->ScoreCheckpoints)."]";
-                $noRecs      = FALSE;
+                $checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . "]";
+                $noRecs = FALSE;
                 // XAseco entry missing last CP. Add the record time as it is the the same value.
             } elseif (sizeof($record->ScoreCheckpoints) == $this->totalCp - 1) {
-                $checkpoints = "[".implode(",", $record->ScoreCheckpoints).", ".$record->time."]";
-                $noRecs      = FALSE;
+                $checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . ", " . $record->time . "]";
+                $noRecs = FALSE;
             }
         }
 
@@ -127,16 +129,16 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         }
 
         // Send data for the dedimania records.
-        $dediTime  = "";
+        $dediTime = "";
         $reference = $this->reference;
         if (sizeof(self::$dedirecords) > 0) {
             if (isset(self::$dedirecords[$reference - 1])) {
                 $record = self::$dedirecords[$reference - 1];
             } else {
-                $record    = self::$dedirecords[0];
+                $record = self::$dedirecords[0];
                 $reference = 1;
             }
-            $dediTime = '['.$record['Checks'].']';
+            $dediTime = '[' . $record['Checks'] . ']';
         } else {
             $dediTime = '[';
             for ($i = 0; $i < $this->totalCp; $i++) {
@@ -168,4 +170,5 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         parent::destroy();
     }
 }
+
 ?>

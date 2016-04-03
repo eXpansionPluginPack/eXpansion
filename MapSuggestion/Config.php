@@ -2,7 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\MapSuggestion;
 
-class Config extends \ManiaLib\Utils\Singleton {
+class Config extends \ManiaLib\Utils\Singleton
+{
 
 }
+
 ?>

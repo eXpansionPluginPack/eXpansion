@@ -2,9 +2,10 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_LocalScores\Gui\Widgets;
 
-class LocalPanel2 extends PlainPanel {
+class LocalPanel2 extends PlainPanel
+{
 
-  
+
 }
 
 ?>

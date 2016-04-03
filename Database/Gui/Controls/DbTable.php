@@ -14,68 +14,69 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 class DbTable extends Control
 {
 
-	private $bg;
+    private $bg;
 
-	private $label;
+    private $label;
 
-	private $inputbox;
+    private $inputbox;
 
-	private $frame;
+    private $frame;
 
-	public $checkBox = null;
+    public $checkBox = null;
 
-	public $tableName;
+    public $tableName;
 
-	public $type = null;
+    public $type = null;
 
-	/**
-	 * 
-	 * @param int $indexNumber
-	 * @param string $settingName
-	 * @param mixed $value
-	 * @param int $sizeX
-	 */
-	function __construct($indexNumber, $tableName, $sizeX)
-	{
-		$sizeY = 6;
-		$this->tableName = $tableName;
+    /**
+     *
+     * @param int $indexNumber
+     * @param string $settingName
+     * @param mixed $value
+     * @param int $sizeX
+     */
+    function __construct($indexNumber, $tableName, $sizeX)
+    {
+        $sizeY = 6;
+        $this->tableName = $tableName;
 
 
-		$this->bg = new ListBackGround($indexNumber, $sizeX - 8, $sizeY);
-		$this->addComponent($this->bg);
-		
-		$this->checkBox = new CheckboxScripted(4, 4, 1);
-		$this->addComponent($this->checkBox);
+        $this->bg = new ListBackGround($indexNumber, $sizeX - 8, $sizeY);
+        $this->addComponent($this->bg);
 
-		$this->label = new Label(120, 4);
-		$this->label->setPosX(6);
-		$this->label->setAlign('left', 'center');
-		$this->label->setText($tableName);
-		$this->label->setScale(0.8);
-		$this->addComponent($this->label);
+        $this->checkBox = new CheckboxScripted(4, 4, 1);
+        $this->addComponent($this->checkBox);
 
-		$this->sizeX = $sizeX;
-		$this->sizeY = $sizeY;
-		$this->setSize($sizeX, $sizeY);
-	}
+        $this->label = new Label(120, 4);
+        $this->label->setPosX(6);
+        $this->label->setAlign('left', 'center');
+        $this->label->setText($tableName);
+        $this->label->setScale(0.8);
+        $this->addComponent($this->label);
 
-	// manialive 3.1 override to do nothing.
-	function destroy()
-	{
+        $this->sizeX = $sizeX;
+        $this->sizeY = $sizeY;
+        $this->setSize($sizeX, $sizeY);
+    }
 
-	}
+    // manialive 3.1 override to do nothing.
+    function destroy()
+    {
 
-	/*
-	 * custom function to remove contents.
-	 */
+    }
 
-	function erase()
-	{
-		$this->checkBox->destroy();		
-		$this->destroyComponents();
-		parent::destroy();
-	}
+    /*
+     * custom function to remove contents.
+     */
+
+    function erase()
+    {
+        $this->checkBox->destroy();
+        $this->destroyComponents();
+        parent::destroy();
+    }
 
 }
+
 ?>
 

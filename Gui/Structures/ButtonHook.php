@@ -23,12 +23,13 @@
 namespace ManiaLivePlugins\eXpansion\Gui\Structures;
 
 
-class ButtonHook {
+class ButtonHook
+{
 
-	public $callback;
+    public $callback;
 
-	public $label;
+    public $label;
 
-	public $buttonColorize = '0d0';
+    public $buttonColorize = '0d0';
 
 } 

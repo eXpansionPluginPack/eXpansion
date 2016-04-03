@@ -5,11 +5,11 @@ namespace ManiaLivePlugins\eXpansion\InfoMessage;
 class Config extends \ManiaLib\Utils\Singleton
 {
 
-	public $infoMessages = Array();
+    public $infoMessages = Array();
 
-	public $infoMessageColor = '$fff';
+    public $infoMessageColor = '$fff';
 
-	public $infoInterval = "1:00";
+    public $infoInterval = "1:00";
 
 }
 

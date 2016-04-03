@@ -25,11 +25,12 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange\Structures;
 
 use ManiaLivePlugins\eXpansion\Gui\Structures\ButtonHook;
 
-class HookData {
+class HookData
+{
 
-	/**
-	 * @var ButtonHook[]
-	 */
-	public $data;
+    /**
+     * @var ButtonHook[]
+     */
+    public $data;
 
 } 

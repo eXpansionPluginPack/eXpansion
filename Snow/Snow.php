@@ -41,4 +41,5 @@ class Snow extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         parent::exp_onUnload();
     }
 }
+
 ?>

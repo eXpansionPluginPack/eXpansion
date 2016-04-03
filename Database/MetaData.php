@@ -16,21 +16,21 @@ namespace ManiaLivePlugins\eXpansion\Database;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-	public function onBeginLoad()
-	{
-		parent::onBeginLoad();
-		$this->setName("Core: Database");
-		$this->setDescription("Handles eXpansion database tables versions, backups, restores and repairs etc");
-		$this->setGroups(array('Core'));
+    public function onBeginLoad()
+    {
+        parent::onBeginLoad();
+        $this->setName("Core: Database");
+        $this->setDescription("Handles eXpansion database tables versions, backups, restores and repairs etc");
+        $this->setGroups(array('Core'));
 
-		$config = Config::getInstance();
+        $config = Config::getInstance();
 
-		$var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean("showWins", "Show player win statistics at podium ?", $config);
-		$var->setGroup("Chat Messages");
-		$var->setDefaultValue(true)
-			->setCanBeNull(false);
+        $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean("showWins", "Show player win statistics at podium ?", $config);
+        $var->setGroup("Chat Messages");
+        $var->setDefaultValue(true)
+            ->setCanBeNull(false);
 
-		$this->registerVariable($var);
-	}
+        $this->registerVariable($var);
+    }
 
 }

@@ -40,8 +40,8 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         CurrentTrackWidget::EraseAll();
         MusicListWindow::EraseAll();
 
-		CurrentTrackWidget::$musicBoxPlugin = null;
-		Gui\Windows\MusicListWindow::$musicPlugin = null;
+        CurrentTrackWidget::$musicBoxPlugin = null;
+        Gui\Windows\MusicListWindow::$musicPlugin = null;
 
         $this->connection->setForcedMusic(false, "");
     }
@@ -66,7 +66,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 return false;
             }
 
-            Helper::log("[MusicBox]Http status : ". $status["http_code"]);
+            Helper::log("[MusicBox]Http status : " . $status["http_code"]);
             return false;
         }
         return $data;
@@ -162,7 +162,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $this->exp_chatSendServerMessage($text, null, array($song->title, $song->artist));
             }
         } catch (\Exception $e) {
-            Helper::log("[MusicBox]On EndMatch Error : ".$e->getMessage());
+            Helper::log("[MusicBox]On EndMatch Error : " . $e->getMessage());
         }
     }
 
@@ -277,7 +277,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $info->centerOnScreen();
             $info->show();
         } catch (\Exception $e) {
-            Helper::log("[MusicBox]On EndMatch Error : ".$e->getMessage());
+            Helper::log("[MusicBox]On EndMatch Error : " . $e->getMessage());
         }
     }
 

@@ -4,7 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Overlay_TeamScores\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Overlay_TeamScores\Config;
 
-class ScoresOverlay extends \ManiaLive\Gui\Window {
+class ScoresOverlay extends \ManiaLive\Gui\Window
+{
 
     protected $background;
     protected $team1;
@@ -18,7 +19,8 @@ class ScoresOverlay extends \ManiaLive\Gui\Window {
     public static $resetAction, $toggleAction;
     public static $action, $action2;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         $this->setPosition(0, 80);
         $this->setAlign("center", "top");
 
@@ -85,10 +87,11 @@ class ScoresOverlay extends \ManiaLive\Gui\Window {
     }
 
     /**
-     * 
-     * @param \ManiaLivePlugins\eXpansion\Overlay_TeamScores\Structures\Team[] $teams 
+     *
+     * @param \ManiaLivePlugins\eXpansion\Overlay_TeamScores\Structures\Team[] $teams
      */
-    function setData($teams) {
+    function setData($teams)
+    {
         $this->team1->setText($teams[1]->name);
         $this->team2->setText($teams[0]->name);
 
@@ -96,21 +99,24 @@ class ScoresOverlay extends \ManiaLive\Gui\Window {
         $this->score2->setText($teams[0]->score);
     }
 
-    function setEnable() {
+    function setEnable()
+    {
         $this->team1->setStyle("TextTitle2Blink");
         $this->team2->setStyle("TextTitle2Blink");
         $this->team2->setAction(self::$action);
         $this->team1->setAction(self::$action2);
     }
 
-    function setDisable() {
+    function setDisable()
+    {
         $this->team1->setStyle("TextRankingsBig");
         $this->team2->setStyle("TextRankingsBig");
         $this->team1->setAction(null);
         $this->team2->setAction(null);
     }
 
-    protected function onDraw() {
+    protected function onDraw()
+    {
         $this->setDisable();
         if (is_object($this->button)) {
             $this->button->setText('$dddEnable');
@@ -123,12 +129,14 @@ class ScoresOverlay extends \ManiaLive\Gui\Window {
         }
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    {
         parent::onIsRemoved($target);
         $this->destroy();
     }
-    
-    function destroy() {
+
+    function destroy()
+    {
         parent::destroy();
     }
 

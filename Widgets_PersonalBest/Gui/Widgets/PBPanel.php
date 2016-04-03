@@ -2,7 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Gui\Widgets;
 
-class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
+class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
+{
 
     protected $record;
     protected $pb;
@@ -12,20 +13,21 @@ class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
     protected $rank;
     protected $rankLoading;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $login = $this->getRecipient();
-        
-                $frame = new \ManiaLive\Gui\Controls\Frame();
+
+        $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setPosX(20);
         $this->addComponent($frame);
-        
+
         $label = new \ManiaLib\Gui\Elements\Label(32);
         $label->setText('$ddd' . __('Personal Best', $login));
         $label->setAlign("right", "top");
         $label->setScale(0.7);
         $frame->addComponent($label);
-        
+
         $this->pb = new \ManiaLib\Gui\Elements\Label(16, 4);
         $this->pb->setScale(0.7);
         $this->pb->setAlign("left", "top");
@@ -81,11 +83,12 @@ class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
         $this->rankLoading->setStyle('Icons128x128_Blink');
         $this->rankLoading->setSubStyle('Default');
         $frame->addComponent($this->rankLoading);
-        
+
         $this->setName("Personal Best Widget");
     }
 
-    function setRecord($record, $rank, $rankTotal) {
+    function setRecord($record, $rank, $rankTotal)
+    {
         $this->record = $record;
         if ($record == null) {
             $pbTime = '--';
@@ -107,7 +110,7 @@ class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
         $this->avg->setText('$ddd' . $avgTime);
         $this->finish->setText('$ddd' . $nbFinish);
         $this->rank->setText('$ddd' . $rank . '$n $m/$n $m' . $rankTotal);
-        if ($rank == - 2) {
+        if ($rank == -2) {
             $this->rankLoading->setVisibility(true);
             $this->rank->setPosX(3);
         } else {
@@ -116,11 +119,13 @@ class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget {
         }
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
     }
 
-    function destroy() {
+    function destroy()
+    {
         $this->destroyComponents();
         parent::destroy();
     }

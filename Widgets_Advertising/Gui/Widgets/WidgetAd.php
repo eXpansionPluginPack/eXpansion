@@ -42,10 +42,10 @@ class WidgetAd extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
     public function setImageSize($sizeX, $sizeY, $preferredSize)
     {
-        $wantedAspectRatio  = $sizeX / $sizeY;
+        $wantedAspectRatio = $sizeX / $sizeY;
         $currentAspectRatio = 16 / 9;
-        $x                  = $preferredSize * ($currentAspectRatio / $wantedAspectRatio) * $wantedAspectRatio;
-        $y                  = $preferredSize * ($currentAspectRatio / $wantedAspectRatio);
+        $x = $preferredSize * ($currentAspectRatio / $wantedAspectRatio) * $wantedAspectRatio;
+        $y = $preferredSize * ($currentAspectRatio / $wantedAspectRatio);
         $this->setSize($x, $y);
         $this->quad->setSize($x, $y);
     }

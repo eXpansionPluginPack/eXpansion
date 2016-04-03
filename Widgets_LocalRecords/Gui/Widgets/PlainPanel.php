@@ -48,8 +48,8 @@ class PlainPanel extends Widget
 
     protected function exp_onBeginConstruct()
     {
-        $sizeX         = 46;
-        $sizeY         = 95;
+        $sizeX = 46;
+        $sizeY = 95;
         $this->setScriptEvents();
         $this->storage = Storage::getInstance();
         $this->setName("LocalRecords Panel");
@@ -103,7 +103,7 @@ class PlainPanel extends Widget
         $script = new PlayerFinish();
         //}
 
-        $recCount         = Config::getInstance()->recordsCount;
+        $recCount = Config::getInstance()->recordsCount;
         $this->timeScript = $script;
         $this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
         $this->timeScript->setParam("playerTimes", "[]");
@@ -125,7 +125,7 @@ class PlainPanel extends Widget
         $this->setDisableAxis("x");
         if ($this->edgeWidget) {
             $this->unregisterScript($this->edgeWidget);
-        }        
+        }
         $this->trayWidget = new Script("Gui/Scripts/NewTray");
         $this->registerScript($this->trayWidget);
         $this->bgTitle->setDirection($dir);
@@ -134,7 +134,7 @@ class PlainPanel extends Widget
     protected function autoSetPositions()
     {
         parent::autoSetPositions();
-        $nbFields      = $this->getParameter('nbFields');
+        $nbFields = $this->getParameter('nbFields');
         $nbFieldsFirst = $this->getParameter('nbFirstFields');
         if ($nbFields != null && $nbFieldsFirst != null) {
             $this->setNbFields($nbFields);
@@ -195,8 +195,8 @@ class PlainPanel extends Widget
                 $recsData .= ', ';
                 $nickData .= ', ';
             }
-            $recsData .= '"'.Gui::fixString($record->login).'"=>'.$record->time;
-            $nickData .= '"'.Gui::fixString($record->login).'"=>"'.Gui::fixString($record->nickName).'"';
+            $recsData .= '"' . Gui::fixString($record->login) . '"=>' . $record->time;
+            $nickData .= '"' . Gui::fixString($record->login) . '"=>"' . Gui::fixString($record->nickName) . '"';
             $index++;
         }
 
@@ -215,8 +215,8 @@ class PlainPanel extends Widget
             $recsData = 'Integer[Text]';
             $nickData = 'Text[Text]';
         } else {
-            $recsData = '['.$recsData.']';
-            $nickData = '['.$nickData.']';
+            $recsData = '[' . $recsData . ']';
+            $nickData = '[' . $nickData . ']';
         }
 
         $this->timeScript->setParam("playerTimes", $recsData);
@@ -236,4 +236,5 @@ class PlainPanel extends Widget
         parent::destroy();
     }
 }
+
 ?>

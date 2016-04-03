@@ -4,7 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
-class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer {
+class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
+{
 
     protected static $counter = 0;
     protected static $script = null;
@@ -28,7 +29,8 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
      * @param int $sizeX = 24
      * @param intt $sizeY = 6
      */
-    function __construct($sizeX = 32, $sizeY = 6) {
+    function __construct($sizeX = 32, $sizeY = 6)
+    {
 
         if (self::$script === null) {
             self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\ButtonScript();
@@ -64,19 +66,17 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->bgFrame->setColorize($config->buttonBackgroundColor);
 
 
-
         $this->backGround = new \ManiaLib\Gui\Elements\Quad($sizeX + 2, $sizeY + 1);
         $this->backGround->setAlign('left', 'center2');
         //$this->backGround->setStyle('Bgs1InRace');
         //$this->backGround->setSubStyle('BgCard');
-	$this->backGround->setImage("file://Media/Manialinks/Common/Demo/demo-button-green.png", true);
-	$this->backGround->setImageFocus("file://Media/Manialinks/Common/Demo/demo-button-green-focus.png", true);
+        $this->backGround->setImage("file://Media/Manialinks/Common/Demo/demo-button-green.png", true);
+        $this->backGround->setImageFocus("file://Media/Manialinks/Common/Demo/demo-button-green-focus.png", true);
 
 
         $this->backGround->setId("backGround_" . $this->buttonId);
         $this->backGround->setScriptEvents();
         $this->backGround->setColorize($config->buttonBackgroundColor);
-
 
 
         $this->labelDesc = new \ManiaLib\Gui\Elements\Label(20, 6);
@@ -105,13 +105,13 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->setSize($sizeX + 2, $sizeY + 2);
     }
 
-    protected function onResize($oldX, $oldY) {
+    protected function onResize($oldX, $oldY)
+    {
 
         if ($this->icon == null) {
             $this->label->setPosX(($this->sizeX) / 2);
             $this->label->setPosZ($this->posZ);
-        }
-        else {
+        } else {
             $this->label->setPosX((($this->sizeX) / 2) + ($this->getSizeY() - 1));
             $this->label->setSizeX($this->getSizeX() - ($this->getSizeY() + 1));
             $this->icon->setSize($this->sizeX, $this->sizeY);
@@ -121,12 +121,13 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         parent::onResize($oldX, $oldY);
     }
 
-    function onDraw() {
+    function onDraw()
+    {
         self::$script->reset();
 
         if ($this->icon == null) {
             $this->addComponent($this->backGround);
-          //  $this->addComponent($this->bgFrame);
+            //  $this->addComponent($this->bgFrame);
         }
         if ($this->isActive) $this->addComponent($this->activeFrame);
 
@@ -143,15 +144,18 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         if ($this->icon != null) $this->addComponent($this->icon);
     }
 
-    function getText() {
+    function getText()
+    {
         return $this->text;
     }
 
-    function setText($text) {
+    function setText($text)
+    {
         $this->text = $text;
     }
 
-    function setDescription($description, $sizeX = 30, $sizeY = 5, $maxLine = 1) {
+    function setDescription($description, $sizeX = 30, $sizeY = 5, $maxLine = 1)
+    {
         $this->description = "$000" . $description;
         $this->labelDesc->setSizeX($sizeX);
         $this->labelDesc->setSizeY($sizeY * $maxLine);
@@ -160,15 +164,18 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->backGroundDesc->setSizeY($sizeY * $maxLine);
     }
 
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
-    function setActive($bool = true) {
+    function setActive($bool = true)
+    {
         $this->isActive = $bool;
     }
 
-    function getValue() {
+    function getValue()
+    {
         return $this->value;
     }
 
@@ -176,7 +183,8 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
      * Colorize the button background
      * @param string $value 4-digit RGBa code
      */
-    function colorize($value) {
+    function colorize($value)
+    {
         $this->label->setTextColor("fff");
         $this->backGround->setColorize($value);
         if ($this->icon != null) {
@@ -188,15 +196,18 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
      * Sets text color
      * @param string $value 4-digit RGBa code
      */
-    function setTextColor($textcolor) {
+    function setTextColor($textcolor)
+    {
         $this->label->setTextColor($textcolor);
     }
 
-    function setValue($text) {
+    function setValue($text)
+    {
         $this->value = $text;
     }
 
-    function setAction($action) {
+    function setAction($action)
+    {
         $this->backGround->setAction($action);
 
         //$this->label->setAction($action);
@@ -204,26 +215,28 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         if ($this->icon != null) $this->icon->setAction($action);
     }
 
-    public function setManialink($manialink) {
+    public function setManialink($manialink)
+    {
         $this->label->setManialink($manialink);
         if ($this->icon != null) {
             $this->icon->setManialink($manialink);
         }
     }
 
-    public function setUrl($url) {
+    public function setUrl($url)
+    {
         $this->label->setUrl($url);
     }
 
-    public function setIcon($style, $subStyle = null) {
+    public function setIcon($style, $subStyle = null)
+    {
         $this->icon = new \ManiaLib\Gui\Elements\Quad($this->getSizeY(), $this->getSizeY());
         $this->icon->setAlign('left', 'center');
         $this->icon->setScriptEvents(1);
         if ($subStyle != null) {
             $this->icon->setStyle($style);
             $this->icon->setSubStyle($subStyle);
-        }
-        else {
+        } else {
             $this->icon->setImage($style, true);
         }
         $this->icon->setId("Icon_" . $this->buttonId);
@@ -234,14 +247,14 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->label->setSizeX($this->getSizeX() - ($this->getSizeY() + 1));
     }
 
-    public function setId($id) {
+    public function setId($id)
+    {
         //parent::setId($id);
         $this->buttonId = $id;
 
         if ($this->icon != null) {
             $this->icon->setId($this->buttonId);
-        }
-        else {
+        } else {
             $this->backGround->setId($id);
             $this->backGround->setScriptEvents();
         }
@@ -250,23 +263,27 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->backGroundDesc->setId("eXp_ButtonDescBg_" . $this->buttonId);
     }
 
-    public function setClass($class) {
+    public function setClass($class)
+    {
         if ($this->icon != null) $this->icon->setAttribute('class', $class);
         else {
             $this->backGround->setAttribute('class', $class);
         }
     }
 
-    function getButtonId() {
+    function getButtonId()
+    {
         return $this->buttonId;
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    {
         parent::onIsRemoved($target);
         parent::destroy();
     }
 
-    public function getScript() {
+    public function getScript()
+    {
         return self::$script;
     }
 

@@ -33,60 +33,60 @@ use ManiaLivePlugins\eXpansion\SM_EventHelper\Gui\EventHelper;
 class SM_EventHelper extends ExpPlugin
 {
 
-	private $widget;
+    private $widget;
 
-	public function exp_onReady()
-	{
-		$aHandler = ActionHandler::getInstance();
+    public function exp_onReady()
+    {
+        $aHandler = ActionHandler::getInstance();
 
-		EventHelper::$actions['checkpoint'] = $aHandler->createAction(array($this, "invokeCheckpoint"));
-		EventHelper::$actions['finish'] = $aHandler->createAction(array($this, "invokeFinish"));
+        EventHelper::$actions['checkpoint'] = $aHandler->createAction(array($this, "invokeCheckpoint"));
+        EventHelper::$actions['finish'] = $aHandler->createAction(array($this, "invokeFinish"));
 
-		$this->enableDedicatedEvents();
-		$this->widget = EventHelper::Create(null);
-		$this->widget->show();
-	}
+        $this->enableDedicatedEvents();
+        $this->widget = EventHelper::Create(null);
+        $this->widget->show();
+    }
 
-	public function onEndMatch($rankings, $winnerTeamOrMap)
-	{
-		$this->widget->hide();
-	}
+    public function onEndMatch($rankings, $winnerTeamOrMap)
+    {
+        $this->widget->hide();
+    }
 
-	public function onBeginMap($map, $warmUp, $matchContinuation)
-	{
-		$this->widget->show();
-	}
+    public function onBeginMap($map, $warmUp, $matchContinuation)
+    {
+        $this->widget->show();
+    }
 
-	public function invokeCheckpoint($login, $entries)
-	{
-		$timeOrScore = $entries['timeOrScore'];
-		$cpIndex = $entries['index'];
+    public function invokeCheckpoint($login, $entries)
+    {
+        $timeOrScore = $entries['timeOrScore'];
+        $cpIndex = $entries['index'];
 
-		Dispatcher::dispatch(
-				// login  , #id      , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
-				new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, "False", null, null, null))
-		);
-	}
+        Dispatcher::dispatch(
+        // login  , #id      , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
+            new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, "False", null, null, null))
+        );
+    }
 
-	public function invokeFinish($login, $entries)
-	{
-		$timeOrScore = $entries['timeOrScore'];
-		$cpIndex = $entries['index'];
-		Dispatcher::dispatch(
-				// login  , #id      , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
-				new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, "True", null, null, null))
-		);
-	}
+    public function invokeFinish($login, $entries)
+    {
+        $timeOrScore = $entries['timeOrScore'];
+        $cpIndex = $entries['index'];
+        Dispatcher::dispatch(
+        // login  , #id      , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
+            new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, "True", null, null, null))
+        );
+    }
 
-	public function onBeginMatch()
-	{
-		$this->widget->show();
-	}
+    public function onBeginMatch()
+    {
+        $this->widget->show();
+    }
 
-	public function exp_onUnload()
-	{
-		$this->widget = null;
-		EventHelper::EraseAll();
-	}
+    public function exp_onUnload()
+    {
+        $this->widget = null;
+        EventHelper::EraseAll();
+    }
 
 }

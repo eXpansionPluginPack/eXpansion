@@ -24,14 +24,15 @@ namespace ManiaLivePlugins\eXpansion\Irc\Classes;
  *
  * @author Petri
  */
-class IrcConfig extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure {
-    
+class IrcConfig extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+{
+
     public $server = "";
     public $port = 6667;
     public $serverPass = "";
     public $nickname = "";
-    public $realname = "";    
+    public $realname = "";
     public $channel = "";
     public $channelKey = "";
-               
+
 }

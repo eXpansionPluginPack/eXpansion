@@ -100,7 +100,7 @@ class ConfigManager
         /**
          * @var \ManiaLive\Data\Storage;
          */
-        $storage           = \ManiaLive\Data\Storage::getInstance();
+        $storage = \ManiaLive\Data\Storage::getInstance();
         $this->serverLogin = $storage->serverLogin;
 
         if (!file_exists(self::dirName))
@@ -120,7 +120,7 @@ class ConfigManager
      * Registers a varible to the config manager in order to allow it to be saved
      *
      * @param types\config\Variable $var
-     * @param string                $pluginId
+     * @param string $pluginId
      */
     public function registerVariable(Variable $var, $pluginId)
     {
@@ -155,9 +155,9 @@ class ConfigManager
     }
 
     /**
-     * @param string                $group
+     * @param string $group
      * @param types\config\Variable $var
-     * @param int                   $num
+     * @param int $num
      */
     private function addVariableToGroup($group, $var, $num = 1)
     {
@@ -166,9 +166,9 @@ class ConfigManager
             $groupName = $group . ' #' . $num;
 
         $confName = "main";
-        if (!$var->getShowMain()){
+        if (!$var->getShowMain()) {
             $confName = $var->getPluginId();
-		}
+        }
 
         if (!isset($this->groupedVariables[$confName]))
             $this->groupedVariables[$confName] = array();
@@ -256,7 +256,7 @@ class ConfigManager
                 Variable::SCOPE_SERVER
             );
             $this->scopedUpdated = false;
-            $saved               = true;
+            $saved = true;
         }
 
         if ($forceSave || $this->globalsUpdated) {
@@ -266,7 +266,7 @@ class ConfigManager
                 Variable::SCOPE_GLOBAL
             );
             $this->globalsUpdated = false;
-            $saved                = true;
+            $saved = true;
         }
 
         $conf = Config::getInstance();
@@ -277,7 +277,7 @@ class ConfigManager
                 Variable::SCOPE_FILE
             );
             $this->fileUpdated = false;
-            $saved             = true;
+            $saved = true;
         }
 
         if (!$saved)
@@ -332,7 +332,7 @@ class ConfigManager
      * Loads file scoped settings from a file
      *
      * @param string $fileName The file to load the settings from
-     * @param bool   $save     Should the settings should be re saved at the end of the step
+     * @param bool $save Should the settings should be re saved at the end of the step
      */
     public function loadSettingsFrom($fileName, $save = true)
     {
@@ -348,7 +348,7 @@ class ConfigManager
 
         $this->applySettings($scoped, Variable::SCOPE_SERVER);
 
-        $conf  = Config::getInstance();
+        $conf = Config::getInstance();
         $fileS = $this->getSettingsFromFile($fileName);
 
         $this->applySettings($fileS, Variable::SCOPE_FILE);
@@ -363,8 +363,8 @@ class ConfigManager
      * Saves the settings into the file.
      *
      * @param String $fileName The path ot the file to save the configuration to
-     * @param mixed  $settings The settings to serialize and save
-     * @param int    $scope    the scope of the file being saved
+     * @param mixed $settings The settings to serialize and save
+     * @param int $scope the scope of the file being saved
      */
     protected function saveSettings($fileName, $settings, $scope)
     {

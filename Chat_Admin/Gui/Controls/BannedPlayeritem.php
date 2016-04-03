@@ -8,66 +8,67 @@ use \ManiaLib\Utils\Formatting;
 class BannedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-	private $bg;
+    private $bg;
 
-	private $unbanButton;
+    private $unbanButton;
 
-	private $login;
+    private $login;
 
-	private $nickname;
+    private $nickname;
 
-	private $unbanAction;
+    private $unbanAction;
 
-	private $frame;
+    private $frame;
 
-	function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\PlayerBan $player, $controller, $login)
-	{
-		$sizeX = 80;
-		$sizeY = 6;
-		$this->player = $player;
+    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\PlayerBan $player, $controller, $login)
+    {
+        $sizeX = 80;
+        $sizeY = 6;
+        $this->player = $player;
 
-		$this->unbanAction = $this->createAction(array($controller, 'unban'), array($player->login));
+        $this->unbanAction = $this->createAction(array($controller, 'unban'), array($player->login));
 
-		$this->frame = new \ManiaLive\Gui\Controls\Frame();
-		$this->frame->setSize($sizeX, $sizeY);
-		$this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame->setSize($sizeX, $sizeY);
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
 
-		$this->login = new \ManiaLib\Gui\Elements\Label(50, 4);
-		$this->login->setAlign('left', 'center');
-		$this->login->setText($player->login);
-	
-		$this->frame->addComponent($this->login);
+        $this->login = new \ManiaLib\Gui\Elements\Label(50, 4);
+        $this->login->setAlign('left', 'center');
+        $this->login->setText($player->login);
 
-
-		$spacer = new \ManiaLib\Gui\Elements\Quad();
-		$spacer->setSize(4, 4);
-		$spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-
-		$this->frame->addComponent($spacer);
-
-		$this->unbanButton = new MyButton();
-		$this->unbanButton->setText(__("Remove"));
-		$this->unbanButton->setAction($this->unbanAction);
-		$this->frame->addComponent($this->unbanButton);
+        $this->frame->addComponent($this->login);
 
 
-		$this->addComponent($this->frame);
+        $spacer = new \ManiaLib\Gui\Elements\Quad();
+        $spacer->setSize(4, 4);
+        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
 
-		$this->sizeX = $sizeX;
-		$this->sizeY = $sizeY;
-		$this->setSize($sizeX, $sizeY);
-	}
+        $this->frame->addComponent($spacer);
 
-	protected function onResize($oldX, $oldY)
-	{
-		
-	}
+        $this->unbanButton = new MyButton();
+        $this->unbanButton->setText(__("Remove"));
+        $this->unbanButton->setAction($this->unbanAction);
+        $this->frame->addComponent($this->unbanButton);
 
-	function __destruct()
-	{
-		
-	}
+
+        $this->addComponent($this->frame);
+
+        $this->sizeX = $sizeX;
+        $this->sizeY = $sizeY;
+        $this->setSize($sizeX, $sizeY);
+    }
+
+    protected function onResize($oldX, $oldY)
+    {
+
+    }
+
+    function __destruct()
+    {
+
+    }
 
 }
+
 ?>
 

@@ -9,7 +9,8 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  *
  * @author Petri
  */
-class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer {
+class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
+{
 
     protected $pager;
     protected $items = array();
@@ -18,7 +19,8 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
     protected $itemSizeY = 6;
     protected $myScript;
 
-    public function __construct() {
+    public function __construct()
+    {
         $config = Config::getInstance();
 
         $this->pager = new \ManiaLive\Gui\Controls\Frame();
@@ -66,14 +68,15 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
         $this->myScript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\Pager");
     }
 
-    public function onResize($oldX, $oldY) {
+    public function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
 
         $this->pager->setSize($this->sizeX - 6, $this->sizeY);
 
-       // $this->pager->setAttribute("clip","1");
-       // $this->pager->setAttribute("clipsizen", ($this->sizeX - 6)." ". $this->sizeY);
-        
+        // $this->pager->setAttribute("clip","1");
+        // $this->pager->setAttribute("clipsizen", ($this->sizeX - 6)." ". $this->sizeY);
+
         $this->myScript->setParam("pagerSizeY", $this->sizeY);
 
         $this->scroll->setPosition($this->sizeX - 3, 0);
@@ -91,11 +94,13 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
         }
     }
 
-    public function setStretchContentX($value) {
+    public function setStretchContentX($value)
+    {
         // do nothing xD
     }
 
-    public function addItem(\ManiaLib\Gui\Component $component) {
+    public function addItem(\ManiaLib\Gui\Component $component)
+    {
         $scale = $component->getScale();
         if ($scale == "") $scale = 1;
         $component->setSizeX($this->sizeX / $scale - 8);
@@ -112,21 +117,24 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
         $this->pager->addComponent($this->items[$hash]);
     }
 
-    public function clearItems() {
+    public function clearItems()
+    {
         if (isset($this->pager) && $this->pager != null) {
             $this->pager->destroyComponents();
             $this->items = array();
         }
     }
 
-    public function removeItem(\ManiaLib\Gui\Component $item) {
+    public function removeItem(\ManiaLib\Gui\Component $item)
+    {
         $hash = spl_object_hash($item);
         $this->pager->removeComponent($this->items[$hash]);
         $this->items[$hash]->destroy();
         unset($this->items[$hash]);
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         if (isset($this->pager) && $this->pager != null) {
             $this->pager->destroyComponents();
             $this->pager->destroy();
@@ -135,12 +143,14 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
         parent::destroy();
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target) {
+    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    {
         parent::onIsRemoved($target);
         $this->destroy();
     }
 
-    public function getScript() {
+    public function getScript()
+    {
         $this->myScript->setParam("sizeY", $this->itemSizeY);
 
         return $this->myScript;

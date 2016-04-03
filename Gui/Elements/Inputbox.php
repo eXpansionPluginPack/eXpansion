@@ -13,7 +13,7 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     function __construct($name, $sizeX = 35, $editable = true)
     {
-        $config     = Config::getInstance();
+        $config = Config::getInstance();
         $this->name = $name;
 
         $this->bg = new WidgetBackGround(100, 30);
@@ -36,8 +36,6 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label->setTextColor('fff');
         $this->label->setTextEmboss();
         $this->addComponent($this->label);
-
-
 
 
         $this->setSize($sizeX, 12);
@@ -145,7 +143,7 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     function setClass($class)
     {
-        $this->button->setAttribute("class", "isTabIndex isEditable ".$class);
+        $this->button->setAttribute("class", "isTabIndex isEditable " . $class);
     }
 
     function onIsRemoved(\ManiaLive\Gui\Container $target)
@@ -154,4 +152,5 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         parent::destroy();
     }
 }
+
 ?>
