@@ -89,7 +89,7 @@ Drop
 Effacer
 
 Add all
-Ajouter tousse
+Ajouter toutes
 
 Map name
 Nom du circuit
