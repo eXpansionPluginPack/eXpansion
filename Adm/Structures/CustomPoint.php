@@ -2,9 +2,10 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Structures;
 
-class CustomPoint extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
-{
+use Maniaplanet\DedicatedServer\Structures\AbstractStructure;
 
+class CustomPoint extends AbstractStructure
+{
     public $name;
     public $points;
 
@@ -16,4 +17,3 @@ class CustomPoint extends \Maniaplanet\DedicatedServer\Structures\AbstractStruct
 
 }
 
-?>

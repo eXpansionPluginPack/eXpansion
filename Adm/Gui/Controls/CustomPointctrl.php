@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
 class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-
     private $bg;
     private $label;
     private $label2;
@@ -76,7 +75,7 @@ class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 
-// manialive 3.1 override to do nothing.
+    // manialive 3.1 override to do nothing.
     function destroy()
     {
 
@@ -85,7 +84,6 @@ class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control
     /*
      * custom function to remove contents.
      */
-
     function erase()
     {
         $this->button->destroy();

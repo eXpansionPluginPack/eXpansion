@@ -16,21 +16,27 @@ use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerOptions;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Events\Event;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Core\i18n\Message;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class Adm extends ExpPlugin
 {
+    /** @var Message Messages needed */
+    private $msgScriptSettings;
+    /** @var Message Messages needed */
+    private $msgDatabasePlugin;
+    /** @var Message Messages needed */
+    private $msgForceScoreError;
 
-    private $msg_forceScore_error, $msg_scriptSettings, $msg_databasePlugin;
-
-    private $config;
-
-    public function exp_onLoad()
+    /**
+     * @inheritdoc
+     */
+    public function eXpPnLoad()
     {
-        $this->msg_forceScore_error = exp_getMessage("ForceScores can be used only with rounds or team mode");
-        $this->msg_scriptSettings = exp_getMessage("ScriptSettings available only in script mode");
-        $this->msg_databasePlugin = exp_getMessage("Database plugin not loaded!");
+        $this->msgForceScoreError = exp_getMessage("ForceScores can be used only with rounds or team mode");
+        $this->msgScriptSettings = exp_getMessage("ScriptSettings available only in script mode");
+        $this->msgDatabasePlugin = exp_getMessage("Database plugin not loaded!");
 
         $this->setPublicMethod('serverControlMain');
 
@@ -43,22 +49,10 @@ class Adm extends ExpPlugin
         AdminGroups::addAlias($cmd, "setexp"); // xaseco & fast
     }
 
-    public function showExpSettings($login)
-    {
-        $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Core\Core', 'showExpSettings', $login);
-    }
-
-    function exp_admin_added($login)
-    {
-        $this->onPlayerConnect($login, false);
-    }
-
-    function exp_admin_removed($login)
-    {
-        AdminPanel::Erase($login);
-    }
-
-    function exp_onReady()
+    /**
+     * @inheritdoc
+     */
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
 
@@ -73,18 +67,54 @@ class Adm extends ExpPlugin
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "server");
 
-        foreach ($this->storage->players as $player)
+        foreach ($this->storage->players as $player) {
             $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $player)
+        }
+        foreach ($this->storage->spectators as $player) {
             $this->onPlayerConnect($player->login, true);
+        }
 
         $this->onBeginMap(null, null, null);
     }
 
-    function onPlayerConnect($login, $isSpectator)
+    /**
+     * Display eXpansion settings.
+     *
+     * @param string $login The login of the player
+     */
+    public function showExpSettings($login)
     {
-        if ($this->expStorage->isRelay)
+        $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Core\Core', 'showExpSettings', $login);
+    }
+
+    /**
+     * Called when an admin is added
+     *
+     * @param string $login The login of the player
+     */
+    public function exp_admin_added($login)
+    {
+        $this->onPlayerConnect($login, false);
+    }
+
+    /**
+     * Called when a admin is removed
+     *
+     * @param string $login The login of the player
+     */
+    public function exp_admin_removed($login)
+    {
+        AdminPanel::Erase($login);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function onPlayerConnect($login, $isSpectator)
+    {
+        if ($this->expStorage->isRelay) {
             return;
+        }
 
         if (AdminGroups::isInList($login)) {
             $widget = AdminPanel::Create($login);
@@ -94,6 +124,11 @@ class Adm extends ExpPlugin
         }
     }
 
+    /**
+     * Display server options window
+     *
+     * @param string $login The login of the player
+     */
     public function serverOptions($login)
     {
         if (AdminGroups::getAdmin($login) != null) {
@@ -105,6 +140,11 @@ class Adm extends ExpPlugin
         }
     }
 
+    /**
+     * Show windows to the set up forced scores
+     *
+     * @param string $login The login of the player
+     */
     public function forceScores($login)
     {
         if (AdminGroups::hasPermission($login, Permission::game_settings)) {
@@ -116,19 +156,28 @@ class Adm extends ExpPlugin
                 $window->setSize(160, 80);
                 $window->show();
             } else {
-                $this->exp_chatSendServerMessage($this->msg_forceScore_error, $login);
+                $this->eXpChatSendServerMessage($this->msgForceScoreError, $login);
             }
         }
     }
 
+    /**
+     * Function to validated score change
+     */
     public function forceScoresOk()
     {
-        $this->exp_chatSendServerMessage('Notice: Admin has altered the scores of current match!');
+        // @TODO Replace this by a proper event.
+        $this->eXpChatSendServerMessage('Notice: Admin has altered the scores of current match!');
         if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\ESLcup\\ESLcup")) {
             $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\ESLcup\\ESLcup", "syncScores");
         }
     }
 
+    /**
+     * Show window for game options
+     *
+     * @param string $login The login of the player
+     */
     public function gameOptions($login)
     {
         if (AdminGroups::hasPermission($login, Permission::game_settings)) {
@@ -140,6 +189,11 @@ class Adm extends ExpPlugin
         }
     }
 
+    /**
+     * Show the window for server management
+     *
+     * @param string $login The login of the player
+     */
     public function serverManagement($login)
     {
         if (AdminGroups::hasPermission($login, Permission::server_stopDedicated) || AdminGroups::hasPermission($login, Permission::server_stopManialive)) {
@@ -151,6 +205,11 @@ class Adm extends ExpPlugin
         }
     }
 
+    /**
+     * Show window to customized points
+     *
+     * @param string $login The login of the player
+     */
     public function roundPoints($login)
     {
         if (AdminGroups::hasPermission($login, Permission::game_settings)) {
@@ -162,6 +221,11 @@ class Adm extends ExpPlugin
         }
     }
 
+    /**
+     * Show window to access all server configurations.
+     *
+     * @param string $login The login of the player
+     */
     public function serverControlMain($login)
     {
         if (AdminGroups::hasPermission($login, Permission::server_controlPanel)) {
@@ -171,22 +235,39 @@ class Adm extends ExpPlugin
         }
     }
 
+    /**
+     * Show window that allows votes configuration
+     *
+     * @param string $login The login of the player
+     */
     public function showVotesConfig($login)
     {
         if (AdminGroups::hasPermission($login, Permission::server_votes)) {
-            if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Votes\Votes'))
+            if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Votes\Votes')) {
                 $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Votes\Votes', 'showVotesConfig', $login);
+            }
         }
     }
 
+    /**
+     * Show window that allows to start/stop plugins & see list of plugins
+     *
+     * @param string $login The login of the player
+     */
     public function showPluginManagement($login)
     {
         if (AdminGroups::hasPermission($login, Permission::expansion_pluginStartStop)) {
-            if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad'))
+            if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad')) {
                 $this->callPublicMethod('\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad', 'showPluginsWindow', $login);
+            }
         }
     }
 
+    /**
+     * Show window to set up the match settings used
+     *
+     *  string $login The login of the player
+     */
     public function matchSettings($login)
     {
         if (AdminGroups::hasPermission($login, Permission::game_matchSave) || AdminGroups::hasPermission($login, 'game_matchDelete') || AdminGroups::hasPermission($login, 'game_match')) {
@@ -198,6 +279,11 @@ class Adm extends ExpPlugin
         }
     }
 
+    /**
+     * Show window for script game settings.
+     *
+     * @param string $login The login of the player
+     */
     public function scriptSettings($login)
     {
         if (AdminGroups::hasPermission($login, Permission::game_settings)) {
@@ -208,22 +294,32 @@ class Adm extends ExpPlugin
                 $window->setSize(160, 100);
                 $window->show();
             } else {
-                $this->exp_chatSendServerMessage($this->msg_scriptSettings, $login);
+                $this->eXpChatSendServerMessage($this->msgScriptSettings, $login);
             }
         }
     }
 
+    /**
+     * Show the window for db tools
+     *
+     * @param string $login The login of the player
+     */
     public function dbTools($login)
     {
         if (AdminGroups::hasPermission($login, Permission::server_database)) {
             if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Database\\Database")) {
                 $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Database\\Database", "showDbMaintainance", $login);
             } else {
-                $this->exp_chatSendServerMessage($this->msg_databasePlugin, $login);
+                $this->eXpChatSendServerMessage($this->msgDatabasePlugin, $login);
             }
         }
     }
 
+    /**
+     * Skip the current map action
+     *
+     * @param string $login The login of the player
+     */
     public function skipMap($login)
     {
         if (AdminGroups::hasPermission($login, Permission::map_skip)) {
@@ -233,6 +329,11 @@ class Adm extends ExpPlugin
         }
     }
 
+    /**
+     * Restart current map action
+     *
+     * @param string $login The login of the player
+     */
     public function restartMap($login)
     {
         if (AdminGroups::hasPermission($login, Permission::map_restart)) {
@@ -243,10 +344,15 @@ class Adm extends ExpPlugin
 
             $this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
             $admin = $this->storage->getPlayerObject($login);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
         }
     }
 
+    /**
+     * Cancel vote action
+     *
+     * @param string $login The login of the player
+     */
     public function cancelVote($login)
     {
         if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin")) {
@@ -256,6 +362,11 @@ class Adm extends ExpPlugin
         $this->connection->cancelVote();
     }
 
+    /**
+     * End round action
+     *
+     * @param string $login The login of the player
+     */
     public function endRound($login)
     {
         if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin")) {
@@ -265,18 +376,30 @@ class Adm extends ExpPlugin
         $this->connection->forceEndRound();
     }
 
+    /**
+     * Display admin groups windows to manage admins.
+     *
+     * @param string $login The login of the player
+     */
     public function adminGroups($login)
     {
         AdminGroups::getInstance()->windowGroups($login);
     }
 
+    /**
+     * Set the current points for rounds action
+     *
+     * @param string $login The login of the player
+     * @param $points
+     */
     public function setPoints($login, $points)
     {
         try {
             $nick = $this->storage->getPlayerObject($login)->nickName;
             $config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
-            foreach ($points as $p)
+            foreach ($points as $p) {
                 $intPoints[] = intval($p);
+            }
 
             $config->roundsPoints = $intPoints;
 
@@ -298,15 +421,18 @@ class Adm extends ExpPlugin
                 $this->connection->setRoundCustomPoints($intPoints);
             }
             $msg = exp_getMessage('#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s');
-            $this->exp_chatSendServerMessage($msg, null, array($nick, implode(",", $intPoints)));
+            $this->eXpChatSendServerMessage($msg, null, array($nick, implode(",", $intPoints)));
         } catch (Exception $e) {
             $this->connection->chatSendServerMessage(__('#admin_error#Error: %s', $login, $e->getMessage()), $login);
         }
     }
 
-    public function exp_onUnload()
+    /**
+     * @inheritdoc
+     */
+    public function eXpOnUnload()
     {
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
         AdminPanel::EraseAll();
         ForceScores::EraseAll();
         GameOptions::EraseAll();
@@ -317,7 +443,4 @@ class Adm extends ExpPlugin
         ServerManagement::EraseAll();
         ServerOptions::EraseAll();
     }
-
 }
-
-?>

@@ -163,7 +163,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->dumpException("Plugin init failed!\nQuiz plugin needs 'mbstring' extension to be loaded!\n Please add the extension to to php for loading this plugin!", new \Exception("php_mbstring extension not loaded"));
             $adm = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
             $adm->announceToPermission(Permission::expansion_pluginStartStop, "\$d00Quiz plugin needs 'mbstring' extension to be added in php extensions! Plugin not loaded.");
-            $this->exp_unload();
+            $this->eXpUnload();
         }
 
         Gui\Windows\QuestionWindow::$mainPlugin = $this;

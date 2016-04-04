@@ -21,9 +21,6 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Easy and graphical way of configuring your server.");
         $this->setGroups(array('Core'));
 
-        $config = Config::getInstance();
-
+        Config::getInstance();
     }
 }
-
-?>
