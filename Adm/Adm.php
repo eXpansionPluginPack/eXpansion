@@ -20,7 +20,7 @@ use ManiaLivePlugins\eXpansion\Core\i18n\Message;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
-class Adm extends ExpPlugin
+class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\Events\Listener
 {
     /** @var Message Messages needed */
     private $msgScriptSettings;
@@ -92,7 +92,7 @@ class Adm extends ExpPlugin
      *
      * @param string $login The login of the player
      */
-    public function exp_admin_added($login)
+    public function eXpAdminAdded($login)
     {
         $this->onPlayerConnect($login, false);
     }
@@ -102,7 +102,7 @@ class Adm extends ExpPlugin
      *
      * @param string $login The login of the player
      */
-    public function exp_admin_removed($login)
+    public function eXpAdminRemoved($login)
     {
         AdminPanel::Erase($login);
     }

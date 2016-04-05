@@ -23,10 +23,10 @@ class Event extends \ManiaLive\Event\Event
         $p = $this->params;
         switch ($this->onWhat) {
             case self::ON_ADMIN_NEW:
-                $listener->exp_admin_added($p[0]);
+                $listener->eXpAdminAdded($p[0]);
                 break;
             case self::ON_ADMIN_REMOVED:
-                $listener->exp_admin_removed($p[0]);
+                $listener->eXpAdminRemoved($p[0]);
                 break;
         }
     }

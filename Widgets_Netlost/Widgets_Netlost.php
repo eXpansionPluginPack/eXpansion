@@ -97,12 +97,12 @@ class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\A
         $this->group = null;
     }
 
-    public function exp_admin_added($login)
+    public function eXpAdminAdded($login)
     {
         $this->updateGroup();
     }
 
-    public function exp_admin_removed($login)
+    public function eXpAdminRemoved($login)
     {
         $this->updateGroup();
         Netlost::Erase($login);

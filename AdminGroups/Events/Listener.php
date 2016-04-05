@@ -26,8 +26,8 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups\Events;
  */
 interface Listener
 {
-    public function exp_admin_added($login);
+    public function eXpAdminAdded($login);
 
-    public function exp_admin_removed($login);
+    public function eXpAdminRemoved($login);
 
 }
