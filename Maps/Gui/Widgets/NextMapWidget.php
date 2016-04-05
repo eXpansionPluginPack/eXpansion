@@ -15,7 +15,7 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     private $map;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setName("Next Map");
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 15);
@@ -72,7 +72,7 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->rightFrame->addComponent($this->time);
     }
 
-    protected function exp_onEndConstruct()
+    protected function eXpOnEndConstruct()
     {
         $this->setSize(60, 15);
     }

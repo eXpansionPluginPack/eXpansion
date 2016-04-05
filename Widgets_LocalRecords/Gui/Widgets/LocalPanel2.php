@@ -5,10 +5,10 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets;
 class LocalPanel2 extends PlainPanel
 {
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
 
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
         // $this->setName("LocalRecords Panel (Tab-layer)");
         $this->timeScript->setParam('varName', 'LocalTime2');
     }

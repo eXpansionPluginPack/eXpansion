@@ -10,9 +10,9 @@ use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
 class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\PlainPanel
 {
 
-    function exp_onBeginConstruct()
+    function eXpOnBeginConstruct()
     {
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
         $this->setName("Dedimania Panel");
         $this->timeScript->setParam("acceptMinCp", 1);
         $this->timeScript->setParam('varName', 'DediTime1');

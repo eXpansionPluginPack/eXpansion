@@ -12,9 +12,9 @@ class TestWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     protected $scriptt, $xmlData, $title, $frame, $frame2, $closeButton;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
         $this->setName('Test widget');
 
         $this->title = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle(100, 4);
@@ -41,9 +41,9 @@ class TestWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->addComponent($this->closeButton);
     }
 
-    public function exp_onEndConstruct()
+    public function eXpOnEndConstruct()
     {
-        parent::exp_onEndConstruct();
+        parent::eXpOnEndConstruct();
     }
 
     public function onResize($oldX, $oldY)

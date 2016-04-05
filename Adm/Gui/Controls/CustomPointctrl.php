@@ -10,7 +10,7 @@ class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control
     private $frame;
     private $action;
 
-    function __construct($indexNumber, $point, $plugin, $login, $sizeX)
+    public function __construct($indexNumber, $point, $plugin, $login, $sizeX)
     {
         $sizeY = 6;
 
@@ -76,7 +76,7 @@ class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -84,7 +84,7 @@ class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control
     /*
      * custom function to remove contents.
      */
-    function erase()
+    public function erase()
     {
         $this->button->destroy();
         $this->frame->clearComponents();
@@ -92,8 +92,4 @@ class CustomPointctrl extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>
-

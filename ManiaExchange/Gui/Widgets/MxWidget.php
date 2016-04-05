@@ -23,7 +23,7 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     private $actionVisit;
     private $actionAward;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setName("ManiaExchange Panel");
 
@@ -74,12 +74,12 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->setScriptEvents(true);
     }
 
-    protected function exp_onEndConstruct()
+    protected function eXpOnEndConstruct()
     {
         $this->setSize(35, 7);
     }
 
-    protected function exp_onSettingsLoaded()
+    protected function eXpOnSettingsLoaded()
     {
         $config = Config::getInstance();
         $this->_minButton->setImage($config->iconMx, true);

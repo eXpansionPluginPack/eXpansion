@@ -7,9 +7,9 @@ use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Widgets_RecordSide;
 class LivePanel2 extends PlainLivePanel
 {
 
-    function exp_onBeginConstruct()
+    function eXpOnBeginConstruct()
     {
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
         // $this->setName("Live Rankings Panel (Tab-layer)");
         $this->timeScript->setParam('varName', 'LiveTime2');
     }

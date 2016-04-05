@@ -7,7 +7,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     protected $clockBg;
     private $frame, $ladderMin, $ladderMax, $serverName, $maxPlayers, $script;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
 
         $bg = new \ManiaLib\Gui\Elements\Quad(60, 15);

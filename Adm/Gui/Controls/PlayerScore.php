@@ -14,11 +14,9 @@ class PlayerScore extends \ManiaLivePlugins\eXpansion\Gui\Control
      *
      * @param int $indexNumber
      * @param \Maniaplanet\DedicatedServer\Structures\PlayerRanking $player
-     * @param int $score
-     * @param type $controller
      * @param int $sizeX
      */
-    function __construct($indexNumber, $player, $sizeX)
+    public function __construct($indexNumber, $player, $sizeX)
     {
         $sizeY = 6;
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
@@ -65,8 +63,8 @@ class PlayerScore extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setSize($sizeX, $sizeY);
     }
 
-// manialive 3.1 override to do nothing.
-    function destroy()
+    // manialive 3.1 override to do nothing.
+    public function destroy()
     {
 
     }
@@ -74,8 +72,7 @@ class PlayerScore extends \ManiaLivePlugins\eXpansion\Gui\Control
     /*
      * custom function to remove contents.
      */
-
-    function erase()
+    public function erase()
     {
         $this->inputbox->destroy();
         $this->frame->clearComponents();
@@ -83,8 +80,4 @@ class PlayerScore extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>
-

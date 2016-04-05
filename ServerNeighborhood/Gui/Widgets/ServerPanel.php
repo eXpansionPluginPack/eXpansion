@@ -55,13 +55,13 @@ class ServerPanel extends Widget
 
     private $label_all;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setName("Server Neighborhood Panel");
         $this->config = Config::getInstance();
     }
 
-    protected function exp_onEndConstruct()
+    protected function eXpOnEndConstruct()
     {
 
         $this->_mainWindow = new Frame();

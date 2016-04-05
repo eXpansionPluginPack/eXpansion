@@ -8,9 +8,9 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 class DediPanel extends PlainPanel
 {
 
-    function exp_onBeginConstruct()
+    function eXpOnBeginConstruct()
     {
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
     }
 }
 

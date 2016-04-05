@@ -16,7 +16,7 @@ class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     private $frame;
 
-    function __construct($indexNumber, $text, $sizeX)
+    public function __construct($indexNumber, $text, $sizeX)
     {
         $sizeY = 6;
 
@@ -52,17 +52,15 @@ class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-// manialive 3.1 override to do nothing.
-    function destroy()
+    // manialive 3.1 override to do nothing.
+    public function destroy()
     {
-
     }
 
     /*
      * custom function to remove contents.
      */
-
-    function erase()
+    public function erase()
     {
         $this->bg->destroy();
         $this->frame->clearComponents();
@@ -71,8 +69,4 @@ class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         parent::destroy();
     }
-
 }
-
-?>
-

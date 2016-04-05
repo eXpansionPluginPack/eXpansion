@@ -46,7 +46,7 @@ class PlainPanel extends Widget
     public $trayWidget;
     public $edgeWidget;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $sizeX = 46;
         $sizeY = 95;
@@ -90,7 +90,7 @@ class PlainPanel extends Widget
         $this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
         $this->registerScript($this->edgeWidget);
 
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
     }
 
     protected function getScript()

@@ -21,9 +21,9 @@ class PlayerScoreWidget extends Widget
 
     private $frame, $bg, $lbl_title, $bgTitle;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
         $this->setName("Player Scores for team mode");
         $sizeX = 42;
         $sizeY = 56;

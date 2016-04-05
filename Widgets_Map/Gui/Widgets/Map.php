@@ -7,7 +7,7 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     protected $clockBg;
     protected $frame, $players, $specs, $map, $author;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setName("Mapinfo Widget");
         $clockBg = new \ManiaLib\Gui\Elements\Quad(45, 15);

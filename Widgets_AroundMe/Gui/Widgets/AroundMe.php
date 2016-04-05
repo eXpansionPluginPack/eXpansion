@@ -23,7 +23,7 @@ class AroundMe extends Widget
 
     public static $connection;
 
-    function exp_onBeginConstruct()
+    function eXpOnBeginConstruct()
     {
         $this->storage = Storage::getInstance();
 

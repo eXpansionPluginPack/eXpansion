@@ -15,10 +15,10 @@ class Widget extends PlainWidget
     private $axisDisabled = "";
     private $script;
 
-    /** @var Array() */
+    /** @var Array */
     private $positions = array();
 
-    /** @var Array() */
+    /** @var Array */
     private $widgetVisible = array();
     private $visibleLayerInit = "normal";
 
@@ -30,7 +30,7 @@ class Widget extends PlainWidget
     protected function onConstruct()
     {
         parent::onConstruct();
-        $this->exp_onBeginConstruct();
+        $this->eXpOnBeginConstruct();
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WidgetScript");
         $this->script->setParam('disablePersonalHud', \ManiaLivePlugins\eXpansion\Gui\Config::getInstance()->disablePersonalHud ? 'True' : 'False');
         $this->registerScript($this->script);
@@ -43,29 +43,59 @@ class Widget extends PlainWidget
         $this->addComponent($this->move);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
-        $this->exp_onEndConstruct();
-        $this->exp_loadSettings();
+        $this->eXpOnEndConstruct();
+        $this->eXpLoadSettings();
     }
 
     /**
-     * Begin construct
+     * When the Widget is being constructed.
+     */
+    protected function eXpOnBeginConstruct()
+    {
+    }
+
+    /**
+     * @deprecated
+     * @see eXpOnBeginConstruct
      */
     protected function exp_onBeginConstruct()
     {
-
+        $this->eXpOnBeginConstruct();
     }
 
+    /**
+     * When the construction of the widget has ended
+     */
+    protected function eXpOnEndConstruct()
+    {
+    }
+
+    /**
+     * @deprecated
+     * @see eXpOnEndConstruct
+     */
     protected function exp_onEndConstruct()
     {
-
+        $this->eXpOnEndConstruct();
     }
 
+    /**
+     * When the settings of the widget has been loaded.
+     */
+    protected function eXpOnSettingsLoaded()
+    {
+    }
+
+    /**
+     * @deprecated
+     * @see eXpOnSettingsLoaded
+     */
     protected function exp_onSettingsLoaded()
     {
-
+        $this->eXpOnSettingsLoaded();
     }
 
-    private function exp_loadSettings()
+    private function eXpLoadSettings()
     {
         $widgetName = str_replace(" ", "", $this->getName());
 
@@ -108,7 +138,7 @@ class Widget extends PlainWidget
         }
 
         $this->autoSetPositions();
-        $this->exp_onSettingsLoaded();
+        $this->eXpOnSettingsLoaded();
     }
 
     protected function onDraw()

@@ -37,7 +37,7 @@ class EnterQueueWidget extends Widget
     protected $dicoLabel;
     protected $button;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setName("Enter Queue");
         $login = $this->getRecipient();
@@ -73,7 +73,7 @@ class EnterQueueWidget extends Widget
         $this->addComponent($frame);
     }
 
-    protected function exp_onEndConstruct()
+    protected function eXpOnEndConstruct()
     {
         $this->setSize(80, 18);
         $this->setPosition(-30, 60);

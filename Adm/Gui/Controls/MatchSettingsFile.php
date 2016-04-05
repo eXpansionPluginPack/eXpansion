@@ -2,14 +2,14 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
-class MatchSettingsFile extends \ManiaLivePlugins\eXpansion\Gui\Control
+class MatchSettingsFile extends Control
 {
-
     private $bg;
 
     private $mapNick;
@@ -34,7 +34,7 @@ class MatchSettingsFile extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     private $frame;
 
-    function __construct($indexNumber, $filename, $controller, $login, $sizeX)
+    public function __construct($indexNumber, $filename, $controller, $login, $sizeX)
     {
         $sizeY = 6;
         $this->saveAction = $this->createAction(array($controller, 'saveSettings'), $filename);
@@ -123,8 +123,8 @@ class MatchSettingsFile extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-// manialive 3.1 override to do nothing.
-    function destroy()
+    // manialive 3.1 override to do nothing.
+    public function destroy()
     {
 
     }
@@ -132,8 +132,7 @@ class MatchSettingsFile extends \ManiaLivePlugins\eXpansion\Gui\Control
     /*
      * custom function to remove contents.
      */
-
-    function erase()
+    public function erase()
     {
         ActionHandler::getInstance()->deleteAction($this->deleteAction);
         ActionHandler::getInstance()->deleteAction($this->deleteActionf);
@@ -145,8 +144,4 @@ class MatchSettingsFile extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         parent::destroy();
     }
-
 }
-
-?>
-

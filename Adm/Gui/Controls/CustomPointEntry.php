@@ -15,7 +15,7 @@ class CustomPointEntry extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     private $action;
 
-    function __construct($indexNumber, $points, $plugin, $login, $sizeX)
+    public function __construct($indexNumber, $points, $plugin, $login, $sizeX)
     {
         $sizeY = 6;
 
@@ -77,8 +77,8 @@ class CustomPointEntry extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-// manialive 3.1 override to do nothing.
-    function destroy()
+    // manialive 3.1 override to do nothing.
+    public function destroy()
     {
 
     }
@@ -87,7 +87,7 @@ class CustomPointEntry extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         $this->button->destroy();
         $this->frame->destroyComponents();
@@ -95,8 +95,4 @@ class CustomPointEntry extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>
-

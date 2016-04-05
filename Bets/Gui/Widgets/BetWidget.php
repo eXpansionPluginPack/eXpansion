@@ -49,7 +49,7 @@ class BetWidget extends Widget
     protected $bg, $header, $closeButton, $buttonAccept;
     protected $script;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $sX = 42;
         $this->setName("Bet widget");
@@ -76,7 +76,7 @@ class BetWidget extends Widget
         $this->addComponent($this->closeButton);
     }
 
-    protected function exp_onEndConstruct()
+    protected function eXpOnEndConstruct()
     {
         $this->setPosition(20, -65);
     }

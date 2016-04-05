@@ -31,9 +31,9 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     /** @var \Maniaplanet\DedicatedServer\Structures\Player */
     private $targetPlayer = false;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
         $this->setName("Personal Chat Widget");
         $config = Config::getInstance();
 
@@ -104,7 +104,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->addComponent($this->_windowFrame);
     }
 
-    protected function exp_onSettingsLoaded()
+    protected function eXpOnSettingsLoaded()
     {
         $this->widgetScript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
         $this->widgetScript->setParam('isMinimized', $this->status);
@@ -117,7 +117,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->sendscript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("PersonalMessages\Gui\Script");
         $this->sendscript->setParam("sendAction", $this->actionSend);
         $this->registerScript($this->sendscript);
-        parent::exp_onSettingsLoaded();
+        parent::eXpOnSettingsLoaded();
     }
 
     function onResize($oldX, $oldY)

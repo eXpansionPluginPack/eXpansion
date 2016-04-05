@@ -22,7 +22,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     public static $localrecords = array();
     public static $dedirecords = array();
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
 
         $login = $this->getRecipient();

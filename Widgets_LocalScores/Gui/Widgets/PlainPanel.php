@@ -42,12 +42,12 @@ class PlainPanel extends Widget
 
     protected $nbFields;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setName("Local Scores Panel");
     }
 
-    protected function exp_onEndConstruct()
+    protected function eXpOnEndConstruct()
     {
         $sizeX = 46;
         $sizeY = 95;

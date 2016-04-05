@@ -19,7 +19,7 @@ class CpProgress extends Widget
     /** @var Storage; */
     private $storage;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setAlign("left", "top");
 

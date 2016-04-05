@@ -38,7 +38,7 @@ class CommunicationWidget extends Widget
     private $script, $frame, $bg, $_mainWindow, $tabs, $inputbox, $replyTo, $sendAction;
     public static $action, $selectPlayer;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setName("Messaging Widget");
 
@@ -122,7 +122,7 @@ class CommunicationWidget extends Widget
         $this->registerScript($this->script);
     }
 
-    function exp_onEndConstruct()
+    function eXpOnEndConstruct()
     {
 
         $this->setSize(120, 42);

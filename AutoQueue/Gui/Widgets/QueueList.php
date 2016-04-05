@@ -42,7 +42,7 @@ class QueueList extends Widget
     protected $mainInstance = null;
     protected $bg;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setName("Queue List");
         $login = $this->getRecipient();
@@ -58,7 +58,7 @@ class QueueList extends Widget
         $this->addComponent($this->frame);
     }
 
-    protected function exp_onEndConstruct()
+    protected function eXpOnEndConstruct()
     {
         $this->setPosition(80, -30);
         $this->setSize(62, 40);

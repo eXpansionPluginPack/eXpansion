@@ -20,9 +20,9 @@ class PlainLivePanel extends PlainPanel
 
     public static $connection;
 
-    function exp_onBeginConstruct()
+    function eXpOnBeginConstruct()
     {
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
         $this->setName("Live Rankings Panel");
         $this->registerScript(new TextExt());
         $this->timeScript->setParam('varName', 'LiveTime1');

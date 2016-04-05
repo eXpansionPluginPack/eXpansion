@@ -15,12 +15,12 @@ class CPPanel extends Widget
 
     private $bg;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setName("Checkpoint counter (storm)");
     }
 
-    protected function exp_onEndConstruct()
+    protected function eXpOnEndConstruct()
     {
 
         $this->bg = new \ManiaLib\Gui\Elements\Quad(30, 10);

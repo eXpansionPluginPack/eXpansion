@@ -20,7 +20,7 @@ class ScriptSetting extends \ManiaLivePlugins\eXpansion\Gui\Control
      * @param mixed $value
      * @param int $sizeX
      */
-    function __construct($indexNumber, $settingName, $value, $sizeX)
+    public function __construct($indexNumber, $settingName, $value, $sizeX)
     {
         $sizeY = 6;
         $this->settingName = $settingName;
@@ -84,12 +84,8 @@ class ScriptSetting extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 
-    function destroy()
+    public function destroy()
     {
         parent::destroy();
     }
-
 }
-
-?>
-

@@ -14,9 +14,9 @@ class FaqWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     protected $frame, $label_help, $icon_help;
     private $action_help;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
         $this->setName("Faq Widget");
         $login = $this->getRecipient();
 

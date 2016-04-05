@@ -31,9 +31,9 @@ class AdminPanel extends Widget
     protected $actionBalance;
     public static $mainPlugin;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
         $this->setName("Admin Panel");
 
         $this->actionEndRound = $this->createAction(array($this, 'actions'), "forceEndRound");
@@ -102,7 +102,7 @@ class AdminPanel extends Widget
         $this->_windowFrame->addComponent($this->_minButton);
     }
 
-    protected function exp_onSettingsLoaded()
+    protected function eXpOnSettingsLoaded()
     {
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
         $script->setParam('isMinimized', 'True');
@@ -113,7 +113,7 @@ class AdminPanel extends Widget
         $this->registerScript($script);
     }
 
-    function actions($login, $action)
+    public function actions($login, $action)
     {
         try {
             switch ($action) {
@@ -138,7 +138,7 @@ class AdminPanel extends Widget
         }
     }
 
-    function onDraw()
+    protected function onDraw()
     {
         parent::onDraw();
         $this->btnRestart->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::map_restart));
@@ -148,11 +148,9 @@ class AdminPanel extends Widget
         $this->btnBalance->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::team_balance));
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();
     }
 }
-
-?>

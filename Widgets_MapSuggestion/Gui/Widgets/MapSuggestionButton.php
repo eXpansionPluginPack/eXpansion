@@ -13,9 +13,9 @@ class MapSuggestionButton extends Widget
      */
     public $btn_wish;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
         $line = new \ManiaLive\Gui\Controls\Frame(6, 0);
         $line->setAlign("center", "top");
         $line->setLayout(new \ManiaLib\Gui\Layouts\Line());

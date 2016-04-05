@@ -6,10 +6,10 @@ namespace ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Widgets;
 class DediPanel2 extends PlainPanel
 {
 
-    function exp_onBeginConstruct()
+    function eXpOnBeginConstruct()
     {
         // $this->setName("Dedimania Panel (Tab-layer)");
-        parent::exp_onBeginConstruct();
+        parent::eXpOnBeginConstruct();
 
         $this->timeScript->setParam('varName', 'DediTime2');
     }

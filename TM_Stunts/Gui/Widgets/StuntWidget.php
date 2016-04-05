@@ -29,7 +29,7 @@ class StuntWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     private $lbl_stuntName, $lbl_description, $frame, $script;
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setName("Stunts Widget");
 

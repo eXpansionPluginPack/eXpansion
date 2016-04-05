@@ -14,7 +14,7 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     public static $donatePlugin;
     private $items = array();
 
-    protected function exp_onBeginConstruct()
+    protected function eXpOnBeginConstruct()
     {
         $this->setName("Donate Panel");
         $login = $this->getRecipient();
@@ -60,7 +60,7 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->_windowFrame->addComponent($this->_minButton);
     }
 
-    protected function exp_onSettingsLoaded()
+    protected function eXpOnSettingsLoaded()
     {
 
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
