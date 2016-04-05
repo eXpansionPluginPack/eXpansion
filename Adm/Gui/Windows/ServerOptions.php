@@ -26,24 +26,40 @@ use Maniaplanet\DedicatedServer\Structures\ServerOptions as Dedicated_ServerOpti
 class ServerOptions extends Window
 {
 
-    private $serverName, $serverComment, $maxPlayers, $maxSpec, $minLadder, $maxLadder, $serverPass, $serverSpecPass, $refereePass;
+    private $serverName;
+	private $serverComment;
+	private $maxPlayers;
+	private $maxSpec;
+	private $minLadder;
+	private $maxLadder;
+	private $serverPass;
+	private $serverSpecPass;
+	private $refereePass;
 
-    private $cbPublicServer, $cbLadderServer, $cbAllowMapDl, $cbAllowp2pDown, $cbAllowp2pUp, $cbReferee;
+    private $cbPublicServer;
+	private $cbLadderServer;
+	private $cbAllowMapDl;
+	private $cbAllowp2pDown;
+	private $cbAllowp2pUp;
+	private $cbReferee;
 
     private $frameCb;
 
-    private $frameInputbox, $frameLadder;
+    private $frameInputbox;
+    private $frameLadder;
 
-    private $buttonOK, $buttonCancel;
+    private $buttonOK;
+    private $buttonCancel;
 
     /** @var Connection */
     private $connection;
 
-    private $actionOK, $actionCancel;
+    private $actionOK;
+	private $actionCancel;
 
     private $e = array();
 
-    function onConstruct()
+    public function onConstruct()
     {
         parent::onConstruct();
         $config = Config::getInstance();
@@ -250,7 +266,7 @@ class ServerOptions extends Window
         $this->frameCb->addComponent($frame);
     }
 
-    function onDraw()
+    protected function onDraw()
     {
         $login = $this->getRecipient();
 
@@ -273,7 +289,7 @@ class ServerOptions extends Window
         parent::onDraw();
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->buttonCancel->destroy();
         $this->buttonOK->destroy();
@@ -302,7 +318,7 @@ class ServerOptions extends Window
         parent::destroy();
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         //   $this->pager->setSize($this->sizeX - 4, $this->sizeY -12);

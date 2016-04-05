@@ -19,7 +19,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     private $actions;
 
 
-    function onConstruct()
+    public function onConstruct()
     {
         parent::onConstruct();
         $login = $this->getRecipient();
@@ -59,7 +59,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $btn->setAction($this->actions->serverOptions);
         $this->frame->addComponent($btn);
 
-        if (!$this->exp_isRelay()) {
+        if (!$this->eXpIsRelay()) {
             $btn = new myButton($btnX, $btnY);
             $btn->setText(__("Game options", $login));
             $btn->setAction($this->actions->gameOptions);
@@ -71,7 +71,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $btn->setAction($this->actions->adminGroups);
         $this->frame->addComponent($btn);
 
-        if (!$this->exp_isRelay()) {
+        if (!$this->eXpIsRelay()) {
             $btn = new myButton($btnX, $btnY);
             $btn->setText(__("Match settings", $login));
             $btn->setAction($this->actions->matchSettings);
@@ -108,7 +108,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $btnDb->setAction($this->actions->pluginManagement);
         $this->frame->addComponent($btnDb);
 
-        if (!$this->exp_isRelay()) {
+        if (!$this->eXpIsRelay()) {
             $btn = new myButton($btnX, $btnY);
             $btn->setText(__("Configure Votes", $login));
             $btn->setAction($this->actions->votesConfig);
@@ -119,12 +119,12 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
     }
 
-    function destroy()
+    public function destroy()
     {
 
         $this->frame->clearComponents();
@@ -134,7 +134,7 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::destroy();
     }
 
-    public function exp_isRelay()
+    public function eXpIsRelay()
     {
         return Storage::getInstance()->isRelay;
     }

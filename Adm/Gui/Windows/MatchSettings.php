@@ -20,18 +20,20 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     private $items = array();
 
-    private $inputboxSaveAs, $inputboxLoadAs;
+    private $inputboxSaveAs;
+    private $inputboxLoadAs;
 
-    private $actionSave, $actionLoad;
+    private $actionSave;
+    private $actionLoad;
 
-    private $saveButton, $loadButton;
+    private $saveButton;
+    private $loadButton;
 
     private $frame;
 
     protected function onConstruct()
     {
         parent::onConstruct();
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
@@ -72,7 +74,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->pager);
     }
 
-    function saveAs($login, $entries)
+    public function saveAs($login, $entries)
     {
 
         try {
@@ -94,7 +96,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function loadAs($login, $entries)
+    public function loadAs($login, $entries)
     {
 
         try {
@@ -116,7 +118,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function deleteSetting($login, $filename)
+    public function deleteSetting($login, $filename)
     {
 
         try {
@@ -130,7 +132,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function saveSettings($login, $filename)
+    public function saveSettings($login, $filename)
     {
 
         try {
@@ -142,7 +144,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function loadSettings($login, $filename)
+    public function loadSettings($login, $filename)
     {
         try {
             $this->connection->loadMatchSettings($filename);
@@ -153,10 +155,9 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
-
 
         $this->frame->setPosition(4, -4);
         $this->pager->setPosY(-6);
@@ -164,24 +165,27 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->setStretchContentX($this->sizeX);
     }
 
-    function onShow()
+    protected function onShow()
     {
         $this->populateList();
     }
 
-    public function onDraw()
+    protected function onDraw()
     {
         parent::onDraw();
         $this->frame->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::game_matchSave));
     }
 
-    function populateList()
+    public function populateList()
     {
 
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
+
         $this->pager->clearItems();
         $this->items = array();
+
         if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
             $this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(1, __("File listing disabled since you are running remote", $this->getRecipient()), $this->sizeX);
             $this->pager->addItem($this->items[0]);
@@ -202,10 +206,11 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function destroy()
+    public function destroy()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->items = array();
 
@@ -221,5 +226,3 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

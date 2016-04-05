@@ -6,9 +6,10 @@ use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted as Checkbox;
 use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use \Maniaplanet\DedicatedServer\Structures\GameInfos;
 
-class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class GameOptions extends Window
 {
     /** @var  \Maniaplanet\DedicatedServer\Connection */
     private $connection;
@@ -18,21 +19,43 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     /** @var GameInfos */
     private $nextGameInfo;
-    protected $actionOK, $actionCancel, $actionTA, $actionRounds, $actionLaps, $actionCup, $actionTeam;
-    protected $btn_ta, $btn_rounds, $btn_cup, $btn_team, $btn_laps, $buttonOK, $buttonCancel;
-    protected $frameGameMode, $frameGeneral, $frameCup, $frameTa, $frameRounds, $frameLaps, $frameContainer;
+    
+    protected $actionOK;
+	protected $actionCancel;
+	protected $actionTA;
+	protected $actionRounds;
+	protected $actionLaps;
+	protected $actionCup;
+	protected $actionTeam;
+
+    protected $buttonTA;
+	protected $buttonRounds;
+	protected $buttonCup;
+	protected $buttonTeams;
+	protected $buttonLaps;
+	protected $buttonOK;
+	protected $buttonCancel;
+
+    protected $frameTeam;
+    protected $frameGameMode;
+	protected $frameGeneral;
+	protected $frameCup;
+	protected $frameTa;
+	protected $frameRounds;
+	protected $frameLaps;
+	protected $frameContainer;
+    
     private $e = array();
     private $nextMode = null;
 
     function onConstruct()
     {
         parent::onConstruct();
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
-        $this->actionOK = $this->createAction(array($this, "Ok"));
-        $this->actionCancel = $this->createAction(array($this, "Cancel"));
+        $this->actionOK = $this->createAction(array($this, "ok"));
+        $this->actionCancel = $this->createAction(array($this, "cancel"));
         $this->actionTA = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_TIMEATTACK);
         $this->actionRounds = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_ROUNDS);
         $this->actionLaps = $this->createAction(array($this, "setGamemode"), GameInfos::GAMEMODE_LAPS);
@@ -248,35 +271,45 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $lbl->setTextSize(1);
         $this->frameGameMode->addComponent($lbl);
 
-        $this->btn_ta = new Ratiobutton();
-        $this->btn_ta->setText(__("Time Attack", $login));
-        $this->btn_ta->setAction($this->actionTA);
-        if ($this->nextMode == GameInfos::GAMEMODE_TIMEATTACK) $this->btn_ta->setStatus(true);
-        $this->frameGameMode->addComponent($this->btn_ta);
+        $this->buttonTA = new Ratiobutton();
+        $this->buttonTA->setText(__("Time Attack", $login));
+        $this->buttonTA->setAction($this->actionTA);
+        if ($this->nextMode == GameInfos::GAMEMODE_TIMEATTACK) {
+            $this->buttonTA->setStatus(true);
+        }
+        $this->frameGameMode->addComponent($this->buttonTA);
 
-        $this->btn_rounds = new Ratiobutton();
-        $this->btn_rounds->setText(__("Rounds", $login));
-        $this->btn_rounds->setAction($this->actionRounds);
-        if ($this->nextMode == GameInfos::GAMEMODE_ROUNDS) $this->btn_rounds->setStatus(true);
-        $this->frameGameMode->addComponent($this->btn_rounds);
+        $this->buttonRounds = new Ratiobutton();
+        $this->buttonRounds->setText(__("Rounds", $login));
+        $this->buttonRounds->setAction($this->actionRounds);
+        if ($this->nextMode == GameInfos::GAMEMODE_ROUNDS) {
+            $this->buttonRounds->setStatus(true);
+        }
+        $this->frameGameMode->addComponent($this->buttonRounds);
 
-        $this->btn_cup = new Ratiobutton();
-        $this->btn_cup->setText(__("Cup", $login));
-        $this->btn_cup->setAction($this->actionCup);
-        if ($this->nextMode == GameInfos::GAMEMODE_CUP) $this->btn_cup->setStatus(true);
-        $this->frameGameMode->addComponent($this->btn_cup);
+        $this->buttonCup = new Ratiobutton();
+        $this->buttonCup->setText(__("Cup", $login));
+        $this->buttonCup->setAction($this->actionCup);
+        if ($this->nextMode == GameInfos::GAMEMODE_CUP) {
+            $this->buttonCup->setStatus(true);
+        }
+        $this->frameGameMode->addComponent($this->buttonCup);
 
-        $this->btn_laps = new Ratiobutton();
-        $this->btn_laps->setText(__("Laps", $login));
-        $this->btn_laps->setAction($this->actionLaps);
-        if ($this->nextMode == GameInfos::GAMEMODE_LAPS) $this->btn_laps->setStatus(true);
-        $this->frameGameMode->addComponent($this->btn_laps);
+        $this->buttonLaps = new Ratiobutton();
+        $this->buttonLaps->setText(__("Laps", $login));
+        $this->buttonLaps->setAction($this->actionLaps);
+        if ($this->nextMode == GameInfos::GAMEMODE_LAPS) {
+            $this->buttonLaps->setStatus(true);
+        }
+        $this->frameGameMode->addComponent($this->buttonLaps);
 
-        $this->btn_team = new Ratiobutton();
-        $this->btn_team->setText(__("Team", $login));
-        $this->btn_team->setAction($this->actionTeam);
-        if ($this->nextMode == GameInfos::GAMEMODE_TEAM) $this->btn_team->setStatus(true);
-        $this->frameGameMode->addComponent($this->btn_team);
+        $this->buttonTeams = new Ratiobutton();
+        $this->buttonTeams->setText(__("Team", $login));
+        $this->buttonTeams->setAction($this->actionTeam);
+        if ($this->nextMode == GameInfos::GAMEMODE_TEAM) {
+            $this->buttonTeams->setStatus(true);
+        }
+        $this->frameGameMode->addComponent($this->buttonTeams);
 
         $lbl = new \ManiaLib\Gui\Elements\Label(25, 8);
         $lbl->setText(__("Additional Options:", $login));
@@ -286,25 +319,33 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $this->e['roundsUseNewRules'] = new Checkbox(4, 4, 30);
         $this->e['roundsUseNewRules']->setPosX(-1);
-        if ($this->nextGameInfo->roundsUseNewRules) $this->e['roundsUseNewRules']->setStatus(true);
+        if ($this->nextGameInfo->roundsUseNewRules) {
+            $this->e['roundsUseNewRules']->setStatus(true);
+        }
         $this->e['roundsUseNewRules']->setText(__("Rounds: use new rules", $login));
         $this->frameGameMode->addComponent($this->e['roundsUseNewRules']);
 
         $this->e['teamUseNewRules'] = new Checkbox(4, 4, 30);
         $this->e['teamUseNewRules']->setPosX(-1);
-        if ($this->nextGameInfo->teamUseNewRules) $this->e['teamUseNewRules']->setStatus(true);
+        if ($this->nextGameInfo->teamUseNewRules) {
+            $this->e['teamUseNewRules']->setStatus(true);
+        }
         $this->e['teamUseNewRules']->setText(__("Team: use new rules", $login));
         $this->frameGameMode->addComponent($this->e['teamUseNewRules']);
 
         $this->e['DisableRespawn'] = new Checkbox(4, 4, 30);
         $this->e['DisableRespawn']->setPosX(-1);
-        if ($this->nextGameInfo->disableRespawn) $this->e['DisableRespawn']->setStatus(true);
+        if ($this->nextGameInfo->disableRespawn) {
+            $this->e['DisableRespawn']->setStatus(true);
+        }
         $this->e['DisableRespawn']->setText(__("Disable Respawn", $login));
         $this->frameGameMode->addComponent($this->e['DisableRespawn']);
 
         $this->e['ForceShowAllOpponents'] = new Checkbox(4, 4, 30);
         $this->e['ForceShowAllOpponents']->setPosX(-1);
-        if ($this->nextGameInfo->forceShowAllOpponents) $this->e['ForceShowAllOpponents']->setStatus(true);
+        if ($this->nextGameInfo->forceShowAllOpponents) {
+            $this->e['ForceShowAllOpponents']->setStatus(true);
+        }
 
         $this->e['ForceShowAllOpponents']->setText(__("Force Show All Opponents", $login));
         $this->frameGameMode->addComponent($this->e['ForceShowAllOpponents']);
@@ -312,7 +353,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->frameGameMode);
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->frameGameMode->setPosition($this->sizeX - 36, 0);
@@ -321,7 +362,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->buttonCancel->setPosition($this->sizeX - $this->buttonCancel->sizeX + 5, -$this->sizeY + 2);
     }
 
-    function setGameMode($login, $gameMode)
+    public function setGameMode($login, $gameMode)
     {
         $this->nextMode = $gameMode;
 //$this->connection->chatSendServerMessage(__('$fff Next Gamemode is now set to $o%s', $this->getRecipient(), $mode));
@@ -333,7 +374,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->RedrawAll();
     }
 
-    public function Ok($login, $options)
+    public function ok($login, $options)
     {
         $gameInfos = $this->nextGameInfo;
 
@@ -343,7 +384,7 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             }
         }
 
-        // general
+        //general
         $gameInfos->allWarmUpDuration = intval($options['AllWarmupDuration']);
         $gameInfos->cupWarmUpDuration = intval($options['AllWarmupDuration']);
         $gameInfos->finishTimeout = intval(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['finishTimeOut']));
@@ -358,21 +399,21 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $gameInfos->gameMode = $this->nextMode;
 
-        // ta
+        //ta
         $gameInfos->timeAttackLimit = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['timeAttackLimit']);
         $gameInfos->timeAttackSynchStartPeriod = intval($options['timeAttackSynchStartPeriod']);
 
-        // rounds
+        //rounds
         $gameInfos->roundsForcedLaps = intval($options['roundsForcedLaps']);
         $gameInfos->roundsPointsLimit = intval($options['roundsPointsLimit']);
         $gameInfos->roundsPointsLimitNewRules = intval($options['roundsPointsLimitNewRules']);
 
-        // team            
+        //team
         $gameInfos->teamPointsLimit = intval($options['teamPointsLimit']);
         $gameInfos->teamPointsLimitNewRules = intval($options['teamPointsLimitNewRules']);
         $gameInfos->teamMaxPoints = intval($options['teamMaxPoints']);
 
-        // cup
+        //cup
         $gameInfos->cupNbWinners = intval($options['cupNbWinners']);
         $gameInfos->cupPointsLimit = intval($options['cupPointsLimit']);
         $gameInfos->cupRoundsPerMap = intval($options['cupRoundsPerMap']);
@@ -390,24 +431,25 @@ class GameOptions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->Erase($login);
     }
 
-    public function Cancel($login)
+    public function cancel($login)
     {
         $this->Erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->connection = null;
         $this->storage = null;
 
-        $this->btn_cup->destroy();
-        $this->btn_laps->destroy();
-        $this->btn_rounds->destroy();
-        $this->btn_ta->destroy();
-        $this->btn_team->destroy();
+        $this->buttonCup->destroy();
+        $this->buttonLaps->destroy();
+        $this->buttonRounds->destroy();
+        $this->buttonTA->destroy();
+        $this->buttonTeams->destroy();
 
-        foreach ($this->e as $item)
+        foreach ($this->e as $item) {
             $item->destroy();
+        }
         $this->e = array();
 
         $this->frameContainer->clearComponents();

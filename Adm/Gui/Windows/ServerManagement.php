@@ -23,12 +23,13 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     private $frame;
     private $closeButton;
     private $actions;
-    private $btn1, $btn2;
+    private $btn1;
+    private $btn2;
 
     protected function onConstruct()
     {
         parent::onConstruct();
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
+
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
@@ -64,7 +65,7 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->addComponent($this->closeButton);
     }
 
-    public function onDraw()
+    protected function onDraw()
     {
 
         $this->btn1->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::server_stopDedicated));
@@ -73,31 +74,31 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onDraw();
     }
 
-    function stopServer($login)
+    public function stopServer($login)
     {
         $this->connection->stopServer();
     }
 
-    function stopManialive($login)
+    public function stopManialive($login)
     {
         $this->connection->chatSendServerMessage("[Notice] Stopping eXpansion...");
         $this->connection->sendHideManialinkPage();
         \ManiaLive\Application\Application::getInstance()->kill();
     }
 
-    function close()
+    public function close()
     {
         $this->Erase($this->getRecipient());
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->frame->setPosition(2, -6);
         $this->closeButton->setPosition($this->sizeX - 28, -($this->sizeY - 6));
     }
 
-    function destroy()
+    public function destroy()
     {
         ActionHandler::getInstance()->deleteAction($this->actions->close);
         ActionHandler::getInstance()->deleteAction($this->actions->stopServer);
@@ -112,5 +113,3 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

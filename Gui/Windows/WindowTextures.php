@@ -134,7 +134,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $element = 12;
@@ -250,34 +250,33 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         \ManiaLive\Gui\Manialinks::appendXML($dico->getXml());
     }
 
-    function setTitle($text, $parameter = "")
+    public function setTitle($text, $parameter = "")
     {
         $this->_name = $text;
         $this->_title->setText($text . " " . $parameter);
-        // $this->_title2->setText($text . " " . $parameter);
     }
 
-    function closeWindow()
+    public function closeWindow()
     {
         $this->erase($this->getRecipient());
     }
 
-    function addScriptToMain($script)
+    public function addScriptToMain($script)
     {
         $this->dDeclares .= $script;
     }
 
-    function addScriptToWhile($script)
+    public function addScriptToWhile($script)
     {
         $this->wLoop .= $script;
     }
 
-    function addScriptToLib($script)
+    public function addScriptToLib($script)
     {
         $this->scriptLib .= $script;
     }
 
-    function destroy()
+    public function destroy()
     {
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->_closeAction);
         $this->_windowFrame->clearComponents();
@@ -289,7 +288,6 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
         parent::destroy();
 
-// echo "window: #";
         foreach ($this as $index => $value) {
             if (\is_object($value)) {
 
@@ -313,7 +311,6 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
                 unset($this->$index);
             }
         }
-        //	echo "\n";
     }
 
     /**

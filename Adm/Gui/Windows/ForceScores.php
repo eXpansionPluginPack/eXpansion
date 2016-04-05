@@ -32,7 +32,9 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     protected $buttonframe;
 
-    protected $btn_clearScores, $btn_resetSkip, $btn_resetRes;
+    protected $btn_clearScores;
+    protected $btn_resetSkip;
+    protected $btn_resetRes;
 
     public static $mainPlugin;
 
@@ -40,14 +42,14 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         parent::onConstruct();
         $login = $this->getRecipient();
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
+
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
-        $this->actionOk = $this->createAction(array($this, "Ok"));
-        $this->actionCancel = $this->createAction(array($this, "Cancel"));
+        $this->actionOk = $this->createAction(array($this, "ok"));
+        $this->actionCancel = $this->createAction(array($this, "cancel"));
 
         $this->buttonframe = new \ManiaLive\Gui\Controls\Frame(40, 2);
         $line = new \ManiaLib\Gui\Layouts\Line();
@@ -84,7 +86,7 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->cancel);
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX, $this->sizeY - 8);
@@ -93,12 +95,12 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->cancel->setPosition($this->sizeX - 24, -$this->sizeY + 6);
     }
 
-    function onShow()
+    protected function onShow()
     {
         $this->populateList();
     }
 
-    function populateList()
+    public function populateList()
     {
         foreach ($this->items as $item)
             $item->erase();
@@ -115,7 +117,7 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function Ok($login, $scores)
+    public function ok($login, $scores)
     {
         $outScores = array();
 
@@ -128,7 +130,7 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->erase($login);
     }
 
-    function resetScores($login)
+    public function resetScores($login)
     {
         $rankings = $this->connection->getCurrentRanking(-1, 0);
         $outScores = array();
@@ -156,15 +158,16 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->Erase($login);
     }
 
-    function Cancel($login)
+    public function cancel($login)
     {
         $this->Erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->items = array();
         $this->pager->destroy();
@@ -175,7 +178,4 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>

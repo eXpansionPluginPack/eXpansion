@@ -31,14 +31,14 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         parent::onConstruct();
         $login = $this->getRecipient();
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
+
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
 
-        $this->actionCancel = $this->createAction(array($this, "Cancel"));
+        $this->actionCancel = $this->createAction(array($this, "cancel"));
 
 
         $this->cancel = new OkButton();
@@ -61,22 +61,23 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX, $this->sizeY - 8);
         $this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
     }
 
-    function onShow()
+    protected function onShow()
     {
         $this->populateList();
     }
 
-    function populateList()
+    public function populateList()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
         $this->pager->clearItems();
         $this->items = array();
 
@@ -95,14 +96,15 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function setPoints($login, $points, $entry)
+    public function setPoints($login, $points, $entry)
     {
         if ($points === null) {
             if (!empty($entry['customPoints'])) {
                 $points = explode(",", $entry['customPoints']);
                 rsort($points, SORT_NUMERIC);
-                foreach ($points as $p)
+                foreach ($points as $p) {
                     $intPoints[] = intval($p);
+                }
                 self::$plugin->setPoints($login, $intPoints);
             }
         } else {
@@ -111,12 +113,12 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->erase($login);
     }
 
-    function Cancel($login)
+    public function cancel($login)
     {
         $this->erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item)
             $item->erase();
@@ -131,5 +133,3 @@ class RoundPoints extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>
