@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="eXpansion" default="ci" basedir=".">
-    <property name="source" value="."/>
+    <property name="source" value="." />
 
     <target name="ci"
-            description="Launch Jenkins targets"
-            depends="clean,qa"
+        description="Launch Jenkins targets"
+        depends="clean,qa"
     />
 
     <target name="clean" description="Delete unwanted files.">
@@ -12,23 +12,21 @@
     </target>
 
     <target name="qa" description="Launch quality analyse tools">
-        <phingcall target="phpcs"/>
-        <phingcall target="phpmd"/>
-        <phingcall target="phploc"/>
+        <phingcall target="phpcs" />
+        <!--<phingcall target="phpmd" />-->
+        <phingcall target="phploc" />
     </target>
-
+    
     <target name="phpmd">
         <phpmd file="${project.basedir}/${source}">
-            <formatter type="xml" outfile="${project.basedir}/build/phpmd/build.xml"/>
+            <formatter type="xml" outfile="${project.basedir}/build/phpmd/build.xml" />
         </phpmd>
     </target>
-
+    
     <target name="phploc">
-        <exec logoutput="true" dir="${project.basedir}"
-              command="phploc --log-csv '${project.basedir}/build/logs/phploc.csv' '${project.basedir}/${source}'"
-              escape="false"/>
+        <exec logoutput="true" dir="${project.basedir}" command="phploc --log-csv '${project.basedir}/build/logs/phploc.csv' '${project.basedir}/${source}'" escape="false" />
     </target>
-
+    
     <target name="phpcs">
         <phpcodesniffer standard="PSR2">
             <fileset dir="${project.basedir}/${source}">
