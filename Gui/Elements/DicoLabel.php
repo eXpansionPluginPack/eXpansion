@@ -30,6 +30,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
  * new localized contentfiles are then at plugin\messages folder.
  *
  * note: eXpansion widgets and windows autocreate dico elements from this class :)
+ *
  * @author Petri
  */
 class DicoLabel extends \ManiaLib\Gui\Elements\Label

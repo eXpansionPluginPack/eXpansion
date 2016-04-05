@@ -95,6 +95,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
             } else {
                 $this->run();
             }
+
             return;
         } else {
             $command = 'nohup ' . $cmd . ' >> tmp/' . $this->fileName . ' 2>&1 & echo $!';

@@ -14,6 +14,7 @@ class ExpPlugin extends BasicPlugin
 
     /**
      * The actual Version of the Expansion Pack
+     *
      * @return type
      */
     public static function getMaxVersion()

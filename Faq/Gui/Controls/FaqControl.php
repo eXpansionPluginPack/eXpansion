@@ -22,6 +22,7 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label->setText($text);
         $this->label->setTextSize(1);
         $this->addComponent($this->label);
+
         return $this;
     }
 
@@ -29,6 +30,7 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         $this->setPosX($index * 6);
         $this->setSize(240 - ($index * 6), 4);
+
         return $this;
     }
 
@@ -37,12 +39,14 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label->setTextColor("3af");
         $this->action = $this->createAction(array(\ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWindow::$mainPlugin, "showFaq"), $file, null);
         $this->label->setAction($this->action);
+
         return $this;
     }
 
     public function setText($text)
     {
         $this->label->setText($text);
+
         return $this;
     }
 

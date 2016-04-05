@@ -122,6 +122,7 @@ class InGameHud extends \ManiaLib\Utils\Singleton
         if ($this->{$var} === true) {
             return "true";
         }
+
         return "false";
     }
 

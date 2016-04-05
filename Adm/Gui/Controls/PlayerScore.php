@@ -12,9 +12,9 @@ class PlayerScore extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param int $indexNumber
+     * @param int                                                   $indexNumber
      * @param \Maniaplanet\DedicatedServer\Structures\PlayerRanking $player
-     * @param int $sizeX
+     * @param int                                                   $sizeX
      */
     public function __construct($indexNumber, $player, $sizeX)
     {

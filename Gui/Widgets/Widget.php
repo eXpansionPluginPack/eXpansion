@@ -192,6 +192,7 @@ class Widget extends PlainWidget
 
     /**
      * disable moving for certaint axis
+     *
      * @param string $axis accepts values: "x" or "y"
      */
     function setDisableAxis($axis)
@@ -201,9 +202,10 @@ class Widget extends PlainWidget
 
     /**
      * set a custom position for a gamemode
+     *
      * @param string $gameMode
-     * @param float $posX
-     * @param float $posY
+     * @param float  $posX
+     * @param float  $posY
      */
     function setPositionForGamemode($gameMode, $posX, $posY)
     {
@@ -214,15 +216,18 @@ class Widget extends PlainWidget
     {
         if (isset($this->widgetVisible[$this->storage->gameInfos->gameMode])) {
             $value = $this->widgetVisible[$this->storage->gameInfos->gameMode];
+
             return $this->getBoolean($value);
         }
+
         return "True";
     }
 
     /**
      * Sets visibility of the widget according to gamemode
+     *
      * @param string $gameMode
-     * @param bool $value
+     * @param bool   $value
      */
     function setVisibilityForGamemode($gameMode, $value)
     {
@@ -248,6 +253,7 @@ class Widget extends PlainWidget
         if (isset($this->positions[$this->storage->gameInfos->gameMode])) {
             return $this->positions[$this->storage->gameInfos->gameMode][1];
         }
+
         return $this->posY;
     }
 

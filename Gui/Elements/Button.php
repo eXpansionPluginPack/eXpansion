@@ -26,7 +26,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
     /**
      * Button
      *
-     * @param int $sizeX = 24
+     * @param int  $sizeX = 24
      * @param intt $sizeY = 6
      */
     function __construct($sizeX = 32, $sizeY = 6)
@@ -181,6 +181,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
     /**
      * Colorize the button background
+     *
      * @param string $value 4-digit RGBa code
      */
     function colorize($value)
@@ -194,6 +195,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
     /**
      * Sets text color
+     *
      * @param string $value 4-digit RGBa code
      */
     function setTextColor($textcolor)

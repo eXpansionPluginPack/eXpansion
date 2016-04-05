@@ -91,7 +91,7 @@ class Menu extends ExpPlugin
                     $this->callPublicMethod($this->getPluginName("Maps"), "addMaps", $login);
                     break;
                 case "maprecords":
-                    $this->callPublicMethod($this->getPluginName("LocalRecords"), "showRecsWindow", $login, Null);
+                    $this->callPublicMethod($this->getPluginName("LocalRecords"), "showRecsWindow", $login, null);
                     break;
                 case "voteres":
                     $plugin = $this->getPluginName("Votes");

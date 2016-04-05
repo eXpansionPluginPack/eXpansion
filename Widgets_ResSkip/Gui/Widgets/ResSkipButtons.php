@@ -34,7 +34,7 @@ class ResSkipButtons extends Widget
             array(
                 exp_getMessage('AddToFav:$s$fffAdd'),
                 exp_getMessage('AddToFav:$s$fffto'),
-                exp_getMessage('AddToFav:$s$fffFav\'s')
+                exp_getMessage('AddToFav:$s$fffFav\'s'),
             )
         );
         $line->addComponent($this->btn_fav);
@@ -70,7 +70,7 @@ class ResSkipButtons extends Widget
                 array(
                     exp_getMessage('AddToFav:$ff0Max'),
                     exp_getMessage('AddToFav:$fffrestarts'),
-                    exp_getMessage('AddToFav:$ff0reached')
+                    exp_getMessage('AddToFav:$ff0reached'),
                 )
             );
             $this->btn_res->setAction(null);
@@ -93,7 +93,7 @@ class ResSkipButtons extends Widget
                 array(
                     exp_getMessage('AddToFav:$ff0Max'),
                     exp_getMessage('AddToFav:$fffskips'),
-                    exp_getMessage('AddToFav:$ff0reached')
+                    exp_getMessage('AddToFav:$ff0reached'),
                 )
             );
             $this->btn_skip->setAction(null);

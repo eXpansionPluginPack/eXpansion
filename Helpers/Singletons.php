@@ -43,6 +43,7 @@ class Singletons extends Singleton
             $config = \ManiaLive\DedicatedApi\Config::getInstance();
             $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($config->host, $config->port);
         }
+
         return $this->connection;
     }
 

@@ -106,6 +106,7 @@ class KnockOut extends ExpPlugin
 
     /**
      * creates array of KOplayers from players not specating at the moment.
+     *
      * @return KOplayer[]
      */
     public function getNewPlayers()
@@ -114,17 +115,20 @@ class KnockOut extends ExpPlugin
         foreach ($this->storage->players as $login => $player) {
             $outPlayers[$login] = new KOplayer($player);
         }
+
         return $outPlayers;
     }
 
     public function getNewPlayer($login)
     {
         $player = $this->storage->getPlayerObject($login);
+
         return new KOplayer($player);
     }
 
     /**
      * Starts the KnockOut
+     *
      * @param string $login
      */
     public function koStart()
@@ -150,6 +154,7 @@ class KnockOut extends ExpPlugin
 
     /**
      * Stops
+     *
      * @param string $login
      */
     public function koStop()
@@ -282,6 +287,7 @@ class KnockOut extends ExpPlugin
                 }
             }
         }
+
         return $outArray;
     }
 

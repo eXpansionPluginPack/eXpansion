@@ -172,6 +172,7 @@ class GBXBaseFetcher
         $data = '';
         while ($len-- > 0)
             $data .= $this->_gbxdata[$this->_gbxptr++];
+
         return $data;
     }
 
@@ -180,6 +181,7 @@ class GBXBaseFetcher
     {
         $data = $this->readData(1);
         list(, $int8) = unpack('c*', $data);
+
         return $int8;
     }
 
@@ -190,6 +192,7 @@ class GBXBaseFetcher
         if ($this->_endianess == self::BIG_ENDIAN_ORDER)
             $data = strrev($data);
         list(, $int16) = unpack('s*', $data);
+
         return $int16;
     }
 
@@ -200,6 +203,7 @@ class GBXBaseFetcher
         if ($this->_endianess == self::BIG_ENDIAN_ORDER)
             $data = strrev($data);
         list(, $int32) = unpack('l*', $data);
+
         return $int32;
     }
 
@@ -215,6 +219,7 @@ class GBXBaseFetcher
                     $len, $len, $gbxptr), 3);
         }
         $data = $this->readData($len);
+
         return $data;
     }
 
@@ -332,8 +337,10 @@ class GBXBaseFetcher
 
     /**
      * Check GBX header, main class ID & header block
+     *
      * @param Array $classes
      *              The main class IDs accepted for this GBX
+     *
      * @return Size of GBX header block
      */
     protected function checkHeader(array $classes)
@@ -358,15 +365,18 @@ class GBXBaseFetcher
         $headerSize = $this->readInt32();
         $this->debugLog(sprintf('GBX header block size: %d (%.1f KB)',
             $headerSize, $headerSize / 1024));
+
         return $headerSize;
     }  // checkHeader
 
     /**
      * Get list of chunks from GBX header block
-     * @param Int $headerSize
+     *
+     * @param Int   $headerSize
      *        Size of header block (chunks list & chunks data)
      * @param array $chunks
      *        List of chunk IDs & names
+     *
      * @return List of chunk offsets & sizes
      */
     protected function getChunksList($headerSize, array $chunks)
@@ -392,7 +402,7 @@ class GBXBaseFetcher
                 $name = $chunks[$chunkId];
                 $chunksList[$name] = array(
                     'off' => $chunkOffset,
-                    'size' => $chunkSize
+                    'size' => $chunkSize,
                 );
             } else {
                 $name = 'UNKNOWN';
@@ -413,6 +423,7 @@ class GBXBaseFetcher
 
     /**
      * Initialize for a new chunk
+     *
      * @param int $offset
      */
     protected function initChunk($offset)
@@ -423,6 +434,7 @@ class GBXBaseFetcher
 
     /**
      * Get XML chunk from GBX header block & optionally parse it
+     *
      * @param array $chunksList
      *        List of chunk offsets & sizes
      */
@@ -457,6 +469,7 @@ class GBXBaseFetcher
 
     /**
      * Get Author chunk from GBX header block
+     *
      * @param array $chunksList
      *        List of chunk offsets & sizes
      */
@@ -475,6 +488,7 @@ class GBXBaseFetcher
      * Read Windows FileTime and convert to Unix timestamp
      * Filetime = 64-bit value with the number of 100-nsec intervals since Jan 1, 1601 (UTC)
      * Based on http://www.mysqlperformanceblog.com/2007/03/27/integers-in-php-running-with-scissors-and-portability/
+     *
      * @return Unix timestamp, or -1 on error
      */
     protected function readFiletime()
@@ -499,6 +513,7 @@ class GBXBaseFetcher
             $stamp = ($date - (int)$EPOCHDIFF) / 10;
             $this->debugLog(sprintf('PAK CreationDate 64-bit: %u.%06u',
                 $stamp / $USEC2SEC, $stamp % $USEC2SEC));
+
             return (int)($stamp / $USEC2SEC);
 
             // check for 32-bit platform
@@ -518,6 +533,7 @@ class GBXBaseFetcher
                 $stamp = gmp_div_qr($stamp, $USEC2SEC);
                 $this->debugLog(sprintf('PAK CreationDate GNU MP: %u.%06u',
                     gmp_strval($stamp[0]), gmp_strval($stamp[1])));
+
                 return (int)gmp_strval($stamp[0]);
             }
 
@@ -528,6 +544,7 @@ class GBXBaseFetcher
                 $stamp = bcdiv(bcsub($date, $EPOCHDIFF), 10, 0);
                 $this->debugLog(sprintf('PAK CreationDate BCMath: %u.%06u',
                     bcdiv($stamp, $USEC2SEC), bcmod($stamp, $USEC2SEC)));
+
                 return (int)bcdiv($stamp, $USEC2SEC);
             }
 
@@ -571,6 +588,7 @@ class GBXBaseFetcher
             $stamp = substr(sprintf('%d%06d%06d', $r1, $r2, $r3), 0, -1);
             $this->debugLog(sprintf('PAK CreationDate manual: %s.%s',
                 substr($stamp, 0, -6), substr($stamp, -6)));
+
             return (int)substr($stamp, 0, -6);
         } else {
             return -1;
@@ -604,10 +622,12 @@ class GBXChallMapFetcher extends GBXBaseFetcher
     /**
      * Mirror (flip) an image across horizontal, vertical or both axis
      * Source: http://www.php.net/manual/en/function.imagecopy.php#85992
+     *
      * @param String $imgsrc
      *        Source image data
-     * @param Int $dir
+     * @param Int    $dir
      *        Flip direction from the constants above
+     *
      * @return Flipped image data if successful, otherwise source image data
      */
     private function imageFlip($imgsrc, $dir)
@@ -643,6 +663,7 @@ class GBXChallMapFetcher extends GBXBaseFetcher
             $width, $height, $src_width, $src_height)) {
             return $imgdest;
         }
+
         return $imgsrc;
     }  // imageFlip
 
@@ -659,6 +680,7 @@ class GBXChallMapFetcher extends GBXBaseFetcher
      *        TMU/TMF or 512x512 pixels for MP
      * @param Boolean $debug
      *        If true, the fetcher prints debug logging to stderr
+     *
      * @return GBXChallMapFetcher
      *        If GBX data couldn't be extracted, an Exception is thrown with
      *        the error message & code
@@ -846,6 +868,7 @@ class GBXChallMapFetcher extends GBXBaseFetcher
 
     /**
      * Get Info chunk from GBX header block
+     *
      * @param array $chunksList
      *        List of chunk offsets & sizes
      */
@@ -947,6 +970,7 @@ class GBXChallMapFetcher extends GBXBaseFetcher
 
     /**
      * Get String chunk from GBX header block
+     *
      * @param array $chunksList
      *        List of chunk offsets & sizes
      */
@@ -1060,6 +1084,7 @@ class GBXChallMapFetcher extends GBXBaseFetcher
 
     /**
      * Get Version chunk from GBX header block
+     *
      * @param array $chunksList
      *        List of chunk offsets & sizes
      */
@@ -1073,6 +1098,7 @@ class GBXChallMapFetcher extends GBXBaseFetcher
 
     /**
      * Get Thumbnail/Comments chunk from GBX header block
+     *
      * @param array $chunksList
      *        List of chunk offsets & sizes
      */
@@ -1128,8 +1154,8 @@ class GBXChallMapFetcher extends GBXBaseFetcher
 
 
 /**
- * @class GBXChallengeFetcher
- * @brief Wrapper class for backwards compatibility with the old GBXChallengeFetcher
+ * @class      GBXChallengeFetcher
+ * @brief      Wrapper class for backwards compatibility with the old GBXChallengeFetcher
  * @deprecated Do not use for new development, use GBXChallMapFetcher instead
  */
 class GBXChallengeFetcher extends GBXChallMapFetcher
@@ -1141,7 +1167,7 @@ class GBXChallengeFetcher extends GBXChallMapFetcher
     /**
      * Fetches a hell of a lot of data about a GBX challenge
      *
-     * @param String $filename
+     * @param String  $filename
      *        The challenge filename (must include full path)
      * @param Boolean $parsexml
      *        If true, the script also parses the XML block
@@ -1151,6 +1177,7 @@ class GBXChallengeFetcher extends GBXChallMapFetcher
      *        it will be in the original upside-down format
      *        Warning: this is binary data in JPEG format, 256x256 pixels for
      *        TMU/TMF or 512x512 pixels for MP
+     *
      * @return GBXChallengeFetcher
      *        If $uid is empty, GBX data couldn't be extracted
      */
@@ -1191,7 +1218,7 @@ class GBXChallengeFetcher extends GBXChallMapFetcher
 /**
  * @class GBXReplayFetcher
  * @brief The class that fetches all GBX replay info
- * @note The interface for GBXReplayFetcher has changed compared to the old class,
+ * @note  The interface for GBXReplayFetcher has changed compared to the old class,
  *       but there is no wrapper because no third-party XASECO[2] plugins used that
  */
 class GBXReplayFetcher extends GBXBaseFetcher
@@ -1207,6 +1234,7 @@ class GBXReplayFetcher extends GBXBaseFetcher
      *        If true, the fetcher also parses the XML block
      * @param Boolean $debug
      *        If true, the fetcher prints debug logging to stderr
+     *
      * @return GBXReplayFetcher
      *        If GBX data couldn't be extracted, an Exception is thrown with
      *        the error message & code
@@ -1331,6 +1359,7 @@ class GBXReplayFetcher extends GBXBaseFetcher
 
     /**
      * Get String chunk from GBX header block
+     *
      * @param array $chunksList
      *        List of chunk offsets & sizes
      */
@@ -1384,6 +1413,7 @@ class GBXPackFetcher extends GBXBaseFetcher
      *        If true, the fetcher also parses the XML block
      * @param Boolean $debug
      *        If true, the fetcher prints debug logging to stderr
+     *
      * @return GBXPackFetcher
      *        If GBX data couldn't be extracted, an Exception is thrown with
      *        the error message & code
@@ -1545,6 +1575,7 @@ class GBXPackHeaderFetcher extends GBXBaseFetcher
      *
      * @param GBXPackFetcher $packGBX
      *        The pack class, needed for headerVersn & the overall base class
+     *
      * @return GBXPackHeaderFetcher
      *        If GBX data couldn't be extracted, an Exception is thrown with
      *        the error message & code

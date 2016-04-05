@@ -156,10 +156,12 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
             $target = $this->targetPlayer;
             if ($target == false) {
                 $this->connection->chatSendServerMessage('Select a player to send pm first by clicking!', $login);
+
                 return;
             }
             if (empty($args['message'])) {
                 $this->connection->chatSendServerMessage('Empty message!', $login);
+
                 return;
             }
 

@@ -143,6 +143,7 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
     private function getColor($var)
     {
         $colors = \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance();
+
         return str_replace('$', "", $colors->getColor($var));
     }
 

@@ -53,7 +53,8 @@ class AdminCmd
     /**
      *
      * @param string $login
-     * @param array $param
+     * @param array  $param
+     *
      * @return string
      */
     public function cmd($login, $param)
@@ -80,13 +81,16 @@ class AdminCmd
             // add login to the first element of the params array;
 
             call_user_func_array(array($this->class, $this->function), array($login, $param));
+
             return "";
         }
+
         return AdminGroups::$txt_msg_cmdDontEx;
     }
 
     /**
      * getCmd()
+     *
      * @return string
      */
     public function getCmd()
@@ -105,23 +109,27 @@ class AdminCmd
     /**
      *
      * @param int $minParam
+     *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
     public function setMinParam($minParam)
     {
         $this->minParam = $minParam;
+
         return $this;
     }
 
     /**
      *
-     * @param int $numParam
+     * @param int                                                      $numParam
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker $check
+     *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
     public function addchecker($numParam, types\absChecker $check)
     {
         $this->checker[$numParam - 1][] = $check;
+
         return $this;
     }
 
@@ -145,11 +153,13 @@ class AdminCmd
     /**
      *
      * @param string $help
+     *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
     public function setHelp($help)
     {
         $this->help = $help;
+
         return $this;
     }
 
@@ -165,17 +175,20 @@ class AdminCmd
     /**
      *
      * @param string $helpMore
+     *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
     public function setHelpMore($helpMore)
     {
         $this->helpMore = $helpMore;
+
         return $this;
     }
 
     /**
      *
      * @param string $line
+     *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
     public function addLineHelpMore($line)
@@ -184,6 +197,7 @@ class AdminCmd
             $this->helpMore = $line;
         else
             $this->helpMore .= "\n" . $line;
+
         return $this;
     }
 

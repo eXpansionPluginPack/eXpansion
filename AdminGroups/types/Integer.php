@@ -25,6 +25,7 @@ class Integer extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker
 
     /**
      * Adds optional range detection
+     *
      * @param int $min
      * @param int $max
      */
@@ -37,6 +38,7 @@ class Integer extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker
     public function getErrorMsg()
     {
         if ($this->range) return "A numerical value in range ({$this->range}) was expected!";
+
         return "A numerical value was expected";
     }
 

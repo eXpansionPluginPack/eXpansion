@@ -401,6 +401,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             array_unshift($datas[$i], $i + 1);
             $i++;
         }
+
         return $datas;
     }
 

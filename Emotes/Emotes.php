@@ -209,6 +209,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * @param mixed $text
      * @param mixed $source1
      * @param mixed $source2
+     *
      * @return void
      */
     function helper($login, $args, $source1, $source2)
@@ -216,6 +217,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Chat\Chat') && !\ManiaLivePlugins\eXpansion\Chat\Config::getInstance()->publicChatActive) {
             $this->exp_chatSendServerMessage("#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages", $login, array());
+
             return;
         }
         $args = explode(" ", $args);
@@ -245,6 +247,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if ($player instanceof \ManiaLive\Data\Player) {
                 return $player->nickName;
             }
+
             return "";
         } catch (Exception $ex) {
             return "";
@@ -257,6 +260,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param mixed $login
      * @param mixed $file
+     *
      * @return void
      */
     function oneLiner($login, $file)

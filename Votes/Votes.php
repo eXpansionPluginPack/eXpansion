@@ -24,6 +24,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * returns managedvote with key of command name
+     *
      * @return \ManiaLivePlugins\eXpansion\Votes\Structures\ManagedVote[]
      */
     private function getVotes()
@@ -38,6 +39,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $vote->voters = $this->config->managedVote_voters[$this->config->managedVote_commands[$x]];
             $out[$vote->command] = $vote;
         }
+
         return $out;
     }
 
@@ -143,12 +145,14 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if ($managedVotes['RestartMap']->managed == false) return;
             if ($managedVotes['RestartMap']->ratio == -1.) {
                 $this->exp_chatSendServerMessage(exp_getMessage("#error#Restart vote is disabled!"), $login);
+
                 return;
             }
             $config = Config::getInstance();
             if ($config->restartLimit != 0 && $config->restartLimit <= $this->resCount) {
                 $this->exp_chatSendServerMessage(exp_getMessage("#error#Map limit for voting restart reached."), $login,
                     array($this->config->restartLimit));
+
                 return;
             }
 
@@ -179,6 +183,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if ($managedVotes['NextMap']->managed == false) return;
             if ($managedVotes['NextMap']->ratio == -1.) {
                 $this->exp_chatSendServerMessage(exp_getMessage("#error#Skip vote is disabled!"), $login);
+
                 return;
             }
 
@@ -213,12 +218,14 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $this->connection->cancelVote();
                 $this->voter = $login;
                 $this->vote_Restart($login);
+
                 return;
             }
             if ($cmdName == "SkipMap") {
                 $this->connection->cancelVote();
                 $this->voter = $login;
                 $this->vote_Skip($login);
+
                 return;
             }
         }
@@ -245,6 +252,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     $this->connection->cancelVote();
                     $msg = exp_getMessage("Vote limit reached.");
                     $this->exp_chatSendServerMessage($msg);
+
                     return;
                 }
             }
@@ -287,6 +295,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->connection->cancelVote();
             $msg = exp_getMessage('#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!');
             $this->exp_chatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+
             return;
         } else {
             $this->connection->chatSendServerMessage('Notice: Can\'t cancel a vote, no vote in progress!', $login);

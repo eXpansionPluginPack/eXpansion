@@ -50,6 +50,7 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
             $mxid = intval($mxid);
             if (empty($description)) {
                 Gui::showNotice(exp_getMessage("Looks like you have not entered any description."), $login);
+
                 return;
             }
 
@@ -60,6 +61,7 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
             $dataAccess->save($file, $data, true);
             Gui::showNotice(exp_getMessage("Your wish has been saved\nThe server admin will review the wish\nand add the map if it's good enough."), $login);
             MapWish::Erase($login);
+
             return;
         }
         Gui::showNotice(exp_getMessage("Looks like mx id is missing or is invalid."), $login);
@@ -68,7 +70,7 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
     /**
      *
      * @param HookData $buttons
-     * @param $login
+     * @param          $login
      *
      * @return mixed
      */

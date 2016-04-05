@@ -107,6 +107,7 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     {
         $item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\ServerInfoItem($size);
         $item->setText("Ladder limits " . ($this->storage->server->ladderServerLimitMin / 1000) . " - " . ($this->storage->server->ladderServerLimitMax / 1000) . "k");
+
         return $item;
     }
 
@@ -114,18 +115,21 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     {
         $item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\MapInfoItem($size);
         $item->setMap($this->storage->currentMap);
+
         return $item;
     }
 
     protected function getPlayerInfo($sizeX)
     {
         $item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\NbPlayerItem($sizeX);
+
         return $item;
     }
 
     protected function getClock($sizeX)
     {
         $item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\ClockItem($sizeX);
+
         return $item;
     }
 

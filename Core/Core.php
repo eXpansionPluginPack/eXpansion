@@ -290,7 +290,7 @@ EOT;
     {
         $dirs = array(
             'tmp',
-            'tmp/' . $this->storage->serverLogin
+            'tmp/' . $this->storage->serverLogin,
         );
 
         if (!$this->expStorage->isRemoteControlled) {
@@ -478,6 +478,7 @@ EOT;
 
     /**
      * enables callback from block
+     *
      * @param array|string $callback
      */
     static public function enableScriptCallback($callback)
@@ -561,8 +562,8 @@ EOT;
     /**
      *
      * @param array $map
-     * @param bool $warmUp
-     * @param bool $matchContinuation
+     * @param bool  $warmUp
+     * @param bool  $matchContinuation
      */
     function onBeginMap($map, $warmUp, $matchContinuation)
     {
@@ -661,7 +662,7 @@ EOT;
      *
      * @param \Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings The old Game Infos
      * @param \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings The new Game Infos
-     * @param  array $changes Differences between both of them
+     * @param  array                                            $changes     Differences between both of them
      */
     public function onGameSettingsChange(
         \Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings, \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings, $changes
@@ -673,8 +674,8 @@ EOT;
     /**
      * Called when server settings are changed
      *
-     * @param ServerOptions $old old settings
-     * @param ServerOptions $new new settings
+     * @param ServerOptions $old  old settings
+     * @param ServerOptions $new  new settings
      * @param               $diff The differences between the old and the new settings
      */
     public function onServerSettingsChange(ServerOptions $old, ServerOptions $new, $diff)
@@ -690,9 +691,10 @@ EOT;
                 return;
             /** @var SimpleXMLElement */
             $oldXml = simplexml_load_file($path);
-            if ($oldXml === FALSE) {
+            if ($oldXml === false) {
                 $this->console("ERROR while loading Dedicated server config file: " . $this->config->dedicatedConfigFile);
                 $this->console("your settings are NOT saved!");
+
                 return;
             }
             $adapter = array("name" => "name",
@@ -716,7 +718,7 @@ EOT;
                 "refereeMode" => "referee_validation_mode",
                 "disableHorns" => "disable_horns",
                 "clientInputsMaxLatency" => "clientinputs_maxlatency",
-                "keepPlayerSlots" => "keep_player_slots"
+                "keepPlayerSlots" => "keep_player_slots",
             );
 
             foreach ($new as $key => $value) {
@@ -752,8 +754,8 @@ EOT;
     /**
      * When the map list is modified
      *
-     * @param int $curMapIndex index of the current map
-     * @param int $nextMapIndex Index of the next map
+     * @param int  $curMapIndex    index of the current map
+     * @param int  $nextMapIndex   Index of the next map
      * @param bool $isListModified was the list modifed
      */
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified)
@@ -940,7 +942,7 @@ EOT;
     /**
      * Show main expansion settings window
      *
-     * @param string $login the login of the player to show the settings to
+     * @param string $login    the login of the player to show the settings to
      * @param string $pluginId
      * @param string $confName The config window to show. either main or plugin id
      */
@@ -1030,8 +1032,8 @@ EOT;
     /**
      * When player disconnects
      *
-     * @param string $login The login of the player that disconnected
-     * @param mixed $disconnectionReason The reason the player disconnected
+     * @param string $login               The login of the player that disconnected
+     * @param mixed  $disconnectionReason The reason the player disconnected
      */
     public function onPlayerDisconnect($login, $disconnectionReason = null)
     {

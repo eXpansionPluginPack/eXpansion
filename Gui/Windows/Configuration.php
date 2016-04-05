@@ -85,6 +85,7 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
      * you can assume only one gamemode is sent at a time, so multiple gamemodes are not mixed
      *
      * @param array $data
+     *
      * @return \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem
      */
     private function parseData($data)

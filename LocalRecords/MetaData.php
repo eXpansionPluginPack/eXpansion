@@ -14,7 +14,8 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
     /**
-     * Do not change, if you use this you break compatibility. Plz fixing this on the other plugins for the third time now
+     * Do not change, if you use this you break compatibility. Plz fixing this on the other plugins for the third time
+     * now
      */
     final public function onBeginLoad()
     {

@@ -22,6 +22,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 
     /**
      * displayWidget(string $login)
+     *
      * @param string $login
      */
     function displayWidget($login = null)
@@ -60,6 +61,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
             . ' ORDER BY data DESC'
             . ' LIMIT 0, 100';
         $data = $this->db->execute($sql);
+
         return $data->fetchArrayOfObject();
     }
 
@@ -72,6 +74,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
             . ' LIMIT 0, 100';
 
         $data = $this->db->execute($sql);
+
         return $data->fetchArrayOfObject();
     }
 

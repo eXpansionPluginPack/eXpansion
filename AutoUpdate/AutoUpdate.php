@@ -66,6 +66,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($this->onGoing) {
             $msg = "#admin_error#An update or check for update is already under way!";
             $AdminGroups->announceToPermission(Permission::server_update, $msg);
+
             return;
         }
 
@@ -88,8 +89,8 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Handles the results of one of the update steps. and starts next step.
      *
      * @param ParalelExecution $paralelExec The parallel execution utility
-     * @param string[] $results The results of the previous steps execution
-     * @param int $ret The value returned from the previous
+     * @param string[]         $results     The results of the previous steps execution
+     * @param int              $ret         The value returned from the previous
      */
     public function checkExecuted($paralelExec, $results, $ret = 1)
     {
@@ -126,6 +127,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($this->onGoing) {
             $msg = "#admin_error#An update or check for update is already under way!";
             $AdminGroups->announceToPermission(Permission::server_update, $msg);
+
             return;
         }
 
@@ -149,8 +151,8 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Handles the results of one of the update steps. and starts next step.
      *
      * @param ParalelExecution $paralelExec The parallel execution utility
-     * @param string[] $results The results of the previous steps execution
-     * @param int $ret The value returned from the previous
+     * @param string[]         $results     The results of the previous steps execution
+     * @param int              $ret         The value returned from the previous
      */
     public function updateExecuted($paralelExec, $results, $ret = 1)
     {
@@ -180,8 +182,8 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Checks if one of the strings in the array contains another text
      *
-     * @param string $needle text to search for in the array
-     * @param string[] $array The array of text in which we need to search for the text
+     * @param string   $needle text to search for in the array
+     * @param string[] $array  The array of text in which we need to search for the text
      *
      * @return bool was the needle found in the array
      */

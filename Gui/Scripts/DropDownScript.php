@@ -22,6 +22,7 @@ class DropDownScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script
     public function getDeclarationScript($win, $component)
     {
         $this->dropdownIndex = self::$nb++;
+
         return parent::getDeclarationScript($win, $component);
     }
 

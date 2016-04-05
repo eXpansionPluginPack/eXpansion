@@ -74,6 +74,7 @@ class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\A
 
     /**
      * displayWidget(string $login)
+     *
      * @param string $login
      */
     function displayWidget()

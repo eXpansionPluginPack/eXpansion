@@ -123,6 +123,7 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 $widget->setData($this->teams);
                 $widget->show();
             }
+
             return;
         }
 
@@ -136,6 +137,7 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
         if ($login == null) {
             Gui\Widgets\ScoresOverlay::EraseAll();
+
             return;
         }
         $widget = Gui\Widgets\ScoresOverlay::Erase($login);

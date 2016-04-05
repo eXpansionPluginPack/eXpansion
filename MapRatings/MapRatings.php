@@ -98,6 +98,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         foreach ($ratings as $rating) {
             $out[$rating->uid] = new Structures\Rating($rating->rating, $rating->ratingTotal, $rating->uid);
         }
+
         return $out;
     }
 
@@ -127,6 +128,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      *
      * @param null|string|\Maniaplanet\DedicatedServer\Structures\Map $uId
+     *
      * @return PlayerVote[]
      */
     public function getVotesForMap($uId = null)
@@ -144,6 +146,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $vote = PlayerVote::fromArray($data);
             $out[$vote->login] = $vote;
         }
+
         return $out;
     }
 
@@ -236,6 +239,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($login != null) {
             if ($this->ratingTotal == 0) {
                 $this->exp_chatSendServerMessage($this->msg_noRating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
+
                 return;
             }
             if ($playerRating === null) {
@@ -289,6 +293,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 }
             }
         }
+
         return $items;
     }
 

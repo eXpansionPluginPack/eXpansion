@@ -56,6 +56,7 @@ class JoinLeaveMessage extends ExpPlugin
             if ($diff->i) $playtime .= $diff->i . " min ";
             if ($diff->s) $playtime .= $diff->s . " sec ";
         }
+
         return $playtime;
     }
 
@@ -102,6 +103,7 @@ class JoinLeaveMessage extends ExpPlugin
             if ($player === null) {
                 $msg = "#admin_error#a player with login '#variable#" . $login . "#admin_error#' connected, but no player object for this login exist.";
                 AdminGroups::announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin, "");
+
                 return;
             }
             $this->setJoinTime($login);
@@ -155,6 +157,7 @@ class JoinLeaveMessage extends ExpPlugin
                 $msg = "#admin_error#a player with login '#variable#" . $login . "#admin_error#' disconnected, but no player object for this login exist.";
                 $ag = AdminGroups::getInstance();
                 $ag->announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin, $msg);
+
                 return;
             }
             $nick = $player->nickName;

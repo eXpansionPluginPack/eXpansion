@@ -1,6 +1,6 @@
 <?php
 /**
- * @author      Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -119,7 +119,7 @@ class EliteEventDispatcher implements ServerEventListener
      * Method called when a Player join the server
      *
      * @param string $login
-     * @param bool $isSpectator
+     * @param bool   $isSpectator
      */
     function onPlayerConnect($login, $isSpectator)
     {
@@ -137,10 +137,10 @@ class EliteEventDispatcher implements ServerEventListener
     /**
      * Method called when a Player chat on the server
      *
-     * @param int $playerUid
+     * @param int    $playerUid
      * @param string $login
      * @param string $text
-     * @param bool $isRegistredCmd
+     * @param bool   $isRegistredCmd
      */
     function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
@@ -148,11 +148,12 @@ class EliteEventDispatcher implements ServerEventListener
 
     /**
      * Method called when a Answer to a Manialink Page
-     * difference with previous TM: this is not called if the player doesn't answer, and thus '0' is also a valid answer.
+     * difference with previous TM: this is not called if the player doesn't answer, and thus '0' is also a valid
+     * answer.
      *
-     * @param int $playerUid
+     * @param int    $playerUid
      * @param string $login
-     * @param int $answer
+     * @param int    $answer
      */
     function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries)
     {
@@ -208,7 +209,7 @@ class EliteEventDispatcher implements ServerEventListener
      * }
      *
      * @param SPlayerRanking[] $rankings
-     * @param int|SMapInfo $winnerTeamOrMap Winner team if API version >= 2012-06-19, else the map
+     * @param int|SMapInfo     $winnerTeamOrMap Winner team if API version >= 2012-06-19, else the map
      */
     function onEndMatch($rankings, $winnerTeamOrMap)
     {
@@ -218,8 +219,8 @@ class EliteEventDispatcher implements ServerEventListener
      * Method called when a map begin
      *
      * @param SMapInfo $map
-     * @param bool $warmUp
-     * @param bool $matchContinuation
+     * @param bool     $warmUp
+     * @param bool     $matchContinuation
      */
     function onBeginMap($map, $warmUp, $matchContinuation)
     {
@@ -229,10 +230,10 @@ class EliteEventDispatcher implements ServerEventListener
      * Method called when a map end
      *
      * @param SPlayerRanking[] $rankings
-     * @param SMapInfo $map
-     * @param bool $wasWarmUp
-     * @param bool $matchContinuesOnNextMap
-     * @param bool $restartMap
+     * @param SMapInfo         $map
+     * @param bool             $wasWarmUp
+     * @param bool             $matchContinuesOnNextMap
+     * @param bool             $restartMap
      */
     function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
@@ -265,11 +266,11 @@ class EliteEventDispatcher implements ServerEventListener
     /**
      * Method called when a player cross a checkPoint
      *
-     * @param int $playerUid
+     * @param int    $playerUid
      * @param string $login
-     * @param int $timeOrScore
-     * @param int $curLap
-     * @param int $checkpointIndex
+     * @param int    $timeOrScore
+     * @param int    $curLap
+     * @param int    $checkpointIndex
      */
     function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex)
     {
@@ -278,9 +279,9 @@ class EliteEventDispatcher implements ServerEventListener
     /**
      * Method called when a player finish a round
      *
-     * @param int $playerUid
+     * @param int    $playerUid
      * @param string $login
-     * @param int $timeOrScore
+     * @param int    $timeOrScore
      */
     function onPlayerFinish($playerUid, $login, $timeOrScore)
     {
@@ -289,7 +290,7 @@ class EliteEventDispatcher implements ServerEventListener
     /**
      * Method called when there is an incoherence with a player data
      *
-     * @param int $playerUid
+     * @param int    $playerUid
      * @param string $login
      */
     function onPlayerIncoherence($playerUid, $login)
@@ -299,10 +300,10 @@ class EliteEventDispatcher implements ServerEventListener
     /**
      * Method called when a bill is updated
      *
-     * @param int $billId
-     * @param int $state
+     * @param int    $billId
+     * @param int    $state
      * @param string $stateName
-     * @param int $transactionId
+     * @param int    $transactionId
      */
     function onBillUpdated($billId, $state, $stateName, $transactionId)
     {
@@ -311,7 +312,7 @@ class EliteEventDispatcher implements ServerEventListener
     /**
      * Method called server receive data
      *
-     * @param int $playerUid
+     * @param int    $playerUid
      * @param string $login
      * @param base64 $data
      */
@@ -322,8 +323,8 @@ class EliteEventDispatcher implements ServerEventListener
     /**
      * Method called when the map list is modified
      *
-     * @param int $curMapIndex
-     * @param int $nextMapIndex
+     * @param int  $curMapIndex
+     * @param int  $nextMapIndex
      * @param bool $isListModified
      */
     function onMapListModified($curMapIndex, $nextMapIndex, $isListModified)
@@ -352,9 +353,9 @@ class EliteEventDispatcher implements ServerEventListener
      * Method called when a vote change of State
      *
      * @param string $stateName can be NewVote, VoteCancelled, votePassed, voteFailed
-     * @param string $login the login of the player who start the vote if empty the server start the vote
-     * @param string $cmdName the command used for the vote
-     * @param string $cmdParam the parameters of the vote
+     * @param string $login     the login of the player who start the vote if empty the server start the vote
+     * @param string $cmdName   the command used for the vote
+     * @param string $cmdParam  the parameters of the vote
      */
     function onVoteUpdated($stateName, $login, $cmdName, $cmdParam)
     {

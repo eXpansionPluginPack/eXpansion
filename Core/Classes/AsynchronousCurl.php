@@ -1,6 +1,6 @@
 <?php
 /**
- * @author      Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -47,10 +47,11 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
 
     /**
      * make a http query with options
-     * @param string $url
+     *
+     * @param string   $url
      * @param callable $callback
-     * @param mixed $addionalData if you need to pass additional metadata with the query, like login do it here
-     * @param array $options curl options array
+     * @param mixed    $addionalData if you need to pass additional metadata with the query, like login do it here
+     * @param array    $options      curl options array
      */
     public function query($url, $callback, $additionalData = null, $options = array())
     {
@@ -59,8 +60,8 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
         $curlJob->setUrl($url);
 
         $options = array(
-                CURLOPT_SSL_VERIFYPEER => FALSE,
-                CURLOPT_USERAGENT => "eXpansionPluginPack v " . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_USERAGENT => "eXpansionPluginPack v " . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION,
             ) + $options;
 
         $curlJob->setOptions($options);

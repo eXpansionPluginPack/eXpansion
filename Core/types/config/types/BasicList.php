@@ -48,8 +48,10 @@ class BasicList extends Variable
             $array = $this->getRawValue();
             $array[] = $this->type->castValue($value);;
             $this->setRawValue($array);
+
             return true;
         }
+
         return false;
     }
 

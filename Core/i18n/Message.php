@@ -67,7 +67,7 @@ class Message
             $text = call_user_func_array('sprintf', $arrgs);
             $out[$lang] = array(
                 "Lang" => lcfirst($lang),
-                "Text" => \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text)
+                "Text" => \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text),
             );
         }
 
@@ -91,6 +91,7 @@ class Message
         $arrgs = $this->args;
         array_unshift($arrgs, $this->getMessage($lang));
         $text = call_user_func_array('sprintf', $arrgs);
+
         return \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text);
     }
 

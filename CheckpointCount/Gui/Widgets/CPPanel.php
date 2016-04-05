@@ -39,6 +39,7 @@ class CPPanel extends \ManiaLive\Gui\Window
     /**
      * SetText(string $text)
      * Sets the text used in the widget
+     *
      * @param string $text
      */
     public function setText($text)

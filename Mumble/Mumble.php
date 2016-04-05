@@ -101,6 +101,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * showWidget(string $login)
+     *
      * @param string $login
      */
     function showWidget($login = null)
@@ -114,6 +115,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * showMumble(string $login)
+     *
      * @param string $login
      */
     function showMumble($login = null)
@@ -140,6 +142,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param mixed $login
      * @param mixed $isSpectator
+     *
      * @return void
      */
     function onPlayerConnect($login, $isSpec)

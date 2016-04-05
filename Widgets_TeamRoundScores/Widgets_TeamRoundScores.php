@@ -144,6 +144,7 @@ class Widgets_TeamRoundScores extends ExpPlugin
         $points = $total - $position;
         if ($points < 0)
             $points = 0;
+
         return $points;
     }
 

@@ -82,6 +82,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if ($params === false) {
             $this->exp_chatSendServerMessage($this->msg_help, $login);
+
             return;
         }
         $message = explode(" ", $params);
@@ -94,15 +95,18 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             if (!array_key_exists($target, $this->storage->players) && !array_key_exists($target, $this->storage->spectators)) {
                 $this->exp_chatSendServerMessage($this->msg_noLogin, $login, array($target));
+
                 return;
             }
             if ($login == $target) {
                 $this->exp_chatSendServerMessage($this->msg_self, $login, array($target));
+
                 return;
             }
 
             if (empty($message)) {
                 $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+
                 return;
             }
             $targetPlayer = $this->storage->getPlayerObject($target);
@@ -123,15 +127,18 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             if (!array_key_exists($target, $this->storage->players) && !array_key_exists($target, $this->storage->spectators)) {
                 $this->exp_chatSendServerMessage($this->msg_noLogin, $login, array($target));
+
                 return;
             }
             if ($login == $target) {
                 $this->exp_chatSendServerMessage($this->msg_self, $login, array($target));
+
                 return;
             }
 
             if (empty($message)) {
                 $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+
                 return;
             }
 
@@ -157,6 +164,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if (empty($message)) {
             $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+
             return;
         }
         try {
@@ -178,6 +186,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         try {
             if (empty($message)) {
                 $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+
                 return;
             }
             if (array_key_exists($login, self::$reply)) {

@@ -87,6 +87,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
             $this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(1, __("File listing disabled since you are running eXpansion remote", $this->getRecipient()), $this->sizeX);
             $this->pager->addItem($this->items[0]);
+
             return;
         }
         /** @var \Maniaplanet\DedicatedServer\Structures\Version */
@@ -108,6 +109,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
             $this->connection->chatSendServerMessage(__("#admin_error#This instance of eXpansion is runnin remotelly! Can't delete file #variable#'%s'", $this->getRecipient(), end($file)));
+
             return;
         }
         try {

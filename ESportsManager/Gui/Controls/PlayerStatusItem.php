@@ -16,11 +16,11 @@ class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param int $indexNumber
+     * @param int          $indexNumber
      * @param PlayerStatus $player
-     * @param int $score
-     * @param type $controller
-     * @param int $sizeX
+     * @param int          $score
+     * @param type         $controller
+     * @param int          $sizeX
      */
     function __construct($indexNumber, PlayerStatus $player, $controller, $gameMode, $isAdmin, $sizeX)
     {

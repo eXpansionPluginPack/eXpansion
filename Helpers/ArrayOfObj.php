@@ -8,8 +8,10 @@ class ArrayOfObj
     /**
      * sortAsc()
      * sort and re-create indexes
+     *
      * @param mixed[] $array
-     * @param string $prop
+     * @param string  $prop
+     *
      * @return mixed[] type
      */
     static function sortAsc(&$array, $prop)
@@ -22,8 +24,10 @@ class ArrayOfObj
     /**
      * sortDesc()
      * sort and re-create indexes
+     *
      * @param mixed[] $array
-     * @param string $prop
+     * @param string  $prop
+     *
      * @return mixed[] type
      */
     static function sortDesc(&$array, $prop)
@@ -36,8 +40,10 @@ class ArrayOfObj
     /**
      * asortAsc()
      * sort and maintain indexes
+     *
      * @param mixed[] $array
-     * @param string $prop
+     * @param string  $prop
+     *
      * @return mixed[] type
      */
     static function asortAsc(&$array, $prop)
@@ -50,8 +56,10 @@ class ArrayOfObj
     /**
      * sortDesc()
      * sort and maintain indexes
+     *
      * @param mixed[] $array
-     * @param string $prop
+     * @param string  $prop
+     *
      * @return mixed[] type
      */
     static function asortDesc(&$array, $prop)
@@ -63,9 +71,11 @@ class ArrayOfObj
 
     /**
      * Gets a matching object by searching property by value
-     * @param type $array
+     *
+     * @param type   $array
      * @param string $prop
      * @param string $value
+     *
      * @return false|Object $obj
      */
     static function getObjbyPropValue(&$array, $prop, $value)
@@ -80,6 +90,7 @@ class ArrayOfObj
             if ($class->$prop == $value)
                 return $class;
         }
+
         return false;
     }
 
@@ -89,6 +100,7 @@ class ArrayOfObj
             if (property_exists($class, $prop))
                 return true;
         }
+
         return false;
     }
 

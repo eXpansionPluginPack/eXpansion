@@ -46,11 +46,13 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if (!is_numeric($value)) {
             $this->exp_chatSendServerMessage(exp_getMessage('#error#"%s" is not a numeric value!'), null, array($value));
+
             return;
         }
 
         if ($value < 1) {
             $this->exp_chatSendServerMessage(exp_getMessage('#error#"%s" is less than 1!'), null, array($value));
+
             return;
         }
 

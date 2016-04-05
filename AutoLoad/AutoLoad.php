@@ -183,7 +183,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * @param                                        $list        List of plugins to load
-     * @param \ManiaLive\PluginHandler\PluginHandler $pHandler The manialive plugin handler
+     * @param \ManiaLive\PluginHandler\PluginHandler $pHandler    The manialive plugin handler
      *
      * @return array list of plugins that coudln't be loaded due to dependencies
      */
@@ -265,6 +265,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             throw $ex;
         } catch (\Exception $ex) {
             $this->console("[" . $pname . "]..............................FAIL -> will retry");
+
             //Helper::log("[AutoLoad]".ErrorHandling::computeMessage($ex));
             return false;
         }
@@ -415,6 +416,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($a->getName() == $b->getName()) {
             return 0;
         }
+
         return ($a->getName() < $b->getName()) ? -1 : 1;
     }
 

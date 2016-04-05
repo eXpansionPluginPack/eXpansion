@@ -124,22 +124,26 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
         if ($data === false) {
             $this->connection->chatSendServerMessage('Error receving data from ManiaExchange!');
+
             return false;
         }
 
         if ($status["http_code"] !== 200) {
             if ($status["http_code"] == 301) {
                 $this->connection->chatSendServerMessage('Map not found from ManiaExchange', $login);
+
                 return false;
             }
 
             $this->connection->chatSendServerMessage(sprintf('MX returned http error code: %s', $status["http_code"]), $login);
+
             return false;
         }
 
         $json = \json_decode($data);
         if ($json === false || sizeof($json) == 0) {
             $this->connection->chatSendServerMessage('Map not found from ManiaExchange', $login);
+
             return false;
         }
 

@@ -208,16 +208,19 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * addQuestion($question)
      * Adds question to queue
+     *
      * @param \ManiaLivePlugins\eXpansion\Quiz\Structures\Question $question
      */
     function addQuestion(Structures\Question $question)
     {
         if (empty($question->question)) {
             $this->exp_chatSendServerMessage($this->msg_questionMissing, $question->asker->login);
+
             return;
         }
         if (sizeof($question->answer) == 0) {
             $this->exp_chatSendServerMessage($this->msg_answerMissing, $question->asker->login);
+
             return;
         }
         try {
@@ -334,6 +337,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if ($this->questionDb == null) {
             Gui\Widget\QuizImageWidget::EraseAll();
+
             return;
         }
 
@@ -342,6 +346,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if ($login != null) {
                 $this->exp_chatSendServerMessage("Question added to the queue. (There is already an existing question.)", $login);
             }
+
             return;
         }
 
@@ -462,11 +467,13 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $answerPosition = strpos($text, "?");
                 if ($answerPosition == false) {
                     $this->exp_chatSendServerMessage($this->msg_format, $login);
+
                     return;
                 }
                 $answer = trim(str_replace("?", "", strstr($text, "?")));
                 if ($answer == "") {
                     $this->exp_chatSendServerMessage($this->msg_answerMissing, $login);
+
                     return;
                 }
 

@@ -1,56 +1,949 @@
 <!doctype html>
 <html>
-    <head>
+<head>
     <title>eXpansion documentor</title>
-    </head>        
-    <style>
+</head>
+<style>
     table tr:nth-child(odd) {
-     background: #eee;
+        background: #eee;
     }
-    
+
     #morehelp {
         font-size: small;
         font-color: #999;
     }
-    </style>
-<body>        
+</style>
+<body>
 <h1>Admin Commands</h1>
 <table>
-            <tr>
-            <th>Command</th><th>Aliases</th><th>Help</th>            
-            </tr>
-<tr><td>/admin groups</td><td></td><td>Administrate the admin groups players and permissions.<br/><div id="morehelp"></div></td></tr><tr><td>/admin help</td><td></td><td>Show the list of all available admin commands and alliases.<br/><div id="morehelp"></div></td></tr><tr><td>/admin setting expansion</td><td>setexp</td><td>Set up your expansion<br/><div id="morehelp"></div></td></tr><tr><td>/admin server control</td><td>server</td><td>Displays the main control panel for the server<br/><div id="morehelp"></div></td></tr><tr><td>/admin dbtools</td><td></td><td>shows administrative window for database<br/><div id="morehelp"></div></td></tr><tr><td>/admin update</td><td></td><td><br/><div id="morehelp"></div></td></tr><tr><td>/admin check</td><td></td><td><br/><div id="morehelp"></div></td></tr><tr><td>/admin game script</td><td>script</td><td>/script<br/><div id="morehelp"></div></td></tr><tr><td>/admin game ta</td><td>ta</td><td>/ta limit; Sets timelimit for TimeAttack<br/><div id="morehelp"></div></td></tr><tr><td>/admin game laps</td><td>laps</td><td>/laps laps X; Sets Laps Limit<br/><div id="morehelp"></div></td></tr><tr><td>/admin game rounds</td><td>rounds</td><td>/rounds limit X; Sets PointLimit in Rounds<br/><div id="morehelp"></div></td></tr><tr><td>/admin game cup</td><td>cup</td><td>/cup limit X; Sets CupRoundsLimit for Winner<br/><div id="morehelp"></div></td></tr><tr><td>/admin game team</td><td>team</td><td>/team limit X; Sets Team PointLimit<br/><div id="morehelp"></div></td></tr><tr><td>/admin player kick</td><td>kick</td><td>kick the player from the server<br/><div id="morehelp">/admin player kick #login will kick the player from the server.
-A kicked player may return to the server whanever he desires.</div></td></tr><tr><td>/admin player ban</td><td>ban</td><td>Ban the player from the server<br/><div id="morehelp">/admin player ban #login will ban  the player from the server.
-He may not return until the server is restarted</div></td></tr><tr><td>/admin player black</td><td>black</td><td>Add the player to the black list<br/><div id="morehelp">/admin player black #login will add the player to the blacklist of this server.
-He may not return until the server blacklist file is deleted.
-Other server might use the same blacklist file!!</div></td></tr><tr><td>/admin player remove ban</td><td>unban</td><td>Removes the ban of the player<br/><div id="morehelp">/admin player remove ban #login will remove the ban of the player from this server
-He may rejoin the server after this.</div></td></tr><tr><td>/admin clear banlist</td><td>cleanbanlist</td><td>clears the banlist of players<br/><div id="morehelp">Will completeley clear the banlist.
-All banned players will be able to rejoin the server.</div></td></tr><tr><td>/admin get banlist</td><td>getbanlist</td><td>shows the current banlist of players<br/><div id="morehelp"></div></td></tr><tr><td>/admin clear blacklist</td><td>cleanblacklist</td><td>clears the blacklist of players<br/><div id="morehelp">Will completeley clear the blackList.
-All blacklist players will be able to rejoin the server.</div></td></tr><tr><td>/admin get blacklist</td><td>getblacklist</td><td>shows the current banlist of players<br/><div id="morehelp"></div></td></tr><tr><td>/admin get guestlist</td><td>getguestlist</td><td>shows the current guest of players<br/><div id="morehelp"></div></td></tr><tr><td>/admin get ignorelist</td><td>getignorelist</td><td>shows the current ignorelist of players<br/><div id="morehelp"></div></td></tr><tr><td>/admin remove black</td><td>unblack</td><td>Removes the player from the black list<br/><div id="morehelp">/admin player remove black #login will remove the player from the servers blacklist
-He may rejoin the server after this.</div></td></tr><tr><td>/admin player spec</td><td>spec</td><td>Forces the player to become spectator<br/><div id="morehelp">/admin player spec #login The playing player will be forced to become a spectator
-If the max spectators is reached it the player won't become a spectator</div></td></tr><tr><td>/admin player ignore</td><td>ignore</td><td>Adds player to ignore list and mutes him from the chat<br/><div id="morehelp">/admin player ignore #login will ignore the players chat
-This player won't be able to communicate with other players.</div></td></tr><tr><td>/admin player unignore</td><td>unignore</td><td>Removes player to ignore list and allows him to chat<br/><div id="morehelp">/admin player unignore #login will allow this player to use the chat again
-This player will be able to communicate with other players</div></td></tr><tr><td>/admin settings</td><td></td><td><br/><div id="morehelp"></div></td></tr><tr><td>/admin get server planets</td><td>planets</td><td>Gets the serveraccount planets amount<br/><div id="morehelp">/admin planets return the planets amount on server account.</div></td></tr><tr><td>/admin set server pay</td><td>pay</td><td>Pays out planets<br/><div id="morehelp">/admin pay #login #amount pays amount of planets to login</div></td></tr><tr><td>/admin set server name</td><td>setservername<br/>name</td><td>Changes the name of the server<br/><div id="morehelp">/admin set server name #name will change the server name.
-This servers name will be changed.</div></td></tr><tr><td>/admin set server comment</td><td>setcomment<br/>comment</td><td>Changes the server comment<br/><div id="morehelp">/admin set server comment #comment will change the server comment.
-This servers comment will be changed.</div></td></tr><tr><td>/admin set server player password</td><td>setpwd<br/>pass</td><td>Changes the player password<br/><div id="morehelp">/admin set server spec password #pwd will change the password needed for players to connect to this server</div></td></tr><tr><td>/admin set server spec password</td><td>setspecpwd<br/>spectpass</td><td>Changes the spectator password<br/><div id="morehelp">/admin set server spec password #pwd will change the password needed for spectators to connect to this server</div></td></tr><tr><td>/admin set server ref password</td><td>setrefpwd</td><td>Changes the Referee password<br/><div id="morehelp"></div></td></tr><tr><td>/admin set server maxplayers</td><td>setmaxplayers<br/>maxplayers</td><td>Sets a new maximum of players<br/><div id="morehelp">Sets the maximum number of players who can play on this server.</div></td></tr><tr><td>/admin set server maxspectators</td><td>setmaxspecs<br/>maxspec</td><td>Sets the maximum number of players who can spectate the players on this server.<br/><div id="morehelp"></div></td></tr><tr><td>/admin set server chattime</td><td>setchattime<br/>chattime</td><td>Sets the Chat time duration.<br/><div id="morehelp">This is the time players get between the challenge end and the the new map</div></td></tr><tr><td>/admin set server hide</td><td>sethideserver</td><td>Allows you to hide or show the server to players<br/><div id="morehelp">\admin set server hide true Will hide the server from other players. Players would need to have the servers in their favorites or need to know the server login 
-\admin set server hide false Will make the server visible to any player</div></td></tr><tr><td>/admin set server mapdownload</td><td>setmapdownload</td><td>Will allow players to download maps they are playing from the server.<br/><div id="morehelp">\admin set server mapdownload true will allow the maps to be downloaded.
-\admin set server mapdownload false will not allow players to download the maps of this server.</div></td></tr><tr><td>/admin stop dedicated</td><td>stop dedi</td><td>Stops this server. Manialive will stop after this.<br/><div id="morehelp"></div></td></tr><tr><td>/admin stop manialive</td><td>stop exp<br/>stop expansion</td><td>Stops the Manialive instance running on for the server.<br/><div id="morehelp"></div></td></tr><tr><td>/admin manialive restart</td><td>res exp<br/>res expansion</td><td>Restart the Manialive instance running on for the server.<br/><div id="morehelp"></div></td></tr><tr><td>/admin skip</td><td>skip<br/>skipmap<br/>next<br/>nextmap</td><td>Skips the current track<br/><div id="morehelp"></div></td></tr><tr><td>/admin restart</td><td>res<br/>restart<br/>restartmap</td><td>Restarts this map to allow you to replay the map<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game mode</td><td>setgamemode<br/>mode</td><td>Sets next mode {ta,rounds,team,laps,stunts,cup}<br/><div id="morehelp">\admin set game mode ta will change gamemode to TimeAttack.
-\admin set game mode rounds will change gamemode to Rounds mode.
-\admin set game mode team will change gamemode to Team mode.
-\admin set game mode laps will change gamemode to Laps mode.
-\admin set game mode cup will change gamemode to Cup mode.
-\admin set game mode stunts will change gamemode to Stunts mode.</div></td></tr><tr><td>/admin set game AllWarmUpDuration</td><td>setAllWarmUpDuration</td><td>Set the warmup duration at the begining of the maps for all gamemodes<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game disableRespawn</td><td>setDisableRespawn</td><td>Will disable the respawn capabilities of the players<br/><div id="morehelp">/admin set game disableRespawn true will force the players to restart the map when they respaw
-/admin set game disableRespawn false player that respaw will return back to the last checkpoint
+    <tr>
+        <th>Command</th>
+        <th>Aliases</th>
+        <th>Help</th>
+    </tr>
+    <tr>
+        <td>/admin groups</td>
+        <td></td>
+        <td>Administrate the admin groups players and permissions.<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin help</td>
+        <td></td>
+        <td>Show the list of all available admin commands and alliases.<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin setting expansion</td>
+        <td>setexp</td>
+        <td>Set up your expansion<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin server control</td>
+        <td>server</td>
+        <td>Displays the main control panel for the server<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin dbtools</td>
+        <td></td>
+        <td>shows administrative window for database<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin update</td>
+        <td></td>
+        <td><br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin check</td>
+        <td></td>
+        <td><br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin game script</td>
+        <td>script</td>
+        <td>/script<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin game ta</td>
+        <td>ta</td>
+        <td>/ta limit; Sets timelimit for TimeAttack<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin game laps</td>
+        <td>laps</td>
+        <td>/laps laps X; Sets Laps Limit<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin game rounds</td>
+        <td>rounds</td>
+        <td>/rounds limit X; Sets PointLimit in Rounds<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin game cup</td>
+        <td>cup</td>
+        <td>/cup limit X; Sets CupRoundsLimit for Winner<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin game team</td>
+        <td>team</td>
+        <td>/team limit X; Sets Team PointLimit<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin player kick</td>
+        <td>kick</td>
+        <td>kick the player from the server<br/>
+            <div id="morehelp">/admin player kick #login will kick the player from the server.
+                A kicked player may return to the server whanever he desires.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin player ban</td>
+        <td>ban</td>
+        <td>Ban the player from the server<br/>
+            <div id="morehelp">/admin player ban #login will ban the player from the server.
+                He may not return until the server is restarted
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin player black</td>
+        <td>black</td>
+        <td>Add the player to the black list<br/>
+            <div id="morehelp">/admin player black #login will add the player to the blacklist of this server.
+                He may not return until the server blacklist file is deleted.
+                Other server might use the same blacklist file!!
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin player remove ban</td>
+        <td>unban</td>
+        <td>Removes the ban of the player<br/>
+            <div id="morehelp">/admin player remove ban #login will remove the ban of the player from this server
+                He may rejoin the server after this.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin clear banlist</td>
+        <td>cleanbanlist</td>
+        <td>clears the banlist of players<br/>
+            <div id="morehelp">Will completeley clear the banlist.
+                All banned players will be able to rejoin the server.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin get banlist</td>
+        <td>getbanlist</td>
+        <td>shows the current banlist of players<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin clear blacklist</td>
+        <td>cleanblacklist</td>
+        <td>clears the blacklist of players<br/>
+            <div id="morehelp">Will completeley clear the blackList.
+                All blacklist players will be able to rejoin the server.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin get blacklist</td>
+        <td>getblacklist</td>
+        <td>shows the current banlist of players<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin get guestlist</td>
+        <td>getguestlist</td>
+        <td>shows the current guest of players<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin get ignorelist</td>
+        <td>getignorelist</td>
+        <td>shows the current ignorelist of players<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin remove black</td>
+        <td>unblack</td>
+        <td>Removes the player from the black list<br/>
+            <div id="morehelp">/admin player remove black #login will remove the player from the servers blacklist
+                He may rejoin the server after this.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin player spec</td>
+        <td>spec</td>
+        <td>Forces the player to become spectator<br/>
+            <div id="morehelp">/admin player spec #login The playing player will be forced to become a spectator
+                If the max spectators is reached it the player won't become a spectator
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin player ignore</td>
+        <td>ignore</td>
+        <td>Adds player to ignore list and mutes him from the chat<br/>
+            <div id="morehelp">/admin player ignore #login will ignore the players chat
+                This player won't be able to communicate with other players.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin player unignore</td>
+        <td>unignore</td>
+        <td>Removes player to ignore list and allows him to chat<br/>
+            <div id="morehelp">/admin player unignore #login will allow this player to use the chat again
+                This player will be able to communicate with other players
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin settings</td>
+        <td></td>
+        <td><br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin get server planets</td>
+        <td>planets</td>
+        <td>Gets the serveraccount planets amount<br/>
+            <div id="morehelp">/admin planets return the planets amount on server account.</div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set server pay</td>
+        <td>pay</td>
+        <td>Pays out planets<br/>
+            <div id="morehelp">/admin pay #login #amount pays amount of planets to login</div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set server name</td>
+        <td>setservername<br/>name</td>
+        <td>Changes the name of the server<br/>
+            <div id="morehelp">/admin set server name #name will change the server name.
+                This servers name will be changed.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set server comment</td>
+        <td>setcomment<br/>comment</td>
+        <td>Changes the server comment<br/>
+            <div id="morehelp">/admin set server comment #comment will change the server comment.
+                This servers comment will be changed.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set server player password</td>
+        <td>setpwd<br/>pass</td>
+        <td>Changes the player password<br/>
+            <div id="morehelp">/admin set server spec password #pwd will change the password needed for players to
+                connect to this server
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set server spec password</td>
+        <td>setspecpwd<br/>spectpass</td>
+        <td>Changes the spectator password<br/>
+            <div id="morehelp">/admin set server spec password #pwd will change the password needed for spectators to
+                connect to this server
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set server ref password</td>
+        <td>setrefpwd</td>
+        <td>Changes the Referee password<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set server maxplayers</td>
+        <td>setmaxplayers<br/>maxplayers</td>
+        <td>Sets a new maximum of players<br/>
+            <div id="morehelp">Sets the maximum number of players who can play on this server.</div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set server maxspectators</td>
+        <td>setmaxspecs<br/>maxspec</td>
+        <td>Sets the maximum number of players who can spectate the players on this server.<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set server chattime</td>
+        <td>setchattime<br/>chattime</td>
+        <td>Sets the Chat time duration.<br/>
+            <div id="morehelp">This is the time players get between the challenge end and the the new map</div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set server hide</td>
+        <td>sethideserver</td>
+        <td>Allows you to hide or show the server to players<br/>
+            <div id="morehelp">\admin set server hide true Will hide the server from other players. Players would need
+                to have the servers in their favorites or need to know the server login
+                \admin set server hide false Will make the server visible to any player
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set server mapdownload</td>
+        <td>setmapdownload</td>
+        <td>Will allow players to download maps they are playing from the server.<br/>
+            <div id="morehelp">\admin set server mapdownload true will allow the maps to be downloaded.
+                \admin set server mapdownload false will not allow players to download the maps of this server.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin stop dedicated</td>
+        <td>stop dedi</td>
+        <td>Stops this server. Manialive will stop after this.<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin stop manialive</td>
+        <td>stop exp<br/>stop expansion</td>
+        <td>Stops the Manialive instance running on for the server.<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin manialive restart</td>
+        <td>res exp<br/>res expansion</td>
+        <td>Restart the Manialive instance running on for the server.<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin skip</td>
+        <td>skip<br/>skipmap<br/>next<br/>nextmap</td>
+        <td>Skips the current track<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin restart</td>
+        <td>res<br/>restart<br/>restartmap</td>
+        <td>Restarts this map to allow you to replay the map<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game mode</td>
+        <td>setgamemode<br/>mode</td>
+        <td>Sets next mode {ta,rounds,team,laps,stunts,cup}<br/>
+            <div id="morehelp">\admin set game mode ta will change gamemode to TimeAttack.
+                \admin set game mode rounds will change gamemode to Rounds mode.
+                \admin set game mode team will change gamemode to Team mode.
+                \admin set game mode laps will change gamemode to Laps mode.
+                \admin set game mode cup will change gamemode to Cup mode.
+                \admin set game mode stunts will change gamemode to Stunts mode.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game AllWarmUpDuration</td>
+        <td>setAllWarmUpDuration</td>
+        <td>Set the warmup duration at the begining of the maps for all gamemodes<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game disableRespawn</td>
+        <td>setDisableRespawn</td>
+        <td>Will disable the respawn capabilities of the players<br/>
+            <div id="morehelp">/admin set game disableRespawn true will force the players to restart the map when they
+                respaw
+                /admin set game disableRespawn false player that respaw will return back to the last checkpoint
 
-A player respaws when he clicks on backspace on his keyboard</div></td></tr><tr><td>/admin set game ta timelimit</td><td>setTAlimit</td><td>Changes the time limit of Time Attack mode.<br/><div id="morehelp">/admin set game ta timelimit #num will change the play time of a map</div></td></tr><tr><td>/admin set game ta dynamic</td><td>setTAdynamic</td><td>Enables the dynamic timelimit for Time Attack Mode.<br/><div id="morehelp">/admin set game ta timelimit #num will change the multiplier used for map authortime.</div></td></tr><tr><td>/admin set game ta WarmUpDuration</td><td></td><td>Changes the warmup duration of Time Attack mode only<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game rounds end</td><td>end<br/>endround<br/>er</td><td>Ends a round. Only work in round mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game rounds PointsLimit</td><td>rpoints</td><td>Changes the points limit of rounds mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game rounds ForcedLaps</td><td>setRoundForcedLaps</td><td>Forces laps in Rounds mode<br/><div id="morehelp">\admin set game rounds ForcedLaps #num will force multi laps maps lap number to the given value
-using 0 as number of laps will change the nb of laps to the default value</div></td></tr><tr><td>/admin set game rounds NewRules</td><td>setUseNewRulesRound</td><td>Allows you tu use new rules in rounds mode<br/><div id="morehelp">/admin set game rounds NewRules true will force the usage of new rules in rounds mode
-/admin set game rounds NewRules false will force the usage of old rules in rounds mode</div></td></tr><tr><td>/admin set game rounds WarmUpDuration</td><td>setAllWarmUpDuration</td><td>Changes the warmup duration of Rounds mode only<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game laps TimeLimit</td><td>setLapsTimeLimit</td><td>Changes the limit of time players has to finish the track<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game laps nbLaps</td><td>setNbLaps</td><td>Changes the numbers of laps players need to do to finish the map<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game laps FinishTimeOut</td><td>setFinishTimeout</td><td>Changes the time that has a player to finish a map once 1 player has already finished the map<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game laps WarmUpDuration</td><td>setAllWarmUpDuration</td><td>Changes the warmup duration of laps mode only<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game team PointsLimit</td><td>setTeamPointsLimit</td><td>Changes the points limit of team mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game team maxPoints</td><td>setMaxPointsTeam</td><td>Changes the Max PointsLimit of team mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game team NewRules</td><td>setUseNewRulesTeam</td><td>Changes the NewRules of team mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game team forcePlayer</td><td>forcePlayerTeam</td><td>Changes the Team for a Player by Forcing him<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game team WarmUpDuration</td><td>setAllWarmUpDuration</td><td>Changes the WarmUpDuration of team mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game cup PointsLimit</td><td>setCupPointsLimit</td><td>Changes the Cup PointLimit of Cup mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game cup RoundsPerMap</td><td>setCupRoundsPerMap</td><td>Changes the Cup RoundsPerMap of Cup mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game cup WarmUpDuration</td><td>setCupWarmUpDuration</td><td>Changes the Cup WarmUpDuration of Cup mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game cup NbWinners</td><td>setCupNbWinners</td><td>Changes the Cup NbWinners of Cup mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game cup customPoints</td><td>prepareRoundPoints</td><td>Changes the Cup CustomPoints of Cup mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin set game cup finishtimeout</td><td>setFinishTimeout</td><td>Changes the Cup Finishtimeout of Cup mode<br/><div id="morehelp"></div></td></tr><tr><td>/admin saverecs</td><td></td><td>Will force the save of the records changes in the Database<br/><div id="morehelp"></div></td></tr><tr><td>/admin add</td><td></td><td>Adds a map from ManiaExchange<br/><div id="morehelp">/admin add #id will add a map with id fron ManiaExchange</div></td></tr><tr><td>/admin map remove</td><td>remove</td><td>Removes current map from the playlist.<br/><div id="morehelp"></div></td></tr><tr><td>/admin map erase</td><td>nuke this<br/>trash this</td><td>Removes current map from the playlist.<br/><div id="morehelp"></div></td></tr><tr><td>/admin replaymap</td><td>replay</td><td>Sets current challenge to replay at end of match<br/><div id="morehelp"></div></td></tr><tr><td>/admin chat</td><td>a</td><td><br/><div id="morehelp"></div></td></tr><tr><td>/admin cancelvote</td><td>cancel</td><td><br/><div id="morehelp"></div></td></tr><tr><td>/admin votes</td><td></td><td>shows config window for managing votes<br/><div id="morehelp"></div></td></tr></table>
+                A player respaws when he clicks on backspace on his keyboard
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game ta timelimit</td>
+        <td>setTAlimit</td>
+        <td>Changes the time limit of Time Attack mode.<br/>
+            <div id="morehelp">/admin set game ta timelimit #num will change the play time of a map</div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game ta dynamic</td>
+        <td>setTAdynamic</td>
+        <td>Enables the dynamic timelimit for Time Attack Mode.<br/>
+            <div id="morehelp">/admin set game ta timelimit #num will change the multiplier used for map authortime.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game ta WarmUpDuration</td>
+        <td></td>
+        <td>Changes the warmup duration of Time Attack mode only<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game rounds end</td>
+        <td>end<br/>endround<br/>er</td>
+        <td>Ends a round. Only work in round mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game rounds PointsLimit</td>
+        <td>rpoints</td>
+        <td>Changes the points limit of rounds mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game rounds ForcedLaps</td>
+        <td>setRoundForcedLaps</td>
+        <td>Forces laps in Rounds mode<br/>
+            <div id="morehelp">\admin set game rounds ForcedLaps #num will force multi laps maps lap number to the given
+                value
+                using 0 as number of laps will change the nb of laps to the default value
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game rounds NewRules</td>
+        <td>setUseNewRulesRound</td>
+        <td>Allows you tu use new rules in rounds mode<br/>
+            <div id="morehelp">/admin set game rounds NewRules true will force the usage of new rules in rounds mode
+                /admin set game rounds NewRules false will force the usage of old rules in rounds mode
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game rounds WarmUpDuration</td>
+        <td>setAllWarmUpDuration</td>
+        <td>Changes the warmup duration of Rounds mode only<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game laps TimeLimit</td>
+        <td>setLapsTimeLimit</td>
+        <td>Changes the limit of time players has to finish the track<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game laps nbLaps</td>
+        <td>setNbLaps</td>
+        <td>Changes the numbers of laps players need to do to finish the map<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game laps FinishTimeOut</td>
+        <td>setFinishTimeout</td>
+        <td>Changes the time that has a player to finish a map once 1 player has already finished the map<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game laps WarmUpDuration</td>
+        <td>setAllWarmUpDuration</td>
+        <td>Changes the warmup duration of laps mode only<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game team PointsLimit</td>
+        <td>setTeamPointsLimit</td>
+        <td>Changes the points limit of team mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game team maxPoints</td>
+        <td>setMaxPointsTeam</td>
+        <td>Changes the Max PointsLimit of team mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game team NewRules</td>
+        <td>setUseNewRulesTeam</td>
+        <td>Changes the NewRules of team mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game team forcePlayer</td>
+        <td>forcePlayerTeam</td>
+        <td>Changes the Team for a Player by Forcing him<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game team WarmUpDuration</td>
+        <td>setAllWarmUpDuration</td>
+        <td>Changes the WarmUpDuration of team mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game cup PointsLimit</td>
+        <td>setCupPointsLimit</td>
+        <td>Changes the Cup PointLimit of Cup mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game cup RoundsPerMap</td>
+        <td>setCupRoundsPerMap</td>
+        <td>Changes the Cup RoundsPerMap of Cup mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game cup WarmUpDuration</td>
+        <td>setCupWarmUpDuration</td>
+        <td>Changes the Cup WarmUpDuration of Cup mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game cup NbWinners</td>
+        <td>setCupNbWinners</td>
+        <td>Changes the Cup NbWinners of Cup mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game cup customPoints</td>
+        <td>prepareRoundPoints</td>
+        <td>Changes the Cup CustomPoints of Cup mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin set game cup finishtimeout</td>
+        <td>setFinishTimeout</td>
+        <td>Changes the Cup Finishtimeout of Cup mode<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin saverecs</td>
+        <td></td>
+        <td>Will force the save of the records changes in the Database<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin add</td>
+        <td></td>
+        <td>Adds a map from ManiaExchange<br/>
+            <div id="morehelp">/admin add #id will add a map with id fron ManiaExchange</div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin map remove</td>
+        <td>remove</td>
+        <td>Removes current map from the playlist.<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin map erase</td>
+        <td>nuke this<br/>trash this</td>
+        <td>Removes current map from the playlist.<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin replaymap</td>
+        <td>replay</td>
+        <td>Sets current challenge to replay at end of match<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin chat</td>
+        <td>a</td>
+        <td><br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin cancelvote</td>
+        <td>cancel</td>
+        <td><br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>/admin votes</td>
+        <td></td>
+        <td>shows config window for managing votes<br/>
+            <div id="morehelp"></div>
+        </td>
+    </tr>
+</table>
 <h1>All Public commands</h1>
 <table>
-            <tr>
-            <th>Command</th><th>Help</th>            
-            </tr><tr><td>/man</td><td>Display help for every commands you give as parameter
-exemple of usage: /man man</td></tr><tr><td>/man</td><td>Display help for the command with the corresponding parameters
-exemple of usage: /man man 2</td></tr><tr><td>/server</td><td></td></tr><tr><td>/serverlogin</td><td></td></tr><tr><td>/admin</td><td></td></tr><tr><td>/adm</td><td></td></tr><tr><td>/hud</td><td></td></tr><tr><td>/hud</td><td></td></tr><tr><td>/script</td><td></td></tr><tr><td>/ta</td><td></td></tr><tr><td>/laps</td><td></td></tr><tr><td>/rounds</td><td></td></tr><tr><td>/cup</td><td></td></tr><tr><td>/team</td><td></td></tr><tr><td>/chatlog</td><td></td></tr><tr><td>/bb</td><td>performs a chatemote.</td></tr><tr><td>/bye</td><td>performs a chatemote.</td></tr><tr><td>/hi</td><td>performs a chatemote.</td></tr><tr><td>/hello</td><td>performs a chatemote.</td></tr><tr><td>/thx</td><td>performs a chatemote.</td></tr><tr><td>/ty</td><td>performs a chatemote.</td></tr><tr><td>/lol</td><td>performs a chatemote.</td></tr><tr><td>/brb</td><td>performs a chatemote.</td></tr><tr><td>/afk</td><td>performs a chatemote.</td></tr><tr><td>/gg</td><td>performs a chatemote.</td></tr><tr><td>/nl</td><td>performs a chatemote.</td></tr><tr><td>/bgm</td><td>performs a chatemote.</td></tr><tr><td>/sry</td><td>performs a chatemote.</td></tr><tr><td>/sorry</td><td>performs a chatemote.</td></tr><tr><td>/glhf</td><td>performs a chatemote.</td></tr><tr><td>/wb</td><td>performs a chatemote.</td></tr><tr><td>/omg</td><td>performs a chatemote.</td></tr><tr><td>/buzz</td><td>performs a chatemote.</td></tr><tr><td>/eat</td><td>performs a chatemote.</td></tr><tr><td>/drink</td><td>performs a chatemote.</td></tr><tr><td>/rant</td><td>performs a chatemote.</td></tr><tr><td>/rq</td><td>performs a chatemote.</td></tr><tr><td>/bootme</td><td>performs a chatemote.</td></tr><tr><td>/joke</td><td>performs a chatemote.</td></tr><tr><td>/fact</td><td>performs a chatemote.</td></tr><tr><td>/proverb</td><td>performs a chatemote.</td></tr><tr><td>/quote</td><td>performs a chatemote.</td></tr><tr><td>/donate</td><td></td></tr><tr><td>/donate</td><td>/donate X where X is ammount of Planets</td></tr><tr><td>/faq</td><td></td></tr><tr><td>/faq</td><td></td></tr><tr><td>/faq</td><td></td></tr><tr><td>/played</td><td></td></tr><tr><td>/recs</td><td>Show Records Window</td></tr><tr><td>/top100</td><td>Show Server Ranks Window</td></tr><tr><td>/ranks</td><td>Show Server Ranks Window</td></tr><tr><td>/rank</td><td>Show Player Rank</td></tr><tr><td>/pb</td><td>Show Player Personal Best</td></tr><tr><td>/cps</td><td>Show Checkpoint times</td></tr><tr><td>/sectors</td><td>Show Players Best Sector times</td></tr><tr><td>/mx</td><td></td></tr><tr><td>/mx</td><td></td></tr><tr><td>/mx</td><td></td></tr><tr><td>/rate</td><td>/rate +++, /rate ++, /rate +-, /rate --, /rate --- or /rate 5, /rate 4, /rate 3. /rate 2, /rate 1</td></tr><tr><td>/rating</td><td>/rating Map Rating Approval</td></tr><tr><td>/list</td><td></td></tr><tr><td>/maps</td><td></td></tr><tr><td>/nextmap</td><td></td></tr><tr><td>/jb</td><td></td></tr><tr><td>/jb</td><td></td></tr><tr><td>/pm</td><td></td></tr><tr><td>/r</td><td></td></tr><tr><td>/a</td><td></td></tr><tr><td>/players</td><td></td></tr><tr><td>/plist</td><td></td></tr><tr><td>/play</td><td></td></tr><tr><td>/spec</td><td></td></tr><tr><td>/stats</td><td></td></tr><tr><td>/replay</td><td>Start a vote to restart a map</td></tr><tr><td>/restart</td><td>Start a vote to restart a map</td></tr><tr><td>/res</td><td>Start a vote to restart a map</td></tr><tr><td>/skip</td><td>Start a vote to skip a map</td></tr></table>
+    <tr>
+        <th>Command</th>
+        <th>Help</th>
+    </tr>
+    <tr>
+        <td>/man</td>
+        <td>Display help for every commands you give as parameter
+            exemple of usage: /man man
+        </td>
+    </tr>
+    <tr>
+        <td>/man</td>
+        <td>Display help for the command with the corresponding parameters
+            exemple of usage: /man man 2
+        </td>
+    </tr>
+    <tr>
+        <td>/server</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/serverlogin</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/admin</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/adm</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/hud</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/hud</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/script</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/ta</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/laps</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/rounds</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/cup</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/team</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/chatlog</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/bb</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/bye</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/hi</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/hello</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/thx</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/ty</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/lol</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/brb</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/afk</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/gg</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/nl</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/bgm</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/sry</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/sorry</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/glhf</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/wb</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/omg</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/buzz</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/eat</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/drink</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/rant</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/rq</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/bootme</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/joke</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/fact</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/proverb</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/quote</td>
+        <td>performs a chatemote.</td>
+    </tr>
+    <tr>
+        <td>/donate</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/donate</td>
+        <td>/donate X where X is ammount of Planets</td>
+    </tr>
+    <tr>
+        <td>/faq</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/faq</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/faq</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/played</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/recs</td>
+        <td>Show Records Window</td>
+    </tr>
+    <tr>
+        <td>/top100</td>
+        <td>Show Server Ranks Window</td>
+    </tr>
+    <tr>
+        <td>/ranks</td>
+        <td>Show Server Ranks Window</td>
+    </tr>
+    <tr>
+        <td>/rank</td>
+        <td>Show Player Rank</td>
+    </tr>
+    <tr>
+        <td>/pb</td>
+        <td>Show Player Personal Best</td>
+    </tr>
+    <tr>
+        <td>/cps</td>
+        <td>Show Checkpoint times</td>
+    </tr>
+    <tr>
+        <td>/sectors</td>
+        <td>Show Players Best Sector times</td>
+    </tr>
+    <tr>
+        <td>/mx</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/mx</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/mx</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/rate</td>
+        <td>/rate +++, /rate ++, /rate +-, /rate --, /rate --- or /rate 5, /rate 4, /rate 3. /rate 2, /rate 1</td>
+    </tr>
+    <tr>
+        <td>/rating</td>
+        <td>/rating Map Rating Approval</td>
+    </tr>
+    <tr>
+        <td>/list</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/maps</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/nextmap</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/jb</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/jb</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/pm</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/r</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/a</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/players</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/plist</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/play</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/spec</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/stats</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>/replay</td>
+        <td>Start a vote to restart a map</td>
+    </tr>
+    <tr>
+        <td>/restart</td>
+        <td>Start a vote to restart a map</td>
+    </tr>
+    <tr>
+        <td>/res</td>
+        <td>Start a vote to restart a map</td>
+    </tr>
+    <tr>
+        <td>/skip</td>
+        <td>Start a vote to skip a map</td>
+    </tr>
+</table>
 </body>
 </html>            

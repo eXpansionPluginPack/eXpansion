@@ -100,7 +100,7 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->target);
 
         $checkpoints = "[ -1 ]";
-        $noRecs = TRUE;
+        $noRecs = true;
 
         // Add record information for MS usage.
         if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record) {
@@ -108,11 +108,11 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
             if (sizeof($record->ScoreCheckpoints) == $this->totalCp) {
                 // Normal DB entry with all CP's.
                 $checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . "]";
-                $noRecs = FALSE;
+                $noRecs = false;
                 // XAseco entry missing last CP. Add the record time as it is the the same value.
             } elseif (sizeof($record->ScoreCheckpoints) == $this->totalCp - 1) {
                 $checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . ", " . $record->time . "]";
-                $noRecs = FALSE;
+                $noRecs = false;
             }
         }
 

@@ -24,7 +24,7 @@ class LinePlotter extends \ManiaLivePlugins\eXpansion\Gui\Control
     /**
      * Button
      *
-     * @param int $sizeX = 24
+     * @param int  $sizeX = 24
      * @param intt $sizeY = 6
      */
     function __construct($sizeX = 100, $sizeY = 100)
@@ -121,6 +121,7 @@ class LinePlotter extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      * sets the step value for scale-lines
+     *
      * @param float $step
      */
     public function setTickSize($step = 4)
@@ -203,6 +204,7 @@ while (index < max) {
     index = index + step;
 }
 ';
+
         return $val;
     }
 

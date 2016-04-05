@@ -48,6 +48,7 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param mixed $login
      * @param mixed $amount
+     *
      * @return void
      */
     function donate($login, $amount = null, $someOtherPlayer = null)
@@ -55,12 +56,14 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $player = $this->storage->getPlayerObject($login);
         if ($amount == "help" || $amount == null) {
             $this->showHelp($login);
+
             return;
         }
         if (is_numeric($amount)) {
             $amount = (int)$amount;
         } else {
             $this->exp_chatSendServerMessage('#error#Donate takes one argument and it needs to be numeric.', $login);
+
             return;
         }
 

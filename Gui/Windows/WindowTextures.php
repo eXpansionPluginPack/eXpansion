@@ -315,6 +315,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
     /**
      * Registers a script to widget instance
+     *
      * @param \ManiaLivePlugins\eXpansion\Gui\Structures\Script $script
      */
     public function registerScript(\ManiaLivePlugins\eXpansion\Gui\Structures\Script $script)

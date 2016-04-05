@@ -83,6 +83,7 @@ class Communication extends ExpPlugin
     {
         if (!$this->checkPlayer($login)) {
             $this->send($login, $target, '$d00' . __("You are being ignored. Message not sent.", $login));
+
             return;
         }
 
@@ -121,6 +122,7 @@ class Communication extends ExpPlugin
         if (empty($test)) {
             return false;
         }
+
         return true;
     }
 
@@ -135,6 +137,7 @@ class Communication extends ExpPlugin
     {
         if ($params === false) {
             $this->exp_chatSendServerMessage($this->msg_help, $login);
+
             return;
         }
         $text = explode(" ", $params);

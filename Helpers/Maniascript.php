@@ -29,6 +29,7 @@ class Maniascript
 
     /**
      *    converts object, string or array to maniascript array
+     *
      * @param mixed $data
      */
     static public function stringifyAsList($data)
@@ -50,6 +51,7 @@ class Maniascript
 
     /**
      *    converts object, string or array to maniascript array
+     *
      * @todo implement the converter
      *
      * @param mixed $data
@@ -66,6 +68,7 @@ class Maniascript
      * String, Boolean, Integer, Float, Null
      *
      * @param  String|Boolean|Integer|Float|Null $var
+     *
      * @return string|numeric
      */
     static public function convertType($var)
@@ -82,6 +85,7 @@ class Maniascript
         if (is_bool($var)) {
             if ($var)
                 return 'True';
+
             return 'False';
         }
 
@@ -109,7 +113,9 @@ class Maniascript
 
     /**
      * convert php numeric value to maniascript Real
+     *
      * @param numeric $var
+     *
      * @return int|float
      */
     public static function getReal($var)
@@ -121,13 +127,16 @@ class Maniascript
 
     /**
      * convert php boolean to maniascript boolan
+     *
      * @param bool $boolean
+     *
      * @return string
      */
     public static function getBoolean($boolean)
     {
         if ($boolean)
             return "True";
+
         return "False";
     }
 

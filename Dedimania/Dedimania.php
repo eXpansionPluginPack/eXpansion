@@ -48,9 +48,9 @@ class Dedimania extends DedimaniaAbstract
 
     /**
      * @param \ManiaLive\Data\Player $player
-     * @param $time
-     * @param $checkpoints
-     * @param int $nbLap
+     * @param                        $time
+     * @param                        $checkpoints
+     * @param int                    $nbLap
      */
     public function onPlayerFinishLap($player, $time, $checkpoints, $nbLap)
     {
@@ -169,7 +169,7 @@ class Dedimania extends DedimaniaAbstract
 
     /**
      *
-     * @param array $rankings
+     * @param array  $rankings
      * @param string $winnerTeamOrMap
      *
      */
@@ -178,6 +178,7 @@ class Dedimania extends DedimaniaAbstract
         if (!$this->running) return;
         if ($this->wasWarmup) {
             $this->console("[Dedimania] the last round was warmup, deditimes not send for warmup!");
+
             return;
         }
 

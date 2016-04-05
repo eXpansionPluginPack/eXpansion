@@ -40,6 +40,7 @@ class ConfigOption extends \ManiaLivePlugins\eXpansion\Gui\Control
             if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK)
                 return "TA";
         }
+
         return "" . $mode;
     }
 

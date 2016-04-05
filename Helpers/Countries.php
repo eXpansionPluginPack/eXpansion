@@ -203,6 +203,7 @@ class Countries
         } else {
             $output = 'OTH';
         }
+
         return $output;
     }
 
@@ -220,6 +221,7 @@ class Countries
         } else {
             $output = 'Other';
         }
+
         return $output;
     }
 

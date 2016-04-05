@@ -29,6 +29,7 @@ class ForceSkin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->connection->setForcedSkins($this->getSkins());
         } catch (\Exception $e) {
             $this->console("[eXp\ForceSkins] error while forcing a skin:" . $e->getMessage());
+
             return;
         }
     }
@@ -41,10 +42,12 @@ class ForceSkin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $skin->orig = "";
             $skin->url = $this->config->skinUrl;
             $skin->checksum = "";
+
             return array($skin);
         } catch (\Exception $e) {
 
             Helper::log("[ForceSkin]Error : " . $e->getMessage());
+
             return array(new \Maniaplanet\DedicatedServer\Structures\ForcedSkin());
         }
     }

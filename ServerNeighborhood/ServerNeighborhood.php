@@ -139,11 +139,13 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         }
         if ($tries >= 40) {
             $this->console('[server_neighborhood] Could not open file " ' . $filename . '" to store the Server Information!');
+
             return false;
         } else {
             fwrite($fh, $data);
             fclose($fh);
         }
+
         return true;
     }
 

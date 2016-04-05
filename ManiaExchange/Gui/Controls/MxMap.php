@@ -23,11 +23,11 @@ class MxMap extends Control
     private $line1, $line2;
 
     /**
-     * @param $indexNumber
+     * @param                                                            $indexNumber
      * @param \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map
-     * @param $controller
-     * @param ButtonHook[] $buttons
-     * @param $sizeX
+     * @param                                                            $controller
+     * @param ButtonHook[]                                               $buttons
+     * @param                                                            $sizeX
      */
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map, $controller, $buttons, $sizeX)
     {

@@ -136,6 +136,7 @@ class i18n extends \ManiaLib\Utils\Singleton
             return $this->messages[$string];
         } else {
             $nmessage = new i18n\Message($string);
+
             return $nmessage;
         }
     }
@@ -143,7 +144,7 @@ class i18n extends \ManiaLib\Utils\Singleton
     /**
      * Get the translation of a key in a certain language. If no language is defined default language
      *
-     * @param      $string      Translation key
+     * @param      $string       Translation key
      * @param null $fromLanguage Language to get the translation for
      *
      * @return string the translation, if none find the translation key
@@ -152,6 +153,7 @@ class i18n extends \ManiaLib\Utils\Singleton
     {
         if ($fromLanguage == null)
             return $this->translate($string, $this->defaultLanguage);
+
         return $this->translate($string, $fromLanguage);
     }
 

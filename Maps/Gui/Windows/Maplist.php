@@ -374,7 +374,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $rate => -1,
                 "Info" => $showInfoAction,
                 "Recs" => $showRecsAction,
-                "remove" => $removeMapAction
+                "remove" => $removeMapAction,
             ));
             $x++;
         }
@@ -458,6 +458,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $min_key = $k;
             }
         }
+
         return $min_key;
     }
     /*
@@ -558,6 +559,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         // and take a substring based on those results
         $start = $current[1];
         $end = $min_key;
+
         return substr($haystack, $start, $end - $start);
     }
 

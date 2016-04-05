@@ -45,6 +45,7 @@ class Group
             $i++;
         }
         $this->groupUsers = $newGroupUsers;
+
         return $found;
     }
 
@@ -82,9 +83,11 @@ class Group
 
                 return $this->hasInheritancePermission($name);
             }
+
             return $this->permissions[$name] == AdminGroups::havePermission;
         } else {
             $this->permissions[$name] = AdminGroups::unknownPermission;
+
             return $this->hasInheritancePermission($name);
         }
     }
@@ -101,6 +104,7 @@ class Group
                     return true;
             }
         }
+
         return $actual == AdminGroups::havePermission;
     }
 

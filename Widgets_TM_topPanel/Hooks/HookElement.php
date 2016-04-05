@@ -1,6 +1,6 @@
 <?php
 /**
- * @author      Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -33,7 +33,7 @@ class HookElement
 
     /**
      * @param Element $gui
-     * @param int $priority
+     * @param int     $priority
      */
     function __construct($gui, $priority = 0)
     {

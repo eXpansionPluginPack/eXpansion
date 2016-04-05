@@ -99,6 +99,7 @@ class Widgets_Voip extends ExpPlugin
     {
         $player = $this->storage->getPlayerObject($login);
         $nick = Formatting::stripStyles($player->nickName);
+
         return $nick;
         //return mb_convert_encoding($nick, "latin-1", "UTF-8");
     }

@@ -36,6 +36,7 @@ class Question
     {
         $this->asker = $player;
         $this->question = $question;
+
         return $this;
     }
 
@@ -48,12 +49,14 @@ class Question
     public function setQuestion($question)
     {
         $this->question = $question;
+
         return $this;
     }
 
     /**
      * getQuestion()
      * Getter for question
+     *
      * @return string
      */
     public function getQuestion()
@@ -64,6 +67,7 @@ class Question
     /**
      * addAnswer()
      * adds a correct answer
+     *
      * @param \ManiaLivePlugins\eXpansion\Quiz\Structures\Answer $answer
      */
     public function addAnswer($answer)
@@ -74,6 +78,7 @@ class Question
     /**
      * removeAnswer()
      * removes a correct answer
+     *
      * @param integer $index ;
      */
     public function removeAnswer($index)
@@ -83,13 +88,15 @@ class Question
         } catch (\Exception $e) {
 
         }
+
         return $this;
     }
 
     /**
      * setAnswer($index, $answer);
      * setter for answer
-     * @param int $index
+     *
+     * @param int                                                $index
      * @param \ManiaLivePlugins\eXpansion\Quiz\Structures\Answer $answer
      */
     public function setAnswer($index, Answer $answer)
@@ -120,7 +127,9 @@ class Question
 
     /**
      * checkAnswer($message);
+     *
      * @param string $message
+     *
      * @return boolean
      */
     public function checkAnswer($message)
@@ -134,9 +143,11 @@ class Question
                 if ($this->multipart) {
                     return self::MoreAnswersNeeded;
                 }
+
                 return self::Correct;
             }
         }
+
         return self::WrongAnswer;
     }
 

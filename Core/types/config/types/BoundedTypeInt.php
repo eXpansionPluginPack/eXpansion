@@ -40,11 +40,13 @@ class BoundedTypeInt extends TypeInt
      * Prevents values of the Variable to be greater then this value
      *
      * @param int $max Sets the maximum value allowed
+     *
      * @return \ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt
      */
     public function setMax($max)
     {
         $this->max = $max;
+
         return $this;
     }
 
@@ -52,11 +54,13 @@ class BoundedTypeInt extends TypeInt
      * Prevents values of the Variable to be smaller then this value
      *
      * @param int $min Sets the minumum value allowed
+     *
      * @return \ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt
      */
     public function setMin($min)
     {
         $this->min = $min;
+
         return $this;
     }
 

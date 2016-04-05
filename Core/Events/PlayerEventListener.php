@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author      Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -36,8 +36,8 @@ interface PlayerEventListener
 
     /**
      * @param  ExpPlayer $player $player player object of the changed info
-     * @param  int $oldPos old position
-     * @param  int $newPos new position
+     * @param  int       $oldPos old position
+     * @param  int       $newPos new position
      */
     public function onPlayerPositionChange(ExpPlayer $player, $oldPos, $newPos);
 

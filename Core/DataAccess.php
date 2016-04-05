@@ -66,10 +66,10 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
      * Use this if you need to access for example https
      * note: This may block the main loop for short period of time.
      *
-     * @param string $url
+     * @param string   $url
      * @param callable $callback
-     * @param mixed $addionalData additional data passed for the query, like login, map-object, whatever
-     * @param array $options curl options array
+     * @param mixed    $addionalData additional data passed for the query, like login, map-object, whatever
+     * @param array    $options      curl options array
      */
     function httpCurl($url, $callback, $addionalData = null, $options = array())
     {
@@ -85,11 +85,11 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
      *
      * }
      *
-     * @param string $url usage: http://www.example.com?param=value
-     * @param array $callback usage: array($this, "xCallback")
-     * @param array $callparams usage: array($param1, $param2)
-     * @param string $userAgent userAgent to be sent
-     * @param string $mimeType header mimetype request -> defaults to "text/html"
+     * @param string $url        usage: http://www.example.com?param=value
+     * @param array  $callback   usage: array($this, "xCallback")
+     * @param array  $callparams usage: array($param1, $param2)
+     * @param string $userAgent  userAgent to be sent
+     * @param string $mimeType   header mimetype request -> defaults to "text/html"
      *
      * @throws Exception
      */
@@ -125,6 +125,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
         if (!is_file($filename)) {
             if (!touch($filename)) {
                 chmod($filename, 0755);
+
                 return false;
             }
         }
@@ -134,9 +135,11 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
                 if ($append === true) {
                     return file_put_contents($filename, $data, LOCK_EX | FILE_APPEND);
                 }
+
                 return file_put_contents($filename, $data, LOCK_EX);
             } catch (\Exception $e) {
                 Console::println("File write exception:" . $e->getMessage());
+
                 return false;
             }
         }
@@ -154,6 +157,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
                 return file_get_contents($filename);
             } catch (\Exception $e) {
                 Console::println("File read exception:" . $e->getMessage());
+
                 return false;
             }
         }
@@ -163,6 +167,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
     {
         if (!is_callable($query->callback)) {
             Console::println("[DataAccess Error] Callback-function is not valid!");
+
             return;
         }
 
@@ -186,6 +191,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             } else {
                 Console::println("[DataAccess] webRequest redirected more than 3 times, canceling request.");
             }
+
             return;
         }
 // moved temporarily
@@ -205,6 +211,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             } else {
                 Console::println("[DataAccess] webRequest redirected more than 3 times, canceling request.");
             }
+
             return;
         }
 // access ok

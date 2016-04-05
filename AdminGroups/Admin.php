@@ -45,6 +45,7 @@ class Admin
                     }
                 }
             }
+
             return false;
         } else {
             return $this->group->hasPermission($name);

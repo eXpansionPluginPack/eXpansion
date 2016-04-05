@@ -332,6 +332,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             return null;
         } else {
             $player = $query->fetchStdObject();
+
             return $player;
         }
     }
@@ -373,6 +374,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         } else {
             $num = $num . 'th';
         }
+
         return $num;
     }
 
@@ -385,6 +387,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             return false;
         } else {
             $record = $query->fetchStdObject();
+
             return $record->database_version;
         }
     }

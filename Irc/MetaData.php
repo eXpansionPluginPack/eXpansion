@@ -70,6 +70,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         if (!extension_loaded("sockets"))
             return array('You need extension "php_sockets" enabled for php!');
+
         return array();
     }
 

@@ -90,8 +90,8 @@ class PlainWidget extends \ManiaLive\Gui\Window
     /**
      * Will apply a single script
      *
-     * @param Script $script The script to apply if possible to the current window
-     * @param mixed $component the component that adds this script
+     * @param Script $script    The script to apply if possible to the current window
+     * @param mixed  $component the component that adds this script
      */
     private function applyScript(Script $script, $component)
     {
@@ -192,7 +192,9 @@ class PlainWidget extends \ManiaLive\Gui\Window
 
     /**
      * formats number for maniascript
+     *
      * @param numeric $number
+     *
      * @return string
      */
     public function getNumber($number)
@@ -203,6 +205,7 @@ class PlainWidget extends \ManiaLive\Gui\Window
     public function getBoolean($boolean)
     {
         if ($boolean) return "True";
+
         return "False";
     }
 

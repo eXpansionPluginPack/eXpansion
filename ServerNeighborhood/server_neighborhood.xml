@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <server_neighborhood>
-	<!-- THIS IS THE CONFIG FILE FOR THE MANIALIVE VERSION ONLY -->
-       
+    <!-- THIS IS THE CONFIG FILE FOR THE MANIALIVE VERSION ONLY -->
+
     <hud>
         <posX>-163</posX>
         <posY>90</posY>
         <sizeX>33</sizeX>
         <nbElement>3</nbElement>
-		
-		<!--Available styles :
+
+        <!--Available styles :
             - small
             - UndefStyle
         -->
@@ -17,48 +17,48 @@
 
     <!-- THANKS to undef to allow me to use his config file -->
 
-	<!--
-	Refresh the Panel every [INT] seconds.
-	Recommendation:
-	5-10 sec. on low visited servers (cpu intensive, lag in game)
-	10-30 sec. on high volume servers (less cpu intensive, less lag in game)
-	//-->
-	<refresh_interval>10</refresh_interval>
+    <!--
+    Refresh the Panel every [INT] seconds.
+    Recommendation:
+    5-10 sec. on low visited servers (cpu intensive, lag in game)
+    10-30 sec. on high volume servers (less cpu intensive, less lag in game)
+    //-->
+    <refresh_interval>10</refresh_interval>
 
-	<!--
-	If you wish to save the Server-Information to a remote destination e.g. on a FTP-Server
-	just use the following format "ftp://username:password@ftp.example.com/serverneighbors/"
-	NOTE: Make sure your php option "allow_url_fopen" is set to "on" and the given path exist!
+    <!--
+    If you wish to save the Server-Information to a remote destination e.g. on a FTP-Server
+    just use the following format "ftp://username:password@ftp.example.com/serverneighbors/"
+    NOTE: Make sure your php option "allow_url_fopen" is set to "on" and the given path exist!
 
-	If you wish to save the Server-Information local, then make sure that the path to the files
-	are read- and writeable by the user that runs xaseco (see "man chmod" under UN!X/Linux)!
+    If you wish to save the Server-Information local, then make sure that the path to the files
+    are read- and writeable by the user that runs xaseco (see "man chmod" under UN!X/Linux)!
 
-	Some examples for <storing_path>:
-	 - Linux (local):		<storing_path>/home/user/serverneighbors/</storing_path>
-	 - Windows (local):		<storing_path>C:/Trackmania/serverneighbors/</storing_path>
-	 - FTP (remote):		<storing_path>ftp://username:password@ftp.example.com/serverneighbors/</storing_path>
-	//-->
-	<storing_path></storing_path>
+    Some examples for <storing_path>:
+     - Linux (local):		<storing_path>/home/user/serverneighbors/</storing_path>
+     - Windows (local):		<storing_path>C:/Trackmania/serverneighbors/</storing_path>
+     - FTP (remote):		<storing_path>ftp://username:password@ftp.example.com/serverneighbors/</storing_path>
+    //-->
+    <storing_path></storing_path>
 
-	<!--
-	The server neighbors, max. 56 servers!
-	<path> = path to the "<login of dedicated server neighbor>_serverinfo.xml" including the filename, with the same conditions as <storing_path> (but only for read access)
+    <!--
+    The server neighbors, max. 56 servers!
+    <path> = path to the "<login of dedicated server neighbor>_serverinfo.xml" including the filename, with the same conditions as <storing_path> (but only for read access)
 
-	Some examples for <path> (assuming "clanserver007" as <login>):
-	 - Linux (local):		<path>/home/user/serverneighbors/clanserver007_serverinfo.xml</path>
-	 - Windows (local):		<path>C:/Trackmania/serverneighbors/clanserver007_serverinfo.xml</path>
-	 - FTP (remote):		<path>ftp://username:password@ftp.example.com/serverneighbors/clanserver007_serverinfo.xml</path>
-	 - HTTP (remote):		<path>http://www.example.com/serverneighbors/clanserver007_serverinfo.xml</path>
-	//-->
-	<server_accounts>
-		
-		<server_neighbor>
-			<path></path>
-			<enable>true</enable>								<!-- 'true' or 'false' -->
-			<force_spectator>false</force_spectator>					<!-- 'true' or 'false' -->
-		</server_neighbor>
-		
-	</server_accounts>
+    Some examples for <path> (assuming "clanserver007" as <login>):
+     - Linux (local):		<path>/home/user/serverneighbors/clanserver007_serverinfo.xml</path>
+     - Windows (local):		<path>C:/Trackmania/serverneighbors/clanserver007_serverinfo.xml</path>
+     - FTP (remote):		<path>ftp://username:password@ftp.example.com/serverneighbors/clanserver007_serverinfo.xml</path>
+     - HTTP (remote):		<path>http://www.example.com/serverneighbors/clanserver007_serverinfo.xml</path>
+    //-->
+    <server_accounts>
+
+        <server_neighbor>
+            <path></path>
+            <enable>true</enable>                                <!-- 'true' or 'false' -->
+            <force_spectator>false</force_spectator>                    <!-- 'true' or 'false' -->
+        </server_neighbor>
+
+    </server_accounts>
 
 
 </server_neighborhood>

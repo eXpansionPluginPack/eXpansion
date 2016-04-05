@@ -140,7 +140,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function onBeginMap($map, $warmUp, $matchContinuation)
     {
-        if (self::$raceOn == True) return;
+        if (self::$raceOn == true) return;
 
         $this->getRoundsPoints();
         self::$raceOn = false;
@@ -153,7 +153,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function onBeginMatch()
     {
-        if (self::$raceOn == True) return;
+        if (self::$raceOn == true) return;
 
         self::$raceOn = false;
         $this->forceUpdate = true;

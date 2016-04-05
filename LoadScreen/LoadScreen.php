@@ -145,6 +145,7 @@ class LoadScreen extends ExpPlugin
             $json = json_decode($data, true);
             if ($json === null) {
                 $this->mxImage = "";
+
                 return;
             }
             $map = MxMap::fromArray($json);

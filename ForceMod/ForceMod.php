@@ -67,6 +67,7 @@ class ForceMod extends ExpPlugin
             $this->connection->setForcedMods(true, $rnd_mod);
         } catch (Exception $e) {
             $this->console("[eXp\\ForceMod] error while enabling the mod:" . $e->getMessage() . " line:" . $e->getLine());
+
             return;
         }
     }
@@ -90,9 +91,11 @@ class ForceMod extends ExpPlugin
                 $mod->env = $env;
                 $mods[$env][] = $mod;
             }
+
             return $mods;
         } catch (Exception $e) {
             \ManiaLivePlugins\eXpansion\Helpers\Helper::logError("Error while forcemod:" . $e->getMessage());
+
             return array();
         }
     }
@@ -114,6 +117,7 @@ class ForceMod extends ExpPlugin
             $this->connection->setForcedMods(true, array());
         } catch (Exception $e) {
             $this->console("[eXp\\ForceMod] error while disabling the mods:" . $e->getMessage());
+
             return;
         }
     }
@@ -131,6 +135,7 @@ class ForceMod extends ExpPlugin
                 return "Canyon";
                 break;
         }
+
         return $env;
     }
 

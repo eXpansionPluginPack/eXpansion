@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author      Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -110,7 +110,7 @@ class TM_DopplerScores extends LocalBase
 
     /**
      * @param string $login
-     * @param bool $isSpectator
+     * @param bool   $isSpectator
      */
     public function onPlayerConnect($login, $isSpectator)
     {
@@ -121,7 +121,7 @@ class TM_DopplerScores extends LocalBase
 
     /**
      * @param string $login
-     * @param null $reason
+     * @param null   $reason
      */
     public function onPlayerDisconnect($login, $reason = null)
     {

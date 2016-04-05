@@ -207,7 +207,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     /**
      * @param Curl $job
-     * @param $jobData
+     * @param      $jobData
      */
     function xSearch($job, $jobData)
     {
@@ -226,6 +226,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0,
                 "search returned a http error " . $code, $this->sizeX - 6));
             $this->redraw();
+
             return;
         }
 
@@ -234,6 +235,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "search returned no data",
                     $this->sizeX - 6));
                 $this->redraw();
+
                 return;
             }
             $json = json_decode($data, true);
@@ -247,12 +249,14 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0,
                     "Error while processing json data from MX.", $this->sizeX - 6));
                 $this->redraw();
+
                 return;
             }
             if (!array_key_exists("results", $json)) {
                 $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error: MX returned no results.",
                     $this->sizeX - 6));
                 $this->redraw();
+
                 return;
             }
 

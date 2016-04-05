@@ -70,6 +70,7 @@ class TM_Scoretable extends ExpPlugin
         if ($x > 230) {
             $x = 230;
         }
+
         return '
 <?xml version="1.0" encoding="utf-8"?>
 <scorestable version="1">

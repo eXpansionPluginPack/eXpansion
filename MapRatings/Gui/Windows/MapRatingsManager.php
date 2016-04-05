@@ -39,6 +39,7 @@ class MapRatingsManager extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     /**
      * set ratings for window
+     *
      * @param \ManiaLivePlugins\eXpansion\MapRatings\Structures\MapRating[] $ratings ;
      */
     public function setRatings($ratings)

@@ -35,7 +35,7 @@ class BetCounter
 
     private $active = false;
 
-    public function __construct($timeout, $callback = Null, $param = null)
+    public function __construct($timeout, $callback = null, $param = null)
     {
         if (!is_numeric($timeout))
             return;
@@ -60,8 +60,10 @@ class BetCounter
                 }
             } catch (\Exception $e) {
                 \ManiaLivePlugins\eXpansion\Helpers\Helper::logError("invalid callback found at betcounter.php");
+
                 return true;
             }
+
             return true;
         }
 

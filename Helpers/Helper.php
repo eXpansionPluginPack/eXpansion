@@ -42,6 +42,7 @@ class Helper
     {
         if (self::$paths == null)
             self::$paths = new Paths();
+
         return self::$paths;
     }
 
@@ -54,6 +55,7 @@ class Helper
     {
         if (self::$singletons == null)
             self::$singletons = Singletons::getInstance();
+
         return self::$singletons;
     }
 
@@ -80,6 +82,7 @@ class Helper
         if (self::$buildData == null) {
             self::$buildData = self::rBuildDate(dirname(__DIR__) . '/');
         }
+
         return self::$buildData;
     }
 
@@ -148,6 +151,7 @@ class Helper
         for ($i = $start; $i >= $stop; $i--) {
             $content .= $info[$i] . ' ';
         }
+
         return $content;
     }
 }

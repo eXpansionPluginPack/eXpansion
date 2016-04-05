@@ -244,7 +244,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * Gets allowed ips for the login
+     *
      * @param string $login
+     *
      * @return false|string[]
      */
     public function getAllowedIp($login)
@@ -252,6 +254,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (array_key_exists($login, $this->adminIps)) {
             return $this->adminIps[$login];
         }
+
         return false;
     }
 
@@ -365,7 +368,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *  $ag = AdminGroups::getIntance();
      *  $ag->announceToGroup($ag->getGroup("Admins"), exp_getMessage("your message here"));
      *
-     * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
+     * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group        $group
      * @param String|\ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
      */
     public function announceToGroup(Group $group, $msg, $args = array())
@@ -378,7 +381,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * Announces a chat message to certaint permission
-     * @param string $permission common usage would be to use Permission::constant
+     *
+     * @param string                                               $permission common usage would be to use
+     *                                                                         Permission::constant
      * @param String|\ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
      */
     public function announceToPermission($permission, $msg, $args = array())
@@ -392,6 +397,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Gets group object by name
      *
      * @param String $groupName
+     *
      * @return Null|Group
      */
     public function getGroup($groupName)
@@ -401,6 +407,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 return $group;
             }
         }
+
         return null;
     }
 
@@ -408,7 +415,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Parse a group
      *
      * @param string $groupName The groups name
-     * @param array $value
+     * @param array  $value
      *
      * @return array
      */
@@ -447,6 +454,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
         }
         self::$groupList[] = $group;
+
         return $inherits;
     }
 
@@ -454,7 +462,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Parse the Master admins group
      *
      * @param string $groupName The groups name
-     * @param array $permissions
+     * @param array  $permissions
      */
     private function parseMaster($groupName, $permissions)
     {
@@ -538,7 +546,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *          // do something
      *      }
      *
-     * @param string $login The login of the player
+     * @param string $login          The login of the player
      * @param string $permissionName The permission name
      *
      * @return boolean Has the player this permission
@@ -561,6 +569,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Returns group name for login, returns "player" for non-admins.
      *
      * @param string $login
+     *
      * @return string containing "Player" for non-admingroup memebers, othervice returns the admin group name.
      */
     static public function getGroupName($login)
@@ -593,12 +602,14 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
         } else {
             $this->exp_chatSendServerMessage($this->msg_needBeAdmin, $login);
+
             return false;
         }
     }
 
     /**
      * Gets admin
+     *
      * @param string $login
      *
      * @return Admin|Null
@@ -638,7 +649,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * $cmd = AdminGroups::addAdminCommand('player kick', $this, 'kick', Permission::player_kick); //
      * $cmd->setHelp('kick the player from the server');
-     * $cmd->setHelpMore('$w/admin player kick #login$z will kick the player from the server. A kicked player may return to the server whanever he desires.');
+     * $cmd->setHelpMore('$w/admin player kick #login$z will kick the player from the server. A kicked player may
+     * return to the server whanever he desires.');
      * $cmd->setMinParam(1);
      * AdminGroups::addAlias($cmd, "kick"); // xaseco & fast
      * AdminGroups::addAlias($cmd, "boot"); // just example on how to add multiple aliases
@@ -646,11 +658,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * function kick($fromLogin, $params)
      * }
      *
-     * @param String $cmd The string of the command
-     * @param Object $class The object to call
-     * @param String $function The name of the function to call
-     * @param \ManiaLivePlugins\eXpansion\AdminGroups\Permissions $permission The permission level needed to do the command.
-     *                                                                        If null then an admin from any group can do the command
+     * @param String                                              $cmd        The string of the command
+     * @param Object                                              $class      The object to call
+     * @param String                                              $function   The name of the function to call
+     * @param \ManiaLivePlugins\eXpansion\AdminGroups\Permissions $permission The permission level needed to do the
+     *                                                                        command. If null then an admin from any
+     *                                                                        group can do the command
      *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd The AdminCmd object
      */
@@ -663,14 +676,16 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($permission != null) self::$permissionList[$permission] = true;
 
         self::$instance->saveFile();
+
         return $comand;
     }
 
     /**
      * Adds an alias to an existing command
      *
-     * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd The command object to which we want to add an alias
-     * @param string $cmd The new command
+     * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd The command object to which we want to add an
+     *                                                                   alias
+     * @param string                                           $cmd      The new command
      */
     static public function addAlias(AdminCmd $adminCmd, $cmd)
     {
@@ -684,7 +699,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * They work the same way other commands works.
      *
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd
-     * @param type $cmd
+     * @param type                                             $cmd
      *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
@@ -715,7 +730,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Adds the command
      *
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd
-     * @param type $cmd
+     * @param type                                             $cmd
      *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
@@ -763,6 +778,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (!isset($commands[$cmd])) $commands[$cmd] = null;
             //Continue to add recursively
             $commands[$cmd] = self::addRecursive($commands[$cmd], $cmdArray, $comandObj);
+
             return $commands;
         }
     }
@@ -807,6 +823,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 function ($str, $word) {
                     $temp = str_replace('\"', '"', $str != '' ? $str : $word);
                     if ($temp == '""') return "";
+
                     return $temp;
                 }, $matches[1], $matches[2]);
 
@@ -823,8 +840,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      *
      * @param AdminCmd $commands
-     * @param array $chats
-     * @param string $login
+     * @param array    $chats
+     * @param string   $login
      */
     private function doAdminCmd($commands, $chats, $login)
     {
@@ -865,9 +882,28 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Adds a player to a group
      *
-     * @param String                                               The login of the player who makes the changes
-     * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group The group to which the player needs to be added
-     * @param String $login2 The player to add to the group
+     * @param                                               String                                               The login
+     *                                                                                                               of
+     *                                                                                                               the
+     *                                                                                                               player
+     *                                                                                                               who
+     *                                                                                                               makes
+     *                                                                                                               the
+     *                                                                                                               changes
+     * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group                                               The
+     *                                                                                                           group
+     *                                                                                                           to
+     *                                                                                                           which
+     *                                                                                                           the
+     *                                                                                                           player
+     *                                                                                                           needs
+     *                                                                                                           to be
+     *                                                                                                           added
+     * @param String                                        $login2                                              The
+     *                                                                                                           player
+     *                                                                                                           to add
+     *                                                                                                           to the
+     *                                                                                                           group
      */
     public function addToGroup($login, Group $group, $login2)
     {
@@ -901,7 +937,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Removes a player from a group
      *
-     * @param string $login
+     * @param string                                        $login
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Admin $admin
      */
@@ -943,6 +979,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if ($group->isMaster()) {
             $this->exp_chatSendServerMessage($this->msg_masterMasterE, $login);
+
             return;
         }
 
@@ -970,9 +1007,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Change the permissions of a group
      *
-     * @param String $login
+     * @param String                                        $login
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
-     * @param array $newPermissions The list of new permissions.
+     * @param array                                         $newPermissions The list of new permissions.
      */
     public function changePermissionOfGroup($login, Group $group, array $newPermissions)
     {
@@ -996,9 +1033,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Change the permissions of a group
      *
-     * @param String $login
+     * @param String                                        $login
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
-     * @param array $newPermissions The list of new permissions.
+     * @param array                                         $newPermissions The list of new permissions.
      */
     public function changeInheritanceOfGroup($login, Group $group, array $newHeritances)
     {
@@ -1078,6 +1115,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Gets admin logins by permission
      *
      * @param String $permissionName
+     *
      * @return String[String]
      */
     public static function getAdminsByPermission($permissionName)
@@ -1091,6 +1129,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 }
             }
         }
+
         return $admins;
     }
 
@@ -1109,6 +1148,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (sizeof($admins) == 0) {
             $admins[] = false;
         }
+
         return $admins;
     }
 
@@ -1150,6 +1190,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         $text = str_replace("'", "", $text);
         $text = str_replace('"', "", $text);
+
         return $text;
     }
 }

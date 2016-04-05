@@ -92,6 +92,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
      *
      * @param string $login
      * @param Record $record
+     *
      * @return
      */
     function displayRecordWidget($login, $record = null)

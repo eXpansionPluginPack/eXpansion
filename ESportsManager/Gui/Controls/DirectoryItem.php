@@ -14,7 +14,7 @@ class DirectoryItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     /**
      *
      * @param \SplFileInfo $dir
-     * @param type $sizeX
+     * @param type         $sizeX
      */
     function __construct(\SplFileInfo $dir, $controller, $compare, $sizeX)
     {

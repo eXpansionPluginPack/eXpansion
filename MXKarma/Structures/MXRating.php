@@ -24,11 +24,12 @@ namespace ManiaLivePlugins\eXpansion\MXKarma\Structures;
  *
  * votecount number - Amount of votes made so far.
  * voteaverage number - Average vote. If no votes are made, this value equals 50. Not per see integeral.
- * modevotecount number - Amount of votes made so far in the current mode/title group. If getvotesonly, this value equals -1.
- * modevoteaverage number - Average vote in the current mode/title group. If no votes are made, this value equals 50. If getvotesonly, this value equals -1. Not per see integeral.
- * votes array - Array of objects containing votes of the requested logins.
- * login string - Player login.
- * vote number - Player vote (integer ranging from 0 to 100). Player logins provided who have not voted are not included here.
+ * modevotecount number - Amount of votes made so far in the current mode/title group. If getvotesonly, this value
+ * equals -1. modevoteaverage number - Average vote in the current mode/title group. If no votes are made, this value
+ * equals 50. If getvotesonly, this value equals -1. Not per see integeral. votes array - Array of objects containing
+ * votes of the requested logins. login string - Player login. vote number - Player vote (integer ranging from 0 to
+ * 100). Player logins provided who have not voted are not included here.
+ *
  * @author Reaby
  */
 class MXRating extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure

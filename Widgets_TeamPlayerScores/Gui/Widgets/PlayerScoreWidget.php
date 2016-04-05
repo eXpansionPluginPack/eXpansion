@@ -61,6 +61,7 @@ class PlayerScoreWidget extends Widget
     /**
      *
      * @param PlayerScore $roundScores
+     *
      * @return null
      */
     public function setScores($playerScores)

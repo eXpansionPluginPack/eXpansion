@@ -167,6 +167,7 @@ class MapInfo extends Window
             $this->frame2->addComponent($lbl);
             $y -= 5;
         }
+
         return true;
     }
 

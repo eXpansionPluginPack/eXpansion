@@ -38,6 +38,7 @@ class Xml extends \ManiaLive\Gui\Elements\Xml
             }
             \ManiaLive\Utilities\Console::println("Xml error");
             \ManiaLive\Utilities\Console::println($ex->getMessage());
+
             return;
         }
     }

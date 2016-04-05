@@ -92,6 +92,7 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
                     Permission::expansion_pluginSettings, "#admin_error#Server login or/and Server code is empty in MXKarma Configuration"
                 );
                 $this->console("Server code or/and login is not configured for MXKarma plugin!");
+
                 return;
             }
             $this->mxConnection->connect($this->config->mxKarmaServerLogin, $this->config->mxKarmaApiKey);
@@ -200,6 +201,7 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
         $players = array();
         $players = array_keys($this->storage->players);
         array_merge($players, array_keys($this->storage->players));
+
         return $players;
     }
 

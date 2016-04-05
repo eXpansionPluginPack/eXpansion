@@ -18,6 +18,7 @@ class Karma
     /**
      * Just copy all the response values into
      * the Karma object and do simple calculations.
+     *
      * @param $response
      */
     function __construct($response = null)
@@ -53,6 +54,7 @@ class Karma
     /**
      * Copies the values of one Karma object to another.
      * This keeps the votes array intact.
+     *
      * @param Karma $from
      * @param Karma $to
      */

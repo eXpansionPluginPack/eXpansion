@@ -11,12 +11,13 @@ abstract class Data
         'SOUTHAMERICA' => 'http://worldwide.tm-karma.com/API-3.0.0.fphp',
         'NORTHAMERICA' => 'http://worldwide.tm-karma.com/API-3.0.0.fphp',
         'OCEANIA' => 'http://worldwide.tm-karma.com/API-3.0.0.fphp',
-        'RUSSIA' => 'http://worldwide.tm-karma.com/API-3.0.0.fphp'
+        'RUSSIA' => 'http://worldwide.tm-karma.com/API-3.0.0.fphp',
     );
 
     /**
      * Parsed list of continents
      * and their abbreviations.
+     *
      * @var array
      */
     static $continents = array(
@@ -26,13 +27,14 @@ abstract class Data
         'NA' => 'North America',
         'SA' => 'South America',
         'OC' => 'Oceania',
-        'AN' => 'Russia'
+        'AN' => 'Russia',
     );
 
     /**
      * Automatically parsed list from these sources:
      * http://en.wikipedia.org/wiki/List_of_sovereign_states_and_dependent_territories_by_continent_(data_file)
      * ftp://ftp.fu-berlin.de/doc/iso/iso3166-countrycodes.txt
+     *
      * @var array
      */
     static $countries = array(
@@ -281,7 +283,7 @@ abstract class Data
         'YEM' => array("Yemen", 'ASIA'),
         'ZAF' => array("South Africa", 'AFRICA'),
         'ZMB' => array("Zambia", 'AFRICA'),
-        'ZWE' => array("Zimbabwe", 'AFRICA')
+        'ZWE' => array("Zimbabwe", 'AFRICA'),
     );
 }
 

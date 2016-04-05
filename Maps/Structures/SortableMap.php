@@ -26,8 +26,8 @@ class SortableMap
 
     /**
      *
-     * @param \Maniaplanet\DedicatedServer\Structures\Map $map
-     * @param int $localrec
+     * @param \Maniaplanet\DedicatedServer\Structures\Map              $map
+     * @param int                                                      $localrec
      * @param \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating $rating
      */
     public function __construct(\Maniaplanet\DedicatedServer\Structures\Map $map, $localrec, $maxrec, \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating $rating)

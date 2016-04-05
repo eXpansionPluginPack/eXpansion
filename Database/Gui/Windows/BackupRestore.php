@@ -116,9 +116,11 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         if (!is_dir($path)) {
             if (!mkdir($path, 0777)) {
                 $this->connection->chatSendServerMessage("Error while creating folder: " . $path, $login);
+
                 return false;
             }
         }
+
         return $path;
     }
 

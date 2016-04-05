@@ -26,6 +26,7 @@ class StatsWindows implements AbstractStat
             $loadArray = $set->PercentProcessorTime;
             // var_dump($set->Timestamp_Sys100NS);
         }
+
         return $loadArray[0];
     }
 
@@ -43,6 +44,7 @@ class StatsWindows implements AbstractStat
             $free = $os->FreePhysicalMemory;
             break;
         }
+
         return new \ManiaLivePlugins\eXpansion\ServerStatistics\Structures\MemoryInfo($total, $free);
     }
 
@@ -61,12 +63,13 @@ class StatsWindows implements AbstractStat
             'day' => substr($boot, 6, 2),
             'hour' => substr($boot, 8, 2),
             'minute' => substr($boot, 10, 2),
-            'second' => substr($boot, 12, 2)
+            'second' => substr($boot, 12, 2),
         );
 
         $bootTime = mktime($booted['hour'], $booted['minute'], $booted['second'], $booted['month'], $booted['day'], $booted['year']);
 
         $uptime = (time() - $bootTime);
+
         return $uptime;
     }
 

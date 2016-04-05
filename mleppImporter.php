@@ -90,7 +90,7 @@ class Mimporter
             'player_wins' => 'player_wins',
             'player_timeplayed' => 'player_timeplayed',
             'player_onlinerights' => 'player_onlinerights',
-            'player_ip' => 'player_ip'
+            'player_ip' => 'player_ip',
         );
         $this->merge($this->config['mlepp_db'] . '.players', $this->config['exp_db'] . '.exp_players', $map, array('player_updated2' => 'UNIX_TIMESTAMP(player_updated) as player_updated2'));
 
@@ -108,7 +108,7 @@ class Mimporter
             "challenge_lapRace" => "challenge_lapRace",
             "challenge_nbLaps" => "challenge_nbLaps",
             "challenge_nbCheckpoints" => "challenge_nbCheckpoints",
-            "challenge_addtime2" => "challenge_addtime"
+            "challenge_addtime2" => "challenge_addtime",
         );
         $this->merge($this->config['mlepp_db'] . '.challenges', $this->config['exp_db'] . '.exp_maps', $map, array('challenge_addtime2' => 'UNIX_TIMESTAMP(challenge_addtime) as challenge_addtime2'));
 
@@ -204,6 +204,7 @@ class Mimporter
             $message .= 'Query:' . $query;
             die($message);
         }
+
         return $result;
     }
 

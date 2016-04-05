@@ -96,6 +96,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $out[] = $word;
             }
         }
+
         return implode(" ", $out);
     }
 
@@ -190,6 +191,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 unset($recepients[$login]);
             }
         }
+
         return array_keys(array_intersect_key(($this->storage->players + $this->storage->spectators), $recepients));
     }
 
@@ -197,10 +199,10 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * onPlayerChat()
      * Processes the chat incoming from server, changes the look and color.
      *
-     * @param int $playerUid
+     * @param int    $playerUid
      * @param string $login
      * @param string $text
-     * @param bool $isRegistredCmd
+     * @param bool   $isRegistredCmd
      *
      * * @return void
      */

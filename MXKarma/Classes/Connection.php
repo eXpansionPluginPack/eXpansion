@@ -194,6 +194,7 @@ class Connection
                 $gamemode = "Cup";
                 break;
         }
+
         return $gamemode;
     }
 
@@ -202,8 +203,10 @@ class Connection
         $obj = (object)json_decode($data);
         if ($obj->success == false) {
             $this->handleErrors($obj, $origin);
+
             return null;
         }
+
         return $obj->data;
     }
 

@@ -22,12 +22,12 @@ class Wishitem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param type $indexNumber
-     * @param type $login
+     * @param type                                                $indexNumber
+     * @param type                                                $login
      * @param \ManiaLivePlugins\eXpansion\Maps\Structures\MapWish $map
-     * @param type $controller
-     * @param type $isAdmin
-     * @param type $sizeX
+     * @param type                                                $controller
+     * @param type                                                $isAdmin
+     * @param type                                                $sizeX
      */
     function __construct($indexNumber, $login, $map, $controller, $isAdmin, $sizeX)
     {

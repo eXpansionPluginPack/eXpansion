@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author      Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -63,6 +63,7 @@ class ServerInfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
     public function getScript()
     {
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\Gui\Scripts\serverInfo");
+
         return $script;
     }
 

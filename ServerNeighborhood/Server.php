@@ -130,6 +130,7 @@ class Server
                             (null, ' . $db->quote($storage->serverLogin) . ', ' . time() . ',' . $db->quote($data) . ')';
                 $db->query($sql);
                 $this->inDb = true;
+
                 return;
             }
         }

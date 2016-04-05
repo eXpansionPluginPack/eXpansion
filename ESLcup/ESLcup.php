@@ -251,9 +251,9 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      *
      *
-     * @param int $playerUid
+     * @param int    $playerUid
      * @param string $login
-     * @param int $timeOrScore
+     * @param int    $timeOrScore
      *
      * @return null
      */
@@ -328,6 +328,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                             $this->exp_chatSendServerMessage("**********************************");
                             $this->resetData = true;
                             $this->connection->nextMap(false);
+
                             return;
                         }
                     }

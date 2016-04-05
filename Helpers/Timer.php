@@ -30,6 +30,7 @@ class Timer
             self::set();
         } else {
             Console::println("Profiler ended: " . (self::$time + microtime(true)) . "ms");
+
             return (self::$time + microtime(true));
         }
     }
@@ -42,6 +43,7 @@ class Timer
             Console::println($message . ' Started ...');
         if ($log)
             Logger::info($message . ' Started ...');
+
         return $id;
     }
 
@@ -53,8 +55,10 @@ class Timer
                 Console::println($message . ' Ended in : ' . $time . 'ms');
             if ($log)
                 Logger::info($message . ' Ended in : ' . $time . 'ms');
+
             return $time;
         }
+
         return 0;
     }
 

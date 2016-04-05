@@ -1,6 +1,6 @@
 <?php
 /**
- * @author      Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -38,6 +38,7 @@ class NbSpecItem extends PanelItem implements ScriptedContainer
         $storage = \ManiaLive\Data\Storage::getInstance();
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_TM_topPanel\\Gui\\Scripts\\nbSpec");
         $script->setParam('maxPlayers', $storage->server->currentMaxSpectators);
+
         return $script;
     }
 }

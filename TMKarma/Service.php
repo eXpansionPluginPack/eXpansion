@@ -10,6 +10,7 @@ abstract class Service
 
     /**
      * Link continents with their specific API URLs.
+     *
      * @var unknown_type
      */
     protected static $apiUrls = array(
@@ -19,7 +20,7 @@ abstract class Service
         'SOUTHAMERICA' => 'http://south-america.tm-karma.com/API-v2',
         'NORTHAMERICA' => 'http://north-america.tm-karma.com/API-v2',
         'OCEANIA' => 'http://oceania.tm-karma.com/API-v2',
-        'RUSSIA' => 'http://russia.tm-karma.com/API-v2'
+        'RUSSIA' => 'http://russia.tm-karma.com/API-v2',
     );
     public static $login = null;
     static protected $apiUrl = null;
@@ -30,6 +31,7 @@ abstract class Service
      * forceCountryCode();
      *
      * @param string $code
+     *
      * @throws Exception
      */
     static function forceCountryCode($code)
@@ -43,6 +45,7 @@ abstract class Service
     /**
      * Return the country code you are running
      * this script in.
+     *
      * @param bool $long
      */
     protected static function getCountryCode($long = false)
@@ -78,6 +81,7 @@ abstract class Service
     {
         $code = self::getCountryCode();
         $continent = ucwords(strtolower(Data::$countries[$code][1]));
+
         return $continent;
     }
 
@@ -114,13 +118,15 @@ abstract class Service
         $code = self::getCountryCode();
         $country = ucwords(strtolower(Data::$countries[$code][0]));
         $continent = ucwords(strtolower(Data::$countries[$code][1]));
+
         return $country . ' (' . $continent . ')';
     }
 
     /**
      * Authenticates at the tm-karma webservice.
-     * @param sring $serverName
-     * @param string $login
+     *
+     * @param sring   $serverName
+     * @param string  $login
      * @param integer $communityCode
      */
     static function Authenticate($serverName, $login, $game)
@@ -145,8 +151,10 @@ abstract class Service
 
     /**
      * Retrieves the challenge's karma from the webservice.
+     *
      * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
-     * @param \ManiaLive\Data\Player[] $players
+     * @param \ManiaLive\Data\Player[]                    $players
+     *
      * @return \ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma
      */
     static function GetChallengeKarma($challenge, $players)
@@ -177,8 +185,9 @@ abstract class Service
     /**
      *
      * SendVotes()
+     *
      * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
-     * @param Structures\Vote[] $votes
+     * @param Structures\Vote[]                           $votes
      */
     static function SendVotes(\Maniaplanet\DedicatedServer\Structures\Map $challenge, $votes)
     {
@@ -204,7 +213,9 @@ abstract class Service
 
     /**
      * Sends GET request to the Karma Webservice.
+     *
      * @param string $geturl
+     *
      * @throws \Exception
      */
     static function sendRequest($url)
@@ -217,8 +228,8 @@ abstract class Service
         $params = array(
             'http' => array(
                 'method' => "GET",
-                'header' => array("User-Agent: " . $agent)
-            )
+                'header' => array("User-Agent: " . $agent),
+            ),
         );
 
         $ctx = stream_context_create($params);

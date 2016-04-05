@@ -85,6 +85,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
         //	echo "onSync Map:" . $params;
         $this->storage = \ManiaLive\Data\Storage::getInstance();
+
         //var_dump($this->storage->currentMap);
         return $this->storage->currentMap;
     }
@@ -93,6 +94,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
     {
         //	echo "onSync Nextmap:" . $params;
         $this->storage = \ManiaLive\Data\Storage::getInstance();
+
         //var_dump($this->storage->nextMap);
         return $this->storage->nextMap;
     }
@@ -118,6 +120,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
     {
         if ($this->storage->serverLogin == $this->relayMaster)
             return true;
+
         return false;
     }
 

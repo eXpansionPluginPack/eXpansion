@@ -20,7 +20,7 @@ class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
     /**
      * Button
      *
-     * @param int $sizeX = 24
+     * @param int  $sizeX = 24
      * @param intt $sizeY = 6
      */
     function __construct($sizeX = 12, $sizeY = 12)

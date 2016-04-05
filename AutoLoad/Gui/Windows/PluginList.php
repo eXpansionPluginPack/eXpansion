@@ -146,7 +146,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
     /**
-     * @param AutoLoad $autoLoader
+     * @param AutoLoad   $autoLoader
      * @param MetaData[] $availablePlugins
      */
     public function populate(AutoLoad $autoLoader, $availablePlugins)

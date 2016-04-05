@@ -174,7 +174,7 @@ class Dedimania_Script extends DedimaniaAbstract
 
     /**
      *
-     * @param array $rankings
+     * @param array  $rankings
      * @param string $winnerTeamOrMap
      *
      */
@@ -221,6 +221,7 @@ class Dedimania_Script extends DedimaniaAbstract
                 $this->vReplay = "";
                 $this->gReplay = "";
                 $this->console("[Dedimania] No new times driven. Skipping dedimania sent.");
+
                 return;
             }
 
@@ -234,6 +235,7 @@ class Dedimania_Script extends DedimaniaAbstract
             // Dedimania doesn't allow times sent without validation relay. So, let's just stop here if there is none.
             if (empty($this->vReplay)) {
                 $this->console("[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent.");
+
                 return;
             }
 

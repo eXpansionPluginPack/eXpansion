@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Petri Järvisalo
+ * @author       Petri Järvisalo
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *

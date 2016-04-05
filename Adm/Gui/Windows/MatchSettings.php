@@ -80,6 +80,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         try {
             if (empty($entries['SaveAs'])) {
                 $this->connection->chatSendServerMessage(__("Error in filename", $login), $login);
+
                 return;
             }
             $appendTxt = ".txt";
@@ -102,6 +103,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         try {
             if (empty($entries['LoadAs'])) {
                 $this->connection->chatSendServerMessage(__("Error in filename", $login), $login);
+
                 return;
             }
             $appendTxt = ".txt";

@@ -120,7 +120,7 @@ class ConfigManager
      * Registers a varible to the config manager in order to allow it to be saved
      *
      * @param types\config\Variable $var
-     * @param string $pluginId
+     * @param string                $pluginId
      */
     public function registerVariable(Variable $var, $pluginId)
     {
@@ -155,9 +155,9 @@ class ConfigManager
     }
 
     /**
-     * @param string $group
+     * @param string                $group
      * @param types\config\Variable $var
-     * @param int $num
+     * @param int                   $num
      */
     private function addVariableToGroup($group, $var, $num = 1)
     {
@@ -200,8 +200,8 @@ class ConfigManager
     }
 
     /**
-     * @param string $confName The name of the configuration. By default it is "main" for all settings that appears on the main page.
-     *                         IF not the name of the plugin that might have specific plugin settings.
+     * @param string $confName The name of the configuration. By default it is "main" for all settings that appears on
+     *                         the main page. IF not the name of the plugin that might have specific plugin settings.
      *
      * @return mixed[]
      */
@@ -332,7 +332,7 @@ class ConfigManager
      * Loads file scoped settings from a file
      *
      * @param string $fileName The file to load the settings from
-     * @param bool $save Should the settings should be re saved at the end of the step
+     * @param bool   $save     Should the settings should be re saved at the end of the step
      */
     public function loadSettingsFrom($fileName, $save = true)
     {
@@ -363,8 +363,8 @@ class ConfigManager
      * Saves the settings into the file.
      *
      * @param String $fileName The path ot the file to save the configuration to
-     * @param mixed $settings The settings to serialize and save
-     * @param int $scope the scope of the file being saved
+     * @param mixed  $settings The settings to serialize and save
+     * @param int    $scope    the scope of the file being saved
      */
     protected function saveSettings($fileName, $settings, $scope)
     {

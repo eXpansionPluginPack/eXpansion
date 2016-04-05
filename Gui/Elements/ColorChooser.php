@@ -29,9 +29,9 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
     /**
      *
      * @param string $inputboxName
-     * @param float $sizeX
-     * @param int $output
-     * @param bool $hasPrefix
+     * @param float  $sizeX
+     * @param int    $output
+     * @param bool   $hasPrefix
      */
     function __construct($inputboxName, $sizeX = 35, $output = 3, $hasPrefix = true)
     {

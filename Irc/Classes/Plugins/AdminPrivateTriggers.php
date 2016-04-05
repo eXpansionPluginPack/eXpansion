@@ -61,6 +61,7 @@ class AdminPrivateTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Ir
             $to = $this->irc->getIrcNick($nick);
             if (!in_array($connection->getIrcNick($nick), Config::getInstance()->allowedIrcLogins)) {
                 $this->irc->sendPrivateMessage($to, "You are not allowed to use this interface. go away.");
+
                 return;
             }
             $params = explode(" ", $message);
@@ -101,6 +102,7 @@ class AdminPrivateTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Ir
         try {
             if (empty($login)) {
                 $this->irc->sendPrivateMessage($to, "Failed to ignore: player login is missing");
+
                 return;
             }
             $this->connection->kick($login);
@@ -115,6 +117,7 @@ class AdminPrivateTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Ir
         try {
             if (empty($login)) {
                 $this->irc->sendPrivateMessage($to, "Failed to ignore: player login is missing");
+
                 return;
             }
             $this->connection->ignore($login);
@@ -132,6 +135,7 @@ class AdminPrivateTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Ir
         try {
             if (empty($login)) {
                 $this->irc->sendPrivateMessage($to, "Failed to ignore: player login is missing");
+
                 return;
             }
             $this->connection->unIgnore($login);

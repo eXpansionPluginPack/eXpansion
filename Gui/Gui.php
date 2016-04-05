@@ -90,6 +90,7 @@ class Gui extends ExpPlugin
         foreach ($sizes as $val) {
             $nsize[] = $val * $coff;
         }
+
         return $nsize;
     }
 
@@ -320,6 +321,7 @@ class Gui extends ExpPlugin
 
     /**
      * Preload image
+     *
      * @param type $url
      */
     public static function preloadImage($url)
@@ -329,6 +331,7 @@ class Gui extends ExpPlugin
 
     /**
      * Preload image
+     *
      * @param type $url
      */
     public static function preloadRemove($url)
@@ -351,6 +354,7 @@ class Gui extends ExpPlugin
 //$finalAction = call_user_func_array(array(\ManiaLive\Gui\ActionHandler::getInstance(), 'createAction'), func_get_args());
         $outAction = call_user_func_array(array(ActionHandler::getInstance(), 'createAction'),
             array(array(__NAMESPACE__ . '\Gui', 'showConfirmDialog'), $finalAction));
+
         return $outAction;
     }
 }

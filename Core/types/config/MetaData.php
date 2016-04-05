@@ -294,7 +294,7 @@ abstract class MetaData
      * If it isn't the plugin will be unloaded From ManiaLive
      * If you change GameModes the plugin may be loaded again.
      *
-     * @param int $gameMode
+     * @param int           $gameMode
      * @param string | null $scriptName
      */
     protected function addGameModeCompability($gameMode, $scriptName = null)
@@ -396,8 +396,8 @@ abstract class MetaData
      * See if this plugin is compatible with the current game mode.
      * You can pass a game mod in parameter to check if it is compatible with that one
      *
-     * @param int | null The game mode to check. If null will check for the current game mode
-     * @param String | null The script name to check. If null will check for the currrent.
+     * @param int | null    The   game mode to check. If null will check for the current game mode
+     * @param String | null The   script name to check. If null will check for the currrent.
      *                            For this to be checked game mode need to be on script mpde
      *
      * @return boolean IF is compatible with the game mode
@@ -430,6 +430,7 @@ abstract class MetaData
     {
         if ($this->scriptCompatibiliyMode) {
             $gmode = \ManiaLivePlugins\eXpansion\Core\Core::exp_getScriptCompatibilityMode($scriptName);
+
             return isset($this->gameModeSupport[$gmode]) ? $this->gameModeSupport[$gmode] : false;
         }
 
@@ -442,6 +443,7 @@ abstract class MetaData
                 }
             }
         }
+
         return false;
     }
 
@@ -469,8 +471,10 @@ abstract class MetaData
                     return true;
                 }
             }
+
             return false;
         }
+
         //No rules for game compatibility, this plugin supports all modes
         return true;
     }
@@ -482,12 +486,14 @@ abstract class MetaData
         if ($expStorage->isRelay && !$this->getRelaySupport()) {
             return array('This plugin don\'t support Relay servers');
         }
+
         return array();
     }
 
     public function checkAll()
     {
         $errors = $this->checkOtherCompatibility();
+
         return $this->checkGameCompatibility() && $this->checkTitleCompatibility() && empty($errors);
     }
 

@@ -57,6 +57,7 @@ class Boolean extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
             return $string;
         if (strtoupper($string) == "FALSE" || $string == "0" || strtoupper($string) == "NO" || empty($string))
             return false;
+
         return true;
 
     }

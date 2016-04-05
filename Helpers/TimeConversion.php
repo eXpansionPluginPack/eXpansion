@@ -17,6 +17,7 @@ class TimeConversion
     public static function TMtoMS($time)
     {
         $time = intval($time);
+
         return gmdate("i:s", $time / 1000);
     }
 

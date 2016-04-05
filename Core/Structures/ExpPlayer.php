@@ -55,6 +55,7 @@ class ExpPlayer extends \ManiaLive\Data\Player
     {
         $object = parent::fromArray($array);
         $object->skins = null;
+
         return $object;
     }
 

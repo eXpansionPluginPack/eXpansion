@@ -77,6 +77,7 @@ class IrcBot
 
     /**
      * this should be called on main loop to work right
+     *
      * @return boolean
      */
     final public function onTick()
@@ -90,8 +91,8 @@ class IrcBot
 
 
         $read = array($this->socket);
-        $write = NULL;
-        $except = NULL;
+        $write = null;
+        $except = null;
         $diff = socket_select($read, $write, $except, 0);
 
         if ($diff === false) {
@@ -107,6 +108,7 @@ class IrcBot
 
     /**
      * returns status of the connectiton
+     *
      * @return boolean
      */
     final public function isConnected()
@@ -116,6 +118,7 @@ class IrcBot
 
     /**
      * Registers a class to send callbacks, must be compliant to IrcListener
+     *
      * @param Object $class
      */
     final public function registerCallbackClass($class)
@@ -171,12 +174,14 @@ class IrcBot
     public function getIrcNick($string)
     {
         list ($nick, $host) = explode("!", $string, 2);
+
         return $nick;
     }
 
     public function getIrcHost($string)
     {
         list ($nick, $host) = explode("!", $string, 2);
+
         return $host;
     }
 
@@ -196,6 +201,7 @@ class IrcBot
 
     /**
      * Sends message to irc as query
+     *
      * @param string $to
      * @param string $message
      */
@@ -206,6 +212,7 @@ class IrcBot
 
     /**
      * Sends message to irc as public message
+     *
      * @param string $message
      */
     public function sendPublicChat($message)

@@ -188,6 +188,7 @@ class ExpSetting extends Control
         if ($this->input != null) {
             if ($this->input instanceof CheckboxScripted) {
                 $this->input->setArgs($options);
+
                 return $this->input->getStatus();
             } else {
                 return isset($options[$this->var->getName()]) ? $options[$this->var->getName()] : null;

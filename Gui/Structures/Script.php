@@ -21,8 +21,9 @@ class Script
      * example for external plugins
      * $this->script = new Script("authorName/pluginName/Gui/Script", true);
      *
-     * @param string $path relative path to your script
-     * @param bool $pluginsRoot set the relative path pointer to ManialivePlugins\ instead of ManialivePlugins\eXpansion\
+     * @param string $path        relative path to your script
+     * @param bool   $pluginsRoot set the relative path pointer to ManialivePlugins\ instead of
+     *                            ManialivePlugins\eXpansion\
      *
      *
      */
@@ -53,7 +54,7 @@ class Script
     }
 
     /**
-     * @param string $name The name of the parameter.
+     * @param string $name  The name of the parameter.
      * @param string $value The value
      */
     public function setParam($name, $value)
@@ -105,7 +106,7 @@ class Script
     }
 
     /**
-     * @param string $path Path to the script
+     * @param string $path       Path to the script
      * @param        $win        The window that creates the script
      * @param        $component  The componenet in which it was crreated
      *
@@ -120,6 +121,7 @@ class Script
 
             $script = ob_get_contents();
             ob_end_clean();
+
             return $script;
         }
     }

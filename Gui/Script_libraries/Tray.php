@@ -25,6 +25,7 @@ class Tray extends Script
 
     /**
      * Disable autoclose
+     *
      * @param bool $value
      */
     public function setDisableAutoClose($value = true)
@@ -34,6 +35,7 @@ class Tray extends Script
 
     /**
      * autoclose timeout
+     *
      * @param int $value in milliseconds
      */
     public function setAutoCloseTimeOut($value = 0)

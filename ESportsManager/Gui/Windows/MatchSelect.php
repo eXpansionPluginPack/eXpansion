@@ -95,6 +95,7 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         if (!$ini) {
             $login = $this->getRecipient();
             $this->connection->chatSendServerMessage(__("Error while parsing match file.", $login), $login);
+
             return;
         }
         try {
@@ -138,6 +139,7 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
 
         $out = \Maniaplanet\DedicatedServer\Structures\GameInfos::fromArray($infos);
+
         return $out;
     }
 
@@ -167,6 +169,7 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 return \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT;
                 break;
         }
+
         return null;
     }
 

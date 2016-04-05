@@ -35,7 +35,7 @@ class Widget extends \ManiaLive\Gui\Window
             '+++' => TMKarma::VOTE_FANTASTIC,
             '-' => TMKarma::VOTE_BAD,
             '--' => TMKarma::VOTE_POOR,
-            '---' => TMKarma::VOTE_WASTE
+            '---' => TMKarma::VOTE_WASTE,
         );
 
         // set the window's size

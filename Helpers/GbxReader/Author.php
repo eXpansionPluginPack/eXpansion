@@ -24,6 +24,7 @@ class Author extends AbstractStructure
         $author->nickname = self::fetchString($fp);
         $author->zone = self::fetchString($fp);
         $author->extra = self::fetchString($fp);
+
         return $author;
     }
 }

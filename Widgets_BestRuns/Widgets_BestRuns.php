@@ -65,6 +65,7 @@ class Widgets_BestRuns extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * displayWidget(string $login)
+     *
      * @param string $login
      */
     function displayWidget($login = null)

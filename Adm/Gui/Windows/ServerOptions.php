@@ -27,21 +27,21 @@ class ServerOptions extends Window
 {
 
     private $serverName;
-	private $serverComment;
-	private $maxPlayers;
-	private $maxSpec;
-	private $minLadder;
-	private $maxLadder;
-	private $serverPass;
-	private $serverSpecPass;
-	private $refereePass;
+    private $serverComment;
+    private $maxPlayers;
+    private $maxSpec;
+    private $minLadder;
+    private $maxLadder;
+    private $serverPass;
+    private $serverSpecPass;
+    private $refereePass;
 
     private $cbPublicServer;
-	private $cbLadderServer;
-	private $cbAllowMapDl;
-	private $cbAllowp2pDown;
-	private $cbAllowp2pUp;
-	private $cbReferee;
+    private $cbLadderServer;
+    private $cbAllowMapDl;
+    private $cbAllowp2pDown;
+    private $cbAllowp2pUp;
+    private $cbReferee;
 
     private $frameCb;
 
@@ -55,7 +55,7 @@ class ServerOptions extends Window
     private $connection;
 
     private $actionOK;
-	private $actionCancel;
+    private $actionCancel;
 
     private $e = array();
 
@@ -363,7 +363,7 @@ class ServerOptions extends Window
             "AutoSaveValidationReplays" => $this->e['AutosaveValidation']->getStatus(),
             "DisableHorns" => $this->e['DisableHorns']->getStatus(),
             "DisableServiceAnnounces" => $this->e['DisableAnnounces']->getStatus(),
-            "KeepPlayerSlots" => $this->e['KeepPlayerSlots']->getStatus()
+            "KeepPlayerSlots" => $this->e['KeepPlayerSlots']->getStatus(),
         );
 
         try {

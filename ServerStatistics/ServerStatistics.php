@@ -333,6 +333,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         for ($i = 0; $i < 4; $i++) {
             $labels[] = date("Y-m-d H:i", $startTime + ($i * ((24 * 60 * 60) / 3)));
         }
+
         return $labels;
     }
 

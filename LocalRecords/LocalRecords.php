@@ -1,6 +1,6 @@
 <?php
 /**
- * @author      Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -37,9 +37,9 @@ class LocalRecords extends LocalBase
      * onPlayerFinish()
      * Function called when a player finishes.
      *
-     * @param int $playerUid
+     * @param int    $playerUid
      * @param string $login
-     * @param int $timeOrScore
+     * @param int    $timeOrScore
      *
      * @return void
      */
@@ -68,9 +68,9 @@ class LocalRecords extends LocalBase
 
     /**
      * @param \ManiaLive\Data\Player $player
-     * @param $time
-     * @param $checkpoints
-     * @param int $nbLap
+     * @param                        $time
+     * @param                        $checkpoints
+     * @param int                    $nbLap
      */
     public function onPlayerFinishLap($player, $time, $checkpoints, $nbLap)
     {
@@ -113,7 +113,7 @@ class LocalRecords extends LocalBase
 
     /**
      * @param string $login
-     * @param bool $isSpectator
+     * @param bool   $isSpectator
      */
     public function onPlayerConnect($login, $isSpectator)
     {
@@ -124,7 +124,7 @@ class LocalRecords extends LocalBase
 
     /**
      * @param string $login
-     * @param null $reason
+     * @param null   $reason
      */
     public function onPlayerDisconnect($login, $reason = null)
     {
@@ -154,6 +154,7 @@ class LocalRecords extends LocalBase
         if (substr($time, 0, 2) === "0:") {
             $time = substr($time, 2);
         }
+
         return $time;
     }
 
@@ -182,6 +183,7 @@ class LocalRecords extends LocalBase
         } else if (substr($securedBy, 0, 2) === "0:") {
             $securedBy = substr($securedBy, 2);
         }
+
         return $securedBy;
     }
 

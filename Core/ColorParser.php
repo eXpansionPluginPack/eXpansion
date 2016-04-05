@@ -13,6 +13,7 @@ class ColorParser extends \ManiaLib\Utils\Singleton
 
     /**
      * Color codes
+     *
      * @type array
      */
     private $codes = array();
@@ -31,6 +32,7 @@ class ColorParser extends \ManiaLib\Utils\Singleton
             $key = $obj[1];
             $text = str_replace('#' . $code . '#', '$z$s' . $obj[0]->$key, $text);
         }
+
         return $text;
     }
 
@@ -39,6 +41,7 @@ class ColorParser extends \ManiaLib\Utils\Singleton
      * returns tm color code for a color token.
      *
      * @param string $value example: $value = $ColorParser->getColor("#record#");
+     *
      * @return string color code, example "$fff"
      */
     public function getColor($value)
@@ -50,6 +53,7 @@ class ColorParser extends \ManiaLib\Utils\Singleton
             $key = $obj[1];
             $color = $obj[0]->$key;
         }
+
         return $color;
     }
 
@@ -75,8 +79,9 @@ class ColorParser extends \ManiaLib\Utils\Singleton
      * $this->registerCode("server", Config::getInstance(), "Color_server");
      *
      * @param String $token The key for the color code
-     * @param Config $obj The configuration object that contains the variable to use(allows the color code to be changed live)
-     * @param String $key The key in the object that contains this color code
+     * @param Config $obj   The configuration object that contains the variable to use(allows the color code to be
+     *                      changed live)
+     * @param String $key   The key in the object that contains this color code
      */
     public function registerCode($token, $obj, $key)
     {

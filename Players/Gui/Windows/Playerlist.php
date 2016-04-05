@@ -162,12 +162,14 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             if ($player->spectatorStatus == 0) {
                 $this->connection->forceSpectator($target, 1);
                 $this->connection->chatSendServerMessage(__('Admin has forced you to specate!', $target), $target);
+
                 return;
             }
             if ($player->spectator == 1) {
                 $this->connection->forceSpectator($target, 2);
                 $this->connection->forceSpectator($target, 0);
                 $this->connection->chatSendServerMessage(__("Admin has released you from specate to play.", $target), $target);
+
                 return;
             }
         } catch (\Exception $e) {
@@ -230,7 +232,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 "ban" => $banAction,
                 "blacklist" => $blacklistAction,
                 "force" => $forceAction,
-                "guest" => $guestAction
+                "guest" => $guestAction,
             ));
         }
         foreach ($this->storage->spectators as $player) {
@@ -249,7 +251,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 "ban" => $banAction,
                 "blacklist" => $blacklistAction,
                 "force" => $forceAction,
-                "guest" => $guestAction
+                "guest" => $guestAction,
             ));
         }
 

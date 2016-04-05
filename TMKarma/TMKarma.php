@@ -87,6 +87,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * A new player is connecting to the server.
+     *
      * @see libraries/ManiaLive/PluginHandler/ManiaLive\PluginHandler.Plugin::onPlayerConnect()
      */
     function onPlayerConnect($login, $isSpectator)
@@ -142,6 +143,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * Displays the Karma Widget to the given player.
+     *
      * @param string $login
      */
     protected function displayWidget($login)
@@ -164,7 +166,8 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * Processes a vote of a player.
-     * @param string $login
+     *
+     * @param string  $login
      * @param integer $vote
      */
     function doVote($login, $vote)

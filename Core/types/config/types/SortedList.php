@@ -19,6 +19,7 @@ class SortedList extends BasicList
      * Adds a value to the end of the list
      *
      * @param mixed $value The value to add
+     *
      * @return bool True if the variable could be added
      */
     public function addValue($value)
@@ -36,6 +37,7 @@ class SortedList extends BasicList
 
             return true;
         }
+
         return false;
     }
 
@@ -55,6 +57,7 @@ class SortedList extends BasicList
             $this->setRawValue($array);
         else
             return false;
+
         return true;
     }
 

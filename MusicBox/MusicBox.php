@@ -57,18 +57,22 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if ($data === false) {
             Helper::log("[MusicBox]Server is down");
+
             return false;
         }
 
         if ($status["http_code"] !== 200) {
             if ($status["http_code"] == 301) {
                 Helper::log("[MusicBox]Link has moved");
+
                 return false;
             }
 
             Helper::log("[MusicBox]Http status : " . $status["http_code"]);
+
             return false;
         }
+
         return $data;
     }
 
@@ -98,6 +102,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
             $array[] = array_combine($keys, array_map('trim', str_getcsv($line, ";")));
         }
+
         return $array;
     }
 
@@ -177,6 +182,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param mixed $login
      * @param mixed $music
+     *
      * @return void
      */
     function showWidget()
@@ -220,6 +226,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param mixed $login
      * @param mixed $musicNumber
+     *
      * @return
      */
     function mbox($login, $number = null)
@@ -230,12 +237,14 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $player = $this->storage->getPlayerObject($login);
         if ($number == 'list' || $number == null) { // parametres redirect
             $this->musicList($login);
+
             return;
         }
         if (!is_numeric($number)) { // check for numeric value
 // show error
             $text = '#music#MusicBox $fff»» #error#Invalid song number!';
             $this->exp_chatSendServerMessage($text, $login);
+
             return;
         }
 
@@ -245,12 +254,14 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (sizeof($this->songs) == 0) {
             $text = '#music#MusicBox $fff»» #error#No songs at music MusicBox!';
             $this->exp_chatSendServerMessage($text, $login);
+
             return;
         }
 
         if (!array_key_exists($number, $this->songs)) {
             $text = '#music#MusicBox $fff»» #error#Number entered is not in music list';
             $this->exp_chatSendServerMessage($text, $player);
+
             return;
         }
         $song = $this->songs[$number];
@@ -261,6 +272,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $this->wishes[] = new Structures\Wish($song, $player);
                 $text = 'Dropped last entry and  #variable#' . $song->title . "#mucic# by #variable#" . $song->artist . ' $z$s#music# is added to the MusicBox by #variable#' . \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos") . '.';
                 $this->exp_chatSendServerMessage($text, null);
+
                 return;
             }
         }

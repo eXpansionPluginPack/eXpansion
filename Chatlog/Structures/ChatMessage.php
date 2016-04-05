@@ -24,7 +24,8 @@ class ChatMessage extends \Maniaplanet\DedicatedServer\Structures\AbstractStruct
 
     /**
      * Constructor
-     * @param long $stamp
+     *
+     * @param long   $stamp
      * @param string $login
      * @param string $nickname
      * @param string $text

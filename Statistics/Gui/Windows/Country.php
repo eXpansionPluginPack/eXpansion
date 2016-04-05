@@ -54,6 +54,7 @@ class Country extends StatsWindow
         if ($a['nb'] == $b['nb']) {
             return 0;
         }
+
         return ($a['nb'] > $b['nb']) ? -1 : 1;
     }
 

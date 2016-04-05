@@ -84,5 +84,6 @@ function fixMessage($message)
     $message = rtrim($message, "\r\n");
     $message = str_replace("\'", "'", $message);
     $message = str_replace('\"', '"', $message);
+
     return $message;
 }

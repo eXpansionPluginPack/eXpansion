@@ -25,11 +25,11 @@ class DediRecord extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
 
     /**
      *
-     * @param string $login
-     * @param string $nickname
-     * @param int $maxrank ;
-     * @param int $time
-     * @param int $place
+     * @param string       $login
+     * @param string       $nickname
+     * @param int          $maxrank ;
+     * @param int          $time
+     * @param int          $place
      * @param array|string $checkpoints
      */
     public function __construct($login, $nickname, $maxrank, $time, $place = -1, $checkpoints = "")

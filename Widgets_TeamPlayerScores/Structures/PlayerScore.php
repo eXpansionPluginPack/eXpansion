@@ -18,30 +18,35 @@ class PlayerScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStruct
 
     /**
      * Total Score of a player
+     *
      * @var int
      */
     public $score = 0;
 
     /**
      * Counter for top3 places
+     *
      * @var array
      */
     public $winScore = array(0 => 0, 1 => 0, 2 => 0);
 
     /**
      * login
+     *
      * @var string
      */
     public $login;
 
     /**
      * nickname
+     *
      * @var string
      */
     public $nickName;
 
     /**
      * best time so far...
+     *
      * @var int
      */
     public $bestTime;

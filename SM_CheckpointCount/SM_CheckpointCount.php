@@ -27,6 +27,7 @@ class SM_CheckpointCount extends ExpPlugin
      * displayWidget(string $login)
      * Refreshes and Displays checpoint counter widget to player
      * * If no login is given, widget is displayed for all players
+     *
      * @param string $login |null
      */
     function displayWidget($login = null, $cpIndex = "-")

@@ -30,7 +30,7 @@ class Config extends \ManiaLib\Utils\Singleton
     , '\ManiaLivePlugins\eXpansion\Widgets_Map\Widgets_Map'
     , '\ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Widgets_LocalRecords'
     , '\ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Widgets_LiveRankings'
-    , '\ManiaLivePlugins\eXpansion\Widgets_Dedimania\Widgets_Dedimania'
+    , '\ManiaLivePlugins\eXpansion\Widgets_Dedimania\Widgets_Dedimania',
     );
 
     public $pluginPaths = array(

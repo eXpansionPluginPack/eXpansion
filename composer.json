@@ -1,53 +1,59 @@
 {
-    "name": "ml-expansion/expansion",
-    "type": "library",
-    "description": "Plugin pack for manialive server controler",
-    "keywords": ["maniaplanet", "shootmania", "trackmania", "application", "manialive", "next gen controller"],
-    "homepage": "http://www.ml-expansion.com/",
-    "license": "LGPL-3.0",
-    "authors": [
-        {
-            "name": "Reaby",
-            "email": "petri.jarvisalo@gmail.com"
-        },
-        {
-            "name": "Oliverde8",
-            "email": "oliverde8@tm-teams.com",
-            "homepage": "http://www.oliver-decramer.com"
-        }
-    ],
-    "support": {
-        "forum": "https://github.com/eXpansionPluginPack/eXpansion"
+  "name": "ml-expansion/expansion",
+  "type": "library",
+  "description": "Plugin pack for manialive server controler",
+  "keywords": [
+    "maniaplanet",
+    "shootmania",
+    "trackmania",
+    "application",
+    "manialive",
+    "next gen controller"
+  ],
+  "homepage": "http://www.ml-expansion.com/",
+  "license": "LGPL-3.0",
+  "authors": [
+    {
+      "name": "Reaby",
+      "email": "petri.jarvisalo@gmail.com"
     },
-    "repositories":
-            [
-                {
-                    "type": "package",
-                    "package": {
-                        "name": "shutterstock/badwords",
-                        "version": "master",
-                        "source": {
-                            "url": "https://github.com/shutterstock/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words",
-                            "type": "git",
-                            "reference": "master"
-                        }
-                    }
-                }
-            ],
-    "require": {
-        "php": ">=5.4",
-        "ext-curl": "*",
-        "ext-json": "*",
-        "maniaplanet/manialive-lib": "1.0.0.*",
-        "monolog/monolog": "1.0.*",
-        "oliverde8/asynchronous-jobs": "1.0.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "ManiaLivePlugins\\eXpansion\\": "."
-        }
-    },
-    "scripts": {
-        "post-update-cmd": "ManiaLivePlugins\\eXpansion\\Core\\Install::postUpdate"
+    {
+      "name": "Oliverde8",
+      "email": "oliverde8@tm-teams.com",
+      "homepage": "http://www.oliver-decramer.com"
     }
+  ],
+  "support": {
+    "forum": "https://github.com/eXpansionPluginPack/eXpansion"
+  },
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "shutterstock/badwords",
+        "version": "master",
+        "source": {
+          "url": "https://github.com/shutterstock/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words",
+          "type": "git",
+          "reference": "master"
+        }
+      }
+    }
+  ],
+  "require": {
+    "php": ">=5.4",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "maniaplanet/manialive-lib": "1.0.0.*",
+    "monolog/monolog": "1.0.*",
+    "oliverde8/asynchronous-jobs": "1.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "ManiaLivePlugins\\eXpansion\\": "."
+    }
+  },
+  "scripts": {
+    "post-update-cmd": "ManiaLivePlugins\\eXpansion\\Core\\Install::postUpdate"
+  }
 }

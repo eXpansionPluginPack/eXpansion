@@ -19,32 +19,32 @@ class GameOptions extends Window
 
     /** @var GameInfos */
     private $nextGameInfo;
-    
+
     protected $actionOK;
-	protected $actionCancel;
-	protected $actionTA;
-	protected $actionRounds;
-	protected $actionLaps;
-	protected $actionCup;
-	protected $actionTeam;
+    protected $actionCancel;
+    protected $actionTA;
+    protected $actionRounds;
+    protected $actionLaps;
+    protected $actionCup;
+    protected $actionTeam;
 
     protected $buttonTA;
-	protected $buttonRounds;
-	protected $buttonCup;
-	protected $buttonTeams;
-	protected $buttonLaps;
-	protected $buttonOK;
-	protected $buttonCancel;
+    protected $buttonRounds;
+    protected $buttonCup;
+    protected $buttonTeams;
+    protected $buttonLaps;
+    protected $buttonOK;
+    protected $buttonCancel;
 
     protected $frameTeam;
     protected $frameGameMode;
-	protected $frameGeneral;
-	protected $frameCup;
-	protected $frameTa;
-	protected $frameRounds;
-	protected $frameLaps;
-	protected $frameContainer;
-    
+    protected $frameGeneral;
+    protected $frameCup;
+    protected $frameTa;
+    protected $frameRounds;
+    protected $frameLaps;
+    protected $frameContainer;
+
     private $e = array();
     private $nextMode = null;
 

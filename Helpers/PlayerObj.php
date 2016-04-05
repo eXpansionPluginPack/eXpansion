@@ -14,6 +14,7 @@ class PlayerObj
      * Parses spectatorinfos from numeric value
      *
      * @param mixed|integer $spectatorInfo
+     *
      * @return \Maniaplanet\DedicatedServer\Structures\Player
      */
     public static function parseSpecStatus($spectatorInfo)
@@ -29,6 +30,7 @@ class PlayerObj
         $obj->pureSpectator = intval(substr($number, -3, 1));
         $obj->tempSpectator = intval(substr($number, -2, 1));
         $obj->spectator = intval(substr($number, -1, 1));
+
         return $obj;
     }
 

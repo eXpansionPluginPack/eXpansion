@@ -31,24 +31,28 @@ abstract class AbstractStructure
     final static function fetchByte($fp)
     {
         $byte = unpack('C', fread($fp, 1));
+
         return $byte[1];
     }
 
     final static function fetchShort($fp)
     {
         $short = unpack('v', fread($fp, 2));
+
         return $short[1];
     }
 
     final static function fetchLong($fp)
     {
         $long = unpack('V', fread($fp, 4));
+
         return $long[1];
     }
 
     final static function fetchFloat($fp)
     {
         $float = unpack('f', fread($fp, 4));
+
         return $float[1];
     }
 
@@ -65,12 +69,14 @@ abstract class AbstractStructure
     final static function fetchChecksum($fp)
     {
         $checksum = unpack('H64', fread($fp, 32));
+
         return $checksum[1];
     }
 
     final static function fetchString($fp)
     {
         $length = self::fetchLong($fp);
+
         return $length ? fread($fp, $length) : '';
     }
 
@@ -85,6 +91,7 @@ abstract class AbstractStructure
             return self::$lookbackStrings[$index - 1];
 
         self::$lookbackStrings[] = $string = self::fetchString($fp);
+
         return $string;
     }
 
@@ -104,6 +111,7 @@ abstract class AbstractStructure
         $date = bcdiv($date, '10000000');
         // substract the difference with EPOCH to get a Unix timestamp
         $date = bcsub($date, '11644473600');
+
         // return the DateTime object
         return new \DateTime('@' . $date);
     }

@@ -21,6 +21,7 @@ class Request
     {
         if ($args == null)
             return array('methodName' => $method);
+
         return array('methodName' => $method, 'params' => $args);
     }
 
@@ -42,6 +43,7 @@ class Request
         }
 
         $xml .= "</params>\n</methodCall>";
+
         return $xml;
     }
 
@@ -123,6 +125,7 @@ class IXR_Value
         // If it is a normal PHP object convert it into a struct
         if (is_object($this->data)) {
             $this->data = get_object_vars($this->data);
+
             return 'struct';
         }
         if (!is_array($this->data)) {
@@ -157,6 +160,7 @@ class IXR_Value
                 foreach ($this->data as $item) {
                     $xml .= '<value>' . $item->getXml() . '</value>';
                 }
+
                 return '<array><data>' . $xml . '</data></array>';
                 break;
             case 'struct':
@@ -164,6 +168,7 @@ class IXR_Value
                 foreach ($this->data as $name => $value) {
                     $xml .= '<member><name>' . $name . '</name><value>' . $value->getXml() . '</value></member>';
                 }
+
                 return '<struct>' . $xml . '</struct>';
                 break;
             case 'date':
@@ -171,6 +176,7 @@ class IXR_Value
                 return $this->data->getXml();
                 break;
         }
+
         return false;
     }
 
@@ -184,6 +190,7 @@ class IXR_Value
             }
             $expected++;
         }
+
         return false;
     }
 

@@ -153,7 +153,7 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $localBase->formatScore($record->time) . " " => -1,
                 $localBase->formatScore($record->avgScore) . "" => -1,
                 "#" . $record->nbFinish => -1,
-                ($record->isDelete ? '$w$F00Cancel Delete' : '$F00$wDelete') => $this->createAction(array($this, 'toogleDelete'), $record)
+                ($record->isDelete ? '$w$F00Cancel Delete' : '$F00$wDelete') => $this->createAction(array($this, 'toogleDelete'), $record),
             ));
             $x++;
         }

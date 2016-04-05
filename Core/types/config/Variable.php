@@ -60,11 +60,12 @@ abstract class Variable
 
     /**
      *
-     * @param String $name The name of the variable in the config file
-     * @param String $visibleName The name the players should see
-     * @param Singleton $configInstance The config instance in which the value should be saved into
-     * @param int | bool $scope Is the scope of this variable global or server only
-     * @param Boolean $showMain Should the setting be shown in the main configuration or in the main expansion configuration
+     * @param String     $name           The name of the variable in the config file
+     * @param String     $visibleName    The name the players should see
+     * @param Singleton  $configInstance The config instance in which the value should be saved into
+     * @param int | bool $scope          Is the scope of this variable global or server only
+     * @param Boolean    $showMain       Should the setting be shown in the main configuration or in the main expansion
+     *                                   configuration
      */
     public function __construct($name, $visibleName = "", $configInstance = null, $scope = true, $showMain = true)
     {
@@ -87,6 +88,7 @@ abstract class Variable
     public function addPossibleValue($value)
     {
         $this->possibleValues[] = $value;
+
         return $this;
     }
 
@@ -111,6 +113,7 @@ abstract class Variable
     public function setDefaultValue($value)
     {
         $this->defaultValue = $value;
+
         return $this;
     }
 
@@ -125,6 +128,7 @@ abstract class Variable
     public function setCanBeNull($canBe)
     {
         $this->canBeNull = $canBe;
+
         return $this;
     }
 
@@ -252,6 +256,7 @@ abstract class Variable
 
     /**
      * Sets visibility of the config variable
+     *
      * @return bool $visible
      */
     public function getVisible()
@@ -261,6 +266,7 @@ abstract class Variable
 
     /**
      * Sets visibility of the config variable
+     *
      * @param bool $visible
      */
     public function setVisible($visible)
@@ -314,6 +320,7 @@ abstract class Variable
         } else {
             $this->value = $value;
         }
+
         return true;
     }
 
@@ -326,6 +333,7 @@ abstract class Variable
     {
         if ($this->configInstance != null) {
             $name = $this->name;
+
             return isset($this->configInstance->$name) ? $this->configInstance->$name : null;
         } else {
             return $this->value;

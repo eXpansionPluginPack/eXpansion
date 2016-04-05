@@ -7,6 +7,7 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 
 /**
  * Listener interface for local records
+ *
  * @author Petri
  */
 interface Listener extends EventListener

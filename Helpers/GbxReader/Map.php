@@ -56,7 +56,7 @@ class Map extends FileStructure
             self::fetchByte($fp),
             self::fetchByte($fp),
             self::fetchByte($fp),
-            self::fetchByte($fp)
+            self::fetchByte($fp),
         );
         $classId = self::fetchLong($fp);
         if ($classId != 0x03043000)

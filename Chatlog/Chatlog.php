@@ -36,7 +36,7 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             return;
         $chatMessage = new Structures\ChatMessage(time(), $login, $player->nickName, $text);
         array_unshift($this->log, $chatMessage);
-        $this->log = array_slice($this->log, 0, Config::getInstance()->historyLenght, True);
+        $this->log = array_slice($this->log, 0, Config::getInstance()->historyLenght, true);
     }
 
     /**

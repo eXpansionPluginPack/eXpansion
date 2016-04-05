@@ -85,6 +85,7 @@ class Minigame1 extends ExpPlugin
     {
         $min = TimeConversion::MStoTM($this->config->mg1_displayIntervalMin);
         $max = TimeConversion::MStoTM($this->config->mg1_displayIntervalMax);
+
         return intval(rand($min, $max) / 1000);
     }
 
@@ -92,6 +93,7 @@ class Minigame1 extends ExpPlugin
     {
         $min = $this->config->mg1_displayDurationMin;
         $max = $this->config->mg1_displayDurationMax;
+
         return intval(rand($min, $max));
     }
 

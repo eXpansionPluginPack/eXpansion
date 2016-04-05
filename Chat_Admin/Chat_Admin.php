@@ -594,6 +594,7 @@ Other server might use the same blacklist file!!');
             if ($player->login == $login)
                 return true;
         }
+
         return false;
     }
 
@@ -603,6 +604,7 @@ Other server might use the same blacklist file!!');
             if ($player->login == $login)
                 return true;
         }
+
         return false;
     }
 
@@ -625,6 +627,7 @@ Other server might use the same blacklist file!!');
 
         if ($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_SCRIPT) {
             $this->exp_chatSendServerMessage("#admin_error#Error: Not in script mode!", $fromLogin);
+
             return;
         }
 
@@ -902,11 +905,13 @@ Other server might use the same blacklist file!!');
         if (sizeof($params) == 0) {
             $name = $this->connection->getScriptName();
             $this->exp_chatSendServerMessage("current script name: " . $name['CurrentValue'], $fromLogin);
+
             return;
         }
 
         if (!is_string($params[0])) {
             $this->exp_chatSendServerMessage("#admin_error#needs script name to be text!", $fromLogin);
+
             return;
         }
 
@@ -1061,6 +1066,7 @@ Other server might use the same blacklist file!!');
         $player = $this->storage->getPlayerObject($params[0]);
         if ($player == null) {
             $this->exp_chatSendServerMessage('#admin_action#Player #variable# %s #admin_action#doesn\' exist.', null, array($params[0]));
+
             return;
         }
 
@@ -1200,6 +1206,7 @@ Other server might use the same blacklist file!!');
         $player = $this->storage->getPlayerObject($target);
         if ($player == null) {
             $this->exp_chatSendServerMessage('#admin_action#Player #variable# %s #admin_action#doesn\' exist.', $fromLogin, array($target));
+
             return;
         }
         if (empty($reason)) {
@@ -1207,6 +1214,7 @@ Other server might use the same blacklist file!!');
             $dialog->setTitle(__("blacklist", $fromLogin), Formatting::stripStyles($player->nickName));
             $dialog->setData("black", $target);
             $dialog->show($fromLogin);
+
             return;
         }
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1273,6 +1281,7 @@ Other server might use the same blacklist file!!');
     {
         if ($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_SCRIPT) {
             $this->exp_chatSendServerMessage("#admin_error#Error: Not in script mode!", $fromLogin);
+
             return;
         }
 
@@ -1333,6 +1342,7 @@ Other server might use the same blacklist file!!');
             $dialog->setTitle(__("ban", $fromLogin), Formatting::stripStyles($player->nickName));
             $dialog->setData("ban", $target);
             $dialog->show($fromLogin);
+
             return;
         }
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1394,6 +1404,7 @@ Other server might use the same blacklist file!!');
         $player = $this->storage->getPlayerObject($target);
         if ($player == null) {
             $this->exp_chatSendServerMessage('#admin_error#Player #variable# %s doesn\' exist.', $fromLogin, array($target));
+
             return;
         }
         if (empty($reason)) {
@@ -1401,6 +1412,7 @@ Other server might use the same blacklist file!!');
             $dialog->setTitle(__("kick", $fromLogin), Formatting::stripStyles($player->nickName));
             $dialog->setData("kick", $target);
             $dialog->show($fromLogin);
+
             return;
         }
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1440,6 +1452,7 @@ Other server might use the same blacklist file!!');
         $player = $this->storage->getPlayerObject($target);
         if ($player == null) {
             $this->exp_chatSendServerMessage('#admin_error#Player #variable# %s doesn\' exist.', $fromLogin, array($target));
+
             return;
         }
 
@@ -1460,6 +1473,7 @@ Other server might use the same blacklist file!!');
         $player = $this->storage->getPlayerObject($params[0]);
         if ($player == null) {
             $this->exp_chatSendServerMessage('#admin_action#Player #variable# %s doesn\' exist.', $fromLogin, array($params[0]));
+
             return;
         }
         try {
@@ -1586,6 +1600,7 @@ Other server might use the same blacklist file!!');
                 $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action# disables the dynamic time limit!', null, array($admin->nickName));
                 $this->exp_chatSendServerMessage('#admin_action#Static timelimit is set to #variable#5:00 #admin_action#minutes.');
                 $this->connection->setTimeAttackLimit(300000);
+
                 return;
             }
             $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets dynamic time limit multiplier to #variable# %s #admin_action#!', null, array($admin->nickName, $params[0]));
@@ -1618,6 +1633,7 @@ Other server might use the same blacklist file!!');
                 $bool = false;
         } else {
             $this->sendErrorChat($fromLogin, 'Invalid parameter. Correct parameter for the command is either true or false.');
+
             return;
         }
 
@@ -1644,6 +1660,7 @@ Other server might use the same blacklist file!!');
                 $output = intval($params[0]);
         } else {
             $this->sendErrorChat($fromLogin, 'Invalid parameter. Correct parameters for command are: 0,1,2,visible,hidden,nations.');
+
             return;
         }
         try {
@@ -1746,6 +1763,7 @@ Other server might use the same blacklist file!!');
             if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Maps\Maps')) {
                 \ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_RESTART));
                 $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Maps\Maps', "replayMapInstant");
+
                 return;
             }
             \ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_RESTART));
@@ -1775,6 +1793,7 @@ Other server might use the same blacklist file!!');
             if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Maps\Maps')) {
                 \ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_RESTART));
                 $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Maps\Maps', "replayScoreReset");
+
                 return;
             }
             \ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_RESTART));
@@ -1787,7 +1806,7 @@ Other server might use the same blacklist file!!');
 
     function setGameMode($fromLogin, $params)
     {
-        $gamemode = NULL;
+        $gamemode = null;
 
         if (is_numeric($params[0])) {
             $gamemode = $params[0];
@@ -1807,8 +1826,9 @@ Other server might use the same blacklist file!!');
                 $gamemode = GameInfos::GAMEMODE_STUNTS;
             if (strtolower($param1) == "cup")
                 $gamemode = GameInfos::GAMEMODE_CUP;
-            if ($gamemode === NULL) {
+            if ($gamemode === null) {
                 $this->sendErrorChat($fromLogin, 'Invalid parameter. Valid parameteres are: script,team,timeattack,ta,rounds,laps,stunts,cup.');
+
                 return;
             }
         }
@@ -1832,6 +1852,7 @@ Other server might use the same blacklist file!!');
             $this->exp_chatSendServerMessage('#admin_action#Admin #variable# %s #admin_action#sets all game modes warmup duration to#variable# %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
+
             return;
         }
     }
@@ -1845,6 +1866,7 @@ Other server might use the same blacklist file!!');
             try {
                 $this->connection->cancelVote();
                 $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#cancels the vote.', null, array($admin->nickName));
+
                 return;
             } catch (Exception $e) {
                 $this->exp_chatSendServerMessage('#admin_error#Error: Server said %1$s', $admin->login, array($e->getMessage()));
@@ -1863,6 +1885,7 @@ Other server might use the same blacklist file!!');
                 $bool = true; // ^^
         } else {
             $this->sendErrorChat($fromLogin, 'Invalid parameter. Correct parameter for the command is either true or false.');
+
             return;
         }
 

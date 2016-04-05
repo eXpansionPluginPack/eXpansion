@@ -244,7 +244,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * eXpansion method invoked at Manialive onload
          *
          * @deprecated replaced with eXpOnLoad
-         * @see eXpOnLoad
+         * @see        eXpOnLoad
          */
         public function exp_onLoad()
         {
@@ -264,6 +264,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         {
             if (!$this->metaData->checkAll()) {
                 $this->eXpUnload();
+
                 return;
             } else {
                 if (!$this->_isReady) {
@@ -303,7 +304,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
         /**
          * Overwritten modescript callback to trigger modescript functions
-         * @param string $param1
+         *
+         * @param string       $param1
          * @param string|array $param2
          */
         final public function onModeScriptCallback($param1, $param2)
@@ -341,7 +343,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
         /**
          * redirected onModeScriptCallback
-         * @param string $param1
+         *
+         * @param string       $param1
          * @param string|array $param2
          */
         public function eXpOnModeScriptCallback($param1, $param2)
@@ -414,6 +417,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             $file = $reflector->getFileName();
 
             $this->eXpDir = dirname($file);
+
             return $this->eXpDir;
         }
 
@@ -425,9 +429,9 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * to send login:
          * exp_chatSendServerMessage("Message with parameters %1$s %2$s", $login, array("parameter1","parameter2));
          *
-         * @param string|MultiLangMsg $msg string or MultiLangMsg to sent
-         * @param null|string $login null for everybody, string for individual
-         * @param array $args simple array of parameters
+         * @param string|MultiLangMsg $msg   string or MultiLangMsg to sent
+         * @param null|string         $login null for everybody, string for individual
+         * @param array               $args  simple array of parameters
          */
         public function eXpChatSendServerMessage($msg, $login = null, $args = array())
         {
@@ -466,7 +470,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         /**
          * Sends a chat message to the server or redirect to another plugin
          *
-         * @param type $msg The message
+         * @param type $msg   The message
          * @param type $login The login to whom it needs to be sent
          */
         private function eXpRedirectedChatSendServerMessage($msg, $login)
@@ -504,8 +508,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param MultiLangMsg $msg      The message to send to all users
          * @param string       $icon     Icon for the message (might be used by some plugins)
          * @param callable     $callback
-         * @param string       $pluginid The id of the plugin that sends the announcement, will be used to distribute the
-         *                               announce properly
+         * @param string       $pluginid The id of the plugin that sends the announcement, will be used to distribute
+         *                               the announce properly
          */
         protected function eXpAnnounce($msg, $icon = null, $callback = null, $pluginid = null)
         {
@@ -555,7 +559,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * Do a multi language announcement.
          *
          * @param MultiLangMsg $msg
-         * @param array $args
+         * @param array        $args
          */
         protected function eXpMultilangAnnounce(MultiLangMsg $msg, array $args)
         {
@@ -652,7 +656,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @deprecated
          * @see eXpUnload
          */
-        final public function exp_unload() {
+        final public function exp_unload()
+        {
             $this->eXpUnload();
         }
 
@@ -780,7 +785,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          */
         final public function exp_getOldId($id = null)
         {
-           return $this->eXpGetOldId($id);
+            return $this->eXpGetOldId($id);
         }
 
         /**
@@ -999,8 +1004,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         /**
          *
          * @param ExpPlayer $player player object of the player
-         * @param int $oldPos old position
-         * @param int $newPos new position
+         * @param int       $oldPos old position
+         * @param int       $newPos new position
          */
         public function onPlayerPositionChange(
             ExpPlayer $player, $oldPos, $newPos

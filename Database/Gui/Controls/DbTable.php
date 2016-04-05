@@ -30,10 +30,10 @@ class DbTable extends Control
 
     /**
      *
-     * @param int $indexNumber
+     * @param int    $indexNumber
      * @param string $settingName
-     * @param mixed $value
-     * @param int $sizeX
+     * @param mixed  $value
+     * @param int    $sizeX
      */
     function __construct($indexNumber, $tableName, $sizeX)
     {

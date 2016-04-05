@@ -118,6 +118,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * generates totally new playerStatuses objects
+     *
      * @return \ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus[]
      */
     private function generatePlayerStatuses()
@@ -140,6 +141,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if (self::$matchStatus->isMatchActive == false) {
             $this->connection->manualFlowControlProceed();
+
             return;
         }
         echo $transition . "\n";
@@ -215,6 +217,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (AdminGroups::hasPermission($login, Permission::game_settings))
                 return $login;
         }
+
         return false;
     }
 

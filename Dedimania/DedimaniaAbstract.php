@@ -403,6 +403,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 
         if (sizeof($this->records) == 0) {
             $this->exp_chatSendServerMessage($this->msg_norecord, $login);
+
             return;
         }
         try {
@@ -426,6 +427,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 
         if (sizeof($this->records) == 0) {
             $this->exp_chatSendServerMessage($this->msg_norecord, $login);
+
             return;
         }
         try {

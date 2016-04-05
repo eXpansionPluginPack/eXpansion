@@ -49,6 +49,7 @@ class StatsLinux implements AbstractStat
     {
         $contents = file_get_contents('/proc/uptime', false);
         list($seconds) = explode(' ', $contents, 1);
+
         return $seconds;
     }
 

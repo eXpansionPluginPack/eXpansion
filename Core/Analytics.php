@@ -1,6 +1,6 @@
 <?php
 /**
- * @author      Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -150,7 +150,7 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 
         $data = array(
             'page' => 'handshake',
-            'server-login' => $this->storage->serverLogin
+            'server-login' => $this->storage->serverLogin,
         );
 
         $url = $this->url . "?" . $this->generate($data);

@@ -23,6 +23,7 @@ class Paths
 
     /**
      * gets manialive root directory
+     *
      * @return string
      */
     public function getManialiveRoot()
@@ -62,6 +63,7 @@ class Paths
 
     /**
      * Gets gamedata path
+     *
      * @return string
      */
     public function getGameDataPath()

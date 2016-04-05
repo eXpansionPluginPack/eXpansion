@@ -73,6 +73,7 @@ class Queue
 
     /**
      * gets first player out of the array :)
+     *
      * @return null|QueuePlayer
      */
     public function getNextPlayer()
@@ -85,6 +86,7 @@ class Queue
 
     /**
      * gets list of queueplayer
+     *
      * @return QueuePlayer[]
      */
     public function getQueuedPlayers()
@@ -98,6 +100,7 @@ class Queue
 
     /**
      * gets list of logins
+     *
      * @return string[]
      */
     public function getLogins()

@@ -1,6 +1,6 @@
 <?php
 /**
- * @author      Oliver de Cramer (oliverde8 at gmail.com)
+ * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
  *                     Version 3, 29 June 2007
  *
@@ -114,7 +114,7 @@ class SM_ObstaclesScores extends LocalBase
 
     /**
      * @param string $login
-     * @param bool $isSpectator
+     * @param bool   $isSpectator
      */
     public function onPlayerConnect($login, $isSpectator)
     {
@@ -125,7 +125,7 @@ class SM_ObstaclesScores extends LocalBase
 
     /**
      * @param string $login
-     * @param null $reason
+     * @param null   $reason
      */
     public function onPlayerDisconnect($login, $reason = null)
     {
@@ -162,6 +162,7 @@ class SM_ObstaclesScores extends LocalBase
         if (substr($time, 0, 2) === "0:") {
             $time = substr($time, 2);
         }
+
         return $time;
     }
 
@@ -190,6 +191,7 @@ class SM_ObstaclesScores extends LocalBase
         } else if (substr($securedBy, 0, 2) === "0:") {
             $securedBy = substr($securedBy, 2);
         }
+
         return $securedBy;
     }
 

@@ -270,6 +270,7 @@ AND Donations >0;", $this->conn);
             $message .= 'Query:' . $query;
             die($message);
         }
+
         return $result;
     }
 

@@ -182,7 +182,7 @@ class Maps extends ExpPlugin
      * showRec($login, $map)
      *
      * @param string $login
-     * @param Map $map
+     * @param Map    $map
      */
     public function showRec($login, $map)
     {
@@ -405,7 +405,7 @@ class Maps extends ExpPlugin
     /**
      * Handler for jukebox chat
      *
-     * @param $login
+     * @param        $login
      * @param string $args
      */
     public function jukebox($login, $args = "")
@@ -499,19 +499,22 @@ class Maps extends ExpPlugin
         if (!empty($this->config->publicQueuAmount) && $this->config->publicQueuAmount != -1) {
             if (isset($this->config->publicQueuAmount[sizeof($this->queue)])) {
                 $amount = $this->config->publicQueuAmount[sizeof($this->queue)];
+
                 return $amount != -1 ? $amount : 0;
             }
+
             return -1; //Impossible
         }
+
         return 0;
     }
 
     /**
      * Makes a player queu a map
      *
-     * @param $login       Player that wishes to queu the map
-     * @param Map $map the map to queu
-     * @param bool $isTemp will te map be deleted after being playerd
+     * @param      $login       Player that wishes to queu the map
+     * @param Map  $map         the map to queu
+     * @param bool $isTemp      will te map be deleted after being playerd
      */
     public function playerQueueMap($login, Map $map, $isTemp = false)
     {
@@ -525,6 +528,7 @@ class Maps extends ExpPlugin
                 if ($this->paymentInProgress) {
                     $msg = exp_getMessage('#admin_error# $iA payment for wishin a track is in progress please try later.');
                     $this->exp_chatSendServerMessage($msg, $login);
+
                     return;
                 }
 
@@ -562,9 +566,9 @@ class Maps extends ExpPlugin
     /**
      * Check if a map can be queud by a player
      *
-     * @param $login             The player that tries to queu the map
-     * @param Map $map the map to be queud
-     * @param bool $sendMessages should an error message be sent to the player
+     * @param      $login             The player that tries to queu the map
+     * @param Map  $map               the map to be queud
+     * @param bool $sendMessages      should an error message be sent to the player
      *
      * @return bool if the map can be added
      */
@@ -575,6 +579,7 @@ class Maps extends ExpPlugin
         if ($this->storage->currentMap->uId == $map->uId) {
             $msg = exp_getMessage('#admin_error# $iThis map is currently playing...');
             if ($sendMessages) $this->exp_chatSendServerMessage($msg, $login);
+
             return false;
         }
 
@@ -582,12 +587,14 @@ class Maps extends ExpPlugin
             if ($queue->map->uId == $map->uId) {
                 $msg = exp_getMessage('#admin_error# $iThis map is already in the queue...');
                 if ($sendMessages) $this->exp_chatSendServerMessage($msg, $login);
+
                 return false;
             }
 
             if (!AdminGroups::hasPermission($login, Permission::map_jukebox_admin) && $queue->player->login == $login) {
                 $msg = exp_getMessage('#admin_error# $iYou already have a map in the queue...');
                 if ($sendMessages) $this->exp_chatSendServerMessage($msg, $login);
+
                 return false;
             }
         }
@@ -599,21 +606,23 @@ class Maps extends ExpPlugin
                     if ($this->history[$cp]->uId == $map->uId) {
                         $msg = exp_getMessage('#admin_error# $iMap has been played too recently...');
                         if ($sendMessages) $this->exp_chatSendServerMessage($msg, $login);
+
                         return false;
                     }
                 }
             }
         }
+
         return true;
     }
 
     /**
      * Queus the map if possible
      *
-     * @param $login       The player that wants to queu the map
-     * @param Map $map The map to be queud
-     * @param bool $isTemp will the map be deleted after
-     * @param bool $check should we check if adding the map is possible
+     * @param      $login       The player that wants to queu the map
+     * @param Map  $map         The map to be queud
+     * @param bool $isTemp      will the map be deleted after
+     * @param bool $check       should we check if adding the map is possible
      */
     public function queueMap($login, Map $map, $isTemp = false, $check = true)
     {
@@ -681,8 +690,8 @@ class Maps extends ExpPlugin
     /**
      * Changes the next map and slips the current map
      *
-     * @param $login   player that initiate the goto map
-     * @param Map $map The next map
+     * @param     $login   player that initiate the goto map
+     * @param Map $map     The next map
      */
     public function gotoMap($login, Map $map)
     {
@@ -706,7 +715,7 @@ class Maps extends ExpPlugin
     /**
      * Removes a map from a server
      *
-     * @param $login
+     * @param     $login
      * @param Map $map
      */
     public function removeMap($login, Map $map)
@@ -714,6 +723,7 @@ class Maps extends ExpPlugin
         if (!AdminGroups::hasPermission($login, Permission::map_removeMap)) {
             $msg = exp_getMessage('#admin_error# $iYou are not allowed to do that!');
             $this->exp_chatSendServerMessage($msg, $login);
+
             return;
         }
 
@@ -731,7 +741,7 @@ class Maps extends ExpPlugin
     /**
      * Removes a map from the server and deletes the file
      *
-     * @param $login
+     * @param     $login
      * @param Map $map
      */
     public function eraseMap($login, Map $map)
@@ -739,6 +749,7 @@ class Maps extends ExpPlugin
         if (!AdminGroups::hasPermission($login, Permission::map_removeMap)) {
             $msg = exp_getMessage('#admin_error# $iYou are not allowed to do that!');
             $this->exp_chatSendServerMessage($msg, $login);
+
             return;
         }
 
@@ -763,6 +774,7 @@ class Maps extends ExpPlugin
                 }
                 $this->exp_chatSendServerMessage($msg, $recievers,
                     array(Formatting::stripCodes($player->nickName, 'wosnm'), null, Formatting::stripCodes($map->name, 'wosnm'), $map->author));
+
                 return;
             } else {
 
@@ -793,8 +805,8 @@ class Maps extends ExpPlugin
     /**
      * When the map list is modified refresh the queu adn update the widgets & windows
      *
-     * @param int $curMapIndex
-     * @param int $nextMapIndex
+     * @param int  $curMapIndex
+     * @param int  $nextMapIndex
      * @param bool $isListModified
      */
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified)
@@ -875,11 +887,13 @@ class Maps extends ExpPlugin
             if (is_object($this->storage->maps[$params[0]])) {
                 $this->removeMap($login, $this->storage->maps[$params[0]]);
             }
+
             return;
         }
 
         if ($params[0] == "this") {
             $this->removeMap($login, $this->storage->currentMap);
+
             return;
         }
     }
@@ -1010,6 +1024,7 @@ class Maps extends ExpPlugin
     {
         if (!AdminGroups::hasPermission($login, Permission::map_jukebox_admin)) {
             $this->exp_chatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
+
             return;
         }
         $player = $this->storage->getPlayerObject($login);
@@ -1056,6 +1071,7 @@ class Maps extends ExpPlugin
 
     /**
      * Add the current map to the begining of the queue for replay
+     *
      * @param $login
      */
     function replayMap($login)
@@ -1068,6 +1084,7 @@ class Maps extends ExpPlugin
             if ($queue->map->uId == $this->storage->currentMap->uId) {
                 $msg = exp_getMessage('#admin_error# $iChallenge already set to be replayed!');
                 $this->exp_chatSendServerMessage($msg, $login, array(Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+
                 return;
             }
         }
@@ -1097,6 +1114,7 @@ class Maps extends ExpPlugin
             if ($queue->map->uId == $this->storage->currentMap->uId) {
                 $msg = exp_getMessage('#admin_error# $iChallenge already set to be replayed!');
                 $this->exp_chatSendServerMessage($msg, $login, array(Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+
                 return;
             }
         }
@@ -1113,7 +1131,7 @@ class Maps extends ExpPlugin
                     Formatting::stripCodes($player->nickName, 'wosnm'),
                     null,
                     Formatting::stripCodes($map->name, 'wosnm'),
-                    $map->author
+                    $map->author,
                 )
             );
 
@@ -1132,11 +1150,13 @@ class Maps extends ExpPlugin
     {
         if (!AdminGroups::hasPermission($login, Permission::map_addLocal)) {
             $this->exp_chatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
+
             return;
         }
         if ($this->expStorage->isRemoteControlled) {
             $this->exp_chatSendServerMessage(exp_getMessage("#admin_error#Can't continue, since this instance of eXpansion is running remote agains the server"),
                 $login);
+
             return;
         }
         $window = Gui\Windows\AddMaps::Create($login);
@@ -1156,6 +1176,7 @@ class Maps extends ExpPlugin
     {
         if (!AdminGroups::hasPermission($login, Permission::map_addMX)) {
             $this->exp_chatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
+
             return;
         }
 
@@ -1172,6 +1193,7 @@ class Maps extends ExpPlugin
                 } else {
                     if (strlen($file) >= 1024 * 1024) {
                         $this->exp_chatSendServerMessage($this->msg_errToLarge, $login);
+
                         return;
                     }
                     $game = $this->connection->getVersion();
@@ -1184,6 +1206,7 @@ class Maps extends ExpPlugin
                         $this->exp_chatSendServerMessage('#admin_error#Error saving file - unable to write data. Please contact admin.',
                             $login);
                         fclose($lfile);
+
                         return;
                     }
                     fclose($lfile);

@@ -25,6 +25,7 @@ class IncludedPack extends AbstractStructure
         $includedPack->author = Author::fetch($fp);
         $includedPack->manialink = self::fetchString($fp);
         $includedPack->creationDate = self::fetchChecksum($fp);
+
         return $includedPack;
     }
 }

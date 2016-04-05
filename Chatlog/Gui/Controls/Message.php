@@ -16,9 +16,9 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param int $indexNumber
+     * @param int                                                        $indexNumber
      * @param \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message
-     * @param int $sizeX
+     * @param int                                                        $sizeX
      */
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message, $widths, $sizeX)
     {

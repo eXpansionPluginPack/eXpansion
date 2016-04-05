@@ -13,9 +13,9 @@ class ManagedVoteControl extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param type $indexNumber
+     * @param type                                                     $indexNumber
      * @param \ManiaLivePlugins\eXpansion\Votes\Structures\ManagedVote $voteObject
-     * @param type $sizeX
+     * @param type                                                     $sizeX
      */
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Votes\Structures\ManagedVote $vote, $sizeX)
     {

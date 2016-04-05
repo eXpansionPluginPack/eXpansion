@@ -67,6 +67,7 @@ class AdminPublicTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Irc
         if (substr($message, 0, 1) == "!") {
             if (!in_array($connection->getIrcNick($nick), Config::getInstance()->allowedIrcLogins)) {
                 $this->irc->sendPublicChat("You are not allowed to use ! commands.");
+
                 return;
             }
             $string = substr($message, 1);

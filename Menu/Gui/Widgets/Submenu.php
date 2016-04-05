@@ -61,6 +61,7 @@ class Submenu extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $this->addItem($menu, $text, $action, $mb, true);
         // add component to menu
         $menu->addComponent($this->submenu[$mb]);
+
         return $this->submenu[$mb];
     }
 

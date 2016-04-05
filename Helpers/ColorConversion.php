@@ -16,6 +16,7 @@ class ColorConversion
      * @param int $r
      * @param int $g
      * @param int $b
+     *
      * @return array(h,s,l);
      */
     static function rgbToHsl($r, $g, $b)
@@ -51,6 +52,7 @@ class ColorConversion
                     break;
             }
         }
+
         return array(round($h, 2), round($s, 2), round($l, 2));
     }
 
@@ -60,6 +62,7 @@ class ColorConversion
      * @param int $h
      * @param int $s
      * @param int $l
+     *
      * @return array(r,g,b)
      */
     static function hslToRgb($h, $s, $l)
@@ -98,6 +101,7 @@ class ColorConversion
         $r = ($r + $m) * 255;
         $g = ($g + $m) * 255;
         $b = ($b + $m) * 255;
+
         return array(floor($r), floor($g), floor($b));
     }
 

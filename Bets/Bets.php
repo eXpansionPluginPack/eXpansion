@@ -115,6 +115,7 @@ class Bets extends ExpPlugin
             if (array_key_exists($player->login, $this->players)) {
                 $this->exp_chatSendServerMessage($this->msg_winner, null, array($player->nickName . '$z$s', $total));
                 $this->connection->pay($player->login, intval($total), 'Winner of the bet!');
+
                 return;
             }
         }
@@ -134,11 +135,13 @@ class Bets extends ExpPlugin
         if (!is_numeric($amount) || empty($amount) || $amount < 1) {
             $this->exp_chatSendServerMessage('#error#Can\'t place a bet, the value: "#variable#%1$s#error#" is not numeric value!', $login,
                 array($amount));
+
             return;
         }
 
         if ($amount < 100) {
             $this->exp_chatSendServerMessage('#error#Custom value must be over 100 planets!', $login);
+
             return;
         }
 
@@ -161,6 +164,7 @@ class Bets extends ExpPlugin
 
     /**
      *    this called when recieves the a bet from server
+     *
      * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
      */
     public function billPaySuccess(Bill $bill)
@@ -171,6 +175,7 @@ class Bets extends ExpPlugin
 
     /**
      *    this called when player accepts a bet
+     *
      * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
      */
     public function billAcceptSuccess(Bill $bill)
@@ -188,6 +193,7 @@ class Bets extends ExpPlugin
 
     /**
      * This is called when initial bet is accepted and planets has been transferred
+     *
      * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
      */
     public function billSetSuccess(Bill $bill)

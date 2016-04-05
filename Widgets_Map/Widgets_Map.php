@@ -19,6 +19,7 @@ class Widgets_Map extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /**
      * displayWidget(string $login)
+     *
      * @param string $login
      */
     function displayWidget($login)

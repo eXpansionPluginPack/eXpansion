@@ -158,6 +158,7 @@ class BetWidget extends Widget
 
     /**
      * set logins to maniascritp to hide the widget...
+     *
      * @param string[] $players
      */
     public function setToHide($players)
