@@ -32,7 +32,7 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     /**
      * @inheritdoc
      */
-    public function eXpPnLoad()
+    public function eXpOnLoad()
     {
         $this->msgForceScoreError = exp_getMessage("ForceScores can be used only with rounds or team mode");
         $this->msgScriptSettings = exp_getMessage("ScriptSettings available only in script mode");
