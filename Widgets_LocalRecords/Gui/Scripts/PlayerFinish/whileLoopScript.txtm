@@ -219,6 +219,7 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
         if (scoreFirst == -1) {
             scoreFirst = Score;
         }
+
         if ((nbRec <= nbFirstFields || (nbRec > start && nbRec <= end) ) && nbRec <= nbShow && i <= nbFields) {
 
             declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
@@ -235,7 +236,7 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 
             if (nickLabel != Null) {
                 declare outScore = Score;
-                if (i > 1) {
+                if (i > 1 && Login != InputPlayer.Login) {
                     outScore = Score - scoreFirst;
                 }
                 putRecordTo(i, nbRec, outScore, Login, playerNickName[Login], Login == LocalUser.Login);
@@ -285,7 +286,6 @@ foreach (Event in PendingEvents) {
                             x += 1;
                         }
 
-
                         declare timeLabel = (Page.GetFirstChild("RecTime_"^(index+1)) as CMlLabel);
                         timeLabel.Value = "$fff" ^ TimeToText(time);
                     }
@@ -313,7 +313,8 @@ foreach (Event in PendingEvents) {
                         x += 1;
                     }
 
-                     declare timeLabel = (Page.GetFirstChild("RecTime_"^(index+1)) as CMlLabel);
+                    declare timeLabel = (Page.GetFirstChild("RecTime_"^(index+1)) as CMlLabel);
+
                     timeLabel.Value = "$ff0+" ^ TimeToText(time - firstScore);
                     if (index == 0) {
                         timeLabel.Value = "$fff" ^ TimeToText(time);
