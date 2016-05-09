@@ -237,22 +237,20 @@ foreach (Event in PendingEvents) {
                 declare x = 0;
                 declare time = 0;
                 declare firstScore = -1;
-                foreach (Login => Score in playerTimes) {
-                    if (firstScore == -1)
-                        firstScore = Score;
-                    if (index == x) {
-                        time = Score;
-                        break;
+                if (index < playerTimes.count ) {
+                    foreach (Login => Score in playerTimes) {
+                        if (firstScore == -1)
+                            firstScore = Score;
+                        if (index == x) {
+                            time = Score;
+                            break;
+                        }
+                        x += 1;
                     }
-                    x += 1;
-                }
 
-                declare timeLabel = (Page.GetFirstChild("RecTime_"^(index+1)) as CMlLabel);
-                timeLabel.Value = "$ff0+" ^ TimeToText(time - firstScore);
-                if (index == 0) {
+                    declare timeLabel = (Page.GetFirstChild("RecTime_"^(index+1)) as CMlLabel);
                     timeLabel.Value = "$fff" ^ TimeToText(time);
                 }
-
             }
         }
 
@@ -264,18 +262,24 @@ foreach (Event in PendingEvents) {
                 declare x = 0;
                 declare time = 0;
                 declare firstScore = -1;
-                foreach (Login => Score in playerTimes) {
-                    if (firstScore == -1)
-                        firstScore = Score;
-                    if (index == x) {
-                        time = Score;
-                        break;
-                    }
-                    x += 1;
-                }
 
-               declare timeLabel = (Page.GetFirstChild("RecTime_"^(index+1)) as CMlLabel);
-               timeLabel.Value = "$fff" ^ TimeToText(time);
+                if (index < playerTimes.count ) {
+                    foreach (Login => Score in playerTimes) {
+                        if (firstScore == -1)
+                            firstScore = Score;
+                        if (index == x) {
+                            time = Score;
+                            break;
+                        }
+                        x += 1;
+                    }
+
+                    declare timeLabel = (Page.GetFirstChild("RecTime_"^(index+1)) as CMlLabel);
+                    timeLabel.Value = "$ff0+" ^ TimeToText(time - firstScore);
+                    if (index == 0) {
+                        timeLabel.Value = "$fff" ^ TimeToText(time);
+                    }
+                }
         }
     }
 

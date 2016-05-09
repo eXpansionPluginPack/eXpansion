@@ -34,7 +34,7 @@ class Menu extends ExpPlugin implements Listener
         $this->enableDedicatedEvents();
         $this->enablePluginEvents();
         Dispatcher::register(Event::getClass(), $this);
-     }
+    }
 
     public function eXpAutoloadComplete()
     {
@@ -66,20 +66,20 @@ class Menu extends ExpPlugin implements Listener
 
     public function onPlayerConnect($login, $isSpectator)
     {
-        $name = AdminGroups::getGroupName($login);        
+        $name = AdminGroups::getGroupName($login);
         if (!array_key_exists($name, $this->menuGroups)) {
             $this->createMenu($name);
             $this->menuGroups[$name]->add($login, true);
         } else {
             $this->menuGroups[$name]->add($login, true);
         }
-        
+
         $this->menuWindows[$name]->show($login);
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason)
     {
-        $this->menuGroups['Player']->remove($login);        
+        $this->menuGroups['Player']->remove($login);
     }
 
     public function onPluginLoaded($pluginId)
@@ -140,10 +140,10 @@ class Menu extends ExpPlugin implements Listener
 // records
         $recGroup = $menu->addGroup("Records");
         if ($this->pluginLoaded("Dedimania") || $this->pluginLoaded("Dedimania_Script"))
-                $recGroup->addItem("Local Records", "!dedirecs", $this);
+                $recGroup->addItem("Dedimania", "!dedirecs", $this);
 
         if ($this->pluginLoaded("LocalRecords")) {
-            $recGroup->addItem("Local Records", "!showrecs", $this);
+            $recGroup->addItem("Local", "!showrecs", $this);
             $recGroup->addItem("Hall of Fame", "!topsums", $this);
             $recGroup->addItem("Server Ranks", "!serverranks", $this);
         }
@@ -317,6 +317,22 @@ class Menu extends ExpPlugin implements Listener
                     $plugin = $this->getPluginClass("Dedimania_Script");
                     if ($this->isPluginLoaded($plugin)) {
                         $this->callPublicMethod($plugin, "showRecs", $login);
+                    }
+                    break;
+                case "!voteres":
+                    $plugin = $this->getPluginClass("Votes");
+                    if ($this->isPluginLoaded($plugin)) {
+                        $this->callPublicMethod($plugin, "vote_restart", $login);
+                    } else {
+                        $this->connection->callVoteRestartMap();
+                    }
+                    break;
+                case "!voteskip":
+                    $plugin = $this->getPluginClass("Votes");
+                    if ($this->isPluginLoaded($plugin)) {
+                        $this->callPublicMethod($plugin, "vote_skip", $login);
+                    } else {
+                        $this->connection->callVoteNextMap();
                     }
                     break;
                 default:

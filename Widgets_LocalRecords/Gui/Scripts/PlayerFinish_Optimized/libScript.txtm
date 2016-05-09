@@ -6,7 +6,7 @@ Void putRecordTo(Integer i, Integer Rank, Integer Score, Text Login, Text nick, 
 	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
 	declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
         declare Text prefix = "$fff";
-       // if (i > 1) prefix = "$ff0+";
+        if (i > 1) prefix = "$ff0+";
 	if(nickLabel != Null){
 		nickLabel.Value = TextLib::Trim(nick);
 		timeLabel.Value = prefix ^ TimeToText(Score);
