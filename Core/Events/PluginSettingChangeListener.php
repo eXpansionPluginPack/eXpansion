@@ -35,5 +35,5 @@ interface PluginSettingChangeListener
      * @return mixed
      */
     public function onPluginSettingsChange($pluginId, Variable $var);
-
+    
 } 

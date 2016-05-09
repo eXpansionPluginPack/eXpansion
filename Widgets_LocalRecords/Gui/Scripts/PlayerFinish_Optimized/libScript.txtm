@@ -5,10 +5,11 @@ Void putRecordTo(Integer i, Integer Rank, Integer Score, Text Login, Text nick, 
 	declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
 	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
 	declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
-	
+        declare Text prefix = "$fff";
+       // if (i > 1) prefix = "$ff0+";
 	if(nickLabel != Null){
 		nickLabel.Value = TextLib::Trim(nick);
-		timeLabel.SetText(TimeToText(Score));
+		timeLabel.Value = prefix ^ TimeToText(Score);
 
 		declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
 		rank.SetText(""^Rank^".");
@@ -16,7 +17,6 @@ Void putRecordTo(Integer i, Integer Rank, Integer Score, Text Login, Text nick, 
 		declare bg = (Page.GetFirstChild("RecBgBlink_"^i) as CMlQuad);
 
 		if(mine){
-			highliteQuad.Hide();    
 			bg.Show();
 		} else {
 			bg.Hide();

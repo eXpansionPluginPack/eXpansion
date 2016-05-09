@@ -1032,6 +1032,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
         }
 
+        public function eXpAutoloadComplete() {
+            
+        }
+
         /**
          * @param PlayerNetInfo[] $players
          */

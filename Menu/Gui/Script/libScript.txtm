@@ -1,0 +1,8 @@
+Void hideSubMenu() {
+    declare CMlFrame Menu <=> (Page.GetFirstChild("Menu") as CMlFrame);
+    Page.GetClassChildren("sub" , Menu , True);
+    foreach (control in Page.GetClassChildren_Result) {
+        declare lbl = (control as CMlLabel);
+        lbl.Hide();
+    }
+}

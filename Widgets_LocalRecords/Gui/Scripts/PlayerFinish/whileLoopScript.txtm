@@ -1,46 +1,46 @@
 // if (UI.UISequence == CUIConfig::EUISequence::Playing && triggerBegin == True) {
 //    triggerBegin = False;
 //    isStart = True;
-//    animStart = Now;   
-// } 
+//    animStart = Now;
+// }
 
-if (isStart) {    
+if (isStart) {
     declare delay = 100;
     for (i, 1, nbFields ) {
         declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
 	declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
 	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
         declare time = (Now - animStart - delay);
-        if (time < 0) {            
+        if (time < 0) {
             time = 0;
         }
         timeLabel.Opacity = AL::Ease("LinearOut", time * 1., 0., 1., 500.);
-        nickLabel.Opacity = AL::Ease("LinearOut", time * 1., 0., 1., 500.);      
-        rank.Opacity = AL::Ease("LinearOut", time * 1., 0., 1., 500.);      
+        nickLabel.Opacity = AL::Ease("LinearOut", time * 1., 0., 1., 500.);
+        rank.Opacity = AL::Ease("LinearOut", time * 1., 0., 1., 500.);
         delay += 100;
     }
-    
+
 }
 
-if (isZoom) {    
+if (isZoom) {
     if (zoomId != -1) {
     declare rank = (Page.GetFirstChild("RecRank_"^zoomId) as CMlLabel);
     declare nickLabel = (Page.GetFirstChild("RecNick_"^zoomId) as CMlLabel);
     declare timeLabel = (Page.GetFirstChild("RecTime_"^zoomId) as CMlLabel);
     declare time = (Now - animStart);
     timeLabel.RelativeScale = 2. - AL::Ease("LinearInOut", time * 1., 0., 1., 500.);
-    nickLabel.RelativeScale = 2. - AL::Ease("LinearInOut", time * 1., 0., 1., 500.);      
-    rank.RelativeScale = 2. - AL::Ease("LinearInOut", time * 1., 0., 1., 500.);      
+    nickLabel.RelativeScale = 2. - AL::Ease("LinearInOut", time * 1., 0., 1., 500.);
+    rank.RelativeScale = 2. - AL::Ease("LinearInOut", time * 1., 0., 1., 500.);
     }
 }
 
-if (isStart && animStart + 3000 <= Now ) {        
+if (isStart && animStart + 3000 <= Now ) {
     isStart = False;
 
     // added for debug
     isZoom = True;
     animStart = Now;
-    
+
     // just a failsafe to force visibility, if animation fails for some reason
     for (i, 1, nbFields ) {
         declare rank = (Page.GetFirstChild("RecRank_"^i) as CMlLabel);
@@ -52,7 +52,7 @@ if (isStart && animStart + 3000 <= Now ) {
     }
 }
 
-if (isZoom && animStart + 2000 <= Now ) {        
+if (isZoom && animStart + 2000 <= Now ) {
     isZoom = False;
 }
 
@@ -66,7 +66,7 @@ foreach (Player in Players) {
     }
 
     if (<?php echo $this->varName ?> != Player.CurRace.Checkpoints.count) {
-    
+
         //Update the current checkpoint of this user
         <?php echo $this->varName ?> = Player.CurRace.Checkpoints.count;
         curCp = Player.CurRace.Checkpoints.count;
@@ -212,8 +212,13 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
     i = 1;
     nbRec = 1;
     zoomId = -1;
+    declare scoreFirst = -1;
+
     foreach (Login => Score in playerTimes) {
 
+        if (scoreFirst == -1) {
+            scoreFirst = Score;
+        }
         if ((nbRec <= nbFirstFields || (nbRec > start && nbRec <= end) ) && nbRec <= nbShow && i <= nbFields) {
 
             declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
@@ -222,20 +227,24 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
 
             if (highliteQuad != Null) {
                 if (playersOnServer.existskey(Login) && i != myRank) {
-                    highliteQuad.Show();                    
+                    highliteQuad.Show();
                 } else {
                     highliteQuad.Hide();
                 }
             }
 
             if (nickLabel != Null) {
-                putRecordTo(i, nbRec, Score, Login, playerNickName[Login], Login == LocalUser.Login);
+                declare outScore = Score;
+                if (i > 1) {
+                    outScore = Score - scoreFirst;
+                }
+                putRecordTo(i, nbRec, outScore, Login, playerNickName[Login], Login == LocalUser.Login);
                 if (Login == LocalUser.Login) {
                     showed = True;
-                    zoomId = i;                    
+                    zoomId = i;
                     if (lastZoomId != zoomId) {
-                        isZoom = True;        
-                        animStart = Now;    
+                        isZoom = True;
+                        animStart = Now;
                         lastZoomId = zoomId;
                     }
                 }
@@ -247,14 +256,68 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
         if (nbRec > nbShow) {
 
         }
-    }        
-       
+    }
+
 }
 
 foreach (Event in PendingEvents) {
     /*if (Event.Type == CXmlRpcEvent::Type::LibXmlRpc_OnWayPoint) {
-	
+
     }*/
+
+       if (Event.Type == CMlEvent::Type::MouseOver) {
+        declare CMlControl control = Page.GetFirstChild(Event.ControlId);
+        if (control.ControlClasses.count > 0 && control.ControlClasses[0] == "nickLabel") {
+                declare controlId = TextLib::Split("_",Event.ControlId);
+                declare Integer index = TextLib::ToInteger(controlId[1])-1;
+                declare x = 0;
+                declare time = 0;
+                declare firstScore = -1;
+                foreach (Login => Score in playerTimes) {
+                    if (firstScore == -1)
+                        firstScore = Score;
+                    if (index == x) {
+                        time = Score;
+                        break;
+                    }
+                    x += 1;
+                }
+
+                declare timeLabel = (Page.GetFirstChild("RecTime_"^(index+1)) as CMlLabel);
+                timeLabel.Value = "$ff0+" ^ TimeToText(time - firstScore);
+                if (index == 0) {
+                    timeLabel.Value = "$fff" ^ TimeToText(time);
+                }
+
+        }
+    }
+
+
+ if (Event.Type == CMlEvent::Type::MouseOut) {
+        declare CMlControl control = Page.GetFirstChild(Event.ControlId);
+        if (control.ControlClasses.count > 0 && control.ControlClasses[0] == "nickLabel") {
+                declare controlId = TextLib::Split("_",Event.ControlId);
+                declare Integer index = TextLib::ToInteger(controlId[1])-1;
+                declare x = 0;
+                declare time = 0;
+                declare firstScore = -1;
+                foreach (Login => Score in playerTimes) {
+                    if (firstScore == -1)
+                        firstScore = Score;
+                    if (index == x) {
+                        time = Score;
+                        break;
+                    }
+                    x += 1;
+                }
+
+                declare timeLabel = (Page.GetFirstChild("RecTime_"^(index+1)) as CMlLabel);
+                timeLabel.Value = "$fff" ^ TimeToText(time);
+        }
+    }
+
+
+
 
     if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer") {
         if (eXp_widgetLayers[version][id][gameMode] == "normal") {

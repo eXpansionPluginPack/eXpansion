@@ -27,6 +27,7 @@ class PluginSettingChange extends \ManiaLive\Event\Event
 {
 
     const ON_SETTINGS_CHANGE = 1;
+    const ON_AUTOLOAD_COMPLETE = 2;
 
     protected $params;
 
@@ -45,8 +46,7 @@ class PluginSettingChange extends \ManiaLive\Event\Event
             case self::ON_SETTINGS_CHANGE:
                 /** PluginId, variable*/
                 $listener->onPluginSettingsChange($p[0], $p[1]);
-                break;
-
+                break;          
         }
     }
 

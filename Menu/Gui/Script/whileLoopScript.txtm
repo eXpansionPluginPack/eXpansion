@@ -73,8 +73,42 @@ if(eXp_tabPressed){
 
 if (toggleSubmenu) {
 	foreach (Event in PendingEvents) {
-            if (Event.Type == CMlEvent::Type::MouseClick) {
-                outText = "";
+            if (Event.Type == CMlEvent::Type::MouseOver) {
+                if ( Event.Control.ControlClasses.count > 0) {
+                    if (Event.Control.ControlClasses[0] == "group") {
+
+                        if (lastItem != Event.Control.DataAttributeGet("label") ) {
+                            hideSubMenu();
+                            lastItem = Event.Control.DataAttributeGet("label");
+                         }
+                        declare subFrame = (Page.GetFirstChild(Event.Control.DataAttributeGet("label")) as CMlFrame);
+                        Page.GetClassChildren("sub" , subFrame , True);
+                        foreach (control in Page.GetClassChildren_Result) {
+                            declare lbl = (control as CMlLabel);
+                            lbl.Show();
+                        }
+                    }
+
+                    if (Event.Control.ControlClasses[0] == "menu") {
+                        hideSubMenu();
+                    }
+
+                    lastItem = Event.Control.DataAttributeGet("label");
+                }
+
+                if (Event.Control.ControlClasses.count == 0) {
+                    hideSubMenu();
+                }
+            }
+    }
+}
+
+if (needUpdate) {
+    needUpdate = False;
+
+    if (showStatus) {
+        Menu.Show();
+         outText = "";
                 foreach (idd => dump in eXp_widgetVisible[version]) {
                     if (!eXp_widgetVisible[version][idd].existskey(gameMode)) {
                         continue;
@@ -89,80 +123,24 @@ if (toggleSubmenu) {
                     }
                     // log(outText);
                     widgetStatus.Value = outText;
-                    declare item = Page.GetFirstChild(Event.ControlId);
-
-                    if (item.DataAttributeExists("action") ) {
-                        TriggerPageAction(item.DataAttributeGet("action"));
-                        toggleSubmenu = False;
-                        needUpdate = True;
-                        showStatus = False;
-                    }
-                }
-
-	    if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId != "Unassigned")  {
-			if(Page.GetFirstChild("submenu_"^ TextLib::SubText(Event.ControlId,4,1)) != Null ) {
-				if (currentButton != Null && currentButton.ControlId != "submenu_"^ TextLib::SubText(Event.ControlId,4,1)) {
-					currentButton.Hide();
-                                        }
-				//log ("hovering: submenu_"^ TextLib::SubText(Event.ControlId,4,1));
-
-				currentButton = (Page.GetFirstChild("submenu_"^ TextLib::SubText(Event.ControlId,4,1)) as CMlFrame);
-				currentButton.Show();
-			} else {
-				if (currentButton != Null) {
-					//log ("hiding:" ^ currentButton.ControlId);
-					currentButton.Hide();
-					currentButton = Null;
-				}
-			}
-		}
-	}
-}
-
-if (needUpdate) {
-    needUpdate = False;
-
-    if (showStatus) {
-        Menu.Show();
-        //log("Show"^ Now);
-        needHidden = True;
-        Page.GetClassChildren("menuitem" , Menu , True);
-        declare Integer delay = 0;
-        foreach (control in Page.GetClassChildren_Result) {
-        	LibManialink_AnimInsert("<quad opacity=\"0.75\" id=\""^ control.ControlId ^ "\" />", delay,300 ,"EaseInLinear");
-        	LibManialink_AnimInsert("<quad opacity=\"1.\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 300, "EaseInLinear");
-        	LibManialink_AnimInsert("<quad opacity=\"1.\" id=\""^ control.ControlId ^ "_icon\" />", delay, 300, "EaseInLinear");
-                delay += 20;
-	}
+                    needHidden = True;
 
     } else {
         if (needHidden) {
             hideStamp = Now;
             needHidden = False;
             toggleSubmenu = False;
-            declare Integer delay = 0;
-            Page.GetClassChildren("menuitem" , Menu , True);
-            foreach (control in Page.GetClassChildren_Result) {
-                LibManialink_AnimInsert("<quad opacity=\"0\" id=\""^ control.ControlId ^ "\" />", delay, 300 ,"EaseInLinear");
-        	LibManialink_AnimInsert("<quad opacity=\"0\" id=\""^ control.ControlId ^ "_lbl\" />", delay, 300, "EaseInLinear");
-        	LibManialink_AnimInsert("<quad opacity=\"0\" id=\""^ control.ControlId ^ "_icon\" />", delay, 300, "EaseInLinear");
-                delay += 20;
-            }
-
-                }
-            }
-        }
+            Menu.Hide();
+           }
+    }
+}
 
 if(!toggleSubmenu && Menu.Visible && (Now - hideStamp) > 300) {
     Menu.Hide();
-    if (currentButton != Null) {
-        //log ("hiding:" ^ currentButton.ControlId);
-        currentButton.Hide();
-        currentButton = Null;
-    }
 }
 
 if (MouseLeftButton || (canToggle == False && MouseRightButton)) {
          showStatus = False;
          needUpdate = True;
 }
+

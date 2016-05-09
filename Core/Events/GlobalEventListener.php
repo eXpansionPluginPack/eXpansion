@@ -14,7 +14,7 @@ interface GlobalEventListener
 
     public function onMapSkip();
 
+    public function eXpAutoloadComplete();
 }
-
 ?>
 

@@ -9,20 +9,20 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups;
  */
 class Group
 {
-
     private $groupName;
 
     /** @var boolean */
     private $master;
+
+    /** @var Admin[] */
     private $groupUsers = array();
     private $permissions;
-
-    private $inherits = array();
+    private $inherits   = array();
 
     function __construct($groupName, $master)
     {
         $this->groupName = $groupName;
-        $this->master = $master;
+        $this->master    = $master;
     }
 
     public function addAdmin(Admin $admin)
@@ -32,8 +32,8 @@ class Group
 
     public function removeAdmin($login)
     {
-        $i = 0;
-        $found = false;
+        $i             = 0;
+        $found         = false;
         $newGroupUsers = array();
 
         while ($i < sizeof($this->groupUsers)) {
@@ -66,18 +66,14 @@ class Group
 
     public function getPermission($name)
     {
-        if ($name == null || $this->master)
-            return AdminGroups::havePermission;
-        else if (isset($this->permissions[$name]))
-            return $this->permissions[$name];
-        else
-            return AdminGroups::unknownPermission;
+        if ($name == null || $this->master) return AdminGroups::havePermission;
+        else if (isset($this->permissions[$name])) return $this->permissions[$name];
+        else return AdminGroups::unknownPermission;
     }
 
     private function hasPermission2($name)
     {
-        if ($name == "")
-            return true;
+        if ($name == "") return true;
         else if (isset($this->permissions[$name])) {
             if ($this->permissions[$name] == AdminGroups::unknownPermission) {
 
@@ -100,8 +96,7 @@ class Group
 
             foreach ($this->inherits as $gname => $group) {
                 $actual = $group->getPermission($name);
-                if ($actual == AdminGroups::havePermission)
-                    return true;
+                if ($actual == AdminGroups::havePermission) return true;
             }
         }
 
@@ -118,6 +113,7 @@ class Group
         return $this->master;
     }
 
+    /** @return Admin[] */
     public function getGroupUsers()
     {
         return $this->groupUsers;
@@ -142,7 +138,5 @@ class Group
     {
         $this->inherits[$group->getGroupName()] = $group;
     }
-
 }
-
 ?>

@@ -1,19 +1,19 @@
-
-declare CMlFrame Menu <=> (Page.GetFirstChild("Submenu") as CMlFrame);
+declare CMlFrame Menu <=> (Page.GetFirstChild("Menu") as CMlFrame);
 
 Menu.Hide(); // reduce flicker on refresh
 
 declare CMlEntry widgetStatus <=> (Page.GetFirstChild("widgetStatus") as CMlEntry);
+
 declare Text outText = "";
+
 declare Boolean toggleSubmenu = False;
-declare CMlFrame currentButton = Null;
-declare CMlFrame previousButton = Null;
 declare persistent Boolean[Text][Text][Text] eXp_widgetVisible;
+
 declare Text version = "<?php echo $this->version ?>";
 declare Text id = "<?php echo $this->name ?>";
 declare Text gameMode = "<?php echo $this->gameMode; ?>";
 declare Boolean forceReset = <?php echo $this->forceReset ?>;
-declare Integer menuCount = <?php echo $this->count ?>;
+
 declare Boolean eXp_mouseRightState = False;
 declare eXp_mouseRightTime = 0;
 declare eXp_tabPressed = False;
@@ -30,6 +30,7 @@ declare Boolean exp_needToCheckPersistentVars for UI = False;
 declare Boolean showStatus = False;
 declare Boolean needUpdate = True;
 declare Boolean needHidden = False;
+declare Text lastItem = "";
 
 if (!eXp_widgetVisible.existskey(version) ) {
 	eXp_widgetVisible[version] = Boolean[Text][Text];
@@ -43,20 +44,11 @@ if ( !eXp_widgetVisible[version][id].existskey(gameMode) ) {
 	eXp_widgetVisible[version][id][gameMode] = True;
 }
 
-for(i, 1, menuCount) {
-    Page.GetFirstChild("submenu_"^i).Hide();
-}
-
 Menu.RelativePosition.Z = 30.0;
 
- Page.GetClassChildren("menuitem" , Menu , True);
-  foreach (control in Page.GetClassChildren_Result) {
-             declare CMlQuad quad  <=> (Page.GetFirstChild(control.ControlId) as CMlQuad);
-             quad.Opacity = 0.0;
-             declare CMlLabel lbl  <=> (Page.GetFirstChild(control.ControlId^"_lbl") as CMlLabel);
-             lbl.Opacity = 0.0;
-             declare CMlQuad icon  <=> (Page.GetFirstChild(control.ControlId^"_icon") as CMlQuad);
-             if (icon != Null) {
-                icon.Opacity = 0.0;
-             }
+Page.GetClassChildren("sub" , Menu , True);
+foreach (control in Page.GetClassChildren_Result) {
+    declare lbl = (control as CMlLabel);
+    //   log(lbl);
+       lbl.Hide();
 }

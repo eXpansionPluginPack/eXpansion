@@ -53,11 +53,11 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         , '\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups'
         , '\ManiaLivePlugins\eXpansion\AutoUpdate\AutoUpdate'
         , '\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin'
-        , '\ManiaLivePlugins\eXpansion\Gui\Gui'
-        , '\ManiaLivePlugins\eXpansion\Menu\Menu'
+        , '\ManiaLivePlugins\eXpansion\Gui\Gui'        
         , '\ManiaLivePlugins\eXpansion\Adm\Adm'
         , '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad'
-        , '\ManiaLivePlugins\eXpansion\Database\Database');
+        , '\ManiaLivePlugins\eXpansion\Database\Database'
+        , '\ManiaLivePlugins\eXpansion\Menu\Menu');
 
         $this->findAvailablePlugins();
         ConfigManager::getInstance()->loadSettings();
@@ -67,7 +67,8 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         $this->autoLoadPlugins($this->plugins, $pHandler);
 
-
+        // do event to inform autoload is complete;
+        Dispatcher::dispatch(new \ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent(\ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent::ON_AUTOLOAD_COMPLETE));
     }
 
     public function exp_onReady()
@@ -178,7 +179,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $this->console($pname);
                 $this->connection->chatSendServerMessage('Starting ' . $pname . '........$f00 Failure');
             }
-        }
+        }        
     }
 
     /**

@@ -14,27 +14,19 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  */
 class Cps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
-
     private $frame;
-
     private $label_rank, $label_nick, $label_score, $frameCP, $nextButton, $prevButton;
-
     private $widths = array(0.5, 3, 10);
-
     private $pager;
-
     private $items = array();
-
     private $offset = 0;
-
     private $itemsPerPage = 6;
-
     private $recs;
 
     protected function onConstruct()
     {
         parent::onConstruct();
-        $sizeX = 170;
+        $sizeX       = 170;
         $scaledSizes = Gui::getScaledSize($this->widths, $sizeX);
 
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
@@ -62,7 +54,7 @@ class Cps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         for ($x = $this->offset; $x <= $this->offset + $this->itemsPerPage; $x++) {
             $label = new \ManiaLib\Gui\Elements\Label(15, 6);
             $label->setAlign("left", "center");
-            $label->setText("Cp " . ($x + 1));
+            $label->setText("Cp ".($x + 1));
             $this->frameCP->addComponent($label);
         }
 
@@ -107,7 +99,7 @@ class Cps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
 
         $this->items = null;
-        $this->recs = null;
+        $this->recs  = null;
 
         $this->pager->destroy();
         $this->destroyComponents();
@@ -116,7 +108,7 @@ class Cps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function populateList($recs)
     {
-        $x = 0;
+        $x          = 0;
         $this->recs = $recs;
 
         $login = $this->getRecipient();
@@ -163,7 +155,7 @@ class Cps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         for ($x = $this->offset; $x <= $this->offset + $this->itemsPerPage; $x++) {
             $label = new \ManiaLib\Gui\Elements\Label(15, 6);
             $label->setAlign("left", "center");
-            $label->setText("Cp " . ($x + 1));
+            $label->setText("Cp ".($x + 1));
             $this->frameCP->addComponent($label);
         }
 
@@ -177,15 +169,6 @@ class Cps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->nextButton->setAction($this->createAction(array($this, "nextPage")));
         $this->frameCP->addComponent($this->nextButton);
 
-        if ($offset < $this->itemsPerPage) {
-            $this->prevButton->setVisibility(false);
-            $this->nextButton->setVisibility(false);
-        }
-
-        if ($offset <= ($this->offset + $this->itemsPerPage)) {
-            $this->nextButton->setVisibility(false);
-        }
-
         $x = 0;
         foreach ($this->recs as $rec) {
             $this->items[$x] = new CpItem($x, $this->getRecipient(), $rec, $this->widths, $offset);
@@ -193,7 +176,5 @@ class Cps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $x++;
         }
     }
-
 }
-
 ?>

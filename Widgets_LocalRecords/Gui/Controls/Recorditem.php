@@ -70,7 +70,9 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label = new \ManiaLib\Gui\Elements\Label(11, 5);
         $this->label->setId("RecTime_" . $index);
         $this->label->setPosition(3.5, 0);
+        $this->label->setAttribute("class", "nickLabel");
         $this->label->setAlign('left', 'center');
+        $this->label->setScriptEvents();
         $this->label->setTextColor($this->getColor("#time#"));
         $this->label->setStyle("TextRaceChat");
         $this->label->setTextSize(1);
@@ -80,12 +82,13 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->nick->setPosition(15.5, 0);
         $this->nick->setAlign('left', 'center');
         $this->nick->setStyle("TextRaceChat");
+        $this->nick->setAttribute("class", "nickLabel");
         $this->nick->setTextSize(1);
         $this->nick->setTextEmboss(false);
-        $this->nick->setTextColor("fff");
+        $this->nick->setTextColor("fff");        
         $this->nick->setId("RecNick_" . $index);
         $this->nick->setAttribute("class", "nickLabel");
-        $this->nick->setScriptEvents();
+        $this->nick->setScriptEvents();        
         //$this->nick->setText("#######################################################");
         $this->addComponent($this->nick);
 
