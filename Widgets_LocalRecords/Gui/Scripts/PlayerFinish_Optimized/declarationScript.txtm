@@ -6,12 +6,12 @@ declare Integer nbFields =  <?php echo $this->nbFields ?>;
 declare Integer nbFirstFields =  <?php echo $this->nbFirstFields ?>;
 declare Integer worseTime = -1;
 declare Boolean getCurrentTimes = <?php echo $this->getCurrentTimes ?>;
-
+declare persistent Boolean edge_showDiff = False;
 declare Integer maxServerRank = <?php echo $this->acceptMaxServerRank ?>;
 declare Integer[Text] maxPlayerRank = <?php echo $this->acceptMaxPlayerRank ?>;
 declare useMaxPlayerRank = <?php echo $this->useMaxPlayerRank ?>;
 declare Integer acceptMinCp = <?php echo $this->acceptMinCp ?>;
-
+declare Boolean old_showDiff = edge_showDiff;
 
 //Ranks of the players
 declare playerTimes = <?php echo $this->playerTimes ?>;
@@ -58,12 +58,12 @@ foreach (Player in Players) {
 
     declare <?php echo $this->varName ?> for Player.User = -1;
     <?php echo $this->varName ?> = -1;
-    
+
     if(getCurrentTimes && Player.CurRace.Time != -1){
 	//log("Getting Current Times for "^Player.Login^" Time : "^Player.CurRace.Time);
 	//playerTimes[Player.Login] = Player.CurRace.Time;
     }
-    
+
     playersOnServer[Player.Login] = Player.Name;
     if(!playerNickName.existskey(Player.Login)){
         playerNickName[Player.Login] = Player.Name;
@@ -76,5 +76,5 @@ for (i, 1, nbFields ) {
 	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
         rank.Opacity = 0.;
         timeLabel.Opacity = 0.;
-        nickLabel.Opacity = 0.;       
+        nickLabel.Opacity = 0.;
 }

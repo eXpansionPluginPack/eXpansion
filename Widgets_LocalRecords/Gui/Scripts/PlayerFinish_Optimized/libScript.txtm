@@ -1,12 +1,12 @@
 
 
 Void putRecordTo(Integer i, Integer Rank, Integer Score, Text Login, Text nick, Boolean mine){
-
+        declare persistent Boolean edge_showDiff = False;
 	declare nickLabel = (Page.GetFirstChild("RecNick_"^i) as CMlLabel);
 	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
 	declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
         declare Text prefix = "$fff";
-        if (i > 1 && !mine) prefix = "$ff0+";
+        if (i > 1 && !mine && edge_showDiff) prefix = "$ff0+";
 	if(nickLabel != Null){
 		nickLabel.Value = TextLib::Trim(nick);
 		timeLabel.Value = prefix ^ TimeToText(Score);

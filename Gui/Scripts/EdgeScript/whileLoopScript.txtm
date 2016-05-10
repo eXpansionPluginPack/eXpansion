@@ -9,11 +9,20 @@ foreach (Event in PendingEvents) {
             }
            else {
                 Edge.Colorize = imageOn;
-                
-           }
 
-         //  foreach (widgetid => value in edge_animatedId) {
-         //       edge_animatedId[widgetid] = True;
-         //   }
+           }
     }
+
+    if (Event.Type == CMlEvent::Type::MouseClick && ( Event.ControlId == "Diff" )) {
+
+           edge_showDiff = !edge_showDiff;
+
+           if (edge_showDiff) {
+                 Diff.Colorize = imageOn;
+           }
+           else {
+                Diff.Colorize = imageOff;
+           }
+    }
+
 }

@@ -5,12 +5,12 @@ declare Integer nbFields =  <?php echo $this->nbFields ?>;
 declare Integer nbFirstFields =  <?php echo $this->nbFirstFields ?>;
 declare Integer worseTime = -1;
 declare Boolean getCurrentTimes = <?php echo $this->getCurrentTimes ?>;
-
+declare persistent Boolean edge_showDiff = False;
 declare Integer maxServerRank = <?php echo $this->acceptMaxServerRank ?>;
 declare Integer[Text] maxPlayerRank = <?php echo $this->acceptMaxPlayerRank ?>;
 declare useMaxPlayerRank = <?php echo $this->useMaxPlayerRank ?>;
 declare Integer acceptMinCp = <?php echo $this->acceptMinCp ?>;
-
+declare Boolean old_showDiff = edge_showDiff;
 
 //Ranks of the players
 declare playerTimes = <?php echo $this->playerTimes ?>;
@@ -73,7 +73,7 @@ for (i, 1, nbFields ) {
 	declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
         rank.Opacity = 0.;
         timeLabel.Opacity = 0.;
-        nickLabel.Opacity = 0.;       
+        nickLabel.Opacity = 0.;
 }
 
 isStart = True;

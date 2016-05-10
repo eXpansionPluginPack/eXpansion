@@ -125,9 +125,7 @@ class AutoQueue extends ExpPlugin
     }
 
     public function queueReleaseNext()
-    {
-        echo count($this->storage->players). "<". $this->storage->server->currentMaxPlayers ."\n";
-        
+    {                
         if (count($this->storage->players) <= $this->storage->server->currentMaxPlayers) {
             $player = $this->queue->getNextPlayer();
             if ($player) {

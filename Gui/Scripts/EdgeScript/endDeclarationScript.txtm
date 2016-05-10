@@ -1,8 +1,11 @@
 declare  CMlQuad Edge <=> (Page.GetFirstChild("Edge") as CMlQuad);
-declare  Boolean edge_isMinimized for UI = False;
+declare  CMlQuad Diff <=> (Page.GetFirstChild("Diff") as CMlQuad);
+
+declare Boolean edge_isMinimized for UI = False;
 declare Boolean edge_isAnimated for UI= False;
 declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
 declare persistent Boolean edge_isLockedVisible2 = True;
+declare persistent Boolean edge_showDiff = False;
 declare imageOn = <?php echo $this->imageOn; ?>;
 declare imageOff = <?php echo $this->imageOff; ?>;
 
@@ -14,5 +17,13 @@ edge_animatedId.clear();
 }
 else {
     Edge.Colorize = imageOn;
+
+}
+
+ if (edge_showDiff) {
+     Diff.Colorize = imageOn;
+}
+else {
+    Diff.Colorize = imageOff;
 
 }
