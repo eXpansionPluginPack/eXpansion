@@ -89,11 +89,14 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         try {
             if (is_numeric($amount)) {
                 $x = 0;
-                foreach ($this->players as $login => $player) {
+                $players = array_merge($this->storage->players, $this->storage->spectators);
+                
+                foreach ($players as $login => $player) {
+                    echo "$login, $x,  $amount\n";
                     if (strstr($login, "fakeplayer") !== false && $x < $amount) {
-                        $this->connection->connectFakePlayer($login);
-                    }
-                    $x++;
+                        $this->connection->disconnectFakePlayer($login);
+                        $x++;
+                    }   
                 }
             } else {
                 $this->connection->disconnectFakePlayer("*");

@@ -37,7 +37,7 @@ class AutoQueue extends ExpPlugin
     public static $enterAction;
     public static $leaveAction;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->queue = new Queue();
@@ -126,7 +126,9 @@ class AutoQueue extends ExpPlugin
 
     public function queueReleaseNext()
     {
-        if (count($this->storage->players) < $this->storage->server->currentMaxPlayers) {
+        echo count($this->storage->players). "<". $this->storage->server->currentMaxPlayers ."\n";
+        
+        if (count($this->storage->players) <= $this->storage->server->currentMaxPlayers) {
             $player = $this->queue->getNextPlayer();
             if ($player) {
                 $this->connection->forceSpectator($player->login, 2);
