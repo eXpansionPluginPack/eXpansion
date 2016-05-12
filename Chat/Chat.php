@@ -69,7 +69,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private function loadProfanityList()
     {
         $ignore = array(".", "..", "LICENSE", "README.md", "USERS.md", ".git");
-        $path = realpath(APP_ROOT) . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "shutterstock" . DIRECTORY_SEPARATOR . "badwords";
+        $path = realpath(APP_ROOT) . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "bad_words" . DIRECTORY_SEPARATOR . "List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words-master";
 
         if (is_dir($path)) {
 

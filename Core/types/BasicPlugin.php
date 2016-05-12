@@ -219,7 +219,6 @@ namespace ManiaLivePlugins\eXpansion\Core\types
         public final function onLoad() {
             if (! $this->metaData->checkAll()) {
                 $this->eXpUnload();
-
                 return;
             }
             try {
