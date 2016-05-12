@@ -27,8 +27,7 @@ class Widget extends PlainWidget
     private static $config;
     public $currentSettings = array();
 
-    protected function onConstruct()
-    {
+    protected function onConstruct() {
         parent::onConstruct();
         $this->eXpOnBeginConstruct();
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WidgetScript");
@@ -50,61 +49,31 @@ class Widget extends PlainWidget
     /**
      * When the Widget is being constructed.
      */
-    protected function eXpOnBeginConstruct()
-    {
-    }
-
-    /**
-     * @deprecated
-     * @see eXpOnBeginConstruct
-     */
-    protected function exp_onBeginConstruct()
-    {
-        $this->eXpOnBeginConstruct();
+    protected function eXpOnBeginConstruct() {
     }
 
     /**
      * When the construction of the widget has ended
      */
-    protected function eXpOnEndConstruct()
-    {
-    }
-
-    /**
-     * @deprecated
-     * @see eXpOnEndConstruct
-     */
-    protected function exp_onEndConstruct()
-    {
-        $this->eXpOnEndConstruct();
+    protected function eXpOnEndConstruct() {
     }
 
     /**
      * When the settings of the widget has been loaded.
      */
-    protected function eXpOnSettingsLoaded()
-    {
+    protected function eXpOnSettingsLoaded() {
     }
 
-    /**
-     * @deprecated
-     * @see eXpOnSettingsLoaded
-     */
-    protected function exp_onSettingsLoaded()
-    {
-        $this->eXpOnSettingsLoaded();
-    }
-
-    private function eXpLoadSettings()
-    {
+    private function eXpLoadSettings() {
         $widgetName = str_replace(" ", "", $this->getName());
 
-        if (isset(self::$config[$widgetName])) {
+        if (isset(self::$config[ $widgetName ])) {
 
             //Getting exact game mode
             $gameMode = $this->storage->gameInfos->gameMode;
-            if ($gameMode == 0)
+            if ($gameMode == 0) {
                 $gameMode = $this->storage->gameInfos->scriptName;
+            }
 
             //Getting compatibility Game mode
             $compoMode = Gui::eXpGetCurrentCompatibilityGameMode();
@@ -122,17 +91,29 @@ class Widget extends PlainWidget
 
 
             $this->currentSettings = array();
-            foreach (self::$config[$widgetName] as $name => $values) {
-                if (isset($values[$gameMode])) {
-                    $this->currentSettings[$name] = $values[$gameMode];
-                } else if (isset($values[$compoMode])) {
-                    $this->currentSettings[$name] = $values[$compoMode];
-                } else if (isset($values[$titleid])) {
-                    $this->currentSettings[$name] = $values[$titleid];
-                } else if (isset($values[$enviTitle])) {
-                    $this->currentSettings[$name] = $values[$enviTitle];
-                } else if (isset($values[WConfig::config_default])) {
-                    $this->currentSettings[$name] = $values[WConfig::config_default];
+            foreach (self::$config[ $widgetName ] as $name => $values) {
+                if (isset($values[ $gameMode ])) {
+                    $this->currentSettings[ $name ] = $values[ $gameMode ];
+                }
+                else {
+                    if (isset($values[ $compoMode ])) {
+                        $this->currentSettings[ $name ] = $values[ $compoMode ];
+                    }
+                    else {
+                        if (isset($values[ $titleid ])) {
+                            $this->currentSettings[ $name ] = $values[ $titleid ];
+                        }
+                        else {
+                            if (isset($values[ $enviTitle ])) {
+                                $this->currentSettings[ $name ] = $values[ $enviTitle ];
+                            }
+                            else {
+                                if (isset($values[ WConfig::config_default ])) {
+                                    $this->currentSettings[ $name ] = $values[ WConfig::config_default ];
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -141,8 +122,7 @@ class Widget extends PlainWidget
         $this->eXpOnSettingsLoaded();
     }
 
-    protected function onDraw()
-    {
+    protected function onDraw() {
 
         $this->script->setParam("name", $this->getName());
         $this->script->setParam("axisDisabled", $this->axisDisabled);
@@ -150,7 +130,8 @@ class Widget extends PlainWidget
 
         if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
             $this->script->setParam("gameMode", Gui::fixString($this->storage->gameInfos->scriptName));
-        } else {
+        }
+        else {
             $this->script->setParam("gameMode", $this->storage->gameInfos->gameMode);
         }
 
@@ -161,14 +142,12 @@ class Widget extends PlainWidget
 
     }
 
-    public function onResize($oldX, $oldY)
-    {
+    public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->move->setSize($this->getSizeX(), $this->getSizeY());
     }
 
-    protected function autoSetPositions()
-    {
+    protected function autoSetPositions() {
         $posX = $this->getParameter("posX");
         $posY = $this->getParameter("posY");
 
@@ -177,13 +156,11 @@ class Widget extends PlainWidget
         }
     }
 
-    function closeWindow()
-    {
+    function closeWindow() {
         $this->erase($this->getRecipient());
     }
 
-    function destroy()
-    {
+    function destroy() {
         unset($this->currentSettings);
         unset($this->widgetVisible);
         unset($this->positions);
@@ -195,8 +172,7 @@ class Widget extends PlainWidget
      *
      * @param string $axis accepts values: "x" or "y"
      */
-    function setDisableAxis($axis)
-    {
+    function setDisableAxis($axis) {
         $this->axisDisabled = $axis;
     }
 
@@ -207,15 +183,13 @@ class Widget extends PlainWidget
      * @param float  $posX
      * @param float  $posY
      */
-    function setPositionForGamemode($gameMode, $posX, $posY)
-    {
-        $this->positions[$gameMode] = array($posX, $posY);
+    function setPositionForGamemode($gameMode, $posX, $posY) {
+        $this->positions[ $gameMode ] = array($posX, $posY);
     }
 
-    function getWidgetVisible()
-    {
-        if (isset($this->widgetVisible[$this->storage->gameInfos->gameMode])) {
-            $value = $this->widgetVisible[$this->storage->gameInfos->gameMode];
+    function getWidgetVisible() {
+        if (isset($this->widgetVisible[ $this->storage->gameInfos->gameMode ])) {
+            $value = $this->widgetVisible[ $this->storage->gameInfos->gameMode ];
 
             return $this->getBoolean($value);
         }
@@ -229,45 +203,40 @@ class Widget extends PlainWidget
      * @param string $gameMode
      * @param bool   $value
      */
-    function setVisibilityForGamemode($gameMode, $value)
-    {
-        $this->widgetVisible[$gameMode] = $value;
+    function setVisibilityForGamemode($gameMode, $value) {
+        $this->widgetVisible[ $gameMode ] = $value;
     }
 
-    function setVisibleLayer($string)
-    {
+    function setVisibleLayer($string) {
         $this->visibleLayerInit = $string;
     }
 
-    function getPosX()
-    {
-        if (isset($this->positions[$this->storage->gameInfos->gameMode])) {
-            return $this->positions[$this->storage->gameInfos->gameMode][0];
+    function getPosX() {
+        if (isset($this->positions[ $this->storage->gameInfos->gameMode ])) {
+            return $this->positions[ $this->storage->gameInfos->gameMode ][0];
         }
 
         return $this->posX;
     }
 
-    function getPosY()
-    {
-        if (isset($this->positions[$this->storage->gameInfos->gameMode])) {
-            return $this->positions[$this->storage->gameInfos->gameMode][1];
+    function getPosY() {
+        if (isset($this->positions[ $this->storage->gameInfos->gameMode ])) {
+            return $this->positions[ $this->storage->gameInfos->gameMode ][1];
         }
 
         return $this->posY;
     }
 
-    public static function setParameter($widgetName, $name, $value)
-    {
-        if (!isset(self::$config[$widgetName]))
-            self::$config[$widgetName] = array();
+    public static function setParameter($widgetName, $name, $value) {
+        if (! isset(self::$config[ $widgetName ])) {
+            self::$config[ $widgetName ] = array();
+        }
 
-        self::$config[$widgetName][$name] = $value;
+        self::$config[ $widgetName ][ $name ] = $value;
     }
 
-    protected function getParameter($name)
-    {
-        return isset($this->currentSettings[$name]) ? $this->currentSettings[$name] : null;
+    protected function getParameter($name) {
+        return isset($this->currentSettings[ $name ]) ? $this->currentSettings[ $name ] : null;
     }
 
 }
