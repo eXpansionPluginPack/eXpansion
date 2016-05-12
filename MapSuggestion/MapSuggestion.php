@@ -14,7 +14,7 @@ use ManiaLivePlugins\eXpansion\MapSuggestion\Gui\Windows\MapWish;
 class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements ListButtons_Event
 {
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->registerChatCommand("mapwish", "showMapWishWindow", 0, true);
         $this->setPublicMethod("showMapWishWindow");
@@ -87,11 +87,11 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
     }
 
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         MapWish::EraseAll();
         Dispatcher::unregister(ListButtons::getClass(), $this);
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
 
     }
 

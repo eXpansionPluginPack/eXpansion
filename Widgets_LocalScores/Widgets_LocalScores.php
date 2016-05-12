@@ -22,13 +22,13 @@ class Widgets_LocalScores extends ExpPlugin implements Listener
         $this->addDependency(new Dependency('\\ManiaLivePlugins\\eXpansion\\SM_PlatformScores\\SM_PlatformScores'));
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
 
@@ -86,7 +86,7 @@ class Widgets_LocalScores extends ExpPlugin implements Listener
         $this->updateLocalPanel();
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);

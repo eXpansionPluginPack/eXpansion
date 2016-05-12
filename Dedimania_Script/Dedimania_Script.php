@@ -16,9 +16,9 @@ class Dedimania_Script extends DedimaniaAbstract
 
     private $endmatchTriggered = false;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
-        parent::exp_onReady();
+        parent::eXpOnReady();
         $this->enableScriptEvents(array("LibXmlRpc_BeginMap", "LibXmlRpc_OnWayPoint", "LibXmlRpc_EndMatch"));
     }
 

@@ -35,7 +35,7 @@ class Gui extends ExpPlugin
         $this->setVersion("0.1");
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         HudPanel::$mainPlugin = $this;
 
@@ -47,7 +47,7 @@ class Gui extends ExpPlugin
         $config = Config::getInstance();
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->enableTickerEvent();
@@ -126,7 +126,7 @@ class Gui extends ExpPlugin
                     case 3:
                         $guiHandler->toggleGui($login);
                         unset($this->resetLogins[$login]);
-                        $this->exp_chatSendServerMessage(exp_getMessage("Hud reset done!"), $login);
+                        $this->eXpChatSendServerMessage(exp_getMessage("Hud reset done!"), $login);
                         break;
                 }
             }
@@ -183,7 +183,7 @@ class Gui extends ExpPlugin
                 $this->disableHudMove($login);
                 break;
             default:
-                $this->exp_chatSendServerMessage($this->msg_params, $login);
+                $this->eXpChatSendServerMessage($this->msg_params, $login);
                 break;
         }
     }
@@ -191,7 +191,7 @@ class Gui extends ExpPlugin
     function enableHudMove($login)
     {
         if (Config::getInstance()->disablePersonalHud) {
-            $this->exp_chatSendServerMessage($this->msg_disabled, $login);
+            $this->eXpChatSendServerMessage($this->msg_disabled, $login);
         } else {
             $window = HudMove::Create($login, false);
             $window->enable();
@@ -202,7 +202,7 @@ class Gui extends ExpPlugin
     function disableHudMove($login)
     {
         if (Config::getInstance()->disablePersonalHud) {
-            $this->exp_chatSendServerMessage($this->msg_disabled, $login);
+            $this->eXpChatSendServerMessage($this->msg_disabled, $login);
         } else {
             $window = HudMove::Create($login, false);
             $window->disable();
@@ -213,7 +213,7 @@ class Gui extends ExpPlugin
     function showConfigWindow($login, $entries)
     {
         if (Config::getInstance()->disablePersonalHud) {
-            $this->exp_chatSendServerMessage($this->msg_disabled, $login);
+            $this->eXpChatSendServerMessage($this->msg_disabled, $login);
         } else {
             $window = Configuration::Create($login, true);
             $window->setSize(120, 90);
@@ -225,13 +225,13 @@ class Gui extends ExpPlugin
     function resetHud($login)
     {
         if (Config::getInstance()->disablePersonalHud) {
-            $this->exp_chatSendServerMessage($this->msg_disabled, $login);
+            $this->eXpChatSendServerMessage($this->msg_disabled, $login);
         } else {
             $window = ResetHud::Create($login);
             $window->setTimeout(1);
             $window->show();
             $this->resetLogins[$login] = 0;
-            $this->exp_chatSendServerMessage(exp_getMessage("Starting hud reset, please wait"), $login);
+            $this->eXpChatSendServerMessage(exp_getMessage("Starting hud reset, please wait"), $login);
         }
     }
 

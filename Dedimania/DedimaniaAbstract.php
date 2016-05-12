@@ -58,7 +58,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         $this->config = Config::getInstance();
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         $helpText = "\n\nPlease correct your config with these instructions: \nEdit and add following configuration lines to manialive config.ini\n\n ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config.login = 'your_server_login_here' \n ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config.code = 'your_server_code_here' \n\n Visit http://dedimania.net/tm2stats/?do=register to get code for your server.";
         if (empty($this->config->login)) {
@@ -80,9 +80,9 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         $this->msg_norecord = exp_getMessage('#dedirecord#No dedimania records found for the map!');
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
-        parent::exp_onReady();
+        parent::eXpOnReady();
         $this->enableDedicatedEvents();
         $this->enableApplicationEvents();
         $this->enableStorageEvents();
@@ -294,7 +294,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         $this->debug("Dedimania get records:");
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $this->disableTickerEvent();
         $this->disableDedicatedEvents();
@@ -339,7 +339,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
                 $time = substr($time, 2);
             }
 
-            $this->exp_chatSendServerMessage(
+            $this->eXpChatSendServerMessage(
                 $this->msg_newRecord, $recepient,
                 array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time)
             );
@@ -375,7 +375,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
                 $time = substr($time, 2);
             }
 
-            $this->exp_chatSendServerMessage(
+            $this->eXpChatSendServerMessage(
                 $this->msg_record, $recepient,
                 array(\ManiaLib\Utils\Formatting::stripCodes(
                     $record->nickname, "wos"
@@ -402,7 +402,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         \ManiaLivePlugins\eXpansion\Dedimania\Gui\Windows\Records::Erase($login);
 
         if (sizeof($this->records) == 0) {
-            $this->exp_chatSendServerMessage($this->msg_norecord, $login);
+            $this->eXpChatSendServerMessage($this->msg_norecord, $login);
 
             return;
         }
@@ -426,7 +426,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         \ManiaLivePlugins\eXpansion\Dedimania\Gui\Windows\RecordCps::Erase($login);
 
         if (sizeof($this->records) == 0) {
-            $this->exp_chatSendServerMessage($this->msg_norecord, $login);
+            $this->eXpChatSendServerMessage($this->msg_norecord, $login);
 
             return;
         }

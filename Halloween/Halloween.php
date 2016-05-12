@@ -9,9 +9,9 @@ class Halloween extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public $wasWarmup = false;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
-        parent::exp_onReady();
+        parent::eXpOnReady();
         $this->enableDedicatedEvents();
         $config = Config::getInstance();
         \ManiaLivePlugins\eXpansion\Gui\Gui::preloadImage($config->texture);
@@ -41,10 +41,10 @@ class Halloween extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window->show();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         Gui\Widget\SpiderWidget::EraseAll();
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

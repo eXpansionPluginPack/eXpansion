@@ -12,7 +12,7 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     private $log = array();
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_PLAYER_CHAT);
         $this->registerChatCommand("chatlog", "showLog", 0, true);
@@ -55,9 +55,9 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window->show();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
         Gui\Windows\ChatlogWindow::EraseAll();
     }
 }

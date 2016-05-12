@@ -34,7 +34,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $testActive = false;
     private $fakelogin = "";
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableTickerEvent();
         $this->enableDedicatedEvents();
@@ -50,10 +50,10 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->mem(null);
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $this->disableTickerEvent();
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
     function onTick()

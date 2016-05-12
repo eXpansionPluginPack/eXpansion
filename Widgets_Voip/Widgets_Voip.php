@@ -26,7 +26,7 @@ class Widgets_Voip extends ExpPlugin
 
     static public $GotoTs = -1;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
 
         $actionHandler = ActionHandler::getInstance();
@@ -116,13 +116,13 @@ class Widgets_Voip extends ExpPlugin
         $this->connection->sendOpenLink($login, $link, 0);
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         Widget::EraseAll();
         self::$GotoMumble = -1;
         self::$GotoTs = -1;
 
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

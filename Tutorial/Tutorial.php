@@ -25,14 +25,14 @@ use ManiaLivePlugins\eXpansion\Tutorial\Gui\Windows\TutorialWindow;
 class Tutorial extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $window = Gui\Windows\TutorialWindow::Create(null);
         $window->setSize(160, 80);
         $window->show();
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         TutorialWindow::EraseAll();
     }

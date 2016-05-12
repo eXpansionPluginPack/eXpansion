@@ -17,7 +17,7 @@ class Widgets_MapSuggestion extends ExpPlugin
         $this->addDependency(new Dependency('\\ManiaLivePlugins\\eXpansion\\MapSuggestion\\MapSuggestion'));
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $ahandler = ActionHandler::getInstance();
         $this->action = $ahandler->createAction(array($this, "invoke"));
@@ -36,7 +36,7 @@ class Widgets_MapSuggestion extends ExpPlugin
     }
 
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $ahandler = ActionHandler::getInstance();
         $ahandler->deleteAction($this->action);

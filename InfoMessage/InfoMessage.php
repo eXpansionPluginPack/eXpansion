@@ -12,7 +12,7 @@ class InfoMessage extends ExpPlugin
     /** @var Config */
     private $config;
 
-    function exp_onReady()
+    function eXpOnReady()
     {
         $this->enableTickerEvent();
     }
@@ -28,7 +28,7 @@ class InfoMessage extends ExpPlugin
 
         if ((time() % $interval) == 0) {
             $i = rand(0, count($this->config->infoMessages) - 1);
-            $this->exp_chatSendServerMessage($this->config->infoMessageColor . $this->config->infoMessages[$i]);
+            $this->eXpChatSendServerMessage($this->config->infoMessageColor . $this->config->infoMessages[$i]);
         }
     }
 

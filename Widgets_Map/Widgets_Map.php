@@ -7,12 +7,12 @@ use ManiaLivePlugins\eXpansion\Widgets_Map\Gui\Widgets\Map;
 class Widgets_Map extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         // $this->enableDedicatedEvents();
     }
 
-    function exp_onReady()
+    function eXpOnReady()
     {
         $this->displayWidget(null);
     }
@@ -31,7 +31,7 @@ class Widgets_Map extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $info->show();
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         Map::EraseAll();
     }

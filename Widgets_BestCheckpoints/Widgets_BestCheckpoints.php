@@ -8,7 +8,7 @@ use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint;
 class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->displayWidget(null);
@@ -40,10 +40,10 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
         }
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         BestCpPanel::EraseAll();
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 }
 

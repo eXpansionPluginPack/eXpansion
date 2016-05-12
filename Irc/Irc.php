@@ -35,7 +35,7 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
     /** @var Config */
     private $config;
 
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         $this->enableApplicationEvents();
@@ -52,7 +52,7 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
         $ircConfig->serverPass = $this->config->serverPass;
 
         try {
-            $this->exp_chatSendServerMessage("Connecting to irc...");
+            $this->eXpChatSendServerMessage("Connecting to irc...");
             $this->irc->connect($ircConfig);
             $this->irc->registerCallbackClass($this);
             foreach ($this->config->plugins as $plugin) {
@@ -62,7 +62,7 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
                 } catch (\Exception $ex) {
                     $msg = "Failed to load IrcBot plugin: " . $plugin . ", plugin not found.";
                     $this->console($msg);
-                    $this->exp_chatSendServerMessage($msg);
+                    $this->eXpChatSendServerMessage($msg);
                 }
             }
         } catch (\Exception $e) {
@@ -75,20 +75,20 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
         $this->irc->onTick();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $this->irc->disconnect();
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
     public function irc_onConnect($connection)
     {
-        $this->exp_chatSendServerMessage('Irc connection $0f0success$fff. Server is now linked to ' . $this->config->channel);
+        $this->eXpChatSendServerMessage('Irc connection $0f0success$fff. Server is now linked to ' . $this->config->channel);
     }
 
     public function irc_onDisconnect()
     {
-        $this->exp_chatSendServerMessage('Irc has been unexpectedly $f00disconnected$fff.');
+        $this->eXpChatSendServerMessage('Irc has been unexpectedly $f00disconnected$fff.');
     }
 
     public function irc_onPrivateMessage($connection, $nick, $message)

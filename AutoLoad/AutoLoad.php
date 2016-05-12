@@ -36,7 +36,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     private $configPlugins = array();
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         $this->setPublicMethod('showPluginsWindow');
         Dispatcher::register(ConfigLoadEvent::getClass(), $this, ConfigLoadEvent::ON_CONFIG_FILE_LOADED);
@@ -71,7 +71,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Dispatcher::dispatch(new \ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent(\ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent::ON_AUTOLOAD_COMPLETE));
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         //We Need the plugin Handler
         $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
@@ -133,7 +133,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (!empty($toRemove))
             foreach ($toRemove as $plugin) {
                 if ($pHandler->isLoaded($plugin))
-                    $pHandler->callPublicMethod($this, $plugin, 'exp_unload', array());
+                    $pHandler->callPublicMethod($this, $plugin, 'eXpUnload', array());
             }
 
         if (!empty($toAdd))
@@ -169,7 +169,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         //If all plugins couldn't be loaded
         if (!empty($recheck)) {
             //$this->dumpException("Couldn't Autoload all required plugins", new \Maniaplanet\WebServices\Exception("Autoload failed."));
-            $this->exp_chatSendServerMessage(
+            $this->eXpChatSendServerMessage(
                 "couldn't Autoload all required plugins, see console log for more details."
             );
             $this->console(
@@ -297,7 +297,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if ($this->isInStartList($pluginId) || $pHandler->isLoaded($pluginId)) {
             if (in_array($pluginId, $this->plugins)) {
-                $this->exp_chatSendServerMessage(
+                $this->eXpChatSendServerMessage(
                     "#admin_error#This plugin is a core element of eXpansion. It cant be unloaded", $login
                 );
             } else {
@@ -308,15 +308,15 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     ConfigManager::getInstance()->check();
                 }
                 if ($pHandler->isLoaded($pluginId))
-                    $pHandler->callPublicMethod($this, $pluginId, 'exp_unload', array());
-                $this->exp_chatSendServerMessage("#admin_action#Plugin stopped with success", $login);
+                    $pHandler->callPublicMethod($this, $pluginId, 'eXpUnload', array());
+                $this->eXpChatSendServerMessage("#admin_action#Plugin stopped with success", $login);
             }
         } else {
             if ($this->loadPlugin($pluginId, $pHandler)) {
                 $pHandler->ready($pluginId);
-                $this->exp_chatSendServerMessage("#admin_action#Plugin started with success", $login);
+                $this->eXpChatSendServerMessage("#admin_action#Plugin started with success", $login);
             } else {
-                $this->exp_chatSendServerMessage(
+                $this->eXpChatSendServerMessage(
                     "#admin_error#This plugin contains errors that prevented it from starting", $login
                 );
             }

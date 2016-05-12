@@ -38,14 +38,14 @@ class SM_PlatformScores extends LocalBase
     private $lastCpNum = array();
     private $cpScores = array();
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         $this->enableScriptEvents("LibXmlRpc_OnWayPoint");
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
-        parent::exp_onReady();
+        parent::eXpOnReady();
     }
 
     public function LibXmlRpc_OnWayPoint(

@@ -72,13 +72,13 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         if (!extension_loaded("gd")) {
             if (!(bool)ini_get("enable_dl") || (bool)ini_get("safe_mode")) {
                 $phpPath = get_cfg_var('cfg_file_path');
                 $this->dumpException("Autoloading extensions is not enabled in php.ini.\n\n`php_gd2` extension needs to be enabled for systems running this plugin.\n\nEdit following file $phpPath and set:\n\nenable_dl = On\n\nor add this line:\n\nextension=php_gd2.dll", new \Maniaplanet\WebServices\Exception("Loading extensions is not permitted."));
-                $this->exp_chatSendServerMessage("#quiz#Quiz started, php GD2-extension was not not loaded, see console log for more details.");
+                $this->eXpChatSendServerMessage("#quiz#Quiz started, php GD2-extension was not not loaded, see console log for more details.");
             } else {
                 dl("php_gd2");
                 self::$GDsupport = true;
@@ -157,7 +157,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->msg_errorImageType = exp_getMessage('#quiz#$Displaying image not possible, due unsupported media type was detected.');
     }
 
-    function exp_onReady()
+    function eXpOnReady()
     {
         if (!extension_loaded("mbstring")) {
             $this->dumpException("Plugin init failed!\nQuiz plugin needs 'mbstring' extension to be loaded!\n Please add the extension to to php for loading this plugin!", new \Exception("php_mbstring extension not loaded"));
@@ -214,12 +214,12 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     function addQuestion(Structures\Question $question)
     {
         if (empty($question->question)) {
-            $this->exp_chatSendServerMessage($this->msg_questionMissing, $question->asker->login);
+            $this->eXpChatSendServerMessage($this->msg_questionMissing, $question->asker->login);
 
             return;
         }
         if (sizeof($question->answer) == 0) {
-            $this->exp_chatSendServerMessage($this->msg_answerMissing, $question->asker->login);
+            $this->eXpChatSendServerMessage($this->msg_answerMissing, $question->asker->login);
 
             return;
         }
@@ -262,7 +262,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 }
                 $answer = trim($answer, ", ");
 
-                $this->exp_chatSendServerMessage($this->msg_correctAnswer, null, array($answer, $player->nickName));
+                $this->eXpChatSendServerMessage($this->msg_correctAnswer, null, array($answer, $player->nickName));
                 $this->connection->chatSendServerMessage($this->colorParser->parseColors($header));
 
                 $this->addPoint(null, $login);
@@ -270,7 +270,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $this->chooseNextQuestion();
                 break;
             case Structures\Question::MoreAnswersNeeded:
-                $this->exp_chatSendServerMessage($this->msg_correct, null, array($text));
+                $this->eXpChatSendServerMessage($this->msg_correct, null, array($text));
                 $this->addPoint(null, $login);
                 break;
             default:
@@ -293,7 +293,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             return;
 
         if ($this->currentQuestion->asker->login == $login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
-            $this->exp_chatSendServerMessage($this->msg_cancelQuestion, null, array($this->storage->getPlayerObject($login)->nickName));
+            $this->eXpChatSendServerMessage($this->msg_cancelQuestion, null, array($this->storage->getPlayerObject($login)->nickName));
             $this->currentQuestion = null;
             $this->chooseNextQuestion();
             Gui\Widget\QuizImageWidget::EraseAll();
@@ -309,7 +309,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->currentQuestion = null;
         $this->questionCounter = 0;
         $this->db->execute('TRUNCATE TABLE`quiz_points`;');
-        $this->exp_chatSendServerMessage($this->msg_reset);
+        $this->eXpChatSendServerMessage($this->msg_reset);
         Gui\Widget\QuizImageWidget::EraseAll();
     }
 
@@ -324,7 +324,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $answer .= " " . $ans->answer . ",";
             }
             $answer = trim($answer, ", ");
-            $this->exp_chatSendServerMessage($this->msg_rightAnswer, null, array($answer));
+            $this->eXpChatSendServerMessage($this->msg_rightAnswer, null, array($answer));
 
             $this->currentQuestion = null;
             Gui\Widget\QuizImageWidget::EraseAll();
@@ -344,7 +344,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (isset($this->currentQuestion->question)) {
             //Show info to asker that there is already question active and the new question was added to the queue
             if ($login != null) {
-                $this->exp_chatSendServerMessage("Question added to the queue. (There is already an existing question.)", $login);
+                $this->eXpChatSendServerMessage("Question added to the queue. (There is already an existing question.)", $login);
             }
 
             return;
@@ -367,13 +367,13 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (!isset($this->players[$target])) {
                 $this->players[$target] = new Structures\QuizPlayer($target, $this->storage->getPlayerObject($target)->nickName, 1);
                 if ($login !== null) {
-                    $this->exp_chatSendServerMessage($this->msg_pointAdd, null, array($this->players[$target]->nickName));
+                    $this->eXpChatSendServerMessage($this->msg_pointAdd, null, array($this->players[$target]->nickName));
                 }
                 $this->showPoints();
             } else {
                 $this->players[$target]->points++;
                 if ($login !== null) {
-                    $this->exp_chatSendServerMessage($this->msg_pointAdd, null, array($this->players[$target]->nickName));
+                    $this->eXpChatSendServerMessage($this->msg_pointAdd, null, array($this->players[$target]->nickName));
                 }
                 $this->showPoints();
             }
@@ -392,7 +392,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
             if (isset($this->players[$target])) {
                 if ($login !== null) {
-                    $this->exp_chatSendServerMessage($this->msg_pointRemove, null, array($this->players[$target]->nickName));
+                    $this->eXpChatSendServerMessage($this->msg_pointRemove, null, array($this->players[$target]->nickName));
                 }
                 $this->players[$target]->points--;
                 $count = $this->db->execute("SELECT * FROM `quiz_points` where login = " . $this->db->quote($target) . " LIMIT 1;")->recordCount();
@@ -420,8 +420,8 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $widget->show();
             }
         }
-        $this->exp_chatSendServerMessage($this->msg_questionPre, null, array($this->questionCounter, $nickName));
-        $this->exp_chatSendServerMessage($this->msg_question, null, array($question));
+        $this->eXpChatSendServerMessage($this->msg_questionPre, null, array($this->questionCounter, $nickName));
+        $this->eXpChatSendServerMessage($this->msg_question, null, array($question));
     }
 
     function xGetImage($data, $httpCode)
@@ -455,7 +455,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $widget->setImageSize($newWidth, $newHeight);
             $widget->show();
         } else {
-            $this->exp_chatSendServerMessage($msg_errorImageType);
+            $this->eXpChatSendServerMessage($msg_errorImageType);
         }
     }
 
@@ -466,13 +466,13 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (strlen($text) > 1) {
                 $answerPosition = strpos($text, "?");
                 if ($answerPosition == false) {
-                    $this->exp_chatSendServerMessage($this->msg_format, $login);
+                    $this->eXpChatSendServerMessage($this->msg_format, $login);
 
                     return;
                 }
                 $answer = trim(str_replace("?", "", strstr($text, "?")));
                 if ($answer == "") {
-                    $this->exp_chatSendServerMessage($this->msg_answerMissing, $login);
+                    $this->eXpChatSendServerMessage($this->msg_answerMissing, $login);
 
                     return;
                 }
@@ -519,7 +519,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     function showPoints($login = null)
     {
         \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->players, "points");
-        $this->exp_chatSendServerMessage($this->msg_points);
+        $this->eXpChatSendServerMessage($this->msg_points);
         $output = "";
         foreach ($this->players as $player) {
             if ($player->points > 0)
@@ -529,7 +529,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->connection->chatSendServerMessage(substr($output, 0, (strlen($output) - 2)));
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         AddPoint::EraseAll();
         PlayerList::EraseAll();

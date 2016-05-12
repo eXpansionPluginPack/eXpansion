@@ -50,7 +50,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Service::$login = $this->storage->serverLogin;
     }
 
-    function exp_onReady()
+    function eXpOnReady()
     {
         // check whether the location has been set in the config
         try {
@@ -182,7 +182,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         $this->newVotes[$login] = new Structures\Vote($login, $vote);
         $msg = exp_getMessage('#rank#$iVote Registered!!');
-        $this->exp_chatSendServerMessage($msg, $login);
+        $this->eXpChatSendServerMessage($msg, $login);
 
         // redraw the widget for this player
         $widget = Widget::Create($login);
@@ -197,7 +197,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * When this plugin is unloaded by ManiaLive.
      */
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         // erase all widgets
         Widget::EraseAll();

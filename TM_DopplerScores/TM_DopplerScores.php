@@ -45,9 +45,9 @@ class TM_DopplerScores extends LocalBase
      */
     protected $checkpoints = array();
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
-        parent::exp_onReady();
+        parent::eXpOnReady();
 
         $this->enableScriptEvents(array("Doppler_onCheckpoint", "LibXmlRpc_OnWayPoint", "playerFinish"));
     }
@@ -75,7 +75,7 @@ class TM_DopplerScores extends LocalBase
       echo "\nScore : $login: cpindex: $cpIndex with $time \n";
       } */
 
-    public function exp_onModeScriptCallback($param1, $param2)
+    public function eXpOnModeScriptCallback($param1, $param2)
     {
 
         switch ($param1) {

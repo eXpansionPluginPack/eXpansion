@@ -22,13 +22,13 @@ class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /** @var Config */
     private $config;
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
 
         $this->config = Config::getInstance();
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->updateAroundMe();
@@ -151,7 +151,7 @@ class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         Gui\Widgets\AroundMe::EraseAll();
         self::$me = null;

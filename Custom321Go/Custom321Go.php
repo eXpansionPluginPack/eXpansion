@@ -12,9 +12,9 @@ use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 class Custom321Go extends ExpPlugin
 {
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
-        parent::exp_onReady();
+        parent::eXpOnReady();
 
         $this->enableDedicatedEvents();
         $window = Gui\Hud\CountdownHud::create();

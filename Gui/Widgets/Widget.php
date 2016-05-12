@@ -107,7 +107,7 @@ class Widget extends PlainWidget
                 $gameMode = $this->storage->gameInfos->scriptName;
 
             //Getting compatibility Game mode
-            $compoMode = Gui::exp_getCurrentCompatibilityGameMode();
+            $compoMode = Gui::eXpGetCurrentCompatibilityGameMode();
 
             /**
              * @var \ManiaLivePlugins\eXpansion\Helpers\Storage $storage

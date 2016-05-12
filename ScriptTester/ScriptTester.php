@@ -20,7 +20,7 @@ class ScriptTester extends ExpPlugin
     private $cmd_edit;
     private $actionId;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
 
         $ahandler = ActionHandler::getInstance();
@@ -37,9 +37,9 @@ class ScriptTester extends ExpPlugin
         $widget->show();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
         $admingroup = AdminGroups::getInstance();
         $admingroup->removeAdminCommand($this->cmd_edit);
         $this->cmd_edit = null;
@@ -66,7 +66,7 @@ class ScriptTester extends ExpPlugin
             $widget->setPosition(-50, 60);
             $widget->show();
         } catch (\Exception $e) {
-            $this->exp_chatSendServerMessage("Error: " . $e->getMessage(), $login);
+            $this->eXpChatSendServerMessage("Error: " . $e->getMessage(), $login);
         }
     }
 

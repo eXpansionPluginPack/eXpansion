@@ -148,7 +148,7 @@ class Core extends types\ExpPlugin
     /**
      * Let us let know to the worl that expanson has started
      */
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         //Listen to all dedicated events
         $this->enableDedicatedEvents();
@@ -373,7 +373,7 @@ EOT;
     /**
      * When manialive ready, register chat commands and more
      */
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->lastTick = time();
         $this->config = Config::getInstance();
@@ -838,7 +838,7 @@ EOT;
             if (class_exists($metaData)) {
                 if (!$pluginId::getMetaData()->checkAll()) {
                     try {
-                        $this->callPublicMethod($pluginId, 'exp_unload');
+                        $this->callPublicMethod($pluginId, 'eXpUnload');
                     } catch (\Exception $ex) {
 
                     }

@@ -10,7 +10,7 @@ use \ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
 class Minimap extends ExpPlugin
 {
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableScriptEvents(array("LibXmlRpc_BeginPlaying", "LibXmlRpc_BeginPodium"));
         $this->show();
@@ -27,7 +27,7 @@ class Minimap extends ExpPlugin
         $this->hide();
     }
 
-    public function exp_onModeScriptCallback($param1, $param2)
+    public function eXpOnModeScriptCallback($param1, $param2)
     {
         $this->debug($param1);
         $this->debug($param2);
@@ -65,10 +65,10 @@ class Minimap extends ExpPlugin
         }
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         MapWindow::EraseAll();
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

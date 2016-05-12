@@ -17,12 +17,12 @@ class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
     }
 
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         foreach ($this->storage->players as $player)
             $this->onPlayerConnect($player->login, false);

@@ -22,12 +22,12 @@ class Widgets_TeamPlayerScores extends ExpPlugin
      */
     private $playerScores = array();
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
 
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->reset();
@@ -155,11 +155,11 @@ class Widgets_TeamPlayerScores extends ExpPlugin
         PlayerScoreWidget::EraseAll();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $this->reset();
         $this->hideWidget();
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

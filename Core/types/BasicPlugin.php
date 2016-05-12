@@ -1,6 +1,7 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Core\types {
+namespace ManiaLivePlugins\eXpansion\Core\types
+{
 
     use Exception;
     use ManiaLib\Application\ErrorHandling;
@@ -105,25 +106,25 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          */
         protected $expStorage;
 
-        public final function onInit()
-        {
+        public final function onInit() {
             $this->expStorage = Storage::getInstance();
 
             $this->loadMetaData();
-            if (!$this->metaData->checkAll()) {
+            if (! $this->metaData->checkAll()) {
                 return;
             }
 
             $this->checkVersion();
 
 
-            self::$plugins_list[get_class($this)] = $this;
+            self::$plugins_list[ get_class($this) ] = $this;
 
             $this->setVersion(Core::EXP_VERSION);
             ErrorHandler::$server = $this->storage->serverLogin;
             try {
                 $this->enableDatabase();
-            } catch (Exception $e) {
+            }
+            catch (Exception $e) {
                 $this->dumpException('There seems be a problem while establishing a MySQL connection.', $e);
                 exit(1);
             }
@@ -136,28 +137,22 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 
             //All plugins need the eXpansion Core to work properly
-            if ($this->getId() != '\ManiaLivePlugins\eXpansion\Core' && $this->getId() != '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad'
-            )
+            if ($this->getId() != '\ManiaLivePlugins\eXpansion\Core' && $this->getId() != '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad') {
                 $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\Core\Core'));
+            }
 
-            $this->setPublicMethod('exp_unload');
             $this->setPublicMethod('eXpUnload');
 
             $this->setPublicMethod('getDependencies');
 
-            $this->setPublicMethod('exp_chatSendServerMessage');
             $this->setPublicMethod('eXpChatSendServerMessage');
 
-            $this->setPublicMethod('exp_activateChatRedirect');
             $this->setPublicMethod('eXpActivateChatRedirect');
 
-            $this->setPublicMethod('exp_deactivateChatRedirect');
             $this->setPublicMethod('eXpDeactivateChatRedirect');
 
-            $this->setPublicMethod('exp_activateAnnounceRedirect');
             $this->setPublicMethod('eXpActivateAnnounceRedirect');
 
-            $this->setPublicMethod('exp_deactivateAnnounceRedirect');
             $this->setPublicMethod('eXpDeactivateAnnounceRedirect');
 
             $this->setPublicMethod('onSettingsChanged');
@@ -169,8 +164,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             Dispatcher::register(GlobalEvent::getClass(), $this);
         }
 
-        private function loadMetaData()
-        {
+        private function loadMetaData() {
             $pieces = explode('\\', get_class($this));
             array_pop($pieces);
             $class = implode('\\', $pieces);
@@ -182,8 +176,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @return MetaData
          */
-        public static function getMetaData()
-        {
+        public static function getMetaData() {
             $class = get_called_class();
             $pieces = explode('\\', $class);
             array_pop($pieces);
@@ -198,8 +191,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @abstract
          */
-        public function exp_onInit()
-        {
+        public function exp_onInit() {
 
         }
 
@@ -214,8 +206,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param string|array $callback this can be either one callback or array of callbacks
          *
          */
-        public final function enableScriptEvents($callback = false)
-        {
+        public final function enableScriptEvents($callback = false) {
             if ($callback === false) {
                 throw new Exception('$this->enableScriptEvents($callback) needs a value for whitelisting...');
             }
@@ -225,30 +216,19 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             //	Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
         }
 
-        public final function onLoad()
-        {
-            if (!$this->metaData->checkAll()) {
+        public final function onLoad() {
+            if (! $this->metaData->checkAll()) {
                 $this->eXpUnload();
 
                 return;
             }
             try {
-                $this->exp_onLoad();
-            } catch (Exception $e) {
+                $this->eXpOnLoad();
+            }
+            catch (Exception $e) {
                 Helper::log("[BasicPlugin]onLoad exception:" . $this->getId() . " -> " . $e->getMessage() . "\n");
                 Helper::log("[BasicPlugin]" . ErrorHandling::computeMessage($e));
             }
-        }
-
-        /**
-         * eXpansion method invoked at Manialive onload
-         *
-         * @deprecated replaced with eXpOnLoad
-         * @see        eXpOnLoad
-         */
-        public function exp_onLoad()
-        {
-            $this->eXpOnLoad();
         }
 
         /**
@@ -256,20 +236,19 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * Basically the meta data is loaded and the plugin was checked and found compatible with current settings.
          */
-        public function eXpOnLoad()
-        {
+        public function eXpOnLoad() {
         }
 
-        public final function onReady()
-        {
-            if (!$this->metaData->checkAll()) {
+        public final function onReady() {
+            if (! $this->metaData->checkAll()) {
                 $this->eXpUnload();
 
                 return;
-            } else {
-                if (!$this->_isReady) {
+            }
+            else {
+                if (! $this->_isReady) {
                     $this->_isReady = true;
-                    $this->exp_onReady();
+                    $this->eXpOnReady();
                 }
             }
 
@@ -286,20 +265,9 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         }
 
         /**
-         * eXpansion onReady handler
-         *
-         * @deprecated
-         */
-        public function exp_onReady()
-        {
-            $this->eXpOnReady();
-        }
-
-        /**
          * eXpansion callback when a plugin is ready and will start receiving callbacks.
          */
-        public function eXpOnReady()
-        {
+        public function eXpOnReady() {
         }
 
         /**
@@ -308,36 +276,46 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param string       $param1
          * @param string|array $param2
          */
-        final public function onModeScriptCallback($param1, $param2)
-        {
+        final public function onModeScriptCallback($param1, $param2) {
             $out = array();
             if (is_array($param2)) {
                 foreach ($param2 as $value) {
                     $out[] = $this->parseScriptValue($value);
                 }
-            } else {
+            }
+            else {
                 $out = $this->parseScriptValue($param2);
             }
 
             if (method_exists($this, $param1)) {
                 call_user_func_array(array($this, $param1), $out);
-            } else {
-                $this->exp_onModeScriptCallback($param1, $out);
+            }
+            else {
+                $this->eXpOnModeScriptCallback($param1, $out);
             }
         }
 
-        protected function parseScriptValue($value)
-        {
+        protected function parseScriptValue($value) {
             if (filter_var($value, FILTER_VALIDATE_INT)) {
                 return intval($value);
-            } else if (is_numeric($value)) {
-                return floatval($value);
-            } else if ($value == "False") {
-                return false;
-            } else if ($value == "True") {
-                return true;
-            } else {
-                return $value;
+            }
+            else {
+                if (is_numeric($value)) {
+                    return floatval($value);
+                }
+                else {
+                    if ($value == "False") {
+                        return false;
+                    }
+                    else {
+                        if ($value == "True") {
+                            return true;
+                        }
+                        else {
+                            return $value;
+                        }
+                    }
+                }
             }
         }
 
@@ -347,44 +325,24 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param string       $param1
          * @param string|array $param2
          */
-        public function eXpOnModeScriptCallback($param1, $param2)
-        {
+        public function eXpOnModeScriptCallback($param1, $param2) {
 
         }
 
-        /**
-         * @deprecated
-         * @see eXpOnModeScriptCallback
-         */
-        public function exp_onModeScriptCallback($param1, $param2)
-        {
-
-        }
-
-        final public function onUnload()
-        {
+        final public function onUnload() {
             Dispatcher::unregister(GameSettingsEvent::getClass(), $this);
             Dispatcher::unregister(PlayerEvent::getClass(), $this);
             Dispatcher::unregister(GlobalEvent::getClass(), $this);
 
             try {
-                $this->exp_onUnload();
-            } catch (Exception $e) {
+                $this->eXpOnUnload();
+            }
+            catch (Exception $e) {
                 Helper::log("[BasicPlugin]onUnload exception:" . $this->getId() . " -> " . $e->getMessage() . "\n");
             }
 
-            unset(self::$plugins_list[get_class($this)]);
+            unset(self::$plugins_list[ get_class($this) ]);
             parent::onUnload();
-        }
-
-        /**
-         * Called once the dependencies of the plugin were removed.
-         *
-         * @deprecated
-         */
-        public function exp_onUnload()
-        {
-            $this->eXpOnUnload();
         }
 
         /**
@@ -392,27 +350,17 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * Called once the dependencies of the plugin were removed.
          */
-        public function eXpOnUnload()
-        {
+        public function eXpOnUnload() {
         }
 
-        private function checkVersion()
-        {
-            if (version_compare(
-                \ManiaLive\Application\VERSION, Core::EXP_REQUIRE_MANIALIVE, 'lt'
-            )
-            ) {
-                $this->dumpException(
-                    "Looks like your ManiaLive is too old to run this version of eXpansion.\n"
-                    . "Your ManiaLive version: " . \ManiaLive\Application\VERSION . ", (required " . Core::EXP_REQUIRE_MANIALIVE . ")\n"
-                    . "Please update your manialive version in order to continue.", New Exception3("ManiaLive version is too old!")
-                );
+        private function checkVersion() {
+            if (version_compare(\ManiaLive\Application\VERSION, Core::EXP_REQUIRE_MANIALIVE, 'lt')) {
+                $this->dumpException("Looks like your ManiaLive is too old to run this version of eXpansion.\n" . "Your ManiaLive version: " . \ManiaLive\Application\VERSION . ", (required " . Core::EXP_REQUIRE_MANIALIVE . ")\n" . "Please update your manialive version in order to continue.", New Exception3("ManiaLive version is too old!"));
                 exit();
             }
         }
 
-        private function eXpGetDir()
-        {
+        private function eXpGetDir() {
             $reflector = new \ReflectionClass(get_class($this));
             $file = $reflector->getFileName();
 
@@ -424,18 +372,17 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         /**
          *
          * to send everybody:
-         * exp_chatSendServerMessage("Message with parameters %1$s %2$s", null, array("parameter1","parameter2));
+         * eXpChatSendServerMessage("Message with parameters %1$s %2$s", null, array("parameter1","parameter2));
          *
          * to send login:
-         * exp_chatSendServerMessage("Message with parameters %1$s %2$s", $login, array("parameter1","parameter2));
+         * eXpChatSendServerMessage("Message with parameters %1$s %2$s", $login, array("parameter1","parameter2));
          *
          * @param string|MultiLangMsg $msg   string or MultiLangMsg to sent
          * @param null|string         $login null for everybody, string for individual
          * @param array               $args  simple array of parameters
          */
-        public function eXpChatSendServerMessage($msg, $login = null, $args = array())
-        {
-            if (!($msg instanceof MultiLangMsg)) {
+        public function eXpChatSendServerMessage($msg, $login = null, $args = array()) {
+            if (! ($msg instanceof MultiLangMsg)) {
                 if (DEBUG) {
                     $this->console("#Plugin " . $this->getId() . " uses chatSendServerMessage in an unoptimized way!!");
                 }
@@ -445,10 +392,11 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             if ($login == null) {
                 /* array_unshift($args, $msg->getMessage());
                   $msg = call_user_func_array('sprintf', $args);
-                  $this->exp_announce($msg);
+                  $this->eXpAnnounce($msg);
                  */
                 $this->exp_multilangAnnounce($msg, $args);
-            } else {
+            }
+            else {
                 array_unshift($args, $msg, $login);
                 $msgString = call_user_func_array('__', $args);
 
@@ -458,46 +406,32 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         }
 
         /**
-         * @deprecated
-         *
-         * @see eXpChatSendServerMessage
-         */
-        public function exp_chatSendServerMessage($msg, $login = null, $args = array())
-        {
-            $this->eXpChatSendServerMessage($msg, $login, $args);
-        }
-
-        /**
          * Sends a chat message to the server or redirect to another plugin
          *
          * @param type $msg   The message
          * @param type $login The login to whom it needs to be sent
          */
-        private function eXpRedirectedChatSendServerMessage($msg, $login)
-        {
+        private function eXpRedirectedChatSendServerMessage($msg, $login) {
             $sender = get_class($this);
             $fromPlugin = explode("\\", $sender);
             $fromPlugin = str_replace("_", " ", end($fromPlugin));
 
-            if (isset(self::$eXpChatRedirected[$sender])) {
+            if (isset(self::$eXpChatRedirected[ $sender ])) {
                 $message = $msg;
-                if (is_object(self::$eXpChatRedirected[$sender][0]))
-                    call_user_func_array(
-                        self::$eXpChatRedirected[$sender], array($login, $this->colorParser->parseColors($message))
-                    );
-                else {
-                    $this->callPublicMethod(
-                        self::$eXpChatRedirected[$sender][0], self::$eXpChatRedirected[$sender][1], array($login, $this->colorParser->parseColors($message))
-                    );
+                if (is_object(self::$eXpChatRedirected[ $sender ][0])) {
+                    call_user_func_array(self::$eXpChatRedirected[ $sender ], array($login, $this->colorParser->parseColors($message)));
                 }
-            } else {
+                else {
+                    $this->callPublicMethod(self::$eXpChatRedirected[ $sender ][0], self::$eXpChatRedirected[ $sender ][1], array($login, $this->colorParser->parseColors($message)));
+                }
+            }
+            else {
 
                 try {
                     $this->connection->chatSendServerMessage($this->colorParser->parseColors($msg), $login);
-                } catch (Exception $e) {
-                    $this->console(
-                        "Error while sending chat message to '" . $login . "'\n Server said:" . $e->getMessage()
-                    );
+                }
+                catch (Exception $e) {
+                    $this->console("Error while sending chat message to '" . $login . "'\n Server said:" . $e->getMessage());
                 }
             }
         }
@@ -511,48 +445,32 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param string       $pluginid The id of the plugin that sends the announcement, will be used to distribute
          *                               the announce properly
          */
-        protected function eXpAnnounce($msg, $icon = null, $callback = null, $pluginid = null)
-        {
+        protected function eXpAnnounce($msg, $icon = null, $callback = null, $pluginid = null) {
             $sender = get_class($this);
             $fromPlugin = explode("\\", $sender);
             $fromPlugin = str_replace("_", " ", end($fromPlugin));
 
-            if (isset(self::$eXpAnnounceRedirected[$sender])) {
+            if (isset(self::$eXpAnnounceRedirected[ $sender ])) {
                 $message = clone $msg;
-                if (is_object(self::$eXpAnnounceRedirected[$sender][0]))
-                    call_user_func_array(
-                        self::$eXpAnnounceRedirected[$sender], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
-                    );
-                else {
-                    $this->callPublicMethod(
-                        self::$eXpChatRedirected[$sender][0], self::$eXpChatRedirected[$sender][1], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
-                    );
+                if (is_object(self::$eXpAnnounceRedirected[ $sender ][0])) {
+                    call_user_func_array(self::$eXpAnnounceRedirected[ $sender ], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid));
                 }
-            } else {
+                else {
+                    $this->callPublicMethod(self::$eXpChatRedirected[ $sender ][0], self::$eXpChatRedirected[ $sender ][1], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid));
+                }
+            }
+            else {
                 try {
-                    $this->connection->chatSendServerMessage(
-                        '$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg)
-                    );
-                } catch (LoginUnknownException $ex) {
-                    Console::println(
-                        "[eXpansion]Attempt to send Announce to a login failed. Login unknown"
-                    );
-                    Logger::info(
-                        "[eXpansion]Attempt to send Announce to a login failed. Login unknown"
-                    );
-                } catch (Exception $e) {
+                    $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg));
+                }
+                catch (LoginUnknownException $ex) {
+                    Console::println("[eXpansion]Attempt to send Announce to a login failed. Login unknown");
+                    Logger::info("[eXpansion]Attempt to send Announce to a login failed. Login unknown");
+                }
+                catch (Exception $e) {
                     $this->console("Error while sending Announce message => Server said:" . $e->getMessage());
                 }
             }
-        }
-
-        /**
-         * @deprecated
-         * @see eXpAnnounce
-         */
-        protected function exp_announce($msg, $icon = null, $callback = null, $pluginid = null)
-        {
-            $this->eXpAnnounce($msg, $icon, $callback, $pluginid);
         }
 
         /**
@@ -561,45 +479,33 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param MultiLangMsg $msg
          * @param array        $args
          */
-        protected function eXpMultilangAnnounce(MultiLangMsg $msg, array $args)
-        {
+        protected function eXpMultilangAnnounce(MultiLangMsg $msg, array $args) {
             $sender = get_class($this);
 
-            if (isset(self::$eXpChatRedirected[$sender])) {
+            if (isset(self::$eXpChatRedirected[ $sender ])) {
                 $message = clone $msg;
                 $message->setArgs($args);
-                if (is_object(self::$eXpChatRedirected[$sender][0]))
-                    call_user_func_array(self::$eXpChatRedirected[$sender], array(null, $message));
-                else {
-                    $this->callPublicMethod(
-                        self::$eXpChatRedirected[$sender][0], self::$eXpChatRedirected[$sender][1], array(null, $message)
-                    );
+                if (is_object(self::$eXpChatRedirected[ $sender ][0])) {
+                    call_user_func_array(self::$eXpChatRedirected[ $sender ], array(null, $message));
                 }
-            } else {
+                else {
+                    $this->callPublicMethod(self::$eXpChatRedirected[ $sender ][0], self::$eXpChatRedirected[ $sender ][1], array(null, $message));
+                }
+            }
+            else {
                 try {
                     $msg->setArgs($args);
 
                     $this->connection->chatSendServerMessage($msg->getMultiLangArray(), null);
-                } catch (LoginUnknownException $ex) {
-                    Console::println(
-                        "[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown"
-                    );
-                    Logger::info(
-                        "[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown"
-                    );
-                } catch (Exception $e) {
+                }
+                catch (LoginUnknownException $ex) {
+                    Console::println("[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown");
+                    Logger::info("[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown");
+                }
+                catch (Exception $e) {
                     $this->console("Error while sending Multilang Announce message => Server said:" . $e->getMessage());
                 }
             }
-        }
-
-        /**
-         * @deprecated
-         * @see eXpMultilangAnnounce
-         */
-        protected function exp_multilangAnnounce(MultiLangMsg $msg, array $args)
-        {
-            $this->eXpMultilangAnnounce($msg, $args);
         }
 
         /**
@@ -607,10 +513,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @abstract
          */
-        final public function eXpUnload()
-        {
-            if ($this->eXpUnloading)
+        final public function eXpUnload() {
+            if ($this->eXpUnloading) {
                 return;
+            }
 
             Dispatcher::unregister(GameSettingsEvent::getClass(), $this);
             Dispatcher::unregister(PlayerEvent::getClass(), $this);
@@ -628,20 +534,22 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                         if (method_exists($plugin, 'getDependencies')) {
                             try {
                                 $deps = $this->callPublicMethod($plugin, 'getDependencies');
-                            } catch (Exception $ex) {
+                            }
+                            catch (Exception $ex) {
                                 //Nothing to do, not a eXpansion plugin we will hope for the best
                             }
                         }
-                        if (!empty($deps)) {
+                        if (! empty($deps)) {
                             foreach ($deps as $dep) {
                                 if ($dep->getPluginId() == $this->getId()) {
-                                    $this->callPublicMethod($plugin, 'exp_unload');
+                                    $this->callPublicMethod($plugin, 'eXpUnload');
                                     break;
                                 }
                             }
                         }
                     }
-                } catch (Exception $ex) {
+                }
+                catch (Exception $ex) {
                     Helper::log("[BasicPlugin]onUnload exception:" . $ex->getFile() . ":" . $ex->getLine() . "\n" . $ex->getMessage());
                 }
             }
@@ -649,16 +557,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             //Unloading it self
             $this->eXpUnloading = true;
             $pHandler->unload($this->getId());
-            self::$plugins_onHold[$this->getId()] = $this->getId();
-        }
-
-        /**
-         * @deprecated
-         * @see eXpUnload
-         */
-        final public function exp_unload()
-        {
-            $this->eXpUnload();
+            self::$plugins_onHold[ $this->getId() ] = $this->getId();
         }
 
         /**
@@ -666,35 +565,15 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @param array $array The Object or plugin id and the function to call
          */
-        public function eXpActivateChatRedirect($array)
-        {
-            self::$eXpChatRedirected[get_class($this)] = $array;
-        }
-
-        /**
-         * @deprecated
-         * @see eXpActivateChatRedirect
-         */
-        public function exp_activateChatRedirect($array)
-        {
-            $this->eXpActivateChatRedirect($array);
+        public function eXpActivateChatRedirect($array) {
+            self::$eXpChatRedirected[ get_class($this) ] = $array;
         }
 
         /**
          * Deactivate chat redirect to send it back throught the chat
          */
-        public function eXpDeactivateChatRedirect()
-        {
-            unset(self::$eXpChatRedirected[get_class($this)]);
-        }
-
-        /**
-         * @deprecated
-         * @see eXpDeactivateChatRedirect
-         */
-        public function exp_deactivateChatRedirect()
-        {
-            $this->eXpDeactivateChatRedirect();
+        public function eXpDeactivateChatRedirect() {
+            unset(self::$eXpChatRedirected[ get_class($this) ]);
         }
 
         /**
@@ -702,35 +581,15 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @param array $array The Object or plugin id and the function to call
          */
-        public function eXpActivateAnnounceRedirect($array)
-        {
-            self::$eXpAnnounceRedirected[get_class($this)] = $array;
-        }
-
-        /**
-         * @deprecated
-         * @see eXpActivateAnnounceRedirect
-         */
-        public function exp_activateAnnounceRedirect($array)
-        {
-            $this->eXpActivateAnnounceRedirect($array);
+        public function eXpActivateAnnounceRedirect($array) {
+            self::$eXpAnnounceRedirected[ get_class($this) ] = $array;
         }
 
         /**
          * Deactivate chat redirect to send it back throught the chat
          */
-        public function eXpDeactivateAnnounceRedirect()
-        {
-            unset(self::$eXpAnnounceRedirected[get_class($this)]);
-        }
-
-        /**
-         * @deprecated
-         * @see eXpDeactivateAnnounceRedirect
-         */
-        public function exp_deactivateAnnounceRedirect()
-        {
-            $this->eXpDeactivateAnnounceRedirect();
+        public function eXpDeactivateAnnounceRedirect() {
+            unset(self::$eXpAnnounceRedirected[ get_class($this) ]);
         }
 
         /**
@@ -745,10 +604,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @return Bill*
          */
-        final public function eXpStartBill(
-            $source_login, $destination_login, $amount, $msg, $callback = array(), $params = array()
-        )
-        {
+        final public function eXpStartBill($source_login, $destination_login, $amount, $msg, $callback = array(), $params = array()) {
             $bill = new Bill($source_login, $destination_login, $amount, $msg);
             self::$eXpBillManager->sendBill($bill);
             $bill->setValidationCallback($callback, $params);
@@ -759,18 +615,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             return $bill;
         }
 
-        /**
-         * @deprecated
-         * @see eXpStartBill
-         */
-        final public function exp_startBill($source_login, $destination_login, $amount, $msg, $callback = array(), $params = array())
-        {
-            return $this->eXpStartBill($source_login, $destination_login, $amount, $msg, $callback, $params);
-        }
-
-
-        final public function eXpGetOldId($id = null)
-        {
+        final public function eXpGetOldId($id = null) {
             if ($id == null) {
                 $id = $this->getId();
             }
@@ -780,36 +625,18 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         }
 
         /**
-         * @deprecated
-         * @see
-         */
-        final public function exp_getOldId($id = null)
-        {
-            return $this->eXpGetOldId($id);
-        }
-
-        /**
          * Returns the current game mode taking in acount script modes that might be equivalent with old modes
          *
          * @return Int The gamemode which is compatible with the current script. 0 if none
          */
-        final static public function eXpGetCurrentCompatibilityGameMode()
-        {
+        final static public function eXpGetCurrentCompatibilityGameMode() {
             $gameInfo = Storage2::getInstance()->gameInfos;
             if ($gameInfo->gameMode == GameInfos::GAMEMODE_SCRIPT) {
-                return self::exp_getScriptCompatibilityMode($gameInfo->scriptName);
-            } else {
+                return self::eXpGetScriptCompatibilityMode($gameInfo->scriptName);
+            }
+            else {
                 return $gameInfo->gameMode;
             }
-        }
-
-        /**
-         * @deprecated
-         * @see eXpGetCurrentCompatibilityGameMode
-         */
-        final static public function exp_getCurrentCompatibilityGameMode()
-        {
-            return self::eXpGetCurrentCompatibilityGameMode();
         }
 
         /**
@@ -818,8 +645,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @return int The gamemode which is compatible with the script. 0 if none
          */
-        final static public function eXpGetScriptCompatibilityMode($scriptName)
-        {
+        final static public function eXpGetScriptCompatibilityMode($scriptName) {
             $class = get_called_class();
             $soft = true;
 
@@ -829,21 +655,24 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             if ($soft) {
                 if (strpos($compatibility, 'TIMEATTACK') !== false) {
                     $compatibility = GameInfos::GAMEMODE_TIMEATTACK;
-                } elseif (strpos($compatibility, 'ROUNDS') !== false || strpos(
-                        $compatibility, 'ROUNDSBASE'
-                    ) !== false
-                ) {
+                }
+                elseif (strpos($compatibility, 'ROUNDS') !== false || strpos($compatibility, 'ROUNDSBASE') !== false) {
                     $compatibility = GameInfos::GAMEMODE_ROUNDS;
-                } elseif (strpos($compatibility, 'TEAM') !== false) {
+                }
+                elseif (strpos($compatibility, 'TEAM') !== false) {
                     $compatibility = GameInfos::GAMEMODE_TEAM;
-                } elseif (strpos($compatibility, 'CUP') !== false) {
+                }
+                elseif (strpos($compatibility, 'CUP') !== false) {
                     $compatibility = GameInfos::GAMEMODE_ROUNDS;
-                } elseif (strpos($compatibility, 'LAPS') !== false) {
+                }
+                elseif (strpos($compatibility, 'LAPS') !== false) {
                     $compatibility = GameInfos::GAMEMODE_LAPS;
-                } else {
+                }
+                else {
                     $compatibility = 0;
                 }
-            } else {
+            }
+            else {
                 switch ($compatibility) {
                     case 'TIMEATTACK' :
                         $compatibility = GameInfos::GAMEMODE_TIMEATTACK;
@@ -866,20 +695,11 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             return $compatibility;
         }
 
-        /**
-         * @deprecated
-         * @see eXpGetScriptCompatibilityMode
-         */
-        final static public function exp_getScriptCompatibilityMode($scriptName)
-        {
-            return self::eXpGetScriptCompatibilityMode($scriptName);
-        }
-
-        final public function debug($message)
-        {
+        final public function debug($message) {
             $config = Config::getInstance();
-            if (!$config->debug)
+            if (! $config->debug) {
                 return;
+            }
 
             if (is_string($message)) {
                 Console::println($message);
@@ -897,8 +717,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             }
         }
 
-        final public function dumpException($message, Exception $e)
-        {
+        final public function dumpException($message, Exception $e) {
             $this->console('                                ____                  _  ');
             $this->console('                               / __ \                | |');
             $this->console('                              | |  | | ___  _ __  ___| |');
@@ -911,8 +730,9 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
             $fill = "";
             $firstline = explode("\n", $message, 2);
-            if (!is_array($firstline))
+            if (! is_array($firstline)) {
                 $firstline = array($firstline);
+            }
             for ($x = 0; $x < ((80 - strlen($firstline[0])) / 2); $x++) {
                 $fill .= " ";
             }
@@ -935,17 +755,19 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @throws Exception2
          */
-        public function getPlayerObjectById($id)
-        {
-            if (!is_numeric($id))
+        public function getPlayerObjectById($id) {
+            if (! is_numeric($id)) {
                 throw new Exception2("player id is not numeric");
+            }
             foreach ($this->storage->players as $login => $player) {
-                if ($player->playerId == $id)
+                if ($player->playerId == $id) {
                     return $player;
+                }
             }
             foreach ($this->storage->spectators as $login => $player) {
-                if ($player->playerId == $id)
+                if ($player->playerId == $id) {
                     return $player;
+                }
             }
 
             return new Player();
@@ -956,8 +778,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @param $message
          */
-        final public function console($message)
-        {
+        final public function console($message) {
             $logFile = $this->storage->serverLogin . ".console.log";
             /** @var Logger */
             $logger = Logger::getLog("eXpansion");
@@ -978,26 +799,22 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             }
         }
 
-        public function onSettingsChanged(Variable $var)
-        {
+        public function onSettingsChanged(Variable $var) {
 
         }
 
-        public function onGameModeChange($oldGameMode, $newGameMode)
-        {
+        public function onGameModeChange($oldGameMode, $newGameMode) {
 
         }
 
-        public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes)
-        {
+        public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes) {
 
         }
 
         /**
          * @param ExpPlayer $player player object of the player given up
          */
-        public function onPlayerGiveup(ExpPlayer $player)
-        {
+        public function onPlayerGiveup(ExpPlayer $player) {
 
         }
 
@@ -1007,40 +824,33 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param int       $oldPos old position
          * @param int       $newPos new position
          */
-        public function onPlayerPositionChange(
-            ExpPlayer $player, $oldPos, $newPos
-        )
-        {
+        public function onPlayerPositionChange(ExpPlayer $player, $oldPos, $newPos) {
 
         }
 
         /**
          * @param ExpPlayer[] $playerPositions array(string => ExpPlayer);
          */
-        public function onPlayerNewPositions($playerPositions)
-        {
+        public function onPlayerNewPositions($playerPositions) {
 
         }
 
-        public function onMapRestart()
-        {
+        public function onMapRestart() {
 
         }
 
-        public function onMapSkip()
-        {
+        public function onMapSkip() {
 
         }
 
         public function eXpAutoloadComplete() {
-            
+
         }
 
         /**
          * @param PlayerNetInfo[] $players
          */
-        public function onPlayerNetLost($players)
-        {
+        public function onPlayerNetLost($players) {
 
         }
 
@@ -1048,7 +858,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 }
 
-namespace {
+namespace
+{
 
     use \ManiaLivePlugins\eXpansion\Helpers\Helper;
 
@@ -1056,21 +867,20 @@ namespace {
      * Convert php.ini memory shorthand string to integer bytes
      * http://www.php.net/manual/en/function.ini-get.php#96996
      */
-    function shorthand2bytes($size_str)
-    {
+    function shorthand2bytes($size_str) {
 
         switch (substr($size_str, -1)) {
             case 'M':
             case 'm':
-                return (int)$size_str * 1048576;
+                return (int) $size_str * 1048576;
             case 'K':
             case 'k':
-                return (int)$size_str * 1024;
+                return (int) $size_str * 1024;
             case 'G':
             case 'g':
-                return (int)$size_str * 1073741824;
+                return (int) $size_str * 1073741824;
             default:
-                return (int)$size_str;
+                return (int) $size_str;
         }
     }
 
@@ -1080,8 +890,9 @@ namespace {
     error_reporting(E_ALL ^ E_DEPRECATED);
     // do custom logging also
     $limit = ini_get('memory_limit');
-    if (shorthand2bytes($limit) < 512 * 1048576)
+    if (shorthand2bytes($limit) < 512 * 1048576) {
         ini_set('memory_limit', '512M');
+    }
 
     set_time_limit(0);
 
@@ -1095,7 +906,7 @@ namespace {
     } */
 
 
-    if (!function_exists('__')) {
+    if (! function_exists('__')) {
 
         /**
          * $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($login);
@@ -1108,17 +919,18 @@ namespace {
          * }
          *
          */
-        function __()
-        {
+        function __() {
             $args = func_get_args();
 
-            if (empty($args))
+            if (empty($args)) {
                 return '';
+            }
 
             $message = array_shift($args);
 
-            if ($message == "" || $message == null)
+            if ($message == "" || $message == null) {
                 return '';
+            }
 
             $language = null;
             if (sizeof($args) > 0) {
@@ -1126,16 +938,19 @@ namespace {
                 $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($login);
                 if ($player == null) {
                     $language = null;
-                } else {
+                }
+                else {
                     $language = $player->language;
                 }
-            } else {
+            }
+            else {
                 $language = null;
             }
 
             if (is_object($message)) {
                 $lang = $message->getMessage($language);
-            } else {
+            }
+            else {
                 $lang = \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getString($message, $language);
             }
 
@@ -1143,7 +958,8 @@ namespace {
 
             try {
                 return call_user_func_array('sprintf', $args);
-            } catch (\Exception $e) {
+            }
+            catch (\Exception $e) {
                 Helper::logError('[basicPlugin/Chat]Error with translations strings : ' . $lang);
                 Helper::logError('[basicPlugin/Chat]' . $e->getMessage());
 
@@ -1158,8 +974,7 @@ namespace {
          *
          * @return \ManiaLivePlugins\eXpansion\Core\i18n\Message
          */
-        function exp_getMessage($string)
-        {
+        function exp_getMessage($string) {
             return \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getObject($string);
         }
 

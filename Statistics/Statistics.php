@@ -11,9 +11,9 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Database\\Database"));
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
-        parent::exp_onReady();
+        parent::eXpOnReady();
         $this->enableDatabase();
         $aHandler = \ManiaLive\Gui\ActionHandler::getInstance();
 
@@ -405,7 +405,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return $datas;
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerTopIncome::EraseAll();
         \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmount::EraseAll();

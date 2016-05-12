@@ -40,7 +40,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         $this->enableTickerEvent();
@@ -53,7 +53,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * @return void
      */
 
-    function exp_onReady()
+    function eXpOnReady()
     {
         $config = Config::getInstance();
         $this->connection->chatSendServerMessage("Mumble trying to load"); //debug

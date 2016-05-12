@@ -30,7 +30,7 @@ class Widgets_TM_topPanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
     /** @var  \ManiaLive\PluginHandler\PluginHandler */
     private $pluginhandler;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
 
         $this->pluginhandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
@@ -61,7 +61,7 @@ class Widgets_TM_topPanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         return '\\ManiaLivePlugins\\eXpansion\\' . $plugin . '\\' . $plugin;
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         Gui\Widgets\TopPanel::EraseAll();
     }

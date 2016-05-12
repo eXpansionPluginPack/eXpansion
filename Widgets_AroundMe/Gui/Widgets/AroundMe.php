@@ -64,7 +64,7 @@ class AroundMe extends Widget
 
     protected function getScript()
     {
-        $gm = Widgets_LiveRankings::exp_getCurrentCompatibilityGameMode();
+        $gm = Widgets_LiveRankings::eXpGetCurrentCompatibilityGameMode();
 
         $script = new CpPositions();
         $this->timeScript = $script;
@@ -98,14 +98,14 @@ class AroundMe extends Widget
             $teamMaxPoint = $this->storage->gameInfos->teamPointsLimit;
         }
 
-        if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
+        if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
             $this->timeScript->setParam("isLaps", "True");
 
             if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
                 $this->timeScript->setParam("nbLaps", $nbLaps);
             else
                 $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->lapsNbLaps);
-        } else if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_ROUNDS && $this->storage->gameInfos->roundsForcedLaps > 0
+        } else if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_ROUNDS && $this->storage->gameInfos->roundsForcedLaps > 0
         ) {
             $this->timeScript->setParam("isLaps", "True");
 
@@ -113,7 +113,7 @@ class AroundMe extends Widget
                 $this->timeScript->setParam("nbLaps", $nbLaps);
             else
                 $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
-        } else if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->roundsForcedLaps > 0
+        } else if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->roundsForcedLaps > 0
         ) {
             $this->timeScript->setParam("isLaps", "True");
 
@@ -121,7 +121,7 @@ class AroundMe extends Widget
                 $this->timeScript->setParam("nbLaps", $$nbLaps);
             else
                 $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
-        } else if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_CUP && $this->storage->gameInfos->roundsForcedLaps > 0
+        } else if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_CUP && $this->storage->gameInfos->roundsForcedLaps > 0
         ) {
             $this->timeScript->setParam("isLaps", "True");
 
@@ -131,7 +131,7 @@ class AroundMe extends Widget
                 $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
         }
 
-        if (Widgets_LocalRecords::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM) {
+        if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM) {
             $this->timeScript->setParam("isTeam", "True");
         }
 

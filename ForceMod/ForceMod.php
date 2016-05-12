@@ -19,7 +19,7 @@ class ForceMod extends ExpPlugin
     /** @var Config */
     private $config;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->forceMods();
@@ -110,7 +110,7 @@ class ForceMod extends ExpPlugin
         $this->forceMods();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         try {
             $this->console("Disabling forced mods");

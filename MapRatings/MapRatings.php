@@ -41,7 +41,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->config = Config::getInstance();
     }
 
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         $this->enableDatabase();
         $this->enableDedicatedEvents();
@@ -66,7 +66,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->setPublicMethod("showRatingsManager");
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->reload();
         if ($this->isPluginLoaded("eXpansion\TMKarma")) {
@@ -229,7 +229,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->displayWidget(null);
             /* reaby disabled, no need to show vote registered text :/
               $msg = exp_getMessage('#rank#$iVote Registered!!');
-              $this->exp_chatSendServerMessage($msg, $login); */
+              $this->eXpChatSendServerMessage($msg, $login); */
             $this->sendRatingMsg($login, $rating);
         }
     }
@@ -238,7 +238,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if ($login != null) {
             if ($this->ratingTotal == 0) {
-                $this->exp_chatSendServerMessage($this->msg_noRating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
+                $this->eXpChatSendServerMessage($this->msg_noRating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
 
                 return;
             }
@@ -254,7 +254,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             // $rating = (($this->rating - 1) / 4) * 100;
             $rating = ($this->rating / 5) * 100;
             $rating = round($rating) . "%";
-            $this->exp_chatSendServerMessage($this->msg_rating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'), $rating, $this->ratingTotal, $playerRating));
+            $this->eXpChatSendServerMessage($this->msg_rating, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'), $rating, $this->ratingTotal, $playerRating));
         }
     }
 
@@ -269,10 +269,10 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             try {
                 $this->connection->removeMapList($filenames);
-                $this->exp_chatSendServerMessage(exp_getMessage("Maps with bad rating removed successfully."));
+                $this->eXpChatSendServerMessage(exp_getMessage("Maps with bad rating removed successfully."));
                 Gui\Windows\MapRatingsManager::Erase($login);
             } catch (\Exception $e) {
-                $this->exp_chatSendServerMessage("#error#Error: %s", $login, array($e->getMessage()));
+                $this->eXpChatSendServerMessage("#error#Error: %s", $login, array($e->getMessage()));
             }
         }
     }
@@ -351,7 +351,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         //send msg
         if ($this->config->sendBeginMapNotices) {
             if ($this->ratingTotal == 0) {
-                $this->exp_chatSendServerMessage($this->msg_noRating, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
+                $this->eXpChatSendServerMessage($this->msg_noRating, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm')));
             } else {
                 foreach ($this->storage->players as $login => $player) {
                     $this->sendRatingMsg($login, null);
@@ -438,7 +438,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->saveRating($login, 5);
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         EndMapRatings::EraseAll();
         RatingsWidget::EraseAll();

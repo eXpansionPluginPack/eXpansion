@@ -12,7 +12,7 @@ class JoinLeaveMessage extends ExpPlugin
 {
     private $joinMsg, $joinMsgTime, $leaveMsg, $tabNoticeMsg, $playtimeMsg;
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
 
@@ -23,7 +23,7 @@ class JoinLeaveMessage extends ExpPlugin
         $this->playtimeMsg = exp_getMessage('#player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s');
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $cmd = $this->registerChatCommand("played", "showPlaytime", 0, true);
 
@@ -89,7 +89,7 @@ class JoinLeaveMessage extends ExpPlugin
 
     public function showPlayTime($login)
     {
-        $this->exp_chatSendServerMessage($this->playtimeMsg, $login, array($this->getSessionTime($login), $this->getTotalPlaytime($login)));
+        $this->eXpChatSendServerMessage($this->playtimeMsg, $login, array($this->getSessionTime($login), $this->getTotalPlaytime($login)));
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -131,12 +131,12 @@ class JoinLeaveMessage extends ExpPlugin
                 }
             } else {
                 if ($config->showTotalPlayOnJoin) {
-                    $this->exp_chatSendServerMessage($this->joinMsgTime, null, $joinTimeArgs);
+                    $this->eXpChatSendServerMessage($this->joinMsgTime, null, $joinTimeArgs);
                 } else {
-                    $this->exp_chatSendServerMessage($this->joinMsg, null, $joinArgs);
+                    $this->eXpChatSendServerMessage($this->joinMsg, null, $joinArgs);
                 }
             }
-            // $this->exp_chatSendServerMessage($this->tabNoticeMsg, $login);
+            // $this->eXpChatSendServerMessage($this->tabNoticeMsg, $login);
         } catch (Exception $e) {
             $this->console($e->getLine() . ":" . $e->getMessage());
         }
@@ -167,7 +167,7 @@ class JoinLeaveMessage extends ExpPlugin
             $grpName = AdminGroups::getGroupName($login);
             $country = $this->getCountry($player);
 
-            $this->exp_chatSendServerMessage($this->leaveMsg, null, array('$z$s' . $nick . '$z$s', $login, $country, $grpName, $playtime));
+            $this->eXpChatSendServerMessage($this->leaveMsg, null, array('$z$s' . $nick . '$z$s', $login, $country, $grpName, $playtime));
         } catch (Exception $e) {
             Helper::log("[JoinLeaveMessage]Error while disconnecting : $login");
         }

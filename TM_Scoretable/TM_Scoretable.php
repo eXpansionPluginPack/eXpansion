@@ -30,7 +30,7 @@ use ManiaLivePlugins\eXpansion\TM_Scoretable\Gui\Scoretable\Scoretable;
 class TM_Scoretable extends ExpPlugin
 {
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->sendScoretable();
     }
@@ -47,9 +47,9 @@ class TM_Scoretable extends ExpPlugin
         }
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
     protected function getXML()

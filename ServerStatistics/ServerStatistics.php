@@ -51,16 +51,16 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         self::$serverPlayerAction = $aHandler->createAction(array($this, 'showPlayers'));
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
-        parent::exp_onLoad();
+        parent::eXpOnLoad();
         $this->enableDedicatedEvents();
         Gui\Windows\StatsWindow::$mainPlugin = $this;
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
-        parent::exp_onReady();
+        parent::eXpOnReady();
         $this->enableTickerEvent();
 
         $this->registerChatCommand("serverstat", "showStats", 0, true);
@@ -385,7 +385,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         StatsWindow::EraseAll();
         PlotterWindow::EraseAll();

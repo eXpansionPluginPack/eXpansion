@@ -39,12 +39,12 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     private $currentLogin;
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
 
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $adm = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
 
@@ -172,9 +172,9 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
         $this->onGoingSteps = array();
         UpdateProgress::EraseAll();
     }

@@ -26,121 +26,126 @@ class Menu extends ExpPlugin implements Listener
      *
      * @var Group[]
      */
-    protected $menuGroups  = [];
+    protected $menuGroups = [];
     protected $menuWindows = [];
 
-    public function eXpOnReady()
-    {
+    public function eXpOnReady() {
         $this->enableDedicatedEvents();
         $this->enablePluginEvents();
         Dispatcher::register(Event::getClass(), $this);
     }
 
-    public function eXpAutoloadComplete()
-    {
+    public function eXpAutoloadComplete() {
         $this->prepareMenu();
     }
 
-    public function eXpAdminAdded($login)
-    {
+    public function eXpAdminAdded($login) {
         $name = AdminGroups::getGroupName($login);
         $this->menuGroups['Player']->remove($login);
-        if (!array_key_exists($name, $this->menuGroups)) {
+        if (! array_key_exists($name, $this->menuGroups)) {
             $this->createMenu($name);
-            $this->menuGroups[$name]->add($login, true);
-        } else {
-            $this->menuGroups[$name]->add($login, true);
+            $this->menuGroups[ $name ]->add($login, true);
+        }
+        else {
+            $this->menuGroups[ $name ]->add($login, true);
         }
     }
 
-    public function eXpAdminRemoved($login)
-    {
-        $name = AdminGroups::getGroupName($login);
+    public function eXpAdminRemoved($login) {
         foreach ($this->menuGroups as $name => $group) {
             if ($group->contains($login)) {
-                $this->menuGroups[$name]->remove($login);
+                $this->menuGroups[ $name ]->remove($login);
             }
         }
         $this->menuGroups['Player']->add($login, true);
     }
 
-    public function onPlayerConnect($login, $isSpectator)
-    {
+    public function onPlayerConnect($login, $isSpectator) {
         $name = AdminGroups::getGroupName($login);
-        if (!array_key_exists($name, $this->menuGroups)) {
+        if (! array_key_exists($name, $this->menuGroups)) {
             $this->createMenu($name);
-            $this->menuGroups[$name]->add($login, true);
-        } else {
-            $this->menuGroups[$name]->add($login, true);
+            $this->menuGroups[ $name ]->add($login, true);
+        }
+        else {
+            $this->menuGroups[ $name ]->add($login, true);
         }
 
-        $this->menuWindows[$name]->show($login);
+        $this->menuWindows[ $name ]->show($login);
     }
 
-    public function onPlayerDisconnect($login, $disconnectionReason)
-    {
-        $this->menuGroups['Player']->remove($login);
+    public function onPlayerDisconnect($login, $disconnectionReason) {
+        $name = AdminGroups::getGroupName($login);
+        if (! array_key_exists($name, $this->menuGroups)) {
+            $this->menuGroups[ $name ]->remove($login);
+        }
     }
 
-    public function onPluginLoaded($pluginId)
-    {
+    public function onPluginLoaded($pluginId) {
         $this->prepareMenu();
     }
 
-    public function onPluginUnloaded($pluginId)
-    {
+    public function onPluginUnloaded($pluginId) {
         $this->prepareMenu();
     }
 
-    public function prepareMenu()
-    {
+    public function prepareMenu() {
         $this->menuGroups = [];
         MenuWidget::EraseAll();
 
         foreach (AdminGroups::getGroupList() as $group) {
-            $this->menuGroups[$group->getGroupName()] = Group::Create($group->getGroupName());
+            $this->menuGroups[ $group->getGroupName() ] = Group::Create($group->getGroupName());
             foreach ($group->getGroupUsers() as $user) {
-                $this->menuGroups[$group->getGroupName()]->add($user->getLogin());
+                $this->menuGroups[ $group->getGroupName() ]->add($user->getLogin());
             }
             $this->createMenu($group);
         }
 
-        $players        = array_merge($this->storage->players, $this->storage->spectators);
+        $players = array_merge($this->storage->players, $this->storage->spectators);
         $regularPlayers = [];
 
         $admins = AdminGroups::get();
 
         foreach ($players as $login => $player) {
-            if (!in_array($login, $admins)) $regularPlayers[] = $login;
+            if (! in_array($login, $admins))
+                $regularPlayers[] = $login;
         }
 
         $this->menuGroups['Player'] = Group::Create('Player', $regularPlayers);
         $this->createMenu(new AdmGroup('Player', false));
     }
 
-    public function createMenu(AdmGroup $group)
-    {
-        $menu = MenuWidget::Create($this->menuGroups[$group->getGroupName()], true);
-        if ($this->pluginLoaded("Faq")) $menu->addItem("Help", "!help", $this);
+    public function createMenu(AdmGroup $group) {
+        $menu = MenuWidget::Create($this->menuGroups[ $group->getGroupName() ], true);
+        if ($this->pluginLoaded("Faq"))
+            $menu->addItem("Help", "!help", $this);
 
-        if ($this->pluginLoaded("Players")) $menu->addItem("Players", "!players", $this);
+        if ($this->pluginLoaded("Players"))
+            $menu->addItem("Players", "!players", $this);
 
-// Maps
+        // Maps
         $mapsGroup = $menu->addGroup("Maps");
 
-        if ($this->pluginLoaded("Maps")) $mapsGroup->addItem("Show Maps", "!maplist", $this);
-        if ($group->hasPermission(Permission::map_addLocal))
-                if ($this->pluginLoaded("Maps")) $mapsGroup->addItem("Add Local Maps", "!addMaps", $this);
-        if ($group->hasPermission(Permission::map_addMX))
-                if ($this->pluginLoaded("ManiaExchange")) $mapsGroup->addItem("ManiaExchange", "!mx", $this);
-        if ($group->hasPermission(Permission::map_removeMap)) {
-            if ($this->pluginLoaded("Maps")) $mapsGroup->addItem('$f00Remove this', "!admremovemap", $this);
-            if ($this->pluginLoaded("Maps")) $mapsGroup->addItem('$f00Trash this', "!admtrashmap", $this);
+        if ($this->pluginLoaded("Maps"))
+            $mapsGroup->addItem("Show Maps", "!maplist", $this);
+        if ($group->hasPermission(Permission::map_addLocal)) {
+            if ($this->pluginLoaded("Maps"))
+                $mapsGroup->addItem("Add Local Maps", "!addMaps", $this);
         }
-// records
+        if ($group->hasPermission(Permission::map_addMX)) {
+            if ($this->pluginLoaded("ManiaExchange"))
+                $mapsGroup->addItem("ManiaExchange", "!mx", $this);
+        }
+        if ($group->hasPermission(Permission::map_removeMap)) {
+            if ($this->pluginLoaded("Maps"))
+                $mapsGroup->addItem('$f00Remove this', "!admremovemap", $this);
+            if ($this->pluginLoaded("Maps"))
+                $mapsGroup->addItem('$f00Trash this', "!admtrashmap", $this);
+        }
+        // records
         $recGroup = $menu->addGroup("Records");
-        if ($this->pluginLoaded("Dedimania") || $this->pluginLoaded("Dedimania_Script"))
-                $recGroup->addItem("Dedimania", "!dedirecs", $this);
+        if ($this->pluginLoaded("Dedimania") || $this->pluginLoaded("Dedimania_Script")) {
+            $recGroup->addItem("Dedimania", "!dedirecs", $this);
+        }
 
         if ($this->pluginLoaded("LocalRecords")) {
             $recGroup->addItem("Local", "!showrecs", $this);
@@ -148,10 +153,11 @@ class Menu extends ExpPlugin implements Listener
             $recGroup->addItem("Server Ranks", "!serverranks", $this);
         }
 
-// statistics
-        if ($this->pluginLoaded("Statistics")) $menu->addItem("Statistics", "!stats", $this);
+        // statistics
+        if ($this->pluginLoaded("Statistics"))
+            $menu->addItem("Statistics", "!stats", $this);
 
-// Vote
+        // Vote
         $voteGroup = $menu->addGroup("Vote");
         $voteGroup->addItem("Skip", "!voteskip", $this);
         $voteGroup->addItem("Res", "!voteres", $this);
@@ -166,45 +172,48 @@ class Menu extends ExpPlugin implements Listener
         $hudGroup->addItem("Reset", "!hudReset", $this);
         $hudGroup->addItem("Config...", "!hudConfig", $this);
 
-// admin
+        // admin
 
-        if ($group->hasPermission(Permission::team_balance) || $group->hasPermission(Permission::map_endRound) || $group->hasPermission(Permission::map_restart)
-            || $group->hasPermission(Permission::map_skip)
-        ) {
+        if ($group->hasPermission(Permission::team_balance) || $group->hasPermission(Permission::map_endRound) || $group->hasPermission(Permission::map_restart) || $group->hasPermission(Permission::map_skip)) {
             $admGroup = $menu->addGroup('$f00Admin');
 
-            if ($group->hasPermission(Permission::map_restart)) $admGroup->addItem("Instant Res", "!admres", $this);
+            if ($group->hasPermission(Permission::map_restart))
+                $admGroup->addItem("Instant Res", "!admres", $this);
 
-            if ($group->hasPermission(Permission::map_restart)) $admGroup->addItem("Replay", "!admreplay", $this);
+            if ($group->hasPermission(Permission::map_restart))
+                $admGroup->addItem("Replay", "!admreplay", $this);
 
-            if ($group->hasPermission(Permission::map_skip)) $admGroup->addItem("Skip", "!admskip", $this);
+            if ($group->hasPermission(Permission::map_skip))
+                $admGroup->addItem("Skip", "!admskip", $this);
 
-            if ($group->hasPermission(Permission::map_endRound)) $admGroup->addItem("End Round", "!admer", $this);
+            if ($group->hasPermission(Permission::map_endRound))
+                $admGroup->addItem("End Round", "!admer", $this);
 
-            if ($group->hasPermission(Permission::team_balance)) $admGroup->addItem("Balance teams", "!teambalance", $this);
+            if ($group->hasPermission(Permission::team_balance))
+                $admGroup->addItem("Balance teams", "!teambalance", $this);
         }
 
         if ($group->hasPermission(Permission::server_controlPanel)) {
             $serverGroup = $menu->addGroup("Server Control");
             $serverGroup->addItem('Control Panel', "!admcontrol", $this);
-            if ($group->hasPermission(Permission::expansion_pluginSettings))
-                    $serverGroup->addItem('$fffe$3afX$fffpansion Config', "!adm_settings", $this);
-            if ($group->hasPermission(Permission::expansion_pluginStartStop))
-                    $serverGroup->addItem("Plugin Manager", "!adm_plugins", $this);
+            if ($group->hasPermission(Permission::expansion_pluginSettings)) {
+                $serverGroup->addItem('$fffe$3afX$fffpansion Config', "!adm_settings", $this);
+            }
+            if ($group->hasPermission(Permission::expansion_pluginStartStop)) {
+                $serverGroup->addItem("Plugin Manager", "!adm_plugins", $this);
+            }
         }
 
         $menu->addItem("Server Info", "!serverinfo", $this);
-        $this->menuWindows[$group->getGroupName()] = $menu;
-        $this->menuWindows[$group->getGroupName()]->show();
+        $this->menuWindows[ $group->getGroupName() ] = $menu;
+        $this->menuWindows[ $group->getGroupName() ]->show();
     }
 
-    public function pluginLoaded($plugin)
-    {
+    public function pluginLoaded($plugin) {
         return $this->isPluginLoaded($this->getPluginClass($plugin));
     }
 
-    public function actionHandler($login, $action, $entries = [])
-    {
+    public function actionHandler($login, $action, $entries = []) {
         $adminGrp = AdminGroups::getInstance();
         try {
             switch ($action) {
@@ -323,7 +332,8 @@ class Menu extends ExpPlugin implements Listener
                     $plugin = $this->getPluginClass("Votes");
                     if ($this->isPluginLoaded($plugin)) {
                         $this->callPublicMethod($plugin, "vote_restart", $login);
-                    } else {
+                    }
+                    else {
                         $this->connection->callVoteRestartMap();
                     }
                     break;
@@ -331,26 +341,29 @@ class Menu extends ExpPlugin implements Listener
                     $plugin = $this->getPluginClass("Votes");
                     if ($this->isPluginLoaded($plugin)) {
                         $this->callPublicMethod($plugin, "vote_skip", $login);
-                    } else {
+                    }
+                    else {
                         $this->connection->callVoteNextMap();
                     }
                     break;
                 default:
-                    $this->eXpChatSendServerMessage("not found: ".$action);
+                    $this->eXpChatSendServerMessage("not found: " . $action, $login);
+                    Logger::info("menu command not found: " . $action);
                     break;
             }
-        } catch (Exception $ex) {
-            Logger::error("Error in Menu while running action : ".$action);
+        }
+        catch (Exception $ex) {
+            Logger::error("Error in Menu while running action : " . $action);
         }
     }
 
     /**
      *
      * @param string $plugin
+     *
      * @return string
      */
-    private function getPluginClass($plugin)
-    {
-        return "\\ManiaLivePlugins\\eXpansion\\".$plugin."\\".$plugin;
+    private function getPluginClass($plugin) {
+        return "\\ManiaLivePlugins\\eXpansion\\" . $plugin . "\\" . $plugin;
     }
 }

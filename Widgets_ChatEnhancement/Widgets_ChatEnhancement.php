@@ -38,11 +38,11 @@ class Widgets_ChatEnhancement extends \ManiaLivePlugins\eXpansion\Core\types\Exp
     private $action_chatLog;
     private $action_chatStatus;
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         /** @var ActionHandler $actionH */
         $actionH = ActionHandler::getInstance();
@@ -101,10 +101,10 @@ class Widgets_ChatEnhancement extends \ManiaLivePlugins\eXpansion\Core\types\Exp
                 $var = ChatMetaData::getInstance()->getVariable('publicChatActive');
                 $var->setRawValue(!$var->getRawValue());
 
-                $this->exp_chatSendServerMessage("#admin_action#Public chat is now #variable#" . ($var->getRawValue() ? "Enable" : "Disable"));
+                $this->eXpChatSendServerMessage("#admin_action#Public chat is now #variable#" . ($var->getRawValue() ? "Enable" : "Disable"));
 
             } else {
-                $this->exp_chatSendServerMessage("#admin_error#Custom Chat plugin needs to be enabled", $login);
+                $this->eXpChatSendServerMessage("#admin_error#Custom Chat plugin needs to be enabled", $login);
             }
         }
     }
@@ -123,9 +123,9 @@ class Widgets_ChatEnhancement extends \ManiaLivePlugins\eXpansion\Core\types\Exp
         }
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
 
         /** @var ActionHandler $actionH */
         $actionH = ActionHandler::getInstance();

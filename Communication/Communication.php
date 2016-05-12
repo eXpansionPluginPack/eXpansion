@@ -39,7 +39,7 @@ class Communication extends ExpPlugin
     /** @var \Maniaplanet\DedicatedServer\Structures\Player */
     private $cachedIgnoreList = array();
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
 
@@ -136,7 +136,7 @@ class Communication extends ExpPlugin
     public function sendPmChat($login, $params = false)
     {
         if ($params === false) {
-            $this->exp_chatSendServerMessage($this->msg_help, $login);
+            $this->eXpChatSendServerMessage($this->msg_help, $login);
 
             return;
         }
@@ -168,7 +168,7 @@ class Communication extends ExpPlugin
         $info->show();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         Messager::EraseAll();
         CommunicationWidget::EraseAll();
@@ -176,7 +176,7 @@ class Communication extends ExpPlugin
         $actionH = ActionHandler::getInstance();
         $actionH->deleteAction(CommunicationWidget::$action);
         $actionH->deleteAction(CommunicationWidget::$selectPlayer);
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

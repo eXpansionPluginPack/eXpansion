@@ -31,7 +31,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
     private $config;
     private $panelSizeX = 42;
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania') || $this->isPluginLoaded(
                 '\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script'
@@ -41,7 +41,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
         $this->config = Config::getInstance();
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
 
@@ -248,7 +248,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         Gui\Widgets\DediPanel::EraseAll();
         Gui\Widgets\DediPanel2::EraseAll();

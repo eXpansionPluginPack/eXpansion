@@ -45,7 +45,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         $this->setPublicMethod("syncScores");
@@ -61,7 +61,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * onReady
      *
      */
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         if (!$this->enabled)
             return;
@@ -100,7 +100,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         $newlimit = (intval($params) * 2) + 500;
                         $this->connection->setCupPointsLimit($newlimit);
                     }
-                    $this->exp_chatSendServerMessage("Starting ESLcup with point limit: " . $this->pointsLimit);
+                    $this->eXpChatSendServerMessage("Starting ESLcup with point limit: " . $this->pointsLimit);
                     $this->connection->nextMap(false);
                     break;
                 case "stop":
@@ -113,7 +113,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     $this->enabled = false;
                     $this->releaseSpec();
                     $this->connection->setCupPointsLimit(100);
-                    $this->exp_chatSendServerMessage("ESLcup disabled, normal cup point limit set to 100");
+                    $this->eXpChatSendServerMessage("ESLcup disabled, normal cup point limit set to 100");
                     $this->connection->nextMap(false);
                     break;
                 case "pointslimit":
@@ -121,7 +121,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     $params = $params[0];
                     if (is_numeric($params)) {
                         $this->pointsLimit = $params;
-                        $this->exp_chatSendServerMessage("ESLcup points limit is now set to:" . $params);
+                        $this->eXpChatSendServerMessage("ESLcup points limit is now set to:" . $params);
                         $newlimit = (intval($params) * 2) + 500;
                         $this->connection->setCupPointsLimit($newlimit);
                         $this->syncScores();
@@ -136,7 +136,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     $this->connection->nextMap(false);
                     break;
                 default:
-                    $this->exp_chatSendServerMessage("command not found", $fromLogin);
+                    $this->eXpChatSendServerMessage("command not found", $fromLogin);
                     break;
             }
         } catch (\Exception $e) {
@@ -306,7 +306,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         $this->cupScores[$player->login]->hasWin = time();
                         $this->winners[] = $this->cupScores[$player->login];
                         // send message about win
-                        $this->exp_chatSendServerMessage($player->nickName . ' $z$s$fff takes the ' . count($this->winners) . ' place!');
+                        $this->eXpChatSendServerMessage($player->nickName . ' $z$s$fff takes the ' . count($this->winners) . ' place!');
                         $this->connection->forceSpectator($player->login, 1);
                         // check if there is need for more winners
                         $nbWinners = 1;
@@ -320,12 +320,12 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         if (count($this->winners) >= $nbWinners) {
                             $this->scoreTable(true, "normal");
 
-                            $this->exp_chatSendServerMessage("          ESL CUP RESULTS         ");
-                            $this->exp_chatSendServerMessage("**********************************");
+                            $this->eXpChatSendServerMessage("          ESL CUP RESULTS         ");
+                            $this->eXpChatSendServerMessage("**********************************");
                             foreach ($this->winners as $i => $winner) {
-                                $this->exp_chatSendServerMessage(($i + 1) . ". place " . $winner->nickName);
+                                $this->eXpChatSendServerMessage(($i + 1) . ". place " . $winner->nickName);
                             }
-                            $this->exp_chatSendServerMessage("**********************************");
+                            $this->eXpChatSendServerMessage("**********************************");
                             $this->resetData = true;
                             $this->connection->nextMap(false);
 
@@ -494,7 +494,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $win->show();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $this->enabled = false;
         $this->winners = array();

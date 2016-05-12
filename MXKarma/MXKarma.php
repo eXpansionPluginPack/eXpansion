@@ -63,16 +63,16 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
 
     private $settingsChanged = array();
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
-        parent::exp_onLoad();
+        parent::eXpOnLoad();
         $this->config = Config::getInstance();
         $this->mxConnection = new mxConnection();
         $this->msg_error = exp_getMessage('MXKarma error %1$s: %2$s');
         $this->msg_connected = exp_getMessage('MXKarma connection Success!');
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         \ManiaLive\Event\Dispatcher::register(MXKarmaEvent::getClass(), $this);
@@ -149,7 +149,7 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
                     break;
             }
 
-            $this->exp_chatSendServerMessage("Vote registered for MXKarma", $login);
+            $this->eXpChatSendServerMessage("Vote registered for MXKarma", $login);
         }
     }
 
@@ -217,7 +217,7 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
 
     public function MXKarma_onError($state, $number, $reason)
     {
-        $this->exp_chatSendServerMessage($this->msg_error, null, array($state, $reason));
+        $this->eXpChatSendServerMessage($this->msg_error, null, array($state, $reason));
         $this->console("MXKarma error  " . $state . ": " . $reason);
     }
 
@@ -244,16 +244,16 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
     public function MXKarma_onVotesSave($isSuccess)
     {
         if ($isSuccess) {
-            $this->exp_chatSendServerMessage("MXKarma saved successfully!", null);
+            $this->eXpChatSendServerMessage("MXKarma saved successfully!", null);
         }
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         \ManiaLive\Event\Dispatcher::unregister(MXKarmaEvent::getClass(), $this);
         MXRatingsWidget::EraseAll();
         unset($this->mxConnection);
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

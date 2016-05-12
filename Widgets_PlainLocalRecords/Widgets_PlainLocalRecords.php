@@ -16,14 +16,14 @@ class Widgets_PlainLocalRecords extends ExpPlugin implements Listener
     /** @var Config */
     private $config;
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
 
@@ -82,7 +82,7 @@ class Widgets_PlainLocalRecords extends ExpPlugin implements Listener
         $this->updateLocalPanel();
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);

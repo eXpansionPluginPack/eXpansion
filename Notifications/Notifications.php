@@ -18,7 +18,7 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->setPublicMethod("send");
     }
 
-    function exp_onReady()
+    function eXpOnReady()
     {
         $this->enableDedicatedEvents();
 
@@ -116,9 +116,9 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         foreach (\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad::getAvailablePlugins() as $plugin => $meta) {
             if ($this->isPluginLoaded($plugin)) {
                 if (in_array($plugin, $config->redirectedPlugins)) {
-                    $this->callPublicMethod((string)$plugin, 'exp_activateChatRedirect', array($this, 'send'));
+                    $this->callPublicMethod((string)$plugin, 'eXpActivateChatRedirect', array($this, 'send'));
                 } else {
-                    $this->callPublicMethod((string)$plugin, 'exp_deactivateChatRedirect', array($this, 'send'));
+                    $this->callPublicMethod((string)$plugin, 'eXpDeactivateChatRedirect', array($this, 'send'));
                 }
             }
         }
@@ -133,13 +133,13 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
         NotificationPanel::EraseAll();
         foreach (\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad::getAvailablePlugins() as $plugin => $meta) {
             if ($this->isPluginLoaded($plugin)) {
-                $this->callPublicMethod((string)$plugin, 'exp_deactivateChatRedirect', array($this, 'send'));
+                $this->callPublicMethod((string)$plugin, 'eXpDeactivateChatRedirect', array($this, 'send'));
             }
         }
     }

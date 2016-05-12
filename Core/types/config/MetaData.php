@@ -429,7 +429,7 @@ abstract class MetaData
     protected function checkScriptGameModeCompatibility($scriptName)
     {
         if ($this->scriptCompatibiliyMode) {
-            $gmode = \ManiaLivePlugins\eXpansion\Core\Core::exp_getScriptCompatibilityMode($scriptName);
+            $gmode = \ManiaLivePlugins\eXpansion\Core\Core::eXpGetScriptCompatibilityMode($scriptName);
 
             return isset($this->gameModeSupport[$gmode]) ? $this->gameModeSupport[$gmode] : false;
         }

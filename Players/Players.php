@@ -18,12 +18,12 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Gui\Windows\Playerlist::$mainPlugin = $this;
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         $this->msg_broadcast = exp_getMessage('%s$1 $z$s$fff is $f00broadcasting$fff at $lwww.twitch.tv$l, say hello to all the viewers :)');
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->registerChatCommand("players", "showPlayerList", 0, true); // xaseco
@@ -80,7 +80,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function announceBroadcasting($login)
     {
         $player = $this->storage->getPlayerObject($login);
-        $this->exp_chatSendServerMessage($this->msg_broadcast, null, array($player->nickName));
+        $this->eXpChatSendServerMessage($this->msg_broadcast, null, array($player->nickName));
     }
 
     public function showPlayerList($login)
@@ -99,7 +99,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         // $this->updateOpenedWindows();
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         PlayerList::EraseAll();
     }

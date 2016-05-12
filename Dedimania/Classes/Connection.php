@@ -199,7 +199,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         if ($this->connection->isRelayServer()) return;
 
 // special rounds mode disabled
-        if (\ManiaLivePlugins\eXpansion\Core\Core::exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_ROUNDS && (!isset($map->lapRace)
+        if (\ManiaLivePlugins\eXpansion\Core\Core::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_ROUNDS && (!isset($map->lapRace)
                 || $map->lapRace) && $this->storage->gameInfos->roundsForcedLaps && $this->storage->gameInfos->roundsForcedLaps != 0
         ) {
             $this->console("[Dedimania Warning] Special rounds mode with forced laps ignored!");

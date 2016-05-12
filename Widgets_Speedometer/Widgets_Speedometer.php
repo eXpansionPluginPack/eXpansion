@@ -29,7 +29,7 @@ class Widgets_Speedometer extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 
     private $widget;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->widget = Gui\Widgets\Speedmeter::Create(null);
@@ -52,7 +52,7 @@ class Widgets_Speedometer extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $this->widget->show();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $this->widget = null;
         Gui\Widgets\Speedmeter::EraseAll();

@@ -21,7 +21,7 @@ class Widgets_Advertising extends ExpPlugin
 
     private $settingsChanged = false;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->config = Config::GetInstance();
         $this->displayWidget();
@@ -77,10 +77,10 @@ class Widgets_Advertising extends ExpPlugin
         }
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         WidgetAd::EraseAll();
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

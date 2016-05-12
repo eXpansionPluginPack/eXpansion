@@ -15,7 +15,7 @@ namespace ManiaLivePlugins\eXpansion\SubTest;
 class SubTest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->registerChatCommand("menu", "show", 0, true);

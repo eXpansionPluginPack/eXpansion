@@ -8,7 +8,7 @@ class Snow extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
     private $wasWarmup = false;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
     }
@@ -35,10 +35,10 @@ class Snow extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window->show();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         Gui\Windows\SnowParticle::EraseAll();
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 }
 

@@ -20,13 +20,13 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     private $config;
     private $panelSizeX = 42;
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
 
         $this->config = Config::getInstance();
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->updateLivePanel();
@@ -81,7 +81,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             }
         }
 
-        $gamemode = self::exp_getCurrentCompatibilityGameMode();
+        $gamemode = self::eXpGetCurrentCompatibilityGameMode();
         if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM || $gamemode == GameInfos::GAMEMODE_CUP) {
             if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                 $this->connection->triggerModeScriptEvent("UI_DisplaySmallScoresTable", "False");
@@ -189,7 +189,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         Gui\Widgets\LivePanel2::Erase($login);
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         Gui\Widgets\LivePanel::EraseAll();
         Gui\Widgets\LivePanel2::EraseAll();

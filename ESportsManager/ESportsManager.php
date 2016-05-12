@@ -40,7 +40,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /** @var Config */
     private $config;
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         self::$matchStatus = new Structures\MatchStatus();
         self::$matchSettings = new MatchSetting();
@@ -50,7 +50,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->config = Config::getInstance();
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableTickerEvent();
         $this->enableDedicatedEvents();
@@ -203,7 +203,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 }
             }
         } else {
-            $this->exp_chatSendServerMessage("Didn't find admin on server, chat triggers not executed.");
+            $this->eXpChatSendServerMessage("Didn't find admin on server, chat triggers not executed.");
         }
     }
 

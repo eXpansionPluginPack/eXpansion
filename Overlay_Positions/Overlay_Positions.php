@@ -28,7 +28,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT);
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->enableTickerEvent();
@@ -87,7 +87,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $teamMaxPoint = $this->storage->gameInfos->teamPointsLimit;
         }
 
-        $pospanel->setData(\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo, self::exp_getCurrentCompatibilityGameMode(), $teamMaxPoint);
+        $pospanel->setData(\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo, self::eXpGetCurrentCompatibilityGameMode(), $teamMaxPoint);
         $pospanel->setScale(1.1);
         $pospanel->show();
     }
@@ -158,7 +158,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->update = true;
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $this->disableTickerEvent();
     }

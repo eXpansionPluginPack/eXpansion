@@ -7,12 +7,12 @@ use ManiaLivePlugins\eXpansion\CustomUI\Gui\Customizer;
 class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         // $this->enableDedicatedEvents();
     }
 
-    function exp_onReady()
+    function eXpOnReady()
     {
 
         $this->displayWidget(null);
@@ -39,7 +39,7 @@ class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         Customizer::EraseAll();
     }

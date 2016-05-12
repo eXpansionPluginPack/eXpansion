@@ -17,7 +17,7 @@ class ForceSkin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->config = Config::getInstance();
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->forceSkins();
     }

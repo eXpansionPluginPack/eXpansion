@@ -17,13 +17,13 @@ class Widgets_BestRuns extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     private $nbDisplay = 1;
 
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         $this->enableStorageEvents();
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->onBeginMatch();
 
@@ -87,10 +87,10 @@ class Widgets_BestRuns extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         BestRunPanel::Erase($login);
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         BestRunPanel::EraseAll();
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

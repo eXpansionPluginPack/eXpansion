@@ -132,7 +132,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->saveFile();
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
 
         //Loading all Messages;
@@ -374,7 +374,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         foreach ($group->getGroupUsers() as $user) {
             $player = $this->storage->getPlayerObject($user->getLogin());
-            if ($player != null && $player->isConnected) $this->exp_chatSendServerMessage($msg, $user->getLogin(), $args);
+            if ($player != null && $player->isConnected) $this->eXpChatSendServerMessage($msg, $user->getLogin(), $args);
         }
     }
 
@@ -597,10 +597,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (self::$admins[$login]->hasPermission($permissionName)) {
                 return true;
             } else {
-                $this->exp_chatSendServerMessage($this->msg_neeMorPerm, $login);
+                $this->eXpChatSendServerMessage($this->msg_neeMorPerm, $login);
             }
         } else {
-            $this->exp_chatSendServerMessage($this->msg_needBeAdmin, $login);
+            $this->eXpChatSendServerMessage($this->msg_needBeAdmin, $login);
 
             return false;
         }
@@ -752,7 +752,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     /**
-     *  remove admin command, usually used exp_onUnload
+     *  remove admin command, usually used eXpOnUnload
      *
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd
      */
@@ -807,7 +807,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         //First lets check if player is an admin
         if (!isset(self::$admins[$login])) {
-            if ($errors) $this->exp_chatSendServerMessage($this->msg_needBeAdmin, $login);
+            if ($errors) $this->eXpChatSendServerMessage($this->msg_needBeAdmin, $login);
         } else {
 
             if (empty($cmds)) {
@@ -831,7 +831,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (isset($cmds[$arg])) {
                 $this->doAdminCmd($cmds[$arg], $args, $login);
             } else if ($errors) {
-                $this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
+                $this->eXpChatSendServerMessage($this->msg_cmdDontEx, $login);
             }
         }
     }
@@ -848,19 +848,19 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             //We found the command
             if ($this->hasPermission($login, $commands->getPermission())) {
                 $error = $commands->cmd($login, $chats);
-                if ($error != '') $this->exp_chatSendServerMessage(__('#admin_error#'.$error, $login), $login);
+                if ($error != '') $this->eXpChatSendServerMessage(__('#admin_error#'.$error, $login), $login);
             } else {
-                $this->exp_chatSendServerMessage($this->msg_neeMorPerm, $login);
+                $this->eXpChatSendServerMessage($this->msg_neeMorPerm, $login);
             }
         } else if (isset($chats[0])) {
             $chat = strtolower(array_shift($chats));
             if (is_array($commands) && isset($commands[$chat])) {
                 $this->doAdminCmd($commands[$chat], $chats, $login);
             } else {
-                $this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
+                $this->eXpChatSendServerMessage($this->msg_cmdDontEx, $login);
             }
         } else {
-            $this->exp_chatSendServerMessage($this->msg_cmdDontEx, $login);
+            $this->eXpChatSendServerMessage($this->msg_cmdDontEx, $login);
         }
     }
 
@@ -908,7 +908,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
 
         if (isset(self::$admins[$login2])) {
-            $this->exp_chatSendServerMessage($this->msg_aInGroup, $login, array($login2, $group->getGroupName()));
+            $this->eXpChatSendServerMessage($this->msg_aInGroup, $login, array($login2, $group->getGroupName()));
         } else {
             $this->reLoadAdmins();
 
@@ -923,12 +923,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     $this->saveFile();
                     $success               = true;
                     Dispatcher::dispatch(new Events\Event(Events\Event::ON_ADMIN_NEW, $login2));
-                    $this->exp_chatSendServerMessage($this->msg_paddSuc, null, array($login2, $group->getGroupName()));
+                    $this->eXpChatSendServerMessage($this->msg_paddSuc, null, array($login2, $group->getGroupName()));
                     break;
                 }
             }
             if ($success == false) {
-                $this->exp_chatSendServerMessage($this->msg_paddFai, null, array($login2, $group->getGroupName()));
+                $this->eXpChatSendServerMessage($this->msg_paddFai, null, array($login2, $group->getGroupName()));
             }
         }
     }
@@ -944,9 +944,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
 
         if (isset(self::$admins[$login]) && $admin->getLogin() == $login) {
-            $this->exp_chatSendServerMessage($this->msg_premoveSelf, $login, array($login));
+            $this->eXpChatSendServerMessage($this->msg_premoveSelf, $login, array($login));
         } else if ($admin->isReadOnly()) {
-            $this->exp_chatSendServerMessage($this->msg_removeMlAdmin, $login, array($admin->getLogin()));
+            $this->eXpChatSendServerMessage($this->msg_removeMlAdmin, $login, array($admin->getLogin()));
         } else if (isset(self::$admins[$login]) && $group->removeAdmin($admin->getLogin())) {
             $this->reLoadAdmins();
 
@@ -958,11 +958,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
             unset(self::$admins[$admin->getLogin()]);
             Dispatcher::dispatch(new Events\Event(Events\Event::ON_ADMIN_REMOVED, $admin->getLogin()));
-            $this->exp_chatSendServerMessage($this->msg_pRemoveSuc, null, array($admin->getLogin(), $group->getGroupName()));
+            $this->eXpChatSendServerMessage($this->msg_pRemoveSuc, null, array($admin->getLogin(), $group->getGroupName()));
 
             $this->saveFile();
         } else {
-            $this->exp_chatSendServerMessage($this->msg_pRemoveFa, $login, array($admin->getLogin()));
+            $this->eXpChatSendServerMessage($this->msg_pRemoveFa, $login, array($admin->getLogin()));
         }
     }
 
@@ -977,7 +977,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
 
         if ($group->isMaster()) {
-            $this->exp_chatSendServerMessage($this->msg_masterMasterE, $login);
+            $this->eXpChatSendServerMessage($this->msg_masterMasterE, $login);
 
             return;
         }
@@ -1013,7 +1013,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function changePermissionOfGroup($login, Group $group, array $newPermissions)
     {
         if ($group->isMaster()) {
-            $this->exp_chatSendServerMessage($this->msg_masterMasterE, $login);
+            $this->eXpChatSendServerMessage($this->msg_masterMasterE, $login);
         } else {
             $this->reLoadAdmins();
 
@@ -1039,7 +1039,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function changeInheritanceOfGroup($login, Group $group, array $newHeritances)
     {
         if ($group->isMaster()) {
-            $this->exp_chatSendServerMessage($this->msg_masterMasterE, $login);
+            $this->eXpChatSendServerMessage($this->msg_masterMasterE, $login);
         } else {
             $this->reLoadAdmins();
 
@@ -1176,7 +1176,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window->show();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         self::$admins         = array();
         self::$commands       = array();

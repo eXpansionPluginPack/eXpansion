@@ -39,7 +39,7 @@ class Dedimania extends DedimaniaAbstract
         // if player is banned from dedimania, don't send his time.
         if (DediConnection::$players[$login]->banned) return;
 
-        if (self::exp_getCurrentCompatibilityGameMode() == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) {
+        if (self::eXpGetCurrentCompatibilityGameMode() == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) {
             return;
         }
 
@@ -54,7 +54,7 @@ class Dedimania extends DedimaniaAbstract
      */
     public function onPlayerFinishLap($player, $time, $checkpoints, $nbLap)
     {
-        $gamemode = self::exp_getCurrentCompatibilityGameMode();
+        $gamemode = self::eXpGetCurrentCompatibilityGameMode();
 
         if ($gamemode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) {
             return;
@@ -182,7 +182,7 @@ class Dedimania extends DedimaniaAbstract
             return;
         }
 
-        $gamemode = self::exp_getCurrentCompatibilityGameMode();
+        $gamemode = self::eXpGetCurrentCompatibilityGameMode();
 
         if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) {
             foreach ($rankings as $number => $rank) {

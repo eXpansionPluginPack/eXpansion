@@ -21,16 +21,16 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
-        parent::exp_onLoad();
+        parent::eXpOnLoad();
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_PERSONAL_BEST);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_FINISH);
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         foreach ($this->storage->players as $player)
@@ -119,7 +119,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $info->show();
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_PERSONAL_BEST);
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);

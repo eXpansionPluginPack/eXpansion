@@ -52,7 +52,7 @@ class KnockOut extends ExpPlugin
 
     private $msg_newRound, $msg_koStart, $msg_knockout, $msg_knockoutDNF, $msg_champ;
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         $this->msg_newRound = exp_getMessage('#ko#KnockOut! Round: #variable#%1$s #ko#Players #variable#%2$s #ko#/#variable#%3$s remain');
         $this->msg_koStart = exp_getMessage('#ko#KnockOut #variable#starts #ko#after next map');
@@ -62,7 +62,7 @@ class KnockOut extends ExpPlugin
         $this->msg_champ = exp_getMessage('#ko#KnockOut! #variable# %1$s $z$s#ko# is the CHAMP!!! congrats');
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
 
@@ -96,11 +96,11 @@ class KnockOut extends ExpPlugin
                     break;
 
                 default:
-                    $this->exp_chatSendServerMessage("Possible values: start, stop, res, skip", $login);
+                    $this->eXpChatSendServerMessage("Possible values: start, stop, res, skip", $login);
                     break;
             }
         } catch (Exception $e) {
-            $this->exp_chatSendServerMessage('#admin_error#Error:' . $e->getMessage(), $fromLogin);
+            $this->eXpChatSendServerMessage('#admin_error#Error:' . $e->getMessage(), $fromLogin);
         }
     }
 
@@ -138,7 +138,7 @@ class KnockOut extends ExpPlugin
         $this->delay = true;
         $this->players = $this->getNewPlayers();
         $this->playersAtStart = count($this->players);
-        $this->exp_chatSendServerMessage($this->msg_koStart, null);
+        $this->eXpChatSendServerMessage($this->msg_koStart, null);
     }
 
     public function reset()
@@ -161,7 +161,7 @@ class KnockOut extends ExpPlugin
     {
         $this->reset();
         $this->isRunning = false;
-        $this->exp_chatSendServerMessage($this->msg_koStop, null);
+        $this->eXpChatSendServerMessage($this->msg_koStop, null);
 
 // release spectators to play
         foreach ($this->storage->spectators as $player) {
@@ -175,7 +175,7 @@ class KnockOut extends ExpPlugin
         $this->isWarmup = $this->connection->getWarmUp();
         if ($this->isRunning && !$this->isWarmup) {
             $this->round++;
-            $this->exp_chatSendServerMessage($this->msg_newRound, null, array("" . $this->round, "" . count($this->players), "" . $this->playersAtStart));
+            $this->eXpChatSendServerMessage($this->msg_newRound, null, array("" . $this->round, "" . count($this->players), "" . $this->playersAtStart));
             $this->delay = false;
         }
     }
@@ -228,7 +228,7 @@ class KnockOut extends ExpPlugin
                     $this->connection->forceSpectator($login, 1);
                 }
             }
-            $this->exp_chatSendServerMessage($this->msg_knockoutDNF, null, array(implode('$z$s, ', $out)));
+            $this->eXpChatSendServerMessage($this->msg_knockoutDNF, null, array(implode('$z$s, ', $out)));
         }
 
 
@@ -253,13 +253,13 @@ class KnockOut extends ExpPlugin
             }
         }
         if (count($out) > 0) {
-            $this->exp_chatSendServerMessage($this->msg_knockout, null, array(implode('$z$s', $out)));
+            $this->eXpChatSendServerMessage($this->msg_knockout, null, array(implode('$z$s', $out)));
         }
 
         if (count($this->players) == 1) {
             reset($this->players);
             $player = current($this->players);
-            $this->exp_chatSendServerMessage($this->msg_champ, null, array($player->nickName));
+            $this->eXpChatSendServerMessage($this->msg_champ, null, array($player->nickName));
         }
 
         if (count($this->players) >= 1) {
@@ -291,12 +291,12 @@ class KnockOut extends ExpPlugin
         return $outArray;
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         AdminGroups::removeShortAllias("ko");
         AdminGroups::removeAdminCommand($this->adm_ko);
 
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

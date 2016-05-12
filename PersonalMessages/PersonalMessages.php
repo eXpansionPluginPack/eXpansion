@@ -22,7 +22,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     private $cmd_chat;
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         $this->msg_noLogin = exp_getMessage('#personalmessage#Player with login "%1$s" is not found at server!');
         $this->msg_noMessage = exp_getMessage("#personalmessage#No message to send to!");
@@ -31,7 +31,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->msg_help = exp_getMessage("#personalmessage#Usage /pm [login] your personal message here");
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->registerChatCommand("pm", "chatSendPersonalMessage", -1, true);
@@ -81,7 +81,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     function chatSendPersonalMessage($login, $params = false)
     {
         if ($params === false) {
-            $this->exp_chatSendServerMessage($this->msg_help, $login);
+            $this->eXpChatSendServerMessage($this->msg_help, $login);
 
             return;
         }
@@ -94,18 +94,18 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             PlayerSelection::Erase($login);
 
             if (!array_key_exists($target, $this->storage->players) && !array_key_exists($target, $this->storage->spectators)) {
-                $this->exp_chatSendServerMessage($this->msg_noLogin, $login, array($target));
+                $this->eXpChatSendServerMessage($this->msg_noLogin, $login, array($target));
 
                 return;
             }
             if ($login == $target) {
-                $this->exp_chatSendServerMessage($this->msg_self, $login, array($target));
+                $this->eXpChatSendServerMessage($this->msg_self, $login, array($target));
 
                 return;
             }
 
             if (empty($message)) {
-                $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+                $this->eXpChatSendServerMessage($this->msg_noMessage, $login);
 
                 return;
             }
@@ -126,18 +126,18 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         try {
 
             if (!array_key_exists($target, $this->storage->players) && !array_key_exists($target, $this->storage->spectators)) {
-                $this->exp_chatSendServerMessage($this->msg_noLogin, $login, array($target));
+                $this->eXpChatSendServerMessage($this->msg_noLogin, $login, array($target));
 
                 return;
             }
             if ($login == $target) {
-                $this->exp_chatSendServerMessage($this->msg_self, $login, array($target));
+                $this->eXpChatSendServerMessage($this->msg_self, $login, array($target));
 
                 return;
             }
 
             if (empty($message)) {
-                $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+                $this->eXpChatSendServerMessage($this->msg_noMessage, $login);
 
                 return;
             }
@@ -163,7 +163,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $color = '$z$s' . $this->config->Colors_admingroup_chat;
 
         if (empty($message)) {
-            $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+            $this->eXpChatSendServerMessage($this->msg_noMessage, $login);
 
             return;
         }
@@ -185,7 +185,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         try {
             if (empty($message)) {
-                $this->exp_chatSendServerMessage($this->msg_noMessage, $login);
+                $this->eXpChatSendServerMessage($this->msg_noMessage, $login);
 
                 return;
             }
@@ -196,14 +196,14 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $login);
                 $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, self::$reply[$login]);
             } else {
-                $this->exp_chatSendServerMessage($this->msg_noReply, $login);
+                $this->eXpChatSendServerMessage($this->msg_noReply, $login);
             }
         } catch (\Exception $e) {
             $this->console("Error sending a reply" . $e->getMessage());
         }
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         MessagesPanel::EraseAll();
         AdminGroups::removeAdminCommand($this->cmd_chat);

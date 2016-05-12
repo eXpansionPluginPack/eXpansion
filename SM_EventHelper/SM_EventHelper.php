@@ -35,7 +35,7 @@ class SM_EventHelper extends ExpPlugin
 
     private $widget;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $aHandler = ActionHandler::getInstance();
 
@@ -83,7 +83,7 @@ class SM_EventHelper extends ExpPlugin
         $this->widget->show();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $this->widget = null;
         EventHelper::EraseAll();

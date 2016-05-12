@@ -33,7 +33,7 @@ class TM_Stunts extends ExpPlugin
 
     private $counter;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         //	$this->enableTickerEvent();
         $this->stuntWindow = Gui\Widgets\StuntWidget::Create(null, false);
@@ -69,9 +69,9 @@ class TM_Stunts extends ExpPlugin
         }
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

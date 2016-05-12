@@ -47,7 +47,7 @@ class LocalRecords extends LocalBase
     {
         //Checking for valid time
         if (isset($this->storage->players[$login]) && $timeOrScore > 0) {
-            $gamemode = self::exp_getCurrentCompatibilityGameMode();
+            $gamemode = self::eXpGetCurrentCompatibilityGameMode();
 
             //If laps mode we need to ignore. Laps has it's own end map event(end finish lap)
             if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS && $this->config->lapsModeCount1lap) //Laps mode has it own on Player finish event
@@ -76,7 +76,7 @@ class LocalRecords extends LocalBase
     {
 
         if ($this->config->lapsModeCount1lap && isset($this->storage->players[$player->login]) && $time > 0) {
-            $gamemode = self::exp_getCurrentCompatibilityGameMode();
+            $gamemode = self::eXpGetCurrentCompatibilityGameMode();
 
             if ($gamemode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) //Laps mode has it own on Player finish event
                 return;
@@ -225,7 +225,7 @@ class LocalRecords extends LocalBase
             }
         } else {
             $settings = $this->connection->getModeScriptSettings();
-            switch (self::exp_getCurrentCompatibilityGameMode()) {
+            switch (self::eXpGetCurrentCompatibilityGameMode()) {
                 case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS:
                 case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM:
                 case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP:

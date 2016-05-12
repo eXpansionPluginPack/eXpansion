@@ -70,9 +70,9 @@ class Chat_Admin extends ExpPlugin
         $this->setPublicMethod("shuffleMaps");
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
-        parent::exp_onLoad();
+        parent::eXpOnLoad();
 
         $admingroup = AdminGroups::getInstance();
 
@@ -559,7 +559,7 @@ Other server might use the same blacklist file!!');
         self::$showActions['guest'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showGuestList'));
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
     }
@@ -626,7 +626,7 @@ Other server might use the same blacklist file!!');
     {
 
         if ($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_SCRIPT) {
-            $this->exp_chatSendServerMessage("#admin_error#Error: Not in script mode!", $fromLogin);
+            $this->eXpChatSendServerMessage("#admin_error#Error: Not in script mode!", $fromLogin);
 
             return;
         }
@@ -644,7 +644,7 @@ Other server might use the same blacklist file!!');
                     break;
             }
         } catch (Exception $e) {
-            $this->exp_chatSendServerMessage('#admin_error#Error:' . $e->getMessage(), $fromLogin);
+            $this->eXpChatSendServerMessage('#admin_error#Error:' . $e->getMessage(), $fromLogin);
         }
     }
 
@@ -671,7 +671,7 @@ Other server might use the same blacklist file!!');
                     break;
                 default:
                     $msg = exp_getMessage("possible parameters: limit, dynamic, wu");
-                    $this->exp_chatSendServerMessage($msg, $fromLogin);
+                    $this->eXpChatSendServerMessage($msg, $fromLogin);
                     break;
             }
         } catch (Exception $e) {
@@ -708,7 +708,7 @@ Other server might use the same blacklist file!!');
                     break;
                 default:
                     $msg = exp_getMessage("possible parameters: laps, limit, wu, fto, ftimeout");
-                    $this->exp_chatSendServerMessage($msg, $fromLogin);
+                    $this->eXpChatSendServerMessage($msg, $fromLogin);
                     break;
             }
         } catch (Exception $e) {
@@ -747,7 +747,7 @@ Other server might use the same blacklist file!!');
                     break;
                 default:
                     $msg = exp_getMessage("possible parameters: pointslimit, newrules, wu, fto, ftimeout");
-                    $this->exp_chatSendServerMessage($msg, $fromLogin);
+                    $this->eXpChatSendServerMessage($msg, $fromLogin);
                     break;
             }
         } catch (Exception $e) {
@@ -795,7 +795,7 @@ Other server might use the same blacklist file!!');
                     break;
                 default:
                     $msg = exp_getMessage("possible parameters: limit, rounds, nbwin, wu, fto, ftimeout");
-                    $this->exp_chatSendServerMessage($msg, $fromLogin);
+                    $this->eXpChatSendServerMessage($msg, $fromLogin);
                     break;
             }
         } catch (Exception $e) {
@@ -850,7 +850,7 @@ Other server might use the same blacklist file!!');
                     break;
                 default:
                     $msg = exp_getMessage("possible parameters: balance, limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap");
-                    $this->exp_chatSendServerMessage($msg, $fromLogin);
+                    $this->eXpChatSendServerMessage($msg, $fromLogin);
                     break;
             }
         } catch (Exception $e) {
@@ -881,9 +881,9 @@ Other server might use the same blacklist file!!');
             $msg = exp_getMessage('#admin_action#Admin #variable#%1$s $z$s#admin_action#shuffles the maps list!');
             $nick = $this->storage->getPlayerObject($login)->nickName;
 
-            $this->exp_chatSendServerMessage($msg, null, array($nick));
+            $this->eXpChatSendServerMessage($msg, null, array($nick));
         } catch (\Exception $e) {
-            $this->exp_chatSendServerMessage("#admin_error#there was error while shuffling the maps", $login);
+            $this->eXpChatSendServerMessage("#admin_error#there was error while shuffling the maps", $login);
             $this->console("Error while shuffling maps: " . $e->getMessage);
         }
     }
@@ -893,10 +893,10 @@ Other server might use the same blacklist file!!');
         try {
 
             $adminNick = $this->storage->getPlayerObject($fromLogin)->nickName;
-            $this->exp_chatSendServerMessage('#admin_action#Admin #variable#%s $z$s#admin_action# AutoBalances the Teams!', null, array($adminNick));
+            $this->eXpChatSendServerMessage('#admin_action#Admin #variable#%s $z$s#admin_action# AutoBalances the Teams!', null, array($adminNick));
             $this->connection->autoTeamBalance();
         } catch (\Exception $e) {
-            $this->exp_chatSendServerMessage("#admin_error#error while AutoTeamBalance: " . $e->getMessage(), $fromLogin);
+            $this->eXpChatSendServerMessage("#admin_error#error while AutoTeamBalance: " . $e->getMessage(), $fromLogin);
         }
     }
 
@@ -904,13 +904,13 @@ Other server might use the same blacklist file!!');
     {
         if (sizeof($params) == 0) {
             $name = $this->connection->getScriptName();
-            $this->exp_chatSendServerMessage("current script name: " . $name['CurrentValue'], $fromLogin);
+            $this->eXpChatSendServerMessage("current script name: " . $name['CurrentValue'], $fromLogin);
 
             return;
         }
 
         if (!is_string($params[0])) {
-            $this->exp_chatSendServerMessage("#admin_error#needs script name to be text!", $fromLogin);
+            $this->eXpChatSendServerMessage("#admin_error#needs script name to be text!", $fromLogin);
 
             return;
         }
@@ -918,22 +918,22 @@ Other server might use the same blacklist file!!');
 
         try {
             $this->connection->setScriptName($params[0]);
-            $this->exp_chatSendServerMessage("new script in run: " . $params[0] . ", please restart or skip the map for changes to be active.", $fromLogin);
+            $this->eXpChatSendServerMessage("new script in run: " . $params[0] . ", please restart or skip the map for changes to be active.", $fromLogin);
         } catch (Exception2 $ex) {
-            $this->exp_chatSendServerMessage("#admin_error#Error:" . $ex->getMessage() . " on line:" . $ex->getLine(), $fromLogin);
+            $this->eXpChatSendServerMessage("#admin_error#Error:" . $ex->getMessage() . " on line:" . $ex->getLine(), $fromLogin);
         }
     }
 
     public function enableTeamGap($login, $params)
     {
         if ($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_TEAM) {
-            $this->exp_chatSendServerMessage("#admin_error#Not in teams mode!", $login);
+            $this->eXpChatSendServerMessage("#admin_error#Not in teams mode!", $login);
         }
 
         if (sizeof($params) > 0 && is_numeric($params[0])) {
             $this->teamGap = intval($params[0]);
 
-            $this->exp_chatSendServerMessage('#admin_action#Team gap set to #variable# %1$s!', $login, array($params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Team gap set to #variable# %1$s!', $login, array($params[0]));
             $this->connection->restartMap();
         }
     }
@@ -978,7 +978,7 @@ Other server might use the same blacklist file!!');
     {
         try {
             $this->connection->pay($params[0], intval($params[1]), $params[0] . " Planets payed out from server " . $this->storage->server->name);
-            $this->exp_chatSendServerMessage('#admin_action#Server just sent#variable# %s #admin_action#Planets to#variable# %s #admin_action#!', $fromLogin, array($params[1], $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Server just sent#variable# %s #admin_action#Planets to#variable# %s #admin_action#!', $fromLogin, array($params[1], $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -988,7 +988,7 @@ Other server might use the same blacklist file!!');
     {
         try {
 
-            $this->exp_chatSendServerMessage('#admin_action#Server has #variable# %s #admin_action#Planets.', $fromLogin, array($this->connection->getServerPlanets()));
+            $this->eXpChatSendServerMessage('#admin_action#Server has #variable# %s #admin_action#Planets.', $fromLogin, array($this->connection->getServerPlanets()));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -999,7 +999,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->forcePlayerTeam($params[0], 0);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sends player#variable# %s #admin_action#to team $00fBlue.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sends player#variable# %s #admin_action#to team $00fBlue.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1010,7 +1010,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->forcePlayerTeam($params[0], 1);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sends player#variable# %s #admin_action#to team $f00Red.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sends player#variable# %s #admin_action#to team $f00Red.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1021,7 +1021,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setCupWarmUpDuration(intval($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets cup winners to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets cup winners to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1032,7 +1032,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setCupWarmUpDuration(intval($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets use new warmup duration to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets use new warmup duration to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1043,7 +1043,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setCupRoundsPerMap(intval($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets use new rounds to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets use new rounds to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1054,7 +1054,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setCupPointsLimit(intval($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets use new cup points limit to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets use new cup points limit to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1065,7 +1065,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         $player = $this->storage->getPlayerObject($params[0]);
         if ($player == null) {
-            $this->exp_chatSendServerMessage('#admin_action#Player #variable# %s #admin_action#doesn\' exist.', null, array($params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Player #variable# %s #admin_action#doesn\' exist.', null, array($params[0]));
 
             return;
         }
@@ -1077,7 +1077,7 @@ Other server might use the same blacklist file!!');
 
         try {
             $this->connection->forcePlayerTeam($player, intval($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#forces player #variable# %s #admin_action# to team#variable# %s #admin_action#.', null, array($admin->nickName, $player->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#forces player #variable# %s #admin_action# to team#variable# %s #admin_action#.', null, array($admin->nickName, $player->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1088,7 +1088,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setMaxPointsTeam(filter_var($params[0], FILTER_VALIDATE_BOOLEAN));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets use new team rules to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets use new team rules to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1099,7 +1099,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setMaxPointsTeam(intval($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets Team max points to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets Team max points to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1110,7 +1110,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setTeamPointsLimit(intval($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets Team points limit to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets Team points limit to#variable# %s #admin_action#.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1121,7 +1121,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setFinishTimeout(TimeConversion::MStoTM($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new finish timeout to#variable# %s #admin_action#minutes.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new finish timeout to#variable# %s #admin_action#minutes.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1132,7 +1132,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setNbLaps(intval($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new number of laps to#variable# %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new number of laps to#variable# %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1143,7 +1143,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setLapsTimeLimit(TimeConversion::MStoTM($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new laps timelimit to#variable# %s #admin_action#minutes.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new laps timelimit to#variable# %s #admin_action#minutes.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1154,7 +1154,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setRoundPointsLimit(intval($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets rounds points limits to#variable# %s.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets rounds points limits to#variable# %s.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1170,7 +1170,7 @@ Other server might use the same blacklist file!!');
                 $this->connection->forceEndRound();
             }
 
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#forces the round to end.', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#forces the round to end.', null, array($admin->nickName));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1181,7 +1181,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setUseNewRulesRound(filter_var($params[0], FILTER_VALIDATE_BOOLEAN));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new round rules to#variable# %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new round rules to#variable# %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1193,7 +1193,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->setRoundForcedLaps(intval($params[0]));
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new round forced laps to#variable# %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new round forced laps to#variable# %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1205,7 +1205,7 @@ Other server might use the same blacklist file!!');
         $reason = implode(" ", $params);
         $player = $this->storage->getPlayerObject($target);
         if ($player == null) {
-            $this->exp_chatSendServerMessage('#admin_action#Player #variable# %s #admin_action#doesn\' exist.', $fromLogin, array($target));
+            $this->eXpChatSendServerMessage('#admin_action#Player #variable# %s #admin_action#doesn\' exist.', $fromLogin, array($target));
 
             return;
         }
@@ -1223,7 +1223,7 @@ Other server might use the same blacklist file!!');
             $this->connection->banAndBlackList($target, $reason, true);
             $this->expStorage->saveBlackList();
 
-            $this->exp_chatSendServerMessage('#admin_action#Admin #variable# %s #admin_action#blacklists the player #variable# %s', null, array($admin->nickName, $player->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin #variable# %s #admin_action#blacklists the player #variable# %s', null, array($admin->nickName, $player->nickName));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1235,7 +1235,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->cleanBlackList();
             $this->expStorage->saveBlackList();
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#cleans the blacklist.', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#cleans the blacklist.', null, array($admin->nickName));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1246,7 +1246,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->cleanBanList();
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#cleans the banlist.', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#cleans the banlist.', null, array($admin->nickName));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1257,7 +1257,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->cleanIgnoreList();
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#cleans the ignorelist.', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#cleans the ignorelist.', null, array($admin->nickName));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1280,7 +1280,7 @@ Other server might use the same blacklist file!!');
     public function loadScript($fromLogin, $params)
     {
         if ($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_SCRIPT) {
-            $this->exp_chatSendServerMessage("#admin_error#Error: Not in script mode!", $fromLogin);
+            $this->eXpChatSendServerMessage("#admin_error#Error: Not in script mode!", $fromLogin);
 
             return;
         }
@@ -1302,14 +1302,14 @@ Other server might use the same blacklist file!!');
             try {
                 $this->connection->setModeScriptText($data);
                 $this->connection->setScriptName($params[0]);
-                $this->exp_chatSendServerMessage("Script loaded to server runtime: " . $params[0]);
+                $this->eXpChatSendServerMessage("Script loaded to server runtime: " . $params[0]);
             } catch (\Exception $e) {
-                $this->exp_chatSendServerMessage("#admin_error#Couldn't load script : ", $e->getMessage());
+                $this->eXpChatSendServerMessage("#admin_error#Couldn't load script : ", $e->getMessage());
             }
 
             return;
         }
-        $this->exp_chatSendServerMessage("#admin_error#Error: Script wasn't found !", $fromLogin);
+        $this->eXpChatSendServerMessage("#admin_error#Error: Script wasn't found !", $fromLogin);
     }
 
     public function unBlacklist($fromLogin, $params)
@@ -1321,7 +1321,7 @@ Other server might use the same blacklist file!!');
             $this->connection->unBlackList($params[0]);
             $this->expStorage->saveBlackList();
 
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#unblacklists the player %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#unblacklists the player %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1348,7 +1348,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->ban($target, $reason);
-            $this->exp_chatSendServerMessage('#admin_action#Admin #variable# %s #admin_action# bans the player#variable# %s', null, array($admin->nickName, $nickname));
+            $this->eXpChatSendServerMessage('#admin_action#Admin #variable# %s #admin_action# bans the player#variable# %s', null, array($admin->nickName, $nickname));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1367,7 +1367,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->ignore($params[0]);
-            $this->exp_chatSendServerMessage('#admin_action#Admin #variable# %s #admin_action# ignores the player#variable# %s', null, array($admin->nickName, $nickname));
+            $this->eXpChatSendServerMessage('#admin_action#Admin #variable# %s #admin_action# ignores the player#variable# %s', null, array($admin->nickName, $nickname));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1378,7 +1378,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->unBan($params[0]);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#unbans the player %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#unbans the player %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1390,7 +1390,7 @@ Other server might use the same blacklist file!!');
 
         try {
             $this->connection->unIgnore($params[0]);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#unignores the player %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#unignores the player %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1403,7 +1403,7 @@ Other server might use the same blacklist file!!');
         $reason = trim($reason);
         $player = $this->storage->getPlayerObject($target);
         if ($player == null) {
-            $this->exp_chatSendServerMessage('#admin_error#Player #variable# %s doesn\' exist.', $fromLogin, array($target));
+            $this->eXpChatSendServerMessage('#admin_error#Player #variable# %s doesn\' exist.', $fromLogin, array($target));
 
             return;
         }
@@ -1418,7 +1418,7 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->connection->kick($player, $reason);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#kicks the player#variable# %s', null, array($admin->nickName, $player->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#kicks the player#variable# %s', null, array($admin->nickName, $player->nickName));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1440,7 +1440,7 @@ Other server might use the same blacklist file!!');
             $this->connection->addGuest($target);
             $this->expStorage->saveGuestList();
 
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#add as guest the player#variable# %s', null, array($admin->nickName, $nick));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#add as guest the player#variable# %s', null, array($admin->nickName, $nick));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1451,7 +1451,7 @@ Other server might use the same blacklist file!!');
         $target = array_shift($params);
         $player = $this->storage->getPlayerObject($target);
         if ($player == null) {
-            $this->exp_chatSendServerMessage('#admin_error#Player #variable# %s doesn\' exist.', $fromLogin, array($target));
+            $this->eXpChatSendServerMessage('#admin_error#Player #variable# %s doesn\' exist.', $fromLogin, array($target));
 
             return;
         }
@@ -1462,7 +1462,7 @@ Other server might use the same blacklist file!!');
             $this->connection->removeGuest($player);
             $this->expStorage->saveGuestList();
 
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#removed guest status of the player#variable# %s', null, array($admin->nickName, $player->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#removed guest status of the player#variable# %s', null, array($admin->nickName, $player->nickName));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1472,7 +1472,7 @@ Other server might use the same blacklist file!!');
     {
         $player = $this->storage->getPlayerObject($params[0]);
         if ($player == null) {
-            $this->exp_chatSendServerMessage('#admin_action#Player #variable# %s doesn\' exist.', $fromLogin, array($params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Player #variable# %s doesn\' exist.', $fromLogin, array($params[0]));
 
             return;
         }
@@ -1480,7 +1480,7 @@ Other server might use the same blacklist file!!');
             $admin = $this->storage->getPlayerObject($fromLogin);
             $this->connection->forceSpectator($player, 1);
             $this->connection->forceSpectator($player, 0);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#Forces the player #variable# %s #admin_action#to Spectator.', null, array($admin->nickName, $player->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#Forces the player #variable# %s #admin_action#to Spectator.', null, array($admin->nickName, $player->nickName));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1488,7 +1488,7 @@ Other server might use the same blacklist file!!');
 
     public function sendErrorChat($login, $message)
     {
-        $this->exp_chatSendServerMessage('#admin_error#' . $message, $login);
+        $this->eXpChatSendServerMessage('#admin_error#' . $message, $login);
     }
 
     function setServerName($fromLogin, $params)
@@ -1497,7 +1497,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setServerName($name);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action# sets new server name:#variable# %s', null, array($admin->nickName, $name));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action# sets new server name:#variable# %s', null, array($admin->nickName, $name));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1509,7 +1509,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setServerComment($comment);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new server comment:#variable# %s', null, array($admin->nickName, $comment));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new server comment:#variable# %s', null, array($admin->nickName, $comment));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1521,7 +1521,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setMaxPlayers($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets server maximum players to#variable# %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets server maximum players to#variable# %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1533,7 +1533,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setMaxSpectators($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets server maximum spectators to#variable# %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets server maximum spectators to#variable# %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1544,8 +1544,8 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setServerPassword($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin #variable# %s #admin_action# sets/unsets new server password.', null, array($admin->nickName));
-            $this->exp_chatSendServerMessage('#admin_action#New server password:#variable# %s', null, array($params[0]), $fromLogin);
+            $this->eXpChatSendServerMessage('#admin_action#Admin #variable# %s #admin_action# sets/unsets new server password.', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#New server password:#variable# %s', null, array($params[0]), $fromLogin);
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1556,8 +1556,8 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setServerPasswordForSpectator($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets/unsets new spectator password.', null, array($admin->nickName));
-            $this->exp_chatSendServerMessage('#admin_action#New spectator password:#variable# %s', null, array($params[0]), $fromLogin);
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets/unsets new spectator password.', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#New spectator password:#variable# %s', null, array($params[0]), $fromLogin);
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1568,8 +1568,8 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setRefereePassword($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets/unsets new referee password.', null, array($admin->nickName));
-            $this->exp_chatSendServerMessage('#admin_action#New referee password:#variable# %s', null, array($params[0]), $fromLogin);
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets/unsets new referee password.', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#New referee password:#variable# %s', null, array($params[0]), $fromLogin);
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1585,7 +1585,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->SetChatTime($newLimit);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin #variable#%s $z#admin_action#sets new chat time limit of #variable# %s #admin_action#minutes.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin #variable#%s $z#admin_action#sets new chat time limit of #variable# %s #admin_action#minutes.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1597,13 +1597,13 @@ Other server might use the same blacklist file!!');
             $this->dynamicTime = $params[0];
             $admin = $this->storage->getPlayerObject($fromLogin);
             if ($params[0] == 0) {
-                $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action# disables the dynamic time limit!', null, array($admin->nickName));
-                $this->exp_chatSendServerMessage('#admin_action#Static timelimit is set to #variable#5:00 #admin_action#minutes.');
+                $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action# disables the dynamic time limit!', null, array($admin->nickName));
+                $this->eXpChatSendServerMessage('#admin_action#Static timelimit is set to #variable#5:00 #admin_action#minutes.');
                 $this->connection->setTimeAttackLimit(300000);
 
                 return;
             }
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets dynamic time limit multiplier to #variable# %s #admin_action#!', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets dynamic time limit multiplier to #variable# %s #admin_action#!', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             print $e->getMessage();
             $this->sendErrorChat($fromLogin, $e->getMessage());
@@ -1615,7 +1615,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setTimeAttackLimit(TimeConversion::MStoTM($params[0]));
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new time limit of #variable# %s #admin_action#minutes.', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets new time limit of #variable# %s #admin_action#minutes.', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             print $e->getMessage();
             $this->sendErrorChat($fromLogin, $e->getMessage());
@@ -1640,7 +1640,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->allowMapDownload($bool);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#set allow download maps to#variable# %s', null, array($admin->nickName, $param1));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#set allow download maps to#variable# %s', null, array($admin->nickName, $param1));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1666,7 +1666,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setHideServer($output);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#set Hide Server to#variable# %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#set Hide Server to#variable# %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1694,7 +1694,7 @@ Other server might use the same blacklist file!!');
     {
         Dispatcher::dispatch(new ExpansionEvent(ExpansionEvent::ON_RESTART_START));
 
-        $this->exp_chatSendServerMessage("[Notice] restarting eXpansion...");
+        $this->eXpChatSendServerMessage("[Notice] restarting eXpansion...");
         $this->connection->sendHideManialinkPage();
         $this->connection->chatEnableManualRouting(false);
 
@@ -1749,7 +1749,7 @@ Other server might use the same blacklist file!!');
             \ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_SKIP));
             $this->connection->nextMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#skips the challenge!', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#skips the challenge!', null, array($admin->nickName));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1759,7 +1759,7 @@ Other server might use the same blacklist file!!');
     {
         try {
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
             if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Maps\Maps')) {
                 \ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_RESTART));
                 $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Maps\Maps', "replayMapInstant");
@@ -1779,7 +1779,7 @@ Other server might use the same blacklist file!!');
             \ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_SKIP));
             $this->connection->nextMap(false);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#skips the challenge!', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#skips the challenge!', null, array($admin->nickName));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1789,7 +1789,7 @@ Other server might use the same blacklist file!!');
     {
         try {
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
             if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Maps\Maps')) {
                 \ManiaLive\Event\Dispatcher::dispatch(new GlobalEvent(GlobalEvent::ON_ADMIN_RESTART));
                 $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Maps\Maps', "replayScoreReset");
@@ -1836,7 +1836,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setGameMode($gamemode);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets game mode to#variable# %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#sets game mode to#variable# %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e
         ) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
@@ -1849,7 +1849,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setAllWarmUpDuration($params[0]);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin #variable# %s #admin_action#sets all game modes warmup duration to#variable# %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin #variable# %s #admin_action#sets all game modes warmup duration to#variable# %s', null, array($admin->nickName, $params[0]));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
 
@@ -1865,14 +1865,14 @@ Other server might use the same blacklist file!!');
         if (!empty($vote->cmdName)) {
             try {
                 $this->connection->cancelVote();
-                $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#cancels the vote.', null, array($admin->nickName));
+                $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#cancels the vote.', null, array($admin->nickName));
 
                 return;
             } catch (Exception $e) {
-                $this->exp_chatSendServerMessage('#admin_error#Error: Server said %1$s', $admin->login, array($e->getMessage()));
+                $this->eXpChatSendServerMessage('#admin_error#Error: Server said %1$s', $admin->login, array($e->getMessage()));
             }
         } else {
-            $this->exp_chatSendServerMessage('#admin_error#Can\'t cancel a vote, no vote in progress!', $admin->login);
+            $this->eXpChatSendServerMessage('#admin_error#Can\'t cancel a vote, no vote in progress!', $admin->login);
         }
     }
 
@@ -1892,7 +1892,7 @@ Other server might use the same blacklist file!!');
         try {
             $this->connection->setDisableRespawn($bool);
             $admin = $this->storage->getPlayerObject($fromLogin);
-            $this->exp_chatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#set allow respawn to #variable# %s', null, array($admin->nickName, $param1));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#set allow respawn to #variable# %s', null, array($admin->nickName, $param1));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -2004,7 +2004,7 @@ Other server might use the same blacklist file!!');
     public function onStatusChanged($statusCode, $statusName)
     {
         if ($this->expStorage->simpleEnviTitle == Storage::TITLE_SIMPLE_TM && $statusCode == 6 && $this->dynamicTime > 0)
-            if ($this->exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TIMEATTACK) {
+            if ($this->eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TIMEATTACK) {
                 $map = $this->connection->getNextMapInfo();
                 $laps = $map->nbLaps;
                 if ($map->nbLaps <= 1) {
@@ -2022,20 +2022,20 @@ Other server might use the same blacklist file!!');
                 if ($newLimit < $min) {
                     $newLimit = $min;
                 }
-                if ($this->exp_getCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_SCRIPT) {
+                if ($this->eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_SCRIPT) {
                     $scriptLimit = $newLimit / 1000;
                     $this->connection->setModeScriptSettings(array("S_TimeLimit" => $scriptLimit));
                 } else {
                     $this->connection->setTimeAttackLimit(intval($newLimit));
                 }
 
-                $this->exp_chatSendServerMessage('#admin_action#Dynamic time limit set to: #variable#' . Time::fromTM($newLimit), null);
+                $this->eXpChatSendServerMessage('#admin_action#Dynamic time limit set to: #variable#' . Time::fromTM($newLimit), null);
             }
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
         ParameterDialog::EraseAll();
     }
 

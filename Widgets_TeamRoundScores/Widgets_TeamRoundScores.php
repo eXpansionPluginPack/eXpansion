@@ -21,12 +21,12 @@ class Widgets_TeamRoundScores extends ExpPlugin
     private $roundNumber = 0;
     private $totalScores = array();
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         $this->roundScores = array();
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         // $this->registerChatCommand("roundTest", "test", 0, false);
@@ -170,11 +170,11 @@ class Widgets_TeamRoundScores extends ExpPlugin
         Gui\Widgets\RoundScoreWidget::EraseAll();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $this->reset();
         $this->hideWidget();
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

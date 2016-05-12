@@ -14,7 +14,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
-    function exp_onReady()
+    function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->enableDatabase();
@@ -106,7 +106,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         Gui\Widgets\Donators::EraseAll();
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         $this->hide();
     }

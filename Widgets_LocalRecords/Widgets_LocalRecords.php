@@ -26,7 +26,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
@@ -34,7 +34,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $this->config = Config::getInstance();
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
 
@@ -59,7 +59,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
                 $panelMain->setSizeX($this->panelSizeX);
                 $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
                 if (!$this->config->isHorizontal) {
-                    if ($this->exp_getCurrentCompatibilityGameMode() != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+                    if ($this->eXpGetCurrentCompatibilityGameMode() != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
                         $panelMain->setDirection("right");
                     } else {
                         $panelMain->setDirection("left");
@@ -182,7 +182,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         self::$localrecords = $data;
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         Gui\Widgets\LocalPanel::EraseAll();
         Gui\Widgets\LocalPanel2::EraseAll();

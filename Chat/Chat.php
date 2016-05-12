@@ -40,12 +40,12 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $exclude = array();
     public $badWords = array();
 
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         $this->loadProfanityList();
     }
 
-    function exp_onReady()
+    function eXpOnReady()
     {
         $this->enableDedicatedEvents(Event::ON_PLAYER_CONNECT);
         $this->enableDedicatedEvents(Event::ON_PLAYER_DISCONNECT);
@@ -107,14 +107,14 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 if (array_key_exists($login, $this->exclude)) {
                     unset($this->exclude[$login]);
                 }
-                $this->exp_chatSendServerMessage(exp_getMessage("Chat messages enabled."), $login);
+                $this->eXpChatSendServerMessage(exp_getMessage("Chat messages enabled."), $login);
                 break;
             case "off":
                 $this->exclude[$login] = $login;
-                $this->exp_chatSendServerMessage(exp_getMessage("Chat messages disabled."), $login);
+                $this->eXpChatSendServerMessage(exp_getMessage("Chat messages disabled."), $login);
                 break;
             default:
-                $this->exp_chatSendServerMessage(exp_getMessage("Usage: /chat on or /chat off."), $login);
+                $this->eXpChatSendServerMessage(exp_getMessage("Usage: /chat on or /chat off."), $login);
                 break;
         }
     }
@@ -128,11 +128,11 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         switch (strtolower($command)) {
             case "enable":
                 $var->setRawValue(true);
-                $this->exp_chatSendServerMessage("#admin_action#Public chat is now #variable#Enabled");
+                $this->eXpChatSendServerMessage("#admin_action#Public chat is now #variable#Enabled");
                 break;
             case "disable":
                 $var->setRawValue(false);
-                $this->exp_chatSendServerMessage("#admin_action#Public chat is now #variable#Disabled");
+                $this->eXpChatSendServerMessage("#admin_action#Public chat is now #variable#Disabled");
                 break;
         }
     }
@@ -275,11 +275,11 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         $nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);
                         \ManiaLive\Utilities\Logger::getLog('chat')->write("[" . $login . "] " . $nickLog . " - " . $text);
                     } else {
-                        $this->exp_chatSendServerMessage("#error#Chat is disabled at at the moment!!! You can chat when you retire or go spectator. You may still use PM messages",
+                        $this->eXpChatSendServerMessage("#error#Chat is disabled at at the moment!!! You can chat when you retire or go spectator. You may still use PM messages",
                             $login, array());
                     }
                 } else {
-                    $this->exp_chatSendServerMessage("#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages",
+                    $this->eXpChatSendServerMessage("#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages",
                         $login, array());
                 }
             }
@@ -292,7 +292,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         Dispatcher::unregister(Event::getClass(), $this, Event::ON_PLAYER_CHAT);
         $this->connection->chatEnableManualRouting(false);

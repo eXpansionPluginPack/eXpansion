@@ -69,7 +69,7 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $this->config = Config::getInstance();
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->server = new Server();
         $this->server->create_fromConnection($this->connection, $this->storage);
@@ -207,7 +207,7 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $w->show();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         ServerPanel::EraseAll();
         ServerList::EraseAll();

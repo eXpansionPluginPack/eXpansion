@@ -16,12 +16,12 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         //	$this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
     }
 
-    function exp_onReady()
+    function eXpOnReady()
     {
         if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania')) {
             Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
@@ -45,18 +45,18 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function chat_cps($login, $value)
     {
         if (!is_numeric($value)) {
-            $this->exp_chatSendServerMessage(exp_getMessage('#error#"%s" is not a numeric value!'), null, array($value));
+            $this->eXpChatSendServerMessage(exp_getMessage('#error#"%s" is not a numeric value!'), null, array($value));
 
             return;
         }
 
         if ($value < 1) {
-            $this->exp_chatSendServerMessage(exp_getMessage('#error#"%s" is less than 1!'), null, array($value));
+            $this->eXpChatSendServerMessage(exp_getMessage('#error#"%s" is less than 1!'), null, array($value));
 
             return;
         }
 
-        $this->exp_chatSendServerMessage(exp_getMessage('#info#New time reference point set to %s'), null, array($value));
+        $this->eXpChatSendServerMessage(exp_getMessage('#info#New time reference point set to %s'), null, array($value));
         $this->references[$login] = (int)$value;
         $this->showPanel($login, $this->storage->getPlayerObject($login));
     }
@@ -227,7 +227,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->showPanel($record->login, false);
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
         Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);

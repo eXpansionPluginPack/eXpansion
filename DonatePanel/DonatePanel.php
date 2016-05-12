@@ -19,7 +19,7 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         $this->config = Config::getInstance();
@@ -30,14 +30,14 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $cmd->help = '/donate X where X is ammount of Planets';
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $window = DonatePanelWindow::Create();
         $window->setDisableAxis("x");
         $window->show();
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         DonatePanelWindow::EraseAll();
     }
@@ -62,7 +62,7 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (is_numeric($amount)) {
             $amount = (int)$amount;
         } else {
-            $this->exp_chatSendServerMessage('#error#Donate takes one argument and it needs to be numeric.', $login);
+            $this->eXpChatSendServerMessage('#error#Donate takes one argument and it needs to be numeric.', $login);
 
             return;
         }
@@ -72,7 +72,7 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $toLogin = $this->storage->serverLogin;
         }
 
-        $bill = $this->exp_startBill($login, $toLogin, $amount, 'Planets Donation', array($this, 'billSucess'));
+        $bill = $this->eXpStartBill($login, $toLogin, $amount, 'Planets Donation', array($this, 'billSucess'));
         $bill->setErrorCallback(5, array($this, 'billFail'));
         $bill->setErrorCallback(6, array($this, 'billFail'));
         $bill->setSubject('server_donation');
@@ -81,13 +81,13 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function billSucess(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill)
     {
         if ($bill->getDestination_login() != $this->storage->serverLogin) {
-            $this->exp_chatSendServerMessage('#donate#You donated #variable#' . $bill->getAmount() . '#donate# Planets to #variable#' . $toLogin . '$z$s#donate#', $bill->getSource_login());
+            $this->eXpChatSendServerMessage('#donate#You donated #variable#' . $bill->getAmount() . '#donate# Planets to #variable#' . $toLogin . '$z$s#donate#', $bill->getSource_login());
         } else {
             if ($bill->getAmount() < $this->config->donateAmountForGlobalMsg) {
-                $this->exp_chatSendServerMessage('#donate#You donated #variable#' . $bill->getAmount() . '#donate# Planets to server$z$s#donate#, Thank You.', $bill->getSource_login());
+                $this->eXpChatSendServerMessage('#donate#You donated #variable#' . $bill->getAmount() . '#donate# Planets to server$z$s#donate#, Thank You.', $bill->getSource_login());
             } else {
                 $fromPlayer = $this->storage->getPlayerObject($bill->getSource_login());
-                $this->exp_chatSendServerMessage('#donate#The server recieved a donation of #variable#' . $bill->getAmount() . '#donate# Planets from #variable#' . $fromPlayer->nickName . '$z$s#donate#, Thank You.', null);
+                $this->eXpChatSendServerMessage('#donate#The server recieved a donation of #variable#' . $bill->getAmount() . '#donate# Planets from #variable#' . $fromPlayer->nickName . '$z$s#donate#, Thank You.', null);
             }
         }
     }
@@ -97,14 +97,14 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($state == 5) { // No go
             $login = $bill->getSource_login();
 
-            $this->exp_chatSendServerMessage('#error#No Planets billed.', $login);
+            $this->eXpChatSendServerMessage('#error#No Planets billed.', $login);
         }
 
         if ($state == 6) {  // Error
             $login = $bill->getDestination_login();
             $fromPlayer = $this->storage->getPlayerObject($bill->getSource_login());
-            $this->exp_chatSendServerMessage('#error# There was error with player #variable#' . $fromPlayer->nickName . '$z$s#error# donation.');
-            $this->exp_chatSendServerMessage('#error#' . $stateName, $bill->getSource_login());
+            $this->eXpChatSendServerMessage('#error# There was error with player #variable#' . $fromPlayer->nickName . '$z$s#error# donation.');
+            $this->eXpChatSendServerMessage('#error#' . $stateName, $bill->getSource_login());
         }
     }
 

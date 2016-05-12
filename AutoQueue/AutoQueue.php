@@ -132,7 +132,7 @@ class AutoQueue extends ExpPlugin
                 $this->connection->forceSpectator($player->login, 2);
                 $this->connection->forceSpectator($player->login, 0);
                 $msg = exp_getMessage('You got free spot, good luck and have fun!');
-                $this->exp_chatSendServerMessage($msg, $player->login);
+                $this->eXpChatSendServerMessage($msg, $player->login);
             }
         }
         $this->widgetSyncList();
@@ -145,8 +145,8 @@ class AutoQueue extends ExpPlugin
         ) {
             if (in_array($target, $this->queue->getLogins())) {
                 $this->queue->remove($target);
-                $this->exp_chatSendServerMessage(exp_getMessage("Admin has removed you from queue!", $target));
-                $this->exp_chatSendServerMessage(exp_getMessage('Removed player %s $z$ffffrom queue'), $login,
+                $this->eXpChatSendServerMessage(exp_getMessage("Admin has removed you from queue!", $target));
+                $this->eXpChatSendServerMessage(exp_getMessage('Removed player %s $z$ffffrom queue'), $login,
                     array($this->storage->getPlayerObject($target)->nickName));
             }
         }
@@ -173,7 +173,7 @@ class AutoQueue extends ExpPlugin
         $this->widgetSyncList();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $ah = ActionHandler::getInstance();
         $ah->deleteAction(self::$enterAction);

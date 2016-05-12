@@ -24,7 +24,7 @@ class Minigame1 extends ExpPlugin
 
     private $tick = 0;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
 
         $this->enableTickerEvent();
@@ -50,7 +50,7 @@ class Minigame1 extends ExpPlugin
             $message = 'You won ' . $amount . 'p from ' . $this->storage->server->name . '$z$s minigame!' . "\n" . ' Congratulations! ';
 
             $this->connection->pay($login, $amount, $message);
-            $this->exp_chatSendServerMessage('%1$s $z$s#game1# wins #variable#%2$s #game1#planets', null, array($player->nickName, $amount));
+            $this->eXpChatSendServerMessage('%1$s $z$s#game1# wins #variable#%2$s #game1#planets', null, array($player->nickName, $amount));
         } catch (Exception $e) {
             $ac = AdminGroups::getInstance();
             $ac->announceToPermission(Permission::server_admin, "Minigame1 Error: " . $e->getMessage());
@@ -69,7 +69,7 @@ class Minigame1 extends ExpPlugin
         if ($this->tick > $this->timerGap) {
             if ($this->connection->getServerPlanets() < $this->config->mg1_serverPlanetsMin) {
                 $msg = exp_getMessage("#game1#The server has not enough #variable#Planets #game1#to run minigame, please #variable#Donate #game1#!");
-                $this->exp_chatSendServerMessage($msg);
+                $this->eXpChatSendServerMessage($msg);
             } else {
                 MinigameWidget::EraseAll();
                 $widget = MinigameWidget::Create(null);
@@ -97,7 +97,7 @@ class Minigame1 extends ExpPlugin
         return intval(rand($min, $max));
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         $ah = ActionHandler::getInstance();
         $ah->deleteAction(MinigameWidget::$action);
@@ -106,7 +106,7 @@ class Minigame1 extends ExpPlugin
         Gui::preloadRemove($this->config->mg1_imageFocusUrl);
         Gui::preloadUpdate();
 
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

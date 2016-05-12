@@ -15,7 +15,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public static $action_Lol;
     public static $action_Bg;
 
-    function exp_onLoad()
+    function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         EmotePanel::$emotePlugin = $this;
@@ -53,7 +53,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $nick = $player->nickName;
         $message = (string)$this->config->bootme[rand(0, count($this->config->bootme) - 1)];
 
-        $this->exp_chatSendServerMessage($nick . ' $z$s #emote#' . $message);
+        $this->eXpChatSendServerMessage($nick . ' $z$s #emote#' . $message);
         $this->connection->kick($login, "thanks for playing");
     }
 
@@ -62,7 +62,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $player = $this->storage->getPlayerObject($login);
         $nick = $player->nickName;
         $message = (string)$this->config->ragequit[rand(0, count($this->config->ragequit) - 1)];
-        $this->exp_chatSendServerMessage($nick . ' $z$s #emote#' . $message);
+        $this->eXpChatSendServerMessage($nick . ' $z$s #emote#' . $message);
         $this->connection->kick($login, "thanks for playing");
     }
 
@@ -216,7 +216,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
 
         if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Chat\Chat') && !\ManiaLivePlugins\eXpansion\Chat\Config::getInstance()->publicChatActive) {
-            $this->exp_chatSendServerMessage("#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages", $login, array());
+            $this->eXpChatSendServerMessage("#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages", $login, array());
 
             return;
         }
@@ -229,14 +229,14 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (count($args) >= 0) {
             if (($nick = $this->getPlayerNick($args[0])) == "") {
                 $text = implode(" ", $args);
-                $this->exp_chatSendServerMessage($player->nickName . '$z$s #emote#' . $message . " #emote#" . $text);
+                $this->eXpChatSendServerMessage($player->nickName . '$z$s #emote#' . $message . " #emote#" . $text);
             } else {
                 array_shift($args);
                 $text = implode(" ", $args);
-                $this->exp_chatSendServerMessage($player->nickName . '$z$s #emote#' . $message2 . ", " . $nick . " #emote#" . $text);
+                $this->eXpChatSendServerMessage($player->nickName . '$z$s #emote#' . $message2 . ", " . $nick . " #emote#" . $text);
             }
         } else {
-            $this->exp_chatSendServerMessage($player->nickName . '$z$s #emote#' . $message);
+            $this->eXpChatSendServerMessage($player->nickName . '$z$s #emote#' . $message);
         }
     }
 
@@ -269,10 +269,10 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $lines = explode("\n", $data);
         $message = (string)$lines[rand(0, count($lines) - 1)];
         $player = $this->storage->getPlayerObject($login);
-        $this->exp_chatSendServerMessage($player->nickName . '$z$s #emote#' . trim($message) . '$z$s');
+        $this->eXpChatSendServerMessage($player->nickName . '$z$s #emote#' . trim($message) . '$z$s');
     }
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         EmotePanel::EraseAll();
     }

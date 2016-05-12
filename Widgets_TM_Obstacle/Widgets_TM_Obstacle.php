@@ -27,7 +27,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TM_Obstacle;
 class Widgets_TM_Obstacle extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->displayWidget();
@@ -52,7 +52,7 @@ class Widgets_TM_Obstacle extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         Gui\Widgets\CpProgress::EraseAll();
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         Gui\Widgets\CpProgress::EraseAll();
     }

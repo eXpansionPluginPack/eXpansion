@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\DocGen;
 class DocGen extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    function exp_onReady()
+    function eXpOnReady()
     {
         $buffer = "<!doctype html>
 <html>

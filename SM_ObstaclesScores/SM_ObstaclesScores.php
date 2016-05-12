@@ -50,9 +50,9 @@ class SM_ObstaclesScores extends LocalBase
     protected $checkpoints = array();
 
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
-        parent::exp_onReady();
+        parent::eXpOnReady();
 
         $this->enableScriptEvents(array("onCheckpoint", "playerFinish"));
         // Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
@@ -84,7 +84,7 @@ class SM_ObstaclesScores extends LocalBase
         echo "\nScore : $login: cpindex: $cpIndex with $time \n";
     }*/
 
-    public function exp_onModeScriptCallback($param1, $param2)
+    public function eXpOnModeScriptCallback($param1, $param2)
     {
         switch ($param1) {
             case 'playerFinish' :

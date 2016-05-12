@@ -29,7 +29,7 @@ class NetStat extends ExpPlugin
     public static $netStat = array();
     private $cmdNetStat;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableApplicationEvents(Event::ON_POST_LOOP);
         $ahandler = ActionHandler::getInstance();
@@ -45,9 +45,9 @@ class NetStat extends ExpPlugin
 
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
         $admingroup = AdminGroups::getInstance();
         $admingroup->removeAdminCommand($this->cmdNetStat);
         $admingroup->removeShortAllias($this->cmdNetStat);

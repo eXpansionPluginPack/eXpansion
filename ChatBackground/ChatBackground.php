@@ -9,7 +9,7 @@ use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 class ChatBackground extends ExpPlugin
 {
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $window = BoxWindow::Create(null);
         $window->show();
@@ -24,10 +24,10 @@ class ChatBackground extends ExpPlugin
         }
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         BoxWindow::EraseAll();
-        parent::exp_onUnload();
+        parent::eXpOnUnload();
     }
 
 }

@@ -162,7 +162,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         );
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
 
         //Recovering the multi language messages
@@ -239,7 +239,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $cmd->setHelp("Will force the save of the records changes in the Database");
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         //Creating the records table
         if (!$this->db->tableExists("exp_records")) {
@@ -412,13 +412,13 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
         //Sending begin map messages
         if (sizeof($this->currentChallengeRecords) == 0 && $this->config->sendBeginMapNotices) {
-            $this->exp_chatSendServerMessage(
+            $this->eXpChatSendServerMessage(
                 $this->msg_newMap, null, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'))
             );
         } else if ($this->config->sendBeginMapNotices) {
             $time = $this->formatScore($this->currentChallengeRecords[0]->time);
 
-            $this->exp_chatSendServerMessage(
+            $this->eXpChatSendServerMessage(
                 $this->msg_BeginMap, null, array(\ManiaLib\Utils\Formatting::stripCodes(
                     $this->storage->currentMap->name, 'wosnm'
                 ), $time, \ManiaLib\Utils\Formatting::stripCodes($this->currentChallengeRecords[0]->nickName, 'wosnm'))
@@ -511,13 +511,13 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
         //Send a message telling him about records on this map
         if (sizeof($this->currentChallengeRecords) == 0 && $this->config->sendBeginMapNotices) {
-            $this->exp_chatSendServerMessage(
+            $this->eXpChatSendServerMessage(
                 $this->msg_newMap, $login, array(\ManiaLib\Utils\Formatting::stripCodes($this->storage->currentMap->name, 'wosnm'))
             );
         } else if ($this->config->sendBeginMapNotices) {
             $time = $this->formatScore($this->currentChallengeRecords[0]->time);
 
-            $this->exp_chatSendServerMessage(
+            $this->eXpChatSendServerMessage(
                 $this->msg_BeginMap, $login, array(\ManiaLib\Utils\Formatting::stripCodes(
                     $this->storage->currentMap->name, 'wosnm'
                 ), $time, \ManiaLib\Utils\Formatting::stripCodes($this->currentChallengeRecords[0]->nickName, 'wosnm'))
@@ -573,7 +573,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             $record->time = $score;
             $record->nbFinish = 1;
             $record->avgScore = $score;
-            $record->gamemode = self::exp_getCurrentCompatibilityGameMode();
+            $record->gamemode = self::eXpGetCurrentCompatibilityGameMode();
             $record->nation = $player->path;
             $record->uId = $uid;
             $record->place = sizeof($this->currentChallengeRecords) + 1;
@@ -687,13 +687,13 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                             $msg = $this->msg_equals_top1;
                     }
                     if ($nrecord->place <= $this->config->recordPublicMsgTreshold) {
-                        $this->exp_chatSendServerMessage(
+                        $this->eXpChatSendServerMessage(
                             $msg, null, array(\ManiaLib\Utils\Formatting::stripCodes(
                                 $nrecord->nickName, 'wosnm'
                             ), $nrecord->place, $time)
                         );
                     } else {
-                        $this->exp_chatSendServerMessage(
+                        $this->eXpChatSendServerMessage(
                             $msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes(
                                 $nrecord->nickName, 'wosnm'
                             ), $nrecord->place, $time)
@@ -708,13 +708,13 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                             $msg = $this->msg_secure_top1;
                     }
                     if ($nrecord->place <= $this->config->recordPublicMsgTreshold) {
-                        $this->exp_chatSendServerMessage(
+                        $this->eXpChatSendServerMessage(
                             $msg, null, array(\ManiaLib\Utils\Formatting::stripCodes(
                                 $nrecord->nickName, 'wosnm'
                             ), $nrecord->place, $time, $recordrank_old, $securedBy)
                         );
                     } else {
-                        $this->exp_chatSendServerMessage(
+                        $this->eXpChatSendServerMessage(
                             $msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes(
                                 $nrecord->nickName, 'wosnm'
                             ), $nrecord->place, $time, $recordrank_old, $securedBy)
@@ -737,13 +737,13 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 }
 
                 if ($nrecord->place <= $this->config->recordPublicMsgTreshold) {
-                    $this->exp_chatSendServerMessage(
+                    $this->eXpChatSendServerMessage(
                         $msg, null, array(\ManiaLib\Utils\Formatting::stripCodes(
                             $nrecord->nickName, 'wosnm'
                         ), $nrecord->place, $time, $recordrank_old, $securedBy)
                     );
                 } else {
-                    $this->exp_chatSendServerMessage(
+                    $this->eXpChatSendServerMessage(
                         $msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes(
                             $nrecord->nickName, 'wosnm'
                         ), $nrecord->place, $time, $recordrank_old, $securedBy)
@@ -762,13 +762,13 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                         $msg = $this->msg_new_top1;
                 }
                 if ($nrecord->place <= $this->config->recordPublicMsgTreshold) {
-                    $this->exp_chatSendServerMessage(
+                    $this->eXpChatSendServerMessage(
                         $msg, null, array(\ManiaLib\Utils\Formatting::stripCodes(
                             $nrecord->nickName, 'wosnm'
                         ), $nrecord->place, $time)
                     );
                 } else {
-                    $this->exp_chatSendServerMessage(
+                    $this->eXpChatSendServerMessage(
                         $msg, $login, array(\ManiaLib\Utils\Formatting::stripCodes(
                             $nrecord->nickName, 'wosnm'
                         ), $nrecord->place, $time)
@@ -873,7 +873,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function deleteRecordOfPlayerOnMap($adminLogin, $login)
     {
         if ($this->expStorage->isRelay) {
-            $this->exp_chatSendServerMessage("#admin_error#Can't delete a record on Relay server.", $adminLogin);
+            $this->eXpChatSendServerMessage("#admin_error#Can't delete a record on Relay server.", $adminLogin);
         }
 
         if (isset($this->currentChallengePlayerRecords[$login])) {
@@ -881,13 +881,13 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
             if ($record->isDelete) {
                 $record->isDelete = false;
-                $this->exp_chatSendServerMessage("#admin_action#Delete of record player canceled!", $adminLogin);
+                $this->eXpChatSendServerMessage("#admin_action#Delete of record player canceled!", $adminLogin);
             } else {
-                $this->exp_chatSendServerMessage("#admin_action#Record of player deleted! Restart map to take in account.", $adminLogin);
+                $this->eXpChatSendServerMessage("#admin_action#Record of player deleted! Restart map to take in account.", $adminLogin);
                 $record->isDelete = true;
             }
         } else {
-            $this->exp_chatSendServerMessage("#admin_error#Player doesn't have a record on this map! can't delete.", $adminLogin);
+            $this->eXpChatSendServerMessage("#admin_error#Player doesn't have a record on this map! can't delete.", $adminLogin);
         }
     }
 
@@ -940,7 +940,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $challenge = $this->storage->currentMap;
 
         if ($gamemode === null || $gamemode == '') {
-            $gamemode = self::exp_getCurrentCompatibilityGameMode();
+            $gamemode = self::eXpGetCurrentCompatibilityGameMode();
         }
 
         $cons = "";
@@ -1090,7 +1090,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         }
 
         if ($gamemode === null || $gamemode == '') {
-            $gamemode = self::exp_getCurrentCompatibilityGameMode();
+            $gamemode = self::eXpGetCurrentCompatibilityGameMode();
         }
 
         $cons = "";
@@ -1211,7 +1211,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function useLapsConstraints()
     {
         if (!$this->config->lapsModeCount1lap) {
-            $gamemode = self::exp_getCurrentCompatibilityGameMode();
+            $gamemode = self::eXpGetCurrentCompatibilityGameMode();
 
             if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK || $gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS || $gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS || $gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP) {
                 $nbLaps = $this->getNbOfLaps();
@@ -1266,7 +1266,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $window->populateList($records, $this->config->recordsCount, $currentMap, $this);
         $window->show();
         /* } catch (\Exception $e) {
-          $this->exp_chatSendServerMessage("Error: %s", $login, array($e->getMessage()));
+          $this->eXpChatSendServerMessage("Error: %s", $login, array($e->getMessage()));
           } */
     }
 
@@ -1647,10 +1647,10 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             //}
             $rankTotal = $this->getTotalRanked();
             if ($rank > 0) {
-                $this->exp_chatSendServerMessage($this->msg_showRank, $login, array($rank, $rankTotal));
+                $this->eXpChatSendServerMessage($this->msg_showRank, $login, array($rank, $rankTotal));
             } else {
                 // reaby disabled this, people doesn't like error messages
-                // $this->exp_chatSendServerMessage($this->msg_noRank, $login, array());
+                // $this->eXpChatSendServerMessage($this->msg_noRank, $login, array());
             }
         }
     }
@@ -1661,7 +1661,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             $record = $this->getCurrentChallangePlayerRecord($login);
             if (!$record) {
                 // reaby disabed this, ppl doesn't like error messages!
-                // $this->exp_chatSendServerMessage($this->msg_noPB, $login, array());
+                // $this->eXpChatSendServerMessage($this->msg_noPB, $login, array());
             } else {
                 $time = $this->formatScore($record->time);
                 $avg = $this->formatScore($record->avgScore);
@@ -1672,7 +1672,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                     $place = '--';
                 }
 
-                $this->exp_chatSendServerMessage(
+                $this->eXpChatSendServerMessage(
                     $this->msg_personalBest, $login, array($time, $place, $avg, $record->nbFinish)
                 );
             }
@@ -1682,7 +1682,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     public function chat_forceSave($login)
     {
         $this->onEndMatch(array(), array());
-        $this->exp_chatSendServerMessage($this->msg_admin_savedRecs, $login);
+        $this->eXpChatSendServerMessage($this->msg_admin_savedRecs, $login);
     }
 
     /**
@@ -1723,7 +1723,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
 
-    function exp_onUnload()
+    function eXpOnUnload()
     {
         Dispatcher::unregister(ExpansionEvent::ON_RESTART_START, $this);
         $this->onEndMatch(array(), array());

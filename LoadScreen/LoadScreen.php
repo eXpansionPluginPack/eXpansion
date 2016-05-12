@@ -45,7 +45,7 @@ class LoadScreen extends ExpPlugin
     /** @var DataAccess */
     private $dataAccess;
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->enableTickerEvent();
@@ -164,7 +164,7 @@ class LoadScreen extends ExpPlugin
         }
     }
 
-    public function exp_onUnload()
+    public function eXpOnUnload()
     {
         Dispatcher::unregister(Event::getClass(), $this, Event::ON_END_MATCH);
     }

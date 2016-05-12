@@ -21,9 +21,9 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->config = Config::getInstance();
     }
 
-    public function exp_onLoad()
+    public function eXpOnLoad()
     {
-        parent::exp_onLoad();
+        parent::eXpOnLoad();
         try {
             $this->enableDatabase();
         } catch (\Exception $e) {
@@ -51,7 +51,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $cmd->setMinParam(0);
     }
 
-    public function exp_onReady()
+    public function eXpOnReady()
     {
 
     }
@@ -352,11 +352,11 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $msg_self = exp_getMessage('#rank#Congratulations for your #variable#%1$s#rank# win!');
             $wins = $this->numberize($w);
             if ($w <= 100 && $w % 10 == 0) {
-                $this->exp_chatSendServerMessage($msg_pub, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wosnm"), $wins));
+                $this->eXpChatSendServerMessage($msg_pub, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wosnm"), $wins));
             } else if ($w % 25 == 0) {
-                $this->exp_chatSendServerMessage($msg_pub, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wosnm"), $wins));
+                $this->eXpChatSendServerMessage($msg_pub, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wosnm"), $wins));
             } else {
-                $this->exp_chatSendServerMessage($msg_self, $player->login, array($wins));
+                $this->eXpChatSendServerMessage($msg_self, $player->login, array($wins));
             }
         }
     }
