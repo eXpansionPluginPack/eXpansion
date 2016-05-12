@@ -41,7 +41,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     const VOTE_POOR = -2;
     const VOTE_WASTE = -3;
 
-    function exp_onInit()
+    function expOnInit()
     {
         $this->config = Config::getInstance();
 

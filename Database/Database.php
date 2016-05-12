@@ -16,7 +16,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     private $config;
 
-    function exp_onInit()
+    function expOnInit()
     {
         $this->config = Config::getInstance();
     }

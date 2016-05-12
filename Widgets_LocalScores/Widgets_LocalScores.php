@@ -17,7 +17,7 @@ class Widgets_LocalScores extends ExpPlugin implements Listener
     /** @var Config */
     private $config;
 
-    public function exp_onInit()
+    public function expOnInit()
     {
         $this->addDependency(new Dependency('\\ManiaLivePlugins\\eXpansion\\SM_PlatformScores\\SM_PlatformScores'));
     }

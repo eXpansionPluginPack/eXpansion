@@ -72,7 +72,7 @@ class Maps extends ExpPlugin
     private $is_onBeginMatch = false;
     private $is_onEndMatch = false;
 
-    public function exp_onInit()
+    public function expOnInit()
     {
 
         $this->messages = new \StdClass();

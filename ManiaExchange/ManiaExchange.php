@@ -28,7 +28,7 @@ class ManiaExchange extends ExpPlugin
     private $dataAccess;
     private $cmd_add;
 
-    public function exp_onInit()
+    public function expOnInit()
     {
         $this->config = Config::getInstance();
     }

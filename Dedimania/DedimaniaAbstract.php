@@ -52,7 +52,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
     public static $actionOpenRecs = -1;
     public static $actionOpenCps = -1;
 
-    public function exp_onInit()
+    public function expOnInit()
     {
         $this->setPublicMethod("isRunning");
         $this->config = Config::getInstance();

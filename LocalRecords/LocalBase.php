@@ -128,7 +128,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public static $openCpsAction = -1;
 
-    function exp_onInit()
+    function expOnInit()
     {
         //Activating debug for records only
         $this->debug = self::DEBUG_NONE;

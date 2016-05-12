@@ -21,7 +21,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     private $config;
     private $panelSizeX = 42;
 
-    public function exp_onInit()
+    public function expOnInit()
     {
         $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }

@@ -23,7 +23,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $mumble_feed;
     private $channels;
 
-    function exp_onInit()
+    function expOnInit()
     {
         //Important for all eXpansion plugins.
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);

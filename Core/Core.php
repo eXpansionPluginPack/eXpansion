@@ -111,7 +111,7 @@ class Core extends types\ExpPlugin
     /**
      * Declares what is necessary for expansion ro run.
      */
-    function exp_onInit()
+    function expOnInit()
     {
         //File to log expansion console logs
         $logFile = "manialive-" . $this->storage->serverLogin . ".console.log";

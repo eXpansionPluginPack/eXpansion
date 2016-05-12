@@ -157,7 +157,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types
 
             $this->setPublicMethod('onSettingsChanged');
 
-            $this->exp_onInit();
+            $this->expOnInit();
 
             Dispatcher::register(GameSettingsEvent::getClass(), $this);
             Dispatcher::register(PlayerEvent::getClass(), $this);
@@ -191,7 +191,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types
          *
          * @abstract
          */
-        public function exp_onInit() {
+        public function expOnInit() {
 
         }
 
@@ -394,7 +394,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types
                   $msg = call_user_func_array('sprintf', $args);
                   $this->eXpAnnounce($msg);
                  */
-                $this->exp_multilangAnnounce($msg, $args);
+                $this->eXpMultilangAnnounce($msg, $args);
             }
             else {
                 array_unshift($args, $msg, $login);
@@ -899,7 +899,7 @@ namespace
     set_error_handler('\\ManiaLivePlugins\\eXpansion\\Core\\types\\ErrorHandler::createExceptionFromError');
 
     /*
-    // moved to core exp_onInit
+    // moved to core expOnInit
       if (!defined("DEBUG")) {
         $config = ManiaLivePlugins\eXpansion\Core\Config::getInstance();
         define("DEBUG", filter_var($config->debug, FILTER_VALIDATE_BOOLEAN));

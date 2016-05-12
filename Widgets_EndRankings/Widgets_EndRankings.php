@@ -9,7 +9,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 {
     private $wasWarmup = false;
 
-    function exp_onInit()
+    function expOnInit()
     {
         $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }

@@ -7,7 +7,7 @@ use \ManiaLivePlugins\eXpansion\CheckpointCount\Gui\Widgets\CPPanel;
 class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    function exp_onInit()
+    function expOnInit()
     {
         //Important for all eXpansion plugins.
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);

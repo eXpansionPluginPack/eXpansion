@@ -22,7 +22,7 @@ class ExpPlugin extends BasicPlugin
         return \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION;
     }
 
-    public function exp_onInit()
+    public function expOnInit()
     {
 
     }

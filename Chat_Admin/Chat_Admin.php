@@ -53,9 +53,9 @@ class Chat_Admin extends ExpPlugin
 
     public static $showActions = array();
 
-    public function exp_onInit()
+    public function expOnInit()
     {
-        parent::exp_onInit();
+        parent::expOnInit();
         ParameterDialog::$mainPlugin = $this;
         $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups'));
 

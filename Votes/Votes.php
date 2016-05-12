@@ -17,7 +17,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $resCount = 0;
     private $lastMapUid = "";
 
-    function exp_onInit()
+    function expOnInit()
     {
         $this->config = Config::getInstance();
     }

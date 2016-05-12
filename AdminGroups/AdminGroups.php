@@ -117,9 +117,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     static public $txt_noPermissionMsg;
     static public $txt_permissions = array();
 
-    public function exp_onInit()
+    public function expOnInit()
     {
-        parent::exp_onInit();
+        parent::expOnInit();
         self::$instance = $this;
 
         //Recovering the configuration

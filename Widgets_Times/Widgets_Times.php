@@ -11,7 +11,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
     protected $references = array();
 
-    function exp_onInit()
+    function expOnInit()
     {
         //	$this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }

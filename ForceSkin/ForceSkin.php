@@ -12,7 +12,7 @@ class ForceSkin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
     /** @var Config */
-    public function exp_onInit()
+    public function expOnInit()
     {
         $this->config = Config::getInstance();
     }

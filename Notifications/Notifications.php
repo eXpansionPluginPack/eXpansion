@@ -13,7 +13,7 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     private $personalMessages = array(array());
 
-    function exp_onInit()
+    function expOnInit()
     {
         $this->setPublicMethod("send");
     }
