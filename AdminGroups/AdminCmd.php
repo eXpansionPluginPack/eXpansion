@@ -42,8 +42,15 @@ class AdminCmd
     /** @var int */
     private $minParam = 0;
 
-    function __construct($cmd, $class, $function, $permission)
-    {
+    /**
+     * AdminCmd constructor.
+     *
+     * @param $cmd
+     * @param $class
+     * @param $function
+     * @param $permission
+     */
+    public function __construct($cmd, $class, $function, $permission) {
         $this->cmd = $cmd;
         $this->class = $class;
         $this->function = $function;
@@ -57,8 +64,7 @@ class AdminCmd
      *
      * @return string
      */
-    public function cmd($login, $param)
-    {
+    public function cmd($login, $param) {
         if ($this->class != null && method_exists($this->class, $this->function)) {
 
             /*
@@ -66,15 +72,17 @@ class AdminCmd
              */
 
             //Parameter count
-            if (sizeof($param) < $this->minParam)
+            if (sizeof($param) < $this->minParam) {
                 return __("This command expect at least one parameter");
+            }
 
             //All Parameters.
             foreach ($this->checker as $cmd_num => $checkers) {
-                if (isset($param[$cmd_num]) && is_array($checkers)) {
+                if (isset($param[ $cmd_num ]) && is_array($checkers)) {
                     foreach ($checkers as $check) {
-                        if (!$check->check($param[$cmd_num]))
+                        if (! $check->check($param[ $cmd_num ])) {
                             return $check->getErrorMsg();
+                        }
                     }
                 }
             }
@@ -93,16 +101,14 @@ class AdminCmd
      *
      * @return string
      */
-    public function getCmd()
-    {
+    public function getCmd() {
         return $this->cmd;
     }
 
     /**
      * @return int
      */
-    public function getMinParam()
-    {
+    public function getMinParam() {
         return $this->minParam;
     }
 
@@ -112,8 +118,7 @@ class AdminCmd
      *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
-    public function setMinParam($minParam)
-    {
+    public function setMinParam($minParam) {
         $this->minParam = $minParam;
 
         return $this;
@@ -126,9 +131,8 @@ class AdminCmd
      *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
-    public function addchecker($numParam, types\absChecker $check)
-    {
-        $this->checker[$numParam - 1][] = $check;
+    public function addchecker($numParam, types\absChecker $check) {
+        $this->checker[ $numParam - 1 ][] = $check;
 
         return $this;
     }
@@ -136,8 +140,7 @@ class AdminCmd
     /**
      * @return string
      */
-    public function getPermission()
-    {
+    public function getPermission() {
         return $this->permission;
     }
 
@@ -145,8 +148,7 @@ class AdminCmd
      *
      * @return string
      */
-    public function getHelp()
-    {
+    public function getHelp() {
         return $this->help;
     }
 
@@ -156,8 +158,7 @@ class AdminCmd
      *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
-    public function setHelp($help)
-    {
+    public function setHelp($help) {
         $this->help = $help;
 
         return $this;
@@ -167,8 +168,7 @@ class AdminCmd
      *
      * @return string
      */
-    public function getHelpMore()
-    {
+    public function getHelpMore() {
         return $this->helpMore;
     }
 
@@ -178,8 +178,7 @@ class AdminCmd
      *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
-    public function setHelpMore($helpMore)
-    {
+    public function setHelpMore($helpMore) {
         $this->helpMore = $helpMore;
 
         return $this;
@@ -191,31 +190,27 @@ class AdminCmd
      *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
-    public function addLineHelpMore($line)
-    {
-        if ($this->helpMore == null)
+    public function addLineHelpMore($line) {
+        if ($this->helpMore == null) {
             $this->helpMore = $line;
-        else
+        }
+        else {
             $this->helpMore .= "\n" . $line;
+        }
 
         return $this;
     }
 
-    public function addAlias($cmd)
-    {
+    public function addAlias($cmd) {
         $this->aliases[] = $cmd;
     }
 
-    public function getAliases()
-    {
+    public function getAliases() {
         return $this->aliases;
     }
 
-    public function deactivate()
-    {
+    public function deactivate() {
         $this->class = null;
     }
 
 }
-
-?>

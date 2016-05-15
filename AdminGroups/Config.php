@@ -11,5 +11,3 @@ class Config extends \ManiaLib\Utils\Singleton
 {
     public $fileName = null;
 }
-
-?>

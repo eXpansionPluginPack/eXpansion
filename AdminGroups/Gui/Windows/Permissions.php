@@ -97,7 +97,7 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $cInherit = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 15, $cPermission);
                 $cInherit->setText('$fff' . __(AdminGroups::$txt_inherits, $this->getRecipient()) . "?");
                 $cInherit->setScale(0.8);
-                if ($this->group->getPermission($key) == AdminGroups::unknownPermission) {
+                if ($this->group->getPermission($key) == AdminGroups::UNKNOWN_PERMISSION) {
                     $cPermission->SetIsWorking(false);
                     $cInherit->setStatus(true);
                 } else {
@@ -120,12 +120,12 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $permission = $val[0];
 
             if ($inheritance == null) {
-                $newPermissions[$key] = $permission->getStatus() == false ? AdminGroups::unknownPermission : AdminGroups::havePermission;
+                $newPermissions[$key] = $permission->getStatus() == false ? AdminGroups::UNKNOWN_PERMISSION : AdminGroups::HAVE_PERMISSION;
             } else {
                 if ($inheritance->getStatus())
-                    $newPermissions[$key] = AdminGroups::unknownPermission;
+                    $newPermissions[$key] = AdminGroups::UNKNOWN_PERMISSION;
                 else {
-                    $newPermissions[$key] = $permission->getStatus() == false ? AdminGroups::noPermission : AdminGroups::havePermission;
+                    $newPermissions[$key] = $permission->getStatus() == false ? AdminGroups::NO_PERMISSION : AdminGroups::HAVE_PERMISSION;
                 }
             }
         }

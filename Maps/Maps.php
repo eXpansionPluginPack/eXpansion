@@ -1023,7 +1023,7 @@ class Maps extends ExpPlugin
     function emptyWishes($login)
     {
         if (!AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_ADMIN)) {
-            $this->eXpChatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
+            $this->eXpChatSendServerMessage(AdminGroups::getNoPermissionMsg(), $login);
 
             return;
         }
@@ -1149,7 +1149,7 @@ class Maps extends ExpPlugin
     public function addMaps($login)
     {
         if (!AdminGroups::hasPermission($login, Permission::MAP_ADD_LOCAL)) {
-            $this->eXpChatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
+            $this->eXpChatSendServerMessage(AdminGroups::getNoPermissionMsg(), $login);
 
             return;
         }
@@ -1175,7 +1175,7 @@ class Maps extends ExpPlugin
     public function addMxMap($login, $params)
     {
         if (!AdminGroups::hasPermission($login, Permission::MAP_ADD_MX)) {
-            $this->eXpChatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
+            $this->eXpChatSendServerMessage(AdminGroups::getNoPermissionMsg(), $login);
 
             return;
         }
