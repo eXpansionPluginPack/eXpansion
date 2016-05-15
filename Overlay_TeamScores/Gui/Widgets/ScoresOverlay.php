@@ -68,7 +68,7 @@ class ScoresOverlay extends \ManiaLive\Gui\Window
         $this->team1->setAction(self::$action);
         $this->team2->setAction(self::$action2);
 
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), \ManiaLivePlugins\eXpansion\AdminGroups\Permission::game_settings)) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($this->getRecipient(), \ManiaLivePlugins\eXpansion\AdminGroups\Permission::GAME_SETTINGS)) {
             $this->button = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
             $this->button->colorize("0000");
             $this->button->setAlign("center", "center");

@@ -96,26 +96,26 @@ class Maps extends ExpPlugin
     public function eXpOnReady()
     {
 
-        $cmd = AdminGroups::addAdminCommand('map remove', $this, 'chat_removeMap', Permission::map_removeMap);
+        $cmd = AdminGroups::addAdminCommand('map remove', $this, 'chat_removeMap', Permission::MAP_REMOVE_MAP);
         $cmd->setHelp(exp_getMessage('Removes current map from the playlist.'));
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, "remove");
         $this->cmd_remove = $cmd;
 
-        $cmd = AdminGroups::addAdminCommand('map erase', $this, 'chat_eraseMap', Permission::map_removeMap);
+        $cmd = AdminGroups::addAdminCommand('map erase', $this, 'chat_eraseMap', Permission::MAP_REMOVE_MAP);
         $cmd->setHelp(exp_getMessage('Erases current map from the playlist.'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "nuke this");
         AdminGroups::addAlias($cmd, "trash this");
         $this->cmd_erease = $cmd;
 
-        $cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', Permission::map_restart);
+        $cmd = AdminGroups::addAdminCommand('replaymap', $this, 'replayMap', Permission::MAP_RES);
         $cmd->setHelp(exp_getMessage('Sets current challenge to replay at end of match'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "replay");
         $this->cmd_replay = $cmd;
 
-        $cmd = AdminGroups::addAdminCommand('previous', $this, 'previousMap', Permission::map_restart);
+        $cmd = AdminGroups::addAdminCommand('previous', $this, 'previousMap', Permission::MAP_RES);
         $cmd->setHelp(exp_getMessage('Adds previous map back to the Jukebox.'));
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "prev");
@@ -416,7 +416,7 @@ class Maps extends ExpPlugin
                     $this->chat_dropQueue($login);
                     break;
                 case "reset":
-                    if (AdminGroups::hasPermission($login, Permission::map_jukebox_admin)) {
+                    if (AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_ADMIN)) {
                         $this->emptyWishes($login);
                     }
                     break;
@@ -521,7 +521,7 @@ class Maps extends ExpPlugin
 
         $amount = $this->getQueuAmount();
 
-        if ($amount == 0 || AdminGroups::hasPermission($login, Permission::map_jukebox_free)) $this->queueMap($login, $map, $isTemp);
+        if ($amount == 0 || AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_FREE)) $this->queueMap($login, $map, $isTemp);
         else if ($amount != -1) {
             if ($this->checkQueuMap($login, $map, true)) {
 
@@ -591,7 +591,7 @@ class Maps extends ExpPlugin
                 return false;
             }
 
-            if (!AdminGroups::hasPermission($login, Permission::map_jukebox_admin) && $queue->player->login == $login) {
+            if (!AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_ADMIN) && $queue->player->login == $login) {
                 $msg = exp_getMessage('#admin_error# $iYou already have a map in the queue...');
                 if ($sendMessages) $this->eXpChatSendServerMessage($msg, $login);
 
@@ -720,7 +720,7 @@ class Maps extends ExpPlugin
      */
     public function removeMap($login, Map $map)
     {
-        if (!AdminGroups::hasPermission($login, Permission::map_removeMap)) {
+        if (!AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
             $msg = exp_getMessage('#admin_error# $iYou are not allowed to do that!');
             $this->eXpChatSendServerMessage($msg, $login);
 
@@ -746,7 +746,7 @@ class Maps extends ExpPlugin
      */
     public function eraseMap($login, Map $map)
     {
-        if (!AdminGroups::hasPermission($login, Permission::map_removeMap)) {
+        if (!AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
             $msg = exp_getMessage('#admin_error# $iYou are not allowed to do that!');
             $this->eXpChatSendServerMessage($msg, $login);
 
@@ -1022,7 +1022,7 @@ class Maps extends ExpPlugin
      */
     function emptyWishes($login)
     {
-        if (!AdminGroups::hasPermission($login, Permission::map_jukebox_admin)) {
+        if (!AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_ADMIN)) {
             $this->eXpChatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
 
             return;
@@ -1148,7 +1148,7 @@ class Maps extends ExpPlugin
      */
     public function addMaps($login)
     {
-        if (!AdminGroups::hasPermission($login, Permission::map_addLocal)) {
+        if (!AdminGroups::hasPermission($login, Permission::MAP_ADD_LOCAL)) {
             $this->eXpChatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
 
             return;
@@ -1174,7 +1174,7 @@ class Maps extends ExpPlugin
      */
     public function addMxMap($login, $params)
     {
-        if (!AdminGroups::hasPermission($login, Permission::map_addMX)) {
+        if (!AdminGroups::hasPermission($login, Permission::MAP_ADD_MX)) {
             $this->eXpChatSendServerMessage(AdminGroups::GetnoPermissionMsg(), $login);
 
             return;

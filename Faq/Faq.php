@@ -54,7 +54,7 @@ class Faq extends ExpPlugin
     {
 
         $showTo = $login;
-        if (AdminGroups::hasPermission($login, Permission::game_settings)) {
+        if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
             if (!empty($recipient)) {
                 if (array_key_exists($recipient, $this->storage->players)) {
                     $showTo = $recipient;

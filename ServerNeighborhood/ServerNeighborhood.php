@@ -87,7 +87,7 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
             if (!$status) {
                 $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
-                $admins->announceToPermission(Permission::expansion_pluginSettings, "#admin_error#[ServerNeighborhoo]Storage path is wrong. Can't write!!");
+                $admins->announceToPermission(Permission::EXPANSION_PLUGIN_SETTINGS, "#admin_error#[ServerNeighborhoo]Storage path is wrong. Can't write!!");
             }
         }
 

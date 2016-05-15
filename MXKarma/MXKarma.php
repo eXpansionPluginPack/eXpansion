@@ -89,7 +89,7 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
         if (!$this->mxConnection->isConnected()) {
             if (empty($this->config->mxKarmaServerLogin) || empty($this->config->mxKarmaApiKey)) {
                 $admins->announceToPermission(
-                    Permission::expansion_pluginSettings, "#admin_error#Server login or/and Server code is empty in MXKarma Configuration"
+                    Permission::EXPANSION_PLUGIN_SETTINGS, "#admin_error#Server login or/and Server code is empty in MXKarma Configuration"
                 );
                 $this->console("Server code or/and login is not configured for MXKarma plugin!");
 
@@ -98,7 +98,7 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
             $this->mxConnection->connect($this->config->mxKarmaServerLogin, $this->config->mxKarmaApiKey);
         } else {
             $admins->announceToPermission(
-                Permission::expansion_pluginSettings, "#admin_error#Tried to connect to MXKarma, but connection is already made."
+                Permission::EXPANSION_PLUGIN_SETTINGS, "#admin_error#Tried to connect to MXKarma, but connection is already made."
             );
             $this->console("Tried to connect to MXKarma, but connection is already made.");
         }

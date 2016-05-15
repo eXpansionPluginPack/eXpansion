@@ -102,7 +102,7 @@ class JoinLeaveMessage extends ExpPlugin
             $player = $this->storage->getPlayerObject($login);
             if ($player === null) {
                 $msg = "#admin_error#a player with login '#variable#" . $login . "#admin_error#' connected, but no player object for this login exist.";
-                AdminGroups::announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin, "");
+                AdminGroups::announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::SERVER_ADMIN, "");
 
                 return;
             }
@@ -124,10 +124,10 @@ class JoinLeaveMessage extends ExpPlugin
             if ($config->hideFromPlayers) {
                 $ag = AdminGroups::getInstance();
                 if ($config->showTotalPlayOnJoin) {
-                    $ag->announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin, $this->joinMsgTime,
+                    $ag->announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::SERVER_ADMIN, $this->joinMsgTime,
                         $joinTimeArgs);
                 } else {
-                    $ag->announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin, $this->joinMsg, $joinArgs);
+                    $ag->announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::SERVER_ADMIN, $this->joinMsg, $joinArgs);
                 }
             } else {
                 if ($config->showTotalPlayOnJoin) {
@@ -156,7 +156,7 @@ class JoinLeaveMessage extends ExpPlugin
             if ($player === null) {
                 $msg = "#admin_error#a player with login '#variable#" . $login . "#admin_error#' disconnected, but no player object for this login exist.";
                 $ag = AdminGroups::getInstance();
-                $ag->announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin, $msg);
+                $ag->announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::SERVER_ADMIN, $msg);
 
                 return;
             }

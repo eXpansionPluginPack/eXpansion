@@ -101,7 +101,7 @@ class Mapitem extends Control implements OptimizedPagerElement
             $this->actionsFrame->addComponent($this->showRecsButton);
         }
 
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_removeMap)) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
 
             /*  $spacer = new \ManiaLib\Gui\Elements\Quad();
               $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);

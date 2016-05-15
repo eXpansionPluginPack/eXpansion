@@ -68,7 +68,7 @@ class KnockOut extends ExpPlugin
 
         $adminGroups = AdminGroups::getInstance();
 
-        $this->adm_ko = AdminGroups::addAdminCommand('ko', $this, 'chatCommands', Permission::game_settings);
+        $this->adm_ko = AdminGroups::addAdminCommand('ko', $this, 'chatCommands', Permission::GAME_SETTINGS);
         $this->adm_ko->setHelp('/ko start, stop, res, skip');
         $adminGroups->addShortAlias($this->adm_ko, 'ko');
 

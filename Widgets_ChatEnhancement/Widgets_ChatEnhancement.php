@@ -96,7 +96,7 @@ class Widgets_ChatEnhancement extends \ManiaLivePlugins\eXpansion\Core\types\Exp
 
     public function toogleChatStatus($login)
     {
-        if (AdminGroups::hasPermission($login, Permission::game_settings)) {
+        if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
             if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Chat\Chat')) {
                 $var = ChatMetaData::getInstance()->getVariable('publicChatActive');
                 $var->setRawValue(!$var->getRawValue());

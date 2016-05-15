@@ -51,7 +51,7 @@ class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $frame->addComponent($gui_nick);
 
-        if (AdminGroups::hasPermission($login, Permission::admingroups_adminAllGroups) && !$admin->isReadOnly()) {
+        if (AdminGroups::hasPermission($login, Permission::ADMINGROUPS_ADMIN_ALL_GROUPS) && !$admin->isReadOnly()) {
 
             $this->plistButton = new MyButton(30, 4);
             $this->plistButton->setAction($this->action_remove);

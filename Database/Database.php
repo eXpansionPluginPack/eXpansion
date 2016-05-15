@@ -46,7 +46,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->setPublicMethod('showDbMaintainance');
         $this->updateServerChallenges();
         // add admin command ;)
-        $cmd = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::addAdminCommand('dbtools', $this, 'showDbMaintainance', Permission::server_database); //
+        $cmd = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::addAdminCommand('dbtools', $this, 'showDbMaintainance', Permission::SERVER_DATABASE); //
         $cmd->setHelp('shows administrative window for database');
         $cmd->setMinParam(0);
     }
@@ -394,7 +394,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function showDbMaintainance($login)
     {
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::server_database)) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::SERVER_DATABASE)) {
             $window = Gui\Windows\Maintainance::Create($login);
             $window->init($this->db);
             $window->setTitle(__('Database Maintainance'));
@@ -407,7 +407,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function showBackupRestore($login)
     {
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::server_database)) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::SERVER_DATABASE)) {
             $window = Gui\Windows\BackupRestore::Create($login);
             $window->init($this->db);
             $window->setTitle(__('Database Backup and Restore'));

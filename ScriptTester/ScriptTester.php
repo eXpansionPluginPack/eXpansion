@@ -27,7 +27,7 @@ class ScriptTester extends ExpPlugin
         $this->actionId = $ahandler->createAction(array($this, "apply"));
 
         $admingroup = AdminGroups::getInstance();
-        $this->cmd_edit = AdminGroups::addAdminCommand("editor", $this, 'showEditor', Permission::server_admin);
+        $this->cmd_edit = AdminGroups::addAdminCommand("editor", $this, 'showEditor', Permission::SERVER_ADMIN);
     }
 
     public function showEditor($login)

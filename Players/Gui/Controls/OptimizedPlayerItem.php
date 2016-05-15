@@ -137,7 +137,7 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 // admin additions
         if ($this->isAdmin) {
-            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::player_ignore)) {
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::PLAYER_IGNORE)) {
                 $this->ignoreButton = new MyButton(7, 5);
                 $this->ignoreButton->setDescription(__('Ignore player %1$s ', $login, $player->login), 50);
                 $this->ignoreButton->setTextColor("fff");
@@ -151,7 +151,7 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
                 $this->frame->addComponent($this->ignoreButton);
             }
 
-            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::player_kick)) {
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::PLAYER_KICK)) {
                 $this->kickButton = new MyButton(7, 5);
                 $this->kickButton->setDescription(__('Kick player %1$s ', $login, $player->login), 50);
                 $this->kickButton->setTextColor("fff");
@@ -161,7 +161,7 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
                 $this->frame->addComponent($this->kickButton);
             }
 
-            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::player_ban)) {
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::PLAYER_BAN)) {
                 $this->banButton = new MyButton(7, 5);
                 $this->banButton->setDescription(__('Ban player %1$s ', $login, $player->login), 50);
                 $this->banButton->setTextColor("fff");
@@ -171,7 +171,7 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
                 $this->frame->addComponent($this->banButton);
             }
 
-            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::player_black)) {
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::PLAYER_BLACK)) {
                 $this->blacklistButton = new MyButton(7, 5);
                 $this->blacklistButton->setDescription(__('Blacklist player %1$s ', $login, $player->login), 50);
                 $this->blacklistButton->setTextColor("fff");
@@ -182,7 +182,7 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
                 $this->frame->addComponent($this->blacklistButton);
             }
 
-            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::player_forcespec)) {
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::PLAYER_FORCESPEC)) {
                 $this->forceButton = new MyButton(6, 5);
                 $this->forceButton->setAction($this->forceAction);
                 $this->forceButton->colorize("2f2");
@@ -191,7 +191,7 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
                 $this->frame->addComponent($this->forceButton);
             }
 
-            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::player_guest)) {
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::PLAYER_GUEST)) {
                 $this->guestButton = new MyButton(6, 5);
                 $this->guestButton->setAction($this->guestAction);
                 $this->guestButton->colorize("2f2");

@@ -169,11 +169,11 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
         try {
             foreach ($this->storage->players as $reciever => $player) {
-                if (AdminGroups::hasPermission($reciever, Permission::chat_adminChannel))
+                if (AdminGroups::hasPermission($reciever, Permission::CHAT_ADMINCHAT))
                     $this->connection->chatSendServerMessage($color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message, $reciever);
             }
             foreach ($this->storage->spectators as $reciever => $player) {
-                if (AdminGroups::hasPermission($reciever, Permission::chat_adminChannel))
+                if (AdminGroups::hasPermission($reciever, Permission::CHAT_ADMINCHAT))
                     $this->connection->chatSendServerMessage($color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message, $reciever);
             }
         } catch (\Exception $e) {

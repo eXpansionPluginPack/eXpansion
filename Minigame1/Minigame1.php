@@ -53,7 +53,7 @@ class Minigame1 extends ExpPlugin
             $this->eXpChatSendServerMessage('%1$s $z$s#game1# wins #variable#%2$s #game1#planets', null, array($player->nickName, $amount));
         } catch (Exception $e) {
             $ac = AdminGroups::getInstance();
-            $ac->announceToPermission(Permission::server_admin, "Minigame1 Error: " . $e->getMessage());
+            $ac->announceToPermission(Permission::SERVER_ADMIN, "Minigame1 Error: " . $e->getMessage());
             $this->console("[Minigame1] Error:" . $e->getMessage());
         }
     }

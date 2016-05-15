@@ -112,7 +112,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
             if (empty($this->config->login) || empty($this->config->code)) {
                 $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
                 $admins->announceToPermission(
-                    Permission::expansion_pluginSettings, "#admin_error#Server login or/and Server code is empty in Dedimania Configuration"
+                    Permission::EXPANSION_PLUGIN_SETTINGS, "#admin_error#Server login or/and Server code is empty in Dedimania Configuration"
                 );
                 $this->console("Server code or/and login is not configured for dedimania plugin!");
             } else {

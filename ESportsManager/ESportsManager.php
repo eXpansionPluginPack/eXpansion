@@ -210,11 +210,11 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private function findAdmin()
     {
         foreach ($this->storage->players as $login => $player) {
-            if (AdminGroups::hasPermission($login, Permission::game_settings))
+            if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS))
                 return $login;
         }
         foreach ($this->storage->spectators as $login => $player) {
-            if (AdminGroups::hasPermission($login, Permission::game_settings))
+            if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS))
                 return $login;
         }
 
@@ -225,7 +225,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         foreach ($this->storage->players as $login => $player) {
             $window = Gui\Windows\MatchWait::Create($login);
-            if (AdminGroups::hasPermission($login, Permission::game_settings)) {
+            if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
                 $window->setAdminAction($this->action_matchSelect, $this->actions_matchReady["forceContinue"]);
             }
             $window->setSize(90, 30);
@@ -233,7 +233,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
         foreach ($this->storage->spectators as $login => $player) {
             $window = Gui\Windows\MatchWait::Create($login);
-            if (AdminGroups::hasPermission($login, Permission::game_settings)) {
+            if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
                 $window->setAdminAction($this->action_matchSelect, $this->actions_matchReady["forceContinue"]);
             }
             $window->setSize(90, 30);

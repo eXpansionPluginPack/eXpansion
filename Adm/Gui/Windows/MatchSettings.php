@@ -175,7 +175,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected function onDraw()
     {
         parent::onDraw();
-        $this->frame->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::game_matchSave));
+        $this->frame->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::GAME_MATCH_SAVE));
     }
 
     public function populateList()

@@ -141,7 +141,7 @@ class AutoQueue extends ExpPlugin
     public function admRemoveQueue($login, $target)
     {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login,
-            \ManiaLivePlugins\eXpansion\AdminGroups\Permission::server_admin)
+            \ManiaLivePlugins\eXpansion\AdminGroups\Permission::SERVER_ADMIN)
         ) {
             if (in_array($target, $this->queue->getLogins())) {
                 $this->queue->remove($target);

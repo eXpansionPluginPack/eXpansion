@@ -108,7 +108,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
         $this->configPlugins = $this->config->plugins;
 
-        AdminGroups::addAdminCommand('plugins', $this, 'showPluginsWindow', Permission::expansion_pluginStartStop);
+        AdminGroups::addAdminCommand('plugins', $this, 'showPluginsWindow', Permission::EXPANSION_PLUGIN_START_STOP);
     }
 
     public function onConfigFileLoaded()

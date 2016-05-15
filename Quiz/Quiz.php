@@ -162,7 +162,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (!extension_loaded("mbstring")) {
             $this->dumpException("Plugin init failed!\nQuiz plugin needs 'mbstring' extension to be loaded!\n Please add the extension to to php for loading this plugin!", new \Exception("php_mbstring extension not loaded"));
             $adm = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
-            $adm->announceToPermission(Permission::expansion_pluginStartStop, "\$d00Quiz plugin needs 'mbstring' extension to be added in php extensions! Plugin not loaded.");
+            $adm->announceToPermission(Permission::EXPANSION_PLUGIN_START_STOP, "\$d00Quiz plugin needs 'mbstring' extension to be added in php extensions! Plugin not loaded.");
             $this->eXpUnload();
         }
 
@@ -292,7 +292,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($this->currentQuestion === null)
             return;
 
-        if ($this->currentQuestion->asker->login == $login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
+        if ($this->currentQuestion->asker->login == $login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN)) {
             $this->eXpChatSendServerMessage($this->msg_cancelQuestion, null, array($this->storage->getPlayerObject($login)->nickName));
             $this->currentQuestion = null;
             $this->chooseNextQuestion();
@@ -302,7 +302,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function reset($login)
     {
-        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin))
+        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN))
             return;
         $this->players = array();
         $this->questionDb = array();
@@ -317,7 +317,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if (!isset($this->currentQuestion->question))
             return;
-        if ($login == $this->currentQuestion->asker->login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
+        if ($login == $this->currentQuestion->asker->login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN)) {
             $answer = "";
 
             foreach ($this->currentQuestion->answer as $ans) {
@@ -363,7 +363,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function addPoint($login = null, $target)
     {
-        if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
+        if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN)) {
             if (!isset($this->players[$target])) {
                 $this->players[$target] = new Structures\QuizPlayer($target, $this->storage->getPlayerObject($target)->nickName, 1);
                 if ($login !== null) {
@@ -389,7 +389,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     function removePoint($login, $target)
     {
 
-        if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin)) {
+        if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN)) {
             if (isset($this->players[$target])) {
                 if ($login !== null) {
                     $this->eXpChatSendServerMessage($this->msg_pointRemove, null, array($this->players[$target]->nickName));
@@ -507,7 +507,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function addPointsWindow($login)
     {
-        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::quiz_admin))
+        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN))
             return;
         $window = Gui\Windows\AddPoint::Create($login);
         $window->setSize(90, 60);

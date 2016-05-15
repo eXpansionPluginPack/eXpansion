@@ -105,9 +105,9 @@ class MatchSettingsFile extends Control
 
         $this->addComponent($this->frame);
 
-        $this->loadButton->setVisibility(AdminGroups::hasPermission($login, Permission::game_matchSettings));
-        $this->saveButton->setVisibility(AdminGroups::hasPermission($login, Permission::game_matchSave));
-        $this->deleteButton->setVisibility(AdminGroups::hasPermission($login, Permission::game_matchDelete));
+        $this->loadButton->setVisibility(AdminGroups::hasPermission($login, Permission::GAME_MATCH_SETTINGS));
+        $this->saveButton->setVisibility(AdminGroups::hasPermission($login, Permission::GAME_MATCH_SAVE));
+        $this->deleteButton->setVisibility(AdminGroups::hasPermission($login, Permission::GAME_MATCH_DELETE));
 
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;

@@ -52,7 +52,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         try {
             $this->connection->chatEnableManualRouting(true);
-            $cmd = AdminGroups::addAdminCommand('chat', $this, 'adm_chat', Permission::game_settings);
+            $cmd = AdminGroups::addAdminCommand('chat', $this, 'adm_chat', Permission::GAME_SETTINGS);
             $cmd->setHelp('/adm chat enable or disable');
             $this->registerChatCommand("chat", "cmd_chat", 1, true);
             $this->registerChatCommand("chat", "cmd_chat", 0, true);
@@ -159,7 +159,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function getRecepients() {
 
-        $array = array_values($this->storage->spectators + AdminGroups::getAdminsByPermission(Permission::chat_onDisabled));
+        $array = array_values($this->storage->spectators + AdminGroups::getAdminsByPermission(Permission::CHAT_ON_DISABLED));
         foreach (\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo as $login => $playerinfo) {
             if ($playerinfo->hasRetired) {
                 $array[] = $playerinfo->login;
@@ -224,7 +224,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $nick = str_replace('$<', '', $nick);
             $text = str_replace('$<', '', $text);
 
-            if ($this->config->publicChatActive || AdminGroups::hasPermission($login, Permission::chat_onDisabled)) {
+            if ($this->config->publicChatActive || AdminGroups::hasPermission($login, Permission::CHAT_ON_DISABLED)) {
 
                 try {
                     // change text color, if admin is defined at admingroups

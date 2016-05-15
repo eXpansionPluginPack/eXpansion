@@ -41,7 +41,7 @@ class NetStat extends ExpPlugin
 
         $admingroup = AdminGroups::getInstance();
 
-        $this->cmdNetStat = AdminGroups::addAdminCommand("lag", $this, 'showNetStat', Permission::chat_adminChannel);
+        $this->cmdNetStat = AdminGroups::addAdminCommand("lag", $this, 'showNetStat', Permission::CHAT_ADMINCHAT);
 
     }
 

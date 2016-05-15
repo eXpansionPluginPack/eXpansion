@@ -127,15 +127,15 @@ class Menu extends ExpPlugin implements Listener
 
         if ($this->pluginLoaded("Maps"))
             $mapsGroup->addItem("Show Maps", "!maplist", $this);
-        if ($group->hasPermission(Permission::map_addLocal)) {
+        if ($group->hasPermission(Permission::MAP_ADD_LOCAL)) {
             if ($this->pluginLoaded("Maps"))
                 $mapsGroup->addItem("Add Local Maps", "!addMaps", $this);
         }
-        if ($group->hasPermission(Permission::map_addMX)) {
+        if ($group->hasPermission(Permission::MAP_ADD_MX)) {
             if ($this->pluginLoaded("ManiaExchange"))
                 $mapsGroup->addItem("ManiaExchange", "!mx", $this);
         }
-        if ($group->hasPermission(Permission::map_removeMap)) {
+        if ($group->hasPermission(Permission::MAP_REMOVE_MAP)) {
             if ($this->pluginLoaded("Maps"))
                 $mapsGroup->addItem('$f00Remove this', "!admremovemap", $this);
             if ($this->pluginLoaded("Maps"))
@@ -161,7 +161,7 @@ class Menu extends ExpPlugin implements Listener
         $voteGroup = $menu->addGroup("Vote");
         $voteGroup->addItem("Skip", "!voteskip", $this);
         $voteGroup->addItem("Res", "!voteres", $this);
-        if ($group->hasPermission(Permission::server_votes)) {
+        if ($group->hasPermission(Permission::SERVER_VOTES)) {
             $voteGroup->addItem("Config...", "!adm_votes", $this);
             $voteGroup->addItem('$f00Cancel', "!admcancel", $this);
         }
@@ -174,32 +174,32 @@ class Menu extends ExpPlugin implements Listener
 
         // admin
 
-        if ($group->hasPermission(Permission::team_balance) || $group->hasPermission(Permission::map_endRound) || $group->hasPermission(Permission::map_restart) || $group->hasPermission(Permission::map_skip)) {
+        if ($group->hasPermission(Permission::TEAM_BALANCE) || $group->hasPermission(Permission::MAP_END_ROUND) || $group->hasPermission(Permission::MAP_RES) || $group->hasPermission(Permission::MAP_SKIP)) {
             $admGroup = $menu->addGroup('$f00Admin');
 
-            if ($group->hasPermission(Permission::map_restart))
+            if ($group->hasPermission(Permission::MAP_RES))
                 $admGroup->addItem("Instant Res", "!admres", $this);
 
-            if ($group->hasPermission(Permission::map_restart))
+            if ($group->hasPermission(Permission::MAP_RES))
                 $admGroup->addItem("Replay", "!admreplay", $this);
 
-            if ($group->hasPermission(Permission::map_skip))
+            if ($group->hasPermission(Permission::MAP_SKIP))
                 $admGroup->addItem("Skip", "!admskip", $this);
 
-            if ($group->hasPermission(Permission::map_endRound))
+            if ($group->hasPermission(Permission::MAP_END_ROUND))
                 $admGroup->addItem("End Round", "!admer", $this);
 
-            if ($group->hasPermission(Permission::team_balance))
+            if ($group->hasPermission(Permission::TEAM_BALANCE))
                 $admGroup->addItem("Balance teams", "!teambalance", $this);
         }
 
-        if ($group->hasPermission(Permission::server_controlPanel)) {
+        if ($group->hasPermission(Permission::SERVER_CONTROL_PANEL)) {
             $serverGroup = $menu->addGroup("Server Control");
             $serverGroup->addItem('Control Panel', "!admcontrol", $this);
-            if ($group->hasPermission(Permission::expansion_pluginSettings)) {
+            if ($group->hasPermission(Permission::EXPANSION_PLUGIN_SETTINGS)) {
                 $serverGroup->addItem('$fffe$3afX$fffpansion Config', "!adm_settings", $this);
             }
-            if ($group->hasPermission(Permission::expansion_pluginStartStop)) {
+            if ($group->hasPermission(Permission::EXPANSION_PLUGIN_START_STOP)) {
                 $serverGroup->addItem("Plugin Manager", "!adm_plugins", $this);
             }
         }

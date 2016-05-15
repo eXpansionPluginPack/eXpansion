@@ -165,7 +165,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             Maps::$playerSortModes[$login] = new \ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode();
         }
 
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_removeMap)) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
             $this->actionRemoveAllf = $this->createAction(array($this, "removeAllMaps"));
             $this->actionRemoveAll = Gui::createConfirm($this->actionRemoveAllf);
             $this->btnRemoveAll = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(35);
@@ -273,7 +273,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->items = array();
 
 
-        $isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_removeMap);
+        $isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP);
 
         $this->maps = array();
 

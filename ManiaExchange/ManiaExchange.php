@@ -329,7 +329,7 @@ class ManiaExchange extends ExpPlugin
             return;
         }
 
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_addMX)) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_ADD_MX)) {
             $this->mxQueue($login, $mxId);
 
             return;

@@ -68,8 +68,8 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected function onDraw()
     {
 
-        $this->btn1->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::server_stopDedicated));
-        $this->btn2->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::server_stopManialive));
+        $this->btn1->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_STOP_DEDICATED));
+        $this->btn2->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_STOP_MANIALIVE));
 
         parent::onDraw();
     }

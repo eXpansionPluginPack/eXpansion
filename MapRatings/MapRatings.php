@@ -260,7 +260,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function autoRemove($login)
     {
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_removeMap)) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
 
             $filenames = array();
             foreach ($this->autoMapManager_getMaps() as $rating) {
@@ -299,7 +299,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function showRatingsManager($login)
     {
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_removeMap)) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
             $window = Gui\Windows\MapRatingsManager::Create($login);
             $window->setTitle(__("Ratings Manager", $login));
             $window->setSize(120, 90);

@@ -56,7 +56,7 @@ class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $x = 0;
         $login = $this->getRecipient();
-        $isadmin = AdminGroups::hasPermission($login, Permission::quiz_admin);
+        $isadmin = AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN);
         try {
             foreach (\ManiaLive\Data\Storage::getInstance()->players as $login => $player) {
                 $this->items[$x] = new AddPointItem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->sizeX);

@@ -74,7 +74,7 @@ class Playeritem extends Control implements OptimizedPagerElement
 
 // admin additions
         if (AdminGroups::isInList($login)) {
-            if (AdminGroups::hasPermission($login, Permission::player_ignore)) {
+            if (AdminGroups::hasPermission($login, Permission::PLAYER_IGNORE)) {
                 $this->ignoreButton = new MyButton(7, 5);
                 $this->ignoreButton->setDescription(__('Ignore player', $login), 50);
                 $this->ignoreButton->setTextColor("fff");
@@ -90,7 +90,7 @@ class Playeritem extends Control implements OptimizedPagerElement
                 $this->frame->addComponent($this->ignoreButton);
             }
 
-            if (AdminGroups::hasPermission($login, Permission::player_kick)) {
+            if (AdminGroups::hasPermission($login, Permission::PLAYER_KICK)) {
                 $this->kickButton = new MyButton(7, 5);
                 $this->kickButton->setDescription(__('Kick player', $login), 50);
                 $this->kickButton->setTextColor("fff");
@@ -105,7 +105,7 @@ class Playeritem extends Control implements OptimizedPagerElement
                 $this->frame->addComponent($this->kickButton);
             }
 
-            if (AdminGroups::hasPermission($login, Permission::player_ban)) {
+            if (AdminGroups::hasPermission($login, Permission::PLAYER_BAN)) {
                 $this->banButton = new MyButton(7, 5);
                 $this->banButton->setDescription(__('Ban player', $login), 50);
                 $this->banButton->setTextColor("fff");
@@ -119,7 +119,7 @@ class Playeritem extends Control implements OptimizedPagerElement
                 $this->frame->addComponent($this->banButton);
             }
 
-            if (AdminGroups::hasPermission($login, Permission::player_black)) {
+            if (AdminGroups::hasPermission($login, Permission::PLAYER_BLACK)) {
                 $this->blacklistButton = new MyButton(7, 5);
                 $this->blacklistButton->setDescription(__('Blacklist player', $login), 50);
                 $this->blacklistButton->setTextColor("fff");
@@ -133,7 +133,7 @@ class Playeritem extends Control implements OptimizedPagerElement
                 $this->frame->addComponent($this->blacklistButton);
             }
 
-            if (AdminGroups::hasPermission($login, Permission::player_forcespec)) {
+            if (AdminGroups::hasPermission($login, Permission::PLAYER_FORCESPEC)) {
                 $this->forceButton = new MyButton(6, 5);
                 $this->forceButton->setAction($action);
                 $this->forceButton->colorize("2f2");
@@ -151,7 +151,7 @@ class Playeritem extends Control implements OptimizedPagerElement
                 $this->frame->addComponent($this->forceButton);
             }
 
-            if (AdminGroups::hasPermission($login, Permission::player_guest)) {
+            if (AdminGroups::hasPermission($login, Permission::PLAYER_GUEST)) {
                 $this->guestButton = new MyButton(6, 5);
                 $this->guestButton->setAction($action);
                 $this->guestButton->colorize("2f2");

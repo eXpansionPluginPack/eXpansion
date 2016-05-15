@@ -930,7 +930,7 @@ EOT;
      */
     public function showNetStats($login)
     {
-        if (AdminGroups::hasPermission($login, Permission::chat_adminChannel)) {
+        if (AdminGroups::hasPermission($login, Permission::CHAT_ADMINCHAT)) {
             Gui\Windows\NetStat::Erase($login);
             $win = Gui\Windows\NetStat::Create($login);
             $win->setTitle("Network Status");
@@ -948,7 +948,7 @@ EOT;
      */
     public function showExpSettings($login, $pluginId, $confName = 'main')
     {
-        if (AdminGroups::hasPermission($login, Permission::expansion_pluginSettings)) {
+        if (AdminGroups::hasPermission($login, Permission::EXPANSION_PLUGIN_SETTINGS)) {
             Gui\Windows\ExpSettings::Erase($login);
             /** @var Gui\Windows\ExpSettings $win */
             $win = Gui\Windows\ExpSettings::Create($login);
@@ -1021,7 +1021,7 @@ EOT;
             unset($playerArray[$loginDisconnecting]);
 
         foreach ($playerArray as $login => $player) {
-            if (AdminGroups::hasPermission($login, Permission::player_kick)) {
+            if (AdminGroups::hasPermission($login, Permission::PLAYER_KICK)) {
                 $hasAdmin = "true";
             }
         }

@@ -262,7 +262,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 
             $login = $this->getRecipient();
-            $isadmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::map_addMX);
+            $isadmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_ADD_MX);
 
             $buttons = $this->hookButtons($isadmin);
 

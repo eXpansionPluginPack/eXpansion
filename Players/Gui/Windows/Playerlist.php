@@ -40,27 +40,27 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $line = new \ManiaLive\Gui\Controls\Frame(18, 2);
         $line->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        if (AdminGroups::hasPermission($login, Permission::player_ignore)) {
+        if (AdminGroups::hasPermission($login, Permission::PLAYER_IGNORE)) {
             $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
             $btn->setText(__("Ignore List", $login));
             $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['ignore']);
             $line->addComponent($btn);
         }
 
-        if (AdminGroups::hasPermission($login, Permission::game_settings)) {
+        if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
             $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
             $btn->setText(__("Guest List", $login));
             $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['guest']);
             $line->addComponent($btn);
         }
 
-        if (AdminGroups::hasPermission($login, Permission::player_unban)) {
+        if (AdminGroups::hasPermission($login, Permission::PLAYER_UNBAN)) {
             $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
             $btn->setText(__("Ban List", $login));
             $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['ban']);
             $line->addComponent($btn);
         }
-        if (AdminGroups::hasPermission($login, Permission::player_black)) {
+        if (AdminGroups::hasPermission($login, Permission::PLAYER_BLACK)) {
             $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
             $btn->setText(__("Black List", $login));
             $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['black']);
@@ -80,7 +80,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         try {
             $login = $this->getRecipient();
-            if (!AdminGroups::hasPermission($login, Permission::player_ignore)) {
+            if (!AdminGroups::hasPermission($login, Permission::PLAYER_IGNORE)) {
                 $this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!', $login), $login);
             }
             $player = $this->storage->getPlayerObject($target);
@@ -154,7 +154,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         try {
             $login = $this->getRecipient();
-            if (!AdminGroups::hasPermission($login, Permission::player_forcespec)) {
+            if (!AdminGroups::hasPermission($login, Permission::PLAYER_FORCESPEC)) {
                 $this->connection->chatSendServerMessage(__('$ff3$iYou are not allowed to do that!', $login), $login);
             }
             $player = $this->storage->getPlayerObject($target);
@@ -193,7 +193,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     function toggleTeam($login, $target)
     {
-        if (AdminGroups::hasPermission($login, Permission::player_changeTeam)) {
+        if (AdminGroups::hasPermission($login, Permission::PLAYER_CHANGE_TEAM)) {
             $player = $this->storage->getPlayerObject($target);
             if ($player->teamId === 0) $this->connection->forcePlayerTeam($target, 1);
             if ($player->teamId === 1) $this->connection->forcePlayerTeam($target, 0);
@@ -208,7 +208,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         $x = 0;
         $login = $this->getRecipient();
-        $isadmin = AdminGroups::hasPermission($login, Permission::player_forcespec);
+        $isadmin = AdminGroups::hasPermission($login, Permission::PLAYER_FORCESPEC);
 
         $list = $this->connection->getIgnoreList(-1, 0);
         $ignoreList = array();

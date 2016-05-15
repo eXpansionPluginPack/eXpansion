@@ -141,11 +141,11 @@ class AdminPanel extends Widget
     protected function onDraw()
     {
         parent::onDraw();
-        $this->btnRestart->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::map_restart));
-        $this->btnSkip->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::map_skip));
-        $this->btnEndRound->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::map_endRound));
-        $this->btnCancelVote->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::server_votes));
-        $this->btnBalance->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::team_balance));
+        $this->btnRestart->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::MAP_RES));
+        $this->btnSkip->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::MAP_SKIP));
+        $this->btnEndRound->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::MAP_END_ROUND));
+        $this->btnCancelVote->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_VOTES));
+        $this->btnBalance->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::TEAM_BALANCE));
     }
 
     public function destroy()

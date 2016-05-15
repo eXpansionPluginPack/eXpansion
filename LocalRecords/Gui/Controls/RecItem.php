@@ -64,7 +64,7 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaL
         $this->label_nbFinish->setId('column_' . $indexNumber . '_4');
         $this->frame->addComponent($this->label_nbFinish);
 
-        if (AdminGroups::hasPermission($login, Permission::localRecrods_delete)) {
+        if (AdminGroups::hasPermission($login, Permission::LOCAL_RECORDS_DELETE)) {
             $this->button_delete = new Label(15, 6);
             $this->button_delete->setId('column_' . $indexNumber . '_5');
             $this->button_delete->setAlign('left', 'center');
