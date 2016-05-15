@@ -12,10 +12,9 @@ class FaqWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     public static $mainPlugin;
     protected $frame, $label_help, $icon_help;
-    private $action_help;
+    protected $action_help;
 
-    protected function eXpOnBeginConstruct()
-    {
+    protected function eXpOnBeginConstruct() {
         parent::eXpOnBeginConstruct();
         $this->setName("Faq Widget");
         $login = $this->getRecipient();

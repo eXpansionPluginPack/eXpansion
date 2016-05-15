@@ -1,6 +1,5 @@
-Frequently asked questions
-#Welcome to eXpansion pluginpack for Manialive!
-The system looks different - since it's different, but nearly every chat command works like in the other servers.
+Help Center
+#eXpansion Help
 
 	!ui|I'm not seeing the usual UI, how i find my way around ?
 	!list|How to display list of maps ? 

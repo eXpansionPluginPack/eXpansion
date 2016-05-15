@@ -2,20 +2,17 @@
 
 namespace ManiaLivePlugins\eXpansion\DonatePanel\Gui;
 
-use ManiaLivePlugins\eXpansion\DonatePanel\DonatePanel;
-
 class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-    private $_windowFrame;
-    private $_mainWindow;
-    private $_minButton;
-    private $container;
+    protected $_windowFrame;
+    protected $_mainWindow;
+    protected $_minButton;
+    protected $container;
     public static $donatePlugin;
-    private $items = array();
+    protected $items = array();
 
-    protected function eXpOnBeginConstruct()
-    {
+    protected function eXpOnBeginConstruct() {
         $this->setName("Donate Panel");
         $login = $this->getRecipient();
         $this->setScriptEvents();
@@ -41,11 +38,11 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $donations = array(50, 100, 500, 1000, 2000);
         $x = 0;
         foreach ($donations as $text) {
-            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(18, 6);
-            $this->items[$x]->setText($text . "p");
-            $this->items[$x]->setScale(0.55);
-            $this->items[$x]->setAction($this->createAction(array($this, "Donate"), $text));
-            $frame->addComponent($this->items[$x]);
+            $this->items[ $x ] = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(18, 6);
+            $this->items[ $x ]->setText($text . "p");
+            $this->items[ $x ]->setScale(0.55);
+            $this->items[ $x ]->setAction($this->createAction(array($this, "Donate"), $text));
+            $frame->addComponent($this->items[ $x ]);
         }
 
         $this->_windowFrame->addComponent($frame);
@@ -60,8 +57,7 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->_windowFrame->addComponent($this->_minButton);
     }
 
-    protected function eXpOnSettingsLoaded()
-    {
+    protected function eXpOnSettingsLoaded() {
 
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
         $script->setParam('isMinimized', 'True');
@@ -72,18 +68,14 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->registerScript($script);
     }
 
-    function Donate($login, $amount)
-    {
+    function Donate($login, $amount) {
         self::$donatePlugin->Donate($login, $amount);
     }
 
-    function destroy()
-    {
+    function destroy() {
         foreach ($this->items as $item)
             $item->destroy();
         parent::destroy();
     }
 
 }
-
-?>
