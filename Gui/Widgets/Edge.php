@@ -48,7 +48,7 @@ class Edge extends Widget
         $this->label->setTextColor("fff");
         $this->label->setPosition(5, -3);
         $this->label->setAlign("left", "center");
-        $msg = exp_getMessage("Auto hide");
+        $msg = eXpGetMessage("Auto hide");
         $this->label->setText($msg);
         $this->_windowFrame->addComponent($this->label);
 
@@ -68,7 +68,7 @@ class Edge extends Widget
         $this->label2->setTextColor("fff");
         $this->label2->setPosition(26, -3);
         $this->label2->setAlign("left", "center");
-        $msg = exp_getMessage("Show Diff");
+        $msg = eXpGetMessage("Show Diff");
         $this->label2->setText($msg);
         $this->_windowFrame->addComponent($this->label2);
 

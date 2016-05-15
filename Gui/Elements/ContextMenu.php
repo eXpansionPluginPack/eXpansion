@@ -49,7 +49,7 @@ class ContextMenu extends Control implements ScriptedContainer
     public function addItem($label, $itemValue, $isAdmin = false)
     {
         if (is_string($label)) {
-            $label = exp_getMessage($label);
+            $label = eXpGetMessage($label);
         }
         $elem = new \ManiaLivePlugins\eXpansion\Gui\Structures\ContextMenuData($label, $itemValue);
         $hash = spl_object_hash($elem);

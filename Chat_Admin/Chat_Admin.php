@@ -578,7 +578,7 @@ Other server might use the same blacklist file!!');
                     $this->setAllWarmUpDuration($fromLogin, $params);
                     break;
                 default:
-                    $msg = exp_getMessage("possible parameters: limit, dynamic, wu");
+                    $msg = eXpGetMessage("possible parameters: limit, dynamic, wu");
                     $this->eXpChatSendServerMessage($msg, $fromLogin);
                     break;
             }
@@ -615,7 +615,7 @@ Other server might use the same blacklist file!!');
                     $this->setFinishTimeout($fromLogin, $params);
                     break;
                 default:
-                    $msg = exp_getMessage("possible parameters: laps, limit, wu, fto, ftimeout");
+                    $msg = eXpGetMessage("possible parameters: laps, limit, wu, fto, ftimeout");
                     $this->eXpChatSendServerMessage($msg, $fromLogin);
                     break;
             }
@@ -654,7 +654,7 @@ Other server might use the same blacklist file!!');
                     $this->restartScoreReset($fromLogin, $params);
                     break;
                 default:
-                    $msg = exp_getMessage("possible parameters: pointslimit, newrules, wu, fto, ftimeout");
+                    $msg = eXpGetMessage("possible parameters: pointslimit, newrules, wu, fto, ftimeout");
                     $this->eXpChatSendServerMessage($msg, $fromLogin);
                     break;
             }
@@ -702,7 +702,7 @@ Other server might use the same blacklist file!!');
                     $this->restartScoreReset($fromLogin, $params);
                     break;
                 default:
-                    $msg = exp_getMessage("possible parameters: limit, rounds, nbwin, wu, fto, ftimeout");
+                    $msg = eXpGetMessage("possible parameters: limit, rounds, nbwin, wu, fto, ftimeout");
                     $this->eXpChatSendServerMessage($msg, $fromLogin);
                     break;
             }
@@ -757,7 +757,7 @@ Other server might use the same blacklist file!!');
                     $this->restartScoreReset($fromLogin, $params);
                     break;
                 default:
-                    $msg = exp_getMessage("possible parameters: balance, limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap");
+                    $msg = eXpGetMessage("possible parameters: balance, limit, maxpoint, newrules, wu, fto, ftimeout, blue, red, gap");
                     $this->eXpChatSendServerMessage($msg, $fromLogin);
                     break;
             }
@@ -784,7 +784,7 @@ Other server might use the same blacklist file!!');
             $this->connection->removeMapList($mapsArray);
             shuffle($mapsArray);
             $this->connection->addMapList($mapsArray);
-            $msg = exp_getMessage('#admin_action#Admin #variable#%1$s $z$s#admin_action#shuffles the maps list!');
+            $msg = eXpGetMessage('#admin_action#Admin #variable#%1$s $z$s#admin_action#shuffles the maps list!');
             $nick = $this->storage->getPlayerObject($login)->nickName;
 
             $this->eXpChatSendServerMessage($msg, null, array($nick));

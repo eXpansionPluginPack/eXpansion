@@ -7,6 +7,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types
     use ManiaLib\Application\ErrorHandling;
     use ManiaLive\Data\Player;
     use ManiaLive\Data\Storage as Storage2;
+    use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
     use ManiaLive\Event\Dispatcher;
     use ManiaLive\PluginHandler\Dependency;
     use ManiaLive\PluginHandler\Exception as Exception3;
@@ -25,13 +26,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types
     use ManiaLivePlugins\eXpansion\Core\Events\GlobalEventListener;
     use ManiaLivePlugins\eXpansion\Core\Events\PlayerEvent;
     use ManiaLivePlugins\eXpansion\Core\Events\PlayerEventListener;
-    use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
-    use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEventListener;
     use ManiaLivePlugins\eXpansion\Core\i18n;
     use ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
     use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
     use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
-    use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
     use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
     use ManiaLivePlugins\eXpansion\Helpers\Helper;
     use ManiaLivePlugins\eXpansion\Helpers\Storage;
@@ -39,8 +37,6 @@ namespace ManiaLivePlugins\eXpansion\Core\types
     use Maniaplanet\DedicatedServer\Structures\PlayerNetInfo;
     use Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException;
     use Phine\Exception\Exception as Exception2;
-    use \ManiaLive\DedicatedApi\Config as DedicatedConfig;
-    use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
 
     /**
      * Description of BasicPlugin
@@ -219,6 +215,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types
         public final function onLoad() {
             if (! $this->metaData->checkAll()) {
                 $this->eXpUnload();
+
                 return;
             }
             try {
@@ -385,7 +382,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types
                 if (DEBUG) {
                     $this->console("#Plugin " . $this->getId() . " uses chatSendServerMessage in an unoptimized way!!");
                 }
-                $msg = exp_getMessage($msg);
+                $msg = eXpGetMessage($msg);
             }
 
             if ($login == null) {
@@ -860,11 +857,15 @@ namespace ManiaLivePlugins\eXpansion\Core\types
 namespace
 {
 
-    use \ManiaLivePlugins\eXpansion\Helpers\Helper;
+    use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
     /**
      * Convert php.ini memory shorthand string to integer bytes
      * http://www.php.net/manual/en/function.ini-get.php#96996
+     *
+     * @param string $size_str
+     *
+     * @return int
      */
     function shorthand2bytes($size_str) {
 
@@ -883,8 +884,6 @@ namespace
         }
     }
 
-    // return_bytes
-    //
     // fix for  php 5.5.0
     error_reporting(E_ALL ^ E_DEPRECATED);
     // do custom logging also
@@ -897,27 +896,8 @@ namespace
 
     set_error_handler('\\ManiaLivePlugins\\eXpansion\\Core\\types\\ErrorHandler::createExceptionFromError');
 
-    /*
-    // moved to core expOnInit
-      if (!defined("DEBUG")) {
-        $config = ManiaLivePlugins\eXpansion\Core\Config::getInstance();
-        define("DEBUG", filter_var($config->debug, FILTER_VALIDATE_BOOLEAN));
-    } */
-
-
     if (! function_exists('__')) {
 
-        /**
-         * $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($login);
-         * if($player == null){
-         * array_unshift($args, $msg);
-         * $msgString = call_user_func_array('__', $args);
-         * }else{
-         * array_unshift($args, $msg, $login);
-         * $msgString = call_user_func_array('__', $args);
-         * }
-         *
-         */
         function __() {
             $args = func_get_args();
 
@@ -965,18 +945,18 @@ namespace
                 return $lang;
             }
         }
+    } else {
+        exit("function '__()' is already defined, can't continue.");
+    }
 
-        /**
-         * exp_getMessage(string $string)
-         *
-         * @param string $string
-         *
-         * @return \ManiaLivePlugins\eXpansion\Core\i18n\Message
-         */
-        function exp_getMessage($string) {
-            return \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getObject($string);
-        }
-
+    /**
+     * getMessage(string $string)
+     *
+     * @param string $string
+     *
+     * @return \ManiaLivePlugins\eXpansion\Core\i18n\Message
+     */
+    function eXpGetMessage($string) {
+        return \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getObject($string);
     }
 }
-

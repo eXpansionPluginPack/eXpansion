@@ -20,7 +20,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function eXpOnLoad()
     {
-        $this->msg_broadcast = exp_getMessage('%s$1 $z$s$fff is $f00broadcasting$fff at $lwww.twitch.tv$l, say hello to all the viewers :)');
+        $this->msg_broadcast = eXpGetMessage('%s$1 $z$s$fff is $f00broadcasting$fff at $lwww.twitch.tv$l, say hello to all the viewers :)');
     }
 
     public function eXpOnReady()

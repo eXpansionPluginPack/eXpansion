@@ -51,7 +51,7 @@ class QueueList extends Widget
         $this->addComponent($this->bg);
 
         $header = new WidgetTitle(62, 40);
-        $header->setText(exp_getMessage("Waiting Queue"));
+        $header->setText(eXpGetMessage("Waiting Queue"));
         $this->addComponent($header);
 
         $this->frame = new Frame(1, -2);

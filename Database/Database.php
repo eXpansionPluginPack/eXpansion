@@ -348,8 +348,8 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $query = $this->db->execute($q);
             $data = $query->fetchStdObject();
             $w = $data->player_wins;
-            $msg_pub = exp_getMessage('#rank#Congratulations to #variable#%1$s#rank# for their #variable#%2$s#rank# win!');
-            $msg_self = exp_getMessage('#rank#Congratulations for your #variable#%1$s#rank# win!');
+            $msg_pub = eXpGetMessage('#rank#Congratulations to #variable#%1$s#rank# for their #variable#%2$s#rank# win!');
+            $msg_self = eXpGetMessage('#rank#Congratulations for your #variable#%1$s#rank# win!');
             $wins = $this->numberize($w);
             if ($w <= 100 && $w % 10 == 0) {
                 $this->eXpChatSendServerMessage($msg_pub, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wosnm"), $wins));

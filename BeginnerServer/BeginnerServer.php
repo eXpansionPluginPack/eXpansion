@@ -9,8 +9,8 @@ class BeginnerServer extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function eXpOnLoad()
     {
-        $this->msg_notBeginner = exp_getMessage("This is beginner friendly server, since you have more than 100k ladder rank, you are automatically forced to spectate!");
-        $this->msg_isBeginner = exp_getMessage("Welcome to play at beginner friendly server, players more than 100k ladder rank are automatically forced to spectate :)");
+        $this->msg_notBeginner = eXpGetMessage("This is beginner friendly server, since you have more than 100k ladder rank, you are automatically forced to spectate!");
+        $this->msg_isBeginner = eXpGetMessage("Welcome to play at beginner friendly server, players more than 100k ladder rank are automatically forced to spectate :)");
     }
 
     public function eXpOnReady()

@@ -90,8 +90,8 @@ class BetWidget extends Widget
 
     public function onDraw()
     {
-        if (Bets::$state == Bets::state_setBets) $this->setBets();
-        if (Bets::$state == Bets::state_acceptMoreBets) $this->acceptBets();
+        if (Bets::$state == Bets::SET) $this->setBets();
+        if (Bets::$state == Bets::ACCEPT) $this->acceptBets();
         $this->closeButton->setPosition($this->sizeX - 28, -$this->sizeY + 5);
         parent::onDraw();
     }
@@ -99,14 +99,14 @@ class BetWidget extends Widget
     public function acceptBets()
     {
         $this->frame->clearComponents();
-        $this->header->setText(exp_getMessage("Accept Bet"));
+        $this->header->setText(eXpGetMessage("Accept Bet"));
         $line = new Frame();
         $line->setLayout(new Flow());
         $line->setSize(80, 12);
 
         $this->labelAccept = new DicoLabel(50);
         $this->labelAccept->setPosition(5, -2);
-        $this->labelAccept->setText(exp_getMessage('Accept bet for %1$s planets ?'), array("" . Bets::$betAmount));
+        $this->labelAccept->setText(eXpGetMessage('Accept bet for %1$s planets ?'), array("" . Bets::$betAmount));
         $line->addComponent($this->labelAccept);
 
         $button = new Button();
@@ -125,7 +125,7 @@ class BetWidget extends Widget
 
         $this->script->setParam("action", self::$action_setAmount);
 
-        $this->header->setText(exp_getMessage("Start Bet"));
+        $this->header->setText(eXpGetMessage("Start Bet"));
 
         $line = new Frame();
         $line->setLayout(new Flow());

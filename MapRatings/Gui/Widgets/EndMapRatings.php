@@ -99,7 +99,7 @@ class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
     {
-        $msg = exp_getMessage("Did you like the map ?");
+        $msg = eXpGetMessage("Did you like the map ?");
         $this->label->setText($msg);
         $this->labelMap->setText(\ManiaLib\Utils\Formatting::stripCodes($map->name, "wosn"));
     }

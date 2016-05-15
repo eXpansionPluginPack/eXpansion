@@ -160,10 +160,10 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             $this->connection->setForcedMusic(true, $url);
             if ($wish) {
-                $text = exp_getMessage('#variable# %1$s#music# by#variable#  %2$s #music# is been played next requested by #variable# %3$s ');
+                $text = eXpGetMessage('#variable# %1$s#music# by#variable#  %2$s #music# is been played next requested by #variable# %3$s ');
                 $this->eXpChatSendServerMessage($text, null, array($song->title, $song->artist, \ManiaLib\Utils\Formatting::stripCodes($wish->player->nickName, "wos")));
             } else {
-                $text = exp_getMessage('#music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s');
+                $text = eXpGetMessage('#music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s');
                 $this->eXpChatSendServerMessage($text, null, array($song->title, $song->artist));
             }
         } catch (\Exception $e) {

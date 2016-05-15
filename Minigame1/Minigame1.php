@@ -68,7 +68,7 @@ class Minigame1 extends ExpPlugin
 
         if ($this->tick > $this->timerGap) {
             if ($this->connection->getServerPlanets() < $this->config->mg1_serverPlanetsMin) {
-                $msg = exp_getMessage("#game1#The server has not enough #variable#Planets #game1#to run minigame, please #variable#Donate #game1#!");
+                $msg = eXpGetMessage("#game1#The server has not enough #variable#Planets #game1#to run minigame, please #variable#Donate #game1#!");
                 $this->eXpChatSendServerMessage($msg);
             } else {
                 MinigameWidget::EraseAll();

@@ -44,7 +44,7 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $label->setTextEmboss();
 
         $nowPlaying = clone $biglabel;
-        $nowPlaying->setText(exp_getMessage("Next Map"));
+        $nowPlaying->setText(eXpGetMessage("Next Map"));
         $nowPlaying->setPosition(30, 3);
         $nowPlaying->setAlign("center", "center");
         $this->addComponent($nowPlaying);

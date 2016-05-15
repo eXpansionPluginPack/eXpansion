@@ -141,20 +141,20 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $command = $this->registerChatCommand("nollaa", "reset", 0, true);
         $command->help = '/nollaa resets the quiz points';
 
-        $this->msg_questionPre = exp_getMessage("#quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2");
-        $this->msg_question = exp_getMessage("#question#%s?");
-        $this->msg_format = exp_getMessage("#error#Question needs to be at the right format!");
-        $this->msg_reset = exp_getMessage("#quiz#Quiz has been reset!");
-        $this->msg_correct = exp_getMessage("Correct from");
-        $this->msg_correctAnswer = exp_getMessage("#quiz#Correct! #question# %s$1 #quiz# Well Done,#variable# %s$2 #quiz#!");
-        $this->msg_rightAnswer = exp_getMessage('#quiz#Right answers: $o#question#%s');
-        $this->msg_answerMissing = exp_getMessage("#error#Aswer is missing from the question!");
-        $this->msg_questionMissing = exp_getMessage("#error#Question is missing from the question!");
-        $this->msg_cancelQuestion = exp_getMessage('%s #quiz#cancels the question.');
-        $this->msg_points = exp_getMessage("#quiz#Current point holders:");
-        $this->msg_pointAdd = exp_getMessage('#quiz#$oPoint added for #variable#%s');
-        $this->msg_pointRemove = exp_getMessage('#quiz#$oPoint removed from #variable#%s');
-        $this->msg_errorImageType = exp_getMessage('#quiz#$Displaying image not possible, due unsupported media type was detected.');
+        $this->msg_questionPre = eXpGetMessage("#quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2");
+        $this->msg_question = eXpGetMessage("#question#%s?");
+        $this->msg_format = eXpGetMessage("#error#Question needs to be at the right format!");
+        $this->msg_reset = eXpGetMessage("#quiz#Quiz has been reset!");
+        $this->msg_correct = eXpGetMessage("Correct from");
+        $this->msg_correctAnswer = eXpGetMessage("#quiz#Correct! #question# %s$1 #quiz# Well Done,#variable# %s$2 #quiz#!");
+        $this->msg_rightAnswer = eXpGetMessage('#quiz#Right answers: $o#question#%s');
+        $this->msg_answerMissing = eXpGetMessage("#error#Aswer is missing from the question!");
+        $this->msg_questionMissing = eXpGetMessage("#error#Question is missing from the question!");
+        $this->msg_cancelQuestion = eXpGetMessage('%s #quiz#cancels the question.');
+        $this->msg_points = eXpGetMessage("#quiz#Current point holders:");
+        $this->msg_pointAdd = eXpGetMessage('#quiz#$oPoint added for #variable#%s');
+        $this->msg_pointRemove = eXpGetMessage('#quiz#$oPoint removed from #variable#%s');
+        $this->msg_errorImageType = eXpGetMessage('#quiz#$Displaying image not possible, due unsupported media type was detected.');
     }
 
     function eXpOnReady()

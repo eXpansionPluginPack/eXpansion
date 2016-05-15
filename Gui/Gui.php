@@ -56,8 +56,8 @@ class Gui extends ExpPlugin
         $this->setPublicMethod("hudCommands");
         $this->setPublicMethod("showConfigWindow");
 
-        $this->msg_params = exp_getMessage("possible parameters: move, lock, reset");
-        $this->msg_disabled = exp_getMessage("#error#Server Admin has disabled personal huds. Sorry!");
+        $this->msg_params = eXpGetMessage("possible parameters: move, lock, reset");
+        $this->msg_disabled = eXpGetMessage("#error#Server Admin has disabled personal huds. Sorry!");
 
         $this->preloader = Preloader::Create(null);
         $this->preloader->show();
@@ -126,7 +126,7 @@ class Gui extends ExpPlugin
                     case 3:
                         $guiHandler->toggleGui($login);
                         unset($this->resetLogins[$login]);
-                        $this->eXpChatSendServerMessage(exp_getMessage("Hud reset done!"), $login);
+                        $this->eXpChatSendServerMessage(eXpGetMessage("Hud reset done!"), $login);
                         break;
                 }
             }
@@ -231,7 +231,7 @@ class Gui extends ExpPlugin
             $window->setTimeout(1);
             $window->show();
             $this->resetLogins[$login] = 0;
-            $this->eXpChatSendServerMessage(exp_getMessage("Starting hud reset, please wait"), $login);
+            $this->eXpChatSendServerMessage(eXpGetMessage("Starting hud reset, please wait"), $login);
         }
     }
 
@@ -300,7 +300,7 @@ class Gui extends ExpPlugin
         }
 
         if (is_string($message)) {
-            $message = exp_getMessage($message);
+            $message = eXpGetMessage($message);
         }
         $window->setMessage($message, $args);
         $window->show($login);

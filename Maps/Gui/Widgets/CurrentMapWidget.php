@@ -46,7 +46,7 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $label->setTextEmboss();
 
         $nowPlaying = clone $biglabel;
-        $nowPlaying->setText(exp_getMessage("Now Playing"));
+        $nowPlaying->setText(eXpGetMessage("Now Playing"));
         $nowPlaying->setPosition(45, 3);
         $this->addComponent($nowPlaying);
 

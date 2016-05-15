@@ -13,8 +13,7 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-    public function onBeginLoad()
-    {
+    public function onBeginLoad() {
         parent::onBeginLoad();
         $this->setName("Games: Bet Planets for winner");
         $this->setDescription('Enables the famous bets for playres to compete for planets');
@@ -30,4 +29,3 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 }
 
-?>

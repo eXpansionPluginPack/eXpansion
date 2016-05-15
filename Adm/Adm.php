@@ -34,9 +34,9 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
      */
     public function eXpOnLoad()
     {
-        $this->msgForceScoreError = exp_getMessage("ForceScores can be used only with rounds or team mode");
-        $this->msgScriptSettings = exp_getMessage("ScriptSettings available only in script mode");
-        $this->msgDatabasePlugin = exp_getMessage("Database plugin not loaded!");
+        $this->msgForceScoreError = eXpGetMessage("ForceScores can be used only with rounds or team mode");
+        $this->msgScriptSettings = eXpGetMessage("ScriptSettings available only in script mode");
+        $this->msgDatabasePlugin = eXpGetMessage("Database plugin not loaded!");
 
         $this->setPublicMethod('serverControlMain');
 
@@ -423,7 +423,7 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
             } else {
                 $this->connection->setRoundCustomPoints($intPoints);
             }
-            $msg = exp_getMessage('#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s');
+            $msg = eXpGetMessage('#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s');
             $this->eXpChatSendServerMessage($msg, null, array($nick, implode(",", $intPoints)));
         } catch (Exception $e) {
             $this->connection->chatSendServerMessage(__('#admin_error#Error: %s', $login, $e->getMessage()), $login);

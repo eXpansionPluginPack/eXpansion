@@ -36,7 +36,7 @@ class ManiaExchange extends ExpPlugin
     public function eXpOnLoad()
     {
 
-        $this->msg_add = exp_getMessage('Map %s $z$s$fff added from MX Succesfully');
+        $this->msg_add = eXpGetMessage('Map %s $z$s$fff added from MX Succesfully');
     }
 
     public function eXpOnReady()
@@ -95,7 +95,7 @@ class ManiaExchange extends ExpPlugin
                 break;
             case "help":
             default:
-                $msg = exp_getMessage("usage /mx add [id], /mx queue [id], /mx search \"terms here\"  \"authorname\" ,/mx author \"name\" ");
+                $msg = eXpGetMessage("usage /mx add [id], /mx queue [id], /mx search \"terms here\"  \"authorname\" ,/mx author \"name\" ");
                 $this->eXpChatSendServerMessage($msg, $login);
                 break;
         }
@@ -216,7 +216,7 @@ class ManiaExchange extends ExpPlugin
 
                 try {
                     if (!$this->connection->checkMapForCurrentServerParams($file)) {
-                        $msg = exp_getMessage("The Map is not compatible with current server settings, map not added.");
+                        $msg = eXpGetMessage("The Map is not compatible with current server settings, map not added.");
                         $this->eXpChatSendServerMessage($msg, $login);
 
                         return;
@@ -251,7 +251,7 @@ class ManiaExchange extends ExpPlugin
 
                 try {
                     if (!$this->connection->checkMapForCurrentServerParams($file)) {
-                        $msg = exp_getMessage("Map is not compatible with current server settings, map not added.");
+                        $msg = eXpGetMessage("Map is not compatible with current server settings, map not added.");
                         $this->eXpChatSendServerMessage($msg, $login);
 
                         return;
@@ -310,7 +310,7 @@ class ManiaExchange extends ExpPlugin
 
         if ($this->dataAccess->save($file, $data)) {
             if (!$this->connection->checkMapForCurrentServerParams($file)) {
-                $msg = exp_getMessage("Map is not compatible with current server settings, map not added.");
+                $msg = eXpGetMessage("Map is not compatible with current server settings, map not added.");
                 $this->eXpChatSendServerMessage($msg, $login);
 
                 return;
@@ -338,7 +338,7 @@ class ManiaExchange extends ExpPlugin
         $queue = $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\Maps\\Maps', 'returnQueue');
         foreach ($queue as $q) {
             if ($q->player->login == $login) {
-                $msg = exp_getMessage('#admin_error# $iYou already have a map in the queue...');
+                $msg = eXpGetMessage('#admin_error# $iYou already have a map in the queue...');
                 $this->eXpChatSendServerMessage($msg, $login);
 
                 return;
@@ -423,13 +423,13 @@ class ManiaExchange extends ExpPlugin
             case 'to the queue from MX?$3f3':
                 switch ($stateName) {
                     case "VotePassed":
-                        $msg = exp_getMessage('#record# $iVote passed!');
+                        $msg = eXpGetMessage('#record# $iVote passed!');
                         $this->eXpChatSendServerMessage($msg, null);
                         $this->mxQueue($this->vote['login'], $this->vote['mxId']);
                         $this->vote = array();
                         break;
                     case "VoteFailed":
-                        $msg = exp_getMessage('#admin_error# $iVote failed!');
+                        $msg = eXpGetMessage('#admin_error# $iVote failed!');
                         $this->eXpChatSendServerMessage($msg, null);
                         $this->vote = array();
                         break;

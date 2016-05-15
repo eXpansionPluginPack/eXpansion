@@ -22,7 +22,7 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->addComponent($bg);
 
         $title = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle(34, 4);
-        $title->setText(exp_getMessage('Map Rating'));
+        $title->setText(eXpGetMessage('Map Rating'));
         $this->addComponent($title);
 
         /* $label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(34);

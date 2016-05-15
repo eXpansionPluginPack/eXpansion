@@ -52,6 +52,3 @@ interface PlayerEventListener
     /** @param PlayerNetInfo[] $players */
     public function onPlayerNetLost($players);
 }
-
-?>
-

@@ -22,7 +22,7 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->addComponent($this->bg);
 
         $this->bgTitle = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle($sizeX, $sizeY);
-        $this->bgTitle->setText(exp_getMessage("Server Ranks"));
+        $this->bgTitle->setText(eXpGetMessage("Server Ranks"));
         $this->addComponent($this->bgTitle);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame(4, -5);

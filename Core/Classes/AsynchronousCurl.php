@@ -24,7 +24,6 @@ namespace ManiaLivePlugins\eXpansion\Core\Classes;
 
 use ManiaLive\Application\Event as AppEvent;
 use ManiaLive\Data\Storage;
-use ManiaLive\Features\Tick\Event as TickEvent;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Core\types\AsynchronousCurlData;
 use oliverde8\AsynchronousJobs\Job\CallbackCurl;
@@ -37,8 +36,7 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
     /** @var AsynchronousCurlData[] */
     protected $_queries = array();
 
-    public function start()
-    {
+    public function start() {
         Dispatcher::register(AppEvent::getClass(), $this);
         /** @var Storage $storage */
         $storage = Storage::getInstance();
@@ -53,16 +51,12 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
      * @param mixed    $addionalData if you need to pass additional metadata with the query, like login do it here
      * @param array    $options      curl options array
      */
-    public function query($url, $callback, $additionalData = null, $options = array())
-    {
+    public function query($url, $callback, $additionalData = null, $options = array()) {
         $curlJob = new CallbackCurl();
         $curlJob->setCallback($callback);
         $curlJob->setUrl($url);
 
-        $options = array(
-                CURLOPT_SSL_VERIFYPEER => false,
-                CURLOPT_USERAGENT => "eXpansionPluginPack v " . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION,
-            ) + $options;
+        $options = array(CURLOPT_SSL_VERIFYPEER => false, CURLOPT_USERAGENT => "eXpansionPluginPack v " . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION,) + $options;
 
         $curlJob->setOptions($options);
         $curlJob->__additionalData = $additionalData;
@@ -73,33 +67,27 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
     /**
      * Event launch every seconds
      */
-    function onTick()
-    {
+    public function onTick() {
         JobRunner::getInstance()->proccess();
     }
 
-    function onInit()
-    {
+    public function onInit() {
 
     }
 
-    function onRun()
-    {
+    public function onRun() {
 
     }
 
-    function onPreLoop()
-    {
+    public function onPreLoop() {
 
     }
 
-    function onPostLoop()
-    {
+    public function onPostLoop() {
         JobRunner::getInstance()->proccess();
     }
 
-    function onTerminate()
-    {
+    public function onTerminate() {
         curl_multi_close($this->handle);
     }
 }

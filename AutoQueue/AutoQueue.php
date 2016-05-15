@@ -131,7 +131,7 @@ class AutoQueue extends ExpPlugin
             if ($player) {
                 $this->connection->forceSpectator($player->login, 2);
                 $this->connection->forceSpectator($player->login, 0);
-                $msg = exp_getMessage('You got free spot, good luck and have fun!');
+                $msg = eXpGetMessage('You got free spot, good luck and have fun!');
                 $this->eXpChatSendServerMessage($msg, $player->login);
             }
         }
@@ -145,8 +145,8 @@ class AutoQueue extends ExpPlugin
         ) {
             if (in_array($target, $this->queue->getLogins())) {
                 $this->queue->remove($target);
-                $this->eXpChatSendServerMessage(exp_getMessage("Admin has removed you from queue!", $target));
-                $this->eXpChatSendServerMessage(exp_getMessage('Removed player %s $z$ffffrom queue'), $login,
+                $this->eXpChatSendServerMessage(eXpGetMessage("Admin has removed you from queue!", $target));
+                $this->eXpChatSendServerMessage(eXpGetMessage('Removed player %s $z$ffffrom queue'), $login,
                     array($this->storage->getPlayerObject($target)->nickName));
             }
         }

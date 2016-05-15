@@ -35,13 +35,13 @@ class Widgets_ResSkip extends ExpPlugin
 
     public function eXpOnLoad()
     {
-        $this->msg_resOnProgress = exp_getMessage("The restart of this track is in progress!");
-        $this->msg_prestart = exp_getMessage("#player#Player #variable# %s #player#pays and restarts the challenge!");
-        $this->msg_pskip = exp_getMessage('#player#Player#variable# %s #player#pays and skips the challenge!');
-        $this->msg_resUnused = exp_getMessage("#error#Player can't restart tracks on this server");
-        $this->msg_resMax = exp_getMessage("#error#The map has already been restarted. Limit reached!");
-        $this->msg_skipUnused = exp_getMessage("#error#You can't skip tracks on this server.");
-        $this->msg_skipMax = exp_getMessage("#error#You have skipped to many maps already!");
+        $this->msg_resOnProgress = eXpGetMessage("The restart of this track is in progress!");
+        $this->msg_prestart = eXpGetMessage("#player#Player #variable# %s #player#pays and restarts the challenge!");
+        $this->msg_pskip = eXpGetMessage('#player#Player#variable# %s #player#pays and skips the challenge!');
+        $this->msg_resUnused = eXpGetMessage("#error#Player can't restart tracks on this server");
+        $this->msg_resMax = eXpGetMessage("#error#The map has already been restarted. Limit reached!");
+        $this->msg_skipUnused = eXpGetMessage("#error#You can't skip tracks on this server.");
+        $this->msg_skipMax = eXpGetMessage("#error#You have skipped to many maps already!");
 
         $this->setPublicMethod('isPublicResIsActive');
         $this->setPublicMethod('isPublicSkipActive');

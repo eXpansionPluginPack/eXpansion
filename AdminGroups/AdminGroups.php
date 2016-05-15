@@ -134,40 +134,40 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function eXpOnLoad() {
 
         //Loading all Messages;
-        $this->msg_needBeAdmin = exp_getMessage('#admin_error#You need to be an Admin to use that command');
-        $this->msg_cmdDontEx = exp_getMessage('#admin_error#That Admin command doesen\'t exist. Use #variable#/admin help #admin_error#to see all commands');
-        $this->msg_neeMorPerm = exp_getMessage('#admin_error#You don\'t have the permission to use that admin command');
-        $this->msg_aInGroup = exp_getMessage('#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first');
-        $this->msg_paddSuc = exp_getMessage('#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s');
-        $this->msg_paddFai = exp_getMessage('#admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s');
-        $this->msg_premoveSelf = exp_getMessage('#admin_error#Your are #variable#%1$s #admin_error#You can\'t remove yourself from a group');
-        $this->msg_pRemoveSuc = exp_getMessage('#admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s');
-        $this->msg_pRemoveFa = exp_getMessage('#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group');
-        $this->msg_masterMasterE = exp_getMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
-        $this->msg_removeMlAdmin = exp_getMessage('#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!');
+        $this->msg_needBeAdmin = eXpGetMessage('#admin_error#You need to be an Admin to use that command');
+        $this->msg_cmdDontEx = eXpGetMessage('#admin_error#That Admin command doesen\'t exist. Use #variable#/admin help #admin_error#to see all commands');
+        $this->msg_neeMorPerm = eXpGetMessage('#admin_error#You don\'t have the permission to use that admin command');
+        $this->msg_aInGroup = eXpGetMessage('#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first');
+        $this->msg_paddSuc = eXpGetMessage('#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s');
+        $this->msg_paddFai = eXpGetMessage('#admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s');
+        $this->msg_premoveSelf = eXpGetMessage('#admin_error#Your are #variable#%1$s #admin_error#You can\'t remove yourself from a group');
+        $this->msg_pRemoveSuc = eXpGetMessage('#admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s');
+        $this->msg_pRemoveFa = eXpGetMessage('#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group');
+        $this->msg_masterMasterE = eXpGetMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
+        $this->msg_removeMlAdmin = eXpGetMessage('#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!');
         self::$txt_msg_cmdDontEx = $this->msg_cmdDontEx;
         self::$txt_noPermissionMsg = $this->msg_neeMorPerm;
-        self::$txt_groupsTitle = exp_getMessage('Admin Groups');
-        self::$txt_helpTitle = exp_getMessage('Admin Commands Help');
-        self::$txt_permissionsTitle = exp_getMessage('Admin Group Permission - %1$s');
-        self::$txt_playersTitle = exp_getMessage('Admin Group Players - %1$s');
-        self::$txt_nwGroupNameL = exp_getMessage('New Group Name :');
-        self::$txt_add = exp_getMessage('Add');
-        self::$txt_inherits = exp_getMessage('Inherits');
-        self::$txt_inheritsTitle = exp_getMessage('Admin Group Inherits - %1$s');
-        self::$txt_groupName = exp_getMessage('Group Name');
-        self::$txt_nbPlayers = exp_getMessage('Nb Players');
-        self::$txt_playerList = exp_getMessage("Player List");
-        self::$txt_permissionList = exp_getMessage('Change Permissions');
-        self::$txt_deletegroup = exp_getMessage('Delete Group');
-        self::$txt_rmPlayer = exp_getMessage('Remove Player');
-        self::$txt_command = exp_getMessage('Command');
-        self::$txt_description = exp_getMessage('Description');
-        self::$txt_descMore = exp_getMessage('More');
-        self::$txt_aliases = exp_getMessage('Aliases');
+        self::$txt_groupsTitle = eXpGetMessage('Admin Groups');
+        self::$txt_helpTitle = eXpGetMessage('Admin Commands Help');
+        self::$txt_permissionsTitle = eXpGetMessage('Admin Group Permission - %1$s');
+        self::$txt_playersTitle = eXpGetMessage('Admin Group Players - %1$s');
+        self::$txt_nwGroupNameL = eXpGetMessage('New Group Name :');
+        self::$txt_add = eXpGetMessage('Add');
+        self::$txt_inherits = eXpGetMessage('Inherits');
+        self::$txt_inheritsTitle = eXpGetMessage('Admin Group Inherits - %1$s');
+        self::$txt_groupName = eXpGetMessage('Group Name');
+        self::$txt_nbPlayers = eXpGetMessage('Nb Players');
+        self::$txt_playerList = eXpGetMessage("Player List");
+        self::$txt_permissionList = eXpGetMessage('Change Permissions');
+        self::$txt_deletegroup = eXpGetMessage('Delete Group');
+        self::$txt_rmPlayer = eXpGetMessage('Remove Player');
+        self::$txt_command = eXpGetMessage('Command');
+        self::$txt_description = eXpGetMessage('Description');
+        self::$txt_descMore = eXpGetMessage('More');
+        self::$txt_aliases = eXpGetMessage('Aliases');
 
         foreach (self::$permissionList as $permission => $val) {
-            self::$txt_permissions[ $permission ] = exp_getMessage("Permission_" . $permission);
+            self::$txt_permissions[ $permission ] = eXpGetMessage("Permission_" . $permission);
         }
 
         //No idea if needed, I think not need to check

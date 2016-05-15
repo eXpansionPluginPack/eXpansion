@@ -96,7 +96,7 @@ class PlainPanel extends Widget
 
         $index = 1;
 
-        $this->bgTitle->setText(exp_getMessage('Best Scores'));
+        $this->bgTitle->setText(eXpGetMessage('Best Scores'));
 
 
         $recsData = "";

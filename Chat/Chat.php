@@ -103,14 +103,14 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 if (array_key_exists($login, $this->exclude)) {
                     unset($this->exclude[ $login ]);
                 }
-                $this->eXpChatSendServerMessage(exp_getMessage("Chat messages enabled."), $login);
+                $this->eXpChatSendServerMessage(eXpGetMessage("Chat messages enabled."), $login);
                 break;
             case "off":
                 $this->exclude[ $login ] = $login;
-                $this->eXpChatSendServerMessage(exp_getMessage("Chat messages disabled."), $login);
+                $this->eXpChatSendServerMessage(eXpGetMessage("Chat messages disabled."), $login);
                 break;
             default:
-                $this->eXpChatSendServerMessage(exp_getMessage("Usage: /chat on or /chat off."), $login);
+                $this->eXpChatSendServerMessage(eXpGetMessage("Usage: /chat on or /chat off."), $login);
                 break;
         }
     }

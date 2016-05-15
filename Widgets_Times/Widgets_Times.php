@@ -45,18 +45,18 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function chat_cps($login, $value)
     {
         if (!is_numeric($value)) {
-            $this->eXpChatSendServerMessage(exp_getMessage('#error#"%s" is not a numeric value!'), null, array($value));
+            $this->eXpChatSendServerMessage(eXpGetMessage('#error#"%s" is not a numeric value!'), null, array($value));
 
             return;
         }
 
         if ($value < 1) {
-            $this->eXpChatSendServerMessage(exp_getMessage('#error#"%s" is less than 1!'), null, array($value));
+            $this->eXpChatSendServerMessage(eXpGetMessage('#error#"%s" is less than 1!'), null, array($value));
 
             return;
         }
 
-        $this->eXpChatSendServerMessage(exp_getMessage('#info#New time reference point set to %s'), null, array($value));
+        $this->eXpChatSendServerMessage(eXpGetMessage('#info#New time reference point set to %s'), null, array($value));
         $this->references[$login] = (int)$value;
         $this->showPanel($login, $this->storage->getPlayerObject($login));
     }

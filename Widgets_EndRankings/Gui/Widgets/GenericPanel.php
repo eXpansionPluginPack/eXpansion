@@ -31,7 +31,7 @@ class GenericPanel extends Widget
         $this->addComponent($this->bg);
 
         $this->bgTitle = new WidgetTitle($sizeX, $sizeY);
-        $this->bgTitle->setText(exp_getMessage("Generic Panel"));
+        $this->bgTitle->setText(eXpGetMessage("Generic Panel"));
         $this->addComponent($this->bgTitle);
 
         $this->frame = new Frame(4, -5);

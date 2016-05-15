@@ -127,7 +127,7 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->configManager->check();
         $this->populate($this->configManager, $this->currentGroup, $this->confName);
         $this->redraw();
-        $msg = exp_getMessage("Settings are now saved!");
+        $msg = eXpGetMessage("Settings are now saved!");
         \ManiaLivePlugins\eXpansion\Gui\Gui::showNotice($msg, $login);
     }
 

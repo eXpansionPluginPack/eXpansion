@@ -54,12 +54,12 @@ class KnockOut extends ExpPlugin
 
     public function eXpOnLoad()
     {
-        $this->msg_newRound = exp_getMessage('#ko#KnockOut! Round: #variable#%1$s #ko#Players #variable#%2$s #ko#/#variable#%3$s remain');
-        $this->msg_koStart = exp_getMessage('#ko#KnockOut #variable#starts #ko#after next map');
-        $this->msg_koStop = exp_getMessage('#ko#KnockOut has been #variable#stopped.');
-        $this->msg_knockout = exp_getMessage('#ko#KnockOut! #variable# %1$s $z$s#ko# knocked out, but the game is still on!');
-        $this->msg_knockoutDNF = exp_getMessage('#ko#KnockOut! #variable# %1$s $z$s#ko# knocked out, since no finish!');
-        $this->msg_champ = exp_getMessage('#ko#KnockOut! #variable# %1$s $z$s#ko# is the CHAMP!!! congrats');
+        $this->msg_newRound = eXpGetMessage('#ko#KnockOut! Round: #variable#%1$s #ko#Players #variable#%2$s #ko#/#variable#%3$s remain');
+        $this->msg_koStart = eXpGetMessage('#ko#KnockOut #variable#starts #ko#after next map');
+        $this->msg_koStop = eXpGetMessage('#ko#KnockOut has been #variable#stopped.');
+        $this->msg_knockout = eXpGetMessage('#ko#KnockOut! #variable# %1$s $z$s#ko# knocked out, but the game is still on!');
+        $this->msg_knockoutDNF = eXpGetMessage('#ko#KnockOut! #variable# %1$s $z$s#ko# knocked out, since no finish!');
+        $this->msg_champ = eXpGetMessage('#ko#KnockOut! #variable# %1$s $z$s#ko# is the CHAMP!!! congrats');
     }
 
     public function eXpOnReady()

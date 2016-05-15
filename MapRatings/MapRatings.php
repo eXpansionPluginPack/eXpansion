@@ -45,8 +45,8 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         $this->enableDatabase();
         $this->enableDedicatedEvents();
-        $this->msg_rating = exp_getMessage('#rating#Map Approval Rating: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Your Rating: #variable#%4$s#rating# / #variable#5');  // '%1$s' = Map Name, '%2$s' = Rating %, '%3$s' = # of Ratings, '%4$s' = Player's Rating);
-        $this->msg_noRating = exp_getMessage('#rating# $iMap has not been rated yet!');
+        $this->msg_rating = eXpGetMessage('#rating#Map Approval Rating: #variable#%2$s#rating# (#variable#%3$s #rating#votes).  Your Rating: #variable#%4$s#rating# / #variable#5');  // '%1$s' = Map Name, '%2$s' = Rating %, '%3$s' = # of Ratings, '%4$s' = Player's Rating);
+        $this->msg_noRating = eXpGetMessage('#rating# $iMap has not been rated yet!');
         if (!$this->db->tableExists("exp_ratings")) {
             $this->db->execute('CREATE TABLE IF NOT EXISTS `exp_ratings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -269,7 +269,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             try {
                 $this->connection->removeMapList($filenames);
-                $this->eXpChatSendServerMessage(exp_getMessage("Maps with bad rating removed successfully."));
+                $this->eXpChatSendServerMessage(eXpGetMessage("Maps with bad rating removed successfully."));
                 Gui\Windows\MapRatingsManager::Erase($login);
             } catch (\Exception $e) {
                 $this->eXpChatSendServerMessage("#error#Error: %s", $login, array($e->getMessage()));

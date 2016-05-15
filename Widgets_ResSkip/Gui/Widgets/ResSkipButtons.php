@@ -32,9 +32,9 @@ class ResSkipButtons extends Widget
         $this->btn_fav->setPositionZ(-1);
         $this->btn_fav->setText(
             array(
-                exp_getMessage('AddToFav:$s$fffAdd'),
-                exp_getMessage('AddToFav:$s$fffto'),
-                exp_getMessage('AddToFav:$s$fffFav\'s'),
+                eXpGetMessage('AddToFav:$s$fffAdd'),
+                eXpGetMessage('AddToFav:$s$fffto'),
+                eXpGetMessage('AddToFav:$s$fffFav\'s'),
             )
         );
         $line->addComponent($this->btn_fav);
@@ -60,17 +60,17 @@ class ResSkipButtons extends Widget
         if (is_numeric($amount)) {
             $this->btn_res->setText(
                 array(
-                    exp_getMessage('AddToFav:$ff0Buy'),
-                    exp_getMessage('AddToFav:$fffRestart'),
+                    eXpGetMessage('AddToFav:$ff0Buy'),
+                    eXpGetMessage('AddToFav:$fffRestart'),
                     '$ff0' . $amount . 'p'));
         }
 
         if ($amount == "max") {
             $this->btn_res->setText(
                 array(
-                    exp_getMessage('AddToFav:$ff0Max'),
-                    exp_getMessage('AddToFav:$fffrestarts'),
-                    exp_getMessage('AddToFav:$ff0reached'),
+                    eXpGetMessage('AddToFav:$ff0Max'),
+                    eXpGetMessage('AddToFav:$fffrestarts'),
+                    eXpGetMessage('AddToFav:$ff0reached'),
                 )
             );
             $this->btn_res->setAction(null);
@@ -82,8 +82,8 @@ class ResSkipButtons extends Widget
         if (is_numeric($amount)) {
             $this->btn_skip->setText(
                 array(
-                    exp_getMessage('AddToFav:$ff0Buy'),
-                    exp_getMessage('AddToFav:$fffSkip'),
+                    eXpGetMessage('AddToFav:$ff0Buy'),
+                    eXpGetMessage('AddToFav:$fffSkip'),
                     '$ff0' . $amount . 'p')
             );
         }
@@ -91,9 +91,9 @@ class ResSkipButtons extends Widget
         if ($amount == "max") {
             $this->btn_skip->setText(
                 array(
-                    exp_getMessage('AddToFav:$ff0Max'),
-                    exp_getMessage('AddToFav:$fffskips'),
-                    exp_getMessage('AddToFav:$ff0reached'),
+                    eXpGetMessage('AddToFav:$ff0Max'),
+                    eXpGetMessage('AddToFav:$fffskips'),
+                    eXpGetMessage('AddToFav:$ff0reached'),
                 )
             );
             $this->btn_skip->setAction(null);

@@ -46,12 +46,12 @@ class EnterQueueWidget extends Widget
         $this->addComponent($bg);
 
         $header = new WidgetTitle(81, 4);
-        $header->setText(exp_getMessage("Join Queue"));
+        $header->setText(eXpGetMessage("Join Queue"));
         $this->addComponent($header);
 
         $this->dicoLabel = new DicoLabel(50, 10);
         $this->dicoLabel->setPosition(2, -6);
-        $this->dicoLabel->setText(exp_getMessage("Click the button to \njoin the waiting queue!"));
+        $this->dicoLabel->setText(eXpGetMessage("Click the button to \njoin the waiting queue!"));
         $this->dicoLabel->setTextColor("fff");
         $this->addComponent($this->dicoLabel);
 

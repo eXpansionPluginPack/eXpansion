@@ -166,42 +166,42 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     {
 
         //Recovering the multi language messages
-        $this->msg_secure = exp_getMessage($this->config->msg_secure);
-        $this->msg_new = exp_getMessage($this->config->msg_new);
-        $this->msg_equals = exp_getMessage($this->config->msg_equals);
-        $this->msg_improved = exp_getMessage($this->config->msg_improved);
+        $this->msg_secure = eXpGetMessage($this->config->msg_secure);
+        $this->msg_new = eXpGetMessage($this->config->msg_new);
+        $this->msg_equals = eXpGetMessage($this->config->msg_equals);
+        $this->msg_improved = eXpGetMessage($this->config->msg_improved);
 
 
-        $this->msg_secure_top5 = exp_getMessage($this->config->msg_secure_top5);
-        $this->msg_new_top5 = exp_getMessage($this->config->msg_new_top5);
-        $this->msg_equals_top5 = exp_getMessage($this->config->msg_equals_top5);
-        $this->msg_improved_top5 = exp_getMessage($this->config->msg_improved_top5);
+        $this->msg_secure_top5 = eXpGetMessage($this->config->msg_secure_top5);
+        $this->msg_new_top5 = eXpGetMessage($this->config->msg_new_top5);
+        $this->msg_equals_top5 = eXpGetMessage($this->config->msg_equals_top5);
+        $this->msg_improved_top5 = eXpGetMessage($this->config->msg_improved_top5);
 
-        $this->msg_secure_top1 = exp_getMessage($this->config->msg_secure_top1);
-        $this->msg_new_top1 = exp_getMessage($this->config->msg_new_top1);
-        $this->msg_equals_top1 = exp_getMessage($this->config->msg_equals_top1);
-        $this->msg_improved_top1 = exp_getMessage($this->config->msg_improved_top1);
+        $this->msg_secure_top1 = eXpGetMessage($this->config->msg_secure_top1);
+        $this->msg_new_top1 = eXpGetMessage($this->config->msg_new_top1);
+        $this->msg_equals_top1 = eXpGetMessage($this->config->msg_equals_top1);
+        $this->msg_improved_top1 = eXpGetMessage($this->config->msg_improved_top1);
 
-        $this->msg_newMap = exp_getMessage($this->config->msg_newMap);
-        $this->msg_BeginMap = exp_getMessage($this->config->msg_BeginMap);
-        $this->msg_personalBest = exp_getMessage($this->config->msg_personalBest);
-        $this->msg_noPB = exp_getMessage($this->config->msg_noPB);
-        $this->msg_showRank = exp_getMessage($this->config->msg_showRank);
-        $this->msg_noRank = exp_getMessage($this->config->msg_noRank);
-        $this->msg_admin_savedRecs = exp_getMessage('#admin_action#Records saved sucessfully into the database');
+        $this->msg_newMap = eXpGetMessage($this->config->msg_newMap);
+        $this->msg_BeginMap = eXpGetMessage($this->config->msg_BeginMap);
+        $this->msg_personalBest = eXpGetMessage($this->config->msg_personalBest);
+        $this->msg_noPB = eXpGetMessage($this->config->msg_noPB);
+        $this->msg_showRank = eXpGetMessage($this->config->msg_showRank);
+        $this->msg_noRank = eXpGetMessage($this->config->msg_noRank);
+        $this->msg_admin_savedRecs = eXpGetMessage('#admin_action#Records saved sucessfully into the database');
 
-        self::$txt_rank = exp_getMessage("#");
-        self::$txt_nick = exp_getMessage("NickName");
-        self::$txt_score = exp_getMessage("Score");
-        self::$txt_sector = exp_getMessage("Sector");
-        self::$txt_cp = exp_getMessage("CheckPoint Times");
-        self::$txt_avgScore = exp_getMessage("Average Score");
-        self::$txt_nbFinish = exp_getMessage("Finishes");
-        self::$txt_wins = exp_getMessage("Nb Wins");
-        self::$txt_lastRec = exp_getMessage("Last Rec Date");
-        self::$txt_ptime = exp_getMessage("Play Time");
-        self::$txt_nbRecords = exp_getMessage("nb Rec");
-        self::$txt_login = exp_getMessage("Login");
+        self::$txt_rank = eXpGetMessage("#");
+        self::$txt_nick = eXpGetMessage("NickName");
+        self::$txt_score = eXpGetMessage("Score");
+        self::$txt_sector = eXpGetMessage("Sector");
+        self::$txt_cp = eXpGetMessage("CheckPoint Times");
+        self::$txt_avgScore = eXpGetMessage("Average Score");
+        self::$txt_nbFinish = eXpGetMessage("Finishes");
+        self::$txt_wins = eXpGetMessage("Nb Wins");
+        self::$txt_lastRec = eXpGetMessage("Last Rec Date");
+        self::$txt_ptime = eXpGetMessage("Play Time");
+        self::$txt_nbRecords = eXpGetMessage("nb Rec");
+        self::$txt_login = eXpGetMessage("Login");
 
         $this->enableStorageEvents();
         $this->enableDedicatedEvents();

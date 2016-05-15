@@ -24,11 +24,11 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function eXpOnLoad()
     {
-        $this->msg_noLogin = exp_getMessage('#personalmessage#Player with login "%1$s" is not found at server!');
-        $this->msg_noMessage = exp_getMessage("#personalmessage#No message to send to!");
-        $this->msg_noReply = exp_getMessage("#personalmessage#No one to reply back!");
-        $this->msg_self = exp_getMessage("#personalmessage#You can't send a message to yourself.");
-        $this->msg_help = exp_getMessage("#personalmessage#Usage /pm [login] your personal message here");
+        $this->msg_noLogin = eXpGetMessage('#personalmessage#Player with login "%1$s" is not found at server!');
+        $this->msg_noMessage = eXpGetMessage("#personalmessage#No message to send to!");
+        $this->msg_noReply = eXpGetMessage("#personalmessage#No one to reply back!");
+        $this->msg_self = eXpGetMessage("#personalmessage#You can't send a message to yourself.");
+        $this->msg_help = eXpGetMessage("#personalmessage#Usage /pm [login] your personal message here");
     }
 
     public function eXpOnReady()

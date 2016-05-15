@@ -68,8 +68,8 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
         parent::eXpOnLoad();
         $this->config = Config::getInstance();
         $this->mxConnection = new mxConnection();
-        $this->msg_error = exp_getMessage('MXKarma error %1$s: %2$s');
-        $this->msg_connected = exp_getMessage('MXKarma connection Success!');
+        $this->msg_error = eXpGetMessage('MXKarma error %1$s: %2$s');
+        $this->msg_connected = eXpGetMessage('MXKarma connection Success!');
     }
 
     public function eXpOnReady()

@@ -142,7 +142,7 @@ class PlainLivePanel extends PlainPanel
 
         $index = 1;
 
-        $this->bgTitle->setText(exp_getMessage("Live Rankings"));
+        $this->bgTitle->setText(eXpGetMessage("Live Rankings"));
 
 
         $recsData = "";

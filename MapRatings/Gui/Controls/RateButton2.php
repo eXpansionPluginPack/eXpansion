@@ -48,11 +48,11 @@ class RateButton2 extends \ManiaLivePlugins\eXpansion\Gui\Control
             case 0:
                 // $thumb->setColorize("f00");
                 $thumb->setAttribute("rot", "180");
-                $label->setText(exp_getMessage("No"));
+                $label->setText(eXpGetMessage("No"));
                 break;
             case 5;
                 // $thumb->setColorize("0f0");
-                $label->setText(exp_getMessage("Yes"));
+                $label->setText(eXpGetMessage("Yes"));
                 break;
         }
 

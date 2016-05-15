@@ -181,7 +181,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->karma->votes[$login] = $vote;
 
         $this->newVotes[$login] = new Structures\Vote($login, $vote);
-        $msg = exp_getMessage('#rank#$iVote Registered!!');
+        $msg = eXpGetMessage('#rank#$iVote Registered!!');
         $this->eXpChatSendServerMessage($msg, $login);
 
         // redraw the widget for this player

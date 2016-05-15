@@ -47,7 +47,7 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(30, 5);
 
-        $label->setText("    ".\exp_getMessage($itemName, null));
+        $label->setText("    ".\eXpGetMessage($itemName, null));
         $label->setTextSize(1);
         $label->setScriptEvents();
         $label->setStyle("Manialink_Body");

@@ -34,7 +34,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $info->show();
 
         $play = Gui\Widgets\TopPlayTime::Create(null);
-        $play->setTitle(exp_getMessage("Top Playtime"));
+        $play->setTitle(eXpGetMessage("Top Playtime"));
         $play->setLines(15);
         $play->setData($this->getTopPlaytime());
         $play->setPosition(120, 60);
@@ -42,7 +42,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 
 
         $don = Gui\Widgets\Donators::Create(null);
-        $don->setTitle(exp_getMessage("Top Donators"));
+        $don->setTitle(eXpGetMessage("Top Donators"));
         $don->setLines(15);
         $don->setData($this->getTopDonators());
         $don->setPosition(120, 0);

@@ -144,13 +144,13 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             // if vote is not managed...
             if ($managedVotes['RestartMap']->managed == false) return;
             if ($managedVotes['RestartMap']->ratio == -1.) {
-                $this->eXpChatSendServerMessage(exp_getMessage("#error#Restart vote is disabled!"), $login);
+                $this->eXpChatSendServerMessage(eXpGetMessage("#error#Restart vote is disabled!"), $login);
 
                 return;
             }
             $config = Config::getInstance();
             if ($config->restartLimit != 0 && $config->restartLimit <= $this->resCount) {
-                $this->eXpChatSendServerMessage(exp_getMessage("#error#Map limit for voting restart reached."), $login,
+                $this->eXpChatSendServerMessage(eXpGetMessage("#error#Map limit for voting restart reached."), $login,
                     array($this->config->restartLimit));
 
                 return;
@@ -165,7 +165,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->connection->callVote($vote, $vote->ratio, ($vote->timeout * 1000), $vote->voters);
 
             $player = $this->storage->getPlayerObject($login);
-            $msg = exp_getMessage('#variable#%s #vote#initiated restart map vote..');
+            $msg = eXpGetMessage('#variable#%s #vote#initiated restart map vote..');
             $this->eXpChatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage("[Notice] " . $e->getMessage(), $login);
@@ -182,7 +182,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             // if vote is not managed...
             if ($managedVotes['NextMap']->managed == false) return;
             if ($managedVotes['NextMap']->ratio == -1.) {
-                $this->eXpChatSendServerMessage(exp_getMessage("#error#Skip vote is disabled!"), $login);
+                $this->eXpChatSendServerMessage(eXpGetMessage("#error#Skip vote is disabled!"), $login);
 
                 return;
             }
@@ -196,7 +196,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->connection->callVote($vote, $vote->ratio, ($vote->timeout * 1000), $vote->voters);
 
             $player = $this->storage->getPlayerObject($login);
-            $msg = exp_getMessage('#variable#%1$s #vote#initiated skip map vote..');
+            $msg = eXpGetMessage('#variable#%1$s #vote#initiated skip map vote..');
             $this->eXpChatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm')));
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage("[Notice] " . $e->getMessage(), $login);
@@ -250,7 +250,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 if ($this->counters[$login][$cmdName] > $this->config->limit_votes) {
 
                     $this->connection->cancelVote();
-                    $msg = exp_getMessage("Vote limit reached.");
+                    $msg = eXpGetMessage("Vote limit reached.");
                     $this->eXpChatSendServerMessage($msg);
 
                     return;
@@ -264,7 +264,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($stateName == "VotePassed") {
             if ($cmdName != "Replay" && $cmdName != "Skip") return;
 
-            $msg = exp_getMessage('#vote_success# $iVote passed!');
+            $msg = eXpGetMessage('#vote_success# $iVote passed!');
             $this->eXpChatSendServerMessage($msg, null);
             $voter = $this->voter;
             if ($cmdName == "Replay") {
@@ -281,7 +281,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
         if ($stateName == "VoteFailed") {
             if ($cmdName != "Replay" && $cmdName != "Skip") return;
-            $msg = exp_getMessage('#vote_failure# $iVote failed!');
+            $msg = eXpGetMessage('#vote_failure# $iVote failed!');
             $this->eXpChatSendServerMessage($msg, null);
             $this->voter = null;
         }
@@ -293,7 +293,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $vote = $this->connection->getCurrentCallVote();
         if (!empty($vote->cmdName)) {
             $this->connection->cancelVote();
-            $msg = exp_getMessage('#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!');
+            $msg = eXpGetMessage('#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!');
             $this->eXpChatSendServerMessage($msg, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, 'wosnm'), $login));
 
             return;
