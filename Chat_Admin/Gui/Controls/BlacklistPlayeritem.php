@@ -3,23 +3,21 @@
 namespace ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
 
 class BlacklistPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $unblackButton;
+    protected $unblackButton;
 
-    private $login;
+    protected $login;
 
-    private $unbanAction;
+    protected $unblackAction;
 
-    private $frame;
+    protected $frame;
 
-    private $bg;
+    protected $bg;
 
-    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login)
-    {
+    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login) {
         $sizeX = 80;
         $sizeY = 6;
         $this->player = $player;
@@ -57,22 +55,5 @@ class BlacklistPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY)
-    {
-
-    }
-
-    function onDraw()
-    {
-
-    }
-
-    function __destruct()
-    {
-
-    }
-
 }
-
-?>
 

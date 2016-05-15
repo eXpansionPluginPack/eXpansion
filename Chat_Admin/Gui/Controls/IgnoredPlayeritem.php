@@ -14,15 +14,12 @@ use Maniaplanet\DedicatedServer\Structures\Player;
 class IgnoredPlayeritem extends Control
 {
 
-    private $bg;
-    private $unignoreButton;
-    private $login;
-    private $nickname;
-    private $unignoreAction;
-    private $frame;
+    protected $unignoreButton;
+    protected $login;
+    protected $unignoreAction;
+    protected $frame;
 
-    function __construct($indexNumber, Player $player, $controller, $login)
-    {
+    public function __construct($indexNumber, Player $player, $controller, $login) {
         $sizeX = 80;
         $sizeY = 6;
         $this->player = $player;
@@ -58,13 +55,9 @@ class IgnoredPlayeritem extends Control
         $this->setSize($sizeX, $sizeY);
     }
 
-    function destroy()
-    {
+    public function destroy() {
         $this->unignoreButton->destroy();
         parent::destroy();
     }
 
 }
-
-?>
-

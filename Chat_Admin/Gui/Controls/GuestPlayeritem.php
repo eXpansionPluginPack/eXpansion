@@ -4,23 +4,21 @@ namespace ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
 
 class GuestPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $bg;
-    private $removeButton;
+    protected $bg;
+    protected $removeButton;
 
-    private $login;
-    private $nickname;
+    protected $login;
+    protected $nickname;
 
-    private $removeAction;
+    protected $removeAction;
 
-    private $frame;
+    protected $frame;
 
-    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login)
-    {
+    public function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login) {
         $sizeX = 80;
         $sizeY = 6;
         $this->player = $player;
@@ -58,27 +56,8 @@ class GuestPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY)
-    {
-
-    }
-
-    function onDraw()
-    {
-
-    }
-
-    function __destruct()
-    {
-
-    }
-
-    public function removeGuest($login, $target)
-    {
+    public function removeGuest($login, $target) {
         AdminGroups::getInstance()->adminCmd($login, 'player remove guest ' . $target);
     }
 
 }
-
-?>
-

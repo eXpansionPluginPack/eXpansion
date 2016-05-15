@@ -3,25 +3,18 @@
 namespace ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
 
 class BannedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $bg;
+    protected $bg;
+    protected $unbanButton;
+    protected $login;
+    protected $nickname;
+    protected $unbanAction;
+    protected $frame;
 
-    private $unbanButton;
-
-    private $login;
-
-    private $nickname;
-
-    private $unbanAction;
-
-    private $frame;
-
-    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\PlayerBan $player, $controller, $login)
-    {
+    public function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\PlayerBan $player, $controller, $login) {
         $sizeX = 80;
         $sizeY = 6;
         $this->player = $player;
@@ -58,17 +51,5 @@ class BannedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY)
-    {
-
-    }
-
-    function __destruct()
-    {
-
-    }
-
 }
-
-?>
 

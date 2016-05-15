@@ -38,13 +38,13 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /** @var Config */
     private $config;
     private $exclude = array();
-    public $badWords = array();
+    private $badWords = array();
 
-    function eXpOnLoad() {
+    public function eXpOnLoad() {
         $this->loadProfanityList();
     }
 
-    function eXpOnReady() {
+    public function eXpOnReady() {
         $this->enableDedicatedEvents(Event::ON_PLAYER_CONNECT);
         $this->enableDedicatedEvents(Event::ON_PLAYER_DISCONNECT);
 
@@ -52,10 +52,10 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         try {
             $this->connection->chatEnableManualRouting(true);
-            $cmd = AdminGroups::addAdminCommand('chat', $this, 'adm_chat', Permission::GAME_SETTINGS);
+            $cmd = AdminGroups::addAdminCommand('chat', $this, 'admChat', Permission::GAME_SETTINGS);
             $cmd->setHelp('/adm chat enable or disable');
-            $this->registerChatCommand("chat", "cmd_chat", 1, true);
-            $this->registerChatCommand("chat", "cmd_chat", 0, true);
+            $this->registerChatCommand("chat", "cmdChat", 1, true);
+            $this->registerChatCommand("chat", "cmdChat", 0, true);
         }
         catch (\Exception $e) {
             $this->console("[eXpansion|Chat] Couldn't initialize chat. Error from server: " . $e->getMessage());
@@ -97,7 +97,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return implode(" ", $out);
     }
 
-    public function cmd_chat($login, $params = "help") {
+    public function cmdChat($login, $params = "help") {
         switch (strtolower($params)) {
             case "on":
                 if (array_key_exists($login, $this->exclude)) {
@@ -115,7 +115,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    public function adm_chat($login, $params) {
+    public function admChat($login, $params) {
         $command = array_shift($params);
 
         $var = MetaData::getInstance()->getVariable('publicChatActive');
@@ -152,8 +152,9 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function onPlayerDisconnect($login, $reason = null) {
         $player = $this->storage->getPlayerObject($login);
-        if (empty($player))
+        if (empty($player)) {
             return;
+        }
         \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $player->iPAddress . ") [" . $login . "] Disconnected");
     }
 
@@ -196,7 +197,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * * @return void
      */
-    function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
+    public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd) {
         if ($playerUid != 0 && substr($text, 0, 1) != "/" && $this->enabled) {
             $config = Config::getInstance();
             $force = "";
@@ -206,17 +207,21 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     $nick = $source_player->nickName;
                     $pos = strpos($source_player->nickName, '$>');
                     $color = substr($source_player->nickName, $pos);
-                    if (substr($nick, -1) == '$')
+                    if (substr($nick, -1) == '$') {
                         $nick = substr($nick, 0, -1);
-                    if ($color != '$>$')
+                    }
+                    if ($color != '$>$') {
                         $force = str_replace('$>', "", $color);
+                    }
                 }
             }
-            if ($config->useProfanityFilter)
+            if ($config->useProfanityFilter) {
                 $text = $this->applyFilter($text);
+            }
 
-            if ($source_player == null)
+            if ($source_player == null) {
                 return;
+            }
             $nick = $source_player->nickName;
             $nick = str_ireplace('$w', '', $nick);
             $nick = str_ireplace('$z', '$z$s', $nick);
@@ -283,10 +288,8 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function eXpOnUnload() {
+    public function eXpOnUnload() {
         Dispatcher::unregister(Event::getClass(), $this, Event::ON_PLAYER_CHAT);
         $this->connection->chatEnableManualRouting(false);
     }
 }
-
-?>
