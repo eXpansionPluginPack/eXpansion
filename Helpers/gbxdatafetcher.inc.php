@@ -372,7 +372,7 @@ class GBXBaseFetcher
     /**
      * Get list of chunks from GBX header block
      *
-     * @param Int   $headerSize
+     * @param Int $headerSize
      *        Size of header block (chunks list & chunks data)
      * @param array $chunks
      *        List of chunk IDs & names
@@ -625,7 +625,7 @@ class GBXChallMapFetcher extends GBXBaseFetcher
      *
      * @param String $imgsrc
      *        Source image data
-     * @param Int    $dir
+     * @param Int $dir
      *        Flip direction from the constants above
      *
      * @return Flipped image data if successful, otherwise source image data
@@ -1167,7 +1167,7 @@ class GBXChallengeFetcher extends GBXChallMapFetcher
     /**
      * Fetches a hell of a lot of data about a GBX challenge
      *
-     * @param String  $filename
+     * @param String $filename
      *        The challenge filename (must include full path)
      * @param Boolean $parsexml
      *        If true, the script also parses the XML block

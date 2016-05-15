@@ -33,7 +33,7 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         parent::onConstruct();
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
 
         $this->bg->setSize($this->sizeX, $this->sizeY);
@@ -42,7 +42,7 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         parent::onResize($oldX, $oldY);
     }
 
-    function setData($ranks)
+    public function setData($ranks)
     {
         foreach ($this->items as $item) {
             $item->destroy();
@@ -60,7 +60,7 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         }
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item) {
             $item->destroy();
@@ -72,5 +72,3 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     }
 
 }
-
-?>

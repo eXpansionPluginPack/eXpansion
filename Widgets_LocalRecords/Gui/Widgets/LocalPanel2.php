@@ -13,5 +13,3 @@ class LocalPanel2 extends PlainPanel
         $this->timeScript->setParam('varName', 'LocalTime2');
     }
 }
-
-?>

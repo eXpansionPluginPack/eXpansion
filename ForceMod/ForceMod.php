@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\ForceMod;
 
 use Exception;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
-use ManiaLivePlugins\eXpansion\ForceMod\Config;
 use Maniaplanet\DedicatedServer\Structures\Mod;
 
 /**

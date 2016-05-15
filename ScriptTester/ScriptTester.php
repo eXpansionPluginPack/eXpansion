@@ -7,7 +7,6 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\ScriptTester\Gui\Widgets\ScriptEditor;
-use ManiaLivePlugins\eXpansion\ScriptTester\Config;
 
 /**
  * Description of Netstat

@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls;
 
-use \ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus;
-
 class DirectoryItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
@@ -14,7 +12,7 @@ class DirectoryItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     /**
      *
      * @param \SplFileInfo $dir
-     * @param type         $sizeX
+     * @param type $sizeX
      */
     function __construct(\SplFileInfo $dir, $controller, $compare, $sizeX)
     {

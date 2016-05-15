@@ -72,7 +72,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         if (!extension_loaded("gd")) {
             if (!(bool)ini_get("enable_dl") || (bool)ini_get("safe_mode")) {
@@ -157,7 +157,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->msg_errorImageType = eXpGetMessage('#quiz#$Displaying image not possible, due unsupported media type was detected.');
     }
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
         if (!extension_loaded("mbstring")) {
             $this->dumpException("Plugin init failed!\nQuiz plugin needs 'mbstring' extension to be loaded!\n Please add the extension to to php for loading this plugin!", new \Exception("php_mbstring extension not loaded"));
@@ -177,7 +177,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function chatquiz($login, $args)
+    public function chatquiz($login, $args)
     {
         $args = explode(" ", $args);
         $action = array_shift($args);
@@ -211,7 +211,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param \ManiaLivePlugins\eXpansion\Quiz\Structures\Question $question
      */
-    function addQuestion(Structures\Question $question)
+    public function addQuestion(Structures\Question $question)
     {
         if (empty($question->question)) {
             $this->eXpChatSendServerMessage($this->msg_questionMissing, $question->asker->login);
@@ -236,7 +236,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->chooseNextQuestion($question->asker->login);
     }
 
-    function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
+    public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
         if ($playerUid == 0)
             return;
@@ -287,7 +287,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return $this->players;
     }
 
-    function cancel($login)
+    public function cancel($login)
     {
         if ($this->currentQuestion === null)
             return;
@@ -300,7 +300,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function reset($login)
+    public function reset($login)
     {
         if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN))
             return;
@@ -313,7 +313,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Gui\Widget\QuizImageWidget::EraseAll();
     }
 
-    function showAnswer($login)
+    public function showAnswer($login)
     {
         if (!isset($this->currentQuestion->question))
             return;
@@ -332,7 +332,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function chooseNextQuestion($login = null)
+    public function chooseNextQuestion($login = null)
     {
 
         if ($this->questionDb == null) {
@@ -361,7 +361,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function addPoint($login = null, $target)
+    public function addPoint($login = null, $target)
     {
         if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN)) {
             if (!isset($this->players[$target])) {
@@ -386,7 +386,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function removePoint($login, $target)
+    public function removePoint($login, $target)
     {
 
         if ($login == null || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN)) {
@@ -406,7 +406,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function showQuestion()
+    public function showQuestion()
     {
         $nickName = $this->currentQuestion->asker->nickName;
         $question = $this->currentQuestion->question;
@@ -424,7 +424,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->eXpChatSendServerMessage($this->msg_question, null, array($question));
     }
 
-    function xGetImage($data, $httpCode)
+    public function xGetImage($data, $httpCode)
     {
         if ($httpCode != 200)
             return;
@@ -459,7 +459,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function ask($login, $text = "")
+    public function ask($login, $text = "")
     {
         $window = Gui\Windows\QuestionWindow::Create($login);
         try {
@@ -495,7 +495,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function showPointsWindow($login)
+    public function showPointsWindow($login)
     {
         \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->players, "points");
         $window = Gui\Windows\Playerlist::Create($login);
@@ -505,7 +505,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window->Show();
     }
 
-    function addPointsWindow($login)
+    public function addPointsWindow($login)
     {
         if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN))
             return;
@@ -516,7 +516,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window->Show();
     }
 
-    function showPoints($login = null)
+    public function showPoints($login = null)
     {
         \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->players, "points");
         $this->eXpChatSendServerMessage($this->msg_points);
@@ -529,7 +529,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->connection->chatSendServerMessage(substr($output, 0, (strlen($output) - 2)));
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         AddPoint::EraseAll();
         PlayerList::EraseAll();
@@ -538,5 +538,3 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
 }
-
-?>

@@ -26,7 +26,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
     /**
      * Button
      *
-     * @param int  $sizeX = 24
+     * @param int $sizeX = 24
      * @param intt $sizeY = 6
      */
     function __construct($sizeX = 32, $sizeY = 6)

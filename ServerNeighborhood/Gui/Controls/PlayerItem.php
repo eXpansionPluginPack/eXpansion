@@ -14,12 +14,12 @@ class PlayerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     private static $bgStyle = 'Bgs1';
     private static $bgStyles = array('BgList', 'BgListLine');
-    private $bg_nick, $bg_login, $bg_nation, $bg_ladder, $bg_spec;
-    private $label_nick, $label_login, $label_nation, $label_ladder;
-    private $icon_spec;
+    protected $bg_nick, $bg_login, $bg_nation, $bg_ladder, $bg_spec;
+    protected $label_nick, $label_login, $label_nation, $label_ladder;
+    protected $icon_spec;
 
     //nickname, login, nation, ladder, spectator
-    function __construct($indexNumber, $ctr, $player)
+    public function __construct($indexNumber, $ctr, $player)
     {
         $sizeY = 4;
 
@@ -106,12 +106,5 @@ class PlayerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->icon_spec->setPosX($posX + $sizeX / 2 - $this->icon_spec->getSizeX() / 2);
     }
-
-    public function destroy()
-    {
-        parent::destroy();
-    }
-
+    
 }
-
-?>

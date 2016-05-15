@@ -2,13 +2,12 @@
 
 namespace ManiaLivePlugins\eXpansion\MapRatings;
 
-use ManiaLive\Event\Dispatcher;
-use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\RatingsWidget;
-use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\EndMapRatings;
-use ManiaLivePlugins\eXpansion\MapRatings\Gui\Windows\MapRatingsManager;
-use ManiaLivePlugins\eXpansion\MapRatings\Structures\PlayerVote;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\EndMapRatings;
+use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\RatingsWidget;
+use ManiaLivePlugins\eXpansion\MapRatings\Gui\Windows\MapRatingsManager;
+use ManiaLivePlugins\eXpansion\MapRatings\Structures\PlayerVote;
 
 class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -41,7 +40,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->config = Config::getInstance();
     }
 
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $this->enableDatabase();
         $this->enableDedicatedEvents();
@@ -234,7 +233,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function sendRatingMsg($login, $playerRating)
+    public function sendRatingMsg($login, $playerRating)
     {
         if ($login != null) {
             if ($this->ratingTotal == 0) {
@@ -258,7 +257,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function autoRemove($login)
+    public function autoRemove($login)
     {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
 
@@ -281,7 +280,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return \ManiaLivePlugins\eXpansion\MapRatings\MapRating[]
      */
-    function autoMapManager_getMaps()
+    public function autoMapManager_getMaps()
     {
         $items = array();
         foreach ($this->getRatings() as $uid => $rating) {
@@ -297,7 +296,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return $items;
     }
 
-    function showRatingsManager($login)
+    public function showRatingsManager($login)
     {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
             $window = Gui\Windows\MapRatingsManager::Create($login);
@@ -308,14 +307,14 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function chatRating($login = null)
+    public function chatRating($login = null)
     {
         if ($login !== null) {
             $this->sendRatingMsg($login, null);
         }
     }
 
-    function displayWidget($login = null)
+    public function displayWidget($login = null)
     {
         if (!$this->displayWidget)
             return;
@@ -329,7 +328,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function onBeginMap($var, $var2, $var3)
+    public function onBeginMap($var, $var2, $var3)
     {
         if ($this->previousMap != null) {
             $this->saveRatings($this->previousMap->uId);
@@ -372,7 +371,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->displayWidget();
     }
 
-    function onEndMatch($rankings = "", $winnerTeamOrMap = "")
+    public function onEndMatch($rankings = "", $winnerTeamOrMap = "")
     {
 
         if ($this->config->showPodiumWindow) {
@@ -407,7 +406,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
+    public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
         if ($playerUid == 0)
             return;
@@ -438,7 +437,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->saveRating($login, 5);
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         EndMapRatings::EraseAll();
         RatingsWidget::EraseAll();
@@ -446,5 +445,3 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
 }
-
-?>

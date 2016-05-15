@@ -2,10 +2,10 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows;
 
+use ManiaLivePlugins\eXpansion\Gui\Gui;
+use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls\SecItem;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
-use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls\SecItem;
-use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 /**
  * Description of Cps
@@ -16,10 +16,10 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
     public static $nbResult = 5;
-    private $label_sector, $label_pos;
-    private $widths = array(3, 7, 7, 7, 7, 7);
-    private $pager;
-    private $items = array();
+    protected $label_sector, $label_pos;
+    protected $widths = array(3, 7, 7, 7, 7, 7);
+    protected $pager;
+    protected $items = array();
 
     protected function onConstruct()
     {
@@ -101,5 +101,3 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 }
-
-?>

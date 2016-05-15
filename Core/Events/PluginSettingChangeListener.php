@@ -29,11 +29,11 @@ interface PluginSettingChangeListener
 {
 
     /**
-     * @param string   $pluginId
+     * @param string $pluginId
      * @param Variable $var
      *
      * @return mixed
      */
     public function onPluginSettingsChange($pluginId, Variable $var);
-    
+
 } 

@@ -9,5 +9,3 @@ class Config extends \ManiaLib\Utils\Singleton
     public $imageurl = "http://reaby.kapsi.fi/ml/scoreboard.png";
 
 }
-
-?>

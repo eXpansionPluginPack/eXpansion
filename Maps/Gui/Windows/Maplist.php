@@ -13,13 +13,13 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public $records = array();
     public static $mapsPlugin = null;
     public static $localrecordsLoaded = false;
-    private $history = array();
-    private $items = array();
+    protected $history = array();
+    protected $items = array();
 
     /** @var \ManiaLive\Gui\Controls\Pager */
     protected $pager;
     protected $btnRemoveAll;
-    private $frame;
+    protected $frame;
     protected $title_mapName, $title_envi;
     protected $title_authorName;
     protected $title_goldTime;
@@ -29,20 +29,20 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $searchBox, $searchframe;
     protected $btn_search, $btn_search2;
     protected $btn_sortNewest;
-    private $actionRemoveAll;
-    private $actionRemoveAllf;
-    private $currentMap = null;
-    private $titlebg;
+    protected $actionRemoveAll;
+    protected $actionRemoveAllf;
+    protected $currentMap = null;
+    protected $titlebg;
 
     /** @var  \Maniaplanet\DedicatedServer\Connection */
-    private $connection;
+    protected $connection;
 
     /** @var  \ManiaLive\Data\Storage */
-    private $storage;
-    private $widths = array(5, 15, 4, 4, 3, 3, 3, .7);
+    protected $storage;
+    protected $widths = array(5, 15, 4, 4, 3, 3, 3, .7);
 
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap[] */
-    private $maps = array();
+    protected $maps = array();
 
     protected function onConstruct()
     {
@@ -181,29 +181,29 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         self::$mapsPlugin = $mapsPlugin;
     }
 
-    function gotoMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
+    public function gotoMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
     {
         self::$mapsPlugin->gotoMap($login, $map);
         $this->Erase($this->getRecipient());
     }
 
-    function removeMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
+    public function removeMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
     {
         self::$mapsPlugin->removeMap($login, $map);
         $this->RedrawAll();
     }
 
-    function queueMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
+    public function queueMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
     {
         self::$mapsPlugin->playerQueueMap($login, $map, false);
     }
 
-    function showRec($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
+    public function showRec($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
     {
         self::$mapsPlugin->showRec($login, $map);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
 
@@ -232,7 +232,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         if (is_object($this->btnRemoveAll)) $this->btnRemoveAll->setPosition($this->getSizeX() - 25, 2);
     }
 
-    function removeAllMaps($login)
+    public function removeAllMaps($login)
     {
         $mapsAtServer = array();
         $maps = $this->connection->getMapList(-1, 0);
@@ -251,7 +251,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function updateList($login, $column = null, $sortType = null, $maps = null)
+    public function updateList($login, $column = null, $sortType = null, $maps = null)
     {
 
         $this->pager->clearItems();
@@ -385,7 +385,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->redraw($this->getRecipient());
     }
 
-    function showInfo($login, $uid)
+    public function showInfo($login, $uid)
     {
         $window = MapInfo::create($login);
         if (!$window->setMap($uid)) {
@@ -395,14 +395,14 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $window->show($login);
     }
 
-    function setRecords($records)
+    public function setRecords($records)
     {
         self::$localrecordsLoaded = true;
         $this->records = $records;
     }
 
     /** @param \Maniaplanet\DedicatedServer\Structures\Map[] $history */
-    function setHistory($history)
+    public function setHistory($history)
     {
         $this->history = array();
         foreach ($history as $map) {
@@ -410,12 +410,12 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function setCurrentMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
+    public function setCurrentMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
     {
         $this->currentMap = $map;
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item) {
             $item->erase();
@@ -431,7 +431,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::destroy();
     }
 
-    function doSearchMap($login, $entries)
+    public function doSearchMap($login, $entries)
     {
         Maps::$searchTerm[$login] = $entries['searchbox'];
         Maps::$searchField[$login] = "name";
@@ -439,7 +439,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->redraw($login);
     }
 
-    function doSearchAuthor($login, $entries)
+    public function doSearchAuthor($login, $entries)
     {
         Maps::$searchTerm[$login] = $entries['searchbox'];
         Maps::$searchField[$login] = "author";
@@ -448,7 +448,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
     // utility function - returns the key of the array minimum
-    function array_min_key($arr)
+    public function array_min_key($arr)
     {
         $min_key = null;
         $min = PHP_INT_MAX;
@@ -466,7 +466,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
      */
 
     // Calculate the edit distance between two strings
-    function edit_distance($string1, $string2)
+    public function edit_distance($string1, $string2)
     {
         $m = strlen($string1);
         $n = strlen($string2);
@@ -491,7 +491,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 // Helper function for edit_distance()
-    function levenshtein_weighting($i, $j, $d, $string1, $string2)
+    public function levenshtein_weighting($i, $j, $d, $string1, $string2)
     {
         // if the two letters are equal, cost is 0
         if ($string1[$i - 1] === $string2[$j - 1]) {
@@ -520,7 +520,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 // attempt to find the substring of $haystack most closely matching $needle
-    function shortest_edit_substring($needle, $haystack)
+    public function shortest_edit_substring($needle, $haystack)
     {
         // initialize edit distance matrix
         $m = strlen($needle);
@@ -613,5 +613,3 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             });
     }
 }
-
-?>

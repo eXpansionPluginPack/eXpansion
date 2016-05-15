@@ -14,7 +14,8 @@ class BannedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $unbanAction;
     protected $frame;
 
-    public function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\PlayerBan $player, $controller, $login) {
+    public function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\PlayerBan $player, $controller, $login)
+    {
         $sizeX = 80;
         $sizeY = 6;
         $this->player = $player;

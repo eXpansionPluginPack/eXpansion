@@ -31,12 +31,12 @@ class MinigameWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
     public static $action = -1;
 
-    private $quad;
+    protected $quad;
 
     /** @var Config */
-    private $config;
+    protected $config;
 
-    private $script;
+    protected $script;
 
     protected function onConstruct()
     {

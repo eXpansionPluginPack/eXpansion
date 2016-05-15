@@ -2,18 +2,15 @@
 
 namespace ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
-
 class MxInfo extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $bg;
-    private $label;
-    private $time;
-    private $frame;
+    protected $bg;
+    protected $label;
+    protected $time;
+    protected $frame;
 
-    function __construct($indexNumber, $message, $sizeX)
+    public function __construct($indexNumber, $message, $sizeX)
     {
         $sizeY = 5.5;
 
@@ -52,14 +49,14 @@ class MxInfo extends \ManiaLivePlugins\eXpansion\Gui\Control
         //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->erase();
     }
 
     // override destroy method not to destroy its contents on manialive 3.1 
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -67,7 +64,7 @@ class MxInfo extends \ManiaLivePlugins\eXpansion\Gui\Control
     /**
      * custom function to destroy contents when needed.
      */
-    function erase()
+    public function erase()
     {
         $this->frame->clearComponents();
         $this->frame->destroy();
@@ -76,6 +73,4 @@ class MxInfo extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>
 

@@ -2,15 +2,13 @@
 
 namespace ManiaLivePlugins\eXpansion\Notifications\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-
 class Item extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
     protected $label;
     protected $frame;
 
-    function __construct($string)
+    public function __construct($string)
     {
         $this->sizeX = 100;
         $this->sizeY = 3.5;
@@ -29,18 +27,11 @@ class Item extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
     }
 
-    public function destroy()
-    {
-        parent::destroy();
-    }
-
 }
-
-?>
 

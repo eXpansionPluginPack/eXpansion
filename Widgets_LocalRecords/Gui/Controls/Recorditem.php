@@ -2,24 +2,21 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Widgets_Record\Config;
-use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
-use ManiaLivePlugins\eXpansion\Helpers\Countries;
 
 class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $bg, $bg2;
+    protected $bg, $bg2;
 
-    private $nick;
+    protected $nick;
 
-    private $label;
+    protected $label;
 
-    private $time;
+    protected $time;
 
-    private $frame;
+    protected $frame;
 
-    function __construct($index, $highlite, $moreInfo = false)
+    public function __construct($index, $highlite, $moreInfo = false)
     {
         $sizeX = 41;
         $sizeY = 4;
@@ -85,10 +82,10 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->nick->setAttribute("class", "nickLabel");
         $this->nick->setTextSize(1);
         $this->nick->setTextEmboss(false);
-        $this->nick->setTextColor("fff");        
+        $this->nick->setTextColor("fff");
         $this->nick->setId("RecNick_" . $index);
         $this->nick->setAttribute("class", "nickLabel");
-        $this->nick->setScriptEvents();        
+        $this->nick->setScriptEvents();
         //$this->nick->setText("#######################################################");
         $this->addComponent($this->nick);
 

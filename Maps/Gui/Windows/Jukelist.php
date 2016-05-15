@@ -2,19 +2,19 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Wishitem;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Wishitem;
 
 class Jukelist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $items = array();
+    protected $items = array();
     public static $mainPlugin;
 
     /** @var \ManiaLive\Gui\Controls\Pager */
-    private $pager;
-    private $btnRemoveAll;
-    private $actionRemoveAll;
+    protected $pager;
+    protected $btnRemoveAll;
+    protected $actionRemoveAll;
 
     protected function onConstruct()
     {
@@ -29,7 +29,7 @@ class Jukelist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->btnRemoveAll->colorize("d00");
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         if (is_object($this->btnRemoveAll))
@@ -64,12 +64,12 @@ class Jukelist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onDraw();
     }
 
-    function setList($maps)
+    public function setList($maps)
     {
         $this->maps = $maps;
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item) {
             $item->erase();
@@ -83,5 +83,3 @@ class Jukelist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

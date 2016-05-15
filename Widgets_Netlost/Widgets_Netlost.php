@@ -19,13 +19,13 @@ class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\A
 
     private $group;
 
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         $this->updateGroup();
     }
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
         Dispatcher::register(AdminGroupEvent::getClass(), $this);
         $this->displayWidget();
@@ -77,7 +77,7 @@ class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\A
      *
      * @param string $login
      */
-    function displayWidget()
+    public function displayWidget()
     {
         $recepient = null;
         if (Config::getInstance()->showOnlyAdmins)
@@ -89,7 +89,7 @@ class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\A
         $info->show();
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         Dispatcher::unregister(AdminGroupEvent::getClass(), $this);
         Netlost::EraseAll();
@@ -110,6 +110,3 @@ class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\A
     }
 
 }
-
-?>
-

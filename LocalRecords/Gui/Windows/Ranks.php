@@ -14,12 +14,12 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
 class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $frame;
-    private $label_rank, $label_nick, $label_wins, $label_score, $label_finish, $label_nbRecords, $label_ptime, $label_lastRec;
-    private $widths = array(1, 6, 2, 2, 2, 2, 3, 3);
+    protected $frame;
+    protected $label_rank, $label_nick, $label_wins, $label_score, $label_finish, $label_nbRecords, $label_ptime, $label_lastRec;
+    protected $widths = array(1, 6, 2, 2, 2, 2, 3, 3);
 
-    private $pager, $headerbar;
-    private $items = array();
+    protected $pager, $headerbar;
+    protected $items = array();
 
     protected function onConstruct()
     {
@@ -141,5 +141,3 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 }
-
-?>

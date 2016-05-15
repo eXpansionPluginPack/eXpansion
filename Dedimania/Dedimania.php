@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Dedimania;
 
 use ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection as DediConnection;
 use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as DediEvent;
-use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 class Dedimania extends DedimaniaAbstract
 {
@@ -50,7 +49,7 @@ class Dedimania extends DedimaniaAbstract
      * @param \ManiaLive\Data\Player $player
      * @param                        $time
      * @param                        $checkpoints
-     * @param int                    $nbLap
+     * @param int $nbLap
      */
     public function onPlayerFinishLap($player, $time, $checkpoints, $nbLap)
     {
@@ -169,7 +168,7 @@ class Dedimania extends DedimaniaAbstract
 
     /**
      *
-     * @param array  $rankings
+     * @param array $rankings
      * @param string $winnerTeamOrMap
      *
      */

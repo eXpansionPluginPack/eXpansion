@@ -3,16 +3,15 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_TeamRoundScores\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Label;
-use ManiaLib\Gui\Elements\Quad;
 use ManiaLive\Gui\Container;
-use ManiaLive\Gui\Control;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Widgets_TeamRoundScores\Structures\RoundScore;
 
 class ScoreItem extends Control
 {
 
-    private $bg;
-    private $score1, $score2, $winner, $team1, $team2, $roundNumber;
+    protected $bg;
+    protected $score1, $score2, $winner, $team1, $team2, $roundNumber;
 
     function __construct(RoundScore $score)
     {
@@ -86,7 +85,7 @@ class ScoreItem extends Control
         $this->setAlign("left", "top");
     }
 
-    function onIsRemoved(Container $target)
+    public function onIsRemoved(Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();

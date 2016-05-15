@@ -23,5 +23,3 @@ class Record
     public $uId;
 
 }
-
-?>

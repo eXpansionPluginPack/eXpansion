@@ -128,7 +128,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public static $openCpsAction = -1;
 
-    function expOnInit()
+    public function expOnInit()
     {
         //Activating debug for records only
         $this->debug = self::DEBUG_NONE;
@@ -382,7 +382,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         }
     }
 
-    function onTick()
+    public function onTick()
     {
         if ($this->config->saveRecFrequency != 0) {
             if ((time() - $this->lastSave) > ($this->config->saveRecFrequency * 60)) {
@@ -547,10 +547,10 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
      * Will add a a record to the current map records buffer.
      * The record will only be save on endMap
      *
-     * @param string  $login    the login of the player who did the time
-     * @param int     $score    His score/time
-     * @param int     $gamemode The gamemode while he did the record
-     * @param array() $cpScore  list of CheckPoint times
+     * @param string $login the login of the player who did the time
+     * @param int $score His score/time
+     * @param int $gamemode The gamemode while he did the record
+     * @param array() $cpScore list of CheckPoint times
      */
     public function addRecord($login, $score, $gamemode, $cpScore)
     {
@@ -849,7 +849,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     /**
      * @param Record $record Record to delete
-     * @param int    $nbLaps
+     * @param int $nbLaps
      *
      * @return bool
      */
@@ -998,7 +998,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
      * deletes a record from database for map.
      *
      * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
-     * @param string                                      $login
+     * @param string $login
      *
      * @return boolean
      */
@@ -1076,8 +1076,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
      * getRecordsForMap().
      * gets the records for a map and returns array of record objects
      *
-     * @param mixed  $gamemode
-     * @param Map    $challenge
+     * @param mixed $gamemode
+     * @param Map $challenge
      * @param string $plugin
      *
      * @return array(Record)
@@ -1240,7 +1240,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
      *
      * Display a window for a login with best times
      *
-     * @param type                                        $login
+     * @param type $login
      * @param \Maniaplanet\DedicatedServer\Structures\Map $map (optional)
      */
     public function showRecsWindow($login, $map = null)
@@ -1713,17 +1713,17 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         return trim($uids, ",");
     }
 
-    function eXp_onRestartStart()
+    public function eXp_onRestartStart()
     {
         $this->onEndMatch(array(), array());
     }
 
-    function eXp_onRestartEnd()
+    public function eXp_onRestartEnd()
     {
     }
 
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         Dispatcher::unregister(ExpansionEvent::ON_RESTART_START, $this);
         $this->onEndMatch(array(), array());
@@ -1734,5 +1734,3 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
 }
-
-?>

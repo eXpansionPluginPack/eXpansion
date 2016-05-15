@@ -17,5 +17,3 @@ class Answer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
 
 
 }
-
-?>

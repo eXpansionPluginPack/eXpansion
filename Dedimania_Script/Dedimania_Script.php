@@ -174,7 +174,7 @@ class Dedimania_Script extends DedimaniaAbstract
 
     /**
      *
-     * @param array  $rankings
+     * @param array $rankings
      * @param string $winnerTeamOrMap
      *
      */

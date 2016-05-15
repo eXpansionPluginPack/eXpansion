@@ -14,23 +14,23 @@ class ServerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     private static $bgStyle = 'Bgs1';
     private static $bgStyles = array('BgList', 'BgListLine');
-    private $bg_main;
-    private $label_sname;
+    protected $bg_main;
+    protected $label_sname;
     //Server information
-    private $icons_frame;
-    private $icon_game, $icon_player, $icon_specs, $icon_ladder;
-    private $label_nbPlayers, $label_nbSpecs, $label_ladder;
+    protected $icons_frame;
+    protected $icon_game, $icon_player, $icon_specs, $icon_ladder;
+    protected $label_nbPlayers, $label_nbSpecs, $label_ladder;
     //Server Map information
-    private $info_frame;
-    private $icon_map, $icon_author, $icon_envi, $icon_atime;
-    private $label_map, $label_author, $label_envi, $label_atime;
-    private $icon_jspec;
-    private $icon_jplayer;
-    private $icon_fav;
-    private $icon_info;
-    private $frame_main, $frame_info, $frame_map, $frame_server, $frame;
+    protected $info_frame;
+    protected $icon_map, $icon_author, $icon_envi, $icon_atime;
+    protected $label_map, $label_author, $label_envi, $label_atime;
+    protected $icon_jspec;
+    protected $icon_jplayer;
+    protected $icon_fav;
+    protected $icon_info;
+    protected $frame_main, $frame_info, $frame_map, $frame_server, $frame;
 
-    function __construct($indexNumber, $ctr, \ManiaLivePlugins\eXpansion\ServerNeighborhood\Server $server)
+    public function __construct($indexNumber, $ctr, \ManiaLivePlugins\eXpansion\ServerNeighborhood\Server $server)
     {
         $sizeY = 14;
         $YSpace = 0.2;
@@ -213,11 +213,5 @@ class ServerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         //$this->icon_fav->setManialink('maniaplanet://#addfavourite=' . $server->getServer_data()->server->login);
     }
 
-    public function destroy()
-    {
-        parent::destroy();
-    }
 
 }
-
-?>

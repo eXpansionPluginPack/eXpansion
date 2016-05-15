@@ -2,21 +2,16 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use ManiaLive\Gui\ActionHandler;
-use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
-
 class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $bg;
+    protected $bg;
 
-    private $label;
+    protected $label;
 
-    private $frame;
+    protected $frame;
 
-    function __construct($indexNumber, $text, $sizeX)
+    public function __construct($indexNumber, $text, $sizeX)
     {
         $sizeY = 6;
 
@@ -53,7 +48,7 @@ class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 // manialive 3.1 override to do nothing.
-    function destroy()
+   public  function destroy()
     {
 
     }
@@ -62,7 +57,7 @@ class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         $this->bg->destroy();
         $this->frame->clearComponents();
@@ -74,5 +69,4 @@ class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 }
 
-?>
 

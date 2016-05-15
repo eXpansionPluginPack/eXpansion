@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Notifications\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-
 class ItemPlugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
@@ -28,7 +26,7 @@ class ItemPlugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->addComponent($this->checkbox);
     }
 
-    function setStatus($boolean)
+    public function setStatus($boolean)
     {
         $this->checkbox->setStatus($boolean);
     }
@@ -40,6 +38,3 @@ class ItemPlugin extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>
-

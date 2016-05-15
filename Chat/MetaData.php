@@ -14,7 +14,8 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-    public function onBeginLoad() {
+    public function onBeginLoad()
+    {
         parent::onBeginLoad();
         $this->setName("Chat: Color Customization");
         $this->setDescription('Reroute chat to controller and customize the chat colors and look!');

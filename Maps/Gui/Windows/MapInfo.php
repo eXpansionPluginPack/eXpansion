@@ -9,7 +9,6 @@ namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
 use Exception;
 use ManiaLib\Gui\Elements\Label;
-use ManiaLib\Gui\Elements\Quad;
 use ManiaLive\Data\Storage;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLive\Utilities\Time;

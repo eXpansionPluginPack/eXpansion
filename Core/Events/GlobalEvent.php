@@ -4,10 +4,10 @@ namespace ManiaLivePlugins\eXpansion\Core\Events;
 
 class GlobalEvent extends \ManiaLive\Event\Event
 {
-    const ON_ADMIN_RESTART     = 1;
-    const ON_ADMIN_SKIP        = 2;
-    const ON_VOTE_RESTART      = 4;
-    const ON_VOTE_SKIP         = 8;
+    const ON_ADMIN_RESTART = 1;
+    const ON_ADMIN_SKIP = 2;
+    const ON_VOTE_RESTART = 4;
+    const ON_VOTE_SKIP = 8;
     const ON_AUTOLOAD_COMPLETE = 16;
 
     protected $params;
@@ -15,7 +15,7 @@ class GlobalEvent extends \ManiaLive\Event\Event
     function __construct($onWhat)
     {
         parent::__construct($onWhat);
-        $params       = func_get_args();
+        $params = func_get_args();
         array_shift($params);
         $this->params = $params;
     }

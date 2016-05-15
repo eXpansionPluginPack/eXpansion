@@ -182,7 +182,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         self::$localrecords = $data;
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         Gui\Widgets\LocalPanel::EraseAll();
         Gui\Widgets\LocalPanel2::EraseAll();
@@ -191,5 +191,3 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
 }
-
-?>

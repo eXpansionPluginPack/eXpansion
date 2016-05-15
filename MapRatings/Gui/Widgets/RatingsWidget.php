@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets;
 
-use ManiaLivePlugins\eXpansion\Gui\Config;
-
 class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
     protected $frame, $starFrame, $move, $gauge, $edgeWidget;
@@ -50,12 +48,12 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         }
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
     }
 
-    function setStars($number, $total)
+    public function setStars($number, $total)
     {
         $this->frame->clearComponents();
         $login = $this->getRecipient();
@@ -85,5 +83,3 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->redraw();
     }
 }
-
-?>

@@ -6,7 +6,7 @@ use ManiaLib\Gui\Elements\Icons64x64_1;
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Line;
-use ManiaLive\Gui\Control;
+use ManiaLivePlugins\eXpansion\Gui\Control
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use Maniaplanet\DedicatedServer\Structures\Player;
@@ -19,7 +19,8 @@ class IgnoredPlayeritem extends Control
     protected $unignoreAction;
     protected $frame;
 
-    public function __construct($indexNumber, Player $player, $controller, $login) {
+    public function __construct($indexNumber, Player $player, $controller, $login)
+    {
         $sizeX = 80;
         $sizeY = 6;
         $this->player = $player;
@@ -55,7 +56,8 @@ class IgnoredPlayeritem extends Control
         $this->setSize($sizeX, $sizeY);
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         $this->unignoreButton->destroy();
         parent::destroy();
     }

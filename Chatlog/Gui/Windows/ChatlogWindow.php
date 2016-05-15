@@ -1,7 +1,6 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Chatlog\Gui\Windows;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 
 class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {

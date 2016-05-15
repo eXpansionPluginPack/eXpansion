@@ -3,7 +3,6 @@
 namespace ManiaLivePlugins\eXpansion\SM_CheckpointCount\Gui\Widgets;
 
 use ManiaLib\Gui\Elements\Label;
-use ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 
 class CPPanel extends Widget

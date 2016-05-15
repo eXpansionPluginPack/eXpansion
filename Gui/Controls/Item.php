@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 

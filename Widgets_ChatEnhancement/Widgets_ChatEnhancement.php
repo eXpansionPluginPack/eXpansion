@@ -110,7 +110,7 @@ class Widgets_ChatEnhancement extends \ManiaLivePlugins\eXpansion\Core\types\Exp
     }
 
     /**
-     * @param string   $pluginId
+     * @param string $pluginId
      * @param Variable $var
      *
      * @return mixed

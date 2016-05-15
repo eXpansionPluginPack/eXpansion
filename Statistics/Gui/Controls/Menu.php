@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Controls;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 
 class Menu extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
@@ -10,7 +10,7 @@ class Menu extends \ManiaLivePlugins\eXpansion\Gui\Control
     public $frame;
 
 
-    function __construct()
+    public function __construct()
     {
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($this->getSizeX(), 4);
@@ -39,5 +39,3 @@ class Menu extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>

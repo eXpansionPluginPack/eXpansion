@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
@@ -14,11 +13,11 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
 class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $label_rank, $label_nick, $label_wins, $label_score, $label_finish, $label_lastRec;
-    private $bg;
-    private $widths;
+    protected $label_rank, $label_nick, $label_wins, $label_score, $label_finish, $label_lastRec;
+    protected $bg;
+    protected $widths;
 
-    function __construct($indexNumber, $login, $rank, $widths)
+    public function __construct($indexNumber, $login, $rank, $widths)
     {
         $this->widths = $widths;
         $this->sizeY = 6;
@@ -94,7 +93,7 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -103,7 +102,7 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         parent::destroy();
     }
@@ -120,5 +119,3 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>

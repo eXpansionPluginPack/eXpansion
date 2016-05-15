@@ -2,9 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
-use \ManiaLive\DedicatedApi\Callback\Event;
-use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Config;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {

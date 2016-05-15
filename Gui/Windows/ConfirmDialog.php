@@ -2,12 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
-use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
-use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 
 class ConfirmDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {

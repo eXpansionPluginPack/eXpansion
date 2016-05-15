@@ -14,10 +14,10 @@ class RateButton2 extends \ManiaLivePlugins\eXpansion\Gui\Control
     /**
      * Button
      *
-     * @param int  $sizeX = 24
+     * @param int $sizeX = 24
      * @param intt $sizeY = 6
      */
-    function __construct($number)
+    public function __construct($number)
     {
         $sizeX = 18;
         $sizeY = 6;
@@ -64,5 +64,3 @@ class RateButton2 extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>

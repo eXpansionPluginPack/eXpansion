@@ -2,11 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use ManiaLive\Gui\ActionHandler;
-use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
-
 class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 

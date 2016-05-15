@@ -5,15 +5,15 @@ namespace ManiaLivePlugins\eXpansion\Maps\Gui\Widgets;
 class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-    private $bg;
-    private $leftFrame, $rightFrame;
-    private $mapName;
-    private $mapAuthor;
-    private $labelName;
-    private $labelAuthor, $environment, $time, $country;
+    protected $bg;
+    protected $leftFrame, $rightFrame;
+    protected $mapName;
+    protected $mapAuthor;
+    protected $labelName;
+    protected $labelAuthor, $environment, $time, $country;
 
     /** @var \Maniaplanet\DedicatedServer\Structures\Map */
-    private $map;
+    protected $map;
 
     protected function eXpOnBeginConstruct()
     {
@@ -77,12 +77,12 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->setSize(60, 15);
     }
 
-    function setAction($action)
+    public function setAction($action)
     {
         $this->bg->setAction($action);
     }
 
-    function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
+    public function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
     {
         $this->map = $map;
         $this->labelName->setText($this->map->name);
@@ -94,12 +94,10 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
             $this->country->setImage("http://reaby.kapsi.fi/ml/flags/France.dds", true);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();
     }
 
 }
-
-?>

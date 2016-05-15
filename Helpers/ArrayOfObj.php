@@ -10,7 +10,7 @@ class ArrayOfObj
      * sort and re-create indexes
      *
      * @param mixed[] $array
-     * @param string  $prop
+     * @param string $prop
      *
      * @return mixed[] type
      */
@@ -26,7 +26,7 @@ class ArrayOfObj
      * sort and re-create indexes
      *
      * @param mixed[] $array
-     * @param string  $prop
+     * @param string $prop
      *
      * @return mixed[] type
      */
@@ -42,7 +42,7 @@ class ArrayOfObj
      * sort and maintain indexes
      *
      * @param mixed[] $array
-     * @param string  $prop
+     * @param string $prop
      *
      * @return mixed[] type
      */
@@ -58,7 +58,7 @@ class ArrayOfObj
      * sort and maintain indexes
      *
      * @param mixed[] $array
-     * @param string  $prop
+     * @param string $prop
      *
      * @return mixed[] type
      */
@@ -72,7 +72,7 @@ class ArrayOfObj
     /**
      * Gets a matching object by searching property by value
      *
-     * @param type   $array
+     * @param type $array
      * @param string $prop
      * @param string $value
      *

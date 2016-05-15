@@ -46,5 +46,3 @@ abstract class AbsControl extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>

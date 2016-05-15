@@ -15,5 +15,3 @@ class LivePanel2 extends PlainLivePanel
     }
 
 }
-
-?>

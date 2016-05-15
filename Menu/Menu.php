@@ -29,73 +29,80 @@ class Menu extends ExpPlugin implements Listener
     protected $menuGroups = [];
     protected $menuWindows = [];
 
-    public function eXpOnReady() {
+    public function eXpOnReady()
+    {
         $this->enableDedicatedEvents();
         $this->enablePluginEvents();
         Dispatcher::register(Event::getClass(), $this);
     }
 
-    public function eXpAutoloadComplete() {
+    public function eXpAutoloadComplete()
+    {
         $this->prepareMenu();
     }
 
-    public function eXpAdminAdded($login) {
+    public function eXpAdminAdded($login)
+    {
         $name = AdminGroups::getGroupName($login);
         $this->menuGroups['Player']->remove($login);
-        if (! array_key_exists($name, $this->menuGroups)) {
+        if (!array_key_exists($name, $this->menuGroups)) {
             $this->createMenu($name);
-            $this->menuGroups[ $name ]->add($login, true);
-        }
-        else {
-            $this->menuGroups[ $name ]->add($login, true);
+            $this->menuGroups[$name]->add($login, true);
+        } else {
+            $this->menuGroups[$name]->add($login, true);
         }
     }
 
-    public function eXpAdminRemoved($login) {
+    public function eXpAdminRemoved($login)
+    {
         foreach ($this->menuGroups as $name => $group) {
             if ($group->contains($login)) {
-                $this->menuGroups[ $name ]->remove($login);
+                $this->menuGroups[$name]->remove($login);
             }
         }
         $this->menuGroups['Player']->add($login, true);
     }
 
-    public function onPlayerConnect($login, $isSpectator) {
+    public function onPlayerConnect($login, $isSpectator)
+    {
         $name = AdminGroups::getGroupName($login);
-        if (! array_key_exists($name, $this->menuGroups)) {
+        if (!array_key_exists($name, $this->menuGroups)) {
             $this->createMenu($name);
-            $this->menuGroups[ $name ]->add($login, true);
-        }
-        else {
-            $this->menuGroups[ $name ]->add($login, true);
+            $this->menuGroups[$name]->add($login, true);
+        } else {
+            $this->menuGroups[$name]->add($login, true);
         }
 
-        $this->menuWindows[ $name ]->show($login);
+        $this->menuWindows[$name]->show($login);
     }
 
-    public function onPlayerDisconnect($login, $disconnectionReason) {
+    public function onPlayerDisconnect($login, $disconnectionReason)
+    {
         $name = AdminGroups::getGroupName($login);
-        if (! array_key_exists($name, $this->menuGroups)) {
-            $this->menuGroups[ $name ]->remove($login);
+        if (!array_key_exists($name, $this->menuGroups)) {
+            $this->menuGroups[$name]->remove($login);
         }
     }
 
-    public function onPluginLoaded($pluginId) {
+    public function onPluginLoaded($pluginId)
+    {
         $this->prepareMenu();
     }
 
-    public function onPluginUnloaded($pluginId) {
+    public function onPluginUnloaded($pluginId)
+    {
         $this->prepareMenu();
     }
 
-    public function prepareMenu() {
+    public function prepareMenu()
+    {
         $this->menuGroups = [];
         MenuWidget::EraseAll();
 
         foreach (AdminGroups::getGroupList() as $group) {
-            $this->menuGroups[ $group->getGroupName() ] = Group::Create($group->getGroupName());
+            $this->menuGroups[$group->getGroupName()] = Group::Create($group->getGroupName());
             foreach ($group->getGroupUsers() as $user) {
-                $this->menuGroups[ $group->getGroupName() ]->add($user->getLogin());
+                $this->menuGroups[$group->getGroupName()]->add($user->getLogin());
             }
             $this->createMenu($group);
         }
@@ -106,7 +113,7 @@ class Menu extends ExpPlugin implements Listener
         $admins = AdminGroups::get();
 
         foreach ($players as $login => $player) {
-            if (! in_array($login, $admins))
+            if (!in_array($login, $admins))
                 $regularPlayers[] = $login;
         }
 
@@ -114,8 +121,9 @@ class Menu extends ExpPlugin implements Listener
         $this->createMenu(new AdmGroup('Player', false));
     }
 
-    public function createMenu(AdmGroup $group) {
-        $menu = MenuWidget::Create($this->menuGroups[ $group->getGroupName() ], true);
+    public function createMenu(AdmGroup $group)
+    {
+        $menu = MenuWidget::Create($this->menuGroups[$group->getGroupName()], true);
         if ($this->pluginLoaded("Faq"))
             $menu->addItem("Help", "!help", $this);
 
@@ -205,15 +213,17 @@ class Menu extends ExpPlugin implements Listener
         }
 
         $menu->addItem("Server Info", "!serverinfo", $this);
-        $this->menuWindows[ $group->getGroupName() ] = $menu;
-        $this->menuWindows[ $group->getGroupName() ]->show();
+        $this->menuWindows[$group->getGroupName()] = $menu;
+        $this->menuWindows[$group->getGroupName()]->show();
     }
 
-    public function pluginLoaded($plugin) {
+    public function pluginLoaded($plugin)
+    {
         return $this->isPluginLoaded($this->getPluginClass($plugin));
     }
 
-    public function actionHandler($login, $action, $entries = []) {
+    public function actionHandler($login, $action, $entries = [])
+    {
         $adminGrp = AdminGroups::getInstance();
         try {
             switch ($action) {
@@ -332,8 +342,7 @@ class Menu extends ExpPlugin implements Listener
                     $plugin = $this->getPluginClass("Votes");
                     if ($this->isPluginLoaded($plugin)) {
                         $this->callPublicMethod($plugin, "vote_restart", $login);
-                    }
-                    else {
+                    } else {
                         $this->connection->callVoteRestartMap();
                     }
                     break;
@@ -341,8 +350,7 @@ class Menu extends ExpPlugin implements Listener
                     $plugin = $this->getPluginClass("Votes");
                     if ($this->isPluginLoaded($plugin)) {
                         $this->callPublicMethod($plugin, "vote_skip", $login);
-                    }
-                    else {
+                    } else {
                         $this->connection->callVoteNextMap();
                     }
                     break;
@@ -351,8 +359,7 @@ class Menu extends ExpPlugin implements Listener
                     Logger::info("menu command not found: " . $action);
                     break;
             }
-        }
-        catch (Exception $ex) {
+        } catch (Exception $ex) {
             Logger::error("Error in Menu while running action : " . $action);
         }
     }
@@ -363,7 +370,8 @@ class Menu extends ExpPlugin implements Listener
      *
      * @return string
      */
-    private function getPluginClass($plugin) {
+    private function getPluginClass($plugin)
+    {
         return "\\ManiaLivePlugins\\eXpansion\\" . $plugin . "\\" . $plugin;
     }
 }

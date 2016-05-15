@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\MXKarma\Gui\Widgets;
 
-use ManiaLivePlugins\eXpansion\Gui\Config;
-
 class MXRatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 

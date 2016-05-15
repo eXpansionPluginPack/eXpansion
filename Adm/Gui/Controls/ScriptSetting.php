@@ -15,10 +15,10 @@ class ScriptSetting extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param int    $indexNumber
+     * @param int $indexNumber
      * @param string $settingName
-     * @param mixed  $value
-     * @param int    $sizeX
+     * @param mixed $value
+     * @param int $sizeX
      */
     public function __construct($indexNumber, $settingName, $value, $sizeX)
     {

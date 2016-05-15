@@ -35,7 +35,7 @@ interface MXKarmaEventListener
     /**
      *
      * @param string $state
-     * @param int    $number
+     * @param int $number
      * @param string $reason
      */
     public function MXKarma_onError($state, $number, $reason);

@@ -9,7 +9,6 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Helpers\TimeConversion;
-use ManiaLivePlugins\eXpansion\Minigame1\Config;
 use ManiaLivePlugins\eXpansion\Minigame1\Gui\Widgets\MinigameWidget;
 
 class Minigame1 extends ExpPlugin
@@ -110,5 +109,3 @@ class Minigame1 extends ExpPlugin
     }
 
 }
-
-?>

@@ -90,7 +90,7 @@ class ScoresOverlay extends \ManiaLive\Gui\Window
      *
      * @param \ManiaLivePlugins\eXpansion\Overlay_TeamScores\Structures\Team[] $teams
      */
-    function setData($teams)
+    public function setData($teams)
     {
         $this->team1->setText($teams[1]->name);
         $this->team2->setText($teams[0]->name);
@@ -99,7 +99,7 @@ class ScoresOverlay extends \ManiaLive\Gui\Window
         $this->score2->setText($teams[0]->score);
     }
 
-    function setEnable()
+    public function setEnable()
     {
         $this->team1->setStyle("TextTitle2Blink");
         $this->team2->setStyle("TextTitle2Blink");
@@ -107,7 +107,7 @@ class ScoresOverlay extends \ManiaLive\Gui\Window
         $this->team1->setAction(self::$action2);
     }
 
-    function setDisable()
+    public function setDisable()
     {
         $this->team1->setStyle("TextRankingsBig");
         $this->team2->setStyle("TextRankingsBig");
@@ -129,17 +129,15 @@ class ScoresOverlay extends \ManiaLive\Gui\Window
         }
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
     }
 
-    function destroy()
+    public function destroy()
     {
         parent::destroy();
     }
 
 }
-
-?>

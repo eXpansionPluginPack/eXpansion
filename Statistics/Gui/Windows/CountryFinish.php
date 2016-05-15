@@ -28,5 +28,3 @@ class CountryFinish extends Country
         return array(null, \ManiaLivePlugins\eXpansion\Gui\Formaters\Country::getInstance(), null);
     }
 }
-
-?>

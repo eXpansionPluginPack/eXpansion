@@ -9,14 +9,16 @@ class ConfigLoadEvent extends \ManiaLive\Event\Event
 
     protected $params;
 
-    public function __construct($onWhat) {
+    public function __construct($onWhat)
+    {
         parent::__construct($onWhat);
         $params = func_get_args();
         array_shift($params);
         $this->params = $params;
     }
 
-    public function fireDo($listener) {
+    public function fireDo($listener)
+    {
         $p = $this->params;
         switch ($this->onWhat) {
             case self::ON_CONFIG_FILE_LOADED:

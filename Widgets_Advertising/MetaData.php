@@ -23,10 +23,10 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_Advertising;
 
 
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {

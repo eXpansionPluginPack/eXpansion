@@ -16,7 +16,7 @@ namespace ManiaLivePlugins\eXpansion\ScriptTester\Gui;
 class TesterScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script
 {
 
-    private $str;
+    protected $str;
 
     public function __construct($script)
     {

@@ -3,12 +3,9 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_ResSkip;
 
 use ManiaLive\Gui\ActionHandler;
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\Bill;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\DonatePanel\Config as DonateConfig;
-use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Widgets_ResSkip\Gui\Widgets\ResSkipButtons;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 

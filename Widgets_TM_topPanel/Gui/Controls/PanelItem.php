@@ -2,11 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
-use \ManiaLive\Gui\ActionHandler;
-use ManiaLivePlugins\eXpansion\Gui\Gui;
-
 class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 

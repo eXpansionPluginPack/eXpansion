@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls;
 
-use \ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus;
+use ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus;
 
 class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
@@ -16,11 +16,11 @@ class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param int          $indexNumber
+     * @param int $indexNumber
      * @param PlayerStatus $player
-     * @param int          $score
-     * @param type         $controller
-     * @param int          $sizeX
+     * @param int $score
+     * @param type $controller
+     * @param int $sizeX
      */
     function __construct($indexNumber, PlayerStatus $player, $controller, $gameMode, $isAdmin, $sizeX)
     {

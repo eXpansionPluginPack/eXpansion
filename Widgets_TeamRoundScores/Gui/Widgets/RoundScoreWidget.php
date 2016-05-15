@@ -7,7 +7,6 @@ use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 use ManiaLivePlugins\eXpansion\Widgets_TeamRoundScores\Gui\Controls\ScoreItem;
-use ManiaLivePlugins\eXpansion\Widgets_TeamRoundScores\Structures\RoundScore;
 
 /**
  * Description of RoundScoreWidget
@@ -17,7 +16,7 @@ use ManiaLivePlugins\eXpansion\Widgets_TeamRoundScores\Structures\RoundScore;
 class RoundScoreWidget extends Widget
 {
 
-    private $frame, $bg, $lbl_title, $bgTitle;
+    protected $frame, $bg, $lbl_title, $bgTitle;
 
     protected function eXpOnBeginConstruct()
     {

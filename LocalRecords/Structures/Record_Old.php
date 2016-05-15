@@ -17,5 +17,3 @@ class Record2 extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
     }
 
 }
-
-?>

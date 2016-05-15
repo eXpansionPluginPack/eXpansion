@@ -2,20 +2,16 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Widgets_Record\Config;
-use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
-use ManiaLivePlugins\eXpansion\Helpers\Countries;
-
 class TeamItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $bg, $bg2;
-    private $nick;
-    private $label;
-    private $time;
-    private $frame;
+    protected $bg, $bg2;
+    protected $nick;
+    protected $label;
+    protected $time;
+    protected $frame;
 
-    function __construct()
+    public function __construct()
     {
         $sizeX = 40;
         $sizeY = 4;
@@ -66,7 +62,7 @@ class TeamItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setAlign("center", "top");
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
@@ -81,6 +77,4 @@ class TeamItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>
 

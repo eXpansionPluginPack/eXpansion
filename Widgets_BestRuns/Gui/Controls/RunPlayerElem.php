@@ -11,7 +11,7 @@ class RunPlayerElem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected $totalTime;
 
-    function __construct(\Maniaplanet\DedicatedServer\Structures\PlayerRanking $player)
+    public function __construct(\Maniaplanet\DedicatedServer\Structures\PlayerRanking $player)
     {
         $sizeX = 45;
         $sizeY = 5;
@@ -46,6 +46,4 @@ class RunPlayerElem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>
 

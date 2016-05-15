@@ -2,8 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_BestRuns;
 
-use ManiaLivePlugins\eXpansion\Widgets_BestRuns\Structures\Run;
 use ManiaLivePlugins\eXpansion\Widgets_BestRuns\Gui\Widgets\BestRunPanel;
+use ManiaLivePlugins\eXpansion\Widgets_BestRuns\Structures\Run;
 
 /**
  * Description of Widgets_BestRuns
@@ -17,7 +17,7 @@ class Widgets_BestRuns extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     private $nbDisplay = 1;
 
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         $this->enableStorageEvents();
@@ -68,7 +68,7 @@ class Widgets_BestRuns extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param string $login
      */
-    function displayWidget($login = null)
+    public function displayWidget($login = null)
     {
         $info = BestRunPanel::Create($login);
         $info->setSize(220, 20);
@@ -77,17 +77,17 @@ class Widgets_BestRuns extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $info->show();
     }
 
-    function onPlayerConnect($login, $isSpectator)
+    public function onPlayerConnect($login, $isSpectator)
     {
         $this->displayWidget($login);
     }
 
-    function onPlayerDisconnect($login, $reason = null)
+    public function onPlayerDisconnect($login, $reason = null)
     {
         BestRunPanel::Erase($login);
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         BestRunPanel::EraseAll();
         parent::eXpOnUnload();

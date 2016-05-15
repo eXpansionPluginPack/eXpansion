@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets;
 
-use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLivePlugins\eXpansion\MapRatings\Gui\Controls\RateButton2;
 
 class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
@@ -97,7 +96,7 @@ class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->setSize($sizeX, $sizeY);
     }
 
-    function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
+    public function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
     {
         $msg = eXpGetMessage("Did you like the map ?");
         $this->label->setText($msg);
@@ -106,5 +105,3 @@ class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
 }
 
-?>
-    

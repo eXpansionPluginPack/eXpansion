@@ -3,13 +3,11 @@
 namespace ManiaLivePlugins\eXpansion\Netstat\Gui\Windows;
 
 use ManiaLib\Gui\Elements\Label;
-use ManiaLib\Gui\Layouts\Column;
 use ManiaLib\Gui\Layouts\Line;
 use ManiaLive\Data\Storage;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Features\Tick\Event as TickEvent;
 use ManiaLive\Gui\Controls\Frame;
-use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 
 /**
@@ -23,8 +21,8 @@ class NetStatWindow extends Window
     protected $frame;
 
     /** @var Storage */
-    private $storage;
-    private $lastUpdate = 0;
+    protected $storage;
+    protected $lastUpdate = 0;
 
     protected function onConstruct()
     {
@@ -119,5 +117,3 @@ class NetStatWindow extends Window
     }
 
 }
-
-?>

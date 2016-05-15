@@ -3,16 +3,15 @@
 namespace ManiaLivePlugins\eXpansion\LoadScreen;
 
 use Exception;
+use ManiaLive\DedicatedApi\Callback\Event;
+use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Core\DataAccess;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
-use ManiaLivePlugins\eXpansion\LoadScreen\Config;
 use ManiaLivePlugins\eXpansion\LoadScreen\Gui\Windows\LScreen;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap;
-use ManiaLive\DedicatedApi\Callback\Event;
-use ManiaLive\Event\Dispatcher;
 
 /*
  * Copyright (C) 2014 Reaby

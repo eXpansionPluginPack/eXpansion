@@ -57,7 +57,7 @@ class GenericItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->sizeY = $sizeY;
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
@@ -69,6 +69,4 @@ class GenericItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         parent::destroy();
     }
 }
-
-?>
 

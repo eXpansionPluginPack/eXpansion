@@ -179,7 +179,7 @@ class Playeritem extends Control implements OptimizedPagerElement
         $this->bg->setSize($this->getSizeX() + 4, $this->getSizeY());
     }
 
-    function destroy()
+    public function destroy()
     {
         if (is_object($this->banButton)) $this->banButton->destroy();
         if (is_object($this->forceButton)) $this->forceButton->destroy();

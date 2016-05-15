@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
-
 /**
  * Is actually an array with the key value going from 0 to nbElements -1
  * This means you can remove elements from it and the keys will be maintained.

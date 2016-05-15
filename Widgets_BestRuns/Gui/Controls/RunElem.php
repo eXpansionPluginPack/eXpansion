@@ -10,7 +10,7 @@ class RunElem extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $player;
     protected $cps = array();
 
-    function __construct(\ManiaLivePlugins\eXpansion\Widgets_BestRuns\Structures\Run $run)
+    public function __construct(\ManiaLivePlugins\eXpansion\Widgets_BestRuns\Structures\Run $run)
     {
         $x = 0;
         $this->setSize(220, 6);
@@ -47,6 +47,4 @@ class RunElem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>
 

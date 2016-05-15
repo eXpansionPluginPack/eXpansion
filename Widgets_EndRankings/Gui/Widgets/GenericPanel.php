@@ -58,7 +58,7 @@ class GenericPanel extends Widget
         $this->setSize($this->sizeX, ($this->lineHeight * $this->totalLines) + 5);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         $this->bg->setSize($this->sizeX, ($this->lineHeight * $this->totalLines) + 5);
         $this->bgTitle->setSize($this->sizeX, 4.2);
@@ -69,7 +69,7 @@ class GenericPanel extends Widget
      *
      * @param GenericItem[] $items
      */
-    function setData($items)
+    public function setData($items)
     {
         foreach ($this->items as $item) {
             $item->destroy();
@@ -87,7 +87,7 @@ class GenericPanel extends Widget
         }
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item) {
             $item->destroy();
@@ -98,5 +98,3 @@ class GenericPanel extends Widget
         parent::destroy();
     }
 }
-
-?>

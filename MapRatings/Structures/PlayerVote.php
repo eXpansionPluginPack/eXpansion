@@ -15,5 +15,3 @@ class PlayerVote extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
     }
 
 }
-
-?>

@@ -188,7 +188,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
      * invokes dedimania.SetChallengeTimes
      * Should be called onEndMatch
      *
-     * @param array $map     from dedicated server
+     * @param array $map from dedicated server
      * @param array $ranking from dedicated server
      *
      */
@@ -356,7 +356,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
      * PlayerConnect
      *
      * @param \ManiaLive\Data\Player $player
-     * @param bool                   $isSpec
+     * @param bool $isSpec
      */
     function playerConnect(\ManiaLive\Data\Player $player, $isSpec)
     {
@@ -389,7 +389,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
      * playerMultiConnect
      *
      * @param \ManiaLive\Data\Player[] $players
-     * @param bool                     $isSpec
+     * @param bool $isSpec
      */
     function playerMultiConnect($players)
     {

@@ -9,5 +9,3 @@ class Config extends \ManiaLib\Utils\Singleton
     public $posX = 40;
     public $posY = -40;
 }
-
-?>

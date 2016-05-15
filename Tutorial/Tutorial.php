@@ -32,7 +32,7 @@ class Tutorial extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window->show();
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         TutorialWindow::EraseAll();
     }

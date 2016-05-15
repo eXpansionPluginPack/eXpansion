@@ -36,8 +36,8 @@ interface PlayerEventListener
 
     /**
      * @param  ExpPlayer $player $player player object of the changed info
-     * @param  int       $oldPos old position
-     * @param  int       $newPos new position
+     * @param  int $oldPos old position
+     * @param  int $newPos new position
      */
     public function onPlayerPositionChange(ExpPlayer $player, $oldPos, $newPos);
 

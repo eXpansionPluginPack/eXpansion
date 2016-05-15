@@ -3,7 +3,6 @@
 namespace ManiaLivePlugins\eXpansion\Core\Gui\Windows;
 
 use ManiaLib\Gui\Elements\Label;
-use ManiaLib\Gui\Layouts\Column;
 use ManiaLib\Gui\Layouts\Line;
 use ManiaLive\Data\Storage;
 use ManiaLive\Event\Dispatcher;

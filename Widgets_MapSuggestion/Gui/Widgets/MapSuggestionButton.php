@@ -35,7 +35,7 @@ class MapSuggestionButton extends Widget
         $this->btn_wish->setAction($res);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();

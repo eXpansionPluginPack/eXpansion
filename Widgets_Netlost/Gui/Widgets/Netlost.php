@@ -7,9 +7,9 @@ class Netlost extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     protected $clockBg;
 
-    private $frame, $players, $specs, $map, $author;
+    protected $frame, $players, $specs, $map, $author;
 
-    private $line;
+    protected $line;
 
     protected function eXpOnBeginConstruct()
     {
@@ -52,7 +52,7 @@ class Netlost extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         // $this->server->setText($name);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();

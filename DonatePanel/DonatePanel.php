@@ -16,7 +16,8 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function eXpOnLoad() {
+    function eXpOnLoad()
+    {
         $this->enableDedicatedEvents();
         $this->config = Config::getInstance();
         DonatePanelWindow::$donatePlugin = $this;
@@ -26,13 +27,15 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $cmd->help = '/donate X where X is ammount of Planets';
     }
 
-    public function eXpOnReady() {
+    public function eXpOnReady()
+    {
         $window = DonatePanelWindow::Create();
         $window->setDisableAxis("x");
         $window->show();
     }
 
-    public function eXpOnUnload() {
+    public function eXpOnUnload()
+    {
         DonatePanelWindow::EraseAll();
     }
 
@@ -45,7 +48,8 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    public function donate($login, $amount = null, $someOtherPlayer = null) {
+    public function donate($login, $amount = null, $someOtherPlayer = null)
+    {
         $player = $this->storage->getPlayerObject($login);
         if ($amount == "help" || $amount == null) {
             $this->showHelp($login);
@@ -53,9 +57,8 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             return;
         }
         if (is_numeric($amount)) {
-            $amount = (int) $amount;
-        }
-        else {
+            $amount = (int)$amount;
+        } else {
             $this->eXpChatSendServerMessage('#error#Donate takes one argument and it needs to be numeric.', $login);
 
             return;
@@ -70,25 +73,25 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $bill->setErrorCallback(5, array($this, 'billFail'));
         $bill->setErrorCallback(6, array($this, 'billFail'));
         $bill->setSubject('server_donation');
-        
+
     }
 
-    public function billSucess(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill) {
+    public function billSucess(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill)
+    {
         if ($bill->getDestination_login() != $this->storage->serverLogin) {
             $this->eXpChatSendServerMessage('#donate#You donated #variable#' . $bill->getAmount() . '#donate# Planets to #variable#' . $toLogin . '$z$s#donate#', $bill->getSource_login());
-        }
-        else {
+        } else {
             if ($bill->getAmount() < $this->config->donateAmountForGlobalMsg) {
                 $this->eXpChatSendServerMessage('#donate#You donated #variable#' . $bill->getAmount() . '#donate# Planets to server$z$s#donate#, Thank You.', $bill->getSource_login());
-            }
-            else {
+            } else {
                 $fromPlayer = $this->storage->getPlayerObject($bill->getSource_login());
                 $this->eXpChatSendServerMessage('#donate#The server recieved a donation of #variable#' . $bill->getAmount() . '#donate# Planets from #variable#' . $fromPlayer->nickName . '$z$s#donate#, Thank You.', null);
             }
         }
     }
 
-    public function billFail(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill, $state, $stateName) {
+    public function billFail(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill, $state, $stateName)
+    {
         if ($state == 5) { // No go
             $login = $bill->getSource_login();
 

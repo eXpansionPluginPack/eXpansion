@@ -5,29 +5,29 @@ namespace ManiaLivePlugins\eXpansion\Votes\Gui\Windows;
 class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $pager;
+    protected $pager;
 
     /** @var \Maniaplanet\DedicatedServer\Connection */
-    private $connection;
+    protected $connection;
 
     /** @var \ManiaLive\Data\Storage */
-    private $storage;
+    protected $storage;
 
-    private $items = array();
+    protected $items = array();
 
-    private $ok;
+    protected $ok;
 
-    private $cancel;
+    protected $cancel;
 
-    private $actionOk;
+    protected $actionOk;
 
-    private $actionCancel;
+    protected $actionCancel;
 
     /**
      *
      * @var \ManiaLivePlugins\eXpansion\Votes\MetaData
      */
-    private $metaData;
+    protected $metaData;
 
     protected function onConstruct()
     {
@@ -53,7 +53,7 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->addComponent($this->cancel);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 5, $this->sizeY - 12);
@@ -66,7 +66,7 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
      *
      * @param \ManiaLivePlugins\eXpansion\Votes\Structures\ManagedVote $votes
      */
-    function populateList($managedVotes, $metadata)
+    public function populateList($managedVotes, $metadata)
     {
         $login = $this->getRecipient();
         $this->metaData = $metadata;
@@ -86,7 +86,7 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function Ok($login, $settings)
+    public function Ok($login, $settings)
     {
         $array = array();
 
@@ -109,12 +109,12 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->Erase($login);
     }
 
-    function Cancel($login)
+    public function Cancel($login)
     {
         $this->Erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item)
             $item->destroy();
@@ -130,5 +130,3 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

@@ -96,7 +96,7 @@ class Question
      * setAnswer($index, $answer);
      * setter for answer
      *
-     * @param int                                                $index
+     * @param int $index
      * @param \ManiaLivePlugins\eXpansion\Quiz\Structures\Answer $answer
      */
     public function setAnswer($index, Answer $answer)
@@ -152,5 +152,3 @@ class Question
     }
 
 }
-
-?>

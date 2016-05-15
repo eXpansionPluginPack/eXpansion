@@ -13,5 +13,3 @@ class Config extends \ManiaLib\Utils\Singleton
     public $publicQueueAmount = array(0);
 
 }
-
-?>

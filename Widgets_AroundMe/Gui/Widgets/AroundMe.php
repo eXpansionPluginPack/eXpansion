@@ -6,24 +6,24 @@ use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\UIConstructionSimple_Buttons;
 use ManiaLib\Utils\Formatting;
 use ManiaLive\Data\Storage;
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
-use ManiaLivePlugins\eXpansion\Widgets_AroundMe\Widgets_AroundMe;
 use ManiaLivePlugins\eXpansion\Widgets_AroundMe\Gui\Scripts\CpPositions;
+use ManiaLivePlugins\eXpansion\Widgets_AroundMe\Widgets_AroundMe;
 use ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Widgets_LiveRankings;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Widgets_LocalRecords;
-use ManiaLive\Gui\Controls\Frame;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class AroundMe extends Widget
 {
 
-    private $storage;
+    protected $storage;
 
     public static $connection;
 
-    function eXpOnBeginConstruct()
+    public function eXpOnBeginConstruct()
     {
         $this->storage = Storage::getInstance();
 
@@ -138,7 +138,7 @@ class AroundMe extends Widget
         return $script;
     }
 
-    function update()
+    public function update()
     {
 
 
@@ -253,5 +253,3 @@ class AroundMe extends Widget
     }
 
 }
-
-?>

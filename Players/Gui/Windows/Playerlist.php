@@ -2,10 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Players\Gui\Windows;
 
-use ManiaLivePlugins\eXpansion\Players\Gui\Controls\Playeritem;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
-use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
@@ -16,12 +15,12 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public static $mainPlugin;
 
     /** @var \Maniaplanet\DedicatedServer\Connection */
-    private $connection;
+    protected $connection;
 
     /** @var \ManiaLive\Data\Storage */
-    private $storage;
-    private $items = array();
-    private $frame;
+    protected $storage;
+    protected $items = array();
+    protected $frame;
     protected $title_status, $title_login, $title_nickname;
 
     public static $widths = array(1, 8, 6, 6);
@@ -76,7 +75,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $scaledSizes = Gui::getScaledSize(self::$widths, $this->sizeX);
     }
 
-    function ignorePlayer($login, $target)
+    public function ignorePlayer($login, $target)
     {
         try {
             $login = $this->getRecipient();
@@ -110,7 +109,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function kickPlayer($login, $target)
+    public function kickPlayer($login, $target)
     {
         try {
             AdminGroups::getInstance()->adminCmd($login, "kick " . $target);
@@ -120,7 +119,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function banPlayer($login, $target)
+    public function banPlayer($login, $target)
     {
         try {
             AdminGroups::getInstance()->adminCmd($login, "ban " . $target);
@@ -130,7 +129,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function blacklistPlayer($login, $target)
+    public function blacklistPlayer($login, $target)
     {
         try {
             AdminGroups::getInstance()->adminCmd($login, "black " . $target);
@@ -140,7 +139,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function guestlistPlayer($login, $target)
+    public function guestlistPlayer($login, $target)
     {
         try {
             AdminGroups::getInstance()->adminCmd($login, "guest " . $target);
@@ -150,7 +149,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function toggleSpec($login, $target)
+    public function toggleSpec($login, $target)
     {
         try {
             $login = $this->getRecipient();
@@ -178,20 +177,20 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setPosition(0, -6);
         $this->pager->setSize($this->sizeX, $this->sizeY - 10);
     }
 
-    function onDraw()
+    public function onDraw()
     {
         $this->populateList();
         parent::onDraw();
     }
 
-    function toggleTeam($login, $target)
+    public function toggleTeam($login, $target)
     {
         if (AdminGroups::hasPermission($login, Permission::PLAYER_CHANGE_TEAM)) {
             $player = $this->storage->getPlayerObject($target);
@@ -259,7 +258,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->update($this->getRecipient());
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->connection = null;
         $this->storage = null;
@@ -272,5 +271,3 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::destroy();
     }
 }
-
-?>

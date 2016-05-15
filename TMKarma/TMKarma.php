@@ -3,9 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\TMKarma;
 
 use ManiaLive\Application\ErrorHandling;
-use ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma;
 use ManiaLivePlugins\eXpansion\TMKarma\Gui\Windows\Widget;
-use ManiaLivePlugins\eXpansion\TMKarma\Data;
 
 class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -167,7 +165,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Processes a vote of a player.
      *
-     * @param string  $login
+     * @param string $login
      * @param integer $vote
      */
     function doVote($login, $vote)

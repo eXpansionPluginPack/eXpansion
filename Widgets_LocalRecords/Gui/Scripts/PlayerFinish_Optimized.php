@@ -23,8 +23,6 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts;
 
 
-use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
-
 class PlayerFinish_Optimized extends CommonScript
 {
 

@@ -39,7 +39,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             $this->onPlayerConnect($player->login, true);
     }
 
-    function onPlayerConnect($login, $isSpectator)
+    public function onPlayerConnect($login, $isSpectator)
     {
         if (!$isSpectator) {
             $this->displayRecordWidget($login);
@@ -56,7 +56,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         }
     }
 
-    function onRecordsLoaded($record)
+    public function onRecordsLoaded($record)
     {
         foreach ($this->storage->players as $player)
             $this->redrawWidget($player->login);
@@ -95,7 +95,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
      *
      * @return
      */
-    function displayRecordWidget($login, $record = null)
+    public function displayRecordWidget($login, $record = null)
     {
         //PBPanel::Erase($login);
 
@@ -119,7 +119,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $info->show();
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_PERSONAL_BEST);
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);

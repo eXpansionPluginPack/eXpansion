@@ -2,10 +2,10 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls;
 
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd;
 
 /**
  * Description of HelpItem
@@ -16,7 +16,7 @@ class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
     protected $moreButton;
-    
+
     function __construct($indexNumber, AdminCmd $cmd, $controller, $login)
     {
         $this->action = $this->createAction(array($this, 'cmdMore'), $cmd);

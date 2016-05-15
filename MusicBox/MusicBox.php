@@ -22,7 +22,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         $this->config = Config::getInstance();
@@ -35,7 +35,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $command = $this->registerChatCommand("mlist", "mbox", 1, true); // xaseco
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         CurrentTrackWidget::EraseAll();
         MusicListWindow::EraseAll();
@@ -46,7 +46,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->connection->setForcedMusic(false, "");
     }
 
-    function download($url)
+    public function download($url)
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_USERAGENT, "Manialive/eXpansion MusicBox [getter] ver 0.1");
@@ -76,7 +76,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return $data;
     }
 
-    function getMusicCsv()
+    public function getMusicCsv()
     {
 
 
@@ -113,7 +113,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * @return void
      */
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
 
         try {
@@ -134,7 +134,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->showWidget();
     }
 
-    function onEndMatch($rankings, $winnerTeamOrMap)
+    public function onEndMatch($rankings, $winnerTeamOrMap)
     {
         if (!$this->enabled)
             return;
@@ -185,7 +185,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function showWidget()
+    public function showWidget()
     {
         if (!$this->enabled)
             return;
@@ -229,7 +229,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return
      */
-    function mbox($login, $number = null)
+    public function mbox($login, $number = null)
     {
         if (!$this->enabled)
             return;
@@ -281,7 +281,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->eXpChatSendServerMessage($text, null);
     }
 
-    function musicList($login)
+    public function musicList($login)
     {
         try {
             $info = Gui\Windows\MusicListWindow::Create($login);
@@ -294,5 +294,3 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
 }
-
-?>

@@ -24,5 +24,3 @@ class Finish extends StatsWindow
     }
 
 }
-
-?>

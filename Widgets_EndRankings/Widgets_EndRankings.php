@@ -3,7 +3,6 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_EndRankings;
 
 use ManiaLive\PluginHandler\Dependency;
-use ManiaLivePlugins\eXpansion\Widgets_EndRankings\Gui\Widgets\RanksPanel;
 
 class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -14,7 +13,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->enableDatabase();
@@ -25,7 +24,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
      *
      * @param string $login
      */
-    function displayWidget($login = null)
+    public function displayWidget($login = null)
     {
         $info = Gui\Widgets\RanksPanel::Create(null);
         $info->setData($this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRanks"));
@@ -49,7 +48,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $don->show();
     }
 
-    function getTopDonators()
+    public function getTopDonators()
     {
         $this->storage->serverLogin;
         $sql = 'SELECT transaction_fromLogin as login, player_nickname as nickname, SUM(transaction_amount) as data'
@@ -65,7 +64,7 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         return $data->fetchArrayOfObject();
     }
 
-    function getTopPlaytime()
+    public function getTopPlaytime()
     {
         $this->storage->serverLogin;
         $sql = 'SELECT player_nickname as nickname, player_timeplayed as longDate'
@@ -106,11 +105,10 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         Gui\Widgets\Donators::EraseAll();
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         $this->hide();
     }
 }
 
-?>
 

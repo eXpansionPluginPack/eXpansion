@@ -2,10 +2,10 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 
 /**
  * Server Controlpanel Main window

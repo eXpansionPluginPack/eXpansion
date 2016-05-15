@@ -46,7 +46,7 @@ class PluginSettingChange extends \ManiaLive\Event\Event
             case self::ON_SETTINGS_CHANGE:
                 /** PluginId, variable*/
                 $listener->onPluginSettingsChange($p[0], $p[1]);
-                break;          
+                break;
         }
     }
 

@@ -7,10 +7,10 @@ use ManiaLivePlugins\eXpansion\Notifications\Gui\Controls\Item;
 class Panel extends \ManiaLive\Gui\Window
 {
 
-    private $_windowFrame;
-    private $_mainWindow;
-    private $_minButton;
-    private $frame;
+    protected $_windowFrame;
+    protected $_mainWindow;
+    protected $_minButton;
+    protected $frame;
     public static $menuPlugin;
 
     protected function onConstruct()
@@ -97,19 +97,14 @@ class Panel extends \ManiaLive\Gui\Window
         $this->addComponent($xml);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize(120, 40);
         $this->_mainWindow->setSize(120, 45);
     }
 
-    function onShow()
-    {
-
-    }
-
-    function setItems(array $menuItems)
+    public function setItems(array $menuItems)
     {
         if ($this->frame != null)
             $this->_windowFrame->removeComponent($this->frame);
@@ -128,11 +123,4 @@ class Panel extends \ManiaLive\Gui\Window
         $this->_windowFrame->addComponent($this->frame);
     }
 
-    function destroy()
-    {
-        parent::destroy();
-    }
-
 }
-
-?>

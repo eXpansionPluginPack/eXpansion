@@ -22,14 +22,14 @@ class Preloader extends \ManiaLive\Gui\Window
         $this->setAlign("center", "center");
     }
 
-    function add($url)
+    public function add($url)
     {
         $elem = new \ManiaLib\Gui\Elements\Quad(6, 6);
         $elem->setImage($url, true);
         $this->frame->addComponent($elem);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->frame->clearComponents();
         $this->frame->destroy();

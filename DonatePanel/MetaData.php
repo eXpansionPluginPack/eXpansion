@@ -16,7 +16,8 @@ namespace ManiaLivePlugins\eXpansion\DonatePanel;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-    public function onBeginLoad() {
+    public function onBeginLoad()
+    {
         parent::onBeginLoad();
         $this->setName("Widget: Donates panel");
         $this->setDescription("Donates for players to send for server or eachother");

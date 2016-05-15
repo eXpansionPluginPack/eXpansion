@@ -10,15 +10,15 @@ namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Windows;
 class MapRatingsManager extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $pager;
+    protected $pager;
 
     public static $removeId;
 
-    private $btn_remove;
+    protected $btn_remove;
 
-    private $btn_close;
+    protected $btn_close;
 
-    function onConstruct()
+    public function onConstruct()
     {
         parent::onConstruct();
         $login = $this->getRecipient();

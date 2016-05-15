@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Overlay_Positions;
 
-use \ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
+use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
 
 /**
  * Description of Overlay_Positions

@@ -2,11 +2,11 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window

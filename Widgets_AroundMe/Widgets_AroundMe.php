@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_AroundMe;
 
-use ManiaLivePlugins\eXpansion\Widgets_AroundMe\Gui\Widgets\AroundMe;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
@@ -151,12 +150,10 @@ class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         Gui\Widgets\AroundMe::EraseAll();
         self::$me = null;
     }
 
 }
-
-?>

@@ -25,7 +25,7 @@ class PlotterWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->plotter->setTickSize(5);
     }
 
-    function setDatas($datas)
+    public function setDatas($datas)
     {
         foreach ($datas as $i => $data) {
             foreach ($data as $x => $val) {
@@ -35,22 +35,22 @@ class PlotterWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function setLineColor($line, $color)
+    public function setLineColor($line, $color)
     {
         $this->plotter->setLineColor($line, $color);
     }
 
-    function setLimit($x, $y)
+    public function setLimit($x, $y)
     {
         $this->plotter->setLimits(0, 0, $x, $y);
     }
 
-    function setXLabels($labels)
+    public function setXLabels($labels)
     {
         $this->plotter->setXLabels($labels);
     }
 
-    function setYLabels($labels)
+    public function setYLabels($labels)
     {
         $this->plotter->setYLabels($labels);
     }
@@ -60,7 +60,7 @@ class PlotterWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         return number_format((float)$number, 2, '.', '');
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();

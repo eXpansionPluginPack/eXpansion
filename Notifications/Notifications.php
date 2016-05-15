@@ -2,9 +2,10 @@
 
 namespace ManiaLivePlugins\eXpansion\Notifications;
 
-use \ManiaLivePlugins\eXpansion\Notifications\Gui\Widgets\Panel2 as NotificationPanel;
+use ManiaLivePlugins\eXpansion\Notifications\Gui\Widgets\Panel2 as NotificationPanel;
+use ManiaLivePlugins\eXpansion\Notifications\Structures\Message;
+
 //use \ManiaLivePlugins\eXpansion\Notifications\Gui\Widgets\Panel2 as NotifiPanel2;
-use \ManiaLivePlugins\eXpansion\Notifications\Structures\Message;
 
 class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -145,5 +146,3 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
 }
-
-?>

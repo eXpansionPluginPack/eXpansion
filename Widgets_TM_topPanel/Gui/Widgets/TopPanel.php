@@ -19,10 +19,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Widgets;
 
-use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\HookData;
-use ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Hooks\BarElements;
-use ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Hooks\HookElement;
-
 /**
  * Description of TopPanel
  *

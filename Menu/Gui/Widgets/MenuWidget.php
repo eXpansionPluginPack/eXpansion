@@ -17,7 +17,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $boundingBox->setBgcolor('0001');
         $boundingBox->setScriptEvents();
         $this->addComponent($boundingBox);
-        
+
         $this->frame = New \ManiaLive\Gui\Controls\Frame(0, 0, new \ManiaLib\Gui\Layouts\Column(50, 20));
         $this->frame->setId("Menu");
         $this->addComponent($this->frame);
@@ -35,7 +35,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
             $this->script->setParam("gameMode", $storage->gameInfos->gameMode);
         }
         $this->script->setParam("forceReset", $this->getBoolean(DEBUG));
-        $this->registerScript($this->script);        
+        $this->registerScript($this->script);
 
         $inputbox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("widgetStatus");
         $inputbox->setPosition(900, 900);
@@ -58,7 +58,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
         /* @var $label \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel */
         $label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(30, 5);
-        $label->setText("    ".\eXpGetMessage($itemName, null));
+        $label->setText("    " . \eXpGetMessage($itemName, null));
         $label->setAttribute("class", "menu item");
         $label->setScriptEvents();
         $label->setTextSize(1);
@@ -67,13 +67,13 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $label->setTextColor("fff");
         $label->setAlign("left", "center");
         if (strlen($config->style_widget_bgColorize) == 6) {
-            $label->setFocusAreaColor1($config->style_widget_bgColorize."aa");
+            $label->setFocusAreaColor1($config->style_widget_bgColorize . "aa");
         } else {
             $label->setFocusAreaColor1($config->style_widget_bgColorize);
         }
 
         if (strlen($config->style_widget_title_bgColorize) == 6) {
-            $label->setFocusAreaColor2($config->style_widget_title_bgColorize."aa");
+            $label->setFocusAreaColor2($config->style_widget_title_bgColorize . "aa");
         } else {
             $label->setFocusAreaColor2($config->style_widget_title_bgColorize);
         }
@@ -83,4 +83,3 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $this->frame->addComponent($label);
     }
 }
-?>

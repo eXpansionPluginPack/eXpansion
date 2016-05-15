@@ -19,7 +19,7 @@ class MenuItem
     public $callback;
 
     public function __construct($name, callable $callback, $plugin)
-    {    
-        
+    {
+
     }
 }

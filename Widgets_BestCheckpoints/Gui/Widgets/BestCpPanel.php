@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Widgets;
 
-use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Controls\CheckpointElem;
 
 class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
@@ -30,7 +29,7 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->registerScript($this->timeScript);
     }
 
-    function onDraw()
+    public function onDraw()
     {
 
         $this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
@@ -50,7 +49,7 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         parent::onDraw();
     }
 
-    function destroy()
+    public function destroy()
     {
         parent::destroy();
         foreach ($this->cps as $cp) {
@@ -63,5 +62,3 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     }
 
 }
-
-?>

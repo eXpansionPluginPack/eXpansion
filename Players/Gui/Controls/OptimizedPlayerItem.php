@@ -2,10 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Players\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 
 class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
@@ -261,6 +259,3 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         return 9;
     }
 }
-
-?>
-

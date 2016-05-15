@@ -37,9 +37,9 @@ class LocalRecords extends LocalBase
      * onPlayerFinish()
      * Function called when a player finishes.
      *
-     * @param int    $playerUid
+     * @param int $playerUid
      * @param string $login
-     * @param int    $timeOrScore
+     * @param int $timeOrScore
      *
      * @return void
      */
@@ -70,7 +70,7 @@ class LocalRecords extends LocalBase
      * @param \ManiaLive\Data\Player $player
      * @param                        $time
      * @param                        $checkpoints
-     * @param int                    $nbLap
+     * @param int $nbLap
      */
     public function onPlayerFinishLap($player, $time, $checkpoints, $nbLap)
     {
@@ -113,7 +113,7 @@ class LocalRecords extends LocalBase
 
     /**
      * @param string $login
-     * @param bool   $isSpectator
+     * @param bool $isSpectator
      */
     public function onPlayerConnect($login, $isSpectator)
     {
@@ -124,7 +124,7 @@ class LocalRecords extends LocalBase
 
     /**
      * @param string $login
-     * @param null   $reason
+     * @param null $reason
      */
     public function onPlayerDisconnect($login, $reason = null)
     {

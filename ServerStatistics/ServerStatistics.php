@@ -23,7 +23,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /** @var Stats\StatsWindows */
     private $metrics;
 
-    function expOnInit()
+    public function expOnInit()
     {
         global $lang;
         //The Database plugin is needed.
@@ -385,11 +385,9 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         StatsWindow::EraseAll();
         PlotterWindow::EraseAll();
     }
 }
-
-?>

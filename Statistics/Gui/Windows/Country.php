@@ -59,5 +59,3 @@ class Country extends StatsWindow
     }
 
 }
-
-?>

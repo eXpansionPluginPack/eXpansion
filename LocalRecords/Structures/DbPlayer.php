@@ -10,19 +10,19 @@ class DbPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
     public $nation = "";
     public $language = "en";
 
-    function __construct()
+    public function __construct()
     {
 
     }
 
-    function fromPlayerObj(\Maniaplanet\DedicatedServer\Structures\Player $player)
+    public function fromPlayerObj(\Maniaplanet\DedicatedServer\Structures\Player $player)
     {
         $this->nickname = $player->nickName;
         $this->login = $player->login;
         $this->nation = $player->path;
     }
 
-    function exportToDb()
+    public function exportToDb()
     {
         $properties = get_object_vars($this);
         $keys = "";
@@ -46,5 +46,3 @@ class DbPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
     }
 
 }
-
-?>

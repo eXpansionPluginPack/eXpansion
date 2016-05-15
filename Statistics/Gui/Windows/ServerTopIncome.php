@@ -24,5 +24,3 @@ class ServerTopIncome extends StatsWindow
     }
 
 }
-
-?>

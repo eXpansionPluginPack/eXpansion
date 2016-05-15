@@ -11,11 +11,11 @@ use ManiaLivePlugins\eXpansion\ServerNeighborhood\Server;
 class UndefStyle extends AbsControl
 {
 
-    private $bg;
-    private $label_name;
+    protected $bg;
+    protected $label_name;
 
-    private $icon_status, $icon_game, $icon_player, $icon_specs, $icon_ladder;
-    private $label_nbPlayers, $label_nbSpecs, $label_ladder;
+    protected $icon_status, $icon_game, $icon_player, $icon_specs, $icon_ladder;
+    protected $label_nbPlayers, $label_nbSpecs, $label_ladder;
 
     function __construct($i, $ctr, Server $server)
     {
@@ -144,5 +144,3 @@ class UndefStyle extends AbsControl
     }
 
 }
-
-?>

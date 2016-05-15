@@ -16,23 +16,23 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $frame;
-    private $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
-    private $widths = array(1, 5, 3, 3, 2, 4);
+    protected $frame;
+    protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
+    protected $widths = array(1, 5, 3, 3, 2, 4);
 
     /**
      * @var \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager
      */
-    private $pager;
-    private $items = array();
-    private $button_sectors, $button_cps;
+    protected $pager;
+    protected $items = array();
+    protected $button_sectors, $button_cps;
 
-    private $recList;
-    private $limit;
-    private $currentMap;
+    protected $recList;
+    protected $limit;
+    protected $currentMap;
 
     /** @var  LocalBase */
-    private $localBase;
+    protected $localBase;
 
     protected function onConstruct()
     {
@@ -171,5 +171,3 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

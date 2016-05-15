@@ -2,10 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
-use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
-use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 /**
  * Description of CpItem
@@ -19,7 +16,7 @@ class TopsumItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected $bg;
 
-    function __construct($indexNumber, $login, $data, $width = 100)
+    public function __construct($indexNumber, $login, $data, $width = 100)
     {
         $this->sizeY = 6;
         $this->sizeX = 100;
@@ -72,5 +69,3 @@ class TopsumItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>

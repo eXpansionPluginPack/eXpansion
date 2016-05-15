@@ -2,9 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Communication\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
-
 /**
  *
  * @author reaby

@@ -13,5 +13,3 @@ class MapSortMode
     public $sortMode = 0;
     public $column = "";
 }
-
-?>

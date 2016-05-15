@@ -3,7 +3,6 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints;
 
 use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Gui\Widgets\BestCpPanel;
-use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint;
 
 class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -19,7 +18,7 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
      *
      * @param string $login
      */
-    function displayWidget($login = null)
+    public function displayWidget($login = null)
     {
         $info = BestCpPanel::Create($login);
         $info->setSize(190, 7);
@@ -40,12 +39,9 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
         }
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         BestCpPanel::EraseAll();
         parent::eXpOnUnload();
     }
 }
-
-?>
-

@@ -3,10 +3,10 @@
 namespace ManiaLivePlugins\eXpansion\ESportsManager;
 
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\ESportsManager\Structures\MatchSetting;
 use ManiaLivePlugins\eXpansion\ESportsManager\Structures\MatchStatus;
 use ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus;
-use ManiaLivePlugins\eXpansion\ESportsManager\Structures\MatchSetting;
-use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 /**
  * Description of ESportsMAnager

@@ -5,7 +5,6 @@ namespace ManiaLivePlugins\eXpansion\Debugtool\Gui;
 use ManiaLib\Gui\Elements\Label;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Features\Tick\Event as TickEvent;
-use ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget;
 
 /**
  * Description of widget_netstat

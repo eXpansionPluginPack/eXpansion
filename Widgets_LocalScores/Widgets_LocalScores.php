@@ -5,8 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LocalScores;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\PluginHandler\Dependency;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
-use ManiaLivePlugins\eXpansion\LocalRecords\Events\Listener;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
+use ManiaLivePlugins\eXpansion\LocalRecords\Events\Listener;
 use ManiaLivePlugins\eXpansion\Widgets_LocalScores\Gui\Widgets\LocalPanel;
 
 class Widgets_LocalScores extends ExpPlugin implements Listener
@@ -86,7 +86,7 @@ class Widgets_LocalScores extends ExpPlugin implements Listener
         $this->updateLocalPanel();
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
@@ -109,5 +109,3 @@ class Widgets_LocalScores extends ExpPlugin implements Listener
     }
 
 }
-
-?>

@@ -2,9 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Debugtool;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
-
 /**
  * Description of MetaData
  *

@@ -9,27 +9,27 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
     /** @var \Maniaplanet\DedicatedServer\Connection */
-    private $connection;
+    protected $connection;
 
     /** @var \ManiaLive\Data\Storage */
-    private $storage;
-    private $actionPlayers;
-    private $actionSend;
-    private $_windowFrame;
-    private $_mainWindow;
-    private $_minButton;
-    private $frame;
-    private $labelPlayer;
-    private $inputboxMessage;
-    private $buttonSend;
-    private $status = "True";
-    private $minMaxAction;
-    private $labelReciever;
-    private $widgetScript;
-    private $sendscript;
+    protected $storage;
+    protected $actionPlayers;
+    protected $actionSend;
+    protected $_windowFrame;
+    protected $_mainWindow;
+    protected $_minButton;
+    protected $frame;
+    protected $labelPlayer;
+    protected $inputboxMessage;
+    protected $buttonSend;
+    protected $status = "True";
+    protected $minMaxAction;
+    protected $labelReciever;
+    protected $widgetScript;
+    protected $sendscript;
 
     /** @var \Maniaplanet\DedicatedServer\Structures\Player */
-    private $targetPlayer = false;
+    protected $targetPlayer = false;
 
     protected function eXpOnBeginConstruct()
     {
@@ -120,14 +120,14 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         parent::eXpOnSettingsLoaded();
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->_mainWindow->setSize(102, 6);
         $this->_minButton->setPosition(100 - 4, -2.5);
     }
 
-    function sendPm($login, $target)
+    public function sendPm($login, $target)
     {
         $this->targetPlayer = $target;
         $targetPlayer = $this->storage->getPlayerObject($target);
@@ -137,7 +137,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->redraw($this->getRecipient());
     }
 
-    function players($login, $args = array())
+    public function players($login, $args = array())
     {
         // $this->status = "False";
         $window = \ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection::Create($login);
@@ -149,7 +149,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $window->show();
     }
 
-    function send($login, $args)
+    public function send($login, $args)
     {
         try {
             // $this->status = "False";
@@ -177,7 +177,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         }
     }
 
-    function setTargetPlayer($login)
+    public function setTargetPlayer($login)
     {
         $this->targetPlayer = $login;
         $this->labelReciever->setText($targetPlayer->nickName);
@@ -186,11 +186,4 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->redraw($this->getRecipient());
     }
 
-    function destroy()
-    {
-        parent::destroy();
-    }
-
 }
-
-?>

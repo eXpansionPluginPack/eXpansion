@@ -26,5 +26,3 @@ class Helper_PingAnswer extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWid
         $this->script->setParam('stamp', $value);
     }
 }
-
-?>

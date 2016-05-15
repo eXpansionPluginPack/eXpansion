@@ -23,7 +23,8 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $items = array();
     protected $permissions = array();
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
 
@@ -43,15 +44,18 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->button_cancel);
     }
 
-    public function setGroup(Group $g) {
+    public function setGroup(Group $g)
+    {
         $this->group = $g;
     }
 
-    public function getGroup() {
+    public function getGroup()
+    {
         return $this->group;
     }
 
-    public function onResize($oldX, $oldY) {
+    public function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 12);
         $this->pager->setPosition(1, -1);
@@ -61,11 +65,13 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->button_cancel->setPosition($centerX + 30, -$this->sizeY + 5);
     }
 
-    public function onShow() {
+    public function onShow()
+    {
         $this->populateList();
     }
 
-    public function populateList() {
+    public function populateList()
+    {
         foreach ($this->permissions as $item) {
             $item[0]->destroy();
             if ($item[1] != null) {
@@ -89,41 +95,39 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $cInherit = null;
 
             $inheritances = $this->group->getInherits();
-            if (! empty($inheritances)) {
+            if (!empty($inheritances)) {
                 $cInherit = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 15, $cPermission);
                 $cInherit->setText('$fff' . __(AdminGroups::$txt_inherits, $this->getRecipient()) . "?");
                 $cInherit->setScale(0.8);
                 if ($this->group->getPermission($key) == AdminGroups::UNKNOWN_PERMISSION) {
                     $cPermission->SetIsWorking(false);
                     $cInherit->setStatus(true);
-                }
-                else {
+                } else {
                     $cInherit->setStatus(false);
                 }
             }
 
-            $this->permissions[ $key ] = array($cPermission, $cInherit);
-            $this->items[ $x ] = new \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem($x, $cPermission, $cInherit);
-            $this->pager->addItem($this->items[ $x ]);
+            $this->permissions[$key] = array($cPermission, $cInherit);
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem($x, $cPermission, $cInherit);
+            $this->pager->addItem($this->items[$x]);
             $x++;
         }
     }
 
-    public function clickOk($login) {
+    public function clickOk($login)
+    {
         $newPermissions = array();
         foreach ($this->permissions as $key => $val) {
             $inheritance = $val[1];
             $permission = $val[0];
 
             if ($inheritance == null) {
-                $newPermissions[ $key ] = $permission->getStatus() == false ? AdminGroups::UNKNOWN_PERMISSION : AdminGroups::HAVE_PERMISSION;
-            }
-            else {
+                $newPermissions[$key] = $permission->getStatus() == false ? AdminGroups::UNKNOWN_PERMISSION : AdminGroups::HAVE_PERMISSION;
+            } else {
                 if ($inheritance->getStatus()) {
-                    $newPermissions[ $key ] = AdminGroups::UNKNOWN_PERMISSION;
-                }
-                else {
-                    $newPermissions[ $key ] = $permission->getStatus() == false ? AdminGroups::NO_PERMISSION : AdminGroups::HAVE_PERMISSION;
+                    $newPermissions[$key] = AdminGroups::UNKNOWN_PERMISSION;
+                } else {
+                    $newPermissions[$key] = $permission->getStatus() == false ? AdminGroups::NO_PERMISSION : AdminGroups::HAVE_PERMISSION;
                 }
             }
         }
@@ -140,11 +144,13 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    public function clickCancel() {
+    public function clickCancel()
+    {
         $this->Erase($this->getRecipient());
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         foreach ($this->permissions as $item) {
             $item[0]->destroy();
             if ($item[1] != null) {

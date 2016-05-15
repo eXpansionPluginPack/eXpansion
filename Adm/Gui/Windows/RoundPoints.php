@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
-use ManiaLivePlugins\eXpansion\Adm\Config;
 use ManiaLivePlugins\eXpansion\Adm\Structures\CustomPoint;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 

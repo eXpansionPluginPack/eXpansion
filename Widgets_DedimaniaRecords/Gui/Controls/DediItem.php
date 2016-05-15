@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
 class DediItem extends Recorditem
 {
 
-    function __construct($index, $record, $login, $highlite = false)
+    public function __construct($index, $record, $login, $highlite = false)
     {
         $outrec = new \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record();
         $outrec->login = $record['Login'];
@@ -19,5 +19,4 @@ class DediItem extends Recorditem
 
 }
 
-?>
 

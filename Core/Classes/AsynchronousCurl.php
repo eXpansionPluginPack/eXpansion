@@ -36,7 +36,8 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
     /** @var AsynchronousCurlData[] */
     protected $_queries = array();
 
-    public function start() {
+    public function start()
+    {
         Dispatcher::register(AppEvent::getClass(), $this);
         /** @var Storage $storage */
         $storage = Storage::getInstance();
@@ -46,12 +47,13 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
     /**
      * make a http query with options
      *
-     * @param string   $url
+     * @param string $url
      * @param callable $callback
-     * @param mixed    $addionalData if you need to pass additional metadata with the query, like login do it here
-     * @param array    $options      curl options array
+     * @param mixed $addionalData if you need to pass additional metadata with the query, like login do it here
+     * @param array $options curl options array
      */
-    public function query($url, $callback, $additionalData = null, $options = array()) {
+    public function query($url, $callback, $additionalData = null, $options = array())
+    {
         $curlJob = new CallbackCurl();
         $curlJob->setCallback($callback);
         $curlJob->setUrl($url);
@@ -67,27 +69,33 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
     /**
      * Event launch every seconds
      */
-    public function onTick() {
+    public function onTick()
+    {
         JobRunner::getInstance()->proccess();
     }
 
-    public function onInit() {
+    public function onInit()
+    {
 
     }
 
-    public function onRun() {
+    public function onRun()
+    {
 
     }
 
-    public function onPreLoop() {
+    public function onPreLoop()
+    {
 
     }
 
-    public function onPostLoop() {
+    public function onPostLoop()
+    {
         JobRunner::getInstance()->proccess();
     }
 
-    public function onTerminate() {
+    public function onTerminate()
+    {
         curl_multi_close($this->handle);
     }
 }

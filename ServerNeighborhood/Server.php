@@ -2,8 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\ServerNeighborhood;
 
-use \Maniaplanet\DedicatedServer\Connection;
-use \ManiaLive\Utilities\Time as TmTime;
+use ManiaLive\Utilities\Time as TmTime;
+use Maniaplanet\DedicatedServer\Connection;
 
 class Server
 {
@@ -22,7 +22,7 @@ class Server
 
     private $inDb = false;
 
-    function __construct()
+    public function __construct()
     {
         $this->server_oldOnline = time() - 10;
     }
@@ -182,5 +182,3 @@ class Server
         return $this->server_isOnline;
     }
 }
-
-?>

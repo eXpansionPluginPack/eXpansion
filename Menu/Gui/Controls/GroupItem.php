@@ -2,9 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Menu\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\Gui\Config;
-
 class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
     protected $frame;
@@ -47,7 +44,7 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(30, 5);
 
-        $label->setText("    ".\eXpGetMessage($itemName, null));
+        $label->setText("    " . \eXpGetMessage($itemName, null));
         $label->setTextSize(1);
         $label->setScriptEvents();
         $label->setStyle("Manialink_Body");
@@ -55,13 +52,13 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $label->setTextColor("fff");
         $label->setAlign("left", "center");
         if (strlen($config->style_widget_bgColorize) == 6) {
-            $label->setFocusAreaColor1($config->style_widget_bgColorize."aa");
+            $label->setFocusAreaColor1($config->style_widget_bgColorize . "aa");
         } else {
             $label->setFocusAreaColor1($config->style_widget_bgColorize);
         }
 
         if (strlen($config->style_widget_title_bgColorize) == 6) {
-            $label->setFocusAreaColor2($config->style_widget_title_bgColorize."aa");
+            $label->setFocusAreaColor2($config->style_widget_title_bgColorize . "aa");
         } else {
             $label->setFocusAreaColor2($config->style_widget_title_bgColorize);
         }
@@ -69,5 +66,3 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         return $label;
     }
 }
-?>
-

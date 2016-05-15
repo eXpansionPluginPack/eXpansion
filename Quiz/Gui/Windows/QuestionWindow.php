@@ -2,31 +2,29 @@
 
 namespace ManiaLivePlugins\eXpansion\Quiz\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 
 class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $ok;
+    protected $ok;
 
-    private $cancel;
+    protected $cancel;
 
-    private $actionOk;
+    protected $actionOk;
 
-    private $actionCancel;
+    protected $actionCancel;
 
-    private $IBanswers;
+    protected $IBanswers;
 
-    private $IBQuestion;
+    protected $IBQuestion;
 
-    private $IBimageUrl;
+    protected $IBimageUrl;
 
-    private $frame;
+    protected $frame;
 
-    private $answerCount = 7;
+    protected $answerCount = 7;
 
     /** @var \ManiaLivePlugins\eXpansion\Quiz\Quiz */
     public static $mainPlugin;
@@ -73,7 +71,7 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->cancel);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
 
@@ -81,7 +79,7 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->cancel->setPosition($this->sizeX - 24, -$this->sizeY + 9);
     }
 
-    function setQuestion(\ManiaLivePlugins\eXpansion\Quiz\Structures\Question $question)
+    public function setQuestion(\ManiaLivePlugins\eXpansion\Quiz\Structures\Question $question)
     {
         $this->IBQuestion->setText($question->getQuestion());
         for ($x = 0; $x < $this->answerCount; $x++) {
@@ -91,7 +89,7 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function Ok($login, $data)
+    public function Ok($login, $data)
     {
         $storage = \ManiaLive\Data\Storage::getInstance();
         $q = str_replace("?", "", $data['question']);
@@ -110,12 +108,12 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->erase($login);
     }
 
-    function Cancel($login)
+    public function Cancel($login)
     {
         $this->erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
 
         $this->ok->destroy();
@@ -125,5 +123,3 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

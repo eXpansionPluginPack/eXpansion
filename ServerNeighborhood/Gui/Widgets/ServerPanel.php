@@ -6,7 +6,6 @@ use ManiaLib\Gui\Elements\BgsPlayerCard;
 use ManiaLib\Gui\Elements\Icons128x128_1;
 use ManiaLib\Gui\Elements\Icons64x64_1;
 use ManiaLib\Gui\Elements\Label;
-use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
@@ -26,34 +25,34 @@ class ServerPanel extends Widget
 
     public static $xml_config;
 
-    private $servers = array();
+    protected $servers = array();
 
     /** @var Config */
-    private $config;
+    protected $config;
 
-    private $lastStart;
+    protected $lastStart;
 
-    private $first = true;
+    protected $first = true;
 
-    private $items = array();
+    protected $items = array();
 
-    private $frame;
+    protected $frame;
 
-    private $bg;
+    protected $bg;
 
-    private $bg_title;
+    protected $bg_title;
 
-    private $label_title;
+    protected $label_title;
 
-    private $icon_title;
+    protected $icon_title;
 
-    private $label_secCounter;
+    protected $label_secCounter;
 
-    private $bg_more;
+    protected $bg_more;
 
-    private $icon_all;
+    protected $icon_all;
 
-    private $label_all;
+    protected $label_all;
 
     protected function eXpOnBeginConstruct()
     {
@@ -250,5 +249,3 @@ class ServerPanel extends Widget
     }
 
 }
-
-?>

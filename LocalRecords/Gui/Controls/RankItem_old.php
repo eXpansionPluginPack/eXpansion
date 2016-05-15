@@ -2,18 +2,15 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
-
 class RankItem_old extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $bg;
-    private $nbrec;
-    private $nickname;
-    private $frame;
+    protected $bg;
+    protected $nbrec;
+    protected $nickname;
+    protected $frame;
 
-    function __construct($indexNumber, $nickname, $nbrec)
+    public function __construct($indexNumber, $nickname, $nbrec)
     {
         $sizeX = 120;
         $sizeY = 6;
@@ -96,12 +93,7 @@ class RankItem_old extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     }
 
-    function onDraw()
-    {
-
-    }
-
-    function destroy()
+    public function destroy()
     {
         $this->frame->clearComponents();
         $this->frame->destroy();
@@ -112,5 +104,4 @@ class RankItem_old extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 }
 
-?>
 

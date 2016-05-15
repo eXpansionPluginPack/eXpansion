@@ -2,10 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
-use ManiaLivePlugins\eXpansion\Core\i18n\Message;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
-use ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel;
-
 class Error extends Window
 {
     protected $ok;

@@ -33,7 +33,7 @@ class HookElement
 
     /**
      * @param Element $gui
-     * @param int     $priority
+     * @param int $priority
      */
     function __construct($gui, $priority = 0)
     {

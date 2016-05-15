@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\types;
 
-use ManiaLive\Utilities\Console;
-
 /**
  * Description of MaxPlugin
  *

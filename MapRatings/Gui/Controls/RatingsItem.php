@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Controls;
 
-use \ManiaLib\Utils\Formatting;
+use ManiaLib\Utils\Formatting;
 
 class RatingsItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
@@ -27,7 +27,7 @@ class RatingsItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected $isAdmin;
 
-    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\MapRatings\Structures\MapRating $rating)
+    public function __construct($indexNumber, \ManiaLivePlugins\eXpansion\MapRatings\Structures\MapRating $rating)
     {
         $sizeY = 5.5;
         $sizeX = 110;
@@ -83,7 +83,7 @@ class RatingsItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // override destroy method not to destroy its contents on manialive 3.1
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -91,7 +91,7 @@ class RatingsItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     /**
      * custom function to destroy contents when needed.
      */
-    function erase()
+    public function erase()
     {
         if (is_object($this->queueButton)) {
             $this->queueButton->destroy();

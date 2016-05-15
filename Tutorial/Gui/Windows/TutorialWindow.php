@@ -31,10 +31,11 @@ use ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Line;
 class TutorialWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $button, $frame;
-    private $mScript;
+    protected $button, $frame;
+    protected $mScript;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $this->setTitle("eXpansion Plugin Pack - Tutorial");
 
@@ -96,11 +97,13 @@ class TutorialWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->registerScript($this->mScript);
     }
 
-    public function close($login) {
+    public function close($login)
+    {
         $this->Erase($login);
     }
 
-    public function onResize($oldX, $oldY) {
+    public function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
         $this->button->setPosition($this->sizeX - 40, -$this->sizeY + 6);
 

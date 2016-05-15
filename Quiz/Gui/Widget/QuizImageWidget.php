@@ -27,7 +27,7 @@ namespace ManiaLivePlugins\eXpansion\Quiz\Gui\Widget;
 class QuizImageWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-    private $quad, $title, $bg, $script;
+    protected $quad, $title, $bg, $script;
 
     protected function eXpOnBeginConstruct()
     {

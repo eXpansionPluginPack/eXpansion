@@ -61,5 +61,3 @@ class CountryOnlineTime extends Country
     }
 
 }
-
-?>

@@ -19,5 +19,3 @@ class Checkpoint extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
     }
 
 }
-
-?>

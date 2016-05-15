@@ -90,8 +90,8 @@ class PlainWidget extends \ManiaLive\Gui\Window
     /**
      * Will apply a single script
      *
-     * @param Script $script    The script to apply if possible to the current window
-     * @param mixed  $component the component that adds this script
+     * @param Script $script The script to apply if possible to the current window
+     * @param mixed $component the component that adds this script
      */
     private function applyScript(Script $script, $component)
     {

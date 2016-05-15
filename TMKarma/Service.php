@@ -3,7 +3,6 @@
 namespace ManiaLivePlugins\eXpansion\TMKarma;
 
 use ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma;
-use ManiaLive\Utilities\Console;
 
 abstract class Service
 {
@@ -125,8 +124,8 @@ abstract class Service
     /**
      * Authenticates at the tm-karma webservice.
      *
-     * @param sring   $serverName
-     * @param string  $login
+     * @param sring $serverName
+     * @param string $login
      * @param integer $communityCode
      */
     static function Authenticate($serverName, $login, $game)
@@ -153,7 +152,7 @@ abstract class Service
      * Retrieves the challenge's karma from the webservice.
      *
      * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
-     * @param \ManiaLive\Data\Player[]                    $players
+     * @param \ManiaLive\Data\Player[] $players
      *
      * @return \ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma
      */
@@ -187,7 +186,7 @@ abstract class Service
      * SendVotes()
      *
      * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
-     * @param Structures\Vote[]                           $votes
+     * @param Structures\Vote[] $votes
      */
     static function SendVotes(\Maniaplanet\DedicatedServer\Structures\Map $challenge, $votes)
     {

@@ -2,12 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
-use ManiaLive\Gui\ActionHandler;
-use ManiaLib\Utils\Formatting;
 use ManiaLivePlugins\eXpansion\Gui\Controls\Playeritem;
 
 class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window

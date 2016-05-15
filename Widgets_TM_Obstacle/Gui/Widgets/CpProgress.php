@@ -8,19 +8,16 @@ use ManiaLib\Gui\Layouts\Line;
 use ManiaLive\Data\Storage;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Gauge;
-use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 
 class CpProgress extends Widget
 {
 
-    private $frame;
-
-    private $script;
+    protected $frame;
 
     /** @var Storage; */
-    private $storage;
+    protected $storage;
 
     protected function eXpOnBeginConstruct()
     {
@@ -30,8 +27,7 @@ class CpProgress extends Widget
         $this->frame = new Frame();
         $this->frame->setLayout(new Column());
         $this->addComponent($this->frame);
-
-        $x = 0;
+        
         for ($x = 0; $x < 10; $x++) {
             $line = new Frame();
             $line->setLayout(new Line());

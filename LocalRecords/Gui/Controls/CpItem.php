@@ -2,10 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
-use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
+use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 
 /**
  * Description of CpItem
@@ -19,9 +18,9 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected $bg;
 
-    private $widths;
+    protected $widths;
 
-    function __construct($indexNumber, $login, Record $record, $widths, $offset = 0)
+    public function __construct($indexNumber, $login, Record $record, $widths, $offset = 0)
     {
         $this->widths = $widths;
         $this->sizeY = 6;
@@ -80,7 +79,7 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -89,11 +88,9 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         parent::destroy();
     }
 
 }
-
-?>

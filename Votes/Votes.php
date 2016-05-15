@@ -17,7 +17,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $resCount = 0;
     private $lastMapUid = "";
 
-    function expOnInit()
+    public function expOnInit()
     {
         $this->config = Config::getInstance();
     }
@@ -287,7 +287,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function cancelVote($login)
+    public function cancelVote($login)
     {
         $player = $this->storage->getPlayerObject($login);
         $vote = $this->connection->getCurrentCallVote();
@@ -334,5 +334,3 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 }
-
-?>

@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\MusicBox\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\MusicBox\Gui\Controls\Song;
+use ManiaLivePlugins\eXpansion\MusicBox\Gui\Controls\Song;
 
 class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {

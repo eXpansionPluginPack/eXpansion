@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Statistics;
 class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    function expOnInit()
+    public function expOnInit()
     {
         //The Database plugin is needed.
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Database\\Database"));
@@ -405,7 +405,7 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return $datas;
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerTopIncome::EraseAll();
         \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\ServerDonationAmount::EraseAll();
@@ -424,5 +424,3 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         \ManiaLivePlugins\eXpansion\Statistics\Gui\Windows\Country::EraseAll();
     }
 }
-
-?>

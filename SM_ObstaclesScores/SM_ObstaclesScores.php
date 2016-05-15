@@ -23,12 +23,8 @@
 namespace ManiaLivePlugins\eXpansion\SM_ObstaclesScores;
 
 
-use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use ManiaLivePlugins\eXpansion\Core\types\BasicPlugin;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
-use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
-use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
 
 /**
  * Class LocalScores
@@ -114,7 +110,7 @@ class SM_ObstaclesScores extends LocalBase
 
     /**
      * @param string $login
-     * @param bool   $isSpectator
+     * @param bool $isSpectator
      */
     public function onPlayerConnect($login, $isSpectator)
     {
@@ -125,7 +121,7 @@ class SM_ObstaclesScores extends LocalBase
 
     /**
      * @param string $login
-     * @param null   $reason
+     * @param null $reason
      */
     public function onPlayerDisconnect($login, $reason = null)
     {

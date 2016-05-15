@@ -3,7 +3,6 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_Times;
 
 use ManiaLive\Event\Dispatcher;
-use ManiaLive\PluginHandler\Dependency;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 use ManiaLivePlugins\eXpansion\Widgets_Times\Gui\Widgets\TimePanel;
 
@@ -11,17 +10,17 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
     protected $references = array();
 
-    function expOnInit()
+    public function expOnInit()
     {
         //	$this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
     }
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
         if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania')) {
             Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
@@ -99,7 +98,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->showPanel($player->login, $player);
     }
 
-    function showPanel($login, $playerObject)
+    public function showPanel($login, $playerObject)
     {
 
         $spectatorTarget = $login;
@@ -126,12 +125,12 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $info->show();
     }
 
-    function onPlayerConnect($login, $isSpectator)
+    public function onPlayerConnect($login, $isSpectator)
     {
         $this->showPanel($login, $this->storage->getPlayerObject($login));
     }
 
-    function onPlayerDisconnect($login, $reason = null)
+    public function onPlayerDisconnect($login, $reason = null)
     {
         TimePanel::Erase($login);
     }
@@ -236,6 +235,3 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         parent::eXpUnload();
     }
 }
-
-?>
-

@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
-use ManiaLivePlugins\eXpansion\Gui\Config;
-
 class LinePlotter extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
@@ -24,7 +22,7 @@ class LinePlotter extends \ManiaLivePlugins\eXpansion\Gui\Control
     /**
      * Button
      *
-     * @param int  $sizeX = 24
+     * @param int $sizeX = 24
      * @param intt $sizeY = 6
      */
     function __construct($sizeX = 100, $sizeY = 100)

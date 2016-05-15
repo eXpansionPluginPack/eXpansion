@@ -15,7 +15,8 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     /** @var \ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin */
     public static $mainPlugin;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $login = $this->getRecipient();
 
@@ -53,47 +54,52 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->setSize(110, 20);
     }
 
-    function onResize($oldX, $oldY) {
+    function onResize($oldX, $oldY)
+    {
         $this->frame->setSize($this->sizeX, $this->sizeY);
         $this->frame->setPosition($this->sizeX - 48, -$this->sizeY + 6);
         parent::onResize($oldX, $oldY);
     }
 
-    protected function onShow() {
+    protected function onShow()
+    {
         if ($this->adminAction != "kick") {
             $this->frm->addComponent($this->compobox);
         }
     }
 
-    public function setData($action, $params) {
+    public function setData($action, $params)
+    {
         $login = $this->getRecipient();
         $this->adminAction = $action;
         $this->adminParams = $params;
         $this->btn_ok->setText(__($action, $login));
     }
 
-    public function ok($login, $inputbox) {
+    public function ok($login, $inputbox)
+    {
         if ($this->adminAction == "kick") {
             $params = $this->adminAction . " " . $this->adminParams . " " . $inputbox['parameter'];
-        }
-        else {
+        } else {
             if (empty($inputbox['select'])) {
                 $inputbox['select'] = 0;
             }
             $items = $this->compobox->getDropdownItems();
-            $params = $this->adminAction . " " . $this->adminParams . " " . $inputbox['parameter'] . ", duration: " . $items[ $inputbox['select'] ];
+            $params = $this->adminAction . " " . $this->adminParams . " " . $inputbox['parameter'] . ", duration: " . $items[$inputbox['select']];
             $prms = explode(" ", $this->adminParams);
-            self::$mainPlugin->addActionDuration($prms[0], $this->adminAction, $items[ $inputbox['select'] ]);
+            self::$mainPlugin->addActionDuration($prms[0], $this->adminAction, $items[$inputbox['select']]);
         }
         AdminGroups::getInstance()->adminCmd($login, $params);
         $this->Erase($login);
     }
 
-    public function cancel($login) {
+    public function cancel($login)
+    {
         $this->Erase($login);
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         $this->btn_ok->destroy();
         $this->inputbox->destroy();
         $this->btn_cancel->destroy();

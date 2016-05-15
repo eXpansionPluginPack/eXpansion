@@ -5,7 +5,6 @@ namespace ManiaLivePlugins\eXpansion\MapSuggestion;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ButtonHook;
-use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Windows\MxSearch;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Hooks\ListButtons;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Hooks\ListButtons_Event;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\HookData;
@@ -96,5 +95,3 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
     }
 
 }
-
-?>

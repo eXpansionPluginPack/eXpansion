@@ -2,11 +2,11 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls;
 
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Group;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
-use ManiaLivePlugins\eXpansion\AdminGroups\Group;
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 /**
  * Description of GroupItem

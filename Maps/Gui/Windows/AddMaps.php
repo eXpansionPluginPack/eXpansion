@@ -3,30 +3,30 @@
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
-use \ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Additem;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Additem;
 
 class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $pager;
+    protected $pager;
 
     public static $mapsPlugin = null;
 
     /** @var  \Maniaplanet\DedicatedServer\Connection */
-    private $connection;
+    protected $connection;
 
     /** @var  \ManiaLive\Data\Storage */
-    private $storage;
+    protected $storage;
 
-    private $items = array();
+    protected $items = array();
 
-    private $gbx;
+    protected $gbx;
 
-    private $btnAddAll;
+    protected $btnAddAll;
 
-    private $actionAddAll;
+    protected $actionAddAll;
 
-    private $label;
+    protected $label;
 
     protected function onConstruct()
     {
@@ -46,7 +46,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->btnAddAll);
     }
 
-    function addMap($login, $array)
+    public function addMap($login, $array)
     {
         try {
             $this->connection->addMap($array[0]);
@@ -56,7 +56,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         foreach ($this->items as $item) {
             $item->setSize($this->sizeX, $this->sizeY);
@@ -66,12 +66,12 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onResize($oldX, $oldY);
     }
 
-    function onShow()
+    public function onShow()
     {
         $this->populateList();
     }
 
-    function populateList()
+    public function populateList()
     {
         foreach ($this->items as $item) {
             $item->erase();
@@ -105,7 +105,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function deleteMap($login, $filename)
+    public function deleteMap($login, $filename)
     {
         if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
             $this->connection->chatSendServerMessage(__("#admin_error#This instance of eXpansion is runnin remotelly! Can't delete file #variable#'%s'", $this->getRecipient(), end($file)));
@@ -123,7 +123,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function addAllMaps($login)
+    public function addAllMaps($login)
     {
         $game = $this->connection->getVersion();
         $path = Helper::getPaths()->getDownloadMapsPath() . $game->titleId . "/*.Map.Gbx";
@@ -139,7 +139,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->connection->chatSendServerMessage("Added " . count($mapsAtDisk) . " maps to playlist.", $login);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->gbx = null;
         foreach ($this->items as $item) {
@@ -156,5 +156,3 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

@@ -8,9 +8,6 @@
 
 namespace ManiaLivePlugins\eXpansion\NetStat;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeFloat;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
-
 /**
  * Description of MetaData
  *
@@ -25,8 +22,6 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setName("Tool: Network lag");
         $this->setDescription("Provides /adm lag command, for fullstack latency");
         $this->setGroups(array('Tools'));
-
-        $config = Config::getInstance();
     }
 
 }

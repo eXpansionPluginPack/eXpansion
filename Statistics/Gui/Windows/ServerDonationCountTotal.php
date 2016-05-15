@@ -8,5 +8,3 @@ class ServerDonationCountTotal extends ServerDonationCount
 
 
 }
-
-?>

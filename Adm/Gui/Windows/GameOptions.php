@@ -2,12 +2,12 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted as Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
-use \Maniaplanet\DedicatedServer\Structures\GameInfos;
+use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class GameOptions extends Window
 {

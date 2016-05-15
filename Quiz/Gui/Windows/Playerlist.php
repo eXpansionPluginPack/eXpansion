@@ -2,24 +2,20 @@
 
 namespace ManiaLivePlugins\eXpansion\Quiz\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
-use ManiaLivePlugins\eXpansion\Quiz\Gui\Controls\Playeritem;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Quiz\Gui\Controls\Playeritem;
 
 class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $pager;
+    protected $pager;
 
-    private $connection;
+    protected $connection;
 
-    private $storage;
+    protected $storage;
 
-    private $items = array();
+    protected $items = array();
 
     public static $mainPlugin;
 
@@ -32,7 +28,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->addComponent($this->pager);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setPosition(1);
@@ -43,7 +39,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
      *
      * @param \ManiaLivePlugins\eXpansion\Quiz\Structures\QuizPlayer[] $players
      */
-    function setData($players)
+
+    public function setData($players)
     {
 
         foreach ($this->items as $item)
@@ -70,21 +67,21 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onShow();
     }
 
-    function addPoint($login, $target)
+    public function addPoint($login, $target)
     {
         self::$mainPlugin->addPoint($login, $target);
         $this->setData(self::$mainPlugin->getPlayers());
         $this->RedrawAll();
     }
 
-    function removePoint($login, $target)
+    public function removePoint($login, $target)
     {
         self::$mainPlugin->removePoint($login, $target);
         $this->setData(self::$mainPlugin->getPlayers());
         $this->RedrawAll();
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->connection = null;
         $this->storage = null;
@@ -97,5 +94,3 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

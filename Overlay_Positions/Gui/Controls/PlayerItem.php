@@ -2,11 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Overlay_Positions\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
-use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
-use \ManiaLib\Utils\Formatting;
-use ManiaLivePlugins\eXpansion\Gui\Gui;
+use ManiaLib\Utils\Formatting;
 
 class PlayerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
@@ -15,7 +11,7 @@ class PlayerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $label_index, $label_nickname, $label_time, $label_diff, $label_points;
     protected $frame;
 
-    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player, $login, $gamemode, $sizeX)
+    public function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer $player, $login, $gamemode, $sizeX)
     {
         $sizeY = 4.5;
 
@@ -132,14 +128,14 @@ class PlayerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setSize($sizeX, $sizeY);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->erase();
     }
 
 // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
         $this->erase();
     }
@@ -148,7 +144,7 @@ class PlayerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         $this->destroyComponents();
         parent::destroy();

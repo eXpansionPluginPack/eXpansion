@@ -5,8 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLive\Data\Storage;
-use ManiaLive\Gui\Control;
 use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
@@ -37,7 +37,7 @@ class PlainPanel extends Widget
     /**
      * @var Button
      */
-    private $layer;
+    protected $layer;
 
     /** @var Storage */
     public $storage;
@@ -156,7 +156,7 @@ class PlainPanel extends Widget
         $this->bgFirst->setPosY((-4 * $nb) - 3);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
@@ -171,7 +171,7 @@ class PlainPanel extends Widget
         $this->layer->setPosition($this->sizeX - 6, -2);
     }
 
-    function update()
+    public function update()
     {
         foreach ($this->items as $item)
             $item->destroy();
@@ -223,7 +223,7 @@ class PlainPanel extends Widget
         $this->timeScript->setParam("playerNicks", $nickData);
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item)
             $item->destroy();
@@ -236,5 +236,3 @@ class PlainPanel extends Widget
         parent::destroy();
     }
 }
-
-?>

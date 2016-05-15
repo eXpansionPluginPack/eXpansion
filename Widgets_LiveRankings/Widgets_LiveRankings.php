@@ -189,11 +189,9 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         Gui\Widgets\LivePanel2::Erase($login);
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         Gui\Widgets\LivePanel::EraseAll();
         Gui\Widgets\LivePanel2::EraseAll();
     }
 }
-
-?>

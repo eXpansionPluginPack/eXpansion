@@ -79,9 +79,9 @@ class ColorParser extends \ManiaLib\Utils\Singleton
      * $this->registerCode("server", Config::getInstance(), "Color_server");
      *
      * @param String $token The key for the color code
-     * @param Config $obj   The configuration object that contains the variable to use(allows the color code to be
+     * @param Config $obj The configuration object that contains the variable to use(allows the color code to be
      *                      changed live)
-     * @param String $key   The key in the object that contains this color code
+     * @param String $key The key in the object that contains this color code
      */
     public function registerCode($token, $obj, $key)
     {

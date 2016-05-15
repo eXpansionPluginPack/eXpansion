@@ -23,10 +23,8 @@
 namespace ManiaLivePlugins\eXpansion\Gui\Structures\Config;
 
 
-use ManiaLib\Utils\Singleton;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeFloat;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\MultiField;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 class QuadConfigVariable extends MultiField

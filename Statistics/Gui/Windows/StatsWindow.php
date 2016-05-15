@@ -18,5 +18,3 @@ abstract class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Pager
     }
 
 }
-
-?>

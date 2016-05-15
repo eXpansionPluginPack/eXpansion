@@ -2,20 +2,20 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_LocalScores\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Widgets_Record\Config;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
+use ManiaLivePlugins\eXpansion\Widgets_Record\Config;
 
 
 class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $bg, $bg2;
-    private $nick;
-    private $label;
-    private $time;
-    private $frame;
+    protected $bg, $bg2;
+    protected $nick;
+    protected $label;
+    protected $time;
+    protected $frame;
 
-    function __construct($index, Record $record, $highlite = false)
+    public function __construct($index, Record $record, $highlite = false)
     {
         $sizeX = 38;
         $sizeY = 4;
@@ -90,7 +90,7 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setAlign("center", "top");
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
@@ -106,4 +106,3 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 }
 
-?>

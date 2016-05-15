@@ -11,11 +11,12 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
     public static $mainPlugin;
-    private $userLanguage = "en";
+    protected $userLanguage = "en";
     protected $elements = array();
     protected $frame;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $this->setTitle("Frequently asked questions");
         $this->frame = new \ManiaLive\Gui\Controls\Frame(6, -4);
@@ -24,14 +25,16 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 
-    public function setLanguage($language) {
+    public function setLanguage($language)
+    {
         $this->userLanguage = "en";
         if (in_array($language, \ManiaLivePlugins\eXpansion\Faq\Faq::$availableLanguages)) {
             $this->userLanguage = $language;
         }
     }
 
-    public function setTopic($topic) {
+    public function setTopic($topic)
+    {
         $this->frame->clearComponents();
         foreach ($this->elements as $elem) {
             $elem->destroy();
@@ -44,8 +47,7 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             }
             $file = file_get_contents(dirname(dirname(__DIR__)) . "/Topics/" . $this->userLanguage . "/" . $topic . ".txt");
             $this->parse($file);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $file = file_get_contents(dirname(dirname(__DIR__)) . "/Topics/" . $this->userLanguage . "/" . "toc.txt");
             $this->parse($file);
         }
@@ -54,7 +56,8 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    public function parse($file) {
+    public function parse($file)
+    {
         $data = explode("\n", $file);
         $topic = true;
         $x = 0;
@@ -67,10 +70,9 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             }
             // match #, which marks a text to be rendered as a header
             if (preg_match('/^\#/', trim($line))) {
-                $this->elements[ $x ] = new \ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Header($line);
-            }
-            else {
-                $this->elements[ $x ] = new \ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Line(trim($line));
+                $this->elements[$x] = new \ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Header($line);
+            } else {
+                $this->elements[$x] = new \ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Line(trim($line));
             }
 
             $matches = array();
@@ -78,12 +80,12 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             //preg_match('/\!.*\|(.*)\|(.*)/', trim($line), $matches);
 
             if (sizeof($matches) == 3) {
-                $this->elements[ $x ]->setText(trim($matches[2]));
-                $this->elements[ $x ]->setTopicLink($matches[1]);
+                $this->elements[$x]->setText(trim($matches[2]));
+                $this->elements[$x]->setTopicLink($matches[1]);
             }
             if (substr_count($line, "\t")) {
                 $indent = substr_count($line, "\t");
-                $this->elements[ $x ]->setBlock($indent);
+                $this->elements[$x]->setBlock($indent);
             }
             $x++;
         }

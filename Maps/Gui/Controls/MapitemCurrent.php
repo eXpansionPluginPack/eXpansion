@@ -2,16 +2,10 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
-use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
-use \ManiaLib\Utils\Formatting;
-use ManiaLivePlugins\eXpansion\Gui\Gui;
-
 class MapitemCurrent extends Mapitem
 {
 
-    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap $sortableMap, $controller, $isAdmin, $isHistory, $widths, $sizeX)
+    public function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap $sortableMap, $controller, $isAdmin, $isHistory, $widths, $sizeX)
     {
         parent::__construct($indexNumber, $login, $sortableMap, $controller, $isAdmin, $isHistory, $widths, $sizeX);
         $style = "TextTitle2Blink";
@@ -40,6 +34,4 @@ class MapitemCurrent extends Mapitem
     }
 
 }
-
-?>
 

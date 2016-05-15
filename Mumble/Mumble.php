@@ -3,8 +3,6 @@
 namespace ManiaLivePlugins\eXpansion\Mumble;
 
 use ManiaLive\Application\ErrorHandling;
-use ManiaLive\Utilities\Console;
-use ManiaLivePlugins\eXpansion\Mumble\Config;
 
 class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {

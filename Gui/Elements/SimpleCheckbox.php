@@ -3,7 +3,6 @@
 namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
-use ManiaLive\Gui\ActionHandler;
 
 class SimpleCheckbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 {

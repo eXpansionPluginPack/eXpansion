@@ -15,5 +15,3 @@ class Config extends \ManiaLib\Utils\Singleton
     public $juke_newmaps = true;  // whaever newly added maps should be put to jukebox
 
 }
-
-?>

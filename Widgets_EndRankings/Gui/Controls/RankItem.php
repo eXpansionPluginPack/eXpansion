@@ -11,7 +11,7 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $time;
     protected $frame;
 
-    function __construct($index, $rank)
+    public function __construct($index, $rank)
     {
         $sizeX = 36;
         $sizeY = 3;
@@ -50,7 +50,7 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->sizeY = $sizeY;
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
@@ -63,6 +63,3 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>
-

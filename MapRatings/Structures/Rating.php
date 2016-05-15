@@ -16,5 +16,3 @@ class Rating extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
     }
 
 }
-
-?>

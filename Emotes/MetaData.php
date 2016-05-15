@@ -16,7 +16,8 @@ namespace ManiaLivePlugins\eXpansion\Emotes;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-    public function onBeginLoad() {
+    public function onBeginLoad()
+    {
         parent::onBeginLoad();
         $this->setName("Chat: Emotes");
         $this->setDescription("Provides lot of chat commands for players to emote");

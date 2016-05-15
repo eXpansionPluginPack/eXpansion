@@ -84,7 +84,6 @@ class Edge extends Widget
         $this->_windowFrame->addComponent($this->quad2);
 
 
-
         $this->_minButton = new Quad(5.5, 5.5);
         $this->_minButton->setAlign("left", "top");
         $this->_minButton->setId("minimizeButton");

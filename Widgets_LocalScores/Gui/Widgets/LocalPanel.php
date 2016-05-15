@@ -6,5 +6,3 @@ class LocalPanel extends PlainPanel
 {
 
 }
-
-?>

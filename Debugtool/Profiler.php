@@ -23,7 +23,6 @@
 namespace ManiaLivePlugins\eXpansion\Debugtool;
 
 
-use ManiaLive\Application\Event as mainEvent;
 use ManiaLive\Application\ApplicationListener;
 use ManiaLive\Data\Storage;
 

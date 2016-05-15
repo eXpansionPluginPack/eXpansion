@@ -3,7 +3,6 @@
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use ManiaLivePlugins\eXpansion\Gui\Elements\SimpleCheckbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
 /**

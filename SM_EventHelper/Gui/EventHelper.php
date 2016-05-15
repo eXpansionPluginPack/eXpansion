@@ -19,7 +19,6 @@
 
 namespace ManiaLivePlugins\eXpansion\SM_EventHelper\Gui;
 
-use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget;
 
 /**

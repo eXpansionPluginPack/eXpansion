@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TeamPlayerScores;
 
 use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
-use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 use ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj;
 use ManiaLivePlugins\eXpansion\Widgets_TeamPlayerScores\Gui\Widgets\PlayerScoreWidget;
 use ManiaLivePlugins\eXpansion\Widgets_TeamPlayerScores\Structures\PlayerScore;

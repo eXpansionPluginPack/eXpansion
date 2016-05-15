@@ -42,7 +42,7 @@ class PlayerStatus extends \Maniaplanet\DedicatedServer\Structures\AbstractStruc
     /**
      *
      * @param \ManiaLive\Data\Player $player
-     * @param mixed                  $status
+     * @param mixed $status
      */
     public function __construct(\ManiaLive\Data\Player $player)
     {

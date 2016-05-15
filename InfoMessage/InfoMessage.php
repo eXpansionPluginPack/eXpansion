@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\InfoMessage;
 
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Helpers\TimeConversion;
-use ManiaLivePlugins\eXpansion\InfoMessage\Config;
 
 class InfoMessage extends ExpPlugin
 {
@@ -12,12 +11,12 @@ class InfoMessage extends ExpPlugin
     /** @var Config */
     private $config;
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
         $this->enableTickerEvent();
     }
 
-    function onTick()
+    public function onTick()
     {
         $this->config = Config::getInstance();
 

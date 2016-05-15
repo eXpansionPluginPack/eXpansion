@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\ESportsManager\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\ESportsManager\ESportsManager;
+use ManiaLivePlugins\eXpansion\ESportsManager\ESportsManager;
 
 /**
  *

@@ -7,12 +7,12 @@ use ManiaLivePlugins\eXpansion\Notifications\Gui\Controls\Item;
 class Panel2 extends \ManiaLive\Gui\Window
 {
 
-    private $frame;
+    protected $frame;
 
     /**
      * @var \ManiaLive\Data\Storage
      */
-    private $storage;
+    protected $storage;
 
     protected function onConstruct()
     {
@@ -23,7 +23,7 @@ class Panel2 extends \ManiaLive\Gui\Window
         $this->addComponent($this->frame);
     }
 
-    function setMessages(array $messages)
+    public function setMessages(array $messages)
     {
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->frame->clearComponents();
@@ -52,11 +52,4 @@ class Panel2 extends \ManiaLive\Gui\Window
         }
     }
 
-    function destroy()
-    {
-        parent::destroy();
-    }
-
 }
-
-?>

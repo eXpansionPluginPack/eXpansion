@@ -2,12 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Database\Gui\Controls;
 
-use ManiaLib\Gui\Elements\Icons64x64_1;
 use ManiaLib\Gui\Elements\Label;
-use ManiaLib\Gui\Elements\Quad;
-use ManiaLib\Gui\Layouts\Line;
-use ManiaLive\Gui\Control;
-use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
@@ -30,10 +26,10 @@ class DbTable extends Control
 
     /**
      *
-     * @param int    $indexNumber
+     * @param int $indexNumber
      * @param string $settingName
-     * @param mixed  $value
-     * @param int    $sizeX
+     * @param mixed $value
+     * @param int $sizeX
      */
     function __construct($indexNumber, $tableName, $sizeX)
     {

@@ -3,10 +3,10 @@
 namespace ManiaLivePlugins\eXpansion\PersonalMessages;
 
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Core\Config;
 use ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection;
 use ManiaLivePlugins\eXpansion\PersonalMessages\Gui\Widgets\MessagesPanel;
-use ManiaLivePlugins\eXpansion\Core\Config;
-use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -51,7 +51,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->onPlayerConnect($login, true);
     }
 
-    function onPlayerConnect($login, $isSpectator)
+    public function onPlayerConnect($login, $isSpectator)
     {
         $info = Gui\Widgets\MessagesPanel::Create($login);
         $info->setSize(100, 6);
@@ -78,7 +78,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window->show();
     }
 
-    function chatSendPersonalMessage($login, $params = false)
+    public function chatSendPersonalMessage($login, $params = false)
     {
         if ($params === false) {
             $this->eXpChatSendServerMessage($this->msg_help, $login);
@@ -121,7 +121,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function sendPm($login, $target)
+    public function sendPm($login, $target)
     {
         try {
 
@@ -155,7 +155,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function adminChat($login, $message)
+    public function adminChat($login, $message)
     {
         $message = implode(" ", $message);
 
@@ -203,7 +203,7 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         MessagesPanel::EraseAll();
         AdminGroups::removeAdminCommand($this->cmd_chat);
@@ -211,5 +211,3 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
 }
-
-?>

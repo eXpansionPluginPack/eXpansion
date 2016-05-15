@@ -2,35 +2,34 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Controls;
 
+use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
-use \ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $bg;
+    protected $bg;
 
-    private $mapNick;
+    protected $mapNick;
 
-    private $addButton;
+    protected $addButton;
 
-    private $deleteButton;
+    protected $deleteButton;
 
-    private $label;
+    protected $label;
 
-    private $time;
+    protected $time;
 
-    private $addMapAction;
+    protected $addMapAction;
 
-    private $deleteActionf;
+    protected $deleteActionf;
 
-    private $deleteAction;
+    protected $deleteAction;
 
-    private $frame;
+    protected $frame;
 
-    function __construct($indexNumber, $filename, $controller, $gbx, $login, $sizeX)
+    public function __construct($indexNumber, $filename, $controller, $gbx, $login, $sizeX)
     {
         $sizeY = 6;
 
@@ -132,10 +131,10 @@ class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
-        ActionHandler::getInstance()->deleteAction($this->deleteAction);
+
     }
 
     /*
@@ -144,6 +143,7 @@ class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     function erase()
     {
+        ActionHandler::getInstance()->deleteAction($this->deleteAction);
         $this->frame->clearComponents();
         $this->frame->destroy();
         $this->addButton->destroy();

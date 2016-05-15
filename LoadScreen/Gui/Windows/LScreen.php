@@ -4,16 +4,15 @@ namespace ManiaLivePlugins\eXpansion\LoadScreen\Gui\Windows;
 
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLive\Gui\Window;
-use ManiaLivePlugins\eXpansion\LoadScreen\Config;
 
 class LScreen extends Window
 {
 
     protected $frame;
 
-    private $xml;
+    protected $xml;
 
-    private $quad;
+    protected $quad;
 
     protected function onConstruct()
     {
@@ -69,7 +68,7 @@ class LScreen extends Window
         $this->quad->setImage($url, true);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();
@@ -77,4 +76,3 @@ class LScreen extends Window
 
 }
 
-?>

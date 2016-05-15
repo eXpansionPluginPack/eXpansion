@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\ServerStatistics\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\ServerStatistics\Gui\Controls\InfoLine;
 
 /**
@@ -15,14 +15,14 @@ class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     /** @var \ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics */
     public static $mainPlugin;
-    private $frame;
-    private $contentFrame;
-    private $closeButton;
-    private $actions;
-    private $btn1, $btn2, $btn3;
-    private $btnDb;
+    protected $frame;
+    protected $contentFrame;
+    protected $closeButton;
+    protected $actions;
+    protected $btn1, $btn2, $btn3;
+    protected $btnDb;
 
-    function onConstruct()
+    public function onConstruct()
     {
         parent::onConstruct();
         $login = $this->getRecipient();
@@ -91,19 +91,19 @@ class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     }
 
-    function close()
+    public function close()
     {
         $this->Erase($this->getRecipient());
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->frame->setPosition(2, -($this->sizeY - 6));
         $this->closeButton->setPosition($this->sizeX - $this->closeButton->sizeX, -($this->sizeY - 6));
     }
 
-    function destroy()
+    public function destroy()
     {
 
         unset($this->actions);
@@ -119,5 +119,3 @@ class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

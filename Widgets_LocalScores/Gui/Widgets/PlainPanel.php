@@ -5,8 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LocalScores\Gui\Widgets;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLive\Data\Storage;
-use ManiaLive\Gui\Control;
 use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle;
@@ -76,7 +76,7 @@ class PlainPanel extends Widget
         $this->setSize($sizeX, $sizeY);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
@@ -87,7 +87,7 @@ class PlainPanel extends Widget
         $this->frame->setPosition(($this->sizeX / 2) + 1, -5);
     }
 
-    function update()
+    public function update()
     {
         foreach ($this->items as $item)
             $item->destroy();
@@ -117,7 +117,7 @@ class PlainPanel extends Widget
         }
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item)
             $item->destroy();
@@ -131,5 +131,3 @@ class PlainPanel extends Widget
     }
 
 }
-
-?>

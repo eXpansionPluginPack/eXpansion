@@ -24,7 +24,6 @@ use ManiaLib\Gui\Layouts\Line;
 use ManiaLive\Data\Storage;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLive\Utilities\Validation;
-use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use ManiaLivePlugins\eXpansion\MapSuggestion\MapSuggestion;
 
@@ -36,20 +35,20 @@ use ManiaLivePlugins\eXpansion\MapSuggestion\MapSuggestion;
 class MapWish extends Window
 {
 
-    private $frame;
+    protected $frame;
 
     /** @var string $mxid */
-    private $mxid = "";
-    private $inputbox_mxid;
-    private $inputbox_description;
-    private $button_send;
-    private $button_cancel;
-    private $fromText = "";
+    protected $mxid = "";
+    protected $inputbox_mxid;
+    protected $inputbox_description;
+    protected $button_send;
+    protected $button_cancel;
+    protected $fromText = "";
 
     /**
      * @var MapSuggestion
      */
-    private $plugin;
+    protected $plugin;
 
     function onConstruct()
     {

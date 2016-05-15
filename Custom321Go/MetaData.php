@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Custom321Go;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\HashList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**

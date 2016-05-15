@@ -182,7 +182,7 @@ class Maps extends ExpPlugin
      * showRec($login, $map)
      *
      * @param string $login
-     * @param Map    $map
+     * @param Map $map
      */
     public function showRec($login, $map)
     {
@@ -211,7 +211,7 @@ class Maps extends ExpPlugin
     /**
      *    is a fix for storm gamemodes, which all doesn't emit onBeginMatch event.
      */
-    function LibXmlRpc_BeginMap()
+    public function LibXmlRpc_BeginMap()
     {
         $this->is_onEndMatch = false;
 
@@ -221,7 +221,7 @@ class Maps extends ExpPlugin
         }
     }
 
-    function onBeginMatch()
+    public function onBeginMatch()
     {
         $this->is_onEndMatch = false;
         if ($this->is_onBeginMatch) {
@@ -513,8 +513,8 @@ class Maps extends ExpPlugin
      * Makes a player queu a map
      *
      * @param      $login       Player that wishes to queu the map
-     * @param Map  $map         the map to queu
-     * @param bool $isTemp      will te map be deleted after being playerd
+     * @param Map $map the map to queu
+     * @param bool $isTemp will te map be deleted after being playerd
      */
     public function playerQueueMap($login, Map $map, $isTemp = false)
     {
@@ -567,8 +567,8 @@ class Maps extends ExpPlugin
      * Check if a map can be queud by a player
      *
      * @param      $login             The player that tries to queu the map
-     * @param Map  $map               the map to be queud
-     * @param bool $sendMessages      should an error message be sent to the player
+     * @param Map $map the map to be queud
+     * @param bool $sendMessages should an error message be sent to the player
      *
      * @return bool if the map can be added
      */
@@ -620,9 +620,9 @@ class Maps extends ExpPlugin
      * Queus the map if possible
      *
      * @param      $login       The player that wants to queu the map
-     * @param Map  $map         The map to be queud
-     * @param bool $isTemp      will the map be deleted after
-     * @param bool $check       should we check if adding the map is possible
+     * @param Map $map The map to be queud
+     * @param bool $isTemp will the map be deleted after
+     * @param bool $check should we check if adding the map is possible
      */
     public function queueMap($login, Map $map, $isTemp = false, $check = true)
     {
@@ -691,7 +691,7 @@ class Maps extends ExpPlugin
      * Changes the next map and slips the current map
      *
      * @param     $login   player that initiate the goto map
-     * @param Map $map     The next map
+     * @param Map $map The next map
      */
     public function gotoMap($login, Map $map)
     {
@@ -805,8 +805,8 @@ class Maps extends ExpPlugin
     /**
      * When the map list is modified refresh the queu adn update the widgets & windows
      *
-     * @param int  $curMapIndex
-     * @param int  $nextMapIndex
+     * @param int $curMapIndex
+     * @param int $nextMapIndex
      * @param bool $isListModified
      */
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified)
@@ -847,7 +847,7 @@ class Maps extends ExpPlugin
     /**
      * Loads map history when expansion starts
      */
-    function preloadHistory()
+    public function preloadHistory()
     {
         $mapList = $this->connection->getMapList(-1, 0);
         $mapCount = count($mapList);
@@ -881,7 +881,7 @@ class Maps extends ExpPlugin
      * @param $login
      * @param $params
      */
-    function chat_removeMap($login, $params)
+    public function chat_removeMap($login, $params)
     {
         if (is_numeric($params[0])) {
             if (is_object($this->storage->maps[$params[0]])) {
@@ -904,7 +904,7 @@ class Maps extends ExpPlugin
      * @param $login
      * @param $params
      */
-    function chat_eraseMap($login, $params)
+    public function chat_eraseMap($login, $params)
     {
         try {
             $this->eraseMap($login, $this->storage->currentMap);
@@ -918,7 +918,7 @@ class Maps extends ExpPlugin
      *
      * @param null $login
      */
-    function chat_nextMap($login = null)
+    public function chat_nextMap($login = null)
     {
         if ($login != null) {
             if (count($this->queue) > 0) {
@@ -940,7 +940,7 @@ class Maps extends ExpPlugin
      * @param $login
      * @param $map
      */
-    function dropQueue($login, $map)
+    public function dropQueue($login, $map)
     {
         $i = 0;
         foreach ($this->queue as $queue) {
@@ -972,7 +972,7 @@ class Maps extends ExpPlugin
      *
      * @param null $login
      */
-    function chat_dropQueue($login = null)
+    public function chat_dropQueue($login = null)
     {
         if ($login == null) return;
 
@@ -1009,7 +1009,7 @@ class Maps extends ExpPlugin
      *
      * @param $login
      */
-    function emptyWishesGui($login)
+    public function emptyWishesGui($login)
     {
         $this->emptyWishes($login);
         $this->showJukeList($login);
@@ -1020,7 +1020,7 @@ class Maps extends ExpPlugin
      *
      * @param $login
      */
-    function emptyWishes($login)
+    public function emptyWishes($login)
     {
         if (!AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_ADMIN)) {
             $this->eXpChatSendServerMessage(AdminGroups::getNoPermissionMsg(), $login);
@@ -1044,7 +1044,7 @@ class Maps extends ExpPlugin
      *
      * @param $login
      */
-    function replayMapInstant($login)
+    public function replayMapInstant($login)
     {
         $this->instantReplay = true;
         foreach (NextMapWidget::getAll() as $widget) {
@@ -1059,7 +1059,7 @@ class Maps extends ExpPlugin
      *
      * @param $login
      */
-    function replayScoreReset($login)
+    public function replayScoreReset($login)
     {
         $this->instantReplay = true;
         foreach (NextMapWidget::getAll() as $widget) {
@@ -1074,7 +1074,7 @@ class Maps extends ExpPlugin
      *
      * @param $login
      */
-    function replayMap($login)
+    public function replayMap($login)
     {
         $player = $this->storage->getPlayerObject($login);
 
@@ -1226,7 +1226,7 @@ class Maps extends ExpPlugin
         }
     }
 
-    function showMapInfo($login, $uid = null)
+    public function showMapInfo($login, $uid = null)
     {
         if ($uid == null) {
             $uid = $this->storage->currentMap->uId;
@@ -1238,7 +1238,7 @@ class Maps extends ExpPlugin
         $window->show($login);
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         CurrentMapWidget::EraseAll();
         NextMapWidget::EraseAll();
@@ -1258,5 +1258,3 @@ class Maps extends ExpPlugin
         $action->deleteAction($this->actionShowMapList);
     }
 }
-
-?>

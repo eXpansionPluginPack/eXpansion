@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Snow;
 
-use ManiaLivePlugins\eXpansion\Snow\Config;
-
 class Snow extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
     private $wasWarmup = false;
@@ -41,5 +39,3 @@ class Snow extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         parent::eXpOnUnload();
     }
 }
-
-?>

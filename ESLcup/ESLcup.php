@@ -251,9 +251,9 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      *
      *
-     * @param int    $playerUid
+     * @param int $playerUid
      * @param string $login
-     * @param int    $timeOrScore
+     * @param int $timeOrScore
      *
      * @return null
      */

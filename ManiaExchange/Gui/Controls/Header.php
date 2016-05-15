@@ -2,15 +2,12 @@
 
 namespace ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
-
 class Header extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $label;
-    private $time;
-    private $frame;
+    protected $label;
+    protected $time;
+    protected $frame;
 
     public function __construct()
     {
@@ -77,7 +74,7 @@ class Header extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
@@ -92,6 +89,3 @@ class Header extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>
-

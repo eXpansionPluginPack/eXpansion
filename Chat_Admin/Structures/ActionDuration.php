@@ -20,7 +20,8 @@ class ActionDuration extends \Maniaplanet\DedicatedServer\Structures\AbstractStr
     public $action;
     public $stamp;
 
-    public function __construct($login, $action, $duration) {
+    public function __construct($login, $action, $duration)
+    {
         $this->login = $login;
         $this->action = $action;
         $this->stamp = strtotime($duration);

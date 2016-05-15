@@ -24,5 +24,3 @@ class ServerDonationAmount extends StatsWindow
     }
 
 }
-
-?>

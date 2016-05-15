@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Debugtool\Gui;
 
-use ManiaLivePlugins\eXpansion\Core\Core;
-
 /**
  * Description of widget_netstat
  *

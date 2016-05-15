@@ -11,5 +11,3 @@ class Config extends \ManiaLib\Utils\Singleton
     public $removeTresholdPercentage = 30;    // map rating value for removal
 
 }
-
-?>

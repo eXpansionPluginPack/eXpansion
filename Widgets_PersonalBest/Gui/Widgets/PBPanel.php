@@ -87,7 +87,7 @@ class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->setName("Personal Best Widget");
     }
 
-    function setRecord($record, $rank, $rankTotal)
+    public function setRecord($record, $rank, $rankTotal)
     {
         $this->record = $record;
         if ($record == null) {
@@ -119,12 +119,8 @@ class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         }
     }
 
-    function onResize($oldX, $oldY)
-    {
-        parent::onResize($oldX, $oldY);
-    }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();

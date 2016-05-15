@@ -2,11 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Widgets;
 
-use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Flow;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLive\Gui\Window;
-use ManiaLivePlugins\eXpansion\Gui\Config;
 
 class Preloader extends Window
 {

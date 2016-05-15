@@ -5,7 +5,6 @@ namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
 use ManiaLib\Gui\Elements\Icons128x128_1;
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
-use ManiaLive\Gui\Control;
 use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpListSetting;
 use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpSettings;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
@@ -14,6 +13,7 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\HashList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
@@ -38,7 +38,7 @@ class ExpSetting extends Control
 
     protected $var;
 
-    protected $win;
+    private $win;
 
     function __construct($indexNumber, Variable $var, $login, ExpSettings $win)
     {
@@ -204,6 +204,3 @@ class ExpSetting extends Control
     }
 
 }
-
-?>
-/

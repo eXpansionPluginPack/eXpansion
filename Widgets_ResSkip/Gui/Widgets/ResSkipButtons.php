@@ -11,7 +11,7 @@ class ResSkipButtons extends Widget
     /**
      * @var WidgetButton
      */
-    public $btn_res, $btn_skip, $btn_fav, $edgeWidget;
+    protected $btn_res, $btn_skip, $btn_fav, $edgeWidget;
 
     protected function eXpOnBeginConstruct()
     {
@@ -104,11 +104,6 @@ class ResSkipButtons extends Widget
     {
         $url = 'http://reaby.kapsi.fi/ml/addfavourite.php?login=' . rawurldecode($login);
         $this->btn_fav->setManialink($url);
-    }
-
-    function destroy()
-    {
-        parent::destroy();
     }
 
 }

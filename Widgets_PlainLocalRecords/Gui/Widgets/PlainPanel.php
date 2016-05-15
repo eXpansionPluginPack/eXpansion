@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_PlainLocalRecords\Gui\Widgets;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLive\Data\Storage;
-use ManiaLive\Gui\Control;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
@@ -33,7 +33,7 @@ class PlainPanel extends Widget
     /**
      * @var Button
      */
-    private $layer;
+    protected $layer;
 
     /** @var Storage */
     public $storage;

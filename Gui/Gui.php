@@ -6,7 +6,6 @@ use Exception;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLive\Gui\GuiHandler;
 use ManiaLive\Utilities\Logger;
-use ManiaLivePlugins\eXpansion\Core\i18n\Message;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Gui\Widgets as WConfig;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\HudPanel;

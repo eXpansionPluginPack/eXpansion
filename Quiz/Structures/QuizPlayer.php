@@ -17,5 +17,3 @@ class QuizPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
     }
 
 }
-
-?>

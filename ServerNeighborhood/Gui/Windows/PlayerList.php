@@ -4,10 +4,9 @@ namespace ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
-use ManiaLivePlugins\eXpansion\ServerNeighborhood\Server;
-
+use ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Controls\PlayerItem;
 use ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Controls\ServerItem;
-use \ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Controls\PlayerItem;
+use ManiaLivePlugins\eXpansion\ServerNeighborhood\Server;
 
 /**
  * Description of ServerList
@@ -17,9 +16,9 @@ use \ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Controls\PlayerItem;
 class PlayerList extends Window
 {
 
-    private $pager;
-    private $items = array();
-    private $serverItem;
+    protected $pager;
+    protected $items = array();
+    protected $serverItem;
 
     protected function onConstruct()
     {
@@ -74,5 +73,3 @@ class PlayerList extends Window
     }
 
 }
-
-?>

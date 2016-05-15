@@ -15,7 +15,7 @@ interface Listener extends \ManiaLive\Event\Listener
      * Callback for dedimania.GetChallengeRecords
      *
      * $data =  array {'UId' => string, 'ServerMaxRank' => int, 'AllowedGameModes' => string (list of string, comma
-     * separated), 
+     * separated),
      *                'Records' => array of struct {'Login': string, 'NickName': string, 'Best': int, 'Rank': int,
      *                'MaxRank': int, 'Checks': string (list of int, comma separated), 'Vote': int},
      *            'Players' => array of {'Login': string, 'MaxRank': int}, 'TotalRaces' => int, 'TotalPlayers' => int

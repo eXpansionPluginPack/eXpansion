@@ -13,11 +13,11 @@ class CpProgress extends Widget
 {
 
     protected $clockBg;
-    private $gauge1;
-    private $script;
+    protected $gauge1;
+    protected $script;
 
     /** @var Storage; */
-    private $storage;
+    protected $storage;
 
     protected function eXpOnBeginConstruct()
     {
@@ -47,7 +47,7 @@ class CpProgress extends Widget
         $this->setName("Checkpoint progress Widget");
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         $this->storage = null;

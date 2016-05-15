@@ -2,22 +2,15 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Ratiobutton;
-
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls\RankItem;
-
-use ManiaLive\Gui\ActionHandler;
 
 class RanksWindow_old extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $pager;
-    private $connection;
-    private $storage;
-    private $items = array();
+    protected $pager;
+    protected $connection;
+    protected $storage;
+    protected $items = array();
     public static $ranks;
     public static $nbrec;
     public static $top3;
@@ -33,7 +26,7 @@ class RanksWindow_old extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->pager);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 14);
@@ -41,12 +34,12 @@ class RanksWindow_old extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->setPosition(4, -5);
     }
 
-    function onShow()
+    public function onShow()
     {
         $this->populateList();
     }
 
-    function populateList()
+    public function populateList()
     {
 
         foreach ($this->items as $item)
@@ -66,7 +59,7 @@ class RanksWindow_old extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->connection = null;
         $this->storage = null;
@@ -80,5 +73,3 @@ class RanksWindow_old extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

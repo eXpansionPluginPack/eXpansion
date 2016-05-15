@@ -24,5 +24,3 @@ class Winners extends StatsWindow
     }
 
 }
-
-?>

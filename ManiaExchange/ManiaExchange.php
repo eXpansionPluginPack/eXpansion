@@ -143,7 +143,7 @@ class ManiaExchange extends ExpPlugin
      *
      * @return string
      */
-    function download($mxId, $login, $redirect)
+    public function download($mxId, $login, $redirect)
     {
         if (!is_numeric($mxId)) {
             $this->connection->chatSendServerMessage(__('"%s" is not a numeric value.', $login, $mxId), $login);
@@ -171,7 +171,7 @@ class ManiaExchange extends ExpPlugin
      * @param Curl $job
      * @param      $jobData
      */
-    function xAddMapAdmin($job, $jobData)
+    public function xAddMapAdmin($job, $jobData)
     {
         $info = $job->getCurlInfo();
         $code = $info['http_code'];
@@ -279,7 +279,7 @@ class ManiaExchange extends ExpPlugin
      * @param Curl $job
      * @param      $jobData
      */
-    function xQueue($job, $jobData)
+    public function xQueue($job, $jobData)
     {
         $info = $job->getCurlInfo();
         $code = $info['http_code'];
@@ -319,7 +319,7 @@ class ManiaExchange extends ExpPlugin
         }
     }
 
-    function mxVote($login, $mxId)
+    public function mxVote($login, $mxId)
     {
         if (!$this->config->mxVote_enable) return;
 
@@ -363,7 +363,7 @@ class ManiaExchange extends ExpPlugin
     }
 
     //function xVote($data, $code, $login, $mxId)
-    function xVote($job, $jobData)
+    public function xVote($job, $jobData)
     {
         $info = $job->getCurlInfo();
         $code = $info['http_code'];
@@ -412,12 +412,12 @@ class ManiaExchange extends ExpPlugin
         $this->connection->callVote($vote, $this->config->mxVote_ratio, ($this->config->mxVote_timeout * 1000), $this->config->mxVote_voters);
     }
 
-    function mxQueue($login, $mxId)
+    public function mxQueue($login, $mxId)
     {
         $this->download($mxId, $login, "xQueue");
     }
 
-    function onVoteUpdated($stateName, $login, $cmdName, $cmdParam)
+    public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam)
     {
         switch ($cmdParam) {
             case 'to the queue from MX?$3f3':
@@ -442,12 +442,10 @@ class ManiaExchange extends ExpPlugin
         }
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         MxWidget::EraseAll();
         MxSearch::EraseAll();
         AdminGroups::removeAdminCommand($this->cmd_add);
     }
 }
-
-?>

@@ -20,27 +20,28 @@ use oliverde8\AsynchronousJobs\Job\Curl;
 class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
     /** @var \ManiaLive\Gui\Controls\Pager */
-    private $pager;
+    protected $pager;
 
     /** @var  \Maniaplanet\DedicatedServer\Connection */
-    private $connection;
+    protected $connection;
 
     /** @var  \ManiaLive\Data\Storage */
-    private $storage;
-    private $maps;
-    private $frame;
-    private $searchframe;
-    private $inputAuthor;
-    private $inputMapName;
-    private $buttonSearch;
-    private $actionSearch;
-    private $header;
-    private $style;
-    private $lenght;
-    private $items = array();
+    protected $storage;
+    protected $maps;
+    protected $frame;
+    protected $searchframe;
+    protected $inputAuthor;
+    protected $inputMapName;
+    protected $buttonSearch;
+    protected $actionSearch;
+    protected $header;
+    protected $style;
+    protected $lenght;
+    protected $items = array();
     public $mxPlugin;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
 
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
@@ -104,7 +105,8 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->frame);
     }
 
-    function onResize($oldX, $oldY) {
+    public function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
         $this->frame->setSizeX($this->sizeX);
         $this->pager->setSize($this->sizeX - 3, $this->sizeY - 12);
@@ -112,11 +114,13 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->frame->setPosition(0, -6);
     }
 
-    public function setPlugin($plugin) {
+    public function setPlugin($plugin)
+    {
         $this->mxPlugin = $plugin;
     }
 
-    public function search($login, $trackname = "", $author = "", $style = null, $length = null) {
+    public function search($login, $trackname = "", $author = "", $style = null, $length = null)
+    {
         foreach ($this->items as $item)
             $item->erase();
 
@@ -145,8 +149,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $titlePack = $parts[0];
 
             $query = 'https://sm.mania-exchange.com/tracksearch2/search?mode=0&vm=0&trackname=' . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&mtype=' . rawurlencode($mapType) . '&priord=2&limit=100&environments=1&tracksearch&api=on&format=json';
-        }
-        else {
+        } else {
             $query = 'https://tm.mania-exchange.com/tracksearch2/search?api=on&format=json';
 
             switch ($info->titleId) {
@@ -207,7 +210,8 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
      * @param Curl $job
      * @param      $jobData
      */
-    function xSearch($job, $jobData) {
+    public function xSearch($job, $jobData)
+    {
         $info = $job->getCurlInfo();
         $code = $info['http_code'];
 
@@ -232,7 +236,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
 
         try {
-            if (! $data) {
+            if (!$data) {
                 $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "search returned no data", $this->sizeX - 6));
                 $this->redraw();
 
@@ -240,7 +244,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             }
             $json = json_decode($data, true);
 
-            if (isset($json[0]) && ! isset($json['results'])) {
+            if (isset($json[0]) && !isset($json['results'])) {
                 $newArray['results'] = $json;
                 $json = $newArray;
             }
@@ -251,7 +255,7 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
                 return;
             }
-            if (! array_key_exists("results", $json)) {
+            if (!array_key_exists("results", $json)) {
                 $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "Error: MX returned no results.", $this->sizeX - 6));
                 $this->redraw();
 
@@ -269,23 +273,22 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $x = 0;
             if (empty($this->maps)) {
                 $this->pager->addItem(new \ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo(0, "No maps found with this search terms.", $this->sizeX - 6));
-            }
-            else {
+            } else {
                 foreach ($this->maps as $map) {
-                    $this->items[ $x ] = new MxMap($x, $map, $this, $buttons, $this->sizeX - 9);
-                    $this->pager->addItem($this->items[ $x ]);
+                    $this->items[$x] = new MxMap($x, $map, $this, $buttons, $this->sizeX - 9);
+                    $this->pager->addItem($this->items[$x]);
                     $x++;
                 }
             }
 
             $this->redraw();
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             Helper::logError(ErrorHandling::computeMessage($ex));
         }
     }
 
-    protected function hookButtons($isadmin) {
+    protected function hookButtons($isadmin)
+    {
         $buttons = array();
 
         $config = Config::getInstance();
@@ -310,15 +313,18 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         return $hook->data;
     }
 
-    function addMap($login, $mapId) {
+    public function addMap($login, $mapId)
+    {
         $this->mxPlugin->addMap($login, $mapId);
     }
 
-    function mxVote($login, $mapId) {
+    public function mxVote($login, $mapId)
+    {
         $this->mxPlugin->mxVote($login, $mapId);
     }
 
-    function actionOk($login, $args) {
+    public function actionOk($login, $args)
+    {
         $style = null;
         $length = null;
         if ($args['style']) {
@@ -332,7 +338,8 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->search($login, $args['mapName'], $args['author'], $style, $length);
     }
 
-    function destroy() {
+    public function destroy()
+    {
         foreach ($this->items as $item)
             $item->erase();
 
@@ -353,5 +360,3 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::destroy();
     }
 }
-
-?>

@@ -6,8 +6,8 @@ class NetlostUpdate extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
 
     protected $clockBg;
-    private $frame, $players, $specs, $map, $author;
-    private $script;
+    protected $frame, $players, $specs, $map, $author;
+    protected $script;
 
     protected function onConstruct()
     {
@@ -22,7 +22,7 @@ class NetlostUpdate extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $this->script->setParam("players", $string);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();

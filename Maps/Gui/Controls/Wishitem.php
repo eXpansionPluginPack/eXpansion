@@ -2,10 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Controls;
 
+use ManiaLib\Utils\Formatting;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
-use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
-use \ManiaLib\Utils\Formatting;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class Wishitem extends \ManiaLivePlugins\eXpansion\Gui\Control
@@ -22,14 +21,14 @@ class Wishitem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param type                                                $indexNumber
-     * @param type                                                $login
+     * @param type $indexNumber
+     * @param type $login
      * @param \ManiaLivePlugins\eXpansion\Maps\Structures\MapWish $map
-     * @param type                                                $controller
-     * @param type                                                $isAdmin
-     * @param type                                                $sizeX
+     * @param type $controller
+     * @param type $isAdmin
+     * @param type $sizeX
      */
-    function __construct($indexNumber, $login, $map, $controller, $isAdmin, $sizeX)
+    public function __construct($indexNumber, $login, $map, $controller, $isAdmin, $sizeX)
     {
         $sizeY = 5;
 
@@ -107,7 +106,7 @@ class Wishitem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -116,7 +115,7 @@ class Wishitem extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         if (is_object($this->removeButton))
             $this->removeButton->destroy();
@@ -126,6 +125,4 @@ class Wishitem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>
 

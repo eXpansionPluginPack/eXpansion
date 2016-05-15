@@ -14,7 +14,8 @@ use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
 
-    public function onBeginLoad() {
+    public function onBeginLoad()
+    {
         parent::onBeginLoad();
         $this->setName("Core: AutoLoader");
         $this->setDescription('Autoloader, all-in-one solution for loading eXpansion easily');

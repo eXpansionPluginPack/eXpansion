@@ -2,9 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\KnockOut;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
 
 /**

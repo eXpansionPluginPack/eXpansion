@@ -10,7 +10,7 @@ use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
 class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\PlainPanel
 {
 
-    function eXpOnBeginConstruct()
+    public function eXpOnBeginConstruct()
     {
         parent::eXpOnBeginConstruct();
         $this->setName("Dedimania Panel");
@@ -20,7 +20,7 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
         $this->bg->setAction(\ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAbstract::$actionOpenRecs);
     }
 
-    function update()
+    public function update()
     {
         $this->timeScript->setParam(
             "acceptMaxPlayerRank",
@@ -84,14 +84,14 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
         }
     }
 
-    function fixDashes($string)
+    public function fixDashes($string)
     {
         $out = str_replace('--', '––', $string);
 
         return $out;
     }
 
-    function fixHyphens($string)
+    public function fixHyphens($string)
     {
         $out = str_replace('"', "'", $string);
         $out = str_replace('\\', '\\\\', $out);
@@ -101,5 +101,3 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
     }
 
 }
-
-?>

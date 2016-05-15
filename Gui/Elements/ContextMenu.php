@@ -4,12 +4,12 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLib\Gui\Elements\Label;
 use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLivePlugins\eXpansion\Gui\Control;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 use ManiaLivePlugins\eXpansion\SubMenu\SubMenu;
-use ManiaLivePlugins\eXpansion\Gui\Gui;
-use ManiaLivePlugins\eXpansion\Gui\Config;
 
 /**
  * Description of menu

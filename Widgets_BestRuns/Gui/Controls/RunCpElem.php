@@ -8,7 +8,7 @@ class RunCpElem extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $bg;
     protected $time;
 
-    function __construct($index, $time)
+    public function __construct($index, $time)
     {
         $sizeX = 15;
         $sizeY = 5;
@@ -30,13 +30,5 @@ class RunCpElem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->setSize($sizeX + 5, $sizeY);
     }
-
-    public function destroy()
-    {
-        parent::destroy();
-    }
-
+    
 }
-
-?>
-

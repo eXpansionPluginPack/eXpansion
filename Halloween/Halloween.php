@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Halloween;
 
-use ManiaLivePlugins\eXpansion\Halloween\Config;
-
 class Halloween extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
@@ -48,5 +46,3 @@ class Halloween extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
 }
-
-?>

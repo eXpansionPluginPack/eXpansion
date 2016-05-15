@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\ForceMod\Gui\Overlay;
 class LoadScreen extends \ManiaLive\Gui\Window
 {
 
-    private $quad;
+    protected $quad;
 
     protected function onConstruct()
     {

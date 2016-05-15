@@ -22,17 +22,16 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_ChatEnhancement\Gui\Widgets;
 
-use ManiaLib\Gui\Elements\UIConstructionSimple_Buttons;
 use ManiaLive\PluginHandler\PluginHandler;
+use ManiaLivePlugins\eXpansion\Chat\MetaData as ChatMetaData;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget;
-use ManiaLivePlugins\eXpansion\Chat\MetaData as ChatMetaData;
 
 class Chat extends PlainWidget
 {
 
-    private $chatLogIcon;
-    private $chatState;
+    protected $chatLogIcon;
+    protected $chatState;
 
     public function onConstruct()
     {

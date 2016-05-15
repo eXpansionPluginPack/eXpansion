@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\TMKarma\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\TMKarma\TMKarma;
+use ManiaLivePlugins\eXpansion\TMKarma\TMKarma;
 
 class Widget extends \ManiaLive\Gui\Window
 {

@@ -35,5 +35,3 @@ class Config extends \ManiaLib\Utils\Singleton
     public $tsX = 100;  // image position x in maniaplanet display units
     public $tsY = 65; // image position y in maniaplanet display units
 }
-
-?>

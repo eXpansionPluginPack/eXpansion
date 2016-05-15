@@ -6,6 +6,7 @@ use Exception;
 use ManiaLib\Utils\Formatting;
 use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
+use ManiaLivePlugins\eXpansion\Gui\Script_libraries\TextExt;
 use ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Gui\Scripts\CpPositions;
 use ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Widgets_LiveRankings;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
@@ -13,14 +14,13 @@ use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\TeamItem;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\PlainPanel;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Widgets_LocalRecords;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
-use ManiaLivePlugins\eXpansion\Gui\Script_libraries\TextExt;
 
 class PlainLivePanel extends PlainPanel
 {
 
     public static $connection;
 
-    function eXpOnBeginConstruct()
+    public function eXpOnBeginConstruct()
     {
         parent::eXpOnBeginConstruct();
         $this->setName("Live Rankings Panel");
@@ -130,7 +130,7 @@ class PlainLivePanel extends PlainPanel
             parent::setNbFields($nb);
     }
 
-    function update()
+    public function update()
     {
 
         $login = $this->getRecipient();

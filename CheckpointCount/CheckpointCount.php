@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\CheckpointCount;
 
-use \ManiaLivePlugins\eXpansion\CheckpointCount\Gui\Widgets\CPPanel;
+use ManiaLivePlugins\eXpansion\CheckpointCount\Gui\Widgets\CPPanel;
 
 class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {

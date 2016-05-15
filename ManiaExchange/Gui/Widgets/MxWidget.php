@@ -10,18 +10,18 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     /**
      * @var \Maniaplanet\DedicatedServer\Connection
      */
-    private $connection;
+    protected $connection;
 
     /** @var \ManiaLive\Data\Storage */
-    private $storage;
-    private $_windowFrame;
-    private $_mainWindow;
-    private $_minButton;
-    private $servername;
-    private $btnVisit;
-    private $btnAward;
-    private $actionVisit;
-    private $actionAward;
+    protected $storage;
+    protected $_windowFrame;
+    protected $_mainWindow;
+    protected $_minButton;
+    protected $servername;
+    protected $btnVisit;
+    protected $btnAward;
+    protected $actionVisit;
+    protected $actionAward;
 
     protected function eXpOnBeginConstruct()
     {
@@ -92,7 +92,7 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->registerScript($script);
     }
 
-    function Visit($login)
+    public function Visit($login)
     {
         $mxId = $this->getMXid($login);
         if ($mxId === false)
@@ -102,7 +102,7 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->connection->sendOpenLink($login, $link, 0);
     }
 
-    function Award($login)
+    public function Award($login)
     {
         $mxId = $this->getMXid($login);
         if ($mxId === false)
@@ -111,7 +111,7 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->connection->sendOpenLink($login, $link, 0);
     }
 
-    function getMXid($login)
+    public function getMXid($login)
     {
         $query = "http://api.mania-exchange.com/tm/tracks/" . $this->storage->currentMap->uId;
 
@@ -151,5 +151,3 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     }
 
 }
-
-?>

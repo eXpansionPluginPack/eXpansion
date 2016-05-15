@@ -19,11 +19,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Communication\Gui\Widgets;
 
-use ManiaLib\Gui\Elements\Icons128x128_1;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Script_libraries\Animation;
-use ManiaLivePlugins\eXpansion\Gui\Script_libraries\Tray;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 

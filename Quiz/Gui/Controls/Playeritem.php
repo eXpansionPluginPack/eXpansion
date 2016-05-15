@@ -6,8 +6,8 @@ use ManiaLib\Gui\Elements\Icons64x64_1;
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Line;
-use ManiaLive\Gui\Control;
 use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Quiz\Structures\QuizPlayer;
@@ -15,25 +15,25 @@ use ManiaLivePlugins\eXpansion\Quiz\Structures\QuizPlayer;
 class Playeritem extends Control
 {
 
-    private $background;
+    protected $background;
 
-    private $addpointButton;
+    protected $addpointButton;
 
-    private $removepointButton;
+    protected $removepointButton;
 
-    private $nickname;
+    protected $nickname;
 
-    private $addpointAction;
+    protected $addpointAction;
 
-    private $removeAction;
+    protected $removeAction;
 
-    private $frame;
+    protected $frame;
 
-    private $points;
+    protected $points;
 
-    private $isAdmin;
+    protected $isAdmin;
 
-    function __construct($indexNumber, QuizPlayer $player, $controller, $isAdmin, $login, $sizeX)
+    public function __construct($indexNumber, QuizPlayer $player, $controller, $isAdmin, $login, $sizeX)
     {
         $sizeY = 6;
         $this->isAdmin = $isAdmin;
@@ -113,7 +113,7 @@ class Playeritem extends Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -122,7 +122,7 @@ class Playeritem extends Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         if (is_object($this->addpointButton))
             $this->addpointButton->destroy();
@@ -136,6 +136,3 @@ class Playeritem extends Control
     }
 
 }
-
-?>
-

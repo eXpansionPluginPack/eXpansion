@@ -7,7 +7,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania\Gui\Windows;
 
-use ManiaLib\Gui\Elements\Frame;
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLive\Data\Storage;

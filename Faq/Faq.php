@@ -15,7 +15,8 @@ class Faq extends ExpPlugin
     private $msg_admin_redirect, $msg_admin_info;
     public static $availableLanguages = array();
 
-    public function eXpOnLoad() {
+    public function eXpOnLoad()
+    {
         $this->enableDedicatedEvents();
         $this->msg_admin_redirect = eXpGetMessage('Notice: a help page is displayed by an admin!');
         $this->msg_admin_info = eXpGetMessage('Notice: Displaying a help page "%1$s" to "%2$s"');
@@ -35,7 +36,8 @@ class Faq extends ExpPlugin
         }
     }
 
-    public function eXpOnReady() {
+    public function eXpOnReady()
+    {
         $this->registerChatCommand("faq", "showFaq", 0, true);
         $this->registerChatCommand("faq", "showFaq", 1, true);
         $this->registerChatCommand("faq", "showFaq", 2, true);
@@ -49,11 +51,12 @@ class Faq extends ExpPlugin
 
     }
 
-    public function showFaq($login, $topic = "toc", $recipient = null) {
+    public function showFaq($login, $topic = "toc", $recipient = null)
+    {
 
         $showTo = $login;
         if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
-            if (! empty($recipient)) {
+            if (!empty($recipient)) {
                 if (array_key_exists($recipient, $this->storage->players)) {
                     $showTo = $recipient;
                     $this->eXpChatSendServerMessage($this->msg_admin_redirect, $showTo);
@@ -69,7 +72,8 @@ class Faq extends ExpPlugin
         $window->show();
     }
 
-    function eXpOnUnload() {
+    function eXpOnUnload()
+    {
         FaqWindow::EraseAll();
         FaqWidget::EraseAll();
     }

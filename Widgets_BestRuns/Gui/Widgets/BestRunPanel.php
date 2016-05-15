@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_BestRuns\Gui\Widgets;
 
-use ManiaLivePlugins\eXpansion\Widgets_BestRuns\Structures\Run;
-
 class BestRunPanel extends \ManiaLive\Gui\Window
 {
 
@@ -23,7 +21,7 @@ class BestRunPanel extends \ManiaLive\Gui\Window
         $this->addComponent($this->frame);
     }
 
-    function onDraw()
+    public function onDraw()
     {
         $this->frame->clearComponents();
         foreach (self::$bestRuns as $run) {
@@ -31,7 +29,7 @@ class BestRunPanel extends \ManiaLive\Gui\Window
         }
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->lines as $cp) {
             $cp->destroy();
@@ -44,4 +42,3 @@ class BestRunPanel extends \ManiaLive\Gui\Window
 
 }
 
-?>

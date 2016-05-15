@@ -22,7 +22,8 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $items = array();
     protected $inherits = array();
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
@@ -40,15 +41,18 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->button_cancel);
     }
 
-    public function setGroup(Group $group) {
+    public function setGroup(Group $group)
+    {
         $this->group = $group;
     }
 
-    public function getGroup() {
+    public function getGroup()
+    {
         return $this->group;
     }
 
-    public function onResize($oldX, $oldY) {
+    public function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 12);
         $this->pager->setPosition(1, -1);
@@ -58,11 +62,13 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->button_cancel->setPosition($centerX + 30, -$this->sizeY + 5);
     }
 
-    public function onShow() {
+    public function onShow()
+    {
         $this->populateList();
     }
 
-    public function populateList() {
+    public function populateList()
+    {
         foreach ($this->inherits as $item) {
             $item->destroy();
         }
@@ -80,25 +86,26 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         foreach ($adminGroups->getGroupList() as $i => $group) {
             $nh = $group->getInherits();
 
-            if ($this->group != $group && ! isset($nh[ $this->group->getGroupName() ])) {
+            if ($this->group != $group && !isset($nh[$this->group->getGroupName()])) {
 
                 $cInherit = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 38);
                 $cInherit->setText($group->getGroupName());
                 $cInherit->setScale(0.8);
 
-                if (! empty($inherits)) {
-                    $cInherit->setStatus(isset($inherits[ $group->getGroupName() ]));
+                if (!empty($inherits)) {
+                    $cInherit->setStatus(isset($inherits[$group->getGroupName()]));
                 }
 
-                $this->inherits[ $i ] = $cInherit;
-                $this->items[ $x ] = new \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem($x, $cInherit);
-                $this->pager->addItem($this->items[ $x ]);
+                $this->inherits[$i] = $cInherit;
+                $this->items[$x] = new \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem($x, $cInherit);
+                $this->pager->addItem($this->items[$x]);
                 $x++;
             }
         }
     }
 
-    public function clickOk($login) {
+    public function clickOk($login)
+    {
 
         $adminGroups = AdminGroups::getInstance();
 
@@ -106,9 +113,9 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $newInheritances = array();
 
         foreach ($this->inherits as $i => $cbox) {
-            $nh = $groups[ $i ]->getInherits();
-            if ($cbox->getStatus() && ! isset($nh[ $this->group->getGroupName() ])) {
-                $newInheritances[] = $groups[ $i ];
+            $nh = $groups[$i]->getInherits();
+            if ($cbox->getStatus() && !isset($nh[$this->group->getGroupName()])) {
+                $newInheritances[] = $groups[$i];
             }
         }
 
@@ -124,11 +131,13 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    public function clickCancel() {
+    public function clickCancel()
+    {
         $this->Erase($this->getRecipient());
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         foreach ($this->inherits as $item) {
             $item->destroy();
         }

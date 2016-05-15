@@ -45,5 +45,3 @@ class Config extends \ManiaLib\Utils\Singleton
         "AutoTeamBalance" => 1);
 
 }
-
-?>

@@ -4,14 +4,15 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TeamPlayerScores\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Label;
 use ManiaLive\Gui\Container;
-use ManiaLive\Gui\Control;
+
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Widgets_TeamPlayerScores\Structures\PlayerScore;
 
 class ScoreItem extends Control
 {
 
-    private $bg;
-    private $score, $nick, $time, $win1, $win2, $win3;
+    protected $bg;
+    protected $score, $nick, $time, $win1, $win2, $win3;
 
     function __construct(PlayerScore $playerScore)
     {
@@ -72,7 +73,7 @@ class ScoreItem extends Control
         $this->setAlign("left", "top");
     }
 
-    function onIsRemoved(Container $target)
+    public function onIsRemoved(Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();

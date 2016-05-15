@@ -20,7 +20,8 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     private $cmd;
 
-    protected function onConstruct() {
+    protected function onConstruct()
+    {
         parent::onConstruct();
 
         $this->bgt_cmd = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround(30, 4);
@@ -106,11 +107,13 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->content_aliases);
     }
 
-    public function setCommand(\ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $command) {
+    public function setCommand(\ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $command)
+    {
         $this->cmd = $command;
     }
 
-    public function onResize($oldX, $oldY) {
+    public function onResize($oldX, $oldY)
+    {
         parent::onResize($oldX, $oldY);
 
         $sizeX2 = $this->getSizeX() / .8;
@@ -153,7 +156,8 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->bg_aliases->setPosX($this->getSizeX() / 1.5 + 1);
     }
 
-    public function onShow() {
+    public function onShow()
+    {
 
         $this->label_cmd->setText('$w' . __(AdminGroups::$txt_command, $this->getRecipient()));
         $this->label_desc->setText('$w' . __(AdminGroups::$txt_description, $this->getRecipient()));
@@ -173,7 +177,8 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->content_aliases->setText($aliases);
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         parent::destroy();
         $this->bg_aliases->destroy();
         $this->bg_desc->destroy();

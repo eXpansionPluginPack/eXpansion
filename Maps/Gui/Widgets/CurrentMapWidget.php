@@ -7,8 +7,8 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     protected $bg;
     protected $authorTime, $logo;
-    private $leftFrame, $centerFrame, $rightFrame;
-    private $environment, $country;
+    protected $leftFrame, $centerFrame, $rightFrame;
+    protected $environment, $country;
 
     protected function eXpOnBeginConstruct()
     {
@@ -93,7 +93,7 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->setSize(90, 15);
     }
 
-    function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
+    public function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
     {
         $playerModel = "";
         if (isset($map->playerModel)) {
@@ -105,11 +105,9 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         }
     }
 
-    function setAction($action)
+    public function setAction($action)
     {
         $this->bg->setAction($action);
     }
 
 }
-
-?>

@@ -4,16 +4,15 @@ namespace ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords;
 
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection;
-use ManiaLivePlugins\eXpansion\Dedimania\DedimaniaAbstract;
 use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediPlayer;
 use ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Widgets\DediPanel;
 use ManiaLivePlugins\eXpansion\Widgets_DedimaniaRecords\Gui\Widgets\DediPanel2;
 
 class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
-    const None = 0x0;
-    const Dedimania = 0x2;
-    const Dedimania_force = 0x8;
+    const NONE = 0x0;
+    const DEDIMANIA = 0x2;
+    const DEDIMANIA_FORCE = 0x8;
     const All = 0x31;
 
     public static $me = null;
@@ -57,10 +56,10 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
         if ((time() - $this->lastUpdate) > 20) {
 
-            if (($this->needUpdate & self::Dedimania) == self::Dedimania || $this->forceUpdate || ($this->needUpdate & self::Dedimania_force)
-                == self::Dedimania_force
+            if (($this->needUpdate & self::DEDIMANIA) == self::DEDIMANIA || $this->forceUpdate || ($this->needUpdate & self::DEDIMANIA_FORCE)
+                == self::DEDIMANIA_FORCE
             ) {
-                if ($this->dedi || $this->needUpdate == self::Dedimania_force) {
+                if ($this->dedi || $this->needUpdate == self::DEDIMANIA_FORCE) {
                     $this->updateDediPanel();
                     $this->dedi = false;
                 }
@@ -199,7 +198,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
     {
         self::$dedirecords = $data['Records'];
         $this->dedi = true;
-        $this->needUpdate = self::Dedimania_force;
+        $this->needUpdate = self::DEDIMANIA_FORCE;
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -234,7 +233,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
     public function onDedimaniaPlayerConnect($data)
     {
         if ($data->maxRank > Connection::$serverMaxRank) {
-            $this->needUpdate = self::Dedimania_force;
+            $this->needUpdate = self::DEDIMANIA_FORCE;
         }
     }
 
@@ -248,7 +247,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         Gui\Widgets\DediPanel::EraseAll();
         Gui\Widgets\DediPanel2::EraseAll();
@@ -256,5 +255,3 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
         Dispatcher::unregister(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
     }
 }
-
-?>

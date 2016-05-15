@@ -5,8 +5,6 @@ namespace ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls;
 use ManiaLib\Gui\Elements\Label;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
-use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
@@ -19,15 +17,15 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaL
 {
 
     /** @var \ManiaLib\Gui\Elements\Label */
-    private $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
+    protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
 
-    private $button_delete;
+    protected $button_delete;
 
-    private $bg;
+    protected $bg;
 
     public static $widths;
 
-    function __construct($indexNumber, $login, $action)
+    public function __construct($indexNumber, $login, $action)
     {
         $this->sizeY = 6;
         $this->bg = new ListBackGround($indexNumber, 100, 6);
@@ -93,7 +91,7 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaL
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -102,7 +100,7 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaL
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         parent::destroy();
     }
@@ -114,4 +112,3 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaL
 
 }
 
-?>

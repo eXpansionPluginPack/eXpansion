@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Button;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 
 class ExpSettingsMenu extends \ManiaLivePlugins\eXpansion\Gui\Control
 {

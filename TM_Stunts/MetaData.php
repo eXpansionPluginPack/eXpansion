@@ -2,10 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\TM_Stunts;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
-use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
-
 /**
  * Description of MetaData
  *
@@ -34,9 +30,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $this->setRelaySupport(false);
 
-        $config = Config::getInstance();
+    
     }
 
 }
-
-?>

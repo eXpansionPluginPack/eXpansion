@@ -52,12 +52,14 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
     public static $actionOpenRecs = -1;
     public static $actionOpenCps = -1;
 
-    public function expOnInit() {
+    public function expOnInit()
+    {
         $this->setPublicMethod("isRunning");
         $this->config = Config::getInstance();
     }
 
-    public function eXpOnLoad() {
+    public function eXpOnLoad()
+    {
         $helpText = "\n\nPlease correct your config with these instructions: \nEdit and add following configuration lines to manialive config.ini\n\n ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config.login = 'your_server_login_here' \n ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config.code = 'your_server_code_here' \n\n Visit http://dedimania.net/tm2stats/?do=register to get code for your server.";
         if (empty($this->config->login)) {
             $this->console("Server login is not configured for dedimania plugin!");
@@ -74,7 +76,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         $this->msg_norecord = eXpGetMessage('#dedirecord#No dedimania records found for the map!');
     }
 
-    public function eXpOnReady() {
+    public function eXpOnReady()
+    {
         parent::eXpOnReady();
         $this->enableDedicatedEvents();
         $this->enableApplicationEvents();
@@ -88,22 +91,23 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 
     private $settingsChanged = array();
 
-    public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var) {
-        $this->settingsChanged[ $var->getName() ] = true;
+    public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
+    {
+        $this->settingsChanged[$var->getName()] = true;
         if ($this->settingsChanged['login'] && $this->settingsChanged['code']) {
             $this->tryConnection();
             $this->settingsChanged = array();
         }
     }
 
-    public function tryConnection() {
-        if (! $this->running) {
+    public function tryConnection()
+    {
+        if (!$this->running) {
             if (empty($this->config->login) || empty($this->config->code)) {
                 $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
                 $admins->announceToPermission(Permission::EXPANSION_PLUGIN_SETTINGS, "#admin_error#Server login or/and Server code is empty in Dedimania Configuration");
                 $this->console("Server code or/and login is not configured for dedimania plugin!");
-            }
-            else {
+            } else {
                 try {
                     $this->dedimania->openSession($this->expStorage->version->titleId, $this->config);
                     $this->registerChatCommand("dedirecs", "showRecs", 0, true);
@@ -117,8 +121,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 
                     self::$actionOpenRecs = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, "showRecs"));
                     self::$actionOpenCps = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, "showCps"));
-                }
-                catch (\Exception $ex) {
+                } catch (\Exception $ex) {
                     $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
                     $admins->announceToPermission('expansion_settings', "#admin_error#Server login or/and Server code is wrong in Dedimania Configuration");
                     $admins->announceToPermission('expansion_settings', "#admin_error#" . $ex->getMessage());
@@ -128,27 +131,31 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         }
     }
 
-    public function checkSession($login) {
+    public function checkSession($login)
+    {
         $this->dedimania->checkSession();
     }
 
-    public function onPlayerConnect($login, $isSpectator) {
-        if (! $this->running) {
+    public function onPlayerConnect($login, $isSpectator)
+    {
+        if (!$this->running) {
             return;
         }
         $player = $this->storage->getPlayerObject($login);
         $this->dedimania->playerConnect($player, $isSpectator);
     }
 
-    public function onPlayerDisconnect($login, $reason = null) {
-        if (! $this->running) {
+    public function onPlayerDisconnect($login, $reason = null)
+    {
+        if (!$this->running) {
             return;
         }
         $this->dedimania->playerDisconnect($login);
     }
 
-    public function onBeginMatch() {
-        if (! $this->running) {
+    public function onBeginMatch()
+    {
+        if (!$this->running) {
             return;
         }
         // echo "beginMatch\n";
@@ -156,8 +163,9 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         $this->dedimania->getChallengeRecords();
     }
 
-    public function onBeginRound() {
-        if (! $this->running) {
+    public function onBeginRound()
+    {
+        if (!$this->running) {
             return;
         }
         // echo "beginround\n";
@@ -169,13 +177,14 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
      *
      * @param string $login is passed to check the server,map and player maxranks for new driven record
      */
-    public function reArrage($login) {
+    public function reArrage($login)
+    {
         // sort by time
         $this->sortAsc($this->records, "time");
 
         $maxrank = DediConnection::$serverMaxRank;
-        if (DediConnection::$players[ $login ]->maxRank > $maxrank) {
-            $maxrank = DediConnection::$players[ $login ]->maxRank;
+        if (DediConnection::$players[$login]->maxRank > $maxrank) {
+            $maxrank = DediConnection::$players[$login]->maxRank;
         }
 
         $this->debug_max_ranks('Server Max Rank is : ' . DediConnection::$serverMaxRank);
@@ -203,18 +212,17 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
                 // update checkpoints for the record
                 $playerinfo = \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo;
 
-                $record->checkpoints = implode(",", $playerinfo[ $login ]->checkpoints);
+                $record->checkpoints = implode(",", $playerinfo[$login]->checkpoints);
 
                 // add record
-                $newrecords[ $record->login ] = $record;
+                $newrecords[$record->login] = $record;
                 // othervice
-            }
-            else {
+            } else {
                 // check if some record needs to be erased from the list...
                 //  if ($record->place > DediConnection::$dediMap->mapMaxRank)
                 //  continue;
 
-                $newrecords[ $record->login ] = $record;
+                $newrecords[$record->login] = $record;
             }
         }
 
@@ -236,7 +244,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         \ManiaLive\Event\Dispatcher::dispatch(new DediEvent(DediEvent::ON_UPDATE_RECORDS, $data));
     }
 
-    public function compare_bestTime($a, $b) {
+    public function compare_bestTime($a, $b)
+    {
         if ($a['BestTime'] == $b['BestTime']) {
             return 0;
         }
@@ -244,13 +253,15 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         return ($a['BestTime'] < $b['BestTime']) ? -1 : 1;
     }
 
-    private function sortAsc(&$array, $prop) {
+    private function sortAsc(&$array, $prop)
+    {
         usort($array, function ($a, $b) use ($prop) {
             return $a->$prop > $b->$prop ? 1 : -1;
         });
     }
 
-    public function onDedimaniaOpenSession() {
+    public function onDedimaniaOpenSession()
+    {
         $players = array();
         foreach ($this->storage->players as $player) {
             if ($player->login != $this->storage->serverLogin) {
@@ -267,12 +278,13 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         $this->rankings = array();
     }
 
-    public function onDedimaniaGetRecords($data) {
+    public function onDedimaniaGetRecords($data)
+    {
 
         $this->records = array();
 
         foreach ($data['Records'] as $record) {
-            $this->records[ $record['Login'] ] = new DediRecord($record['Login'], $record['NickName'], $record['MaxRank'], $record['Best'], $record['Rank'], $record['Checks']);
+            $this->records[$record['Login']] = new DediRecord($record['Login'], $record['NickName'], $record['MaxRank'], $record['Best'], $record['Rank'], $record['Checks']);
         }
         $this->lastRecord = end($this->records);
         $this->recordCount = count($this->records);
@@ -280,7 +292,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         $this->debug("Dedimania get records:");
     }
 
-    public function eXpOnUnload() {
+    public function eXpOnUnload()
+    {
         $this->disableTickerEvent();
         $this->disableDedicatedEvents();
         \ManiaLivePlugins\eXpansion\Dedimania\Gui\Windows\Records::EraseAll();
@@ -297,7 +310,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
      *
      * @param type $data
      */
-    public function onDedimaniaUpdateRecords($data) {
+    public function onDedimaniaUpdateRecords($data)
+    {
         $this->debug("Dedimania update records:");
         // $this->debug($data);
     }
@@ -308,7 +322,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
      *
      * @param Structures\DediRecord $record
      */
-    public function onDedimaniaNewRecord($record) {
+    public function onDedimaniaNewRecord($record)
+    {
         try {
             if ($this->config->disableMessages == true) {
                 return;
@@ -322,16 +337,14 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
             $time = \ManiaLive\Utilities\Time::fromTM($record->time);
             if (substr($time, 0, 3) === "0:0") {
                 $time = substr($time, 3);
-            }
-            else {
+            } else {
                 if (substr($time, 0, 2) === "0:") {
                     $time = substr($time, 2);
                 }
             }
 
             $this->eXpChatSendServerMessage($this->msg_newRecord, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time));
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->console("Error: couldn't show dedimania message" . $e->getMessage());
         }
     }
@@ -341,7 +354,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
      * @param Structures\DediRecord $record
      * @param Structures\DediRecord $oldRecord
      */
-    public function onDedimaniaRecord($record, $oldRecord) {
+    public function onDedimaniaRecord($record, $oldRecord)
+    {
         $this->debug("improved dedirecord:");
         $this->debug($record);
         try {
@@ -356,8 +370,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
             $diff = \ManiaLive\Utilities\Time::fromTM($record->time - $oldRecord->time);
             if (substr($diff, 0, 3) === "0:0") {
                 $diff = substr($diff, 3);
-            }
-            else {
+            } else {
                 if (substr($diff, 0, 2) === "0:") {
                     $diff = substr($diff, 2);
                 }
@@ -365,8 +378,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
             $time = \ManiaLive\Utilities\Time::fromTM($record->time);
             if (substr($time, 0, 3) === "0:0") {
                 $time = substr($time, 3);
-            }
-            else {
+            } else {
                 if (substr($time, 0, 2) === "0:") {
                     $time = substr($time, 2);
                 }
@@ -374,21 +386,23 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 
             $this->eXpChatSendServerMessage($this->msg_record, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time, $oldRecord->place, $diff));
             $this->debug("message sent.");
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->console("Error: couldn't show dedimania message");
         }
     }
 
-    public function onDedimaniaPlayerConnect($data) {
+    public function onDedimaniaPlayerConnect($data)
+    {
 
     }
 
-    public function onDedimaniaPlayerDisconnect($login) {
+    public function onDedimaniaPlayerDisconnect($login)
+    {
 
     }
 
-    public function showRecs($login) {
+    public function showRecs($login)
+    {
         \ManiaLivePlugins\eXpansion\Dedimania\Gui\Windows\Records::Erase($login);
 
         if (sizeof($this->records) == 0) {
@@ -406,13 +420,13 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 
             $window->setSize(120, 100);
             $window->show();
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             ErrorHandling::displayAndLogError($e);
         }
     }
 
-    public function showCps($login) {
+    public function showCps($login)
+    {
         \ManiaLivePlugins\eXpansion\Dedimania\Gui\Windows\RecordCps::Erase($login);
 
         if (sizeof($this->records) == 0) {
@@ -428,17 +442,18 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 
             $window->setSize(170, 110);
             $window->show();
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             ErrorHandling::displayAndLogError($e);
         }
     }
 
-    public function isRunning() {
+    public function isRunning()
+    {
         return $this->running;
     }
 
-    protected function debug_max_ranks($debugMsg) {
+    protected function debug_max_ranks($debugMsg)
+    {
         if (($this->debug & self::DEBUG_MAX_RANKS) == self::DEBUG_MAX_RANKS) {
             $this->console('[DEDIMANIA][Max Ranks]' . $debugMsg);
         }

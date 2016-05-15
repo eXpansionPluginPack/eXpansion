@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_Advertising;
 
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Widgets_Advertising\Gui\Widgets\WidgetAd;
@@ -37,7 +35,7 @@ class Widgets_Advertising extends ExpPlugin
         }
     }
 
-    function onPreLoop()
+    public function onPreLoop()
     {
         if ($this->settingsChanged) {
             $this->displayWidget();

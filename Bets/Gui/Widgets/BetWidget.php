@@ -18,7 +18,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Bets\Gui\Widgets;
 
-use ManiaLib\Gui\Layouts\Column;
 use ManiaLib\Gui\Layouts\Flow;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Bets\Bets;

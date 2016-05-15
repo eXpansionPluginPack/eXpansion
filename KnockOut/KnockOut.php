@@ -22,7 +22,6 @@ namespace ManiaLivePlugins\eXpansion\KnockOut;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
-use ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj;
 use ManiaLivePlugins\eXpansion\KnockOut\Structures\KOplayer;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 use Phine\Exception\Exception;

@@ -15,11 +15,11 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 class SecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $label_rank, $label_nick, $label_time, $frames;
-    private $bg;
-    private $widths;
+    protected $label_rank, $label_nick, $label_time, $frames;
+    protected $bg;
+    protected $widths;
 
-    function __construct($indexNumber, $login, $rank, $widths, LocalBase $localBase)
+    public function __construct($indexNumber, $login, $rank, $widths, LocalBase $localBase)
     {
         $this->widths = $widths;
         $this->sizeY = 8;
@@ -90,7 +90,7 @@ class SecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -99,7 +99,7 @@ class SecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         unset($this->label_nick);
         parent::destroy();
@@ -107,4 +107,3 @@ class SecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 }
 
-?>

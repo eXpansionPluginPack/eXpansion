@@ -14,5 +14,3 @@ class Config extends \ManiaLib\Utils\Singleton
     public $posY = 125;
     public $posZ = -70;
 }
-
-?>

@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\MXKarma;
 
-use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**

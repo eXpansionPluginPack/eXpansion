@@ -22,5 +22,3 @@ class MapRating extends \Maniaplanet\DedicatedServer\Structures\AbstractStructur
 
 
 }
-
-?>

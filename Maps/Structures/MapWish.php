@@ -22,9 +22,9 @@ class MapWish
     /**
      * MapWish($player, $map, $isTemp);
      *
-     * @param \ManiaLive\Data\Player                      $player
+     * @param \ManiaLive\Data\Player $player
      * @param \Maniaplanet\DedicatedServer\Structures\Map $map
-     * @param bool                                        $isTemp
+     * @param bool $isTemp
      */
     public function __construct(\ManiaLive\Data\Player $player, \Maniaplanet\DedicatedServer\Structures\Map $map, $isTemp = false)
     {
@@ -34,5 +34,3 @@ class MapWish
     }
 
 }
-
-?>

@@ -2,12 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Core;
 
-use ManiaLive\Application\ErrorHandling;
 use ManiaLive\DedicatedApi\Callback\Event as dediEvent;
 use ManiaLive\Event\Dispatcher;
-use ManiaLive\Utilities\Console;
-use ManiaLivePlugins\eXpansion\Core\Structures\Query;
-use ManiaLivePlugins\eXpansion\Core\Structures\Callback;
 
 class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\DedicatedApi\Callback\Listener
 {

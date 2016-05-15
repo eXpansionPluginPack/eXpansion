@@ -5,31 +5,30 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls;
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Line;
-use ManiaLive\Gui\Control;
 use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ButtonHook;
-use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
 
 class MxMap extends Control
 {
 
-    private $bg;
+    protected $bg;
 
-    private $buttons = array();
-    private $actionSearch;
-    private $line1, $line2;
+    protected $buttons = array();
+    protected $actionSearch;
+    protected $line1, $line2;
 
     /**
      * @param                                                            $indexNumber
      * @param \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map
      * @param                                                            $controller
-     * @param ButtonHook[]                                               $buttons
+     * @param ButtonHook[] $buttons
      * @param                                                            $sizeX
      */
-    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map, $controller, $buttons, $sizeX)
+    public function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map, $controller, $buttons, $sizeX)
     {
         $sizeY = 12;
 
@@ -149,7 +148,7 @@ class MxMap extends Control
     }
 
     // override destroy method not to destroy its contents on manialive 3.1
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -157,7 +156,7 @@ class MxMap extends Control
     /**
      * custom function to destroy contents when needed.
      */
-    function erase()
+    public function erase()
     {
         if (!empty($this->buttons)) {
             foreach ($this->buttons as $button) {
@@ -174,6 +173,4 @@ class MxMap extends Control
     }
 
 }
-
-?>
 

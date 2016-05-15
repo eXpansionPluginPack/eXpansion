@@ -11,8 +11,8 @@ use ManiaLivePlugins\eXpansion\ServerNeighborhood\Server;
 class Small extends AbsControl
 {
 
-    private $bg;
-    private $label_name;
+    protected $bg;
+    protected $label_name;
 
     function __construct($i, $ctr, Server $server)
     {
@@ -54,5 +54,3 @@ class Small extends AbsControl
     }
 
 }
-
-?>

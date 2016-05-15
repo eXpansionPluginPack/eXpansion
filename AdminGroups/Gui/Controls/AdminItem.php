@@ -15,10 +15,11 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
  */
 class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-    
+
     private $plistButton;
 
-    function __construct($indexNumber, Admin $admin, $controller, $login) {
+    function __construct($indexNumber, Admin $admin, $controller, $login)
+    {
         $sizeX = 75;
         $sizeY = 6;
 
@@ -45,7 +46,7 @@ class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $frame->addComponent($gui_nick);
 
-        if (AdminGroups::hasPermission($login, Permission::ADMINGROUPS_ADMIN_ALL_GROUPS) && ! $admin->isReadOnly()) {
+        if (AdminGroups::hasPermission($login, Permission::ADMINGROUPS_ADMIN_ALL_GROUPS) && !$admin->isReadOnly()) {
 
             $this->plistButton = new MyButton(30, 4);
             $this->plistButton->setAction($actionRemove);
@@ -62,14 +63,16 @@ class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy() {
+    function destroy()
+    {
 
     }
 
     /*
      * custom function to remove contents.
      */
-    public function erase() {
+    public function erase()
+    {
         if ($this->plistButton != null) {
             $this->plistButton->destroy();
         }

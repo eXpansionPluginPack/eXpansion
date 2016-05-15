@@ -2,9 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\IdleKick;
 
-use ManiaLivePlugins\eXpansion\IdleKick\Config;
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-
 class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
@@ -14,7 +11,7 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /** @var Config */
     private $config;
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->enableTickerEvent();
@@ -22,7 +19,7 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->onPlayerConnect($player->login, false);
     }
 
-    function onPlayerConnect($login, $isSpectator)
+    public function onPlayerConnect($login, $isSpectator)
     {
         $this->checkActivity($login);
     }
@@ -38,7 +35,7 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->checkActivity($login);
     }
 
-    function onTick()
+    public function onTick()
     {
         if ($this->tickCounter % 10 == 0) {
             $this->tickCounter = 0;
@@ -62,14 +59,14 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->tickCounter++;
     }
 
-    function checkActivity($login)
+    public function checkActivity($login)
     {
         if ($login != $this->storage->serverLogin) {
             $this->timeStamps[$login] = time();
         }
     }
 
-    function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
+    public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
         if ($playerUid != 0) {
             $player = $this->storage->getPlayerObject($login);
@@ -79,7 +76,7 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function onPlayerInfoChanged($playerInfo)
+    public function onPlayerInfoChanged($playerInfo)
     {
         $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
         $login = $player->login;
@@ -94,4 +91,3 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 }
 
-?>

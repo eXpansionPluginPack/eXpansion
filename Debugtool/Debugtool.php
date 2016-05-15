@@ -21,7 +21,6 @@
 namespace ManiaLivePlugins\eXpansion\Debugtool;
 
 use ManiaLive\Event\Dispatcher;
-use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 /**
  * Description of Debugtool
@@ -90,13 +89,13 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (is_numeric($amount)) {
                 $x = 0;
                 $players = array_merge($this->storage->players, $this->storage->spectators);
-                
+
                 foreach ($players as $login => $player) {
                     echo "$login, $x,  $amount\n";
                     if (strstr($login, "fakeplayer") !== false && $x < $amount) {
                         $this->connection->disconnectFakePlayer($login);
                         $x++;
-                    }   
+                    }
                 }
             } else {
                 $this->connection->disconnectFakePlayer("*");

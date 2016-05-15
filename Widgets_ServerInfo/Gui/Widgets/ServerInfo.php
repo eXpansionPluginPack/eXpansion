@@ -5,7 +5,12 @@ namespace ManiaLivePlugins\eXpansion\Widgets_ServerInfo\Gui\Widgets;
 class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
     protected $clockBg;
-    private $frame, $ladderMin, $ladderMax, $serverName, $maxPlayers, $script;
+    protected $frame;
+    protected $ladderMin;
+    protected $ladderMax;
+    protected $serverName;
+    protected $maxPlayers;
+    protected $script;
 
     protected function eXpOnBeginConstruct()
     {
@@ -108,7 +113,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->script->setParam("maxSpec", \ManiaLive\Data\Storage::getInstance()->server->currentMaxSpectators);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         unset($this->script);

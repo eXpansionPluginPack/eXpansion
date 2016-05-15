@@ -24,8 +24,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Irc;
 
-use ManiaLive\Utilities\Console;
-
 class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Classes\IrcListener
 {
 
@@ -139,5 +137,3 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
     }
 
 }
-
-?>

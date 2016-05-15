@@ -2,11 +2,11 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
+use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use ManiaLive\Gui\ActionHandler;
-use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 
 class MatchSettingsFile extends Control
 {

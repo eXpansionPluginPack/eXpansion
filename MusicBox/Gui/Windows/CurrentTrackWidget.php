@@ -7,12 +7,12 @@ class CurrentTrackWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     /** @var $frame \ManiaLive\Gui\Controls\Frame */
     protected $frame;
     protected $quad;
-    private $label;
+    protected $label;
     public static $musicBoxPlugin;
-    private $background;
-    private $action = null;
+    protected $background;
+    protected $action = null;
 
-    function onConstruct()
+    public function onConstruct()
     {
         $this->setName("Music Widget");
 
@@ -61,17 +61,17 @@ class CurrentTrackWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         parent::onConstruct();
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
 
     }
 
-    function setSong(\ManiaLivePlugins\eXpansion\MusicBox\Structures\Song $song)
+    public function setSong(\ManiaLivePlugins\eXpansion\MusicBox\Structures\Song $song)
     {
         $this->label->setText($song->artist . " - " . $song->title);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->frame->clearComponents();
         $this->frame->destroy();
@@ -79,5 +79,3 @@ class CurrentTrackWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     }
 
 }
-
-?>

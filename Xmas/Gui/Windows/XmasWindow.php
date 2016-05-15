@@ -7,9 +7,9 @@ use ManiaLivePlugins\eXpansion\Xmas\Config;
 class XmasWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
 
-    private $frame;
+    protected $frame;
 
-    private $config;
+    protected $config;
 
     protected function onConstruct()
     {

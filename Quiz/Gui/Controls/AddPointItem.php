@@ -2,28 +2,27 @@
 
 namespace ManiaLivePlugins\eXpansion\Quiz\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use \ManiaLib\Utils\Formatting;
 
 class AddPointItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $bg;
+    protected $bg;
 
-    private $addpointButton, $removepointButton;
+    protected $addpointButton, $removepointButton;
 
-    private $nickname;
+    protected $nickname;
 
-    private $addpointAction;
+    protected $addpointAction;
 
-    private $removepointAction;
+    protected $removepointAction;
 
-    private $pointsLabel;
+    protected $pointsLabel;
 
-    private $frame;
+    protected $frame;
 
-    function __construct($indexNumber, \ManiaLive\Data\Player $player, $controller, $isAdmin, $login, $sizeX)
+
+    public function __construct($indexNumber, \ManiaLive\Data\Player $player, $controller, $isAdmin, $login, $sizeX)
     {
         $sizeY = 6;
 
@@ -111,7 +110,7 @@ class AddPointItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -120,7 +119,7 @@ class AddPointItem extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         if (is_object($this->addpointButton))
             $this->addpointButton->destroy();
@@ -134,6 +133,3 @@ class AddPointItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>
-

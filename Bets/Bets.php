@@ -48,7 +48,8 @@ class Bets extends ExpPlugin
     /** @var Player[] */
     private $players = array();
 
-    public function eXpOnLoad() {
+    public function eXpOnLoad()
+    {
         $this->msg_fail = eXpGetMessage('#donate#No planets billed');
         $this->msg_error = eXpGetMessage('#donate#Error: %1$s');
         $this->msg_payFail = eXpGetMessage('#donate#The server was unable to pay your winning bet. Sorry.');
@@ -58,7 +59,8 @@ class Bets extends ExpPlugin
         $this->msg_winner = eXpGetMessage('#variable# %1$s #donate#wins the bet with #variable# %2$s #donate#planets, congratulations');
     }
 
-    public function eXpOnReady() {
+    public function eXpOnReady()
+    {
         $this->enableDedicatedEvents();
         $this->enableTickerEvent();
 
@@ -74,19 +76,22 @@ class Bets extends ExpPlugin
         $this->reset();
     }
 
-    public function onTick() {
+    public function onTick()
+    {
         foreach ($this->counters as $idx => $counter) {
             if ($counter->check()) {
-                unset($this->counters[ $idx ]);
+                unset($this->counters[$idx]);
             }
         }
     }
 
-    public function onBeginMatch() {
+    public function onBeginMatch()
+    {
         $this->start(Config::getInstance()->timeoutSetBet);
     }
 
-    public function onEndMatch($rankings, $winnerTeamOrMap) {
+    public function onEndMatch($rankings, $winnerTeamOrMap)
+    {
         switch (self::$state) {
 
             case self::RUNNING:
@@ -101,7 +106,8 @@ class Bets extends ExpPlugin
         }
     }
 
-    private function checkWinner() {
+    private function checkWinner()
+    {
         $rankings = $this->connection->getCurrentRanking(-1, 0);
         $total = (count($this->players) * self::$betAmount);
 
@@ -115,16 +121,18 @@ class Bets extends ExpPlugin
         }
     }
 
-    private function setState($data) {
+    private function setState($data)
+    {
         self::$state = $data;
     }
 
-    public function setBetAmount($login, $amount = null, $data = array()) {
+    public function setBetAmount($login, $amount = null, $data = array())
+    {
         if ($amount == null) {
             $amount = $data['betAmount'];
         }
 
-        if (! is_numeric($amount) || empty($amount) || $amount < 1) {
+        if (!is_numeric($amount) || empty($amount) || $amount < 1) {
             $this->eXpChatSendServerMessage('#error#Can\'t place a bet, the value: "#variable#%1$s#error#" is not numeric value!', $login, array($amount));
 
             return;
@@ -144,7 +152,8 @@ class Bets extends ExpPlugin
         $bill->setSubject('bets_plugin');
     }
 
-    public function acceptBet($login) {
+    public function acceptBet($login)
+    {
         $bill = $this->eXpStartBill($login, $this->storage->serverLogin, self::$betAmount, 'Acccept Bet ?', array($this, 'billAcceptSuccess'));
         $bill->setErrorCallback(5, array($this, 'billFail'));
         $bill->setErrorCallback(6, array($this, 'billFail'));
@@ -156,7 +165,8 @@ class Bets extends ExpPlugin
      *
      * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
      */
-    public function billPaySuccess(Bill $bill) {
+    public function billPaySuccess(Bill $bill)
+    {
         $login = $bill->getSource_login();
         $this->eXpChatSendServerMessage($this->msg_billPaySuccess, $login, array($bill->getAmount()));
     }
@@ -166,15 +176,15 @@ class Bets extends ExpPlugin
      *
      * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
      */
-    public function billAcceptSuccess(Bill $bill) {
+    public function billAcceptSuccess(Bill $bill)
+    {
         $login = $bill->getSource_login();
         try {
-            $this->players[ $login ] = $this->storage->getPlayerObject($login);
+            $this->players[$login] = $this->storage->getPlayerObject($login);
             $this->eXpChatSendServerMessage($this->msg_billSuccess, $login, array($bill->getAmount()));
             $this->updateBetWidget();
             $this->announceTotal($login);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->eXpChatSendServerMessage($this->msg_fail, $login, array($e->getMessage()));
         }
     }
@@ -184,60 +194,66 @@ class Bets extends ExpPlugin
      *
      * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
      */
-    public function billSetSuccess(Bill $bill) {
+    public function billSetSuccess(Bill $bill)
+    {
         $this->setState(self::ACCEPT);
         $login = $bill->getSource_login();
         try {
-            $this->players[ $login ] = $this->storage->getPlayerObject($login);
+            $this->players[$login] = $this->storage->getPlayerObject($login);
             $this->eXpChatSendServerMessage($this->msg_billSuccess, $login, array($bill->getAmount()));
             BetWidget::EraseAll();
             $this->updateBetWidget();
             $this->announceTotal($login);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->eXpChatSendServerMessage($this->msg_fail, $login, array($e->getMessage()));
         }
     }
 
-    public function announceTotal($login) {
+    public function announceTotal($login)
+    {
         $total = (count($this->players) * self::$betAmount);
-        $nick = $this->players[ $login ]->nickName . '$z$s';
+        $nick = $this->players[$login]->nickName . '$z$s';
         $this->eXpChatSendServerMessage($this->msg_totalStake, null, array($nick, $total));
     }
 
-    public function billFail(Bill $bill, $state, $stateName) {
+    public function billFail(Bill $bill, $state, $stateName)
+    {
         $this->eXpChatSendServerMessage($this->msg_fail, $bill->getSource_login());
     }
 
-    public function billPayFail(Bill $bill, $state, $stateName) {
+    public function billPayFail(Bill $bill, $state, $stateName)
+    {
         $this->eXpChatSendServerMessage($this->msg_payFail, $bill->getSource_login());
     }
 
-    public function updateBetWidget() {
+    public function updateBetWidget()
+    {
         $widget = BetWidget::Create(null);
         $widget->setSize(80, 20);
         $widget->setToHide(array_keys($this->players));
         $widget->show(true);
     }
 
-    public function start($timeout) {
+    public function start($timeout)
+    {
         $this->reset();
         $this->setState(self::SET);
         $this->updateBetWidget();
         $this->counters[] = new BetCounter($timeout, array($this, "closeAccept"));
     }
 
-    public function closeAccept($param = null) {
+    public function closeAccept($param = null)
+    {
         if (self::$state == self::ACCEPT) {
             $this->setState(self::RUNNING);
-        }
-        else {
+        } else {
             $this->setState(self::NOBETS);
         }
         BetWidget::EraseAll();
     }
 
-    private function reset() {
+    private function reset()
+    {
         self::$state = self::OFF;
         self::$betAmount = 0;
         $this->counters = array();
@@ -245,7 +261,8 @@ class Bets extends ExpPlugin
         BetWidget::EraseAll();
     }
 
-    public function eXpOnUnload() {
+    public function eXpOnUnload()
+    {
         $ah = ActionHandler::getInstance();
         $ah->deleteAction(BetWidget::$action_acceptBet);
         $ah->deleteAction(BetWidget::$action_setAmount);

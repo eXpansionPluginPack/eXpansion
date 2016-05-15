@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Xmas;
 
-use ManiaLivePlugins\eXpansion\Xmas\Config;
-
 class Xmas extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
@@ -31,7 +29,9 @@ class Xmas extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-        if ($this->wasWarmup) return;
+        if ($this->wasWarmup) {
+            return;
+        }
         $window = Gui\Windows\XmasWindow::Create(null);
         $window->show();
     }
@@ -43,4 +43,4 @@ class Xmas extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 }
 
-?>
+

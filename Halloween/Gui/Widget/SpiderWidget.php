@@ -8,7 +8,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Halloween\Gui\Widget;
 
-use \ManiaLivePlugins\eXpansion\Halloween\Config;
+use ManiaLivePlugins\eXpansion\Halloween\Config;
 
 /**
  * Description of SpiderWidget
@@ -18,8 +18,8 @@ use \ManiaLivePlugins\eXpansion\Halloween\Config;
 class SpiderWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
 
-    private $frame;
-    private $config;
+    protected $frame;
+    protected $config;
 
     protected function onConstruct()
     {

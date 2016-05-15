@@ -14,8 +14,8 @@ use ManiaLivePlugins\eXpansion\ServerNeighborhood\Gui\Controls\ServerItem;
 class ServerList extends Window
 {
 
-    private $pager;
-    private $items = array();
+    protected $pager;
+    protected $items = array();
 
     protected function onConstruct()
     {
@@ -75,5 +75,3 @@ class ServerList extends Window
         $w->show();
     }
 }
-
-?>

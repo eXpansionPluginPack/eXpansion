@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Chatlog\Gui\Controls;
 
-use ManiaLib\Gui\Elements\Quad;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
@@ -16,9 +15,9 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param int                                                        $indexNumber
+     * @param int $indexNumber
      * @param \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message
-     * @param int                                                        $sizeX
+     * @param int $sizeX
      */
     function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message, $widths, $sizeX)
     {

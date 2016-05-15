@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\CheckpointCount\Gui\Widgets;
 
-use ManiaLivePlugins\eXpansion\Gui\Config;
-
 class CPPanel extends \ManiaLive\Gui\Window
 {
 
