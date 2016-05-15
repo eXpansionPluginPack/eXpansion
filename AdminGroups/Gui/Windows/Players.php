@@ -2,9 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\AdminItem;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 
 /**
  * Description of Permissions
@@ -14,7 +14,6 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\AdminItem;
 class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $adminGroups;
     protected $pager;
     protected $group;
     protected $button_add;
@@ -22,15 +21,14 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $login_add;
     protected $action_add;
     protected $action_select;
-    private $items = array();
+    protected $items = array();
 
-    protected function onConstruct()
-    {
+    protected function onConstruct() {
         parent::onConstruct();
         $login = $this->getRecipient();
 
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
-        $this->mainFrame->addComponent($this->pager);
+        $this->addComponent($this->pager);
 
 
         $line = new \ManiaLive\Gui\Controls\Frame(4, -6);
@@ -45,38 +43,34 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $this->button_add = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
         $this->button_add->setText(__("Add", $login));
-        $this->action_add = $this->createAction(array($this, 'click_add'));
+        $this->action_add = $this->createAction(array($this, 'clickAdd'));
         $this->button_add->setAction($this->action_add);
         $line->addComponent($this->button_add);
 
         $this->button_select = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
         $this->button_select->setText(__("Select", $login));
-        $this->action_select = $this->createAction(array($this, 'click_select'));
+        $this->action_select = $this->createAction(array($this, 'clickSelect'));
         $this->button_select->setAction($this->action_select);
         $line->addComponent($this->button_select);
 
         $this->addComponent($line);
     }
 
-    public function setGroup($g)
-    {
+    public function setGroup($g) {
         $this->group = $g;
     }
 
-    public function getGroup()
-    {
+    public function getGroup() {
         return $this->group;
     }
 
-    function onResize($oldX, $oldY)
-    {
+    public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 4, $this->sizeY - 12);
         $this->pager->setPosition(0, -7);
     }
 
-    function onShow()
-    {
+    public function onShow() {
         foreach ($this->items as $item)
             $item->erase();
         $this->pager->clearItems();
@@ -86,18 +80,16 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->populateList();
     }
 
-    function populateList()
-    {
+    public function populateList() {
         $x = 0;
         foreach ($this->group->getGroupUsers() as $admin) {
-            $this->items[$x] = new AdminItem($x, $admin, $this, $this->getRecipient());
-            $this->pager->addItem($this->items[$x]);
+            $this->items[ $x ] = new AdminItem($x, $admin, $this, $this->getRecipient());
+            $this->pager->addItem($this->items[ $x ]);
             $x++;
         }
     }
 
-    function click_add($login2, $args)
-    {
+    public function clickAdd($login2, $args) {
         $adminGroups = AdminGroups::getInstance();
         $login = $args['login'];
 
@@ -114,8 +106,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function click_select($login)
-    {
+    public function clickSelect($login) {
         $window = \ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection::Create($login);
         $window->setController($this);
         $window->setTitle('Select Player to add to ' . $this->group->getGroupName());
@@ -125,14 +116,12 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $window->show();
     }
 
-    public function select_player($login, $newlogin)
-    {
-        $this->click_add($login, array('login' => $newlogin));
+    public function selectPlayer($login, $newlogin) {
+        $this->clickAdd($login, array('login' => $newlogin));
         \ManiaLivePlugins\eXpansion\Gui\Windows\PlayerSelection::Erase($login);
     }
 
-    function click_remove($login, $admin)
-    {
+    public function clickRemove($login, $admin) {
         $adminGroups = AdminGroups::getInstance();
         $adminGroups->removeFromGroup($login, $this->group, $admin);
 
@@ -146,8 +135,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    public function destroy()
-    {
+    public function destroy() {
         $this->login_add->destroy();
         $this->button_add->destroy();
         foreach ($this->items as $item)
@@ -157,5 +145,3 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

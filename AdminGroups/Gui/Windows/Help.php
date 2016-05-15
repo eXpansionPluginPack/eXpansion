@@ -2,8 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\HelpItem;
-use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 /**
  * Description of Help
@@ -13,14 +13,14 @@ use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $adminGroups;
-    private $pager;
-    private $items = array();
+    protected $adminGroups;
+    protected $pager;
+    protected $items = array();
 
-    private $label_cmd, $label_desc;
+    protected $label_cmd;
+    protected $label_desc;
 
-    protected function onConstruct()
-    {
+    protected function onConstruct() {
         parent::onConstruct();
         $this->adminGroups = AdminGroups::getInstance();
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
@@ -43,16 +43,14 @@ class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $frame->addComponent($this->label_desc);
     }
 
-    function onResize($oldX, $oldY)
-    {
+    public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 13);
         $this->pager->setStretchContentX($this->sizeX - 4);
         $this->pager->setPosition(0, -4);
     }
 
-    function onShow()
-    {
+    public function onShow() {
         foreach ($this->items as $item) {
             $item->erase();
         }
@@ -65,20 +63,17 @@ class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->populateList();
     }
 
-    function populateList()
-    {
-
+    public function populateList() {
         $x = 0;
         $login = $this->getRecipient();
         foreach ($this->adminGroups->getAdminCommands() as $cmd) {
-            $this->items[$x] = new HelpItem($x, $cmd, $this, $login);
-            $this->pager->addItem($this->items[$x]);
+            $this->items[ $x ] = new HelpItem($x, $cmd, $this, $login);
+            $this->pager->addItem($this->items[ $x ]);
             $x++;
         }
     }
 
-    public function destroy()
-    {
+    public function destroy() {
         foreach ($this->items as $item) {
             $item->erase();
         }
@@ -88,5 +83,3 @@ class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::destroy();
     }
 }
-
-?>

@@ -2,11 +2,11 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
-use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\AdminGroups\Admin;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
 /**
  * Description of GroupItem
@@ -15,20 +15,14 @@ use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
  */
 class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-
-    private $admin;
-
-    private $action_remove;
-
+    
     private $plistButton;
 
-    function __construct($indexNumber, Admin $admin, $controller, $login)
-    {
-        $this->group = $admin;
+    function __construct($indexNumber, Admin $admin, $controller, $login) {
         $sizeX = 75;
         $sizeY = 6;
 
-        $this->action_remove = $this->createAction(array($controller, 'click_remove'), $admin);
+        $actionRemove = $this->createAction(array($controller, 'clickRemove'), $admin);
 
         $frame = new \ManiaLive\Gui\Controls\Frame();
         $frame->setSize($sizeX, $sizeY);
@@ -51,10 +45,10 @@ class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $frame->addComponent($gui_nick);
 
-        if (AdminGroups::hasPermission($login, Permission::ADMINGROUPS_ADMIN_ALL_GROUPS) && !$admin->isReadOnly()) {
+        if (AdminGroups::hasPermission($login, Permission::ADMINGROUPS_ADMIN_ALL_GROUPS) && ! $admin->isReadOnly()) {
 
             $this->plistButton = new MyButton(30, 4);
-            $this->plistButton->setAction($this->action_remove);
+            $this->plistButton->setAction($actionRemove);
             $this->plistButton->setText(__(AdminGroups::$txt_rmPlayer, $login));
             $this->plistButton->setScale(0.6);
             $frame->addComponent($this->plistButton);
@@ -68,24 +62,20 @@ class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
-    {
+    function destroy() {
 
     }
 
     /*
      * custom function to remove contents.
      */
-
-    public function erase()
-    {
-        if ($this->plistButton != null)
+    public function erase() {
+        if ($this->plistButton != null) {
             $this->plistButton->destroy();
+        }
         $this->plistButton = null;
         $this->destroyComponents();
         parent::destroy();
     }
 
 }
-
-?>

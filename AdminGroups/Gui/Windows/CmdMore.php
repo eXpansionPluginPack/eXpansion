@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
-use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 
 /**
  * Description of CmdMore
@@ -12,16 +12,15 @@ use \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    private $label_cmd, $label_desc, $label_descm, $label_aliases;
-    private $bgt_cmd, $bgt_desc, $bgt_descm, $bgt_aliases;
+    protected $label_cmd, $label_desc, $label_descm, $label_aliases;
+    protected $bgt_cmd, $bgt_desc, $bgt_descm, $bgt_aliases;
 
-    private $content_cmd, $content_desc, $content_descm, $content_aliases;
-    private $bg_cmd, $bg_desc, $bg_descm, $bg_aliases;
+    protected $content_cmd, $content_desc, $content_descm, $content_aliases;
+    protected $bg_cmd, $bg_desc, $bg_descm, $bg_aliases;
 
     private $cmd;
 
-    protected function onConstruct()
-    {
+    protected function onConstruct() {
         parent::onConstruct();
 
         $this->bgt_cmd = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround(30, 4);
@@ -107,13 +106,11 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->content_aliases);
     }
 
-    public function setCommand(\ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $command)
-    {
+    public function setCommand(\ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $command) {
         $this->cmd = $command;
     }
 
-    function onResize($oldX, $oldY)
-    {
+    public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
 
         $sizeX2 = $this->getSizeX() / .8;
@@ -156,8 +153,7 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->bg_aliases->setPosX($this->getSizeX() / 1.5 + 1);
     }
 
-    function onShow()
-    {
+    public function onShow() {
 
         $this->label_cmd->setText('$w' . __(AdminGroups::$txt_command, $this->getRecipient()));
         $this->label_desc->setText('$w' . __(AdminGroups::$txt_description, $this->getRecipient()));
@@ -177,8 +173,7 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->content_aliases->setText($aliases);
     }
 
-    function destroy()
-    {
+    public function destroy() {
         parent::destroy();
         $this->bg_aliases->destroy();
         $this->bg_desc->destroy();

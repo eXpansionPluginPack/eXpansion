@@ -15,9 +15,8 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd;
 class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $moreButton;
-    private $bg;
-
+    protected $moreButton;
+    
     function __construct($indexNumber, AdminCmd $cmd, $controller, $login)
     {
         $this->action = $this->createAction(array($this, 'cmdMore'), $cmd);

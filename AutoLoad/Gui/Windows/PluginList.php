@@ -29,8 +29,6 @@ use ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad;
 use ManiaLivePlugins\eXpansion\AutoLoad\Gui\Controls\Plugin;
 use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
@@ -41,12 +39,14 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     /**
      * @var Inputbox
      */
-    protected $input_name, $input_author;
+    protected $input_name;
+    protected $input_author;
 
     /**
      * @var String
      */
-    protected $value_name, $value_author;
+    protected $value_name;
+    protected $value_author;
 
     /**
      * @var Dropdown
@@ -97,8 +97,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public $firstDisplay = true;
 
-    protected function onConstruct()
-    {
+    protected function onConstruct() {
         parent::onConstruct();
         $login = $this->getRecipient();
 
@@ -139,8 +138,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pluginHandler = PluginHandler::getInstance();
     }
 
-    public function onResize($oldX, $oldY)
-    {
+    public function onResize($oldX, $oldY) {
         parent::onResize($oldX, $oldY);
         $this->pagerFrame->setSize($this->getSizeX() - 3, $this->getSizeY() - 11);
     }
@@ -149,8 +147,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
      * @param AutoLoad   $autoLoader
      * @param MetaData[] $availablePlugins
      */
-    public function populate(AutoLoad $autoLoader, $availablePlugins)
-    {
+    public function populate(AutoLoad $autoLoader, $availablePlugins) {
 
         $this->pluginList = $availablePlugins;
         $this->autoLoad = $autoLoader;
@@ -173,26 +170,29 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             if ($this->firstDisplay) {
                 foreach ($metaData->getGroups() as $name) {
                     if ($name != "Core") {
-                        $groups[$name] = true;
+                        $groups[ $name ] = true;
                     }
                 }
             }
 
             $text = $this->input_name->getText();
-            if (!empty($text) && strpos(strtoupper($metaData->getName()), strtoupper($text)) === false)
+            if (! empty($text) && strpos(strtoupper($metaData->getName()), strtoupper($text)) === false) {
                 continue;
+            }
 
             $text = $this->input_author->getText();
-            if (!empty($text) && strpos(strtoupper($metaData->getAuthor()), strtoupper($text)) === false)
+            if (! empty($text) && strpos(strtoupper($metaData->getAuthor()), strtoupper($text)) === false) {
                 continue;
+            }
 
-            if (!empty($this->value_group) && $this->value_group != "All" && !in_array($this->value_group, $metaData->getGroups())) {
+            if (! empty($this->value_group) && $this->value_group != "All" && ! in_array($this->value_group, $metaData->getGroups())) {
                 continue;
             }
 
             // hide core plugins as you can't really load/unload them
-            if (in_array("Core", $metaData->getGroups()))
+            if (in_array("Core", $metaData->getGroups())) {
                 continue;
+            }
 
             $metaData->checkAll();
             $control = new Plugin($i++, $autoLoader, $metaData, $this->getRecipient(), $this->pluginHandler->isLoaded($metaData->getPlugin()));
@@ -210,8 +210,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->firstDisplay = false;
     }
 
-    public function destroy()
-    {
+    public function destroy() {
         foreach ($this->items as $item) {
             $item->destroy();
         }
@@ -224,11 +223,10 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::destroy();
     }
 
-    public function doSearch($login, $params)
-    {
+    public function doSearch($login, $params) {
         $this->input_name->setText($params['name']);
         $this->input_author->setText($params['author']);
-        $this->value_group = $params['group'] == "" ? "" : $this->elements[$params['group']];
+        $this->value_group = $params['group'] == "" ? "" : $this->elements[ $params['group'] ];
 
         $this->populate($this->autoLoad, $this->pluginList);
         $this->select_group->setSelected($params['group']);

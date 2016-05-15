@@ -26,4 +26,4 @@ namespace ManiaLivePlugins\eXpansion\AutoLoad\Structures;
 class PluginNotFoundException extends \Exception
 {
 
-} 
+}

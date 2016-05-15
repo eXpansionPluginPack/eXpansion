@@ -16,17 +16,17 @@ use \ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    private $group;
+    protected $group;
 
-    private $action_changePermissions;
-    private $action_playerList;
-    private $action_deleteGroup;
-    private $action_inherticances;
+    protected $action_changePermissions;
+    protected $action_playerList;
+    protected $action_deleteGroup;
+    protected $action_inherticances;
 
-    private $plistButton;
-    private $permiButton;
-    private $deleteButton;
-    private $InheritButton;
+    protected $plistButton;
+    protected $permiButton;
+    protected $deleteButton;
+    protected $InheritButton;
 
     function __construct($indexNumber, Group $group, $controller, $login)
     {

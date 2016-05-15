@@ -25,7 +25,6 @@ namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
-use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad;
 use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpSettings;
@@ -71,8 +70,7 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
      */
     protected $configManger = null;
 
-    function __construct($indexNumber, AutoLoad $autoload, MetaData $plugin, $login, $isLoaded)
-    {
+    public function __construct($indexNumber, AutoLoad $autoload, MetaData $plugin, $login, $isLoaded) {
 
         $this->metaData = $plugin;
         $this->autoLoad = $autoload;
@@ -91,12 +89,17 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->button_running = new Button(8, 8);
         $this->button_running->setIcon('Icons64x64_1', 'GenericButton');
         $this->button_running->setDescription(__($this->getRunningDescriptionText($isLoaded, $isInStart), $login), 120);
-        if ($isLoaded)
+        if ($isLoaded) {
             $this->button_running->colorize('0f0');
-        else if ($isInStart)
-            $this->button_running->colorize('ff0');
-        else
-            $this->button_running->colorize('f00');
+        }
+        else {
+            if ($isInStart) {
+                $this->button_running->colorize('ff0');
+            }
+            else {
+                $this->button_running->colorize('f00');
+            }
+        }
         $this->button_running->setAction($toggleAction);
         $this->addComponent($this->button_running);
 
@@ -118,28 +121,34 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->button_titleComp = new Button(7, 7);
         $this->button_titleComp->setIcon('Icons64x64_1', 'GenericButton');
         $this->button_titleComp->setDescription(__($this->getTitleDescriptionText($titleCompatible), $login), 100);
-        if ($titleCompatible)
+        if ($titleCompatible) {
             $this->button_titleComp->colorize('090');
-        else
+        }
+        else {
             $this->button_titleComp->colorize('f00');
+        }
         $this->addComponent($this->button_titleComp);
 
         $this->button_gameComp = new Button(7, 7);
         $this->button_gameComp->setIcon('Icons64x64_1', 'GenericButton');
         $this->button_gameComp->setDescription(__($this->getGameDescriptionText($gameCompatible), $login), 100);
-        if ($gameCompatible)
+        if ($gameCompatible) {
             $this->button_gameComp->colorize('090');
-        else
+        }
+        else {
             $this->button_gameComp->colorize('f00');
+        }
         $this->addComponent($this->button_gameComp);
 
         $this->button_otherComp = new Button(7, 7);
         $this->button_otherComp->setIcon('Icons64x64_1', 'GenericButton');
         $this->button_otherComp->setDescription(__($this->getOtherDescriptionText($otherCompatible), $login), 100, 5, sizeof($otherCompatible) + 1);
-        if (empty($otherCompatible))
+        if (empty($otherCompatible)) {
             $this->button_otherComp->colorize('090');
-        else
+        }
+        else {
             $this->button_otherComp->colorize('f00');
+        }
         $this->addComponent($this->button_otherComp);
 
         $this->button_more = new Button(22, 7);
@@ -147,8 +156,9 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->button_more->setText(__("Settings", $login));
         $this->button_more->setAction($this->createAction(array($this, 'showPluginSettings')));
         $configs = $this->configManger->getGroupedVariables($this->metaData->getPlugin());
-        if (!empty($configs))
+        if (! empty($configs)) {
             $this->addComponent($this->button_more);
+        }
 
         $this->button_start = new Button(14, 7);
         $this->button_start->setAction($toggleAction);
@@ -156,7 +166,8 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         if ($this->getStartText($isLoaded, $isInStart) == "Start") {
             $this->button_start->colorize("0D0");
-        } else {
+        }
+        else {
             $this->button_start->colorize("F00");
         }
         $this->addComponent($this->button_start);
@@ -164,8 +175,8 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setSize(122, 8);
     }
 
-    protected function onResize($oldX, $oldY)
-    {
+    protected function onResize($oldX, $oldY) {
+        parent::onResize($oldX, $oldY);
         $this->label_name->setSizeX(($this->getSizeX() - $this->label_name->getPosX() - 5 * 8 - 7) / 1);
         $this->label_author->setSizeX(($this->getSizeX() - $this->label_author->getPosX() - 5 * 8 - 7) / 1);
 
@@ -179,56 +190,61 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->button_start->setPositionX($this->getSizeX() - 8 * 1 - 2);
     }
 
-    private function getRunningDescriptionText($runnig, $inStart)
-    {
-        if ($runnig)
+    private function getRunningDescriptionText($running, $inStart) {
+        if ($running) {
             return "Plugin is running. Click to unload!";
-        else if ($inStart)
-            return "Plugin not compatible with game mode, title or server settings.\n Plugin will be enabled when possible.";
-        else
-            return "Plugin not running. Click to load!";
+        }
+        else {
+            if ($inStart) {
+                return "Plugin not compatible with game mode, title or server settings.\n Plugin will be enabled when possible.";
+            }
+            else {
+                return "Plugin not running. Click to load!";
+            }
+        }
     }
 
-    private function getTitleDescriptionText($titleCompatible)
-    {
-        if ($titleCompatible)
+    private function getTitleDescriptionText($titleCompatible) {
+        if ($titleCompatible) {
             return "This plugin is compatible with the current Title";
-        else
+        }
+        else {
             return "This plugin isn't compatible with the current Title";
+        }
     }
 
-    private function getGameDescriptionText($gameCompatible)
-    {
-        if ($gameCompatible)
+    private function getGameDescriptionText($gameCompatible) {
+        if ($gameCompatible) {
             return "This plugin is compatible with the current Game mode";
-        else
+        }
+        else {
             return "This plugin isn't compatible with the current Game mode";
+        }
     }
 
-    private function getOtherDescriptionText($otherCompatibility)
-    {
-        if (empty($otherCompatibility))
+    private function getOtherDescriptionText($otherCompatibility) {
+        if (empty($otherCompatibility)) {
             return "This plugin is is compatible with current installation";
-        else
+        }
+        else {
             return "This plugin has a few compatibility issues : \n" . implode("\n", $otherCompatibility);
+        }
     }
 
-    private function getStartText($started, $instart)
-    {
-        if ($instart || $started) {
+    private function getStartText($started, $inStart) {
+        if ($inStart || $started) {
             return "Stop";
-        } else {
+        }
+        else {
             return "Start";
         }
     }
 
-    public function togglePlugin($login)
-    {
-        $this->autoLoad->tooglePlugin($login, $this->metaData);
+    public function togglePlugin($login) {
+        $this->autoLoad->togglePlugin($login, $this->metaData);
     }
 
-    public function showPluginSettings($login)
-    {
+    public function showPluginSettings($login) {
         ExpSettings::Erase($login);
         /** @var ExpSettings $win */
         $win = ExpSettings::Create($login);
