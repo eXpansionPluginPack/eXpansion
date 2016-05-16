@@ -111,7 +111,7 @@ class Core extends types\ExpPlugin
     /**
      * Declares what is necessary for expansion ro run.
      */
-    function expOnInit()
+    public function expOnInit()
     {
         //File to log expansion console logs
         $logFile = "manialive-" . $this->storage->serverLogin . ".console.log";
@@ -148,7 +148,7 @@ class Core extends types\ExpPlugin
     /**
      * Let us let know to the worl that expanson has started
      */
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         //Listen to all dedicated events
         $this->enableDedicatedEvents();
@@ -222,16 +222,13 @@ EOT;
             $bExitApp = true;
         }
 
-        $this->console('Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . ' build ' . date(
-                "Y-m-d h:i:s A", Helper::getBuildDate()
-            ) . ''
-        );
+        $this->console('Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . ' build ' .
+            date("Y-m-d h:i:s A", Helper::getBuildDate()) . '');
 
         //List of supported languages found
         $this->console('');
         $this->console(
-            'Language support detected for: ' . implode(",", i18n::getInstance()->getSupportedLocales()) . '!'
-        );
+            'Language support detected for: ' . implode(",", i18n::getInstance()->getSupportedLocales()) . '!');
         $this->console('Enabling default locale: ' . $config->defaultLanguage . '');
         i18n::getInstance()->setDefaultLanguage($config->defaultLanguage);
 
@@ -465,7 +462,7 @@ EOT;
     /**
      *  optimizes the script callbacks
      */
-    static public function optimizeScriptCallbacks()
+    public static function optimizeScriptCallbacks()
     {
         $connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         if (sizeof(self::$enabledCallbacks) > 0) {
@@ -481,7 +478,7 @@ EOT;
      *
      * @param array|string $callback
      */
-    static public function enableScriptCallback($callback)
+    public static function enableScriptCallback($callback)
     {
         if (is_string($callback)) {
             self::$enabledCallbacks[$callback] = $callback;
@@ -518,7 +515,7 @@ EOT;
         }
     }
 
-    function updateQuitDialog()
+    public function updateQuitDialog()
     {
         $config = Config::getInstance();
         if (empty($config->quitDialogManialink)) {
@@ -565,7 +562,7 @@ EOT;
      * @param bool $warmUp
      * @param bool $matchContinuation
      */
-    function onBeginMap($map, $warmUp, $matchContinuation)
+    public function onBeginMap($map, $warmUp, $matchContinuation)
     {
         //Check if reload or save of configurations needed
         $this->configManager->check();
@@ -591,9 +588,9 @@ EOT;
             $this->checkPluginsOnHold();
         } else {
             //Detecting any changes in game Settings
-            if ($this->lastGameSettings == null)
+            if ($this->lastGameSettings == null) {
                 $this->lastGameSettings = clone $gameSettings;
-            else {
+            } else {
                 $difs = $this->compareObjects($gameSettings, $this->lastGameSettings, array("gameMode", "scriptName"));
                 if (!empty($difs)) {
                     Dispatcher::dispatch(
@@ -606,9 +603,9 @@ EOT;
 
         //Detecting any changes in Server Settings
         $serverSettings = \ManiaLive\Data\Storage::getInstance()->server;
-        if ($this->lastServerSettings == null)
+        if ($this->lastServerSettings == null) {
             $this->lastServerSettings = clone $serverSettings;
-        else {
+        } else {
             $difs = $this->compareObjects(
                 $serverSettings, $this->lastServerSettings, array('useChangingValidationSeed')
             );
@@ -645,11 +642,14 @@ EOT;
                         $difs[$varName] = true;
                     } else {
                         $newDisf = $this->compareObjects($value, $obj2->$varName, $ignoreList);
-                        if (!empty($newDisf))
+                        if (!empty($newDisf)) {
                             $difs[$varName] = $newDisf;
+                        }
                     }
-                } else if (!isset($obj2->$varName) || $obj2->$varName != $value) {
-                    $difs[$varName] = true;
+                } else {
+                    if (!isset($obj2->$varName) || $obj2->$varName != $value) {
+                        $difs[$varName] = true;
+                    }
                 }
             }
         }
@@ -682,13 +682,15 @@ EOT;
     {
 
         $dediConfig = \ManiaLive\DedicatedApi\Config::getInstance();
-        if ($this->expStorage->isRemoteControlled)
+        if ($this->expStorage->isRemoteControlled) {
             return;
+        }
 
         try {
             $path = Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile;
-            if (!file_exists($path))
+            if (!file_exists($path)) {
                 return;
+            }
             /** @var SimpleXMLElement */
             $oldXml = simplexml_load_file($path);
             if ($oldXml === false) {
@@ -726,16 +728,18 @@ EOT;
                 $search = $key;
                 if (array_key_exists($key, $adapter)) {
                     $search = $adapter[$key];
-                } else
+                } else {
                     continue;
+                }
 
                 //			echo $key . " -> " . $search . "\n";
 
                 $out = $new->{$key};
                 if (is_bool($value)) {
                     $out = "False";
-                    if ($value)
+                    if ($value) {
                         $out = "True";
+                    }
                 }
 
 
@@ -810,8 +814,9 @@ EOT;
         $this->console("                        |_| \_|\___/ \__|_|\___\___|");
         $fill = "";
         $firstline = explode("\n", $message, 2);
-        if (!is_array($firstline))
+        if (!is_array($firstline)) {
             $firstline = array($firstline);
+        }
         for ($x = 0; $x < ((80 - strlen($firstline[0])) / 2); $x++) {
             $fill .= " ";
         }
@@ -893,8 +898,9 @@ EOT;
 
     public function onTick()
     {
-        if ($this->storage->serverStatus->code < 3 || $this->storage->serverStatus->code > 4)
+        if ($this->storage->serverStatus->code < 3 || $this->storage->serverStatus->code > 4) {
             return;
+        }
 
         //every 5 seconds gogo
         if (time() - $this->lastTick > 5) {
@@ -963,8 +969,9 @@ EOT;
     public function onPostLoop()
     {
         // check for update conditions
-        if ($this->enableCalculation == false || $this->expStorage->isRelay)
+        if ($this->enableCalculation == false || $this->expStorage->isRelay) {
             return;
+        }
         if ($this->storage->serverStatus->code == 4 && $this->update && (microtime(true) - $this->loopTimer) > 0.35) {
             $this->update = false;
             $this->loopTimer = microtime(true);
@@ -978,18 +985,19 @@ EOT;
      *
      * @return string
      */
-    function echo_memory_usage()
+    public function echo_memory_usage()
     {
         gc_enable();
         gc_collect_cycles();
         $mem_usage = memory_get_usage(true);
 
-        if ($mem_usage < 1024)
+        if ($mem_usage < 1024) {
             return $mem_usage . " bytes";
-        elseif ($mem_usage < 1048576)
+        } elseif ($mem_usage < 1048576) {
             return round($mem_usage / 1024, 2) . " kilobytes";
-        else
+        } else {
             return round($mem_usage / 1048576, 2) . " megabytes";
+        }
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -1017,8 +1025,9 @@ EOT;
             $playerArray[$login] = "present";
         }
 
-        if ($loginDisconnecting !== false && array_key_exists($loginDisconnecting, $playerArray))
+        if ($loginDisconnecting !== false && array_key_exists($loginDisconnecting, $playerArray)) {
             unset($playerArray[$loginDisconnecting]);
+        }
 
         foreach ($playerArray as $login => $player) {
             if (AdminGroups::hasPermission($login, Permission::PLAYER_KICK)) {
@@ -1062,8 +1071,9 @@ EOT;
      */
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex)
     {
-        if ($this->enableCalculation == false || $this->expStorage->isRelay)
+        if ($this->enableCalculation == false || $this->expStorage->isRelay) {
             return;
+        }
 
         $this->update = true;
         if (!array_key_exists($login, $this->expPlayers)) {
@@ -1100,8 +1110,9 @@ EOT;
      */
     public function onPlayerInfoChanged($playerInfo)
     {
-        if ($this->enableCalculation == false || $this->expStorage->isRelay)
+        if ($this->enableCalculation == false || $this->expStorage->isRelay) {
             return;
+        }
 
         $this->update = true;
         $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
@@ -1114,8 +1125,9 @@ EOT;
             }
             $this->expPlayers[$player->login] = Structures\ExpPlayer::fromArray($pla->toArray());
 
-            if (array_key_exists($login, $this->teamScores))
+            if (array_key_exists($login, $this->teamScores)) {
                 $this->expPlayers[$login]->matchScore = $this->teamScores[$login];
+            }
             $this->expPlayers[$login]->hasRetired = false;
             $this->expPlayers[$login]->isPlaying = true;
             $this->expPlayers[$login]->checkpoints = array(0 => 0);
@@ -1125,8 +1137,9 @@ EOT;
             $this->expPlayers[$login]->curCpIndex = -1;
             $this->expPlayers[$login]->isFinished = false;
             // in case player is joining to match in round, he needs to be marked as waiting
-            if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK)
+            if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
                 $this->expPlayers[$login]->isWaiting = true;
+            }
         }
 
         $this->expPlayers[$player->login]->teamId = $player->teamId;
@@ -1169,8 +1182,9 @@ EOT;
                 $this->expPlayers[$login]->isPlaying = false;
                 continue;
             }
-            if (array_key_exists($login, $this->teamScores))
+            if (array_key_exists($login, $this->teamScores)) {
                 $this->expPlayers[$login]->matchScore = $this->teamScores[$login];
+            }
             $this->expPlayers[$login]->hasRetired = false;
             $this->expPlayers[$login]->isPlaying = true;
             $this->expPlayers[$login]->checkpoints = array(0 => 0);
@@ -1193,13 +1207,15 @@ EOT;
 
     public function onPlayerFinish($playerUid, $login, $timeOrScore)
     {
-        if ($this->enableCalculation == false || $this->expStorage->isRelay)
+        if ($this->enableCalculation == false || $this->expStorage->isRelay) {
             return;
+        }
 
         // handle onPlayerfinish @ start from server.
         $this->update = true;
-        if ($playerUid == 0)
+        if ($playerUid == 0) {
             return;
+        }
 
         if ($timeOrScore == 0) {
             if (array_key_exists($login, $this->expPlayers)) {
@@ -1230,8 +1246,9 @@ EOT;
                 $total = 0;
                 // get total number if players
                 foreach ($this->expPlayers as $player) {
-                    if ($player->isPlaying)
+                    if ($player->isPlaying) {
                         $total++;
+                    }
                 }
                 // set max points
                 if ($total > $maxpoints) {
@@ -1245,8 +1262,9 @@ EOT;
                         $points = ($total + 1) - (count(self::$roundFinishOrder));
 
 
-                        if ($points < 0)
+                        if ($points < 0) {
                             $points = 0;
+                        }
 
                         if (!array_key_exists($player->login, $this->teamScores)) {
                             $this->teamScores[$player->login] = $points;
@@ -1261,7 +1279,7 @@ EOT;
         }
     }
 
-    function calculatePositions()
+    public function calculatePositions()
     {
         /** @var $playerPositions Structures\ExpPlayer[] */
         $playerPositions = array();
@@ -1320,16 +1338,19 @@ EOT;
                 $first = $this->expPlayers[$firstPlayerLogin];
 
                 $this->expPlayers[$login]->deltaCpCountTop1 = $first->curCpIndex - $current->curCpIndex - 1;
-                if ($this->expPlayers[$login]->deltaCpCountTop1 < 0)
+                if ($this->expPlayers[$login]->deltaCpCountTop1 < 0) {
                     $this->expPlayers[$login]->deltaCpCountTop1 = 0;
+                }
 
                 $cpindex = $current->curCpIndex;
-                if ($cpindex < 0)
+                if ($cpindex < 0) {
                     $cpindex = 0;
+                }
 
                 $this->expPlayers[$login]->deltaTimeTop1 = -1;
-                if (isset($first->checkpoints[$cpindex]))
+                if (isset($first->checkpoints[$cpindex])) {
                     $this->expPlayers[$login]->deltaTimeTop1 = $current->time - $first->checkpoints[$cpindex];
+                }
             }
             // reset flags
             $this->expPlayers[$login]->changeFlags = 0;
@@ -1409,16 +1430,18 @@ EOT;
         } elseif ($a->score > 0 && $b->score > 0 && $a->score < $b->score) {
             return 1;
         } // same check check, time, rank and general score, so test besttime
-        elseif ($a->bestTime > 0 && $b->bestTime > 0 && $a->bestTime < $b->bestTime)
+        elseif ($a->bestTime > 0 && $b->bestTime > 0 && $a->bestTime < $b->bestTime) {
             return -1;
-        elseif ($a->bestTime > 0 && $b->bestTime > 0 && $a->bestTime > $b->bestTime)
+        } elseif ($a->bestTime > 0 && $b->bestTime > 0 && $a->bestTime > $b->bestTime) {
             return 1;
+        }
         // all same... test time of previous checks
         for ($key = $a->curCpIndex - 1; $key >= 0; $key--) {
-            if ($a->checkpoints[$key] < $b->checkpoints[$key])
+            if ($a->checkpoints[$key] < $b->checkpoints[$key]) {
                 return -1;
-            elseif ($a->checkpoints[$key] > $b->checkpoints[$key])
+            } elseif ($a->checkpoints[$key] > $b->checkpoints[$key]) {
                 return 1;
+            }
         }
         // really all same, use login  :p
         //    echo "use login";
@@ -1426,5 +1449,3 @@ EOT;
     }
 
 }
-
-?>

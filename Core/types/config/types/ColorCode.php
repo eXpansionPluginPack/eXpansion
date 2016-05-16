@@ -43,9 +43,9 @@ class ColorCode extends TypeString
 
     public function setUseFullHex($value = true)
     {
-        if (is_numeric($value))
+        if (is_numeric($value)) {
             $this->digits = $value;
-        else {
+        } else {
             $this->digits = 3;
             if ($value === true) {
                 $this->digits = 6;
@@ -59,5 +59,3 @@ class ColorCode extends TypeString
     }
 
 }
-
-?>

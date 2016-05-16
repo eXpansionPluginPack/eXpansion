@@ -194,7 +194,7 @@ class Countries
         'Zimbabwe' => 'ZIM',
     );
 
-    static function mapCountry($country)
+    public static function mapCountry($country)
     {
         $countries = self::$countries;
 
@@ -207,7 +207,7 @@ class Countries
         return $output;
     }
 
-    static function getCountryFromCode($code)
+    public static function getCountryFromCode($code)
     {
         $countries = self::$countries;
 
@@ -226,5 +226,3 @@ class Countries
     }
 
 }
-
-?>

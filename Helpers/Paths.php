@@ -13,7 +13,7 @@ class Paths
      */
     private $path;
 
-    function __construct()
+    public function __construct()
     {
         $connection = Helper::getSingletons()->getDediConnection();
         $this->mapsDirectory = $connection->getMapsDirectory();

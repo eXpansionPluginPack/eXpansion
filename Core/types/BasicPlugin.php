@@ -101,7 +101,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          */
         protected $expStorage;
 
-        public final function onInit()
+        final public function onInit()
         {
             $this->expStorage = Storage::getInstance();
 
@@ -204,7 +204,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param string|array $callback this can be either one callback or array of callbacks
          *
          */
-        public final function enableScriptEvents($callback = false)
+        final public function enableScriptEvents($callback = false)
         {
             if ($callback === false) {
                 throw new Exception('$this->enableScriptEvents($callback) needs a value for whitelisting...');
@@ -215,7 +215,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             //	Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
         }
 
-        public final function onLoad()
+        final public function onLoad()
         {
             if (!$this->metaData->checkAll()) {
                 $this->eXpUnload();
@@ -239,7 +239,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         {
         }
 
-        public final function onReady()
+        final public function onReady()
         {
             if (!$this->metaData->checkAll()) {
                 $this->eXpUnload();
@@ -355,7 +355,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         private function checkVersion()
         {
             if (version_compare(\ManiaLive\Application\VERSION, Core::EXP_REQUIRE_MANIALIVE, 'lt')) {
-                $this->dumpException("Looks like your ManiaLive is too old to run this version of eXpansion.\n" . "Your ManiaLive version: " . \ManiaLive\Application\VERSION . ", (required " . Core::EXP_REQUIRE_MANIALIVE . ")\n" . "Please update your manialive version in order to continue.", New Exception3("ManiaLive version is too old!"));
+                $this->dumpException("Looks like your ManiaLive is too old to run this version of eXpansion.\n" . "Your ManiaLive version: " . \ManiaLive\Application\VERSION . ", (required " . Core::EXP_REQUIRE_MANIALIVE . ")\n" . "Please update your manialive version in order to continue.", new Exception3("ManiaLive version is too old!"));
                 exit();
             }
         }
@@ -627,7 +627,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @return Int The gamemode which is compatible with the current script. 0 if none
          */
-        final static public function eXpGetCurrentCompatibilityGameMode()
+        final public static function eXpGetCurrentCompatibilityGameMode()
         {
             $gameInfo = Storage2::getInstance()->gameInfos;
             if ($gameInfo->gameMode == GameInfos::GAMEMODE_SCRIPT) {
@@ -643,7 +643,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @return int The gamemode which is compatible with the script. 0 if none
          */
-        final static public function eXpGetScriptCompatibilityMode($scriptName)
+        final public static function eXpGetScriptCompatibilityMode($scriptName)
         {
             $class = get_called_class();
             $soft = true;
@@ -667,20 +667,20 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                 }
             } else {
                 switch ($compatibility) {
-                    case 'TIMEATTACK' :
+                    case 'TIMEATTACK':
                         $compatibility = GameInfos::GAMEMODE_TIMEATTACK;
                         break;
-                    case 'ROUNDS' :
-                    case 'ROUNDSBASE' :
+                    case 'ROUNDS':
+                    case 'ROUNDSBASE':
                         $compatibility = GameInfos::GAMEMODE_ROUNDS;
                         break;
-                    case 'TEAM' :
+                    case 'TEAM':
                         $compatibility = GameInfos::GAMEMODE_TEAM;
                         break;
-                    case 'CUP' :
+                    case 'CUP':
                         $compatibility = GameInfos::GAMEMODE_CUP;
                         break;
-                    default :
+                    default:
                         $compatibility = 0;
                 }
             }
@@ -833,7 +833,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         /**
          * @param ExpPlayer[] $playerPositions array(string => ExpPlayer);
          */
-        public function onPlayerNewPositions($playerPositions)
+        public function onPlayernewPositions($playerPositions)
         {
 
         }

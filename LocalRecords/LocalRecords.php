@@ -50,15 +50,18 @@ class LocalRecords extends LocalBase
             $gamemode = self::eXpGetCurrentCompatibilityGameMode();
 
             //If laps mode we need to ignore. Laps has it's own end map event(end finish lap)
-            if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS && $this->config->lapsModeCount1lap) //Laps mode has it own on Player finish event
+            //Laps mode has it own on Player finish event
+            if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS && $this->config->lapsModeCount1lap) {
                 return;
+            }
 
             $time = microtime();
             //We add the record to the buffer
             $this->addRecord($login, $timeOrScore, $gamemode, $this->checkpoints[$login]);
 
-            if (($this->debug & self::DEBUG_RECPROCESSTIME) == self::DEBUG_RECPROCESSTIME)
+            if (($this->debug & self::DEBUG_RECPROCESSTIME) == self::DEBUG_RECPROCESSTIME) {
                 $this->console("[eXp][DEBUG][LocalRecords:RECS]#### NEW RANK IN : " . (microtime() - $time) . "s BAD?");
+            }
         }
         //We reset the checkPoints
         $this->checkpoints[$login] = array();
@@ -78,8 +81,10 @@ class LocalRecords extends LocalBase
         if ($this->config->lapsModeCount1lap && isset($this->storage->players[$player->login]) && $time > 0) {
             $gamemode = self::eXpGetCurrentCompatibilityGameMode();
 
-            if ($gamemode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) //Laps mode has it own on Player finish event
+            //Laps mode has it own on Player finish event
+            if ($gamemode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) {
                 return;
+            }
 
             // if normal map, don't trigger the event for first lap :)
             if ($this->storage->currentMap->nbLaps == 0) {
@@ -180,8 +185,10 @@ class LocalRecords extends LocalBase
         $securedBy = \ManiaLive\Utilities\Time::fromTM($newTime - $oldTime);
         if (substr($securedBy, 0, 3) === "0:0") {
             $securedBy = substr($securedBy, 3);
-        } else if (substr($securedBy, 0, 2) === "0:") {
-            $securedBy = substr($securedBy, 2);
+        } else {
+            if (substr($securedBy, 0, 2) === "0:") {
+                $securedBy = substr($securedBy, 2);
+            }
         }
 
         return $securedBy;
@@ -206,10 +213,11 @@ class LocalRecords extends LocalBase
         if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
             switch ($this->storage->gameInfos->gameMode) {
                 case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS:
-                    if ($this->storage->gameInfos->roundsForcedLaps == 0)
+                    if ($this->storage->gameInfos->roundsForcedLaps == 0) {
                         return $this->storage->currentMap->nbLaps;
-                    else
+                    } else {
                         return $this->storage->gameInfos->roundsForcedLaps;
+                    }
 
                 case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM:
                 case \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP:
@@ -238,4 +246,5 @@ class LocalRecords extends LocalBase
             }
         }
     }
+
 }

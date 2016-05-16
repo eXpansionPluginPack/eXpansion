@@ -82,8 +82,9 @@ class i18n extends \ManiaLib\Utils\Singleton
      */
     protected function readFiles($dir)
     {
-        if (isset($this->handledDirectories[$dir]))
+        if (isset($this->handledDirectories[$dir])) {
             return;
+        }
 
         $this->handledDirectories[$dir] = true;
 
@@ -94,15 +95,17 @@ class i18n extends \ManiaLib\Utils\Singleton
                 $language = explode("/", $file);
                 $language = end($language);
                 $language = str_replace(".txt", "", $language);
-                if (empty($language))
+                if (empty($language)) {
                     continue;
+                }
                 $this->supportedLocales[] = $language;
                 $data = file($file, FILE_IGNORE_NEW_LINES);
                 for ($x = 0; $x < count($data) - 1; $x += 3) {
                     $orig = trim($data[$x]);
                     $trans = trim($data[$x + 1]);
-                    if (!DEBUG)
+                    if (!DEBUG) {
                         $trans = str_replace("#translate# ", "", $trans);
+                    }
 
                     if (!isset($this->messages[$orig])) {
                         $this->messages[$orig] = new i18n\Message($orig);
@@ -151,8 +154,9 @@ class i18n extends \ManiaLib\Utils\Singleton
      */
     public function getString($string, $fromLanguage = null)
     {
-        if ($fromLanguage == null)
+        if ($fromLanguage == null) {
             return $this->translate($string, $this->defaultLanguage);
+        }
 
         return $this->translate($string, $fromLanguage);
     }
@@ -179,10 +183,9 @@ class i18n extends \ManiaLib\Utils\Singleton
 
         if (isset($this->messages[$string])) {
             return $this->messages[$string]->getMessage($language);
-        } else
+        } else {
             return $string;
+        }
     }
 
 }
-
-?>

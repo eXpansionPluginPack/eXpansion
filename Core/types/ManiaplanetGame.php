@@ -14,5 +14,3 @@ class ManiaplanetGame
     const QUESTMANIA = "QuestMania";
     const ALL = "All";
 }
-
-?>

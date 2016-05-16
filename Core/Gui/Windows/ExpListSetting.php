@@ -146,8 +146,9 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         if ($this->var instanceof \ManiaLivePlugins\eXpansion\Core\types\config\types\HashList) {
             $key = $entries['key'];
-            if ($key != "")
+            if ($key != "") {
                 $this->var->setValue($key, $entries['value']);
+            }
         } else {
             $this->var->addValue($entries['value']);
         }
@@ -179,5 +180,3 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

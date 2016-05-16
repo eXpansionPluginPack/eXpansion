@@ -26,5 +26,4 @@ class NetStat extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
         $this->ipAddress = $player->iPAddress;
     }
 
-
 }

@@ -39,10 +39,12 @@ class Timer
     {
         $id = self::$nbTimers++;
         self::$times[$id] = microtime();
-        if ($print)
+        if ($print) {
             Console::println($message . ' Started ...');
-        if ($log)
+        }
+        if ($log) {
             Logger::info($message . ' Started ...');
+        }
 
         return $id;
     }
@@ -51,10 +53,12 @@ class Timer
     {
         if (isset(self::$times[$id])) {
             $time = microtime() - self::$times[$id];
-            if ($print)
+            if ($print) {
                 Console::println($message . ' Ended in : ' . $time . 'ms');
-            if ($log)
+            }
+            if ($log) {
                 Logger::info($message . ' Ended in : ' . $time . 'ms');
+            }
 
             return $time;
         }

@@ -18,8 +18,9 @@ class RpcObject extends AbstractStructure
      */
     public function __construct($json = false)
     {
-        if ($json)
+        if ($json) {
             $this->set(json_decode($json, true));
+        }
     }
 
     /**
@@ -29,7 +30,7 @@ class RpcObject extends AbstractStructure
      */
     public function set($data)
     {
-        foreach ($data AS $key => $value) {
+        foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $sub = new RpcObject();
                 $sub->set($value);

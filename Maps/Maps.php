@@ -357,7 +357,9 @@ class Maps extends ExpPlugin
         $this->is_onEndMatch = true;
 
         $this->config = Config::getInstance();
-        if ($this->wasWarmup) return;
+        if ($this->wasWarmup) {
+            return;
+        }
 
         $this->atPodium = true;
 
@@ -521,34 +523,40 @@ class Maps extends ExpPlugin
 
         $amount = $this->getQueuAmount();
 
-        if ($amount == 0 || AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_FREE)) $this->queueMap($login, $map, $isTemp);
-        else if ($amount != -1) {
-            if ($this->checkQueuMap($login, $map, true)) {
-
-                if ($this->paymentInProgress) {
-                    $msg = eXpGetMessage('#admin_error# $iA payment for wishin a track is in progress please try later.');
-                    $this->eXpChatSendServerMessage($msg, $login);
-
-                    return;
-                }
-
-                //Start Bill
-                $this->paymentInProgress = true;
-
-                if (!empty($this->donateConfig->toLogin)) $toLogin = $this->donateConfig->toLogin;
-                else $toLogin = $this->storage->serverLogin;
-
-                $bill = $this->eXpStartBill($login, $toLogin, $amount, __("Are you sure you want to wish this map to be played", $login),
-                    array($this, 'validateQueuMap'));
-
-                $bill->setSubject('map_wish');
-                $bill->setErrorCallback(5, array($this, 'failQueuMap'));
-                $bill->setErrorCallback(6, array($this, 'failQueuMap'));
-                $bill->map = $map;
-            }
+        if ($amount == 0 || AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_FREE)) {
+            $this->queueMap($login, $map, $isTemp);
         } else {
-            $msg = eXpGetMessage('#admin_error# $iYOu can\'t wish for a map at the moment.');
-            $this->eXpChatSendServerMessage($msg, $login);
+            if ($amount != -1) {
+                if ($this->checkQueuMap($login, $map, true)) {
+
+                    if ($this->paymentInProgress) {
+                        $msg = eXpGetMessage('#admin_error# $iA payment for wishin a track is in progress please try later.');
+                        $this->eXpChatSendServerMessage($msg, $login);
+
+                        return;
+                    }
+
+                    //Start Bill
+                    $this->paymentInProgress = true;
+
+                    if (!empty($this->donateConfig->toLogin)) {
+                        $toLogin = $this->donateConfig->toLogin;
+                    } else {
+                        $toLogin = $this->storage->serverLogin;
+                    }
+
+                    $bill = $this->eXpStartBill($login, $toLogin, $amount, __("Are you sure you want to wish this map to be played", $login),
+                        array($this, 'validateQueuMap'));
+
+                    $bill->setSubject('map_wish');
+                    $bill->setErrorCallback(5, array($this, 'failQueuMap'));
+                    $bill->setErrorCallback(6, array($this, 'failQueuMap'));
+                    $bill->map = $map;
+                }
+            } else {
+                $msg = eXpGetMessage('#admin_error# $iYOu can\'t wish for a map at the moment.');
+                $this->eXpChatSendServerMessage($msg, $login);
+            }
         }
     }
 
@@ -578,7 +586,9 @@ class Maps extends ExpPlugin
 
         if ($this->storage->currentMap->uId == $map->uId) {
             $msg = eXpGetMessage('#admin_error# $iThis map is currently playing...');
-            if ($sendMessages) $this->eXpChatSendServerMessage($msg, $login);
+            if ($sendMessages) {
+                $this->eXpChatSendServerMessage($msg, $login);
+            }
 
             return false;
         }
@@ -586,14 +596,18 @@ class Maps extends ExpPlugin
         foreach ($this->queue as $queue) {
             if ($queue->map->uId == $map->uId) {
                 $msg = eXpGetMessage('#admin_error# $iThis map is already in the queue...');
-                if ($sendMessages) $this->eXpChatSendServerMessage($msg, $login);
+                if ($sendMessages) {
+                    $this->eXpChatSendServerMessage($msg, $login);
+                }
 
                 return false;
             }
 
             if (!AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_ADMIN) && $queue->player->login == $login) {
                 $msg = eXpGetMessage('#admin_error# $iYou already have a map in the queue...');
-                if ($sendMessages) $this->eXpChatSendServerMessage($msg, $login);
+                if ($sendMessages) {
+                    $this->eXpChatSendServerMessage($msg, $login);
+                }
 
                 return false;
             }
@@ -605,7 +619,9 @@ class Maps extends ExpPlugin
                 if (isset($this->history[$cp])) {
                     if ($this->history[$cp]->uId == $map->uId) {
                         $msg = eXpGetMessage('#admin_error# $iMap has been played too recently...');
-                        if ($sendMessages) $this->eXpChatSendServerMessage($msg, $login);
+                        if ($sendMessages) {
+                            $this->eXpChatSendServerMessage($msg, $login);
+                        }
 
                         return false;
                     }
@@ -630,7 +646,9 @@ class Maps extends ExpPlugin
         $player = $this->storage->getPlayerObject($login);
 
         try {
-            if ($check && !$this->checkQueuMap($login, $map, true)) return;
+            if ($check && !$this->checkQueuMap($login, $map, true)) {
+                return;
+            }
 
             $this->queue[] = new MapWish($player, $map, $isTemp);
 
@@ -780,8 +798,11 @@ class Maps extends ExpPlugin
 
                 try {
                     unlink(Helper::getPaths()->getDefaultMapPath() . $map->fileName);
-                    if ($found) $additions = "playlist and disk!";
-                    else $additions = "disk!";
+                    if ($found) {
+                        $additions = "playlist and disk!";
+                    } else {
+                        $additions = "disk!";
+                    }
                 } catch (\Exception $ex) {
                     if ($found) {
                         $additions = "playlist";
@@ -974,7 +995,9 @@ class Maps extends ExpPlugin
      */
     public function chat_dropQueue($login = null)
     {
-        if ($login == null) return;
+        if ($login == null) {
+            return;
+        }
 
         if (count($this->queue) > 0) {
             $player = $this->storage->getPlayerObject($login);
@@ -1257,4 +1280,5 @@ class Maps extends ExpPlugin
         $action->deleteAction($this->actionShowJukeList);
         $action->deleteAction($this->actionShowMapList);
     }
+
 }

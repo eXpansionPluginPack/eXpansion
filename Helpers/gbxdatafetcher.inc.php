@@ -1,33 +1,33 @@
 <?php
 namespace ManiaLivePlugins\eXpansion\Helpers;
 
-/* vim: set noexpandtab tabstop=2 softtabstop=2 shiftwidth=2: */
+    /* vim: set noexpandtab tabstop=2 softtabstop=2 shiftwidth=2: */
 
-/**
- * GBXDataFetcher - Fetch GBX challenge/map/replay/pack data for TrackMania (TM)
- *                  & ManiaPlanet (MP) files
- * Created by Xymph <tm@gamers.org>
- * Thanks to Electron for additional input, prototyping & testing
- * Based on information at http://en.tm-wiki.org/wiki/GBX,
- * http://www.tm-forum.com/viewtopic.php?p=192817#p192817
- * and http://en.tm-wiki.org/wiki/PAK
- *
- * v2.8: Fix minor lookback strings bug
- * v2.7: Add class GBXPackHeaderFetcher for Included Packs info in GBXPackFetcher;
- *       move readFiletime method to base class; add $vehicle to GBXChallMapFetcher
- *       and GBXReplayFetcher; improved chunk handling; minor fixes
- * v2.6: Update GBXPackFetcher version-dependent processing; add $ghostBlocks to
- *       GBXChallMapFetcher; add $headerMaxSz & $downloadUrl to GBXPackFetcher
- * v2.5: Add lookback string Valley; strip optional digits from mood; fix empty
- *       thumbnail warning
- * v2.4: Update GBXChallMapFetcher & GBXPackFetcher version-dependent processing;
- *       update lookback strings
- * v2.3: Add UTF-8 decoding of parsed XML chunk's elements; strip UTF-8 BOM
- *       from various string fields
- * v2.2: Add class GBXPackFetcher; limit loadGBXdata() to first 256KB
- * v2.1: Add exception codes; add $thumbLen to GBXChallMapFetcher
- * v2.0: Complete rewrite
- */
+    /**
+     * GBXDataFetcher - Fetch GBX challenge/map/replay/pack data for TrackMania (TM)
+     *                  & ManiaPlanet (MP) files
+     * Created by Xymph <tm@gamers.org>
+     * Thanks to Electron for additional input, prototyping & testing
+     * Based on information at http://en.tm-wiki.org/wiki/GBX,
+     * http://www.tm-forum.com/viewtopic.php?p=192817#p192817
+     * and http://en.tm-wiki.org/wiki/PAK
+     *
+     * v2.8: Fix minor lookback strings bug
+     * v2.7: Add class GBXPackHeaderFetcher for Included Packs info in GBXPackFetcher;
+     *       move readFiletime method to base class; add $vehicle to GBXChallMapFetcher
+     *       and GBXReplayFetcher; improved chunk handling; minor fixes
+     * v2.6: Update GBXPackFetcher version-dependent processing; add $ghostBlocks to
+     *       GBXChallMapFetcher; add $headerMaxSz & $downloadUrl to GBXPackFetcher
+     * v2.5: Add lookback string Valley; strip optional digits from mood; fix empty
+     *       thumbnail warning
+     * v2.4: Update GBXChallMapFetcher & GBXPackFetcher version-dependent processing;
+     *       update lookback strings
+     * v2.3: Add UTF-8 decoding of parsed XML chunk's elements; strip UTF-8 BOM
+     *       from various string fields
+     * v2.2: Add class GBXPackFetcher; limit loadGBXdata() to first 256KB
+     * v2.1: Add exception codes; add $thumbLen to GBXChallMapFetcher
+     * v2.0: Complete rewrite
+     */
 
 /**
  * @class GBXBaseFetcher
@@ -65,10 +65,11 @@ class GBXBaseFetcher
         $this->_error = '';
 
         list($endiantest) = array_values(unpack('L1L', pack('V', 1)));
-        if ($endiantest != 1)
+        if ($endiantest != 1) {
             $this->_endianess = self::BIG_ENDIAN_ORDER;
-        else
+        } else {
             $this->_endianess = self::LITTLE_ENDIAN_ORDER;
+        }
 
         $this->clearGBXdata();
         $this->clearLookbacks();
@@ -96,8 +97,9 @@ class GBXBaseFetcher
     // print message to stderr if debugging
     protected function debugLog($msg)
     {
-        if ($this->_debug)
+        if ($this->_debug) {
             fwrite(STDERR, $msg . "\n");
+        }
     }
 
     // set error message prefix
@@ -117,10 +119,11 @@ class GBXBaseFetcher
     protected function loadGBXdata($filename)
     {
         $gbxdata = @file_get_contents($filename, false, null, 0, self::LOAD_LIMIT * 1024);
-        if ($gbxdata !== false)
+        if ($gbxdata !== false) {
             $this->storeGBXdata($gbxdata);
-        else
+        } else {
             $this->errorOut('Unable to read GBX data from ' . $filename, 1);
+        }
     }
 
     // store raw GBX data
@@ -129,8 +132,9 @@ class GBXBaseFetcher
         $this->_gbxdata = &$gbxdata;
         $this->_gbxlen = strlen($gbxdata);
         $this->_gbxptr = 0;
-        if ($this->_gbxlen > 0)
+        if ($this->_gbxlen > 0) {
             $this->debugLog('GBX data length: ' . $this->_gbxlen);
+        }
     }
 
     // retrieve raw GBX data
@@ -166,12 +170,14 @@ class GBXBaseFetcher
     // read $len bytes from GBX data
     protected function readData($len)
     {
-        if ($this->_gbxptr + $len > $this->_gbxlen)
+        if ($this->_gbxptr + $len > $this->_gbxlen) {
             $this->errorOut(sprintf('Insufficient data for %d bytes at pos 0x%04X',
                 $len, $this->_gbxptr), 2);
+        }
         $data = '';
-        while ($len-- > 0)
+        while ($len-- > 0) {
             $data .= $this->_gbxdata[$this->_gbxptr++];
+        }
 
         return $data;
     }
@@ -189,8 +195,9 @@ class GBXBaseFetcher
     protected function readInt16()
     {
         $data = $this->readData(2);
-        if ($this->_endianess == self::BIG_ENDIAN_ORDER)
+        if ($this->_endianess == self::BIG_ENDIAN_ORDER) {
             $data = strrev($data);
+        }
         list(, $int16) = unpack('s*', $data);
 
         return $int16;
@@ -200,8 +207,9 @@ class GBXBaseFetcher
     protected function readInt32()
     {
         $data = $this->readData(4);
-        if ($this->_endianess == self::BIG_ENDIAN_ORDER)
+        if ($this->_endianess == self::BIG_ENDIAN_ORDER) {
             $data = strrev($data);
+        }
         list(, $int32) = unpack('l*', $data);
 
         return $int32;
@@ -214,9 +222,10 @@ class GBXBaseFetcher
         $len = $this->readInt32();
         $len &= 0x7FFFFFFF;
         if ($len <= 0 || $len >= 0x12000) {  // for large XML & Data blocks
-            if ($len != 0)
+            if ($len != 0) {
                 $this->errorOut(sprintf('Invalid string length %d (0x%04X) at pos 0x%04X',
                     $len, $len, $gbxptr), 3);
+            }
         }
         $data = $this->readData($len);
 
@@ -241,8 +250,9 @@ class GBXBaseFetcher
         if (!isset($this->_lookbacks)) {
             $this->_lookbacks = array();
             $version = $this->readInt32();
-            if ($version != 3)
+            if ($version != 3) {
                 $this->errorOut('Unknown lookback strings version: ' . $version, 4);
+            }
         }
 
         // check index
@@ -289,8 +299,9 @@ class GBXBaseFetcher
     // XML parser functions
     private function startTag($parser, $name, $attribs)
     {
-        foreach ($attribs as $key => &$val)
+        foreach ($attribs as $key => &$val) {
             $val = utf8_decode($val);
+        }
         //echo 'startTag: ' . $name . "\n"; print_r($attribs);
         array_push($this->_parsestack, $name);
         if ($name == 'DEP') {
@@ -304,10 +315,11 @@ class GBXBaseFetcher
     private function charData($parser, $data)
     {
         //echo 'charData: ' . $data . "\n";
-        if (count($this->_parsestack) == 3)
+        if (count($this->_parsestack) == 3) {
             $this->xmlParsed[$this->_parsestack[1]][$this->_parsestack[2]] = $data;
-        elseif (count($this->_parsestack) > 3)
+        } elseif (count($this->_parsestack) > 3) {
             $this->debugLog('XML chunk nested too deeply: ' . print_r($this->_parsestack, true));
+        }
     }
 
     private function endTag($parser, $name)
@@ -327,10 +339,11 @@ class GBXBaseFetcher
         // escape '&' characters unless already a known entity
         $xml = preg_replace('/&(?!(?:amp|quot|apos|lt|gt);)/', '&amp;', $this->xml);
 
-        if (!xml_parse($xml_parser, utf8_encode($xml), true))
+        if (!xml_parse($xml_parser, utf8_encode($xml), true)) {
             $this->errorOut(sprintf('XML chunk parse error: %s at line %d',
                 xml_error_string(xml_get_error_code($xml_parser)),
                 xml_get_current_line_number($xml_parser)), 12);
+        }
 
         xml_parser_free($xml_parser);
     }
@@ -348,17 +361,20 @@ class GBXBaseFetcher
         // check magic header
         $data = $this->readData(3);
         $version = $this->readInt16();
-        if ($data != 'GBX')
+        if ($data != 'GBX') {
             $this->errorOut('No magic GBX header', 5);
-        if ($version != 6)
+        }
+        if ($version != 6) {
             $this->errorOut('Unsupported GBX version: ' . $version, 6);
+        }
 
         $this->moveGBXptr(4);  // skip format/compression/unknown bytes
 
         // check main class ID
         $mainClass = $this->readInt32();
-        if (!in_array($mainClass, $classes))
+        if (!in_array($mainClass, $classes)) {
             $this->errorOut(sprintf('Main class ID %08X not supported', $mainClass), 7);
+        }
         $this->debugLog(sprintf('GBX main class ID: %08X', $mainClass));
 
         // get header size
@@ -383,8 +399,9 @@ class GBXBaseFetcher
     {
         // get number of chunks
         $numChunks = $this->readInt32();
-        if ($numChunks == 0)
+        if ($numChunks == 0) {
             $this->errorOut('No GBX header chunks', 9);
+        }
 
         $this->debugLog('GBX number of header chunks: ' . $numChunks);
         $chunkStart = $this->getGBXptr();
@@ -414,9 +431,10 @@ class GBXBaseFetcher
 
         //$this->debugLog(print_r($chunksList, true));
         $totalSize = $chunkOffset - $chunkStart + 4;  // numChunks
-        if ($headerSize != $totalSize)
+        if ($headerSize != $totalSize) {
             $this->errorOut(sprintf('Chunk list size mismatch: %d <> %d',
                 $headerSize, $totalSize), 10);
+        }
 
         return $chunksList;
     }  // getChunksList
@@ -440,19 +458,23 @@ class GBXBaseFetcher
      */
     protected function getXMLChunk(array $chunksList)
     {
-        if (!isset($chunksList['XML'])) return;
+        if (!isset($chunksList['XML'])) {
+            return;
+        }
 
         $this->initChunk($chunksList['XML']['off']);
         $this->xml = $this->readString();
         $xmlLen = strlen($this->xml);
 
         // check for XML chunk that's not zero-filled
-        if ($xmlLen > 0 && $chunksList['XML']['size'] != $xmlLen + 4)
+        if ($xmlLen > 0 && $chunksList['XML']['size'] != $xmlLen + 4) {
             $this->errorOut(sprintf('XML chunk size mismatch: %d <> %d',
                 $chunksList['XML']['size'], $xmlLen + 4), 11);
+        }
 
-        if ($this->parseXml && $this->xml != '')
+        if ($this->parseXml && $this->xml != '') {
             $this->parseXMLstring();
+        }
     }  // getXMLChunk
 
     /**
@@ -475,7 +497,9 @@ class GBXBaseFetcher
      */
     protected function getAuthorChunk(array $chunksList)
     {
-        if (!isset($chunksList['Author'])) return;
+        if (!isset($chunksList['Author'])) {
+            return;
+        }
 
         $this->initChunk($chunksList['Author']['off']);
         $version = $this->readInt32();
@@ -504,10 +528,14 @@ class GBXBaseFetcher
         // check for 64-bit platform
         if (PHP_INT_SIZE >= 8) {
             // use native math
-            if ($lo < 0) $lo += (1 << 32);
+            if ($lo < 0) {
+                $lo += (1 << 32);
+            }
             $date = ($hi << 32) + $lo;
             $this->debugLog(sprintf('PAK CreationDate source: %016x', $date));
-            if ($date == 0) return -1;
+            if ($date == 0) {
+                return -1;
+            }
 
             // convert to Unix timestamp in usec
             $stamp = ($date - (int)$EPOCHDIFF) / 10;
@@ -519,7 +547,9 @@ class GBXBaseFetcher
             // check for 32-bit platform
         } elseif (PHP_INT_SIZE >= 4) {
             $this->debugLog(sprintf('PAK CreationDate source: %08x%08x', $hi, $lo));
-            if ($lo == 0 && $hi == 0) return -1;
+            if ($lo == 0 && $hi == 0) {
+                return -1;
+            }
 
             // workaround signed/unsigned braindamage on x32
             $lo = sprintf('%u', $lo);
@@ -740,8 +770,9 @@ class GBXChallMapFetcher extends GBXBaseFetcher
 
         $this->parseXml = (bool)$parsexml;
         $this->tnImage = (bool)$tnimage;
-        if ((bool)$debug)
+        if ((bool)$debug) {
             $this->enableDebug();
+        }
 
         $this->setError('GBX map error: ');
     }  // __construct
@@ -782,8 +813,9 @@ class GBXChallMapFetcher extends GBXBaseFetcher
         );
 
         $headerSize = $this->checkHeader($challclasses);
-        if ($headerSize == 0)
+        if ($headerSize == 0) {
             $this->errorOut('No GBX header block', 8);
+        }
         $headerStart = $headerEnd = $this->getGBXptr();
 
         // desired challenge/map chunk IDs
@@ -821,43 +853,56 @@ class GBXChallMapFetcher extends GBXBaseFetcher
         $this->getAuthorChunk($chunksList);
         $headerEnd = max($headerEnd, $this->getGBXptr());
 
-        if ($headerSize != $headerEnd - $headerStart)
+        if ($headerSize != $headerEnd - $headerStart) {
             $this->errorOut(sprintf('Header size mismatch: %d <> %d',
                 $headerSize, $headerEnd - $headerStart), 16);
+        }
 
         if ($this->parseXml) {
-            if (isset($this->xmlParsed['HEADER']['VERSION']))
+            if (isset($this->xmlParsed['HEADER']['VERSION'])) {
                 $this->xmlVer = $this->xmlParsed['HEADER']['VERSION'];
-            if (isset($this->xmlParsed['HEADER']['EXEVER']))
+            }
+            if (isset($this->xmlParsed['HEADER']['EXEVER'])) {
                 $this->exeVer = $this->xmlParsed['HEADER']['EXEVER'];
-            if (isset($this->xmlParsed['HEADER']['EXEBUILD']))
+            }
+            if (isset($this->xmlParsed['HEADER']['EXEBUILD'])) {
                 $this->exeBld = $this->xmlParsed['HEADER']['EXEBUILD'];
-            if ($this->lightmap == 0 && isset($this->xmlParsed['HEADER']['LIGHTMAP']))
+            }
+            if ($this->lightmap == 0 && isset($this->xmlParsed['HEADER']['LIGHTMAP'])) {
                 $this->lightmap = (int)$this->xmlParsed['HEADER']['LIGHTMAP'];
-            if ($this->authorZone == '' && isset($this->xmlParsed['IDENT']['AUTHORZONE']))
+            }
+            if ($this->authorZone == '' && isset($this->xmlParsed['IDENT']['AUTHORZONE'])) {
                 $this->authorZone = $this->xmlParsed['IDENT']['AUTHORZONE'];
-            if ($this->envir == 'UNKNOWN' && isset($this->xmlParsed['DESC']['ENVIR']))
+            }
+            if ($this->envir == 'UNKNOWN' && isset($this->xmlParsed['DESC']['ENVIR'])) {
                 $this->envir = $this->xmlParsed['DESC']['ENVIR'];
-            if ($this->nbLaps == 0 && isset($this->xmlParsed['DESC']['NBLAPS']))
+            }
+            if ($this->nbLaps == 0 && isset($this->xmlParsed['DESC']['NBLAPS'])) {
                 $this->nbLaps = (int)$this->xmlParsed['DESC']['NBLAPS'];
-            if (isset($this->xmlParsed['DESC']['VALIDATED']))
+            }
+            if (isset($this->xmlParsed['DESC']['VALIDATED'])) {
                 $this->validated = (bool)$this->xmlParsed['DESC']['VALIDATED'];
-            if (isset($this->xmlParsed['DESC']['MOD']))
+            }
+            if (isset($this->xmlParsed['DESC']['MOD'])) {
                 $this->modName = $this->xmlParsed['DESC']['MOD'];
-            if (isset($this->xmlParsed['PLAYERMODEL']['ID']))
+            }
+            if (isset($this->xmlParsed['PLAYERMODEL']['ID'])) {
                 $this->vehicle = $this->xmlParsed['PLAYERMODEL']['ID'];
+            }
 
             // extract optional song & mod filenames
             if (!empty($this->xmlParsed['DEPS'])) {
                 for ($i = 0; $i < count($this->xmlParsed['DEPS']); $i++) {
                     if (preg_match('/ChallengeMusics\\\\(.+)/', $this->xmlParsed['DEPS'][$i]['FILE'], $path)) {
                         $this->songFile = $path[1];
-                        if (isset($this->xmlParsed['DEPS'][$i]['URL']))
+                        if (isset($this->xmlParsed['DEPS'][$i]['URL'])) {
                             $this->songUrl = $this->xmlParsed['DEPS'][$i]['URL'];
+                        }
                     } elseif (preg_match('/.+\\\\Mod\\\\.+/', $this->xmlParsed['DEPS'][$i]['FILE'], $path)) {
                         $this->modFile = $path[0];
-                        if (isset($this->xmlParsed['DEPS'][$i]['URL']))
+                        if (isset($this->xmlParsed['DEPS'][$i]['URL'])) {
                             $this->modUrl = $this->xmlParsed['DEPS'][$i]['URL'];
+                        }
                     }
                 }
             }
@@ -874,7 +919,9 @@ class GBXChallMapFetcher extends GBXBaseFetcher
      */
     protected function getInfoChunk(array $chunksList)
     {
-        if (!isset($chunksList['Info'])) return;
+        if (!isset($chunksList['Info'])) {
+            return;
+        }
 
         $this->initChunk($chunksList['Info']['off']);
         $version = $this->readInt8();
@@ -899,8 +946,9 @@ class GBXChallMapFetcher extends GBXBaseFetcher
 
             $this->authorTime = $this->readInt32();
 
-            if ($version == 2)
-                $this->moveGBXptr(1);  // skip unknown byte
+            if ($version == 2) {
+                $this->moveGBXptr(1);
+            }  // skip unknown byte
 
             if ($version >= 4) {
                 $this->cost = $this->readInt32();
@@ -908,8 +956,9 @@ class GBXChallMapFetcher extends GBXBaseFetcher
                 if ($version >= 5) {
                     $this->multiLap = (bool)$this->readInt32();
 
-                    if ($version == 6)
-                        $this->moveGBXptr(4);  // skip unknown bool
+                    if ($version == 6) {
+                        $this->moveGBXptr(4);
+                    }  // skip unknown bool
 
                     if ($version >= 7) {
                         $this->type = $this->readInt32();
@@ -976,7 +1025,9 @@ class GBXChallMapFetcher extends GBXBaseFetcher
      */
     protected function getStringChunk(array $chunksList)
     {
-        if (!isset($chunksList['String'])) return;
+        if (!isset($chunksList['String'])) {
+            return;
+        }
 
         $this->initChunk($chunksList['String']['off']);
         $version = $this->readInt8();
@@ -1060,8 +1111,9 @@ class GBXChallMapFetcher extends GBXBaseFetcher
                                 $this->mapType = $this->readString();
                                 $this->mapStyle = $this->readString();
 
-                                if ($version <= 8)
-                                    $this->moveGBXptr(4);  // skip unknown bool
+                                if ($version <= 8) {
+                                    $this->moveGBXptr(4);
+                                }  // skip unknown bool
 
                                 if ($version >= 8) {
                                     $this->moveGBXptr(8);  // skip lightmapCacheUID
@@ -1090,7 +1142,9 @@ class GBXChallMapFetcher extends GBXBaseFetcher
      */
     protected function getVersionChunk(array $chunksList)
     {
-        if (!isset($chunksList['Version'])) return;
+        if (!isset($chunksList['Version'])) {
+            return;
+        }
 
         $this->initChunk($chunksList['Version']['off']);
         $this->headerVersn = $this->readInt32();
@@ -1104,7 +1158,9 @@ class GBXChallMapFetcher extends GBXBaseFetcher
      */
     protected function getThumbnlChunk(array $chunksList)
     {
-        if (!isset($chunksList['Thumbnl'])) return;
+        if (!isset($chunksList['Thumbnl'])) {
+            return;
+        }
 
         $this->initChunk($chunksList['Thumbnl']['off']);
         $version = $this->readInt32();
@@ -1262,8 +1318,9 @@ class GBXReplayFetcher extends GBXBaseFetcher
         $this->vehicle = '';
 
         $this->parseXml = (bool)$parsexml;
-        if ((bool)$debug)
+        if ((bool)$debug) {
             $this->enableDebug();
+        }
 
         $this->setError('GBX replay error: ');
     }  // __construct
@@ -1305,8 +1362,9 @@ class GBXReplayFetcher extends GBXBaseFetcher
         );
 
         $headerSize = $this->checkHeader($replayclasses);
-        if ($headerSize == 0)
+        if ($headerSize == 0) {
             $this->errorOut('No GBX header block', 8);
+        }
         $headerStart = $headerEnd = $this->getGBXptr();
 
         // desired replay chunk IDs
@@ -1329,29 +1387,39 @@ class GBXReplayFetcher extends GBXBaseFetcher
         $this->getAuthorChunk($chunksList);
         $headerEnd = max($headerEnd, $this->getGBXptr());
 
-        if ($headerSize != $headerEnd - $headerStart)
+        if ($headerSize != $headerEnd - $headerStart) {
             $this->errorOut(sprintf('Header size mismatch: %d <> %d',
                 $headerSize, $headerEnd - $headerStart), 20);
+        }
 
         if ($this->parseXml) {
-            if (isset($this->xmlParsed['HEADER']['VERSION']))
+            if (isset($this->xmlParsed['HEADER']['VERSION'])) {
                 $this->xmlVer = $this->xmlParsed['HEADER']['VERSION'];
-            if (isset($this->xmlParsed['HEADER']['EXEVER']))
+            }
+            if (isset($this->xmlParsed['HEADER']['EXEVER'])) {
                 $this->exeVer = $this->xmlParsed['HEADER']['EXEVER'];
-            if (isset($this->xmlParsed['HEADER']['EXEBUILD']))
+            }
+            if (isset($this->xmlParsed['HEADER']['EXEBUILD'])) {
                 $this->exeBld = $this->xmlParsed['HEADER']['EXEBUILD'];
-            if (isset($this->xmlParsed['TIMES']['RESPAWNS']))
+            }
+            if (isset($this->xmlParsed['TIMES']['RESPAWNS'])) {
                 $this->respawns = (int)$this->xmlParsed['TIMES']['RESPAWNS'];
-            if (isset($this->xmlParsed['TIMES']['STUNTSCORE']))
+            }
+            if (isset($this->xmlParsed['TIMES']['STUNTSCORE'])) {
                 $this->stuntScore = (int)$this->xmlParsed['TIMES']['STUNTSCORE'];
-            if (isset($this->xmlParsed['TIMES']['VALIDABLE']))
+            }
+            if (isset($this->xmlParsed['TIMES']['VALIDABLE'])) {
                 $this->validable = (bool)$this->xmlParsed['TIMES']['VALIDABLE'];
-            if (isset($this->xmlParsed['CHECKPOINTS']['CUR']))
+            }
+            if (isset($this->xmlParsed['CHECKPOINTS']['CUR'])) {
                 $this->cpsCur = (int)$this->xmlParsed['CHECKPOINTS']['CUR'];
-            if (isset($this->xmlParsed['CHECKPOINTS']['ONELAP']))
+            }
+            if (isset($this->xmlParsed['CHECKPOINTS']['ONELAP'])) {
                 $this->cpsLap = (int)$this->xmlParsed['CHECKPOINTS']['ONELAP'];
-            if (isset($this->xmlParsed['PLAYERMODEL']['ID']))
+            }
+            if (isset($this->xmlParsed['PLAYERMODEL']['ID'])) {
                 $this->vehicle = $this->xmlParsed['PLAYERMODEL']['ID'];
+            }
         }
 
         $this->clearGBXdata();
@@ -1365,7 +1433,9 @@ class GBXReplayFetcher extends GBXBaseFetcher
      */
     protected function getStringChunk(array $chunksList)
     {
-        if (!isset($chunksList['String'])) return;
+        if (!isset($chunksList['String'])) {
+            return;
+        }
 
         $this->initChunk($chunksList['String']['off']);
         $version = $this->readInt32();
@@ -1440,8 +1510,9 @@ class GBXPackFetcher extends GBXBaseFetcher
         $this->packHeaders = array();
 
         $this->parseXml = (bool)$parsexml;
-        if ((bool)$debug)
+        if ((bool)$debug) {
             $this->enableDebug();
+        }
 
         $this->setError('GBX pack error: ');
     }  // __construct
@@ -1477,18 +1548,21 @@ class GBXPackFetcher extends GBXBaseFetcher
     {
         // check magic header
         $data = $this->readData(8);
-        if ($data != 'NadeoPak')
+        if ($data != 'NadeoPak') {
             $this->errorOut('No magic NadeoPak header', 5);
+        }
 
         $this->headerVersn = $this->readInt32();
-        if ($this->headerVersn < 6)
+        if ($this->headerVersn < 6) {
             $this->errorOut(sprintf('Pack version %d not supported', $this->headerVersn), 24);
+        }
 
         $this->moveGBXptr(32);  // skip ContentsChecksum
 
         $this->flags = $this->readInt32(); // DecryptFlags
-        if ($this->headerVersn >= 15)
-            $this->headerMaxSz = $this->readInt32(); // 0x4000 = small, 0x100000 = big, 0x1000000 = huge
+        if ($this->headerVersn >= 15) {
+            $this->headerMaxSz = $this->readInt32();
+        } // 0x4000 = small, 0x100000 = big, 0x1000000 = huge
 
         if ($this->headerVersn >= 7) {
             $this->getAuthorFields();
@@ -1507,8 +1581,9 @@ class GBXPackFetcher extends GBXBaseFetcher
             } else {  // >= 9
                 $this->infoMlUrl = $this->readString();
 
-                if ($this->headerVersn >= 13)
+                if ($this->headerVersn >= 13) {
                     $this->downloadUrl = $this->readString();
+                }
 
                 $this->creatDate = $this->readFiletime();
 
@@ -1521,12 +1596,15 @@ class GBXPackFetcher extends GBXBaseFetcher
                     if ($this->parseXml && $this->xml != '') {
                         $this->parseXMLstring();
 
-                        if (isset($this->xmlParsed['HEADER']['EXEVER']))
+                        if (isset($this->xmlParsed['HEADER']['EXEVER'])) {
                             $this->exeVer = $this->xmlParsed['HEADER']['EXEVER'];
-                        if (isset($this->xmlParsed['HEADER']['EXEBUILD']))
+                        }
+                        if (isset($this->xmlParsed['HEADER']['EXEBUILD'])) {
                             $this->exeBld = $this->xmlParsed['HEADER']['EXEBUILD'];
-                        if (isset($this->xmlParsed['IDENT']['CREATIONDATE']))
+                        }
+                        if (isset($this->xmlParsed['IDENT']['CREATIONDATE'])) {
                             $this->xmlDate = $this->xmlParsed['IDENT']['CREATIONDATE'];
+                        }
                     }
                 }
 
@@ -1630,9 +1708,9 @@ class GBXPackHeaderFetcher extends GBXBaseFetcher
 
         $this->name = $this->readString();  // duplicate
 
-        if ($this->_headerVersn >= 11)
+        if ($this->_headerVersn >= 11) {
             $this->nestLevel = $this->readInt32();
+        }
     }  // processGBX
 
 }  // class GBXPackHeaderFetcher
-?>

@@ -16,6 +16,3 @@ interface GlobalEventListener
 
     public function eXpAutoloadComplete();
 }
-
-?>
-

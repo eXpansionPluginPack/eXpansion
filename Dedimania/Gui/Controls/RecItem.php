@@ -14,9 +14,9 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
     protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish, $label_login;
     protected $bg, $button_report;
-    private $widths;
+    protected $widths;
 
-    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $record, $widths)
+    public function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $record, $widths)
     {
         $this->widths = $widths;
         $this->sizeY = 6;
@@ -80,19 +80,16 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
 
-    /*
+    /**
      * custom function to remove contents.
      */
-
-    function erase()
+    public function erase()
     {
         parent::destroy();
     }
 }
-
-?>

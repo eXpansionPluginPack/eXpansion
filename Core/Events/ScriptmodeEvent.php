@@ -130,7 +130,7 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
 
     protected static $const = array();
 
-    function __construct($onWhat)
+    public function __construct($onWhat)
     {
         parent::__construct($onWhat);
         $params = func_get_args();
@@ -146,17 +146,19 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
         }
     }
 
-    function fixBooleans(&$array)
+    public function fixBooleans(&$array)
     {
         foreach ($array as $key => $value) {
-            if ($value == "True")
+            if ($value == "True") {
                 $array[$key] = true;
-            if ($value == "False")
+            }
+            if ($value == "False") {
                 $array[$key] = false;
+            }
         }
     }
 
-    function fireDo($listener)
+    public function fireDo($listener)
     {
         $p = $this->params;
         $params = $p[0];

@@ -31,7 +31,7 @@ class Message
      */
     private $args = array();
 
-    function __construct($orginalMessage)
+    public function __construct($orginalMessage)
     {
         $this->originalMessage = $orginalMessage;
     }
@@ -106,10 +106,12 @@ class Message
     {
         if ($lang == null) {
             return isset($this->lmessages[self::$defaultLanguage]) ? $this->lmessages[self::$defaultLanguage] : $this->originalMessage;
-        } else if (isset($this->lmessages[$lang]))
-            return $this->lmessages[$lang];
-        else {
-            return isset($this->lmessages[self::$defaultLanguage]) ? $this->lmessages[self::$defaultLanguage] : $this->originalMessage;
+        } else {
+            if (isset($this->lmessages[$lang])) {
+                return $this->lmessages[$lang];
+            } else {
+                return isset($this->lmessages[self::$defaultLanguage]) ? $this->lmessages[self::$defaultLanguage] : $this->originalMessage;
+            }
         }
     }
 
@@ -119,5 +121,3 @@ class Message
     }
 
 }
-
-?>

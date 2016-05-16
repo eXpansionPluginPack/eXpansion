@@ -98,7 +98,7 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pagerFrame->clearItems();
         $this->items = array();
 
-        $this->populateFromDir($var, ConfigManager::dirName, true);
+        $this->populateFromDir($var, ConfigManager::DIRNAME, true);
         $this->populateFromDir($var, 'libraries/ManiaLivePlugins/eXpansion/Core/defaultConfigs', false);
     }
 
@@ -146,4 +146,4 @@ class ConfSwitcher extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::destroy();
     }
 
-} 
+}

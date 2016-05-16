@@ -12,7 +12,7 @@ class QuitWindow
     protected $entry;
     protected $label;
     /** @var \ManiaLive\Data\Storage */
-    private $storage;
+    protected $storage;
 
     public function getXml()
     {
@@ -54,5 +54,3 @@ class QuitWindow
     }
 
 }
-
-?>

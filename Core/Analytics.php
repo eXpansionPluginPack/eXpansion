@@ -65,7 +65,7 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 
     private $nbError = 0;
 
-    function __construct()
+    public function __construct()
     {
         $this->storage = Storage::getInstance();
         $this->expStorage = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance();
@@ -126,7 +126,7 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
     /**
      * Event launch every seconds
      */
-    function onTick()
+    public function onTick()
     {
         if (!$this->active || $this->key == null) {
             if (!$this->running && $this->lasPing + self::NOT_ACTIVE_PING < time()) {
@@ -155,14 +155,15 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 
         $url = $this->url . "?" . $this->generate($data);
 
-        $access->httpGet($url, Array($this, "completeHandshake"), $data, "Manialive/eXpansion", "application/json");
+        $access->httpGet($url, array($this, "completeHandshake"), $data, "Manialive/eXpansion", "application/json");
     }
 
     public function completeHandshake($data)
     {
         $this->running = false;
-        if (!$data)
+        if (!$data) {
             return;
+        }
 
         $json = json_decode($data);
 
@@ -220,10 +221,10 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 
             $url = $this->url . "?" . $this->generate($data);
 
-            $access->httpGet($url, Array($this, "completeError"), $data, "Manialive/eXpansion", "application/json");
+            $access->httpGet($url, array($this, "completeError"), $data, "Manialive/eXpansion", "application/json");
         } else {
             $url = $this->url . "?" . $this->generate($data);
-            $access->httpGet($url, Array($this, "completePing"), $data, "Manialive/eXpansion", "application/json");
+            $access->httpGet($url, array($this, "completePing"), $data, "Manialive/eXpansion", "application/json");
         }
     }
 

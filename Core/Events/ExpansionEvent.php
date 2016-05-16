@@ -10,7 +10,7 @@ class ExpansionEvent extends \ManiaLive\Event\Event
 
     protected $params;
 
-    function __construct($onWhat)
+    public function __construct($onWhat)
     {
         parent::__construct($onWhat);
         $params = func_get_args();
@@ -21,7 +21,7 @@ class ExpansionEvent extends \ManiaLive\Event\Event
     /**
      * @param ExpansionEventListener $listener
      */
-    function fireDo($listener)
+    public function fireDo($listener)
     {
         $p = $this->params;
         switch ($this->onWhat) {

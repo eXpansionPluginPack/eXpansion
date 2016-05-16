@@ -35,5 +35,3 @@ interface ServerSettingsEventListener
 
     public function onServerSettingsChange(ServerOptions $oldSettings, ServerOptions $newSettings, $changes);
 }
-
-?>

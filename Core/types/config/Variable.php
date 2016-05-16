@@ -155,18 +155,20 @@ abstract class Variable
 
     public function getIsGlobal()
     {
-        if ($this->scopeHandler == null)
+        if ($this->scopeHandler == null) {
             return $this->scope == self::SCOPE_GLOBAL;
-        else
+        } else {
             return $this->scopeHandler->getRawValue() == self::SCOPE_GLOBAL;
+        }
     }
 
     public function getScope()
     {
-        if ($this->scopeHandler == null)
+        if ($this->scopeHandler == null) {
             return $this->scope;
-        else
+        } else {
             return $this->scopeHandler->getRawValue();
+        }
     }
 
     /**
@@ -342,12 +344,15 @@ abstract class Variable
 
     public function basicValueCheck($value)
     {
-        if ($value == null && $this->canBeNull)
+        if ($value == null && $this->canBeNull) {
             return true;
-        else if (!empty($this->possibleValues))
-            return \in_array($value, $this->possibleValues);
-        else
-            return true;
+        } else {
+            if (!empty($this->possibleValues)) {
+                return \in_array($value, $this->possibleValues);
+            } else {
+                return true;
+            }
+        }
     }
 
     public function castValue($value)
@@ -372,5 +377,3 @@ abstract class Variable
 
     abstract function getPreviewValues();
 }
-
-?>

@@ -17,7 +17,9 @@ class Dedimania extends DedimaniaAbstract
 
     public function onBeginMap($map, $warmUp, $matchContinuation)
     {
-        if (!$this->running) return;
+        if (!$this->running) {
+            return;
+        }
         $this->records = array();
         $this->rankings = array();
         $this->vReplay = "";
@@ -28,15 +30,25 @@ class Dedimania extends DedimaniaAbstract
 
     public function onPlayerFinish($playerUid, $login, $time)
     {
-        if (!$this->running) return;
-        if ($time == 0) return;
+        if (!$this->running) {
+            return;
+        }
+        if ($time == 0) {
+            return;
+        }
 
-        if ($this->storage->currentMap->nbCheckpoints == 1) return;
+        if ($this->storage->currentMap->nbCheckpoints == 1) {
+            return;
+        }
 
-        if (!array_key_exists($login, DediConnection::$players)) return;
+        if (!array_key_exists($login, DediConnection::$players)) {
+            return;
+        }
 
         // if player is banned from dedimania, don't send his time.
-        if (DediConnection::$players[$login]->banned) return;
+        if (DediConnection::$players[$login]->banned) {
+            return;
+        }
 
         if (self::eXpGetCurrentCompatibilityGameMode() == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) {
             return;
@@ -132,9 +144,11 @@ class Dedimania extends DedimaniaAbstract
                         $login, $this->records
                     )
                     ) // have to recheck if the player is still at the dedi array
+                    {
                         \ManiaLive\Event\Dispatcher::dispatch(
                             new DediEvent(DediEvent::ON_DEDI_RECORD, $this->records[$login], $oldRecord)
                         );
+                    }
 
                     return;
                 }
@@ -156,10 +170,11 @@ class Dedimania extends DedimaniaAbstract
                 $this->reArrage($login);
 
                 // have to recheck if the player is still at the dedi array
-                if (array_key_exists($login, $this->records))
+                if (array_key_exists($login, $this->records)) {
                     \ManiaLive\Event\Dispatcher::dispatch(
                         new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login])
                     );
+                }
 
                 return;
             }
@@ -174,7 +189,9 @@ class Dedimania extends DedimaniaAbstract
      */
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-        if (!$this->running) return;
+        if (!$this->running) {
+            return;
+        }
         if ($this->wasWarmup) {
             $this->console("[Dedimania] the last round was warmup, deditimes not send for warmup!");
 
@@ -195,7 +212,9 @@ class Dedimania extends DedimaniaAbstract
             }
         }
 
-        if ($this->expStorage->isRelay) return;
+        if ($this->expStorage->isRelay) {
+            return;
+        }
 
         try {
             if (sizeof($rankings) == 0) {
@@ -234,6 +253,5 @@ class Dedimania extends DedimaniaAbstract
         $this->checkpoints = array();
         $this->bestTimes = array();
     }
-}
 
-?>
+}

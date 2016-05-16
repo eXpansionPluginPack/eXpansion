@@ -34,6 +34,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
 {
 
     private $pid;
+
     private $id;
 
     private $results = array();
@@ -53,13 +54,14 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
     private $fileName;
 
 
-    function __construct($cmds, $callback, $executionName = "")
+    public function __construct($cmds, $callback, $executionName = "")
     {
         $this->id = time() . '.' . rand(0, 100000);
         $this->callback = $callback;
 
-        if (!file_exists('tmp'))
+        if (!file_exists('tmp')) {
             mkdir('tmp/');
+        }
 
         $this->cmds = $cmds;
 
@@ -172,8 +174,9 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
     {
         exec("ps ax | grep " . $this->pid . " 2>&1", $output);
 
-        if (!$output)
+        if (!$output) {
             return false;
+        }
 
         while (list(, $row) = each($output)) {
 
@@ -192,7 +195,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
     /**
      * Event launch every seconds
      */
-    function onTick()
+    public function onTick()
     {
         if (!$this->PsExists()) {
             if (empty($this->cmds) || $this->return != 0) {
@@ -213,4 +216,5 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
     {
         return $this->values[$key];
     }
+
 }

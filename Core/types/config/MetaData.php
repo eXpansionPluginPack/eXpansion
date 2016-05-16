@@ -297,10 +297,11 @@ abstract class MetaData
      */
     protected function addGameModeCompability($gameMode, $scriptName = null)
     {
-        if ($scriptName == null || $gameMode != GameInfos::GAMEMODE_SCRIPT)
+        if ($scriptName == null || $gameMode != GameInfos::GAMEMODE_SCRIPT) {
             $this->gameModeSupport[$gameMode] = true;
-        else
+        } else {
             $this->gameModeSupport[$gameMode][$scriptName] = true;
+        }
     }
 
     public function getGameModeCompability()
@@ -408,8 +409,9 @@ abstract class MetaData
             if ($gamemode == null) {
                 $storage = \ManiaLive\Data\Storage::getInstance();
                 $gamemode = $storage->gameInfos->gameMode;
-                if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT)
+                if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
                     $scriptName = $storage->gameInfos->scriptName;
+                }
             }
 
             //Scrit mode special checking.
@@ -436,8 +438,10 @@ abstract class MetaData
             foreach ($this->gameModeSupport[0] as $supportedScript) {
                 if ($this->softScriptCompatibility && strpos($scriptName, $supportedScript) !== false) {
                     return true;
-                } else if ($scriptName == $supportedScript) {
-                    return true;
+                } else {
+                    if ($scriptName == $supportedScript) {
+                        return true;
+                    }
                 }
             }
         }
@@ -453,8 +457,9 @@ abstract class MetaData
                 /**
                  * @var Storage $storage
                  */
-                if ($this->checkTitleCompatibility(\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId))
+                if ($this->checkTitleCompatibility(\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId)) {
                     return true;
+                }
                 $titleName = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->simpleEnviTitle;
             } else {
                 $titleName = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId;
@@ -465,8 +470,10 @@ abstract class MetaData
             foreach ($this->titleSupport as $supportedTitle) {
                 if ($this->softTitleSupport && strpos($titleName, $supportedTitle) !== false) {
                     return true;
-                } else if ($titleName == $supportedTitle) {
-                    return true;
+                } else {
+                    if ($titleName == $supportedTitle) {
+                        return true;
+                    }
                 }
             }
 
@@ -496,5 +503,3 @@ abstract class MetaData
     }
 
 }
-
-?>

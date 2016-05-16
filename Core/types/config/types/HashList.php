@@ -46,8 +46,9 @@ class HashList extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
         }
 
         $list = $this->getRawValue();
-        if ($list == null)
+        if ($list == null) {
             $list = array();
+        }
         $list[$key] = $this->type->castValue($value);
 
         return $this->setRawValue($list);
@@ -56,8 +57,9 @@ class HashList extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
     public function getValue($key)
     {
         $list = $this->getRawValue();
-        if ($list == null)
+        if ($list == null) {
             $list = array();
+        }
 
         return isset($list[$key]) ? $list[$key] : null;
     }
@@ -87,5 +89,3 @@ class HashList extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
     }
 
 }
-
-?>

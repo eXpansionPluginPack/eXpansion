@@ -22,5 +22,3 @@ class DediMap extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
     }
 
 }
-
-?>

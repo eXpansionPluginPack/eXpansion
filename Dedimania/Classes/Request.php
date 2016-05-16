@@ -7,25 +7,26 @@ class Request
 
     private $requests = array();
 
-    function __construct($method, $args)
+    public function __construct($method, $args)
     {
         $this->requests[] = $this->generate($method, $args);
     }
 
-    function add($method, $args)
+    public function add($method, $args)
     {
         $this->requests[] = $this->generate($method, $args);
     }
 
-    function generate($method, $args)
+    public function generate($method, $args)
     {
-        if ($args == null)
+        if ($args == null) {
             return array('methodName' => $method);
+        }
 
         return array('methodName' => $method, 'params' => $args);
     }
 
-    function getXml()
+    public function getXml()
     {
 
         $params = $this->requests;
@@ -63,12 +64,12 @@ class IXR_Base64
 {
     private $data;
 
-    function __construct($data)
+    public function __construct($data)
     {
         $this->data = $data;
     }
 
-    function getXml()
+    public function getXml()
     {
         return '<base64>' . base64_encode($this->data) . '</base64>';
     }
@@ -80,7 +81,7 @@ class IXR_Value
     private $data;
     private $type;
 
-    function __construct($data, $type = false)
+    public function __construct($data, $type = false)
     {
         $this->data = $data;
         if (!$type) {
@@ -104,7 +105,7 @@ class IXR_Value
         }
     }
 
-    function calculateType()
+    public function calculateType()
     {
         if ($this->data === true || $this->data === false) {
             return 'boolean';
@@ -139,7 +140,7 @@ class IXR_Value
         }
     }
 
-    function getXml()
+    public function getXml()
     {
         // Return XML for this value
         switch ($this->type) {
@@ -180,7 +181,7 @@ class IXR_Value
         return false;
     }
 
-    function isStruct($array)
+    public function isStruct($array)
     {
         // Nasty function to check if an array is a struct or not
         $expected = 0;
@@ -195,5 +196,3 @@ class IXR_Value
     }
 
 }
-
-?>

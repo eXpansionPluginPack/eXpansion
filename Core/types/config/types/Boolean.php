@@ -15,8 +15,9 @@ class Boolean extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
 
     public function setValue($value)
     {
-        if ($this->basicValueCheck($value))
+        if ($this->basicValueCheck($value)) {
             return $this->setRawValue($this->castValue($value));
+        }
 
         return false;
     }
@@ -53,15 +54,15 @@ class Boolean extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
 
     public function castValue($string)
     {
-        if (is_bool($string))
+        if (is_bool($string)) {
             return $string;
-        if (strtoupper($string) == "FALSE" || $string == "0" || strtoupper($string) == "NO" || empty($string))
+        }
+        if (strtoupper($string) == "FALSE" || $string == "0" || strtoupper($string) == "NO" || empty($string)) {
             return false;
+        }
 
         return true;
 
     }
 
 }
-
-?>

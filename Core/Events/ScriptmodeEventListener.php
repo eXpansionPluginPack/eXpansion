@@ -150,5 +150,3 @@ interface ScriptmodeEventListener
     function UI_Properties($value);
 
 }
-
-?>

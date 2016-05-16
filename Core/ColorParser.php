@@ -89,5 +89,3 @@ class ColorParser extends \ManiaLib\Utils\Singleton
     }
 
 }
-
-?>

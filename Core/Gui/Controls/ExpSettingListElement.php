@@ -14,7 +14,7 @@ class ExpSettingListElement extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $button_remove;
     public static $large = false;
 
-    function __construct($indexNumber, $login, $action)
+    public function __construct($indexNumber, $login, $action)
     {
 
         $this->bg = new ListBackGround($indexNumber, 100, 4);
@@ -69,6 +69,3 @@ class ExpSettingListElement extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>
-/

@@ -98,5 +98,3 @@ class Netstat extends Window
     }
 
 }
-
-?>

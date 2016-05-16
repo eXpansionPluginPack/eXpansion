@@ -28,4 +28,3 @@ class ConfigLoadEvent extends \ManiaLive\Event\Event
     }
 
 }
-

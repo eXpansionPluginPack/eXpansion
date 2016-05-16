@@ -114,8 +114,9 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
     public function isMaster()
     {
-        if ($this->storage->serverLogin == $this->relayMaster)
+        if ($this->storage->serverLogin == $this->relayMaster) {
             return true;
+        }
 
         return false;
     }
@@ -312,6 +313,3 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
     }
 
 }
-
-?>
-

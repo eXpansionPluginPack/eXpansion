@@ -90,4 +90,3 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
 }
-

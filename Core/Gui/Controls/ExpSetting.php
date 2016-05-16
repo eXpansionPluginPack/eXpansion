@@ -40,7 +40,7 @@ class ExpSetting extends Control
 
     private $win;
 
-    function __construct($indexNumber, Variable $var, $login, ExpSettings $win)
+    public function __construct($indexNumber, Variable $var, $login, ExpSettings $win)
     {
         $this->var = $var;
         $this->win = $win;

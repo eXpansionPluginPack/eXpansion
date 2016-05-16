@@ -24,7 +24,7 @@ class ConfigManager
      */
     private static $_instance;
 
-    const dirName = "config/eXp/";
+    const DIRNAME = "config/eXp/";
 
     /**
      *
@@ -83,8 +83,11 @@ class ConfigManager
     {
         if (self::$_instance == null) {
             self::$_instance = new ConfigManager($eXpCore);
-        } else if ($eXpCore != null)
-            self::$_instance->setCore($eXpCore);
+        } else {
+            if ($eXpCore != null) {
+                self::$_instance->setCore($eXpCore);
+            }
+        }
 
         return self::$_instance;
     }
@@ -103,8 +106,9 @@ class ConfigManager
         $storage = \ManiaLive\Data\Storage::getInstance();
         $this->serverLogin = $storage->serverLogin;
 
-        if (!file_exists(self::dirName))
-            mkdir(self::dirName);
+        if (!file_exists(self::DIRNAME)) {
+            mkdir(self::DIRNAME);
+        }
     }
 
     /**
@@ -131,14 +135,16 @@ class ConfigManager
             $class = get_class($config);
 
             $this->configurationPlugins[$class] = $pluginId;
-            if (!isset($this->variables[$class]))
+            if (!isset($this->variables[$class])) {
                 $this->variables[$class] = array();
+            }
 
             $this->variables[$class][$var->getName()] = $var;
 
             $group = $var->getGroup();
-            if ($group == "")
+            if ($group == "") {
                 $group = 'General';
+            }
 
             $this->addVariableToGroup($group, $var);
 
@@ -148,8 +154,9 @@ class ConfigManager
 
             $scopeVar = new TypeInt($class . $var->getName(), "", Config::getInstance(), Variable::SCOPE_SERVER, false);
             $var->setScopeHandler($scopeVar);
-            if (!isset($this->variables[get_class(Config::getInstance())]))
+            if (!isset($this->variables[get_class(Config::getInstance())])) {
                 $this->variables[get_class(Config::getInstance())] = array();
+            }
             $this->variables[get_class(Config::getInstance())][$scopeVar->getName()] = $scopeVar;
         }
     }
@@ -162,19 +169,22 @@ class ConfigManager
     private function addVariableToGroup($group, $var, $num = 1)
     {
         $groupName = $group;
-        if ($num > 1)
+        if ($num > 1) {
             $groupName = $group . ' #' . $num;
+        }
 
         $confName = "main";
         if (!$var->getShowMain()) {
             $confName = $var->getPluginId();
         }
 
-        if (!isset($this->groupedVariables[$confName]))
+        if (!isset($this->groupedVariables[$confName])) {
             $this->groupedVariables[$confName] = array();
+        }
 
-        if (!isset($this->groupedVariables[$confName][$groupName]))
+        if (!isset($this->groupedVariables[$confName][$groupName])) {
             $this->groupedVariables[$confName][$groupName] = array();
+        }
 
         if (sizeof($this->groupedVariables[$confName][$groupName]) > 64) {
             $this->addVariableToGroup($group, $var, $num + 1);
@@ -190,12 +200,14 @@ class ConfigManager
      */
     public function registerValueChange(Variable $var)
     {
-        if ($var->getScope() == Variable::SCOPE_GLOBAL)
+        if ($var->getScope() == Variable::SCOPE_GLOBAL) {
             $this->globalsUpdated = true;
-        else if ($var->getScope() == Variable::SCOPE_SERVER)
-            $this->scopedUpdated = true;
-        else {
-            $this->fileUpdated = true;
+        } else {
+            if ($var->getScope() == Variable::SCOPE_SERVER) {
+                $this->scopedUpdated = true;
+            } else {
+                $this->fileUpdated = true;
+            }
         }
     }
 
@@ -217,16 +229,16 @@ class ConfigManager
     {
         $fileS = array();
 
-        $global = $this->getSettingsFromFile(self::dirName . DIRECTORY_SEPARATOR . "settings.exp");
+        $global = $this->getSettingsFromFile(self::DIRNAME . DIRECTORY_SEPARATOR . "settings.exp");
 
         $scoped = $this->getSettingsFromFile(
-            self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp"
+            self::DIRNAME . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp"
         );
 
         $conf = Config::getInstance();
         if ($conf->saveSettingsFile !== '') {
             $fileS = $this->getSettingsFromFile(
-                self::dirName . DIRECTORY_SEPARATOR . $conf->saveSettingsFile . ".user.exp"
+                self::DIRNAME . DIRECTORY_SEPARATOR . $conf->saveSettingsFile . ".user.exp"
             );
         }
 
@@ -251,7 +263,7 @@ class ConfigManager
 
         if ($forceSave || $this->scopedUpdated) {
             $this->saveSettings(
-                self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp",
+                self::DIRNAME . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp",
                 $this->configurations,
                 Variable::SCOPE_SERVER
             );
@@ -261,7 +273,7 @@ class ConfigManager
 
         if ($forceSave || $this->globalsUpdated) {
             $this->saveSettings(
-                self::dirName . DIRECTORY_SEPARATOR . "settings.exp",
+                self::DIRNAME . DIRECTORY_SEPARATOR . "settings.exp",
                 $this->configurations,
                 Variable::SCOPE_GLOBAL
             );
@@ -272,7 +284,7 @@ class ConfigManager
         $conf = Config::getInstance();
         if ($forceSave || $conf->saveSettingsFile !== '' && $this->fileUpdated) {
             $this->saveSettings(
-                self::dirName . DIRECTORY_SEPARATOR . $conf->saveSettingsFile . ".user.exp",
+                self::DIRNAME . DIRECTORY_SEPARATOR . $conf->saveSettingsFile . ".user.exp",
                 $this->configurations,
                 Variable::SCOPE_FILE
             );
@@ -280,8 +292,9 @@ class ConfigManager
             $saved = true;
         }
 
-        if (!$saved)
+        if (!$saved) {
             $this->loadSettings();
+        }
     }
 
     /**
@@ -295,8 +308,9 @@ class ConfigManager
 
         foreach ($newSettings as $className => $object) {
             if (!isset($this->configurations[$className])) {
-                if (!class_exists($className))
+                if (!class_exists($className)) {
                     continue;
+                }
                 $this->configurations[$className] = $className::getInstance();
             }
 
@@ -321,7 +335,7 @@ class ConfigManager
     public function saveSettingsIn($fileName)
     {
         $this->saveSettings(
-            self::dirName . DIRECTORY_SEPARATOR . $fileName,
+            self::DIRNAME . DIRECTORY_SEPARATOR . $fileName,
             $this->configurations,
             Variable::SCOPE_FILE
         );
@@ -338,10 +352,10 @@ class ConfigManager
     {
         $fileS = array();
 
-        $global = $this->getSettingsFromFile(self::dirName . DIRECTORY_SEPARATOR . "settings.exp");
+        $global = $this->getSettingsFromFile(self::DIRNAME . DIRECTORY_SEPARATOR . "settings.exp");
 
         $scoped = $this->getSettingsFromFile(
-            self::dirName . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp"
+            self::DIRNAME . DIRECTORY_SEPARATOR . "settings_" . $this->serverLogin . ".exp"
         );
 
         $this->applySettings($global, Variable::SCOPE_GLOBAL);
@@ -353,8 +367,9 @@ class ConfigManager
 
         $this->applySettings($fileS, Variable::SCOPE_FILE);
 
-        if ($save)
+        if ($save) {
             $this->check(true);
+        }
 
         Dispatcher::dispatch(new ConfigLoadEvent(ConfigLoadEvent::ON_CONFIG_FILE_LOADED));
     }
@@ -408,5 +423,3 @@ class ConfigManager
     }
 
 }
-
-?>

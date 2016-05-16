@@ -40,8 +40,9 @@ class Helper
      */
     public static function getPaths()
     {
-        if (self::$paths == null)
+        if (self::$paths == null) {
             self::$paths = new Paths();
+        }
 
         return self::$paths;
     }
@@ -53,8 +54,9 @@ class Helper
      */
     public static function getSingletons()
     {
-        if (self::$singletons == null)
+        if (self::$singletons == null) {
             self::$singletons = Singletons::getInstance();
+        }
 
         return self::$singletons;
     }
@@ -102,8 +104,9 @@ class Helper
                 $newDate = filemtime($base . $value);
             }
 
-            if ($newDate > $maxDate)
+            if ($newDate > $maxDate) {
                 $maxDate = $newDate;
+            }
         }
 
         return $maxDate;

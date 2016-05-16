@@ -26,8 +26,9 @@ class Dedimania_Script extends DedimaniaAbstract
     public function LibXmlRpc_BeginMap($number)
     {
         $this->endmatchTriggered = false;
-        if (!$this->running)
+        if (!$this->running) {
             return;
+        }
 
         $this->records = array();
         $this->rankings = array();
@@ -37,26 +38,31 @@ class Dedimania_Script extends DedimaniaAbstract
 
     public function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
     {
-        if (!$this->running)
+        if (!$this->running) {
             return;
+        }
 
-        if ($time == 0)
+        if ($time == 0) {
             return;
+        }
 
         $playerinfo = Core::$playerInfo;
 
-        if (!$isEndBlock)
+        if (!$isEndBlock) {
             return;
+        }
 
-        if ($this->storage->currentMap->nbCheckpoints == 1)
+        if ($this->storage->currentMap->nbCheckpoints == 1) {
             return;
+        }
 
         if (empty($login) || !is_string($login)) {
             return;
         }
 
-        if (!array_key_exists($login, DediConnection::$players))
+        if (!array_key_exists($login, DediConnection::$players)) {
             return;
+        }
 
         if (!isset($playerinfo[$login])) {
             return;
@@ -67,8 +73,9 @@ class Dedimania_Script extends DedimaniaAbstract
         }
 
         // if player is banned from dedimania, don't send his time.
-        if (DediConnection::$players[$login]->banned)
+        if (DediConnection::$players[$login]->banned) {
             return;
+        }
 
         if (!array_key_exists($login, $this->rankings)) {
             $this->rankings[$login] = array();
@@ -142,7 +149,9 @@ class Dedimania_Script extends DedimaniaAbstract
                     // have to recheck if the player is still at the dedi array
                     if (array_key_exists($login, $this->records)
                     ) // have to recheck if the player is still at the dedi array
+                    {
                         Dispatcher::dispatch(new DediEvent(DediEvent::ON_DEDI_RECORD, $this->records[$login], $oldRecord));
+                    }
 
                     return;
                 }
@@ -159,8 +168,9 @@ class Dedimania_Script extends DedimaniaAbstract
                 $this->reArrage($login);
 
                 // have to recheck if the player is still at the dedi array
-                if (array_key_exists($login, $this->records))
+                if (array_key_exists($login, $this->records)) {
                     Dispatcher::dispatch(new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login]));
+                }
 
                 return;
             }
@@ -190,11 +200,13 @@ class Dedimania_Script extends DedimaniaAbstract
         } else {
             $this->endmatchTriggered = true;
         }
-        if (!$this->running)
+        if (!$this->running) {
             return;
+        }
 
-        if ($this->expStorage->isRelay)
+        if ($this->expStorage->isRelay) {
             return;
+        }
 
         usort($this->rankings, array($this, "compare_BestTime"));
 
@@ -203,8 +215,9 @@ class Dedimania_Script extends DedimaniaAbstract
         foreach ($this->rankings as $login => $rank) {
             $checks = explode(",", $rank['BestCheckpoints']);
             foreach ($checks as $list) {
-                if ($list == 0)
+                if ($list == 0) {
                     $error = true;
+                }
             }
             $rank['BestCheckpoints'] = $checks;
             $rankings[] = $rank;
@@ -248,5 +261,3 @@ class Dedimania_Script extends DedimaniaAbstract
     }
 
 }
-
-?>

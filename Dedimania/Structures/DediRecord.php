@@ -40,10 +40,9 @@ class DediRecord extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
         $this->maxRank = intval($maxrank);
         $this->time = intval($time);
         $this->checkpoints = $checkpoints;
-        if (is_array($checkpoints))
+        if (is_array($checkpoints)) {
             $this->checkpoints = implode(",", $checkpoints);
+        }
     }
 
 }
-
-?>

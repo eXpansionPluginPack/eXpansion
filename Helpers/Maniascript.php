@@ -32,7 +32,7 @@ class Maniascript
      *
      * @param mixed $data
      */
-    static public function stringifyAsList($data)
+    public static function stringifyAsList($data)
     {
 
         if (is_object($data)) {
@@ -56,7 +56,7 @@ class Maniascript
      *
      * @param mixed $data
      */
-    static public function stringifyAsArray($data)
+    public static function stringifyAsArray($data)
     {
         throw new Exception("not implemented yet");
     }
@@ -71,7 +71,7 @@ class Maniascript
      *
      * @return string|numeric
      */
-    static public function convertType($var)
+    public static function convertType($var)
     {
         if (is_null($var)) {
             return 'Null';
@@ -83,8 +83,9 @@ class Maniascript
             return $var;
         }
         if (is_bool($var)) {
-            if ($var)
+            if ($var) {
                 return 'True';
+            }
 
             return 'False';
         }
@@ -134,8 +135,9 @@ class Maniascript
      */
     public static function getBoolean($boolean)
     {
-        if ($boolean)
+        if ($boolean) {
             return "True";
+        }
 
         return "False";
     }

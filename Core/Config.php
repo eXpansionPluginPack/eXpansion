@@ -50,5 +50,3 @@ class Config extends \ManiaLib\Utils\Singleton
     public $useWhitelist = false;
 
 }
-
-?>

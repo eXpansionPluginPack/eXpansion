@@ -11,5 +11,3 @@ class Config extends \ManiaLib\Utils\Singleton
     public $show_welcome_msg = true;
     public $disableMessages = false;
 }
-
-?>

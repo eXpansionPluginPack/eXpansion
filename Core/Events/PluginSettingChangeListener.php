@@ -36,4 +36,4 @@ interface PluginSettingChangeListener
      */
     public function onPluginSettingsChange($pluginId, Variable $var);
 
-} 
+}

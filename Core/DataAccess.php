@@ -54,7 +54,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
         }
     }
 
-    function __destruct()
+    public function __destruct()
     {
         $this->webaccess = null;
         Dispatcher::unregister(TickEvent::getClass(), $this);
@@ -71,7 +71,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
      * @param mixed $addionalData additional data passed for the query, like login, map-object, whatever
      * @param array $options curl options array
      */
-    function httpCurl($url, $callback, $addionalData = null, $options = array())
+    public function httpCurl($url, $callback, $addionalData = null, $options = array())
     {
         $this->asyncCurl->query($url, $callback, $addionalData, $options);
     }
@@ -171,7 +171,9 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             return;
         }
 
-        if (array_key_exists("Error", $data)) return;
+        if (array_key_exists("Error", $data)) {
+            return;
+        }
 
         if ($data['Code'] == 301) {
             Console::println("[DataAccess] webRequest to " . $query->baseurl . " is permanently moved.");
@@ -179,7 +181,9 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             array_unshift($args, null, $data['Code']);
             call_user_func_array($query->callback, $args);
 
-            if (!isset($data['Headers']['location'][0])) return;
+            if (!isset($data['Headers']['location'][0])) {
+                return;
+            }
 // set new redirected address
             $query->baseurl = $data['Headers']['location'][0];
 
@@ -201,7 +205,9 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             $args = $query->callparams;
             array_unshift($args, null, $data['Code']);
             call_user_func_array($query->callback, $args);
-            if (!isset($data['Headers']['location'][0])) return;
+            if (!isset($data['Headers']['location'][0])) {
+                return;
+            }
 // set new redirected address
             $query->baseurl = $data['Headers']['location'][0];
             $query->redirectCount++;

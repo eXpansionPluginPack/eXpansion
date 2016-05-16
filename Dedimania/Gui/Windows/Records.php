@@ -72,8 +72,9 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->label_visit->setPosition($this->getSizeX() - 72, -$this->getSizeY() + 6);
 
         $this->pager->setSize($this->getSizeX(), $this->getSizeY() - 12);
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->setSizeX($this->getSizeX());
+        }
     }
 
     public function onShow()
@@ -113,5 +114,3 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->label_visit->setScriptEvents();
     }
 }
-
-?>

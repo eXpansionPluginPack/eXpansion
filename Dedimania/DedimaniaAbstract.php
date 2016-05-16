@@ -268,8 +268,9 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
                 $players[] = array($player, false);
             }
         }
-        foreach ($this->storage->spectators as $player)
+        foreach ($this->storage->spectators as $player) {
             $players[] = array($player, true);
+        }
 
         $this->dedimania->playerMultiConnect($players);
 
@@ -458,4 +459,5 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
             $this->console('[DEDIMANIA][Max Ranks]' . $debugMsg);
         }
     }
+
 }

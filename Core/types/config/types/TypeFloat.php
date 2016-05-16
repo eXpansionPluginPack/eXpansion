@@ -12,8 +12,9 @@ class TypeFloat extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
 
     public function setValue($value)
     {
-        if ($this->basicValueCheck($value))
+        if ($this->basicValueCheck($value)) {
             return $this->setRawValue((float)$value);
+        }
 
         return false;
     }
@@ -34,5 +35,3 @@ class TypeFloat extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
     }
 
 }
-
-?>

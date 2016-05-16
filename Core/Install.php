@@ -23,6 +23,5 @@ class Install
         $zip->open('tmp/tmp.zip');
         $zip->extractTo('config/bad_words');
     }
-}
 
-?>
+}

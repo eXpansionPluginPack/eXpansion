@@ -9,7 +9,7 @@ interface Listener extends \ManiaLive\Event\Listener
      * Callback for dedimania.OpenSession
      *
      */
-    function onDedimaniaOpenSession();
+    public function onDedimaniaOpenSession();
 
     /**
      * Callback for dedimania.GetChallengeRecords
@@ -28,7 +28,7 @@ interface Listener extends \ManiaLive\Event\Listener
      *
      * @param array $data
      */
-    function onDedimaniaGetRecords($data);
+    public function onDedimaniaGetRecords($data);
 
     /**
      * Callback when records are updated locally, ie when new record is set and recordlist is modified
@@ -46,14 +46,14 @@ interface Listener extends \ManiaLive\Event\Listener
      * @param array $data
      *
      */
-    function onDedimaniaUpdateRecords($data);
+    public function onDedimaniaUpdateRecords($data);
 
     /**
      * Callback when a new record is driven for the map
      *
      * @param Record $record
      */
-    function onDedimaniaNewRecord($record);
+    public function onDedimaniaNewRecord($record);
 
     /**
      * Callback when player enhances his own record
@@ -61,7 +61,7 @@ interface Listener extends \ManiaLive\Event\Listener
      * @param Record $record
      * @param Record $oldrecord
      */
-    function onDedimaniaRecord($record, $oldrecord);
+    public function onDedimaniaRecord($record, $oldrecord);
 
     /**
      * Callback for dedimania.PlayerConnect
@@ -74,13 +74,13 @@ interface Listener extends \ManiaLive\Event\Listener
      *
      * @param array $data
      */
-    function onDedimaniaPlayerConnect($data);
+    public function onDedimaniaPlayerConnect($data);
 
     /**
      *  Callback for dedimania.PlayerDisconnect
      *
      */
-    function onDedimaniaPlayerDisconnect($login);
+    public function onDedimaniaPlayerDisconnect($login);
 }
 
 ?>

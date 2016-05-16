@@ -13,7 +13,12 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
 class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish, $label_login;
+    protected $label_rank;
+    protected $label_nick;
+    protected $label_score;
+    protected $label_avgScore;
+    protected $label_nbFinish;
+    protected $label_login;
 
     protected $bg;
 
@@ -54,8 +59,9 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $idx = 0;
         $addLast = false;
         for ($x = $offset; $x <= $offset + 6; $x++) {
-            if ($x > count($cpArray))
+            if ($x > count($cpArray)) {
                 break;
+            }
 
             if (array_key_exists($x, $cpArray)) {
                 $label = new \ManiaLib\Gui\Elements\Label(15, 6);
@@ -78,7 +84,7 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -87,7 +93,7 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         parent::destroy();
     }

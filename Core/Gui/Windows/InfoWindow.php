@@ -16,13 +16,13 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $ok;
     protected $stats;
     protected $actionOk;
-    private $button_cpJoin, $button_addFav;
+    protected $button_cpJoin, $button_addFav;
 
     /** @var \Maniaplanet\DedicatedServer\Connection */
-    private $connection;
+    protected $connection;
 
     /** @var \ManiaLive\Data\Storage */
-    private $storage;
+    protected $storage;
 
     protected function onConstruct()
     {
@@ -105,7 +105,7 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->button_addFav);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->ok->setPosition($this->sizeX - 22, -$this->sizeY + 6);
@@ -120,12 +120,12 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->button_addFav->setPosition($this->sizeX - 20, -$this->sizeY + 14.5);
     }
 
-    function Ok($login)
+    public function Ok($login)
     {
         $this->erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->connection = null;
         $this->storage = null;
@@ -134,5 +134,3 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

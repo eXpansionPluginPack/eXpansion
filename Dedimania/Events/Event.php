@@ -15,7 +15,7 @@ class Event extends \ManiaLive\Event\Event
 
     protected $params;
 
-    function __construct()
+    public function __construct()
     {
         $params = func_get_args();
         $onWhat = array_shift($params);
@@ -23,7 +23,7 @@ class Event extends \ManiaLive\Event\Event
         $this->params = $params;
     }
 
-    function fireDo($listener)
+    public function fireDo($listener)
     {
         $p = $this->params;
 
@@ -53,5 +53,3 @@ class Event extends \ManiaLive\Event\Event
     }
 
 }
-
-?>

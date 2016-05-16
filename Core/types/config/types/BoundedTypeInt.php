@@ -71,5 +71,3 @@ class BoundedTypeInt extends TypeInt
         && parent::basicValueCheck($value);
     }
 }
-
-?>

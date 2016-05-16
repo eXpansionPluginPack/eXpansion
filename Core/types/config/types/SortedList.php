@@ -26,12 +26,15 @@ class SortedList extends BasicList
             $array = $this->getRawValue();
             $array[] = $this->type->castValue($value);
 
-            if ($this->lowToHight && sort($array))
+            if ($this->lowToHight && sort($array)) {
                 $this->setRawValue($array);
-            else if (!$this->lowToHight && rsort($array))
-                $this->setRawValue($array);
-            else
-                return false;
+            } else {
+                if (!$this->lowToHight && rsort($array)) {
+                    $this->setRawValue($array);
+                } else {
+                    return false;
+                }
+            }
 
             return true;
         }
@@ -49,12 +52,15 @@ class SortedList extends BasicList
         $array = $this->getRawValue();
         unset($array[$index]);
         $array = array_values($array);
-        if ($this->lowToHight && sort($array))
+        if ($this->lowToHight && sort($array)) {
             $this->setRawValue($array);
-        else if (!$this->lowToHight && rsort($array))
-            $this->setRawValue($array);
-        else
-            return false;
+        } else {
+            if (!$this->lowToHight && rsort($array)) {
+                $this->setRawValue($array);
+            } else {
+                return false;
+            }
+        }
 
         return true;
     }
@@ -85,5 +91,3 @@ class SortedList extends BasicList
     }
 
 }
-
-?>

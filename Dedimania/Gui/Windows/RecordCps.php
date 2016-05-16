@@ -75,8 +75,9 @@ class RecordCps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         //	$this->label_score->setSizeX($scaledSizes[2]);
 
         $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 12);
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->setSizeX($this->getSizeX());
+        }
     }
 
     public function onShow()
@@ -170,6 +171,5 @@ class RecordCps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $x++;
         }
     }
-}
 
-?>
+}

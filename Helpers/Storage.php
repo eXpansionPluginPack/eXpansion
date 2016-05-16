@@ -44,7 +44,7 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 {
 
     /**  for testing stuff */
-    const ForceRemote = false;
+    const FORCEREMOTE = false;
 
     const TITLE_SIMPLE_TM = 'TM';
 
@@ -164,12 +164,13 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 
         $this->serverAccount = $this->connection->getDetailedPlayerInfo($this->storage->serverLogin);
 
-        if (DedicatedConfig::getInstance()->host == "localhost" || DedicatedConfig::getInstance()->host == "127.0.0.1")
+        if (DedicatedConfig::getInstance()->host == "localhost" || DedicatedConfig::getInstance()->host == "127.0.0.1") {
             $this->isRemoteControlled = false;
-        else
+        } else {
             $this->isRemoteControlled = true;
+        }
 
-        if (self::ForceRemote) {
+        if (self::FORCEREMOTE) {
             $this->isRemoteControlled = true;
             $this->connection->chatSend('[notice] $$Exp_storage->isRemoteControlled is forced to True!', null, true);
         }
@@ -183,10 +184,12 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $this->serverOs = "Windows";
-        } else if (strtoupper(substr(PHP_OS, 0, 3)) === 'MAC') {
-            $this->serverOs = "Mac";
         } else {
-            $this->serverOs = "Linux";
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'MAC') {
+                $this->serverOs = "Mac";
+            } else {
+                $this->serverOs = "Linux";
+            }
         }
 
         foreach ($this->storage->players as $player) {
@@ -275,10 +278,12 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 
     private function removePlayer($login)
     {
-        if (array_key_exists($login, $this->spectators))
+        if (array_key_exists($login, $this->spectators)) {
             unset($this->spectators[$login]);
-        if (array_key_exists($login, $this->players))
+        }
+        if (array_key_exists($login, $this->players)) {
             unset($this->players[$login]);
+        }
     }
 
     protected function getSimpleMapType($type)
@@ -332,8 +337,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param string $text
      * @param bool $isRegistredCmd
      */
-    function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
+    public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
+
     }
 
     /**
@@ -345,8 +351,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param string $login
      * @param int $answer
      */
-    function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries)
+    public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries)
     {
+
     }
 
     /**
@@ -355,29 +362,33 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param string $internal
      * @param string $public
      */
-    function onEcho($internal, $public)
+    public function onEcho($internal, $public)
     {
+
     }
 
     /**
      * Method called when the server starts
      */
-    function onServerStart()
+    public function onServerStart()
     {
+
     }
 
     /**
      * Method called when the server stops
      */
-    function onServerStop()
+    public function onServerStop()
     {
+
     }
 
     /**
      * Method called when the Race Begin
      */
-    function onBeginMatch()
+    public function onBeginMatch()
     {
+
     }
 
     /**
@@ -401,8 +412,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param SPlayerRanking[] $rankings
      * @param int|SMapInfo $winnerTeamOrMap Winner team if API version >= 2012-06-19, else the map
      */
-    function onEndMatch($rankings, $winnerTeamOrMap)
+    public function onEndMatch($rankings, $winnerTeamOrMap)
     {
+
     }
 
     /**
@@ -414,22 +426,25 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param bool $matchContinuesOnNextMap
      * @param bool $restartMap
      */
-    function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
+    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
+
     }
 
     /**
      * Method called on Round beginning
      */
-    function onBeginRound()
+    public function onBeginRound()
     {
+
     }
 
     /**
      * Method called on Round ending
      */
-    function onEndRound()
+    public function onEndRound()
     {
+
     }
 
     /**
@@ -438,8 +453,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param int    StatusCode
      * @param string StatsName
      */
-    function onStatusChanged($statusCode, $statusName)
+    public function onStatusChanged($statusCode, $statusName)
     {
+
     }
 
     /**
@@ -451,8 +467,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param int $curLap
      * @param int $checkpointIndex
      */
-    function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex)
+    public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex)
     {
+
     }
 
     /**
@@ -462,8 +479,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param string $login
      * @param int $timeOrScore
      */
-    function onPlayerFinish($playerUid, $login, $timeOrScore)
+    public function onPlayerFinish($playerUid, $login, $timeOrScore)
     {
+
     }
 
     /**
@@ -472,8 +490,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param int $playerUid
      * @param string $login
      */
-    function onPlayerIncoherence($playerUid, $login)
+    public function onPlayerIncoherence($playerUid, $login)
     {
+
     }
 
     /**
@@ -484,8 +503,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param string $stateName
      * @param int $transactionId
      */
-    function onBillUpdated($billId, $state, $stateName, $transactionId)
+    public function onBillUpdated($billId, $state, $stateName, $transactionId)
     {
+
     }
 
     /**
@@ -495,8 +515,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param string $login
      * @param base64 $data
      */
-    function onTunnelDataReceived($playerUid, $login, $data)
+    public function onTunnelDataReceived($playerUid, $login, $data)
     {
+
     }
 
     /**
@@ -506,8 +527,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param int $nextMapIndex
      * @param bool $isListModified
      */
-    function onMapListModified($curMapIndex, $nextMapIndex, $isListModified)
+    public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified)
     {
+
     }
 
     /**
@@ -515,8 +537,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      *
      * @param string $transition
      */
-    function onManualFlowControlTransition($transition)
+    public function onManualFlowControlTransition($transition)
     {
+
     }
 
     /**
@@ -527,16 +550,18 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @param string $cmdName the command used for the vote
      * @param string $cmdParam the parameters of the vote
      */
-    function onVoteUpdated($stateName, $login, $cmdName, $cmdParam)
+    public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam)
     {
+
     }
 
     /**
      * @param string
      * @param string
      */
-    function onModeScriptCallback($param1, $param2)
+    public function onModeScriptCallback($param1, $param2)
     {
+
     }
 
     /**
@@ -544,7 +569,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      *
      * @param string $login
      */
-    function onPlayerAlliesChanged($login)
+    public function onPlayerAlliesChanged($login)
     {
+
     }
+
 }

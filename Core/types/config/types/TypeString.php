@@ -19,8 +19,9 @@ class TypeString extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
      */
     public function setValue($value)
     {
-        if ($this->basicValueCheck($value))
+        if ($this->basicValueCheck($value)) {
             return $this->setRawValue($value);
+        }
 
         return false;
     }
@@ -39,6 +40,5 @@ class TypeString extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
     {
         return strval($this->getRawValue());
     }
-}
 
-?>
+}

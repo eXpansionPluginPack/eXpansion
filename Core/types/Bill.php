@@ -12,8 +12,8 @@ class Bill
 
     private $billId = null;
 
-    private $source_login;
-    private $destination_login;
+    private $sourceLogin;
+    private $destinationLogin;
     private $amount;
     private $msg;
 
@@ -25,10 +25,10 @@ class Bill
 
     private $errorCallBack;
 
-    function __construct($source_login, $destination_login, $amount, $msg)
+    public function __construct($source_login, $destination_login, $amount, $msg)
     {
-        $this->source_login = $source_login;
-        $this->destination_login = $destination_login;
+        $this->sourceLogin = $source_login;
+        $this->destinationLogin = $destination_login;
         $this->amount = $amount;
         $this->msg = $msg;
     }
@@ -45,12 +45,12 @@ class Bill
 
     public function getSource_login()
     {
-        return $this->source_login;
+        return $this->sourceLogin;
     }
 
     public function getDestination_login()
     {
-        return $this->destination_login;
+        return $this->destinationLogin;
     }
 
     public function getAmount()
@@ -63,14 +63,14 @@ class Bill
         return $this->msg;
     }
 
-    public function setSource_login($source_login)
+    public function setSource_login($sourceLogin)
     {
-        $this->source_login = $source_login;
+        $this->sourceLogin = $sourceLogin;
     }
 
-    public function setDestination_login($destination_login)
+    public function setDestination_login($destinationLogin)
     {
-        $this->destination_login = $destination_login;
+        $this->destinationLogin = $destinationLogin;
     }
 
     public function setAmount($amount)
@@ -127,11 +127,10 @@ class Bill
 
     public function error($erroNum, $stateName)
     {
-        if (isset($this->errorCallBack[$erroNum]))
+        if (isset($this->errorCallBack[$erroNum])) {
             call_user_func_array($this->errorCallBack[$erroNum][0], array($this, $erroNum, $stateName));
+        }
 
     }
 
 }
-
-?>

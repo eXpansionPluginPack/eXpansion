@@ -10,7 +10,7 @@ class ExpSettingsMenu extends \ManiaLivePlugins\eXpansion\Gui\Control
     public $frame;
 
 
-    function __construct()
+    public function __construct()
     {
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($this->getSizeX(), 4);
@@ -44,5 +44,3 @@ class ExpSettingsMenu extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>

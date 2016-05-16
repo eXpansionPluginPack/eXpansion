@@ -37,5 +37,3 @@ interface GameSettingsEventListener
 
     public function onGameSettingsChange(GameInfos $oldSettings, GameInfos $newSettings, $changes);
 }
-
-?>

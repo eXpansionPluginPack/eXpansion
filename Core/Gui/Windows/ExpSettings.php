@@ -141,5 +141,3 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

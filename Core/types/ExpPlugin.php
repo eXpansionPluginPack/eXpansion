@@ -26,5 +26,3 @@ class ExpPlugin extends BasicPlugin
     }
 
 }
-
-?>

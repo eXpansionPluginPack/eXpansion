@@ -49,7 +49,7 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener
      * @param DbConnection $dbcon The database connection
      * @param                                         $plugin     A plugin to have
      */
-    function __construct(\Maniaplanet\DedicatedServer\Connection $connection, DbConnection $dbcon, $plugin)
+    public function __construct(\Maniaplanet\DedicatedServer\Connection $connection, DbConnection $dbcon, $plugin)
     {
 
         $this->connection = $connection;
@@ -95,8 +95,9 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener
             $bill->getDestination_login()
         );
 
-        if (empty($this->bills))
+        if (empty($this->bills)) {
             \ManiaLive\Event\Dispatcher::register(ServerEvent::getClass(), $this);
+        }
 
         $this->bills[$billId] = $bill;
         $bill->setBillId($billId);
@@ -113,8 +114,9 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener
     public function onBillUpdated($billId, $state, $stateName, $transactionId)
     {
         //If there isn't any un going bills, well stop listening
-        if (count($this->bills) == 0)
+        if (count($this->bills) == 0) {
             \ManiaLive\Event\Dispatcher::unregister(ServerEvent::getClass(), $this);
+        }
 
         //If the bill Manager is managing this bill let do what needs to be done
         if (isset($this->bills[$billId])) {
@@ -138,9 +140,11 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener
             } elseif ($state == 5) { // No go
                 $bill->error(5, $stateName);
                 unset($this->bills[$billId]);
-            } else if ($state == 6) { // Error
-                $bill->error(6, $stateName);
-                unset($this->bills[$billId]);
+            } else {
+                if ($state == 6) { // Error
+                    $bill->error(6, $stateName);
+                    unset($this->bills[$billId]);
+                }
             }
         }
     }
@@ -266,5 +270,3 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener
     }
 
 }
-
-?>

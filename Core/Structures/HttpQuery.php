@@ -41,8 +41,9 @@ class HttpQuery extends \Maniaplanet\DedicatedServer\Structures\AbstractStructur
             $this->params = "";
         }
         $this->callback = $callback;
-        if (!is_array($callParams))
+        if (!is_array($callParams)) {
             $callParams = array($callParams);
+        }
 
         $this->callparams = $callParams;
         $this->userAgent = $userAgent;

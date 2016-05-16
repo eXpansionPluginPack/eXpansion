@@ -50,5 +50,4 @@ class PluginSettingChange extends \ManiaLive\Event\Event
         }
     }
 
-
-} 
+}

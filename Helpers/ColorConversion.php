@@ -19,7 +19,7 @@ class ColorConversion
      *
      * @return array(h,s,l);
      */
-    static function rgbToHsl($r, $g, $b)
+    public static function rgbToHsl($r, $g, $b)
     {
         $oldR = $r;
         $oldG = $g;
@@ -65,7 +65,7 @@ class ColorConversion
      *
      * @return array(r,g,b)
      */
-    static function hslToRgb($h, $s, $l)
+    public static function hslToRgb($h, $s, $l)
     {
         $r;
         $g;
@@ -77,26 +77,34 @@ class ColorConversion
             $r = $c;
             $g = $x;
             $b = 0;
-        } else if ($h < 120) {
-            $r = $x;
-            $g = $c;
-            $b = 0;
-        } else if ($h < 180) {
-            $r = 0;
-            $g = $c;
-            $b = $x;
-        } else if ($h < 240) {
-            $r = 0;
-            $g = $x;
-            $b = $c;
-        } else if ($h < 300) {
-            $r = $x;
-            $g = 0;
-            $b = $c;
         } else {
-            $r = $c;
-            $g = 0;
-            $b = $x;
+            if ($h < 120) {
+                $r = $x;
+                $g = $c;
+                $b = 0;
+            } else {
+                if ($h < 180) {
+                    $r = 0;
+                    $g = $c;
+                    $b = $x;
+                } else {
+                    if ($h < 240) {
+                        $r = 0;
+                        $g = $x;
+                        $b = $c;
+                    } else {
+                        if ($h < 300) {
+                            $r = $x;
+                            $g = 0;
+                            $b = $c;
+                        } else {
+                            $r = $c;
+                            $g = 0;
+                            $b = $x;
+                        }
+                    }
+                }
+            }
         }
         $r = ($r + $m) * 255;
         $g = ($g + $m) * 255;

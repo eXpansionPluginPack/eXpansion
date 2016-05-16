@@ -24,7 +24,7 @@ class ConfElement extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected $input;
 
-    function __construct($indexNumber, $name, $isCurrent, $modify, $login, $path)
+    public function __construct($indexNumber, $name, $isCurrent, $modify, $login, $path)
     {
         $this->path = $path;
 
@@ -120,5 +120,3 @@ class ConfElement extends \ManiaLivePlugins\eXpansion\Gui\Control
 
 
 }
-
-?>

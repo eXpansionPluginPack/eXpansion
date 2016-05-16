@@ -49,4 +49,4 @@ class ConfigFile extends TypeString
         return true;
     }
 
-} 
+}
