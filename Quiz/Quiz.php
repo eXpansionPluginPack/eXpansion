@@ -175,6 +175,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         foreach ($data as $player) {
             $this->players[$player->login] = new Structures\QuizPlayer($player->login, $player->nickName, (int)$player->score);
         }
+
+        $this->setPublicMethod("ask");
+
     }
 
     public function chatquiz($login, $args)
@@ -408,20 +411,22 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function showQuestion()
     {
-        $nickName = $this->currentQuestion->asker->nickName;
-        $question = $this->currentQuestion->question;
-        if ($this->currentQuestion->hasImage()) {
-            if (self::$GDsupport) {
-                $this->dataAccess->httpGet($this->currentQuestion->getImage(), array($this, "xGetImage"));
-            } else {
-                $widget = Gui\Widget\QuizImageWidget::Create(null);
-                $widget->setImage($this->currentQuestion->getImage());
-                $widget->setImageSize(20, 11.25);
-                $widget->show();
+        if ($this->currentQuestion !== null) {
+            $nickName = $this->currentQuestion->asker->nickName;
+            $question = $this->currentQuestion->question;
+            if ($this->currentQuestion->hasImage()) {
+                if (self::$GDsupport) {
+                    $this->dataAccess->httpGet($this->currentQuestion->getImage(), array($this, "xGetImage"));
+                } else {
+                    $widget = Gui\Widget\QuizImageWidget::Create(null);
+                    $widget->setImage($this->currentQuestion->getImage());
+                    $widget->setImageSize(20, 11.25);
+                    $widget->show();
+                }
             }
+            $this->eXpChatSendServerMessage($this->msg_questionPre, null, array($this->questionCounter, $nickName));
+            $this->eXpChatSendServerMessage($this->msg_question, null, array($question));
         }
-        $this->eXpChatSendServerMessage($this->msg_questionPre, null, array($this->questionCounter, $nickName));
-        $this->eXpChatSendServerMessage($this->msg_question, null, array($question));
     }
 
     public function xGetImage($data, $httpCode)

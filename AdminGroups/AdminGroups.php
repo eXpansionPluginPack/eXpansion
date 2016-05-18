@@ -267,9 +267,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if ($this->config->fileName == null) {
                 $filename = "config/" . $this->storage->serverLogin . "_admins.ini";
             } else {
-
+                $filename = "config/" . $this->config->fileName;
             }
-            $filename = "config/" . $this->config->fileName;
 
             $values = \parse_ini_file($filename, true);
 
@@ -536,7 +535,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
         if ($this->config->fileName == null) {
             $file = "config/" . $this->storage->serverLogin . "_admins.ini";
-        } else $file = "config/" . $this->config->fileName;
+        } else {
+            $file = "config/" . $this->config->fileName;
+        }
 
         if (!file_exists($file)) {
             if (touch($file) == false) {
@@ -646,7 +647,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if (isset(self::$admins[$login])) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -1092,7 +1095,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         } else {
             if ($upper == "TRUE" || $string == "1" || $upper == "YES" || $upper == strtoupper(self::HAVE_PERMISSION)) {
                 return self::HAVE_PERMISSION;
-            } else return self::UNKNOWN_PERMISSION;
+            } else {
+                return self::UNKNOWN_PERMISSION;
+            }
         }
     }
 

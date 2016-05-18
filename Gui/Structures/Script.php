@@ -19,11 +19,11 @@ class Script
      * construct a script
      *
      * example for external plugins
-     * $this->script = new Script("authorName/pluginName/Gui/Script", true);
+     * $this->script = new Script("libraries/ManiaLivePlugins/authorName/pluginName/Gui/Script", true);
      *
      * @param string $path relative path to your script
-     * @param bool $pluginsRoot set the relative path pointer to ManialivePlugins\ instead of
-     *                            ManialivePlugins\eXpansion\
+     * @param bool $pluginsRoot set the relative path pointer to ManialiveRoot instead of
+     *                            Vendor\path
      *
      *
      */

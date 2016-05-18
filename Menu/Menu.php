@@ -45,9 +45,15 @@ class Menu extends ExpPlugin implements Listener
     {
         $name = AdminGroups::getGroupName($login);
         $this->menuGroups['Player']->remove($login);
+
         if (!array_key_exists($name, $this->menuGroups)) {
-            $this->createMenu($name);
-            $this->menuGroups[$name]->add($login, true);
+            $group = AdminGroups::getAdmin($login)->getGroup();
+
+            $this->menuGroups[$group->getGroupName()] = Group::Create($group->getGroupName());
+            foreach ($group->getGroupUsers() as $user) {
+                $this->menuGroups[$group->getGroupName()]->add($user->getLogin());
+            }
+            $this->createMenu($group);
         } else {
             $this->menuGroups[$name]->add($login, true);
         }
@@ -113,8 +119,9 @@ class Menu extends ExpPlugin implements Listener
         $admins = AdminGroups::get();
 
         foreach ($players as $login => $player) {
-            if (!in_array($login, $admins))
+            if (!in_array($login, $admins)) {
                 $regularPlayers[] = $login;
+            }
         }
 
         $this->menuGroups['Player'] = Group::Create('Player', $regularPlayers);
@@ -124,30 +131,37 @@ class Menu extends ExpPlugin implements Listener
     public function createMenu(AdmGroup $group)
     {
         $menu = MenuWidget::Create($this->menuGroups[$group->getGroupName()], true);
-        if ($this->pluginLoaded("Faq"))
+        if ($this->pluginLoaded("Faq")) {
             $menu->addItem("Help", "!help", $this);
+        }
 
-        if ($this->pluginLoaded("Players"))
+        if ($this->pluginLoaded("Players")) {
             $menu->addItem("Players", "!players", $this);
+        }
 
         // Maps
         $mapsGroup = $menu->addGroup("Maps");
 
-        if ($this->pluginLoaded("Maps"))
+        if ($this->pluginLoaded("Maps")) {
             $mapsGroup->addItem("Show Maps", "!maplist", $this);
+        }
         if ($group->hasPermission(Permission::MAP_ADD_LOCAL)) {
-            if ($this->pluginLoaded("Maps"))
+            if ($this->pluginLoaded("Maps")) {
                 $mapsGroup->addItem("Add Local Maps", "!addMaps", $this);
+            }
         }
         if ($group->hasPermission(Permission::MAP_ADD_MX)) {
-            if ($this->pluginLoaded("ManiaExchange"))
+            if ($this->pluginLoaded("ManiaExchange")) {
                 $mapsGroup->addItem("ManiaExchange", "!mx", $this);
+            }
         }
         if ($group->hasPermission(Permission::MAP_REMOVE_MAP)) {
-            if ($this->pluginLoaded("Maps"))
+            if ($this->pluginLoaded("Maps")) {
                 $mapsGroup->addItem('$f00Remove this', "!admremovemap", $this);
-            if ($this->pluginLoaded("Maps"))
+            }
+            if ($this->pluginLoaded("Maps")) {
                 $mapsGroup->addItem('$f00Trash this', "!admtrashmap", $this);
+            }
         }
         // records
         $recGroup = $menu->addGroup("Records");
@@ -162,8 +176,9 @@ class Menu extends ExpPlugin implements Listener
         }
 
         // statistics
-        if ($this->pluginLoaded("Statistics"))
+        if ($this->pluginLoaded("Statistics")) {
             $menu->addItem("Statistics", "!stats", $this);
+        }
 
         // Vote
         $voteGroup = $menu->addGroup("Vote");
@@ -185,20 +200,25 @@ class Menu extends ExpPlugin implements Listener
         if ($group->hasPermission(Permission::TEAM_BALANCE) || $group->hasPermission(Permission::MAP_END_ROUND) || $group->hasPermission(Permission::MAP_RES) || $group->hasPermission(Permission::MAP_SKIP)) {
             $admGroup = $menu->addGroup('$f00Admin');
 
-            if ($group->hasPermission(Permission::MAP_RES))
+            if ($group->hasPermission(Permission::MAP_RES)) {
                 $admGroup->addItem("Instant Res", "!admres", $this);
+            }
 
-            if ($group->hasPermission(Permission::MAP_RES))
+            if ($group->hasPermission(Permission::MAP_RES)) {
                 $admGroup->addItem("Replay", "!admreplay", $this);
+            }
 
-            if ($group->hasPermission(Permission::MAP_SKIP))
+            if ($group->hasPermission(Permission::MAP_SKIP)) {
                 $admGroup->addItem("Skip", "!admskip", $this);
+            }
 
-            if ($group->hasPermission(Permission::MAP_END_ROUND))
+            if ($group->hasPermission(Permission::MAP_END_ROUND)) {
                 $admGroup->addItem("End Round", "!admer", $this);
+            }
 
-            if ($group->hasPermission(Permission::TEAM_BALANCE))
+            if ($group->hasPermission(Permission::TEAM_BALANCE)) {
                 $admGroup->addItem("Balance teams", "!teambalance", $this);
+            }
         }
 
         if ($group->hasPermission(Permission::SERVER_CONTROL_PANEL)) {
