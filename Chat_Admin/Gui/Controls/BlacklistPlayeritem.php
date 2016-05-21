@@ -23,7 +23,7 @@ class BlacklistPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $sizeY = 6;
         $this->player = $player;
 
-        $this->unblackAction = $this->createAction(array($controller, 'unBlacklist'), array($player->login));
+        $this->unblackAction = $this->createAction(array($controller, 'unBlacklistClick'), array($player->login));
 
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);

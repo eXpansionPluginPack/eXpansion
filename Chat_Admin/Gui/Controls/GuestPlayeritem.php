@@ -24,7 +24,7 @@ class GuestPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $sizeY = 6;
         $this->player = $player;
 
-        $this->removeAction = $this->createAction(array($this, 'removeGuest'), $player->login);
+        $this->removeAction = $this->createAction(array($controller, 'removeGuestClick'), array($player->login));
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
@@ -56,10 +56,4 @@ class GuestPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->sizeY = $sizeY;
         $this->setSize($sizeX, $sizeY);
     }
-
-    public function removeGuest($login, $target)
-    {
-        AdminGroups::getInstance()->adminCmd($login, 'player remove guest ' . $target);
-    }
-
 }

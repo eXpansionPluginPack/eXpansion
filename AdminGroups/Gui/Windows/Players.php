@@ -20,7 +20,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $button_select;
     protected $login_add;
     protected $action_add;
-    protected $action_select;
+    private $action_select;
     protected $items = array();
 
     protected function onConstruct()
@@ -119,7 +119,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $window->setController($this);
         $window->setTitle('Select Player to add to ' . $this->group->getGroupName());
         $window->setSize(85, 100);
-        $window->populateList(array($this, 'select_player'), 'select');
+        $window->populateList(array($this, 'selectPlayer'), 'select');
         $window->centerOnScreen();
         $window->show();
     }

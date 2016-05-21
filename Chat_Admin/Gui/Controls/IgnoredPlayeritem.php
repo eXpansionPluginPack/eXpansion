@@ -6,7 +6,7 @@ use ManiaLib\Gui\Elements\Icons64x64_1;
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Line;
-use ManiaLivePlugins\eXpansion\Gui\Control
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use Maniaplanet\DedicatedServer\Structures\Player;
@@ -25,7 +25,7 @@ class IgnoredPlayeritem extends Control
         $sizeY = 6;
         $this->player = $player;
 
-        $this->unignoreAction = $this->createAction(array($controller, 'unignore'), array($player->login));
+        $this->unignoreAction = $this->createAction(array($controller, 'unignoreClick'), array($player->login));
         $this->frame = new Frame();
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new Line());

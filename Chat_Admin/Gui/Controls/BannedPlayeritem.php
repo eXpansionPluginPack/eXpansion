@@ -20,7 +20,7 @@ class BannedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $sizeY = 6;
         $this->player = $player;
 
-        $this->unbanAction = $this->createAction(array($controller, 'unban'), array($player->login));
+        $this->unbanAction = $this->createAction(array($controller, 'unbanClick'), array($player->login));
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);

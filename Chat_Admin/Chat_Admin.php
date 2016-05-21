@@ -471,6 +471,12 @@ Other server might use the same blacklist file!!');
         self::$showActions['ban'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showBanList'));
         self::$showActions['black'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showBlackList'));
         self::$showActions['guest'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'showGuestList'));
+
+        self::$showActions['guestPlayer'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'addGuestList'));
+        self::$showActions['ignorePlayer'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'addIgnore'));
+        self::$showActions['banPlayer'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'addBan'));
+        self::$showActions['blackPlayer'] = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'addBlack'));
+
     }
 
     public function eXpOnReady()
@@ -1122,14 +1128,15 @@ Other server might use the same blacklist file!!');
         $target = array_shift($params);
         $reason = implode(" ", $params);
         $player = $this->storage->getPlayerObject($target);
-        if ($player == null) {
-            $this->eXpChatSendServerMessage('#admin_action#Player #variable# %s #admin_action#doesn\' exist.', $fromLogin, array($target));
-
-            return;
+        if (is_object($player)) {
+            $nickname = $player->nickName;
+        } else {
+            $nickname = $target;
         }
+
         if (empty($reason)) {
             $dialog = ParameterDialog::Create($fromLogin);
-            $dialog->setTitle(__("blacklist", $fromLogin), Formatting::stripStyles($player->nickName));
+            $dialog->setTitle(__("blacklist", $fromLogin), Formatting::stripStyles($nickname));
             $dialog->setData("black", $target);
             $dialog->show($fromLogin);
 
@@ -1138,10 +1145,15 @@ Other server might use the same blacklist file!!');
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->expStorage->loadBlackList();
-            $this->connection->banAndBlackList($target, $reason, true);
+            try {
+                $this->connection->banAndBlackList($target, $reason, true);
+            } catch (\Exception $ex) {
+                $this->connection->blackList($target);
+            }
+
             $this->expStorage->saveBlackList();
 
-            $this->eXpChatSendServerMessage('#admin_action#Admin #variable# %s #admin_action#blacklists the player #variable# %s', null, array($admin->nickName, $player->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin #variable# %s #admin_action#blacklists the player #variable# %s', null, array($admin->nickName, $nickname));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1247,6 +1259,12 @@ Other server might use the same blacklist file!!');
         }
     }
 
+    public function unBlackListClick($fromLogin, $params)
+    {
+        $this->unBlacklist($fromLogin, $params);
+        $this->showBlackList($fromLogin);
+    }
+
     public function ban($fromLogin, $params)
     {
         $target = array_shift($params);
@@ -1259,10 +1277,9 @@ Other server might use the same blacklist file!!');
         }
         if (empty($reason)) {
             $dialog = ParameterDialog::Create($fromLogin);
-            $dialog->setTitle(__("ban", $fromLogin), Formatting::stripStyles($player->nickName));
+            $dialog->setTitle(__("ban", $fromLogin), Formatting::stripStyles($nickname));
             $dialog->setData("ban", $target);
             $dialog->show($fromLogin);
-
             return;
         }
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1293,12 +1310,32 @@ Other server might use the same blacklist file!!');
         }
     }
 
+    public function unignoreClick($fromLogin, $params)
+    {
+        $this->unignore($fromLogin, $params);
+        $this->showIgnoreList($fromLogin);
+    }
+
+    public function unbanClick($fromlogin, $params)
+    {
+        $this->unban($fromlogin, $params);
+        $this->showBanList($fromlogin);
+    }
+
     public function unban($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
+        $player = $this->storage->getPlayerObject($params[0]);
+
         try {
+            if (is_object($player)) {
+                $nickname = $player->nickName;
+            } else {
+                $nickname = $params[0];
+            }
+
             $this->connection->unBan($params[0]);
-            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#unbans the player %s', null, array($admin->nickName, $params[0]));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#unbans the player %s', null, array($admin->nickName, $nickname));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
@@ -1353,7 +1390,6 @@ Other server might use the same blacklist file!!');
         if ($player != null) {
             $nick = $player->nickName;
         }
-
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->expStorage->loadGuestList();
@@ -1370,22 +1406,28 @@ Other server might use the same blacklist file!!');
     {
         $target = array_shift($params);
         $player = $this->storage->getPlayerObject($target);
-        if ($player == null) {
-            $this->eXpChatSendServerMessage('#admin_error#Player #variable# %s doesn\' exist.', $fromLogin, array($target));
-
-            return;
+        if (is_object($player)) {
+            $nickname = $player->nickName;
+        } else {
+            $nickname = $target;
         }
 
         $admin = $this->storage->getPlayerObject($fromLogin);
         try {
             $this->expStorage->loadGuestList();
-            $this->connection->removeGuest($player);
+            $this->connection->removeGuest($target);
             $this->expStorage->saveGuestList();
 
-            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#removed guest status of the player#variable# %s', null, array($admin->nickName, $player->nickName));
+            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#removed guest status of the player#variable# %s', null, array($admin->nickName, $nickname));
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
+    }
+
+    public function removeGuestClick($fromLogin, $params)
+    {
+        $this->guestRemove($fromLogin, $params);
+        $this->showGuestList($fromLogin);
     }
 
     public function forceSpec($fromLogin, $params)
@@ -1393,7 +1435,6 @@ Other server might use the same blacklist file!!');
         $player = $this->storage->getPlayerObject($params[0]);
         if ($player == null) {
             $this->eXpChatSendServerMessage('#admin_action#Player #variable# %s doesn\' exist.', $fromLogin, array($params[0]));
-
             return;
         }
         try {
@@ -1849,6 +1890,7 @@ Other server might use the same blacklist file!!');
             foreach ($this->connection->getBanList(-1, 0) as $player) {
                 $items[] = new BannedPlayeritem($indexNumber, $player, $this, $login);
             }
+            $window->setAction(self::$showActions['banPlayer']);
             $window->populateList($items);
             $window->setSize(90, 120);
             $window->centerOnScreen();
@@ -1857,6 +1899,31 @@ Other server might use the same blacklist file!!');
             $this->sendErrorChat($login, $e->getMessage());
         }
     }
+
+    public function addBan($login, $entries)
+    {
+        $this->ban($login, array($entries['login']));
+        $this->showBanList($login);
+    }
+
+    public function addBlack($login, $entries)
+    {
+        $this->blacklist($login, array($entries['login']));
+        $this->showBlackList($login);
+    }
+
+    public function addIgnore($login, $entries)
+    {
+        $this->ignore($login, array($entries['login']));
+        $this->showIgnoreList($login);
+    }
+
+    public function addGuestList($login, $entries)
+    {
+        $this->guest($login, array($entries['login']));
+        $this->showGuestList($login);
+    }
+
 
     public function showBlackList($login)
     {
@@ -1874,6 +1941,7 @@ Other server might use the same blacklist file!!');
         foreach ($this->connection->getBlackList(-1, 0) as $player) {
             $items[] = new BlacklistPlayeritem($indexNumber, $player, $this, $login);
         }
+        $window->setAction(self::$showActions['blackPlayer']);
         $window->populateList($items);
         $window->setSize(90, 120);
         $window->centerOnScreen();
@@ -1899,12 +1967,13 @@ Other server might use the same blacklist file!!');
             foreach ($this->connection->getGuestList(-1, 0) as $player) {
                 $items[] = new GuestPlayeritem($indexNumber, $player, $this, $login);
             }
+
             $window->populateList($items);
+            $window->setAction(self::$showActions['guestPlayer']);
             $window->setSize(90, 120);
             $window->centerOnScreen();
             $window->show();
         } catch (Exception $e) {
-            throw $e;
             $this->sendErrorChat($login, $e->getMessage());
         }
     }
@@ -1925,6 +1994,7 @@ Other server might use the same blacklist file!!');
             foreach ($this->connection->getIgnoreList(-1, 0) as $player) {
                 $items[] = new IgnoredPlayeritem($indexNumber, $player, $this, $login);
             }
+            $window->setAction(self::$showActions['ignorePlayer']);
             $window->populateList($items);
             $window->setSize(90, 120);
             $window->centerOnScreen();
@@ -1971,6 +2041,8 @@ Other server might use the same blacklist file!!');
     {
         parent::eXpOnUnload();
         ParameterDialog::EraseAll();
+        GenericPlayerList::EraseAll();
+        self::$showActions = null;
     }
 
 }
