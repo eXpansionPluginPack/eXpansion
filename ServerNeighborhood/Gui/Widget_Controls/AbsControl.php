@@ -26,7 +26,7 @@ abstract class AbsControl extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->onSetData($server);
     }
 
-    public abstract function onSetData(Server $server);
+    abstract public function onSetData(Server $server);
 
     public function destroy()
     {

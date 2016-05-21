@@ -11,7 +11,7 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups\types;
 abstract class absChecker extends \ManiaLib\Utils\Singleton
 {
 
-    public abstract function check($data);
+    abstract public function check($data);
 
-    public abstract function getErrorMsg();
+    abstract public function getErrorMsg();
 }
