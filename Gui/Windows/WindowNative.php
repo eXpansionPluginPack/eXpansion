@@ -9,7 +9,6 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  */
 abstract class WindowNative extends \ManiaLive\Gui\Window
 {
-
     protected $_titlebar, $_titlebar2;
 
     protected $_title, $title2;
@@ -75,14 +74,11 @@ abstract class WindowNative extends \ManiaLive\Gui\Window
         $this->style->setAttribute("textcolor", "f00");
         $this->style->setAttribute("focusareacolor1", "09a");
         $this->style->setAttribute("focusareacolor2", "fff");
-        //$this->addComponent($this->style);
 
         $this->_mainWindow = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_mainWindow->setId("MainWindow");
         $this->_mainWindow->setStyle("UIConstruction_Buttons");
         $this->_mainWindow->setSubStyle("BgTools");
-//	$this->_mainWindow->setStyle("Bgs1");
-        //$this->_mainWindow->setSubStyle("BgWindow4");
         $this->_mainWindow->setOpacity(0.95);
         $this->_mainWindow->setColorize("002c59e9");
         $this->_mainWindow->setScriptEvents(true);
@@ -121,27 +117,15 @@ abstract class WindowNative extends \ManiaLive\Gui\Window
 
         $this->_title2 = new \ManiaLib\Gui\Elements\Label(60, 4);
         $this->_title2->setId("TitlebarText");
-        //$this->_title2->setStyle("TextRankingsBig");
         $this->_title2->setTextColor('fffd');
         $this->_title2->setTextSize(2);
-        //$this->_windowFrame->addComponent($this->_title2);
 
         $this->_closebutton = new \ManiaLib\Gui\Elements\Quad(4, 4);
         $this->_closebutton->setId("Close");
         $this->_closebutton->setAlign('center', 'center2');
         $this->_closebutton->setStyle("Icons128x32_1");
         $this->_closebutton->setSubStyle("Close");
-
-        /*   $this->_closebutton->setStyle("TextChallengeNameMedium");
-          $this->_closebutton->setScriptEvents(true);
-          $this->_closebutton->setFocusAreaColor1("fff");
-          $this->_closebutton->setFocusAreaColor2("000");
-          $this->_closebutton->setId("Close");
-          $this->_closebutton->setText(' x ');
-          $this->_closebutton->setTextColor('000');
-          $this->_closebutton->setTextSize(1); */
         $this->_closebutton->setScriptEvents(true);
-        //$this->_closebutton->setAction($this->_closeAction);
         $this->_windowFrame->addComponent($this->_closebutton);
 
         $this->_minbutton = new \ManiaLib\Gui\Elements\Label(7, 3);
@@ -164,7 +148,7 @@ abstract class WindowNative extends \ManiaLive\Gui\Window
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $titleBarPos = 3.5;
@@ -288,39 +272,38 @@ abstract class WindowNative extends \ManiaLive\Gui\Window
         \ManiaLive\Gui\Manialinks::appendXML($dico->getXml());
     }
 
-    function setText($text)
+    public function setText($text)
     {
         $this->_mainText->setText($text);
     }
 
-    function setTitle($text, $parameter = "")
+    public function setTitle($text, $parameter = "")
     {
         $this->_name = $text;
         $this->_title->setText($text . " " . $parameter);
-        // $this->_title2->setText($text . " " . $parameter);
     }
 
-    function closeWindow()
+    public function closeWindow()
     {
         $this->erase($this->getRecipient());
     }
 
-    function addScriptToMain($script)
+    public function addScriptToMain($script)
     {
         $this->dDeclares .= $script;
     }
 
-    function addScriptToWhile($script)
+    public function addScriptToWhile($script)
     {
         $this->wLoop .= $script;
     }
 
-    function addScriptToLib($script)
+    public function addScriptToLib($script)
     {
         $this->scriptLib .= $script;
     }
 
-    function destroy()
+    public function destroy()
     {
         \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->_closeAction);
         $this->_windowFrame->clearComponents();
@@ -343,5 +326,3 @@ abstract class WindowNative extends \ManiaLive\Gui\Window
     }
 
 }
-
-?>

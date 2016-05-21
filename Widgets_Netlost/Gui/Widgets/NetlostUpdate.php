@@ -27,7 +27,4 @@ class NetlostUpdate extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>

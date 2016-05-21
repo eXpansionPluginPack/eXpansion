@@ -9,7 +9,6 @@ namespace ManiaLivePlugins\eXpansion\Gui\Elements;
  */
 class Title extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-
     protected $bg;
     protected $label;
     protected $config;
@@ -47,12 +46,9 @@ class Title extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label->setText($text);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
     }
-
 }
-
-?>

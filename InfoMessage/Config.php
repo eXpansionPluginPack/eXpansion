@@ -10,7 +10,4 @@ class Config extends \ManiaLib\Utils\Singleton
     public $infoMessageColor = '$fff';
 
     public $infoInterval = "1:00";
-
 }
-
-?>

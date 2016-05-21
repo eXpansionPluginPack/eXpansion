@@ -39,7 +39,7 @@ class CPPanel extends Widget
         $this->addComponent($this->label);
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         //$this->cplabel->setPosition(($this->sizeX / 2), -1);
@@ -58,11 +58,9 @@ class CPPanel extends Widget
         $this->label->setText($text);
     }
 
-    function destroy()
+    public function destroy()
     {
         parent::destroy();
     }
 
 }
-
-?>

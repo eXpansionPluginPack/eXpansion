@@ -147,7 +147,7 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
         return str_replace('$', "", $colors->getColor($var));
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
@@ -162,5 +162,3 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>

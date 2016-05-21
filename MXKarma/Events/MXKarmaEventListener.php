@@ -40,6 +40,3 @@ interface MXKarmaEventListener
      */
     public function MXKarma_onError($state, $number, $reason);
 }
-
-?>
-

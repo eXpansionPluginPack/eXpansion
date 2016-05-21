@@ -24,7 +24,7 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     private $widths;
 
-    function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $record, $widths, $offset = 0)
+    public function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $record, $widths, $offset = 0)
     {
         $this->widths = $widths;
         $this->sizeY = 6;
@@ -97,7 +97,4 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         parent::destroy();
     }
-
 }
-
-?>

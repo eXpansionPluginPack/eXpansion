@@ -7,11 +7,9 @@ class Rating
     public $count;
     public $percent;
 
-    function __construct($response)
+    public function __construct($response)
     {
         $this->count = (int)$response['count'];
         $this->percent = $response['percent'];
     }
 }
-
-?>

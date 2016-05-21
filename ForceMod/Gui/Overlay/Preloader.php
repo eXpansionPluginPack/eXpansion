@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\ForceMod\Gui\Overlay;
 
 class Preloader extends \ManiaLive\Gui\Window
 {
-
     protected $frame;
 
     protected function onConstruct()
@@ -36,7 +35,4 @@ class Preloader extends \ManiaLive\Gui\Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>

@@ -78,12 +78,6 @@ class WidgetNetstat extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
             $color = '$ff0';
             $status->setText('$fffloss: ' . $color . $stat->packetLossRate);
             $frame->addComponent($status);
-
-
-            //  }
         }
     }
-
 }
-
-?>

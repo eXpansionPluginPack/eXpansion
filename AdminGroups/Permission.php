@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
 class Permission
 {
-
     const ADMINGROUPS_ONLY_OWN_GROUP = 'admingroups_onlyOwnGroup';
     const ADMINGROUPS_ADMIN_ALL_GROUPS = "admingroups_adminAllGroups";
     //Concerning Players
@@ -67,5 +66,3 @@ class Permission
     const LOCAL_RECORDS_DELETE = 'localRecords_delete';
 
 }
-
-?>

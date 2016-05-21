@@ -17,7 +17,7 @@ class IncludedPack extends AbstractStructure
     public $creationDate;
     public $checksum;
 
-    final static function fetch($fp)
+    final public static function fetch($fp)
     {
         $includedPack = new self;
         $includedPack->checksum = self::fetchChecksum($fp);
@@ -29,5 +29,3 @@ class IncludedPack extends AbstractStructure
         return $includedPack;
     }
 }
-
-?>

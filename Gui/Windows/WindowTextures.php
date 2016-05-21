@@ -69,9 +69,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
         $this->_bgeff->setColorize($config->windowBackgroundColor);
         $this->_windowFrame->addComponent($this->_bgeff);
-
-// bottom
-
+        
         $this->_bottomcenter = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
         $this->_bottomcenter->setAlign("left", "top");
         $this->_bottomcenter->setImage("file://Media/Manialinks/Common/Home/maniahome-title.dds", true);
@@ -292,14 +290,12 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
             if (\is_object($value)) {
 
                 if ($value instanceof \ManiaLive\Gui\Containable || $value instanceof \ManiaLive\Gui\Container) {
-                    //			echo "!";
                     $value->destroyComponents();
                     $value->destroy();
                     unset($this->$index);
                     continue;
                 }
                 if ($value instanceof \ManiaLive\Gui\Control) {
-                    //				echo "*";
                     $value->destroy();
                     unset($this->$index);
                     continue;
@@ -307,7 +303,6 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
                 unset($this->$index);
             } else {
-                //			echo ".";
                 unset($this->$index);
             }
         }
@@ -323,5 +318,3 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_scripts[] = $script;
     }
 }
-
-?>

@@ -86,8 +86,4 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>
-

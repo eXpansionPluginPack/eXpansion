@@ -47,7 +47,7 @@ class Map extends FileStructure
 
     public $fileName;
 
-    final static function fetch($fp)
+    final public static function fetch($fp)
     {
         $map = new self;
         self::ignore($fp, 3);
@@ -83,7 +83,7 @@ class Map extends FileStructure
         return $map;
     }
 
-    final static function check($filename)
+    final public static function check($filename)
     {
         $fp = fopen($filename, 'rb');
 
@@ -166,5 +166,3 @@ class Map extends FileStructure
     }
 
 }
-
-?>

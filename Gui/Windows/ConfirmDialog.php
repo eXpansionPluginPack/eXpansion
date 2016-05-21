@@ -42,17 +42,17 @@ class ConfirmDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
     }
 
-    function setInvokeAction($action)
+    public function setInvokeAction($action)
     {
         $this->action = $action;
     }
 
-    function Ok($login)
+    public function Ok($login)
     {
         $action = ConfirmProxy::Create($login);
         $action->setInvokeAction($this->action);
@@ -61,19 +61,16 @@ class ConfirmDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->Erase($login);
     }
 
-    function Cancel($login)
+    public function Cancel($login)
     {
         $this->erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->ok->destroy();
         $this->cancel->destroy();
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>

@@ -8,7 +8,6 @@ use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 
 class ChatBackground extends ExpPlugin
 {
-
     public function eXpOnReady()
     {
         $window = BoxWindow::Create(null);
@@ -29,7 +28,4 @@ class ChatBackground extends ExpPlugin
         BoxWindow::EraseAll();
         parent::eXpOnUnload();
     }
-
 }
-
-?>

@@ -8,7 +8,7 @@ use ManiaLive\PluginHandler\PluginHandler;
 class AutoTageXpansion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $list = PluginHandler::getInstance()->getLoadedPluginsList();
         $i = 0;
@@ -23,13 +23,8 @@ class AutoTageXpansion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
-        $data = $this->connection->getServerTags();
-        //var_dump($data);
+        $this->connection->getServerTags();
     }
-
-
 }
-
-?>

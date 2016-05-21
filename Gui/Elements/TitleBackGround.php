@@ -49,12 +49,10 @@ class TitleBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->config = null;
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
     }
 
 }
-
-?>

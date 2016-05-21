@@ -26,12 +26,11 @@ class DbTable extends Control
 
     /**
      *
-     * @param int $indexNumber
-     * @param string $settingName
-     * @param mixed $value
-     * @param int $sizeX
+     * @param int    $indexNumber
+     * @param string $tableName
+     * @param int    $sizeX
      */
-    function __construct($indexNumber, $tableName, $sizeX)
+    public function __construct($indexNumber, $tableName, $sizeX)
     {
         $sizeY = 6;
         $this->tableName = $tableName;
@@ -56,7 +55,7 @@ class DbTable extends Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -65,14 +64,10 @@ class DbTable extends Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         $this->checkBox->destroy();
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>
-

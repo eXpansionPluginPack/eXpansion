@@ -226,5 +226,4 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

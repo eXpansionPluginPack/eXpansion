@@ -137,27 +137,27 @@ class PlainWidget extends \ManiaLive\Gui\Window
         \ManiaLive\Gui\Manialinks::appendXML($dico->getXml());
     }
 
-    function closeWindow()
+    public function closeWindow()
     {
         $this->erase($this->getRecipient());
     }
 
-    function addScriptToMain($script)
+    public function addScriptToMain($script)
     {
         $this->dDeclares .= $script;
     }
 
-    function addScriptToWhile($script)
+    public function addScriptToWhile($script)
     {
         $this->wLoop .= $script;
     }
 
-    function addScriptToLib($script)
+    public function addScriptToLib($script)
     {
         $this->scriptLib .= $script;
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->_scripts = array();
         $this->destroyComponents();
@@ -214,5 +214,3 @@ class PlainWidget extends \ManiaLive\Gui\Window
         return !isset($this->_scripts);
     }
 }
-
-?>

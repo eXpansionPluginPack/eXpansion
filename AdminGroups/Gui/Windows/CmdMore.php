@@ -200,7 +200,4 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->bgt_descm = null;
         $this->bgt_cmd = null;
     }
-
 }
-
-?>

@@ -3,7 +3,6 @@ namespace ManiaLivePlugins\eXpansion\CustomUI;
 
 class Config extends \ManiaLib\Utils\Singleton
 {
-
     public $overlayHideNotices = false;
 
     public $overlayHideMapInfo = false;
@@ -47,8 +46,4 @@ class Config extends \ManiaLib\Utils\Singleton
     public $overlayHideBackground = false; //
 
     public $overlayHideEndMapLadderRecap = false; //
-
-
 }
-
-?>

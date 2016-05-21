@@ -12,7 +12,7 @@ class HudMove extends \ManiaLive\Gui\Window
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
     }
@@ -52,11 +52,9 @@ class HudMove extends \ManiaLive\Gui\Window
                 --></script>');
     }
 
-    function destroy()
+    public function destroy()
     {
         parent::destroy();
     }
 
 }
-
-?>

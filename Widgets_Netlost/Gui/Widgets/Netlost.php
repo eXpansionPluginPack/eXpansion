@@ -59,5 +59,3 @@ class Netlost extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     }
 
 }
-
-?>

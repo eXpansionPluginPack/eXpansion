@@ -115,12 +115,10 @@ class Edge extends Widget
         $this->bg->setSize($this->sizeX, $this->sizeY);
     }
 
-    function onIsRemoved(Container $target)
+    public function onIsRemoved(Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
     }
 
 }
-
-?>

@@ -24,7 +24,6 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     protected function eXpOnBeginConstruct()
     {
-
         $login = $this->getRecipient();
 
         $frame = new \ManiaLive\Gui\Controls\Frame();
@@ -79,23 +78,23 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->setName("Player Time Panel");
     }
 
-    function setTarget($login)
+    public function setTarget($login)
     {
         $this->target = Gui::fixString($login);
     }
 
-    function setReference($val)
+    public function setReference($val)
     {
         $this->reference = $val;
     }
 
-    function setMapInfo(\Maniaplanet\DedicatedServer\Structures\Map $map)
+    public function setMapInfo(\Maniaplanet\DedicatedServer\Structures\Map $map)
     {
         $this->totalCp = $map->nbCheckpoints;
         $this->lapRace = $map->lapRace;
     }
 
-    function onDraw()
+    protected function onDraw()
     {
         $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->target);
 
@@ -164,11 +163,9 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         parent::onDraw();
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();
     }
 }
-
-?>

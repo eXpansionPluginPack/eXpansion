@@ -9,9 +9,5 @@ namespace ManiaLivePlugins\eXpansion\Gui\Structures;
  */
 interface OptimizedPagerElement
 {
-
     public function getNbTextColumns();
-
 }
-
-?>

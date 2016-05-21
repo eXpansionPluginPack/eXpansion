@@ -40,9 +40,6 @@ class ChatMessage extends \Maniaplanet\DedicatedServer\Structures\AbstractStruct
 
     public function __toString()
     {
-        return "[" . \ManiaLib\Utils\Formatting::stripStyles($this->nickname) . "] " . $this->text;
+        return "[" . \ManiaLib\Utils\Formatting::stripStyles($this->nickName) . "] " . $this->text;
     }
-
 }
-
-?>

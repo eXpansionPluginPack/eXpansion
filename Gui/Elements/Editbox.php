@@ -21,7 +21,7 @@ class Editbox extends Control
 
     protected $bg;
 
-    function __construct($name, $sizeX = 100, $sizeY = 30, $editable = true)
+    public function __construct($name, $sizeX = 100, $sizeY = 30, $editable = true)
     {
 
         $config = Config::getInstance();
@@ -118,7 +118,7 @@ class Editbox extends Control
         }
     }
 
-    function getLabel()
+    public function getLabel()
     {
         return $this->label->getText();
     }
@@ -128,7 +128,7 @@ class Editbox extends Control
         $this->label->setText($text);
     }
 
-    function getText()
+    public function getText()
     {
         if ($this->button instanceof Entry)
             return $this->button->getDefault();
@@ -136,7 +136,7 @@ class Editbox extends Control
             return $this->button->getText();
     }
 
-    function setText($text)
+    public function setText($text)
     {
         if ($this->button instanceof Entry)
             $this->button->setDefault($text);
@@ -144,33 +144,30 @@ class Editbox extends Control
             $this->button->setText($text);
     }
 
-    function getName()
+    public function getName()
     {
         return $this->button->getName();
     }
 
-    function setName($text)
+    public function setName($text)
     {
         $this->button->setName($text);
     }
 
-    function setId($id)
+    public function setId($id)
     {
         $this->button->setId($id);
         $this->button->setScriptEvents();
     }
 
-    function setClass($class)
+    public function setClass($class)
     {
         $this->button->setAttribute("class", "isTabIndex isEditable " . $class);
     }
 
-    function onIsRemoved(Container $target)
+    public function onIsRemoved(Container $target)
     {
         parent::onIsRemoved($target);
         parent::destroy();
     }
-
 }
-
-?>

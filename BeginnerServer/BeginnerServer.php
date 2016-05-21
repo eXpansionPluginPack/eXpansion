@@ -46,7 +46,4 @@ class BeginnerServer extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->checkBeginner($player->login);
         }
     }
-
 }
-
-?>

@@ -38,4 +38,3 @@ class SnowParticle extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
 }
 
-?>

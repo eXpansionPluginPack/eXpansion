@@ -12,21 +12,18 @@ class dummy extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         // $this->mainFrame->addComponent($component);
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
     }
 
-    function onShow()
+    protected function onShow()
     {
 
     }
 
-    function destroy()
+    public function destroy()
     {
         parent::destroy();
     }
-
 }
-
-?>

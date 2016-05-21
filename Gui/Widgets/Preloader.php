@@ -8,7 +8,6 @@ use ManiaLive\Gui\Window;
 
 class Preloader extends Window
 {
-
     protected $frame;
 
     private static $cache = array();
@@ -52,7 +51,7 @@ class Preloader extends Window
         }
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->frame->clearComponents();
         $this->frame->destroy();
@@ -61,5 +60,3 @@ class Preloader extends Window
     }
 
 }
-
-?>

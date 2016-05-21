@@ -111,5 +111,4 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         unset($this->actions);
         parent::destroy();
     }
-
 }

@@ -33,17 +33,6 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->serverName->setTextPrefix('$s');
         $this->addComponent($this->serverName);
 
-//	$this->author = new \ManiaLib\Gui\Elements\Label(60, 6);
-//	$this->author->setId('mapAuthor');
-//	$this->author->setAlign("right", "top");
-//	$this->author->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
-//	$this->author->setTextSize(2);
-//	$this->author->setPosition(58, -11.5);
-//	$this->author->setTextColor('fff');
-//	$this->author->setTextPrefix('$s');		
-//	$this->addComponent($this->author);
-
-
         $line = new \ManiaLive\Gui\Controls\Frame(1, -6.5);
         $layout = new \ManiaLib\Gui\Layouts\Line();
         $layout->setMargin(1);
@@ -120,5 +109,3 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         parent::destroy();
     }
 }
-
-?>

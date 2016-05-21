@@ -35,11 +35,9 @@ class Error extends Window
         $this->mainFrame->addComponent($this->label);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();
     }
 }
-
-?>

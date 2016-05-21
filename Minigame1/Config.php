@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Minigame1;
 
 class Config extends \ManiaLib\Utils\Singleton
 {
-
     public $mg1_displayIntervalMin = "2:00";
 
     public $mg1_displayIntervalMax = "3:00";
@@ -28,5 +27,3 @@ class Config extends \ManiaLib\Utils\Singleton
     public $mg1_imageSize = 20;
 
 }
-
-?>

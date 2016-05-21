@@ -6,7 +6,6 @@ use ManiaLivePlugins\eXpansion\Emotes\Config;
 
 class EmotePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
-
     private $connection;
     private $storage;
     private $_windowFrame;
@@ -101,7 +100,7 @@ class EmotePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize(60, 12);
@@ -110,12 +109,10 @@ class EmotePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();
     }
 
 }
-
-?>

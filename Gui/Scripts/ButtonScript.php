@@ -10,10 +10,8 @@ namespace ManiaLivePlugins\eXpansion\Gui\Scripts;
 class ButtonScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script
 {
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct("Gui/Scripts/Button");
     }
 }
-
-?>

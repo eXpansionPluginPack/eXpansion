@@ -113,7 +113,6 @@ class Gui extends ExpPlugin
             /** @var GuiHandler */
             $guiHandler = GuiHandler::getInstance();
             foreach ($this->resetLogins as $login => $value) {
-// delayed tick
                 $this->resetLogins[$login]++;
                 switch ($this->resetLogins[$login]) {
                     case 1:
@@ -138,18 +137,8 @@ class Gui extends ExpPlugin
         }
     }
 
-    function onPlayerConnect($login, $isSpectator)
+    public function onPlayerConnect($login, $isSpectator)
     {
-// remove f8 for hiding ui
-// 	\ManiaLive\Gui\Windows\Shortkey::Erase($login);
-
-
-        /* reaby disabled this, no need anymore :)
-          $info = HudPanel::Create($login);
-          $info->setSize(75, 6);
-          $info->setPosition(-160, -50);
-          $info->show(); */
-
         try {
 
             if ($this->expStorage->simpleEnviTitle == "SM") {
@@ -164,12 +153,12 @@ class Gui extends ExpPlugin
         }
     }
 
-    function onPlayerDisconnect($login, $reason = null)
+    public function onPlayerDisconnect($login, $reason = null)
     {
 
     }
 
-    function hudCommands($login, $param = "null")
+    public function hudCommands($login, $param = "null")
     {
         switch ($param) {
             case "reset":
@@ -187,7 +176,7 @@ class Gui extends ExpPlugin
         }
     }
 
-    function enableHudMove($login)
+    public function enableHudMove($login)
     {
         if (Config::getInstance()->disablePersonalHud) {
             $this->eXpChatSendServerMessage($this->msg_disabled, $login);
@@ -198,7 +187,7 @@ class Gui extends ExpPlugin
         }
     }
 
-    function disableHudMove($login)
+    public function disableHudMove($login)
     {
         if (Config::getInstance()->disablePersonalHud) {
             $this->eXpChatSendServerMessage($this->msg_disabled, $login);
@@ -209,7 +198,7 @@ class Gui extends ExpPlugin
         }
     }
 
-    function showConfigWindow($login, $entries)
+    public function showConfigWindow($login, $entries)
     {
         if (Config::getInstance()->disablePersonalHud) {
             $this->eXpChatSendServerMessage($this->msg_disabled, $login);
@@ -221,7 +210,7 @@ class Gui extends ExpPlugin
         }
     }
 
-    function resetHud($login)
+    public function resetHud($login)
     {
         if (Config::getInstance()->disablePersonalHud) {
             $this->eXpChatSendServerMessage($this->msg_disabled, $login);
@@ -234,7 +223,7 @@ class Gui extends ExpPlugin
         }
     }
 
-    function logMemory()
+    public function logMemory()
     {
         $mem = "Memory Usage: " . round(memory_get_usage() / 1024) . "Kb";
         Logger::getLog("memory")->write($mem);
@@ -350,12 +339,11 @@ class Gui extends ExpPlugin
      */
     public static function createConfirm($finalAction)
     {
-//$finalAction = call_user_func_array(array(\ManiaLive\Gui\ActionHandler::getInstance(), 'createAction'), func_get_args());
-        $outAction = call_user_func_array(array(ActionHandler::getInstance(), 'createAction'),
-            array(array(__NAMESPACE__ . '\Gui', 'showConfirmDialog'), $finalAction));
+        $outAction = call_user_func_array(
+            array(ActionHandler::getInstance(), 'createAction'),
+            array(array(__NAMESPACE__ . '\Gui', 'showConfirmDialog'), $finalAction)
+        );
 
         return $outAction;
     }
 }
-
-?>

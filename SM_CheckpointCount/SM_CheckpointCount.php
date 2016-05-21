@@ -30,7 +30,7 @@ class SM_CheckpointCount extends ExpPlugin
      *
      * @param string $login |null
      */
-    function displayWidget($login = null, $cpIndex = "-")
+    protected function displayWidget($login = null, $cpIndex = "-")
     {
         if ($login == null)
             CPPanel::EraseAll();
@@ -66,17 +66,14 @@ class SM_CheckpointCount extends ExpPlugin
             $this->onPlayerConnect($player->login, true);
     }
 
-    function onPlayerConnect($login, $isSpectator)
+    public function onPlayerConnect($login, $isSpectator)
     {
         $this->displayWidget($login);
     }
 
-    function onPlayerDisconnect($login, $reason = null)
+    public function onPlayerDisconnect($login, $reason = null)
     {
         CPPanel::Erase($login);
     }
 
 }
-
-?>
-

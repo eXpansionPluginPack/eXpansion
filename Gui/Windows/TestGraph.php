@@ -4,11 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
 class TestGraph extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
-
     protected $ok;
     protected $cancel;
-    private $actionOk;
-    private $actionCancel;
     protected $plotter;
 
     protected function onConstruct()
@@ -27,12 +24,9 @@ class TestGraph extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->setTitle("testGraph");
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>

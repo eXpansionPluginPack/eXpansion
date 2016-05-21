@@ -94,7 +94,7 @@ class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->setDisableAxis("x");
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize(80, 7);
@@ -104,7 +104,7 @@ class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     }
 
 
-    function destroy()
+    public function destroy()
     {
         $this->frame->clearComponents();
         $this->frame->destroy();
@@ -113,5 +113,3 @@ class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     }
 
 }
-
-?>

@@ -13,7 +13,4 @@ class Line extends FaqControl
         parent::__construct($text);
         $this->label->setTextColor("fff");
     }
-
 }
-
-?>

@@ -7,7 +7,7 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public $quad, $lbl_title, $lbl_value;
 
-    function __construct($title, $value, $sizeX = 20, $StyleorUrl = null, $iconSubStyle = null)
+    public function __construct($title, $value, $sizeX = 20, $StyleorUrl = null, $iconSubStyle = null)
     {
         $this->quad = new \ManiaLib\Gui\Elements\Quad(8, 8);
         //$this->quad->setColorize("fff");
@@ -34,22 +34,19 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setScale(0.9);
     }
 
-    function setId($id)
+    public function setId($id)
     {
         $this->lbl_value->setId($id);
     }
 
-    function setIdTitle($id)
+    public function setIdTitle($id)
     {
         $this->lbl_title->setId($id);
     }
 
-    function setQuadid($id)
+    public function setQuadid($id)
     {
         $this->quad->setId($id);
     }
 
 }
-
-?>
-

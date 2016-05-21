@@ -95,7 +95,7 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->frame->addComponent($this->cancel);
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 4, $this->sizeY - 10);
@@ -103,12 +103,12 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->frame->setPosition(30, -$this->sizeY + 3);
     }
 
-    function onShow()
+    protected function onShow()
     {
         $this->populateList();
     }
 
-    function populateList()
+    public function populateList()
     {
         foreach ($this->items as $item)
             $item->erase();
@@ -128,12 +128,12 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function init(\ManiaLive\Database\Connection $db)
+    public function init(\ManiaLive\Database\Connection $db)
     {
         $this->db = $db;
     }
 
-    function Backup($login)
+    public function Backup($login)
     {
 
         $window = BackupRestore::Create($login);
@@ -145,7 +145,7 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->erase($login);
     }
 
-    function Repair($login, $args)
+    public function Repair($login, $args)
     {
 
         foreach ($this->items as $item) {
@@ -161,7 +161,7 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         //   $this->erase($login);
     }
 
-    function Truncate($login, $args)
+    public function Truncate($login, $args)
     {
         foreach ($this->items as $item) {
             // if checkbox checked
@@ -175,7 +175,7 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         //  $this->erase($login);
     }
 
-    function Optimize($login, $args)
+    public function Optimize($login, $args)
     {
 
         foreach ($this->items as $item) {
@@ -190,12 +190,12 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         //  $this->erase($login);
     }
 
-    function Cancel($login)
+    public function Cancel($login)
     {
         $this->erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item)
             $item->erase();
@@ -207,7 +207,7 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::destroy();
     }
 
-    function syncCheckboxItem(&$item, $args)
+    public function syncCheckboxItem(&$item, $args)
     {
         $components = $item->getComponents();
         foreach ($components as &$component) {
@@ -216,7 +216,4 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             }
         }
     }
-
 }
-
-?>

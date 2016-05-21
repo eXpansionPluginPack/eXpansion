@@ -19,7 +19,7 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected $toToggle = null;
 
-    function __construct($sizeX = 5, $sizeY = 5, $textWidth = 25, Checkbox $toToggle = null)
+    public function __construct($sizeX = 5, $sizeY = 5, $textWidth = 25, Checkbox $toToggle = null)
     {
         $this->textWidth = $textWidth;
         $this->action = $this->createAction(array($this, 'toggleActive'));
@@ -74,7 +74,7 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         parent::onResize($this->textWidth + 5, 5);
     }
 
-    function onDraw()
+    protected function onDraw()
     {
         $config = Config::getInstance();
 
@@ -94,27 +94,27 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         }
     }
 
-    function setStatus($boolean)
+    public function setStatus($boolean)
     {
         $this->active = $boolean;
     }
 
-    function getStatus()
+    public function getStatus()
     {
         return $this->active;
     }
 
-    function getText()
+    public function getText()
     {
         return $this->label->getText();
     }
 
-    function setText($text)
+    public function setText($text)
     {
         $this->label->setText('$fff' . $text);
     }
 
-    function toggleActive($login)
+    public function toggleActive($login)
     {
         $this->active = !$this->active;
         if ($this->toToggle != null)
@@ -122,7 +122,7 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->redraw();
     }
 
-    function setAction($action)
+    public function setAction($action)
     {
         $this->button->setAction($action);
     }
@@ -133,12 +133,9 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         parent::destroy();
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
     }
-
 }
-
-?>

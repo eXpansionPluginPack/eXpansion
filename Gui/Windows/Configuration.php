@@ -45,7 +45,7 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->cancel);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX, $this->sizeY - 8);
@@ -54,7 +54,7 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->cancel->setPosition($this->sizeX - 26, -$this->sizeY + 6);
     }
 
-    function setData($data)
+    public function setData($data)
     {
         $login = $this->getRecipient();
 
@@ -102,7 +102,7 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         return $items;
     }
 
-    function Ok($login, $options)
+    public function Ok($login, $options)
     {
         $outValues = array();
 
@@ -120,12 +120,12 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->Erase($login);
     }
 
-    function Cancel($login)
+    public function Cancel($login)
     {
         $this->erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item)
             $item->destroy();
@@ -139,7 +139,4 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>

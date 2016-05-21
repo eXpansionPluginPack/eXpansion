@@ -39,8 +39,4 @@ class Config extends \ManiaLib\Utils\Singleton
     public $allowedIrcLogins = array();
 
     public $plugins = array("AdminPrivateTriggers");
-
-
 }
-
-?>

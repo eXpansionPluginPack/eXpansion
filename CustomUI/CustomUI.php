@@ -7,12 +7,12 @@ use ManiaLivePlugins\eXpansion\CustomUI\Gui\Customizer;
 class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         // $this->enableDedicatedEvents();
     }
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
 
         $this->displayWidget(null);
@@ -23,7 +23,7 @@ class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param string $login
      */
-    function displayWidget($login)
+    protected function displayWidget($login)
     {
         Customizer::EraseAll();
         $info = Customizer::Create(null);
@@ -32,19 +32,15 @@ class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $info->show();
     }
 
-    function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
+    public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
     {
         if ($var->getConfigInstance() instanceof \ManiaLivePlugins\eXpansion\CustomUI\Config) {
             $this->displayWidget(null);
         }
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         Customizer::EraseAll();
     }
-
 }
-
-?>
-

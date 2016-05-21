@@ -12,7 +12,7 @@ class CheckboxScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script
 
     private $putEntry = false;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct("Gui/Scripts/Checkbox");
     }
@@ -22,5 +22,3 @@ class CheckboxScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script
         parent::reset();
     }
 }
-
-?>

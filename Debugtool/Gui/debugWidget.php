@@ -33,7 +33,7 @@ class debugWidget extends \ManiaLive\Gui\Window
         $this->addComponent($this->label);
     }
 
-    function onPostLoop()
+    public function onPostLoop()
     {
         $startTime = microtime(true);
         if ($startTime < $this->nextLoop) return;
@@ -62,5 +62,3 @@ class debugWidget extends \ManiaLive\Gui\Window
         Dispatcher::unregister(TickEvent::getClass(), $this);
     }
 }
-
-?>

@@ -42,5 +42,3 @@ class MapSuggestionButton extends Widget
     }
 
 }
-
-?>

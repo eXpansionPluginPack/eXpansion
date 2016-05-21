@@ -72,11 +72,9 @@ class Faq extends ExpPlugin
         $window->show();
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         FaqWindow::EraseAll();
         FaqWidget::EraseAll();
     }
 }
-
-?>

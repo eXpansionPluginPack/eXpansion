@@ -106,7 +106,4 @@ class Recorditem extends Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>

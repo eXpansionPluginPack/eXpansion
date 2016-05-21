@@ -25,11 +25,8 @@ class MumbleWidget extends \ManiaLive\Gui\Window
         //echo "draw: " . $this->getRecipient() . "\n";
     }
 
-    function destroy()
+    public function destroy()
     {
         parent::destroy();
     }
-
 }
-
-?>

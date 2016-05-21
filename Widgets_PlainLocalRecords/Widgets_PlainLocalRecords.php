@@ -105,5 +105,3 @@ class Widgets_PlainLocalRecords extends ExpPlugin implements Listener
         $this->updateLocalPanel();
     }
 }
-
-?>

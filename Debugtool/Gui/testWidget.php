@@ -71,7 +71,4 @@ class testWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
             $this->frame->addComponent($frame);
         }
     }
-
 }
-
-?>

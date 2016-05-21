@@ -40,5 +40,3 @@ class XmasWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     }
 
 }
-
-?>

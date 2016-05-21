@@ -48,12 +48,9 @@ class Customizer extends PlainWidget
         $this->script->setParam('code', $code);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>

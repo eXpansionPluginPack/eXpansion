@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\ForceMod\Gui\Overlay;
 
 class LoadScreen extends \ManiaLive\Gui\Window
 {
-
     protected $quad;
 
     protected function onConstruct()
@@ -20,7 +19,4 @@ class LoadScreen extends \ManiaLive\Gui\Window
     {
         $this->quad->setImage($image, true);
     }
-
 }
-
-?>

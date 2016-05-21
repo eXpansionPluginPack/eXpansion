@@ -44,7 +44,7 @@ class ListBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg->setSize($this->getSizeX() + (float)$this->config->style_list_sizeXOffset, $this->getSizeY() + (float)$this->config->style_list_sizeYOffset);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
@@ -55,5 +55,3 @@ class ListBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->config = null;
     }
 }
-
-?>

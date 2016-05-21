@@ -36,7 +36,4 @@ class FaqWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->icon_help->setPositionX(.5);
         $this->frame->addComponent($this->icon_help);
     }
-
 }
-
-?>

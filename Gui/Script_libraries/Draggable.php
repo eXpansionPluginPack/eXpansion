@@ -10,10 +10,8 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 class Draggable extends Script
 {
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct("Gui/Script_libraries/Draggable");
     }
 }
-
-?>

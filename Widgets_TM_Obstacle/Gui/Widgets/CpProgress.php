@@ -65,7 +65,7 @@ class CpProgress extends Widget
         $this->registerScript($script);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         $this->storage = null;
@@ -73,5 +73,3 @@ class CpProgress extends Widget
     }
 
 }
-
-?>

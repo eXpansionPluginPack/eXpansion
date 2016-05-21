@@ -44,12 +44,12 @@ class MXRatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->setName("MX Map Rating Widget");
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
     }
 
-    function setRating($number, $total)
+    public function setRating($number, $total)
     {
         $this->frame->clearComponents();
 
@@ -77,5 +77,3 @@ class MXRatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     }
 
 }
-
-?>

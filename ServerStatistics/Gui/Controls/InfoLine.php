@@ -39,7 +39,4 @@ class InfoLine extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setSizeX(85);
         $this->setSizeY($sizeY + 1);
     }
-
 }
-
-?>

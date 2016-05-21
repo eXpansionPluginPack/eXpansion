@@ -21,7 +21,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $mumble_feed;
     private $channels;
 
-    function expOnInit()
+    public function expOnInit()
     {
         //Important for all eXpansion plugins.
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -38,7 +38,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         $this->enableTickerEvent();
@@ -51,7 +51,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * @return void
      */
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
         $config = Config::getInstance();
         $this->connection->chatSendServerMessage("Mumble trying to load"); //debug
@@ -76,7 +76,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function onTick()
+    public function onTick()
     {
         $time = time();
         $config = Config::getInstance();
@@ -102,7 +102,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param string $login
      */
-    function showWidget($login = null)
+    public function showWidget($login = null)
     {
         $info = Gui\Widgets\MumbleWidget::Create(null);
         $info->setPosition(-155, -20, 1);
@@ -116,7 +116,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param string $login
      */
-    function showMumble($login = null)
+    public function showMumble($login = null)
     {
         $info = Gui\Widgets\MumbleInfo::Create(null);
         $info->setPosition(-100, 32, 1);
@@ -124,7 +124,7 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $info->show();
     }
 
-    function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries)
+    public function onPlayerManialinkPageAnswer($playerUid, $login, $answer, array $entries)
     {
         if ($answer == "MumbleLogo") {
             $this->showMumble($login);
@@ -143,18 +143,14 @@ class Mumble extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function onPlayerConnect($login, $isSpec)
+    public function onPlayerConnect($login, $isSpec)
     {
         $this->showWidget($login);
     }
 
-    function onPlayerDisconnect($login, $reason = null)
+    public function onPlayerDisconnect($login, $reason = null)
     {
         Gui\Widgets\MumbleInfo::Erase($login);
         Gui\Widgets\MumbleWidget::Erase($login);
     }
-
-
 }
-
-?>

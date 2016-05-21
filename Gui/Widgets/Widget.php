@@ -159,12 +159,12 @@ class Widget extends PlainWidget
         }
     }
 
-    function closeWindow()
+    public function closeWindow()
     {
         $this->erase($this->getRecipient());
     }
 
-    function destroy()
+    public function destroy()
     {
         unset($this->currentSettings);
         unset($this->widgetVisible);
@@ -177,7 +177,7 @@ class Widget extends PlainWidget
      *
      * @param string $axis accepts values: "x" or "y"
      */
-    function setDisableAxis($axis)
+    public function setDisableAxis($axis)
     {
         $this->axisDisabled = $axis;
     }
@@ -189,12 +189,12 @@ class Widget extends PlainWidget
      * @param float $posX
      * @param float $posY
      */
-    function setPositionForGamemode($gameMode, $posX, $posY)
+    public function setPositionForGamemode($gameMode, $posX, $posY)
     {
         $this->positions[$gameMode] = array($posX, $posY);
     }
 
-    function getWidgetVisible()
+    public function getWidgetVisible()
     {
         if (isset($this->widgetVisible[$this->storage->gameInfos->gameMode])) {
             $value = $this->widgetVisible[$this->storage->gameInfos->gameMode];
@@ -211,17 +211,17 @@ class Widget extends PlainWidget
      * @param string $gameMode
      * @param bool $value
      */
-    function setVisibilityForGamemode($gameMode, $value)
+    public function setVisibilityForGamemode($gameMode, $value)
     {
         $this->widgetVisible[$gameMode] = $value;
     }
 
-    function setVisibleLayer($string)
+    public function setVisibleLayer($string)
     {
         $this->visibleLayerInit = $string;
     }
 
-    function getPosX()
+    public function getPosX()
     {
         if (isset($this->positions[$this->storage->gameInfos->gameMode])) {
             return $this->positions[$this->storage->gameInfos->gameMode][0];
@@ -230,7 +230,7 @@ class Widget extends PlainWidget
         return $this->posX;
     }
 
-    function getPosY()
+    public function getPosY()
     {
         if (isset($this->positions[$this->storage->gameInfos->gameMode])) {
             return $this->positions[$this->storage->gameInfos->gameMode][1];
@@ -252,7 +252,4 @@ class Widget extends PlainWidget
     {
         return isset($this->currentSettings[$name]) ? $this->currentSettings[$name] : null;
     }
-
 }
-
-?>

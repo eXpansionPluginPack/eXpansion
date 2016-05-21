@@ -13,74 +13,74 @@ abstract class AbstractStructure
 {
     static private $lookbackStrings = array();
 
-    static function fetch($fp)
+    public static function fetch($fp)
     {
         throw new \LogicException('This method has to be defined in subclasses');
     }
 
-    final static function ignore($fp, $length)
+    final public static function ignore($fp, $length)
     {
         fread($fp, $length);
     }
 
-    final static function fetchRaw($fp, $length)
+    final public static function fetchRaw($fp, $length)
     {
         return fread($fp, $length);
     }
 
-    final static function fetchByte($fp)
+    final public static function fetchByte($fp)
     {
         $byte = unpack('C', fread($fp, 1));
 
         return $byte[1];
     }
 
-    final static function fetchShort($fp)
+    final public static function fetchShort($fp)
     {
         $short = unpack('v', fread($fp, 2));
 
         return $short[1];
     }
 
-    final static function fetchLong($fp)
+    final public static function fetchLong($fp)
     {
         $long = unpack('V', fread($fp, 4));
 
         return $long[1];
     }
 
-    final static function fetchFloat($fp)
+    final public static function fetchFloat($fp)
     {
         $float = unpack('f', fread($fp, 4));
 
         return $float[1];
     }
 
-    final static function fetchFloat2($fp)
+    final public static function fetchFloat2($fp)
     {
         return array(self::fetchFloat($fp), self::fetchFloat($fp));
     }
 
-    final static function fetchFloat3($fp)
+    final public static function fetchFloat3($fp)
     {
         return array(self::fetchFloat($fp), self::fetchFloat($fp), self::fetchFloat($fp));
     }
 
-    final static function fetchChecksum($fp)
+    final public static function fetchChecksum($fp)
     {
         $checksum = unpack('H64', fread($fp, 32));
 
         return $checksum[1];
     }
 
-    final static function fetchString($fp)
+    final public static function fetchString($fp)
     {
         $length = self::fetchLong($fp);
 
         return $length ? fread($fp, $length) : '';
     }
 
-    final static function fetchLookbackString($fp)
+    final public static function fetchLookbackString($fp)
     {
         // Ignoring version for first lookback string
         if (empty(self::$lookbackStrings))
@@ -95,12 +95,12 @@ abstract class AbstractStructure
         return $string;
     }
 
-    final static function clearLookbackStrings()
+    final public static function clearLookbackStrings()
     {
         self::$lookbackStrings = array();
     }
 
-    final static function fetchDate($fp)
+    final public static function fetchDate($fp)
     {
         $date = unpack('v4', fread($fp, 8));
         // create an int64 string representing the number of 100-nanoseconds since 01/01/1601 00:00:00
@@ -116,5 +116,3 @@ abstract class AbstractStructure
         return new \DateTime('@' . $date);
     }
 }
-
-?>

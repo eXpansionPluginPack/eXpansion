@@ -21,7 +21,7 @@ class Karma
      *
      * @param $response
      */
-    function __construct($response = null)
+    public function __construct($response = null)
     {
         $this->votes = array();
 
@@ -58,7 +58,7 @@ class Karma
      * @param Karma $from
      * @param Karma $to
      */
-    static function copy(Karma $from, Karma $to)
+    public static function copy(Karma $from, Karma $to)
     {
         // copy all properties to the destination
         foreach ($from as $property => $value) {
@@ -73,5 +73,3 @@ class Karma
         return $to;
     }
 }
-
-?>

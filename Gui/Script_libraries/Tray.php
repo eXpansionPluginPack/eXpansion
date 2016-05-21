@@ -12,7 +12,7 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 class Tray extends Script
 {
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct("Gui/Scripts/TrayWidget");
         $this->setParam("disableAutoClose", true);
@@ -45,19 +45,17 @@ class Tray extends Script
 
     public function setPosX($pos)
     {
-        $this->setParam("posX", $pox);
+        $this->setParam("posX", $pos);
     }
 
     public function setPosXMin($pos)
     {
-        $this->setParam("posXMin", $pox);
+        $this->setParam("posXMin", $pos);
     }
 
     public function setPosXMax($pos)
     {
-        $this->setParam("posXMax", $pox);
+        $this->setParam("posXMax", $pos);
     }
 
 }
-
-?>

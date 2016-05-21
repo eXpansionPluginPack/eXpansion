@@ -17,7 +17,7 @@ class Item extends \ManiaLivePlugins\eXpansion\Gui\Control
     private $bg;
     private $widths;
 
-    function __construct($indexNumber, $login, $datas, $widths, $keys, $formaters)
+    public function __construct($indexNumber, $login, $datas, $widths, $keys, $formaters)
     {
         $this->widths = $widths;
         $this->sizeY = 4;
@@ -67,7 +67,7 @@ class Item extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -76,12 +76,10 @@ class Item extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         $this->labels = null;
         parent::destroy();
     }
 
 }
-
-?>

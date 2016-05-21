@@ -118,5 +118,3 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
         }
     }
 }
-
-?>

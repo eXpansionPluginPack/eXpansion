@@ -76,7 +76,7 @@ class PlainPanel extends Widget
         $this->setSize($sizeX, $sizeY);
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
@@ -87,7 +87,7 @@ class PlainPanel extends Widget
         $this->frame->setPosition(($this->sizeX / 2) + 1, -5);
     }
 
-    function update()
+    public function update()
     {
         foreach ($this->items as $item)
             $item->destroy();
@@ -117,7 +117,7 @@ class PlainPanel extends Widget
         }
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item)
             $item->destroy();
@@ -129,7 +129,4 @@ class PlainPanel extends Widget
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>

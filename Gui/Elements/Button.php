@@ -29,7 +29,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
      * @param int $sizeX = 24
      * @param intt $sizeY = 6
      */
-    function __construct($sizeX = 32, $sizeY = 6)
+    public function __construct($sizeX = 32, $sizeY = 6)
     {
 
         if (self::$script === null) {
@@ -121,7 +121,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         parent::onResize($oldX, $oldY);
     }
 
-    function onDraw()
+    protected function onDraw()
     {
         self::$script->reset();
 
@@ -144,17 +144,17 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         if ($this->icon != null) $this->addComponent($this->icon);
     }
 
-    function getText()
+    public function getText()
     {
         return $this->text;
     }
 
-    function setText($text)
+    public function setText($text)
     {
         $this->text = $text;
     }
 
-    function setDescription($description, $sizeX = 30, $sizeY = 5, $maxLine = 1)
+    public function setDescription($description, $sizeX = 30, $sizeY = 5, $maxLine = 1)
     {
         $this->description = "$000" . $description;
         $this->labelDesc->setSizeX($sizeX);
@@ -169,12 +169,12 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         return $this->description;
     }
 
-    function setActive($bool = true)
+    public function setActive($bool = true)
     {
         $this->isActive = $bool;
     }
 
-    function getValue()
+    public function getValue()
     {
         return $this->value;
     }
@@ -184,7 +184,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
      *
      * @param string $value 4-digit RGBa code
      */
-    function colorize($value)
+    public function colorize($value)
     {
         $this->label->setTextColor("fff");
         $this->backGround->setColorize($value);
@@ -198,17 +198,17 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
      *
      * @param string $value 4-digit RGBa code
      */
-    function setTextColor($textcolor)
+    public function setTextColor($textcolor)
     {
         $this->label->setTextColor($textcolor);
     }
 
-    function setValue($text)
+    public function setValue($text)
     {
         $this->value = $text;
     }
 
-    function setAction($action)
+    public function setAction($action)
     {
         $this->backGround->setAction($action);
 
@@ -288,7 +288,4 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
     {
         return self::$script;
     }
-
 }
-
-?>

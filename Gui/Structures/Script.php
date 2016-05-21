@@ -165,11 +165,8 @@ class Script
      *
      * @return string The int transformed into a string
      */
-    function getNumber($number)
+    public function getNumber($number)
     {
         return number_format((float)$number, 2, '.', '');
     }
-
 }
-
-?>

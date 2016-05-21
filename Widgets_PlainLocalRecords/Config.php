@@ -6,5 +6,3 @@ class Config extends \ManiaLib\Utils\Singleton
 {
 
 }
-
-?>

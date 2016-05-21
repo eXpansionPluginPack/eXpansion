@@ -26,5 +26,3 @@ class LongDate extends AbstractFormater
         return $text;
     }
 }
-
-?>

@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
 class ResetHud extends \ManiaLive\Gui\Window
 {
-
     private $xml;
 
     protected function onConstruct()
@@ -12,7 +11,7 @@ class ResetHud extends \ManiaLive\Gui\Window
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
     }
@@ -64,11 +63,8 @@ class ResetHud extends \ManiaLive\Gui\Window
         parent::onDraw();
     }
 
-    function destroy()
+    public function destroy()
     {
         parent::destroy();
     }
-
 }
-
-?>

@@ -24,7 +24,4 @@ class ConfirmProxy extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     {
         $this->iscript->setParam("invokeAction", $action);
     }
-
 }
-
-?>

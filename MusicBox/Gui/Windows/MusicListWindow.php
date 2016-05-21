@@ -21,13 +21,13 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->pager);
     }
 
-    function queueSong($login, $indexNumber)
+    public function queueSong($login, $indexNumber)
     {
         self::$musicPlugin->mbox($login, $indexNumber);
         $this->Erase($this->getRecipient());
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 14);
@@ -56,7 +56,7 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item) {
             $item->erase();
@@ -69,5 +69,3 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
 }
-
-?>

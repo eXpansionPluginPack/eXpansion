@@ -13,7 +13,7 @@ class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
     private $sendAction;
     private $frame;
 
-    function __construct($indexNumber, \ManiaLive\Data\Player $player, $callback, $text)
+    public function __construct($indexNumber, \ManiaLive\Data\Player $player, $callback, $text)
     {
         $sizeX = 60;
         $sizeY = 6;
@@ -69,38 +69,19 @@ class Playeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY)
-    {
-
-    }
-
-    function onDraw()
-    {
-
-    }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
-
     }
 
     /*
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         $this->sendButton->destroy();
         parent::destroy();
     }
-
-    function __destruct()
-    {
-        //       \ManiaLive\Gui\ActionHandler::getInstance()->removeAction($this->chooseNextMap);
-    }
-
 }
-
-?>
-

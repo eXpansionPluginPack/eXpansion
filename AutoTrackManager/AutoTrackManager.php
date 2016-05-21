@@ -51,7 +51,7 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function expOnInit()
+    public function expOnInit()
     {
         $this->setPublicMethod('getVersion');
         $this->config = Config::getInstance();
@@ -63,7 +63,7 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         $this->enableStorageEvents();
@@ -81,7 +81,7 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function onPlayerConnect($login, $isSpectator)
+    public function onPlayerConnect($login, $isSpectator)
     {
         $source_player = $this->storage->getPlayerObject($login);
         $msg = '' . self::$showname . ' ' . $self::$version . '';
@@ -94,13 +94,13 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function atmhelp($login)
+    public function atmhelp($login)
     {
         $msg = 'AutoTrackManager lets you remove / delete tracks from tracklist if track karma got lower than a given value!';
         $this->connection->chatSendServerMessage($msg, $login);
     }
 
-    function onBeginMap($map, $warmUp, $matchContinuation)
+    public function onBeginMap($map, $warmUp, $matchContinuation)
     {
         $this->autotrackmanager();
     }
@@ -111,7 +111,7 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function autotrackmanager()
+    public function autotrackmanager()
     {
         $q = $this->db->execute("SELECT avg(rating) AS rating, COUNT(rating) AS ratingTotal FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";")->fetchObject();
         $this->rating = 0;
@@ -172,7 +172,4 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $query = $this->db->execute($q);
         }
     }
-
 }
-
-?>

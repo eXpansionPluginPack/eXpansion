@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\TMKarma;
 
 abstract class Data
 {
-    static $apiUrls = array(
+    public static $apiUrls = array(
         'AFRICA' => 'http://worldwide.tm-karma.com/API-3.0.0.fphp',
         'ASIA' => 'http://worldwide.tm-karma.com/API-3.0.0.fphp',
         'Europe' => 'http://worldwide.tm-karma.com/API-3.0.0.fphp',
@@ -20,7 +20,7 @@ abstract class Data
      *
      * @var array
      */
-    static $continents = array(
+    public static $continents = array(
         'AF' => 'Africa',
         'AS' => 'Asia',
         'EU' => 'Europe',
@@ -37,7 +37,7 @@ abstract class Data
      *
      * @var array
      */
-    static $countries = array(
+    public static $countries = array(
         'ABW' => array("Aruba", 'NORTHAMERICA'),
         'AFG' => array("Afghanistan", 'ASIA'),
         'AGO' => array("Angola", 'AFRICA'),
@@ -286,5 +286,3 @@ abstract class Data
         'ZWE' => array("Zimbabwe", 'AFRICA'),
     );
 }
-
-?>

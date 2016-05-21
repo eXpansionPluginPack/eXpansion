@@ -214,5 +214,3 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
 }
-
-?>

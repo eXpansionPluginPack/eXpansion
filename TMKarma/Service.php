@@ -33,7 +33,7 @@ abstract class Service
      *
      * @throws Exception
      */
-    static function forceCountryCode($code)
+    public static function forceCountryCode($code)
     {
         if (!isset(Data::$countries[$code])) {
             throw new Exception("The country code $code is not known!");
@@ -112,7 +112,7 @@ abstract class Service
      * Returns string with the users location
      * information.
      */
-    static function getLocationInfo()
+    public static function getLocationInfo()
     {
         $code = self::getCountryCode();
         $country = ucwords(strtolower(Data::$countries[$code][0]));
@@ -128,7 +128,7 @@ abstract class Service
      * @param string $login
      * @param integer $communityCode
      */
-    static function Authenticate($serverName, $login, $game)
+    public static function Authenticate($serverName, $login, $game)
     {
         self::$login = $login;
 
@@ -156,7 +156,7 @@ abstract class Service
      *
      * @return \ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma
      */
-    static function GetChallengeKarma($challenge, $players)
+    public static function GetChallengeKarma($challenge, $players)
     {
         if (!self::$authCode) {
             throw new NotAuthenticatedException('You need to authenticate at the tm-karma webservice first!');
@@ -188,7 +188,7 @@ abstract class Service
      * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
      * @param Structures\Vote[] $votes
      */
-    static function SendVotes(\Maniaplanet\DedicatedServer\Structures\Map $challenge, $votes)
+    public static function SendVotes(\Maniaplanet\DedicatedServer\Structures\Map $challenge, $votes)
     {
         if (!self::$authCode) {
             throw new NotAuthenticatedException('You need to authenticate at the tm-karma webservice first!');
@@ -217,7 +217,7 @@ abstract class Service
      *
      * @throws \Exception
      */
-    static function sendRequest($url)
+    public static function sendRequest($url)
     {
         $agent = '';
         $agent .= 'ManiaLive-eXp/' . \ManiaLive\Application\Version;
@@ -260,5 +260,3 @@ class ApiException extends Exception
 {
 
 }
-
-?>

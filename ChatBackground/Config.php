@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\ChatBackground;
 
 class Config extends \ManiaLib\Utils\Singleton
 {
-
     public $width = 330;
     public $height = 27;
     public $posX = 0;
@@ -15,5 +14,3 @@ class Config extends \ManiaLib\Utils\Singleton
     public $opacity = 0.9;
 
 }
-
-?>

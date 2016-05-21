@@ -19,30 +19,28 @@ interface Listener extends EventListener
      * @param Record $record
      * @param Record $oldRecord
      */
-    function onNewRecord($record, $oldRecord);
+    public function onNewRecord($record, $oldRecord);
 
     /**
      * onUpdateRecords($record)
      *
-     * @param Record[] $record
+     * @param Record[] $records
      */
-    function onUpdateRecords($records);
+    public function onUpdateRecords($records);
 
     /**
      *
      * @param Record $record
      */
-    function onPersonalBestRecord($record);
+    public function onPersonalBestRecord($record);
 
     /**
      * @param Record[] $records
      */
-    function onRecordsLoaded($records);
+    public function onRecordsLoaded($records);
 
     /**
      * @param Record $record
      */
-    function onRecordPlayerFinished($record);
+    public function onRecordPlayerFinished($record);
 }
-
-?>

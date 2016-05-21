@@ -6,7 +6,6 @@ use ManiaLib\Utils\Formatting;
 
 class RatingsItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-
     protected $bg;
 
     protected $label;
@@ -104,8 +103,4 @@ class RatingsItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>
-

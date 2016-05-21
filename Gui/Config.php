@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 
 class Config extends \ManiaLib\Utils\Singleton
 {
-
     public $logo = "http://reaby.kapsi.fi/ml/exp.png";
     public $windowTitleColor = "FFFE";
     public $windowTitleBackgroundColor = "0AA0F9";
@@ -43,7 +42,4 @@ class Config extends \ManiaLib\Utils\Singleton
     public $disablePersonalHud = false;
     public $colorPreview = "http://reaby.kapsi.fi/ml/ui3/colorchooser/1.png";
     public $colorHue = "http://reaby.kapsi.fi/ml/ui3/colorchooser/2.png";
-
 }
-
-?>

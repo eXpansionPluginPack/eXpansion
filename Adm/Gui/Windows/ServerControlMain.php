@@ -138,7 +138,4 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         return Storage::getInstance()->isRelay;
     }
-
 }
-
-?>

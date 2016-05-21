@@ -19,9 +19,9 @@ class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
      * Button
      *
      * @param int $sizeX = 24
-     * @param intt $sizeY = 6
+     * @param int $sizeY = 6
      */
-    function __construct($sizeX = 12, $sizeY = 12)
+    public function __construct($sizeX = 12, $sizeY = 12)
     {
         $this->quad = new WidgetBackGround($sizeX, $sizeY);
         $this->quad->setAlign('center', 'top');
@@ -45,12 +45,12 @@ class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->quad->setPosZ($this->posZ - 1);
     }
 
-    function getText()
+    public function getText()
     {
         return $this->text;
     }
 
-    function setText($text)
+    public function setText($text)
     {
         if (is_array($text)) {
             $y = 0.5;
@@ -77,37 +77,34 @@ class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
         }
     }
 
-    function setManialink($url)
+    public function setManialink($url)
     {
         $this->button->setManialink($url);
     }
 
-    function setActive($bool = true)
+    public function setActive($bool = true)
     {
         $this->isActive = $bool;
     }
 
-    function getValue()
+    public function getValue()
     {
         return $this->value;
     }
 
-    function setValue($text)
+    public function setValue($text)
     {
         $this->value = $text;
     }
 
-    function setAction($action)
+    public function setAction($action)
     {
         $this->button->setAction($action);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         parent::destroy();
     }
-
 }
-
-?>

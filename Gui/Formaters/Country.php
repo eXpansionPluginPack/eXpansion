@@ -19,5 +19,3 @@ class Country extends AbstractFormater
             return "";
     }
 }
-
-?>

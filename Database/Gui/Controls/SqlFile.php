@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Database\Gui\Controls;
 
+use ManiaLivePlugins\eXpansion\Database\Database;
+
 class SqlFile extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
@@ -16,12 +18,12 @@ class SqlFile extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param int $indexNumber
-     * @param string $settingName
-     * @param mixed $value
-     * @param int $sizeX
+     * @param int      $indexNumber
+     * @param Database $controller
+     * @param string   $filename
+     * @param int      $sizeX
      */
-    function __construct($indexNumber, $controller, $filename, $sizeX)
+    public function __construct($indexNumber, $controller, $filename, $sizeX)
     {
         $sizeY = 6;
         $this->actionRestore = $this->createAction(array($controller, 'restoreFile'), $filename);
@@ -81,8 +83,10 @@ class SqlFile extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-// manialive 3.1 override to do nothing.
-    function destroy()
+    /**
+     * manialive 3.1 override to do nothing.
+     */
+    public function destroy()
     {
 
     }
@@ -91,7 +95,7 @@ class SqlFile extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
 
         $this->btnRestore->destroy();
@@ -102,8 +106,4 @@ class SqlFile extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>
-

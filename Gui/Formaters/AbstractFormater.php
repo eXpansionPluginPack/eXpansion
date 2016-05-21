@@ -11,7 +11,4 @@ abstract class AbstractFormater extends \ManiaLib\Utils\Singleton
 {
 
     abstract public function format($val);
-
 }
-
-?>

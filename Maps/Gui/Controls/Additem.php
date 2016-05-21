@@ -8,7 +8,6 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-
     protected $bg;
 
     protected $mapNick;
@@ -130,7 +129,7 @@ class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 
-// manialive 3.1 override to do nothing.
+    // manialive 3.1 override to do nothing.
     public function destroy()
     {
 
@@ -140,8 +139,7 @@ class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
     /*
      * custom function to remove contents.
      */
-
-    function erase()
+    public function erase()
     {
         ActionHandler::getInstance()->deleteAction($this->deleteAction);
         $this->frame->clearComponents();
@@ -156,6 +154,3 @@ class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 }
-
-?>
-

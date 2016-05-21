@@ -61,11 +61,9 @@ class Notice extends Window
         $this->Erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();
     }
 }
-
-?>

@@ -26,7 +26,7 @@ class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->pager);
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY);
@@ -34,12 +34,12 @@ class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->setPosition(0, 4);
     }
 
-    function onShow()
+    protected function onShow()
     {
 
     }
 
-    function populateList($callback, $text = "")
+    public function populateList($callback, $text = "")
     {
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         foreach ($this->items as $item)
@@ -68,24 +68,21 @@ class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function setMessage($message)
+    public function setMessage($message)
     {
         $this->message = $message;
     }
 
-    function setController($obj)
+    public function setController($obj)
     {
         $this->controller = $obj;
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item)
             $item->erase();
 
         parent::destroy();
     }
-
 }
-
-?>

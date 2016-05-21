@@ -30,7 +30,4 @@ class InfoMessage extends ExpPlugin
             $this->eXpChatSendServerMessage($this->config->infoMessageColor . $this->config->infoMessages[$i]);
         }
     }
-
 }
-
-?>

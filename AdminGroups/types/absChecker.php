@@ -15,5 +15,3 @@ abstract class absChecker extends \ManiaLib\Utils\Singleton
 
     public abstract function getErrorMsg();
 }
-
-?>

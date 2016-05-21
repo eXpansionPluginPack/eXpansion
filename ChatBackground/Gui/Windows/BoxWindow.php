@@ -6,7 +6,6 @@ use ManiaLivePlugins\eXpansion\ChatBackground\Config;
 
 class BoxWindow extends \ManiaLive\Gui\Window
 {
-
     protected $quad, $quad2;
     protected $config;
 
@@ -35,5 +34,3 @@ class BoxWindow extends \ManiaLive\Gui\Window
     }
 
 }
-
-?>

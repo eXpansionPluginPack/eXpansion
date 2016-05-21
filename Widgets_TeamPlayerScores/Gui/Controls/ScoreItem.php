@@ -14,7 +14,7 @@ class ScoreItem extends Control
     protected $bg;
     protected $score, $nick, $time, $win1, $win2, $win3;
 
-    function __construct(PlayerScore $playerScore)
+    public function __construct(PlayerScore $playerScore)
     {
         $sizeX = 52;
         $sizeY = 4;
@@ -84,7 +84,5 @@ class ScoreItem extends Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
 
-?>

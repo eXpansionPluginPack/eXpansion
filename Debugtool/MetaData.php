@@ -19,5 +19,3 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
     }
 }
-
-?>

@@ -327,5 +327,3 @@ class PlainLivePanel extends PlainPanel
     }
 
 }
-
-?>

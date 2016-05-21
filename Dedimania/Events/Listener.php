@@ -82,5 +82,3 @@ interface Listener extends \ManiaLive\Event\Listener
      */
     public function onDedimaniaPlayerDisconnect($login);
 }
-
-?>

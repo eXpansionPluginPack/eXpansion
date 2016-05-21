@@ -8,12 +8,12 @@ use ManiaLivePlugins\eXpansion\Widgets_ServerInfo\Gui\Widgets\ServerInfo;
 class Widgets_ServerInfo extends ExpPlugin
 {
 
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
     }
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
         $this->displayWidget();
     }
@@ -21,7 +21,7 @@ class Widgets_ServerInfo extends ExpPlugin
     /**
      * displayWidget()
      */
-    function displayWidget()
+    protected function displayWidget()
     {
         ServerInfo::EraseAll();
         $info = ServerInfo::Create(null);
@@ -31,17 +31,14 @@ class Widgets_ServerInfo extends ExpPlugin
         $info->show();
     }
 
-    function onBeginMap($map, $warmUp, $matchContinuation)
+    public function onBeginMap($map, $warmUp, $matchContinuation)
     {
         $this->displayWidget();
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         ServerInfo::EraseAll();
     }
 
 }
-
-?>
-

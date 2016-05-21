@@ -9,7 +9,7 @@ namespace ManiaLivePlugins\eXpansion\Communication\Gui\Controls;
 class Tab extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    function __construct($idx)
+    public function __construct($idx)
     {
         $sizeX = 22;
         $sizeY = 4;
@@ -43,12 +43,10 @@ class Tab extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setSize($sizeX, $sizeY);
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();
     }
 
 }
-
-?>

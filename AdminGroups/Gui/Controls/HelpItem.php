@@ -14,10 +14,9 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
  */
 class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-
     protected $moreButton;
 
-    function __construct($indexNumber, AdminCmd $cmd, $controller, $login)
+    public function __construct($indexNumber, AdminCmd $cmd, $controller, $login)
     {
         $this->action = $this->createAction(array($this, 'cmdMore'), $cmd);
 
@@ -51,7 +50,7 @@ class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -78,7 +77,4 @@ class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $window->centerOnScreen();
         $window->show();
     }
-
 }
-
-?>

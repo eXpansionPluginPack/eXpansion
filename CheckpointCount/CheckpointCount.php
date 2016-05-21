@@ -83,8 +83,4 @@ class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         CPPanel::Erase($login);
     }
-
 }
-
-?>
-

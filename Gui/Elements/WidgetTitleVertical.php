@@ -21,7 +21,6 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
         $config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
 
         $quad = new \ManiaLib\Gui\Elements\Quad();
-
         $quad->setColorize($config->style_widget_title_bgColorize);
         $quad->setOpacity($config->style_widget_title_bgOpacity);
         $quad->setPosition($config->style_widget_title_bgXOffset, $config->style_widget_title_bgYOffset);
@@ -30,11 +29,6 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg->setStyle('Bgs1InRace');
         $this->bg->setSubStyle('BgWindow4');
         $this->addComponent($this->bg);
-
-        //$this->bgStr = new \ManiaLib\Gui\Elements\Quad();
-        //$this->bgStr->setAlign("right", "center");
-        //$this->bgStr->setImage('file://Media/Manialinks/Common/WarmUp/Structure.dds', true);
-        // $this->addComponent($this->bgStr);
 
         $this->lbl_title = new DicoLabel($sizeX, $sizeY);
         $this->lbl_title->setTextSize($config->style_widget_title_lbSize);
@@ -72,7 +66,4 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         $this->bg->setOpacity($opacity);
     }
-
 }
-
-?>

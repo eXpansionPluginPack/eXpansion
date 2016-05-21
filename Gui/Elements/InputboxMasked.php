@@ -19,7 +19,7 @@ class InputboxMasked extends Control
     protected $name;
     protected $bgleft, $bgcenter, $bgright;
 
-    function __construct($name, $sizeX = 35, $editable = true)
+    public function __construct($name, $sizeX = 35, $editable = true)
     {
         $config = Config::getInstance();
         $this->name = $name;
@@ -105,7 +105,7 @@ class InputboxMasked extends Control
         }
     }
 
-    function setShowClearText()
+    public function setShowClearText()
     {
         if ($this->nonHidden == null) {
             $this->nonHidden = New Button(3, 3);
@@ -117,54 +117,52 @@ class InputboxMasked extends Control
         }
     }
 
-    function getLabel()
+    public function getLabel()
     {
         return $this->label->getText();
     }
 
-    function setLabel($text)
+    public function setLabel($text)
     {
         $this->label->setText($text);
     }
 
-    function getText()
+    public function getText()
     {
         if ($this->button instanceof Entry) return $this->button->getDefault();
         else return $this->button->getText();
     }
 
-    function setText($text)
+    public function setText($text)
     {
         if ($this->button instanceof Entry) $this->button->setDefault($text);
         else $this->button->setText($text);
     }
 
-    function getName()
+    public function getName()
     {
         return $this->button->getName();
     }
 
-    function setName($text)
+    public function setName($text)
     {
         $this->button->setName($text);
     }
 
-    function setId($id)
+    public function setId($id)
     {
         $this->button->setId($id);
         $this->button->setScriptEvents();
     }
 
-    function setClass($class)
+    public function setClass($class)
     {
         $this->button->setAttribute("class", "isTabIndex isEditable " . $class);
     }
 
-    function onIsRemoved(Container $target)
+    public function onIsRemoved(Container $target)
     {
         parent::onIsRemoved($target);
         parent::destroy();
     }
 }
-
-?>

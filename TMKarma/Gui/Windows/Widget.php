@@ -27,7 +27,7 @@ class Widget extends \ManiaLive\Gui\Window
 
     const CUPS_MAX = 5;
 
-    function onConstruct()
+    protected function onConstruct()
     {
         $this->buttons = array(
             '+' => TMKarma::VOTE_GOOD,
@@ -91,7 +91,7 @@ class Widget extends \ManiaLive\Gui\Window
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
     }
 
-    function onDraw()
+    public function onDraw()
     {
         $rate = 100 / self::CUPS_MAX;
 
@@ -249,12 +249,12 @@ class Widget extends \ManiaLive\Gui\Window
         parent::onDraw();
     }
 
-    function setPlugin(TMKarma $plugin)
+    public function setPlugin(TMKarma $plugin)
     {
         $this->plugin = $plugin;
     }
 
-    function setKarma(\ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma $karma)
+    public function setKarma(\ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma $karma)
     {
         $this->karma = $karma;
     }
@@ -266,5 +266,3 @@ class Widget extends \ManiaLive\Gui\Window
     }
 
 }
-
-?>

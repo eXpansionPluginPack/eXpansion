@@ -55,5 +55,3 @@ class CpProgress extends Widget
     }
 
 }
-
-?>

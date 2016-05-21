@@ -14,7 +14,7 @@ class DirectoryItem extends \ManiaLivePlugins\eXpansion\Gui\Control
      * @param \SplFileInfo $dir
      * @param type $sizeX
      */
-    function __construct(\SplFileInfo $dir, $controller, $compare, $sizeX)
+    public function __construct(\SplFileInfo $dir, $controller, $compare, $sizeX)
     {
         $sizeY = 5;
 
@@ -53,8 +53,4 @@ class DirectoryItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
-
 }
-
-?>
-

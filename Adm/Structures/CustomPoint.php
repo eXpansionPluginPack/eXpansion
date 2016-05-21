@@ -9,11 +9,9 @@ class CustomPoint extends AbstractStructure
     public $name;
     public $points;
 
-    function __construct($name, $points)
+    public function __construct($name, $points)
     {
         $this->name = $name;
         $this->points = $points;
     }
-
 }
-

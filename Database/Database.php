@@ -444,7 +444,4 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
         }
     }
-
 }
-
-?>

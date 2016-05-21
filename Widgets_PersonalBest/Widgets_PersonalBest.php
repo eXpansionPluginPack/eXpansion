@@ -127,7 +127,4 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_FINISH);
         PBPanel::EraseAll();
     }
-
 }
-
-?>

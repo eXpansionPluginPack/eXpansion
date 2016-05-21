@@ -76,14 +76,14 @@ class MumbleInfo extends \ManiaLive\Gui\Window
         //echo "draw: " . $this->getRecipient() . "\n";
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
 
         parent::destroy();
     }
 
-    function setData($data)
+    public function setData($data)
     {
         $this->TextChannelName->setText($data['name']);
         $this->channels = $data['root']['channels'];
@@ -382,7 +382,4 @@ class MumbleInfo extends \ManiaLive\Gui\Window
         $this->exitQuad->setAction(0);
         $this->addComponent($this->exitQuad);
     }
-
 }
-
-?>

@@ -61,5 +61,3 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Gui\Windows\ChatlogWindow::EraseAll();
     }
 }
-
-?>

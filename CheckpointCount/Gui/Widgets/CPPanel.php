@@ -23,13 +23,13 @@ class CPPanel extends \ManiaLive\Gui\Window
 
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->label->setPosition(0, -5);
     }
 
-    function onShow()
+    protected function onShow()
     {
 
     }
@@ -45,11 +45,8 @@ class CPPanel extends \ManiaLive\Gui\Window
         $this->label->setText($text);
     }
 
-    function destroy()
+    public function destroy()
     {
         parent::destroy();
     }
-
 }
-
-?>

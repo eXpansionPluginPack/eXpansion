@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Emotes;
 
 class Config extends \ManiaLib\Utils\Singleton
 {
-
     public $iconLol = "http://reaby.kapsi.fi/ml/icon_smile.png";
     public $iconGG = "http://reaby.kapsi.fi/ml/icon_gg.png";
     public $iconBG = "http://reaby.kapsi.fi/ml/icon_bg.png";
@@ -49,7 +48,4 @@ class Config extends \ManiaLib\Utils\Singleton
     public $rant = array("?#@*&%!", "\$f00\$oAaaaarrrghhhh!", "Oh, My, Dog!", "Grrrrrr", "Noooooooo!", "***Explicit language***");
     public $rant2 = array("?#@*&%!", "\$f00\$oAaaaarrrghhhh!", "Oh, My, Dog!", "Grrrrrr", "Noooooooo!", "***Explicit language***");
     public $ragequit = array("Rage quit!", "\$f00\$oRoaaarrrrrr!!!");
-
 }
-
-?>

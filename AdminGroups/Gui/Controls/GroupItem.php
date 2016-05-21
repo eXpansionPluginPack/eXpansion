@@ -15,7 +15,6 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
  */
 class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-
     protected $group;
 
     protected $action_changePermissions;
@@ -28,7 +27,7 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $deleteButton;
     protected $InheritButton;
 
-    function __construct($indexNumber, Group $group, $controller, $login)
+    public function __construct($indexNumber, Group $group, $controller, $login)
     {
         $this->group = $group;
         $sizeX = 100;
@@ -97,7 +96,7 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -122,7 +121,4 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         parent::destroy();
     }
-
 }
-
-?>

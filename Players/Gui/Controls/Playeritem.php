@@ -42,7 +42,7 @@ class Playeritem extends Control implements OptimizedPagerElement
     protected $player;
     protected $columnCount = 1;
 
-    function __construct($indexNumber, $login, $action)
+    public function __construct($indexNumber, $login, $action)
     {
         $this->recipient = $login;
         $sizeY = 6;
@@ -198,6 +198,4 @@ class Playeritem extends Control implements OptimizedPagerElement
         return 2;
     }
 }
-
-?>
 

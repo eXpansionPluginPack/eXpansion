@@ -25,7 +25,7 @@ class LinePlotter extends \ManiaLivePlugins\eXpansion\Gui\Control
      * @param int $sizeX = 24
      * @param intt $sizeY = 6
      */
-    function __construct($sizeX = 100, $sizeY = 100)
+    public function __construct($sizeX = 100, $sizeY = 100)
     {
         $this->plots = array();
         $this->sizes = Array($sizeX, $sizeY);
@@ -206,14 +206,11 @@ while (index < max) {
         return $val;
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         $this->labelsY = array();
         $this->labelsX = array();
         parent::onIsRemoved($target);
         parent::destroy();
     }
-
 }
-
-?>

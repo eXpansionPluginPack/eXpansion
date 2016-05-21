@@ -16,7 +16,7 @@ class Author extends AbstractStructure
     public $zone;
     public $extra;
 
-    final static function fetch($fp)
+    final public static function fetch($fp)
     {
         self::ignore($fp, 4);
         $author = new self;
@@ -28,5 +28,3 @@ class Author extends AbstractStructure
         return $author;
     }
 }
-
-?>

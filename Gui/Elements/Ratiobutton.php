@@ -14,7 +14,7 @@ class Ratiobutton extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $action;
     protected $buttonac;
 
-    function __construct($sizeX = 3, $sizeY = 3, $textWidth = 25)
+    public function __construct($sizeX = 3, $sizeY = 3, $textWidth = 25)
     {
         $this->textWidth = $textWidth;
         $this->action = $this->createAction(array($this, 'toggleActive'));
@@ -48,7 +48,7 @@ class Ratiobutton extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label->setPosition(4, 0);
     }
 
-    function onDraw()
+    protected function onDraw()
     {
         $config = Config::getInstance();
 
@@ -59,43 +59,40 @@ class Ratiobutton extends \ManiaLivePlugins\eXpansion\Gui\Control
         }
     }
 
-    function setStatus($boolean)
+    public function setStatus($boolean)
     {
         $this->active = $boolean;
     }
 
-    function getStatus()
+    public function getStatus()
     {
         return $this->active;
     }
 
-    function getText()
+    public function getText()
     {
         return $this->label->getText();
     }
 
-    function setText($text)
+    public function setText($text)
     {
         $this->label->setText('$fff' . $text);
     }
 
-    function toggleActive($login)
+    public function toggleActive($login)
     {
         $this->active = !$this->active;
         $this->redraw();
     }
 
-    function setAction($action)
+    public function setAction($action)
     {
         $this->button->setAction($action);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         parent::destroy();
     }
-
 }
-
-?>

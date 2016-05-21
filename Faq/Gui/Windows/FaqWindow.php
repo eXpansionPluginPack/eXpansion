@@ -90,7 +90,4 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $x++;
         }
     }
-
 }
-
-?>

@@ -39,7 +39,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     const VOTE_POOR = -2;
     const VOTE_WASTE = -3;
 
-    function expOnInit()
+    public function expOnInit()
     {
         $this->config = Config::getInstance();
 
@@ -48,7 +48,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Service::$login = $this->storage->serverLogin;
     }
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
         // check whether the location has been set in the config
         try {
@@ -88,7 +88,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @see libraries/ManiaLive/PluginHandler/ManiaLive\PluginHandler.Plugin::onPlayerConnect()
      */
-    function onPlayerConnect($login, $isSpectator)
+    public function onPlayerConnect($login, $isSpectator)
     {
         // display a widget with information
         $this->displayWidget($login);
@@ -107,7 +107,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->displayWidget($login);
     }
 
-    function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
+    public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
         if ($playerUid == 0)
             return;
@@ -168,7 +168,7 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * @param string $login
      * @param integer $vote
      */
-    function doVote($login, $vote)
+    public function doVote($login, $vote)
     {
         // we don't need to insert the same vote twice
         if (isset($this->karma->votes[$login]) && $this->karma->votes[$login] == $vote) {
@@ -195,15 +195,11 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * When this plugin is unloaded by ManiaLive.
      */
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         // erase all widgets
         Widget::EraseAll();
-
-        // and let ManiaLive do the rest
-
     }
-
 }
 
 ?>

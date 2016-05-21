@@ -17,7 +17,7 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
     /** @var \ManiaLivePlugins\eXpansion\Gui\Structures\Script */
     private $script = null;
 
-    function __construct($name, $items = array("initial"), $selectedIndex = 0, $sizeX = 35)
+    public function __construct($name, $items = array("initial"), $selectedIndex = 0, $sizeX = 35)
     {
         if (!is_array($items))
             throw new \Exception("Dropdown constructor needs array of values");
@@ -64,9 +64,8 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
         $this->setSelected($selectedIndex);
     }
 
-    function addItems($items)
+    public function addItems($items)
     {
-        $x = 0;
         $this->values = array();
         $this->items = array();
         foreach ($items as $item) {
@@ -74,7 +73,7 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
         }
     }
 
-    function addEntry($item)
+    public function addEntry($item)
     {
         $x = count($this->items);
         $obj = new \ManiaLib\Gui\Elements\Label($this->sizeX);
@@ -109,7 +108,7 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
         $this->script->setParam("selected", intval($index));
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
@@ -119,7 +118,4 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
     {
         return $this->script;
     }
-
 }
-
-?>

@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Helpers;
 
 class TimeConversion
 {
-
     public static function MStoTM($string)
     {
         $timelimit = explode(":", trim($string));
@@ -22,5 +21,3 @@ class TimeConversion
     }
 
 }
-
-?>

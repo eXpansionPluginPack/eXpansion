@@ -52,7 +52,7 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->cancel);
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX, $this->sizeY - 8);
@@ -62,12 +62,12 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
     }
 
-    function onShow()
+    protected function onShow()
     {
         $this->populateList();
     }
 
-    function populateList()
+    public function populateList()
     {
 
         foreach ($this->items as $item)
@@ -90,12 +90,12 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function init(\ManiaLive\Database\Connection $db)
+    public function init(\ManiaLive\Database\Connection $db)
     {
         $this->db = $db;
     }
 
-    function write($string)
+    public function write($string)
     {
         if ($this->fileHandler === false)
             return;
@@ -105,7 +105,7 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function getPath()
+    public function getPath()
     {
         $path = $this->connection->GameDataDirectory();
         $path = dirname($path) . "/backup";
@@ -120,7 +120,7 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         return $path;
     }
 
-    function Backup($login, $inputboxes = "")
+    public function Backup($login, $inputboxes = "")
     {
         if (empty($inputboxes['filename'])) {
             $this->connection->chatSendServerMessage("No backup filename given, canceling backup!", $login);
@@ -162,13 +162,13 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     }
 
     /** @todo imlement restore from .sql file */
-    function restoreFile($login, $file)
+    public function restoreFile($login, $file)
     {
         $this->connection->chatSendServerMessage("Not implemented yet...");
 
     }
 
-    function deleteFile($login, $file)
+    public function deleteFile($login, $file)
     {
 
         unlink($file);
@@ -177,12 +177,12 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->RedrawAll();
     }
 
-    function Cancel($login)
+    public function Cancel($login)
     {
         $this->erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item)
             $item->erase();
@@ -198,7 +198,4 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>

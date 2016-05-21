@@ -104,7 +104,4 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->eXpChatSendServerMessage('#error#' . $stateName, $bill->getSource_login());
         }
     }
-
 }
-
-?>

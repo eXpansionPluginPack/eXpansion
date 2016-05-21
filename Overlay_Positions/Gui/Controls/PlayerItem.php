@@ -149,8 +149,4 @@ class PlayerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-
-?>
-

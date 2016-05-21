@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
 class HudSetVisibility extends \ManiaLive\Gui\Window
 {
-
     protected $xml;
 
     /** @var \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem[] */
@@ -45,11 +44,8 @@ class HudSetVisibility extends \ManiaLive\Gui\Window
         parent::onDraw();
     }
 
-    function destroy()
+    public function destroy()
     {
         parent::destroy();
     }
-
 }
-
-?>

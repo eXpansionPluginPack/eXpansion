@@ -13,11 +13,10 @@ class DropDownScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script
     public static $nb = 0;
     public $dropdownIndex;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct("Gui/Scripts/DropDown");
     }
-
 
     public function getDeclarationScript($win, $component)
     {
@@ -46,5 +45,3 @@ class DropDownScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script
         return true;
     }
 }
-
-?>

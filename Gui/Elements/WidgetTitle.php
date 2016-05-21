@@ -106,5 +106,3 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg->setOpacity($opacity);
     }
 }
-
-?>

@@ -22,7 +22,7 @@ class Pack extends FileStructure
     public $checksum;
     public $flags;
 
-    final static function fetch($fp)
+    final public static function fetch($fp)
     {
         $pack = new self;
         self::ignore($fp, 8);
@@ -49,5 +49,3 @@ class Pack extends FileStructure
         return $pack;
     }
 }
-
-?>

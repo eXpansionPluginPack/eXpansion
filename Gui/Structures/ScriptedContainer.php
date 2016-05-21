@@ -9,12 +9,8 @@ namespace ManiaLivePlugins\eXpansion\Gui\Structures;
  */
 interface ScriptedContainer
 {
-
     /**
      * @return Script the script this container needs
      */
     public function getScript();
-
 }
-
-?>

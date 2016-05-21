@@ -24,7 +24,7 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
     protected $skin = "checkbox";
     protected $skinWidth = 5;
 
-    function __construct($sizeX = 4, $sizeY = 4, $textWidth = 25)
+    public function __construct($sizeX = 4, $sizeY = 4, $textWidth = 25)
     {
         $this->textWidth = $textWidth;
 
@@ -88,7 +88,7 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         parent::onResize($this->textWidth + $this->skinWidth, 5);
     }
 
-    function onDraw()
+    protected function onDraw()
     {
         self::$script->reset();
         $config = Config::getInstance();
@@ -108,7 +108,7 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         }
     }
 
-    function setSkin($value = "ratiobutton", $width = 10)
+    public function setSkin($value = "ratiobutton", $width = 10)
     {
         $this->skin = $value;
         $this->skinWidth = 5;
@@ -121,28 +121,28 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         }
     }
 
-    function setStatus($boolean)
+    public function setStatus($boolean)
     {
         $this->active = $boolean;
         $this->entry->setDefault($this->active ? "1" : "0");
     }
 
-    function getStatus()
+    public function getStatus()
     {
         return $this->entry->getDefault() == "1" ? true : false;
     }
 
-    function getText()
+    public function getText()
     {
         return $this->label->getText();
     }
 
-    function setText($text)
+    public function setText($text)
     {
         $this->label->setText($text);
     }
 
-    function toggleActive($login)
+    public function toggleActive($login)
     {
         $this->active = !$this->active;
         if ($this->toToggle != null) $this->toToggle->ToogleIsWorking($login);
@@ -176,7 +176,4 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
             $this->setStatus($out);
         }
     }
-
 }
-
-?>
