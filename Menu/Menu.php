@@ -80,12 +80,13 @@ class Menu extends ExpPlugin implements Listener
         }
 
         $this->menuWindows[$name]->show($login);
+        
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason)
     {
         $name = AdminGroups::getGroupName($login);
-        if (!array_key_exists($name, $this->menuGroups)) {
+        if (array_key_exists($name, $this->menuGroups)) {
             $this->menuGroups[$name]->remove($login);
         }
     }
