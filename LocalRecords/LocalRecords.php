@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\LocalRecords;
 
-
 class LocalRecords extends LocalBase
 {
 

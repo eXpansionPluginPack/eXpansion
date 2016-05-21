@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Debugtool;
 
-
 use ManiaLive\Application\ApplicationListener;
 use ManiaLive\Data\Storage;
 

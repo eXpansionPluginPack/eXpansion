@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
-
 class ServerTopIncome extends StatsWindow
 {
 
@@ -22,5 +21,4 @@ class ServerTopIncome extends StatsWindow
     {
         return array(1, 5, 5, 3);
     }
-
 }

@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_Advertising;
 
-
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
@@ -103,6 +102,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
             $var->setGroup("Widget#$x");
             $this->registerVariable($var);
         }
-
     }
 } 

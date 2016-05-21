@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\ManiaExchange\Structures;
 
-
 use ManiaLivePlugins\eXpansion\Gui\Structures\ButtonHook;
 
 class HookData

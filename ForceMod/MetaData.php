@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\ForceMod;
 
-
 use ManiaLivePlugins\eXpansion\Core\types\config\types\HashList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 

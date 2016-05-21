@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Gui\Windows;
 
-
 use ManiaLive\Gui\Controls\Pager;
 use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\Gui\Controls\ConfElement;

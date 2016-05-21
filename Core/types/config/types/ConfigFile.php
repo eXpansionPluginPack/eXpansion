@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
 
-
 use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ConfSwitcher;
 
 class ConfigFile extends TypeString

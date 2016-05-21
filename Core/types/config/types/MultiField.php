@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
 
-
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 
 /**

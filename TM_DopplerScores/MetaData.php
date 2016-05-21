@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\TM_DopplerScores;
 
-
 /**
  * Same Meta data as the local records just name and compatibility changes settings are common
  *
@@ -45,5 +44,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData
         $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, 'Doppler.Script.txt');
         $this->setScriptCompatibilityMode(false);
     }
-
 }

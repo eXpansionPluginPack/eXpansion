@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\ManiaExchange\Hooks;
 
-
 interface ListButtons_Event
 {
 

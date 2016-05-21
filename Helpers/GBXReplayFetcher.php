@@ -1,5 +1,6 @@
 <?php
 namespace ManiaLivePlugins\eXpansion\Helpers;
+
 /**
  * Helper to fetch right classes!
  */

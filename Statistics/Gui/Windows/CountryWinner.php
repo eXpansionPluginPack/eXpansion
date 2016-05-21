@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
-
 class CountryWinner extends Country
 {
 

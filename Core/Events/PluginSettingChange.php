@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Events;
 
-
 class PluginSettingChange extends \ManiaLive\Event\Event
 {
 

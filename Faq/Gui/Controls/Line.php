@@ -1,5 +1,7 @@
 <?php
+
 namespace ManiaLivePlugins\eXpansion\Faq\Gui\Controls;
+
 /**
  * Description of Header
  *

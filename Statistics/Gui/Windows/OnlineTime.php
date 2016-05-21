@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
-
 class OnlineTime extends StatsWindow
 {
 

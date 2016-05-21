@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
-
 class ServerDonationCount extends StatsWindow
 {
 

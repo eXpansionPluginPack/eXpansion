@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Events;
 
-
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 
 interface PluginSettingChangeListener

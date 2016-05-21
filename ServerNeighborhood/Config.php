@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\ServerNeighborhood;
 
-
 class Config extends \ManiaLib\Utils\Singleton
 {
 

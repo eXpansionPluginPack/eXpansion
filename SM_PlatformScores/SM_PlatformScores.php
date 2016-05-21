@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\SM_PlatformScores;
 
-
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 
 /**

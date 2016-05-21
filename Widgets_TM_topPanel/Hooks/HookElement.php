@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Hooks;
 
-
 use ManiaLib\Gui\Element;
 
 class HookElement
@@ -40,6 +39,4 @@ class HookElement
         $this->gui = $gui;
         $this->priority = $priority;
     }
-
-
-} 
+}

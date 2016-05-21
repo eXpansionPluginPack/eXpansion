@@ -22,10 +22,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_ChatEnhancement;
 
-
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
-
     public function onBeginLoad()
     {
         parent::onBeginLoad();

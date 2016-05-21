@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
-
 class Winners extends StatsWindow
 {
 
@@ -22,5 +21,4 @@ class Winners extends StatsWindow
     {
         return array(1, 5, 3);
     }
-
 }

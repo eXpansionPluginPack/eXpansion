@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\SM_ObstaclesScores;
 
-
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 

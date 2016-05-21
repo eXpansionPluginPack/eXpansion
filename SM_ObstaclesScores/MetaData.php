@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\SM_ObstaclesScores;
 
-
 /**
  * Same Meta data as the local records just name and compatibility changes settings are common
  *

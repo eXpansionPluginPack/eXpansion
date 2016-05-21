@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\types;
+
 /**
  * Description of Time_ms
  *

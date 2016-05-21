@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Structures\Config;
 
-
 use ManiaLivePlugins\eXpansion\Core\types\config\types\MultiField;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;

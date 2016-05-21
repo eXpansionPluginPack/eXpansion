@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Structures;
 
-
 class ButtonHook
 {
 

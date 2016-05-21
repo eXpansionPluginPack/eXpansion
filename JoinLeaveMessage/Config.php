@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\JoinLeaveMessage;
 
-
 use ManiaLib\Utils\Singleton;
 
 class Config extends Singleton

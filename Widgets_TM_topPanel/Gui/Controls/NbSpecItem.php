@@ -22,13 +22,11 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls;
 
-
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 
 class NbSpecItem extends PanelItem implements ScriptedContainer
 {
-
     /**
      * @return Script the script this container needs
      */

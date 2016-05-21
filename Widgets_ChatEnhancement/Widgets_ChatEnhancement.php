@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_ChatEnhancement;
 
-
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
@@ -34,7 +33,6 @@ use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 
 class Widgets_ChatEnhancement extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements PluginSettingChangeListener
 {
-
     private $action_chatLog;
     private $action_chatStatus;
 

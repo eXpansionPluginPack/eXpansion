@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
+
 /**
  * Description of Int
  *

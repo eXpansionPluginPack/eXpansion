@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Statistics\Gui\Windows;
 
-
 abstract class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\PagerWindow
 {
 
@@ -16,5 +15,4 @@ abstract class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Pager
 
         $this->mainFrame->addComponent(self::$menuFrame);
     }
-
 }

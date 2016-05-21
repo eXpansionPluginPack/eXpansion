@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\AutoUpdate\Structures;
 
-
 class Step
 {
 

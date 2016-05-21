@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Gui\Script_libraries;
+
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 
 /**

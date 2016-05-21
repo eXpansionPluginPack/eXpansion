@@ -22,7 +22,6 @@
 
 namespace ManiaLivePlugins\eXpansion\ManiaExchange\Hooks;
 
-
 class ListButtons extends \ManiaLive\Event\Event
 {
     const ON_BUTTON_LIST_CREATE = 1;

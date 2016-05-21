@@ -2,10 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls;
 
-
 class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-
     protected $bg, $bg2;
 
     protected $nick;
@@ -160,5 +158,4 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
