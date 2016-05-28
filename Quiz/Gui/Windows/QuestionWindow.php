@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Quiz\Gui\Windows;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
@@ -56,8 +57,9 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->IBimageUrl->setLabel(__("Url for image", $login), $login);
         $this->frame->addComponent($this->IBimageUrl);
 
-        $this->checkbox = new CheckboxScripted();
-        $this->checkbox->setText("Hidden Question?");
+        $this->checkbox = new OkButton();
+        $this->checkbox->setText(__("Ask hidden", $login));
+        $this->checkbox->setAction($this->createAction(array($this, "Hidden")));
         $this->frame->addComponent($this->checkbox);
 
         $this->mainFrame->addComponent($this->frame);
@@ -98,8 +100,6 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function Ok($login, $data)
     {
 
-        $this->checkbox->setargs($data);
-
         $storage = \ManiaLive\Data\Storage::getInstance();
         $q = str_replace("?", "", $data['question']);
         $question = new \ManiaLivePlugins\eXpansion\Quiz\Structures\Question($storage->getPlayerObject($login), trim($q));
@@ -112,16 +112,33 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         if (!empty($data['imageUrl'])) {
             $question->setImage(trim($data['imageUrl']));
         }
-        if ($this->checkbox->getStatus() == true) {
-            $question->setHidden(true);
-            $this->erase($login);
-            self::$mainPlugin->setHiddenQuestionBoxes($question);
-            return;
-        }
 
         self::$mainPlugin->addQuestion($question);
         $this->erase($login);
     }
+
+    public function Hidden($login, $data)
+    {
+
+        $storage = \ManiaLive\Data\Storage::getInstance();
+        $q = str_replace("?", "", $data['question']);
+        $question = new \ManiaLivePlugins\eXpansion\Quiz\Structures\Question($storage->getPlayerObject($login), trim($q));
+        for ($x = 0; $x < $this->answerCount; $x++) {
+            if (trim($data['answer.' . $x]) != "") {
+                $question->addAnswer(trim($data['answer.' . $x]));
+            }
+        }
+
+        if (!empty($data['imageUrl'])) {
+            $question->setImage(trim($data['imageUrl']));
+            $question->setHidden(true);
+            $this->erase($login);
+            self::$mainPlugin->setHiddenQuestionBoxes($question);
+        } else {
+          Gui::showNotice("To ask hidden question, you have to define url for image", $login);
+        }
+    }
+
 
     public function Cancel($login)
     {

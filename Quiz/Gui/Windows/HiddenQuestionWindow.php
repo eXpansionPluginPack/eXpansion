@@ -34,7 +34,7 @@ class HiddenQuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
     {
         parent::onConstruct();
         $login = $this->getRecipient();
-
+        $this->setTitle("Set order");
         $this->quad = new Quad();
         $this->addComponent($this->quad);
 
@@ -93,7 +93,7 @@ class HiddenQuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
                 $quad = new Quad();
                 $quad->setScriptEvents();
                 $quad->setBgcolor("0000");
-                $quad->setBgcolorFocus("3af2");
+                $quad->setBgcolorFocus("3af4");
                 $quad->setSize($x, $y);
                 $quad->setPosition($i * $x, -$j * $y);
                 $quad->setId("quad_" . $c);
@@ -104,6 +104,8 @@ class HiddenQuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
                 $label->setSize($x, $y);
                 $label->setAlign("center", "center");
                 $label->setId("lbl_" . $c);
+                $label->setTextSize(3);
+                $label->setStyle("TextRaceMessageBig");
                 $label->setAttribute("class", "label");
                 $label->setPosition(($i * $x) + $x / 2, -$j * $y - $y / 2);
                 $this->frame->addComponent($label);
@@ -127,7 +129,7 @@ class HiddenQuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
             $tmp = explode("_", $value);
             $order[] = intval($tmp[1]);
         }
-        
+
         $this->question->setBoxOrder($order);
         $this->main->addQuestion($this->question);
         $this->erase($login);

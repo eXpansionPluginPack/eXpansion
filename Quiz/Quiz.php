@@ -137,9 +137,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $command->help = '/answer Show the current right answers for a question';
         $command = $this->registerChatCommand("vastaus", "showAnswer", 0, true);
         $command->help = '/vastaus Show the current right answers for a question';
-        $command = $this->registerChatCommand("question", "showQuestion", 0, true);
+        $command = $this->registerChatCommand("question", "displayQuestion", 0, true);
         $command->help = '/question Shows the current question again';
-        $command = $this->registerChatCommand("kysymys", "showQuestion", 0, true);
+        $command = $this->registerChatCommand("kysymys", "displayQuestion", 0, true);
         $command->help = '/question Shows the current question again';
         $command = $this->registerChatCommand("reset", "reset", 0, true);
         $command->help = '/reset resets the quiz points';
@@ -434,12 +434,17 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
        
     }
 
-    public function showQuestion()
+
+    public function displayQuestion() {
+        $this->showQuestion(false);
+    }
+
+    public function showQuestion($redraw = true)
     {
         if ($this->currentQuestion !== null) {
             $nickName = $this->currentQuestion->asker->nickName;
             $question = $this->currentQuestion->question;
-            if ($this->currentQuestion->hasImage()) {
+            if ($this->currentQuestion->hasImage() && $redraw) {
                 if (self::$GDsupport) {
                     $this->dataAccess->httpGet($this->currentQuestion->getImage(), array($this, "xGetImage"));
                 } else {
