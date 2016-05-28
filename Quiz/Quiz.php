@@ -3,8 +3,11 @@
 namespace ManiaLivePlugins\eXpansion\Quiz;
 
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Quiz\Gui\Widget\QuizImageWidget;
 use ManiaLivePlugins\eXpansion\Quiz\Gui\Windows\AddPoint;
+use ManiaLivePlugins\eXpansion\Quiz\Gui\Windows\HiddenQuestionWindow;
 use ManiaLivePlugins\eXpansion\Quiz\Gui\Windows\QuestionWindow;
+use ManiaLivePlugins\eXpansion\Quiz\Structures\Question;
 use ManiaLivePlugins\MatchMakingLobby\Windows\PlayerList;
 
 class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
@@ -83,6 +86,8 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 dl("php_gd2");
                 self::$GDsupport = true;
             }
+        } else {
+            self::$GDsupport = true;
         }
 
         $this->enableDedicatedEvents();
@@ -228,8 +233,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
         try {
             $dbanswer = "";
-            foreach ($question->answer as $answer)
+            foreach ($question->answer as $answer) {
                 $dbanswer .= $answer->answer . ", ";
+            }
             $dbanswer = trim($dbanswer, ", ");
             $this->db->execute("INSERT INTO `quiz_questions` (question, answers, asker) VALUES (" . $this->db->quote($question->question) . ", " . $this->db->quote($dbanswer) . ", " . $this->db->quote($question->asker->login) . ");");
         } catch (\Exception $e) {
@@ -241,17 +247,21 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
-        if ($playerUid == 0)
+        if ($playerUid == 0) {
             return;
+        }
 
-        if (substr($text, 0, 1) == "/")
+        if (substr($text, 0, 1) == "/") {
             return;
+        }
 
-        if (!isset($this->currentQuestion->question))
+        if (!isset($this->currentQuestion->question)) {
             return;
+        }
 
-        if ($login == $this->currentQuestion->asker->login)
-            return; // ignore if answer is from asker
+        if ($login == $this->currentQuestion->asker->login) {
+            return;
+        } // ignore if answer is from asker
 
         switch ($this->currentQuestion->checkAnswer($text)) {
             case Structures\Question::Correct:
@@ -270,6 +280,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
                 $this->addPoint(null, $login);
                 $this->currentQuestion = null;
+                QuizImageWidget::EraseAll();
                 $this->chooseNextQuestion();
                 break;
             case Structures\Question::MoreAnswersNeeded:
@@ -292,8 +303,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function cancel($login)
     {
-        if ($this->currentQuestion === null)
+        if ($this->currentQuestion === null) {
             return;
+        }
 
         if ($this->currentQuestion->asker->login == $login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN)) {
             $this->eXpChatSendServerMessage($this->msg_cancelQuestion, null, array($this->storage->getPlayerObject($login)->nickName));
@@ -305,8 +317,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function reset($login)
     {
-        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN))
+        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN)) {
             return;
+        }
         $this->players = array();
         $this->questionDb = array();
         $this->currentQuestion = null;
@@ -318,8 +331,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function showAnswer($login)
     {
-        if (!isset($this->currentQuestion->question))
+        if (!isset($this->currentQuestion->question)) {
             return;
+        }
         if ($login == $this->currentQuestion->asker->login || \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN)) {
             $answer = "";
 
@@ -340,7 +354,6 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if ($this->questionDb == null) {
             Gui\Widget\QuizImageWidget::EraseAll();
-
             return;
         }
 
@@ -356,6 +369,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (count($this->questionDb) >= 1) {
             $this->currentQuestion = array_shift($this->questionDb);
             $this->questionCounter++;
+            Gui\Widget\QuizImageWidget::EraseAll();
             $this->showQuestion();
         } else {
             $this->currentQuestion = null;
@@ -409,6 +423,17 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
+    public function setHiddenQuestionBoxes(Question $question)
+    {
+        if (self::$GDsupport) {
+            $this->dataAccess->httpGet($question->getImage(), array($this, "xGetHiddenImage"), array($question));
+        }
+        else {
+            $this->eXpChatSendServerMessage("#quiz#Hidden Questions can be only asked with GD Support", $question->asker->login);
+        }
+       
+    }
+
     public function showQuestion()
     {
         if ($this->currentQuestion !== null) {
@@ -420,6 +445,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 } else {
                     $widget = Gui\Widget\QuizImageWidget::Create(null);
                     $widget->setImage($this->currentQuestion->getImage());
+                    $widget->setHiddenQuestion($this->currentQuestion->isHidden, $this->currentQuestion->boxOrder);
                     $widget->setImageSize(20, 11.25);
                     $widget->show();
                 }
@@ -431,8 +457,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function xGetImage($data, $httpCode)
     {
-        if ($httpCode != 200)
+        if ($httpCode != 200) {
             return;
+        }
 
         $maxWidth = 20;
         $maxHeight = 20;
@@ -457,12 +484,50 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             $widget = Gui\Widget\QuizImageWidget::Create(null);
             $widget->setImage($this->currentQuestion->getImage());
+            $widget->setHiddenQuestion($this->currentQuestion->isHidden, $this->currentQuestion->boxOrder);
             $widget->setImageSize($newWidth, $newHeight);
             $widget->show();
         } else {
-            $this->eXpChatSendServerMessage($msg_errorImageType);
+            $this->eXpChatSendServerMessage($this->msg_errorImageType);
         }
     }
+
+    public function xGetHiddenImage($data, $httpCode, $question)
+    {
+
+        if ($httpCode != 200) {
+            return;
+        }
+
+        $maxWidth = 60;
+        $maxHeight = 60;
+
+        $meta = array();
+        list($width, $height, $type, $attr) = @getimagesizefromstring($data, $meta);
+
+        if (($type == IMAGETYPE_JPEG) || ($type == IMAGETYPE_PNG)) {
+            $xRatio = $maxWidth / $width;
+            $yRatio = $maxHeight / $height;
+
+            if (($xRatio * $height) < $maxHeight) {
+                $newHeight = $xRatio * $height;
+                $newWidth = $maxWidth;
+            } else {
+                $newWidth = $yRatio * $width;
+                $newHeight = $maxHeight;
+            }
+
+            $win = HiddenQuestionWindow::Create($question->asker->login);
+            $question->setImageSize($newWidth, $newHeight);
+            $win->setQuestion($question);
+            $win->setMain($this);
+            $win->setSize(90,90);
+            $win->show();
+        } else {
+            $this->eXpChatSendServerMessage($this->msg_errorImageType);
+        }
+    }
+
 
     public function ask($login, $text = "")
     {
@@ -512,8 +577,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function addPointsWindow($login)
     {
-        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN))
+        if (!\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN)) {
             return;
+        }
         $window = Gui\Windows\AddPoint::Create($login);
         $window->setSize(90, 60);
         $window->centerOnScreen();
@@ -527,8 +593,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->eXpChatSendServerMessage($this->msg_points);
         $output = "";
         foreach ($this->players as $player) {
-            if ($player->points > 0)
+            if ($player->points > 0) {
                 $output .= '$z$s$o$ff0' . $player->points . ' $z$s$fff' . $player->nickName . '   $z$s$fff|   ';
+            }
         }
 
         $this->connection->chatSendServerMessage(substr($output, 0, (strlen($output) - 2)));

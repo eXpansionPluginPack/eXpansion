@@ -1,0 +1,52 @@
+if (isHidden) {
+
+    if (Now-start > delay || firstBlock) {
+        firstBlock = False;
+        start = Now;
+        declare Integer ids;
+
+        if (order.existskey(step)) {
+           ids = order[step];
+        } else {
+
+            declare Boolean needContinue = True;
+
+            declare x = 9;
+            while (needContinue) {
+                declare Integer rnd = MathLib::Rand(0,8);
+
+                if (!shown.exists("quad_"^rnd)) {
+                    ids = rnd;
+                    needContinue = False;
+                }
+
+                if (x >= 9) {
+                    needContinue = False;
+                }
+            }
+        }
+
+        declare CMlQuad quad = (Page.GetFirstChild("quad_"^ids) as CMlQuad);
+        quad.Hide();
+        shown.add("quad_"^ids);
+
+        if (step <= 9) {
+            step += 1;
+        } else {
+           isHidden = True;
+        }
+    }
+}
+
+foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::MouseClick && Event.Control.ControlClasses.count == 1 && Event.Control.ControlClasses[0] == "quad") {
+        if (Window.RelativeScale == 1.) {
+            Window.RelativeScale = 4.;
+
+        } else {
+            if (Window.RelativeScale == 4.) {
+            Window.RelativeScale = 1.;
+            }
+         }
+    }
+}

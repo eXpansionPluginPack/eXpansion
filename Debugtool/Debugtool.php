@@ -105,6 +105,11 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
+    public function onStatusChanged($statusCode, $statusName)
+    {
+        echo $statusCode . ": " . $statusName . " \n";
+    }
+
     public function profilere()
     {
         Dispatcher::setApplicationListener(new Profiler());

@@ -1,0 +1,8 @@
+declare Integer[] order = <?php echo $this->boxOrder; ?>;
+declare Text[] shown = Text[];
+declare Integer delay = <?php echo $this->delay; ?> * 1000;  // 10 sec
+declare incStep = False;
+declare firstBlock = True;
+declare step = 0;
+declare start = Now;
+declare isHidden = <?php echo $this->isHidden; ?>;

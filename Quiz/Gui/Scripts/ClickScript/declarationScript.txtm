@@ -1,0 +1,4 @@
+declare Text[] order = Text[];
+declare CMlEntry entry = (Page.GetFirstChild("boxOrder") as CMlEntry);
+
+

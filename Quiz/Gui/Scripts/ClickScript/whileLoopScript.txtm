@@ -1,0 +1,26 @@
+foreach (Event in PendingEvents) {
+    if (Event.Type == CMlEvent::Type::MouseClick ) {
+        if(Event.Control.ControlClasses.count == 1 && Event.Control.ControlClasses[0] == "quad" && !order.exists(Event.ControlId) ){
+                declare id = TextLib::Split("_", Event.ControlId);
+                order.add(Event.ControlId);
+                declare CMlLabel label = (Page.GetFirstChild("lbl_"^id[1]) as CMlLabel);
+                label.Value = "" ^ order.count;
+                declare Text out = "";
+                foreach (x in order) {
+                    out = out ^ x ^ ",";
+                }
+                entry.Value = out;
+        }
+    }
+
+    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "undo") {
+        declare last = order.count-1;
+        if (last >= 0) {
+        declare id = TextLib::Split("_", order[last]);
+        order.removekey(last);
+        declare CMlLabel label = (Page.GetFirstChild("lbl_"^id[1]) as CMlLabel);
+        label.Value = "";
+        }
+    }
+}
+

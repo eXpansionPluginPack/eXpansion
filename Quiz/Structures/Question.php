@@ -32,6 +32,14 @@ class Question
     /** @var bool hasImage */
     public $hasImage = false;
 
+    public $isHidden = false;
+
+    public $sizeX = 30.0;
+    public $sizeY = 30.0;
+
+    public $boxOrder = array();
+
+
     public function __construct(\ManiaLive\Data\Player $player, $question)
     {
         $this->asker = $player;
@@ -51,6 +59,11 @@ class Question
         $this->question = $question;
 
         return $this;
+    }
+
+    public function setHidden($bool = true)
+    {
+        $this->isHidden = $bool;
     }
 
     /**
@@ -109,6 +122,12 @@ class Question
         return $this->answer;
     }
 
+    public function setImageSize($x, $y)
+    {
+        $this->sizeY = $y;
+        $this->sizeX = $x;
+    }
+
     public function setImage($url)
     {
         $this->imageUrl = $url;
@@ -135,10 +154,11 @@ class Question
     public function checkAnswer($message)
     {
         foreach ($this->answer as $answer) {
-            if ($answer->used)
+            if ($answer->used) {
                 continue;
+            }
 
-            if (\mb_strtolower($answer->answer, 'UTF-8') === \mb_strtolower($message, 'UTF-8')) {
+            if (trim(\mb_strtolower($answer->answer, 'UTF-8')) === \mb_strtolower($message, 'UTF-8')) {
                 $answer->used = true;
                 if ($this->multipart) {
                     return self::MoreAnswersNeeded;
@@ -149,6 +169,12 @@ class Question
         }
 
         return self::WrongAnswer;
+    }
+
+
+    public function setBoxOrder($order)
+    {
+        $this->boxOrder = $order;
     }
 
 }
