@@ -42,7 +42,7 @@ class SM_PlatformScores extends LocalBase
     {
         parent::eXpOnReady();
         $this->enableDedicatedEvents();
-        Dispatcher::register(ScriptmodeEvent::class, $this);
+        Dispatcher::register(ScriptmodeEvent::getClass(), $this);
     }
 
 
