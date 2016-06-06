@@ -63,13 +63,14 @@ class SM_EventHelper extends ExpPlugin
         $cpIndex = $entries['index'];
 
         Dispatcher::dispatch(
-        // login  , #id      , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
+        // login  , #id   , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
             new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, "False", null, null, null))
         );
     }
 
     public function invokeFinish($login, $entries)
     {
+
         $timeOrScore = $entries['timeOrScore'];
         $cpIndex = $entries['index'];
         Dispatcher::dispatch(

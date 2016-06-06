@@ -22,6 +22,8 @@
 
 namespace ManiaLivePlugins\eXpansion\SM_PlatformScores;
 
+use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent;
 use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 
 /**
@@ -35,15 +37,14 @@ class SM_PlatformScores extends LocalBase
     private $lastCpNum = array();
     private $cpScores = array();
 
-    public function eXpOnLoad()
-    {
-        $this->enableScriptEvents("LibXmlRpc_OnWayPoint");
-    }
 
     public function eXpOnReady()
     {
         parent::eXpOnReady();
+        $this->enableDedicatedEvents();
+        Dispatcher::register(ScriptmodeEvent::class, $this);
     }
+
 
     public function LibXmlRpc_OnWayPoint(
         $login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
@@ -52,7 +53,6 @@ class SM_PlatformScores extends LocalBase
         if ($time > 0) {
             if ($isEndBlock) {
                 $this->addRecord($login, $time, 0, $this->cpScores[$login]);
-
                 $this->cpScores[$login] = array();
             } else {
                 if (!isset($this->lastCpNum[$login]) || $this->lastCpNum[$login] < $cpIndex) {
@@ -70,8 +70,9 @@ class SM_PlatformScores extends LocalBase
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
         foreach ($this->cpScores as $login => $scores) {
-            if (!empty($scores) && isset($this->lastCpNum[$login]) && isset($scores[$this->lastCpNum[$login]]))
+            if (!empty($scores) && isset($this->lastCpNum[$login]) && isset($scores[$this->lastCpNum[$login]])) {
                 $this->addRecord($login, $scores[$this->lastCpNum[$login]], 0, $scores);
+            }
         }
 
         parent::onEndMatch($rankings, $winnerTeamOrMap);

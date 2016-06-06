@@ -46,4 +46,6 @@ class Config extends \ManiaLib\Utils\Singleton
     public $overlayHideBackground = false; //
 
     public $overlayHideEndMapLadderRecap = false; //
+
+    public $countdownCoord = array(0., -85.);
 }

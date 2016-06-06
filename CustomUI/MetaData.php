@@ -104,8 +104,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->registerVariable($var);
 
         $var = new BasicList("overlayChatOffset", "Chat Offset", $config, false, false);
+        $var->setDescription("x=0.0 to 3.2, y=0 to 1.8");
         $var->setType(new TypeFloat(''));
         $var->setDefaultValue(array(0, 0));
+        $this->registerVariable($var);
+
+        $var = new BasicList("countdownCoord", "Timer Coordinates", $config, false, false);
+        $var->setType(new TypeFloat(''));
+        $var->setDefaultValue(array(0, -85.));
         $this->registerVariable($var);
 
         $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt("overlayChatLineCount", "Chat Line Count", $config, false, false);
