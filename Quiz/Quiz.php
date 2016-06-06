@@ -8,7 +8,7 @@ use ManiaLivePlugins\eXpansion\Quiz\Gui\Windows\AddPoint;
 use ManiaLivePlugins\eXpansion\Quiz\Gui\Windows\HiddenQuestionWindow;
 use ManiaLivePlugins\eXpansion\Quiz\Gui\Windows\QuestionWindow;
 use ManiaLivePlugins\eXpansion\Quiz\Structures\Question;
-use ManiaLivePlugins\MatchMakingLobby\Windows\PlayerList;
+
 
 class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -427,15 +427,15 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if (self::$GDsupport) {
             $this->dataAccess->httpGet($question->getImage(), array($this, "xGetHiddenImage"), array($question));
-        }
-        else {
+        } else {
             $this->eXpChatSendServerMessage("#quiz#Hidden Questions can be only asked with GD Support", $question->asker->login);
         }
-       
+
     }
 
 
-    public function displayQuestion() {
+    public function displayQuestion()
+    {
         $this->showQuestion(false);
     }
 
@@ -526,7 +526,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $question->setImageSize($newWidth, $newHeight);
             $win->setQuestion($question);
             $win->setMain($this);
-            $win->setSize(90,90);
+            $win->setSize(90, 90);
             $win->show();
         } else {
             $this->eXpChatSendServerMessage($this->msg_errorImageType);
@@ -609,7 +609,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function eXpOnUnload()
     {
         AddPoint::EraseAll();
-        PlayerList::EraseAll();
+        Gui\Windows\Playerlist::EraseAll();
         QuestionWindow::EraseAll();
         Gui\Widget\QuizImageWidget::EraseAll();
     }
