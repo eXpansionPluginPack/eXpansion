@@ -14,7 +14,7 @@ class Ants extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $config = Config::getInstance();
         \ManiaLivePlugins\eXpansion\Gui\Gui::preloadImage($config->texture);
         \ManiaLivePlugins\eXpansion\Gui\Gui::preloadUpdate();
-        $this->registerChatCommand("ants", "ants");
+      //  $this->registerChatCommand("ants", "ants");
     }
 
     public function ants() {
