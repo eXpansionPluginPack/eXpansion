@@ -1,0 +1,24 @@
+declare objCount = <?php echo $this->antCount; ?>;
+
+declare CMlQuad[] ant;
+declare Real[] antSpeed;
+declare Real[] antAngle;
+declare Real[] yPos;
+declare Real[] xPos;
+
+declare tick = 0;
+declare needUpdate = False;
+
+declare lastUpdate = Now;
+
+for (i, 0, objCount-1) {
+    declare CMlQuad antQuad <=> (Page.GetFirstChild("ant"^(i+1)) as CMlQuad);
+    ant.add(antQuad);
+    declare Real posX = ML::Rand(-80,80)*1.;
+    declare Real posY = ML::Rand(-80,80)*2.;
+    yPos.add(posX);
+    xPos.add(posY);
+    antSpeed.add(ML::Rand(8, 25) / 10.);
+    antAngle.add(ML::Rand(0, 360) * 1.);
+    antQuad.RelativePosition = <posX, posY, 0.>;
+}

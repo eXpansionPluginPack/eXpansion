@@ -1,0 +1,42 @@
+
+if( (Now - lastUpdate) >= 40){
+    tick +=1;
+    lastUpdate = Now;
+
+    for (i, 0, objCount-1) {
+
+          if (tick % 50 == 0) {
+            antSpeed[i] = ML::Rand(8, 25) / 10.;
+          }
+
+          if (tick % 10 == 0) {
+
+           if (MathLib::Rand(0,100) <= 50 ) {
+           	    antAngle[i] += MathLib::Rand(0,35) * 1.;
+           }
+           else {
+           	   antAngle[i] -=MathLib::Rand(0,35) * 1.;
+           }
+          }
+
+            if (xPos[i] > 180.) {
+                antAngle[i] = 180.;
+            }
+            if (xPos[i] < -180.) {
+               antAngle[i] = 0.;
+            }
+            if (yPos[i] > 90.) {
+                antAngle[i] = -90.;
+            }
+            if (yPos[i] < -90.) {
+                antAngle[i] = 90.;
+            }
+
+        xPos[i] += antSpeed[i]*MathLib::Cos( 3.1415 / 180. * antAngle[i] );
+        yPos[i] += antSpeed[i]*MathLib::Sin( 3.1415 / 180. * antAngle[i] );
+
+        ant[i].RelativePosition = <xPos[i], yPos[i], 0.>;
+        ant[i].RelativeRotation = -antAngle[i];
+    }
+
+}
