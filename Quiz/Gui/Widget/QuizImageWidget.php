@@ -107,7 +107,15 @@ class QuizImageWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         }
         $this->script->setParam("delay", 20);
         $this->script->setParam("boxOrder", $order);
+        $this->script->setParam("reveal", "False");
         $this->script->setParam("isHidden", Maniascript::getBoolean($bool));
     }
+
+    public function revealAnswer()
+    {
+        $this->script->setParam("reveal", "True");
+        $this->setTimeout(5);
+    }
+
 
 }

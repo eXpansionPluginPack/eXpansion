@@ -223,12 +223,11 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if (empty($question->question)) {
             $this->eXpChatSendServerMessage($this->msg_questionMissing, $question->asker->login);
-
             return;
         }
+
         if (sizeof($question->answer) == 0) {
             $this->eXpChatSendServerMessage($this->msg_answerMissing, $question->asker->login);
-
             return;
         }
         try {
@@ -239,6 +238,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $dbanswer = trim($dbanswer, ", ");
             $this->db->execute("INSERT INTO `quiz_questions` (question, answers, asker) VALUES (" . $this->db->quote($question->question) . ", " . $this->db->quote($dbanswer) . ", " . $this->db->quote($question->asker->login) . ");");
         } catch (\Exception $e) {
+            echo $e->getMessage() . "\n";
             // silent exception
         }
         $this->questionDb[] = $question;
@@ -260,7 +260,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
 
         if ($login == $this->currentQuestion->asker->login) {
-            return;
+            //    return;
         } // ignore if answer is from asker
 
         switch ($this->currentQuestion->checkAnswer($text)) {
@@ -274,13 +274,19 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     $answer .= " " . $ans->answer . ",";
                 }
                 $answer = trim($answer, ", ");
-
+                if ($this->currentQuestion->hasImage()) {
+                    $answer = '$l[' . $this->currentQuestion->imageUrl . ']' . $answer . '$l';
+                }
                 $this->eXpChatSendServerMessage($this->msg_correctAnswer, null, array($answer, $player->nickName));
                 $this->connection->chatSendServerMessage($this->colorParser->parseColors($header));
 
                 $this->addPoint(null, $login);
                 $this->currentQuestion = null;
-                QuizImageWidget::EraseAll();
+                $widget = QuizImageWidget::GetAll();
+                foreach ($widget as $window) {
+                    $window->revealAnswer();
+                    $window->redraw();
+                }
                 $this->chooseNextQuestion();
                 break;
             case Structures\Question::MoreAnswersNeeded:
@@ -303,6 +309,8 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function cancel($login)
     {
+        Gui\Widget\QuizImageWidget::EraseAll();
+
         if ($this->currentQuestion === null) {
             return;
         }
@@ -311,7 +319,6 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->eXpChatSendServerMessage($this->msg_cancelQuestion, null, array($this->storage->getPlayerObject($login)->nickName));
             $this->currentQuestion = null;
             $this->chooseNextQuestion();
-            Gui\Widget\QuizImageWidget::EraseAll();
         }
     }
 
@@ -341,6 +348,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $answer .= " " . $ans->answer . ",";
             }
             $answer = trim($answer, ", ");
+            if ($this->currentQuestion->hasImage()) {
+                $answer = '$l[' . $this->currentQuestion->imageUrl . ']' . $answer . '$l';
+            }
             $this->eXpChatSendServerMessage($this->msg_rightAnswer, null, array($answer));
 
             $this->currentQuestion = null;
@@ -353,7 +363,6 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
 
         if ($this->questionDb == null) {
-            Gui\Widget\QuizImageWidget::EraseAll();
             return;
         }
 
@@ -362,7 +371,6 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if ($login != null) {
                 $this->eXpChatSendServerMessage("Question added to the queue. (There is already an existing question.)", $login);
             }
-
             return;
         }
 
@@ -370,6 +378,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->currentQuestion = array_shift($this->questionDb);
             $this->questionCounter++;
             Gui\Widget\QuizImageWidget::EraseAll();
+
             $this->showQuestion();
         } else {
             $this->currentQuestion = null;
@@ -426,7 +435,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function setHiddenQuestionBoxes(Question $question)
     {
         if (self::$GDsupport) {
-            $this->dataAccess->httpGet($question->getImage(), array($this, "xGetHiddenImage"), array($question));
+            $this->dataAccess->httpCurl($question->getImage(), array($this, "xGetHiddenImage"), array("question" => $question));
         } else {
             $this->eXpChatSendServerMessage("#quiz#Hidden Questions can be only asked with GD Support", $question->asker->login);
         }
@@ -446,7 +455,8 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $question = $this->currentQuestion->question;
             if ($this->currentQuestion->hasImage() && $redraw) {
                 if (self::$GDsupport) {
-                    $this->dataAccess->httpGet($this->currentQuestion->getImage(), array($this, "xGetImage"));
+
+                    $this->dataAccess->httpCurl($this->currentQuestion->getImage(), array($this, "xGetImage"));
                 } else {
                     $widget = Gui\Widget\QuizImageWidget::Create(null);
                     $widget->setImage($this->currentQuestion->getImage());
@@ -458,16 +468,26 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->eXpChatSendServerMessage($this->msg_questionPre, null, array($this->questionCounter, $nickName));
             $this->eXpChatSendServerMessage($this->msg_question, null, array($question));
         }
+
     }
 
-    public function xGetImage($data, $httpCode)
+    public function xGetImage($job, $jobData)
     {
+
+        $info = $job->getCurlInfo();
+        $httpCode = $info['http_code'];
+
+
         if ($httpCode != 200) {
+            $this->eXpChatSendServerMessage("#error#Quiz encountered http error: code " . $httpCode);
             return;
         }
 
+        $data = $job->getResponse();
+
         $maxWidth = 20;
         $maxHeight = 20;
+
 
         $meta = array();
         list($width, $height, $type, $attr) = @getimagesizefromstring($data, $meta);
@@ -488,21 +508,31 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
 
             $widget = Gui\Widget\QuizImageWidget::Create(null);
+
             $widget->setImage($this->currentQuestion->getImage());
             $widget->setHiddenQuestion($this->currentQuestion->isHidden, $this->currentQuestion->boxOrder);
             $widget->setImageSize($newWidth, $newHeight);
             $widget->show();
         } else {
+
             $this->eXpChatSendServerMessage($this->msg_errorImageType);
         }
     }
 
-    public function xGetHiddenImage($data, $httpCode, $question)
+    public function xGetHiddenImage($job, $jobData)
     {
+        $info = $job->getCurlInfo();
+        $httpCode = $info['http_code'];
+
+        $additionalData = $job->__additionalData;
+        $question = $additionalData['question'];
 
         if ($httpCode != 200) {
+            $this->eXpChatSendServerMessage("#error#Quiz encountered http error: code " . $httpCode);
             return;
         }
+
+        $data = $job->getResponse();
 
         $maxWidth = 60;
         $maxHeight = 60;

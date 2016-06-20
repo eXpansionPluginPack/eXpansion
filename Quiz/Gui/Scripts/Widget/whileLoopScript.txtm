@@ -38,6 +38,13 @@ if (isHidden) {
     }
 }
 
+if (reveal) {
+    for (ids,0,8) {
+        declare CMlQuad quad = (Page.GetFirstChild("quad_"^ids) as CMlQuad);
+        quad.Hide();
+    }
+}
+
 foreach (Event in PendingEvents) {
     if (Event.Type == CMlEvent::Type::MouseClick && Event.Control.ControlClasses.count == 1 && Event.Control.ControlClasses[0] == "quad") {
         if (Window.RelativeScale == 1.) {

@@ -158,7 +158,7 @@ class Question
                 continue;
             }
 
-            if (trim(\mb_strtolower($answer->answer, 'UTF-8')) === \mb_strtolower($message, 'UTF-8')) {
+            if (trim(\mb_strtolower($answer->answer, 'UTF-8')) === trim(\mb_strtolower($message, 'UTF-8'))) {
                 $answer->used = true;
                 if ($this->multipart) {
                     return self::MoreAnswersNeeded;

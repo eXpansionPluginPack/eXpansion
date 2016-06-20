@@ -5,4 +5,5 @@ declare incStep = False;
 declare firstBlock = True;
 declare step = 0;
 declare start = Now;
+declare reveal = <?php echo $this->reveal; ?>;
 declare isHidden = <?php echo $this->isHidden; ?>;
