@@ -240,14 +240,14 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 }
             }
 
-            if (!isset($this->counters[$login][$cmdName])) {
-                $this->counters[$login][$cmdName] = 0;
+            if (!isset($this->counters[$cmdName])) {
+                $this->counters[$cmdName] = 0;
             }
 
-            $this->counters[$login][$cmdName]++;
+            $this->counters[$cmdName]++;
 
             if ($this->config->limit_votes != -1) {
-                if ($this->counters[$login][$cmdName] > $this->config->limit_votes) {
+                if ($this->counters[$cmdName] > $this->config->limit_votes) {
 
                     $this->connection->cancelVote();
                     $msg = eXpGetMessage("Vote limit reached.");
