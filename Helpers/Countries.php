@@ -210,7 +210,7 @@ class Countries
     public static function getCountryFromCode($code)
     {
         $countries = self::$countries;
-
+        $code = strtoupper($code);
         if (in_array($code, $countries)) {
             foreach ($countries as $country => $short) {
                 if (strtoupper($code) == $short) {
