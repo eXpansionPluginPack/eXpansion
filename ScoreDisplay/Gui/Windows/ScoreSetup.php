@@ -48,10 +48,12 @@ class ScoreSetup extends Window
     public function Ok($login, $data)
     {
         $this->EraseAll();
+        $scale =0.8;
         $scores = Scores::Create(null);
         $scores->setData($data);
         $scores->setName("ScoreWidget");
-        $scores->setPosition(-70, 80);
+        $scores->setScale($scale);
+        $scores->setPosition(-70*$scale, 80);
         $scores->show();
     }
 }
