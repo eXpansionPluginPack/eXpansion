@@ -260,7 +260,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
 
         if ($login == $this->currentQuestion->asker->login) {
-            //    return;
+           return;
         } // ignore if answer is from asker
 
         switch ($this->currentQuestion->checkAnswer($text)) {
