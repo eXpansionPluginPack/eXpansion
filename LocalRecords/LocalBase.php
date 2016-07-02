@@ -3,17 +3,20 @@
 namespace ManiaLivePlugins\eXpansion\LocalRecords;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLive\Gui\ActionHandler;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Core\Events\ExpansionEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ExpansionEventListener;
 use ManiaLivePlugins\eXpansion\Core\i18n\Message;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Cps;
-use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Ranks;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Records;
+use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Ranks;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Sector;
+use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\TopSumsWindow;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 
 abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements ExpansionEventListener
@@ -128,6 +131,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public static $openCpsAction = -1;
 
+    private $deleteTempLogin = null;
+
     public function expOnInit()
     {
         //Activating debug for records only
@@ -237,6 +242,10 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
         $cmd = AdminGroups::addAdminCommand("saverecs", $this, "chat_forceSave", "records_save");
         $cmd->setHelp("Will force the save of the records changes in the Database");
+
+        $cmd = AdminGroups::addAdminCommand("delrec", $this, "chat_delRecord", "records_save");
+        $cmd->setHelp("Deletes all records by login");
+
     }
 
     public function eXpOnReady()
@@ -1257,9 +1266,9 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function showTopSums($login)
     {
-        Gui\Windows\TopSumsWindow::EraseAll();
+        TopSumsWindow::EraseAll();
 
-        $win = Gui\Windows\TopSumsWindow::Create($login);
+        $win = TopSumsWindow::Create($login);
         $win->setTitle("TopSums");
         $win->setDatas($this->getTopSums());
         $win->setSize(100, 90);
@@ -1276,7 +1285,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
      */
     public function showRecsWindow($login, $map = null)
     {
-        Gui\Windows\Records::Erase($login);
+        Records::Erase($login);
         //try {
         if ($map === null) {
             $records = $this->currentChallengeRecords;
@@ -1289,7 +1298,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             $currentMap = true;
         }
 
-        $window = Gui\Windows\Records::Create($login);
+        $window = Records::Create($login);
         /** @var Records $window */
         $window->setTitle(__('Records on a Map', $login));
         $window->centerOnScreen();
@@ -1308,9 +1317,9 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
      */
     public function showRanksWindow($login)
     {
-        Gui\Windows\Ranks::Erase($login);
+        Ranks::Erase($login);
 
-        $window = Gui\Windows\Ranks::Create($login);
+        $window = Ranks::Create($login);
         $window->setTitle(__('Server Ranks', $login));
         $window->centerOnScreen();
         $window->populateList($this->getRanks(), 100);
@@ -1320,9 +1329,9 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function showCpWindow($login)
     {
-        Gui\Windows\Cps::Erase($login);
+        Cps::Erase($login);
 
-        $window = Gui\Windows\Cps::Create($login);
+        $window = Cps::Create($login);
         /** @var Cps $window */
         $window->setTitle(__('CheckPoints on Map', $login));
         $window->populateList($this->currentChallengeRecords, 100, $this);
@@ -1358,7 +1367,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             }
         }
 
-        $window = Gui\Windows\Sector::Create($login);
+        $window = Sector::Create($login);
         /** @var Sector $window */
         $window->setTitle(__('Sector Times on Map', $login));
         $window->populateList($this->currentChallangeSectorTimes, 100, $this);
@@ -1721,6 +1730,42 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $this->onEndMatch(array(), array());
         $this->eXpChatSendServerMessage($this->msg_admin_savedRecs, $login);
     }
+
+    public function chat_delRecord($login, $playerLogin = array())
+    {
+        $playerLogin = array_shift($playerLogin);
+
+        if (!$playerLogin) {
+            $this->eXpChatSendServerMessage("This command takes a login as parameter, none entered");
+            return;
+        }
+
+        $q = "SELECT * FROM `exp_records` WHERE `exp_records`.`record_playerlogin` = " . $this->db->quote($playerLogin) . ";";
+        $ret = $this->db->execute($q);
+
+        if ($ret->recordCount() == 0) {
+            $this->eXpChatSendServerMessage("Can't delete records: Login %s has no records.", $login, array($playerLogin));
+            return;
+        }
+
+        $ac = ActionHandler::getInstance();
+        $action = $ac->createAction(array($this, "delRecs"), $playerLogin);
+
+        Gui::showConfirmDialog($login, $action, "Delete all records by " . $playerLogin. "?");
+
+    }
+
+    public function delRecs($login, $playerLogin)
+    {
+        $q = "DELETE FROM `exp_records` WHERE `exp_records`.`record_playerlogin` = " . $this->db->quote($playerLogin) . ";";
+        try {
+            $this->db->execute($q);
+            Gui::showNotice("All records by ".$playerLogin." are now deleted\n Widgets and records will update at next map.", $login);
+        } catch (\Exception $e) {
+            Gui::showNotice("Error deleting records by " . $playerLogin, $login);
+        }
+    }
+
 
     /**
      * Returns an array containing all the uid's of all the maps of the server
