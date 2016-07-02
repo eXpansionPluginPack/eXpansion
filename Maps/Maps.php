@@ -1261,6 +1261,11 @@ class Maps extends ExpPlugin
         $window->show($login);
     }
 
+    public function onMapRestart()
+    {
+        $this->wasWarmup = true;
+    }
+
     public function eXpOnUnload()
     {
         CurrentMapWidget::EraseAll();
