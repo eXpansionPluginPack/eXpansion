@@ -99,13 +99,17 @@ class Maniascript
      * Cleans the string for manialink or maniascript purposes.
      *
      * @param string $string The string to clean
-     *
+     * @param bool $multiline
      * @return string cleaned up string
      */
-    public static function fixString($string)
+    public static function fixString($string, $multiline = false)
     {
 
-        $out = str_replace('"', "'", $string);
+        $out = str_replace("\r", '', $string);
+        if (!$multiline) {
+            $out = str_replace("\n", '', $out);
+        }
+        $out = str_replace('"', "'", $out);
         $out = str_replace('\\', '\\\\', $out);
         $out = str_replace('-', '–', $out);
 

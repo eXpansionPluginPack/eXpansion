@@ -17,6 +17,7 @@ use ManiaLivePlugins\eXpansion\Gui\Windows\HudMove;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Notice;
 use ManiaLivePlugins\eXpansion\Gui\Windows\ResetHud;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
+use ManiaLivePlugins\eXpansion\Helpers\Maniascript;
 
 class Gui extends ExpPlugin
 {
@@ -254,21 +255,23 @@ class Gui extends ExpPlugin
      * Cleans the string for manialink or maniascript purposes.
      *
      * @param string $string The string to clean
-     *
+     * @param bool $multiline
      * @return string cleaned up string
+     *
+     * @see Maniascript::fixString();
+     * @deprecated
      */
     public static function fixString($string, $multiline = false)
     {
-        $out = str_replace("\r", '', $string);
-        if (!$multiline) {
-            $out = str_replace("\n", '', $out);
-        }
-        $out = str_replace('"', "'", $out);
-        $out = str_replace('\\', '\\\\', $out);
-        $out = str_replace('-', '–', $out);
-
-        return $out;
+        return Maniascript::fixString($string, $multiline);
     }
+
+    /** Shows a confirm dialog
+     *
+     * @param $login to show the dialog
+     * @param $actionId , Create actionid using ActionHandler
+     * @param string $text , additional text to show at dialog
+     */
 
     public static function showConfirmDialog($login, $actionId, $text = "")
     {
@@ -278,7 +281,13 @@ class Gui extends ExpPlugin
         $window->show();
     }
 
-    public static function showNotice($message, $login, $args = array())
+    /** show notification dialog
+     *
+     * @param string|array $login (or array of logins) to show notice to
+     * @param \ManiaLivePlugins\eXpansion\Core\i18n\Message|string $message message to show
+     * @param array $args for message
+     */
+    public static function showNotice($login, $message, $args = array())
     {
         $window = null;
         if (is_array($login)) {
@@ -295,7 +304,12 @@ class Gui extends ExpPlugin
         $window->show($login);
     }
 
-    public static function showError($message, $login)
+    /** Shows error message dialog
+     *
+     * @param $login
+     * @param string $message
+     */
+    public static function showError($login, $message)
     {
         $window = null;
         if (is_array($login)) {
@@ -309,8 +323,7 @@ class Gui extends ExpPlugin
     }
 
     /**
-     * Preload image
-     *
+     * Preloads an image
      * @param type $url
      */
     public static function preloadImage($url)
@@ -319,7 +332,7 @@ class Gui extends ExpPlugin
     }
 
     /**
-     * Preload image
+     * Remove preload of image
      *
      * @param type $url
      */
@@ -328,6 +341,10 @@ class Gui extends ExpPlugin
         Preloader::remove($url);
     }
 
+    /**
+     * Updates the preloader
+     *
+     */
     public static function preloadUpdate()
     {
         $preloader = Preloader::Create(null);
@@ -335,13 +352,16 @@ class Gui extends ExpPlugin
     }
 
     /**
-     * Displays a Confirm Dialog for action.
+     * Create Confirm for an action.
      *
+     * example usage at widgets and windows:
+     * $element = new Quad();
+     * $element->setAction( Gui::createConfirm($this->createAction(array($this, "function")) );
      */
     public static function createConfirm($finalAction)
     {
         $outAction = call_user_func_array(
-            array(ActionHandler::getInstance(), 'createAction')  ,
+            array(ActionHandler::getInstance(), 'createAction'),
             array(array(__NAMESPACE__ . '\Gui', 'showConfirmDialog'), $finalAction)
         );
 

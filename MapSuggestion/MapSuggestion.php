@@ -48,7 +48,7 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
         if (is_numeric($mxid)) {
             $mxid = intval($mxid);
             if (empty($description)) {
-                Gui::showNotice(eXpGetMessage("Looks like you have not entered any description."), $login);
+                Gui::showNotice($login, eXpGetMessage("Looks like you have not entered any description."));
 
                 return;
             }
@@ -58,12 +58,12 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 
             $data .= $mxid . ";" . $from . ";\"" . $description . "\"\r\n";
             $dataAccess->save($file, $data, true);
-            Gui::showNotice(eXpGetMessage("Your wish has been saved\nThe server admin will review the wish\nand add the map if it's good enough."), $login);
+            Gui::showNotice($login, eXpGetMessage("Your wish has been saved\nThe server admin will review the wish\nand add the map if it's good enough."));
             MapWish::Erase($login);
 
             return;
         }
-        Gui::showNotice(eXpGetMessage("Looks like mx id is missing or is invalid."), $login);
+        Gui::showNotice($login, eXpGetMessage("Looks like mx id is missing or is invalid."));
     }
 
     /**
