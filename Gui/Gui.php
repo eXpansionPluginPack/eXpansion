@@ -254,7 +254,7 @@ class Gui extends ExpPlugin
      * Cleans the string for manialink or maniascript purposes.
      *
      * @param string $string The string to clean
-     *
+     * @param bool $multiline if the string is multiline
      * @return string cleaned up string
      */
     public static function fixString($string, $multiline = false)
@@ -270,6 +270,11 @@ class Gui extends ExpPlugin
         return $out;
     }
 
+    /**
+     * @param $login
+     * @param $actionId
+     * @param string $text
+     */
     public static function showConfirmDialog($login, $actionId, $text = "")
     {
         $window = ConfirmDialog::Create($login);
@@ -278,6 +283,11 @@ class Gui extends ExpPlugin
         $window->show();
     }
 
+    /**
+     * @param $message
+     * @param $login
+     * @param array $args
+     */
     public static function showNotice($message, $login, $args = array())
     {
         $window = null;
@@ -295,6 +305,10 @@ class Gui extends ExpPlugin
         $window->show($login);
     }
 
+    /**
+     * @param $message
+     * @param $login
+     */
     public static function showError($message, $login)
     {
         $window = null;

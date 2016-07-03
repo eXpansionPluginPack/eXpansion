@@ -6,6 +6,8 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
     private $timeStamps = array();
+
+    /** @var integer */
     private $tickCounter = 0;
 
     /** @var Config */
@@ -15,8 +17,9 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         $this->enableDedicatedEvents();
         $this->enableTickerEvent();
-        foreach ($this->storage->players as $player)
+        foreach ($this->storage->players as $player) {
             $this->onPlayerConnect($player->login, false);
+        }
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -26,8 +29,9 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onPlayerDisconnect($login, $reason = null)
     {
-        if (array_key_exists($login, $this->timeStamps))
+        if (array_key_exists($login, $this->timeStamps) && !empty($login)) {
             unset($this->timeStamps[$login]);
+        }
     }
 
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex)
@@ -40,8 +44,8 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($this->tickCounter % 10 == 0) {
             $this->tickCounter = 0;
             $this->config = Config::getInstance();
-            foreach ($this->timeStamps as $playerLogin => $value) {
-                if ((time() - $value) > ($this->config->idleMinutes * 60)) {
+            foreach ($this->timeStamps as $playerLogin => $time) {
+                if ((time() - $time) > ($this->config->idleMinutes * 60)) {
 
                     $player = $this->storage->getPlayerObject($playerLogin);
 
@@ -50,8 +54,8 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         $this->connection->kick($playerLogin, "Idle Kick");
                     } else {
                         $this->eXpChatSendServerMessage('%s $z$s$fff is idle and is being sent to spectate!', null, array($player->nickName));
-                        $this->connection->forceSpectator($playerLogin, 3);
                         unset($this->timeStamps[$playerLogin]);
+                        $this->connection->forceSpectator($playerLogin, 3);
                     }
                 }
             }
@@ -61,7 +65,7 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function checkActivity($login)
     {
-        if ($login != $this->storage->serverLogin) {
+        if ($login != $this->storage->serverLogin && !empty($login)) {
             $this->timeStamps[$login] = time();
         }
     }
@@ -82,8 +86,9 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $login = $player->login;
 
         if ($player->spectator) {
-            if (array_key_exists($login, $this->timeStamps))
+            if (array_key_exists($login, $this->timeStamps)) {
                 unset($this->timeStamps[$login]);
+            }
         } else {
             $this->checkActivity($login);
         }
