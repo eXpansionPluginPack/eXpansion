@@ -97,7 +97,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($ret != 0) {
             $this->console('[eXpansion:AutoUpdate]Error while checking for updates eXpansion !!');
             $this->console($results);
-            \ManiaLivePlugins\eXpansion\Gui\Gui::showError(AdminGroups::getAdminsByPermission(Permission::SERVER_UPDATE), $results);
+            \ManiaLivePlugins\eXpansion\Gui\Gui::showError($results, AdminGroups::getAdminsByPermission(Permission::SERVER_UPDATE));
             $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#admin_error#Error while checking for updates of #variable#eXpansion & Components !!');
         } else {
             if ($this->arrayContainsText('Nothing to install or update', $results)) {
@@ -159,7 +159,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($ret != 0) {
             $this->console('[eXpansion:AutoUpdate]Error while updating eXpansion !!');
             $this->console($results);
-            \ManiaLivePlugins\eXpansion\Gui\Gui::showError(AdminGroups::getAdminsByPermission(Permission::SERVER_UPDATE), $results);
+            \ManiaLivePlugins\eXpansion\Gui\Gui::showError($results, AdminGroups::getAdminsByPermission(Permission::SERVER_UPDATE));
             $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#admin_error#Error while updating #variable#eXpansion & Components !!');
         } else {
             $this->console('[eXpansion:AutoUpdate]eXpansion Updated!!');

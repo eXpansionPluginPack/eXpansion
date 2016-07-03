@@ -1760,9 +1760,9 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $q = "DELETE FROM `exp_records` WHERE `exp_records`.`record_playerlogin` = " . $this->db->quote($playerLogin) . ";";
         try {
             $this->db->execute($q);
-            Gui::showNotice($login, eXpGetMessage("All records by %s are now deleted\n Widgets and records will update at next map."), array($playerLogin));
+            Gui::showNotice("All records by ".$playerLogin." are now deleted\n Widgets and records will update at next map.", $login);
         } catch (\Exception $e) {
-            Gui::showNotice($login, eXpGetMessage("Error deleting records by %s"), array($playerLogin));
+            Gui::showNotice("Error deleting records by " . $playerLogin, $login);
         }
     }
 
