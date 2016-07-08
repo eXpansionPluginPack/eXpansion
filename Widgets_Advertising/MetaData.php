@@ -44,7 +44,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(array());
         $this->registerVariable($var);
 
-        for ($x = 1; $x <= 5; $x++) {
+        for ($x = 1; $x <= 10; $x++) {
 
             $var = new Boolean('active_' . $x, 'Active', $config, false, false);
             $var->setDefaultValue($x == 1);

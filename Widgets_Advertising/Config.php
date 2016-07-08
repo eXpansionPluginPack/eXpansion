@@ -81,4 +81,80 @@ class Config extends \ManiaLib\Utils\Singleton
 
     public $x_5 = -30;  // image position x in maniaplanet display units
     public $y_5 = 90; // image position y in maniaplanet display units
+    
+    //Setting _6
+    public $active_6 = false;
+    public $url_6 = "";
+    public $manialink_6 = "";
+    public $imageUrl_6 = "http://reaby.kapsi.fi/ml/exp_small.png";
+    public $imageFocusUrl_6 = "http://reaby.kapsi.fi/ml/exp_small.png";
+
+    public $imageSizeX_6 = 512; // image sizeX in px
+    public $imageSizeY_6 = 128; // image sizeY in px
+
+    public $size_6 = 30;  // image width in maniaplanet display units
+
+    public $x_6 = -30;  // image position x in maniaplanet display units
+    public $y_6 = 90; // image position y in maniaplanet display units
+
+    //Setting _7
+    public $active_7 = false;
+    public $url_7 = "";
+    public $manialink_7 = "";
+    public $imageUrl_7 = "http://reaby.kapsi.fi/ml/exp_small.png";
+    public $imageFocusUrl_7 = "http://reaby.kapsi.fi/ml/exp_small.png";
+
+    public $imageSizeX_7 = 512; // image sizeX in px
+    public $imageSizeY_7 = 128; // image sizeY in px
+
+    public $size_7 = 30;  // image width in maniaplanet display units
+
+    public $x_7 = -30;  // image position x in maniaplanet display units
+    public $y_7 = 90; // image position y in maniaplanet display units 
+
+    //Setting _8
+    public $active_8 = false;
+    public $url_8 = "";
+    public $manialink_8 = "";
+    public $imageUrl_8 = "http://reaby.kapsi.fi/ml/exp_small.png";
+    public $imageFocusUrl_8 = "http://reaby.kapsi.fi/ml/exp_small.png";
+
+    public $imageSizeX_8 = 512; // image sizeX in px
+    public $imageSizeY_8 = 128; // image sizeY in px
+
+    public $size_8 = 30;  // image width in maniaplanet display units
+
+    public $x_8 = -30;  // image position x in maniaplanet display units
+    public $y_8 = 90; // image position y in maniaplanet display units
+
+    //Setting _9
+    public $active_9 = false;
+    public $url_9 = "";
+    public $manialink_9 = "";
+    public $imageUrl_9 = "http://reaby.kapsi.fi/ml/exp_small.png";
+    public $imageFocusUrl_9 = "http://reaby.kapsi.fi/ml/exp_small.png";
+
+    public $imageSizeX_9 = 512; // image sizeX in px
+    public $imageSizeY_9 = 128; // image sizeY in px
+
+    public $size_9 = 30;  // image width in maniaplanet display units
+
+    public $x_9 = -30;  // image position x in maniaplanet display units
+    public $y_9 = 90; // image position y in maniaplanet display units
+
+    //Setting _10
+    public $active_10 = false;
+    public $url_10 = "";
+    public $manialink_10 = "";
+    public $imageUrl_10 = "http://reaby.kapsi.fi/ml/exp_small.png";
+    public $imageFocusUrl_10 = "http://reaby.kapsi.fi/ml/exp_small.png";
+
+    public $imageSizeX_10 = 512; // image sizeX in px
+    public $imageSizeY_10 = 128; // image sizeY in px
+
+    public $size_10 = 30;  // image width in maniaplanet display units
+
+    public $x_10 = -30;  // image position x in maniaplanet display units
+    public $y_10 = 90; // image position y in maniaplanet display units
+    
 }

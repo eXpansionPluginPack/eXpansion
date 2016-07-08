@@ -47,7 +47,7 @@ class Widgets_Advertising extends ExpPlugin
     {
         WidgetAd::EraseAll();
 
-        for ($x = 1; $x <= 5; $x++) {
+        for ($x = 1; $x <= 10; $x++) {
             $varActive = "active_$x";
             if (isset($this->config->$varActive) && $this->config->$varActive) {
                 $widget = WidgetAd::Create(null, false);
