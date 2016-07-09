@@ -1219,6 +1219,7 @@ EOT;
 
         if ($timeOrScore == 0) {
             if (array_key_exists($login, $this->expPlayers)) {
+                $this->expPlayers[$login]->checkpoints = array(0 => 0);
                 $this->expPlayers[$login]->finalTime = 0;
                 if ($this->storage->gameInfos->gameMode !== \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
                     $this->expPlayers[$login]->hasRetired = true;

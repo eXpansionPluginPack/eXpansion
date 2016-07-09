@@ -31,7 +31,6 @@ class Menu extends ExpPlugin implements Listener
 
     public function eXpOnReady()
     {
-        $this->enableDedicatedEvents();
         $this->enablePluginEvents();
         Dispatcher::register(Event::getClass(), $this);
     }
@@ -39,6 +38,9 @@ class Menu extends ExpPlugin implements Listener
     public function eXpAutoloadComplete()
     {
         $this->prepareMenu();
+
+        // menu has to be prepared before enabling dedicated events!
+        $this->enableDedicatedEvents();
     }
 
     public function eXpAdminAdded($login)

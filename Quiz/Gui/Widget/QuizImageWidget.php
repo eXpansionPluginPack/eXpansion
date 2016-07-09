@@ -114,8 +114,6 @@ class QuizImageWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     public function revealAnswer()
     {
         $this->script->setParam("reveal", "True");
-        $this->setTimeout(5);
     }
-
-
+    
 }
