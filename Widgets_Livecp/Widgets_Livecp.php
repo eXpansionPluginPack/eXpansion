@@ -23,7 +23,7 @@ use ManiaLive\Data\Player;
 use ManiaLivePlugins\eXpansion\Widgets_Livecp\Gui\Widgets\CpProgress;
 
 /**
- * Description of Widgets_CheckpointProgress
+ * Description of Widgets_Livecp
  *
  * @author Petri
  */
@@ -31,24 +31,40 @@ class Widgets_Livecp extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
     private $players = array();
+    private $update = false;
+    private $lastSend = 0;
 
     public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->enableStorageEvents();
+        $this->enableTickerEvent();
         $this->reset();
+        $this->lastSend = time() - 3;
         $this->displayWidget();
-
     }
+
+
+    public function onTick()
+    {
+
+        if ($this->update && $this->lastSend <= time() - 2) {
+            $this->update = false;
+            CpProgress::EraseAll();
+            $info = CpProgress::Create(null);
+            $info->setSize(70, 60);
+            $info->setData($this->players);
+            $info->setPosition(-158, 60);
+            $info->show();
+            $this->lastsend = time();
+
+        }
+    }
+
 
     private function displayWidget()
     {
-        CpProgress::EraseAll();
-        $info = CpProgress::Create(null);
-        $info->setSize(70, 60);
-        $info->setData($this->players);
-        $info->setPosition(-158, 60);
-        $info->show();
+        $this->update = true;
     }
 
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex)
@@ -78,7 +94,7 @@ class Widgets_Livecp extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($timeOrScore == 0) {
             $this->players[$login] = array(-1 => 0);
         } else {
-            $this->players[$login][$this->storage->currentMap->nbCheckpoints-1] = $timeOrScore;
+            $this->players[$login][$this->storage->currentMap->nbCheckpoints - 1] = $timeOrScore;
         }
 
         $this->displayWidget();
@@ -122,6 +138,7 @@ class Widgets_Livecp extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         CpProgress::EraseAll();
         $this->disableDedicatedEvents();
         $this->disableStorageEvents();
+        $this->disableTickerEvent();
     }
 
     public function reset()
