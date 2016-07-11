@@ -12,7 +12,7 @@ class ArrayOfObj
      * @param mixed[] $array
      * @param string $prop
      *
-     * @return mixed[] type
+     * @return
      */
     public static function sortAsc(&$array, $prop)
     {
@@ -28,7 +28,7 @@ class ArrayOfObj
      * @param mixed[] $array
      * @param string $prop
      *
-     * @return mixed[] type
+     * @return
      */
     public static function sortDesc(&$array, $prop)
     {
@@ -44,7 +44,7 @@ class ArrayOfObj
      * @param mixed[] $array
      * @param string $prop
      *
-     * @return mixed[] type
+     * @return
      */
     public static function asortAsc(&$array, $prop)
     {
@@ -60,7 +60,7 @@ class ArrayOfObj
      * @param mixed[] $array
      * @param string $prop
      *
-     * @return mixed[] type
+     * @return
      */
     public static function asortDesc(&$array, $prop)
     {

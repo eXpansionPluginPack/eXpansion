@@ -21,6 +21,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Livecp;
 
 use ManiaLive\Data\Player;
 use ManiaLivePlugins\eXpansion\Widgets_Livecp\Gui\Widgets\CpProgress;
+use ManiaLivePlugins\eXpansion\Widgets_Livecp\Structures\CpInfo;
 
 /**
  * Description of Widgets_Livecp
@@ -30,8 +31,11 @@ use ManiaLivePlugins\eXpansion\Widgets_Livecp\Gui\Widgets\CpProgress;
 class Widgets_Livecp extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
+    /** @var CpInfo[] */
     private $players = array();
+    /** @var bool */
     private $update = false;
+    /** @var int */
     private $lastSend = 0;
 
     public function eXpOnReady()
@@ -52,9 +56,8 @@ class Widgets_Livecp extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->update = false;
             CpProgress::EraseAll();
             $info = CpProgress::Create(null);
-            $info->setSize(70, 60);
             $info->setData($this->players);
-            $info->setPosition(-158, 60);
+            $info->setPosition(-160, 60);
             $info->show();
             $this->lastsend = time();
 
@@ -69,7 +72,7 @@ class Widgets_Livecp extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex)
     {
-        $this->players[$login][$checkpointIndex] = $timeOrScore;
+        $this->players[$login] = new CpInfo($checkpointIndex, $timeOrScore);
         $this->displayWidget();
     }
 
@@ -78,7 +81,8 @@ class Widgets_Livecp extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($isSpectator) {
             return;
         }
-        $this->players[$login] = array(-1 => 0);
+        $this->players[$login] = new CpInfo();
+        $this->displayWidget();
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason)
@@ -92,17 +96,13 @@ class Widgets_Livecp extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onPlayerFinish($playerUid, $login, $timeOrScore)
     {
         if ($timeOrScore == 0) {
-            $this->players[$login] = array(-1 => 0);
+            if ($this->players[$login]->cpIndex != $this->storage->currentMap->nbCheckpoints - 1) {
+                $this->players[$login] = new CpInfo();
+            }
         } else {
-            $this->players[$login][$this->storage->currentMap->nbCheckpoints - 1] = $timeOrScore;
+            $this->players[$login] = new CpInfo($this->storage->currentMap->nbCheckpoints - 1, $timeOrScore);
         }
 
-        $this->displayWidget();
-    }
-
-    public function onPlayerFinishLap($player, $time, $checkpoints, $nbLap)
-    {
-        $this->players[$player->login] = array(-1 => 0);
         $this->displayWidget();
     }
 
@@ -116,7 +116,7 @@ class Widgets_Livecp extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 unset($this->players[$login]);
             }
         } else {
-            $this->players[$login] = array(-1 => 0);
+            $this->players[$login] = new CpInfo();
         }
 
         $this->displayWidget();
@@ -145,7 +145,7 @@ class Widgets_Livecp extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         $this->players = array();
         foreach ($this->storage->players as $player) {
-            $this->players[$player->login] = array(-1 => 0);
+            $this->players[$player->login] = new CpInfo();
         }
     }
 }
