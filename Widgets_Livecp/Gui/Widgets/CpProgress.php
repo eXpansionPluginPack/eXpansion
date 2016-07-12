@@ -9,8 +9,8 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
-use ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj;
 use ManiaLivePlugins\eXpansion\Widgets_Livecp\Gui\Controls\CpItem;
+use ManiaLivePlugins\eXpansion\Widgets_Livecp\Structures\CpInfo;
 
 class CpProgress extends Widget
 {
@@ -38,11 +38,11 @@ class CpProgress extends Widget
         $this->wframe->setScriptEvents(true);
         $this->addComponent($this->wframe);
 
-        $this->bg = new WidgetBackGround($x,$y);
+        $this->bg = new WidgetBackGround($x, $y);
         $this->wframe->addComponent($this->bg);
 
-        $this->title = new WidgetTitle($x,$y);
-        $this->title->setText("LiveCP      - Total CP: ".$this->storage->currentMap->nbCheckpoints);
+        $this->title = new WidgetTitle($x, $y);
+        $this->title->setText("LiveCP      - Total CP: " . $this->storage->currentMap->nbCheckpoints);
         $this->title->setId("minimizeButton");
         $this->title->setScriptEvents();
         $this->title->setDirection("right");
@@ -59,16 +59,15 @@ class CpProgress extends Widget
 
     protected function eXpOnEndConstruct()
     {
-        $this->setSize(54,90);
+        $this->setSize(54, 90);
     }
 
     public function setData($playerData)
-    {
-       
-        ArrayOfObj::asortDesc($playerData, "cpIndex");
-        
-        $x = 0;
 
+    {
+        uasort($playerData, array($this, 'compare'));
+
+        $x = 0;
         foreach ($playerData as $login => $data) {
             if ($x >= 16) {
                 break;
@@ -79,6 +78,20 @@ class CpProgress extends Widget
             $x++;
         }
 
+
+    }
+
+    public function compare($a, $b)
+    {
+        if ($a->cpIndex > $b->cpIndex) {
+            return -1;
+        } elseif ($a->cpIndex < $b->cpIndex) {
+            return 1;
+        } elseif ($a->time < $b->time) {
+            return -1;
+        } elseif ($a->time > $b->time) {
+            return 1;
+        }
 
     }
 
