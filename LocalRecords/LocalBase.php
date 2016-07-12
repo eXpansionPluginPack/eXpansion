@@ -13,8 +13,8 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Cps;
-use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Records;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Ranks;
+use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Records;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\Sector;
 use ManiaLivePlugins\eXpansion\LocalRecords\Gui\Windows\TopSumsWindow;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
@@ -104,7 +104,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
      *
      * @var bool
      */
-    protected $rank_needUpdated = true;
+    protected $rank_needUpdated = false;
 
     /**
      * @var Config
@@ -278,8 +278,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         }
 
         $version = $this->callPublicMethod(
-            '\ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_records'
-        );
+        '\ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_records'
+    );
         // update for version2
         if ($version == 1) {
             $q = "ALTER TABLE `exp_records` CHANGE `record_date` `record_date` INT( 12 ) NOT NULL;";
@@ -287,10 +287,18 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Database\Database', 'setDatabaseVersion', 'exp_records', 2);
         }
 
+        $version = $this->callPublicMethod(
+            '\ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_records'
+        );
+
         //Update for version 3
         if ($version <= 2) {
-            $q = "ALTER TABLE `exp_records` ADD COLUMN score_type VARCHAR(10) DEFAULT 'time'";
-            $this->db->execute($q);
+            try {
+                $q = "ALTER TABLE `exp_records` ADD COLUMN score_type VARCHAR(10) DEFAULT 'time'";
+                $this->db->execute($q);
+            } catch (\Exception $e) {
+                $this->console("[LocalRecords] There was error while updating database structure to version 3, setting version 3 as mostlikely it's already converted..");
+            }
             $this->callPublicMethod(
                 '\ManiaLivePlugins\eXpansion\Database\Database',
                 'setDatabaseVersion',
@@ -1610,7 +1618,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             if ($data->recordCount() == 0) {
                 $this->player_ranks[$login] = 1;
             } else {
-                $vals = $data->fetchStdObject();
+
                 $this->player_ranks[$login] = $data->recordCount() + 1;
             }
         }
@@ -1636,32 +1644,15 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             $nbTrack = sizeof($this->storage->maps);
             $uids = $this->getUidSqlString();
 
-            $q = 'SELECT rank_playerlogin,
-                            ((SUM(rank_rank) + (' . $nbTrack . ' - Count(*))*' . $this->config->recordsCount . ')/' . $nbTrack . ') as tscore,
-                            SUM(record_nbFinish) as nbFinish,
-                            Count(*) as nbRecords,
-                            player_nickname,
-                            player_updated,
-                            player_wins,
-                            player_timeplayed,
-                            player_nation,
-                            MAX(record_date) as lastRec,
+            $q = 'SELECT rank_playerlogin as login,
+                            ((SUM(rank_rank) + (' . $nbTrack . ' - Count(*))*' . $this->config->recordsCount . ')/' . $nbTrack . ') as tscore,                            
+                            Count(1) as nbRecords,                         
                             ' . $nbTrack . ' as nbMaps
-               FROM exp_ranks rr, exp_records r, exp_players p
-               WHERE rank_challengeuid IN (' . $uids . ')
-                        AND rr.rank_playerlogin = r.record_playerlogin
-                        AND r.record_playerlogin = p.player_login
-                        AND rank_challengeuid = r.record_challengeuid
-               GROUP BY rank_playerlogin,
-                            player_nickname,
-                            player_updated,
-                            player_wins,
-                            player_timeplayed,
-                            player_nation
-                HAVING Count(*) > 5
-                ORDER BY tscore ASC
-                LIMIT 0, 100';
-
+               FROM exp_ranks
+               WHERE rank_challengeuid IN (' . $uids . ')                                       
+               GROUP BY rank_playerlogin                            
+               ORDER BY tscore ASC
+               LIMIT 0,100';
 
             $dbData = $this->db->execute($q);
 
@@ -1671,11 +1662,44 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 return $this->ranks;
             }
 
+            $tempranks = array();
+            $loginlist = array();
             $i = 1;
+
             while ($data = $dbData->fetchStdObject()) {
-                $this->ranks[] = $data;
-                $this->player_ranks[$data->rank_playerlogin] = $i++;
+                $tempranks[$data->login] = $data;
+                $loginlist[] = $data->login;
+                $this->player_ranks[$data->login] = $i++;
             }
+
+            $this->console("[LocalRecods]Fetching Records from Database !");
+
+            $q = 'SELECT record_playerlogin AS login,
+                  SUM(record_nbFinish) as nbFinish,
+                  MAX(record_date) AS lastRec 
+                  FROM exp_records WHERE record_playerlogin IN (' . $this->getLoginSqlString($loginlist) . ') GROUP BY record_playerlogin LIMIT 0,100';
+
+            $dbData = $this->db->execute($q);
+
+            while ($data = $dbData->fetchStdObject()) {
+                $tempranks[$data->login] = (object)array_merge((array)$tempranks[$data->login], (array)$data);
+            }
+
+            $this->console("[LocalRecods]Fetching Players from Database !");
+            $q = 'SELECT player_login as login,
+		  player_nickname,
+          player_updated,
+          player_wins,
+          player_timeplayed,
+          player_nation
+          FROM exp_players WHERE player_login IN (' . $this->getLoginSqlString($loginlist) . ') LIMIT 0,100;';
+
+            $dbData = $this->db->execute($q);
+            while ($data = $dbData->fetchStdObject()) {
+                $tempranks[$data->login] = (object)array_merge((array)$tempranks[$data->login], (array)$data);
+            }
+
+            $this->ranks = $tempranks;
         }
 
         return $this->ranks;
@@ -1751,7 +1775,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $ac = ActionHandler::getInstance();
         $action = $ac->createAction(array($this, "delRecs"), $playerLogin);
 
-        Gui::showConfirmDialog($login, $action, "Delete all records by " . $playerLogin. "?");
+        Gui::showConfirmDialog($login, $action, "Delete all records by " . $playerLogin . "?");
 
     }
 
@@ -1760,7 +1784,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $q = "DELETE FROM `exp_records` WHERE `exp_records`.`record_playerlogin` = " . $this->db->quote($playerLogin) . ";";
         try {
             $this->db->execute($q);
-            Gui::showNotice("All records by ".$playerLogin." are now deleted\n Widgets and records will update at next map.", $login);
+            Gui::showNotice("All records by " . $playerLogin . " are now deleted\n Widgets and records will update at next map.", $login);
         } catch (\Exception $e) {
             Gui::showNotice("Error deleting records by " . $playerLogin, $login);
         }
@@ -1794,6 +1818,18 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
         return trim($uids, ",");
     }
+
+
+    public function getLoginSqlString($logins)
+    {
+        $out = "";
+        foreach ($logins as $login) {
+            $out .= $this->db->quote($login) . ",";
+        }
+
+        return trim($out, ",");
+    }
+
 
     public function eXp_onRestartStart()
     {

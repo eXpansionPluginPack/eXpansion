@@ -45,9 +45,6 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function eXpOnLoad()
     {
-        parent::eXpOnLoad();
-
-
         $cmd = $this->registerChatCommand("replay", "vote_Restart", 0, true);
         $cmd->help = 'Start a vote to restart a map';
         $cmd = $this->registerChatCommand("restart", "vote_Restart", 0, true);

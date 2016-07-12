@@ -23,7 +23,6 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function eXpOnLoad()
     {
-        parent::eXpOnLoad();
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_PERSONAL_BEST);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
         Dispatcher::register(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
@@ -33,10 +32,7 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
-        foreach ($this->storage->players as $player)
-            $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $player)
-            $this->onPlayerConnect($player->login, true);
+        $this->redrawAll();
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -48,21 +44,47 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function onPlayerInfoChanged($playerInfo)
     {
+        if ($this->storage->serverStatus->code != 4) {
+            return;
+        }
+
         $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
-        if ($player->spectator == 1) {
+
+        if ($player->spectator) {
             PBPanel::Erase($player->login);
         } else {
             $this->displayRecordWidget($player->login);
         }
     }
 
+    public function onBeginMatch()
+    {
+        $this->redrawWidget();
+    }
+
+
     public function onRecordsLoaded($record)
     {
-        foreach ($this->storage->players as $player)
+        foreach ($this->storage->players as $player) {
             $this->redrawWidget($player->login);
-        foreach ($this->storage->spectators as $player)
+        }
+        foreach ($this->storage->spectators as $player) {
             $this->redrawWidget($player->login);
+        }
     }
+
+    public function onEndMatch($rankings, $winnerTeamOrMap)
+    {
+        PBPanel::EraseAll();
+    }
+
+    public function redrawAll()
+    {
+        foreach ($this->storage->players as $player) {
+            $this->onPlayerConnect($player->login, false);
+        }
+    }
+
 
     public function onPersonalBestRecord(Record $record)
     {
@@ -99,17 +121,21 @@ class Widgets_PersonalBest extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     {
         //PBPanel::Erase($login);
 
-        if ($login == null)
+        if ($login == null) {
             return;
+        }
 
-        if ($record == null)
+        if ($record == null) {
             $record = $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords', 'getCurrentChallangePlayerRecord', $login);
+        }
 
         $rank = $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords', 'getPlayerRank', $login);
-        if ($rank == -1)
+        if ($rank == -1) {
             $rank = '--';
-        if ($rank == -2)
+        }
+        if ($rank == -2) {
             $rank = '';
+        }
         $rankTotal = $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords', 'getTotalRanked');
 
         $info = PBPanel::Create($login);

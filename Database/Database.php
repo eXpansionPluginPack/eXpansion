@@ -387,8 +387,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             return false;
         } else {
             $record = $query->fetchStdObject();
-
-            return $record->database_version;
+            return (int)$record->database_version;
         }
     }
 

@@ -56,6 +56,30 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;');
         }
 
+        //Checking the version if the table
+        $version = $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_ratings');
+        if (!$version) {
+            $this->callPublicMethod(
+                '\ManiaLivePlugins\eXpansion\Database\Database', 'setDatabaseVersion', 'exp_records', 1
+            );
+        }
+
+        $version = $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_ratings');
+
+        if ($version == 1) {
+            try {
+                $q = "ALTER TABLE `exp_ratings` CHANGE COLUMN `uid` `uid` VARCHAR(27) NOT NULL ;";
+                $this->db->execute($q);
+                $q = "CREATE INDEX `uid`  ON exp_ratings` (uid, rating) COMMENT '' ALGORITHM DEFAULT LOCK DEFAULT";
+                $this->db->execute($q);
+            }
+            catch (\Exception $ex) {
+             $this->console("[MapRatings] There was error while changing your database structure to newer one, most likely the database is converted already!");
+            }
+            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Database\Database', 'setDatabaseVersion', 'exp_ratings', 2);
+        }
+
+
         $cmd = $this->registerChatCommand("rate", "chatRate", 1, true);
         $cmd->help = '/rate +++, /rate ++, /rate +-, /rate --, /rate --- or /rate 5, /rate 4, /rate 3. /rate 2, /rate 1';
         $cmd = $this->registerChatCommand("rating", "chatRating", 1, true);
@@ -114,10 +138,10 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
         $uids = trim($uids, ",");
 
-        $ratings = $this->db->execute("SELECT uid, avg(rating) AS rating, COUNT(rating) AS ratingTotal "
-            . " FROM exp_ratings "
-            . " WHERE uid IN ($uids)"
-            . " GROUP BY uid;")->fetchArrayOfObject();
+        $ratings = $this->db->execute("SELECT uid, avg(rating) AS rating, COUNT(rating) AS ratingTotal 
+            FROM exp_ratings
+            WHERE uid IN (" . $uids . ")
+            GROUP BY uid;")->fetchArrayOfObject();
         $out = array();
         foreach ($ratings as $rating) {
             $mapsByUid[$rating->uid]->mapRating = new Structures\Rating($rating->rating, $rating->ratingTotal, $rating->uid);
@@ -134,8 +158,10 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if ($uId == null) {
             $uId = $this->storage->currentMap->uId;
-        } else if ($uId instanceof \Maniaplanet\DedicatedServer\Structures\Map) {
-            $uId = $uId->uId;
+        } else {
+            if ($uId instanceof \Maniaplanet\DedicatedServer\Structures\Map) {
+                $uId = $uId->uId;
+            }
         }
 
         $ratings = $this->db->execute("SELECT login, rating FROM exp_ratings WHERE `uid` = " . $this->db->quote($uId) . ";")->fetchArrayOfAssoc();
@@ -173,8 +199,9 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         try {
 
-            if (empty($this->pendingRatings))
+            if (empty($this->pendingRatings)) {
                 return;
+            }
 
             $sqlInsert = "INSERT INTO exp_ratings (`uid`, `login`, `rating`  ) VALUES ";
             $loginList = "";
@@ -210,10 +237,12 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if (isset($this->pendingRatings[$login])) {
             $oldRating = $this->pendingRatings[$login];
-        } else if (isset($this->oldRatings[$login])) {
-            $oldRating = $this->oldRatings[$login]->rating;
         } else {
-            $this->ratingTotal++;
+            if (isset($this->oldRatings[$login])) {
+                $oldRating = $this->oldRatings[$login]->rating;
+            } else {
+                $this->ratingTotal++;
+            }
         }
 
         if ($this->ratingTotal == 0) {
@@ -316,8 +345,9 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function displayWidget($login = null)
     {
-        if (!$this->displayWidget)
+        if (!$this->displayWidget) {
             return;
+        }
         try {
             foreach (RatingsWidget::GetAll() as $window) {
                 $window->setStars($this->rating, $this->ratingTotal);
@@ -334,9 +364,9 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->saveRatings($this->previousMap->uId);
 
             //Updating ratings in map object
-            if (!isset($this->previousMap->mapRating))
+            if (!isset($this->previousMap->mapRating)) {
                 $this->previousMap->mapRating = new Structures\Rating($this->rating, $this->ratingTotal, $this->previousMap->uId);
-            else {
+            } else {
                 $this->previousMap->mapRating->rating = $this->rating;
                 $this->previousMap->mapRating->totalvotes = $this->ratingTotal;
             }
@@ -383,15 +413,17 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 if (array_key_exists($login, $ratings) == false) {
                     $logins[$login] = $login;
                 }
-                if (array_key_exists($login, $this->pendingRatings))
+                if (array_key_exists($login, $this->pendingRatings)) {
                     unset($logins[$login]);
+                }
             }
             foreach ($this->storage->spectators as $login => $player) {
                 if (array_key_exists($login, $ratings) == false) {
                     $logins[$login] = $login;
                 }
-                if (array_key_exists($login, $this->pendingRatings))
+                if (array_key_exists($login, $this->pendingRatings)) {
                     unset($logins[$login]);
+                }
             }
 
 
@@ -408,33 +440,46 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
-        if ($playerUid == 0)
+        if ($playerUid == 0) {
             return;
-        if ($text == "0/5")
+        }
+        if ($text == "0/5") {
             $this->saveRating($login, 0);
-        if ($text == "1/5")
+        }
+        if ($text == "1/5") {
             $this->saveRating($login, 1);
-        if ($text == "2/5")
+        }
+        if ($text == "2/5") {
             $this->saveRating($login, 2);
-        if ($text == "3/5")
+        }
+        if ($text == "3/5") {
             $this->saveRating($login, 3);
-        if ($text == "4/5")
+        }
+        if ($text == "4/5") {
             $this->saveRating($login, 4);
-        if ($text == "5/5")
+        }
+        if ($text == "5/5") {
             $this->saveRating($login, 5);
+        }
 
-        if ($text == "---")
+        if ($text == "---") {
             $this->saveRating($login, 0);
-        if ($text == "--")
+        }
+        if ($text == "--") {
             $this->saveRating($login, 1);
-        if ($text == "-")
+        }
+        if ($text == "-") {
             $this->saveRating($login, 2);
-        if ($text == "+")
+        }
+        if ($text == "+") {
             $this->saveRating($login, 3);
-        if ($text == "++")
+        }
+        if ($text == "++") {
             $this->saveRating($login, 4);
-        if ($text == "+++")
+        }
+        if ($text == "+++") {
             $this->saveRating($login, 5);
+        }
     }
 
     public function eXpOnUnload()
