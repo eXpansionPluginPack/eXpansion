@@ -1699,7 +1699,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 $tempranks[$data->login] = (object)array_merge((array)$tempranks[$data->login], (array)$data);
             }
 
-            $this->ranks = $tempranks;
+            $this->ranks = array_values($tempranks);
         }
 
         return $this->ranks;
