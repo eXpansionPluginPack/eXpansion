@@ -42,22 +42,30 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Dispatcher::register(ConfigLoadEvent::getClass(), $this, ConfigLoadEvent::ON_CONFIG_FILE_LOADED);
         $this->console("[eXpansion] AutoLoading eXpansion pack ... ");
 
-        /**
-         * @var Config $config
-         */
-        $config = Config::getInstance();
-        $this->config = $config;
+        try {
+            /**
+             * @var Config $config
+             */
+            $config = Config::getInstance();
+            $this->config = $config;
 
-        //List of plugins that must be loaded always !!
-        $this->plugins = array('\ManiaLivePlugins\eXpansion\Core\Core', '\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups', '\ManiaLivePlugins\eXpansion\AutoUpdate\AutoUpdate', '\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin', '\ManiaLivePlugins\eXpansion\Gui\Gui', '\ManiaLivePlugins\eXpansion\Adm\Adm', '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad', '\ManiaLivePlugins\eXpansion\Database\Database', '\ManiaLivePlugins\eXpansion\Menu\Menu');
+            //List of plugins that must be loaded always !!
+            $this->plugins = array('\ManiaLivePlugins\eXpansion\Core\Core', '\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups', '\ManiaLivePlugins\eXpansion\AutoUpdate\AutoUpdate', '\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin', '\ManiaLivePlugins\eXpansion\Gui\Gui', '\ManiaLivePlugins\eXpansion\Adm\Adm', '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad', '\ManiaLivePlugins\eXpansion\Database\Database');
 
-        $this->findAvailablePlugins();
-        ConfigManager::getInstance()->loadSettings();
+            $this->findAvailablePlugins();
 
-        //We Need the plugin Handler
-        $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+            // adding menu as last (so it's last when eXpOnReady is called, and all other plugins are done.
+            ConfigManager::getInstance()->loadSettings();
 
-        $this->autoLoadPlugins($this->plugins, $pHandler);
+            //We Need the plugin Handler
+            $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+
+            $this->autoLoadPlugins($this->plugins, $pHandler);
+
+        } catch (\exception $ex) {
+            $this->console("[AutoLoad] Error while loading Core plugins!" . $ex->getMessage());
+            AdminGroups::getInstance()->announceToPermission('[AutoLoad] Error while starting expansion core. See console for more info.', Permission::SERVER_ADMIN);
+        }
 
         // do event to inform autoload is complete;
         Dispatcher::dispatch(new \ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent(\ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent::ON_AUTOLOAD_COMPLETE));
@@ -70,7 +78,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         // Normalize plugin names.
         $plugins = array();
-        $changed = true;
+        $changed = false;
         foreach ($this->config->plugins as $pname) {
             if ($pname[0] != '\\') {
                 $pname = '\\' . $pname;
@@ -91,7 +99,14 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->console('eXpansion might crash at this point, please restart it.');
         }
 
-        $this->autoLoadPlugins($this->config->plugins, $pHandler);
+        try {
+            $this->autoLoadPlugins($this->config->plugins, $pHandler);
+        } catch (\exception $ex) {
+            $this->console("[AutoLoad] Error while AutoLoading additional plugins!" . $ex->getMessage());
+            AdminGroups::getInstance()->announceToPermission('[AutoLoad] Error while starting optional plugins. See console for more info.', Permission::SERVER_ADMIN);
+        }
+
+        $this->autoLoadPlugins(array('\\ManiaLivePlugins\\eXpansion\\Menu\\Menu'), $pHandler);
 
         if (!empty($this->toBeRemoved)) {
             $this->cleanPluginsArray($this->config->plugins, $this->toBeRemoved);

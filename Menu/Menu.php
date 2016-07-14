@@ -33,13 +33,7 @@ class Menu extends ExpPlugin implements Listener
     {
         $this->enablePluginEvents();
         Dispatcher::register(Event::getClass(), $this);
-    }
-
-    public function eXpAutoloadComplete()
-    {
         $this->prepareMenu();
-
-        // menu has to be prepared before enabling dedicated events!
         $this->enableDedicatedEvents();
     }
 
@@ -57,7 +51,7 @@ class Menu extends ExpPlugin implements Listener
             }
             $this->createMenu($group);
         } else {
-            $this->menuGroups[$name]->add($login, true);
+            $this->menuGroups[$name]->add((string)$login, true);
         }
     }
 
@@ -68,7 +62,7 @@ class Menu extends ExpPlugin implements Listener
                 $this->menuGroups[$name]->remove($login);
             }
         }
-        $this->menuGroups['Player']->add($login, true);
+        $this->menuGroups['Player']->add((string)$login, true);
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -76,13 +70,13 @@ class Menu extends ExpPlugin implements Listener
         $name = AdminGroups::getGroupName($login);
         if (!array_key_exists($name, $this->menuGroups)) {
             $this->createMenu($name);
-            $this->menuGroups[$name]->add($login, true);
+            $this->menuGroups[$name]->add((string)$login, true);
         } else {
-            $this->menuGroups[$name]->add($login, true);
+            $this->menuGroups[$name]->add((string)$login, true);
         }
 
-        $this->menuWindows[$name]->show($login);
-        
+        $this->menuWindows[$name]->show((string)$login);
+
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason)
@@ -116,14 +110,14 @@ class Menu extends ExpPlugin implements Listener
             $this->createMenu($group);
         }
 
-        $players = array_merge($this->storage->players, $this->storage->spectators);
+        $players = $this->storage->players + $this->storage->spectators;
         $regularPlayers = [];
 
         $admins = AdminGroups::get();
 
         foreach ($players as $login => $player) {
             if (!in_array($login, $admins)) {
-                $regularPlayers[] = $login;
+                $regularPlayers[] = (string)$login;
             }
         }
 
@@ -133,7 +127,7 @@ class Menu extends ExpPlugin implements Listener
 
     public function createMenu(AdmGroup $group)
     {
-        $menu = MenuWidget::Create($this->menuGroups[$group->getGroupName()], true);
+        $menu = MenuWidget::Create($this->menuGroups[$group->getGroupName()], false);
         if ($this->pluginLoaded("Faq")) {
             $menu->addItem("Help", "!help", $this);
         }

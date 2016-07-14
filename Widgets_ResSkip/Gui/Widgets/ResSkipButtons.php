@@ -51,8 +51,12 @@ class ResSkipButtons extends Widget
 
     public function setActions($res, $skip)
     {
-        $this->btn_res->setAction($res);
-        $this->btn_skip->setAction($skip);
+        if (is_object($this->btn_res)) {
+            $this->btn_res->setAction($res);
+        }
+        if (is_object($this->btn_skip)) {
+            $this->btn_skip->setAction($skip);
+        }
     }
 
     public function setResAmount($amount)

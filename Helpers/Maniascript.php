@@ -39,11 +39,26 @@ class Maniascript
             $data = (array)$data;
         }
         if (!is_array($data)) {
-
             return '[' . self::convertType($data) . ']';
         }
         $returnBuffer = "[";
         $returnBuffer .= implode(",", array_map(array(__CLASS__, "convertType"), $data));
+        $returnBuffer .= ']';
+
+        return $returnBuffer;
+    }
+
+    public static function stringifyAsStringList($data)
+    {
+
+        if (is_object($data)) {
+            $data = (array)$data;
+        }
+        if (!is_array($data)) {
+            return '["' . $data . '"]';
+        }
+        $returnBuffer = "[";
+        $returnBuffer .= implode(",", '"'.$data.'"');
         $returnBuffer .= ']';
 
         return $returnBuffer;

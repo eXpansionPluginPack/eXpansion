@@ -71,7 +71,6 @@ class Bets extends ExpPlugin
         BetWidget::$action_setAmount100 = $ah->createAction(array($this, "setBetAmount"), 100);
         BetWidget::$action_setAmount250 = $ah->createAction(array($this, "setBetAmount"), 250);
         BetWidget::$action_setAmount500 = $ah->createAction(array($this, "setBetAmount"), 500);
-
         BetWidget::$action_acceptBet = $ah->createAction(array($this, "acceptBet"));
         $this->reset();
     }
@@ -228,10 +227,10 @@ class Bets extends ExpPlugin
 
     public function updateBetWidget()
     {
-        $widget = BetWidget::Create(null);
+        $widget = BetWidget::Create(null, false);
         $widget->setSize(80, 20);
         $widget->setToHide(array_keys($this->players));
-        $widget->show(true);
+        $widget->show();
     }
 
     public function start($timeout)

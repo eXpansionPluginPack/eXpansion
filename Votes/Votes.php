@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Votes;
 
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Votes\Gui\Windows\VoteSettingsWindow;
+use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -16,6 +17,10 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $update = false;
     private $resCount = 0;
     private $lastMapUid = "";
+    /** @var int */
+    private $origTimeValue = 0;
+
+
 
     public function expOnInit()
     {
@@ -74,6 +79,12 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->setPublicMethod("vote_skip");
         $this->setPublicMethod("showVotesConfig");
 
+        if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
+            $this->setPublicMethod("showTimeOptions");
+            $this->setPublicMethod("vote_time");
+
+        }
+
         $cmd = AdminGroups::addAdminCommand('votes', $this, 'showVotesConfig', 'server_votes'); //
         $cmd->setHelp('shows config window for managing votes');
         $cmd->setMinParam(0);
@@ -89,6 +100,14 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
 
         $this->update = true;
+    }
+
+    public function showTimeOptions($login) {
+
+    }
+
+    public function vote_time($login, $seconds) {
+
     }
 
     public function syncSettings()
@@ -274,14 +293,22 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if ($cmdName == "Skip") {
                 $this->connection->nextMap();
             }
+            if ($cmdName == "Time") {
+
+            }
             $this->voter = null;
         }
+
         if ($stateName == "VoteFailed") {
             if ($cmdName != "Replay" && $cmdName != "Skip") return;
             $msg = eXpGetMessage('#vote_failure# $iVote failed!');
             $this->eXpChatSendServerMessage($msg, null);
             $this->voter = null;
         }
+
+
+
+
     }
 
     public function cancelVote($login)

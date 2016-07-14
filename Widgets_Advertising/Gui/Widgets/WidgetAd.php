@@ -52,7 +52,7 @@ class WidgetAd extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
     public function setNoAds($players)
     {
-        $out = \ManiaLivePlugins\eXpansion\Helpers\Maniascript::stringifyAsList($players);
+        $out = \ManiaLivePlugins\eXpansion\Helpers\Maniascript::stringifyAsStringList($players);
         if (count($players) == 0) {
             $out = "Text[]";
         }

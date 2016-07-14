@@ -162,7 +162,7 @@ class BetWidget extends Widget
      */
     public function setToHide($players)
     {
-        $out = \ManiaLivePlugins\eXpansion\Helpers\Maniascript::stringifyAsList($players);
+        $out = \ManiaLivePlugins\eXpansion\Helpers\Maniascript::stringifyAsStringList($players);
         if (count($players) == 0) {
             $out = "Text[]";
         }

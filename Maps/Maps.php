@@ -146,7 +146,6 @@ class Maps extends ExpPlugin
 
         CustomUI::HideForAll(CustomUI::CHALLENGE_INFO);
         $this->showCurrentMapWidget(null);
-
         $this->showNextMapWidget(null);
 
         $this->preloadHistory();
@@ -191,8 +190,8 @@ class Maps extends ExpPlugin
 
     public function onPlayerDisconnect($login, $reason = null)
     {
-        Maplist::Erase($login);
-        Gui\Windows\AddMaps::Erase($login);
+        if (empty($login)) return;
+
         if (array_key_exists($login, self::$playerSortModes)) {
             unset(self::$playerSortModes[$login]);
         }
@@ -201,10 +200,6 @@ class Maps extends ExpPlugin
         }
         if (array_key_exists($login, self::$searchField)) {
             unset(self::$searchField[$login]);
-        }
-
-        if ($this->config->showNextMapWidget) {
-            NextMapWidget::Erase($login);
         }
     }
 
@@ -224,11 +219,12 @@ class Maps extends ExpPlugin
     public function onBeginMatch()
     {
         $this->is_onEndMatch = false;
+
         if ($this->is_onBeginMatch) {
             return;
         }
-        $this->is_onBeginMatch = true;
 
+        $this->is_onBeginMatch = true;
         $this->atPodium = false;
 
         $this->nextMap = $this->storage->nextMap;
@@ -305,7 +301,7 @@ class Maps extends ExpPlugin
     public function showCurrentMapWidget($login)
     {
         if ($this->config->showCurrentMapWidget) {
-            $info = CurrentMapWidget::Create(null);
+            $info = CurrentMapWidget::Create(null, false);
             $info->setMap($this->storage->currentMap);
             $info->setLayer(Window::LAYER_SCORES_TABLE);
             $info->setAction($this->actionShowMapList);
@@ -316,7 +312,7 @@ class Maps extends ExpPlugin
     public function showNextMapWidget($login)
     {
         if ($this->config->showNextMapWidget) {
-            $info = NextMapWidget::Create(null);
+            $info = NextMapWidget::Create(null, false);
             $info->setLayer(Window::LAYER_SCORES_TABLE);
             $info->setAction($this->actionShowJukeList);
             $info->setMap($this->nextMap);
@@ -396,14 +392,7 @@ class Maps extends ExpPlugin
             }
         }
     }
-
-    public function buildMenu()
-    {
-        $this->callPublicMethod('Standard\Menubar', 'initMenu', Icons128x128_1::Challenge);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', 'List all maps on server', array($this, 'showMapList'), false);
-        $this->callPublicMethod('Standard\Menubar', 'addButton', 'Add local map on server', array($this, 'addMaps'), true);
-    }
-
+    
     /**
      * Handler for jukebox chat
      *

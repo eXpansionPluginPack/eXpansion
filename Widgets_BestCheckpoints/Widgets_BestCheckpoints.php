@@ -10,7 +10,7 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
     public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
-        $this->displayWidget(null);
+        $this->displayWidget();
     }
 
     /**
@@ -18,16 +18,16 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
      *
      * @param string $login
      */
-    public function displayWidget($login = null)
+    public function displayWidget()
     {
-        $info = BestCpPanel::Create($login);
+        $info = BestCpPanel::Create(null, false);
         $info->setSize(190, 7);
         $info->show();
     }
 
     public function onBeginMatch()
     {
-        $this->displayWidget(null);
+        $this->displayWidget();
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap)

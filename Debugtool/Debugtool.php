@@ -35,7 +35,8 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function eXpOnReady()
     {
-        $this->enableTickerEvent();
+      //  $this->enableTickerEvent();
+        $this->enableDedicatedEvents();
         $this->enableDedicatedEvents();
         //if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
         //	$this->enableScriptEvents();
@@ -67,6 +68,11 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $this->ticker = 1;
             }
         }
+    }
+
+    public function onBeginMap($map, $warmUp, $matchContinuation)
+    {
+        $this->mem(null);
     }
 
     function testWin($login)

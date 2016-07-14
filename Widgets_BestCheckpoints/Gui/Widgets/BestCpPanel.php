@@ -51,8 +51,7 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     public function destroy()
     {
-        parent::destroy();
-        foreach ($this->cps as $cp) {
+       foreach ($this->cps as $cp) {
             $cp->destroy();
         }
         $this->cps = array();

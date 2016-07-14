@@ -102,9 +102,4 @@ class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->button->setAction($action);
     }
 
-    public function onIsRemoved(\ManiaLive\Gui\Container $target)
-    {
-        parent::onIsRemoved($target);
-        parent::destroy();
-    }
 }

@@ -155,11 +155,6 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         self::$raceOn = true;
     }
 
-    public function onEndRound()
-    {
-
-    }
-
     public function onRecordsLoaded($data)
     {
         self::$localrecords = $data;

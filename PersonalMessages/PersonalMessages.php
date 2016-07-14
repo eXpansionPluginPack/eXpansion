@@ -46,9 +46,9 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->config = Config::getInstance();
 
         foreach ($this->storage->players as $login => $player)
-            $this->onPlayerConnect($login, false);
+            $this->onPlayerConnect($player->login, false);
         foreach ($this->storage->spectators as $login => $player)
-            $this->onPlayerConnect($login, true);
+            $this->onPlayerConnect($player->login, true);
     }
 
     public function onPlayerConnect($login, $isSpectator)

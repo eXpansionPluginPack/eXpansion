@@ -14,7 +14,6 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     protected function eXpOnBeginConstruct()
     {
-
         $bg = new \ManiaLib\Gui\Elements\Quad(60, 15);
         $bg->setAlign("left", "top");
         $bg->setStyle("Bgs1InRace");
@@ -102,10 +101,4 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->script->setParam("maxSpec", \ManiaLive\Data\Storage::getInstance()->server->currentMaxSpectators);
     }
 
-    public function destroy()
-    {
-        $this->destroyComponents();
-        unset($this->script);
-        parent::destroy();
-    }
 }

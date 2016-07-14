@@ -66,6 +66,8 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
         $cmd->setHelp('Displays the main control panel for the server');
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "server");
+        AdminGroups::addAlias($cmd, "options");
+        AdminGroups::addAlias($cmd, "control");
 
         foreach ($this->storage->players as $player) {
             $this->onPlayerConnect($player->login, false);

@@ -33,6 +33,10 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         self::$me = $this;
 
         $this->getRoundsPoints();
+
+
+
+
     }
 
     public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
@@ -48,8 +52,8 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         Gui\Widgets\LivePanel::$connection = $this->connection;
         $gui = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
         $localRecs = LivePanel::GetAll();
+        
         if ($login == null) {
-            //Gui\Widgets\LivePanel::EraseAll();
             $panelMain = Gui\Widgets\LivePanel::Create($login);
             $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
             $panelMain->setSizeX($this->panelSizeX);
@@ -59,15 +63,16 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             $this->widgetIds["LivePanel"] = $panelMain;
             $this->widgetIds["LivePanel"]->update();
             $this->widgetIds["LivePanel"]->show();
-        } else if (isset($localRecs[0])) {
-            $localRecs[0]->update();
-            $localRecs[0]->show($login);
+        } else {
+            if (isset($localRecs[0])) {
+                $localRecs[0]->update();
+                $localRecs[0]->show($login);
+            }
         }
 
         if (!$gui->disablePersonalHud) {
             $localRecs = LivePanel2::GetAll();
             if ($login == null) {
-                //Gui\Widgets\LivePanel2::EraseAll();
                 $panelScore = Gui\Widgets\LivePanel2::Create($login);
                 $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
                 $panelScore->setVisibleLayer("scorestable");
@@ -75,9 +80,11 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
                 $this->widgetIds["LivePanel2"] = $panelScore;
                 $this->widgetIds["LivePanel2"]->update();
                 $this->widgetIds["LivePanel2"]->show();
-            } else if (isset($localRecs[0])) {
-                $localRecs[0]->update();
-                $localRecs[0]->show($login);
+            } else {
+                if (isset($localRecs[0])) {
+                    $localRecs[0]->update();
+                    $localRecs[0]->show($login);
+                }
             }
         }
 
@@ -98,9 +105,10 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function hideLivePanel()
     {
-        $this->widgetIds = array();
         Gui\Widgets\LivePanel::EraseAll();
         Gui\Widgets\LivePanel2::EraseAll();
+        $this->widgetIds = array();
+
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap)
@@ -140,7 +148,9 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function onBeginMap($map, $warmUp, $matchContinuation)
     {
-        if (self::$raceOn == true) return;
+        if (self::$raceOn == true) {
+            return;
+        }
 
         $this->getRoundsPoints();
         self::$raceOn = false;
@@ -153,7 +163,9 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function onBeginMatch()
     {
-        if (self::$raceOn == true) return;
+        if (self::$raceOn == true) {
+            return;
+        }
 
         self::$raceOn = false;
         $this->forceUpdate = true;
