@@ -428,7 +428,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             } else {
 
                 try {
-                    $this->connection->chatSendServerMessage($this->colorParser->parseColors($msg), $login);
+                    $this->connection->chatSendServerMessage($this->colorParser->parseColors($msg), (string)$login);
                 } catch (Exception $e) {
                     $this->console("Error while sending chat message to '" . $login . "'\n Server said:" . $e->getMessage());
                 }

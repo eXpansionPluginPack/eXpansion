@@ -52,7 +52,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         Gui\Widgets\LivePanel::$connection = $this->connection;
         $gui = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
         $localRecs = LivePanel::GetAll();
-        
+
         if ($login == null) {
             $panelMain = Gui\Widgets\LivePanel::Create($login);
             $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);

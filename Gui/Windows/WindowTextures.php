@@ -284,8 +284,6 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->destroyComponents();
         $this->_closeAction = null;
 
-        parent::destroy();
-
         foreach ($this as $index => $value) {
             if (\is_object($value)) {
 
@@ -300,12 +298,16 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
                     unset($this->$index);
                     continue;
                 }
-
                 unset($this->$index);
             } else {
-                unset($this->$index);
+                // base window class still needs this at this point...
+                if ($index != "id") {
+                    unset($this->$index);
+                }
             }
         }
+
+        parent::destroy();
     }
 
     /**

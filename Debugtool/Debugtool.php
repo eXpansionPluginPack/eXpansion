@@ -72,7 +72,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onBeginMap($map, $warmUp, $matchContinuation)
     {
-        $this->mem(null);
+     //   $this->mem(null);
     }
 
     function testWin($login)

@@ -16,13 +16,13 @@ class debugWidget extends \ManiaLive\Gui\Window
     public $label;
     public $lastUpdate;
     public $lastValue = 0;
-    private $nextloop;
+    private $nextLoop;
 
     protected function onConstruct()
     {
         parent::onConstruct();
         $this->lastUpdate = 0;
-//        Dispatcher::register(\ManiaLive\Application\Event::getClass(), $this, \ManiaLive\Application\Event::ON_POST_LOOP);
+        Dispatcher::register(\ManiaLive\Application\Event::getClass(), $this, \ManiaLive\Application\Event::ON_POST_LOOP);
 
         $this->setName("Debug widget");
 
