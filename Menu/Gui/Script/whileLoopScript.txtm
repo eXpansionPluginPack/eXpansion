@@ -7,14 +7,18 @@ foreach (Event in PendingEvents) {
         eXp_tabTime = Now;
         eXp_tabPressed = True;
     }
+    if (Event.Type == CMlEvent::Type::KeyPress  && Event.KeyCode == 48) {
+        exp_chatVisible = !exp_chatVisible;
+        ClientUI.OverlayHideChat = !exp_chatVisible;
+    }
 
-    if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId == "boundingBox") {
+    /*if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId == "boundingBox") {
         canToggle = True;
     }
 
     if (Event.Type == CMlEvent::Type::MouseOut && Event.ControlId == "boundingBox") {
        canToggle = False;
-    }
+    } */
 }
 
 if(eXp_tabPressed) {

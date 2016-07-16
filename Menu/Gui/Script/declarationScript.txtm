@@ -21,12 +21,13 @@ declare eXp_tabTime = 0;
 
 declare Boolean eXp_mouseMiddleState = False;
 declare eXp_mouseMiddleTime = 0;
-declare canToggle = False;
+declare canToggle = True;
 declare lastMousePos = <0., 0.>;
 declare hideStamp = 0;
 
 declare Boolean exp_enableHudMove for UI = False;
 declare Boolean exp_needToCheckPersistentVars for UI = False;
+declare persistent Boolean exp_chatVisible = True;
 declare Boolean showStatus = False;
 declare Boolean needUpdate = True;
 declare Boolean needHidden = False;
@@ -52,3 +53,5 @@ foreach (control in Page.GetClassChildren_Result) {
     //   log(lbl);
        lbl.Hide();
 }
+
+ClientUI.OverlayHideChat = !exp_chatVisible;
