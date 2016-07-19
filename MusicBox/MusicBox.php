@@ -275,7 +275,6 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 // show error
             $text = '#music#MusicBox $fff»» #error#Invalid song number!';
             $this->eXpChatSendServerMessage($text, $login);
-
             return;
         }
 
@@ -312,8 +311,13 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->eXpChatSendServerMessage($text, null);
     }
 
-    public function musicList($login)
-    {
+    public function musicList($login) {
+
+        if (Config::getInstance()->disableJukebox) {
+            $this->eXpChatSendServerMessage("#music# Jukeboxing music is disabled.", $login);
+            return;
+        }
+
         try {
             $info = Gui\Windows\MusicListWindow::Create($login);
             $info->setSize(180, 90);

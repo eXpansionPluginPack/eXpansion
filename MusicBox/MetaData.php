@@ -29,6 +29,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var = new TypeString("url", "Enter tracklist index.csv url for musicbox ", $config, false, false);
         $var->setDefaultValue("http://reaby.kapsi.fi/ml/musictest");
         $this->registerVariable($var);
+
+        $var = new Boolean("disableJukebox", "Disable jukeboxing of music?", $config, false, false);
+        $var->setDefaultValue(false);
+        $this->registerVariable($var);
     }
 
 }
