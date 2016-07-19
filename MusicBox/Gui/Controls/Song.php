@@ -2,71 +2,64 @@
 
 namespace ManiaLivePlugins\eXpansion\MusicBox\Gui\Controls;
 
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
+use ManiaLivePlugins\eXpansion\Gui\Structures\OptimizedPagerElement;
 
-class Song extends \ManiaLivePlugins\eXpansion\Gui\Control
+class Song extends Control implements OptimizedPagerElement
 {
 
     protected $bg;
     protected $queueButton;
     protected $title;
     protected $artist;
+    protected $genre;
     protected $queueSong;
     protected $frame;
 
-    public function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\MusicBox\Structures\Song $song, $controller, $sizeX)
+    public function __construct($indexNumber, $login, $action)
     {
         $sizeY = 6;
+        $sizeX = 140;
 
-        $this->queueSong = $this->createAction(array($controller, 'queueSong'), $indexNumber + 1);
         $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, $sizeY);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
-
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setAlign("center", "center2");
-        $spacer->setStyle("Icons128x128_1");
-        $spacer->setSubStyle("Challenge");
-        $this->frame->addComponent($spacer);
-
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        //$this->frame->addComponent($spacer);
+        $line = new \ManiaLib\Gui\Layouts\Line();
+        $line->setMarginWidth(2);
+        $this->frame->setLayout($line);
 
         $this->title = new \ManiaLib\Gui\Elements\Label(70, 4);
         $this->title->setAlign('left', 'center');
-        $this->title->setText($song->title);
         $this->title->setScale(0.8);
+        $this->title->setId('column_' . $indexNumber . '_0');
+        $this->title->setAttribute("class", "eXpOptimizedPagerAction");
         $this->frame->addComponent($this->title);
 
         $this->artist = new \ManiaLib\Gui\Elements\Label(30, 4);
         $this->artist->setAlign('left', 'center');
         $this->artist->setScale(0.8);
-        $this->artist->setText($song->artist);
+        $this->artist->setId('column_' . $indexNumber . '_1');
+        $this->artist->setAttribute("class", "eXpOptimizedPagerAction");
         $this->frame->addComponent($this->artist);
 
-        $ui = new \ManiaLib\Gui\Elements\Label(20, 4);
-        $ui->setAlign('left', 'center');
-        $ui->setScale(0.8);
-        $ui->setText($song->genre);
-        $this->frame->addComponent($ui);
+        $this->genre = new \ManiaLib\Gui\Elements\Label(20, 4);
+        $this->genre->setAlign('left', 'center');
+        $this->genre->setScale(0.8);
+        $this->genre->setId('column_' . $indexNumber . '_2');
+        $this->genre->setAttribute("class", "eXpOptimizedPagerAction");
+        $this->frame->addComponent($this->genre);
 
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
-        $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-
-        $this->frame->addComponent($spacer);
-
-        $this->queueButton = new MyButton(26, 5);
-        $this->queueButton->setText(__("Queue"));
-        $this->queueButton->setAction($this->queueSong);
+        $this->queueButton = new MyButton();
+        $this->queueButton->setText(__("Queue", $login));
+        $this->queueButton->setAction($action);
+        $this->queueButton->setId('column_' . $indexNumber . '_3');
+        $this->queueButton->setAttribute("class", "eXpOptimizedPagerAction");
         $this->queueButton->colorize('2a2');
+        $this->queueButton->setScriptEvents();
         $this->queueButton->setScale(0.5);
         $this->frame->addComponent($this->queueButton);
 
@@ -92,6 +85,10 @@ class Song extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->queueButton->destroy();
         $this->destroyComponents();
         parent::destroy();
+    }
+
+    public function getNbTextColumns() {
+        return 3;
     }
 
 }

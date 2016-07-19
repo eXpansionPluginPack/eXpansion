@@ -38,7 +38,9 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
         $config = Config::getInstance();
         $this->buttonId = self::$counter++;
-        if (self::$counter > 100000) self::$counter = 0;
+        if (self::$counter > 100000) {
+            self::$counter = 0;
+        }
 
         $this->activeFrame = new \ManiaLib\Gui\Elements\Quad($sizeX + 2, $sizeY + 2.5);
         $this->activeFrame->setPosition(-1, 0);
@@ -72,8 +74,6 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         //$this->backGround->setSubStyle('BgCard');
         $this->backGround->setImage("file://Media/Manialinks/Common/Demo/demo-button-green.png", true);
         $this->backGround->setImageFocus("file://Media/Manialinks/Common/Demo/demo-button-green-focus.png", true);
-
-
         $this->backGround->setId("backGround_" . $this->buttonId);
         $this->backGround->setScriptEvents();
         $this->backGround->setColorize($config->buttonBackgroundColor);
@@ -129,7 +129,9 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
             $this->addComponent($this->backGround);
             //  $this->addComponent($this->bgFrame);
         }
-        if ($this->isActive) $this->addComponent($this->activeFrame);
+        if ($this->isActive) {
+            $this->addComponent($this->activeFrame);
+        }
 
         if (!empty($this->text)) {
             $this->addComponent($this->label);
@@ -141,7 +143,9 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
             $this->labelDesc->setText($this->description);
         }
 
-        if ($this->icon != null) $this->addComponent($this->icon);
+        if ($this->icon != null) {
+            $this->addComponent($this->icon);
+        }
     }
 
     public function getText()
@@ -214,7 +218,9 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
         //$this->label->setAction($action);
         $this->action = $action;
-        if ($this->icon != null) $this->icon->setAction($action);
+        if ($this->icon != null) {
+            $this->icon->setAction($action);
+        }
     }
 
     public function setManialink($manialink)
@@ -242,7 +248,9 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
             $this->icon->setImage($style, true);
         }
         $this->icon->setId("Icon_" . $this->buttonId);
-        if ($this->action != 0) $this->icon->setAction($this->action);
+        if ($this->action != 0) {
+            $this->icon->setAction($this->action);
+        }
         $this->addComponent($this->icon);
 
         $this->label->setPosX((($this->sizeX - 2) / 2) + ($this->getSizeY() - 1));
@@ -267,11 +275,28 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
     public function setClass($class)
     {
-        if ($this->icon != null) $this->icon->setAttribute('class', $class);
-        else {
+        if ($this->icon != null) {
+            $this->icon->setAttribute('class', $class);
+        } else {
             $this->backGround->setAttribute('class', $class);
         }
     }
+
+    public function setAttribute($key, $value)
+    {
+
+        if ($key == "class") {
+            $value = $this->getAttribute($key) . " " . $value;
+        }
+
+        if ($this->icon != null) {
+            $this->icon->setAttribute($key, $value);
+        } else {
+            $this->backGround->setAttribute($key, $value);
+        }
+
+    }
+
 
     function getButtonId()
     {

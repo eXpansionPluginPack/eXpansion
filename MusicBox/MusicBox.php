@@ -7,6 +7,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\MusicBox\Gui\Windows\CurrentTrackWidget;
 use ManiaLivePlugins\eXpansion\MusicBox\Gui\Windows\MusicListWindow;
+use ManiaLivePlugins\eXpansion\MusicBox\Structures\Song;
 
 class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -197,6 +198,9 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->wasWarmup = true;
     }
 
+    /**
+     * @return Song[]
+     */
     public function getSongs()
     {
         return $this->songs;
@@ -297,7 +301,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if ($wish->player == $player) {
                 unset($this->wishes[$id]);
                 $this->wishes[] = new Structures\Wish($song, $player);
-                $text = 'Dropped last entry and  #variable#' . $song->title . "#mucic# by #variable#" . $song->artist . ' $z$s#music# is added to the MusicBox by #variable#' . \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos") . '.';
+                $text = '#music#Dropped last entry and #variable#' . $song->title . " #music# by #variable#" . $song->artist . ' $z$s#music# is added to the MusicBox by #variable#' . \ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wos") . '.';
                 $this->eXpChatSendServerMessage($text, null);
 
                 return;
@@ -313,10 +317,11 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         try {
             $info = Gui\Windows\MusicListWindow::Create($login);
             $info->setSize(180, 90);
+            $info->setTitle("Music available at server: ", count($this->songs));
             $info->centerOnScreen();
             $info->show();
         } catch (\Exception $e) {
-            Helper::log("[MusicBox]On EndMatch Error : " . $e->getMessage());
+            Helper::log("[MusicBox] Error while displaying jukebox window: " . $e->getMessage());
         }
     }
 

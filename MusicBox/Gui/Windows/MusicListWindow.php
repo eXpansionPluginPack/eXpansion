@@ -2,11 +2,16 @@
 
 namespace ManiaLivePlugins\eXpansion\MusicBox\Gui\Windows;
 
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\MusicBox\Gui\Controls\Song;
+use ManiaLivePlugins\eXpansion\MusicBox\MusicBox;
 
 class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
+    /**
+     * @var MusicBox
+     */
     public static $musicPlugin = null;
     private $items = array();
 
@@ -16,8 +21,7 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function onConstruct()
     {
         parent::onConstruct();
-        $this->setTitle("Music available at server");
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager();
         $this->mainFrame->addComponent($this->pager);
     }
 
@@ -31,7 +35,6 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 14);
-        $this->pager->setStretchContentX($this->sizeX);
         $this->pager->setPosition(4, 0);
     }
 
@@ -48,12 +51,19 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
 
         $x = 0;
-        $songs = self::$musicPlugin->getSongs();
-        foreach ($songs as $song) {
-            $this->items[$x] = new Song($x, $login, $song, $this, $this->sizeX);
-            $this->pager->addItem($this->items[$x]);
+        foreach (self::$musicPlugin->getSongs() as $song) {
+            $action = $this->createAction(array($this, "queueSong"), ($x+1));
+            $this->pager->addSimpleItems(array(Gui::fixString($song->title) => -1,
+                Gui::fixString($song->artist) => -1,
+                Gui::fixString($song->genre) => -1,
+                "queue" => $action
+            ));
             $x++;
         }
+
+        $this->pager->setContentLayout('\ManiaLivePlugins\eXpansion\MusicBox\Gui\Controls\Song');
+        $this->pager->update($this->getRecipient());
+
     }
 
     public function destroy()
