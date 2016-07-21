@@ -1,11 +1,11 @@
 #variable#[Info] Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.
 #variable#[Info] Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.
 
-#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s
-#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s
+#joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# joins! #variable#%4$s
+#joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# joins! #variable#%4$s
 
-#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s Total Playtime: #variable#%6$s
-#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s Total Playtime: #variable#%6$s
+#joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# joins! #variable#%4$s #joinmsg#Total Playtime: #variable#%6$s
+#joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# joins! #variable#%4$s #joinmsg#Total Playtime: #variable#%6$s
 
 #player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) leaves!
 #player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) leaves!
@@ -13,8 +13,8 @@
 #variable#[#error#Info#variable#] #variable#Press TAB to show records widget, use right mouse button for quick menu access.
 #variable#[#error#Info#variable#] #variable#Press TAB to show records widget, use right mouse button for quick menu access.
 
-#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# leaves! Playtime: #variable#%5$s
-#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# leaves! Playtime: #variable#%5$s
+#leavemsg#%4$s #variable#%1$s #leavemsg# (#variable#%2$s#leavemsg#) from #variable#%3$s #leavemsg# leaves! Playtime: #variable#%5$s
+#leavemsg#%4$s #variable#%1$s #leavemsg# (#variable#%2$s#leavemsg#) from #variable#%3$s #leavemsg# leaves! Playtime: #variable#%5$s
 
 #player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s
 #player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s

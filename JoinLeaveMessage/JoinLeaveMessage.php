@@ -16,9 +16,9 @@ class JoinLeaveMessage extends ExpPlugin
     {
         $this->enableDedicatedEvents();
 
-        $this->joinMsg = eXpGetMessage('#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s');
-        $this->joinMsgTime = eXpGetMessage('#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s Total Playtime: #variable#%6$s');
-        $this->leaveMsg = eXpGetMessage('#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# leaves! Playtime: #variable#%5$s');
+        $this->joinMsg = eXpGetMessage('#joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# joins! #variable#%4$s');
+        $this->joinMsgTime = eXpGetMessage('#joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# joins! #variable#%4$s #joinmsg#Total Playtime: #variable#%6$s');
+        $this->leaveMsg = eXpGetMessage('#leavemsg#%4$s #variable#%1$s #leavemsg# (#variable#%2$s#leavemsg#) from #variable#%3$s #leavemsg# leaves! Playtime: #variable#%5$s');
         $this->tabNoticeMsg = eXpGetMessage('#variable#[#error#Info#variable#] #variable#Press TAB to show records widget, use right mouse button for quick menu access.');
         $this->playtimeMsg = eXpGetMessage('#player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s');
     }

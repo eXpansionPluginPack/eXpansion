@@ -1,8 +1,8 @@
 #variable#[Info] Some widgets are hidden from the main view, press TAB to show them. Use F8 to disable all custom server graphics.
 #variable#[Info] Certain widget sont cache de la vue principale, presser TAB pour les voir. Presser F8 pour désactiver tous les éléments graphiques du serveur.
 
-#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s
-#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# rejoint le serveur! #variable#%4$s
+#joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# joins! #variable#%4$s
+#joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# rejoint le serveur! #variable#%4$s
 
 #player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) leaves!
 #player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) quitte le serveur!
@@ -10,11 +10,11 @@
 #variable#[#error#Info#variable#] #variable#Press TAB to show records widget, use right mouse button for quick menu access.
 #variable#[#error#Info#variable#] #variable#Presser sur TAB pour voir les widget, utiliser le click droite de la souris pour acceder au menu. 
 
-#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# joins! #variable#%4$s Total Playtime: #variable#%6$s
-#player#%5$s #variable#%1$s #player# (#variable#%2$s#player#) de #variable#%3$s #player# nous rejoint! #variable#%4$s Temps de jeux: #variable#%6$s
+#joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# joins! #variable#%4$s #joinmsg#Total Playtime: #variable#%6$s
+#joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) de #variable#%3$s #joinmsg# nous rejoint! #variable#%4$s #joinmsg#Temps de jeux: #variable#%6$s
 
-#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) from #variable#%3$s #player# leaves! Playtime: #variable#%5$s
-#player#%4$s #variable#%1$s #player# (#variable#%2$s#player#) de #variable#%3$s #player# nous laisse! Temps de jeux: #variable#%5$s
+#leavemsg#%4$s #variable#%1$s #leavemsg# (#variable#%2$s#leavemsg#) from #variable#%3$s #leavemsg# leaves! Playtime: #variable#%5$s
+#leavemsg#%4$s #variable#%1$s #leavemsg# (#variable#%2$s#leavemsg#) de #variable#%3$s #leavemsg# nous laisse! Temps de jeux: #variable#%5$s
 
 #player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s
 #player#temps de jeu de cette session:#variable# %1$s#player#, Temps total joué sur le serveur: #variable#%2$s

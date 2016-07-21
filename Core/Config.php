@@ -24,6 +24,8 @@ class Config extends \ManiaLib\Utils\Singleton
     public $Colors_admingroup_chat = '$f00'; // admin chat channel
     public $Colors_donate = '$f0f'; // donate
     public $Colors_player = '$3f0'; // used in joinleave-messages
+    public $Colors_joinmsg = '$3f0'; // used in joinleave-messages
+    public $Colors_leavemsg = '$3f0'; // used in joinleave-messages
     public $Colors_music = '$f7f'; // music box
     public $Colors_emote = '$ff0$i'; // music box
     public $Colors_quiz = '$3e3'; // quiz
