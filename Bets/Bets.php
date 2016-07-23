@@ -41,6 +41,7 @@ class Bets extends ExpPlugin
     private $msg_fail, $msg_billSuccess, $msg_billPaySuccess, $msg_totalStake, $msg_winner, $msg_payFail;
     public static $state = self::OFF;
     public static $betAmount = 0;
+    private $wasWarmup = false;
 
     /** @var BetCounter[] */
     private $counters = array();
@@ -86,15 +87,20 @@ class Bets extends ExpPlugin
 
     public function onBeginMatch()
     {
-        $this->start(Config::getInstance()->timeoutSetBet);
+        if (!$this->connection->getWarmUp()) {
+            $this->start(Config::getInstance()->timeoutSetBet);
+        }
     }
 
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
+
         switch (self::$state) {
 
             case self::RUNNING:
-                $this->checkWinner();
+                if (!$this->connection->getWarmUp()) {
+                    $this->checkWinner();
+                }
                 break;
             case self::NOBETS:
                 break;
@@ -114,7 +120,7 @@ class Bets extends ExpPlugin
             if (array_key_exists($player->login, $this->players)) {
                 $this->eXpChatSendServerMessage($this->msg_winner, null, array($player->nickName . '$z$s', $total));
                 $this->connection->pay($player->login, intval($total), 'Winner of the bet!');
-
+                $this->players = array();
                 return;
             }
         }
@@ -137,8 +143,8 @@ class Bets extends ExpPlugin
             return;
         }
 
-        if ($amount < 100) {
-            $this->eXpChatSendServerMessage('#error#Custom value must be over 100 planets!', $login);
+        if ($amount < 20) {
+            $this->eXpChatSendServerMessage('#error#Custom value must be over 20 planets!', $login);
 
             return;
         }

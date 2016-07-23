@@ -58,7 +58,7 @@ class Maniascript
             return '["' . $data . '"]';
         }
         $returnBuffer = "[";
-        $returnBuffer .= implode(",", '"'.$data.'"');
+        $returnBuffer .= implode(",", array_map(array(__CLASS__, "convertString"), $data));
         $returnBuffer .= ']';
 
         return $returnBuffer;
@@ -108,6 +108,20 @@ class Maniascript
         if (is_string($var)) {
             return '"' . addslashes(self::fixString($var)) . '"';
         }
+    }
+
+    /**
+     * Converts string variable types to maniascript equilable string
+     *
+     * String
+     *
+     * @param  String
+     *
+     * @return string
+     */
+    public static function convertString($var)
+    {
+        return '"' . addslashes(self::fixString($var)) . '"';
     }
 
     /**
