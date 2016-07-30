@@ -12,10 +12,12 @@ use ManiaLive\Event\Dispatcher;
  */
 class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
+    /** Constant for permission values */
     const HAVE_PERMISSION = "y";
     const NO_PERMISSION = "n";
     const UNKNOWN_PERMISSION = "u";
 
+    /** Default name of Guest Group */
     const GROUP_GUEST = "Guest";
 
     /**
@@ -51,6 +53,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * @var AdminCmd[]
      */
     private static $commands = array();
+
+    /**
+     * The short command list
+     *
+     * @var AdminCmd[]
+     */
     private static $shortCommands = array();
 
     /**
@@ -123,6 +131,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public static $txt_noPermissionMsg;
     public static $txt_permissions = array();
 
+    /**
+     * @inheritdoc
+     */
     public function expOnInit()
     {
         parent::expOnInit();
@@ -131,13 +142,16 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         //Recovering the configuration
         $this->config = Config::getInstance();
 
-
         $this->loadIps();
         $this->loadAdmins();
 
+        // Re-save file after reading. The format might have changed.
         $this->saveFile();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function eXpOnLoad()
     {
 
@@ -198,6 +212,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_CHAT);
     }
 
+    /**
+     * Reload the admin configuration file if needed.
+     */
     public function reLoadAdmins()
     {
         if ($this->config->fileName == null) {
@@ -263,10 +280,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function loadAdmins()
     {
-        //Reseting settings
+        //Reset settings
         self::$admins = array();
         self::$groupList = array();
-        //self::$permissionList = array();
+
         //Recovering the admin groups
         try {
             if ($this->config->fileName == null) {
@@ -335,6 +352,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->loadMLAdmins();
     }
 
+    /**
+     * Load the admins for each group.
+     */
     public function loadMLAdmins()
     {
         $masterGroup = $this->getMasterGroup();
@@ -353,6 +373,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
+    /**
+     * Get the guest group. If the group don't exist it will create it.
+     *
+     * @return GuestGroup
+     */
     public function getGuestGroup()
     {
         $guestGroup = null;
@@ -371,6 +396,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return $guestGroup;
     }
 
+    /**
+     * Get the master group. If the group don't exist it will create it.
+     *
+     * @return Group|null
+     */
     public function getMasterGroup()
     {
         $masterGroup = null;
@@ -825,11 +855,25 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $adminCmd->deactivate();
     }
 
+    /**
+     * Un register a chat command by it's alias.
+     *
+     * @param string $command
+     */
     public static function removeShortAllias($command)
     {
         self::getInstance()->unregisterChatCommand($command);
     }
 
+    /**
+     * Add a command to the command tree.
+     *
+     * @param string[] $commands  The commands tree
+     * @param string[] $cmdArray  The command to add
+     * @param AdminCmd $comandObj The command to add.
+     *
+     * @return mixed
+     */
     private static function addRecursive($commands, $cmdArray, $comandObj)
     {
         //If we have finished looking all the sub commands we have finished our work.
@@ -848,11 +892,24 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
+    /**
+     * Add title to a certain permission.
+     *
+     * @param                                               $permissionName
+     * @param \ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
+     */
     public static function addPermissionTitleMessage($permissionName, \ManiaLivePlugins\eXpansion\Core\i18n\Message $msg)
     {
         self::$txt_permissions[$permissionName] = $msg;
     }
 
+    /**
+     * Get the title of a permission
+     *
+     * @param String $permissionName The name of the permission to get the message for
+     *
+     * @return \ManiaLivePlugins\eXpansion\Core\i18n\Message|string
+     */
     public static function getPermissionTitleMessage($permissionName)
     {
         return isset(self::$txt_permissions[$permissionName]) ? self::$txt_permissions[$permissionName] : $permissionName;
@@ -900,6 +957,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     }
 
     /**
+     * Executes an admin command. (will do permission checks as well)
      *
      * @param AdminCmd $commands
      * @param array $chats
@@ -936,6 +994,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     }
 
+    /**
+     * @inheritdoc
+     */
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
         if (!$isRegistredCmd || strpos($text, "/admin") !== false || strpos($text, "/adm") !== false) {
@@ -1020,23 +1081,41 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
+    /**
+     * Create a new group
+     *
+     * @param string $login2    The login if the user creating the group.
+     * @param string $groupName The name of the new group
+     *
+     * @throws \Exception
+     */
     public function addGroup($login2, $groupName)
     {
+        // First be sure the lis ot groups we have is up to date.
         $this->reLoadAdmins();
         self::$groupList[] = new Group($this->escapeSpecials($groupName), false);
         $this->saveFile();
     }
 
+    /**
+     * Removes a group.
+     *
+     * @param string $login The login if the user creating the group.
+     * @param Group $group   The group to be deleted
+     *
+     * @throws \Exception
+     */
     public function removeGroup($login, $group)
     {
-
         if ($group->isMaster()) {
+            // The master group can't be removed.
             $this->eXpChatSendServerMessage($this->msg_masterMasterE, $login);
-
             return;
         }
 
+        // First be sure the lis ot groups we have is up to date.
         $this->reLoadAdmins();
+
         $i = 0;
         $groupName = $group->getGroupName();
         while ($i < sizeof(self::$groupList)) {
@@ -1225,6 +1304,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window->show();
     }
 
+    /**
+     * Display he window with help about all commands.
+     *
+     * @param string $login
+     */
     public function windowHelp($login)
     {
         \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Help::Erase($login);
@@ -1235,6 +1319,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window->show();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function eXpOnUnload()
     {
         self::$admins = array();
@@ -1244,6 +1331,13 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         self::$permissionList = array();
     }
 
+    /**
+     * escape specials for the admin goups save.
+     *
+     * @param string $text The text to escape
+     *
+     * @return string The escaped string
+     */
     public function escapeSpecials($text)
     {
         $text = str_replace("'", "", $text);
