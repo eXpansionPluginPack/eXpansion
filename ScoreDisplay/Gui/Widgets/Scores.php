@@ -65,7 +65,6 @@ class Scores extends Widget
         $team1 = new Quad(12, 12);
 
         $cname = Countries::getCountryFromCode($data->team1Country);
-        echo "http://reaby.kapsi.fi/ml/flags/" . $cname . ".dds";
 
         $team1->setImage("http://reaby.kapsi.fi/ml/flags/" . $cname . ".dds", true);
         $this->frame->addComponent($team1);

@@ -7,6 +7,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\ESportsManager\Structures\MatchSetting;
 use ManiaLivePlugins\eXpansion\ESportsManager\Structures\MatchStatus;
 use ManiaLivePlugins\eXpansion\ESportsManager\Structures\PlayerStatus;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 /**
  * Description of ESportsMAnager
@@ -144,7 +145,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             return;
         }
-        echo $transition . "\n";
+        Helper::logDebug($transition, array('eXpansion', 'ESportsManager'));
         switch ($transition) {
             case "Play -> Podium":
                 if (self::$matchStatus->warmUp == true) {
@@ -283,7 +284,7 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         foreach ($this->storage->players as $player) {
             if (!array_key_exists($player->login, self::$playerStatuses)) {
                 if (!is_object(self::$playerStatuses[$player->login])) {
-                    echo "creating new playerstatus\n";
+                    $this->console('Creating new playerstatus');
                     self::$playerStatuses[$player->login] = new PlayerStatus($player);
                 }
             }

@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\ForceMod;
 
 use Exception;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use Maniaplanet\DedicatedServer\Structures\Mod;
 
 /**
@@ -59,9 +60,9 @@ class ForceMod extends ExpPlugin
                 $this->console("Force mods disabled, since there is no mods defined in config");
             }
 
-            echo "============ forcemod DEBUG info =============\n";
-            print_r($rnd_mod);
-            echo "================================\n";
+            Helper::logDebug("============ forcemod DEBUG info =============\n", array('eXpansion', 'ForceMod'));
+            Helper::logDebug(print_r($rnd_mod, true), array('eXpansion', 'ForceMod'));
+            Helper::logDebug("=========================\n", array('eXpansion', 'ForceMod'));
 
             $this->connection->setForcedMods(true, $rnd_mod);
         } catch (Exception $e) {

@@ -241,10 +241,10 @@ class Maps extends ExpPlugin
                     }
                 }
                 if ($this->isRestartMap == false) {
-                    echo "[maps] shifting queue! \n";
+                    $this->console("Shifting queue!");
                     array_shift($this->queue);
                 } else {
-                    echo "[maps] not shifting queue, since restart! \n";
+                    $this->console( "Not shifting queue, since restart!");
                 }
             } else {
                 if ($this->tries < 3) {
@@ -252,10 +252,10 @@ class Maps extends ExpPlugin
                 } else {
                     $this->tries = 0;
                     if ($this->isRestartMap == false) {
-                        echo "[maps] shifting queue! \n";
+                        $this->console("shifting queue!");
                         array_shift($this->queue);
                     } else {
-                        echo "[maps] not shifting queue, since restart! \n";
+                        $this->console("not shifting queue, since restart!");
                     }
                 }
             }

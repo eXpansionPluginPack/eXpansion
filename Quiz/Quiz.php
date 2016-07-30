@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Quiz;
 
+use ManiaLive\Application\ErrorHandling;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Quiz\Gui\Widget\QuizImageWidget;
 use ManiaLivePlugins\eXpansion\Quiz\Gui\Windows\AddPoint;
@@ -238,7 +239,9 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $dbanswer = trim($dbanswer, ", ");
             $this->db->execute("INSERT INTO `quiz_questions` (question, answers, asker) VALUES (" . $this->db->quote($question->question) . ", " . $this->db->quote($dbanswer) . ", " . $this->db->quote($question->asker->login) . ");");
         } catch (\Exception $e) {
-            echo $e->getMessage() . "\n";
+            $this->console($e->getMessage());
+            ErrorHandling::displayAndLogError($e);
+            ErrorHandling::logError($e);
             // silent exception
         }
         $this->questionDb[] = $question;

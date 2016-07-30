@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Core;
 
 use ManiaLive\DedicatedApi\Callback\Event as dediEvent;
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\DedicatedApi\Callback\Listener
 {
@@ -42,7 +43,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
             $infoNext = $gbxMap->read($this->connection->getMapsDirectory() . DIRECTORY_SEPARATOR . $this->storage->nextMap->fileName);
             $this->storage->currentMap->playerModel = $infoNext->playerModel;
         } catch (\Exception $e) {
-            echo "error while reading mapData " . $e->getMessage();
+            Helper::log("error while reading mapData " . $e->getMessage(), array('eXpansion', 'Core', 'RelayLink'));
         }
     }
 

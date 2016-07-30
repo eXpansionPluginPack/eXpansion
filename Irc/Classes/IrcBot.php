@@ -19,6 +19,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Irc\Classes;
 
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
+
 define("BR", "\r\n");
 
 class IrcException extends \Exception
@@ -242,7 +244,8 @@ class IrcBot
     private function send($string)
     {
         $write = socket_write($this->socket, $string . BR);
-        echo "write: $string \n";
+        Helper::logDebug("write: $string", array('eXpansion', 'IrcBot'));
+
         if ($write === false) {
             $this->throwError();
         }
