@@ -23,8 +23,10 @@
 
 namespace ManiaLivePlugins\eXpansion\Helpers;
 
+use ManiaLive\Data\Storage as MlStorage;
 use ManiaLive\Utilities\Console;
 use ManiaLive\Utilities\Logger;
+use ManiaLivePlugins\eXpansion\Core\Config;
 
 class Helper
 {
@@ -61,24 +63,57 @@ class Helper
         return self::$singletons;
     }
 
-    public static function log($message)
+    public static function log($message, $tags = array('eXpansion', 'AdminPanel'))
     {
-        Logger::info('[eXpansion][Adm/AdminPanel]' . $message);
-        Console::println('[eXpansion][Adm/AdminPanel]' . $message);
+        $logFile = MlStorage::getInstance()->serverLogin . ".console.log";
+        $message =($tags ? '['.implode('][', $tags).'] ' : '').print_r($message, true);
+        Logger::log($message, true, $logFile);
+        Console::println($message);
     }
 
-    public static function logInfo($message)
+    public static function logInfo($message, $tags = array('eXpansion'))
     {
-        Logger::info('[eXpansion]' . $message);
-        Console::println('[eXpansion]' . $message);
+        $message =($tags ? '['.implode('][', $tags).'] ' : '').print_r($message, true);
+        Logger::info($message);
+        Console::println($message);
     }
 
-    public static function logError($message)
+    public static function logError($message, $tags = array('eXpansion'))
     {
-        Logger::error('[eXpansion]' . $message);
-        Console::println('[eXpansion]' . $message);
+        $message =($tags ? '['.implode('][', $tags).'] ' : '').print_r($message, true);
+        Logger::error($message);
+        Console::println($message);
     }
 
+    public static function logDebug($message, $tags = array('eXpansion'))
+    {
+        /** @var Config $coreConfig */
+        $coreConfig = Config::getInstance();
+
+        if ($coreConfig->debug) {
+            $message = ($tags ? '[' . implode('][', $tags) . '] ' : '') . print_r($message, true);
+            Logger::debug('[DEBUG]' . $message);
+            Console::println('[DEBUG]' . $message);
+        }
+    }
+
+    /**
+     * Format a message to print nice.
+     *
+     * @param $message
+     *
+     * @return mixed
+     */
+    public static function formatMessage($message) {
+        if (is_array($message)) {
+            return print_r($message, true);
+        } else if(is_object($message)) {
+            return var_export($message, true);
+        } else {
+            return $message;
+        }
+    }
+    
     public static function getBuildDate()
     {
         if (self::$buildData == null) {

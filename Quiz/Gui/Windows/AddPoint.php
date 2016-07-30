@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Quiz\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\Quiz\Gui\Controls\AddPointItem;
 
 class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
@@ -63,7 +64,7 @@ class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $this->pager->addItem($this->items[$x]);
             }
         } catch (\Exception $e) {
-            Helper::log("[Quiz/AddPoint]On setData Error : " . $e->getMessage());
+            Helper::log("On setData Error : " . $e->getMessage(), array('eXpansion', 'Quiz', 'AddPoint'));
         }
     }
 

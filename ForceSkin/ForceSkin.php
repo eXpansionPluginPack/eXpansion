@@ -45,9 +45,7 @@ class ForceSkin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             return array($skin);
         } catch (\Exception $e) {
-
-            Helper::log("[ForceSkin]Error : " . $e->getMessage());
-
+            $this->console("Error : " . $e->getMessage());
             return array(new \Maniaplanet\DedicatedServer\Structures\ForcedSkin());
         }
     }

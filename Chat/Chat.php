@@ -59,7 +59,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->registerChatCommand("chat", "cmdChat", 1, true);
             $this->registerChatCommand("chat", "cmdChat", 0, true);
         } catch (\Exception $e) {
-            $this->console("[eXpansion|Chat] Couldn't initialize chat. Error from server: " . $e->getMessage());
+            $this->console("Couldn't initialize chat. Error from server: " . $e->getMessage());
             $this->enabled = false;
         }
 
@@ -259,7 +259,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
                     \ManiaLive\Utilities\Logger::getLog('chat')->write("[" . $login . "] " . $nickLog . " - " . $text);
                 } catch (\Exception $e) {
-                    $this->console(__('[eXpansion|Chat] error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()));
+                    $this->console(__('error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()));
                 }
             } else {
                 // chat is disabled

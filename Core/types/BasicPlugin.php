@@ -14,7 +14,6 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
     use ManiaLive\PluginHandler\PluginHandler;
     use ManiaLive\PluginHandler\WaitingCompliant;
     use ManiaLive\Utilities\Console;
-    use ManiaLive\Utilities\Logger;
     use ManiaLivePlugins\eXpansion\Core\BillManager;
     use ManiaLivePlugins\eXpansion\Core\ColorParser;
     use ManiaLivePlugins\eXpansion\Core\Config;
@@ -31,6 +30,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
     use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
     use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
     use ManiaLivePlugins\eXpansion\Helpers\Helper;
+    use ManiaLivePlugins\eXpansion\Helpers\Logger;
     use ManiaLivePlugins\eXpansion\Helpers\Storage;
     use Maniaplanet\DedicatedServer\Structures\GameInfos;
     use Maniaplanet\DedicatedServer\Structures\PlayerNetInfo;
@@ -225,8 +225,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             try {
                 $this->eXpOnLoad();
             } catch (Exception $e) {
-                Helper::log("[BasicPlugin]onLoad exception:" . $this->getId() . " -> " . $e->getMessage() . "\n");
-                Helper::log("[BasicPlugin]" . ErrorHandling::computeMessage($e));
+                $this->console("onLoad exception:" . $this->getId() . " -> " . $e->getMessage() . "\n");
+                $this->console(ErrorHandling::computeMessage($e));
             }
         }
 
@@ -461,8 +461,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                 try {
                     $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg));
                 } catch (LoginUnknownException $ex) {
-                    Console::println("[eXpansion]Attempt to send Announce to a login failed. Login unknown");
-                    Logger::info("[eXpansion]Attempt to send Announce to a login failed. Login unknown");
+                    $this->console('Attempt to send Announce to a login failed. Login unknown');
                 } catch (Exception $e) {
                     $this->console("Error while sending Announce message => Server said:" . $e->getMessage());
                 }
@@ -493,8 +492,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
                     $this->connection->chatSendServerMessage($msg->getMultiLangArray(), null);
                 } catch (LoginUnknownException $ex) {
-                    Console::println("[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown");
-                    Logger::info("[eXpansion]Attempt to send Multilang Announce to a login failed. Login unknown");
+                    $this->console("Attempt to send Multilang Announce to a login failed. Login unknown");
                 } catch (Exception $e) {
                     $this->console("Error while sending Multilang Announce message => Server said:" . $e->getMessage());
                 }
@@ -520,7 +518,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             $pHandler = PluginHandler::getInstance();
 
             $plugins = $pHandler->getLoadedPluginsList();
-            $this->console('[eXpansion] Unloading Dependencies of ' . $this->getId() . '');
+            $this->console('Unloading Dependencies of ' . $this->getId() . '');
             foreach ($plugins as $plugin) {
                 try {
                     if ($plugin != $this->getId()) {
@@ -776,24 +774,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          */
         final public function console($message)
         {
-            $logFile = $this->storage->serverLogin . ".console.log";
-            /** @var Logger */
-            $logger = Logger::getLog("eXpansion");
-
-            if (is_string($message)) {
-                Console::println($message);
-                $logger::log($message, true, $logFile);
-            }
-            if (is_array($message)) {
-                $info = print_r($message, true);
-                Console::println($info);
-                $logger::log($info, true, $logFile);
-            }
-            if (is_object($message)) {
-                $info = var_export($message, true);
-                Console::println($info);
-                $logger::log($info, true, $logFile);
-            }
+            $pieces = explode("\\", get_class($this));
+            Helper::log($message, array_slice($pieces,-3,2));
         }
 
         public function onSettingsChanged(Variable $var)

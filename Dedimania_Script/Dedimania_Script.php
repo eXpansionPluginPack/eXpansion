@@ -98,7 +98,7 @@ class Dedimania_Script extends DedimaniaAbstract
             $player = $this->storage->getPlayerObject($login);
             $playerinfo = Core::$playerInfo;
             if ($this->storage->currentMap->nbCheckpoints !== count($playerinfo[$login]->checkpoints)) {
-                Helper::log("[DediMania]Player CP mismatch");
+                $this->console("Player CP mismatch");
             }
 
             $this->records[$login] = new DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, $playerinfo[$login]->checkpoints);

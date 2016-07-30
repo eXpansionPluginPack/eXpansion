@@ -133,7 +133,7 @@ class AdminPanel extends Widget
                     break;
             }
         } catch (Exception $e) {
-            Helper::log('[Adm/AdminPanel]' . $e->getMessage());
+            Helper::log($e->getMessage(), array('Adm', 'AdminPanel'));
         }
     }
 

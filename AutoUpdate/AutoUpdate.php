@@ -95,16 +95,16 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $AdminGroups = AdminGroups::getInstance();
 
         if ($ret != 0) {
-            $this->console('[eXpansion:AutoUpdate]Error while checking for updates eXpansion !!');
+            $this->console('Error while checking for updates eXpansion !!');
             $this->console($results);
             \ManiaLivePlugins\eXpansion\Gui\Gui::showError($results, AdminGroups::getAdminsByPermission(Permission::SERVER_UPDATE));
             $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#admin_error#Error while checking for updates of #variable#eXpansion & Components !!');
         } else {
             if ($this->arrayContainsText('Nothing to install or update', $results)) {
-                $this->console('[eXpansion:AutoUpdate]eXpansion & Components are up to date');
+                $this->console('eXpansion & Components are up to date');
                 $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#vote_success#eXpansion & Components are up to date!');
             } else {
-                $this->console('[eXpansion:AutoUpdate]eXpansion needs updating!!');
+                $this->console('eXpansion needs updating!!');
                 $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#admin_error#eXpansion needs updating!');
             }
         }
@@ -157,12 +157,12 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $AdminGroups = AdminGroups::getInstance();
 
         if ($ret != 0) {
-            $this->console('[eXpansion:AutoUpdate]Error while updating eXpansion !!');
+            $this->console('Error while updating eXpansion !!');
             $this->console($results);
             \ManiaLivePlugins\eXpansion\Gui\Gui::showError($results, AdminGroups::getAdminsByPermission(Permission::SERVER_UPDATE));
             $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#admin_error#Error while updating #variable#eXpansion & Components !!');
         } else {
-            $this->console('[eXpansion:AutoUpdate]eXpansion Updated!!');
+            $this->console('eXpansion Updated!!');
             $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#vote_success#Update of #variable#eXpansion & Components #vote_success#Done');
         }
 

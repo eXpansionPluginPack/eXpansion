@@ -769,7 +769,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     public function console($message)
     {
-        Helper::log("[DediMania/Connection]$message");
+        Helper::log("$message", array('Dedimania/Connection'));
     }
 
     public function onInit()

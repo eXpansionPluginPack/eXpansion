@@ -43,7 +43,7 @@ class MapReadJob extends Job
                 try {
                     $this->result[] = $gbx->read($filename);
                 } catch (Exception $e) {
-                    Helper::log("[Maps/Additem]Error processing file : " . $e->getMessage());
+                    Helper::log("Error processing file : " . $e->getMessage(), array('eXpansion', 'Maps', 'MapRead'));
                 }
             }
         }

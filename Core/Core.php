@@ -272,7 +272,7 @@ EOT;
             try {
                 $this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => true));
             } catch (\Exception $ex) {
-                Helper::log("[Core] script mode running, but can't enable 'S_UseScriptCallbacks'... perhaps non-nadeo script running ?");
+                $this->console("Script mode running, but can't enable 'S_UseScriptCallbacks'... perhaps non-nadeo script running ?");
             }
             $this->connection->triggerModeScriptEvent("LibXmlRpc_UnblockAllCallbacks", "");
             $this->enableScriptEvents("LibXmlRpc_Callbacks");
@@ -746,7 +746,7 @@ EOT;
                 $oldXml->server_options->{$search}[0] = $out;
             }
 
-            Helper::log('[Core]Saving server settings to : ' . $path);
+            $this->console('Saving server settings to : ' . $path);
             $xml = $oldXml->asXML();
             file_put_contents($path, $xml);
         } catch (\Exception $ex) {

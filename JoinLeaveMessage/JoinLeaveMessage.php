@@ -169,7 +169,7 @@ class JoinLeaveMessage extends ExpPlugin
 
             $this->eXpChatSendServerMessage($this->leaveMsg, null, array('$z$s' . $nick . '$z$s', $login, $country, $grpName, $playtime));
         } catch (Exception $e) {
-            Helper::log("[JoinLeaveMessage]Error while disconnecting : $login");
+            $this->console("Error while disconnecting : $login");
         }
     }
 

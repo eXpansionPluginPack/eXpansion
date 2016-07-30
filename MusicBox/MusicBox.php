@@ -62,18 +62,18 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $ag = AdminGroups::getInstance();
 
         if ($data === false) {
-            Helper::log("[MusicBox]Server is down");
+            $this->console("Server is down");
             $ag->announceToPermission(Permission::SERVER_ADMIN, "Musicbox error: server is unreachable.");
             return false;
         }
 
         if ($status["http_code"] !== 200) {
             if ($status["http_code"] == 301) {
-                Helper::log("[MusicBox]Link has moved");
+                $this->console("Link has moved");
                 $ag->announceToPermission(Permission::SERVER_ADMIN, "MusicBox error: link is moved!");
                 return false;
             }
-            Helper::log("[MusicBox]Http status : " . $status["http_code"]);
+            $this->console("Http status : " . $status["http_code"]);
             $msg = eXpGetMessage("MusicBox error http-code: %s");
             $ag->announceToPermission(Permission::SERVER_ADMIN, $msg,
                 array($status["http_code"])
@@ -183,7 +183,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $this->eXpChatSendServerMessage($text, null, array($song->title, $song->artist));
             }
         } catch (\Exception $e) {
-            Helper::log("[MusicBox]On EndMatch Error : " . $e->getMessage());
+            $this->console("On EndMatch Error : " . $e->getMessage());
         }
     }
 
@@ -325,7 +325,7 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $info->centerOnScreen();
             $info->show();
         } catch (\Exception $e) {
-            Helper::log("[MusicBox] Error while displaying jukebox window: " . $e->getMessage());
+            $this->console(" Error while displaying jukebox window: " . $e->getMessage());
         }
     }
 

@@ -35,8 +35,7 @@ class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
         try {
             $map = $gbx->read($filename);
         } catch (Exception $e) {
-            Helper::log("[Maps/Additem]Error processing file : " . $e->getMessage());
-
+            Helper::log("Error processing file : " . $e->getMessage(), array('eXpansion', 'Maps', 'AddItem'));
             return;
         }
         $this->addMapAction = $this->createAction(array($controller, 'addMap'), array($filename, $gbx->name));

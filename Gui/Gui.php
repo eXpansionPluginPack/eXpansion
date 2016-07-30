@@ -149,7 +149,7 @@ class Gui extends ExpPlugin
                     0, false);
             }
         } catch (Exception $e) {
-            Helper::log("[Gui]Error while disabling alt menu : " . $e->getMessage());
+            $this->console("Error while disabling alt menu : " . $e->getMessage());
         }
     }
 

@@ -204,7 +204,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (count($this->cupScores) > 3) {
             $nbWinners = 3;
         }
-        Helper::log("[ESLcup]Nb Winners : $nbWinners");
+        $this->console("Nb Winners : $nbWinners");
         $this->Scoretable(true);
     }
 
@@ -432,7 +432,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         foreach ($this->storage->spectators as $login => $player) {
             if ($player->forceSpectator) {
-                Helper::log("[ESLcup]Releasing spactator : $login");
+                $this->console("Releasing spactator : $login");
                 $this->connection->forceSpectator($login, 2);
                 $this->connection->forceSpectator($login, 0);
             }
@@ -448,7 +448,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         foreach ($this->storage->spectators as $login => $player) {
             if ($player->forceSpectator) {
-                Helper::log("[ESLcup]Realesing spectator : $login");
+                $this->console("Realesing spectator : $login");
                 $this->connection->forceSpectator($login, 2);
                 $this->connection->forceSpectator($login, 0);
             }

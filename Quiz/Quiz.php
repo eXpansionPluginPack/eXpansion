@@ -596,7 +596,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $window->setTitle(__("New question", $login));
             $window->Show();
         } catch (\Exception $e) {
-            Helper::log("[Quiz]Error when asking : " . $e->getMessage());
+            $this->console("Error when asking : " . $e->getMessage());
         }
     }
 

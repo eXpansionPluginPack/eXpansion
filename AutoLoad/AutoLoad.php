@@ -40,7 +40,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         $this->setPublicMethod('showPluginsWindow');
         Dispatcher::register(ConfigLoadEvent::getClass(), $this, ConfigLoadEvent::ON_CONFIG_FILE_LOADED);
-        $this->console("[eXpansion] AutoLoading eXpansion pack ... ");
+        $this->console("AutoLoading eXpansion pack ... ");
 
         try {
             /**
