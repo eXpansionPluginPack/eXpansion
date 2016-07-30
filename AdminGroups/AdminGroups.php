@@ -16,12 +16,17 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     const NO_PERMISSION = "n";
     const UNKNOWN_PERMISSION = "u";
 
+    const GROUP_GUEST = "Guest";
+
     /**
      * The instance of the runing AdminGroup plugin
      *
      * @var \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups
      */
     private static $instance;
+
+    /** @var  GuestGroup */
+    private static $guestGroup;
 
     /**
      * Get currect running instance of the singleton
@@ -287,12 +292,13 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
                     if ($param[0] == 'MasterAdmin') {
                         $this->parseMaster($param[1], $value);
-                    } else {
-                        if ($param[0] == 'Group') {
-                            //We have found a Admin group, lets see the permissions of
-                            //the group and the players that is part of it
-                            $inheritances[$param[1]] = $this->parseGroup($param[1], $value);
-                        }
+                    } else if ($param[0] == 'Group') {
+                        //We have found a Admin group, lets see the permissions of
+                        //the group and the players that is part of it
+                        $inheritances[$param[1]] = $this->parseGroup($param[1], $value);
+                    } else if ($param[0] == 'Guest') {
+                        //We have found a the guest group.
+                        $inheritances[$param[1]] = $this->parseGroup($param[1], $value, true);
                     }
                 }
             }
@@ -332,6 +338,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function loadMLAdmins()
     {
         $masterGroup = $this->getMasterGroup();
+        self::$guestGroup = $this->getGuestGroup();
 
         foreach (\ManiaLive\Features\Admin\AdminGroup::get() as $login) {
             $admin = new Admin($login, $masterGroup);
@@ -344,6 +351,24 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             self::$admins[$login] = $admin;
             $masterGroup->addAdmin($admin);
         }
+    }
+
+    public function getGuestGroup()
+    {
+        $guestGroup = null;
+        foreach (self::$groupList as $group) {
+            if ($group instanceof GuestGroup) {
+                $guestGroup = $group;
+                break;
+            }
+        }
+
+        if ($guestGroup == null) {
+            $guestGroup = new GuestGroup(self::GROUP_GUEST, false, $this);
+            self::$groupList[] = $guestGroup;
+        }
+
+        return $guestGroup;
     }
 
     public function getMasterGroup()
@@ -421,16 +446,20 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Parse a group
      *
      * @param string $groupName The groups name
-     * @param array $value
+     * @param array  $value     Data from the csv
+     * @oaram bool   $isGuest   Is the group the guest group
      *
      * @return array
      */
-    private function ParseGroup($groupName, $value)
+    private function parseGroup($groupName, $value, $isGuest = false)
     {
-
         $inherits = array();
 
-        $group = new Group($groupName, false);
+        if ($isGuest) {
+            $group = new GuestGroup($groupName, false, $this);
+        } else {
+            $group = new Group($groupName, false);
+        }
 
         //Settings and Permissions
         foreach ($value as $key => $val) {
@@ -513,6 +542,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $string .= ";MasterAdmin is a special group that has all permissions. \n";
                 $string .= ";No need to specify permissions. But we will to show all permissions\n";
                 $string .= "\n\n[MasterAdmin: " . $group->getGroupName() . "]\n";
+            } else if ($group instanceof GuestGroup) {
+                $string .= "\n\n[Guest: " . $group->getGroupName() . "]\n";
             } else {
                 $string .= "\n\n[Group: " . $group->getGroupName() . "]\n";
             }
@@ -527,9 +558,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
 
             $string .= "\n;List of Players.\n";
-            foreach ($group->getGroupUsers() as $value) {
-                if (!$value->isReadOnly()) {
-                    $string .= "login[] = '" . $value->getLogin() . "'\n";
+            if (!($group instanceof GuestGroup)) {
+                // Guest group must not have any users saved.
+                foreach ($group->getGroupUsers() as $value) {
+                    if (!$value->isReadOnly()) {
+                        $string .= "login[] = '" . $value->getLogin() . "'\n";
+                    }
                 }
             }
         }
@@ -576,7 +610,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             //Does he has this permission
             return self::$admins[$login]->hasPermission($permissionName);
         } else {
-            return false;
+            return self::$guestGroup->hasPermission($permissionName);
         }
     }
 
@@ -617,6 +651,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             } else {
                 $this->eXpChatSendServerMessage($this->msg_neeMorPerm, $login);
             }
+        } elseif (self::$guestGroup->hasPermission($permissionName)) {
+            return true;
         } else {
             $this->eXpChatSendServerMessage($this->msg_needBeAdmin, $login);
 
@@ -834,41 +870,33 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function adminCmd($login, $params = "", $cmds = array(), $errors = true)
     {
+        if (empty($cmds)) {
+            $cmds = self::$commands;
+        }
 
-        //First lets check if player is an admin
-        if (!isset(self::$admins[$login])) {
-            if ($errors) {
-                $this->eXpChatSendServerMessage($this->msg_needBeAdmin, $login);
+        // $args = explode(" ", $params);
+
+        $matches = array();
+        preg_match_all('/(?!\\\\)"((?:\\\\"|[^"])+)"?|([^\s]+)/', $params, $matches);
+        $args = array_map(function ($str, $word) {
+            $temp = str_replace('\"', '"', $str != '' ? $str : $word);
+            if ($temp == '""') {
+                return "";
             }
+
+            return $temp;
+        }, $matches[1], $matches[2]);
+
+        //Lets see if the command is correct
+        $arg = strtolower(array_shift($args));
+        if (isset($cmds[$arg])) {
+            $this->doAdminCmd($cmds[$arg], $args, $login);
         } else {
-
-            if (empty($cmds)) {
-                $cmds = self::$commands;
-            }
-
-            // $args = explode(" ", $params);
-
-            $matches = array();
-            preg_match_all('/(?!\\\\)"((?:\\\\"|[^"])+)"?|([^\s]+)/', $params, $matches);
-            $args = array_map(function ($str, $word) {
-                $temp = str_replace('\"', '"', $str != '' ? $str : $word);
-                if ($temp == '""') {
-                    return "";
-                }
-
-                return $temp;
-            }, $matches[1], $matches[2]);
-
-            //Lets see if the command is correct
-            $arg = strtolower(array_shift($args));
-            if (isset($cmds[$arg])) {
-                $this->doAdminCmd($cmds[$arg], $args, $login);
-            } else {
-                if ($errors) {
-                    $this->eXpChatSendServerMessage($this->msg_cmdDontEx, $login);
-                }
+            if ($errors) {
+                $this->eXpChatSendServerMessage($this->msg_cmdDontEx, $login);
             }
         }
+
     }
 
     /**
@@ -1152,7 +1180,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         $admins = array();
         foreach (self::$groupList as $group) {
-            if ($group->hasPermission($permission)) {
+            if ($group->hasPermission($permissionName)) {
                 foreach ($group->getGroupUsers() as $admin) {
                     $login = $admin->getLogin();
                     $admins[$login] = $login;
