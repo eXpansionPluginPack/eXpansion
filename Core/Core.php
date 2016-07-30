@@ -337,7 +337,7 @@ EOT;
         }
         $recomend = array(
             'xmlrpc' => "It will have better performances !",
-            'gd2' => '',
+            'gd' => 'gd2 needs to be enabled for better performances reading maps',
         );
 
         $status = true;
