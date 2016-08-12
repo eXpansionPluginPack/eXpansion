@@ -5,5 +5,6 @@ declare incStep = False;
 declare firstBlock = True;
 declare step = 0;
 declare start = Now;
+declare hideDelay = 5000;
 declare reveal = <?php echo $this->reveal; ?>;
 declare isHidden = <?php echo $this->isHidden; ?>;

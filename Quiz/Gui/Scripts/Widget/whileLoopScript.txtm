@@ -43,6 +43,11 @@ if (reveal) {
         declare CMlQuad quad = (Page.GetFirstChild("quad_"^ids) as CMlQuad);
         quad.Hide();
     }
+
+    if (Now-start > hideDelay) {
+        Window.Hide();
+        reveal=False;
+    }
 }
 
 foreach (Event in PendingEvents) {
