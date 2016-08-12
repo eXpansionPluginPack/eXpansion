@@ -101,7 +101,7 @@ class QuizImageWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     public function setHiddenQuestion($bool, $boxOrder)
     {
         $this->hiddenQuestion = $bool;
-        $order = Maniascript::stringifyAsStringList($boxOrder);
+        $order = Maniascript::stringifyAsList($boxOrder);
         if ($order == "[]") {
             $order = "Integer[]";
         }
