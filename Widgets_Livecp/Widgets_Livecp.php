@@ -55,7 +55,7 @@ class Widgets_Livecp extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($this->update && $this->lastSend <= time() - 2) {
             $this->update = false;
             CpProgress::EraseAll();
-            $info = CpProgress::Create(null, false);
+            $info = CpProgress::Create(null, true);
             $info->setData($this->players);
             $info->setPosition(-160, 60);
             $info->show();

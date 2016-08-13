@@ -50,7 +50,7 @@ class Widgets_Advertising extends ExpPlugin
         for ($x = 1; $x <= 10; $x++) {
             $varActive = "active_$x";
             if (isset($this->config->$varActive) && $this->config->$varActive) {
-                $widget = WidgetAd::Create(null, false);
+                $widget = WidgetAd::Create(null, true);
 
                 $varX = "x_$x";
                 $varY = "y_$x";

@@ -36,7 +36,7 @@ class TM_Stunts extends ExpPlugin
     public function eXpOnReady()
     {
         //	$this->enableTickerEvent();
-        $this->stuntWindow = Gui\Widgets\StuntWidget::Create(null, false);
+        $this->stuntWindow = Gui\Widgets\StuntWidget::Create(null, true);
         $this->stuntWindow->setSize(60, 12);
         $this->stuntWindow->setPosition(-30, 58);
         $this->enableScriptEvents("LibXmlRpc_OnStunt");

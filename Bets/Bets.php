@@ -233,7 +233,7 @@ class Bets extends ExpPlugin
 
     public function updateBetWidget()
     {
-        $widget = BetWidget::Create(null, false);
+        $widget = BetWidget::Create(null, true);
         $widget->setSize(80, 20);
         $widget->setToHide(array_keys($this->players));
         $widget->show();

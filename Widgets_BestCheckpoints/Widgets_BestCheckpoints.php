@@ -20,7 +20,7 @@ class Widgets_BestCheckpoints extends \ManiaLivePlugins\eXpansion\Core\types\Exp
      */
     public function displayWidget()
     {
-        $info = BestCpPanel::Create(null, false);
+        $info = BestCpPanel::Create(null, true);
         $info->setSize(190, 7);
         $info->show();
     }
