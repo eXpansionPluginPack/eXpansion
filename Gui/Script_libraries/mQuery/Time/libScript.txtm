@@ -1,0 +1,615 @@
+#Const TIME_DATE_ATOM "Y-d-m\\TH:i:sP"
+#Const TIME_DATE_COOKIE "l, d-M-Y H:i:s T"
+#Const TIME_DATE_ISO8601 "Y-d-m\\TH:i:sO"
+#Const TIME_DATE_RFC822 "D, d M y H:i:s O"
+#Const TIME_DATE_RFC850 "l, d-M-y H:i:s T"
+#Const TIME_DATE_RFC1036 "D, d M y H:i:s O"
+#Const TIME_DATE_RFC1123 "D, d M Y H:i:s O"
+#Const TIME_DATE_RFC2822 "D, d M Y H:i:s O"
+#Const TIME_DATE_RFC3339 "Y-d-m\\TH:i:sP"
+#Const TIME_DATE_RSS "D, d M Y H:i:s O"
+#Const TIME_DATE_W3C "Y-m-d\\TH:i:sP"
+#Const TIME_DATE_MANIAPLANET "Y/m/d H:i:s"
+
+declare Text[Integer] Time_Months;
+declare Text[Integer] Time_Days;
+declare Text Time_TimeZone;
+declare Text[][Text] Time_Timezones;
+declare Boolean _Time_Init;
+
+Void Time_SetTimezone(Text _TimezoneName) {
+	if (Time_Timezones.existskey(TextLib::ToLowerCase(_TimezoneName)))
+		Time_TimeZone = TextLib::ToLowerCase(_TimezoneName);
+	else
+		log("[WARN][Time][SetTimezone] Timezone " ^ _TimezoneName ^ " is not defined!");
+}
+Void Time_Init() {
+	if (!_Time_Init) {
+		Time_Months = [1=>"January", 2=>"February", 3=>"March", 04=>"April", 5=>"May", 6=>"June", 7=>"July", 8=>"August", 9=>"September", 10=>"October", 11=>"November", 12=>"December"];
+		Time_Days = [0=>"Sunday", 1=>"Monday", 2=>"Tuesday", 3=>"Wednesday", 04=>"Thursday", 5=>"Friday", 6=>"Saturday", 7=>"Sunday"];
+		Time_Timezones = ["acdt" => ["Australian Central Daylight Time", "Australia", "+1030"],
+						"acst" => ["Australian Central Standard Time", "Australia", "+930"],
+						"act" => ["Acre Time", "South America", "-500"],
+						"acwst" => ["Australian Central Western Standard Time", "Australia", "+845"],
+						"adt" => ["Arabia Daylight Time", "Asia", "+300"],
+						"adt" => ["Atlantic Daylight Time", "North America, Atlantic Ocean", "-300"],
+						"aedt" => ["Australian Eastern Daylight Time", "Australia", "+1100"],
+						"aest" => ["Australian Eastern Standard Time", "Australia", "+1000"],
+						"aft" => ["Afghanistan Time", "Asia", "+430"],
+						"akdt" => ["Alaska Daylight Time", "North America", "-800"],
+						"akst" => ["Alaska Standard Time", "North America", "-900"],
+						"almt" => ["Alma-Ata Time", "Asia", "+600"],
+						"amst" => ["Amazon Summer Time", "South America", "-300"],
+						"amst" => ["Armenia Summer Time", "Asia", "+500"],
+						"amt" => ["Amazon Time", "South America", "-400"],
+						"amt" => ["Armenia Time", "Asia", "+400"],
+						"anast" => ["Anadyr Summer Time", "Asia", "+1200"],
+						"anat" => ["Anadyr Time", "Asia", "+1200"],
+						"aqtt" => ["Aqtobe Time", "Asia", "+500"],
+						"art" => ["Argentina Time", "South America", "-300"],
+						"ast" => ["Arabia Standard Time", "Asia", "+300"],
+						"ast" => ["Atlantic Standard Time", "North America, Atlantic Ocean, Caribbean", "-400"],
+						"awdt" => ["Australian Western Daylight Time", "Australia", "+900"],
+						"awst" => ["Australian Western Standard Time", "Australia", "+800"],
+						"azost" => ["Azores Summer Time", "Atlantic Ocean", "+000"],
+						"azot" => ["Azores Time", "Atlantic Ocean", "-100"],
+						"azst" => ["Azerbaijan Summer Time", "Asia", "+500"],
+						"azt" => ["Azerbaijan Time", "Asia", "+400"],
+						"bnt" => ["Brunei Darussalam Time", "Asia", "+800"],
+						"bot" => ["Bolivia Time", "South America", "-400"],
+						"brst" => ["Bras�lia Summer Time", "South America", "-200"],
+						"brt" => ["Bras�lia Time", "South America", "-300"],
+						"bst" => ["Bangladesh Standard Time", "Asia", "+600"],
+						"bst" => ["British Summer Time", "Europe", "+100"],
+						"btt" => ["Bhutan Time", "Asia", "+600"],
+						"cast" => ["Casey Time", "Antarctica", "+800"],
+						"cat" => ["Central Africa Time", "Africa", "+200"],
+						"cct" => ["Cocos Islands Time", "Indian Ocean", "+630"],
+						"cdt" => ["Central Daylight Time", "North America", "-500"],
+						"cdt" => ["Cuba Daylight Time", "Caribbean", "-400"],
+						"cest" => ["Central European Summer Time", "Europe", "+200"],
+						"cet" => ["Central European Time", "Europe, Africa", "+100"],
+						"chadt" => ["Chatham Island Daylight Time", "Pacific Ocean", "+1345"],
+						"chast" => ["Chatham Island Standard Time", "Pacific Ocean", "+1245"],
+						"chot" => ["Choibalsan Time", "Asia", "+800"],
+						"chut" => ["Chuuk Time", "Pacific Ocean", "+1000"],
+						"ckt" => ["Cook Island Time", "Pacific Ocean", "-1000"],
+						"clst" => ["Chile Summer Time", "South America", "-300"],
+						"clt" => ["Chile Standard Time", "South America", "-400"],
+						"cot" => ["Colombia Time", "South America", "-500"],
+						"cst" => ["Central Standard Time", "North America, Central America", "-600"],
+						"cst" => ["China Standard Time", "Asia", "+800"],
+						"cst" => ["Cuba Standard Time", "Caribbean", "-500"],
+						"cvt" => ["Cape Verde Time", "Africa", "-100"],
+						"cxt" => ["Christmas Island Time", "Australia", "+700"],
+						"chst" => ["Chamorro Standard Time", "Pacific Ocean", "+1000"],
+						"davt" => ["Davis Time", "Antarctica", "+700"],
+						"easst" => ["Easter Island Summer Time", "Pacific Ocean", "-500"],
+						"east" => ["Easter Island Standard Time", "Pacific Ocean", "-600"],
+						"eat" => ["Eastern Africa Time", "Africa, Indian Ocean", "+300"],
+						"ect" => ["Ecuador Time", "South America", "-500"],
+						"edt" => ["Eastern Daylight Time", "North America, Caribbean", "-400"],
+						"eest" => ["Eastern European Summer Time", "Europe, Asia, Africa", "+300"],
+						"eet" => ["Eastern European Time", "Europe, Asia, Africa", "+200"],
+						"egst" => ["Eastern Greenland Summer Time", "North America", "+000"],
+						"egt" => ["East Greenland Time", "North America", "-100"],
+						"est" => ["Eastern Standard Time", "North America, Caribbean, Central America", "-500"],
+						"fet" => ["Further-Eastern European Time", "Europe", "+300"],
+						"fjst" => ["Fiji Summer Time", "Pacific Ocean", "+1300"],
+						"fjt" => ["Fiji Time", "Pacific Ocean", "+1200"],
+						"fkst" => ["Falkland Islands Summer Time", "South America", "-300"],
+						"fkt" => ["Falkland Island Time", "South America", "-400"],
+						"fnt" => ["Fernando de Noronha Time", "South America", "-200"],
+						"galt" => ["Galapagos Time", "Pacific Ocean", "-600"],
+						"gamt" => ["Gambier Time", "Pacific Ocean", "-900"],
+						"get" => ["Georgia Standard Time", "Asia", "+400"],
+						"gft" => ["French Guiana Time", "South America", "-300"],
+						"gilt" => ["Gilbert Island Time", "Pacific Ocean", "+1200"],
+						"gmt" => ["Greenwich Mean Time", "Europe, Africa", "+000"],
+						"gst" => ["Gulf Standard Time", "Asia", "+400"],
+						"gyt" => ["Guyana Time", "South America", "-400"],
+						"hadt" => ["Hawaii-Aleutian Daylight Time", "North America", "-900"],
+						"hast" => ["Hawaii-Aleutian Standard Time", "North America", "-1000"],
+						"hkt" => ["Hong Kong Time", "Asia", "+800"],
+						"hovt" => ["Hovd Time", "Asia", "+700"],
+						"ict" => ["Indochina Time", "Asia", "+700"],
+						"idt" => ["Israel Daylight Time", "Asia", "+300"],
+						"iot" => ["Indian Chagos Time", "Indian Ocean", "+600"],
+						"irdt" => ["Iran Daylight Time", "Asia", "+430"],
+						"irkst" => ["Irkutsk Summer Time", "Asia", "+900"],
+						"irkt" => ["Irkutsk Time", "Asia", "+800"],
+						"irst" => ["Iran Standard Time", "Asia", "+330"],
+						"ist" => ["India Standard Time", "Asia", "+530"],
+						"ist" => ["Irish Standard Time", "Europe", "+100"],
+						"ist" => ["Israel Standard Time", "Asia", "+200"],
+						"jst" => ["Japan Standard Time", "Asia", "+900"],
+						"kgt" => ["Kyrgyzstan Time", "Asia", "+600"],
+						"kost" => ["Kosrae Time", "Pacific Ocean", "+1100"],
+						"krast" => ["Krasnoyarsk Summer Time", "Asia", "+800"],
+						"krat" => ["Krasnoyarsk Time", "Asia", "+700"],
+						"kst" => ["Korea Standard Time", "Asia", "+900"],
+						"kuyt" => ["Kuybyshev Time", "Europe", "+400"],
+						"lhdt" => ["Lord Howe Daylight Time", "Australia", "+1100"],
+						"lhst" => ["Lord Howe Standard Time", "Australia", "+1030"],
+						"lint" => ["Line Islands Time", "Pacific Ocean", "+1400"],
+						"magst" => ["Magadan Summer Time", "Asia", "+1200"],
+						"magt" => ["Magadan Time", "Asia", "+1000"],
+						"mart" => ["Marquesas Time", "Pacific Ocean", "-930"],
+						"mawt" => ["Mawson Time", "Antarctica", "+500"],
+						"mdt" => ["Mountain Daylight Time", "North America", "-600"],
+						"mht" => ["Marshall Islands Time", "Pacific Ocean", "+1200"],
+						"mmt" => ["Myanmar Time", "Asia", "+630"],
+						"msd" => ["Moscow Daylight Time", "Europe", "+400"],
+						"msk" => ["Moscow Standard Time", "Europe", "+300"],
+						"mst" => ["Mountain Standard Time", "North America", "-700"],
+						"mut" => ["Mauritius Time", "Africa", "+400"],
+						"mvt" => ["Maldives Time", "Asia", "+500"],
+						"myt" => ["Malaysia Time", "Asia", "+800"],
+						"nct" => ["New Caledonia Time", "Pacific Ocean", "+1100"],
+						"ndt" => ["Newfoundland Daylight Time", "North America", "-230"],
+						"nft" => ["Norfolk Time", "Australia", "+1130"],
+						"novst" => ["Novosibirsk Summer Time", "Asia", "+700"],
+						"novt" => ["Novosibirsk Time", "Asia", "+600"],
+						"npt" => ["Nepal Time", "Asia", "+545"],
+						"nrt" => ["Nauru Time", "Pacific Ocean", "+1200"],
+						"nst" => ["Newfoundland Standard Time", "North America", "-330"],
+						"nut" => ["Niue Time", "Pacific Ocean", "-1100"],
+						"nzdt" => ["New Zealand Daylight Time", "Pacific Ocean, Antarctica", "+1300"],
+						"nzst" => ["New Zealand Standard Time", "Pacific Ocean, Antarctica", "+1200"],
+						"omsst" => ["Omsk Summer Time", "Asia", "+700"],
+						"omst" => ["Omsk Standard Time", "Asia", "+600"],
+						"orat" => ["Oral Time", "Asia", "+500"],
+						"pdt" => ["Pacific Daylight Time", "North America", "-700"],
+						"pet" => ["Peru Time", "South America", "-500"],
+						"petst" => ["Kamchatka Summer Time", "Asia", "+1200"],
+						"pett" => ["Kamchatka Time", "Asia", "+1200"],
+						"pgt" => ["Papua New Guinea Time", "Pacific Ocean", "+1000"],
+						"phot" => ["Phoenix Island Time", "Pacific Ocean", "+1300"],
+						"pht" => ["Philippine Time", "Asia", "+800"],
+						"pkt" => ["Pakistan Standard Time", "Asia", "+500"],
+						"pmdt" => ["Pierre & Miquelon Daylight Time", "North America", "-200"],
+						"pmst" => ["Pierre & Miquelon Standard Time", "North America", "-300"],
+						"pont" => ["Pohnpei Standard Time", "Pacific Ocean", "+1100"],
+						"pst" => ["Pacific Standard Time", "North America", "-800"],
+						"pwt" => ["Palau Time", "Pacific Ocean", "+900"],
+						"pyst" => ["Paraguay Summer Time", "South America", "-300"],
+						"pyt" => ["Paraguay Time", "South America", "-400"],
+						"qyzt" => ["Qyzylorda Time", "Asia", "+600"],
+						"ret" => ["Reunion Time", "Africa", "+400"],
+						"sakt" => ["Sakhalin Time", "Asia", "+1000"],
+						"samt" => ["Samara Time", "Europe", "+400"],
+						"sast" => ["South Africa Standard Time", "Africa", "+200"],
+						"sbt" => ["Solomon Islands Time", "Pacific Ocean", "+1100"],
+						"sct" => ["Seychelles Time", "Africa", "+400"],
+						"sgt" => ["Singapore Time", "Asia", "+800"],
+						"sret" => ["Srednekolymsk Time", "Asia", "+1100"],
+						"srt" => ["Suriname Time", "South America", "-300"],
+						"sst" => ["Samoa Standard Time", "Pacific Ocean", "-1100"],
+						"taht" => ["Tahiti Time", "Pacific Ocean", "-1000"],
+						"tft" => ["French Southern and Antarctic Time", "Indian Ocean", "+500"],
+						"tjt" => ["Tajikistan Time", "Asia", "+500"],
+						"tkt" => ["Tokelau Time", "Pacific Ocean", "+1300"],
+						"tlt" => ["East Timor Time", "Asia", "+900"],
+						"tmt" => ["Turkmenistan Time", "Asia", "+500"],
+						"tot" => ["Tonga Time", "Pacific Ocean", "+1300"],
+						"tvt" => ["Tuvalu Time", "Pacific Ocean", "+1200"],
+						"ulat" => ["Ulaanbaatar Time", "Asia", "+800"],
+						"utc" => ["Coordinated Universal Time", "Worldwide", "+000"],
+						"uyst" => ["Uruguay Summer Time", "South America", "-200"],
+						"uyt" => ["Uruguay Time", "South America", "-300"],
+						"uzt" => ["Uzbekistan Time", "Asia", "+500"],
+						"vet" => ["Venezuelan Standard Time", "South America", "-430"],
+						"vlast" => ["Vladivostok Summer Time", "Asia", "+1100"],
+						"vlat" => ["Vladivostok Time", "Asia", "+1000"],
+						"vut" => ["Vanuatu Time", "Pacific Ocean", "+1100"],
+						"warst" => ["Western Argentine Summer Time", "South America", "-300"],
+						"wast" => ["West Africa Summer Time", "Africa", "+200"],
+						"wat" => ["West Africa Time", "Africa", "+100"],
+						"west" => ["Western European Summer Time", "Europe, Africa", "+100"],
+						"wet" => ["Western European Time", "Europe, Africa", "+000"],
+						"wft" => ["Wallis and Futuna Time", "Pacific Ocean", "+1200"],
+						"wgst" => ["Western Greenland Summer Time", "North America", "-200"],
+						"wgt" => ["West Greenland Time", "North America", "-300"],
+						"wib" => ["Western Indonesian Time", "Asia", "+700"],
+						"wit" => ["Eastern Indonesian Time", "Asia", "+900"],
+						"wita" => ["Central Indonesian Time", "Asia", "+800"],
+						"wst" => ["West Samoa Time", "Pacific Ocean", "+1300"],
+						"wst" => ["Western Sahara Summer Time", "Africa", "+100"],
+						"wt" => ["Western Sahara Standard Time", "Africa", "+000"],
+						"yakst" => ["Yakutsk Summer Time", "Asia", "+1000"],
+						"yakt" => ["Yakutsk Time", "Asia", "+900"],
+						"yapt" => ["Yap Time", "Pacific Ocean", "+1000"],
+						"yekst" => ["Yekaterinburg Summer Time", "Asia", "+600"],
+						"yekt" => ["Yekaterinburg Time", "Asia", "+500"]];
+		Time_SetTimezone("GMT");
+		_Time_Init = True;
+	}
+}
+Integer _Time_Abs(Integer _Int) {
+	if (_Int < 0)
+		return _Int * (-1);
+	return _Int;
+}
+Integer Time_GetTimezoneOffset(Text _TimezoneName) {
+	Time_Init();
+	if (Time_Timezones.existskey(TextLib::ToLowerCase(_TimezoneName))) {
+		if (TextLib::SubString(Time_Timezones[TextLib::ToLowerCase(_TimezoneName)][2], 1, 1) == "0")
+			return 0;
+		return TextLib::ToInteger(Time_Timezones[TextLib::ToLowerCase(_TimezoneName)][2]);
+	}
+	else
+		log("[WARN][Time][GetTimezoneOffset] Timezone " ^ _TimezoneName ^ " is not defined!");
+	return 0;
+}
+Integer Time_GetTimezoneOffset() {
+	Time_Init();
+	return Time_GetTimezoneOffset(Time_TimeZone);
+}
+Text Time_GetTimezoneName(Text _TimezoneName) {
+	Time_Init();
+	if (Time_Timezones.existskey(TextLib::ToLowerCase(_TimezoneName)))
+		return Time_Timezones[TextLib::ToLowerCase(_TimezoneName)][0];
+	else
+		log("[WARN][Time][GetTimezoneName] Timezone " ^ _TimezoneName ^ " is not defined!");
+	return "";
+}
+Text Time_GetTimezoneName() {
+	Time_Init();
+	return Time_GetTimezoneName(Time_TimeZone);
+}
+Text Time_GetTimezoneLocation(Text _TimezoneName) {
+	Time_Init();
+	if (Time_Timezones.existskey(TextLib::ToLowerCase(_TimezoneName)))
+		return Time_Timezones[TextLib::ToLowerCase(_TimezoneName)][1];
+	else
+		log("[WARN][Time][GetTimezoneLocation] Timezone " ^ _TimezoneName ^ " is not defined!");
+	return "";
+}
+Text Time_GetTimezoneLocation() {
+	Time_Init();
+	return Time_GetTimezoneLocation(Time_TimeZone);
+}
+Text Time_GetTimezoneAbbreviation(Text _TimezoneName) {
+	Time_Init();
+	if (Time_Timezones.existskey(TextLib::ToLowerCase(_TimezoneName)))
+		return TextLib::ToUpperCase(_TimezoneName);
+	else
+		log("[WARN][Time][GetTimezoneAbbreviation] Timezone " ^ _TimezoneName ^ " is not defined!");
+	return "";
+}
+Text Time_GetTimezoneAbbreviation() {
+	Time_Init();
+	return Time_GetTimezoneAbbreviation(Time_TimeZone);
+}
+
+Boolean Time_IsLeapYear(Integer _Year) {
+	return (_Year % 4 == 0) && (_Year % 100 != 0) || (_Year % 400 == 0);
+}
+
+Integer Time_DayOfWeek(Integer _Year, Integer _Month, Integer _Day) {
+	declare Integer[] ms = [0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5];
+	if (Time_IsLeapYear(_Year)) {
+		ms[0] = 6;
+		ms[1] = 2;
+	}
+	declare Integer d = _Day % 7;
+	declare Integer m = ms[_Month - 1];
+	declare Integer y = _Year % 1000 % 100;
+	declare Integer[] cs = [6, 4, 2, 0];
+	declare Integer c0 = _Year / 100;
+	declare Integer c = cs[c0 % 4];
+	return (d + m + y + (y / 4) + c) % 7;
+}
+
+Integer Time_WeekOfYear(Integer _Year, Integer _Month, Integer _Day) {
+	declare Integer[] ms = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+	declare Integer m = ms[_Month - 1];
+	if (Time_IsLeapYear(_Year) && _Month > 2) m += 1;
+	declare Integer d = m + _Day;
+	declare Integer w = Time_DayOfWeek(_Year, _Month, _Day);
+	return (d - w + 10) / 7;
+}
+
+Text _Time_SubString(Text _Input, Integer _Start, Integer _Length) {
+	declare Integer start = _Start;
+	if (start < 0) start = TextLib::Length(_Input) + start;
+	if (start < 0) start = 0;
+	return TextLib::SubString(_Input, start, _Length);
+}
+
+Integer Time_Timestamp(Integer _Year, Integer _Month, Integer _Day, Integer _Hour, Integer _Minute, Integer _Second, Integer _UTCOffset) {
+	declare Integer timestamp = 0;
+	declare ys = [0, 1];
+	for (year, 1970, _Year - 1) {
+		declare days = 365;
+		if (Time_IsLeapYear(year))
+			days += 1;
+		timestamp += days * 24 * 60 * 60;
+	}
+	for (month, 1, _Month - 1) {
+		declare days = 31;
+		if (month == 2) {
+			days = 28;
+			if (Time_IsLeapYear(_Year)) days = 29;
+		}
+		if (month == 4 || month == 6 || month == 9 || month == 11)
+			days = 30;
+		timestamp += days * 24 * 60 * 60;
+	}
+	timestamp += (_Day - 1) * 24 * 60 * 60;
+	timestamp += _Hour * 60 * 60;
+	timestamp += _Minute * 60;
+	timestamp += _Second;
+
+	if (_UTCOffset != 0) {
+		declare Integer offsetMinutes = _Time_Abs(_UTCOffset) % 1000 % 100 * 60;
+		declare Integer offsetHours = _Time_Abs(_UTCOffset) / 100 * 60 * 60;
+		timestamp += _UTCOffset / _Time_Abs(_UTCOffset) * (offsetMinutes + offsetHours);		
+	}
+
+	return timestamp;
+}
+
+Integer[Text] Time_FromText(Text date) {
+	declare Integer[Text] result;
+	result["year"] = TextLib::ToInteger(TextLib::SubString(date, 0, 4));
+	result["month"] = TextLib::ToInteger(TextLib::SubString(date, 5, 2));
+	result["day"] = TextLib::ToInteger(TextLib::SubString(date, 8, 2));
+	result["hour"] = TextLib::ToInteger(TextLib::SubString(date, 11, 2));
+	result["minute"] = TextLib::ToInteger(TextLib::SubString(date, 14, 2));
+	result["second"] = TextLib::ToInteger(TextLib::SubString(date, 17, 2));
+	return result;
+}
+
+Integer Time_Timestamp(Integer _UTCOffset) {
+	declare Integer[Text] parts = Time_FromText(CurrentLocalDateText);
+	return Time_Timestamp(parts["year"], parts["month"], parts["day"], parts["hour"], parts["minute"], parts["second"], _UTCOffset);
+}
+Integer Time_Timestamp(Integer _Year, Integer _Month, Integer _Day, Integer _Hour, Integer _Minute, Integer _Second) {
+	return Time_Timestamp(_Year, _Month, _Day, _Hour, _Minute, _Second, Time_GetTimezoneOffset());
+}
+Integer Time_Timestamp() {
+	return Time_Timestamp(Time_GetTimezoneOffset());
+}
+
+Text Time_Date(Integer[Text] _Parts, Text _Format) {
+	Time_Init();
+	declare Text date = "";
+	declare Integer i = 0;
+	declare Integer dayOfWeek = Time_DayOfWeek(_Parts["year"], _Parts["month"], _Parts["day"]);
+	while (i < TextLib::Length(_Format)) {
+		switch (TextLib::SubString(_Format, i, 1)) {
+			case "\\": {
+				if (TextLib::Length(_Format) > i + 1)
+					date ^= TextLib::SubString(_Format, i+1,1);
+				i += 1;
+			}
+			case "d": {
+				date ^= _Time_SubString("0" ^ TextLib::ToText(_Parts["day"]), -2, 2);
+			}
+			case "D": {
+				date ^= TextLib::SubString(Time_Days[dayOfWeek], 0, 3);
+			}
+			case "j": {
+				date ^= TextLib::ToText(_Parts["day"]);
+			}
+			case "l": {
+				date ^= Time_Days[dayOfWeek];
+			}
+			case "N": {
+				date ^= dayOfWeek;
+			}
+			case "S": {
+				declare Integer L = _Parts["day"] % 10;
+				if (L == 1) date ^= "st";
+				else if (L == 2) date ^= "nd";
+				else if (L == 3) date ^= "rd";
+				else date ^= "th";
+			}
+			case "w": {
+				declare Integer w = dayOfWeek;
+				if (w == 0) w = 0;
+				date ^= TextLib::ToText(w);
+			}
+			case "z": {
+				declare Integer z = _Parts["day"] - 1;
+				for (month, 1, _Parts["month"] - 1) {
+					declare days = 31;
+					if (month == 2) {
+						days = 28;
+						if (Time_IsLeapYear(_Parts["year"])) days = 29;
+					}
+					if (month == 4 || month == 6 || month == 9 || month == 11)
+						days = 30;
+					z += days;
+				}
+				date ^= TextLib::ToText(z);
+			}
+			case "W": {				
+				date ^= TextLib::ToText(Time_WeekOfYear(_Parts["year"], _Parts["month"], _Parts["day"]));
+			}
+			case "F": {
+				date ^= Time_Months[_Parts["month"]];
+			}
+			case "m": {
+				date ^= _Time_SubString("0" ^ TextLib::ToText(_Parts["month"]), -2, 2);
+			}
+			case "M": {
+				date ^= TextLib::SubString(Time_Months[_Parts["month"]], 0, 3);
+			}
+			case "n": {
+				date ^= TextLib::ToText(_Parts["month"]);
+			}
+			case "t": {
+				declare Integer t = 31;
+				if (_Parts["month"] == 2) {
+					t = 28;
+					if (Time_IsLeapYear(_Parts["year"])) t = 29;
+				}
+				if (_Parts["month"] == 4 || _Parts["month"] == 6 || _Parts["month"] == 9 || _Parts["month"] == 11)
+					t = 30;
+				date ^= TextLib::ToText(t);
+			}
+			case "L": {
+				if (Time_IsLeapYear(_Parts["year"]))
+					date ^= "1";
+				else
+					date ^= "0";
+			}
+			case "o": {
+				date ^= TextLib::ToText(_Parts["year"]);
+			}
+			case "Y": {
+				date ^= TextLib::ToText(_Parts["year"]);
+			}
+			case "y": {
+				date ^= TextLib::ToText(_Parts["year"] % 1000 % 100);
+			}
+			case "a": {
+				if (_Parts["hour"] < 13)
+					date ^= "am";
+				else
+					date ^= "pm";
+			}
+			case "A": {
+				if (_Parts["hour"] < 13)
+					date ^= "AM";
+				else
+					date ^= "PM";
+			}
+			case "B": {
+				declare Real beat = 24 * 60 * 60 / 1000.;
+				declare Integer b = _Parts["hour"] * 60 * 60;
+				b += _Parts["minute"] * 60;
+				b += _Parts["second"];
+				date ^= TextLib::Split(".", TextLib::ToText(b/beat))[0];
+			}
+			case "g": {
+				declare Integer h = _Parts["hour"] % 12;
+				if (h == 0) h = 12;
+				date ^= TextLib::ToText(h);
+			}
+			case "G": {
+				date ^= TextLib::ToText(_Parts["hour"]);
+			}
+			case "h": {
+				declare Integer h = _Parts["hour"] % 12;
+				if (h == 0) h = 12;
+				date ^= _Time_SubString("0" ^ TextLib::ToText(h), -2, 2);
+			}
+			case "H": {
+				date ^= _Time_SubString("0" ^ TextLib::ToText(_Parts["hour"]), -2, 2);
+			}
+			case "i": {
+				date ^= _Time_SubString("0" ^ TextLib::ToText(_Parts["minute"]), -2, 2);
+			}
+			case "s": {
+				date ^= _Time_SubString("0" ^ TextLib::ToText(_Parts["second"]), -2, 2);
+			}
+			case "u": {
+				date ^= "000000";
+			}
+			case "e": {
+				date ^= Time_GetTimezoneAbbreviation();
+			}
+			case "O": {
+				declare Integer o = Time_GetTimezoneOffset();
+				if (o >= 0)
+					date ^= "+";
+				date ^= _Time_SubString("0000" ^ TextLib::ToText(o), -4, 4);
+			}
+			case "P": {
+				declare Integer o = Time_GetTimezoneOffset();
+				declare Text tzo = TextLib::ToText(o);
+				if (o >= 0)
+					date ^= "+";
+				date ^= _Time_SubString("00" ^ TextLib::SubString(tzo, 0, 2), -2, 2) ^ ":" ^ _Time_SubString("00" ^ tzo, -2, 2);
+			}
+			case "T": {
+				date ^= Time_GetTimezoneAbbreviation();
+			}
+			case "Z": {
+				declare Integer o = Time_GetTimezoneOffset();
+				date ^= TextLib::ToText(o / 100 * 360 + o % 1000 % 100 * 60);
+			}
+			case "c": {
+				date ^= Time_Date(_Parts, TIME_DATE_ISO8601);
+			}
+			case "r": {
+				date ^= Time_Date(_Parts, TIME_DATE_RFC2822);
+			}
+			case "U": {
+				date ^= Time_Timestamp(_Parts["year"], _Parts["month"], _Parts["day"], _Parts["hour"], _Parts["minute"], _Parts["second"]);
+			}
+			default: {
+				date ^= TextLib::SubString(_Format, i, 1);
+			}
+		}
+		i += 1;
+	}
+	return date;
+}
+
+/**
+ * Implemented according to [http://ptspts.blogspot.de/2009/11/how-to-convert-unix-timestamp-to-civil.html]
+ */
+Integer[Text] Time_FromTimestamp(Integer _Timestamp) {
+	declare Integer ts = _Timestamp;
+	declare Integer second = ts % 86400;
+	ts /= 86400;
+	declare Integer hour = second / 3600;
+	declare Integer minute = (second / 60) % 60;
+	second = second % 60;
+
+	declare Integer x = (ts * 4 + 102032) / 146097 + 15;
+
+	declare Integer b = ts + 2442113 + x - (x / 4);
+	declare Integer c = (b * 20 - 2442) / 7305;
+	declare Integer d = b - 365 * c - c / 4;
+	declare Integer e = d * 1000 / 30601;
+	declare Integer f = d - e * 30 - e * 601 / 1000;
+
+	declare Integer month;
+	declare Integer year;
+	declare Integer day = f;
+	if (e < 14) {
+		year = c - 4716;
+		month = e - 1;
+	} else {
+		year = c - 4715;
+		month = e - 13;
+	}
+	declare Integer[Text] result;
+	result["year"] = year;
+	result["month"] = month;
+	result["day"] = day;
+	result["hour"] = hour;
+	result["minute"] = minute;
+	result["second"] = second;
+	return result;
+}
+
+Text Time_Date(Integer[Text] _Parts) {
+	return Time_Date(_Parts, TIME_DATE_MANIAPLANET);
+}
+Text Time_Date(Text _Format) {
+	return Time_Date(Time_FromText(CurrentLocalDateText), _Format);
+}
+Text Time_Date(Integer _Timestamp, Text _Format) {
+	return Time_Date(Time_FromTimestamp(_Timestamp), _Format);
+}
+Text Time_Date(Integer _Timestamp) {
+	return Time_Date(Time_FromTimestamp(_Timestamp));
+}
+Text Time_Date(Integer _Year, Integer _Month, Integer _Day, Integer _Hour, Integer _Minute, Integer _Second, Integer _UTCOffset, Text _Format) {
+	return Time_Date(Time_Timestamp(_Year, _Month, _Day, _Hour, _Minute, _Second, _UTCOffset), _Format);
+}
+Text Time_Date(Integer _Year, Integer _Month, Integer _Day, Integer _Hour, Integer _Minute, Integer _Second, Text _Format) {
+	return Time_Date(Time_Timestamp(_Year, _Month, _Day, _Hour, _Minute, _Second, Time_GetTimezoneOffset()), _Format);
+}
+Text Time_Date(Integer _Year, Integer _Month, Integer _Day, Integer _Hour, Integer _Minute, Integer _Second, Integer _UTCOffset) {
+	return Time_Date(Time_Timestamp(_Year, _Month, _Day, _Hour, _Minute, _Second, _UTCOffset));
+}
+Text Time_Date(Integer _Year, Integer _Month, Integer _Day, Integer _Hour, Integer _Minute, Integer _Second) {
+	return Time_Date(Time_Timestamp(_Year, _Month, _Day, _Hour, _Minute, _Second, Time_GetTimezoneOffset()));
+}

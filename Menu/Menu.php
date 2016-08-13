@@ -44,7 +44,6 @@ class Menu extends ExpPlugin implements Listener
 
         if (!array_key_exists($name, $this->menuGroups)) {
             $group = AdminGroups::getAdmin($login)->getGroup();
-
             $this->menuGroups[$group->getGroupName()] = Group::Create($group->getGroupName());
             foreach ($group->getGroupUsers() as $user) {
                 $this->menuGroups[$group->getGroupName()]->add($user->getLogin());
@@ -69,14 +68,24 @@ class Menu extends ExpPlugin implements Listener
     {
         $name = AdminGroups::getGroupName($login);
         if (!array_key_exists($name, $this->menuGroups)) {
-            $this->createMenu($name);
-            $this->menuGroups[$name]->add((string)$login, true);
+            $group = null;
+            if ($name == 'Player') {
+                $name = 'Guest';
+                $group = AdminGroups::getInstance()->getGuestGroup();
+                $this->menuGroups[$name]->add((string)$login, true);
+
+            } else {
+                $group = AdminGroups::getAdmin($login)->getGroup();
+                $this->menuGroups[$name]->add((string)$login, true);
+            }
+            $this->createMenu($group);
+
         } else {
             $this->menuGroups[$name]->add((string)$login, true);
         }
 
         $this->menuWindows[$name]->show((string)$login);
-        
+
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason)

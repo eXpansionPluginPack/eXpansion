@@ -1,0 +1,6 @@
+if (InputPlayer != Null) {
+    if (isReadySent == False) {
+        isReadySent = True;
+        TriggerPageAction(action);
+    }
+}

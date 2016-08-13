@@ -1,0 +1,2 @@
+
+Counter.Value = TextLib::SubString(CurrentLocalDateText,10,6);

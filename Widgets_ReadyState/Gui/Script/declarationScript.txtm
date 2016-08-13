@@ -1,0 +1,2 @@
+declare Text action = "<?php echo $this->action; ?>";
+declare Boolean isReadySent = False;
