@@ -20,7 +20,7 @@ class ReadyState extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     {
         parent::onConstruct();
 
-
+        $this->setName("Readystate Updater");
         $action = $this->createAction(array($this, "ready"));
 
         $this->myScript = new Script("Widgets_ReadyState\Gui\Script");

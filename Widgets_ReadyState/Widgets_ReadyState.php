@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_ReadyState;
 
+use ManiaLive\Gui\Group;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
@@ -36,6 +37,8 @@ class Widgets_ReadyState extends ExpPlugin
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
         $allPlayers = array_keys($this->storage->players + $this->storage->spectators);
+        print_r($allPlayers);
+
         $this->allPlayers = $allPlayers;
         $this->ready = array();
         $this->lastReady = -1;
@@ -55,14 +58,16 @@ class Widgets_ReadyState extends ExpPlugin
     public function onTick()
     {
         if (count($this->ready) != $this->lastReady) {
-            $this->showWidget();
             $this->lastReady = count($this->ready);
+            $this->showWidget();
         }
     }
 
     public function showWidget()
     {
-        $widget = ReadyWidget::create(implode(",", AdminGroups::getAdminsByPermission(Permission::CHAT_ADMINCHAT)));
+        ReadyWidget::EraseAll();
+        $group = Group::Create("admins", AdminGroups::getAdminsByPermission(Permission::CHAT_ADMINCHAT));
+        $widget = ReadyWidget::create($group, true);
         $widget->setText("Ready: " . count($this->ready) . " Not ready: " . count(array_diff($this->ready, $this->allPlayers)));
         $widget->setPosition(-12, -75);
         $widget->setSize(60, 7);
