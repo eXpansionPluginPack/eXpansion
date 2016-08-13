@@ -40,7 +40,7 @@ class Menu extends ExpPlugin implements Listener
     public function eXpAdminAdded($login)
     {
         $name = AdminGroups::getGroupName($login);
-        $this->menuGroups['Player']->remove($login);
+        $this->menuGroups['Guest']->remove($login);
 
         if (!array_key_exists($name, $this->menuGroups)) {
             $group = AdminGroups::getAdmin($login)->getGroup();
@@ -62,7 +62,7 @@ class Menu extends ExpPlugin implements Listener
                 $this->menuGroups[$name]->remove($login);
             }
         }
-        $this->menuGroups['Player']->add((string)$login, true);
+        $this->menuGroups['Guest']->add((string)$login, true);
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -76,7 +76,7 @@ class Menu extends ExpPlugin implements Listener
         }
 
         $this->menuWindows[$name]->show((string)$login);
-
+        
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason)
@@ -121,8 +121,8 @@ class Menu extends ExpPlugin implements Listener
             }
         }
 
-        $this->menuGroups['Player'] = Group::Create('Player', $regularPlayers);
-        $this->createMenu(new AdmGroup('Player', false));
+        $this->menuGroups['Guest'] = Group::Create('Guest', $regularPlayers);
+        $this->createMenu(new AdmGroup('Guest', false));
     }
 
     public function createMenu(AdmGroup $group)
