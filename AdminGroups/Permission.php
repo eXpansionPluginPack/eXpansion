@@ -6,6 +6,7 @@ class Permission
 {
     const ADMINGROUPS_ONLY_OWN_GROUP = 'admingroups_onlyOwnGroup';
     const ADMINGROUPS_ADMIN_ALL_GROUPS = "admingroups_adminAllGroups";
+
     //Concerning Players
     const PLAYER_BLACK = 'player_black';
     const PLAYER_UNBLACK = 'player_unblack';
@@ -36,7 +37,7 @@ class Permission
     const SERVER_DATABASE = 'server_database';
     const SERVER_GENERIC_OPTIONS = 'server_genericOptions';
     const SERVER_PLANETS = 'server_planets';
-    // conserning expansion
+    // concerning expansion
     const SERVER_UPDATE = "server_update";
     const EXPANSION_PLUGIN_SETTINGS = "expansion_pluginSettings";
     const EXPANSION_PLUGIN_START_STOP = "expansion_pluginStartStop";

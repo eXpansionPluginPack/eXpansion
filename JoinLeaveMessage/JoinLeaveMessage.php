@@ -28,11 +28,13 @@ class JoinLeaveMessage extends ExpPlugin
         $cmd = $this->registerChatCommand("played", "showPlaytime", 0, true);
 
 
-        foreach ($this->storage->players as $login => $player)
+        foreach ($this->storage->players as $login => $player) {
             $this->setJoinTime($login);
+        }
 
-        foreach ($this->storage->spectators as $login => $player)
+        foreach ($this->storage->spectators as $login => $player) {
             $this->setJoinTime($login);
+        }
     }
 
     public function setJoinTime($login)
@@ -52,9 +54,15 @@ class JoinLeaveMessage extends ExpPlugin
 
         if (property_exists($player, "sessionJoinTime")) {
             $diff = $now->diff($player->sessionJoinTime, true);
-            if ($diff->h) $playtime .= $diff->h . " hours ";
-            if ($diff->i) $playtime .= $diff->i . " min ";
-            if ($diff->s) $playtime .= $diff->s . " sec ";
+            if ($diff->h) {
+                $playtime .= $diff->h . " hours ";
+            }
+            if ($diff->i) {
+                $playtime .= $diff->i . " min ";
+            }
+            if ($diff->s) {
+                $playtime .= $diff->s . " sec ";
+            }
         }
 
         return $playtime;
@@ -112,7 +120,9 @@ class JoinLeaveMessage extends ExpPlugin
             $country = $this->getCountry($player);
 
             $spec = "";
-            if ($player->isSpectator) $spec = '$n(Spectator)';
+            if ($player->isSpectator) {
+                $spec = '$n(Spectator)';
+            }
 
             $grpName = AdminGroups::getGroupName($login);
 
@@ -149,7 +159,9 @@ class JoinLeaveMessage extends ExpPlugin
         }
 
         $config = Config::getInstance();
-        if ($config->showLeaveMessage == false) return;
+        if ($config->showLeaveMessage == false) {
+            return;
+        }
 
         try {
             $player = $this->storage->getPlayerObject($login);
@@ -166,8 +178,13 @@ class JoinLeaveMessage extends ExpPlugin
 
             $grpName = AdminGroups::getGroupName($login);
             $country = $this->getCountry($player);
+            if ($config->hideFromPlayers) {
+                $ag = AdminGroups::getInstance();
+                $ag->announceToPermission(\ManiaLivePlugins\eXpansion\AdminGroups\Permission::SERVER_ADMIN, $this->leaveMsg, array('$z$s' . $nick . '$z$s', $login, $country, $grpName, $playtime));
+            } else {
+                $this->eXpChatSendServerMessage($this->leaveMsg, null, array('$z$s' . $nick . '$z$s', $login, $country, $grpName, $playtime));
+            }
 
-            $this->eXpChatSendServerMessage($this->leaveMsg, null, array('$z$s' . $nick . '$z$s', $login, $country, $grpName, $playtime));
         } catch (Exception $e) {
             $this->console("Error while disconnecting : $login");
         }
