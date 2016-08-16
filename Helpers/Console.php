@@ -162,34 +162,27 @@ class Console
             "112" => self::b_blue,
             "002" => self::b_blue,
             "122" => self::b_cyan,
-            "021" => self::cyan,
             "022" => self::b_cyan,
             "202" => self::b_magenta,
             "212" => self::b_magenta,
-            "102" => self::b_magenta,
-            "201" => self::b_magenta,
+            "102" => self::magenta,
+            "201" => self::b_red,
             "222" => self::b_white,
         );
         $matches = array();
         preg_match_all("/\\$[A-Fa-f0-9]{3}/", $string, $matches);
         $split = preg_split("/\\$[A-Fa-f0-9]{3}/", $string);
 
-
         //   print_r($split);
         //   print_r($matches);
 
         $out = "";
         foreach ($matches[0] as $i => $rgb) {
-            $r = fix(hexdec($rgb[1]));
-            $g = fix(hexdec($rgb[2]));
-            $b = fix(hexdec($rgb[3]));
-
-           // $out .= '$' . $r . $g . $b;
-            if (array_key_exists($r . $g . $b, $array)) {
-                $out .= $array[$r . $g . $b] . Formatting::stripStyles($split[$i + 1]);
+            $code = self::fix(hexdec($rgb[1]), hexdec($rgb[2]), hexdec($rgb[3]));
+            if (array_key_exists($code, $array)) {
+                $out .= $array[$code] . Formatting::stripStyles($split[$i + 1]);
             } else {
                 $out .= self::white . Formatting::stripStyles($split[$i + 1]);
-
             }
             $end = Formatting::stripStyles($split[$i + 1]);
         }
@@ -205,20 +198,43 @@ class Console
         echo $out . "\n";
     }
 
-}
-
-function fix($number)
-{
-    $out = "0";
-
-    if ($number >= 9 && $number <= 16) {
-        $out = "2";
+    public static function fix($r, $g, $b)
+    {
+        $out = "111";
+        // black/gray/white
+        if ($r == $g && $g == $b && $b == $r) {
+            if ($r >= 0 && $r < 5) {
+                $out = "000";
+            }
+            if ($r >= 5 && $r < 13) {
+                $out = "111";
+            }
+            if ($r >= 13 && $r <= 16) {
+                $out = "222";
+            }
+        } else {
+            $out = self::convert($r).self::convert($g).self::convert($b);
+        }
+        return $out;
     }
-    if ($number >= 3 && $number < 9) {
-        $out = "1";
-    }
-    if ($number >= 0 && $number < 3) {
+
+    public
+    static function convert($number)
+    {
         $out = "0";
+
+        if ($number >= 9 && $number <= 16) {
+            $out = "2";
+        }
+        if ($number >= 3 && $number < 9) {
+            $out = "1";
+        }
+        if ($number >= 0 && $number < 3) {
+            $out = "0";
+        }
+        return $out;
     }
-    return $out;
 }
+
+
+
