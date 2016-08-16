@@ -1090,8 +1090,12 @@ EOT;
 
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
-        if ($playerUid != 0 && substr($text, 0, 1) != "/") {
-            $out = Console::b_yellow . "[" . $this->storage->getPlayerObject($login)->nickName . Console::b_yellow . "] " . $text;
+        if ($playerUid != 0) {
+            if (substr($text, 0, 1) != "/") {
+                $out = Console::b_yellow . "[" . $this->storage->getPlayerObject($login)->nickName . Console::b_yellow . "] " . $text;
+            } else {
+                return;
+            }
         } else {
             $out = Console::white . $text;
         }

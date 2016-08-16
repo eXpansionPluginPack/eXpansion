@@ -196,10 +196,10 @@ function fix($number)
     if ($number >= 10 && $number <= 16) {
         return "2";
     }
-    if ($number >= 4 && $number < 10) {
+    if ($number >= 5 && $number < 10) {
         return "1";
     }
-    if ($number >= 0 && $number < 4) {
+    if ($number >= 0 && $number < 5) {
         return "0";
     }
 
