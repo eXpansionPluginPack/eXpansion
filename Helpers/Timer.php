@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Helpers;
 
-use ManiaLive\Utilities\Console;
+use ManiaLive\Utilities\Console as Cnsole;
 use ManiaLive\Utilities\Logger;
 
 /**
@@ -21,7 +21,7 @@ class Timer
     static function set()
     {
         self::$time = -microtime(true);
-        Console::println("Profiler timer started.");
+        Cnsole::println("Profiler timer started.");
     }
 
     static function get()
@@ -29,7 +29,7 @@ class Timer
         if (empty(self::$time)) {
             self::set();
         } else {
-            Console::println("Profiler ended: " . (self::$time + microtime(true)) . "ms");
+            Cnsole::println("Profiler ended: " . (self::$time + microtime(true)) . "ms");
 
             return (self::$time + microtime(true));
         }
@@ -40,7 +40,7 @@ class Timer
         $id = self::$nbTimers++;
         self::$times[$id] = microtime();
         if ($print) {
-            Console::println($message . ' Started ...');
+            Cnsole::println($message . ' Started ...');
         }
         if ($log) {
             Logger::info($message . ' Started ...');
@@ -54,7 +54,7 @@ class Timer
         if (isset(self::$times[$id])) {
             $time = microtime() - self::$times[$id];
             if ($print) {
-                Console::println($message . ' Ended in : ' . $time . 'ms');
+                Cnsole::println($message . ' Ended in : ' . $time . 'ms');
             }
             if ($log) {
                 Logger::info($message . ' Ended in : ' . $time . 'ms');

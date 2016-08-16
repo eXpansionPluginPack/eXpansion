@@ -8,6 +8,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
+use ManiaLivePlugins\eXpansion\Helpers\Console;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 use Maniaplanet\DedicatedServer\Structures\ServerOptions;
@@ -1087,9 +1088,14 @@ EOT;
         $this->expPlayers[$login]->curLap = $curLap;
     }
 
-    function onBeginMatch()
+    public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
-
+        if ($playerUid != 0 && substr($text, 0, 1) != "/") {
+            $out = Console::b_yellow . "[" . $this->storage->getPlayerObject($login)->nickName . Console::b_yellow . "] " . $text;
+        } else {
+            $out = Console::white . $text;
+        }
+        echo Console::outTm($out . console::white . "\n", true);
     }
 
     public function onBeginRound()

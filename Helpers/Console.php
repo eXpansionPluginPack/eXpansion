@@ -136,7 +136,7 @@ class Console
     }
 
 
-    public static function outTm($string)
+    public static function outTm($string, $return = false)
     {
 
 
@@ -154,31 +154,40 @@ class Console
             "020" => self::b_green,
             "221" => self::b_yellow,
             "220" => self::b_yellow,
+            "120" => self::b_yellow,
+            "210" => self::b_yellow,
             "112" => self::b_blue,
             "002" => self::b_blue,
             "122" => self::b_cyan,
             "022" => self::b_cyan,
             "202" => self::b_magenta,
             "212" => self::b_magenta,
+            "102" => self::b_magenta,
+            "201" => self::b_magenta,
             "222" => self::b_white
         );
         $matches = array();
         preg_match_all("/\\$[A-Fa-f0-9]{3}/", $string, $matches);
         $split = preg_split("/\\$[A-Fa-f0-9]{3}/", $string);
 
-
+        $out = "";
         foreach ($matches[0] as $i => $rgb) {
             $r = fix(hexdec($rgb[1]));
             $g = fix(hexdec($rgb[2]));
             $b = fix(hexdec($rgb[3]));
+            // $out .= '$' . $r . $g . $b;
             if (array_key_exists($r . $g . $b, $array)) {
-                echo Formatting::stripStyles($split[$i]) . $array[$r . $g . $b];
+                $out .= Formatting::stripStyles($split[$i]) . $array[$r . $g . $b];
             }
-
         }
 
-    }
+        $out .= Formatting::stripStyles(end($split));
 
+        if ($return) {
+            return $out;
+        }
+        echo $out . "\n";
+    }
 
 }
 
@@ -187,10 +196,10 @@ function fix($number)
     if ($number >= 10 && $number <= 16) {
         return "2";
     }
-    if ($number > 4 && $number < 10) {
+    if ($number >= 4 && $number < 10) {
         return "1";
     }
-    if ($number >= 0 && $number <= 4) {
+    if ($number >= 0 && $number < 4) {
         return "0";
     }
 
