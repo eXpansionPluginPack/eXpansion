@@ -140,6 +140,7 @@ class Console
     {
 
 
+        // echo $string . "\n";
         $array = array("000" => self::b_black,
             "100" => self::red,
             "010" => self::green,
@@ -149,39 +150,54 @@ class Console
             "101" => self::cyan,
             "111" => self::white,
             "200" => self::b_red,
-            "211" => self::b_red,
-            "121" => self::b_green,
+            "211" => self::red,
+            "121" => self::green,
             "020" => self::b_green,
+            "021" => self::green,
+            "012" => self::cyan,
             "221" => self::b_yellow,
             "220" => self::b_yellow,
-            "120" => self::b_yellow,
-            "210" => self::b_yellow,
+            "120" => self::green,
+            "210" => self::yellow,
             "112" => self::b_blue,
             "002" => self::b_blue,
             "122" => self::b_cyan,
+            "021" => self::cyan,
             "022" => self::b_cyan,
             "202" => self::b_magenta,
             "212" => self::b_magenta,
             "102" => self::b_magenta,
             "201" => self::b_magenta,
-            "222" => self::b_white
+            "222" => self::b_white,
         );
         $matches = array();
         preg_match_all("/\\$[A-Fa-f0-9]{3}/", $string, $matches);
         $split = preg_split("/\\$[A-Fa-f0-9]{3}/", $string);
+
+
+        //   print_r($split);
+        //   print_r($matches);
 
         $out = "";
         foreach ($matches[0] as $i => $rgb) {
             $r = fix(hexdec($rgb[1]));
             $g = fix(hexdec($rgb[2]));
             $b = fix(hexdec($rgb[3]));
-            // $out .= '$' . $r . $g . $b;
+
+           // $out .= '$' . $r . $g . $b;
             if (array_key_exists($r . $g . $b, $array)) {
-                $out .= Formatting::stripStyles($split[$i]) . $array[$r . $g . $b];
+                $out .= $array[$r . $g . $b] . Formatting::stripStyles($split[$i + 1]);
+            } else {
+                $out .= self::white . Formatting::stripStyles($split[$i + 1]);
+
             }
+            $end = Formatting::stripStyles($split[$i + 1]);
         }
 
-        $out .= Formatting::stripStyles(end($split));
+        if ($end == Formatting::stripStyles(end($split))) {
+            $end = "";
+        }
+        $out = Formatting::stripStyles(reset($split)) . $out . $end;
 
         if ($return) {
             return $out;
@@ -193,14 +209,16 @@ class Console
 
 function fix($number)
 {
-    if ($number >= 10 && $number <= 16) {
-        return "2";
-    }
-    if ($number >= 5 && $number < 10) {
-        return "1";
-    }
-    if ($number >= 0 && $number < 5) {
-        return "0";
-    }
+    $out = "0";
 
+    if ($number >= 9 && $number <= 16) {
+        $out = "2";
+    }
+    if ($number >= 3 && $number < 9) {
+        $out = "1";
+    }
+    if ($number >= 0 && $number < 3) {
+        $out = "0";
+    }
+    return $out;
 }
