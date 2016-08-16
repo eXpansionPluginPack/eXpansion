@@ -37,8 +37,6 @@ class Widgets_ReadyState extends ExpPlugin
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
         $allPlayers = array_keys($this->storage->players + $this->storage->spectators);
-        print_r($allPlayers);
-
         $this->allPlayers = $allPlayers;
         $this->ready = array();
         $this->lastReady = -1;

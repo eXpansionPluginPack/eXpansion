@@ -1,0 +1,197 @@
+<?php
+namespace ManiaLivePlugins\eXpansion\Helpers;
+
+use ManiaLib\Utils\Formatting;
+
+class Console
+{
+
+    const black = "\e[0;30m";
+    const b_black = "\e[30;1m";
+
+    const red = "\e[0;31m";
+    const b_red = "\e[31;1m";
+
+    const green = "\e[0;32m";
+    const b_green = "\e[32;1m";
+
+    const yellow = "\e[0;33m";
+    const b_yellow = "\e[33;1m";
+
+    const blue = "\e[0;34m";
+    const b_blue = "\e[34;1m";
+
+    const magenta = "\e[0;35m";
+    const b_magenta = "\e[35;1m";
+
+    const cyan = "\e[0;36m";
+    const b_cyan = "\e[36;1m";
+
+    const white = "\e[0;37m";
+    const b_white = "\e[37;1m";
+
+    // define aliases for colors
+    const error = "\e[37;1m\e[41m";
+    const success = self::b_green;
+    const normal = self::white;
+    const bold = self::b_white;
+
+
+    /**
+     * displays a mesage with section or without without newline
+     *
+     * **example:**<br>
+     * Console::out("your message\n", "info", Console::b_green);
+     *
+     * @param string $message
+     * @param string|null $section
+     * @param string $sectionColor
+     * @return void
+     */
+    public static function out($message, $section = null, $sectionColor = self::b_yellow)
+    {
+        $message = print_r($message, true);
+
+        if ($section) {
+            echo self::white . "[ " . $sectionColor . $section . self::white . " ] " . $message . "\e[0m";
+        } else {
+            echo self::white . $message . self::white . "\e[0m";
+        }
+    }
+
+    /**
+     * display debug message at console.
+     *
+     * displays only if debug variable is defined at config without newline.
+     *
+     * **example:**<br>
+     * Console::debug("your message\n", "debug", Console::b_green);
+     *
+     * @param $message
+     * @param null $section
+     * @param string $sectionColor
+     * @return void
+     */
+    public static function debug($message, $section = null, $sectionColor = self::b_yellow)
+    {
+        if (DEBUG) {
+            self::out(Console::b_black . trim($message) . "\n", $section, $sectionColor);
+        }
+    }
+
+    /**
+     * function out_error
+     *
+     * displays an error message without newline
+     *
+     * **example:**<br>:
+     * Console::out_error("your message\n");
+     *
+     * @param string $message
+     */
+    public static function out_error($message)
+    {
+        echo self::white . "[ " . self::b_red . "Error" . "\e[0m" . self::white . " ] " . self::error . $message . "\e[0m\n";
+    }
+
+    /**
+     * says `[ Ok ]` at console
+     *
+     * **example:**<br>:
+     * Console::ok();
+     *
+     * @param bool $nl newline
+     * @return void
+     */
+    public static function ok($nl = true)
+    {
+        echo self::white . "[ " . self::b_green . "Ok" . self::white . " ]\n";
+    }
+
+    /**
+     * says `[ Success ]` at console
+     *
+     * **example:**<br>:
+     * Console::success();
+     *
+     * @param bool $nl newline
+     */
+    public static function success($nl = true)
+    {
+        echo self::white . "[ " . self::b_green . "Success" . self::white . " ]\n";
+    }
+
+    /**
+     * says `[ Fail ]` at console
+     *
+     * **example:**<br>:
+     * Console::fail();
+     *
+     * @param bool $nl newline
+     * @return void
+     */
+    public static function fail($nl = true)
+    {
+        echo self::white . "[ " . self::b_red . "Fail" . self::white . " ]\n";
+    }
+
+
+    public static function outTm($string)
+    {
+
+
+        $array = array("000" => self::b_black,
+            "100" => self::red,
+            "010" => self::green,
+            "110" => self::yellow,
+            "001" => self::blue,
+            "011" => self::magenta,
+            "101" => self::cyan,
+            "111" => self::white,
+            "200" => self::b_red,
+            "211" => self::b_red,
+            "121" => self::b_green,
+            "020" => self::b_green,
+            "221" => self::b_yellow,
+            "220" => self::b_yellow,
+            "112" => self::b_blue,
+            "002" => self::b_blue,
+            "122" => self::b_cyan,
+            "022" => self::b_cyan,
+            "202" => self::b_magenta,
+            "212" => self::b_magenta,
+            "222" => self::b_white
+        );
+        $matches = array();
+        preg_match_all("/\\$[A-Fa-f0-9]{3}/", $string, $matches);
+        $split = preg_split("/\\$[A-Fa-f0-9]{3}/", $string);
+
+
+        foreach ($matches[0] as $i => $rgb) {
+            $r = fix(hexdec($rgb[1]));
+            $g = fix(hexdec($rgb[2]));
+            $b = fix(hexdec($rgb[3]));
+            if (array_key_exists($r . $g . $b, $array)) {
+                echo Formatting::stripStyles($split[$i]) . $array[$r . $g . $b];
+            }
+
+        }
+
+    }
+
+
+}
+
+function fix($number)
+{
+    if ($number >= 10 && $number <= 16) {
+        return "2";
+    }
+    if ($number > 4 && $number < 10) {
+        return "1";
+    }
+    if ($number >= 0 && $number <= 4) {
+        return "0";
+    }
+
+}
