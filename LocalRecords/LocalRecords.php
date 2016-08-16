@@ -59,7 +59,7 @@ class LocalRecords extends LocalBase
             $this->addRecord($login, $timeOrScore, $gamemode, $this->checkpoints[$login]);
 
             if (($this->debug & self::DEBUG_RECPROCESSTIME) == self::DEBUG_RECPROCESSTIME) {
-                $this->console("[eXp][DEBUG][LocalRecords:RECS]#### NEW RANK IN : " . (microtime() - $time) . "s BAD?");
+                $this->debug("#### NEW RANK IN : " . (microtime() - $time) . "s BAD?");
             }
         }
         //We reset the checkPoints

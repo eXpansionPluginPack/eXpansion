@@ -106,7 +106,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
             if (empty($this->config->login) || empty($this->config->code)) {
                 $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
                 $admins->announceToPermission(Permission::EXPANSION_PLUGIN_SETTINGS, "#admin_error#Server login or/and Server code is empty in Dedimania Configuration");
-                $this->console("Server code or/and login is not configured for dedimania plugin!");
+                $this->console("\$f00Server code or/and login is not configured for dedimania plugin!");
             } else {
                 try {
                     $this->dedimania->openSession($this->expStorage->version->titleId, $this->config);
@@ -125,7 +125,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
                     $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
                     $admins->announceToPermission('expansion_settings', "#admin_error#Server login or/and Server code is wrong in Dedimania Configuration");
                     $admins->announceToPermission('expansion_settings', "#admin_error#" . $ex->getMessage());
-                    $this->console("Server code or/and login is wrong for the dedimania plugin!");
+                    $this->console("\$f00Server code or/and login is wrong for the dedimania plugin!");
                 }
             }
         }
@@ -456,7 +456,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
     protected function debug_max_ranks($debugMsg)
     {
         if (($this->debug & self::DEBUG_MAX_RANKS) == self::DEBUG_MAX_RANKS) {
-            $this->console('[DEDIMANIA][Max Ranks]' . $debugMsg);
+            $this->console('[Max Ranks]' . $debugMsg);
         }
     }
 

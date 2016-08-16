@@ -23,10 +23,12 @@
 
 namespace ManiaLivePlugins\eXpansion\Helpers;
 
+use ManiaLib\Utils\Formatting;
 use ManiaLive\Data\Storage as MlStorage;
 use ManiaLive\Utilities\Console;
 use ManiaLive\Utilities\Logger;
 use ManiaLivePlugins\eXpansion\Core\Config;
+use ManiaLivePlugins\eXpansion\Helpers\Console as Con;
 
 class Helper
 {
@@ -66,23 +68,23 @@ class Helper
     public static function log($message, $tags = array('eXpansion', 'AdminPanel'))
     {
         $logFile = MlStorage::getInstance()->serverLogin . ".console.log";
-        $message =($tags ? '['.implode('][', $tags).'] ' : '').print_r($message, true);
-        Logger::log($message, true, $logFile);
-        Console::println($message);
+        $message = ($tags ? '[' . implode('][', $tags) . '] ' : '') . print_r($message, true);
+        Logger::log(Formatting::stripStyles($message), true, $logFile);
+        Console::println(Con::outTm($message, true).Con::white);
     }
 
     public static function logInfo($message, $tags = array('eXpansion'))
     {
-        $message =($tags ? '['.implode('][', $tags).'] ' : '').print_r($message, true);
-        Logger::info($message);
-        Console::println($message);
+        $message = ($tags ? '[' . implode('][', $tags) . '] ' : '') . print_r($message, true);
+        Logger::info(Formatting::stripStyles($message));
+        Console::println(Con::outTm($message, true).Con::white);
     }
 
     public static function logError($message, $tags = array('eXpansion'))
     {
-        $message =($tags ? '['.implode('][', $tags).'] ' : '').print_r($message, true);
-        Logger::error($message);
-        Console::println($message);
+        $message = ($tags ? '[' . implode('][', $tags) . '] ' : '') . print_r($message, true);
+        Logger::error(Formatting::stripStyles($message));
+        Console::println(Con::outTm($message, true).Con::white);
     }
 
     public static function logDebug($message, $tags = array('eXpansion'))
@@ -92,8 +94,8 @@ class Helper
 
         if ($coreConfig->debug) {
             $message = ($tags ? '[' . implode('][', $tags) . '] ' : '') . print_r($message, true);
-            Logger::debug('[DEBUG]' . $message);
-            Console::println('[DEBUG]' . $message);
+            Logger::debug('[DEBUG]' . Formatting::stripStyles($message));
+            Console::println('[DEBUG]' . Con::outTm($message, true));
         }
     }
 
@@ -104,16 +106,19 @@ class Helper
      *
      * @return mixed
      */
-    public static function formatMessage($message) {
+    public static function formatMessage($message)
+    {
         if (is_array($message)) {
             return print_r($message, true);
-        } else if(is_object($message)) {
-            return var_export($message, true);
         } else {
-            return $message;
+            if (is_object($message)) {
+                return var_export($message, true);
+            } else {
+                return $message;
+            }
         }
     }
-    
+
     public static function getBuildDate()
     {
         if (self::$buildData == null) {

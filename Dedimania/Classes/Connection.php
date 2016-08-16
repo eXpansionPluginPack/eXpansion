@@ -89,7 +89,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
                 $this->lastUpdate = time();
             }
         } catch (\Exception $e) {
-            $this->console("[Dedimania] OnTick Update failed: " . $e->getMessage());
+            $this->console("OnTick Update failed: " . $e->getMessage());
         }
     }
 
@@ -107,14 +107,14 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         }
 
         if (empty($config->login)) {
-            throw new \Exception("[Dedimania] Server login is not configured!\n");
+            throw new \Exception("Server login is not configured!\n");
         }
         if (empty($config->code)) {
-            throw new \Exception("[Dedimania] Server code is not configured! \n");
+            throw new \Exception("Server code is not configured! \n");
         }
 
         if (strtolower($serverInfo->login) != strtolower($config->login)) {
-            throw new \Exception("[Dedimania] Your dedicated server login differs from configured server login, please check your configuration.");
+            throw new \Exception("Your dedicated server login differs from configured server login, please check your configuration.");
         }
 
         if ($packmask == "") {
@@ -209,20 +209,20 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         if (\ManiaLivePlugins\eXpansion\Core\Core::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_ROUNDS && (!isset($map->lapRace)
                 || $map->lapRace) && $this->storage->gameInfos->roundsForcedLaps && $this->storage->gameInfos->roundsForcedLaps != 0
         ) {
-            $this->console("[Dedimania Warning] Special rounds mode with forced laps ignored!");
+            $this->console("[Warning] Special rounds mode with forced laps ignored!");
 
             return;
         }
 
 // only special maps under 8 seconds are allowed
         if ($map->authorTime < 8000 && strtolower($map->author) != 'nadeo') {
-            $this->console("[Dedimania Notice] Author time under 8 seconds, will not send records.");
+            $this->console("[Notice] Author time under 8 seconds, will not send records.");
 
             return;
         }
 
         if ($this->dediUid != $map->uId) {
-            $this->console("[Dedimania Warning] Map UId mismatch! Map UId differs from dedimania recieved uid for the map. Times are not sent.");
+            $this->console("[Warning] Map UId mismatch! Map UId differs from dedimania recieved uid for the map. Times are not sent.");
 
             return;
         }
@@ -242,7 +242,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         usort($times, array($this, "dbsort"));
 
         if (sizeof($times) == 0) {
-            $this->debug("[Dedimania] No new records, skipping dedimania send.");
+            $this->debug("No new records, skipping dedimania send.");
 
             return;
         }
@@ -253,7 +253,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         }
 
         if (empty($vreplay)) {
-            $this->console("[Dedimania] Validation replay is empty, cancel sending times.");
+            $this->console("Validation replay is empty, cancel sending times.");
 
             return;
         }
@@ -315,7 +315,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
             return $mapInfo;
         }
-        throw new Exception('[Dedimania] error on _getMapInfo, map is in wrong format');
+        throw new Exception('error on _getMapInfo, map is in wrong format');
     }
 
     public function checkSession()
@@ -375,13 +375,13 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     {
 
         if ($this->sessionId === null) {
-            $this->console("[Dedimania] Error: Session ID is null!");
+            $this->console("Error: Session ID is null!");
 
             return;
         }
 
         if ($player->login == $this->storage->serverLogin) {
-            $this->debug("[Dedimania] Abort. tried to send server login.");
+            $this->debug("Abort. tried to send server login.");
 
             return;
         }
@@ -607,15 +607,15 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
 
             if (array_key_exists("faultString", $array[0])) {
-                // $this->connection->chatSendServerMessage("[Dedimania] " . $array[0]['faultString']);
-                $this->console("[Dedimania] Fault from dedimania server: " . $array[0]['faultString']);
+                // $this->connection->chatSendServerMessage("" . $array[0]['faultString']);
+                $this->console("Fault from dedimania server: " . $array[0]['faultString']);
 
                 return;
             }
 
             if (!empty($array[0][0]['Error'])) {
                 // $this->connection->chatSendServerMessage("Dedimania error: " . $array[0][0]['Error']);
-                $this->console("[Dedimania] Error from dedimania server: " . $array[0][0]['Error']);
+                $this->console("Error from dedimania server: " . $array[0][0]['Error']);
 
                 return;
             }
@@ -651,14 +651,14 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     {
         if (isset($data[0][0]['SessionId'])) {
             $this->sessionId = $data[0][0]['SessionId'];
-            $this->console("[Dedimania] Authentication success to dedimania server!");
+            $this->console("Authentication success to dedimania server!");
             $this->debug("recieved Session key:" . $this->sessionId);
             Dispatcher::dispatch(new dediEvent(dediEvent::ON_OPEN_SESSION, $this->sessionId));
 
             return;
         }
         if (!empty($data[0][0]['Error'])) {
-            $this->console("[Dedimania] Authentication Error occurred: " . $data[0][0]['Error']);
+            $this->console("Authentication Error occurred: " . $data[0][0]['Error']);
 
             return;
         }
@@ -674,8 +674,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
         self::$dediMap = null;
 
         if (!empty($data[0]['Error'])) {
-            $this->console("[Dedimania] Error from dediserver: " . $data[0]['Error']);
-
+            $this->console("Error from dediserver: " . $data[0]['Error']);
             return;
         }
 
@@ -693,7 +692,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
 
         if (!$data[0]['Records']) {
-            $this->debug("Dedimania: No records found.");
+            $this->debug("No records found.");
 
             return;
         }
@@ -712,7 +711,7 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
     public function xSetChallengeTimes($data)
     {
-        $this->console("[Dedimania] Sending times new times: Success");
+        $this->console("Sending times new times: \$0f0Success");
     }
 
     public function xCheckSession($data)

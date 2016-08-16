@@ -81,6 +81,8 @@ class Core extends types\ExpPlugin
     private $postLoopStamp = 0;
     private $lastTick = 0;
 
+    private $guestListLastRead = 0;
+
     public static $action_serverInfo = -1;
 
     /** @var Config */
@@ -526,7 +528,7 @@ EOT;
             try {
                 $this->quitDialogXml = file_get_contents($config->quitDialogManialink);
             } catch (\Exception $e) {
-                $this->console("[eXp] error while fetching quitDialog xml: " . $e->getMessage());
+                $this->console("error while fetching quitDialog xml: " . $e->getMessage());
                 $window = new Gui\Windows\QuitWindow();
                 $this->quitDialogXml = $window->getXml();
             }
@@ -688,7 +690,7 @@ EOT;
         }
 
         try {
-            $path = Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile;
+            $path = realpath(Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile);
             if (!file_exists($path)) {
                 return;
             }
@@ -752,7 +754,7 @@ EOT;
             file_put_contents($path, $xml);
         } catch (\Exception $ex) {
             //  print_r($ex);
-            $this->console("[Core]Error writing ServerSettings : " . $path . " - " . $ex->getMessage());
+            $this->console("Error writing ServerSettings : " . $path . " - " . $ex->getMessage());
         }
     }
 
@@ -783,7 +785,7 @@ EOT;
                 );
             } catch (\Exception $ex) {
                 $this->console(
-                    "[Core]Error writing MatchSettings : " . $this->config->defaultMatchSettingsFile . " - " . $ex->getMessage()
+                    "Error writing MatchSettings : " . $this->config->defaultMatchSettingsFile . " - " . $ex->getMessage()
                 );
             }
         }
@@ -903,6 +905,17 @@ EOT;
             return;
         }
 
+        if ($this->config->useWhitelist) {
+            if (time() - $this->guestListLastRead > 5 * 60) {
+                $guests = $this->connection->getGuestList(-1, 0);
+                $this->guestList = array();
+                $this->guestListLastRead = time();
+                foreach ($guests as $player) {
+                    $this->guestList[] = $player->login;
+                }
+            }
+        }
+
         //every 5 seconds gogo
         if (time() - $this->lastTick > 5) {
             if ($this->updateServerTags) {
@@ -1004,8 +1017,9 @@ EOT;
     public function onPlayerConnect($login, $isSpectator)
     {
         $this->updateServerTags = true;
+
         if ($this->config->useWhitelist) {
-            if (in_array($login, $guestList) || AdminGroups::getInstance()->isInList($login)) {
+            if (in_array($login, $this->guestList) || AdminGroups::getInstance()->isInList($login)) {
                 // do nothing
             } else {
                 $this->connection->kick($login, "This server is whitelisted, you are not in the list.");
@@ -1099,7 +1113,7 @@ EOT;
         } else {
             $out = Console::white . $text;
         }
-        echo Console::outTm($out . console::white . "\n", true);
+        $this->console($out);
     }
 
     public function onBeginRound()

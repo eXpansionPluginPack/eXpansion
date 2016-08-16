@@ -297,7 +297,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 $q = "ALTER TABLE `exp_records` ADD COLUMN score_type VARCHAR(10) DEFAULT 'time'";
                 $this->db->execute($q);
             } catch (\Exception $e) {
-                $this->console("[LocalRecords] There was error while updating database structure to version 3, setting version 3 as mostlikely it's already converted..");
+                $this->console("There was error while updating database structure to version 3, setting version 3 as mostlikely it's already converted..");
             }
             $this->callPublicMethod(
                 '\ManiaLivePlugins\eXpansion\Database\Database',
@@ -426,7 +426,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         }
 
         if (($this->debug & self::DEBUG_LAPS) == self::DEBUG_LAPS) {
-            Console::println("[DEBUG LocalRecs]Nb Laps : " . $nbLaps);
+            $this->debug("Nb Laps : " . $nbLaps);
         }
 
         //Sending begin map messages
@@ -479,7 +479,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         }
 
         if (($this->debug & self::DEBUG_LAPS) == self::DEBUG_LAPS) {
-            Console::println("[DEBUG LocalRecs]Nb Laps : " . $nbLaps);
+            $this->debug("Nb Laps : " . $nbLaps);
         }
 
         $updated = false;
@@ -588,7 +588,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $this->currentChallangeSectorTimes = array();
 
         if (is_object($player) == false) {
-            $this->console("[eXp] notice: Error while saving record for login '" . $login . "',couldn't fetch player object!");
+            $this->console("Notice: Error while saving record for login '" . $login . "',couldn't fetch player object!");
 
             return;
         }
@@ -615,7 +615,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             $this->currentChallengePlayerRecords[$login]->isNew = true;
             $force = true;
             if (($this->debug & self::DEBUG_RECS_SAVE) == self::DEBUG_RECS_SAVE) {
-                $this->console("[eXp][DEBUG][LocalRecords:RECS]$login just did his firs time of $score on this map");
+                $this->debug("$login just did his firs time of $score on this map");
             }
         } else {
             //We update the old records average time and nbFinish
@@ -624,8 +624,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             $this->currentChallengePlayerRecords[$login]->avgScore = $avgScore;
 
             if (($this->debug & self::DEBUG_RECS_SAVE) == self::DEBUG_RECS_SAVE) {
-                $this->console(
-                    "[eXp][DEBUG][LocalRecords:RECS]$login just did a new time of $score. His current rank is " . $this->currentChallengePlayerRecords[$login]->place
+                $this->debug(
+                    "$login just did a new time of $score. His current rank is " . $this->currentChallengePlayerRecords[$login]->place
                 );
             }
         }
@@ -660,7 +660,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
             if (($this->debug & self::DEBUG_RECS_FULL) == self::DEBUG_RECS_FULL) {
                 $this->console(
-                    "[eXp][DEBUG][LocalRecords:RECS]Starting to look for the rank of $login 's record at rank $i+1"
+                    "Starting to look for the rank of $login 's record at rank $i+1"
                 );
             }
 
@@ -672,7 +672,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
                 if (($this->debug & self::DEBUG_RECS_FULL) == self::DEBUG_RECS_FULL) {
                     $this->console(
-                        "[eXp][DEBUG][LocalRecords:RECS]$login is getting better : " . $nrecord->place . "=>" . ($nrecord->place - 1)
+                        "$login is getting better : " . $nrecord->place . "=>" . ($nrecord->place - 1)
                         . "And " . $record->login . " is getting worse" . $record->place . "=>" . ($record->place + 1)
                     );
                 }
@@ -694,7 +694,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             $nrecord->ScoreCheckpoints = $cpScore;
             if (($this->debug & self::DEBUG_RECS_SAVE) == self::DEBUG_RECS_SAVE) {
                 $this->console(
-                    "[eXp][DEBUG][LocalRecords:RECS]$login new rec Rank found" . $nrecord->place . " Old was : " . $recordrank_old
+                    "$login new rec Rank found" . $nrecord->place . " Old was : " . $recordrank_old
                 );
             }
 
@@ -1456,13 +1456,13 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             return;
         }
 
-        $fullStart = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Reseting Ranks");
-        $delete = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Deleting existing Ranks");
+       // $fullStart = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Reseting Ranks");
+       // $delete = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Deleting existing Ranks");
 
         $this->db->execute('DELETE FROM exp_ranks WHERE rank_challengeuid IN (' . $this->getUidSqlString() . ')');
         $this->ranks = array();
         $this->player_ranks = array();
-        \ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($delete, "[LocalRecods]Deleting existing Ranks");
+       // \ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($delete, "Deleting existing Ranks");
 
         $i = 0;
         foreach ($this->storage->maps as $map) {
@@ -1472,7 +1472,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             }
             $i++;
         }
-        \ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($fullStart, "[LocalRecods]Reseting Ranks");
+     // \ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($fullStart, "Reseting Ranks");
     }
 
     protected function updateRanks($challengeId, $nbLaps, $log = true)
@@ -1635,7 +1635,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     {
         if ((empty($this->ranks) || $this->rank_needUpdated) && !$this->expStorage->isRelay) {
 
-            $this->console("[LocalRecods]Fetching Server Ranks from Database !");
+            $this->debug("Fetching Server Ranks from Database !");
 
             $this->rank_needUpdated = false;
             $this->total_ranks = -1;
@@ -1672,7 +1672,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 $this->player_ranks[$data->login] = $i++;
             }
 
-            $this->console("[LocalRecods]Fetching Records from Database !");
+            $this->debug("Fetching Records from Database !");
 
             $q = 'SELECT record_playerlogin AS login,
                   SUM(record_nbFinish) as nbFinish,
@@ -1685,7 +1685,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 $tempranks[$data->login] = (object)array_merge((array)$tempranks[$data->login], (array)$data);
             }
 
-            $this->console("[LocalRecods]Fetching Players from Database !");
+            $this->debug("Fetching Players from Database !");
             $q = 'SELECT player_login as login,
 		  player_nickname,
           player_updated,

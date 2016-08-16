@@ -193,8 +193,7 @@ class Dedimania extends DedimaniaAbstract
             return;
         }
         if ($this->wasWarmup) {
-            $this->console("[Dedimania] the last round was warmup, deditimes not send for warmup!");
-
+            $this->console("the last round was warmup, deditimes not send for warmup!");
             return;
         }
 
@@ -235,7 +234,7 @@ class Dedimania extends DedimaniaAbstract
             // Dedimania doesn't allow times sent without validation relay. So, let's just stop here if there is none.
             if (empty($this->vReplay)) {
                 $this->console(
-                    "[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent."
+                    " Couldn't get validation replay of the first player. Dedimania times not sent."
                 );
 
                 return;
@@ -245,7 +244,7 @@ class Dedimania extends DedimaniaAbstract
                 $this->storage->currentMap, $rankings, $this->vReplay, $this->gReplay
             );
         } catch (\Exception $e) {
-            $this->console("[Dedimania] " . $e->getMessage());
+            $this->console(" " . $e->getMessage());
             $this->vReplay = "";
             $this->gReplay = "";
         }

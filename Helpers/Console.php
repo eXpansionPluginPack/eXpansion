@@ -190,7 +190,7 @@ class Console
         if ($end == Formatting::stripStyles(end($split))) {
             $end = "";
         }
-        $out = Formatting::stripStyles(reset($split)) . $out . $end;
+        $out = self::white . Formatting::stripStyles(reset($split)) . $out . $end;
 
         if ($return) {
             return $out;
@@ -213,13 +213,12 @@ class Console
                 $out = "222";
             }
         } else {
-            $out = self::convert($r).self::convert($g).self::convert($b);
+            $out = self::convert($r) . self::convert($g) . self::convert($b);
         }
         return $out;
     }
 
-    public
-    static function convert($number)
+    public static function convert($number)
     {
         $out = "0";
 
