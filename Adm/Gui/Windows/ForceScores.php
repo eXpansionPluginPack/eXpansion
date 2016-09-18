@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
+use ManiaLivePlugins\eXpansion\Helpers\Storage;
 
 class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
@@ -104,7 +105,11 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $login = $this->getRecipient();
         $x = 0;
-        $rankings = $this->connection->getCurrentRanking(-1, 0);
+
+        /** @var Storage $expStorage */
+        $expStorage = Storage::getInstance();
+        $rankings = $expStorage->getCurrentRanking();
+
         foreach ($rankings as $player) {
             $this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\PlayerScore($x, $player, $this->sizeX - 8);
             $this->pager->addItem($this->items[$x]);
@@ -127,7 +132,10 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function resetScores($login)
     {
-        $rankings = $this->connection->getCurrentRanking(-1, 0);
+        /** @var Storage $expStorage */
+        $expStorage = Storage::getInstance();
+        $rankings = $expStorage->getCurrentRanking();
+
         $outScores = array();
         foreach ($rankings as $rank) {
             $outScores[] = array("PlayerId" => intval($rank->playerId), "Score" => 0);

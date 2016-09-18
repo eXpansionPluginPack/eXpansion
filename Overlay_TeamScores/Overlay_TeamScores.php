@@ -80,7 +80,7 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     public function reset($login)
     {
-        $scores = $this->connection->getCurrentRanking(-1, 0);
+        $scores = $this->expStorage->getCurrentRanking();
         $this->teams[0]->name = $scores[0]->nickName;
         $this->teams[1]->name = $scores[1]->nickName;
         $this->showWidget();

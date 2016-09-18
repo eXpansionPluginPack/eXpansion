@@ -209,7 +209,7 @@ class KnockOut extends ExpPlugin
         if ($this->delay || !$this->isRunning || $this->isWarmup)
             return;
 
-        $ranking = $this->connection->getCurrentRanking(-1, 0);
+        $ranking = $this->expStorage->getCurrentRanking();
         $this->sortAsc($ranking);
         $nbKo = 1;
 

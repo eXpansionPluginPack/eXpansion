@@ -138,6 +138,7 @@ class Console
 
     public static function outTm($string, $return = false)
     {
+        return $string;
 
 
         // echo $string . "\n";

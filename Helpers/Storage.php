@@ -38,8 +38,10 @@ use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Core\MetaData as CoreMeta;
 use ManiaLivePlugins\eXpansion\Core\RelayLink;
 use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
+use Maniaplanet\DedicatedServer\Structures\PlayerRanking;
 use Maniaplanet\DedicatedServer\Structures\Version;
 use ManiaLive\Database\Connection as DbConnection;
+use Maniaplanet\DedicatedServer\Xmlrpc\IndexOutOfBoundException;
 
 
 class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerListener
@@ -136,6 +138,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      * @var boolean
      */
     public $isRemoteControlled = false;
+
+    private $currentRankings = array();
 
     private $startTime;
 
@@ -327,14 +331,54 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         }
     }
 
+    /**
+     * Get total time expansion has been running.
+     *
+     * @return int
+     */
     public function getExpansionUpTime()
     {
         return time() - $this->startTime;
     }
 
+    /**
+     * Get total time the dedicated server has been running.
+     *
+     * @return int
+     */
     public function getDediUpTime()
     {
         return $this->getExpansionUpTime() + $this->dediUpTime;
+    }
+
+    /**
+     * Get the current rankings.
+     *
+     * This method will get all current rankings by batch to prevent any memory issues.
+     *
+     * @return PlayerRanking[]
+     * @throws \Maniaplanet\DedicatedServer\InvalidArgumentException
+     */
+    public function getCurrentRanking()
+    {
+        if (empty($this->currentRankings)) {
+            $chunkSize = 50;
+            $offset = 0;
+
+            do {
+                try {
+                    $rankings = $this->connection->getCurrentRanking($chunkSize, $offset);
+                    $offset += $chunkSize;
+
+                    $this->currentRankings = array_merge($this->currentRankings, $rankings);
+                } catch (IndexOutOfBoundException $e) {
+                    // We are expecting this exception, if we have an empty chunk.
+                    $rankings = array();
+                }
+            } while(!empty($rankings) && count($rankings) == $chunkSize);
+        }
+
+        return $this->currentRankings;
     }
 
     /**
@@ -396,7 +440,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onBeginMatch()
     {
-
+        // Reset current rankings
+        $this->currentRankings = array();
     }
 
     /**
@@ -422,7 +467,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-
+        // Reset current rankings
+        $this->currentRankings = array();
     }
 
     /**
@@ -436,7 +482,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
-
+        // Reset current rankings
+        $this->currentRankings = array();
     }
 
     /**
@@ -444,7 +491,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onBeginRound()
     {
-
+        // Reset current rankings
+        $this->currentRankings = array();
     }
 
     /**
@@ -452,7 +500,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onEndRound()
     {
-
+        // Reset current rankings
+        $this->currentRankings = array();
     }
 
     /**
@@ -477,7 +526,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex)
     {
-
+        // Reset current rankings
+        $this->currentRankings = array();
     }
 
     /**
@@ -489,7 +539,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onPlayerFinish($playerUid, $login, $timeOrScore)
     {
-
+        // Reset current rankings
+        $this->currentRankings = array();
     }
 
     /**

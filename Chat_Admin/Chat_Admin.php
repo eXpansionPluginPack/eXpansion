@@ -887,7 +887,7 @@ Other server might use the same blacklist file!!');
     public function checkTeamGap()
     {
         if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->teamUseNewRules) {
-            $ranking = $this->connection->getCurrentRanking(-1, 0);
+            $ranking = $this->expStorage->getCurrentRanking();
             $scoregap = abs($ranking[0]->score - $ranking[1]->score);
             $scoremax = $ranking[0]->score > $ranking[1]->score ? $ranking[0]->score : $ranking[1]->score;
             if ($scoremax >= $this->teamGap && $scoregap >= 2) {

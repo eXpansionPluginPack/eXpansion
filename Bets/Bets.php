@@ -113,7 +113,7 @@ class Bets extends ExpPlugin
 
     private function checkWinner()
     {
-        $rankings = $this->connection->getCurrentRanking(-1, 0);
+        $rankings = $this->expStorage->getCurrentRanking();
         $total = (count($this->players) * self::$betAmount);
 
         foreach ($rankings as $index => $player) {

@@ -7,6 +7,7 @@ use ManiaLib\Utils\Formatting;
 use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Script_libraries\TextExt;
+use ManiaLivePlugins\eXpansion\Helpers\Storage;
 use ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Gui\Scripts\CpPositions;
 use ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Widgets_LiveRankings;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
@@ -173,15 +174,12 @@ class PlainLivePanel extends PlainPanel
 
     protected function taUpdate()
     {
-
-
         $index = 1;
 
-        try {
-            $players = self::$connection->getCurrentRanking(-1, 0);
-        } catch (Exception $ex) {
-            $players = array();
-        }
+        /** @var Storage $expStorage */
+        $expStorage = Storage::getInstance();
+        $players = $expStorage->getCurrentRanking();
+
         $recsData = "";
         $nickData = "";
 

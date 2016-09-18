@@ -152,7 +152,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (!$this->enabled)
             return;
         $this->cupScores = null;
-        $ranking = $this->connection->getCurrentRanking(-1, 0);
+        $ranking = $this->expStorage->getCurrentRanking();
         $this->cupScores = array();
         foreach ($ranking as $player) {
             $this->cupScores[$player->login] = new Structures\CupScore($player->playerId, $player->login, $player->nickName, $player->score);
@@ -423,7 +423,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function doReset()
     {
         $this->resetData = false;
-        $rankings = $this->connection->getCurrentRanking(-1, 0);
+        $rankings = $this->expStorage->getCurrentRanking();
         $out = array();
         foreach ($rankings as $player) {
             $out[] = array("PlayerId" => intval($player->playerId), "Score" => 0);

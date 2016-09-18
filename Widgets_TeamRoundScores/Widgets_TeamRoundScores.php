@@ -105,7 +105,7 @@ class Widgets_TeamRoundScores extends ExpPlugin
         }
 
         // assign total scores
-        foreach ($this->connection->getCurrentRanking(-1, 0) as $ranking) {
+        foreach ($this->expStorage->getCurrentRanking() as $ranking) {
             $team = 0;
             switch ($ranking->nickName) {
                 case "Red":

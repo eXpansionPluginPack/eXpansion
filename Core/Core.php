@@ -1220,8 +1220,7 @@ EOT;
             $this->expPlayers[$login]->isFinished = false;
         }
 
-
-        $rankings = $this->connection->getCurrentRanking(-1, 0);
+        $rankings = $this->expStorage->getCurrentRanking();
         foreach ($rankings as $player) {
             if (!empty($player->login) && array_key_exists($player->login, $this->expPlayers)) {
                 $this->expPlayers[$player->login]->score = $player->score;
