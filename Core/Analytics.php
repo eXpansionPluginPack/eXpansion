@@ -197,6 +197,7 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
             'country' => $this->expStorage->serverCountry,
             'version' => Core::EXP_VERSION,
             'php_version' => $this->expStorage->cleanPhpVersion,
+            'mysql_version' => $this->expStorage->cleanMysqlVersion,
             'memory' => memory_get_usage(),
             'memory_peak' => memory_get_peak_usage(),
             'build' => $this->getDateTime($buildDate),
@@ -206,6 +207,7 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
             'plugins' => implode(',', $this->pluginHandler->getLoadedPluginsList()),
             'serverOs' => $this->expStorage->serverOs,
         );
+
 
         if (!is_null($error)) {
             $this->nbError++;
@@ -220,7 +222,6 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
             $data['error_stack'] = $error->getTraceAsString();
 
             $url = $this->url . "?" . $this->generate($data);
-
             $access->httpGet($url, array($this, "completeError"), $data, "Manialive/eXpansion", "application/json");
         } else {
             $url = $this->url . "?" . $this->generate($data);

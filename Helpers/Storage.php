@@ -39,6 +39,8 @@ use ManiaLivePlugins\eXpansion\Core\MetaData as CoreMeta;
 use ManiaLivePlugins\eXpansion\Core\RelayLink;
 use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
 use Maniaplanet\DedicatedServer\Structures\Version;
+use ManiaLive\Database\Connection as DbConnection;
+
 
 class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerListener
 {
@@ -111,8 +113,11 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
     /** @var string Just the country in which the server is */
     public $serverCountry = '';
 
-    /** @var string Just php version without compilation iformation */
+    /** @var string Just php version without compilation formation */
     public $cleanPhpVersion = '';
+
+    /** @var string Just mysql version. */
+    public $cleanMysqlVersion = '';
 
     /** @var string Os of the server */
     public $serverOs = '';
@@ -181,6 +186,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 
         $version = explode('-', phpversion());
         $this->cleanPhpVersion = $version[0];
+
+        $version = $this->getDatabase()->execute('SHOW VARIABLES LIKE "version"')->fetchArray();
+        $this->cleanMysqlVersion = $version['Value'];
 
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $this->serverOs = "Windows";
@@ -572,6 +580,25 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
     public function onPlayerAlliesChanged($login)
     {
 
+    }
+
+    /**
+     * Get the current connection to the DB.
+     *
+     * @return DbConnection
+     * @throws \ManiaLive\Database\NotSupportedException
+     */
+    protected function getDatabase()
+    {
+        $config = \ManiaLive\Database\Config::getInstance();
+        return DbConnection::getConnection(
+            $config->host,
+            $config->username,
+            $config->password,
+            $config->database,
+            $config->type,
+            $config->port
+        );
     }
 
 }
