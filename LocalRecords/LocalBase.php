@@ -1506,7 +1506,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 FROM exp_records r1
                 WHERE record_challengeuid = \'' . $challengeId . '\'
                                 AND record_nbLaps = ' . $nbLaps . '
-                GROUP BY record_playerlogin, record_challengeuid, record_nbLaps
+                GROUP BY record_playerlogin, record_challengeuid, record_nbLaps, record_score
                 ORDER BY ' . $this->getDbOrderCriteria() . '
                 LIMIT 0, ' . $this->config->recordsCount;
 
