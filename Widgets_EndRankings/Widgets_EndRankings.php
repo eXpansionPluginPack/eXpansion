@@ -17,7 +17,6 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
     {
         $this->enableDedicatedEvents();
         $this->enableDatabase();
-        $this->displayWidget();
     }
 
     /**
