@@ -11,12 +11,6 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     protected function onConstruct()
     {
         parent::onConstruct();
-        $boundingBox = new \ManiaLib\Gui\Elements\Quad(320, 180);
-        $boundingBox->setPosition(-160, 90, -50);
-        $boundingBox->setId("boundingBox");
-        $boundingBox->setBgcolor('0001');
-        $boundingBox->setScriptEvents();
-        $this->addComponent($boundingBox);
 
         $this->frame = New \ManiaLive\Gui\Controls\Frame(0, 0, new \ManiaLib\Gui\Layouts\Column(50, 20));
         $this->frame->setId("Menu");

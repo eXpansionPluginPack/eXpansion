@@ -8,7 +8,6 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
-use ManiaLivePlugins\eXpansion\Helpers\Console;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 use Maniaplanet\DedicatedServer\Structures\ServerOptions;
@@ -1104,16 +1103,16 @@ EOT;
 
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
-        if ($playerUid != 0) {
-            if (substr($text, 0, 1) != "/") {
-                $out = Console::b_yellow . "[" . $this->storage->getPlayerObject($login)->nickName . Console::b_yellow . "] " . $text;
-            } else {
-                return;
-            }
-        } else {
-            $out = Console::white . $text;
-        }
-        $this->console($out);
+        /*  if ($playerUid != 0) {
+              if (substr($text, 0, 1) != "/") {
+                  $out = Console::b_yellow . "[" . $this->storage->getPlayerObject($login)->nickName . Console::b_yellow . "] " . $text;
+              } else {
+                  return;
+              }
+          } else {
+              $out = Console::white . $text;
+          }
+          $this->console($out); */
     }
 
     public function onBeginRound()

@@ -51,18 +51,21 @@ class Console
     public static function out($message, $section = null, $sectionColor = self::b_yellow)
     {
         $message = print_r($message, true);
-
+        $msg = "";
         if ($section) {
-            echo self::white . "[ " . $sectionColor . $section . self::white . " ] " . $message . "\e[0m";
+            $msg = self::white . "[ " . $sectionColor . $section . self::white . " ] " . $message . "\e[0m";
         } else {
-            echo self::white . $message . self::white . "\e[0m";
+            $msg = self::white . $message . self::white . "\e[0m";
         }
+
+        self::eco($msg);
     }
 
     /**
      * display debug message at console.
      *
      * displays only if debug variable is defined at config without newline.
+     * @see Config::$phmodDebug
      *
      * **example:**<br>
      * Console::debug("your message\n", "debug", Console::b_green);
@@ -91,7 +94,7 @@ class Console
      */
     public static function out_error($message)
     {
-        echo self::white . "[ " . self::b_red . "Error" . "\e[0m" . self::white . " ] " . self::error . $message . "\e[0m\n";
+        self::eco(self::white . "[ " . self::b_red . "Error" . "\e[0m" . self::white . " ] " . self::error . $message . "\e[0m\n");
     }
 
     /**
@@ -105,7 +108,7 @@ class Console
      */
     public static function ok($nl = true)
     {
-        echo self::white . "[ " . self::b_green . "Ok" . self::white . " ]\n";
+        self::eco(self::white . "[ " . self::b_green . "Ok" . self::white . " ]\n");
     }
 
     /**
@@ -118,7 +121,7 @@ class Console
      */
     public static function success($nl = true)
     {
-        echo self::white . "[ " . self::b_green . "Success" . self::white . " ]\n";
+        self::eco(self::white . "[ " . self::b_green . "Success" . self::white . " ]\n");
     }
 
     /**
@@ -132,14 +135,20 @@ class Console
      */
     public static function fail($nl = true)
     {
-        echo self::white . "[ " . self::b_red . "Fail" . self::white . " ]\n";
+        self::eco(self::white . "[ " . self::b_red . "Fail" . self::white . " ]\n");
+    }
+
+    public static function eco($msg)
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $msg = preg_replace("/\e\[(\d{1,2}\;){0,1}\d{1,2}m/", "", $msg);
+        }
+        echo $msg;
     }
 
 
     public static function outTm($string, $return = false)
     {
-        return $string;
-
 
         // echo $string . "\n";
         $array = array("000" => self::b_black,
@@ -196,7 +205,7 @@ class Console
         if ($return) {
             return $out;
         }
-        echo $out . "\n";
+        self::eco($out . "\n");
     }
 
     public static function fix($r, $g, $b)
@@ -235,6 +244,3 @@ class Console
         return $out;
     }
 }
-
-
-

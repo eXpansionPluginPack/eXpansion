@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Countdown;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
-use ManiaLivePlugins\eXpansion\Widgets_Advertising\Gui\Widgets\WidgetAd;
+use ManiaLivePlugins\eXpansion\Widgets_Countdown\Gui\Widgets\Countdown;
 
 /**
  * Description of Widgets_Countdown

@@ -11,14 +11,6 @@ foreach (Event in PendingEvents) {
         exp_chatVisible = !exp_chatVisible;
         ClientUI.OverlayHideChat = !exp_chatVisible;
     }
-
-    /*if (Event.Type == CMlEvent::Type::MouseOver && Event.ControlId == "boundingBox") {
-        canToggle = True;
-    }
-
-    if (Event.Type == CMlEvent::Type::MouseOut && Event.ControlId == "boundingBox") {
-       canToggle = False;
-    } */
 }
 
 if(eXp_tabPressed) {
@@ -28,7 +20,7 @@ if(eXp_tabPressed) {
         needUpdate = True;
         showStatus = False;
     }
-} else if (canToggle) {
+} else {
         if(MouseRightButton && !eXp_mouseRightState && !eXp_tabPressed) {
                 eXp_mouseRightTime = Now;
                 eXp_mouseRightState = True;
@@ -71,6 +63,7 @@ if (IsSpectatorMode) {
     toggleSubmenu = False;
 }
 */
+
 if(eXp_tabPressed){
     toggleSubmenu = False;
 }
@@ -143,7 +136,7 @@ if(!toggleSubmenu && Menu.Visible && (Now - hideStamp) > 300) {
     Menu.Hide();
 }
 
-if (MouseLeftButton || (canToggle == False && MouseRightButton)) {
+if (MouseLeftButton) {
          showStatus = False;
          needUpdate = True;
 }
