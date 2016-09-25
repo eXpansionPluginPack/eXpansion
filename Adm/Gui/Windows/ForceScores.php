@@ -103,7 +103,6 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->clearItems();
         $this->items = array();
 
-        $login = $this->getRecipient();
         $x = 0;
 
         /** @var Storage $expStorage */
@@ -124,7 +123,7 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         foreach ($scores as $id => $val) {
             $outScores[] = array("PlayerId" => intval($id), "Score" => intval($val));
         }
-
+        
         $this->connection->forceScores($outScores, true);
         self::$mainPlugin->forceScoresOk();
         $this->erase($login);

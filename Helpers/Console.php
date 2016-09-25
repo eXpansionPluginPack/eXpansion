@@ -94,7 +94,7 @@ class Console
      */
     public static function out_error($message)
     {
-        self::eco(self::white . "[ " . self::b_red . "Error" . "\e[0m" . self::white . " ] " . self::error . $message . "\e[0m\n");
+        self::eco(self::white . "[ " . self::b_red . "Error" . "\e[0m" . self::white . " ] " . self::error . $message . "\n");
     }
 
     /**
@@ -141,8 +141,10 @@ class Console
     public static function eco($msg)
     {
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $msg = preg_replace("/\e\[(\d{1,2}\;){0,1}\d{1,2}m/", "", $msg);
+            $msg = str_replace("\\e", "", $msg);
+            $msg = preg_replace("/\[(\d{1,2}\;){0,1}\d{1,2}m/", "", $msg);
         }
+
         echo $msg;
     }
 

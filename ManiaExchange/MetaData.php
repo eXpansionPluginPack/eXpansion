@@ -33,14 +33,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(false);
         $this->registerVariable($var);
 
-        $var = new BoundedTypeFloat("mxVote_ratio", "MXVote ratio for adding map", $config, true, false);
+        $var = new BoundedTypeFloat("mxVote_ratios", "MXVote ratio for adding map", $config, true, false);
         $var->setGroup("Voting");
         $var->setMin(-1.0);
         $var->setMax(1.0);
         $var->setDefaultValue(0.5);
         $this->registerVariable($var);
 
-        $var = new BoundedTypeInt("mxVote_timeout", "MXVote Timeout in seconds", $config, true, false);
+        $var = new BoundedTypeInt("mxVote_timeouts", "MXVote Timeout in seconds", $config, true, false);
         $var->setDescription("Min: 30, Max: 360");
         $var->setGroup("Voting");
         $var->setMin(30);

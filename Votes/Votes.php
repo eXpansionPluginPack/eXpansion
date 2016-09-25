@@ -21,7 +21,6 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $origTimeValue = 0;
 
 
-
     public function expOnInit()
     {
         $this->config = Config::getInstance();
@@ -102,11 +101,13 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->update = true;
     }
 
-    public function showTimeOptions($login) {
+    public function showTimeOptions($login)
+    {
 
     }
 
-    public function vote_time($login, $seconds) {
+    public function vote_time($login, $seconds)
+    {
 
     }
 
@@ -168,7 +169,6 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if ($config->restartLimit != 0 && $config->restartLimit <= $this->resCount) {
                 $this->eXpChatSendServerMessage(eXpGetMessage("#error#Map limit for voting restart reached."), $login,
                     array($this->config->restartLimit));
-
                 return;
             }
 
@@ -222,9 +222,11 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onVoteUpdated($stateName, $login, $cmdName, $cmdParam)
     {
 
-        //    $this->console("[exp\Votes] Vote Status: " . $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam);
+        //$this->console("[exp\Votes] Vote Status: " . $stateName . " -> " . $login . " -> " . $cmdName . " -> " . $cmdParam);
 // in case managed votes are disabled, return..
-        if ($this->config->use_votes == false) return;
+        $config = Config::getInstance();
+
+        if ($config->use_votes == false) return;
 
         $managedVotes = $this->getVotes();
 
@@ -262,13 +264,11 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             $this->counters[$cmdName]++;
 
-            if ($this->config->limit_votes != -1) {
-                if ($this->counters[$cmdName] > $this->config->limit_votes) {
-
+            if ($config->limit_votes > 0) {
+                if ($this->counters[$cmdName] > $config->limit_votes) {
                     $this->connection->cancelVote();
                     $msg = eXpGetMessage("Vote limit reached.");
                     $this->eXpChatSendServerMessage($msg);
-
                     return;
                 }
             }
@@ -307,8 +307,6 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
 
 
-
-
     }
 
     public function cancelVote($login)
@@ -331,7 +329,9 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $window = Gui\Windows\VoteSettingsWindow::Create($login);
         $window->setSize(120, 96);
         $window->setTitle(__("Configure Votes", $login));
+        $window->addLimits();
         $window->populateList($this->getVotes(), $this->metaData);
+        $window->addMxVotes();
         $window->show($login);
     }
 

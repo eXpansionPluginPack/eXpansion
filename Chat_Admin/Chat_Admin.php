@@ -870,7 +870,11 @@ Other server might use the same blacklist file!!');
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
         if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM) {
-            $this->connection->setTeamPointsLimit($this->teamGap * 10);
+            $points = $this->teamGap * 10;
+            if ($this->teamGap <= 5) {
+                $points = 50;
+            }
+            $this->connection->setTeamPointsLimit($points);
         }
     }
 
@@ -886,12 +890,18 @@ Other server might use the same blacklist file!!');
 
     public function checkTeamGap()
     {
-        if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->teamUseNewRules) {
+        if ($this->teamGap >= 1) {
+
             $ranking = $this->expStorage->getCurrentRanking();
             $scoregap = abs($ranking[0]->score - $ranking[1]->score);
             $scoremax = $ranking[0]->score > $ranking[1]->score ? $ranking[0]->score : $ranking[1]->score;
+            print_r($ranking);
+            print_r($this->storage->players);
+
+            echo "gap:" . $scoregap . " max:" . $scoremax . "\n";
             if ($scoremax >= $this->teamGap && $scoregap >= 2) {
-                $this->connection->nextMap(false);
+                echo "next map\n";
+                // $this->connection->nextMap(false);
             }
         }
     }

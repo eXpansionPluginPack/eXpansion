@@ -35,7 +35,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function eXpOnReady()
     {
-      //  $this->enableTickerEvent();
+        //  $this->enableTickerEvent();
         $this->enableDedicatedEvents();
         $this->enableDedicatedEvents();
         //if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
@@ -48,6 +48,17 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         //$this->registerChatCommand("test", "testWin", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
         //$this->registerChatCommand("mem", "mem", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
         $this->mem(null);
+        $this->registerChatCommand("te", "team", 0, false);
+
+    }
+
+    public function team()
+    {
+        $outScores = [];
+        $outScores[] = array("PlayerId" => 0, "Score" => 1);
+        $outScores[] = array("PlayerId" => 1, "Score" => 2);
+
+        $this->connection->forceScores($outScores, false);
     }
 
     public function eXpOnUnload()
@@ -72,7 +83,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onBeginMap($map, $warmUp, $matchContinuation)
     {
-     //   $this->mem(null);
+        //   $this->mem(null);
     }
 
     function testWin($login)

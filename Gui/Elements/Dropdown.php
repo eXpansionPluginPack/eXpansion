@@ -25,7 +25,6 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\DropDownScript();
         $this->script->setParam("name", $name);
 
-
         $this->values = array();
         $this->name = $name;
         $this->setSize($sizeX, 10);
