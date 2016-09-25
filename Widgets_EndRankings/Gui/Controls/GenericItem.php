@@ -24,8 +24,8 @@ class GenericItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label1->setScale(0.75);
         $this->addComponent($this->label1);
 
-        $this->nick = new \ManiaLib\Gui\Elements\Label(30, 4);
-        $this->nick->setPosition(8, 0);
+        $this->nick = new \ManiaLib\Gui\Elements\Label(28, 4);
+        $this->nick->setPosition(13, 0);
         $this->nick->setAlign('left', 'center');
         $this->nick->setStyle("TextRaceChat");
         $this->nick->setTextColor('fff');
@@ -33,18 +33,20 @@ class GenericItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->nick->setText($item->nickname);
         $this->addComponent($this->nick);
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(15, 5);
+        $this->label = new \ManiaLib\Gui\Elements\Label(14, 5);
         $this->label->setAlign('left', 'center');
         $this->label->setStyle("TextRaceChat");
         $this->label->setScale(0.75);
+        $this->label->setPositionX(1);
         if (property_exists($item, 'longDate')) {
             $formatter = \ManiaLivePlugins\eXpansion\Gui\Formaters\LongDate::getInstance();
             $this->label->setText($formatter->format($item->longDate));
-            $this->label->setPosX(-3);
-            $this->label->setSizeX(25);
+            $this->label->setAlign('right', 'center');
+            $this->label->setPosX(13);
+            $this->label->setSizeX(20);
             $this->removeComponent($this->label1);
             $this->nick->setSizeX(20);
-            $this->nick->setPosX(12);
+            $this->nick->setPosX(14);
         } elseif (property_exists($item, 'timeData')) {
             $this->label->setText(\ManiaLive\Utilities\Time::fromTM($item->timeData));
         } else {

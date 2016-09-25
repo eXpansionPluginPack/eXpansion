@@ -14,5 +14,5 @@ namespace ManiaLivePlugins\eXpansion\Widgets_EndRankings\Gui\Widgets;
  */
 class Donators extends GenericPanel
 {
-    //put your code here
+
 }

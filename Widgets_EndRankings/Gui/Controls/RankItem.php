@@ -26,7 +26,7 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->addComponent($this->label);
 
         $this->label = new \ManiaLib\Gui\Elements\Label(14, 5);
-        $this->label->setPosX(1);
+        $this->label->setPosX(0.75);
         $this->label->setAlign('left', 'center');
         $this->label->setStyle("TextRaceChat");
         $this->label->setText(number_format($rank->tscore + 1, 2));
@@ -35,8 +35,8 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->addComponent($this->label);
 
 
-        $this->nick = new \ManiaLib\Gui\Elements\Label(30, 4);
-        $this->nick->setPosition(8, 0);
+        $this->nick = new \ManiaLib\Gui\Elements\Label(29, 4);
+        $this->nick->setPosition(9, 0);
         $this->nick->setAlign('left', 'center');
         $this->nick->setStyle("TextRaceChat");
         $this->nick->setTextColor('fff');
@@ -44,7 +44,6 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->nick->setText($nickname);
         $this->nick->setScale(0.75);
         $this->addComponent($this->nick);
-
 
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;

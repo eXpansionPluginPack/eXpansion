@@ -204,13 +204,14 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
 
         if ($this->firstDisplay) {
+            $this->firstDisplay = false;
             $groups = array_keys($groups);
             sort($groups, SORT_STRING);
             $this->select_group->addItems($groups);
             $this->elements = $groups;
+
         }
 
-        $this->firstDisplay = false;
     }
 
     public function destroy()
@@ -231,7 +232,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->input_name->setText($params['name']);
         $this->input_author->setText($params['author']);
-        $this->value_group = $params['group'] == "" ? "" : $this->elements[$params['group']];
+        $this->value_group = $params['group'] == "" ? 0 : $this->elements[$params['group']];
 
         $this->populate($this->autoLoad, $this->pluginList);
         $this->select_group->setSelected($params['group']);
