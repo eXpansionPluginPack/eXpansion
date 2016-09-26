@@ -89,7 +89,6 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->button_running = new Button(8, 8);
         $this->button_running->setIcon('Icons64x64_1', 'GenericButton');
-        $this->button_running->setDescription(__($this->getRunningDescriptionText($isLoaded, $isInStart), $login), 120);
         if ($isLoaded) {
             $this->button_running->colorize('0f0');
         } else {

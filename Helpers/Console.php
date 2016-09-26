@@ -138,9 +138,9 @@ class Console
         self::eco(self::white . "[ " . self::b_red . "Fail" . self::white . " ]\n");
     }
 
-    public static function eco($msg)
+    private static function eco($msg)
     {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        if (Storage::getInstance()->serverOs == "Windows") {
             $msg = str_replace("\\e", "", $msg);
             $msg = preg_replace("/\[(\d{1,2}\;){0,1}\d{1,2}m/", "", $msg);
         }

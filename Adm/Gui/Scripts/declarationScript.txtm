@@ -1,0 +1,3 @@
+
+declare commentFrom <=> (Page.GetFirstChild("commentFrom") as CMlTextEdit);
+declare commentTo <=> (Page.GetFirstChild("serverComment") as CMlEntry);

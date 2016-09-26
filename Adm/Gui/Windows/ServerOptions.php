@@ -17,6 +17,8 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted as Checkbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\InputboxMasked;
+use ManiaLivePlugins\eXpansion\Gui\Elements\TextEdit;
+use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use Maniaplanet\DedicatedServer\Connection;
 use Maniaplanet\DedicatedServer\Structures\ServerOptions as Dedicated_ServerOptions;
@@ -24,38 +26,39 @@ use Maniaplanet\DedicatedServer\Structures\ServerOptions as Dedicated_ServerOpti
 class ServerOptions extends Window
 {
 
-    private $serverName;
-    private $serverComment;
-    private $maxPlayers;
-    private $maxSpec;
-    private $minLadder;
-    private $maxLadder;
-    private $serverPass;
-    private $serverSpecPass;
-    private $refereePass;
+    protected $serverName;
+    protected $serverComment;
+    protected $serverCommentE;
+    protected $maxPlayers;
+    protected $maxSpec;
+    protected $minLadder;
+    protected $maxLadder;
+    protected $serverPass;
+    protected $serverSpecPass;
+    protected $refereePass;
 
-    private $cbPublicServer;
-    private $cbLadderServer;
-    private $cbAllowMapDl;
-    private $cbAllowp2pDown;
-    private $cbAllowp2pUp;
-    private $cbReferee;
+    protected $cbPublicServer;
+    protected $cbLadderServer;
+    protected $cbAllowMapDl;
+    protected $cbAllowp2pDown;
+    protected $cbAllowp2pUp;
+    protected $cbReferee;
 
-    private $frameCb;
+    protected $frameCb;
 
-    private $frameInputbox;
-    private $frameLadder;
+    protected $frameInputbox;
+    protected $frameLadder;
 
-    private $buttonOK;
-    private $buttonCancel;
+    protected $buttonOK;
+    protected $buttonCancel;
 
     /** @var Connection */
-    private $connection;
+    protected $connection;
 
-    private $actionOK;
-    private $actionCancel;
+    protected $actionOK;
+    protected $actionCancel;
 
-    private $e = array();
+    protected $e = array();
 
     public function onConstruct()
     {
@@ -69,6 +72,8 @@ class ServerOptions extends Window
 
         $this->inputboxes();
         $this->checkboxes();
+
+        $this->registerScript(new Script("Adm/Gui/Scripts"));
 
         $this->addComponent($this->frameCb);
         $this->addComponent($this->frameInputbox);
@@ -92,11 +97,20 @@ class ServerOptions extends Window
         $this->serverName->setText($this->connection->getServerName());
         $this->frameInputbox->addComponent($this->serverName);
 
+
+
+        $this->serverCommentE = new TextEdit("serverCommentE", 96, 32);
+        $this->serverCommentE->setId("commentFrom");
+        $this->serverCommentE->setPosition(0, 6);
+        $this->serverCommentE->setText($this->connection->getServerComment());
+        $this->serverCommentE->setShowLineNumbers(false);
+        $this->serverCommentE->setScriptEvents();
+        $this->serverCommentE->setScale(0.75);
+        $this->frameInputbox->addComponent($this->serverCommentE);
+
         $this->serverComment = new Inputbox("serverComment", 60, 26);
-        $this->serverComment->setLabel(__("Server Comment", $this->getRecipient()));
-        $this->serverComment->setText($this->connection->getServerComment());
-        $this->serverComment->setName("serverComment");
-        $this->frameInputbox->addComponent($this->serverComment);
+        $this->serverComment->setPosition(900, 900);
+         $this->addComponent($this->serverComment);
 
 
         // Players Min & Max goes to same row
@@ -143,6 +157,7 @@ class ServerOptions extends Window
 
         $this->frameInputbox->addComponent($this->frameLadder);
         // end of ladder points
+
         // server password
         $this->serverPass = new InputboxMasked("serverPass");
         $this->serverPass->setLabel(__("Password for server", $this->getRecipient()));
@@ -272,8 +287,8 @@ class ServerOptions extends Window
         $this->serverComment->setEditable(AdminGroups::hasPermission($login, Permission::SERVER_COMMENT));
         $this->maxPlayers->setEditable(AdminGroups::hasPermission($login, Permission::SERVER_MAXPLAYER));
         $this->maxSpec->setEditable(AdminGroups::hasPermission($login, Permission::SERVER_MAXSPEC));
-        //$this->minLadder->setEditable(AdminGroups::hasPermission($login, Permission::server_ladder));
-        //$this->maxLadder->setEditable(AdminGroups::hasPermission($login, Permission::server_ladder));
+        $this->minLadder->setEditable(AdminGroups::hasPermission($login, Permission::SERVER_LADDER));
+        $this->maxLadder->setEditable(AdminGroups::hasPermission($login, Permission::SERVER_LADDER));
         $this->serverPass->setVisibility(AdminGroups::hasPermission($login, Permission::SERVER_PASSWORD));
         $this->serverSpecPass->setVisibility(AdminGroups::hasPermission($login, Permission::SERVER_SPECPWD));
         $this->refereePass->setVisibility(AdminGroups::hasPermission($login, Permission::SERVER_REFPWD));
@@ -289,30 +304,8 @@ class ServerOptions extends Window
 
     public function destroy()
     {
-        $this->buttonCancel->destroy();
-        $this->buttonOK->destroy();
-        $this->cbAllowMapDl->destroy();
-        $this->cbAllowp2pDown->destroy();
-        $this->cbAllowp2pUp->destroy();
-        $this->cbLadderServer->destroy();
-        $this->cbPublicServer->destroy();
-        $this->cbReferee->destroy();
         $this->connection = null;
         $this->storage = null;
-        $this->maxLadder->destroy();
-        $this->minLadder->destroy();
-        $this->maxPlayers->destroy();
-        $this->maxSpec->destroy();
-        $this->refereePass->destroy();
-        $this->serverComment->destroy();
-        $this->serverName->destroy();
-        $this->serverPass->destroy();
-        $this->serverSpecPass->destroy();
-        $this->frameCb->clearComponents();
-        $this->frameCb->destroy();
-        $this->frameInputbox->clearComponents();
-        $this->frameInputbox->destroy();
-        $this->destroyComponents();
         parent::destroy();
     }
 
