@@ -76,6 +76,7 @@ foreach (Player in Players) {
         //Update the current checkpoint of this user
         <?php echo $this->varName ?> = Player.CurRace.Checkpoints.count;
         curCp = Player.CurRace.Checkpoints.count;
+        playersOnServer[Player.Login] = Player.Name;
 
         //If finish
         if (curCp > 0 && curCp % (totalCp) == 0 && totalCp > acceptMinCp) {
@@ -232,14 +233,6 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
             declare timeLabel = (Page.GetFirstChild("RecTime_"^i) as CMlLabel);
             declare highliteQuad = (Page.GetFirstChild("RecBg_"^i) as CMlQuad);
 
-            if (highliteQuad != Null) {
-                if (playersOnServer.existskey(Login) && i != myRank) {
-                    highliteQuad.Show();
-                } else {
-                    highliteQuad.Hide();
-                }
-            }
-
             if (nickLabel != Null) {
                 declare outScore = Score;
                 if (edge_showDiff) {
@@ -248,6 +241,13 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
                     }
                 }
                 putRecordTo(i, nbRec, outScore, Login, playerNickName[Login], Login == LocalUser.Login);
+               if (highliteQuad != Null) {
+                            if (playersOnServer.existskey(Login) && i != myRank) {
+                                highliteQuad.Show();
+                            } else {
+                                highliteQuad.Hide();
+                            }
+                        }
                 if (Login == LocalUser.Login) {
                     showed = True;
                     zoomId = i;
