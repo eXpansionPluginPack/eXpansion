@@ -58,6 +58,30 @@ class Widgets extends \ManiaLib\Utils\Singleton
         GameInfos::GAMEMODE_TEAM => 5,
         GameInfos::GAMEMODE_LAPS => 5,
         GameInfos::GAMEMODE_CUP => 5);
+
+    public $CombinedPanel_posX = array(self::config_default => 120,
+        GameInfos::GAMEMODE_ROUNDS => -161,
+        GameInfos::GAMEMODE_TEAM => -161,
+        GameInfos::GAMEMODE_LAPS => -161,
+        GameInfos::GAMEMODE_CUP => -161);
+    public $CombinedPanel_posY = array(self::config_default => 63,
+        GameInfos::GAMEMODE_ROUNDS => 63,
+        GameInfos::GAMEMODE_TEAM => 63,
+        GameInfos::GAMEMODE_LAPS => 63,
+        GameInfos::GAMEMODE_CUP => 63);
+    public $CombinedPanel_nbFields = array(self::config_default => 13,
+        GameInfos::GAMEMODE_ROUNDS => 13,
+        GameInfos::GAMEMODE_TEAM => 13,
+        GameInfos::GAMEMODE_LAPS => 13,
+        GameInfos::GAMEMODE_CUP => 13);
+    public $CombinedPanel_nbFirstFields = array(self::config_default => 10,
+        GameInfos::GAMEMODE_ROUNDS => 10,
+        GameInfos::GAMEMODE_TEAM => 10,
+        GameInfos::GAMEMODE_LAPS => 10,
+        GameInfos::GAMEMODE_CUP => 10);
+
+
+
     public $LocalRecordsPanel_posX = array(self::config_default => 120,
         GameInfos::GAMEMODE_ROUNDS => -161,
         GameInfos::GAMEMODE_TEAM => -161,

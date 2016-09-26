@@ -43,6 +43,7 @@ class PlainPanel extends Widget
     public $storage;
     public $timeScript;
     protected $nbFields;
+    protected $firstNbFields;
     public $trayWidget;
     public $edgeWidget;
 
@@ -152,6 +153,7 @@ class PlainPanel extends Widget
     public function setNbFirstFields($nb)
     {
         $this->timeScript->setParam("nbFirstFields", $nb);
+        $this->firstNbFields = $nb;
         $this->bgFirst->setSize($this->sizeX / 1.5, 0.3);
         $this->bgFirst->setPosY((-4 * $nb) - 3);
     }
