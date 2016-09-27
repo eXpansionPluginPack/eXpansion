@@ -20,6 +20,4 @@ class Header extends FaqControl
         $this->setSizeY(7);
         $this->setAlign("left", "top");
     }
-
 }
-

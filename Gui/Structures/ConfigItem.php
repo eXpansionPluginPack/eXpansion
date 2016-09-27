@@ -27,5 +27,4 @@ class ConfigItem extends \ManiaLivePlugins\eXpansion\Gui\Control
             $outval = false;
         $this->value = $outval;
     }
-
 }

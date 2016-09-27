@@ -224,5 +224,4 @@ class Countries
 
         return $output;
     }
-
 }

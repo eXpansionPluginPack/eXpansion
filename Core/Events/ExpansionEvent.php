@@ -33,5 +33,4 @@ class ExpansionEvent extends \ManiaLive\Event\Event
                 break;
         }
     }
-
 }

@@ -51,5 +51,4 @@ class Event extends \ManiaLive\Event\Event
                 break;
         }
     }
-
 }

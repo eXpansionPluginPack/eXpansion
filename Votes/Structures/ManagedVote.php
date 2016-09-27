@@ -41,5 +41,4 @@ class ManagedVote extends \Maniaplanet\DedicatedServer\Structures\Vote
     {
         parent::__construct($cmdName, $cmdParam);
     }
-
 }

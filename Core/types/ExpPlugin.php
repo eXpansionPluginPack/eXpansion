@@ -24,5 +24,4 @@ class ExpPlugin extends BasicPlugin
     {
 
     }
-
 }

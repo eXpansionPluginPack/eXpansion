@@ -67,5 +67,4 @@ class ExpSettingListElement extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         return 2;
     }
-
 }

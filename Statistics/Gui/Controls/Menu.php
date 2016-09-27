@@ -37,5 +37,4 @@ class Menu extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->frame->addComponent($button);
     }
-
 }

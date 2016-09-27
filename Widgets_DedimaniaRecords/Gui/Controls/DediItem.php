@@ -16,7 +16,4 @@ class DediItem extends Recorditem
 
         parent::__construct($index, $outrec, $login, $highlite);
     }
-
 }
-
-

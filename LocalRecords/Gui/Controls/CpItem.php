@@ -92,5 +92,4 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         parent::destroy();
     }
-
 }

@@ -17,6 +17,4 @@ interface ExpansionEventListener
      * @return void
      */
     public function eXp_onRestartEnd();
-
-
 }

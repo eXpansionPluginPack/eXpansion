@@ -66,7 +66,4 @@ class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         parent::destroy();
     }
-
 }
-
-

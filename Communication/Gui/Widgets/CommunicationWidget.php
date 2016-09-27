@@ -122,7 +122,6 @@ class CommunicationWidget extends Widget
 
     function eXpOnEndConstruct()
     {
-
         $this->setSize(120, 42);
         $this->setScale(1);
         $this->setPosition(-278, -20);
@@ -132,5 +131,4 @@ class CommunicationWidget extends Widget
 
         $this->icon_title->setPosition($this->getSizeX() - 2, 0);
     }
-
 }

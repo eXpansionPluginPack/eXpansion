@@ -58,5 +58,4 @@ class ExpPlayer extends \ManiaLive\Data\Player
 
         return $object;
     }
-
 }

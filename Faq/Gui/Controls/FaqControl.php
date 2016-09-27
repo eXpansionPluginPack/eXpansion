@@ -7,8 +7,6 @@ namespace ManiaLivePlugins\eXpansion\Faq\Gui\Controls;
  */
 abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-
-
     protected $label;
     protected $action = null;
 
@@ -66,5 +64,4 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         $this->addComponent($this->label);
     }
-
 }

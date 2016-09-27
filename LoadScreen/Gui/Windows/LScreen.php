@@ -73,6 +73,4 @@ class LScreen extends Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-

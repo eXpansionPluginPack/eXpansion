@@ -225,8 +225,11 @@ class Dedimania extends DedimaniaAbstract
             $this->vReplay = $this->connection->getValidationReplay($rankings[0]['Login']);
             $greplay = "";
             $grfile = sprintf(
-                'Dedimania/%s.%d.%07d.%s.Replay.Gbx', $this->storage->currentMap->uId, $this->storage->gameInfos->gameMode,
-                $rankings[0]['BestTime'], $rankings[0]['Login']
+                'Dedimania/%s.%d.%07d.%s.Replay.Gbx',
+                $this->storage->currentMap->uId,
+                $this->storage->gameInfos->gameMode,
+                $rankings[0]['BestTime'],
+                $rankings[0]['Login']
             );
             $this->connection->SaveBestGhostsReplay($rankings[0]['Login'], $grfile);
             $this->gReplay = file_get_contents($this->connection->gameDataDirectory() . 'Replays/' . $grfile);
@@ -252,5 +255,4 @@ class Dedimania extends DedimaniaAbstract
         $this->checkpoints = array();
         $this->bestTimes = array();
     }
-
 }

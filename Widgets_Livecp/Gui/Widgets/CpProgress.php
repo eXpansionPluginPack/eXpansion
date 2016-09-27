@@ -101,5 +101,4 @@ class CpProgress extends Widget
         $this->storage = null;
         parent::destroy();
     }
-
 }

@@ -26,10 +26,8 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\ButtonHook;
 
 class HookData
 {
-
     /**
      * @var ButtonHook[]
      */
     public $data;
-
-} 
+}

@@ -102,6 +102,4 @@ class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->label->setText($msg);
         $this->labelMap->setText(\ManiaLib\Utils\Formatting::stripCodes($map->name, "wosn"));
     }
-
 }
-

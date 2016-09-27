@@ -93,5 +93,4 @@ class IdleKick extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->checkActivity($login);
         }
     }
-
 }

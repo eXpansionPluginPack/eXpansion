@@ -13,5 +13,4 @@ class LivePanel2 extends PlainLivePanel
         // $this->setName("Live Rankings Panel (Tab-layer)");
         $this->timeScript->setParam('varName', 'LiveTime2');
     }
-
 }

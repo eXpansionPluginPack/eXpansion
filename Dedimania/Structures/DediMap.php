@@ -20,5 +20,4 @@ class DediMap extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
         $this->mapMaxRank = $maxrank;
         $this->allowedGameModes = $allowedgamemodes;
     }
-
 }

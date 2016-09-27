@@ -11,5 +11,4 @@ class Config extends \ManiaLib\Utils\Singleton
     public $showNextMapWidget = true;
     public $showEndMatchNotices = true;
     public $publicQueueAmount = array(0);
-
 }

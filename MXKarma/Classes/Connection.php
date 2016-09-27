@@ -249,5 +249,4 @@ class Connection
     {
         return $this->connected;
     }
-
 }

@@ -70,5 +70,4 @@ class BoundedTypeFloat extends TypeFloat
         && ($this->min == null || $value >= $this->min)
         && parent::basicValueCheck($value);
     }
-
 }

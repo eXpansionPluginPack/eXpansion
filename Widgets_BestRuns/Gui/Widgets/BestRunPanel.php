@@ -39,6 +39,4 @@ class BestRunPanel extends \ManiaLive\Gui\Window
 
         parent::destroy();
     }
-
 }
-

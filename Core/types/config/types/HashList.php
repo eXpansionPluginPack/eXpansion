@@ -87,5 +87,4 @@ class HashList extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
 
         $this->setRawValue($array);
     }
-
 }

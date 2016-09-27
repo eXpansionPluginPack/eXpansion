@@ -44,5 +44,4 @@ class DediRecord extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
             $this->checkpoints = implode(",", $checkpoints);
         }
     }
-
 }

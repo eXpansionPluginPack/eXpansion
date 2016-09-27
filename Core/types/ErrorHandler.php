@@ -26,5 +26,4 @@ class ErrorHandler extends \ManiaLive\Application\ErrorHandling
         \ManiaLive\Utilities\Logger::log($log, false, self::$server . ".error.log");
         parent::displayAndLogError($e);
     }
-
 }

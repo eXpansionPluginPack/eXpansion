@@ -202,5 +202,4 @@ class ExpSetting extends Control
         // disabling for now, since reset didn't work...
         // $this->win = null;
     }
-
 }

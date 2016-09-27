@@ -140,5 +140,4 @@ class InGameHud extends \ManiaLib\Utils\Singleton
     {
         return number_format((float)$number, 2, '.', '');
     }
-
 }

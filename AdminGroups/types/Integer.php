@@ -43,5 +43,4 @@ class Integer extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker
 
         return "A numerical value was expected";
     }
-
 }

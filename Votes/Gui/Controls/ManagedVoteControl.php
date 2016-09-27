@@ -79,6 +79,5 @@ class ManagedVoteControl extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
 

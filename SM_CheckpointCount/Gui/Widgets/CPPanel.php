@@ -62,5 +62,4 @@ class CPPanel extends Widget
     {
         parent::destroy();
     }
-
 }

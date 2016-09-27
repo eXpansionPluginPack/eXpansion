@@ -32,6 +32,4 @@ class Item extends \ManiaLivePlugins\eXpansion\Gui\Control
         parent::onIsRemoved($target);
         $this->destroy();
     }
-
 }
-

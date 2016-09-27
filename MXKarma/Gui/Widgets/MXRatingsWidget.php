@@ -70,5 +70,4 @@ class MXRatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->frame->addComponent($info);
         $this->redraw();
     }
-
 }

@@ -194,5 +194,4 @@ class MatchReady extends \ManiaLive\Gui\Window
         $this->frame_rounds->setPosition(($sX / 2), -24);
         parent::onResize($oldX, $oldY);
     }
-
 }

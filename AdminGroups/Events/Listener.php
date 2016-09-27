@@ -29,5 +29,4 @@ interface Listener
     public function eXpAdminAdded($login);
 
     public function eXpAdminRemoved($login);
-
 }

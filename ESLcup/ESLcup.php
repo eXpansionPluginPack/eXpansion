@@ -502,5 +502,4 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->lastRoundWinner = "";
         $this->resetData = false;
     }
-
 }

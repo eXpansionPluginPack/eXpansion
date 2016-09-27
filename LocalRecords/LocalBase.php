@@ -1850,5 +1850,4 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         Ranks::EraseAll();
         Records::EraseAll();
     }
-
 }

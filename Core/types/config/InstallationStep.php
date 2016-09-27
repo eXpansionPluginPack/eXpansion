@@ -9,10 +9,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config;
  */
 class InstallationStepss
 {
-
     function __construct($name)
     {
-
     }
-
 }

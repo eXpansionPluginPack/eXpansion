@@ -21,6 +21,4 @@ class EndMatch extends RpcObject
 
     /** var integer */
     public $clan2MapScore = 0;
-
 }
-

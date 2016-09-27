@@ -19,5 +19,4 @@ class Message
         $this->callback = $callback;
         $this->timestamp = time();
     }
-
 }

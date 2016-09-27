@@ -62,5 +62,4 @@ class ClockItem extends Control implements ScriptedContainer
 
         return $script;
     }
-
 }

@@ -276,5 +276,4 @@ class IrcBot
             $this->socket = null;
         }
     }
-
 }

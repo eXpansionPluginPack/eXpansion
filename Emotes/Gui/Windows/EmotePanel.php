@@ -114,5 +114,4 @@ class EmotePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

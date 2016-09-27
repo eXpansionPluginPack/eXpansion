@@ -33,5 +33,4 @@ class Custom321Go extends ExpPlugin
             $window->show();
         }
     }
-
 }

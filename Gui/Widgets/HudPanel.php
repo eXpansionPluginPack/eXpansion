@@ -111,5 +111,4 @@ class HudPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

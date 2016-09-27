@@ -178,5 +178,4 @@ class ExpListSetting extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
         parent::destroy();
     }
-
 }

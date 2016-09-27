@@ -32,8 +32,9 @@ class Jukelist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
-        if (is_object($this->btnRemoveAll))
+        if (is_object($this->btnRemoveAll)) {
             $this->btnRemoveAll->setPosition(4, -$this->sizeY + 6);
+        }
 
         $this->pager->setSize($this->sizeX - 2, $this->sizeY - 14);
         $this->pager->setStretchContentX($this->sizeX);
@@ -50,7 +51,10 @@ class Jukelist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->clearItems();
         $this->items = array();
 
-        $isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_ADMIN);
+        $isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission(
+            $login,
+            Permission::MAP_JUKEBOX_ADMIN
+        );
         if ($isAdmin) {
             $this->mainFrame->addComponent($this->btnRemoveAll);
         }
@@ -75,11 +79,11 @@ class Jukelist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $item->erase();
         }
         $this->items = null;
-        if (is_object($this->btnRemoveAll))
+        if (is_object($this->btnRemoveAll)) {
             $this->btnRemoveAll->destroy();
+        }
         $this->pager->destroy();
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

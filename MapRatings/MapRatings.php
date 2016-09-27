@@ -487,5 +487,4 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         RatingsWidget::EraseAll();
         MapRatingsManager::EraseAll();
     }
-
 }

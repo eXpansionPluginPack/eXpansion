@@ -44,5 +44,4 @@ class DbPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
 
         return "INSERT INTO exp_players (" . $keys . ") VALUES (" . $values . ") ON DUPLICATE KEY UPDATE " . $update . ";";
     }
-
 }

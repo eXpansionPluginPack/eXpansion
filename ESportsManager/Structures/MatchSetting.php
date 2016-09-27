@@ -19,5 +19,4 @@ class MatchSetting extends \Maniaplanet\DedicatedServer\Structures\AbstractStruc
     /** @var Maniaplanet\DedicatedServer\Structures\GameInfos */
     public $gameInfos = array();
     public $adminCommands = array();
-
 }

@@ -30,5 +30,4 @@ class ButtonHook
     public $label;
 
     public $buttonColorize = '0d0';
-
-} 
+}

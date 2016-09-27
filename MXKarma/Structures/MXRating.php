@@ -68,5 +68,4 @@ class MXRating extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
             }
         }
     }
-
 }

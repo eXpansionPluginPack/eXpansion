@@ -100,5 +100,4 @@ class CupScoreTableItem extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->addComponent($this->place);
         }
     }
-
 }

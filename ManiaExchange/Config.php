@@ -13,5 +13,4 @@ class Config extends \ManiaLib\Utils\Singleton
     public $iconAward = '';
     public $iconVisit = 'http://mania-exchange.com/Content/images/planet_mx_logo.png';
     public $juke_newmaps = true;  // whaever newly added maps should be put to jukebox
-
 }

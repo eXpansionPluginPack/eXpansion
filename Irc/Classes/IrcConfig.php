@@ -34,5 +34,4 @@ class IrcConfig extends \Maniaplanet\DedicatedServer\Structures\AbstractStructur
     public $realname = "";
     public $channel = "";
     public $channelKey = "";
-
 }

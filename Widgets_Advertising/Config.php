@@ -156,5 +156,4 @@ class Config extends \ManiaLib\Utils\Singleton
 
     public $x_10 = -30;  // image position x in maniaplanet display units
     public $y_10 = 90; // image position y in maniaplanet display units
-
 }

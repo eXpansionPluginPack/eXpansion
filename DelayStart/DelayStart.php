@@ -83,6 +83,4 @@ class DelayStart extends ExpPlugin
     {
         $this->connection->setApiVersion(CoreConfig::getInstance()->API_Version);
     }
-
-
 }

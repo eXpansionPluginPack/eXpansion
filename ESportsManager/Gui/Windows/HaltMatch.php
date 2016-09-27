@@ -54,5 +54,4 @@ class HaltMatch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->label_reason->setText($reason);
     }
-
 }

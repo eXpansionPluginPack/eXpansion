@@ -297,5 +297,4 @@ class KnockOut extends ExpPlugin
 
         parent::eXpOnUnload();
     }
-
 }

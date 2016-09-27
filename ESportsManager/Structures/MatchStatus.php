@@ -25,5 +25,4 @@ class MatchStatus extends \Maniaplanet\DedicatedServer\Structures\AbstractStruct
     public $isAllPlayersReady = false;
     public $warmUp = false;
     public $voteRunning = self::VOTE_NONE;
-
 }

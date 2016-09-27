@@ -27,7 +27,7 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 
 class CommonScript extends Script
 {
-    function __construct($name)
+    public function __construct($name)
     {
         parent::__construct($name);
         $this->addLibrary(new TimeToText());

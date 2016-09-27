@@ -81,5 +81,4 @@ class Item extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->labels = null;
         parent::destroy();
     }
-
 }

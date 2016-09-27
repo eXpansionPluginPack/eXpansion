@@ -148,5 +148,4 @@ class HiddenQuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

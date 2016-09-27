@@ -187,8 +187,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
             $maxrank = DediConnection::$players[$login]->maxRank;
         }
 
-        $this->debug_max_ranks('Server Max Rank is : ' . DediConnection::$serverMaxRank);
-        $this->debug_max_ranks('Checking with      : ' . $maxrank);
+        $this->debugMaxRanks('Server Max Rank is : ' . DediConnection::$serverMaxRank);
+        $this->debugMaxRanks('Checking with      : ' . $maxrank);
 
         $i = 0;
         $newrecords = array();
@@ -203,8 +203,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
             if ($record->login == $login) {
                 // if record is greater than players max rank, don't allow
                 if ($record->place > $maxrank) {
-                    $this->debug_max_ranks("record place: " . $record->place . " is greater than max rank: " . $maxrank);
-                    $this->debug_max_ranks("not adding record.");
+                    $this->debugMaxRanks("record place: " . $record->place . " is greater than max rank: " . $maxrank);
+                    $this->debugMaxRanks("not adding record.");
                     continue;
                 }
 
@@ -453,11 +453,10 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         return $this->running;
     }
 
-    protected function debug_max_ranks($debugMsg)
+    protected function debugMaxRanks($debugMsg)
     {
         if (($this->debug & self::DEBUG_MAX_RANKS) == self::DEBUG_MAX_RANKS) {
             $this->console('[Max Ranks]' . $debugMsg);
         }
     }
-
 }

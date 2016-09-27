@@ -19,6 +19,4 @@ class MapRating extends \Maniaplanet\DedicatedServer\Structures\AbstractStructur
             $this->map = $map;
         }
     }
-
-
 }

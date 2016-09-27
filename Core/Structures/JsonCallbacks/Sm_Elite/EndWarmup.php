@@ -12,6 +12,4 @@ class EndWarmup extends RpcObject
 
     /** var boolean */
     public $allReady = true;
-
 }
-

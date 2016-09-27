@@ -59,5 +59,4 @@ class Clock extends Widget
         $script->setParam('posXMax', -2);
         $this->registerScript($script);
     }
-
 }

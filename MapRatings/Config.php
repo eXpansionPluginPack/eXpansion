@@ -9,5 +9,4 @@ class Config extends \ManiaLib\Utils\Singleton
     public $showPodiumWindow = true;        // enable showing maprating window at podium
     public $minVotes = 10;                // minimum votes for auto removal
     public $removeTresholdPercentage = 30;    // map rating value for removal
-
 }

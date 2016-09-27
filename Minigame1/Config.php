@@ -25,5 +25,4 @@ class Config extends \ManiaLib\Utils\Singleton
     public $mg1_imageUrl = "http://koti.mbnet.fi/reaby/xaseco/images/santa.png";
     public $mg1_imageFocusUrl = "http://koti.mbnet.fi/reaby/xaseco/images/santa.png";
     public $mg1_imageSize = 20;
-
 }

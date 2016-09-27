@@ -40,5 +40,4 @@ class MapSuggestionButton extends Widget
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

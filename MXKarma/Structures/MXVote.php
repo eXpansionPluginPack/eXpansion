@@ -34,5 +34,4 @@ class MXVote extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
         $this->nickName = $player->nickName;
         $this->vote = intval($vote);
     }
-
 }

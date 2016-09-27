@@ -85,7 +85,4 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->sizeX = 54;
         $this->sizeY = 4.25;
     }
-
 }
-
-

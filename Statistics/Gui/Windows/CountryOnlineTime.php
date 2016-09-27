@@ -58,5 +58,4 @@ class CountryOnlineTime extends Country
 
         return ($a['time'] > $b['time']) ? -1 : 1;
     }
-
 }

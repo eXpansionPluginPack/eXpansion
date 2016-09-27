@@ -1274,5 +1274,4 @@ class Maps extends ExpPlugin
         $action->deleteAction($this->actionShowJukeList);
         $action->deleteAction($this->actionShowMapList);
     }
-
 }

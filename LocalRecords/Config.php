@@ -32,5 +32,4 @@ class Config extends \ManiaLib\Utils\Singleton
     public $msg_noPB = '#admin_error# $iYou have not finished this map yet..';
     public $msg_showRank = '#record#Server rank: #rank#%1$s#record#/#rank#%2$s';  // %1$s - server rank, %2$s - total # of ranks
     public $msg_noRank = '#admin_error#$iNot enough local records to obtain ranking yet..';
-
 }

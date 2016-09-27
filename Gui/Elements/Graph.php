@@ -15,5 +15,4 @@ class Graph extends \ManiaLib\Gui\Element
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;
     }
-
 }

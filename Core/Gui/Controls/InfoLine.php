@@ -29,5 +29,4 @@ class InfoLine extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         parent::destroy();
     }
-
 }
