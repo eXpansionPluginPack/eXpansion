@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_CombinedRecords;
 
 use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
 
 /**
  * Description of MetaData
@@ -33,11 +34,22 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         );
 
         $config = Config::getInstance();
+
+        $var = new BoundedTypeInt("nbTop", "Number of top records (always shown)", $config, false, false);
+        $var->setMin(1);
+        $var->setMax(20);
+        $var->setDefaultValue(5);
+        $this->registerVariable($var);
+
+        $var = new BoundedTypeInt("nbTotal", "Number of records displayed", $config, false, false);
+        $var->setMin(1);
+        $var->setMax(30);
+        $var->setDefaultValue(15);
+        $this->registerVariable($var);
+
         $var = new Boolean("isHorizontal", "Use horizontal (old) widget style", $config, false, false);
         $var->setDefaultValue(true);
         $this->registerVariable($var);
-
-
     }
 
 
