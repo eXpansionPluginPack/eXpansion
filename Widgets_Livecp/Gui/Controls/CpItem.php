@@ -2,7 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_Livecp\Gui\Controls;
 
-
 use ManiaLib\Gui\Elements\Label;
 use ManiaLive\Utilities\Time;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Gauge;

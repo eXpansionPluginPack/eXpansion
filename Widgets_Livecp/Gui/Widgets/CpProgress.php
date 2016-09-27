@@ -63,7 +63,6 @@ class CpProgress extends Widget
     }
 
     public function setData($playerData)
-
     {
         uasort($playerData, array($this, 'compare'));
 
@@ -73,7 +72,12 @@ class CpProgress extends Widget
                 break;
             }
 
-            $element = new CpItem($x, $this->storage->getPlayerObject($login), $data, $this->storage->currentMap->nbCheckpoints);
+            $element = new CpItem(
+                $x,
+                $this->storage->getPlayerObject($login),
+                $data,
+                $this->storage->currentMap->nbCheckpoints
+            );
             $this->frame->addComponent($element);
             $x++;
         }

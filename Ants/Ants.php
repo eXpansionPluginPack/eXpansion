@@ -17,7 +17,8 @@ class Ants extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
       //  $this->registerChatCommand("ants", "ants");
     }
 
-    public function ants() {
+    public function ants()
+    {
         Gui\Widget\AntsWidget::EraseAll();
         $window = Gui\Widget\AntsWidget::Create(null);
         $window->show();
