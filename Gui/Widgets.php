@@ -59,7 +59,7 @@ class Widgets extends \ManiaLib\Utils\Singleton
         GameInfos::GAMEMODE_LAPS => 5,
         GameInfos::GAMEMODE_CUP => 5);
 
-    public $CombinedPanel_posX = array(self::config_default => 120,
+    public $CombinedPanel_posX = array(self::config_default => -161,
         GameInfos::GAMEMODE_ROUNDS => -161,
         GameInfos::GAMEMODE_TEAM => -161,
         GameInfos::GAMEMODE_LAPS => -161,
@@ -79,7 +79,6 @@ class Widgets extends \ManiaLib\Utils\Singleton
         GameInfos::GAMEMODE_TEAM => 10,
         GameInfos::GAMEMODE_LAPS => 10,
         GameInfos::GAMEMODE_CUP => 10);
-
 
     public $LocalRecordsPanel_posX = array(self::config_default => 120,
         GameInfos::GAMEMODE_ROUNDS => -161,

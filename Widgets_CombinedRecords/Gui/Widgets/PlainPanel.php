@@ -4,8 +4,10 @@ namespace ManiaLivePlugins\eXpansion\Widgets_CombinedRecords\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\LocalRecords\Config;
+
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\Widgets_CombinedRecords\Widgets_CombinedRecords;
+use ManiaLivePlugins\eXpansion\Widgets_CombinedRecords\Config as CombiConfig;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls\Recorditem;
 
 class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\PlainPanel
@@ -95,8 +97,8 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
         $this->timeScript->setParam("acceptMaxPlayerRank", "Integer[Text]");
         $this->timeScript->setParam("useMaxPlayerRank", "False");
         $this->timeScript->setParam("acceptMinCp", 0);
-        $this->timeScript->setParam("nbFields", $this->nbFields);
-        $this->timeScript->setParam("nbFirstFields", $this->firstNbFields);
+        $this->timeScript->setParam("nbFields", CombiConfig::getInstance()->nbTotal);
+        $this->timeScript->setParam("nbFirstFields", CombiConfig::getInstance()->nbTop);
         $this->timeScript->setParam('varName', 'LocalTime1');
         $this->timeScript->setParam('getCurrentTimes', Widgets_CombinedRecords::$secondMap ? "True" : "False");
 

@@ -5,9 +5,9 @@ namespace ManiaLivePlugins\eXpansion\Widgets_CombinedRecords;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection;
 use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediPlayer;
+use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 use ManiaLivePlugins\eXpansion\Widgets_CombinedRecords\Gui\Widgets\CombiPanel;
 use ManiaLivePlugins\eXpansion\Widgets_CombinedRecords\Gui\Widgets\CombiPanel2;
-use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 
 class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -107,9 +107,13 @@ class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\Exp
                         $panelMain->setDirection("right");
                     }
                     $this->widgetIds["CombiPanel"] = $panelMain;
+                    $this->widgetIds["CombiPanel"]->setNbFields($this->config->nbTotal);
+                    $this->widgetIds["CombiPanel"]->setNbFirstFields($this->config->nbTop);
                     $this->widgetIds["CombiPanel"]->update();
                     $this->widgetIds["CombiPanel"]->show();
                 } else if (isset($localRecs[0])) {
+                    $localRecs[0]->setNbFields($this->config->nbTotal);
+                    $localRecs[0]->setNbFirstFields($this->config->nbTop);
                     $localRecs[0]->update();
                     $localRecs[0]->show($login);
                 }
@@ -122,9 +126,13 @@ class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\Exp
                         $panelScore->setVisibleLayer("scorestable");
                         $panelScore->setSizeX($this->panelSizeX);
                         $this->widgetIds["CombiPanel2"] = $panelScore;
+                        $this->widgetIds["CombiPanel2"]->setNbFields($this->config->nbTotal);
+                        $this->widgetIds["CombiPanel2"]->setNbFirstFields($this->config->nbTop);
                         $this->widgetIds["CombiPanel2"]->update();
                         $this->widgetIds["CombiPanel2"]->show();
                     } else if (isset($localRecs[0])) {
+                        $localRecs[0]->setNbFields($this->config->nbTotal);
+                        $localRecs[0]->setNbFirstFields($this->config->nbTop);
                         $localRecs[0]->update();
                         $localRecs[0]->show($login);
                     }
@@ -138,8 +146,10 @@ class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\Exp
     public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
     {
         if ($var->getConfigInstance() instanceof Config) {
-            Gui\Widgets\CombiPanel::EraseAll();
-            $this->updateCombiPanel();
+            if ($var->getName() == "isHorizontal") {
+                Gui\Widgets\CombiPanel::EraseAll();
+                $this->updateCombiPanel();
+            }
         }
     }
 
@@ -203,10 +213,6 @@ class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\Exp
         self::$raceOn = true;
     }
 
-    public function onEndRound()
-    {
-
-    }
 
     public function onDedimaniaGetRecords($data)
     {
