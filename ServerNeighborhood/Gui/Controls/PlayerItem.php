@@ -106,5 +106,5 @@ class PlayerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->icon_spec->setPosX($posX + $sizeX / 2 - $this->icon_spec->getSizeX() / 2);
     }
-    
+
 }

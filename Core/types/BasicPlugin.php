@@ -775,7 +775,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         final public function console($message)
         {
             $pieces = explode("\\", get_class($this));
-            Helper::log($message, array_slice($pieces,-3,2));
+            Helper::log($message, array_slice($pieces, -3, 2));
         }
 
         public function onSettingsChanged(Variable $var)

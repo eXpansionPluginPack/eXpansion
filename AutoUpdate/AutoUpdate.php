@@ -194,5 +194,4 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         return false;
     }
-
 }

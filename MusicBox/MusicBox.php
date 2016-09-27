@@ -311,7 +311,8 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->eXpChatSendServerMessage($text, null);
     }
 
-    public function musicList($login) {
+    public function musicList($login)
+    {
 
         if (Config::getInstance()->disableJukebox) {
             $this->eXpChatSendServerMessage("#music# Jukeboxing music is disabled.", $login);

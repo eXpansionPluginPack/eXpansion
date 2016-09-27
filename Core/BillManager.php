@@ -268,5 +268,4 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener
     {
 
     }
-
 }

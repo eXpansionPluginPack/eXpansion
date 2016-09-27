@@ -52,7 +52,7 @@ class MusicListWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $x = 0;
         foreach (self::$musicPlugin->getSongs() as $song) {
-            $action = $this->createAction(array($this, "queueSong"), ($x+1));
+            $action = $this->createAction(array($this, "queueSong"), ($x + 1));
             $this->pager->addSimpleItems(array(Gui::fixString($song->title) => -1,
                 Gui::fixString($song->artist) => -1,
                 Gui::fixString($song->genre) => -1,

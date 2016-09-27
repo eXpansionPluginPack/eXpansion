@@ -44,5 +44,4 @@ abstract class AbsControl extends \ManiaLivePlugins\eXpansion\Gui\Control
         $w->centerOnScreen();
         $w->show();
     }
-
 }

@@ -476,7 +476,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Parse a group
      *
      * @param string $groupName The groups name
-     * @param array  $value     Data from the csv
+     * @param array $value Data from the csv
      * @oaram bool   $isGuest   Is the group the guest group
      *
      * @return array
@@ -868,8 +868,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Add a command to the command tree.
      *
-     * @param string[] $commands  The commands tree
-     * @param string[] $cmdArray  The command to add
+     * @param string[] $commands The commands tree
+     * @param string[] $cmdArray The command to add
      * @param AdminCmd $comandObj The command to add.
      *
      * @return mixed
@@ -1084,7 +1084,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Create a new group
      *
-     * @param string $login2    The login if the user creating the group.
+     * @param string $login2 The login if the user creating the group.
      * @param string $groupName The name of the new group
      *
      * @throws \Exception
@@ -1101,7 +1101,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Removes a group.
      *
      * @param string $login The login if the user creating the group.
-     * @param Group $group   The group to be deleted
+     * @param Group $group The group to be deleted
      *
      * @throws \Exception
      */

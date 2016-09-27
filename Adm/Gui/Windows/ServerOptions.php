@@ -98,7 +98,6 @@ class ServerOptions extends Window
         $this->frameInputbox->addComponent($this->serverName);
 
 
-
         $this->serverCommentE = new TextEdit("serverCommentE", 96, 32);
         $this->serverCommentE->setId("commentFrom");
         $this->serverCommentE->setPosition(0, 6);
@@ -110,7 +109,7 @@ class ServerOptions extends Window
 
         $this->serverComment = new Inputbox("serverComment", 60, 26);
         $this->serverComment->setPosition(900, 900);
-         $this->addComponent($this->serverComment);
+        $this->addComponent($this->serverComment);
 
 
         // Players Min & Max goes to same row

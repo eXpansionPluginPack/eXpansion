@@ -26,5 +26,4 @@ class ActionDuration extends \Maniaplanet\DedicatedServer\Structures\AbstractStr
         $this->action = $action;
         $this->stamp = strtotime($duration);
     }
-
 }

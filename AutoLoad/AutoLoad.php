@@ -441,5 +441,4 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         return self::$allAvailablePlugins;
     }
-
 }

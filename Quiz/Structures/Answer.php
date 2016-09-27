@@ -14,6 +14,4 @@ class Answer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
         $this->answer = $answer;
         $this->value = $value;
     }
-
-
 }

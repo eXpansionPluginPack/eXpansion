@@ -154,5 +154,4 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         parent::destroy();
     }
-
 }

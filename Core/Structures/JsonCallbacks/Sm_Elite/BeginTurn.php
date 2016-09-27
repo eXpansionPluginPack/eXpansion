@@ -33,6 +33,4 @@ class BeginTurn extends RpcObject
 
     /** @var ScorePlayer[] */
     public $defendingPlayers = array();
-
 }
-

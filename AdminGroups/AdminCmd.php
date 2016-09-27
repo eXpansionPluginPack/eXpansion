@@ -226,5 +226,4 @@ class AdminCmd
     {
         $this->class = null;
     }
-
 }

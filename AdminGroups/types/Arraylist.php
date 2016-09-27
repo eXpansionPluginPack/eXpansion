@@ -32,5 +32,4 @@ class Arraylist extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker
     {
         return "A value of following (" . implode(",", $this->haystack) . ") was expected.";
     }
-
 }

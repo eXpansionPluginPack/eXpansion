@@ -72,9 +72,8 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $this->db->execute($q);
                 $q = "CREATE INDEX `uid`  ON exp_ratings` (uid, rating) COMMENT '' ALGORITHM DEFAULT LOCK DEFAULT";
                 $this->db->execute($q);
-            }
-            catch (\Exception $ex) {
-             $this->console("[MapRatings] There was error while changing your database structure to newer one, most likely the database is converted already!");
+            } catch (\Exception $ex) {
+                $this->console("[MapRatings] There was error while changing your database structure to newer one, most likely the database is converted already!");
             }
             $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Database\Database', 'setDatabaseVersion', 'exp_ratings', 2);
         }

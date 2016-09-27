@@ -95,5 +95,4 @@ class BasicList extends Variable
             return implode(",", $this->getRawValue());
         }
     }
-
 }

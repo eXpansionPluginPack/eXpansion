@@ -30,5 +30,5 @@ class RunCpElem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->setSize($sizeX + 5, $sizeY);
     }
-    
+
 }

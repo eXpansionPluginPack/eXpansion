@@ -26,9 +26,9 @@ class ConfirmDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->actionCancel = $this->createAction(array($this, "Cancel"));
 
 
-        $this->label = new Label(57,12);
+        $this->label = new Label(57, 12);
         $this->label->setPosition(3);
-        
+
         $this->mainFrame->addComponent($this->label);
 
         $this->ok = new OkButton();
@@ -55,9 +55,11 @@ class ConfirmDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onResize($oldX, $oldY);
     }
 
-    public function setText($text) {
+    public function setText($text)
+    {
         $this->label->setText($text);
     }
+
     public function setInvokeAction($action)
     {
         $this->action = $action;

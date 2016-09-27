@@ -33,7 +33,7 @@ class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->setStretchContentX($this->sizeX);
         $this->pager->setPosition(0, 4);
     }
-    
+
     public function populateList($callback, $text = "")
     {
         $this->storage = \ManiaLive\Data\Storage::getInstance();

@@ -24,5 +24,4 @@ class Boolean extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker
     {
         return "A boolean value or one of following (on, off, yes, no) was expected.";
     }
-
 }

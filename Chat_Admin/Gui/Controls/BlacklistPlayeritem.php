@@ -55,6 +55,4 @@ class BlacklistPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->sizeY = $sizeY;
         $this->setSize($sizeX, $sizeY);
     }
-
 }
-
