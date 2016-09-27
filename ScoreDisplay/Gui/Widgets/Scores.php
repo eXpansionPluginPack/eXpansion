@@ -75,7 +75,7 @@ class Scores extends Widget
         $this->frame->addComponent($team1Name);
 
         $this->points1 = new Label(18, 6);
-        $this->points1->setPosition(9,-2);
+        $this->points1->setPosition(9, -2);
         $this->points1->setAlign("center", "top");
         $this->points1->setText($this->counter[0]);
         $this->points1->setStyle("TextRaceChrono");
@@ -83,7 +83,7 @@ class Scores extends Widget
 
 
         $this->points2 = new Label(18, 6);
-        $this->points2->setPosition(9,-2);
+        $this->points2->setPosition(9, -2);
         $this->points2->setAlign("center", "top");
         $this->points2->setText($this->counter[1]);
         $this->points2->setStyle("TextRaceChrono");

@@ -251,5 +251,4 @@ class AroundMe extends Widget
             $this->timeScript->setParam("maxCp", -1);
         }
     }
-
 }

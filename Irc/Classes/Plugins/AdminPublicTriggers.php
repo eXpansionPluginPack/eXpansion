@@ -85,5 +85,4 @@ class AdminPublicTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Irc
             }
         }
     }
-
 }

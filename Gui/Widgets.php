@@ -81,7 +81,6 @@ class Widgets extends \ManiaLib\Utils\Singleton
         GameInfos::GAMEMODE_CUP => 10);
 
 
-
     public $LocalRecordsPanel_posX = array(self::config_default => 120,
         GameInfos::GAMEMODE_ROUNDS => -161,
         GameInfos::GAMEMODE_TEAM => -161,

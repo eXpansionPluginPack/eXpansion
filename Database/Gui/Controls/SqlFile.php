@@ -18,10 +18,10 @@ class SqlFile extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     /**
      *
-     * @param int      $indexNumber
+     * @param int $indexNumber
      * @param Database $controller
-     * @param string   $filename
-     * @param int      $sizeX
+     * @param string $filename
+     * @param int $sizeX
      */
     public function __construct($indexNumber, $controller, $filename, $sizeX)
     {

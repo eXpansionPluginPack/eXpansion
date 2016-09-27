@@ -40,5 +40,4 @@ class AntsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $script->setParam("antCount", $this->config->spriteCount);
         $this->registerScript($script);
     }
-
 }

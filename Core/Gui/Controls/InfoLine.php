@@ -10,7 +10,7 @@ namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
 class InfoLine extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-   
+
     protected $label;
 
     public function __construct($text)

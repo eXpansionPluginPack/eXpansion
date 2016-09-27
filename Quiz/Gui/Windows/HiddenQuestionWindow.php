@@ -122,7 +122,7 @@ class HiddenQuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
 
     public function Ok($login, $data)
     {
-        $data = explode(",", rtrim($data['boxOrder'],","));
+        $data = explode(",", rtrim($data['boxOrder'], ","));
         $order = array();
 
         foreach ($data as $value) {

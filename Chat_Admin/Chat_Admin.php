@@ -40,7 +40,6 @@ use Phine\Exception\Exception as Exception2;
  */
 class Chat_Admin extends ExpPlugin
 {
-
     /** @var integer $dynamicTime */
     private $dynamicTime = 0;
 
@@ -2054,5 +2053,4 @@ Other server might use the same blacklist file!!');
         GenericPlayerList::EraseAll();
         self::$showActions = null;
     }
-
 }

@@ -87,7 +87,8 @@ class Song extends Control implements OptimizedPagerElement
         parent::destroy();
     }
 
-    public function getNbTextColumns() {
+    public function getNbTextColumns()
+    {
         return 3;
     }
 

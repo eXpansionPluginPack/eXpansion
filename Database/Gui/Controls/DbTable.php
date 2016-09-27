@@ -26,9 +26,9 @@ class DbTable extends Control
 
     /**
      *
-     * @param int    $indexNumber
+     * @param int $indexNumber
      * @param string $tableName
-     * @param int    $sizeX
+     * @param int $sizeX
      */
     public function __construct($indexNumber, $tableName, $sizeX)
     {

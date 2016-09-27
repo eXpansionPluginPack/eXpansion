@@ -118,7 +118,7 @@ class PBPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
             $this->rank->setPosX(1);
         }
     }
-    
+
     public function destroy()
     {
         $this->destroyComponents();

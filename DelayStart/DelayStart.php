@@ -30,14 +30,13 @@ class DelayStart extends ExpPlugin
     {
 
         if ($this->tick) {
-            $remain = (time() - $this->startTime  ) % 5;
+            $remain = (time() - $this->startTime) % 5;
             if ($remain == 0) {
                 $time = round(TimeConversion::MStoTM(Config::GetInstance()->delay) / 1000) + ($this->startTime - time());
 
                 if ($time != 0) {
                     $this->eXpChatSendServerMessage(eXpGetMessage("#player#Will start in #variable#%s#player# sec"), null, array(strval($time)));
-                }
-                else {
+                } else {
                     $this->eXpChatSendServerMessage(eXpGetMessage('#player# Start of match!'), null);
                 }
             }
@@ -59,7 +58,7 @@ class DelayStart extends ExpPlugin
         switch ($transition) {
             case "Synchro -> Play":
                 if (!$this->connection->getWarmUp()) {
-                    $this->eXpChatSendServerMessage(eXpGetMessage("#player#Match start will be delayed #variable#%s"), null,array(Config::getInstance()->delay));
+                    $this->eXpChatSendServerMessage(eXpGetMessage("#player#Match start will be delayed #variable#%s"), null, array(Config::getInstance()->delay));
                     $this->startTime = time();
                     $this->tick = true;
 

@@ -13,5 +13,4 @@ class Callback
         $this->method = $method;
         $this->params = $params;
     }
-
 }

@@ -190,5 +190,4 @@ class AdminPrivateTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Ir
     {
 
     }
-
 }

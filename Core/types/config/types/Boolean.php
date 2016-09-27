@@ -65,5 +65,4 @@ class Boolean extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
         return true;
 
     }
-
 }

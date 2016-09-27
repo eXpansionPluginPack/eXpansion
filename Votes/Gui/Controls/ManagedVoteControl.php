@@ -52,7 +52,7 @@ class ManagedVoteControl extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->frame->addComponent(clone $spacer);
 
-        $this->voters = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown($vote->command . "_voters", array("Select", "Active Players", "Players", "Everybody"), ($vote->voters+1), 20);
+        $this->voters = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown($vote->command . "_voters", array("Select", "Active Players", "Players", "Everybody"), ($vote->voters + 1), 20);
         $this->voters->setPosY(-1);
         $this->frame->addComponent($this->voters);
 

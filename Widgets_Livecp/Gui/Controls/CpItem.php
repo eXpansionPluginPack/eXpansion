@@ -37,7 +37,7 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->cpIndex->setStyle("TextRaceChat");
         $this->cpIndex->setTextSize(1);
         $this->cpIndex->setPosX(5);
-        $this->cpIndex->setText("CP-" . ($data->cpIndex+1));
+        $this->cpIndex->setText("CP-" . ($data->cpIndex + 1));
         $this->cpIndex->setTextColor("f90");
         $this->addComponent($this->cpIndex);
 
@@ -60,7 +60,7 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         // gauge
         $this->gauge = new Gauge(40, 6);
-        $this->gauge->setPosition(3,0);
+        $this->gauge->setPosition(3, 0);
 
         $divGrad = 1.0;
         if ($totalCps > 1) {

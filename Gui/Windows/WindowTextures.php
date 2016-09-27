@@ -69,7 +69,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
         $this->_bgeff->setColorize($config->windowBackgroundColor);
         $this->_windowFrame->addComponent($this->_bgeff);
-        
+
         $this->_bottomcenter = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
         $this->_bottomcenter->setAlign("left", "top");
         $this->_bottomcenter->setImage("file://Media/Manialinks/Common/Home/maniahome-title.dds", true);

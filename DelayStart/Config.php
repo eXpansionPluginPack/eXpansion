@@ -4,6 +4,6 @@ namespace ManiaLivePlugins\eXpansion\DelayStart;
 
 class Config extends \ManiaLib\Utils\Singleton
 {
-    /** @var string  */
+    /** @var string */
     public $delay = "00:05";
 }

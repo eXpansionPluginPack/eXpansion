@@ -12,6 +12,4 @@ class BeginMatch extends RpcObject
 
     /** var integer */
     public $matchNumber = 0;
-
 }
-

@@ -85,7 +85,7 @@ class ContextMenu extends Control implements ScriptedContainer
             $this->frame->addComponent($label);
             $i++;
         }
-        
+
         Gui::$items[$this->hash] = $this->items;
         Gui::$callbacks[$this->hash] = $this->callback;
         parent::onDraw();

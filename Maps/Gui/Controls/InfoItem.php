@@ -48,7 +48,7 @@ class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
 // manialive 3.1 override to do nothing.
-   public  function destroy()
+    public function destroy()
     {
 
     }
