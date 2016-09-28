@@ -17,5 +17,4 @@ class Query
         $this->params = $params;
         $this->from = $from;
     }
-
 }

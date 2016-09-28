@@ -70,5 +70,4 @@ class QuadConfigVariable extends MultiField
         $this->registerNewType(self::VAR_POS_OFFSET_X, $floatType);
         $this->registerNewType(self::VAR_POS_OFFSET_Y, $floatType);
     }
-
-} 
+}

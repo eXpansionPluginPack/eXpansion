@@ -33,5 +33,4 @@ class TypeInt extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
     {
         return (int)$value;
     }
-
 }

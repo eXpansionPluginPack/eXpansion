@@ -24,6 +24,4 @@ class OnShoot extends RpcObject
 
     /** @var Event_OnShoot */
     public $event;
-
 }
-

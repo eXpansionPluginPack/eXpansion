@@ -80,7 +80,6 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->bg = new ListBackGround($indexNumber, 120, 4);
         $this->addComponent($this->bg);
-        $guiConfig = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
 
         $titleCompatible = $plugin->checkTitleCompatibility();
         $gameCompatible = $plugin->checkGameCompatibility();
@@ -102,7 +101,6 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->addComponent($this->button_running);
 
         $this->label_name = new Label(40, 4);
-        //$this->label_name->setScale(0.8);
         $this->label_name->setTextSize(2);
         $this->label_name->setText($plugin->getName() == "" ? $plugin->getPlugin() : $plugin->getName());
         $this->label_name->setPosition(8, 3);
@@ -111,7 +109,7 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label_author = new Label(40, 4);
         $this->label_author->setStyle("TextCardScores2");
         $this->label_author->setTextSize(1);
-        //$this->label_author->setScale(0.8);
+
         $this->label_author->setText('$i' . $plugin->getDescription());
         $this->label_author->setPosition(8, -0.5);
         $this->addComponent($this->label_author);
@@ -138,7 +136,12 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->button_otherComp = new Button(7, 7);
         $this->button_otherComp->setIcon('Icons64x64_1', 'GenericButton');
-        $this->button_otherComp->setDescription(__($this->getOtherDescriptionText($otherCompatible), $login), 100, 5, sizeof($otherCompatible) + 1);
+        $this->button_otherComp->setDescription(
+            __($this->getOtherDescriptionText($otherCompatible), $login),
+            100,
+            5,
+            sizeof($otherCompatible) + 1
+        );
         if (empty($otherCompatible)) {
             $this->button_otherComp->colorize('090');
         } else {
@@ -147,7 +150,6 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->addComponent($this->button_otherComp);
 
         $this->button_more = new Button(22, 7);
-        //$this->button_more->setIcon("Icons128x128_1", "Options");
         $this->button_more->setText(__("Settings", $login));
         $this->button_more->setAction($this->createAction(array($this, 'showPluginSettings')));
         $configs = $this->configManger->getGroupedVariables($this->metaData->getPlugin());
@@ -250,5 +252,4 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $win->populate($this->configManger, 'General', $this->metaData->getPlugin());
         $win->show();
     }
-
 }

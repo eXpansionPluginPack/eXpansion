@@ -5,7 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Core\Events;
 class ScriptmodeEvent extends \ManiaLive\Event\Event
 {
     /*
-     *  when in need to add more suppport for events, just add constant missing event constant here and implement method at the interface :)
+     *  when in need to add more suppport for events,
+     *  just add constant missing event constant here and implement method at the interface :)
      */
 
     const LibXmlRpc_BeginMatch = 1;
@@ -167,5 +168,4 @@ class ScriptmodeEvent extends \ManiaLive\Event\Event
             call_user_func_array(array($listener, self::$const[$this->onWhat]), $params);
         }
     }
-
 }

@@ -40,5 +40,4 @@ class RpcObject extends AbstractStructure
             $this->{$key} = $value;
         }
     }
-
 }

@@ -96,7 +96,12 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
         if (!empty($entries['item'])) {
             // do some magic
             $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($login);
-            \ManiaLive\Gui\ActionHandler::getInstance()->onPlayerManialinkPageAnswer(intval($player->playerId), $login, intval($entries['item']), array());
+            \ManiaLive\Gui\ActionHandler::getInstance()->onPlayerManialinkPageAnswer(
+                intval($player->playerId),
+                $login,
+                intval($entries['item']),
+                array()
+            );
         }
     }
 
@@ -206,5 +211,4 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
 
         return $this->myScript;
     }
-
 }

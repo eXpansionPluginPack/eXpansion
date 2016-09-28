@@ -171,8 +171,14 @@ class GBXBaseFetcher
     protected function readData($len)
     {
         if ($this->_gbxptr + $len > $this->_gbxlen) {
-            $this->errorOut(sprintf('Insufficient data for %d bytes at pos 0x%04X',
-                $len, $this->_gbxptr), 2);
+            $this->errorOut(
+                sprintf(
+                    'Insufficient data for %d bytes at pos 0x%04X',
+                    $len,
+                    $this->_gbxptr
+                ),
+                2
+            );
         }
         $data = '';
         while ($len-- > 0) {
@@ -223,8 +229,10 @@ class GBXBaseFetcher
         $len &= 0x7FFFFFFF;
         if ($len <= 0 || $len >= 0x12000) {  // for large XML & Data blocks
             if ($len != 0) {
-                $this->errorOut(sprintf('Invalid string length %d (0x%04X) at pos 0x%04X',
-                    $len, $len, $gbxptr), 3);
+                $this->errorOut(
+                    sprintf('Invalid string length %d (0x%04X) at pos 0x%04X', $len, $len, $gbxptr),
+                    3
+                );
             }
         }
         $data = $this->readData($len);
@@ -340,9 +348,14 @@ class GBXBaseFetcher
         $xml = preg_replace('/&(?!(?:amp|quot|apos|lt|gt);)/', '&amp;', $this->xml);
 
         if (!xml_parse($xml_parser, utf8_encode($xml), true)) {
-            $this->errorOut(sprintf('XML chunk parse error: %s at line %d',
-                xml_error_string(xml_get_error_code($xml_parser)),
-                xml_get_current_line_number($xml_parser)), 12);
+            $this->errorOut(
+                sprintf(
+                    'XML chunk parse error: %s at line %d',
+                    xml_error_string(xml_get_error_code($xml_parser)),
+                    xml_get_current_line_number($xml_parser)
+                ),
+                12
+            );
         }
 
         xml_parser_free($xml_parser);
@@ -351,8 +364,7 @@ class GBXBaseFetcher
     /**
      * Check GBX header, main class ID & header block
      *
-     * @param Array $classes
-     *              The main class IDs accepted for this GBX
+     * @param array $classes The main class IDs accepted for this GBX
      *
      * @return Size of GBX header block
      */
@@ -379,8 +391,9 @@ class GBXBaseFetcher
 
         // get header size
         $headerSize = $this->readInt32();
-        $this->debugLog(sprintf('GBX header block size: %d (%.1f KB)',
-            $headerSize, $headerSize / 1024));
+        $this->debugLog(
+            sprintf('GBX header block size: %d (%.1f KB)', $headerSize, $headerSize / 1024)
+        );
 
         return $headerSize;
     }  // checkHeader
@@ -424,16 +437,26 @@ class GBXBaseFetcher
             } else {
                 $name = 'UNKNOWN';
             }
-            $this->debugLog(sprintf('GBX chunk %2d  %-8s  Id  0x%08X  Offset  0x%06X  Size %6d',
-                $i, $name, $chunkId, $chunkOffset, $chunkSize));
+            $this->debugLog(
+                sprintf(
+                    'GBX chunk %2d  %-8s  Id  0x%08X  Offset  0x%06X  Size %6d',
+                    $i,
+                    $name,
+                    $chunkId,
+                    $chunkOffset,
+                    $chunkSize
+                )
+            );
             $chunkOffset += $chunkSize;
         }
 
         //$this->debugLog(print_r($chunksList, true));
         $totalSize = $chunkOffset - $chunkStart + 4;  // numChunks
         if ($headerSize != $totalSize) {
-            $this->errorOut(sprintf('Chunk list size mismatch: %d <> %d',
-                $headerSize, $totalSize), 10);
+            $this->errorOut(
+                sprintf('Chunk list size mismatch: %d <> %d', $headerSize, $totalSize),
+                10
+            );
         }
 
         return $chunksList;

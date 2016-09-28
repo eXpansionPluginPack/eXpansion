@@ -42,5 +42,4 @@ class Xml extends \ManiaLive\Gui\Elements\Xml
             return;
         }
     }
-
 }

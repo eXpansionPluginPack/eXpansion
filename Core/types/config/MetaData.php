@@ -457,7 +457,9 @@ abstract class MetaData
                 /**
                  * @var Storage $storage
                  */
-                if ($this->checkTitleCompatibility(\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId)) {
+                if ($this->checkTitleCompatibility(
+                    \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId)
+                ) {
                     return true;
                 }
                 $titleName = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->simpleEnviTitle;
@@ -501,5 +503,4 @@ abstract class MetaData
 
         return $this->checkGameCompatibility() && $this->checkTitleCompatibility() && empty($errors);
     }
-
 }

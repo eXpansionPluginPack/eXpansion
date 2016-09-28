@@ -216,5 +216,4 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
     {
         return $this->values[$key];
     }
-
 }

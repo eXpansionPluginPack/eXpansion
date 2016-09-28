@@ -13,5 +13,4 @@ interface MultipleScriptedContainer
      * @return Script[] All the scripts this component needs
      */
     public function getScripts();
-
 }

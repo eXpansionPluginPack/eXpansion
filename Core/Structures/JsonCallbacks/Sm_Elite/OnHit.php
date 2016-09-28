@@ -24,6 +24,4 @@ class OnHit extends RpcObject
 
     /** @var Event_OnHit */
     public $event;
-
 }
-

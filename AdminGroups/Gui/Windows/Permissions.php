@@ -78,8 +78,9 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $item[1]->destroy();
             }
         }
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->pager->clearItems();
         $this->permissions = array();
@@ -108,7 +109,11 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             }
 
             $this->permissions[$key] = array($cPermission, $cInherit);
-            $this->items[$x] = new \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem($x, $cPermission, $cInherit);
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem(
+                $x,
+                $cPermission,
+                $cInherit
+            );
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
@@ -122,12 +127,14 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $permission = $val[0];
 
             if ($inheritance == null) {
-                $newPermissions[$key] = $permission->getStatus() == false ? AdminGroups::UNKNOWN_PERMISSION : AdminGroups::HAVE_PERMISSION;
+                $newPermissions[$key] = $permission->getStatus() == false ?
+                    AdminGroups::UNKNOWN_PERMISSION : AdminGroups::HAVE_PERMISSION;
             } else {
                 if ($inheritance->getStatus()) {
                     $newPermissions[$key] = AdminGroups::UNKNOWN_PERMISSION;
                 } else {
-                    $newPermissions[$key] = $permission->getStatus() == false ? AdminGroups::NO_PERMISSION : AdminGroups::HAVE_PERMISSION;
+                    $newPermissions[$key] = $permission->getStatus() == false ?
+                        AdminGroups::NO_PERMISSION : AdminGroups::HAVE_PERMISSION;
                 }
             }
         }
@@ -157,8 +164,9 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $item[1]->destroy();
             }
         }
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->permissions = null;
         $this->items = array();
@@ -171,6 +179,5 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         parent::destroy();
     }
-
 }
 

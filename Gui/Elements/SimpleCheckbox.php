@@ -69,5 +69,4 @@ class SimpleCheckbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         parent::onIsRemoved($target);
         parent::destroy();
     }
-
 }

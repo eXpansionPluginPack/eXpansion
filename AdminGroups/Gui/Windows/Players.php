@@ -76,8 +76,9 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function onShow()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
         $this->pager->clearItems();
         $this->items = array();
 
@@ -149,10 +150,10 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->login_add->destroy();
         $this->button_add->destroy();
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
         $this->items = array();
         parent::destroy();
     }
-
 }

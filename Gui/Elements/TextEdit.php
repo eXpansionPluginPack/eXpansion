@@ -77,17 +77,19 @@ class TextEdit extends \ManiaLib\Gui\Element
 
     protected function postFilter()
     {
-        if ($this->default !== null)
+        if ($this->default !== null) {
             $this->xml->setAttribute('default', $this->default);
+        }
 
-        if ($this->textformat !== null)
+        if ($this->textformat !== null) {
             $this->xml->setAttribute('textformat', $this->textformat);
+        }
 
-        if ($this->name !== null)
+        if ($this->name !== null) {
             $this->xml->setAttribute('name', $this->name);
+        }
 
         $this->xml->setAttribute('showlinenumbers', $this->showlinenumbers ? 1 : 0);
         $this->xml->setAttribute('autonewline', $this->autonewline ? 1 : 0);
     }
-
 }

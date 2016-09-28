@@ -101,5 +101,4 @@ class WidgetButton extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         $this->button->setAction($action);
     }
-
 }

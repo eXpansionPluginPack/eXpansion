@@ -179,7 +179,7 @@ class ServerOptions extends Window
         $this->frameInputbox->addComponent($this->refereePass);
     }
 
-// Generate all checkboxes
+    // Generate all checkboxes
     private function checkboxes()
     {
         /** @var ServerOptions2 */
@@ -192,8 +192,9 @@ class ServerOptions extends Window
 
         // checkbox for public server
         $publicServer = true;
-        if ($server->hideServer > 0)
+        if ($server->hideServer > 0) {
             $publicServer = false;  // 0 = visible, 1 = hidden 2 = hidden from nations
+        }
         $this->cbPublicServer = new Checkbox(4, 4, 50);
         $this->cbPublicServer->setStatus($publicServer);
         $this->cbPublicServer->setText(__("Show Server in public server list", $this->getRecipient()));
@@ -335,20 +336,33 @@ class ServerOptions extends Window
             }
         }
 
-        $serverOptions = Array(
-            "Name" => !AdminGroups::hasPermission($login, Permission::SERVER_NAME) ? $server->name : $args['serverName'],
-            "Comment" => !AdminGroups::hasPermission($login, Permission::SERVER_COMMENT) ? $server->comment : $args['serverComment'],
-            "Password" => !AdminGroups::hasPermission($login, Permission::SERVER_PASSWORD) ? $server->password : $args['serverPass'],
-            "PasswordForSpectator" => !AdminGroups::hasPermission($login, Permission::SERVER_SPECPWD) ? $server->passwordForSpectator : $args['serverSpecPass'],
-            "NextCallVoteTimeOut" => !AdminGroups::hasPermission($login, Permission::SERVER_VOTES) ? $server->nextCallVoteTimeOut : intval($server->nextCallVoteTimeOut),
-            "CallVoteRatio" => !AdminGroups::hasPermission($login, Permission::SERVER_VOTES) ? $server->callVoteRatio : floatval($server->callVoteRatio),
-            "RefereePassword" => !AdminGroups::hasPermission($login, Permission::SERVER_REFPWD) ? $server->refereePassword : $args['refereePass'],
-            "IsP2PUpload" => !AdminGroups::hasPermission($login, Permission::SERVER_GENERIC_OPTIONS) ? $server->isP2PUpload : $this->cbAllowp2pUp->getStatus(),
-            "IsP2PDownload" => !AdminGroups::hasPermission($login, Permission::SERVER_GENERIC_OPTIONS) ? $server->isP2PDownload : $this->cbAllowp2pDown->getStatus(),
-            "AllowMapDownload" => !AdminGroups::hasPermission($login, Permission::SERVER_GENERIC_OPTIONS) ? $server->allowMapDownload : $this->cbAllowMapDl->getStatus(),
-            "NextMaxPlayers" => !AdminGroups::hasPermission($login, Permission::SERVER_MAXPLAYER) ? $server->nextMaxPlayers : intval($args['maxPlayers']),
-            "NextMaxSpectators" => !AdminGroups::hasPermission($login, Permission::SERVER_MAXSPEC) ? $server->nextMaxSpectators : intval($args['maxSpec']),
-            "RefereeMode" => !AdminGroups::hasPermission($login, 'server_refmode') ? $server->refereeMode : $this->cbReferee->getStatus(),
+        $serverOptions = array(
+            "Name" => !AdminGroups::hasPermission($login, Permission::SERVER_NAME)
+                ? $server->name : $args['serverName'],
+            "Comment" => !AdminGroups::hasPermission($login, Permission::SERVER_COMMENT)
+                ? $server->comment : $args['serverComment'],
+            "Password" => !AdminGroups::hasPermission($login, Permission::SERVER_PASSWORD)
+                ? $server->password : $args['serverPass'],
+            "PasswordForSpectator" => !AdminGroups::hasPermission($login, Permission::SERVER_SPECPWD)
+                ? $server->passwordForSpectator : $args['serverSpecPass'],
+            "NextCallVoteTimeOut" => !AdminGroups::hasPermission($login, Permission::SERVER_VOTES)
+                ? $server->nextCallVoteTimeOut : intval($server->nextCallVoteTimeOut),
+            "CallVoteRatio" => !AdminGroups::hasPermission($login, Permission::SERVER_VOTES)
+                ? $server->callVoteRatio : floatval($server->callVoteRatio),
+            "RefereePassword" => !AdminGroups::hasPermission($login, Permission::SERVER_REFPWD)
+                ? $server->refereePassword : $args['refereePass'],
+            "IsP2PUpload" => !AdminGroups::hasPermission($login, Permission::SERVER_GENERIC_OPTIONS)
+                ? $server->isP2PUpload : $this->cbAllowp2pUp->getStatus(),
+            "IsP2PDownload" => !AdminGroups::hasPermission($login, Permission::SERVER_GENERIC_OPTIONS)
+                ? $server->isP2PDownload : $this->cbAllowp2pDown->getStatus(),
+            "AllowMapDownload" => !AdminGroups::hasPermission($login, Permission::SERVER_GENERIC_OPTIONS)
+                ? $server->allowMapDownload : $this->cbAllowMapDl->getStatus(),
+            "NextMaxPlayers" => !AdminGroups::hasPermission($login, Permission::SERVER_MAXPLAYER)
+                ? $server->nextMaxPlayers : intval($args['maxPlayers']),
+            "NextMaxSpectators" => !AdminGroups::hasPermission($login, Permission::SERVER_MAXSPEC)
+                ? $server->nextMaxSpectators : intval($args['maxSpec']),
+            "RefereeMode" => !AdminGroups::hasPermission($login, 'server_refmode')
+                ? $server->refereeMode : $this->cbReferee->getStatus(),
             "AutoSaveReplays" => $this->e['AutosaveReplays']->getStatus(),
             "AutoSaveValidationReplays" => $this->e['AutosaveValidation']->getStatus(),
             "DisableHorns" => $this->e['DisableHorns']->getStatus(),
@@ -379,5 +393,4 @@ class ServerOptions extends Window
     {
         $this->Erase($this->getRecipient());
     }
-
 }

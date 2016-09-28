@@ -47,5 +47,4 @@ class SpiderWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $script->setParam("spiderCount", $this->config->spriteCount);
         $this->registerScript($script);
     }
-
 }

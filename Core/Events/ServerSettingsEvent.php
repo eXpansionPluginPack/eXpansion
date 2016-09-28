@@ -27,5 +27,4 @@ class ServerSettingsEvent extends \ManiaLive\Event\Event
 
         }
     }
-
 }

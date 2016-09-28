@@ -38,5 +38,4 @@ class PlayerEvent extends \ManiaLive\Event\Event
                 break;
         }
     }
-
 }

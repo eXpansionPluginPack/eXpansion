@@ -297,7 +297,6 @@ class Webaccess
 
         return array($num, $bad);
     }
-
 }
 
 // usefull datas to handle received headers
@@ -1445,7 +1444,6 @@ if (!function_exists('gzdecode') && function_exists('gzinflate')) {
 
         return $data;
     }
-
 }
 
 function urlsafe_base64_encode($input)

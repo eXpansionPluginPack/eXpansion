@@ -24,6 +24,4 @@ class OnNearMiss extends RpcObject
 
     /** @var Event_OnNearMiss */
     public $event;
-
 }
-

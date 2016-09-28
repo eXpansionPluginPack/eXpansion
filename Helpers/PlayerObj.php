@@ -20,10 +20,12 @@ class PlayerObj
     public static function parseSpecStatus($spectatorInfo)
     {
         $number = 00000;
-        if (is_object($spectatorInfo))
+        if (is_object($spectatorInfo)) {
             $number = $spectatorInfo->spectatorStatus;
-        if (is_numeric($spectatorInfo))
+        }
+        if (is_numeric($spectatorInfo)) {
             $number = $spectatorInfo;
+        }
         $obj = new \Maniaplanet\DedicatedServer\Structures\Player();
         $obj->currentTargetId = floor($number / 10000);
         $obj->autoTarget = intval(substr($number, -4, 1));
@@ -33,5 +35,4 @@ class PlayerObj
 
         return $obj;
     }
-
 }

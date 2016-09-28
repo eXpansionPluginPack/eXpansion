@@ -25,5 +25,4 @@ class NetStat extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
         $this->latestNetworkActivity = $player->latestNetworkActivity;
         $this->ipAddress = $player->iPAddress;
     }
-
 }

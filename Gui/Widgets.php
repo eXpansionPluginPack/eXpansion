@@ -179,5 +179,4 @@ class Widgets extends \ManiaLib\Utils\Singleton
 
     public $AroundMePanel_posX = array(self::config_default => -15);
     public $AroundMePanel_posY = array(self::config_default => -70);
-
 }

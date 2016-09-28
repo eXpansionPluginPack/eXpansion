@@ -92,8 +92,9 @@ class Scoretable extends \ManiaLive\Gui\Window
     public function prev($login)
     {
         $this->page--;
-        if ($this->page < 0)
+        if ($this->page < 0) {
             $this->page = 0;
+        }
 
         $this->redraw($login);
     }
@@ -141,12 +142,10 @@ class Scoretable extends \ManiaLive\Gui\Window
         }
     }
 
-    public
-    function setData($scores, $limit, $winners)
+    public function setData($scores, $limit, $winners)
     {
         $this->scores = $scores;
         $this->limit = $limit;
         $this->winners = $winners;
     }
-
 }

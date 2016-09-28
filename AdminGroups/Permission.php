@@ -65,5 +65,4 @@ class Permission
     const QUIZ_ADMIN = "quiz_admin";
 
     const LOCAL_RECORDS_DELETE = 'localRecords_delete';
-
 }

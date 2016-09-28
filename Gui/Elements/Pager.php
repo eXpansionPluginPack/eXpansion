@@ -74,9 +74,6 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
 
         $this->pager->setSize($this->sizeX - 6, $this->sizeY);
 
-        // $this->pager->setAttribute("clip","1");
-        // $this->pager->setAttribute("clipsizen", ($this->sizeX - 6)." ". $this->sizeY);
-
         $this->myScript->setParam("pagerSizeY", $this->sizeY);
 
         $this->scroll->setPosition($this->sizeX - 3, 0);
@@ -88,7 +85,9 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
 
         foreach ($this->items as $item) {
             $scale = $item->getScale();
-            if ($scale == "") $scale = 1;
+            if ($scale == "") {
+                $scale = 1;
+            }
 
             $item->setSizeX($this->sizeX / $scale - 4);
         }
@@ -102,7 +101,9 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
     public function addItem(\ManiaLib\Gui\Component $component)
     {
         $scale = $component->getScale();
-        if ($scale == "") $scale = 1;
+        if ($scale == "") {
+            $scale = 1;
+        }
         $component->setSizeX($this->sizeX / $scale - 8);
         $component->setAlign("left", "top");
         if ($component->getSizeY() > 0) {
@@ -155,5 +156,4 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
 
         return $this->myScript;
     }
-
 }

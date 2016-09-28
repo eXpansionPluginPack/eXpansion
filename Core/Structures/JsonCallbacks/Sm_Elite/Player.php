@@ -34,5 +34,4 @@ class Player extends ManiaLiveDedicatedApiStructuresAbstractStructure
 
     /** @var Array[][][] */
     public $position = array();
-
 }

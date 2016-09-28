@@ -46,5 +46,4 @@ class Singletons extends Singleton
 
         return $this->connection;
     }
-
 }

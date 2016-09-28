@@ -67,5 +67,4 @@ class MultiField extends Variable
     {
         return true;
     }
-
 }

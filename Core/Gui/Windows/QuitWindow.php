@@ -52,5 +52,4 @@ class QuitWindow
 
         return Manialink::render(true);
     }
-
 }

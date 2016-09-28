@@ -148,5 +148,4 @@ interface ScriptmodeEventListener
     function LibXmlRpc_TeamsMode($value);
 
     function UI_Properties($value);
-
 }

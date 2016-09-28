@@ -96,5 +96,4 @@ class Netstat extends Window
         parent::destroy();
         Dispatcher::unregister(TickEvent::getClass(), $this);
     }
-
 }

@@ -65,5 +65,4 @@ class Timer
 
         return 0;
     }
-
 }

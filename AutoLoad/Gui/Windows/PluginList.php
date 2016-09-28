@@ -188,7 +188,10 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 continue;
             }
 
-            if (!empty($this->value_group) && $this->value_group != "All" && !in_array($this->value_group, $metaData->getGroups())) {
+            if (!empty($this->value_group)
+                && $this->value_group != "All"
+                && !in_array($this->value_group, $metaData->getGroups())
+            ) {
                 continue;
             }
 
@@ -198,7 +201,13 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             }
 
             $metaData->checkAll();
-            $control = new Plugin($i++, $autoLoader, $metaData, $this->getRecipient(), $this->pluginHandler->isLoaded($metaData->getPlugin()));
+            $control = new Plugin(
+                $i++,
+                $autoLoader,
+                $metaData,
+                $this->getRecipient(),
+                $this->pluginHandler->isLoaded($metaData->getPlugin())
+            );
             $this->items[] = $control;
             $this->pagerFrame->addItem($control);
         }
@@ -238,5 +247,4 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->select_group->setSelected($params['group']);
         $this->redraw($login);
     }
-
 }

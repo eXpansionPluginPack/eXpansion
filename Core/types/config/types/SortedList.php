@@ -46,6 +46,8 @@ class SortedList extends BasicList
      * Removes the value at the index and shifts all elements in array to fill in the gap
      *
      * @param int $index The index at which the value must be removed
+     *
+     * @return boolean
      */
     public function removeValue($index)
     {
@@ -89,5 +91,4 @@ class SortedList extends BasicList
                 break;
         }
     }
-
 }

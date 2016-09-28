@@ -72,7 +72,6 @@ class RecordCps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $this->label_rank->setSizeX($scaledSizes[0]);
         $this->label_nick->setSizeX($scaledSizes[1]);
-        //	$this->label_score->setSizeX($scaledSizes[2]);
 
         $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 12);
         foreach ($this->items as $item) {
@@ -84,7 +83,6 @@ class RecordCps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->label_rank->setText(__(LocalRecords::$txt_rank, $this->getRecipient()));
         $this->label_nick->setText(__(LocalRecords::$txt_nick, $this->getRecipient()));
-        //	$this->label_score->setText(__("Cps", $this->getRecipient()));
     }
 
     public function destroy()
@@ -171,5 +169,4 @@ class RecordCps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $x++;
         }
     }
-
 }

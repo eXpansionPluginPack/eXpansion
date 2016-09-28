@@ -48,5 +48,4 @@ class Tab extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

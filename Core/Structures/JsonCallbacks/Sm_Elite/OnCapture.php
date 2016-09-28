@@ -24,6 +24,4 @@ class OnCapture extends RpcObject
 
     /** @var Event_OnCapture */
     public $event;
-
 }
-

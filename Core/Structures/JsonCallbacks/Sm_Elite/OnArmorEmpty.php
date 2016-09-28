@@ -24,6 +24,4 @@ class OnArmorEmpty extends RpcObject
 
     /** @var Event_OnArmorEmpty */
     public $event;
-
 }
-

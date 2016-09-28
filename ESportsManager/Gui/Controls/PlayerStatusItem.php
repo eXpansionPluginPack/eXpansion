@@ -45,14 +45,20 @@ class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control
             if ($player->player->teamId === 0) {
                 $this->team->setStyle("BgRaceScore2");
                 $this->team->setSubStyle("HandleBlue");
-                if ($isAdmin)
-                    $this->team->setAction(\ManiaLivePlugins\eXpansion\ESportsManager\Gui\Widgets\MatchReady::$actions['joinTeam1']);
+                if ($isAdmin) {
+                    $this->team->setAction(
+                        \ManiaLivePlugins\eXpansion\ESportsManager\Gui\Widgets\MatchReady::$actions['joinTeam1']
+                    );
+                }
             }
             if ($player->player->teamId === 1) {
                 $this->team->setStyle("BgRaceScore2");
                 $this->team->setSubStyle("HandleRed");
-                if ($isAdmin)
-                    $this->team->setAction(\ManiaLivePlugins\eXpansion\ESportsManager\Gui\Widgets\MatchReady::$actions['joinTeam0']);
+                if ($isAdmin) {
+                    $this->team->setAction(
+                        \ManiaLivePlugins\eXpansion\ESportsManager\Gui\Widgets\MatchReady::$actions['joinTeam0']
+                    );
+                }
             }
         }
         $this->frame->addComponent($this->team);
@@ -61,7 +67,6 @@ class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(4, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-        //$this->frame->addComponent($spacer);
 
         $this->label = new \ManiaLib\Gui\Elements\Label(40, 4);
         $this->label->setAlign('left', 'center');

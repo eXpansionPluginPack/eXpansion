@@ -57,5 +57,4 @@ class Tray extends Script
     {
         $this->setParam("posXMax", $pos);
     }
-
 }

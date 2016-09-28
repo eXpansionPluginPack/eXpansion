@@ -31,7 +31,19 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->inputbox->setSize(100, 6);
         $this->frm->addComponent($this->inputbox);
 
-        $items = array("30 seconds", "5 min", "10 min", "15 min", "30min", "1 hour", "1 day", "5 day", "week", "month", "permanent");
+        $items = array(
+            "30 seconds",
+            "5 min",
+            "10 min",
+            "15 min",
+            "30min",
+            "1 hour",
+            "1 day",
+            "5 day",
+            "week",
+            "month",
+            "permanent"
+        );
         $this->compobox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("select", $items);
         $this->compobox->setAlign("left", "top");
 
@@ -85,7 +97,9 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $inputbox['select'] = 0;
             }
             $items = $this->compobox->getDropdownItems();
-            $params = $this->adminAction . " " . $this->adminParams . " " . $inputbox['parameter'] . ", duration: " . $items[$inputbox['select']];
+            $params = $this->adminAction
+                . " " . $this->adminParams . " " . $inputbox['parameter']
+                . ", duration: " . $items[$inputbox['select']];
             $prms = explode(" ", $this->adminParams);
             self::$mainPlugin->addActionDuration($prms[0], $this->adminAction, $items[$inputbox['select']]);
         }
@@ -105,5 +119,4 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->btn_cancel->destroy();
         parent::destroy();
     }
-
 }

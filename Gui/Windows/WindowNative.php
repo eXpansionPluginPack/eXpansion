@@ -97,7 +97,6 @@ abstract class WindowNative extends \ManiaLive\Gui\Window
         $this->_titlebar2->setStyle("BgRaceScore2");
         $this->_titlebar2->setSubStyle("CartoucheLine");
         $this->_titlebar2->setAlign("center", "top");
-        // $this->_windowFrame->addComponent($this->_titlebar2);
 
         $this->_bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_bg->setStyle("Bgs1");
@@ -138,7 +137,6 @@ abstract class WindowNative extends \ManiaLive\Gui\Window
         $this->_minbutton->setFocusAreaColor2("0000");
         $this->_minbutton->setScriptEvents(true);
         $this->_minbutton->setId("Minimize");
-        // $this->_windowFrame->addComponent($this->_minbutton);
 
         $this->mainFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->mainFrame->setPosY(-7);
@@ -257,8 +255,9 @@ abstract class WindowNative extends \ManiaLive\Gui\Window
         $this->script->setParam("disableAnimations", Config::getInstance()->disableAnimations ? "True" : "False");
         $this->script->setParam("version", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
         $reset = "False";
-        if (DEBUG)
+        if (DEBUG) {
             $reset = "True";
+        }
 
         $this->script->setParam("forceReset", $reset);
 
@@ -324,5 +323,4 @@ abstract class WindowNative extends \ManiaLive\Gui\Window
     {
         $this->_scripts[] = $script;
     }
-
 }

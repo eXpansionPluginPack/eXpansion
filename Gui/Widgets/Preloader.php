@@ -58,5 +58,4 @@ class Preloader extends Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

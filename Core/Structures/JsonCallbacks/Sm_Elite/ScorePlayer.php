@@ -16,6 +16,4 @@ class ScorePlayer extends ManiaLiveDedicatedApiStructuresAbstractStructure
 
     /** @var integer */
     public $defPoints = 0;
-
 }
-

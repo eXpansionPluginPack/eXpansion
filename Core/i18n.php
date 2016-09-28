@@ -187,5 +187,4 @@ class i18n extends \ManiaLib\Utils\Singleton
             return $string;
         }
     }
-
 }

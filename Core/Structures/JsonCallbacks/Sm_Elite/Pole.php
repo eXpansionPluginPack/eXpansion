@@ -13,5 +13,4 @@ class Pole extends ManiaLiveDedicatedApiStructuresAbstractStructure
 
     /** @var boolean */
     public $captured = false;
-
 }

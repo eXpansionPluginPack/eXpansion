@@ -39,5 +39,4 @@ class Step
 
     public $noUpMessage;
     public $noUpConsole;
-
-} 
+}

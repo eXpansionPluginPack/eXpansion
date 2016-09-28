@@ -33,5 +33,4 @@ class TypeFloat extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
     {
         return (float)$value;
     }
-
 }

@@ -47,7 +47,6 @@ class Request
 
         return $xml;
     }
-
 }
 
 /*
@@ -89,7 +88,8 @@ class IXR_Value
         }
         $this->type = $type;
         if ($type == 'struct') {
-            // warning : in some case changing directly the array values modify also the last entry of original array !!! so build a new array...
+            // warning : in some case changing directly the array values modify
+            // also the last entry of original array !!! so build a new array...
             $this->data = array();
             // Turn all the values in the array into new IXR_Value objects
             foreach ($data as $key => $value) {
@@ -97,7 +97,8 @@ class IXR_Value
             }
         }
         if ($type == 'array') {
-            // warning : in some case changing directly the array values modify also the last entry of original array !!! so build a new array...
+            // warning : in some case changing directly the array values modify
+            // also the last entry of original array !!! so build a new array...
             $this->data = array();
             for ($i = 0, $j = count($data); $i < $j; $i++) {
                 $this->data[$i] = new IXR_Value($data[$i]);
@@ -194,5 +195,4 @@ class IXR_Value
 
         return false;
     }
-
 }

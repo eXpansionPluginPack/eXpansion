@@ -40,5 +40,4 @@ class TypeString extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
     {
         return strval($this->getRawValue());
     }
-
 }

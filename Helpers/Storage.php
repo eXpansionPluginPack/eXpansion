@@ -173,7 +173,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 
         $this->serverAccount = $this->connection->getDetailedPlayerInfo($this->storage->serverLogin);
 
-        if (DedicatedConfig::getInstance()->host == "localhost" || DedicatedConfig::getInstance()->host == "127.0.0.1") {
+        if (DedicatedConfig::getInstance()->host == "localhost"
+            || DedicatedConfig::getInstance()->host == "127.0.0.1"
+        ) {
             $this->isRemoteControlled = false;
         } else {
             $this->isRemoteControlled = true;
@@ -651,5 +653,4 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
             $config->port
         );
     }
-
 }

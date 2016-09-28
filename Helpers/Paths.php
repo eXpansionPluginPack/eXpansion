@@ -75,5 +75,4 @@ class Paths
     {
         return $extension === "" || substr($fileName, -strlen($extension)) === $extension;
     }
-
 }

@@ -24,6 +24,4 @@ class OnPlayerRequestRespawn extends RpcObject
 
     /** @var Event_OnPlayerRequestRespawn */
     public $event;
-
 }
-

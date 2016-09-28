@@ -41,9 +41,14 @@ class WidgetBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public function onResize($oldX, $oldY)
     {
-        $this->bg->setSize($this->getSizeX() + (float)$this->config->style_list_sizeXOffset, $this->getSizeY() + (float)$this->config->style_list_sizeYOffset);
-        $this->bgborder->setSize($this->getSizeX() + (float)$this->config->style_list_sizeXOffset, $this->getSizeY() + (float)$this->config->style_list_sizeYOffset);
-        //$this->bgborder->setSize($this->sizeX + (float) $this->config->style_list_sizeXOffset + 1, $this->sizeY + (float) $this->config->style_list_sizeYOffset + 0.5);
+        $this->bg->setSize(
+            $this->getSizeX() + (float)$this->config->style_list_sizeXOffset,
+            $this->getSizeY() + (float)$this->config->style_list_sizeYOffset
+        );
+        $this->bgborder->setSize(
+            $this->getSizeX() + (float)$this->config->style_list_sizeXOffset,
+            $this->getSizeY() + (float)$this->config->style_list_sizeYOffset
+        );
     }
 
     public function setAction($action)
@@ -70,13 +75,10 @@ class WidgetBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
     public function setHidden($hidden)
     {
         $this->bg->setHidden($hidden);
-        //	$this->bgborder->setHidden($hidden);
     }
 
     public function setId($id)
     {
         $this->bg->setId($id);
-        //$this->bgborder->setId($id);
     }
-
 }
