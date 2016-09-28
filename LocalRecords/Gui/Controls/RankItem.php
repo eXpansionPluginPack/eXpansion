@@ -117,5 +117,4 @@ class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         return $day . 'd ' . $hour . 'h ' . $min . 'm';
     }
-
 }

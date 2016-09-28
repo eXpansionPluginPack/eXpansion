@@ -36,5 +36,4 @@ class Tutorial extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         TutorialWindow::EraseAll();
     }
-
 }

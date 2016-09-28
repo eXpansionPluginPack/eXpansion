@@ -53,6 +53,8 @@ class Question
      * Setter for question in place, can be used to correct typos
      *
      * @param string $question
+     *
+     * @return $this
      */
     public function setQuestion($question)
     {
@@ -93,6 +95,7 @@ class Question
      * removes a correct answer
      *
      * @param integer $index ;
+     * @return $this
      */
     public function removeAnswer($index)
     {
@@ -176,5 +179,4 @@ class Question
     {
         $this->boxOrder = $order;
     }
-
 }

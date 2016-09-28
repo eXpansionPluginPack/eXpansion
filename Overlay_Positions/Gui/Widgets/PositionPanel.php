@@ -51,8 +51,9 @@ class PositionPanel extends \ManiaLive\Gui\Window
 
         // get total number if players
         foreach ($expPlayer as $player) {
-            if ($player->isPlaying)
+            if ($player->isPlaying) {
                 $total++;
+            }
         }
         // set max points
         if ($total > $maxpoints) {
@@ -63,19 +64,29 @@ class PositionPanel extends \ManiaLive\Gui\Window
             if ($player->isPlaying) {
 
                 $cpindex = $player->curCpIndex;
-                if ($cpindex < 0)
+                if ($cpindex < 0) {
                     $cpindex = 0;
+                }
                 $cpCount += $cpindex;
                 if ($player->teamId >= 0 && !$player->hasRetired) {
                     $points = ($total + 1) - ($player->position + 1);
-                    if ($points < 0)
+                    if ($points < 0) {
                         $points = 0;
+                    }
                     $teamPoints[$player->teamId] += $points;
 
-                    //   $teamPointsDisplay[$player->teamId] += ($total + 1) - ($player->position + 1);
                 }
                 if ($x < 15) {
-                    $this->frame->addComponent(new \ManiaLivePlugins\eXpansion\Overlay_Positions\Gui\Controls\PlayerItem($x, $player, $this->getRecipient(), $gamemode, $this->getSizeX()));
+                    $this->frame
+                        ->addComponent(
+                            new \ManiaLivePlugins\eXpansion\Overlay_Positions\Gui\Controls\PlayerItem(
+                                $x,
+                                $player,
+                                $this->getRecipient(),
+                                $gamemode,
+                                $this->getSizeX()
+                            )
+                        );
                 }
                 $x++;
             }
@@ -93,5 +104,4 @@ class PositionPanel extends \ManiaLive\Gui\Window
             }
         }
     }
-
 }

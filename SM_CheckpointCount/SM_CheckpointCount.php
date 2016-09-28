@@ -17,10 +17,12 @@ class SM_CheckpointCount extends ExpPlugin
     {
         $this->enableDedicatedEvents();
 
-        foreach ($this->storage->players as $player)
+        foreach ($this->storage->players as $player) {
             $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $player)
+        }
+        foreach ($this->storage->spectators as $player) {
             $this->onPlayerConnect($player->login, true);
+        }
     }
 
     /**
@@ -32,10 +34,11 @@ class SM_CheckpointCount extends ExpPlugin
      */
     protected function displayWidget($login = null, $cpIndex = "-")
     {
-        if ($login == null)
+        if ($login == null) {
             CPPanel::EraseAll();
-        else
+        } else {
             CPPanel::Erase($login);
+        }
 
         $info = CPPanel::Create($login);
         $info->setSize(35, 6);
@@ -48,8 +51,9 @@ class SM_CheckpointCount extends ExpPlugin
     public function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
     {
         $cp = $cpIndex;
-        if ($isEndBlock)
+        if ($isEndBlock) {
             $cp = "-";
+        }
         $this->displayWidget($login, $cp);
     }
 
@@ -60,10 +64,12 @@ class SM_CheckpointCount extends ExpPlugin
 
     public function onBeginMatch()
     {
-        foreach ($this->storage->players as $player)
+        foreach ($this->storage->players as $player) {
             $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $player)
+        }
+        foreach ($this->storage->spectators as $player) {
             $this->onPlayerConnect($player->login, true);
+        }
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -75,5 +81,4 @@ class SM_CheckpointCount extends ExpPlugin
     {
         CPPanel::Erase($login);
     }
-
 }

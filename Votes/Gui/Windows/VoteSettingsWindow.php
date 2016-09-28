@@ -78,7 +78,11 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $x = count($this->items);
 
         foreach ($managedVotes as $vote) {
-            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Votes\Gui\Controls\ManagedVoteControl($x, $vote, $this->sizeX - 11);
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Votes\Gui\Controls\ManagedVoteControl(
+                $x,
+                $vote,
+                $this->sizeX - 11
+            );
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
@@ -97,7 +101,11 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $vote->voters = $config->mxVote_voters;
 
         $x = count($this->items);
-        $this->items[$x] = new \ManiaLivePlugins\eXpansion\Votes\Gui\Controls\ManagedVoteControl($x, $vote, $this->sizeX - 11);
+        $this->items[$x] = new \ManiaLivePlugins\eXpansion\Votes\Gui\Controls\ManagedVoteControl(
+            $x,
+            $vote,
+            $this->sizeX - 11
+        );
         $this->pager->addItem($this->items[$x]);
 
     }
@@ -115,8 +123,20 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $vote->voters = $config->mxVote_voters;
 
         $x = count($this->items);
-        $this->items[$x] = new \ManiaLivePlugins\eXpansion\Votes\Gui\Controls\ManagedVoteLimit($x, "voteLimit", "Max votes per map (0 = disabled)", $config->limit_votes, $this->sizeX - 11);
-        $this->items[$x + 1] = new \ManiaLivePlugins\eXpansion\Votes\Gui\Controls\ManagedVoteLimit($x, "restartLimit", "Max restarts of a map (0 = disabled)", $config->restartLimit, $this->sizeX - 11);
+        $this->items[$x] = new \ManiaLivePlugins\eXpansion\Votes\Gui\Controls\ManagedVoteLimit(
+            $x,
+            "voteLimit",
+            "Max votes per map (0 = disabled)",
+            $config->limit_votes,
+            $this->sizeX - 11
+        );
+        $this->items[$x + 1] = new \ManiaLivePlugins\eXpansion\Votes\Gui\Controls\ManagedVoteLimit(
+            $x,
+            "restartLimit",
+            "Max restarts of a map (0 = disabled)",
+            $config->restartLimit,
+            $this->sizeX - 11
+        );
 
         $this->pager->addItem($this->items[$x]);
         $this->pager->addItem($this->items[$x + 1]);
@@ -195,8 +215,9 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function destroy()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
 
         $this->items = array();
         $this->pager->destroy();
@@ -207,5 +228,4 @@ class VoteSettingsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

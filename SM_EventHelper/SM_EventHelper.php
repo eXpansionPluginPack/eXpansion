@@ -63,8 +63,11 @@ class SM_EventHelper extends ExpPlugin
         $cpIndex = $entries['index'];
 
         Dispatcher::dispatch(
-        // login  , #id   , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
-            new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, "False", null, null, null))
+            // login  , #id   , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
+            new ScriptmodeEvent(
+                ScriptmodeEvent::LibXmlRpc_OnWayPoint,
+                array($login, null, $timeOrScore, $cpIndex, "False", null, null, null)
+            )
         );
     }
 
@@ -74,8 +77,11 @@ class SM_EventHelper extends ExpPlugin
         $timeOrScore = $entries['timeOrScore'];
         $cpIndex = $entries['index'];
         Dispatcher::dispatch(
-        // login  , #id      , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
-            new ScriptmodeEvent(ScriptmodeEvent::LibXmlRpc_OnWayPoint, array($login, null, $timeOrScore, $cpIndex, "True", null, null, null))
+            // login  , #id      , time  ,  index ,  endblock, , laptime, lapCpIndex, lapEnd
+            new ScriptmodeEvent(
+                ScriptmodeEvent::LibXmlRpc_OnWayPoint,
+                array($login, null, $timeOrScore, $cpIndex, "True", null, null, null)
+            )
         );
     }
 
@@ -89,5 +95,4 @@ class SM_EventHelper extends ExpPlugin
         $this->widget = null;
         EventHelper::EraseAll();
     }
-
 }

@@ -53,7 +53,6 @@ class Playeritem extends Control
         $spacer = new Quad();
         $spacer->setSize(4, 4);
         $spacer->setStyle(Icons64x64_1::EmptyIcon);
-//$this->frame->addComponent($spacer);
 
         $this->login = new Label(20, 4);
         $this->login->setAlign('left', 'center');
@@ -124,15 +123,16 @@ class Playeritem extends Control
 
     public function erase()
     {
-        if (is_object($this->addpointButton))
+        if (is_object($this->addpointButton)) {
             $this->addpointButton->destroy();
-        if (is_object($this->removepointButton))
+        }
+        if (is_object($this->removepointButton)) {
             $this->removepointButton->destroy();
+        }
 
         $this->frame->clearComponents();
         $this->frame->destroy();
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

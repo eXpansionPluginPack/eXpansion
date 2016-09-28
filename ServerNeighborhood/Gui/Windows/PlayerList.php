@@ -42,7 +42,6 @@ class PlayerList extends Window
         $this->items = array();
 
         $i = 1;
-        //for($ii = 0; $ii < 50; $ii++)
         foreach ($server->getServer_data()->current->players->player as $player) {
 
             $pitem = new PlayerItem($i, $this, $player);
@@ -60,8 +59,9 @@ class PlayerList extends Window
         foreach ($this->items as $item) {
             $item->setSizeX($this->getSizeX() - 2);
         }
-        if ($this->serverItem != null)
+        if ($this->serverItem != null) {
             $this->serverItem->setSizeX($this->getSizeX() - 2);
+        }
     }
 
     public function destroy()
@@ -71,5 +71,4 @@ class PlayerList extends Window
         $this->serverItem->destroy();
         parent::destroy();
     }
-
 }

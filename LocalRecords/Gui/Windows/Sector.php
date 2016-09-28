@@ -64,8 +64,9 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
 
         $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 7);
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->setSizeX($this->getSizeX());
+        }
     }
 
     public function onShow()

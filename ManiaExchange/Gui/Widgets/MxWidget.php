@@ -30,7 +30,10 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $login = $this->getRecipient();
 
         $dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
+        $this->connection = \Maniaplanet\DedicatedServer\Connection::factory(
+            $dedicatedConfig->host,
+            $dedicatedConfig->port
+        );
 
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 
@@ -95,8 +98,9 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     public function Visit($login)
     {
         $mxId = $this->getMXid($login);
-        if ($mxId === false)
+        if ($mxId === false) {
             return;
+        }
 
         $link = "http://tm.mania-exchange.com/tracks/view/" . $mxId;
         $this->connection->sendOpenLink($login, $link, 0);
@@ -105,8 +109,9 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     public function Award($login)
     {
         $mxId = $this->getMXid($login);
-        if ($mxId === false)
+        if ($mxId === false) {
             return;
+        }
         $link = "http://tm.mania-exchange.com/awards/add/" . $mxId;
         $this->connection->sendOpenLink($login, $link, 0);
     }
@@ -135,7 +140,10 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
                 return false;
             }
 
-            $this->connection->chatSendServerMessage(sprintf('MX returned http error code: %s', $status["http_code"]), $login);
+            $this->connection->chatSendServerMessage(
+                sprintf('MX returned http error code: %s', $status["http_code"]),
+                $login
+            );
 
             return false;
         }
@@ -149,5 +157,4 @@ class MxWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
         return $json[0]->TrackID;
     }
-
 }

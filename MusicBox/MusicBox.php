@@ -346,5 +346,4 @@ class MusicBox extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->console(" Error while displaying jukebox window: " . $e->getMessage());
         }
     }
-
 }

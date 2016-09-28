@@ -14,5 +14,4 @@ class Rating extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
         $this->totalvotes = $total;
         $this->uid = $uid;
     }
-
 }

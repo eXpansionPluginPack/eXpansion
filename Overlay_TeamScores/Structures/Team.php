@@ -14,5 +14,4 @@ class Team extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
     {
         $this->name = $name;
     }
-
 }

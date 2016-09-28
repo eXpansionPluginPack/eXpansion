@@ -109,6 +109,4 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaL
     {
         return 6;
     }
-
 }
-

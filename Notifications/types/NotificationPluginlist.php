@@ -55,5 +55,4 @@ class NotificationPluginlist extends \ManiaLivePlugins\eXpansion\Core\types\conf
     {
         return true;
     }
-
 }

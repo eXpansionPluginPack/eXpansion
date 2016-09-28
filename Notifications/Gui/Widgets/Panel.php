@@ -16,11 +16,6 @@ class Panel extends \ManiaLive\Gui\Window
     protected function onConstruct()
     {
         parent::onConstruct();
-        /*    $config = Config::getInstance();
-
-          $dedicatedConfig = \ManiaLive\DedicatedApi\Config::getInstance();
-          $this->connection = \Maniaplanet\DedicatedServer\Connection::factory($dedicatedConfig->host, $dedicatedConfig->port);
-          $this->storage = \ManiaLive\Data\Storage::getInstance(); */
 
         $this->setScriptEvents(true);
         $this->setAlign("center", "bottom");
@@ -106,8 +101,9 @@ class Panel extends \ManiaLive\Gui\Window
 
     public function setItems(array $menuItems)
     {
-        if ($this->frame != null)
+        if ($this->frame != null) {
             $this->_windowFrame->removeComponent($this->frame);
+        }
         $this->frame = new \ManiaLive\Gui\Controls\Frame(100, 40);
         $this->frame->setAlign("left", "bottom");
         $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(1));
@@ -122,5 +118,4 @@ class Panel extends \ManiaLive\Gui\Window
         $this->frame->setPosition(6, $posY);
         $this->_windowFrame->addComponent($this->frame);
     }
-
 }

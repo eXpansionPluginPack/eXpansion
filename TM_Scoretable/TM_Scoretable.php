@@ -116,5 +116,4 @@ class TM_Scoretable extends ExpPlugin
     </images>
 </scorestable>';
     }
-
 }

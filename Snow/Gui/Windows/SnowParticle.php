@@ -35,6 +35,4 @@ class SnowParticle extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $script->setParam("particleCount", $this->config->particleCount);
         $this->registerScript($script);
     }
-
 }
-

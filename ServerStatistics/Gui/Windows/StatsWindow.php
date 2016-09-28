@@ -74,7 +74,14 @@ class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->contentFrame);
         $this->contentFrame->setPositionY(5);
 
-        $this->contentFrame->addComponent(new InfoLine(25, 'Comment', \ManiaLivePlugins\eXpansion\Gui\Gui::fixString($storage->server->comment, true), 0));
+        $this->contentFrame->addComponent(
+            new InfoLine(
+                25,
+                'Comment',
+                \ManiaLivePlugins\eXpansion\Gui\Gui::fixString($storage->server->comment, true),
+                0
+            )
+        );
         $this->contentFrame->addComponent(new InfoLine(5, 'Dedicated Up Time', $data['upTimeDedi'], 0));
         $this->contentFrame->addComponent(new InfoLine(5, 'eXpansaion Up Time', $data['upTime'], 0));
         $this->contentFrame->addComponent(new InfoLine(5, 'Map Count', sizeof($storage->maps), 0));
@@ -83,7 +90,14 @@ class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->contentFrame->addComponent(new InfoLine(5, 'Average Players', $data['avgPlayer'], 0));
         $this->contentFrame->addComponent(new InfoLine(5, 'Max Spectators', $storage->server->currentMaxPlayers, 0));
         $this->contentFrame->addComponent(new InfoLine(5, 'Average Spectators', $data['avgSpec'], 0));
-        $this->contentFrame->addComponent(new InfoLine(5, 'Ladder Limit', $storage->server->ladderServerLimitMin . ' - ' . $storage->server->ladderServerLimitMax, 0));
+        $this->contentFrame->addComponent(
+            new InfoLine(
+                5,
+                'Ladder Limit',
+                $storage->server->ladderServerLimitMin . ' - ' . $storage->server->ladderServerLimitMax,
+                0
+            )
+        );
 
         $label = new \ManiaLib\Gui\Elements\Label(70, 12);
         $label->setText("Visited by " . $data['nbPlayer'] . ' players from ' . $data['nbNation'] . ' Nations');
@@ -117,5 +131,4 @@ class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         parent::destroy();
     }
-
 }

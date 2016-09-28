@@ -42,8 +42,9 @@ class RanksWindow_old extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function populateList()
     {
 
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
         $this->pager->clearItems();
         $this->items = array();
 
@@ -53,7 +54,11 @@ class RanksWindow_old extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         arsort(self::$ranks);
 
         foreach (self::$ranks as $login => $rank) {
-            $this->items[$x] = new RankItem($x++, \ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords::$players[$login]->nickname, self::$nbrec[$login]);
+            $this->items[$x] = new RankItem(
+                $x++,
+                \ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords::$players[$login]->nickname,
+                self::$nbrec[$login]
+            );
             $this->pager->addItem($this->items[$x]);
         }
 
@@ -63,13 +68,13 @@ class RanksWindow_old extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->connection = null;
         $this->storage = null;
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
 
         $this->items = null;
         $this->pager->destroy();
 
         parent::destroy();
     }
-
 }

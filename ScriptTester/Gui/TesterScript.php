@@ -43,5 +43,4 @@ class TesterScript extends \ManiaLivePlugins\eXpansion\Gui\Structures\Script
     {
         return "";
     }
-
 }

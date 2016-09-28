@@ -45,10 +45,12 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         $this->config = Config::getInstance();
 
-        foreach ($this->storage->players as $login => $player)
+        foreach ($this->storage->players as $login => $player) {
             $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $login => $player)
+        }
+        foreach ($this->storage->spectators as $login => $player) {
             $this->onPlayerConnect($player->login, true);
+        }
     }
 
     public function onPlayerConnect($login, $isSpectator)
@@ -61,10 +63,12 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onPlayerDisconnect($login, $reason = null)
     {
-        if (isset(self::$reply[$login]))
+        if (isset(self::$reply[$login])) {
             unset(self::$reply[$login]);
-        if (isset($this->message[$login]))
+        }
+        if (isset($this->message[$login])) {
             unset($this->message[$login]);
+        }
     }
 
     public function sendPersonalMessage($login, $message = "")
@@ -93,7 +97,9 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $color = '$z$s' . $this->config->Colors_personalmessage;
             PlayerSelection::Erase($login);
 
-            if (!array_key_exists($target, $this->storage->players) && !array_key_exists($target, $this->storage->spectators)) {
+            if (!array_key_exists($target, $this->storage->players)
+                && !array_key_exists($target, $this->storage->spectators)
+            ) {
                 $this->eXpChatSendServerMessage($this->msg_noLogin, $login, array($target));
 
                 return;
@@ -114,8 +120,16 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             self::$reply[$login] = $target;
 
 
-            $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $login);
-            $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $target);
+            $this->connection->chatSendServerMessage(
+                '$fff' . $sourcePlayer->nickName . $color . ' »» $fff'
+                . $targetPlayer->nickName . $color . " " . $message,
+                $login
+            );
+            $this->connection->chatSendServerMessage(
+                '$fff' . $sourcePlayer->nickName . $color . ' »» $fff'
+                . $targetPlayer->nickName . $color . " " . $message,
+                $target
+            );
         } catch (\Exception $e) {
             $this->console("Error:" . $e->getMessage());
         }
@@ -125,7 +139,9 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         try {
 
-            if (!array_key_exists($target, $this->storage->players) && !array_key_exists($target, $this->storage->spectators)) {
+            if (!array_key_exists($target, $this->storage->players)
+                && !array_key_exists($target, $this->storage->spectators)
+            ) {
                 $this->eXpChatSendServerMessage($this->msg_noLogin, $login, array($target));
 
                 return;
@@ -148,8 +164,16 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             self::$reply[$login] = $target;
             $color = '$z$s' . $this->config->Colors_personalmessage;
 
-            $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $this->message[$login], $login);
-            $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $this->message[$login], $target);
+            $this->connection->chatSendServerMessage(
+                '$fff' . $sourcePlayer->nickName . $color . ' »» $fff'
+                . $targetPlayer->nickName . $color . " " . $this->message[$login],
+                $login
+            );
+            $this->connection->chatSendServerMessage(
+                '$fff' . $sourcePlayer->nickName . $color . ' »» $fff'
+                . $targetPlayer->nickName . $color . " " . $this->message[$login],
+                $target
+            );
         } catch (\Exception $e) {
             $this->console("Error:" . $e->getMessage());
         }
@@ -169,12 +193,20 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
         try {
             foreach ($this->storage->players as $reciever => $player) {
-                if (AdminGroups::hasPermission($reciever, Permission::CHAT_ADMINCHAT))
-                    $this->connection->chatSendServerMessage($color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message, $reciever);
+                if (AdminGroups::hasPermission($reciever, Permission::CHAT_ADMINCHAT)) {
+                    $this->connection->chatSendServerMessage(
+                        $color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message,
+                        $reciever
+                    );
+                }
             }
             foreach ($this->storage->spectators as $reciever => $player) {
-                if (AdminGroups::hasPermission($reciever, Permission::CHAT_ADMINCHAT))
-                    $this->connection->chatSendServerMessage($color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message, $reciever);
+                if (AdminGroups::hasPermission($reciever, Permission::CHAT_ADMINCHAT)) {
+                    $this->connection->chatSendServerMessage(
+                        $color . 'Admin »» $fff' . $sourcePlayer->nickName . $color . " " . $message,
+                        $reciever
+                    );
+                }
             }
         } catch (\Exception $e) {
             $this->console("Error:" . $e->getMessage());
@@ -193,8 +225,16 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $targetPlayer = $this->storage->getPlayerObject(self::$reply[$login]);
                 $sourcePlayer = $this->storage->getPlayerObject($login);
                 $color = '$z$s' . $this->config->Colors_personalmessage;
-                $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, $login);
-                $this->connection->chatSendServerMessage('$fff' . $sourcePlayer->nickName . $color . ' »» $fff' . $targetPlayer->nickName . $color . " " . $message, self::$reply[$login]);
+                $this->connection->chatSendServerMessage(
+                    '$fff' . $sourcePlayer->nickName . $color . ' »» $fff'
+                    . $targetPlayer->nickName . $color . " " . $message,
+                    $login
+                );
+                $this->connection->chatSendServerMessage(
+                    '$fff' . $sourcePlayer->nickName . $color . ' »» $fff'
+                    . $targetPlayer->nickName . $color . " " . $message,
+                    self::$reply[$login]
+                );
             } else {
                 $this->eXpChatSendServerMessage($this->msg_noReply, $login);
             }
@@ -209,5 +249,4 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         AdminGroups::removeAdminCommand($this->cmd_chat);
         AdminGroups::removeShortAllias('a');
     }
-
 }

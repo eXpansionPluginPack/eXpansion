@@ -16,5 +16,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setName("Tutorial");
         $this->setDescription("Provides onetime popup tutorial for players on how to use eXpansion");
     }
-
 }

@@ -50,16 +50,21 @@ abstract class Service
     protected static function getCountryCode($long = false)
     {
         if (!isset(self::$userCountryCode)) {
-            $this->console("[TMKarma] Attempting to autodetect using http://api.hostip.info!");
+            self::console("[TMKarma] Attempting to autodetect using http://api.hostip.info!");
             $data = file_get_contents('http://api.hostip.info/get_json.php');
             $json = json_decode($data);
             if ($json === null) {
-                $this->console("[TMKarma] Autodetect failed, usign default location: Germany");
+                self::console("[TMKarma] Autodetect failed, usign default location: Germany");
                 self::$userCountryCode = "DEU";
             } else {
-                self::$userCountryCode = \ManiaLivePlugins\eXpansion\Helpers\Countries::mapCountry(ucwords(strtolower($json->country_name)));
+                self::$userCountryCode = \ManiaLivePlugins\eXpansion\Helpers\Countries::mapCountry(
+                    ucwords(strtolower($json->country_name))
+                );
                 if (self::$userCountryCode == "OTH") {
-                    $this->console("[TMKarma] Autodetect failed, usign default location: Germany, Detected country was: " . ucwords(strtolower($json->country_name)));
+                    self::console(
+                        "[TMKarma] Autodetect failed, usign default location: Germany, Detected country was: "
+                        . ucwords(strtolower($json->country_name))
+                    );
                     self::$userCountryCode = "DEU";
                 }
             }
@@ -126,7 +131,9 @@ abstract class Service
      *
      * @param sring $serverName
      * @param string $login
-     * @param integer $communityCode
+     * @param integer $game
+     *
+     * @return boolean
      */
     public static function Authenticate($serverName, $login, $game)
     {
@@ -135,9 +142,16 @@ abstract class Service
         $nation = self::getLocationInfo();
 
         // Generate the url for the first Auth-Request
-        $requestUrl = sprintf("%s?Action=Auth&login=%s&name=%s&game=%s&zone=%s&nation=%s", self::getAPIUrl(), urlencode(self::$login), base64_encode($serverName), urlencode('ManiaPlanet'), urlencode(ucwords(strtolower(Data::$countries[self::$userCountryCode][0]))), urlencode(ucwords(strtolower(self::$userCountryCode)))
+        $requestUrl = sprintf(
+            "%s?Action=Auth&login=%s&name=%s&game=%s&zone=%s&nation=%s",
+            self::getAPIUrl(),
+            urlencode(self::$login),
+            base64_encode($serverName),
+            urlencode('ManiaPlanet'),
+            urlencode(ucwords(strtolower(Data::$countries[self::$userCountryCode][0]))),
+            urlencode(ucwords(strtolower(self::$userCountryCode)))
         );
-        //var_dump($requestUrl);
+
         try {
             $result = self::sendRequest($requestUrl);
             self::$authCode = $result->authcode;
@@ -155,6 +169,8 @@ abstract class Service
      * @param \ManiaLive\Data\Player[] $players
      *
      * @return \ManiaLivePlugins\eXpansion\TMKarma\Structures\Karma
+     * @throws ApiException
+     * @throws NotAuthenticatedException
      */
     public static function GetChallengeKarma($challenge, $players)
     {
@@ -167,11 +183,21 @@ abstract class Service
         }
 
         $playersString = '';
-        foreach ($players as $player)
+        foreach ($players as $player) {
             $playersString .= urlencode($player->login) . '|';
+        }
         $playersString = substr($playersString, 0, -1);
 
-        $requestUrl = sprintf("%s?Action=Get&login=%s&authcode=%s&uid=%s&map=%s&author=%s&env=%s&player=%s", self::getAPIUrl(), urlencode(self::$login), urlencode(self::$authCode), urlencode($challenge->uId), base64_encode($challenge->name), urlencode($challenge->author), urlencode($challenge->environnement), $playersString
+        $requestUrl = sprintf(
+            "%s?Action=Get&login=%s&authcode=%s&uid=%s&map=%s&author=%s&env=%s&player=%s",
+            self::getAPIUrl(),
+            urlencode(self::$login),
+            urlencode(self::$authCode),
+            urlencode($challenge->uId),
+            base64_encode($challenge->name),
+            urlencode($challenge->author),
+            urlencode($challenge->environnement),
+            $playersString
         );
 
         $response = self::sendRequest($requestUrl);
@@ -187,6 +213,8 @@ abstract class Service
      *
      * @param \Maniaplanet\DedicatedServer\Structures\Map $challenge
      * @param Structures\Vote[] $votes
+     * @throws ApiException
+     * @throws NotAuthenticatedException
      */
     public static function SendVotes(\Maniaplanet\DedicatedServer\Structures\Map $challenge, $votes)
     {
@@ -194,28 +222,39 @@ abstract class Service
             throw new NotAuthenticatedException('You need to authenticate at the tm-karma webservice first!');
         }
 
-        if (sizeof($votes) == 0)
+        if (sizeof($votes) == 0) {
             return;
+        }
 
         $voteString = "";
-        foreach ($votes as $vote)
+        foreach ($votes as $vote) {
             $voteString .= urlencode($vote->login) . "=" . $vote->vote . "|";
+        }
         $voteString = trim($voteString, "|");
 
         // Generate the url for this vote
-        $requestUrl = sprintf("%s?Action=Vote&login=%s&authcode=%s&uid=%s&map=%s&author=%s&env=%s&votes=%s&tmx=%s", self::getAPIUrl(), urlencode(self::$login), urlencode(self::$authCode), urlencode($challenge->uId), base64_encode($challenge->name), urlencode($challenge->author), urlencode($challenge->environnement), $voteString, '');
-        //var_dump($requestUrl);
+        $requestUrl = sprintf(
+            "%s?Action=Vote&login=%s&authcode=%s&uid=%s&map=%s&author=%s&env=%s&votes=%s&tmx=%s",
+            self::getAPIUrl(),
+            urlencode(self::$login),
+            urlencode(self::$authCode),
+            urlencode($challenge->uId),
+            base64_encode($challenge->name),
+            urlencode($challenge->author),
+            urlencode($challenge->environnement),
+            $voteString,
+            ''
+        );
         $response = self::sendRequest($requestUrl);
-        //var_dump($response);
-        //return new Karma($response);
     }
 
     /**
      * Sends GET request to the Karma Webservice.
      *
-     * @param string $geturl
+     * @param string $url
      *
-     * @throws \Exception
+     * @return \SimpleXMLElement
+     * @throws ApiException
      */
     public static function sendRequest($url)
     {
@@ -243,7 +282,6 @@ abstract class Service
 
         return $response;
     }
-
 }
 
 class Exception extends \Exception

@@ -43,14 +43,13 @@ class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         $localRecs = Gui\Widgets\AroundMe::GetAll();
         if ($login == null) {
-            //Gui\Widgets\AroundMe::EraseAll();
             $panelMain = Gui\Widgets\AroundMe::Create($login);
             $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
             $panelMain->setSizeX(40);
             $this->widgetIds["AroundMe"] = $panelMain;
             $this->widgetIds["AroundMe"]->update();
             $this->widgetIds["AroundMe"]->show();
-        } else if (isset($localRecs[0])) {
+        } elseif (isset($localRecs[0])) {
             $localRecs[0]->update();
             $localRecs[0]->show($login);
         }
@@ -99,7 +98,6 @@ class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
         } else {
             self::$roundPoints = array(10, 6, 4, 3, 2, 1);
-            //points = $this->connection->triggerModeScriptEvent('Rounds_GetPointsRepartition',"");
         }
     }
 
@@ -155,5 +153,4 @@ class Widgets_AroundMe extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Gui\Widgets\AroundMe::EraseAll();
         self::$me = null;
     }
-
 }

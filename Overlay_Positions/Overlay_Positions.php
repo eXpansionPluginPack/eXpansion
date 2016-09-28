@@ -53,8 +53,9 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-        if ($this->wasWarmup)
+        if ($this->wasWarmup) {
             return;
+        }
 
         $this->isPodium = true;
         $this->update = false;
@@ -81,8 +82,9 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $teamMaxPoint = 10;
         if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
             $settings = $this->connection->getModeScriptSettings();
-            if (array_key_exists("S_MaxPointsPerRound", $settings))
+            if (array_key_exists("S_MaxPointsPerRound", $settings)) {
                 $teamMaxPoint = $settings['S_MaxPointsPerRound'];
+            }
         } else {
             $teamMaxPoint = $this->storage->gameInfos->teamPointsLimit;
         }
@@ -94,8 +96,9 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onPlayerInfoChanged($playerInfo)
     {
-        if ($this->storage->serverStatus->code != 4)
+        if ($this->storage->serverStatus->code != 4) {
             return;
+        }
 
         $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
         // hide widget for players who change from spectate to play
@@ -162,5 +165,4 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         $this->disableTickerEvent();
     }
-
 }

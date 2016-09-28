@@ -49,7 +49,6 @@ class StuntWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->lbl_description = new \ManiaLib\Gui\Elements\Label(120, 6);
         $this->lbl_description->setAlign("center", "top");
         $this->lbl_description->setPosX(30);
-        // $this->frame->addComponent($this->lbl_description);
 
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("TM_Stunts/Gui/Script");
         $this->registerScript($this->script);
@@ -58,7 +57,5 @@ class StuntWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     public function setLabels($name, $description)
     {
         $this->lbl_stuntName->setText($name);
-        //$this->lbl_description->setText($description);
     }
-
 }

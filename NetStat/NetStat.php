@@ -70,10 +70,6 @@ class NetStat extends ExpPlugin
     public function answerNetstat($login, $data)
     {
         $loop = (microtime(true) - $this->postLoopStamp) * 1000;
-        /* print "login:" . $login;
-        print " loopLatency: " . floor($loop);
-        print " est. latency: " . ($data['latency'] - floor($loop));
-        print "\n"; */
 
         if (array_key_exists($login, Core::$netStat)) {
             $stat = Core::$netStat[$login];
@@ -85,5 +81,4 @@ class NetStat extends ExpPlugin
         $widget->setStamp($data['stamp']);
         $widget->show();
     }
-
 }

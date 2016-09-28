@@ -60,7 +60,6 @@ class Wishitem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $ui = new \ManiaLib\Gui\Elements\Label(20, 4);
         $ui->setAlign('left', 'center');
         $ui->setScale(0.8);
-        //$ui->setText($map->authorTime);
         $ui->setText(\ManiaLive\Utilities\Time::fromTM($map->map->goldTime));
         $this->frame->addComponent($ui);
 
@@ -73,7 +72,6 @@ class Wishitem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->time->setAlign('left', 'center');
         $this->time->setScale(0.8);
         $this->time->setText(Gui::fixString($map->player->nickName));
-        //$this->time->setText(\ManiaLive\Utilities\Time::fromTM($map->goldTime));
         $this->frame->addComponent($this->time);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad();
@@ -102,10 +100,9 @@ class Wishitem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY);
-        //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
 
-// manialive 3.1 override to do nothing.
+    // manialive 3.1 override to do nothing.
     public function destroy()
     {
 
@@ -117,12 +114,11 @@ class Wishitem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public function erase()
     {
-        if (is_object($this->removeButton))
+        if (is_object($this->removeButton)) {
             $this->removeButton->destroy();
+        }
 
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-

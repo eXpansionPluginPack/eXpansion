@@ -13,5 +13,4 @@ class PlayerVote extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
         $this->login = $login;
         $this->vote = $vote;
     }
-
 }

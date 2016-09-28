@@ -647,9 +647,8 @@ class GBXBaseFetcher
             return -1;
         }
     }  // readFiletime
-
-}  // class GBXBaseFetcher
-
+    // class GBXBaseFetcher
+}
 
 /**
  * @class GBXChallMapFetcher
@@ -712,8 +711,18 @@ class GBXChallMapFetcher extends GBXBaseFetcher
         }
 
         $imgdest = imagecreatetruecolor($width, $height);
-        if (imagecopyresampled($imgdest, $imgsrc, 0, 0, $src_x, $src_y,
-            $width, $height, $src_width, $src_height)) {
+        if (imagecopyresampled(
+            $imgdest,
+            $imgsrc,
+            0,
+            0,
+            $src_x,
+            $src_y,
+            $width,
+            $height,
+            $src_width,
+            $src_height
+        )) {
             return $imgdest;
         }
 
@@ -877,8 +886,10 @@ class GBXChallMapFetcher extends GBXBaseFetcher
         $headerEnd = max($headerEnd, $this->getGBXptr());
 
         if ($headerSize != $headerEnd - $headerStart) {
-            $this->errorOut(sprintf('Header size mismatch: %d <> %d',
-                $headerSize, $headerEnd - $headerStart), 16);
+            $this->errorOut(
+                sprintf('Header size mismatch: %d <> %d', $headerSize, $headerEnd - $headerStart),
+                16
+            );
         }
 
         if ($this->parseXml) {
@@ -1191,8 +1202,9 @@ class GBXChallMapFetcher extends GBXBaseFetcher
 
         if ($version == 1) {
             $thumbSize = $this->readInt32();
-            $this->debugLog(sprintf('GBX Thumbnail size: %d (%.1f KB)',
-                $thumbSize, $thumbSize / 1024));
+            $this->debugLog(
+                sprintf('GBX Thumbnail size: %d (%.1f KB)', $thumbSize, $thumbSize / 1024)
+            );
 
             $this->moveGBXptr(strlen('<Thumbnail.jpg>'));
             $this->thumbnail = $this->readData($thumbSize);
@@ -1228,9 +1240,8 @@ class GBXChallMapFetcher extends GBXBaseFetcher
             }
         }
     }  // getThumbnlChunk
-
-}  // class GBXChallMapFetcher
-
+// class GBXChallMapFetcher
+}
 
 /**
  * @class      GBXChallengeFetcher
@@ -1290,8 +1301,8 @@ class GBXChallengeFetcher extends GBXChallMapFetcher
             $this->uid = '';
         }
     }  // __construct
-
-}  // class GBXChallengeFetcher
+// class GBXChallengeFetcher
+}
 
 
 /**
@@ -1411,8 +1422,10 @@ class GBXReplayFetcher extends GBXBaseFetcher
         $headerEnd = max($headerEnd, $this->getGBXptr());
 
         if ($headerSize != $headerEnd - $headerStart) {
-            $this->errorOut(sprintf('Header size mismatch: %d <> %d',
-                $headerSize, $headerEnd - $headerStart), 20);
+            $this->errorOut(
+                sprintf('Header size mismatch: %d <> %d', $headerSize, $headerEnd - $headerStart),
+                20
+            );
         }
 
         if ($this->parseXml) {
@@ -1485,8 +1498,8 @@ class GBXReplayFetcher extends GBXBaseFetcher
             }
         }
     }  // getStringChunk
-
-}  // class GBXReplayFetcher
+// class GBXReplayFetcher
+}
 
 
 /**
@@ -1657,8 +1670,8 @@ class GBXPackFetcher extends GBXBaseFetcher
 
         $this->clearGBXdata();
     }  // processGBX
-
-}  // class GBXPackFetcher
+// class GBXPackFetcher
+}
 
 
 /**
@@ -1735,5 +1748,5 @@ class GBXPackHeaderFetcher extends GBXBaseFetcher
             $this->nestLevel = $this->readInt32();
         }
     }  // processGBX
-
-}  // class GBXPackHeaderFetcher
+// class GBXPackHeaderFetcher
+}

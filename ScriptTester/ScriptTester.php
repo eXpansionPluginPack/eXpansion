@@ -68,5 +68,4 @@ class ScriptTester extends ExpPlugin
             $this->eXpChatSendServerMessage("Error: " . $e->getMessage(), $login);
         }
     }
-
 }

@@ -100,8 +100,9 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->label_nbFinish->setSizeX($scaledSizes[4]);
         $this->pager->setSize($this->getSizeX() - 1, $this->getSizeY() - 12);
         $this->pager->setPosY(-7);
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->setSizeX($this->getSizeX());
+        }
 
         $this->button_sectors->setPosition($this->getSizeX() - 27, -$this->getSizeY() + 6);
         $this->button_cps->setPosition($this->getSizeX() - 53, -$this->getSizeY() + 6);
@@ -153,7 +154,10 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $localBase->formatScore($record->time) . " " => -1,
                 $localBase->formatScore($record->avgScore) . "" => -1,
                 "#" . $record->nbFinish => -1,
-                ($record->isDelete ? '$w$F00Cancel Delete' : '$F00$wDelete') => $this->createAction(array($this, 'toogleDelete'), $record),
+                ($record->isDelete ? '$w$F00Cancel Delete' : '$F00$wDelete') => $this->createAction(
+                    array($this, 'toogleDelete'),
+                    $record
+                ),
             ));
             $x++;
         }
@@ -169,5 +173,4 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->populateList($this->recList, $this->limit, $this->currentMap, $this->localBase);
         $this->redraw($login);
     }
-
 }

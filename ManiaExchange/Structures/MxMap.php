@@ -128,5 +128,4 @@ class MxMap extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
     public $hasScreenshot;
 
     public $hasThumbnail;
-
 }

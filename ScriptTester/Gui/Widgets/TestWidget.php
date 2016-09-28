@@ -27,13 +27,9 @@ class TestWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->frame->setColorize("f00");
         $this->addComponent($this->frame);
 
-        //$this->frame2 = new \ManiaLive\Gui\Controls\Frame();
-
         $this->xmlData = new \ManiaLivePlugins\eXpansion\Gui\Elements\Xml();
         $this->xmlData->setErrorLogin($this->getRecipient());
         $this->addComponent($this->xmlData);
-
-        // $this->addComponent($this->frame2);
 
         $this->closeButton = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
         $this->closeButton->setText("Close");
@@ -70,5 +66,4 @@ class TestWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     {
         $this->closeWindow();
     }
-
 }

@@ -38,7 +38,9 @@ class UndefStyle extends AbsControl
         $this->icon_game->setPosY(-0.4);
         $this->icon_game->setPosX($this->getSizeX() - 4);
         $this->icon_game->setStyle('Icons128x32_1');
-        $this->icon_game->setSubStyle(\ManiaLivePlugins\eXpansion\ServerNeighborhood\ServerNeighborhood::$gamemodes[(int)$server->getServer_data()->server->gamemode]['icon']);
+        $this->icon_game->setSubStyle(
+            \ManiaLivePlugins\eXpansion\ServerNeighborhood\ServerNeighborhood::$gamemodes[(int)$server->getServer_data()->server->gamemode]['icon']
+        );
         $this->addComponent($this->icon_game);
 
         $this->icon_player = new \ManiaLib\Gui\Elements\Icons64x64_1(2.5, 2.5);
@@ -97,7 +99,7 @@ class UndefStyle extends AbsControl
             $this->icon_status->setStyle('Icons128x128_1');
             $this->icon_status->setSubStyle('Back');
 
-        } else if ($server->getServer_data()->server->private == 'true') {
+        } elseif ($server->getServer_data()->server->private == 'true') {
             $this->icon_status->setStyle('Icons128x128_1');
             $this->icon_status->setSubStyle('Padlock');
         } else {
@@ -105,19 +107,40 @@ class UndefStyle extends AbsControl
             $this->icon_status->setSubStyle('empty');
         }
 
-        $this->icon_game->setSubStyle(\ManiaLivePlugins\eXpansion\ServerNeighborhood\ServerNeighborhood::$gamemodes[(int)$server->getServer_data()->server->gamemode]['icon']);
+        $this->icon_game->setSubStyle(
+            \ManiaLivePlugins\eXpansion\ServerNeighborhood\ServerNeighborhood::$gamemodes[(int)$server->getServer_data()->server->gamemode]['icon']
+        );
 
-        if ((int)$server->getServer_data()->server->players->current == (int)$server->getServer_data()->server->players->maximum)
-            $this->label_nbPlayers->setText('$F00' . $server->getServer_data()->server->players->current . '/' . $server->getServer_data()->server->players->maximum);
-        else
-            $this->label_nbPlayers->setText('$FFF' . $server->getServer_data()->server->players->current . '/' . $server->getServer_data()->server->players->maximum);
+        if ((int)$server->getServer_data()->server->players->current
+            == (int)$server->getServer_data()->server->players->maximum) {
+            $this->label_nbPlayers->setText(
+                '$F00' . $server->getServer_data()->server->players->current
+                . '/' . $server->getServer_data()->server->players->maximum
+            );
+        } else {
+            $this->label_nbPlayers->setText(
+                '$FFF' . $server->getServer_data()->server->players->current
+                . '/' . $server->getServer_data()->server->players->maximum
+            );
+        }
 
-        if ((int)$server->getServer_data()->server->players->current == (int)$server->getServer_data()->server->players->maximum)
-            $this->label_nbSpecs->setText('$F00' . $server->getServer_data()->server->spectators->current . '/' . $server->getServer_data()->server->spectators->maximum);
-        else
-            $this->label_nbSpecs->setText('$FFF' . $server->getServer_data()->server->spectators->current . '/' . $server->getServer_data()->server->spectators->maximum);
+        if ((int)$server->getServer_data()->server->players->current
+            == (int)$server->getServer_data()->server->players->maximum) {
+            $this->label_nbSpecs->setText(
+                '$F00' . $server->getServer_data()->server->spectators->current
+                . '/' . $server->getServer_data()->server->spectators->maximum
+            );
+        } else {
+            $this->label_nbSpecs->setText(
+                '$FFF' . $server->getServer_data()->server->spectators->current
+                . '/' . $server->getServer_data()->server->spectators->maximum
+            );
+        }
 
-        $this->label_ladder->setText('$FFF' . $server->getServer_data()->server->ladder->minimum . '/' . $server->getServer_data()->server->ladder->maximum);
+        $this->label_ladder->setText(
+            '$FFF' . $server->getServer_data()->server->ladder->minimum
+            . '/' . $server->getServer_data()->server->ladder->maximum
+        );
 
         $this->label_name->setText('$AAA' . $server->getServer_data()->server->name);
     }
@@ -142,5 +165,4 @@ class UndefStyle extends AbsControl
     {
         parent::destroy();
     }
-
 }

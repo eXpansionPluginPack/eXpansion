@@ -161,8 +161,6 @@ class ServerPanel extends Widget
 
     private function populateList()
     {
-
-        //$this->items = array();
         $this->frame->clearComponents();
 
         $onlineServers = array();
@@ -174,9 +172,9 @@ class ServerPanel extends Widget
             }
         }
 
-        if (Config::getInstance()->nbElement >= $nbOnline)
+        if (Config::getInstance()->nbElement >= $nbOnline) {
             $i = 0;
-        else {
+        } else {
             $i = $this->lastStart % $nbOnline;
         }
         $this->lastStart++;
@@ -185,7 +183,8 @@ class ServerPanel extends Widget
         while ($nbShown < $nbOnline && $nbShown < Config::getInstance()->nbElement) {
 
             if (!isset($this->items[$nbShown])) {
-                $className = '\\ManiaLivePlugins\\eXpansion\\ServerNeighborhood\\Gui\\Widget_Controls\\' . Config::getInstance()->style;
+                $className = '\\ManiaLivePlugins\\eXpansion\\ServerNeighborhood\\Gui\\Widget_Controls\\'
+                    . Config::getInstance()->style;
                 $item = new $className($nbShown, $this, $onlineServers[$i % $nbOnline]);
             } else {
                 $item = $this->items[$nbShown];
@@ -247,5 +246,4 @@ class ServerPanel extends Widget
         $this->items = array();
         $this->frame->destroy();
     }
-
 }

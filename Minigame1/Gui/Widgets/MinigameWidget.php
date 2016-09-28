@@ -72,5 +72,4 @@ class MinigameWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     {
         $this->script->setParam("duration", $duration);
     }
-
 }

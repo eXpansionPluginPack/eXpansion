@@ -87,9 +87,6 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         parent::onResize($oldX, $oldY);
         $scaledSizes = Gui::getScaledSize($this->widths, ($this->getSizeX() / 0.8) - 8);
-        //$this->headerbar->setSize($this->getSizeX() - 10, 4.5);
-        //$this->headerbar->setPosX(1);
-
         $this->label_rank->setSizeX($scaledSizes[0]);
         $this->label_nick->setSizeX($scaledSizes[1]);
         $this->label_wins->setSizeX($scaledSizes[2]);
@@ -99,8 +96,9 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->label_ptime->setSizeX($scaledSizes[6]);
         $this->label_lastRec->setSizeX($scaledSizes[7]);
         $this->pager->setSize($this->getSizeX() + 4, $this->getSizeY() - 8);
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->setSizeX($this->getSizeX());
+        }
     }
 
     public function onDraw()

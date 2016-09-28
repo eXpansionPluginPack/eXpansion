@@ -74,7 +74,6 @@ class Song extends Control implements OptimizedPagerElement
         $this->bg->setSize($this->sizeX, $this->sizeY);
         $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY);
-        //  $this->button->setPosx($this->sizeX - $this->button->sizeX);
     }
 
     /*
@@ -91,6 +90,4 @@ class Song extends Control implements OptimizedPagerElement
     {
         return 3;
     }
-
 }
-

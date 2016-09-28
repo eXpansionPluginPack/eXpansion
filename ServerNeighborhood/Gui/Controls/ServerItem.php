@@ -39,7 +39,10 @@ class ServerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg_main = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button($this->getSizeX(), $sizeY);
         $this->bg_main->setIcon("Bgs1", "BgCardOnline");
         $this->bg_main->setDescription("Click to Join server", 40);
-        $this->bg_main->setManialink('maniaplanet://#qjoin=' . $server->getServer_data()->server->login . '@' . $server->getServer_data()->server->title);
+        $this->bg_main->setManialink(
+            'maniaplanet://#qjoin=' . $server->getServer_data()->server->login
+            . '@' . $server->getServer_data()->server->title
+        );
         $this->addComponent($this->bg_main);
 
         $this->frame_main = new \ManiaLive\Gui\Controls\Frame();
@@ -47,7 +50,6 @@ class ServerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->createMain($server, $sizeY);
         $this->createMap($server, $sizeY);
-// 	$this->createInfos($server, $sizeY);
 
         $this->setSize($this->getSizeX(), $sizeY + $YSpace);
 
@@ -56,7 +58,6 @@ class ServerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->bg_main->setAction($action, $server);
             $this->bg_main->setManialink(null);
             $this->bg_main->setDescription("Click to show more info", 40);
-            // $this->icon_info->setAction($action, $server);
         }
         $this->sizeY = $sizeY;
 
@@ -111,10 +112,16 @@ class ServerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $frame->addComponent($this->icon_player);
 
         $this->label_nbPlayers = new \ManiaLib\Gui\Elements\Label($iSize * 3, $sizeY * 0.6 + 0.6);
-        $this->label_nbPlayers->setText($server->getServer_data()->server->players->current . '/' . $server->getServer_data()->server->players->maximum);
+        $this->label_nbPlayers->setText(
+            $server->getServer_data()->server->players->current
+            . '/' . $server->getServer_data()->server->players->maximum
+        );
         $this->label_nbPlayers->setTextColor('111');
-        if ((int)$server->getServer_data()->server->players->current == (int)$server->getServer_data()->server->players->maximum)
+        if ((int)$server->getServer_data()->server->players->current
+            == (int)$server->getServer_data()->server->players->maximum
+        ) {
             $this->label_nbPlayers->setTextColor('F00');
+        }
         $frame->addComponent($this->label_nbPlayers);
 
         $this->icon_specs = new \ManiaLib\Gui\Elements\Icons64x64_1($iSize, $iSize);
@@ -123,9 +130,15 @@ class ServerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->label_nbSpecs = new \ManiaLib\Gui\Elements\Label($iSize * 3, $sizeY * 0.6 + 0.6);
         $this->label_nbSpecs->setTextColor('111');
-        $this->label_nbSpecs->setText($server->getServer_data()->server->spectators->current . '/' . $server->getServer_data()->server->spectators->maximum);
-        if ((int)$server->getServer_data()->server->players->current == (int)$server->getServer_data()->server->players->maximum)
+        $this->label_nbSpecs->setText(
+            $server->getServer_data()->server->spectators->current
+            . '/' . $server->getServer_data()->server->spectators->maximum
+        );
+        if ((int)$server->getServer_data()->server->players->current
+            == (int)$server->getServer_data()->server->players->maximum
+        ) {
             $this->label_nbSpecs->setTextColor('F00');
+        }
         $frame->addComponent($this->label_nbSpecs);
 
         $this->icon_ladder = new \ManiaLib\Gui\Elements\Icons128x128_1($iSize, $iSize);
@@ -134,7 +147,10 @@ class ServerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->label_ladder = new \ManiaLib\Gui\Elements\Label($iSize * 3, $iSize);
         $this->label_ladder->setTextColor("111");
-        $this->label_ladder->setText($server->getServer_data()->server->ladder->minimum . ' - ' . $server->getServer_data()->server->ladder->maximum . "k");
+        $this->label_ladder->setText(
+            $server->getServer_data()->server->ladder->minimum . ' - '
+            . $server->getServer_data()->server->ladder->maximum . "k"
+        );
         $frame->addComponent($this->label_ladder);
 
         $server_frame->addComponent($frame);
@@ -197,21 +213,8 @@ class ServerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $fav = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(24, 6);
         $fav->setScale(0.6);
-//	$fav->setStyle("Icons64x64_1");
-//	$fav->setSubStyle("StateFavourite");
+
         $fav->setText("Fav");
         $this->frame_info->addComponent($fav);
-
-        /* $this->icon_info = new \ManiaLib\Gui\Elements\Quad($bsize, $bsize);
-          $this->icon_info->setStyle("Icons64x64_1");
-          $this->icon_info->setSubStyle("TrackInfo");
-          $this->icon_info->setPosY(-$sizeY / 2 + $this->icon_info->getSizeY() / 2);
-          $this->addComponent($this->icon_info); */
-
-
-        //$this->icon_jspec->setManialink('maniaplanet://#spectate=' . $server->getServer_data()->server->login . '@' . $server->getServer_data()->server->title);
-        //$this->icon_fav->setManialink('maniaplanet://#addfavourite=' . $server->getServer_data()->server->login);
     }
-
-
 }

@@ -86,7 +86,10 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
             if (!$status) {
                 $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
-                $admins->announceToPermission(Permission::EXPANSION_PLUGIN_SETTINGS, "#admin_error#[ServerNeighborhoo]Storage path is wrong. Can't write!!");
+                $admins->announceToPermission(
+                    Permission::EXPANSION_PLUGIN_SETTINGS,
+                    "#admin_error#[ServerNeighborhoo]Storage path is wrong. Can't write!!"
+                );
             }
         }
 
@@ -137,7 +140,10 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             }
         }
         if ($tries >= 40) {
-            $this->console('[server_neighborhood] Could not open file " ' . $filename . '" to store the Server Information!');
+            $this->console(
+                '[server_neighborhood] Could not open file " '
+                . $filename . '" to store the Server Information!'
+            );
 
             return false;
         } else {
@@ -166,7 +172,10 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 $xml = simplexml_load_string($data);
 
                 if (!$xml) {
-                    \ManiaLive\Utilities\Console::println('[server_neighborhood] Error loading : ' . $serverPath . ' invalid XML?');
+                    \ManiaLive\Utilities\Console::println(
+                        '[server_neighborhood] Error loading : '
+                        . $serverPath . ' invalid XML?'
+                    );
                 } else {
                     $server->setServer_data($xml);
                 }
@@ -212,5 +221,4 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         ServerList::EraseAll();
         PlayerList::EraseAll();
     }
-
 }

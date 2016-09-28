@@ -37,7 +37,6 @@ class Small extends AbsControl
         $action = $this->createAction(array($this, 'showServerPlayers'));
         $this->bg->setAction($action);
         $this->label_name->setAction($action);
-        //$this->label_name->setManialink('maniaplanet://#join='.$server->getServer_data()->server->login.'@'.$server->getServer_data()->server->packmask);
         parent::__construct($server);
     }
 
@@ -52,5 +51,4 @@ class Small extends AbsControl
     {
         $this->label_name->setText('$AAA' . $server->getServer_data()->server->name);
     }
-
 }

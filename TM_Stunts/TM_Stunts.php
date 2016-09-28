@@ -35,7 +35,6 @@ class TM_Stunts extends ExpPlugin
 
     public function eXpOnReady()
     {
-        //	$this->enableTickerEvent();
         $this->stuntWindow = Gui\Widgets\StuntWidget::Create(null, true);
         $this->stuntWindow->setSize(60, 12);
         $this->stuntWindow->setPosition(-30, 58);
@@ -52,16 +51,27 @@ class TM_Stunts extends ExpPlugin
         $this->counter++;
     }
 
-    public function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump)
-    {
+    public function LibXmlRpc_OnStunt(
+        $login,
+        $points,
+        $combo,
+        $totalScore,
+        $factor,
+        $stuntname,
+        $angle,
+        $isStraight,
+        $isReversed,
+        $isMasterJump
+    ) {
         $stuntname = str_replace("::EStuntFigure::", "", $stuntname);
 
         if ($angle || ($stuntname != "StraightJump" && $stuntname != "RespawnPenalty")) {
             if ($isReversed) {
                 $stuntname = "Reversed" . $stuntname;
             }
-            if ($angle == 0)
+            if ($angle == 0) {
                 $angle = "";
+            }
             $split = preg_split('/(?=\p{Lu})/u', $stuntname);
             $stuntname = implode(" ", $split) . " " . $angle;
             $this->stuntWindow->setLabels($stuntname, $points);
@@ -73,5 +83,4 @@ class TM_Stunts extends ExpPlugin
     {
         parent::eXpOnUnload();
     }
-
 }

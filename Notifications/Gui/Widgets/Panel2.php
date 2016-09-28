@@ -51,5 +51,4 @@ class Panel2 extends \ManiaLive\Gui\Window
             $this->frame->addComponent(new Item($text));
         }
     }
-
 }

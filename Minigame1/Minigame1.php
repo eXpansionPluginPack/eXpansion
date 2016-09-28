@@ -46,10 +46,15 @@ class Minigame1 extends ExpPlugin
         try {
             $player = $this->storage->getPlayerObject($login);
             $amount = intval(rand($this->config->mg1_giftMin, $this->config->mg1_giftMax));
-            $message = 'You won ' . $amount . 'p from ' . $this->storage->server->name . '$z$s minigame!' . "\n" . ' Congratulations! ';
+            $message = 'You won ' . $amount . 'p from '
+                . $this->storage->server->name . '$z$s minigame!' . "\n" . ' Congratulations! ';
 
             $this->connection->pay($login, $amount, $message);
-            $this->eXpChatSendServerMessage('%1$s $z$s#game1# wins #variable#%2$s #game1#planets', null, array($player->nickName, $amount));
+            $this->eXpChatSendServerMessage(
+                '%1$s $z$s#game1# wins #variable#%2$s #game1#planets',
+                null,
+                array($player->nickName, $amount)
+            );
         } catch (Exception $e) {
             $ac = AdminGroups::getInstance();
             $ac->announceToPermission(Permission::SERVER_ADMIN, "Minigame1 Error: " . $e->getMessage());
@@ -67,7 +72,9 @@ class Minigame1 extends ExpPlugin
 
         if ($this->tick > $this->timerGap) {
             if ($this->connection->getServerPlanets() < $this->config->mg1_serverPlanetsMin) {
-                $msg = eXpGetMessage("#game1#The server has not enough #variable#Planets #game1#to run minigame, please #variable#Donate #game1#!");
+                $msg = eXpGetMessage(
+                    "#game1#The server has not enough #variable#Planets #game1#to run minigame, please #variable#Donate #game1#!"
+                );
                 $this->eXpChatSendServerMessage($msg);
             } else {
                 MinigameWidget::EraseAll();
@@ -107,5 +114,4 @@ class Minigame1 extends ExpPlugin
 
         parent::eXpOnUnload();
     }
-
 }

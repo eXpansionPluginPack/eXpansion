@@ -34,10 +34,12 @@ class MxMap extends Control
 
         $id = "";
 
-        if (property_exists($map, "trackID"))
+        if (property_exists($map, "trackID")) {
             $id = $map->trackID;
-        if (property_exists($map, "mapID"))
+        }
+        if (property_exists($map, "mapID")) {
             $id = $map->mapID;
+        }
 
         $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
@@ -171,6 +173,4 @@ class MxMap extends Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-

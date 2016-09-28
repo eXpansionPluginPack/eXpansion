@@ -42,6 +42,4 @@ class ScoreDisplay extends ExpPlugin
             Scores::EraseAll();
         }
     }
-
-
 }

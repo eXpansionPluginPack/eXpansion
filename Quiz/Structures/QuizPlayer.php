@@ -15,5 +15,4 @@ class QuizPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
         $this->nickName = $nick;
         $this->points = $points;
     }
-
 }

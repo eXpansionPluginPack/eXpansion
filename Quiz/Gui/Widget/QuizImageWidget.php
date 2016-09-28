@@ -115,5 +115,4 @@ class QuizImageWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     {
         $this->script->setParam("reveal", "True");
     }
-
 }

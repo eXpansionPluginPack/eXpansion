@@ -60,5 +60,4 @@ class RateButton2 extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->setSize($sizeX, $sizeY);
     }
-
 }

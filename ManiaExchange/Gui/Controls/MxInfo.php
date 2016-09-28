@@ -55,7 +55,7 @@ class MxInfo extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->erase();
     }
 
-    // override destroy method not to destroy its contents on manialive 3.1 
+    // override destroy method not to destroy its contents on manialive 3.1
     public function destroy()
     {
 
@@ -71,6 +71,4 @@ class MxInfo extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-

@@ -26,5 +26,4 @@ class OnlineTime extends StatsWindow
     {
         return array(null, null, \ManiaLivePlugins\eXpansion\Gui\Formaters\LongDate::getInstance());
     }
-
 }

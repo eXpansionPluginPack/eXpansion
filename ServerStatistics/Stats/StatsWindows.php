@@ -24,7 +24,6 @@ class StatsWindows implements AbstractStat
         // ProcessorQueueLength
         foreach ($this->cpuValue->ObjectSet as $key => $set) {
             $loadArray = $set->PercentProcessorTime;
-            // var_dump($set->Timestamp_Sys100NS);
         }
 
         return $loadArray[0];
@@ -66,11 +65,17 @@ class StatsWindows implements AbstractStat
             'second' => substr($boot, 12, 2),
         );
 
-        $bootTime = mktime($booted['hour'], $booted['minute'], $booted['second'], $booted['month'], $booted['day'], $booted['year']);
+        $bootTime = mktime(
+            $booted['hour'],
+            $booted['minute'],
+            $booted['second'],
+            $booted['month'],
+            $booted['day'],
+            $booted['year']
+        );
 
         $uptime = (time() - $bootTime);
 
         return $uptime;
     }
-
 }

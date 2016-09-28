@@ -104,6 +104,4 @@ class SecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         unset($this->label_nick);
         parent::destroy();
     }
-
 }
-

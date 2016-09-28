@@ -101,7 +101,4 @@ class RankItem_old extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         parent::destroy();
     }
-
 }
-
-

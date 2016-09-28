@@ -34,10 +34,9 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     function send($login, $message, $icon = null, $callback = null, $pluginid = null)
     {
         if (is_callable($callback) || $callback === null) {
-            //$hash = spl_object_hash($item);
-            if ($login == null)
+            if ($login == null) {
                 array_unshift($this->publicMessages, new Message($login, $icon, $message, $callback));
-            else {
+            } else {
                 if (!array_key_exists($login, $this->personalMessages)) {
                     $this->personalMessages[$login] = array();
                 }
@@ -51,13 +50,11 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             $this->reDraw();
         } else {
-            // $this->console("Notification adding failed for plugin:" . $pluginid . " callback is not valid.");
         }
     }
 
     function reDraw()
     {
-        //$this->onPlayerConnect(NotificationPanel::RECIPIENT_ALL, true);
         try {
             foreach (NotificationPanel::GetAll() as $window) {
                 $login = $window->getRecipient();
@@ -129,7 +126,7 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if ($var->getName() == "redirectedPlugins") {
             $this->checkRedirect();
-        } else if ($var->getName() == "posY") {
+        } elseif ($var->getName() == "posY") {
             $this->reDraw();
         }
     }
@@ -144,5 +141,4 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
         }
     }
-
 }

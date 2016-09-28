@@ -10,5 +10,4 @@ class Song extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
     public $genre;
     public $filename;
     public $folder;
-
 }

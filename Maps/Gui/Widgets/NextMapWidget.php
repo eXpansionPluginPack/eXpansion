@@ -90,8 +90,9 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         // $this->time->setText($this->map->goldTime);
         $this->environment->setText($map->environnement);
 
-        if ($map->author == "Nadeo")
+        if ($map->author == "Nadeo") {
             $this->country->setImage("http://reaby.kapsi.fi/ml/flags/France.dds", true);
+        }
     }
 
     public function destroy()
@@ -99,5 +100,4 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

@@ -108,5 +108,4 @@ class ScriptEditor extends PlainWidget
     {
         $this->closeWindow();
     }
-
 }

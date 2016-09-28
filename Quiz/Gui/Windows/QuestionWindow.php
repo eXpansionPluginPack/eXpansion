@@ -40,7 +40,7 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame(0, -6);
         $this->frame->setSize(90, 120);
-        $this->frame->setLayout(New \ManiaLib\Gui\Layouts\Column(90, 6));
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(90, 6));
 
 
         $this->IBQuestion = new Inputbox("question", 80);
@@ -102,7 +102,10 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $storage = \ManiaLive\Data\Storage::getInstance();
         $q = str_replace("?", "", $data['question']);
-        $question = new \ManiaLivePlugins\eXpansion\Quiz\Structures\Question($storage->getPlayerObject($login), trim($q));
+        $question = new \ManiaLivePlugins\eXpansion\Quiz\Structures\Question(
+            $storage->getPlayerObject($login),
+            trim($q)
+        );
         for ($x = 0; $x < $this->answerCount; $x++) {
             if (trim($data['answer.' . $x]) != "") {
                 $question->addAnswer(trim($data['answer.' . $x]));
@@ -122,7 +125,10 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $storage = \ManiaLive\Data\Storage::getInstance();
         $q = str_replace("?", "", $data['question']);
-        $question = new \ManiaLivePlugins\eXpansion\Quiz\Structures\Question($storage->getPlayerObject($login), trim($q));
+        $question = new \ManiaLivePlugins\eXpansion\Quiz\Structures\Question(
+            $storage->getPlayerObject($login),
+            trim($q)
+        );
         for ($x = 0; $x < $this->answerCount; $x++) {
             if (trim($data['answer.' . $x]) != "") {
                 $question->addAnswer(trim($data['answer.' . $x]));
@@ -153,5 +159,4 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

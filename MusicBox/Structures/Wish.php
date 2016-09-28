@@ -13,5 +13,4 @@ class Wish
         $this->song = $song;
         $this->player = $player;
     }
-
 }

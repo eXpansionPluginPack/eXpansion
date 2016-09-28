@@ -66,7 +66,11 @@ class Widgets_Advertising extends ExpPlugin
                 $widget->setImage($this->config->$varImageUrl, $this->config->$varImageFocusUrl);
                 $widget->setManialink($this->config->$varManialink);
                 $widget->setUrl($this->config->$varUrl);
-                $widget->setImageSize($this->config->$varImageSizeX, $this->config->$varImageSizeY, $this->config->$varSize);
+                $widget->setImageSize(
+                    $this->config->$varImageSizeX
+                    , $this->config->$varImageSizeY,
+                    $this->config->$varSize
+                );
                 $widget->setPositionX($this->config->$varX);
                 $widget->setPositionY($this->config->$varY);
                 $widget->setNoAds($this->config->noAdUsers);
@@ -80,5 +84,4 @@ class Widgets_Advertising extends ExpPlugin
         WidgetAd::EraseAll();
         parent::eXpOnUnload();
     }
-
 }

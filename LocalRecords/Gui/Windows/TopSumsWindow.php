@@ -42,10 +42,16 @@ class TopSumsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $x = 0;
         foreach ($data as $login => $value) {
-            if ($x >= 100)
+            if ($x >= 100) {
                 break;
+            }
 
-            $this->items[$x] = new \ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls\TopsumItem($x, $login, $value, 100);
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\LocalRecords\Gui\Controls\TopsumItem(
+                $x,
+                $login,
+                $value,
+                100
+            );
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
@@ -66,5 +72,4 @@ class TopSumsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

@@ -67,5 +67,4 @@ class TopsumItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg->setSize($this->sizeX, $this->sizeY);
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
-
 }
