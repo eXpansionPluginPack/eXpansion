@@ -102,7 +102,10 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     protected function getServerNameItem($size)
     {
         $item = new \ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls\ServerInfoItem($size);
-        $item->setText("Ladder limits " . ($this->storage->server->ladderServerLimitMin / 1000) . " - " . ($this->storage->server->ladderServerLimitMax / 1000) . "k");
+        $item->setText(
+            "Ladder limits " . ($this->storage->server->ladderServerLimitMin / 1000)
+            . " - " . ($this->storage->server->ladderServerLimitMax / 1000) . "k"
+        );
 
         return $item;
     }
@@ -128,5 +131,4 @@ class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
         return $item;
     }
-
 }

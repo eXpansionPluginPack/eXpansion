@@ -55,5 +55,4 @@ class Widgets_CheckpointProgress extends \ManiaLivePlugins\eXpansion\Core\types\
     {
         Gui\Widgets\CpProgress::EraseAll();
     }
-
 }

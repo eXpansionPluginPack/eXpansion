@@ -32,7 +32,11 @@ class Widgets_MapSuggestion extends ExpPlugin
 
     public function invoke($login)
     {
-        $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\MapSuggestion\\MapSuggestion", "showMapWishWindow", $login);
+        $this->callPublicMethod(
+            "\\ManiaLivePlugins\\eXpansion\\MapSuggestion\\MapSuggestion",
+            "showMapWishWindow",
+            $login
+        );
     }
 
 
@@ -43,5 +47,4 @@ class Widgets_MapSuggestion extends ExpPlugin
         $this->action = null;
         MapSuggestionButton::EraseAll();
     }
-
 }

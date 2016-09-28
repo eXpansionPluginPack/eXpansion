@@ -66,5 +66,4 @@ class ServerInfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
 
         return $script;
     }
-
 }

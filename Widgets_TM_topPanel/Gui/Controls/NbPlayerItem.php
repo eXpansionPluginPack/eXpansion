@@ -117,5 +117,4 @@ class NbPlayerItem extends Control implements ScriptedContainer
 
         return $script;
     }
-
 }

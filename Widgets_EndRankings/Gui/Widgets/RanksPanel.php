@@ -55,8 +55,9 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
             $this->items[$x] = new \ManiaLivePlugins\eXpansion\Widgets_EndRankings\Gui\Controls\RankItem($x, $rank);
             $this->frame->addComponent($this->items[$x]);
             $x++;
-            if ($x == 30)
+            if ($x == 30) {
                 break;
+            }
         }
     }
 
@@ -70,5 +71,4 @@ class RanksPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
         parent::destroy();
     }
-
 }

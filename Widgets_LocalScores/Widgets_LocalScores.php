@@ -107,5 +107,4 @@ class Widgets_LocalScores extends ExpPlugin implements Listener
     {
 
     }
-
 }

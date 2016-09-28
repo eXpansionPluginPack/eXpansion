@@ -23,8 +23,9 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
     public function update()
     {
 
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
         $this->items = array();
         $this->frame->clearComponents();
 
@@ -110,5 +111,4 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
 
         return $out;
     }
-
 }

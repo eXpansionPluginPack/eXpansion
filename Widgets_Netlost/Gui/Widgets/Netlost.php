@@ -49,7 +49,6 @@ class Netlost extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     public function setServerName($name)
     {
-        // $this->server->setText($name);
     }
 
     public function destroy()
@@ -57,5 +56,4 @@ class Netlost extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

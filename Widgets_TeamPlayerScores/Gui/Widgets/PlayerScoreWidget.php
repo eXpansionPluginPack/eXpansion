@@ -60,7 +60,7 @@ class PlayerScoreWidget extends Widget
 
     /**
      *
-     * @param PlayerScore $roundScores
+     * @param PlayerScore $playerScores
      *
      * @return null
      */
@@ -68,11 +68,11 @@ class PlayerScoreWidget extends Widget
     {
         $x = 0;
         foreach ($playerScores as $score) {
-            if ($x >= 12)
+            if ($x >= 12) {
                 return;
+            }
             $this->frame->addComponent(new ScoreItem($score));
             $x++;
         }
     }
-
 }

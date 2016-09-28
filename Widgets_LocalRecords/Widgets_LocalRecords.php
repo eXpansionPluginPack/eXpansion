@@ -39,10 +39,10 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $this->enableDedicatedEvents();
 
         $this->lastUpdate = time();
-        if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'))
-            self::$localrecords = $this->callPublicMethod(
-                "\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords"
-            );
+        if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords')) {
+            self::$localrecords = $this
+                ->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
+        }
         $this->updateLocalPanel();
         self::$me = $this;
     }
@@ -59,7 +59,9 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
                 $panelMain->setSizeX($this->panelSizeX);
                 $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
                 if (!$this->config->isHorizontal) {
-                    if ($this->eXpGetCurrentCompatibilityGameMode() != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+                    if ($this->eXpGetCurrentCompatibilityGameMode()
+                        != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK
+                    ) {
                         $panelMain->setDirection("right");
                     } else {
                         $panelMain->setDirection("left");
@@ -68,7 +70,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
                 $this->widgetIds["LocalPanel"] = $panelMain;
                 $this->widgetIds["LocalPanel"]->update();
                 $this->widgetIds["LocalPanel"]->show();
-            } else if (isset($localRecs[0])) {
+            } elseif (isset($localRecs[0])) {
                 $localRecs[0]->update();
                 $localRecs[0]->show($login);
             }
@@ -83,7 +85,7 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
                     $this->widgetIds["LocalPanel2"] = $panelScore;
                     $this->widgetIds["LocalPanel2"]->update();
                     $this->widgetIds["LocalPanel2"]->show();
-                } else if (isset($localRecs[0])) {
+                } elseif (isset($localRecs[0])) {
                     $localRecs[0]->update();
                     $localRecs[0]->show($login);
                 }
@@ -143,7 +145,9 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function onBeginMatch()
     {
-        if (self::$raceOn == true) return;
+        if (self::$raceOn == true) {
+            return;
+        }
 
         self::$raceOn = false;
         $this->forceUpdate = true;
@@ -185,5 +189,4 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);
     }
-
 }

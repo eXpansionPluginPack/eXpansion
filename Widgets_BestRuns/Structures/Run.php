@@ -23,6 +23,4 @@ class Run extends AbstractStructure
         $this->nickname = $player->nickName;
         $this->checkpoints = $player->bestCheckpoints;
     }
-
 }
-

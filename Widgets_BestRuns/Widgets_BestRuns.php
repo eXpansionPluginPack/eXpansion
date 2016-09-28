@@ -92,5 +92,4 @@ class Widgets_BestRuns extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         BestRunPanel::EraseAll();
         parent::eXpOnUnload();
     }
-
 }

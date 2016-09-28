@@ -66,7 +66,9 @@ class ResSkipButtons extends Widget
                 array(
                     eXpGetMessage('AddToFav:$ff0Buy'),
                     eXpGetMessage('AddToFav:$fffRestart'),
-                    '$ff0' . $amount . 'p'));
+                    '$ff0' . $amount . 'p'
+                )
+            );
         }
 
         if ($amount == "max") {
@@ -109,5 +111,4 @@ class ResSkipButtons extends Widget
         $url = 'http://reaby.kapsi.fi/ml/addfavourite.php?login=' . rawurldecode($login);
         $this->btn_fav->setManialink($url);
     }
-
 }

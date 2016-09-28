@@ -56,5 +56,4 @@ class Widgets_TM_Obstacle extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
     {
         Gui\Widgets\CpProgress::EraseAll();
     }
-
 }

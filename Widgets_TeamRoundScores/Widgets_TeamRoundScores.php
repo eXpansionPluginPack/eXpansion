@@ -29,8 +29,6 @@ class Widgets_TeamRoundScores extends ExpPlugin
     public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
-        // $this->registerChatCommand("roundTest", "test", 0, false);
-        //$this->test();
         $this->reset();
         $this->showWidget(\ManiaLivePlugins\eXpansion\Gui\Widgets\Widget::LAYER_SCORES_TABLE);
     }
@@ -54,8 +52,9 @@ class Widgets_TeamRoundScores extends ExpPlugin
             reset($teamScores);
             $winnerTeam = key($teamScores);
 
-            if ($teamScores[0] == $teamScores[1])
+            if ($teamScores[0] == $teamScores[1]) {
                 $winnerTeam = -1;
+            }
 
             $score = new RoundScore();
             $score->roundNumber = $x;
@@ -92,8 +91,9 @@ class Widgets_TeamRoundScores extends ExpPlugin
         reset($teamScores);
         $winnerTeam = key($teamScores);
 
-        if ($teamScores[0] == $teamScores[1])
+        if ($teamScores[0] == $teamScores[1]) {
             $winnerTeam = -1;
+        }
 
         $score = new RoundScore();
         $score->roundNumber = $this->roundNumber;
@@ -142,8 +142,9 @@ class Widgets_TeamRoundScores extends ExpPlugin
         /** @var int[] */
         $total = count($this->storage->players);
         $points = $total - $position;
-        if ($points < 0)
+        if ($points < 0) {
             $points = 0;
+        }
 
         return $points;
     }
@@ -176,5 +177,4 @@ class Widgets_TeamRoundScores extends ExpPlugin
         $this->hideWidget();
         parent::eXpOnUnload();
     }
-
 }

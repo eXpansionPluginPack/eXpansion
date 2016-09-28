@@ -26,7 +26,6 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg->setSubStyle("BgRacePlayerLine");
         $this->bg->setColorize("0f0");
         $this->bg->setAlign('left', 'top');
-        //$this->bg->setBgcolor('6af5');
         $this->bg->setHidden(1);
         $this->bg->setPosY(1.5);
         $this->bg->setOpacity(0.75);
@@ -43,11 +42,8 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg2->setColorize("3af");
         $this->bg2->setAttribute("rot", 270);
         $this->bg2->setAlign('left', 'top');
-        //$this->bg->setBgcolor('6af5');
         $this->bg2->setHidden(1);
-        //$this->bg2->setPosX(-1);
         $this->bg2->setPosY(-2.25);
-        //$this->bg2->setPosX($sizeX);
 
         $this->bg2->setId("RecBg_" . $index);
         $this->addComponent($this->bg2);
@@ -84,8 +80,6 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->nick->setText($record->nickName);
         $this->addComponent($this->nick);
 
-        // $this->addComponent($this->frame);
-
         $this->setSize($sizeX, $sizeY);
         $this->setAlign("center", "top");
     }
@@ -98,11 +92,7 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public function destroy()
     {
-        // $this->frame->clearComponents();
-        // $this->frame->destroy();
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-

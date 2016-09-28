@@ -28,8 +28,9 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
         );
         $login = $this->getRecipient();
 
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
         $this->items = array();
         $this->frame->clearComponents();
 

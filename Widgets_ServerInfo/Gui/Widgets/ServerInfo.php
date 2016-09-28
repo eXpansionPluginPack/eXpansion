@@ -100,5 +100,4 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->script->setParam("maxPlayers", \ManiaLive\Data\Storage::getInstance()->server->currentMaxPlayers);
         $this->script->setParam("maxSpec", \ManiaLive\Data\Storage::getInstance()->server->currentMaxSpectators);
     }
-
 }

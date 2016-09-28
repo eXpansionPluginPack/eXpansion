@@ -50,5 +50,4 @@ class PlayerScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStruct
      * @var int
      */
     public $bestTime;
-
 }

@@ -38,6 +38,4 @@ class ReadyState extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     {
         $this->parent = $plugin;
     }
-
-
 }

@@ -17,5 +17,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Seasonal widget just for fun");
         $this->setGroups(array('Widgets'));
     }
-
 }

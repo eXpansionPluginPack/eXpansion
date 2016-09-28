@@ -40,19 +40,6 @@ class Speedmeter extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $label->setPosition(0, -6);
         $this->addComponent($label);
 
-
-        /*$bg = new \ManiaLib\Gui\Elements\Quad(48,48);
-        $bg->setAlign("center", "center");
-        $bg->setImage("http://reaby.kapsi.fi/ml/speedbg.png", true);
-        $this->addComponent($bg);
-
-        $needle = new \ManiaLib\Gui\Elements\Quad(48,48);
-        $needle->setAlign("center", "center");
-        $needle->setId("needle");
-        $needle->setImage("http://reaby.kapsi.fi/ml/speedneedle.png", true);
-        $this->addComponent($needle);
-        */
-
         $gauge = new \ManiaLivePlugins\eXpansion\Gui\Elements\Gauge(30, 8);
         $gauge->setStyle(\ManiaLivePlugins\eXpansion\Gui\Elements\Gauge::EnergyBar);
         $gauge->setGrading(0);
@@ -63,5 +50,4 @@ class Speedmeter extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Speedometer\Gui\Script");
         $this->registerScript($script);
     }
-
 }

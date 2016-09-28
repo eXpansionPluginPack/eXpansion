@@ -54,8 +54,9 @@ class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\A
         if ($this->buffer !== $out) {
 
             $recepient = null;
-            if (Config::getInstance()->showOnlyAdmins)
+            if (Config::getInstance()->showOnlyAdmins) {
                 $recepient = $this->group;
+            }
 
             $update = NetlostUpdate::Create($recepient);
             $update->setPlayer($out);
@@ -80,8 +81,9 @@ class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\A
     public function displayWidget()
     {
         $recepient = null;
-        if (Config::getInstance()->showOnlyAdmins)
+        if (Config::getInstance()->showOnlyAdmins) {
             $recepient = $this->group;
+        }
 
         $info = Netlost::Create($recepient);
         $info->setSize(200, 12);
@@ -108,5 +110,4 @@ class Widgets_Netlost extends ExpPlugin implements \ManiaLivePlugins\eXpansion\A
         $this->updateGroup();
         Netlost::Erase($login);
     }
-
 }

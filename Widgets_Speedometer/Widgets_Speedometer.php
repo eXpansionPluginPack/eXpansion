@@ -57,5 +57,4 @@ class Widgets_Speedometer extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $this->widget = null;
         Gui\Widgets\Speedmeter::EraseAll();
     }
-
 }

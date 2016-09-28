@@ -44,6 +44,4 @@ class RunPlayerElem extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         parent::destroy();
     }
-
 }
-

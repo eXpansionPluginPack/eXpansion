@@ -36,5 +36,4 @@ class Widget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $this->setSize($x, $y);
         $this->quad->setSize($x, $y);
     }
-
 }

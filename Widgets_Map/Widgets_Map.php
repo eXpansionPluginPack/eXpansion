@@ -26,7 +26,6 @@ class Widgets_Map extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         $info = Gui\Widgets\Map::Create(null);
         $info->setSize(60, 15);
-        //$info->setPosition(115, 89);
         $info->setScale(0.75);
         $info->show();
     }
@@ -35,6 +34,4 @@ class Widgets_Map extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         Map::EraseAll();
     }
-
 }
-

@@ -75,34 +75,41 @@ class PlainLivePanel extends PlainPanel
             if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
                 $this->timeScript->setParam("isLaps", "True");
 
-                if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
+                if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                     $this->timeScript->setParam("nbLaps", $nbLaps);
-                else
+                } else {
                     $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->lapsNbLaps);
-            } else if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_ROUNDS && $this->storage->gameInfos->roundsForcedLaps > 0
+                }
+            } elseif (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode()
+                == GameInfos::GAMEMODE_ROUNDS && $this->storage->gameInfos->roundsForcedLaps > 0
             ) {
                 $this->timeScript->setParam("isLaps", "True");
 
-                if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
+                if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                     $this->timeScript->setParam("nbLaps", $nbLaps);
-                else
+                } else {
                     $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
-            } else if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->roundsForcedLaps > 0
+                }
+            } elseif (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode()
+                == GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->roundsForcedLaps > 0
             ) {
                 $this->timeScript->setParam("isLaps", "True");
 
-                if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
+                if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                     $this->timeScript->setParam("nbLaps", $$nbLaps);
-                else
+                } else {
                     $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
-            } else if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_CUP && $this->storage->gameInfos->roundsForcedLaps > 0
+                }
+            } elseif (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode()
+                == GameInfos::GAMEMODE_CUP && $this->storage->gameInfos->roundsForcedLaps > 0
             ) {
                 $this->timeScript->setParam("isLaps", "True");
 
-                if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
+                if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                     $this->timeScript->setParam("nbLaps", $nbLaps);
-                else
+                } else {
                     $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
+                }
             }
 
             if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
@@ -125,18 +132,20 @@ class PlainLivePanel extends PlainPanel
 
     public function setNbFields($nb)
     {
-        if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM)
+        if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM) {
             parent::setNbFields($nb - 1);
-        else
+        } else {
             parent::setNbFields($nb);
+        }
     }
 
     public function update()
     {
 
         $login = $this->getRecipient();
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
 
         $this->items = array();
         $this->frame->clearComponents();
@@ -151,7 +160,9 @@ class PlainLivePanel extends PlainPanel
 
         $gm = Widgets_LiveRankings::eXpGetCurrentCompatibilityGameMode();
         $short = false;
-        if ($gm == GameInfos::GAMEMODE_ROUNDS || $gm == GameInfos::GAMEMODE_CUP || $gm == GameInfos::GAMEMODE_TEAM || $gm == GameInfos::GAMEMODE_LAPS) {
+        if ($gm == GameInfos::GAMEMODE_ROUNDS || $gm == GameInfos::GAMEMODE_CUP
+            || $gm == GameInfos::GAMEMODE_TEAM || $gm == GameInfos::GAMEMODE_LAPS
+        ) {
             $short = true;
         }
 
@@ -165,7 +176,9 @@ class PlainLivePanel extends PlainPanel
             $this->frame->addComponent($this->items[$index - 1]);
         }
 
-        if ($gm == GameInfos::GAMEMODE_ROUNDS || $gm == GameInfos::GAMEMODE_CUP || $gm == GameInfos::GAMEMODE_TEAM || $gm == GameInfos::GAMEMODE_LAPS) {
+        if ($gm == GameInfos::GAMEMODE_ROUNDS || $gm == GameInfos::GAMEMODE_CUP
+            || $gm == GameInfos::GAMEMODE_TEAM || $gm == GameInfos::GAMEMODE_LAPS
+        ) {
             $this->cpUpdate();
         } else {
             $this->taUpdate();
@@ -190,7 +203,8 @@ class PlainLivePanel extends PlainPanel
                     $nickData .= ', ';
                 }
                 $recsData .= '"' . Gui::fixString($player->login) . '"=>' . $player->bestTime;
-                $nickData .= '"' . Gui::fixString($player->login) . '"=>"' . Gui::fixString(Formatting::stripLinks($player->nickName)) . '"';
+                $nickData .= '"' . Gui::fixString($player->login) . '"=>"'
+                    . Gui::fixString(Formatting::stripLinks($player->nickName)) . '"';
                 $index++;
             }
         }
@@ -230,10 +244,13 @@ class PlainLivePanel extends PlainPanel
             $lastCpIndex = count($player->checkpoints) - 1;
             $playerNickNames[$player->login] = $player->nickName;
 
-            if ($player->isPlaying && $lastCpIndex >= 0 && isset($player->checkpoints[$lastCpIndex]) && $player->checkpoints[$lastCpIndex] > 0) {
+            if ($player->isPlaying && $lastCpIndex >= 0
+                && isset($player->checkpoints[$lastCpIndex]) && $player->checkpoints[$lastCpIndex] > 0
+            ) {
 
-                if ($lastCpIndex > $biggestCp)
+                if ($lastCpIndex > $biggestCp) {
                     $biggestCp = $lastCpIndex;
+                }
 
                 $lastCpTime = $player->checkpoints[$lastCpIndex];
                 $player = $this->storage->getPlayerObject($login);
@@ -257,7 +274,8 @@ class PlainLivePanel extends PlainPanel
             if ($index > 1) {
                 $NickNames .= ', ';
             }
-            $NickNames .= '"' . Gui::fixString($login) . '"=>"' . Gui::fixString(Formatting::stripLinks($nickname)) . '"';
+            $NickNames .= '"' . Gui::fixString($login) . '"=>"'
+                . Gui::fixString(Formatting::stripLinks($nickname)) . '"';
             $index++;
         }
         $NickNames .= "]";
@@ -299,8 +317,9 @@ class PlainLivePanel extends PlainPanel
 
         $bestCpsText = '';
         foreach ($bestCps as $cpIndex => $time) {
-            if ($bestCpsText != "")
+            if ($bestCpsText != "") {
                 $bestCpsText .= ', ';
+            }
             $bestCpsText .= $cpIndex . '=>' . $time;
         }
 
@@ -309,8 +328,9 @@ class PlainLivePanel extends PlainPanel
 
         if ($teamCont == 0) {
             $this->timeScript->setParam("playerTeams", "Integer[Text]");
-        } else
+        } else {
             $this->timeScript->setParam("playerTeams", $teams);
+        }
 
         if (!empty($newPlayerCps)) {
             $this->timeScript->setParam("playerTimes", $playerTimes);
@@ -323,5 +343,4 @@ class PlainLivePanel extends PlainPanel
             $this->timeScript->setParam("maxCp", -1);
         }
     }
-
 }

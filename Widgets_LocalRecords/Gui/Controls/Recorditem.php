@@ -21,32 +21,21 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         // hilight own record
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX + 1, $sizeY - 0.5);
-        //$this->bg->setStyle("BgsPlayerCard");
-        //$this->bg->setSubStyle("BgRacePlayerLine");
         $this->bg->setBgcolor("0f0");
         $this->bg->setAlign('left', 'top');
-        //$this->bg->setBgcolor('6af5');
         $this->bg->setHidden(1);
         $this->bg->setPosition(-1.5, 1.5);
         $this->bg->setOpacity(0.25);
-        //$this->bg->setAttribute("rot", 90);
         $this->bg->setId("RecBgBlink_" . $index);
-        //$this->bg->setPosX($sizeX);
         $this->addComponent($this->bg);
 
         // hilight of server record
         $this->bg2 = new \ManiaLib\Gui\Elements\Quad($sizeX + 1, $sizeY - 0.5);
-        //$this->bg2->setStyle("BgsPlayerCard");
-        //$this->bg2->setSubStyle("BgRacePlayerLine");
         $this->bg2->setOpacity(0.55);
         $this->bg2->setBgColor("000");
-        //$this->bg2->setAttribute("rot", 270);
         $this->bg2->setAlign('left', 'top');
-        //$this->bg->setBgcolor('6af5');
         $this->bg2->setHidden(1);
         $this->bg2->setPosition(-1.5, 1.5);
-        //$this->bg2->setPosY(1.5);
-        //$this->bg2->setPosX($sizeX);
 
         $this->bg2->setId("RecBg_" . $index);
         $this->addComponent($this->bg2);
@@ -84,7 +73,6 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->nick->setId("RecNick_" . $index);
         $this->nick->setAttribute("class", "nickLabel");
         $this->nick->setScriptEvents();
-        //$this->nick->setText("#######################################################");
         $this->addComponent($this->nick);
 
         if ($moreInfo) {
@@ -95,7 +83,6 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->label->setId("RecCp2_" . $index);
             $this->label->setTextSize(1);
             $this->label->setTextColor('ff0');
-            //$this->label->setText("+1Cp");
             $this->addComponent($this->label);
 
             $this->label = new \ManiaLib\Gui\Elements\Label(6, 4);
@@ -105,7 +92,6 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->label->setTextSize(1);
             $this->label->setId("RecCp1_" . $index);
             $this->label->setTextColor('ff0');
-            //$this->label->setText("+1Cp");
             $this->addComponent($this->label);
 
             $this->label = new \ManiaLib\Gui\Elements\Label(11, 4);
@@ -115,7 +101,6 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->label->setId("RecInfo2_" . $index);
             $this->label->setTextSize(1);
             $this->label->setTextColor('fff');
-            //$this->label->setText("+00:00:00");
             $this->addComponent($this->label);
 
             $this->label = new \ManiaLib\Gui\Elements\Label(11, 4);
@@ -125,14 +110,8 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->label->setTextSize(1);
             $this->label->setId("RecInfo1_" . $index);
             $this->label->setTextColor('fff');
-            //$this->label->setText("+00:00:00");
             $this->addComponent($this->label);
-
-            /*    $this->bg->setPosX($sizeX -19);
-              $this->bg->setSizeY($sizeY + 2 + 37); */
         }
-
-        // $this->addComponent($this->frame);
 
         $this->setSize($sizeX, $sizeY);
         $this->setAlign("center", "top");
@@ -153,8 +132,6 @@ class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public function destroy()
     {
-        // $this->frame->clearComponents();
-        // $this->frame->destroy();
         $this->destroyComponents();
         parent::destroy();
     }

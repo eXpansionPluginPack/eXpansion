@@ -38,5 +38,4 @@ class XmasWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
         $this->setScale($this->config->scale);
     }
-
 }

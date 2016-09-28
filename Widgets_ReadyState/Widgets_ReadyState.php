@@ -66,7 +66,9 @@ class Widgets_ReadyState extends ExpPlugin
         ReadyWidget::EraseAll();
         $group = Group::Create("admins", AdminGroups::getAdminsByPermission(Permission::CHAT_ADMINCHAT));
         $widget = ReadyWidget::create($group, true);
-        $widget->setText("Ready: " . count($this->ready) . " Not ready: " . count(array_diff($this->ready, $this->allPlayers)));
+        $widget->setText(
+            "Ready: " . count($this->ready) . " Not ready: " . count(array_diff($this->ready, $this->allPlayers))
+        );
         $widget->setPosition(-12, -75);
         $widget->setSize(60, 7);
         $widget->show();
@@ -86,5 +88,4 @@ class Widgets_ReadyState extends ExpPlugin
         ReadyState::EraseAll();
         parent::eXpOnUnload();
     }
-
 }

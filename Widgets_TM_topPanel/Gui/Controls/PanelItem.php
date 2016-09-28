@@ -10,11 +10,9 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     public function __construct($title, $value, $sizeX = 20, $StyleorUrl = null, $iconSubStyle = null)
     {
         $this->quad = new \ManiaLib\Gui\Elements\Quad(8, 8);
-        //$this->quad->setColorize("fff");
         $this->quad->setPosY(0.5);
         $this->quad->setStyle($StyleorUrl);
         $this->quad->setSubStyle($iconSubStyle);
-        //	$this->addComponent($this->quad);
 
         $this->lbl_title = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel($sizeX, 4);
         $this->lbl_title->setText($title);
@@ -48,5 +46,4 @@ class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         $this->quad->setId($id);
     }
-
 }

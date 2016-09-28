@@ -25,5 +25,4 @@ class Widgets_Clock extends ExpPlugin
     {
         Clock::EraseAll();
     }
-
 }

@@ -57,5 +57,4 @@ class Widgets_Countdown extends ExpPlugin
         WidgetAd::EraseAll();
         parent::eXpOnUnload();
     }
-
 }

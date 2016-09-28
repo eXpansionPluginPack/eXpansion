@@ -31,8 +31,9 @@ class Mimporter
 
     function readconfig()
     {
-        if (!file_exists("mlepp_migration.ini"))
+        if (!file_exists("mlepp_migration.ini")) {
             die("Cannot locate main configuration file: mlepp_migration.ini.");
+        }
         $this->config = parse_ini_file("mlepp_migration.ini");
         if ($this->config === false) {
             die("# Fatal error reading configuration file. Check .ini syntax");
@@ -74,15 +75,12 @@ class Mimporter
         $this->hr();
         print "Type \"DO IT\" and press enter to continue: ";
         $input = fgets(STDIN);
-        /*if (trim($input) != "DO IT")
-            die();*/
+
 
         $this->hr();
         $this->c("DO NOT INTERRUPT THE PROCESS", true);
         $this->hr();
 
-        //$this->query('SET AUTOCOMMIT=0', $this->conn);
-        //$this->query('START TRANSACTION;', $this->conn);
 
         $map = array('player_login' => 'player_login',
             'player_nickname' => 'player_nickname',
@@ -92,7 +90,12 @@ class Mimporter
             'player_onlinerights' => 'player_onlinerights',
             'player_ip' => 'player_ip',
         );
-        $this->merge($this->config['mlepp_db'] . '.players', $this->config['exp_db'] . '.exp_players', $map, array('player_updated2' => 'UNIX_TIMESTAMP(player_updated) as player_updated2'));
+        $this->merge(
+            $this->config['mlepp_db'] . '.players',
+            $this->config['exp_db'] . '.exp_players',
+            $map,
+            array('player_updated2' => 'UNIX_TIMESTAMP(player_updated) as player_updated2')
+        );
 
         $map = array("challenge_uid" => "challenge_uid",
             "challenge_name" => "challenge_name",
@@ -110,7 +113,12 @@ class Mimporter
             "challenge_nbCheckpoints" => "challenge_nbCheckpoints",
             "challenge_addtime2" => "challenge_addtime",
         );
-        $this->merge($this->config['mlepp_db'] . '.challenges', $this->config['exp_db'] . '.exp_maps', $map, array('challenge_addtime2' => 'UNIX_TIMESTAMP(challenge_addtime) as challenge_addtime2'));
+        $this->merge(
+            $this->config['mlepp_db'] . '.challenges',
+            $this->config['exp_db'] . '.exp_maps',
+            $map,
+            array('challenge_addtime2' => 'UNIX_TIMESTAMP(challenge_addtime) as challenge_addtime2')
+        );
 
         $map = array("record_challengeuid" => "record_challengeuid",
             "record_playerlogin" => "record_playerlogin",
@@ -120,7 +128,12 @@ class Mimporter
             "record_avgScore" => "record_avgScore",
             "record_checkpoints" => "record_checkpoints",
             "record_date2" => "record_date");
-        $this->merge($this->config['mlepp_db'] . '.localrecords', $this->config['exp_db'] . '.exp_records', $map, array('record_date2' => 'UNIX_TIMESTAMP(record_date) as record_date2'));
+        $this->merge(
+            $this->config['mlepp_db'] . '.localrecords',
+            $this->config['exp_db'] . '.exp_records',
+            $map,
+            array('record_date2' => 'UNIX_TIMESTAMP(record_date) as record_date2')
+        );
 
         $map = array("planets_login" => "transaction_fromLogin",
             "planets_amount" => "transaction_amount",
@@ -128,17 +141,24 @@ class Mimporter
             "planets_fromplugin" => "transaction_plugin",
             "planets_description" => "transaction_subject");
 
-        $specials = array('transaction_toLogin' => '"' . $this->config['transaction_toLogin'] . '" as transaction_toLogin');
+        $specials = array(
+            'transaction_toLogin' => '"' . $this->config['transaction_toLogin'] . '" as transaction_toLogin'
+        );
 
-        $this->merge($this->config['mlepp_db'] . '.planettransactions', $this->config['exp_db'] . '.exp_planet_transaction', $map, $specials);
+        $this->merge(
+            $this->config['mlepp_db'] . '.planettransactions',
+            $this->config['exp_db'] . '.exp_planet_transaction',
+            $map,
+            $specials
+        );
 
-        $query = 'UPDATE ' . $this->config['exp_db'] . '.exp_planet_transaction SET transaction_plugin = "eXpansion\\DonatePanel" WHERE transaction_plugin = "MLEPP\\DonatePlanets"';
+        $query = 'UPDATE ' . $this->config['exp_db']
+            . '.exp_planet_transaction SET transaction_plugin = "eXpansion\\DonatePanel" WHERE transaction_plugin = "MLEPP\\DonatePlanets"';
         mysql_query($query, $this->conn);
 
-        $query = 'UPDATE ' . $this->config['exp_db'] . '.exp_planet_transaction SET transaction_plugin = "ManiaLivePlugins\\PMC" WHERE transaction_plugin = "PMC"';
+        $query = 'UPDATE ' . $this->config['exp_db']
+            . '.exp_planet_transaction SET transaction_plugin = "ManiaLivePlugins\\PMC" WHERE transaction_plugin = "PMC"';
         mysql_query($query, $this->conn);
-
-        //$this->query('COMMIT;', $this->conn);
     }
 
     function merge($tableName1, $tableName2, $map, $specials = array())
@@ -168,8 +188,9 @@ class Mimporter
         $total = count($data1);
         $buffer = "";
         foreach ($data1 as $data) {
-            if (empty($data))
+            if (empty($data)) {
                 continue;
+            }
             if ($i > 0 && $i % 5 == 0) {
                 $buffer = trim($buffer, ",");
                 $this->query("INSERT INTO $tableName2 ($columns) VALUES $buffer;", $this->conn);
@@ -225,12 +246,12 @@ class Mimporter
     {
         if ($center) {
             $len = (80 / 2) - (strlen($string) / 2);
-            for ($x = 0; $x < $len; $x++)
+            for ($x = 0; $x < $len; $x++) {
                 print " ";
+            }
             print $string . "\n";
         } else {
             print $string . "\n";
         }
     }
-
 }

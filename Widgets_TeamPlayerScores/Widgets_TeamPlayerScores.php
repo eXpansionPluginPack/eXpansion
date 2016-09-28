@@ -48,7 +48,9 @@ class Widgets_TeamPlayerScores extends ExpPlugin
             $this->playerScores[$player->login]->score += $this->getScore($player->position);
 
             // assign best time
-            if ($this->playerScores[$player->login]->bestTime == 0 || $player->finalTime < $this->playerScores[$player->login]->bestTime) {
+            if ($this->playerScores[$player->login]->bestTime == 0
+                || $player->finalTime < $this->playerScores[$player->login]->bestTime
+            ) {
                 $this->playerScores[$player->login]->bestTime = $player->finalTime;
             }
 
@@ -93,7 +95,9 @@ class Widgets_TeamPlayerScores extends ExpPlugin
                 $this->playerScores[$player->login]->score += $this->getScore($player->position);
 
                 // assign best time
-                if ($this->playerScores[$player->login]->bestTime == 0 || $player->finalTime < $this->playerScores[$player->login]->bestTime) {
+                if ($this->playerScores[$player->login]->bestTime == 0
+                    || $player->finalTime < $this->playerScores[$player->login]->bestTime
+                ) {
                     $this->playerScores[$player->login]->bestTime = $player->finalTime;
                 }
 
@@ -128,8 +132,9 @@ class Widgets_TeamPlayerScores extends ExpPlugin
         /** @var int[] */
         $total = count($this->storage->players);
         $points = $total - $position;
-        if ($points < 0)
+        if ($points < 0) {
             $points = 0;
+        }
 
         return $points;
     }
@@ -160,5 +165,4 @@ class Widgets_TeamPlayerScores extends ExpPlugin
         $this->hideWidget();
         parent::eXpOnUnload();
     }
-
 }

@@ -27,5 +27,4 @@ class ReadyWidget extends Widget
     {
         $this->label->setText($text);
     }
-
 }

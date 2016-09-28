@@ -83,11 +83,16 @@ class Widgets_Voip extends ExpPlugin
 
                 $widget->setPosition($this->config->$varX, $this->config->$varY, -60);
                 $action = self::$GotoTs;
-                if ($provider == "mumble")
+                if ($provider == "mumble") {
                     $action = self::$GotoMumble;
+                }
 
                 $widget->setImage($this->config->$varImageUrl, $this->config->$varImageFocusUrl, $action);
-                $widget->setImageSize($this->config->$varImageSizeX, $this->config->$varImageSizeY, $this->config->$varSize);
+                $widget->setImageSize(
+                    $this->config->$varImageSizeX,
+                    $this->config->$varImageSizeY,
+                    $this->config->$varSize
+                );
                 $widget->setPositionX($this->config->$varX);
                 $widget->setPositionY($this->config->$varY);
                 $widget->show();
@@ -101,18 +106,19 @@ class Widgets_Voip extends ExpPlugin
         $nick = Formatting::stripStyles($player->nickName);
 
         return $nick;
-        //return mb_convert_encoding($nick, "latin-1", "UTF-8");
     }
 
     public function gotoMumble($login)
     {
-        $link = "mumble://" . rawurlencode($this->getNick($login)) . "@" . $this->config->mumbleHost . ":" . $this->config->mumblePort;
+        $link = "mumble://" . rawurlencode($this->getNick($login)) . "@"
+            . $this->config->mumbleHost . ":" . $this->config->mumblePort;
         $this->connection->sendOpenLink($login, $link, 0);
     }
 
     public function gotoTs($login)
     {
-        $link = "ts3server://" . $this->config->tsHost . "?port=" . $this->config->tsPort . "&nickname=" . rawurlencode($this->getNick($login));
+        $link = "ts3server://" . $this->config->tsHost . "?port="
+            . $this->config->tsPort . "&nickname=" . rawurlencode($this->getNick($login));
         $this->connection->sendOpenLink($login, $link, 0);
     }
 
@@ -124,5 +130,4 @@ class Widgets_Voip extends ExpPlugin
 
         parent::eXpOnUnload();
     }
-
 }

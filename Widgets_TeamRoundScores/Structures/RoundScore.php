@@ -45,5 +45,4 @@ class RoundScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
      * @var int
      */
     public $roundNumber;
-
 }

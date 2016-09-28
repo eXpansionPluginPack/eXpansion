@@ -31,8 +31,9 @@ class RunElem extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->cps[$i] = new \ManiaLivePlugins\eXpansion\Widgets_BestRuns\Gui\Controls\RunCpElem($i, $time);
             $this->frame->addComponent($this->cps[$i]);
             $i++;
-            if ($i == 26)
+            if ($i == 26) {
                 break;
+            }
         }
     }
 
@@ -45,6 +46,4 @@ class RunElem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-

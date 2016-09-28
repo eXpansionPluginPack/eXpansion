@@ -55,9 +55,6 @@ class TeamItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label->setScriptEvents(1);
         $this->addComponent($this->label);
 
-
-        // $this->addComponent($this->frame);
-
         $this->setSize($sizeX, $sizeY);
         $this->setAlign("center", "top");
     }
@@ -70,11 +67,7 @@ class TeamItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public function destroy()
     {
-        // $this->frame->clearComponents();
-        // $this->frame->destroy();
         $this->destroyComponents();
         parent::destroy();
     }
-
 }
-

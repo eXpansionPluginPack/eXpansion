@@ -42,7 +42,11 @@ class Ximporter
     function connectdb()
     {
         $this->c(" Connecting to database.... hold on...");
-        $this->conn = mysql_connect($this->config['host'] . ':' . $this->config['port'], $this->config['login'], $this->config['password']);
+        $this->conn = mysql_connect(
+            $this->config['host'] . ':' . $this->config['port'],
+            $this->config['login'],
+            $this->config['password']
+        );
         if (!$this->conn) {
             die('Could not connect: ' . mysql_error());
         }
@@ -68,8 +72,9 @@ class Ximporter
         $this->hr();
         print "Type \"DO IT\" and press enter to continue: ";
         $input = fgets(STDIN);
-        if (trim($input) != "DO IT")
+        if (trim($input) != "DO IT") {
             die();
+        }
 
         $this->hr();
         $this->c("DO NOT INTERRUPT THE PROCESS", true);
@@ -98,23 +103,28 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
         $this->c("* Migrating localrecords *", true);
         $buffer = "";
         foreach ($xaseco_recs as $data) {
-            if (empty($data))
+            if (empty($data)) {
                 continue;
-// do query every 50 values
+            }
+            // do query every 50 values
             if ($y % 100 == 0 && $y > 0) {
                 $buffer = trim($buffer, ",");
                 $this->query("INSERT INTO exp_records (`record_challengeuid`, `record_playerlogin`, `record_nbLaps`, `record_score`, `record_nbFinish`, `record_avgScore`, `record_checkpoints`, `record_date`) VALUES $buffer;", $this->conn);
                 $buffer = "";
-// for pretty output to user :)
+                // for pretty output to user :)
                 $percentage = round(($x / $total) * 100, 0);
                 $this->c($percentage . "%...");
             }
-            $buffer .= "('" . mysql_escape_string($data->record_challengeuid) . "','" . mysql_escape_string($data->record_playerlogin) . "','1', '" . mysql_escape_string($data->record_score) . "','1','" . mysql_escape_string($data->record_score) . "','" . mysql_escape_string($data->record_checkpoints) . "','" . mysql_escape_string($data->record_date) . "' ),";
+            $buffer .= "('" . mysql_escape_string($data->record_challengeuid)
+                . "','" . mysql_escape_string($data->record_playerlogin) . "','1', '"
+                . mysql_escape_string($data->record_score) . "','1','" . mysql_escape_string($data->record_score)
+                . "','" . mysql_escape_string($data->record_checkpoints)
+                . "','" . mysql_escape_string($data->record_date) . "' ),";
 
             $x++;
             $y++;
         }
-// if buffer had some values, write them..
+        // if buffer had some values, write them..
         $buffer = trim($buffer, ",");
         $this->query("INSERT INTO exp_records (`record_challengeuid`, `record_playerlogin`, `record_nbLaps`, `record_score`, `record_nbFinish`, `record_avgScore`, `record_checkpoints`, `record_date`) VALUES $buffer;", $this->conn);
         $buffer = "";
@@ -137,15 +147,16 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
         $x = 1;
         $y = 0;
         $buffer = "";
-// do the players sort
+        // do the players sort
         foreach ($xaseco_players as $data) {
-            if (empty($data))
+            if (empty($data)) {
                 continue;
+            }
             if ($y % 100 == 0 && $y > 0) {
                 $buffer = trim($buffer, ",");
                 $this->query("INSERT INTO exp_players (`player_login`, `player_nickname`, `player_updated`, `player_wins`, `player_timeplayed`) VALUES $buffer;", $this->conn);
                 $buffer = "";
-// for pretty output to user :)
+                // for pretty output to user :)
                 $percentage = round(($x / $total) * 100, 0);
                 $this->c($percentage . "%...");
             }
@@ -160,11 +171,6 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
         $buffer = "";
         $this->c($percentage . "Done.");
 
-//do double encoded utf-8 from latin-1 back to proper utf-8
-//$this->query("SET NAMES latin1;", $this->conn);
-//$this->query("ALTER TABLE exp_players MODIFY COLUMN player_nickname TEXT CHARACTER SET latin1; ", $this->conn);
-//$this->query("ALTER TABLE exp_players MODIFY COLUMN player_nickname blob; ", $this->conn);
-//$this->query("ALTER TABLE exp_players MODIFY COLUMN player_nickname VARCHAR(100) CHARACTER SET utf8; ", $this->conn);
 
 
         $this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);
@@ -180,8 +186,9 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
         $buffer = "";
         $this->c("* Migrating karma *", true);
         foreach ($xaseco_karma as $data) {
-            if (empty($data))
+            if (empty($data)) {
                 continue;
+            }
 
             if ($y % 100 == 0 && $y > 0) {
                 $buffer = trim($buffer, ",");
@@ -213,7 +220,8 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
                     $karma = 5;
                     break;
             }
-            $buffer .= "('" . mysql_escape_string($data->login) . "','" . mysql_escape_string($data->uid) . "','" . mysql_escape_string($karma) . "'),";
+            $buffer .= "('" . mysql_escape_string($data->login) . "','"
+                . mysql_escape_string($data->uid) . "','" . mysql_escape_string($karma) . "'),";
             $x++;
             $y++;
         }
@@ -223,9 +231,9 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
         $this->c("done.");
 
 
-///////////////////////////
-/// DONATIONS MIGRATION ///
-///////////////////////////
+        ///////////////////////////
+        /// DONATIONS MIGRATION ///
+        ///////////////////////////
         $this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);
         $xdons = $this->query("SELECT p.login AS transaction_fromLogin, Donations AS transaction_amount
 FROM players p, players_extra r
@@ -240,8 +248,9 @@ AND Donations >0;", $this->conn);
         $buffer = "";
         $this->c("* Migrating donations *", true);
         foreach ($xaseco_dons as $data) {
-            if (empty($data))
+            if (empty($data)) {
                 continue;
+            }
 
             if ($y % 100 == 0 && $y > 0) {
                 $buffer = trim($buffer, ",");
@@ -291,14 +300,14 @@ AND Donations >0;", $this->conn);
     {
         if ($center) {
             $len = (80 / 2) - (strlen($string) / 2);
-            for ($x = 0; $x < $len; $x++)
+            for ($x = 0; $x < $len; $x++) {
                 print " ";
+            }
             print $string . "\n";
         } else {
             print $string . "\n";
         }
     }
-
 }
 
 ?>
