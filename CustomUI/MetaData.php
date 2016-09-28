@@ -114,7 +114,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(array(0, -85.));
         $this->registerVariable($var);
 
-        $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt("overlayChatLineCount", "Chat Line Count", $config, false, false);
+        $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt(
+            "overlayChatLineCount",
+            "Chat Line Count",
+            $config,
+            false,
+            false
+        );
         $var->setDefaultValue(7);
         $this->registerVariable($var);
     }

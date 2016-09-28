@@ -28,7 +28,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(true);
         $this->registerVariable($var);
 
-        $var = new Boolean("mxVote_enable", "Allow players to temporarily add maps using votes ?", $config, false, false);
+        $var = new Boolean(
+            "mxVote_enable",
+            "Allow players to temporarily add maps using votes ?",
+            $config,
+            false,
+            false
+        );
         $var->setGroup("Voting");
         $var->setDefaultValue(false);
         $this->registerVariable($var);
@@ -56,5 +62,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(1);
         $this->registerVariable($var);
     }
-
 }

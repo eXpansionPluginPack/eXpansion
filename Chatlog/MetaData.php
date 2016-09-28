@@ -25,5 +25,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
             ->setDefaultValue(100);
         $this->registerVariable($var);
     }
-
 }

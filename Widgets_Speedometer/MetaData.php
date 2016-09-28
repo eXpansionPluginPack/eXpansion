@@ -17,5 +17,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Provides speedometer");
         $this->setGroups(array('Widgets'));
     }
-
 }

@@ -17,5 +17,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Provides ingame help with frequently asked question");
         $this->setGroups(array("Tools"));
     }
-
 }

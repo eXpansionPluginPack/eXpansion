@@ -29,8 +29,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDescription("image for go");
         $var->setDefaultValue("http://reaby.kapsi.fi/ml/boo.png");
         $this->registerVariable($var);
-
-        //$this->setRelaySupport(false);
     }
-
 }

@@ -19,5 +19,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setGroups(array('Widgets', 'Records'));
         $this->addTitleSupport("SM");
     }
-
 }

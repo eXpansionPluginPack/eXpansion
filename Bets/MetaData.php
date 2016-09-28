@@ -12,7 +12,6 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt;
  */
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
-
     public function onBeginLoad()
     {
         parent::onBeginLoad();
@@ -25,8 +24,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setMin(20);
         $var->setDefaultValue(60);
         $this->registerVariable($var);
-
     }
-
 }
-

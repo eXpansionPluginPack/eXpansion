@@ -29,11 +29,19 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->registerVariable($var);
 
         $var = new Boolean('publicChatActive', 'Enable public chat for players', $config, false, false);
-        $var->setDescription('Admins with required permissions can continue to chat. A personal message is sent to other players');
+        $var->setDescription(
+            'Admins with required permissions can continue to chat. A personal message is sent to other players'
+        );
         $var->setDefaultValue(true);
         $this->registerVariable($var);
 
-        $var = new Boolean('enableSpectatorChat', 'Enable chat for spectators when othervice disabled', $config, false, false);
+        $var = new Boolean(
+            'enableSpectatorChat',
+            'Enable chat for spectators when othervice disabled',
+            $config,
+            false,
+            false
+        );
         $var->setDefaultValue(false);
         $this->registerVariable($var);
 
@@ -61,5 +69,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue('$0af»$z$s ');
         $this->registerVariable($var);
     }
-
 }

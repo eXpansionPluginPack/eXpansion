@@ -23,10 +23,15 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Donates for players to send for server or eachother");
         $this->setGroups(array('Widgets'));
         $config = Config::getInstance();
-        $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt("donateAmountForGlobalMsg", "Treshold to show public message on donation", $config, false, true);
+        $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt(
+            "donateAmountForGlobalMsg",
+            "Treshold to show public message on donation",
+            $config,
+            false,
+            true
+        );
         $var->setGroup("Planets");
         $var->setDefaultValue(500);
         $this->registerVariable($var);
     }
-
 }

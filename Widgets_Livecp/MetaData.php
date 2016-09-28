@@ -16,7 +16,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setName("Widget: Live CP Progress");
         $this->setDescription("Shows Checkpoint progress for players");
         $this->setGroups(array('Widgets'));
-
     }
-
 }

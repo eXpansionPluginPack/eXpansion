@@ -19,5 +19,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("displays message on funny time");
         $this->setGroups(array('Other'));
     }
-
 }

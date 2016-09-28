@@ -17,5 +17,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Provides right click menu for the server");
         $this->setGroups(array('Core'));
     }
-
 }

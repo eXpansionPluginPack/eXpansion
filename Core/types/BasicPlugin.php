@@ -132,7 +132,9 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
 
             //All plugins need the eXpansion Core to work properly
-            if ($this->getId() != '\ManiaLivePlugins\eXpansion\Core' && $this->getId() != '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad') {
+            if ($this->getId() != '\ManiaLivePlugins\eXpansion\Core'
+                && $this->getId() != '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad'
+            ) {
                 $this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\Core\Core'));
             }
 
@@ -203,6 +205,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @param string|array $callback this can be either one callback or array of callbacks
          *
+         * @throws Exception
          */
         final public function enableScriptEvents($callback = false)
         {
@@ -212,7 +215,6 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             $this->enableDedicatedEvents(ServerEvent::ON_MODE_SCRIPT_CALLBACK);
             $this->_scriptEventsEnabled = true;
             Core::enableScriptCallback($callback);
-            //	Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
         }
 
         final public function onLoad()
@@ -355,7 +357,13 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         private function checkVersion()
         {
             if (version_compare(\ManiaLive\Application\VERSION, Core::EXP_REQUIRE_MANIALIVE, 'lt')) {
-                $this->dumpException("Looks like your ManiaLive is too old to run this version of eXpansion.\n" . "Your ManiaLive version: " . \ManiaLive\Application\VERSION . ", (required " . Core::EXP_REQUIRE_MANIALIVE . ")\n" . "Please update your manialive version in order to continue.", new Exception3("ManiaLive version is too old!"));
+                $this->dumpException(
+                    "Looks like your ManiaLive is too old to run this version of eXpansion.\n"
+                    . "Your ManiaLive version: " . \ManiaLive\Application\VERSION
+                    . ", (required " . Core::EXP_REQUIRE_MANIALIVE . ")\n"
+                    . "Please update your manialive version in order to continue.",
+                    new Exception3("ManiaLive version is too old!")
+                );
                 exit();
             }
         }
@@ -421,16 +429,27 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             if (isset(self::$eXpChatRedirected[$sender])) {
                 $message = $msg;
                 if (is_object(self::$eXpChatRedirected[$sender][0])) {
-                    call_user_func_array(self::$eXpChatRedirected[$sender], array($login, $this->colorParser->parseColors($message)));
+                    call_user_func_array(
+                        self::$eXpChatRedirected[$sender],
+                        array($login, $this->colorParser->parseColors($message))
+                    );
                 } else {
-                    $this->callPublicMethod(self::$eXpChatRedirected[$sender][0], self::$eXpChatRedirected[$sender][1], array($login, $this->colorParser->parseColors($message)));
+                    $this->callPublicMethod(
+                        self::$eXpChatRedirected[$sender][0],
+                        self::$eXpChatRedirected[$sender][1],
+                        array($login, $this->colorParser->parseColors($message))
+                    );
                 }
             } else {
 
                 try {
                     $this->connection->chatSendServerMessage($this->colorParser->parseColors($msg), (string)$login);
                 } catch (Exception $e) {
-                    $this->console("Error while sending chat message to '" . $login . "'\n Server said:" . $e->getMessage());
+                    $this->console(
+                        "Error while sending chat message to '"
+                        . $login
+                        . "'\n Server said:" . $e->getMessage()
+                    );
                 }
             }
         }
@@ -453,13 +472,22 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             if (isset(self::$eXpAnnounceRedirected[$sender])) {
                 $message = clone $msg;
                 if (is_object(self::$eXpAnnounceRedirected[$sender][0])) {
-                    call_user_func_array(self::$eXpAnnounceRedirected[$sender], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid));
+                    call_user_func_array(
+                        self::$eXpAnnounceRedirected[$sender],
+                        array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
+                    );
                 } else {
-                    $this->callPublicMethod(self::$eXpChatRedirected[$sender][0], self::$eXpChatRedirected[$sender][1], array($this->colorParser->parseColors($message), $icon, $callback, $pluginid));
+                    $this->callPublicMethod(
+                        self::$eXpChatRedirected[$sender][0],
+                        self::$eXpChatRedirected[$sender][1],
+                        array($this->colorParser->parseColors($message), $icon, $callback, $pluginid)
+                    );
                 }
             } else {
                 try {
-                    $this->connection->chatSendServerMessage('$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg));
+                    $this->connection->chatSendServerMessage(
+                        '$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg)
+                    );
                 } catch (LoginUnknownException $ex) {
                     $this->console('Attempt to send Announce to a login failed. Login unknown');
                 } catch (Exception $e) {
@@ -484,7 +512,11 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                 if (is_object(self::$eXpChatRedirected[$sender][0])) {
                     call_user_func_array(self::$eXpChatRedirected[$sender], array(null, $message));
                 } else {
-                    $this->callPublicMethod(self::$eXpChatRedirected[$sender][0], self::$eXpChatRedirected[$sender][1], array(null, $message));
+                    $this->callPublicMethod(
+                        self::$eXpChatRedirected[$sender][0],
+                        self::$eXpChatRedirected[$sender][1],
+                        array(null, $message)
+                    );
                 }
             } else {
                 try {
@@ -540,7 +572,10 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                         }
                     }
                 } catch (Exception $ex) {
-                    Helper::log("[BasicPlugin]onUnload exception:" . $ex->getFile() . ":" . $ex->getLine() . "\n" . $ex->getMessage());
+                    Helper::log(
+                        "[BasicPlugin]onUnload exception:"
+                        . $ex->getFile() . ":" . $ex->getLine() . "\n" . $ex->getMessage()
+                    );
                 }
             }
 
@@ -598,8 +633,14 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @return Bill*
          */
-        final public function eXpStartBill($source_login, $destination_login, $amount, $msg, $callback = array(), $params = array())
-        {
+        final public function eXpStartBill(
+            $source_login,
+            $destination_login,
+            $amount,
+            $msg,
+            $callback = array(),
+            $params = array()
+        ) {
             $bill = new Bill($source_login, $destination_login, $amount, $msg);
             self::$eXpBillManager->sendBill($bill);
             $bill->setValidationCallback($callback, $params);
@@ -652,7 +693,9 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             if ($soft) {
                 if (strpos($compatibility, 'TIMEATTACK') !== false) {
                     $compatibility = GameInfos::GAMEMODE_TIMEATTACK;
-                } elseif (strpos($compatibility, 'ROUNDS') !== false || strpos($compatibility, 'ROUNDSBASE') !== false) {
+                } elseif (strpos($compatibility, 'ROUNDS') !== false
+                    || strpos($compatibility, 'ROUNDSBASE') !== false
+                ) {
                     $compatibility = GameInfos::GAMEMODE_ROUNDS;
                 } elseif (strpos($compatibility, 'TEAM') !== false) {
                     $compatibility = GameInfos::GAMEMODE_TEAM;
@@ -842,9 +885,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         {
 
         }
-
     }
-
 }
 
 namespace {

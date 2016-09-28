@@ -69,7 +69,9 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private function loadProfanityList()
     {
         $ignore = array(".", "..", "LICENSE", "README.md", "USERS.md", ".git");
-        $path = realpath(APP_ROOT) . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "bad_words" . DIRECTORY_SEPARATOR . "List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words-master";
+        $path = realpath(APP_ROOT)
+            . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "bad_words"
+            . DIRECTORY_SEPARATOR . "List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words-master";
 
         if (is_dir($path)) {
             $this->console("[Chat] loading profanity filter words...");
@@ -146,7 +148,9 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         $player = $this->storage->getPlayerObject($login);
         $nickLog = \ManiaLib\Utils\Formatting::stripStyles($player->nickName);
-        \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $player->iPAddress . ") [" . $login . "] Connect with nickname " . $nickLog);
+        \ManiaLive\Utilities\Logger::getLog('chat')->write(
+            " (" . $player->iPAddress . ") [" . $login . "] Connect with nickname " . $nickLog
+        );
     }
 
     /**
@@ -161,13 +165,17 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (empty($player)) {
             return;
         }
-        \ManiaLive\Utilities\Logger::getLog('chat')->write(" (" . $player->iPAddress . ") [" . $login . "] Disconnected");
+        \ManiaLive\Utilities\Logger::getLog('chat')->write(
+            " (" . $player->iPAddress . ") [" . $login . "] Disconnected"
+        );
     }
 
     public function getRecepients()
     {
 
-        $array = array_values($this->storage->spectators + AdminGroups::getAdminsByPermission(Permission::CHAT_ON_DISABLED));
+        $array = array_values(
+            $this->storage->spectators + AdminGroups::getAdminsByPermission(Permission::CHAT_ON_DISABLED)
+        );
         foreach (\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo as $login => $playerinfo) {
             if ($playerinfo->hasRetired) {
                 $array[] = $playerinfo->login;
@@ -246,20 +254,33 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         if ($this->expStorage->isRelay) {
                             $color = $config->otherServerChatColor;
                         }
-                        $this->connection->chatSendServerMessage($config->adminSign . '$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text);
+                        $this->connection->chatSendServerMessage(
+                            $config->adminSign . '$fff$<' . $nick . '$z$s$> '
+                            . $config->chatSeparator . $color . $force . $text
+                        );
                     } else {
                         $color = $config->publicChatColor;
                         if ($this->expStorage->isRelay) {
                             $color = $config->otherServerChatColor;
                         }
 
-                        $this->connection->chatSendServerMessage('$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text);
+                        $this->connection->chatSendServerMessage(
+                            '$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text
+                        );
                     }
                     $nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);
 
                     \ManiaLive\Utilities\Logger::getLog('chat')->write("[" . $login . "] " . $nickLog . " - " . $text);
                 } catch (\Exception $e) {
-                    $this->console(__('error sending chat from %s: %s with folloing error %s', $login, $login, $text, $e->getMessage()));
+                    $this->console(
+                        __(
+                            'error sending chat from %s: %s with folloing error %s',
+                            $login,
+                            $login,
+                            $text,
+                            $e->getMessage()
+                        )
+                    );
                 }
             } else {
                 // chat is disabled
@@ -271,14 +292,27 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
 
                         $color = $config->otherServerChatColor;
-                        $this->connection->chatSendServerMessage('$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text, $recepient);
+                        $this->connection->chatSendServerMessage(
+                            '$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text,
+                            $recepient
+                        );
                         $nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);
-                        \ManiaLive\Utilities\Logger::getLog('chat')->write("[" . $login . "] " . $nickLog . " - " . $text);
+                        \ManiaLive\Utilities\Logger::getLog('chat')->write(
+                            "[" . $login . "] " . $nickLog . " - " . $text
+                        );
                     } else {
-                        $this->eXpChatSendServerMessage("#error#Chat is disabled at at the moment!!! You can chat when you retire or go spectator. You may still use PM messages", $login, array());
+                        $this->eXpChatSendServerMessage(
+                            "#error#Chat is disabled at at the moment!!! You can chat when you retire or go spectator. You may still use PM messages",
+                            $login,
+                            array()
+                        );
                     }
                 } else {
-                    $this->eXpChatSendServerMessage("#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages", $login, array());
+                    $this->eXpChatSendServerMessage(
+                        "#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages",
+                        $login,
+                        array()
+                    );
                 }
             }
         }

@@ -17,5 +17,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Shows players still loading the map!");
         $this->setGroups(array('Widgets'));
     }
-
 }

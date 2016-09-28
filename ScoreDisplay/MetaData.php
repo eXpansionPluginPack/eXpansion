@@ -17,5 +17,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Show scores for a match");
         $this->setGroups(array('Games'));
     }
-
 }

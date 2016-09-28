@@ -16,7 +16,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setName("Maps: suggestions");
         $this->setDescription("Provides map suggestion core");
         $this->setGroups(array('Maps'));
-
     }
-
 }

@@ -68,5 +68,4 @@ class Chat extends PlainWidget
         $this->chatState->setPositionZ(30);
         $this->addComponent($this->chatState);
     }
-
-} 
+}

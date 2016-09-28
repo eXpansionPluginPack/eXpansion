@@ -43,7 +43,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(1);
         $this->registerVariable($var);
 
-        $var = new Boolean("restartVote_useQueue", "Use track queue instead of intant restart for replay votes ?", $config, false, false);
+        $var = new Boolean(
+            "restartVote_useQueue",
+            "Use track queue instead of intant restart for replay votes ?",
+            $config,
+            false,
+            false
+        );
         $var->setDefaultValue(true);
         $this->registerVariable($var);
 
@@ -65,8 +71,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $type = new TypeString("", "", null);
         $var->setType($type);
         $var->setVisible(false);
-        $var->setDefaultValue(array("NextMap", "RestartMap", "Kick", "Ban", "SetModeScriptSettingsAndCommands", "JumpToMapIndex", "SetNextMapIndex",
-            "AutoTeamBalance"));
+        $var->setDefaultValue(
+            array(
+                "NextMap", "RestartMap",
+                "Kick", "Ban", "SetModeScriptSettingsAndCommands",
+                "JumpToMapIndex", "SetNextMapIndex",
+                "AutoTeamBalance")
+        );
         $this->registerVariable($var);
 
         $var = new HashList("managedVote_ratios", "Managed vote ratios", $config, false, false);

@@ -45,7 +45,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM);
         $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
         $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS);
-        $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, 'TeamAttack.Script.txt');
+        $this->addGameModeCompability(
+            \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT,
+            'TeamAttack.Script.txt'
+        );
 
         $this->addTitleSupport("TM");
         $this->addTitleSupport("Trackmania");
@@ -61,7 +64,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(100);
         $this->registerVariable($var);
 
-        $var = new BoundedTypeInt("recordPublicMsgTreshold", "Localrecords: Public chat messages to TOP x", $config, true, false);
+        $var = new BoundedTypeInt(
+            "recordPublicMsgTreshold",
+            "Localrecords: Public chat messages to TOP x",
+            $config,
+            true,
+            false
+        );
         $var->setDescription("to show always public messages, set this to same value as recordsCount");
         $var->setMin(1);
         $var->setMax(1000);
@@ -80,12 +89,20 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
 
         $var = new TypeInt("nbMap_rankProcess", "Number of Maps to Process", $config);
-        $var->setDescription("Number of consecutive maps for which ranking will be calculated at first start", true, false);
+        $var->setDescription(
+            "Number of consecutive maps for which ranking will be calculated at first start",
+            true,
+            false
+        );
         $var->setDefaultValue(500);
         $this->registerVariable($var);
 
         $var = new Boolean("resetRanks", "Reset rankings(May take time)", $config);
-        $var->setDescription("Will delete ranks for this server in order to recreate them. It may take time!!!", true, false);
+        $var->setDescription(
+            "Will delete ranks for this server in order to recreate them. It may take time!!!",
+            true,
+            false
+        );
         $var->setDefaultValue(false);
         $this->registerVariable($var);
 
@@ -94,7 +111,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(false);
         $this->registerVariable($var);
 
-        $var = new Boolean("sendRankingNotices", "Localrecords: Personal rankings messages at begin map", $config, true, false);
+        $var = new Boolean(
+            "sendRankingNotices",
+            "Localrecords: Personal rankings messages at begin map",
+            $config,
+            true,
+            false
+        );
         $var->setGroup("Chat Messages");
         $var->setDefaultValue(false);
         $this->registerVariable($var);
@@ -104,5 +127,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDescription('Save every X minutes records. If 0 then will save on match end Only.');
         $this->registerVariable($var);
     }
-
 }

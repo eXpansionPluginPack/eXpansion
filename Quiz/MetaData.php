@@ -14,8 +14,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     {
         parent::onBeginLoad();
         $this->setName("Games: Quiz");
-        $this->setDescription("Run a Questionnaire powered by questions made up by players, requires gd2 for image support.");
+        $this->setDescription(
+            "Run a Questionnaire powered by questions made up by players, requires gd2 for image support."
+        );
         $this->setGroups(array('Games'));
     }
-
 }

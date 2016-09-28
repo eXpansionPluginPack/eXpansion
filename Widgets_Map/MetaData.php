@@ -17,5 +17,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Displays simple map infos widget at top right corner");
         $this->setGroups(array('Widgets', 'Maps'));
     }
-
 }

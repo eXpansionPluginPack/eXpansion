@@ -36,5 +36,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue('$fff');
         $this->registerVariable($var);
     }
-
 }

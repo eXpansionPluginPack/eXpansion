@@ -23,5 +23,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Provides /adm lag command, for fullstack latency");
         $this->setGroups(array('Tools'));
     }
-
 }

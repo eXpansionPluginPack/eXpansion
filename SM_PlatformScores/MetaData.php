@@ -33,7 +33,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData
     protected function initName()
     {
         $this->setName('Records: PlatformBeta@nadeolabs');
-        $this->setDescription('Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. Higher scores are better.');
+        $this->setDescription(
+            'Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. Higher scores are better.'
+        );
     }
 
     protected function initCompatibility()
@@ -42,5 +44,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData
         $this->setEnviAsTitle(false);
         $this->setGroups(array('Records'));
     }
-
 }

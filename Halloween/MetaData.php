@@ -19,9 +19,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $config = Config::getInstance();
 
-// $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\String("texture", $visibleName, $configInstance, $scope, $showMain)
-
-        $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt("spriteCount", "Spiders count", $config, false, false);
+        $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeInt(
+            "spriteCount",
+            "Spiders count",
+            $config,
+            false,
+            false
+        );
         $var->setMin(1);
         $var->setMax(20);
         $var->setDefaultValue(3);
@@ -29,5 +33,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $this->registerVariable($var);
     }
-
 }

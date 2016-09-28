@@ -29,7 +29,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(array());
         $this->registerVariable($var);
 
-        $var = new BoundedTypeInt("screensDelay", "Show loading screen after [x] seconds of podium", $config, false, false);
+        $var = new BoundedTypeInt(
+            "screensDelay",
+            "Show loading screen after [x] seconds of podium",
+            $config,
+            false,
+            false
+        );
         $var->setMin(1);
         $var->setDefaultValue(17);
         $this->registerVariable($var);
@@ -37,8 +43,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var = new Boolean("screensMx", "Use map image from MX as loading screen, if available", $config, false, false);
         $var->setDefaultValue(false);
         $this->registerVariable($var);
-
-
     }
-
 }

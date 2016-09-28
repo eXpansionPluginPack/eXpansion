@@ -20,5 +20,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->addTitleSupport("TM");
         $this->addTitleSupport("Trackmania");
     }
-
 }

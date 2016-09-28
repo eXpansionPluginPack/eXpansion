@@ -36,7 +36,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(10);
         $this->registerVariable($var);
 
-        $var = new BoundedTypeInt("removeTresholdPercentage", "Map ratings autoremove percentage", $config, true, false);
+        $var = new BoundedTypeInt(
+            "removeTresholdPercentage",
+            "Map ratings autoremove percentage",
+            $config,
+            true,
+            false
+        );
         $var->setDescription("%-value for autoremove treshold (min: 10, max:60)");
         $var->setGroup("Voting");
         $var->setMin(10);
@@ -46,5 +52,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $this->setRelaySupport(false);
     }
-
 }

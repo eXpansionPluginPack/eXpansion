@@ -25,12 +25,17 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue("");
         $this->registerVariable($var);
 
-        $var = new TypeString("mxKarmaApiKey", 'MxKarma apikey, $l[http://karma.mania-exchange.com]click this text to register$l', $config, false, false);
+        $var = new TypeString(
+            "mxKarmaApiKey",
+            'MxKarma apikey, $l[http://karma.mania-exchange.com]click this text to register$l',
+            $config,
+            false,
+            false
+        );
         $var->setDescription('For apikey: click the header or visit http://karma.mania-exchange.com');
         $var->setDefaultValue("");
         $this->registerVariable($var);
 
         $this->setRelaySupport(false);
     }
-
 }

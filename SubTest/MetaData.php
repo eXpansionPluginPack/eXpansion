@@ -17,5 +17,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Test plugin");
         $this->setGroups(array('Menu'));
     }
-
 }

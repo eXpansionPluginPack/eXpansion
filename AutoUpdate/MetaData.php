@@ -41,5 +41,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setGroup("Auto Update");
         $this->registerVariable($var);
     }
-
 }

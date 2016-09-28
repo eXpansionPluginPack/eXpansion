@@ -22,7 +22,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $config = Config::getInstance();
 
-        $var = new \ManiaLivePlugins\eXpansion\Notifications\types\NotificationPluginlist("redirectedPlugins", "plugins to redirect", $config, false, false);
+        $var = new \ManiaLivePlugins\eXpansion\Notifications\types\NotificationPluginlist(
+            "redirectedPlugins",
+            "plugins to redirect",
+            $config,
+            false,
+            false
+        );
         $var->setType(new TypeString(""));
         $var->setDefaultValue(array());
         $this->registerVariable($var);
@@ -36,7 +42,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(-40);
         $var->setDefaultValue(array());
         $this->registerVariable($var);
-
     }
-
 }

@@ -52,13 +52,25 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue("2:00");
         $this->registerVariable($var);
 
-        $var = new BoundedTypeInt("mg1_displayDurationMin", "Min display duration in milliseconds", $config, false, false);
+        $var = new BoundedTypeInt(
+            "mg1_displayDurationMin",
+            "Min display duration in milliseconds",
+            $config,
+            false,
+            false
+        );
         $var->setDescription("Min value 500, no bound for Max");
         $var->setMin(500);
         $var->setDefaultValue(1500);
         $this->registerVariable($var);
 
-        $var = new BoundedTypeInt("mg1_displayDurationMax", "Max display duration in milliseconds", $config, false, false);
+        $var = new BoundedTypeInt(
+            "mg1_displayDurationMax",
+            "Max display duration in milliseconds",
+            $config,
+            false,
+            false
+        );
         $var->setDescription("Min value 1000, no bound for Max");
         $var->setMin(1000);
         $var->setDefaultValue(2500);
@@ -76,11 +88,16 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(25);
         $this->registerVariable($var);
 
-        $var = new BoundedTypeInt("mg1_serverPlanetsMin", "Minimum server planets to run plugin", $config, false, false);
+        $var = new BoundedTypeInt(
+            "mg1_serverPlanetsMin",
+            "Minimum server planets to run plugin",
+            $config,
+            false,
+            false
+        );
         $var->setDescription("Treshold to disable plugin if server planets are low, minimum value 100");
         $var->setMin(100);
         $var->setDefaultValue(1000);
         $this->registerVariable($var);
     }
-
 }

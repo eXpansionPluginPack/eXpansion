@@ -16,7 +16,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setName("Core: Players");
         $this->setDescription("Playerlist");
         $this->setGroups(array('Core'));
-
     }
-
 }

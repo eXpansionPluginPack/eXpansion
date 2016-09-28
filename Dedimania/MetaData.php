@@ -42,12 +42,17 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue("");
         $this->registerVariable($var);
 
-        $var = new TypeString("code", 'Dedimania server code, $l[http://dedimania.net/tm2stats/?do=register]click this text to register$l', $config, false, false);
+        $var = new TypeString(
+            "code",
+            'Dedimania server code, $l[http://dedimania.net/tm2stats/?do=register]click this text to register$l',
+            $config,
+            false,
+            false
+        );
         $var->setDescription('For server code: click the header or visit http://dedimania.net');
         $var->setDefaultValue("");
         $this->registerVariable($var);
 
         $this->setRelaySupport(false);
     }
-
 }

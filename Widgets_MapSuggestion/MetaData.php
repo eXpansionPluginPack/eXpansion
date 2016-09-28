@@ -18,5 +18,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Map suggestion button");
         $this->setGroups(array('Widgets', 'Maps'));
     }
-
 }

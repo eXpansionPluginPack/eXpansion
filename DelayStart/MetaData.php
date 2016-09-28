@@ -36,10 +36,15 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $config = Config::getInstance();
 
-        $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString("delay", "How many seconds to delay?", $config, false, false);
+        $var = new \ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString(
+            "delay",
+            "How many seconds to delay?",
+            $config,
+            false,
+            false
+        );
         $var->setDescription("accepts time in format MM:SS");
         $var->setDefaultValue("00:05");
         $this->registerVariable($var);
     }
-
 }

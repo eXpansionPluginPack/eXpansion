@@ -17,5 +17,4 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setDescription("Provides advanced server statistics gathering and ingame viewer");
         $this->setGroups(array('Tools'));
     }
-
 }

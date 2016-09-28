@@ -16,9 +16,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setName("Widget: Plain Local Records");
         $this->setDescription("LocalRecords without maniascript");
         $this->setGroups(array('Widgets', 'Records'));
-
-        //$this->setEnviAsTitle(true);
-        //$this->addTitleSupport('SM');
     }
-
 }

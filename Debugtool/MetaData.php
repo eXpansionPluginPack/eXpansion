@@ -16,6 +16,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setName("Developers: DebugTool");
         $this->setDescription('Debugtool for developers');
         $this->setGroups(array('Tools'));
-
     }
 }
