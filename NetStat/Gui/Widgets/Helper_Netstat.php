@@ -40,5 +40,4 @@ class Helper_Netstat extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     {
         $this->script->setParam('action', $value);
     }
-
 }

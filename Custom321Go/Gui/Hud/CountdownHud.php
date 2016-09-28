@@ -43,8 +43,5 @@ class CountdownHud extends PlainWidget
 
         $script = new Script("Custom321Go/Gui/Scripts");
         $this->registerScript($script);
-
-// <marker label="My Label" pos="0 0 0" playerlogin="SomePlayerLogin" objectid="#123" box="1 5 1" gauge="0.5" color="f00" imageurl="http://www.example.com/image.png" distmax="100" isturning="1" visibility="always" minimapvisibility="always" manialinkframeid="MyFrameId" />
     }
-
 }

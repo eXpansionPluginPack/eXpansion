@@ -32,5 +32,4 @@ class MapWish
         $this->player = $player;
         $this->isTemp = $isTemp;
     }
-
 }

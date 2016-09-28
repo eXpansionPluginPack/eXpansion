@@ -81,5 +81,4 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
             $item->destroy();
         parent::destroy();
     }
-
 }

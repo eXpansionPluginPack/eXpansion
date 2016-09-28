@@ -69,5 +69,4 @@ class BetCounter
 
         return false;
     }
-
 }

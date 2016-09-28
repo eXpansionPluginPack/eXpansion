@@ -275,5 +275,4 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         EmotePanel::EraseAll();
     }
-
 }

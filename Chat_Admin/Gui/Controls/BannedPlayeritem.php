@@ -51,6 +51,4 @@ class BannedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->sizeY = $sizeY;
         $this->setSize($sizeX, $sizeY);
     }
-
 }
-

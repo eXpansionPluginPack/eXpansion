@@ -478,5 +478,4 @@ class ESportsManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $window->show();
         }
     }
-
 }

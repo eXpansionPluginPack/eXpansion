@@ -61,5 +61,4 @@ class IgnoredPlayeritem extends Control
         $this->unignoreButton->destroy();
         parent::destroy();
     }
-
 }

@@ -28,7 +28,7 @@ class ConfirmDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $this->label = new Label(57, 12);
         $this->label->setPosition(3);
-        
+
         $this->mainFrame->addComponent($this->label);
 
         $this->ok = new OkButton();
@@ -59,6 +59,7 @@ class ConfirmDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->label->setText($text);
     }
+
     public function setInvokeAction($action)
     {
         $this->action = $action;

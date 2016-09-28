@@ -132,5 +132,4 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

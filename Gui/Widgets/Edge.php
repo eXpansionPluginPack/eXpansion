@@ -120,5 +120,4 @@ class Edge extends Widget
         parent::onIsRemoved($target);
         $this->destroy();
     }
-
 }

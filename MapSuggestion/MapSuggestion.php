@@ -93,5 +93,4 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
         parent::eXpOnUnload();
 
     }
-
 }

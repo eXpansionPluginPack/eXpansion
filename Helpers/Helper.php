@@ -70,21 +70,21 @@ class Helper
         $logFile = MlStorage::getInstance()->serverLogin . ".console.log";
         $message = ($tags ? '[' . implode('][', $tags) . '] ' : '') . print_r($message, true);
         Logger::log(Formatting::stripStyles($message), true, $logFile);
-        Console::println(Con::outTm($message, true).Con::white);
+        Console::println(Con::outTm($message, true) . Con::white);
     }
 
     public static function logInfo($message, $tags = array('eXpansion'))
     {
         $message = ($tags ? '[' . implode('][', $tags) . '] ' : '') . print_r($message, true);
         Logger::info(Formatting::stripStyles($message));
-        Console::println(Con::outTm($message, true).Con::white);
+        Console::println(Con::outTm($message, true) . Con::white);
     }
 
     public static function logError($message, $tags = array('eXpansion'))
     {
         $message = ($tags ? '[' . implode('][', $tags) . '] ' : '') . print_r($message, true);
         Logger::error(Formatting::stripStyles($message));
-        Console::println(Con::outTm($message, true).Con::white);
+        Console::println(Con::outTm($message, true) . Con::white);
     }
 
     public static function logDebug($message, $tags = array('eXpansion'))

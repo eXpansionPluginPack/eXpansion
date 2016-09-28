@@ -130,7 +130,5 @@ class Bill
         if (isset($this->errorCallBack[$erroNum])) {
             call_user_func_array($this->errorCallBack[$erroNum][0], array($this, $erroNum, $stateName));
         }
-
     }
-
 }

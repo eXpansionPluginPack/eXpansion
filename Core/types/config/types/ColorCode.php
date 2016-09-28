@@ -57,5 +57,4 @@ class ColorCode extends TypeString
     {
         return $this->getRawValue() . $this->sample;
     }
-
 }

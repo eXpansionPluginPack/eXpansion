@@ -70,5 +70,4 @@ class MatchWait extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->btn_continue->setAction($continue);
         $this->frame->addComponent($this->btn_continue);
     }
-
 }

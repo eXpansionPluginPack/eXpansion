@@ -19,5 +19,4 @@ class DediPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
 
     /** @var string */
     public $toolOption = "";
-
 }

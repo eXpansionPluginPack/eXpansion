@@ -77,5 +77,4 @@ class CheckpointElem extends Control
 
         return str_replace('$', "", $colors->getColor($var));
     }
-
 }

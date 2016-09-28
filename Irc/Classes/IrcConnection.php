@@ -65,5 +65,4 @@ class IrcConnection extends \ManiaLib\Utils\Singleton
     {
         return $this->irc->getIrcNick($string);
     }
-
 }

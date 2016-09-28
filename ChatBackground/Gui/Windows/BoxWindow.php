@@ -32,5 +32,4 @@ class BoxWindow extends \ManiaLive\Gui\Window
         $this->quad2->setAlign("center", "top");
         $this->addComponent($this->quad2);
     }
-
 }

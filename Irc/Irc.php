@@ -135,5 +135,4 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
             $this->irc->sendChat($message);
         }
     }
-
 }

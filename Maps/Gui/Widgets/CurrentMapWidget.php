@@ -109,5 +109,4 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     {
         $this->bg->setAction($action);
     }
-
 }

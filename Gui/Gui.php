@@ -355,7 +355,7 @@ class Gui extends ExpPlugin
     public static function createConfirm($finalAction)
     {
         $outAction = call_user_func_array(
-            array(ActionHandler::getInstance(), 'createAction')  ,
+            array(ActionHandler::getInstance(), 'createAction'),
             array(array(__NAMESPACE__ . '\Gui', 'showConfirmDialog'), $finalAction)
         );
 

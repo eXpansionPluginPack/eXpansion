@@ -27,7 +27,7 @@ class Script
      *
      *
      */
-    function __construct($path, $pluginsRoot = false)
+    public function __construct($path, $pluginsRoot = false)
     {
         $path = str_replace("\\", DIRECTORY_SEPARATOR, $path);
 

@@ -72,7 +72,6 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
     // manialive 3.1 override to do nothing.
     function destroy()
     {
-
     }
 
     /*

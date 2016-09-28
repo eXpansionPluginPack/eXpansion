@@ -7,5 +7,4 @@ class Config extends \ManiaLib\Utils\Singleton
 
     public $idleMinutes = 10;
     public $idleKickReally = false;
-
 }

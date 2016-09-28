@@ -27,7 +27,7 @@ class CpProgress extends Widget
         $this->frame = new Frame();
         $this->frame->setLayout(new Column());
         $this->addComponent($this->frame);
-        
+
         for ($x = 0; $x < 10; $x++) {
             $line = new Frame();
             $line->setLayout(new Line());
@@ -71,5 +71,4 @@ class CpProgress extends Widget
         $this->storage = null;
         parent::destroy();
     }
-
 }

@@ -49,5 +49,4 @@ class ForceSkin extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             return array(new \Maniaplanet\DedicatedServer\Structures\ForcedSkin());
         }
     }
-
 }

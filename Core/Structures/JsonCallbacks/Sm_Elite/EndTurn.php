@@ -51,6 +51,4 @@ class EndTurn extends RpcObject
 
     /** @var ScorePlayer[] */
     public $scoresTable = null;
-
 }
-

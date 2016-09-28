@@ -139,5 +139,4 @@ class ExpSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->items = null;
         parent::destroy();
     }
-
 }

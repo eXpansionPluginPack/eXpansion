@@ -39,5 +39,4 @@ class KOplayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
         $this->login = $player->login;
         $this->nickName = $player->nickName;
     }
-
 }

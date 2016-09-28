@@ -61,7 +61,4 @@ class DocGen extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 ";
         file_put_contents(__DIR__ . "/Docs/index.htm", $buffer);
     }
-
 }
-
-?>

@@ -19,7 +19,6 @@ class ConfigOption extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setSize(60, 5);
         $this->cb_item = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 50);
         $this->cb_item->setStatus($status->value);
-        // $this->cb_item->setText($status->id . " (" . $this->getGamemodeName($status->gameMode) . ")");
         $this->cb_item->setText($status->id);
         $this->addComponent($this->cb_item);
     }
@@ -27,18 +26,24 @@ class ConfigOption extends \ManiaLivePlugins\eXpansion\Gui\Control
     private function getGamemodeName($mode)
     {
         if (is_numeric($mode)) {
-            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT)
+            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
                 return "Script";
-            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP)
+            }
+            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP) {
                 return "Cup";
-            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS)
+            }
+            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS) {
                 return "Laps";
-            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS)
+            }
+            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS) {
                 return "Rounds";
-            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM)
+            }
+            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
                 return "Team";
-            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK)
+            }
+            if ($mode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
                 return "TA";
+            }
         }
 
         return "" . $mode;
@@ -69,5 +74,4 @@ class ConfigOption extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

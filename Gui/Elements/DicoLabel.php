@@ -65,5 +65,4 @@ class DicoLabel extends \ManiaLib\Gui\Elements\Label
     {
         return $this->messages;
     }
-
 }

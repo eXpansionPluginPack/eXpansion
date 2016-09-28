@@ -130,5 +130,4 @@ class ConfPluginList extends Window
         $this->destroyComponents();
         parent::destroy();
     }
-
 }

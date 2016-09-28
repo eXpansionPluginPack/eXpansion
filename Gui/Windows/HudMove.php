@@ -56,5 +56,4 @@ class HudMove extends \ManiaLive\Gui\Window
     {
         parent::destroy();
     }
-
 }

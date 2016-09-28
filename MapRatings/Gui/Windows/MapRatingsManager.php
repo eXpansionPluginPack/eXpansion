@@ -73,5 +73,4 @@ class MapRatingsManager extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         parent::destroy();
     }
-
 }

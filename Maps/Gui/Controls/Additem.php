@@ -151,5 +151,4 @@ class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->destroy();
         parent::destroy();
     }
-
 }

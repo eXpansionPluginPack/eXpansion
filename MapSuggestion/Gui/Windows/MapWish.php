@@ -125,5 +125,4 @@ class MapWish extends Window
             $this->mxid = "" . $mxid;
         }
     }
-
 }

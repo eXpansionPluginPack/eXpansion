@@ -193,17 +193,32 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     function onDraw()
     {
         $this->line->clearComponents();
-        $this->line->addComponent(new \ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls\DirectoryItem(new \SplFileInfo($this->rulesDir), $this, "", 50));
+        $this->line->addComponent(
+            new \ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls\DirectoryItem(
+                new \SplFileInfo($this->rulesDir),
+                $this,
+                "",
+                50
+            )
+        );
         $dirs = new \DirectoryIterator($this->dir);
         foreach ($dirs as $dir) {
-            if (!($dir instanceof \SplFileInfo))
+            if (!($dir instanceof \SplFileInfo)) {
                 continue;
-            if ($dir->isDot())
+            }
+            if ($dir->isDot()) {
                 continue;
-            $this->line->addComponent(new \ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls\DirectoryItem($dir, $this, $this->settingsFile, 50));
+            }
+            $this->line->addComponent(
+                new \ManiaLivePlugins\eXpansion\ESportsManager\Gui\Controls\DirectoryItem(
+                    $dir,
+                    $this,
+                    $this->settingsFile,
+                    50
+                )
+            );
         }
 
         parent::onDraw();
     }
-
 }

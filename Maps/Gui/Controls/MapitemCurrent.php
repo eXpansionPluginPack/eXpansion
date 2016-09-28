@@ -32,6 +32,4 @@ class MapitemCurrent extends Mapitem
         $this->label_localrec->setTextPrefix($color);
         $this->label_localrec->setTextSize($size);
     }
-
 }
-

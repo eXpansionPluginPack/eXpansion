@@ -26,5 +26,4 @@ namespace ManiaLivePlugins\eXpansion\Gui\Windows;
  */
 class IngameHud extends \ManiaLive\Gui\Window
 {
-
 }

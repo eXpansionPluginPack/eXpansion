@@ -46,5 +46,4 @@ class MXKarmaEvent extends \ManiaLive\Event\Event
                 break;
         }
     }
-
 }

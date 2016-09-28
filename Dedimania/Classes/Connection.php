@@ -795,5 +795,4 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
     {
 
     }
-
 }

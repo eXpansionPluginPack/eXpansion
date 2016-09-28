@@ -44,5 +44,4 @@ class Halloween extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Gui\Widget\SpiderWidget::EraseAll();
         parent::eXpOnUnload();
     }
-
 }

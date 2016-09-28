@@ -29,7 +29,6 @@ namespace ManiaLivePlugins\eXpansion\Database\Structures;
  */
 class DbPlayer
 {
-
     /**
      * @var String
      */

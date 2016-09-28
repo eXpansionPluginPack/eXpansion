@@ -30,5 +30,4 @@ class CupScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
         $this->nickName = $nickname;
         $this->score = $score;
     }
-
 }

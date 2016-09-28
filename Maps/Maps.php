@@ -244,7 +244,7 @@ class Maps extends ExpPlugin
                     $this->console("Shifting queue!");
                     array_shift($this->queue);
                 } else {
-                    $this->console( "Not shifting queue, since restart!");
+                    $this->console("Not shifting queue, since restart!");
                 }
             } else {
                 if ($this->tries < 3) {
@@ -392,7 +392,7 @@ class Maps extends ExpPlugin
             }
         }
     }
-    
+
     /**
      * Handler for jukebox chat
      *
@@ -1274,5 +1274,4 @@ class Maps extends ExpPlugin
         $action->deleteAction($this->actionShowJukeList);
         $action->deleteAction($this->actionShowMapList);
     }
-
 }

@@ -77,5 +77,4 @@ class MapInfoItem extends Control implements ScriptedContainer
         $this->map->setText(\ManiaLib\Utils\Formatting::stripCodes($map->name, "wosn"));
         $this->author->setText(\ManiaLib\Utils\Formatting::stripCodes($map->author, "wosn"));
     }
-
 }

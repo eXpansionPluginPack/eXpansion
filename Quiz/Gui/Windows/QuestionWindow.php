@@ -135,7 +135,7 @@ class QuestionWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $this->erase($login);
             self::$mainPlugin->setHiddenQuestionBoxes($question);
         } else {
-          Gui::showNotice("To ask hidden question, you have to define url for image", $login);
+            Gui::showNotice("To ask hidden question, you have to define url for image", $login);
         }
     }
 

@@ -24,6 +24,4 @@ class EndMap extends RpcObject
 
     /** @var ScorePlayer[] */
     public $scoresTable = null;
-
 }
-

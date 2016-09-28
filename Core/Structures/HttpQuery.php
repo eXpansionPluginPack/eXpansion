@@ -9,7 +9,6 @@ namespace ManiaLivePlugins\eXpansion\Core\Structures;
  */
 class HttpQuery extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
 {
-
     public $url;
 
     public $callback;
@@ -54,5 +53,4 @@ class HttpQuery extends \Maniaplanet\DedicatedServer\Structures\AbstractStructur
     {
         $this->data = $data;
     }
-
 }

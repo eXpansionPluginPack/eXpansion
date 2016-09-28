@@ -13,9 +13,10 @@ class Country extends AbstractFormater
     public function format($val)
     {
         $vals = explode('|', $val);
-        if (isset($vals[2]))
-            return $vals[2];
-        else
+        if (isset($vals[2])) {
+            return $vals[ 2 ];
+        } else {
             return "";
+        }
     }
 }

@@ -55,7 +55,4 @@ class GenericPlayerList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->button->setAction($action);
     }
-
-
 }
-

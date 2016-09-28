@@ -93,5 +93,4 @@ class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->destroy();
         parent::destroy();
     }
-
 }

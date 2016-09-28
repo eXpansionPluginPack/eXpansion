@@ -178,5 +178,4 @@ class Communication extends ExpPlugin
         $actionH->deleteAction(CommunicationWidget::$selectPlayer);
         parent::eXpOnUnload();
     }
-
 }

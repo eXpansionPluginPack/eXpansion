@@ -259,5 +259,4 @@ class Dedimania_Script extends DedimaniaAbstract
             $this->gReplay = "";
         }
     }
-
 }

@@ -18,5 +18,4 @@ class MemoryInfo extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
         $this->total = $total;
         $this->free = $free;
     }
-
 }

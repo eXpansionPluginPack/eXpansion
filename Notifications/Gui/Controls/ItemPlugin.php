@@ -36,5 +36,4 @@ class ItemPlugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->checkbox->destroy();
         parent::destroy();
     }
-
 }

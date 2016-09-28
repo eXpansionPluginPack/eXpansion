@@ -421,5 +421,4 @@ class ConfigManager
     {
         return $this->eXpCore;
     }
-
 }

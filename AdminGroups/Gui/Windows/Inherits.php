@@ -155,5 +155,4 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         parent::destroy();
     }
-
 }

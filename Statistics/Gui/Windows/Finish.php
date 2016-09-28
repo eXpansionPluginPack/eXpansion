@@ -21,5 +21,4 @@ class Finish extends StatsWindow
     {
         return array(1, 5, 3);
     }
-
 }

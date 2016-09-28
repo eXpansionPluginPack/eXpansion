@@ -39,5 +39,4 @@ class CheckboxItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->frame->destroy();
         parent::destroy();
     }
-
 }

@@ -50,5 +50,4 @@ class Config extends \ManiaLib\Utils\Singleton
     public $roundsPoints = array(10, 8, 6, 5, 4, 3, 2, 1);
     public $quitDialogManialink = "";
     public $useWhitelist = false;
-
 }

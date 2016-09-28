@@ -65,5 +65,4 @@ class Dico
 
         return $xml;
     }
-
 }

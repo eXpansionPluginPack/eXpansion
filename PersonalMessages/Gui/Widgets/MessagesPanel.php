@@ -185,5 +185,4 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         // $this->status = "False";
         $this->redraw($this->getRecipient());
     }
-
 }

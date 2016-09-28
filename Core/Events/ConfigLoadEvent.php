@@ -19,12 +19,10 @@ class ConfigLoadEvent extends \ManiaLive\Event\Event
 
     public function fireDo($listener)
     {
-        $p = $this->params;
         switch ($this->onWhat) {
             case self::ON_CONFIG_FILE_LOADED:
                 $listener->onConfigFileLoaded();
                 break;
         }
     }
-
 }

@@ -253,5 +253,4 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
         unset($this->mxConnection);
         parent::eXpOnUnload();
     }
-
 }

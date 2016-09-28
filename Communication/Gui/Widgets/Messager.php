@@ -65,5 +65,4 @@ class Messager extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $this->script->setParam("tab", Gui::fixString($tab));
         $this->script->setParam("text", "");
     }
-
 }

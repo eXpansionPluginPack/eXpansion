@@ -77,5 +77,4 @@ class CurrentTrackWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->frame->destroy();
         parent::destroy();
     }
-
 }

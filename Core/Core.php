@@ -1415,31 +1415,30 @@ EOT;
             //   "no cp";
             return strcmp($a->login, $b->login);
         }
+
         // 2nd have del
         if ($a->finalTime > 0 && $b->finalTime <= 0) {
             return -1;
-        } // 1st have del
-        elseif ($a->finalTime <= 0 && $b->finalTime > 0) {
+        } elseif ($a->finalTime <= 0 && $b->finalTime > 0) { // 1st have del
             return 1;
         }
+
         // only 1st
         if ($b->curCpIndex < 0) {
             return -1;
-        } // only 2nd
-        elseif ($a->curCpIndex < 0) {
+        } elseif ($a->curCpIndex < 0) {
+            // only 2nd
             return 1;
-        } // both ok, so...
-        elseif ($a->curCpIndex > $b->curCpIndex) {
+        } elseif ($a->curCpIndex > $b->curCpIndex) {
+            // both ok, so...
             return -1;
         } elseif ($a->curCpIndex < $b->curCpIndex) {
             return 1;
-        } // same check, so test time
-        elseif ($a->time < $b->time) {
+        } elseif ($a->time < $b->time) { // same check, so test time
             return -1;
         } elseif ($a->time > $b->time) {
             return 1;
-        } // same check check and time, so test general rank
-        elseif ($a->rank == 0 && $b->rank > 0) {
+        } elseif ($a->rank == 0 && $b->rank > 0) {  // same check check and time, so test general rank
             return 1;
         } elseif ($a->rank > 0 && $b->rank == 0) {
             return -1;
@@ -1447,13 +1446,13 @@ EOT;
             return -1;
         } elseif ($a->rank > $b->rank) {
             return 1;
-        } // same check check, time and rank (only in team or beginning?), so test general scores
-        elseif ($a->score > 0 && $b->score > 0 && $a->score > $b->score) {
+        } elseif ($a->score > 0 && $b->score > 0 && $a->score > $b->score) {
+            // same check check, time and rank (only in team or beginning?), so test general scores
             return -1;
         } elseif ($a->score > 0 && $b->score > 0 && $a->score < $b->score) {
             return 1;
-        } // same check check, time, rank and general score, so test besttime
-        elseif ($a->bestTime > 0 && $b->bestTime > 0 && $a->bestTime < $b->bestTime) {
+        } elseif ($a->bestTime > 0 && $b->bestTime > 0 && $a->bestTime < $b->bestTime) {
+            // same check check, time, rank and general score, so test besttime
             return -1;
         } elseif ($a->bestTime > 0 && $b->bestTime > 0 && $a->bestTime > $b->bestTime) {
             return 1;
@@ -1470,5 +1469,4 @@ EOT;
         //    echo "use login";
         return strcmp($a->login, $b->login);
     }
-
 }

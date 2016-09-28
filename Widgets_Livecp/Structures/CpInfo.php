@@ -21,5 +21,4 @@ class CpInfo extends AbstractStructure
         $this->cpIndex = $cp;
         $this->time = $time;
     }
-
 }

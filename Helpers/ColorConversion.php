@@ -67,12 +67,14 @@ class ColorConversion
      */
     public static function hslToRgb($h, $s, $l)
     {
-        $r;
-        $g;
-        $b;
+        $r = 0;
+        $g = 0;
+        $b = 0;
+
         $c = (1 - abs(2 * $l - 1)) * $s;
         $x = $c * (1 - abs(fmod(($h / 60), 2) - 1));
         $m = $l - ($c / 2);
+
         if ($h < 60) {
             $r = $c;
             $g = $x;
@@ -112,5 +114,4 @@ class ColorConversion
 
         return array(floor($r), floor($g), floor($b));
     }
-
 }

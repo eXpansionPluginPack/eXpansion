@@ -245,5 +245,4 @@ class LocalRecords extends LocalBase
             }
         }
     }
-
 }

@@ -375,7 +375,7 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
                     // We are expecting this exception, if we have an empty chunk.
                     $rankings = array();
                 }
-            } while(!empty($rankings) && count($rankings) == $chunkSize);
+            } while (!empty($rankings) && count($rankings) == $chunkSize);
         }
 
         return $this->currentRankings;

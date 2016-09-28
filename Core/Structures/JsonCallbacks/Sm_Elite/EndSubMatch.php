@@ -12,6 +12,4 @@ class EndSubMatch extends RpcObject
 
     /** var integer */
     public $submatchNumber = 0;
-
 }
-

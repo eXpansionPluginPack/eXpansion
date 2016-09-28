@@ -278,8 +278,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         }
 
         $version = $this->callPublicMethod(
-        '\ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_records'
-    );
+            '\ManiaLivePlugins\eXpansion\Database\Database', 'getDatabaseVersion', 'exp_records'
+        );
         // update for version2
         if ($version == 1) {
             $q = "ALTER TABLE `exp_records` CHANGE `record_date` `record_date` INT( 12 ) NOT NULL;";
@@ -1456,13 +1456,13 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             return;
         }
 
-       // $fullStart = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Reseting Ranks");
-       // $delete = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Deleting existing Ranks");
+        // $fullStart = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Reseting Ranks");
+        // $delete = \ManiaLivePlugins\eXpansion\Helpers\Timer::startNewTimer("[LocalRecods]Deleting existing Ranks");
 
         $this->db->execute('DELETE FROM exp_ranks WHERE rank_challengeuid IN (' . $this->getUidSqlString() . ')');
         $this->ranks = array();
         $this->player_ranks = array();
-       // \ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($delete, "Deleting existing Ranks");
+        // \ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($delete, "Deleting existing Ranks");
 
         $i = 0;
         foreach ($this->storage->maps as $map) {
@@ -1472,7 +1472,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             }
             $i++;
         }
-     // \ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($fullStart, "Reseting Ranks");
+        // \ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($fullStart, "Reseting Ranks");
     }
 
     protected function updateRanks($challengeId, $nbLaps, $log = true)
@@ -1850,5 +1850,4 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         Ranks::EraseAll();
         Records::EraseAll();
     }
-
 }

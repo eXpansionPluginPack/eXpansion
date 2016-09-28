@@ -87,5 +87,4 @@ class ColorParser extends \ManiaLib\Utils\Singleton
     {
         $this->codes[$token] = array($obj, $key);
     }
-
 }

@@ -31,19 +31,16 @@ class Control extends \ManiaLive\Gui\Control
     {
         parent::destroy();
 
-        //echo "#";
         foreach ($this as $index => $value) {
             if (\is_object($value)) {
 
                 if ($value instanceof \ManiaLive\Gui\Containable || $value instanceof \ManiaLive\Gui\Container) {
-                    //			echo "!";
                     $value->destroyComponents();
                     $value->destroy();
                     unset($this->$index);
                     continue;
                 }
                 if ($value instanceof \ManiaLive\Gui\Control) {
-                    //			echo "*";
                     $value->destroy();
                     unset($this->$index);
                     continue;
@@ -51,11 +48,8 @@ class Control extends \ManiaLive\Gui\Control
 
                 unset($this->$index);
             } else {
-                //		echo ".";
                 unset($this->$index);
             }
         }
-        // echo "\n";
     }
-
 }

@@ -164,5 +164,4 @@ class Map extends FileStructure
         $version = self::fetchLong($fp);
         $map->author = Author::fetch($fp);
     }
-
 }
