@@ -71,7 +71,9 @@ class Group
         } else {
             if (isset($this->permissions[$name])) {
                 return $this->permissions[$name];
-            } else return AdminGroups::UNKNOWN_PERMISSION;
+            } else {
+                return AdminGroups::UNKNOWN_PERMISSION;
+            }
         }
     }
 
@@ -103,8 +105,9 @@ class Group
 
             foreach ($this->inherits as $gname => $group) {
                 $actual = $group->getPermission($name);
-                if ($actual == AdminGroups::HAVE_PERMISSION)
+                if ($actual == AdminGroups::HAVE_PERMISSION) {
                     return true;
+                }
             }
         }
 

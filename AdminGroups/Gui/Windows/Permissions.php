@@ -26,7 +26,6 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected function onConstruct()
     {
         parent::onConstruct();
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
 
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
@@ -180,4 +179,3 @@ class Permissions extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::destroy();
     }
 }
-

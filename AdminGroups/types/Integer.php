@@ -38,8 +38,9 @@ class Integer extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker
 
     public function getErrorMsg()
     {
-        if ($this->range)
+        if ($this->range) {
             return "A numerical value in range ({$this->range}) was expected!";
+        }
 
         return "A numerical value was expected";
     }

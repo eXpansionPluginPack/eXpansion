@@ -38,7 +38,12 @@ class Bets extends ExpPlugin
     const RUNNING = "running";
     const NOBETS = "nobets";
 
-    private $msg_fail, $msg_billSuccess, $msg_billPaySuccess, $msg_totalStake, $msg_winner, $msg_payFail;
+    private $msg_fail;
+    private $msg_billSuccess;
+    private $msg_billPaySuccess;
+    private $msg_totalStake;
+    private $msg_winner;
+    private $msg_payFail;
     public static $state = self::OFF;
     public static $betAmount = 0;
     private $wasWarmup = false;
@@ -55,9 +60,16 @@ class Bets extends ExpPlugin
         $this->msg_error = eXpGetMessage('#donate#Error: %1$s');
         $this->msg_payFail = eXpGetMessage('#donate#The server was unable to pay your winning bet. Sorry.');
         $this->msg_billSuccess = eXpGetMessage('#donate#Bet accepted for#variable# %1$s #donate#planets');
-        $this->msg_billPaySuccess = eXpGetMessage('#donate#You will recieve#variable# %1$s #donate#planets from the server soon.');
-        $this->msg_totalStake = eXpGetMessage('#donate#The game is on as#variable# %1$s #donate#joins! Win stake of the bet is now#variable# %2$s #donate#planets');
-        $this->msg_winner = eXpGetMessage('#variable# %1$s #donate#wins the bet with #variable# %2$s #donate#planets, congratulations');
+        $this->msg_billPaySuccess = eXpGetMessage(
+            '#donate#You will recieve#variable# %1$s #donate#planets from the server soon.'
+        );
+        $this->msg_totalStake = eXpGetMessage(
+            '#donate#The game is on as#variable# %1$s #donate#joins! '
+            .'Win stake of the bet is now#variable# %2$s #donate#planets'
+        );
+        $this->msg_winner = eXpGetMessage(
+            '#variable# %1$s #donate#wins the bet with #variable# %2$s #donate#planets, congratulations'
+        );
     }
 
     public function eXpOnReady()
@@ -138,7 +150,11 @@ class Bets extends ExpPlugin
         }
 
         if (!is_numeric($amount) || empty($amount) || $amount < 1) {
-            $this->eXpChatSendServerMessage('#error#Can\'t place a bet, the value: "#variable#%1$s#error#" is not numeric value!', $login, array($amount));
+            $this->eXpChatSendServerMessage(
+                '#error#Can\'t place a bet, the value: "#variable#%1$s#error#" is not numeric value!',
+                $login,
+                array($amount)
+            );
 
             return;
         }
@@ -151,7 +167,13 @@ class Bets extends ExpPlugin
 
         self::$betAmount = intval($amount);
 
-        $bill = $this->eXpStartBill($login, $this->storage->serverLogin, $amount, 'Acccept Bet ?', array($this, 'billSetSuccess'));
+        $bill = $this->eXpStartBill(
+            $login,
+            $this->storage->serverLogin,
+            $amount,
+            'Acccept Bet ?',
+            array($this, 'billSetSuccess')
+        );
         $bill->setErrorCallback(5, array($this, 'billFail'));
         $bill->setErrorCallback(6, array($this, 'billFail'));
         $bill->setSubject('bets_plugin');
@@ -159,7 +181,13 @@ class Bets extends ExpPlugin
 
     public function acceptBet($login)
     {
-        $bill = $this->eXpStartBill($login, $this->storage->serverLogin, self::$betAmount, 'Acccept Bet ?', array($this, 'billAcceptSuccess'));
+        $bill = $this->eXpStartBill(
+            $login,
+            $this->storage->serverLogin,
+            self::$betAmount,
+            'Acccept Bet ?',
+            array($this, 'billAcceptSuccess')
+        );
         $bill->setErrorCallback(5, array($this, 'billFail'));
         $bill->setErrorCallback(6, array($this, 'billFail'));
         $bill->setSubject('bets_plugin');

@@ -33,10 +33,14 @@ class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $gui_cmd->setScale(0.6);
         $frame->addComponent($gui_cmd);
 
-        $gui_desc = new \ManiaLib\Gui\Elements\Label(($this->getSizeX() - ($gui_cmd->getSizeX() / (.8 / .6))) * (1 / .6) - 8, 4);
+        $gui_desc = new \ManiaLib\Gui\Elements\Label(
+            ($this->getSizeX() - ($gui_cmd->getSizeX() / (.8 / .6))) * (1 / .6) - 8,
+            4
+        );
         $gui_desc->setAlign('left', 'center');
-        if ($cmd->getHelp() != null)
+        if ($cmd->getHelp() != null) {
             $gui_desc->setText(__($cmd->getHelp(), $login));
+        }
         $gui_desc->setScale(0.6);
         $frame->addComponent($gui_desc);
 

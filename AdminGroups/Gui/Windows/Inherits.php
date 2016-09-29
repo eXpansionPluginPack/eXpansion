@@ -72,8 +72,9 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         foreach ($this->inherits as $item) {
             $item->destroy();
         }
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->pager->clearItems();
         $this->inherits = array();
@@ -141,8 +142,9 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         foreach ($this->inherits as $item) {
             $item->destroy();
         }
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->inherits = null;
         $this->items = array();

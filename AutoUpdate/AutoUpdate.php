@@ -76,7 +76,10 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $cmds = array(PHP_BINARY . ' composer.phar update --prefer-dist --no-interaction --dry-run');
         }
 
-        $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#admin_action#[#variable#AutoUpdate#admin_action#] Checking updates for #variable#eXpansion & Components');
+        $AdminGroups->announceToPermission(
+            Permission::SERVER_UPDATE,
+            '#admin_action#[#variable#AutoUpdate#admin_action#] Checking updates for #variable#eXpansion & Components'
+        );
 
         $exec = new ParalelExecution($cmds, array($this, 'checkExecuted'), 'eXpansion_update_check');
         $exec->setValue('login', $this->currentLogin);
@@ -97,15 +100,27 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($ret != 0) {
             $this->console('Error while checking for updates eXpansion !!');
             $this->console($results);
-            \ManiaLivePlugins\eXpansion\Gui\Gui::showError($results, AdminGroups::getAdminsByPermission(Permission::SERVER_UPDATE));
-            $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#admin_error#Error while checking for updates of #variable#eXpansion & Components !!');
+            \ManiaLivePlugins\eXpansion\Gui\Gui::showError(
+                $results,
+                AdminGroups::getAdminsByPermission(Permission::SERVER_UPDATE)
+            );
+            $AdminGroups->announceToPermission(
+                Permission::SERVER_UPDATE,
+                '#admin_error#Error while checking for updates of #variable#eXpansion & Components !!'
+            );
         } else {
             if ($this->arrayContainsText('Nothing to install or update', $results)) {
                 $this->console('eXpansion & Components are up to date');
-                $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#vote_success#eXpansion & Components are up to date!');
+                $AdminGroups->announceToPermission(
+                    Permission::SERVER_UPDATE,
+                    '#vote_success#eXpansion & Components are up to date!'
+                );
             } else {
                 $this->console('eXpansion needs updating!!');
-                $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#admin_error#eXpansion needs updating!');
+                $AdminGroups->announceToPermission(
+                    Permission::SERVER_UPDATE,
+                    '#admin_error#eXpansion needs updating!'
+                );
             }
         }
 
@@ -137,7 +152,10 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $cmds = array(PHP_BINARY . ' composer.phar update --no-interaction --prefer-dist');
         }
 
-        $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#admin_action#[#variable#AutoUpdate#admin_action#] Updating #variable#eXpansion & Components');
+        $AdminGroups->announceToPermission(
+            Permission::SERVER_UPDATE,
+            '#admin_action#[#variable#AutoUpdate#admin_action#] Updating #variable#eXpansion & Components'
+        );
 
         $exec = new ParalelExecution($cmds, array($this, 'updateExecuted'), 'eXpansion_update');
         $exec->setValue('login', $this->currentLogin);
@@ -159,11 +177,20 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($ret != 0) {
             $this->console('Error while updating eXpansion !!');
             $this->console($results);
-            \ManiaLivePlugins\eXpansion\Gui\Gui::showError($results, AdminGroups::getAdminsByPermission(Permission::SERVER_UPDATE));
-            $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#admin_error#Error while updating #variable#eXpansion & Components !!');
+            \ManiaLivePlugins\eXpansion\Gui\Gui::showError(
+                $results,
+                AdminGroups::getAdminsByPermission(Permission::SERVER_UPDATE)
+            );
+            $AdminGroups->announceToPermission(
+                Permission::SERVER_UPDATE,
+                '#admin_error#Error while updating #variable#eXpansion & Components !!'
+            );
         } else {
             $this->console('eXpansion Updated!!');
-            $AdminGroups->announceToPermission(Permission::SERVER_UPDATE, '#vote_success#Update of #variable#eXpansion & Components #vote_success#Done');
+            $AdminGroups->announceToPermission(
+                Permission::SERVER_UPDATE,
+                '#vote_success#Update of #variable#eXpansion & Components #vote_success#Done'
+            );
         }
 
         $this->onGoing = false;
@@ -188,8 +215,9 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     protected function arrayContainsText($needle, $array)
     {
         foreach ($array as $val) {
-            if (strpos($val, $needle) !== false)
+            if (strpos($val, $needle) !== false) {
                 return true;
+            }
         }
 
         return false;

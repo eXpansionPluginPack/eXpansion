@@ -96,13 +96,17 @@ class QueueList extends Widget
                 $this->bg->setAction(null);
             }
 
-            if ($player->login != $this->getRecipient() && AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_ADMIN)) {
+            if ($player->login != $this->getRecipient()
+                && AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_ADMIN)
+            ) {
                 $button->setText(__("Remove", $this->getRecipient()));
                 $button->setAction($this->createAction(array($this->mainInstance, "admRemoveQueue"), $player->login));
                 $this->frame->addComponent($button);
             }
             $x++;
-            if ($x > 8) break;
+            if ($x > 8) {
+                break;
+            }
         }
     }
 

@@ -52,7 +52,6 @@ class AutoQueue extends ExpPlugin
         }
         $this->widgetSyncList();
 
-//$this->registerChatCommand("next", "queueReleaseNext", 0, true);
     }
 
     function onPlayerConnect($login, $isSpectator)
@@ -66,12 +65,16 @@ class AutoQueue extends ExpPlugin
 
     public function onPlayerInfoChanged($info)
     {
-        if ($this->storage->serverStatus->code != Status::PLAY) return;
+        if ($this->storage->serverStatus->code != Status::PLAY) {
+            return;
+        }
 
         $player = PlayerInfo::fromArray($info);
         $login = $player->login;
 
-        if (in_array($login, $this->queue->getLogins())) return;
+        if (in_array($login, $this->queue->getLogins())) {
+            return;
+        }
 
         if ($player->spectator) {
             $this->showEnterQueue($login);
@@ -140,14 +143,18 @@ class AutoQueue extends ExpPlugin
 
     public function admRemoveQueue($login, $target)
     {
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login,
-            \ManiaLivePlugins\eXpansion\AdminGroups\Permission::SERVER_ADMIN)
-        ) {
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission(
+            $login,
+            \ManiaLivePlugins\eXpansion\AdminGroups\Permission::SERVER_ADMIN
+        )) {
             if (in_array($target, $this->queue->getLogins())) {
                 $this->queue->remove($target);
                 $this->eXpChatSendServerMessage(eXpGetMessage("Admin has removed you from queue!", $target));
-                $this->eXpChatSendServerMessage(eXpGetMessage('Removed player %s $z$ffffrom queue'), $login,
-                    array($this->storage->getPlayerObject($target)->nickName));
+                $this->eXpChatSendServerMessage(
+                    eXpGetMessage('Removed player %s $z$ffffrom queue'),
+                    $login,
+                    array($this->storage->getPlayerObject($target)->nickName)
+                );
             }
         }
         EnterQueueWidget::Erase($login);

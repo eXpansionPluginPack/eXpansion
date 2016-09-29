@@ -119,7 +119,9 @@ class GameOptions extends Window
         $this->frameLaps->setSize(160, 10);
 
         $this->e['ChatTime'] = new Inputbox("ChatTime");
-        $this->e['ChatTime']->setText(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->chatTime));
+        $this->e['ChatTime']->setText(
+            \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->chatTime)
+        );
         $this->e['ChatTime']->setLabel(__("Podium: Chat Time", $login));
         $this->frameGeneral->addComponent($this->e['ChatTime']);
 
@@ -138,7 +140,9 @@ class GameOptions extends Window
 
         $this->e['finishTimeout'] = new Inputbox("finishTimeOut");
         $this->e['finishTimeout']->setLabel(__("All: Finish Timeout", $login));
-        $this->e['finishTimeout']->setText(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->finishTimeout));
+        $this->e['finishTimeout']->setText(
+            \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->finishTimeout)
+        );
         $this->frameGeneral->addComponent($this->e['finishTimeout']);
 
         $this->frameContainer->addComponent($this->frameGeneral);
@@ -147,7 +151,9 @@ class GameOptions extends Window
 
         $this->e['timeAttackLimit'] = new Inputbox("timeAttackLimit");
         $this->e['timeAttackLimit']->setLabel(__("TimeAttack: Time Limit", $login));
-        $this->e['timeAttackLimit']->setText(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->timeAttackLimit));
+        $this->e['timeAttackLimit']->setText(
+            \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->timeAttackLimit)
+        );
         $this->frameTa->addComponent($this->e['timeAttackLimit']);
 
         $spacer = new \ManiaLib\Gui\Elements\Quad(4, 4);
@@ -249,7 +255,9 @@ class GameOptions extends Window
 
         $this->e['lapsTimeLimit'] = new Inputbox("lapsTimeLimit");
         $this->e['lapsTimeLimit']->setLabel(__("Laps: Time Limit", $login));
-        $this->e['lapsTimeLimit']->setText(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->lapsTimeLimit));
+        $this->e['lapsTimeLimit']->setText(
+            \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::TMtoMS($this->nextGameInfo->lapsTimeLimit)
+        );
         $this->frameLaps->addComponent($this->e['lapsTimeLimit']);
 
         $this->frameContainer->addComponent($this->frameLaps);
@@ -257,7 +265,7 @@ class GameOptions extends Window
         $this->mainFrame->addComponent($this->frameContainer);
     }
 
-// Generate all inputboxes
+    // Generate all inputboxes
     private function genGameModes()
     {
         $login = $this->getRecipient();
@@ -358,15 +366,16 @@ class GameOptions extends Window
         parent::onResize($oldX, $oldY);
         $this->frameGameMode->setPosition($this->sizeX - 36, 0);
         $this->frameContainer->setPosition(0, -5);
-        $this->buttonOK->setPosition($this->sizeX - $this->buttonCancel->sizeX - $this->buttonOK->sizeX + 8, -$this->sizeY + 2);
+        $this->buttonOK->setPosition(
+            $this->sizeX - $this->buttonCancel->sizeX - $this->buttonOK->sizeX + 8,
+            -$this->sizeY + 2
+        );
         $this->buttonCancel->setPosition($this->sizeX - $this->buttonCancel->sizeX + 5, -$this->sizeY + 2);
     }
 
     public function setGameMode($login, $gameMode)
     {
         $this->nextMode = $gameMode;
-//$this->connection->chatSendServerMessage(__('$fff Next Gamemode is now set to $o%s', $this->getRecipient(), $mode));
-//$this->nextGameInfo = $this->connection->getNextGameInfo();
         $this->frameGameMode->clearComponents();
         $this->mainFrame->removeComponent($this->frameGameMode);
         $this->genGameModes();
@@ -387,7 +396,9 @@ class GameOptions extends Window
         //general
         $gameInfos->allWarmUpDuration = intval($options['AllWarmupDuration']);
         $gameInfos->cupWarmUpDuration = intval($options['AllWarmupDuration']);
-        $gameInfos->finishTimeout = intval(\ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['finishTimeOut']));
+        $gameInfos->finishTimeout = intval(
+            \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['finishTimeOut'])
+        );
 
         $gameInfos->chatTime = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['ChatTime']);
 
@@ -400,7 +411,9 @@ class GameOptions extends Window
         $gameInfos->gameMode = $this->nextMode;
 
         //ta
-        $gameInfos->timeAttackLimit = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['timeAttackLimit']);
+        $gameInfos->timeAttackLimit = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM(
+            $options['timeAttackLimit']
+        );
         $gameInfos->timeAttackSynchStartPeriod = intval($options['timeAttackSynchStartPeriod']);
 
         //rounds
@@ -420,7 +433,9 @@ class GameOptions extends Window
 
         //laps
         $gameInfos->lapsNbLaps = intval($options['lapsNbLaps']);
-        $gameInfos->lapsTimeLimit = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM($options['lapsTimeLimit']);
+        $gameInfos->lapsTimeLimit = \ManiaLivePlugins\eXpansion\Helpers\TimeConversion::MStoTM(
+            $options['lapsTimeLimit']
+        );
         try {
             $this->connection->setGameInfos($gameInfos);
         } catch (\Exception $e) {

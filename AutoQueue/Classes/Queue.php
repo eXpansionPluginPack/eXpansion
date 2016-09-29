@@ -45,14 +45,13 @@ class Queue
         if (is_array($logins)) {
             array_map(array($this, "remove"), $logins);
         } else {
-            $this->remove($login);
+            $this->remove($logins);
         }
     }
 
     public function add($login)
     {
         if (in_array($login, $this->getLogins())) {
-            //       echo "can't add, since player is already in queue\n";
             return;
         }
 
@@ -92,8 +91,9 @@ class Queue
     public function getQueuedPlayers()
     {
         $out = array();
-        foreach ($this->queue as $player)
+        foreach ($this->queue as $player) {
             $out[$player->login] = $player;
+        }
 
         return $out;
     }

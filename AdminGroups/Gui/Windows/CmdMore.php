@@ -12,11 +12,23 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    protected $label_cmd, $label_desc, $label_descm, $label_aliases;
-    protected $bgt_cmd, $bgt_desc, $bgt_descm, $bgt_aliases;
+    protected $label_cmd;
+    protected $label_desc;
+    protected $label_descm;
+    protected $label_aliases;
+    protected $bgt_cmd;
+    protected $bgt_desc;
+    protected $bgt_descm;
+    protected $bgt_aliases;
 
-    protected $content_cmd, $content_desc, $content_descm, $content_aliases;
-    protected $bg_cmd, $bg_desc, $bg_descm, $bg_aliases;
+    protected $content_cmd;
+    protected $content_desc;
+    protected $content_descm;
+    protected $content_aliases;
+    protected $bg_cmd;
+    protected $bg_desc;
+    protected $bg_descm;
+    protected $bg_aliases;
 
     private $cmd;
 

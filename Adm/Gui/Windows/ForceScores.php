@@ -98,8 +98,9 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function populateList()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
         $this->pager->clearItems();
         $this->items = array();
 
@@ -110,7 +111,11 @@ class ForceScores extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $rankings = $expStorage->getCurrentRanking();
 
         foreach ($rankings as $player) {
-            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\PlayerScore($x, $player, $this->sizeX - 8);
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\PlayerScore(
+                $x,
+                $player,
+                $this->sizeX - 8
+            );
             $this->pager->addItem($this->items[$x]);
             $x++;
         }

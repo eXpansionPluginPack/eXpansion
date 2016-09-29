@@ -5,19 +5,26 @@ namespace ManiaLivePlugins\eXpansion\BeginnerServer;
 class BeginnerServer extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    public $msg_notBeginner, $msg_isBeginner;
+    public $msg_notBeginner;
+    public $msg_isBeginner;
 
     public function eXpOnLoad()
     {
-        $this->msg_notBeginner = eXpGetMessage("This is beginner friendly server, since you have more than 100k ladder rank, you are automatically forced to spectate!");
-        $this->msg_isBeginner = eXpGetMessage("Welcome to play at beginner friendly server, players more than 100k ladder rank are automatically forced to spectate :)");
+        $this->msg_notBeginner = eXpGetMessage(
+            "This is beginner friendly server, "
+            . "since you have more than 100k ladder rank, you are automatically forced to spectate!"
+        );
+        $this->msg_isBeginner = eXpGetMessage(
+            "Welcome to play at beginner friendly server, "
+            ."players more than 100k ladder rank are automatically forced to spectate :)"
+        );
     }
 
     public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
         $this->connection->setServerTag("server.isBeginner", "true");
-        $data = $this->connection->getServerTags();
+        $this->connection->getServerTags();
     }
 
     public function onPlayerConnect($login, $isSpectator)

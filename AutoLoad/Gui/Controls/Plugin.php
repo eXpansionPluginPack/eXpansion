@@ -48,7 +48,12 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
     /**
      * @var Button
      */
-    protected $button_running, $button_titleComp, $button_gameComp, $button_otherComp, $button_more, $button_start;
+    protected $button_running;
+    protected $button_titleComp;
+    protected $button_gameComp;
+    protected $button_otherComp;
+    protected $button_more;
+    protected $button_start;
 
     /**
      * @var \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround
@@ -58,12 +63,14 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
     /**
      * @var Label
      */
-    protected $label_name, $label_author;
+    protected $label_name;
+    protected $label_author;
 
     /**
      * @var Quad
      */
-    protected $icon_name, $icon_author;
+    protected $icon_name;
+    protected $icon_author;
 
     /**
      * @var ConfigManager

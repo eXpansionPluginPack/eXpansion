@@ -157,16 +157,30 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         //Loading all Messages;
         $this->msg_needBeAdmin = eXpGetMessage('#admin_error#You need to be an Admin to use that command');
-        $this->msg_cmdDontEx = eXpGetMessage('#admin_error#That Admin command doesen\'t exist. Use #variable#/admin help #admin_error#to see all commands');
+        $this->msg_cmdDontEx = eXpGetMessage(
+            '#admin_error#That Admin command doesen\'t exist. Use #variable#/admin help #admin_error#to see all commands'
+        );
         $this->msg_neeMorPerm = eXpGetMessage('#admin_error#You don\'t have the permission to use that admin command');
-        $this->msg_aInGroup = eXpGetMessage('#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first');
-        $this->msg_paddSuc = eXpGetMessage('#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s');
-        $this->msg_paddFai = eXpGetMessage('#admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s');
-        $this->msg_premoveSelf = eXpGetMessage('#admin_error#Your are #variable#%1$s #admin_error#You can\'t remove yourself from a group');
-        $this->msg_pRemoveSuc = eXpGetMessage('#admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s');
+        $this->msg_aInGroup = eXpGetMessage(
+            '#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first'
+        );
+        $this->msg_paddSuc = eXpGetMessage(
+            '#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s'
+        );
+        $this->msg_paddFai = eXpGetMessage(
+            '#admin_action#Failed to add player #variable# %1$s #admin_action# to admin group #variable#%2$s'
+        );
+        $this->msg_premoveSelf = eXpGetMessage(
+            '#admin_error#Your are #variable#%1$s #admin_error#You can\'t remove yourself from a group'
+        );
+        $this->msg_pRemoveSuc = eXpGetMessage(
+            '#admin_action#Player : #variable#%1$s #admin_action#Has been removed from admin group #variable#%2$s'
+        );
         $this->msg_pRemoveFa = eXpGetMessage('#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group');
         $this->msg_masterMasterE = eXpGetMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
-        $this->msg_removeMlAdmin = eXpGetMessage('#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!');
+        $this->msg_removeMlAdmin = eXpGetMessage(
+            '#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!'
+        );
         self::$txt_msg_cmdDontEx = $this->msg_cmdDontEx;
         self::$txt_noPermissionMsg = $this->msg_neeMorPerm;
         self::$txt_groupsTitle = eXpGetMessage('Admin Groups');
@@ -191,15 +205,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         foreach (self::$permissionList as $permission => $val) {
             self::$txt_permissions[$permission] = eXpGetMessage("Permission_" . $permission);
         }
-
-        //No idea if needed, I think not need to check
-        // $this->enableDedicatedEvents();
         //Registering public functions
         $this->setPublicMethod('adminCmd');
         $this->setPublicMethod('getPermission');
 
-        //$this->registerChatCommand('test', "test", 0, true);
-        //Registering the admin chat comman with a lot of parameters
         $this->registerChatCommand('admin', "adminCmd", -1, true);
         $this->registerChatCommand('adm', "adminCmd", -1, true);
 
@@ -250,7 +259,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 }
             } else {
                 touch($filename);
-                $file = ";-----------------------------------------\n" . "; allowed admin ip table\n" . ";------------------------------------------\n" . "; this file allows you to set restrict admin access for specific ip. \n" . "; tip: you can define multiple ip's for logins.\n" . '; format: login[] = "ip-value"' . "\n;\n;example:\n" . '; oliverde8[] = "192.168.0.1"' . "\n" . '; reaby[] = "192.168.0.2"' . "\n" . '; reaby[] = "192.168.0.1"' . "\n";
+                $file = ";-----------------------------------------\n"
+                    . "; allowed admin ip table\n" . ";------------------------------------------\n"
+                    . "; this file allows you to set restrict admin access for specific ip. \n"
+                    . "; tip: you can define multiple ip's for logins.\n"
+                    . '; format: login[] = "ip-value"' . "\n;\n;example:\n" . '; oliverde8[] = "192.168.0.1"' . "\n"
+                    . '; reaby[] = "192.168.0.2"' . "\n" . '; reaby[] = "192.168.0.1"' . "\n";
 
                 file_put_contents($filename, $file);
             }
@@ -309,11 +323,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
                     if ($param[0] == 'MasterAdmin') {
                         $this->parseMaster($param[1], $value);
-                    } else if ($param[0] == 'Group') {
+                    } elseif ($param[0] == 'Group') {
                         //We have found a Admin group, lets see the permissions of
                         //the group and the players that is part of it
                         $inheritances[$param[1]] = $this->parseGroup($param[1], $value);
-                    } else if ($param[0] == 'Guest') {
+                    } elseif ($param[0] == 'Guest') {
                         //We have found a the guest group.
                         $inheritances[$param[1]] = $this->parseGroup($param[1], $value, true);
                     }
@@ -572,7 +586,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $string .= ";MasterAdmin is a special group that has all permissions. \n";
                 $string .= ";No need to specify permissions. But we will to show all permissions\n";
                 $string .= "\n\n[MasterAdmin: " . $group->getGroupName() . "]\n";
-            } else if ($group instanceof GuestGroup) {
+            } elseif ($group instanceof GuestGroup) {
                 $string .= "\n\n[Guest: " . $group->getGroupName() . "]\n";
             } else {
                 $string .= "\n\n[Group: " . $group->getGroupName() . "]\n";
@@ -605,16 +619,25 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if (!file_exists($file)) {
             if (touch($file) == false) {
-                throw new \Exception("Writing the admingroups file at " . $file . " FAILED. perhaps not enough permissions for folder & file ?");
+                throw new \Exception(
+                    "Writing the admingroups file at " . $file
+                    . " FAILED. perhaps not enough permissions for folder & file ?"
+                );
             }
         }
         if (!is_writable($file)) {
-            throw new \Exception("Writing the admingroups file at " . $file . " FAILED. perhaps not enough permissions for folder & file ?");
+            throw new \Exception(
+                "Writing the admingroups file at " . $file
+                . " FAILED. perhaps not enough permissions for folder & file ?"
+            );
         }
         $status = file_put_contents($file, $string, LOCK_EX);
 
         if ($status === false) {
-            throw new \Exception("Writing the admingroups file at " . $file . " FAILED. perhaps not enough permissions for folder & file ?");
+            throw new \Exception(
+                "Writing the admingroups file at " . $file
+                . " FAILED. perhaps not enough permissions for folder & file ?"
+            );
         }
     }
 
@@ -898,8 +921,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * @param                                               $permissionName
      * @param \ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
      */
-    public static function addPermissionTitleMessage($permissionName, \ManiaLivePlugins\eXpansion\Core\i18n\Message $msg)
-    {
+    public static function addPermissionTitleMessage(
+        $permissionName,
+        \ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
+    ) {
         self::$txt_permissions[$permissionName] = $msg;
     }
 
@@ -912,7 +937,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public static function getPermissionTitleMessage($permissionName)
     {
-        return isset(self::$txt_permissions[$permissionName]) ? self::$txt_permissions[$permissionName] : $permissionName;
+        return isset(self::$txt_permissions[$permissionName]) ?
+            self::$txt_permissions[$permissionName] : $permissionName;
     }
 
     /**
@@ -1071,7 +1097,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     }
                     unset(self::$admins[$admin->getLogin()]);
                     Dispatcher::dispatch(new Events\Event(Events\Event::ON_ADMIN_REMOVED, $admin->getLogin()));
-                    $this->eXpChatSendServerMessage($this->msg_pRemoveSuc, null, array($admin->getLogin(), $group->getGroupName()));
+                    $this->eXpChatSendServerMessage(
+                        $this->msg_pRemoveSuc,
+                        null,
+                        array($admin->getLogin(), $group->getGroupName())
+                    );
 
                     $this->saveFile();
                 } else {

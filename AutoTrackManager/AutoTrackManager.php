@@ -113,7 +113,10 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function autotrackmanager()
     {
-        $q = $this->db->execute("SELECT avg(rating) AS rating, COUNT(rating) AS ratingTotal FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";")->fetchObject();
+        $q = $this->db->execute(
+            "SELECT avg(rating) AS rating, COUNT(rating) AS ratingTotal 
+FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";"
+        )->fetchObject();
         $this->rating = 0;
         $this->ratingTotal = 0;
         $votecount = 0;
@@ -127,16 +130,29 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         foreach ($this->storage->players as $player) {
             $login = $player->login;
-            $this->connection->chatSendServerMessage('Current Track Ratio is ' . (($votecount > 0) ? (round($rating / $votecount, 2)) : ('n/a')) . ' % AutoTrackManager will remove it if it has a percent difference of: ' . ($this->config->integervalue) . ' ', $login);
+            $this->connection->chatSendServerMessage(
+                'Current Track Ratio is ' . (($votecount > 0) ? (round($rating / $votecount, 2)) : ('n/a'))
+                . ' % AutoTrackManager will remove it if it has a percent difference of: '
+                . ($this->config->integervalue) . ' ',
+                $login
+            );
         }
 
         foreach ($this->storage->spectators as $player) {
             $login = $player->login;
-            $this->connection->chatSendServerMessage('Current Track Ratio is ' . (($votecount > 0) ? (round($rating / $votecount, 2)) : ('n/a')) . ' % AutoTrackManager will remove it if it has a percent difference of: ' . ($this->config->integervalue) . ' ', $login);
+            $this->connection->chatSendServerMessage(
+                'Current Track Ratio is ' . (($votecount > 0) ? (round($rating / $votecount, 2)) : ('n/a'))
+                . ' % AutoTrackManager will remove it if it has a percent difference of: '
+                . ($this->config->integervalue) . ' ',
+                $login
+            );
         }
         //Showing track karma status ATM Debug However should be enabled for admins to really see if its true or not.
         $this->console('[' . date('H:i:s') . '] [eXpansion] [ATM] Karma: ' . $rating . '');
-        $this->console('ATM Debug: RatingTotal: ' . $rating . ', Players Voted Total: ' . $this->ratingTotal . ', ratio: ' . (($votecount > 0) ? (round($rating / $votecount, 2)) : ('n/a')));
+        $this->console(
+            'ATM Debug: RatingTotal: ' . $rating . ', Players Voted Total: ' . $this->ratingTotal
+            . ', ratio: ' . (($votecount > 0) ? (round($rating / $votecount, 2)) : ('n/a'))
+        );
         if ($votecount >= $this->config->MINVotes && $rating / $votecount <= $this->config->integervalue) {
             $this->console('[' . date('H:i:s') . '] [eXpansion] [ATM] Karma: removal test');
             $this->console('ATM Debug: Track too bad: ' . $this->storage->currentMap->name);
@@ -161,12 +177,21 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->console('[' . date('H:i:s') . '] [eXpansion] [ATM] Removed current track from the tracklist.');
             $this->connection->saveMatchSettings($tracklist);
             $file = fopen('ATMLog.txt', 'w');
-            fwrite($file, '[' . date('H:i:s') . '] [eXpansion] [ATM] Removed ' . $this->storage->currentMap->name . ' (UId ' . $this->storage->currentMap->uId . ') from the tracklist.\n');
+            fwrite(
+                $file,
+                '[' . date('H:i:s') . '] [eXpansion] [ATM] Removed ' . $this->storage->currentMap->name
+                . ' (UId ' . $this->storage->currentMap->uId . ') from the tracklist.\n'
+            );
             fclose($file);
-            $this->console('[' . date('H:i:s') . '] [eXpansion] [ATM] Removing all data from database from ' . $this->storage->currentMap->name . '');
-            $q = "DELETE FROM exp_maps WHERE challenge_uid = " . $this->db->quote($this->storage->currentMap->uId) . ";";
+            $this->console(
+                '[' . date('H:i:s') . '] [eXpansion] [ATM] Removing all data from database from '
+                . $this->storage->currentMap->name . ''
+            );
+            $q = "DELETE FROM exp_maps WHERE challenge_uid = "
+                . $this->db->quote($this->storage->currentMap->uId) . ";";
             $query = $this->db->execute($q);
-            $q = "DELETE FROM exp_ranks WHERE rank_challengeuid = " . $this->db->quote($this->storage->currentMap->uId) . ";";
+            $q = "DELETE FROM exp_ranks WHERE rank_challengeuid = "
+                . $this->db->quote($this->storage->currentMap->uId) . ";";
             $query = $this->db->execute($q);
             $q = "DELETE FROM karma WHERE karma_trackuid = " . $this->db->quote($this->storage->currentMap->uId) . ";";
             $query = $this->db->execute($q);
