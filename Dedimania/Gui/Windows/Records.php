@@ -9,7 +9,10 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
 class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
     protected $frame;
-    protected $label_rank, $label_nick, $label_login, $label_score;
+    protected $label_rank;
+    protected $label_nick;
+    protected $label_login;
+    protected $label_score;
     protected $widths = array(1, 3, 4, 4, 1);
     protected $pager;
     protected $items = array();

@@ -67,14 +67,15 @@ class Maps extends ExpPlugin
     /**
      * @var AdminCmd
      */
-    private $cmd_remove, $cmd_erease, $cmd_replay;
+    private $cmd_remove;
+    private $cmd_erease;
+    private $cmd_replay;
     private $isRestartMap = false;
     private $is_onBeginMatch = false;
     private $is_onEndMatch = false;
 
     public function expOnInit()
     {
-
         $this->messages = new \StdClass();
 
         $this->config = Config::getInstance();
@@ -125,8 +126,6 @@ class Maps extends ExpPlugin
         $this->registerChatCommand('maps', "showMapList", 0, true);
         $this->registerChatCommand('mapinfo', "showMapInfo", 0, true);
 
-        // $this->registerChatCommand('history', "showHistoryList", 0, true);
-
         $this->registerChatCommand('nextmap', "chat_nextMap", 0, true);
 
         $this->registerChatCommand('jb', "jukebox", 0, true);
@@ -156,15 +155,26 @@ class Maps extends ExpPlugin
 
     public function eXpOnLoad()
     {
-        $this->msg_addQueue = eXpGetMessage('#variable#%1$s  #queue#has been added to the map queue by #variable#%3$s#queue#, in the #variable#%5$s #queue#position'); // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login, '%5$s' = # in queue
-        $this->msg_nextQueue = eXpGetMessage('#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s'); // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
-        $this->msg_nextMap = eXpGetMessage('#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#'); // '%1$s' = Map Name, '%2$s' = Map author
-        $this->msg_queueNow = eXpGetMessage('#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s'); // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
+        $this->msg_addQueue = eXpGetMessage(
+            '#variable#%1$s  #queue#has been added to the map queue '
+            .'by #variable#%3$s#queue#, in the #variable#%5$s #queue#position'
+        ); // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login, '%5$s' = # in queue
+        $this->msg_nextQueue = eXpGetMessage(
+            '#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s'
+        ); // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
+        $this->msg_nextMap = eXpGetMessage(
+            '#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#'
+        ); // '%1$s' = Map Name, '%2$s' = Map author
+        $this->msg_queueNow = eXpGetMessage(
+            '#queue#Map changed to #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s'
+        ); // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login
         $this->msg_jukehelp = eXpGetMessage('#queue#/jb uses next params: drop, reset and show');
         $this->msg_errDwld = eXpGetMessage('#admin_error#Error downloading, or MX is down!');
         $this->msg_errToLarge = eXpGetMessage('#admin_error#The map is to large to be added to a server');
         $this->msg_errMxId = eXpGetMessage("#admin_error#You must include a MX map ID!");
-        $this->msg_mapAdd = eXpGetMessage('#admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s');
+        $this->msg_mapAdd = eXpGetMessage(
+            '#admin_action#Map #variable# %1$s #admin_action#added to playlist by #variable#%2$s'
+        );
         $this->enableDedicatedEvents();
     }
 
@@ -185,12 +195,19 @@ class Maps extends ExpPlugin
      */
     public function showRec($login, $map)
     {
-        $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "showRecsWindow", $login, $map);
+        $this->callPublicMethod(
+            "\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords",
+            "showRecsWindow",
+            $login,
+            $map
+        );
     }
 
     public function onPlayerDisconnect($login, $reason = null)
     {
-        if (empty($login)) return;
+        if (empty($login)) {
+            return;
+        }
 
         if (array_key_exists($login, self::$playerSortModes)) {
             unset(self::$playerSortModes[$login]);
@@ -290,7 +307,6 @@ class Maps extends ExpPlugin
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
         $this->isRestartMap = $restartMap;
-        //$this->redrawNextMapWidget();
     }
 
     public function onBeginRound()
@@ -365,22 +381,30 @@ class Maps extends ExpPlugin
         if (count($this->queue) > 0) {
             reset($this->queue);
             $queue = current($this->queue);
-//if ($queue->map != $this->storage->nextMap) {
             try {
                 $this->connection->chooseNextMap($queue->map->fileName);
 
                 if ($this->config->showEndMatchNotices) {
-                    $this->eXpChatSendServerMessage($this->msg_nextQueue, null,
-                        array(Formatting::stripCodes($queue->map->name, 'wosnm'), $queue->map->author, Formatting::stripCodes($queue->player->nickName,
-                            'wosnm'), $queue->player->login, $queue->map->environnement));
+                    $this->eXpChatSendServerMessage(
+                        $this->msg_nextQueue,
+                        null,
+                        array(
+                            Formatting::stripCodes($queue->map->name, 'wosnm'),
+                            $queue->map->author,
+                            Formatting::stripCodes($queue->player->nickName, 'wosnm'),
+                            $queue->player->login, $queue->map->environnement
+                        )
+                    );
                 }
             } catch (Exception $e) {
                 $this->eXpChatSendServerMessage('Error: %s', $queue->player->login, array($e->getMessage()));
                 $key = key($this->queue);
                 unset($this->queue[$key]);
-                $this->eXpChatSendServerMessage('Recovering from error, map removed from jukebox...', $queue->player->login);
+                $this->eXpChatSendServerMessage(
+                    'Recovering from error, map removed from jukebox...',
+                    $queue->player->login
+                );
             }
-//}
         } else {
             if ($this->config->showEndMatchNotices) {
                 $map = $this->storage->nextMap;
@@ -388,7 +412,11 @@ class Maps extends ExpPlugin
                     $this->instantReplay = false;
                     $map = $this->storage->currentMap;
                 }
-                $this->eXpChatSendServerMessage($this->msg_nextMap, null, array(Formatting::stripCodes($map->name, 'wosnm'), $map->author));
+                $this->eXpChatSendServerMessage(
+                    $this->msg_nextMap,
+                    null,
+                    array(Formatting::stripCodes($map->name, 'wosnm'), $map->author)
+                );
             }
         }
     }
@@ -436,7 +464,6 @@ class Maps extends ExpPlugin
 
     public function showMapList($login)
     {
-        //print "Before Maps Memory Usage: " . memory_get_usage() / 1024 . "Mb\n";
         Maplist::Erase($login);
         self::$searchField[$login] = "name";
 
@@ -446,7 +473,11 @@ class Maps extends ExpPlugin
         $window->setCurrentMap($this->storage->currentMap);
 
         if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
-            $this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords', 'getPlayersRecordsForAllMaps', $login);
+            $this->callPublicMethod(
+                '\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords',
+                'getPlayersRecordsForAllMaps',
+                $login
+            );
             Maplist::$localrecordsLoaded = true;
         } else {
             Maplist::$localrecordsLoaded = false;
@@ -456,7 +487,6 @@ class Maps extends ExpPlugin
         $window->setSize(180, 100);
         $window->updateList($login);
         $window->show();
-        //print "After Maps Memory Usage: " . memory_get_usage() / 1024 . "Mb\n";
     }
 
     public function showHistoryList($login)
@@ -466,10 +496,18 @@ class Maps extends ExpPlugin
         $window->setHistory($this->history);
         $window->setTitle(__('History of Maps', $login));
         if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords')) {
-            $window->setRecords($this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\\LocalRecords', 'getPlayersRecordsForAllMaps', $login));
+            $window->setRecords(
+                $this->callPublicMethod(
+                    '\\ManiaLivePlugins\\eXpansion\\LocalRecords',
+                    'getPlayersRecordsForAllMaps',
+                    $login
+                )
+            );
         }
         if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings')) {
-            $window->setRatings($this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings', 'getRatings'));
+            $window->setRatings(
+                $this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings', 'getRatings')
+            );
         }
 
         $window->centerOnScreen();
@@ -519,7 +557,9 @@ class Maps extends ExpPlugin
                 if ($this->checkQueuMap($login, $map, true)) {
 
                     if ($this->paymentInProgress) {
-                        $msg = eXpGetMessage('#admin_error# $iA payment for wishin a track is in progress please try later.');
+                        $msg = eXpGetMessage(
+                            '#admin_error# $iA payment for wishin a track is in progress please try later.'
+                        );
                         $this->eXpChatSendServerMessage($msg, $login);
 
                         return;
@@ -534,8 +574,13 @@ class Maps extends ExpPlugin
                         $toLogin = $this->storage->serverLogin;
                     }
 
-                    $bill = $this->eXpStartBill($login, $toLogin, $amount, __("Are you sure you want to wish this map to be played", $login),
-                        array($this, 'validateQueuMap'));
+                    $bill = $this->eXpStartBill(
+                        $login,
+                        $toLogin,
+                        $amount,
+                        __("Are you sure you want to wish this map to be played", $login),
+                        array($this, 'validateQueuMap')
+                    );
 
                     $bill->setSubject('map_wish');
                     $bill->setErrorCallback(5, array($this, 'failQueuMap'));
@@ -649,9 +694,17 @@ class Maps extends ExpPlugin
                 }
             }
 
-            $this->eXpChatSendServerMessage($this->msg_addQueue, null,
-                array(Formatting::stripCodes($map->name, 'wosnm'), $map->author, Formatting::stripCodes($player->nickName, 'wosnm'), $player->login,
-                    $queueCount));
+            $this->eXpChatSendServerMessage(
+                $this->msg_addQueue,
+                null,
+                array(
+                    Formatting::stripCodes($map->name, 'wosnm'),
+                    $map->author,
+                    Formatting::stripCodes($player->nickName, 'wosnm'),
+                    $player->login,
+                    $queueCount
+                )
+            );
         } catch (Exception $e) {
             $this->eXpChatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
         }
@@ -680,15 +733,22 @@ class Maps extends ExpPlugin
                 if ($this->config->showNextMapWidget) {
                     $this->redrawNextMapWidget();
                 }
-//$this->connection->chooseNextMap($map->fileName);
             }
             if ($queueCount <= 31) {
                 $queueCount = date('jS', strtotime('2007-01-' . $queueCount));
             }
 
-            $this->eXpChatSendServerMessage($this->msg_addQueue, null,
-                array(Formatting::stripCodes($map->name, 'wosnm'), $map->author, Formatting::stripCodes($player->nickName, 'wosnm'), $player->login,
-                    $queueCount));
+            $this->eXpChatSendServerMessage(
+                $this->msg_addQueue,
+                null,
+                array(
+                    Formatting::stripCodes($map->name, 'wosnm'),
+                    $map->author,
+                    Formatting::stripCodes($player->nickName, 'wosnm'),
+                    $player->login,
+                    $queueCount
+                )
+            );
         } catch (Exception $e) {
             $this->eXpChatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
         }
@@ -712,8 +772,16 @@ class Maps extends ExpPlugin
                 $this->redrawNextMapWidget();
             }
             $this->connection->nextMap();
-            $this->eXpChatSendServerMessage($this->msg_queueNow, null,
-                array(Formatting::stripCodes($map->name, 'wosnm'), $map->author, Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+            $this->eXpChatSendServerMessage(
+                $this->msg_queueNow,
+                null,
+                array(
+                    Formatting::stripCodes($map->name, 'wosnm'),
+                    $map->author,
+                    Formatting::stripCodes($player->nickName, 'wosnm'),
+                    $login
+                )
+            );
         } catch (Exception $e) {
             $this->eXpChatSendServerMessage(__('Error: %s', $login, $e->getMessage()));
         }
@@ -736,9 +804,20 @@ class Maps extends ExpPlugin
 
         try {
             $player = $this->storage->getPlayerObject($login);
-            $msg = eXpGetMessage('#admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from the playlist');
-            $this->eXpChatSendServerMessage($msg, null,
-                array(Formatting::stripCodes($player->nickName, 'wosnm'), null, Formatting::stripCodes($map->name, 'wosnm'), $map->author));
+            $msg = eXpGetMessage(
+                '#admin_action#Admin #variable#%1$s #admin_action#removed '
+                .'the map #variable#%3$s #admin_action# from the playlist'
+            );
+            $this->eXpChatSendServerMessage(
+                $msg,
+                null,
+                array(
+                    Formatting::stripCodes($player->nickName, 'wosnm'),
+                    null,
+                    Formatting::stripCodes($map->name, 'wosnm'),
+                    $map->author
+                )
+            );
             $this->connection->removeMap($map->fileName);
         } catch (Exception $e) {
             $this->eXpChatSendServerMessage(__("Error: %s", $login, $e->getMessage()));
@@ -774,13 +853,27 @@ class Maps extends ExpPlugin
             $additions = "";
             if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
                 if ($found) {
-                    $msg = eXpGetMessage('#admin_action#Admin #variable#%1$s #admin_action#removed the map #variable#%3$s #admin_action# from playlist!');
+                    $msg = eXpGetMessage(
+                        '#admin_action#Admin #variable#%1$s #admin_action#removed '
+                        .'the map #variable#%3$s #admin_action# from playlist!'
+                    );
                 } else {
-                    $msg = eXpGetMessage('#admin_error#Map #variable#%3$s #admin_error# not found at playlist, perhaps it was already removed ?');
+                    $msg = eXpGetMessage(
+                        '#admin_error#Map #variable#%3$s #admin_error# '
+                        .'not found at playlist, perhaps it was already removed ?'
+                    );
                     $recievers = $login;
                 }
-                $this->eXpChatSendServerMessage($msg, $recievers,
-                    array(Formatting::stripCodes($player->nickName, 'wosnm'), null, Formatting::stripCodes($map->name, 'wosnm'), $map->author));
+                $this->eXpChatSendServerMessage(
+                    $msg,
+                    $recievers,
+                    array(
+                        Formatting::stripCodes($player->nickName, 'wosnm'),
+                        null,
+                        Formatting::stripCodes($map->name, 'wosnm'),
+                        $map->author
+                    )
+                );
 
                 return;
             } else {
@@ -798,12 +891,25 @@ class Maps extends ExpPlugin
                     }
                 }
                 if ($additions != "") {
-                    $msg = eXpGetMessage('#admin_action#Admin #variable#%1$s #admin_action#erased the map #variable#%3$s by %4$s #admin_action# from %5$s');
-                    $this->eXpChatSendServerMessage($msg, $recievers,
-                        array(Formatting::stripCodes($player->nickName, 'wosnm'), null, Formatting::stripCodes($map->name, 'wosnm'), $map->author,
-                            $additions));
+                    $msg = eXpGetMessage(
+                        '#admin_action#Admin #variable#%1$s #admin_action#erased '
+                        .'the map #variable#%3$s by %4$s #admin_action# from %5$s'
+                    );
+                    $this->eXpChatSendServerMessage(
+                        $msg,
+                        $recievers,
+                        array(
+                            Formatting::stripCodes($player->nickName, 'wosnm'),
+                            null,
+                            Formatting::stripCodes($map->name, 'wosnm'),
+                            $map->author,
+                            $additions
+                        )
+                    );
                 } else {
-                    $msg = eXpGetMessage('#admin_error#Nothing to do, the map has been removed already from playlist and from disk!');
+                    $msg = eXpGetMessage(
+                        '#admin_error#Nothing to do, the map has been removed already from playlist and from disk!'
+                    );
                     $this->eXpChatSendServerMessage($msg, $login);
                 }
             }
@@ -934,12 +1040,25 @@ class Maps extends ExpPlugin
             if (count($this->queue) > 0) {
                 reset($this->queue);
                 $queue = current($this->queue);
-                $this->eXpChatSendServerMessage($this->msg_nextQueue, $login,
-                    array(Formatting::stripCodes($queue->map->name, 'wosnm'), $queue->map->author, Formatting::stripCodes($queue->player->nickName,
-                        'wosnm'), $queue->player->login));
+                $this->eXpChatSendServerMessage(
+                    $this->msg_nextQueue,
+                    $login,
+                    array(
+                        Formatting::stripCodes($queue->map->name, 'wosnm'),
+                        $queue->map->author,
+                        Formatting::stripCodes($queue->player->nickName, 'wosnm'),
+                        $queue->player->login
+                    )
+                );
             } else {
-                $this->eXpChatSendServerMessage($this->msg_nextMap, $login,
-                    array(Formatting::stripCodes($this->storage->nextMap->name, 'wosnm'), $this->storage->nextMap->author));
+                $this->eXpChatSendServerMessage(
+                    $this->msg_nextMap,
+                    $login,
+                    array(
+                        Formatting::stripCodes($this->storage->nextMap->name, 'wosnm'),
+                        $this->storage->nextMap->author
+                    )
+                );
             }
         }
     }
@@ -957,9 +1076,14 @@ class Maps extends ExpPlugin
             if ($queue->map->uId == $map->uId) {
                 array_splice($this->queue, $i, 1);
                 $msg = eXpGetMessage('#variable#%1$s #queue#removed #variable#%2$s #queue#from the queue..');
-                $this->eXpChatSendServerMessage($msg, null,
-                    array(Formatting::stripCodes($this->storage->getPlayerObject($login)->nickName, 'wosnm'), Formatting::stripCodes($queue->map->name,
-                        'wosnm')));
+                $this->eXpChatSendServerMessage(
+                    $msg,
+                    null,
+                    array(
+                        Formatting::stripCodes($this->storage->getPlayerObject($login)->nickName, 'wosnm'),
+                        Formatting::stripCodes($queue->map->name, 'wosnm')
+                    )
+                );
                 $this->showJukeList($login);
                 break;
             }
@@ -995,8 +1119,14 @@ class Maps extends ExpPlugin
                 if ($queue->player == $player) {
                     array_splice($this->queue, $i, 1);
                     $msg = eXpGetMessage('#variable#%1$s #queue#removed #variable#%2$s #queue#from the queue..');
-                    $this->eXpChatSendServerMessage($msg, null,
-                        array(Formatting::stripCodes($queue->player->nickName, 'wosnm'), Formatting::stripCodes($queue->map->name, 'wosnm')));
+                    $this->eXpChatSendServerMessage(
+                        $msg,
+                        null,
+                        array(
+                            Formatting::stripCodes($queue->player->nickName, 'wosnm'),
+                            Formatting::stripCodes($queue->map->name, 'wosnm')
+                        )
+                    );
                     break;
                 }
                 $i++;
@@ -1095,7 +1225,11 @@ class Maps extends ExpPlugin
             $queue = current($this->queue);
             if ($queue->map->uId == $this->storage->currentMap->uId) {
                 $msg = eXpGetMessage('#admin_error# $iChallenge already set to be replayed!');
-                $this->eXpChatSendServerMessage($msg, $login, array(Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+                $this->eXpChatSendServerMessage(
+                    $msg,
+                    $login,
+                    array(Formatting::stripCodes($player->nickName, 'wosnm'), $login)
+                );
 
                 return;
             }
@@ -1125,7 +1259,11 @@ class Maps extends ExpPlugin
             $queue = current($this->queue);
             if ($queue->map->uId == $this->storage->currentMap->uId) {
                 $msg = eXpGetMessage('#admin_error# $iChallenge already set to be replayed!');
-                $this->eXpChatSendServerMessage($msg, $login, array(Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+                $this->eXpChatSendServerMessage(
+                    $msg,
+                    $login,
+                    array(Formatting::stripCodes($player->nickName, 'wosnm'), $login)
+                );
 
                 return;
             }
@@ -1135,7 +1273,10 @@ class Maps extends ExpPlugin
             $map = $this->history[1];
             array_unshift($this->queue, new MapWish($player, $map, false));
 
-            $msg = eXpGetMessage('#admin_action#Admin #variable#%1$s #admin_action#added previous map #variable#%3$s #admin_action# to the playlist');
+            $msg = eXpGetMessage(
+                '#admin_action#Admin #variable#%1$s #admin_action#added previous '
+                .'map #variable#%3$s #admin_action# to the playlist'
+            );
             $this->eXpChatSendServerMessage(
                 $msg,
                 null,
@@ -1149,7 +1290,11 @@ class Maps extends ExpPlugin
 
         } else {
             $msg = eXpGetMessage('#admin_error# $iThere are no previously played challenge!');
-            $this->eXpChatSendServerMessage($msg, $login, array(Formatting::stripCodes($player->nickName, 'wosnm'), $login));
+            $this->eXpChatSendServerMessage(
+                $msg,
+                $login,
+                array(Formatting::stripCodes($player->nickName, 'wosnm'), $login)
+            );
         }
     }
 
@@ -1166,8 +1311,12 @@ class Maps extends ExpPlugin
             return;
         }
         if ($this->expStorage->isRemoteControlled) {
-            $this->eXpChatSendServerMessage(eXpGetMessage("#admin_error#Can't continue, since this instance of eXpansion is running remote agains the server"),
-                $login);
+            $this->eXpChatSendServerMessage(
+                eXpGetMessage(
+                    "#admin_error#Can't continue, since this instance of eXpansion is running remote agains the server"
+                ),
+                $login
+            );
 
             return;
         }
@@ -1212,11 +1361,16 @@ class Maps extends ExpPlugin
                     $path = Helper::getPaths()->getDownloadMapsPath() . $game->titleId . "/" . $trkid . ".Map.Gbx";
 
                     if (!$lfile = @fopen($path, 'wb')) {
-                        $this->eXpChatSendServerMessage('#admin_error#Error creating file. Please contact admin.', $login);
+                        $this->eXpChatSendServerMessage(
+                            '#admin_error#Error creating file. Please contact admin.',
+                            $login
+                        );
                     }
                     if (!fwrite($lfile, $file)) {
-                        $this->eXpChatSendServerMessage('#admin_error#Error saving file - unable to write data. Please contact admin.',
-                            $login);
+                        $this->eXpChatSendServerMessage(
+                            '#admin_error#Error saving file - unable to write data. Please contact admin.',
+                            $login
+                        );
                         fclose($lfile);
 
                         return;
@@ -1226,8 +1380,11 @@ class Maps extends ExpPlugin
                     try {
                         $this->connection->addMap($path);
                         $mapinfo = $this->connection->getMapInfo($path);
-                        $this->eXpChatSendServerMessage($this->msg_mapAdd, null,
-                            array($mapinfo->name, $this->storage->getPlayerObject($login)->nickName));
+                        $this->eXpChatSendServerMessage(
+                            $this->msg_mapAdd,
+                            null,
+                            array($mapinfo->name, $this->storage->getPlayerObject($login)->nickName)
+                        );
                     } catch (Exception $e) {
                         $this->connection->chatSendServerMessage(__('Error:', $e->getMessage()));
                     }

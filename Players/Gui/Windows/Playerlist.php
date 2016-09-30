@@ -94,17 +94,18 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             }
             if ($ignore) {
                 $this->connection->ignore($target);
-                $this->connection->chatSendServerMessage(__('%s$z$s$fff was ignored by admin %s', $login, $player->nickName,
-                    $admin->nickName));
+                $this->connection->chatSendServerMessage(
+                    __('%s$z$s$fff was ignored by admin %s', $login, $player->nickName, $admin->nickName)
+                );
             } else {
                 $this->connection->unignore($target);
-                $this->connection->chatSendServerMessage(__('%s$z$s$fff was unignored by admin %s', $login, $player->nickName,
-                    $admin->nickName));
+                $this->connection->chatSendServerMessage(
+                    __('%s$z$s$fff was unignored by admin %s', $login, $player->nickName, $admin->nickName)
+                );
             }
 
             $this->show($login);
         } catch (\Exception $e) {
-            //   $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
             Helper::logError("Error:" . $e->getMessage());
         }
     }
@@ -114,7 +115,6 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         try {
             AdminGroups::getInstance()->adminCmd($login, "kick " . $target);
         } catch (\Exception $e) {
-            //$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
             Helper::logError("Error:" . $e->getMessage());
         }
     }
@@ -124,7 +124,6 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         try {
             AdminGroups::getInstance()->adminCmd($login, "ban " . $target);
         } catch (\Exception $e) {
-            //$this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
             Helper::logError("Error:" . $e->getMessage());
         }
     }
@@ -134,7 +133,6 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         try {
             AdminGroups::getInstance()->adminCmd($login, "black " . $target);
         } catch (\Exception $e) {
-            //  $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
             Helper::logError("Error:" . $e->getMessage());
         }
     }
@@ -144,7 +142,6 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         try {
             AdminGroups::getInstance()->adminCmd($login, "guest " . $target);
         } catch (\Exception $e) {
-            //  $this->connection->chatSendServerMessage(__("Error:".$e->getMessage()));
             Helper::logError("Error:" . $e->getMessage());
         }
     }
@@ -167,13 +164,15 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             if ($player->spectator == 1) {
                 $this->connection->forceSpectator($target, 2);
                 $this->connection->forceSpectator($target, 0);
-                $this->connection->chatSendServerMessage(__("Admin has released you from specate to play.", $target), $target);
+                $this->connection->chatSendServerMessage(
+                    __("Admin has released you from specate to play.", $target),
+                    $target
+                );
 
                 return;
             }
         } catch (\Exception $e) {
             Helper::logError("Error:" . $e->getMessage());
-            //$this->connection->chatSendServerMessage(__("Error:".$login, $e->getMessage()), $login);
         }
     }
 
@@ -194,8 +193,12 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         if (AdminGroups::hasPermission($login, Permission::PLAYER_CHANGE_TEAM)) {
             $player = $this->storage->getPlayerObject($target);
-            if ($player->teamId === 0) $this->connection->forcePlayerTeam($target, 1);
-            if ($player->teamId === 1) $this->connection->forcePlayerTeam($target, 0);
+            if ($player->teamId === 0) {
+                $this->connection->forcePlayerTeam($target, 1);
+            }
+            if ($player->teamId === 1) {
+                $this->connection->forcePlayerTeam($target, 0);
+            }
         }
     }
 
@@ -222,7 +225,6 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $blacklistAction = $this->createAction(array($this, 'blacklistPlayer'), $player->login);
             $forceAction = $this->createAction(array($this, 'toggleSpec'), $player->login);
             $guestAction = $this->createAction(array($this, 'guestlistPlayer'), $player->login);
-            //$toggleTeam      = $this->createAction(array($this, 'toggleTeam'), $player->login);
 
             $this->pager->addSimpleItems(array(Gui::fixString($player->nickName) . " " => -1,
                 Gui::fixString($player->login) => -1,
@@ -262,8 +264,9 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->connection = null;
         $this->storage = null;
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->items = null;
 

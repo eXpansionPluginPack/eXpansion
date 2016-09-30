@@ -100,5 +100,4 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
 
         return $out;
     }
-
 }

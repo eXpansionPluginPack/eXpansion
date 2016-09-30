@@ -20,14 +20,17 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $pager;
     protected $btnRemoveAll;
     protected $frame;
-    protected $title_mapName, $title_envi;
+    protected $title_mapName;
+    protected $title_envi;
     protected $title_authorName;
     protected $title_goldTime;
     protected $title_rank;
     protected $title_rating;
     protected $title_actions;
-    protected $searchBox, $searchframe;
-    protected $btn_search, $btn_search2;
+    protected $searchBox;
+    protected $searchframe;
+    protected $btn_search;
+    protected $btn_search2;
     protected $btn_sortNewest;
     protected $actionRemoveAll;
     protected $actionRemoveAllf;
@@ -247,7 +250,9 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $this->connection->RemoveMapList($mapsAtServer);
             $this->connection->chatSendServerMessage("Maplist cleared with:" . count($mapsAtServer) . " maps!", $login);
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage("Oops, couldn't clear the map list. server said:" . $e->getMessage());
+            $this->connection->chatSendServerMessage(
+                "Oops, couldn't clear the map list. server said:" . $e->getMessage()
+            );
         }
     }
 
@@ -273,22 +278,31 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->items = array();
 
 
-        $isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP);
+        $isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission(
+            $login,
+            Permission::MAP_REMOVE_MAP
+        );
 
         $this->maps = array();
 
         $maxrec = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
 
         foreach ($maps as $map) {
-            if (!isset($map->strippedName)) $map->strippedName = \ManiaLib\Utils\Formatting::stripStyles($map->name);
+            if (!isset($map->strippedName)) {
+                $map->strippedName = \ManiaLib\Utils\Formatting::stripStyles($map->name);
+            }
 
             if (!empty(Maps::$searchTerm[$login])) {
                 $field = Maps::$searchField[$login];
 
-                if ($field == "name") $field = "strippedName";
+                if ($field == "name") {
+                    $field = "strippedName";
+                }
 
-                $substring = $this->shortest_edit_substring(Maps::$searchTerm[$login],
-                    \ManiaLib\Utils\Formatting::stripStyles($map->{$field}));
+                $substring = $this->shortest_edit_substring(
+                    Maps::$searchTerm[$login],
+                    \ManiaLib\Utils\Formatting::stripStyles($map->{$field})
+                );
                 $dist = $this->edit_distance(Maps::$searchTerm[$login], $substring);
                 if (!empty($substring) && $dist < 2) {
                     $this->maps[] = $map;
@@ -312,29 +326,41 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $sortmode = SORT_STRING;
         switch (Maps::$playerSortModes[$login]->column) {
             case "rating":
-                if (Maps::$playerSortModes[$login]->sortMode == 1) self::sortByRankingDesc($this->maps);
+                if (Maps::$playerSortModes[$login]->sortMode == 1) {
+                    self::sortByRankingDesc($this->maps);
+                }
                 if (Maps::$playerSortModes[$login]->sortMode == 2) {
                     self::sortByRankingAsc($this->maps);
                 }
                 break;
             case "localrecord":
-                if (Maps::$playerSortModes[$login]->sortMode == 1) self::sortByRecordAsc($this->maps, $login);
+                if (Maps::$playerSortModes[$login]->sortMode == 1) {
+                    self::sortByRecordAsc($this->maps, $login);
+                }
                 if (Maps::$playerSortModes[$login]->sortMode == 2) {
                     self::sortByRecordDesc($this->maps, $login);
                 }
                 break;
             case "name":
-                if (Maps::$playerSortModes[$login]->sortMode == 1)
+                if (Maps::$playerSortModes[$login]->sortMode == 1) {
                     \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc($this->maps, "strippedName");
+                }
                 if (Maps::$playerSortModes[$login]->sortMode == 2) {
                     \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->maps, "strippedName");
                 }
                 break;
-            default :
-                if (Maps::$playerSortModes[$login]->sortMode == 1)
-                    \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc($this->maps, Maps::$playerSortModes[$login]->column);
+            default:
+                if (Maps::$playerSortModes[$login]->sortMode == 1) {
+                    \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc(
+                        $this->maps,
+                        Maps::$playerSortModes[$login]->column
+                    );
+                }
                 if (Maps::$playerSortModes[$login]->sortMode == 2) {
-                    \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->maps, Maps::$playerSortModes[$login]->column);
+                    \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc(
+                        $this->maps,
+                        Maps::$playerSortModes[$login]->column
+                    );
                 }
         }
 
@@ -357,14 +383,17 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             if (isset($sortableMap->mapRating)) {
                 $rate = ($sortableMap->mapRating->rating / 5) * 100;
                 $rate = round($rate) . "%" . '  $n' . "(" . $sortableMap->mapRating->totalvotes . ")";
-                if ($sortableMap->mapRating->rating == -1) $rate = " - ";
+                if ($sortableMap->mapRating->rating == -1) {
+                    $rate = " - ";
+                }
             } else {
                 $rate = " - ";
             }
 
             $localrecord = "-";
-            if (isset($sortableMap->localRecords) && isset($sortableMap->localRecords[$login]))
+            if (isset($sortableMap->localRecords) && isset($sortableMap->localRecords[$login])) {
                 $localrecord = $sortableMap->localRecords[$login] + 1;
+            }
 
             $this->pager->addSimpleItems(array(Gui::fixString($sortableMap->name) => $queueMapAction,
                 Gui::fixString($sortableMap->author) => -1,
@@ -421,7 +450,9 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $item->erase();
         }
         $this->items = null;
-        if (is_object($this->btnRemoveAll)) $this->btnRemoveAll->destroy();
+        if (is_object($this->btnRemoveAll)) {
+            $this->btnRemoveAll->destroy();
+        }
         $this->pager->destroy();
         $this->destroyComponents();
 
@@ -473,10 +504,12 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $d = array();
 
         // the distance from '' to substr(string,$i)
-        for ($i = 0; $i <= $m; $i++)
+        for ($i = 0; $i <= $m; $i++) {
             $d[$i][0] = $i;
-        for ($i = 0; $i <= $n; $i++)
+        }
+        for ($i = 0; $i <= $n; $i++) {
             $d[0][$i] = $i;
+        }
 
         // fill-in the edit distance matrix
         for ($j = 1; $j <= $n; $j++) {
@@ -490,7 +523,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         return $d[$m][$n];
     }
 
-// Helper function for edit_distance()
+    // Helper function for edit_distance()
     public function levenshtein_weighting($i, $j, $d, $string1, $string2)
     {
         // if the two letters are equal, cost is 0
@@ -519,7 +552,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-// attempt to find the substring of $haystack most closely matching $needle
+    // attempt to find the substring of $haystack most closely matching $needle
     public function shortest_edit_substring($needle, $haystack)
     {
         // initialize edit distance matrix
@@ -565,51 +598,85 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     static function sortByRankingAsc(&$array)
     {
-        usort($array,
+        usort(
+            $array,
             function ($a, $b) {
-                if (!isset($a->mapRating) && !isset($b->mapRating)) return 0;
-                else if (!isset($a->mapRating)) return -1;
-                else if (!isset($b->mapRating)) return 1;
-                else return $a->mapRating->rating > $b->mapRating->rating ? 1 : -1;
-            });
+                if (!isset($a->mapRating) && !isset($b->mapRating)) {
+                    return 0;
+                } elseif (!isset($a->mapRating)) {
+                    return -1;
+                } elseif (!isset($b->mapRating)) {
+                    return 1;
+                } else {
+                    return $a->mapRating->rating > $b->mapRating->rating ? 1 : -1;
+                }
+            }
+        );
     }
 
     static function sortByRankingDesc(&$array)
     {
-        usort($array,
+        usort(
+            $array,
             function ($a, $b) {
-                if (!isset($a->mapRating) && !isset($b->mapRating)) return 0;
-                else if (!isset($a->mapRating)) return 1;
-                else if (!isset($b->mapRating)) return -1;
-                else return $a->mapRating->rating > $b->mapRating->rating ? -1 : 1;
-            });
+                if (!isset($a->mapRating) && !isset($b->mapRating)) {
+                    return 0;
+                } elseif (!isset($a->mapRating)) {
+                    return 1;
+                } elseif (!isset($b->mapRating)) {
+                    return -1;
+                } else {
+                    return $a->mapRating->rating > $b->mapRating->rating ? -1 : 1;
+                }
+            }
+        );
     }
 
     static function sortByRecordDesc(&$array, $login)
     {
-        usort($array,
+        usort(
+            $array,
             function ($a, $b) use ($login) {
-                if (!isset($a->localRecords) && !isset($b->localRecords)) return 0;
-                else if (!isset($a->localRecords)) return -1;
-                else if (!isset($b->localRecords)) return 1;
-                else if (!isset($a->localRecords[$login]) && !isset($b->localRecords[$login])) return 0;
-                else if (!isset($a->localRecords[$login])) return -1;
-                else if (!isset($b->localRecords[$login])) return 1;
-                else return $a->localRecords[$login] > $b->localRecords[$login] ? -1 : 1;
-            });
+                if (!isset($a->localRecords) && !isset($b->localRecords)) {
+                    return 0;
+                } elseif (!isset($a->localRecords)) {
+                    return -1;
+                } elseif (!isset($b->localRecords)) {
+                    return 1;
+                } elseif (!isset($a->localRecords[$login]) && !isset($b->localRecords[$login])) {
+                    return 0;
+                } elseif (!isset($a->localRecords[$login])) {
+                    return -1;
+                } elseif (!isset($b->localRecords[$login])) {
+                    return 1;
+                } else {
+                    return $a->localRecords[$login] > $b->localRecords[$login] ? -1 : 1;
+                }
+            }
+        );
     }
 
     static function sortByRecordAsc(&$array, $login)
     {
-        usort($array,
+        usort(
+            $array,
             function ($a, $b) use ($login) {
-                if (!isset($a->localRecords) && !isset($b->localRecords)) return 0;
-                else if (!isset($a->localRecords)) return 1;
-                else if (!isset($b->localRecords)) return -1;
-                else if (!isset($a->localRecords[$login]) && !isset($b->localRecords[$login])) return 0;
-                else if (!isset($a->localRecords[$login])) return 1;
-                else if (!isset($b->localRecords[$login])) return -1;
-                else return $a->localRecords[$login] > $b->localRecords[$login] ? 1 : -1;
-            });
+                if (!isset($a->localRecords) && !isset($b->localRecords)) {
+                    return 0;
+                } elseif (!isset($a->localRecords)) {
+                    return 1;
+                } elseif (!isset($b->localRecords)) {
+                    return -1;
+                } elseif (!isset($a->localRecords[$login]) && !isset($b->localRecords[$login])) {
+                    return 0;
+                } elseif (!isset($a->localRecords[$login])) {
+                    return 1;
+                } elseif (!isset($b->localRecords[$login])) {
+                    return -1;
+                } else {
+                    return $a->localRecords[$login] > $b->localRecords[$login] ? 1 : -1;
+                }
+            }
+        );
     }
 }

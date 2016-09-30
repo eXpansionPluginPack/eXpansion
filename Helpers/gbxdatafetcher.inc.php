@@ -35,12 +35,24 @@ namespace ManiaLivePlugins\eXpansion\Helpers;
  */
 class GBXBaseFetcher
 {
-    public $parseXml, $xml, $xmlParsed;
+    public $parseXml;
+    public $xml;
+    public $xmlParsed;
 
-    public $authorVer, $authorLogin, $authorNick, $authorZone, $authorEInfo;
+    public $authorVer;
+    public $authorLogin;
+    public $authorNick;
+    public $authorZone;
+    public $authorEInfo;
 
-    private $_gbxdata, $_gbxlen, $_gbxptr, $_debug, $_error, $_endianess,
-        $_lookbacks, $_parsestack;
+    private $_gbxdata;
+    private $_gbxlen;
+    private $_gbxptr;
+    private $_debug;
+    private $_error;
+    private $_endianess;
+    private $_lookbacks;
+    private $_parsestack;
 
     // supported class ID's
     const GBX_CHALLENGE_TMF = 0x03043000;
@@ -310,7 +322,6 @@ class GBXBaseFetcher
         foreach ($attribs as $key => &$val) {
             $val = utf8_decode($val);
         }
-        //echo 'startTag: ' . $name . "\n"; print_r($attribs);
         array_push($this->_parsestack, $name);
         if ($name == 'DEP') {
             $this->xmlParsed['DEPS'][] = $attribs;
@@ -332,7 +343,6 @@ class GBXBaseFetcher
 
     private function endTag($parser, $name)
     {
-        //echo 'endTag: ' . $name . "\n";
         array_pop($this->_parsestack);
     }
 
@@ -450,7 +460,6 @@ class GBXBaseFetcher
             $chunkOffset += $chunkSize;
         }
 
-        //$this->debugLog(print_r($chunksList, true));
         $totalSize = $chunkOffset - $chunkStart + 4;  // numChunks
         if ($headerSize != $totalSize) {
             $this->errorOut(
@@ -491,8 +500,10 @@ class GBXBaseFetcher
 
         // check for XML chunk that's not zero-filled
         if ($xmlLen > 0 && $chunksList['XML']['size'] != $xmlLen + 4) {
-            $this->errorOut(sprintf('XML chunk size mismatch: %d <> %d',
-                $chunksList['XML']['size'], $xmlLen + 4), 11);
+            $this->errorOut(
+                sprintf('XML chunk size mismatch: %d <> %d', $chunksList['XML']['size'], $xmlLen + 4),
+                11
+            );
         }
 
         if ($this->parseXml && $this->xml != '') {
@@ -562,8 +573,7 @@ class GBXBaseFetcher
 
             // convert to Unix timestamp in usec
             $stamp = ($date - (int)$EPOCHDIFF) / 10;
-            $this->debugLog(sprintf('PAK CreationDate 64-bit: %u.%06u',
-                $stamp / $USEC2SEC, $stamp % $USEC2SEC));
+            $this->debugLog(sprintf('PAK CreationDate 64-bit: %u.%06u', $stamp / $USEC2SEC, $stamp % $USEC2SEC));
 
             return (int)($stamp / $USEC2SEC);
 
@@ -584,8 +594,9 @@ class GBXBaseFetcher
                 // convert to Unix timestamp in usec
                 $stamp = gmp_div(gmp_sub($date, $EPOCHDIFF), 10);
                 $stamp = gmp_div_qr($stamp, $USEC2SEC);
-                $this->debugLog(sprintf('PAK CreationDate GNU MP: %u.%06u',
-                    gmp_strval($stamp[0]), gmp_strval($stamp[1])));
+                $this->debugLog(
+                    sprintf('PAK CreationDate GNU MP: %u.%06u', gmp_strval($stamp[0]), gmp_strval($stamp[1]))
+                );
 
                 return (int)gmp_strval($stamp[0]);
             }
@@ -595,8 +606,9 @@ class GBXBaseFetcher
                 $date = bcadd(bcmul($hi, $UINT32MAX), $lo);
                 // convert to Unix timestamp in usec
                 $stamp = bcdiv(bcsub($date, $EPOCHDIFF), 10, 0);
-                $this->debugLog(sprintf('PAK CreationDate BCMath: %u.%06u',
-                    bcdiv($stamp, $USEC2SEC), bcmod($stamp, $USEC2SEC)));
+                $this->debugLog(
+                    sprintf('PAK CreationDate BCMath: %u.%06u', bcdiv($stamp, $USEC2SEC), bcmod($stamp, $USEC2SEC))
+                );
 
                 return (int)bcdiv($stamp, $USEC2SEC);
             }
@@ -639,8 +651,9 @@ class GBXBaseFetcher
                 $r1--;
             }
             $stamp = substr(sprintf('%d%06d%06d', $r1, $r2, $r3), 0, -1);
-            $this->debugLog(sprintf('PAK CreationDate manual: %s.%s',
-                substr($stamp, 0, -6), substr($stamp, -6)));
+            $this->debugLog(
+                sprintf('PAK CreationDate manual: %s.%s', substr($stamp, 0, -6), substr($stamp, -6))
+            );
 
             return (int)substr($stamp, 0, -6);
         } else {
@@ -658,14 +671,47 @@ class GBXChallMapFetcher extends GBXBaseFetcher
 {
     public $tnImage;
 
-    public $headerVersn, $bronzeTime, $silverTime, $goldTime, $authorTime,
-        $cost, $multiLap, $type, $typeName, $authorScore, $simpleEdit, $ghostBlocks,
-        $nbChecks, $nbLaps;
-    public $uid, $envir, $author, $name, $kind, $kindName, $password,
-        $mood, $envirBg, $authorBg, $mapType, $mapStyle, $lightmap, $titleUid;
-    public $xmlVer, $exeVer, $exeBld, $validated, $songFile, $songUrl,
-        $modName, $modFile, $modUrl, $vehicle;
-    public $thumbLen, $thumbnail, $comment;
+    public $headerVersn;
+    public $bronzeTime;
+    public $silverTime;
+    public $goldTime;
+    public $authorTime;
+    public $cost;
+    public $multiLap;
+    public $type;
+    public $typeName;
+    public $authorScore;
+    public $simpleEdit;
+    public $ghostBlocks;
+    public $nbChecks;
+    public $nbLaps;
+    public $uid;
+    public $envir;
+    public $author;
+    public $name;
+    public $kind;
+    public $kindName;
+    public $password;
+    public $mood;
+    public $envirBg;
+    public $authorBg;
+    public $mapType;
+    public $mapStyle;
+    public $lightmap;
+    public $titleUid;
+    public $xmlVer;
+    public $exeVer;
+    public $exeBld;
+    public $validated;
+    public $songFile;
+    public $songUrl;
+    public $modName;
+    public $modFile;
+    public $modUrl;
+    public $vehicle;
+    public $thumbLen;
+    public $thumbnail;
+    public $comment;
 
     const IMAGE_FLIP_HORIZONTAL = 1;
     const IMAGE_FLIP_VERTICAL = 2;
@@ -1250,9 +1296,25 @@ class GBXChallMapFetcher extends GBXBaseFetcher
  */
 class GBXChallengeFetcher extends GBXChallMapFetcher
 {
-    public $authortm, $goldtm, $silvertm, $bronzetm, $ascore, $azone, $multi, $editor,
-        $pub, $nblaps, $parsedxml, $xmlver, $exever, $exebld, $songfile, $songurl,
-        $modname, $modfile, $modurl;
+    public $authortm;
+    public $goldtm;
+    public $silvertm;
+    public $bronzetm;
+    public $ascore;
+    public $azone;
+    public $multi;
+    public $editor;
+    public $pub;
+    public $nblaps;
+    public $parsedxml;
+    public $xmlver;
+    public $exever;
+    public $exebld;
+    public $songfile;
+    public $songurl;
+    public $modname;
+    public $modfile;
+    public $modurl;
 
     /**
      * Fetches a hell of a lot of data about a GBX challenge
@@ -1304,7 +1366,6 @@ class GBXChallengeFetcher extends GBXChallMapFetcher
 // class GBXChallengeFetcher
 }
 
-
 /**
  * @class GBXReplayFetcher
  * @brief The class that fetches all GBX replay info
@@ -1313,9 +1374,22 @@ class GBXChallengeFetcher extends GBXChallMapFetcher
  */
 class GBXReplayFetcher extends GBXBaseFetcher
 {
-    public $uid, $envir, $author, $replay, $nickname, $login, $titleUid;
-    public $xmlVer, $exeVer, $exeBld, $respawns, $stuntScore, $validable,
-        $cpsCur, $cpsLap, $vehicle;
+    public $uid;
+    public $envir;
+    public $author;
+    public $replay;
+    public $nickname;
+    public $login;
+    public $titleUid;
+    public $xmlVer;
+    public $exeVer;
+    public $exeBld;
+    public $respawns;
+    public $stuntScore;
+    public $validable;
+    public $cpsCur;
+    public $cpsLap;
+    public $vehicle;
 
     /**
      * Instantiate GBX replay fetcher
@@ -1501,16 +1575,28 @@ class GBXReplayFetcher extends GBXBaseFetcher
 // class GBXReplayFetcher
 }
 
-
 /**
  * @class GBXPackFetcher
  * @brief The class that fetches all GBX pack info
  */
 class GBXPackFetcher extends GBXBaseFetcher
 {
-    public $headerVersn, $flags, $headerMaxSz, $infoMlUrl, $downloadUrl, $creatDate, $comment,
-        $titleId, $usageSubdir, $buildInfo, $authorUrl, $exeVer, $exeBld, $xmlDate,
-        $nbPacks, $packHeaders;
+    public $headerVersn;
+    public $flags;
+    public $headerMaxSz;
+    public $infoMlUrl;
+    public $downloadUrl;
+    public $creatDate;
+    public $comment;
+    public $titleId;
+    public $usageSubdir;
+    public $buildInfo;
+    public $authorUrl;
+    public $exeVer;
+    public $exeBld;
+    public $xmlDate;
+    public $nbPacks;
+    public $packHeaders;
 
     /**
      * Instantiate GBX pack fetcher
@@ -1673,14 +1759,16 @@ class GBXPackFetcher extends GBXBaseFetcher
 // class GBXPackFetcher
 }
 
-
 /**
  * @class GBXPackHeaderFetcher
  * @brief The class that fetches GBX included pack header info
  */
 class GBXPackHeaderFetcher extends GBXBaseFetcher
 {
-    public $name, $infoMlUrl, $creatDate, $nestLevel;
+    public $name;
+    public $infoMlUrl;
+    public $creatDate;
+    public $nestLevel;
 
     private $_headerVersn;
 

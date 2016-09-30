@@ -44,8 +44,9 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function setData($players)
     {
 
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
         $this->pager->clearItems();
         $this->items = array();
 
@@ -86,12 +87,12 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->connection = null;
         $this->storage = null;
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->items = null;
         $this->pager->destroy();
         parent::destroy();
     }
-
 }

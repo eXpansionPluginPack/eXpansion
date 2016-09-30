@@ -458,8 +458,8 @@ abstract class MetaData
                  * @var Storage $storage
                  */
                 if ($this->checkTitleCompatibility(
-                    \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId)
-                ) {
+                    \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId
+                )) {
                     return true;
                 }
                 $titleName = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->simpleEnviTitle;

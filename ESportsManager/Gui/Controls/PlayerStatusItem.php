@@ -118,5 +118,4 @@ class PlayerStatusItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg->setPosX(-2);
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
-
 }

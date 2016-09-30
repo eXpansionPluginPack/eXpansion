@@ -12,7 +12,6 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function expOnInit()
     {
-        //	$this->addDependency(new Dependency('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'));
     }
 
     public function eXpOnLoad()
@@ -31,7 +30,10 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords')) {
             Dispatcher::register(LocalEvent::getClass(), $this);
             try {
-                TimePanel::$localrecords = $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords");
+                TimePanel::$localrecords = $this->callPublicMethod(
+                    "\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords",
+                    "getRecords"
+                );
             } catch (\Exception $e) {
                 TimePanel::$localrecords = array();
             }
@@ -71,8 +73,10 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords')) {
             if (empty(TimePanel::$localrecords)) {
                 try {
-                    TimePanel::$localrecords = $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords",
-                        "getRecords");
+                    TimePanel::$localrecords = $this->callPublicMethod(
+                        "\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords",
+                        "getRecords"
+                    );
                 } catch (\Exception $e) {
                     TimePanel::$localrecords = array();
                 }
@@ -83,19 +87,20 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-        //TimeChooser::EraseAll();
-        TimePanel::$dedirecords = Array();
-        TimePanel::$localrecords = Array();
+        TimePanel::$dedirecords = array();
+        TimePanel::$localrecords = array();
     }
 
     public function showToAll()
     {
         TimePanel::EraseAll();
-        foreach ($this->storage->players as $player)
+        foreach ($this->storage->players as $player) {
             $this->showPanel($player->login, $player);
+        }
 
-        foreach ($this->storage->spectators as $player)
+        foreach ($this->storage->spectators as $player) {
             $this->showPanel($player->login, $player);
+        }
     }
 
     public function showPanel($login, $playerObject)
@@ -119,7 +124,9 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         } else {
             $info->setTarget("");
         }
-        if (array_key_exists($login, $this->references)) $info->setReference($this->references[$login]);
+        if (array_key_exists($login, $this->references)) {
+            $info->setReference($this->references[$login]);
+        }
 
         $info->setMapInfo($this->storage->currentMap);
         $info->show();
@@ -148,10 +155,6 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onUpdateRecords($data)
     {
         TimePanel::$localrecords = $data;
-        /*
-          TimePanel::$localrecords = $data;
-          $this->console("Records Changed, reload!");
-          $this->showToAll(); */
     }
 
     public function onDedimaniaUpdateRecords($data)
@@ -204,8 +207,13 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         foreach (TimePanel::$dedirecords as $index => $data) {
             if (TimePanel::$dedirecords[$index]['Login'] == $record->login) {
-                TimePanel::$dedirecords[$index] = Array("Login" => $record->login, "NickName" => $record->nickname, "Rank" => $record->place,
-                    "Best" => $record->time, "Checks" => $record->checkpoints);
+                TimePanel::$dedirecords[$index] = array(
+                    "Login" => $record->login,
+                    "NickName" => $record->nickname,
+                    "Rank" => $record->place,
+                    "Best" => $record->time,
+                    "Checks" => $record->checkpoints
+                );
             }
         }
         $this->showPanel($record->login, false);
@@ -219,8 +227,13 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         foreach (TimePanel::$dedirecords as $index => $data) {
             if (TimePanel::$dedirecords[$index]['Login'] == $record->login) {
-                TimePanel::$dedirecords[$index] = Array("Login" => $record->login, "NickName" => $record->nickname, "Rank" => $record->place,
-                    "Best" => $record->time, "Checks" => $record->checkpoints);
+                TimePanel::$dedirecords[$index] = array(
+                    "Login" => $record->login,
+                    "NickName" => $record->nickname,
+                    "Rank" => $record->place,
+                    "Best" => $record->time,
+                    "Checks" => $record->checkpoints
+                );
             }
         }
         $this->showPanel($record->login, false);

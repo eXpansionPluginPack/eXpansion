@@ -280,7 +280,8 @@ Other server might use the same blacklist file!!'
         );
         $cmd->setHelp('Changes the player password')
             ->setHelpMore(
-                '$w/admin set server spec password #pwd$z will change the password needed for players to connect to this server'
+                '$w/admin set server spec password #pwd$z will change the password'
+                .' needed for players to connect to this server'
             )
             ->setMinParam(0);
         AdminGroups::addAlias($cmd, "setpwd"); // xaseco
@@ -294,7 +295,8 @@ Other server might use the same blacklist file!!'
         );
         $cmd->setHelp('Changes the spectator password')
             ->setHelpMore(
-                '$w/admin set server spec password #pwd$z will change the password needed for spectators to connect to this server'
+                '$w/admin set server spec password #pwd$z will change the password'
+                .' needed for spectators to connect to this server'
             )
             ->setMinParam(1);
         AdminGroups::addAlias($cmd, "setspecpwd"); // xaseco
@@ -357,7 +359,9 @@ Other server might use the same blacklist file!!'
         );
         $cmd->setHelp('Allows you to hide or show the server to players')
             ->addLineHelpMore(
-                '$w\admin set server hide true$z Will hide the server from other players. Players would need to have the servers in their favorites or need to know the server login ')
+                '$w\admin set server hide true$z Will hide the server from other players.'
+                .' Players would need to have the servers in their favorites or need to know the server login '
+            )
             ->addLineHelpMore('$w\admin set server hide false$z Will make the server visible to any player')
             ->addchecker(1, Boolean::getInstance());
         $cmd->setMinParam(1);
@@ -1239,7 +1243,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->forcePlayerTeam($params[0], 0);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#sends player#variable# %s #admin_action#to team $00fBlue.',
+                '#admin_action#Admin#variable# %s #admin_action#sends '
+                .'player#variable# %s #admin_action#to team $00fBlue.',
                 null,
                 array($admin->nickName, $params[0])
             );
@@ -1254,7 +1259,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->forcePlayerTeam($params[0], 1);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#sends player#variable# %s #admin_action#to team $f00Red.',
+                '#admin_action#Admin#variable# %s #admin_action#sends '
+                .'player#variable# %s #admin_action#to team $f00Red.',
                 null,
                 array($admin->nickName, $params[0])
             );
@@ -1284,7 +1290,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->setCupWarmUpDuration(intval($params[0]));
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#sets use new warmup duration to#variable# %s #admin_action#.',
+                '#admin_action#Admin#variable# %s #admin_action#sets use new '
+                .'warmup duration to#variable# %s #admin_action#.',
                 null,
                 array($admin->nickName, $params[0])
             );
@@ -1314,7 +1321,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->setCupPointsLimit(intval($params[0]));
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#sets use new cup points limit to#variable# %s #admin_action#.',
+                '#admin_action#Admin#variable# %s #admin_action#sets use '
+                .'new cup points limit to#variable# %s #admin_action#.',
                 null,
                 array($admin->nickName, $params[0])
             );
@@ -1347,7 +1355,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->forcePlayerTeam($player, intval($params[0]));
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#forces player #variable# %s #admin_action# to team#variable# %s #admin_action#.',
+                '#admin_action#Admin#variable# %s #admin_action#forces '
+                .'player #variable# %s #admin_action# to team#variable# %s #admin_action#.',
                 null,
                 array($admin->nickName, $player->nickName, $params[0])
             );
@@ -1362,7 +1371,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->setMaxPointsTeam(filter_var($params[0], FILTER_VALIDATE_BOOLEAN));
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#sets use new team rules to#variable# %s #admin_action#.',
+                '#admin_action#Admin#variable# %s #admin_action#sets use '*
+                .'new team rules to#variable# %s #admin_action#.',
                 null,
                 array($admin->nickName, $params[0])
             );
@@ -1407,7 +1417,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->setFinishTimeout(TimeConversion::MStoTM($params[0]));
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#sets new finish timeout to#variable# %s #admin_action#minutes.',
+                '#admin_action#Admin#variable# %s #admin_action#sets new'
+                .' finish timeout to#variable# %s #admin_action#minutes.',
                 null,
                 array($admin->nickName, $params[0])
             );
@@ -1422,7 +1433,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->setNbLaps(intval($params[0]));
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#sets new number of laps to#variable# %s',
+                '#admin_action#Admin#variable# %s #admin_action#sets '
+                .'new number of laps to#variable# %s',
                 null,
                 array($admin->nickName, $params[0])
             );
@@ -1437,7 +1449,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->setLapsTimeLimit(TimeConversion::MStoTM($params[0]));
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#sets new laps timelimit to#variable# %s #admin_action#minutes.',
+                '#admin_action#Admin#variable# %s #admin_action#sets '
+                .'new laps timelimit to#variable# %s #admin_action#minutes.',
                 null,
                 array($admin->nickName, $params[0])
             );
@@ -2040,7 +2053,8 @@ Other server might use the same blacklist file!!'
             $this->connection->SetChatTime($newLimit);
             $admin = $this->storage->getPlayerObject($fromLogin);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin #variable#%s $z#admin_action#sets new chat time limit of #variable# %s #admin_action#minutes.',
+                '#admin_action#Admin #variable#%s $z#admin_action#sets '
+                .'new chat time limit of #variable# %s #admin_action#minutes.',
                 null,
                 array($admin->nickName, $params[0])
             );
@@ -2068,7 +2082,8 @@ Other server might use the same blacklist file!!'
                 return;
             }
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#sets dynamic time limit multiplier to #variable# %s #admin_action#!',
+                '#admin_action#Admin#variable# %s #admin_action#sets dynamic '
+                .'time limit multiplier to #variable# %s #admin_action#!',
                 null,
                 array($admin->nickName, $params[0])
             );
@@ -2084,7 +2099,8 @@ Other server might use the same blacklist file!!'
             $this->connection->setTimeAttackLimit(TimeConversion::MStoTM($params[0]));
             $admin = $this->storage->getPlayerObject($fromLogin);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#sets new time limit of #variable# %s #admin_action#minutes.',
+                '#admin_action#Admin#variable# %s #admin_action#sets '
+                .'new time limit of #variable# %s #admin_action#minutes.',
                 null,
                 array($admin->nickName, $params[0])
             );
@@ -2512,9 +2528,6 @@ Other server might use the same blacklist file!!'
         $window->setSize(90, 120);
         $window->centerOnScreen();
         $window->show();
-        //} catch (Exception $e) {
-        //		$this->sendErrorChat($login, "".$e->getMessage());
-        //		}
     }
 
     public function showGuestList($login)

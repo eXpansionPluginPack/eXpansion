@@ -69,8 +69,18 @@ class Connection
     {
         $this->apikey = $apikey;
 
-        $params = array("serverLogin" => $serverLogin, "applicationIdentifier" => "eXpansion " . Core::EXP_VERSION, "testMode" => "false");
-        $this->dataAccess->httpGet($this->build("startSession", $params), array($this, "xConnect"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
+        $params = array(
+            "serverLogin" => $serverLogin,
+            "applicationIdentifier" => "eXpansion " . Core::EXP_VERSION,
+            "testMode" => "false"
+        );
+        $this->dataAccess->httpGet(
+            $this->build("startSession", $params),
+            array($this, "xConnect"),
+            array(),
+            "ManiaLive - eXpansionPluginPack",
+            "application/json"
+        );
     }
 
     public function xConnect($answer, $httpCode)
@@ -83,7 +93,6 @@ class Connection
         $data = $this->getObject($answer, "onConnect");
 
         if ($data === null) {
-            // print_r($answer);
             return;
         }
 
@@ -93,7 +102,13 @@ class Connection
         $outHash = hash("sha512", ($this->apikey . $this->sessionSeed));
 
         $params = array("sessionKey" => $this->sessionKey, "activationHash" => $outHash);
-        $this->dataAccess->httpGet($this->build("activateSession", $params), array($this, "xActivate"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
+        $this->dataAccess->httpGet(
+            $this->build("activateSession", $params),
+            array($this, "xActivate"),
+            array(),
+            "ManiaLive - eXpansionPluginPack",
+            "application/json"
+        );
     }
 
     public function xActivate($answer, $httpCode)
@@ -106,7 +121,6 @@ class Connection
         $data = $this->getObject($answer, "onActivate");
 
         if ($data === null) {
-            // print_r($answer);
             return;
         }
 
@@ -118,22 +132,53 @@ class Connection
 
     public function getRatings($players = array(), $getVotesOnly = false)
     {
-        if (!$this->connected)
+        if (!$this->connected) {
             return;
+        }
 
         $params = array("sessionKey" => $this->sessionKey);
-        $postData = array("gamemode" => $this->getGameMode(), "titleid" => $this->expStorage->titleId, "mapuid" => $this->storage->currentMap->uId, "getvotesonly" => $getVotesOnly, "playerlogins" => $players);
-        $this->dataAccess->httpPost($this->build("getMapRating", $params), json_encode($postData), array($this, "xGetRatings"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
+        $postData = array(
+            "gamemode" => $this->getGameMode(),
+            "titleid" => $this->expStorage->titleId,
+            "mapuid" => $this->storage->currentMap->uId,
+            "getvotesonly" => $getVotesOnly,
+            "playerlogins" => $players
+        );
+        $this->dataAccess->httpPost(
+            $this->build("getMapRating", $params),
+            json_encode($postData),
+            array($this, "xGetRatings"),
+            array(),
+            "ManiaLive - eXpansionPluginPack",
+            "application/json"
+        );
     }
 
     public function saveVotes(\Maniaplanet\DedicatedServer\Structures\Map $map, $time, $votes)
     {
-        if (!$this->connected)
+        if (!$this->connected) {
             return;
+        }
 
         $params = array("sessionKey" => $this->sessionKey);
-        $postData = array("gamemode" => $this->getGameMode(), "titleid" => $this->expStorage->titleId, "mapuid" => $map->uId, "mapname" => $map->name, "mapauthor" => $map->author, "isimport" => false, "maptime" => $time, "votes" => $votes);
-        $this->dataAccess->httpPost($this->build("saveVotes", $params), json_encode($postData), array($this, "xSaveVotes"), array(), "ManiaLive - eXpansionPluginPack", "application/json");
+        $postData = array(
+            "gamemode" => $this->getGameMode(),
+            "titleid" => $this->expStorage->titleId,
+            "mapuid" => $map->uId,
+            "mapname" => $map->name,
+            "mapauthor" => $map->author,
+            "isimport" => false,
+            "maptime" => $time,
+            "votes" => $votes
+        );
+        $this->dataAccess->httpPost(
+            $this->build("saveVotes", $params),
+            json_encode($postData),
+            array($this, "xSaveVotes"),
+            array(),
+            "ManiaLive - eXpansionPluginPack",
+            "application/json"
+        );
     }
 
     public function xSaveVotes($answer, $httpCode)
@@ -146,7 +191,6 @@ class Connection
         $data = $this->getObject($answer, "getRatings");
 
         if ($data === null) {
-            // print_r($answer);
             return;
         }
 
@@ -163,7 +207,6 @@ class Connection
         $data = $this->getObject($answer, "getRatings");
 
         if ($data === null) {
-            // print_r($answer);
             return;
         }
 
@@ -220,7 +263,6 @@ class Connection
             case 7:
             case 8:
                 $this->connected = false;
-
             default:
                 break;
         }

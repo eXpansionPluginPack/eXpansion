@@ -218,11 +218,7 @@ class PlainLivePanel extends PlainPanel
             $recsData = '[' . $recsData . ']';
             $nickData = '[' . $nickData . ']';
         }
-
-
-        /* $recsData = 'Integer[Text]';
-          $nickData = 'Text[Text]';
-         */
+        
         $this->timeScript->setParam("playerTimes", $recsData);
         $this->timeScript->setParam("playerNicks", $nickData);
     }

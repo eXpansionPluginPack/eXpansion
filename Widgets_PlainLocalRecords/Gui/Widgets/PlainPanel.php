@@ -89,8 +89,9 @@ class PlainPanel extends Widget
 
     public function update()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
         $this->items = array();
         $this->frame->clearComponents();
 
@@ -109,8 +110,9 @@ class PlainPanel extends Widget
         $index = 1;
 
         foreach (Widgets_PlainLocalRecords::$localrecords as $record) {
-            if ($index > 23)
+            if ($index > 23) {
                 break;
+            }
             $this->items[$index - 1] = new Recorditem($index, $record);
             $this->frame->addComponent($this->items[$index - 1]);
             $index++;
@@ -119,8 +121,9 @@ class PlainPanel extends Widget
 
     public function destroy()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
 
         $this->items = array();
 

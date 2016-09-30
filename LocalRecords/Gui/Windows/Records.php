@@ -17,7 +17,11 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
     protected $frame;
-    protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
+    protected $label_rank;
+    protected $label_nick;
+    protected $label_score;
+    protected $label_avgScore;
+    protected $label_nbFinish;
     protected $widths = array(1, 5, 3, 3, 2, 4);
 
     /**
@@ -25,7 +29,8 @@ class Records extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
      */
     protected $pager;
     protected $items = array();
-    protected $button_sectors, $button_cps;
+    protected $button_sectors;
+    protected $button_cps;
 
     protected $recList;
     protected $limit;

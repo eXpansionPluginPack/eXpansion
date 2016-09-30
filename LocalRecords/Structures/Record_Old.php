@@ -15,5 +15,4 @@ class Record2 extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
         $this->time = $time;
         $this->place = $place;
     }
-
 }

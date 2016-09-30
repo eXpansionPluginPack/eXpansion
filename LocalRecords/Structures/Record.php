@@ -21,5 +21,4 @@ class Record
     public $date;
     public $nation;
     public $uId;
-
 }

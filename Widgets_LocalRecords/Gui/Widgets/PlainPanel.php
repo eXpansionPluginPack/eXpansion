@@ -96,13 +96,7 @@ class PlainPanel extends Widget
 
     protected function getScript()
     {
-        /* $script = "";
-          if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT && \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId != 'Platform@nadeolive')
-          {
-          $script = new PlayerFinish_Optimized(); */
-        //} else {
         $script = new PlayerFinish();
-        //}
 
         $recCount = Config::getInstance()->recordsCount;
         $this->timeScript = $script;
@@ -175,8 +169,9 @@ class PlainPanel extends Widget
 
     public function update()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
         $this->items = array();
         $this->frame->clearComponents();
 
@@ -202,15 +197,6 @@ class PlainPanel extends Widget
             $index++;
         }
 
-        /* for($i =0; $i < 100; $i++){
-          if ($index > 1) {
-          $recsData .= ', ';
-          $nickData .= ', ';
-          }
-          $recsData .= '"' . 'player'.$i . '"=>' . (10000+$i);
-          $nickData .= '"' . 'player'.$i . '"=>"' .'player'.$i . '"';
-          } */
-
         $this->timeScript->setParam("totalCp", $this->storage->currentMap->nbCheckpoints);
 
         if (empty($recsData)) {
@@ -227,8 +213,9 @@ class PlainPanel extends Widget
 
     public function destroy()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
 
         $this->items = array();
 

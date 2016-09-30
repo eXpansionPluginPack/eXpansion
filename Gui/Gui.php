@@ -21,7 +21,8 @@ use ManiaLivePlugins\eXpansion\Helpers\Helper;
 class Gui extends ExpPlugin
 {
     private $titleId;
-    private $msg_params, $msg_disabled;
+    private $msg_params;
+    private $msg_disabled;
     private $resetLogins = array();
     private $counter = 0;
     private $preloader;
@@ -130,9 +131,13 @@ class Gui extends ExpPlugin
             }
         }
         if ($this->counter != 0 && time() - $this->counter > 2) {
-            $this->connection->sendDisplayManialinkPage(null,
-                "<manialinks><manialink id=\"0\"><quad></quad></manialink><custom_ui><altmenu_scores visible=\"false\" /></custom_ui></manialinks>",
-                0, false);
+            $this->connection->sendDisplayManialinkPage(
+                null,
+                "<manialinks><manialink id=\"0\"><quad></quad></manialink>
+<custom_ui><altmenu_scores visible=\"false\" /></custom_ui></manialinks>",
+                0,
+                false
+            );
             $this->counter = 0;
         }
     }
@@ -144,9 +149,13 @@ class Gui extends ExpPlugin
             if ($this->expStorage->simpleEnviTitle == "SM") {
                 $this->counter = time();
                 $this->connection->TriggerModeScriptEvent("LibXmlRpc_DisableAltMenu", $login);
-                $this->connection->sendDisplayManialinkPage($login,
-                    "<manialinks><manialink id=\"0\"><quad></quad></manialink><custom_ui><altmenu_scores visible=\"false\" /></custom_ui></manialinks>",
-                    0, false);
+                $this->connection->sendDisplayManialinkPage(
+                    $login,
+                    "<manialinks><manialink id=\"0\"><quad></quad></manialink
+><custom_ui><altmenu_scores visible=\"false\" /></custom_ui></manialinks>",
+                    0,
+                    false
+                );
             }
         } catch (Exception $e) {
             $this->console("Error while disabling alt menu : " . $e->getMessage());
