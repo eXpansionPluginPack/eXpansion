@@ -9,8 +9,14 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    protected $inputbox, $btn_ok, $btn_cancel, $frame, $frm, $compobox;
-    protected $adminAction, $adminParams;
+    protected $inputbox;
+    protected $btn_ok;
+    protected $btn_cancel;
+    protected $frame;
+    protected $frm;
+    protected $compobox;
+    protected $adminAction;
+    protected $adminParams;
 
     /** @var \ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin */
     public static $mainPlugin;

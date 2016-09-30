@@ -8,7 +8,9 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
     protected $bg;
-    protected $label_time, $label_nickname, $label_text;
+    protected $label_time;
+    protected $label_nickname;
+    protected $label_text;
     protected $label_login;
     protected $frame;
     private $widths = array();
@@ -19,8 +21,12 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
      * @param \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message
      * @param int $sizeX
      */
-    function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message, $widths, $sizeX)
-    {
+    function __construct(
+        $indexNumber,
+        \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message,
+        $widths,
+        $sizeX
+    ) {
         $sizeY = 6;
         $this->widths = $widths;
 

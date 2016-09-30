@@ -37,8 +37,9 @@ class BetCounter
 
     public function __construct($timeout, $callback = null, $param = null)
     {
-        if (!is_numeric($timeout))
+        if (!is_numeric($timeout)) {
             return;
+        }
 
         $this->callback = $callback;
         $this->endTimestamp = time() + intval($timeout);
@@ -47,8 +48,9 @@ class BetCounter
 
     public function check()
     {
-        if ($this->active == false)
+        if ($this->active == false) {
             return false;
+        }
 
 
         if ($this->endTimestamp < time()) {

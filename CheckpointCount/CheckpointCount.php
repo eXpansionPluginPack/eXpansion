@@ -24,10 +24,12 @@ class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function eXpOnReady()
     {
-        foreach ($this->storage->players as $player)
+        foreach ($this->storage->players as $player) {
             $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $player)
+        }
+        foreach ($this->storage->spectators as $player) {
             $this->onPlayerConnect($player->login, true);
+        }
     }
 
     /**
@@ -39,10 +41,11 @@ class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     function displayWidget($login = null)
     {
-        if ($login == null)
+        if ($login == null) {
             CPPanel::EraseAll();
-        else
+        } else {
             CPPanel::Erase($login);
+        }
 
         $info = CPPanel::Create($login);
         $info->setSize(30, 6);

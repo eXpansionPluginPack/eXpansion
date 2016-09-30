@@ -99,7 +99,6 @@ $_web_access_post_xmlrpc = false;
 
 class Webaccess
 {
-
     private $_WebaccessList;
 
     public function __construct()
@@ -109,10 +108,19 @@ class Webaccess
     }
 
     function request(
-        $url, $callback, $datas, $is_xmlrpc = false, $keepalive_min_timeout = 300, $opentimeout = 3, $waittimeout = 5, $agent = 'XMLaccess', $mimeType = "text/html"
-    )
-    {
-        global $_web_access_keepalive, $_web_access_keepalive_timeout, $_web_access_keepalive_max;
+        $url,
+        $callback,
+        $datas,
+        $is_xmlrpc = false,
+        $keepalive_min_timeout = 300,
+        $opentimeout = 3,
+        $waittimeout = 5,
+        $agent = 'XMLaccess',
+        $mimeType = "text/html"
+    ) {
+        global $_web_access_keepalive;
+        global $_web_access_keepalive_timeout;
+        global $_web_access_keepalive_max;
 
         list($host, $port, $path) = getHostPortPath($url);
 
@@ -122,8 +130,16 @@ class Webaccess
             $server = $host . ':' . $port;
             // create object is needed
             if (!isset($this->_WebaccessList[$server]) || $this->_WebaccessList[$server] === null) {
-                //$this->_WebaccessList[$server] = new WebaccessUrl($this, $host, $port, $_web_access_keepalive, $_web_access_keepalive_timeout, $_web_access_keepalive_max, $agent);
-                $this->_WebaccessList[$server] = new WebaccessUrl($this, $host, $port, true, 600, 2000, $agent, $mimeType);
+                $this->_WebaccessList[$server] = new WebaccessUrl(
+                    $this,
+                    $host,
+                    $port,
+                    true,
+                    600,
+                    2000,
+                    $agent,
+                    $mimeType
+                );
             }
 
             // increase the default timeout for sync/wait request
@@ -173,12 +189,6 @@ class Webaccess
 
         $read = $this->_getWebaccessReadSockets($read);
         $write = $this->_getWebaccessWriteSockets($write);
-        //$except = $this->_getWebaccessReadSockets($except);
-        //print_r($this->_WebaccessList);
-        //        print_r($read);
-        //        print_r($write);
-        //        print_r($except);
-        // if no socket to select then return
         if (count($read) + count($write) + count($except) == 0) {
             // sleep the asked timeout...
             if ($timeout > 1000) {
@@ -361,10 +371,17 @@ class WebaccessUrl
     //-----------------------------
 
     function __construct(
-        &$wa, $host, $port, $keepalive = true, $keepalive_timeout = 600, $keepalive_max = 300, $agent = 'XMLaccess', $mimeType = "text/html"
-    )
-    {
-        global $_web_access_compress_xmlrpc_request, $_web_access_retry_timeout;
+        &$wa,
+        $host,
+        $port,
+        $keepalive = true,
+        $keepalive_timeout = 600,
+        $keepalive_max = 300,
+        $agent = 'XMLaccess',
+        $mimeType = "text/html"
+    ) {
+        global $_web_access_compress_xmlrpc_request;
+        global $_web_access_retry_timeout;
         $this->wa = &$wa;
         $this->_host = $host;
         $this->_port = $port;
@@ -455,11 +472,14 @@ class WebaccessUrl
     //$query = array('Path'=>$path,'Callback'=>$callback, 'QueryDatas'=>$datas,
     //               'IsXmlrpc'=>$is_xmlrpc, 'KeepaliveMinTimeout'=>$keepalive_min_timeout,
     //               'OpenTimeout'=>$opentimeout, 'WaitTimeout'=>$waittimeout);
-    // will add:     'State','HDatas','Datas','DatasSize','DatasSent','Response','ResponseSize','Headers','Close','Times'
+    // will add:     'State','HDatas','Datas','DatasSize',
+    // will add:     'DatasSent','Response','ResponseSize','Headers','Close','Times'
     function request(&$query)
     {
-        global $_web_access_compress_reply, $_web_access_post_xmlrpc, $_web_access_retry_timeout, $_web_access_retry_timeout_max;
-        //$post_xmlrpc=true;
+        global $_web_access_compress_reply;
+        global $_web_access_post_xmlrpc;
+        global $_web_access_retry_timeout;
+        global $_web_access_retry_timeout_max;
         $query['State'] = 'BAD';
         $query['HDatas'] = '';
         $query['Datas'] = '';
@@ -469,19 +489,25 @@ class WebaccessUrl
         $query['ResponseSize'] = 0;
         $query['Headers'] = array();
         $query['Close'] = false;
-        $query['Times'] = array('open' => array(-1.0, -1.0), 'send' => array(-1.0, -1.0), 'receive' => array(-1.00, -1.0, 0));
+        $query['Times'] = array(
+            'open' => array(-1.0, -1.0),
+            'send' => array(-1.0, -1.0),
+            'receive' => array(-1.00, -1.0, 0)
+        );
 
 
         // if asynch, in error, and maximal timeout, then forget the request and return false.
         if (($query['Callback'] != null) && ($this->_state == 'BAD')) {
             if ($this->_bad_timeout > $_web_access_retry_timeout_max) {
                 print_r(
-                    '*' . $this->_webaccess_str . 'Request refused for consecutive errors (' . $this->_bad_timeout . " / " . $_web_access_retry_timeout_max . ")\n"
+                    '*' . $this->_webaccess_str . 'Request refused for consecutive errors (' . $this->_bad_timeout
+                    . " / " . $_web_access_retry_timeout_max . ")\n"
                 );
 
                 return false;
             } else {
-                // if not max then accept the request and try a request (minimum $_web_access_retry_timeout/2 after previous try)
+                // if not max then accept the request
+                // and try a request (minimum $_web_access_retry_timeout/2 after previous try)
                 $time = time();
                 $timeout = ($this->_bad_timeout / 2) - ($time - $this->_bad_time);
                 if ($timeout < 0) {
@@ -540,7 +566,6 @@ class WebaccessUrl
 
                 $msg .= "Content-length: " . strlen($query['QueryDatas']) . "\r\n";
 
-                //print "\n\n".$msg."\n";
                 $query['HDatas'] = $msg;
 
                 $query['State'] = 'OPEN';
@@ -560,7 +585,6 @@ class WebaccessUrl
                     $this->_open();
                 }
             } else {
-                // print_r('*' . $this->_webaccess_str . 'Bad datas');
                 $msg = "GET " . $query['Path'] . " HTTP/1.1\r\n";
                 $msg .= "Host: " . $this->_host . "\r\n";
                 $msg .= "User-Agent: " . $this->_agent . "\r\n";
@@ -582,7 +606,6 @@ class WebaccessUrl
                 $query['State'] = 'OPEN';
                 $query['Retries'] = 0;
 
-                //print_r($msg);
                 // add the query in spool
                 $this->_spool[] = &$query;
 
@@ -631,7 +654,6 @@ class WebaccessUrl
                 }
             }
             $this->_state = 'OPENED';
-            // print_r('*' . $this->_webaccess_str . "connection opened !");
             // new socket connection : reset all pending request original values
             for ($i = 0; $i < count($this->_spool); $i++) {
                 $this->_spool[$i]['State'] = 'OPEN';
@@ -662,7 +684,6 @@ class WebaccessUrl
             (($this->_bad_timeout > $_web_access_retry_timeout_max) ||
                 (($time - $this->_bad_time) < $this->_bad_timeout))
         ) {
-            //print_r ('*'.$this->_webaccess_str.' wait to retry ('.($time-$this->_bad_time)." / ".$this->_bad_timeout.")");
             return false;
         }
 
@@ -670,7 +691,6 @@ class WebaccessUrl
         if ($this->_socket && $this->_state == 'OPENED' &&
             ($this->_serv_keepalive_timeout <= ($time - $this->_query_time))
         ) {
-            //print_r ('*'.$this->_webaccess_str."timeout, close it !");
             $this->_state = 'CLOSED';
             @fclose($this->_socket);
             $this->_socket = null;
@@ -693,7 +713,6 @@ class WebaccessUrl
                     ($this->_spool[0]['State'] == 'OPEN' ||
                         $this->_spool[0]['State'] == 'SEND' ||
                         $this->_spool[0]['State'] == 'RECEIVE')) {
-                    //echo "State=".$this->_spool[0]['State']." (".count($this->_spool).")\n";
                     if (!$this->_socket || $this->_state != 'OPENED') {
                         $this->_open_socket($opentimeout);
                     }
@@ -711,7 +730,8 @@ class WebaccessUrl
                     // if timeout then error
                     if (($difftime = round(microtime(true) - $this->_read_time)) > $waittimeout) {
                         $this->_bad(
-                            "Request timeout, in _open ({$difftime} > {$waittimeout}s) state=" . $this->_spool[0]['State']
+                            "Request timeout, in _open ({$difftime} > {$waittimeout}s) state="
+                            . $this->_spool[0]['State']
                         );
 
                         return;
@@ -720,8 +740,9 @@ class WebaccessUrl
                 if ($this->_socket) {
                     @stream_set_timeout($this->_socket, 0, 2000);
                 }
-            } // else just do a send on the current
-            elseif (isset($this->_spool[0]['State']) && $this->_spool[0]['State'] == 'OPEN') {
+            } elseif (isset($this->_spool[0]['State'])
+                && $this->_spool[0]['State'] == 'OPEN'
+            ) { // else just do a send on the current
                 @stream_set_timeout($this->_socket, 0, 2000);
                 $this->_send($waittimeout);
             }
@@ -733,6 +754,8 @@ class WebaccessUrl
         if (!isset($this->_spool[0]['State'])) {
             return;
         }
+        $errno = '';
+        $errstr = '';
 
         // if OPEN then become SEND
         if ($this->_spool[0]['State'] == 'OPEN') {
@@ -762,9 +785,8 @@ class WebaccessUrl
                 $cookie_msg = '';
                 $sep = '';
                 foreach ($this->_cookies as $name => $cookie) {
-                    if (!isset($cookie['path']) || strncmp(
-                            $this->_spool[0]['Path'], $cookie['path'], strlen($cookie['path'])
-                        ) == 0
+                    if (!isset($cookie['path'])
+                        || strncmp($this->_spool[0]['Path'], $cookie['path'], strlen($cookie['path'])) == 0
                     ) {
                         $cookie_msg .= $sep . $name . '=' . $cookie['Value'];
                         $sep = '; ';
@@ -780,8 +802,6 @@ class WebaccessUrl
             $this->_spool[0]['Datas'] = $msg;
             $this->_spool[0]['DatasSize'] = strlen($msg);
             $this->_spool[0]['DatasSent'] = 0;
-
-            // print_r($msg);
         }
 
         // if not SEND then stop
@@ -791,17 +811,18 @@ class WebaccessUrl
 
         do {
             $sent = @stream_socket_sendto(
-                $this->_socket, substr(
-                    $this->_spool[0]['Datas'], $this->_spool[0]['DatasSent'], ($this->_spool[0]['DatasSize'] - $this->_spool[0]['DatasSent'])
+                $this->_socket,
+                substr(
+                    $this->_spool[0]['Datas'],
+                    $this->_spool[0]['DatasSent'],
+                    ($this->_spool[0]['DatasSize'] - $this->_spool[0]['DatasSent'])
                 )
             );
 
-            //echo $this->_spool[0]['Datas'];
             if ($sent == false) {
 
                 $time = microtime(true);
                 $this->_spool[0]['Times']['send'][1] = $time - $this->_spool[0]['Times']['send'][0];
-                //var_dump($this->_spool[0]['Datas']);
                 $this->_bad(
                     'Error(' . $errno . ')' . $errstr . ', could not send datas ! ('
                     . $sent . ' / ' . ($this->_spool[0]['DatasSize'] - $this->_spool[0]['DatasSent']) . ' , '
@@ -821,7 +842,6 @@ class WebaccessUrl
                     $time = microtime(true);
                     $this->_spool[0]['Times']['send'][1] = $time - $this->_spool[0]['Times']['send'][0];
 
-                    //@stream_set_blocking($this->_socket,0);
                     $this->_spool[0]['State'] = 'RECEIVE';
                     $this->_spool[0]['Times']['receive'][0] = $time;
                 } elseif (($difftime = round(microtime(true) - $this->_read_time)) > $waittimeout) {
@@ -844,7 +864,9 @@ class WebaccessUrl
         if (!$this->_socket || $this->_state != 'OPENED') {
             return;
         }
-
+        
+        $errno = '';
+        $errstr = '';
         $state = false;
         $time0 = microtime(true);
         $timeout = ($this->_wait) ? $waittimeout : 0;
@@ -900,14 +922,11 @@ class WebaccessUrl
 
             // get headers and full message
             $state = $this->_handleHeaders();
-            //echo "receive9\n";
-            //var_dump($state);
         } while ($this->_wait && $state === false && $this->_socket && !@feof($this->_socket));
 
         if (!isset($this->_spool[0]['State']) || $this->_spool[0]['State'] != 'RECEIVE') {
             // in case of (probably keepalive) connection closed by server
             if ($this->_socket && @feof($this->_socket)) {
-                //print_r ('Socket closed by server ('.$this->_host.')');
                 $this->_state = 'CLOSED';
                 @fclose($this->_socket);
                 $this->_socket = null;
@@ -925,8 +944,8 @@ class WebaccessUrl
                 $this->_spool[0]['State'] = 'OPEN';
                 $this->_spool[0]['Times']['receive'][1] = $time - $this->_spool[0]['Times']['receive'][0];
             }
-            if (strlen($this->_response) > 0) // if not 0 sized then show error message
-            {
+            // if not 0 sized then show error message
+            if (strlen($this->_response) > 0) {
                 $this->_bad(
                     'Error: closed with incomplete read : re-open socket and re-send ! (' . strlen(
                         $this->_response
@@ -934,7 +953,8 @@ class WebaccessUrl
                 );
             } else {
                 $this->_bad(
-                    'Closed by server when reading : re-open socket and re-send ! (' . strlen($this->_response) . ')', false
+                    'Closed by server when reading : re-open socket and re-send ! (' . strlen($this->_response) . ')',
+                    false
                 );
             }
 
@@ -942,7 +962,8 @@ class WebaccessUrl
             if ($this->_spool[0]['Retries'] > 2) {
                 // 3 tries failed, remode entry from spool
                 print_r(
-                    '*' . $this->_webaccess_str . " Failed {$this->_spool[0]['Retries']} times : skip current request.\n"
+                    '*' . $this->_webaccess_str
+                    . " Failed {$this->_spool[0]['Retries']} times : skip current request.\n"
                 );
                 array_shift($this->_spool);
             }
@@ -960,7 +981,6 @@ class WebaccessUrl
 
             // store http/xml response in global $_Webaccess_last_response for debugging use
             $_Webaccess_last_response = $this->_spool[0]['Response'];
-            //debugPrint("Webaccess->_receive - Response",$_Webaccess_last_response);
             // call callback func
             $this->_callCallback();
 
@@ -968,8 +988,6 @@ class WebaccessUrl
             $this->_query_time = time();
 
             if (!$this->_keepalive || $this->_spool[0]['Close']) {
-                //if($this->_spool[0]['Close'])
-                //print_r ('*'.$this->_webaccess_str."close connection (asked in headers)");
                 $this->_state = 'CLOSED';
                 @fclose($this->_socket);
                 $this->_socket = null;
@@ -1006,8 +1024,8 @@ class WebaccessUrl
             return false;
         }
 
-        if (strlen($this->_response) < 8) // not enough data, continue read
-        {
+        // not enough data, continue read
+        if (strlen($this->_response) < 8) {
             return false;
         }
         if (strncmp($this->_response, 'HTTP/', 5) != 0) { // not HTTP !
@@ -1033,7 +1051,6 @@ class WebaccessUrl
         // get headers if not done on previous read
         if (!isset($this->_spool[0]['Headers']['Command'][0])) {
             // separate headers
-            //echo "Get Headers !(".strlen($datas[1]).")\n";
 
             $headers = array();
             $heads = explode("\n", str_replace("\r", "\n", str_replace("\r\n", "\n", $datas[0])));
@@ -1071,13 +1088,13 @@ class WebaccessUrl
 
             $this->_spool[0]['Headers'] = $headers;
 
-            if (isset($headers['server'][0])) // add header specific info in case of Dedimania reply
-            {
-                $this->_webaccess_str = 'Webaccess(' . $this->_host . ':' . $this->_port . '/' . $headers['server'][0] . '): ';
+            // add header specific info in case of Dedimania reply
+            if (isset($headers['server'][0])) {
+                $this->_webaccess_str = 'Webaccess(' . $this->_host . ':' . $this->_port . '/'
+                    . $headers['server'][0] . '): ';
             }
         } else {
             $headers = &$this->_spool[0]['Headers'];
-            //echo "Previous Headers !(".strlen($datas[1]).")\n";
         }
 
 
@@ -1085,10 +1102,8 @@ class WebaccessUrl
         $datasize = strlen($datas[1]);
         if (isset($headers['content-length'][0]) && $headers['content-length'][0] >= 0) {
 
-            //echo "mess_size0=".strlen($datas[1])."\n";
-
-            if ($headers['content-length'][0] > $datasize) // incomplete message
-            {
+            // incomplete message
+            if ($headers['content-length'][0] > $datasize) {
                 return false;
             } elseif ($headers['content-length'][0] < $datasize) {
                 $message = substr($datas[1], 0, $headers['content-length'][0]);
@@ -1099,8 +1114,9 @@ class WebaccessUrl
                 $this->_response = '';
             }
             $this->_spool[0]['ResponseSize'] = strlen($datas[0]) + 4 + $headers['content-length'][0];
-        } // get real message when reply is chunked
-        elseif (isset($headers['transfer-encoding'][0]) && $headers['transfer-encoding'][0] == 'chunked') {
+        } elseif (isset($headers['transfer-encoding'][0])
+            && $headers['transfer-encoding'][0] == 'chunked'
+        ) {  // get real message when reply is chunked
 
             // get chunk size and make message with chunks datas
             $size = -1;
@@ -1109,10 +1125,9 @@ class WebaccessUrl
                 $message = '';
                 $chunk = explode(';', substr($datas[1], $chunkpos, $datapos - $chunkpos));
                 $size = hexdec($chunk[0]);
-                //debugPrint("Webaccess->Response - chunk - $chunkpos,$datapos,$size (".strlen($datas[1]).")",$chunk);
                 while ($size > 0) {
-                    if ($datapos + 2 + $size > $datasize) // incomplete message
-                    {
+                    // incomplete message
+                    if ($datapos + 2 + $size > $datasize) {
                         return false;
                     }
                     $message .= substr($datas[1], $datapos + 2, $size);
@@ -1123,22 +1138,22 @@ class WebaccessUrl
                     } else {
                         $size = -1;
                     }
-                    //debugPrint("Webaccess->Response - chunk - $chunkpos,$datapos,$size (".strlen($datas[1]).")",$chunk);
                 }
             }
-            if ($size < 0) // error bad size or incomplete message
-            {
+            // error bad size or incomplete message
+            if ($size < 0) {
                 return false;
             }
 
-            if (strpos($datas[1], "\r\n\r\n", $chunkpos) === false) // incomplete message : end is missing
-            {
+            // incomplete message : end is missing
+            if (strpos($datas[1], "\r\n\r\n", $chunkpos) === false) {
                 return false;
             }
 
             // store complete message size
             $msize = strlen($message);
-            $headers['transfer-encoding'][1] = 'total_size=' . $msize; // add message size after 'chunked' for information
+            // add message size after 'chunked' for information
+            $headers['transfer-encoding'][1] = 'total_size=' . $msize;
             $this->_spool[0]['ResponseSize'] = strlen($datas[0]) + 4 + $msize;
 
             // after the message itself...
@@ -1173,8 +1188,7 @@ class WebaccessUrl
             } else {
                 $this->_response = '';
             }
-        } // no content-length and not chunked !
-        else {
+        } else {  // no content-length and not chunked !
             $this->_bad(
                 "Error, bad http, no content-length and not chunked ! **********\n" . $datas[0] . "\n***************\n"
             );
@@ -1182,7 +1196,6 @@ class WebaccessUrl
             return null;
         }
 
-        //echo "mess_size1=".strlen($message)."\n";
         // if Content-Encoding: gzip  or  Content-Encoding: deflate
         if (isset($headers['content-encoding'][0])) {
             if ($headers['content-encoding'][0] == 'gzip') {
@@ -1207,9 +1220,6 @@ class WebaccessUrl
             if ($this->_compress_request == 'accept') {
                 $this->_compress_request = false;
             }
-
-            // print_r($this->_webaccess_str . 'send: ' . ($this->_compress_request === false ? 'no compression' : $this->_compress_request)
-            //         . ', receive: ' . (isset($headers['content-encoding'][0]) ? $headers['content-encoding'][0] : 'no compression'));
         }
 
         // get cookies values
@@ -1234,14 +1244,10 @@ class WebaccessUrl
                     }
                 }
             }
-            //debugPrint("SET-COOKIES: ",$headers['set-cookie']);
-            //debugPrint("STORED COOKIES: ",$this->_cookies);
         }
 
         // if the server reply ask to close, then close
         if (!isset($headers['connection'][0]) || $headers['connection'][0] == 'close') {
-            //if(!$this->_spool[0]['Close'])
-            //print_r ('*'.$this->_webaccess_str."server ask to close connection.");
             $this->_spool[0]['Close'] = true;
         }
 
@@ -1260,7 +1266,6 @@ class WebaccessUrl
             if (isset($headers['keep-alive']['max'])) {
                 $this->_serv_keepalive_max = $headers['keep-alive']['max'];
             }
-            //print_r ('*'.$this->_webaccess_str."max=".$this->_serv_keepalive_max.", timeout=".$this->_serv_keepalive_timeout.".\n");
         }
 
         // store complete reply message for the request
@@ -1269,7 +1274,6 @@ class WebaccessUrl
             'Headers' => $headers,
             'Message' => $message);
 
-        //echo "mess_size2=".strlen($message)."\n";
         return true;
     }
 
@@ -1281,21 +1285,24 @@ class WebaccessUrl
             ) : 0;
             $msg = $this->_webaccess_str
                 . sprintf(
-                    "[%s,%s]: %0.3f / %0.3f / %0.3f (%0.3f) / %d [%d,%d,%d]", $this->_state, $this->_spool[0]['State'], $this->_spool[0]['Times']['open'][1], $this->_spool[0]['Times']['send'][1], $this->_spool[0]['Times']['receive'][1], $this->_spool[0]['Times']['receive'][2], $this->_query_num, $this->_spool[0]['DatasSize'], $size, $this->_spool[0]['ResponseSize']
+                    "[%s,%s]: %0.3f / %0.3f / %0.3f (%0.3f) / %d [%d,%d,%d]",
+                    $this->_state,
+                    $this->_spool[0]['State'],
+                    $this->_spool[0]['Times']['open'][1],
+                    $this->_spool[0]['Times']['send'][1],
+                    $this->_spool[0]['Times']['receive'][1],
+                    $this->_spool[0]['Times']['receive'][2],
+                    $this->_query_num,
+                    $this->_spool[0]['DatasSize'],
+                    $size,
+                    $this->_spool[0]['ResponseSize']
                 );
-            //print_r($msg);
         } catch (Exception $e) {
             print "Exception at infos:" . $e->getMessage();
         }
     }
-
 }
 
-//if(!function_exists('print_r ')){
-//	function print_r ($str){
-//		echo "".$str."\n";
-//	}
-//}
 // use: list($host,$port,$path) = getHostPortPath($url);
 function getHostPortPath($url)
 {

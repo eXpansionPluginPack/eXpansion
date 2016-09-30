@@ -6,7 +6,8 @@ use ManiaLivePlugins\eXpansion\ChatBackground\Config;
 
 class BoxWindow extends \ManiaLive\Gui\Window
 {
-    protected $quad, $quad2;
+    protected $quad;
+    protected $quad2;
     protected $config;
 
     protected function onConstruct()

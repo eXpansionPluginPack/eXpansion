@@ -18,7 +18,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 {
     /** @var Webaccess */
     private $webaccess;
-// these are used for async webaccess 
+    // these are used for async webaccess
     private $read;
     private $write;
     private $except;
@@ -39,7 +39,6 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 
     public function start()
     {
-        //Dispatcher::register(TickEvent::getClass(), $this);
         Dispatcher::register(AppEvent::getClass(), $this);
     }
 
@@ -50,7 +49,10 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
                 $this->webaccess->select($this->read, $this->write, $this->except, 0, 0);
             }
         } catch (\Exception $e) {
-            Console::println("[DataAccess] OnTick Update failed: " . $e->getMessage() . "\n file " . $e->getFile() . ":" . $e->getLine());
+            Console::println(
+                "[DataAccess] OnTick Update failed: " . $e->getMessage()
+                . "\n file " . $e->getFile() . ":" . $e->getLine()
+            );
         }
     }
 
@@ -93,25 +95,39 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
      *
      * @throws Exception
      */
-    final public function httpGet($url, $callback, $callparams = array(), $userAgent = "ManiaLive - eXpansionPluginPack",
-                                  $mimeType = "text/html")
-    {
-        /* if (!is_callable($callback))
-          throw new \Exception("Invalid Callback!");
-         */
-
+    final public function httpGet(
+        $url,
+        $callback,
+        $callparams = array(),
+        $userAgent = "ManiaLive - eXpansionPluginPack",
+        $mimeType = "text/html"
+    ) {
         $this->_get(new HttpQuery($url, $callback, $callparams, $userAgent, $mimeType));
     }
 
     private function _get(HttpQuery $query)
     {
-        $this->webaccess->request($query->baseurl . "?" . $query->params, array(array($this, "_process"), $query), $query->data, false, 20, 3,
-            5, $query->userAgent, $query->mimeType);
+        $this->webaccess->request(
+            $query->baseurl . "?" . $query->params,
+            array(array($this, "_process"), $query),
+            $query->data,
+            false,
+            20,
+            3,
+            5,
+            $query->userAgent,
+            $query->mimeType
+        );
     }
 
-    final public function httpPost($url, $data = null, $callback, $callparams = array(), $userAgent = "ManiaLive - eXpansionPluginPack",
-                                   $mimeType = "application/json")
-    {
+    final public function httpPost(
+        $url,
+        $data = null,
+        $callback,
+        $callparams = array(),
+        $userAgent = "ManiaLive - eXpansionPluginPack",
+        $mimeType = "application/json"
+    ) {
 
         $query = new HttpQuery($url, $callback, $callparams, $userAgent, $mimeType);
         $query->setData($data);
@@ -184,7 +200,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             if (!isset($data['Headers']['location'][0])) {
                 return;
             }
-// set new redirected address
+            // set new redirected address
             $query->baseurl = $data['Headers']['location'][0];
 
             $query->redirectCount++;
@@ -198,7 +214,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 
             return;
         }
-// moved temporarily
+        // moved temporarily
         if ($data['Code'] == 302) {
             Console::println("[DataAccess] webRequest to " . $query->baseurl . " is temporarily moved.");
 
@@ -208,7 +224,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
             if (!isset($data['Headers']['location'][0])) {
                 return;
             }
-// set new redirected address
+            // set new redirected address
             $query->baseurl = $data['Headers']['location'][0];
             $query->redirectCount++;
             if ($query->redirectCount < 3) {
@@ -220,7 +236,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
 
             return;
         }
-// access ok
+        // access ok
 
         if ($data['Code'] == 200) {
             $outData = $data['Message'];
@@ -252,7 +268,10 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
                 }
             }
         } catch (\Exception $e) {
-            Console::println("[DataAccess] OnTick Update failed: " . $e->getMessage() . "\n file " . $e->getFile() . ":" . $e->getLine());
+            Console::println(
+                "[DataAccess] OnTick Update failed: " . $e->getMessage()
+                . "\n file " . $e->getFile() . ":" . $e->getLine()
+            );
             Console::println("[DataAccess] Recovering retry loop in 2 seconds...");
             $this->tryTimer = time() + 2;
         }

@@ -44,15 +44,18 @@ class BetWidget extends Widget
     public static $action_setAmount100;
     public static $action_setAmount250;
     public static $action_setAmount500;
-    protected $frame, $labelAccept;
-    protected $bg, $header, $closeButton, $buttonAccept;
+    protected $frame;
+    protected $labelAccept;
+    protected $bg;
+    protected $header;
+    protected $closeButton;
+    protected $buttonAccept;
     protected $script;
 
     protected function eXpOnBeginConstruct()
     {
         $sX = 42;
         $this->setName("Bet widget");
-        $login = $this->getRecipient();
 
         $this->bg = new WidgetBackGround($sX, 20);
         $this->addComponent($this->bg);
@@ -61,7 +64,6 @@ class BetWidget extends Widget
         $this->addComponent($this->header);
 
         $this->frame = new Frame(1, -8);
-        // $this->frame->setLayout(new Column());
         $this->addComponent($this->frame);
 
         $this->script = new Script("Bets/Gui/Scripts");
@@ -89,8 +91,12 @@ class BetWidget extends Widget
 
     public function onDraw()
     {
-        if (Bets::$state == Bets::SET) $this->setBets();
-        if (Bets::$state == Bets::ACCEPT) $this->acceptBets();
+        if (Bets::$state == Bets::SET) {
+            $this->setBets();
+        }
+        if (Bets::$state == Bets::ACCEPT) {
+            $this->acceptBets();
+        }
         $this->closeButton->setPosition($this->sizeX - 28, -$this->sizeY + 5);
         parent::onDraw();
     }
@@ -129,8 +135,6 @@ class BetWidget extends Widget
         $line = new Frame();
         $line->setLayout(new Flow());
         $line->setSize(60, 6);
-
-        $config = Config::getInstance();
 
         foreach (array(25, 50, 100, 250, 500) as $value) {
 

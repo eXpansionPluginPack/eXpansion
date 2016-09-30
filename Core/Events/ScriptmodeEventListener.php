@@ -83,7 +83,18 @@ interface ScriptmodeEventListener
 
     function LibXmlRpc_OnRespawn($login);
 
-    function LibXmlRpc_OnStunt($login, $points, $combo, $totalScore, $factor, $stuntname, $angle, $isStraight, $isReversed, $isMasterJump);
+    function LibXmlRpc_OnStunt(
+        $login,
+        $points,
+        $combo,
+        $totalScore,
+        $factor,
+        $stuntname,
+        $angle,
+        $isStraight,
+        $isReversed,
+        $isMasterJump
+    );
 
     /* more events */
 

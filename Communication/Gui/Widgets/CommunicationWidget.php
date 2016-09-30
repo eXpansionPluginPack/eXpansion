@@ -33,8 +33,16 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 class CommunicationWidget extends Widget
 {
 
-    private $script, $frame, $bg, $_mainWindow, $tabs, $inputbox, $replyTo, $sendAction;
-    public static $action, $selectPlayer;
+    private $script;
+    private $frame;
+    private $bg;
+    private $_mainWindow;
+    private $tabs;
+    private $inputbox;
+    private $replyTo;
+    private $sendAction;
+    public static $action;
+    public static $selectPlayer;
 
     protected function eXpOnBeginConstruct()
     {
@@ -80,7 +88,6 @@ class CommunicationWidget extends Widget
             $label = new \ManiaLib\Gui\Elements\Label(116, 5);
             $label->setId("line_" . $x);
             $label->setTextColor("fff");
-            //   $label->setScriptEvents();
             $this->frame->addComponent($label);
         }
 
@@ -109,7 +116,6 @@ class CommunicationWidget extends Widget
         $add->setSubStyle(\ManiaLib\Gui\Elements\Icons64x64_1::Add);
         $add->setId("addTab");
         $add->setAction(self::$selectPlayer);
-        //$add->setScriptEvents(1);
         $this->_mainWindow->addComponent($add);
 
         $lib = new Animation();

@@ -29,11 +29,13 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
-        if ($playerUid == 0 || substr($text, 0, 1) == "/")
+        if ($playerUid == 0 || substr($text, 0, 1) == "/") {
             return;
+        }
         $player = $this->storage->getPlayerObject($login);
-        if ($player == null)
+        if ($player == null) {
             return;
+        }
         $chatMessage = new Structures\ChatMessage(time(), $login, $player->nickName, $text);
         array_unshift($this->log, $chatMessage);
         $this->log = array_slice($this->log, 0, Config::getInstance()->historyLenght, true);

@@ -191,7 +191,10 @@ EOT;
             $this->console(
                 'Minimum Dedicated version ' . self::EXP_REQUIRE_DEDIATED . ': Fail (' . $dedicatedVersion . ')'
             );
-            $this->connection->chatSendServerMessage("Couldn't start eXpansion - Your dedicated server is too old, required version is: " . self::EXP_REQUIRE_DEDIATED);
+            $this->connection->chatSendServerMessage(
+                "Couldn't start eXpansion - Your dedicated server is too old, required version is: "
+                . self::EXP_REQUIRE_DEDIATED
+            );
             $bExitApp = true;
         } else {
             $this->console(
@@ -224,13 +227,16 @@ EOT;
             $bExitApp = true;
         }
 
-        $this->console('Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . ' build ' .
-            date("Y-m-d h:i:s A", Helper::getBuildDate()) . '');
+        $this->console(
+            'Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . ' build ' .
+            date("Y-m-d h:i:s A", Helper::getBuildDate()) . ''
+        );
 
         //List of supported languages found
         $this->console('');
         $this->console(
-            'Language support detected for: ' . implode(",", i18n::getInstance()->getSupportedLocales()) . '!');
+            'Language support detected for: ' . implode(",", i18n::getInstance()->getSupportedLocales()) . '!'
+        );
         $this->console('Enabling default locale: ' . $config->defaultLanguage . '');
         i18n::getInstance()->setDefaultLanguage($config->defaultLanguage);
 
@@ -261,9 +267,8 @@ EOT;
         $this->connection->chatSendServerMessage('$fff$w$oe$3afΧ$fffpansion');
         $this->connection->chatSendServerMessage('$000P L U G I N   P A C K  ');
         $this->connection->chatSendServerMessage(
-            'Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . '  $n build ' . date(
-                "Y-m-d", Helper::getBuildDate()
-            ) . ''
+            'Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . '  $n build '
+            .date("Y-m-d", Helper::getBuildDate()) . ''
         );
         if (DEBUG) {
             $this->connection->chatSendServerMessage('$f00$w DEBUG MODE enabled');
@@ -274,7 +279,9 @@ EOT;
             try {
                 $this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => true));
             } catch (\Exception $ex) {
-                $this->console("Script mode running, but can't enable 'S_UseScriptCallbacks'... perhaps non-nadeo script running ?");
+                $this->console(
+                    "Script mode running, but can't enable 'S_UseScriptCallbacks'... perhaps non-nadeo script running ?"
+                );
             }
             $this->connection->triggerModeScriptEvent("LibXmlRpc_UnblockAllCallbacks", "");
             $this->enableScriptEvents("LibXmlRpc_Callbacks");
@@ -346,7 +353,9 @@ EOT;
 
         foreach ($extensions as $extension => $description) {
             if (!extension_loaded($extension)) {
-                $this->console("eXpansion needs PHP extension $extension to run. Enable it to run eXpansion => " . $description);
+                $this->console(
+                    "eXpansion needs PHP extension $extension to run. Enable it to run eXpansion => " . $description
+                );
                 $status = false;
             }
         }
@@ -414,7 +423,9 @@ EOT;
         $this->connection->setRoundCustomPoints($this->config->roundsPoints);
         $this->connection->resetServerTags();
         $this->connection->setServerTag("nl.controller", "ManiaLive / eXpansion");
-        $this->connection->setServerTag("nl.controller.version", \ManiaLive\Application\VERSION . " / " . Core::EXP_VERSION);
+        $this->connection->setServerTag(
+            "nl.controller.version", \ManiaLive\Application\VERSION . " / " . Core::EXP_VERSION
+        );
         $this->syncAdminStatus();
 
         // this is a fix for servers with a password, if player chooses to spectate, he can now enter back to play,
@@ -452,7 +463,7 @@ EOT;
                     $this->doWhitelist();
                 }
                 break;
-            case "analytics" :
+            case "analytics":
                 if ($var->getRawValue()) {
                     $this->analytics->enable();
                 } else {
@@ -596,7 +607,12 @@ EOT;
                 $difs = $this->compareObjects($gameSettings, $this->lastGameSettings, array("gameMode", "scriptName"));
                 if (!empty($difs)) {
                     Dispatcher::dispatch(
-                        new GameSettingsEvent(GameSettingsEvent::ON_GAME_SETTINGS_CHANGE, $this->lastGameSettings, $gameSettings, $difs)
+                        new GameSettingsEvent(
+                            GameSettingsEvent::ON_GAME_SETTINGS_CHANGE,
+                            $this->lastGameSettings,
+                            $gameSettings,
+                            $difs
+                        )
                     );
                     $this->lastGameSettings = clone $gameSettings;
                 }
@@ -609,11 +625,18 @@ EOT;
             $this->lastServerSettings = clone $serverSettings;
         } else {
             $difs = $this->compareObjects(
-                $serverSettings, $this->lastServerSettings, array('useChangingValidationSeed')
+                $serverSettings,
+                $this->lastServerSettings,
+                array('useChangingValidationSeed')
             );
             if (!empty($difs)) {
                 Dispatcher::dispatch(
-                    new ServerSettingsEvent(ServerSettingsEvent::ON_SERVER_SETTINGS_CHANGE, $this->lastServerSettings, $serverSettings, $difs)
+                    new ServerSettingsEvent(
+                        ServerSettingsEvent::ON_SERVER_SETTINGS_CHANGE,
+                        $this->lastServerSettings,
+                        $serverSettings,
+                        $difs
+                    )
                 );
                 $this->lastServerSettings = clone $serverSettings;
             }
@@ -667,9 +690,10 @@ EOT;
      * @param  array $changes Differences between both of them
      */
     public function onGameSettingsChange(
-        \Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings, \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings, $changes
-    )
-    {
+        \Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings,
+        \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings,
+        $changes
+    ) {
         $this->saveMatchSettings();
     }
 
@@ -689,14 +713,18 @@ EOT;
         }
 
         try {
-            $path = realpath(Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile);
+            $path = realpath(
+                Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile
+            );
             if (!file_exists($path)) {
                 return;
             }
             /** @var SimpleXMLElement */
             $oldXml = simplexml_load_file($path);
             if ($oldXml === false) {
-                $this->console("ERROR while loading Dedicated server config file: " . $this->config->dedicatedConfigFile);
+                $this->console(
+                    "ERROR while loading Dedicated server config file: " . $this->config->dedicatedConfigFile
+                );
                 $this->console("your settings are NOT saved!");
 
                 return;
@@ -711,8 +739,6 @@ EOT;
                 "isP2PUpload" => "enable_p2p_upload",
                 "isP2PDownload" => "enable_p2p_download",
                 "nextLadderMode" => "ladder_mode",
-                //"ladderServerLimitMax" => "ladder_serverlimit_max",
-                //"ladderServerLimitMin" => "ladder_serverlimit_min",
                 "nextCallVoteTimeOut" => "callvote_timeout",
                 "callVoteRatio" => "callvote_ratio",
                 "allowMapDownload" => "allow_map_download",
@@ -734,8 +760,6 @@ EOT;
                     continue;
                 }
 
-                //			echo $key . " -> " . $search . "\n";
-
                 $out = $new->{$key};
                 if (is_bool($value)) {
                     $out = "False";
@@ -752,7 +776,6 @@ EOT;
             $xml = $oldXml->asXML();
             file_put_contents($path, $xml);
         } catch (\Exception $ex) {
-            //  print_r($ex);
             $this->console("Error writing ServerSettings : " . $path . " - " . $ex->getMessage());
         }
     }
@@ -780,11 +803,14 @@ EOT;
         if (!empty($this->config->defaultMatchSettingsFile)) {
             try {
                 $this->connection->saveMatchSettings(
-                    (empty($this->config->mapBase) ? "" : $this->config->mapBase . '/') . "MatchSettings" . DIRECTORY_SEPARATOR . $this->config->defaultMatchSettingsFile
+                    (empty($this->config->mapBase) ? "" : $this->config->mapBase . '/')
+                    . "MatchSettings"
+                    . DIRECTORY_SEPARATOR . $this->config->defaultMatchSettingsFile
                 );
             } catch (\Exception $ex) {
                 $this->console(
-                    "Error writing MatchSettings : " . $this->config->defaultMatchSettingsFile . " - " . $ex->getMessage()
+                    "Error writing MatchSettings : " . $this->config->defaultMatchSettingsFile
+                    . " - " . $ex->getMessage()
                 );
             }
         }
@@ -863,8 +889,6 @@ EOT;
 
         $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
         foreach (\ManiaLivePlugins\eXpansion\AutoLoad\Config::getInstance()->plugins as $plugin_id) {
-            //$parts = explode("\\", $plugin_id);
-            //$className = '\\ManiaLivePlugins\\' . $plugin_id . '\\' . $parts[1];
             $className = $plugin_id;
             if (class_exists($className)) {
                 if ($className::getMetaData()->checkAll() && !$this->isPluginLoaded($plugin_id)) {
@@ -887,7 +911,8 @@ EOT;
     {
         //If server statistics are loaded put an action so that we can have a button to show them.
         if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics')) {
-            Gui\Windows\InfoWindow::$statsAction = \ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics::$serverStatAction;
+            Gui\Windows\InfoWindow::$statsAction =
+                \ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics::$serverStatAction;
         } else {
             Gui\Windows\InfoWindow::$statsAction = -1;
         }
@@ -1103,16 +1128,6 @@ EOT;
 
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
-        /*  if ($playerUid != 0) {
-              if (substr($text, 0, 1) != "/") {
-                  $out = Console::b_yellow . "[" . $this->storage->getPlayerObject($login)->nickName . Console::b_yellow . "] " . $text;
-              } else {
-                  return;
-              }
-          } else {
-              $out = Console::white . $text;
-          }
-          $this->console($out); */
     }
 
     public function onBeginRound()
@@ -1160,7 +1175,9 @@ EOT;
             $this->expPlayers[$login]->curCpIndex = -1;
             $this->expPlayers[$login]->isFinished = false;
             // in case player is joining to match in round, he needs to be marked as waiting
-            if ($this->storage->gameInfos->gameMode != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+            if ($this->storage->gameInfos->gameMode
+                != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK
+            ) {
                 $this->expPlayers[$login]->isWaiting = true;
             }
         }
@@ -1243,7 +1260,9 @@ EOT;
             if (array_key_exists($login, $this->expPlayers)) {
                 $this->expPlayers[$login]->checkpoints = array(0 => 0);
                 $this->expPlayers[$login]->finalTime = 0;
-                if ($this->storage->gameInfos->gameMode !== \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+                if ($this->storage->gameInfos->gameMode
+                    !== \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK
+                ) {
                     $this->expPlayers[$login]->hasRetired = true;
                     Dispatcher::dispatch(
                         new Events\PlayerEvent(Events\PlayerEvent::ON_PLAYER_GIVEUP, $this->expPlayers[$login])
@@ -1258,13 +1277,17 @@ EOT;
             if (array_key_exists($login, $this->expPlayers)) {
                 $this->expPlayers[$login]->finalTime = $timeOrScore;
                 $this->expPlayers[$login]->isFinished = true;
-                if ($this->storage->gameInfos->gameMode !== \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK) {
+                if ($this->storage->gameInfos->gameMode
+                    !== \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK
+                ) {
                     self::$roundFinishOrder[] = $login;
                 }
             }
 
             // set points
-            if ($this->storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
+            if ($this->storage->gameInfos->gameMode
+                == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM
+            ) {
                 $maxpoints = $this->storage->gameInfos->teamMaxPoints;
                 $total = 0;
                 // get total number if players
@@ -1324,7 +1347,6 @@ EOT;
 
             if (isset($player->checkpoints[0])) {
                 $player->time = end($player->checkpoints);
-                // $player->curCpIndex = key($player->checkpoints);
             }
             // is player is not playing ie. has become spectator or disconnect, remove...
 
@@ -1390,7 +1412,12 @@ EOT;
 
             if ($dispatch) {
                 Dispatcher::dispatch(
-                    new Events\PlayerEvent(Events\PlayerEvent::ON_PLAYER_POSITION_CHANGE, $this->expPlayers[$login], $oldPos, $pos)
+                    new Events\PlayerEvent(
+                        Events\PlayerEvent::ON_PLAYER_POSITION_CHANGE,
+                        $this->expPlayers[$login],
+                        $oldPos,
+                        $pos
+                    )
                 );
             }
             // set previous player

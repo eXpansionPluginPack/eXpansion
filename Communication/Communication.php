@@ -51,10 +51,12 @@ class Communication extends ExpPlugin
 
         $this->registerChatCommand("send", "sendPmChat", -1, true);
 
-        foreach ($this->storage->players as $login => $player)
+        foreach ($this->storage->players as $login => $player) {
             $this->onPlayerConnect($login, null);
-        foreach ($this->storage->spectators as $login => $player)
+        }
+        foreach ($this->storage->spectators as $login => $player) {
             $this->onPlayerConnect($login, null);
+        }
 
         $this->lastCheck = time();
         $this->cachedIgnoreList = $this->connection->getIgnoreList(-1, 0);
@@ -71,7 +73,8 @@ class Communication extends ExpPlugin
 
     public function send($login, $tab, $text)
     {
-        $login = str_replace('–', '-', $login); // undo replacing maniascript en hyphen to normal one, so message reaches the right person...
+        // undo replacing maniascript en hyphen to normal one, so message reaches the right person...
+        $login = str_replace('–', '-', $login);
         Messager::Erase($login);
         $info = Messager::Create($login);
         $info->sendChat($tab, $text);
@@ -86,11 +89,6 @@ class Communication extends ExpPlugin
 
             return;
         }
-
-        /* if (!$this->checkPlayer($target)) {
-          $this->send($login, $target, '$f00' . __("You can't send a message to " . $target . ", he is ignored or disconnected.", $login));
-          return;
-          } */
 
         $fromPlayer = $this->storage->getPlayerObject($login);
         $this->send($login, $target, '$z$fffMe: ' . $text);
