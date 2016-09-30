@@ -35,18 +35,28 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function eXpOnReady()
     {
-        //  $this->enableTickerEvent();
         $this->enableDedicatedEvents();
         $this->enableDedicatedEvents();
-        //if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
-        //	$this->enableScriptEvents();
-        //$this->registerChatCommand("crash", "crash", 1, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
-        $this->registerChatCommand("connect", "connect", 1, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
-        $this->registerChatCommand("disconnect", "disconnect", 1, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
-        //$this->registerChatCommand("profiler_enable", "profilere", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
-        $this->registerChatCommand("faketest", "test", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
-        //$this->registerChatCommand("test", "testWin", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
-        //$this->registerChatCommand("mem", "mem", 0, true, \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get());
+        $this->registerChatCommand(
+            "connect",
+            "connect",
+            1,
+            true,
+            \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get()
+        );
+        $this->registerChatCommand(
+            "disconnect",
+            "disconnect",
+            1, true,
+            \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get()
+        );
+        $this->registerChatCommand(
+            "faketest",
+            "test",
+            0,
+            true,
+            \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get()
+        );
         $this->mem(null);
         $this->registerChatCommand("te", "team", 0, false);
 
@@ -83,7 +93,6 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onBeginMap($map, $warmUp, $matchContinuation)
     {
-        //   $this->mem(null);
     }
 
     function testWin($login)
@@ -134,7 +143,6 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
     {
-        //	echo "$login: cpindex: $cpIndex with $time\n";
     }
 
     function test($login)
@@ -145,7 +153,6 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     function logMemory()
     {
         $mem = "Memory Usage: " . round(memory_get_usage() / 1024 / 1024) . "Kb";
-        //\ManiaLive\Utilities\Logger::getLog("memory")->write($mem);
         print "\n" . $mem . "\n";
         $this->connection->chatSend($mem);
     }

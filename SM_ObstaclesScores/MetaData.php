@@ -34,7 +34,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData
     {
         $this->setName('Records: Obstacle@steeffeen');
         $this->setDescription(
-            'Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. Higher scores are better.'
+            'Local Scores work the same way as LocalRecords but instead of ordering times it orders scores. '
+            .'Higher scores are better.'
         );
         $this->setGroups(array('Records'));
     }

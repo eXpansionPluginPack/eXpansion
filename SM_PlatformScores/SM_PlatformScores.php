@@ -47,9 +47,15 @@ class SM_PlatformScores extends LocalBase
 
 
     public function LibXmlRpc_OnWayPoint(
-        $login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
-    )
-    {
+        $login,
+        $blockId,
+        $time,
+        $cpIndex,
+        $isEndBlock,
+        $lapTime,
+        $lapNb,
+        $isLapEnd
+    ) {
         if ($time > 0) {
             if ($isEndBlock) {
                 $this->addRecord($login, $time, 0, $this->cpScores[$login]);

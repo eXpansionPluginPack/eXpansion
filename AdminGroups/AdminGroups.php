@@ -158,11 +158,13 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         //Loading all Messages;
         $this->msg_needBeAdmin = eXpGetMessage('#admin_error#You need to be an Admin to use that command');
         $this->msg_cmdDontEx = eXpGetMessage(
-            '#admin_error#That Admin command doesen\'t exist. Use #variable#/admin help #admin_error#to see all commands'
+            '#admin_error#That Admin command doesen\'t exist. '
+            .'Use #variable#/admin help #admin_error#to see all commands'
         );
         $this->msg_neeMorPerm = eXpGetMessage('#admin_error#You don\'t have the permission to use that admin command');
         $this->msg_aInGroup = eXpGetMessage(
-            '#admin_error#Player #variable#%1$s #admin_error#is already in a group #admin_error#%2$s. #admin_error#Remove him first'
+            '#admin_error#Player #variable#%1$s #admin_error#is '
+            .'already in a group #admin_error#%2$s. #admin_error#Remove him first'
         );
         $this->msg_paddSuc = eXpGetMessage(
             '#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s'
@@ -179,7 +181,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->msg_pRemoveFa = eXpGetMessage('#admin_error#Player #variable#%1$s #admin_action#isn\'t in the group');
         $this->msg_masterMasterE = eXpGetMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
         $this->msg_removeMlAdmin = eXpGetMessage(
-            '#admin_error#Master admin #variable#%1$s has been defined in config.ini and not throught eXpansion. Can\'t remove!'
+            '#admin_error#Master admin #variable#%1$s has been '
+            .'defined in config.ini and not throught eXpansion. Can\'t remove!'
         );
         self::$txt_msg_cmdDontEx = $this->msg_cmdDontEx;
         self::$txt_noPermissionMsg = $this->msg_neeMorPerm;

@@ -62,7 +62,7 @@ class Widgets_ChatEnhancement extends \ManiaLivePlugins\eXpansion\Core\types\Exp
             $panelMain = Gui\Widgets\Chat::Create($login, true, $this->action_chatLog, $this->action_chatStatus);
             $panelMain->setPosition(-161, -66);
             $panelMain->show();
-        } else if (isset($localRecs[0]) && !$localRecs[0]->isDestroyed()) {
+        } elseif (isset($localRecs[0]) && !$localRecs[0]->isDestroyed()) {
             $localRecs[0]->show($login);
         }
     }
@@ -99,7 +99,9 @@ class Widgets_ChatEnhancement extends \ManiaLivePlugins\eXpansion\Core\types\Exp
                 $var = ChatMetaData::getInstance()->getVariable('publicChatActive');
                 $var->setRawValue(!$var->getRawValue());
 
-                $this->eXpChatSendServerMessage("#admin_action#Public chat is now #variable#" . ($var->getRawValue() ? "Enable" : "Disable"));
+                $this->eXpChatSendServerMessage(
+                    "#admin_action#Public chat is now #variable#" . ($var->getRawValue() ? "Enable" : "Disable")
+                );
 
             } else {
                 $this->eXpChatSendServerMessage("#admin_error#Custom Chat plugin needs to be enabled", $login);

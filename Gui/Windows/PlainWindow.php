@@ -73,19 +73,16 @@ class PlainWindow extends \ManiaLive\Gui\Window
         $this->destroyComponents();
         parent::destroy();
 
-        // echo "window: #";
         foreach ($this as $index => $value) {
             if (\is_object($value)) {
 
                 if ($value instanceof \ManiaLive\Gui\Containable || $value instanceof \ManiaLive\Gui\Container) {
-                    //			echo "!";
                     $value->destroyComponents();
                     $value->destroy();
                     unset($this->$index);
                     continue;
                 }
                 if ($value instanceof \ManiaLive\Gui\Control) {
-                    //				echo "*";
                     $value->destroy();
                     unset($this->$index);
                     continue;
@@ -93,10 +90,8 @@ class PlainWindow extends \ManiaLive\Gui\Window
 
                 unset($this->$index);
             } else {
-                //			echo ".";
                 unset($this->$index);
             }
         }
-        //	echo "\n";
     }
 }

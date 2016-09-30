@@ -50,43 +50,19 @@ class SM_ObstaclesScores extends LocalBase
         parent::eXpOnReady();
 
         $this->enableScriptEvents(array("onCheckpoint", "playerFinish"));
-        // Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_MODE_SCRIPT_CALLBACK);
 
         $cmd = AdminGroups::addAdminCommand("jumpto", $this, "jumpto", self::PERM_JUMTO);
         $cmd->setMinParam(1);
     }
 
-    /*public function LibXmlRpc_OnWayPoint(
-        $login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd
-    )
-    {
-        if($time > 0){
-            if($isEndBlock){
-                $this->addRecord($login, $time, 0, $this->cpScores[$login]);
-
-                $this->cpScores[$login] = array();
-            }else{
-                if(!isset($this->lastCpNum[$login]) || $this->lastCpNum[$login] < $cpIndex){
-                    $this->cpScores[$login][$cpIndex] = $time;
-                }else{
-                    //Respawned
-                    $this->cpScores[$login] = array();
-                }
-
-                $this->lastCpNum[$login] = $cpIndex;
-            }
-        }
-        echo "\nScore : $login: cpindex: $cpIndex with $time \n";
-    }*/
-
     public function eXpOnModeScriptCallback($param1, $param2)
     {
         switch ($param1) {
-            case 'playerFinish' :
+            case 'playerFinish':
                 $params = explode('{:}', $param2);
                 $this->addRecord($params[1], $params[0], 0, $this->checkpoints[$params[1]]);
                 break;
-            case 'OnCheckpoint' :
+            case 'OnCheckpoint':
                 $params = json_decode($param2);
                 $this->playerCp($params->Player->Login, $params->Run->Time, $params->Run->CheckpointIndex);
         }
@@ -183,7 +159,7 @@ class SM_ObstaclesScores extends LocalBase
         $securedBy = \ManiaLive\Utilities\Time::fromTM($newTime - $oldTime);
         if (substr($securedBy, 0, 3) === "0:0") {
             $securedBy = substr($securedBy, 3);
-        } else if (substr($securedBy, 0, 2) === "0:") {
+        } elseif (substr($securedBy, 0, 2) === "0:") {
             $securedBy = substr($securedBy, 2);
         }
 

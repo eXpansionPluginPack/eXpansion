@@ -94,7 +94,9 @@ class Console
      */
     public static function out_error($message)
     {
-        self::eco(self::white . "[ " . self::b_red . "Error" . "\e[0m" . self::white . " ] " . self::error . $message . "\n");
+        self::eco(
+            self::white . "[ " . self::b_red . "Error" . "\e[0m" . self::white . " ] " . self::error . $message . "\n"
+        );
     }
 
     /**
@@ -184,9 +186,6 @@ class Console
         $matches = array();
         preg_match_all("/\\$[A-Fa-f0-9]{3}/", $string, $matches);
         $split = preg_split("/\\$[A-Fa-f0-9]{3}/", $string);
-
-        //   print_r($split);
-        //   print_r($matches);
 
         $out = "";
         foreach ($matches[0] as $i => $rgb) {
