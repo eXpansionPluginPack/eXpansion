@@ -7,7 +7,7 @@ use ManiaLivePlugins\eXpansion\CheckpointCount\Gui\Widgets\CPPanel;
 class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    function expOnInit()
+    public function eXpOnInit()
     {
         //Important for all eXpansion plugins.
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_ROUNDS);
@@ -17,7 +17,7 @@ class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->exp_addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP);
     }
 
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
     }
@@ -39,7 +39,7 @@ class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param string $login |null
      */
-    function displayWidget($login = null)
+    public function displayWidget($login = null)
     {
         if ($login == null) {
             CPPanel::EraseAll();
@@ -77,12 +77,12 @@ class CheckpointCount extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         CPPanel::EraseAll();
     }
 
-    function onPlayerConnect($login, $isSpectator)
+    public function onPlayerConnect($login, $isSpectator)
     {
         $this->displayWidget($login);
     }
 
-    function onPlayerDisconnect($login, $reason = null)
+    public function onPlayerDisconnect($login, $reason = null)
     {
         CPPanel::Erase($login);
     }

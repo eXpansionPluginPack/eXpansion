@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Windows;
+namespace ManiaLivePlugins\eXpansion\ChatAdmin\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;

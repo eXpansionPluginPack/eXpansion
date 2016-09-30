@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Core\i18n;
+namespace ManiaLivePlugins\eXpansion\Core\I18n;
 
 /**
  * Description of Message

@@ -12,7 +12,7 @@ class Widgets_MapSuggestion extends ExpPlugin
 
     private $action;
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
         $this->addDependency(new Dependency('\\ManiaLivePlugins\\eXpansion\\MapSuggestion\\MapSuggestion'));
     }

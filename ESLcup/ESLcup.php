@@ -38,7 +38,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * onload
      */
-    public function expOnInit()
+    public function eXpOnInit()
     {
         $this->exp_addTitleSupport("TM");
         $this->exp_addTitleSupport("Trackmania");

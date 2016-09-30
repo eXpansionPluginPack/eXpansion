@@ -14,6 +14,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
     use ManiaLive\PluginHandler\PluginHandler;
     use ManiaLive\PluginHandler\WaitingCompliant;
     use ManiaLive\Utilities\Console;
+    use ManiaLive\Utilities\Logger;
     use ManiaLivePlugins\eXpansion\Core\BillManager;
     use ManiaLivePlugins\eXpansion\Core\ColorParser;
     use ManiaLivePlugins\eXpansion\Core\Config;
@@ -24,17 +25,16 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
     use ManiaLivePlugins\eXpansion\Core\Events\GlobalEventListener;
     use ManiaLivePlugins\eXpansion\Core\Events\PlayerEvent;
     use ManiaLivePlugins\eXpansion\Core\Events\PlayerEventListener;
-    use ManiaLivePlugins\eXpansion\Core\i18n;
-    use ManiaLivePlugins\eXpansion\Core\i18n\Message as MultiLangMsg;
+    use ManiaLivePlugins\eXpansion\Core\I18n;
+    use ManiaLivePlugins\eXpansion\Core\I18n\Message as MultiLangMsg;
     use ManiaLivePlugins\eXpansion\Core\Structures\ExpPlayer;
     use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
     use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
     use ManiaLivePlugins\eXpansion\Helpers\Helper;
-    use ManiaLivePlugins\eXpansion\Helpers\Logger;
     use ManiaLivePlugins\eXpansion\Helpers\Storage;
     use Maniaplanet\DedicatedServer\Structures\GameInfos;
     use Maniaplanet\DedicatedServer\Structures\PlayerNetInfo;
-    use Maniaplanet\DedicatedServer\Xmlrpc\LoginUnknownException;
+    use Maniaplanet\DedicatedServer\Xmlrpc\UnknownPlayerException;
     use Phine\Exception\Exception as Exception2;
 
     /**
@@ -128,7 +128,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             $this->colorParser = ColorParser::getInstance();
 
             $this->eXpUnloading = false;
-            i18n::getInstance()->registerDirectory($this->eXpGetDir());
+            I18n::getInstance()->registerDirectory($this->eXpGetDir());
 
 
             //All plugins need the eXpansion Core to work properly
@@ -154,7 +154,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
             $this->setPublicMethod('onSettingsChanged');
 
-            $this->expOnInit();
+            $this->eXpOnInit();
 
             Dispatcher::register(GameSettingsEvent::getClass(), $this);
             Dispatcher::register(PlayerEvent::getClass(), $this);
@@ -190,7 +190,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @abstract
          */
-        public function expOnInit()
+        public function eXpOnInit()
         {
 
         }
@@ -488,7 +488,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                     $this->connection->chatSendServerMessage(
                         '$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg)
                     );
-                } catch (LoginUnknownException $ex) {
+                } catch (UnknownPlayerException $ex) {
                     $this->console('Attempt to send Announce to a login failed. Login unknown');
                 } catch (Exception $e) {
                     $this->console("Error while sending Announce message => Server said:" . $e->getMessage());
@@ -640,7 +640,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             $msg,
             $callback = array(),
             $params = array()
-        ) {
+        )
+        {
             $bill = new Bill($source_login, $destination_login, $amount, $msg);
             self::$eXpBillManager->sendBill($bill);
             $bill->setValidationCallback($callback, $params);
@@ -962,7 +963,7 @@ namespace {
             if (is_object($message)) {
                 $lang = $message->getMessage($language);
             } else {
-                $lang = \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getString($message, $language);
+                $lang = \ManiaLivePlugins\eXpansion\Core\I18n::getInstance()->getString($message, $language);
             }
 
             array_unshift($args, $lang);
@@ -985,10 +986,10 @@ namespace {
      *
      * @param string $string
      *
-     * @return \ManiaLivePlugins\eXpansion\Core\i18n\Message
+     * @return \ManiaLivePlugins\eXpansion\Core\I18n\Message
      */
     function eXpGetMessage($string)
     {
-        return \ManiaLivePlugins\eXpansion\Core\i18n::getInstance()->getObject($string);
+        return \ManiaLivePlugins\eXpansion\Core\I18n::getInstance()->getObject($string);
     }
 }

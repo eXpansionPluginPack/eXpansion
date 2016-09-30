@@ -17,7 +17,7 @@ class CountdownHud extends PlainWidget
     protected $sprite;
     protected $sprite2;
 
-    function onConstruct()
+    public function onConstruct()
     {
         parent::onConstruct();
         $this->setName("countdown");

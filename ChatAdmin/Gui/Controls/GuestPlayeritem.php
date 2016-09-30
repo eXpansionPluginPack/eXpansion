@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Controls;
+namespace ManiaLivePlugins\eXpansion\ChatAdmin\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;

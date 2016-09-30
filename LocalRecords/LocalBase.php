@@ -8,7 +8,7 @@ use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Core\Events\ExpansionEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ExpansionEventListener;
-use ManiaLivePlugins\eXpansion\Core\i18n\Message;
+use ManiaLivePlugins\eXpansion\Core\I18n\Message;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event;
@@ -159,7 +159,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     private $deleteTempLogin = null;
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
         //Activating debug for records only
         $this->debug = self::DEBUG_NONE;

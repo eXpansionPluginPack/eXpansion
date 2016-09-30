@@ -60,7 +60,7 @@ class DbPlayer
      * @param $playerUpdated
      * @param $playerWins
      */
-    function __construct($login, $lastPlayTime, $playerUpdated, $playerWins)
+    public function __construct($login, $lastPlayTime, $playerUpdated, $playerWins)
     {
         $this->lastPlayTime = $lastPlayTime;
         $this->login = $login;

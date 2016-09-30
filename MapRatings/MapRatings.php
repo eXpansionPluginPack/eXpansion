@@ -31,7 +31,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     private $previousMap = null;
 
-    function expOnInit()
+    function eXpOnInit()
     {
         EndMapRatings::$parentPlugin = $this;
         \ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\RatingsWidget::$parentPlugin = $this;

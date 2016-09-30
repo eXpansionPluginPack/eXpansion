@@ -170,7 +170,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
         return $this->results;
     }
 
-    public function PsExists()
+    public function psExists()
     {
         exec("ps ax | grep " . $this->pid . " 2>&1", $output);
 
@@ -197,7 +197,7 @@ class ParalelExecution implements \ManiaLive\Features\Tick\Listener
      */
     public function onTick()
     {
-        if (!$this->PsExists()) {
+        if (!$this->psExists()) {
             if (empty($this->cmds) || $this->return != 0) {
                 $this->call();
                 Dispatcher::unregister(TickEvent::getClass(), $this);

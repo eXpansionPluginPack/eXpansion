@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_EndRankings\Gui\Widgets;
 
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLive\Gui\Controls\Frame;
-use ManiaLivePlugins\eXpansion\Core\i18n\Message;
+use ManiaLivePlugins\eXpansion\Core\I18n\Message;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;

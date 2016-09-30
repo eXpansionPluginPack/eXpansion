@@ -126,7 +126,7 @@ class CommunicationWidget extends Widget
         $this->registerScript($this->script);
     }
 
-    function eXpOnEndConstruct()
+    public function eXpOnEndConstruct()
     {
         $this->setSize(120, 42);
         $this->setScale(1);

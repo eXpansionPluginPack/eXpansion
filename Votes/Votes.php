@@ -21,7 +21,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $origTimeValue = 0;
 
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
         $this->config = Config::getInstance();
     }

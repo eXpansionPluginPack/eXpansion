@@ -21,12 +21,13 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
      * @param \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message
      * @param int $sizeX
      */
-    function __construct(
+    public function __construct(
         $indexNumber,
         \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message,
         $widths,
         $sizeX
-    ) {
+    )
+    {
         $sizeY = 6;
         $this->widths = $widths;
 
@@ -76,7 +77,7 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
     }
 
@@ -84,7 +85,7 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
      * custom function to remove contents.
      */
 
-    function erase()
+    public function erase()
     {
         $this->frame->clearComponents();
         $this->frame->destroy();

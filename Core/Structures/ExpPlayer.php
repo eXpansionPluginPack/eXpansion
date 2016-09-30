@@ -51,7 +51,7 @@ class ExpPlayer extends \ManiaLive\Data\Player
     public $isWaiting = false;
     public $isFinished = false;
 
-    static public function fromArray($array)
+    public static function fromArray($array)
     {
         $object = parent::fromArray($array);
         $object->skins = null;

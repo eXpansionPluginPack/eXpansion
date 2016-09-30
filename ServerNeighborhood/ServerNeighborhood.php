@@ -62,7 +62,7 @@ class ServerNeighborhood extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     private $config;
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
         $this->setVersion("1.0");
         $this->config = Config::getInstance();

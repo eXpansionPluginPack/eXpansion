@@ -23,7 +23,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /** @var Stats\StatsWindows */
     private $metrics;
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
         global $lang;
         //The Database plugin is needed.

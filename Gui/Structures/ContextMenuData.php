@@ -15,7 +15,7 @@ namespace ManiaLivePlugins\eXpansion\Gui\Structures;
 class ContextMenuData
 {
     /**
-     * @var \ManiaLivePlugins\eXpansion\Core\i18n\Message
+     * @var \ManiaLivePlugins\eXpansion\Core\I18n\Message
      */
     public $message;
 
@@ -30,7 +30,7 @@ class ContextMenuData
      */
     public $dataId;
 
-    public function __construct(\ManiaLivePlugins\eXpansion\Core\i18n\Message $message, $data)
+    public function __construct(\ManiaLivePlugins\eXpansion\Core\I18n\Message $message, $data)
     {
         $this->message = $message;
         $this->data = $data;

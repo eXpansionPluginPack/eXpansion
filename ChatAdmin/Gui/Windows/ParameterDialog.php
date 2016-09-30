@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Windows;
+namespace ManiaLivePlugins\eXpansion\ChatAdmin\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
@@ -18,7 +18,7 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $adminAction;
     protected $adminParams;
 
-    /** @var \ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin */
+    /** @var \ManiaLivePlugins\eXpansion\ChatAdmin\ChatAdmin */
     public static $mainPlugin;
 
     protected function onConstruct()
@@ -72,7 +72,7 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->setSize(110, 20);
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         $this->frame->setSize($this->sizeX, $this->sizeY);
         $this->frame->setPosition($this->sizeX - 48, -$this->sizeY + 6);

@@ -43,12 +43,12 @@ class Bill
         $this->billId = $billId;
     }
 
-    public function getSource_login()
+    public function getSourceLogin()
     {
         return $this->sourceLogin;
     }
 
-    public function getDestination_login()
+    public function getDestinationLogin()
     {
         return $this->destinationLogin;
     }
@@ -63,12 +63,12 @@ class Bill
         return $this->msg;
     }
 
-    public function setSource_login($sourceLogin)
+    public function setSourceLogin($sourceLogin)
     {
         $this->sourceLogin = $sourceLogin;
     }
 
-    public function setDestination_login($destinationLogin)
+    public function setDestinationLogin($destinationLogin)
     {
         $this->destinationLogin = $destinationLogin;
     }

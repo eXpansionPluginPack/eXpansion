@@ -54,7 +54,7 @@ class AutoQueue extends ExpPlugin
 
     }
 
-    function onPlayerConnect($login, $isSpectator)
+    public function onPlayerConnect($login, $isSpectator)
     {
         if ($isSpectator) {
             $this->connection->forceSpectator($login, 1);
@@ -110,12 +110,12 @@ class AutoQueue extends ExpPlugin
         $this->queueReleaseNext();
     }
 
-    function onBeginMatch()
+    public function onBeginMatch()
     {
         $this->queRealeseAvailable();
     }
 
-    function onBeginRound()
+    public function onBeginRound()
     {
         $this->queRealeseAvailable();
     }
@@ -146,7 +146,8 @@ class AutoQueue extends ExpPlugin
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission(
             $login,
             \ManiaLivePlugins\eXpansion\AdminGroups\Permission::SERVER_ADMIN
-        )) {
+        )
+        ) {
             if (in_array($target, $this->queue->getLogins())) {
                 $this->queue->remove($target);
                 $this->eXpChatSendServerMessage(eXpGetMessage("Admin has removed you from queue!", $target));

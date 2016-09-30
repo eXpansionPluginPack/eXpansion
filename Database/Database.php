@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Database;
 
 use ManiaLib\Utils\Formatting as StringFormatting;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
 
 /**
@@ -11,12 +12,12 @@ use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
  *
  * @author oliverde8
  */
-class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+class Database extends ExpPlugin
 {
 
     private $config;
 
-    function expOnInit()
+    public function eXpOnInit()
     {
         $this->config = Config::getInstance();
     }
@@ -54,11 +55,6 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         );
         $cmd->setHelp('shows administrative window for database');
         $cmd->setMinParam(0);
-    }
-
-    public function eXpOnReady()
-    {
-
     }
 
     public function onPlayerConnect($login, $isSpec)
@@ -107,13 +103,13 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->expStorage->dbPlayers[$login] = $dbPlayer;
     }
 
-    function onPlayerDisconnect($login, $reason = null)
+    public function onPlayerDisconnect($login, $reason = null)
     {
         $this->updatePlayTime($this->storage->getPlayerObject($login));
         unset($this->expStorage->dbPlayers[$login]);
     }
 
-    function onEndMatch($rankings, $winnerTeamOrMap)
+    public function onEndMatch($rankings, $winnerTeamOrMap)
     {
         $firstFound = false;
         foreach ($this->storage->players as $login => $player) { // get players
@@ -134,7 +130,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->updateServerChallenges();
     }
 
-    function updatePlayTime($player)
+    public function updatePlayTime($player)
     {
         $time = time();
         if (empty($player) || (!$player->spectator && $this->expStorage->isRelay))
@@ -150,7 +146,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $player->lastTimeUpdate = $time;
     }
 
-    function updateServerChallenges()
+    public function updateServerChallenges()
     {
         if ($this->expStorage->isRelay) {
             return;
@@ -267,7 +263,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->db->execute($q);
     }
 
-    function createPlayersTable()
+    public function createPlayersTable()
     {
         if ($this->getDatabaseVersion('exp_players') == false) {
             $this->setDatabaseVersion('exp_players', 1);
@@ -380,7 +376,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function numberize($num)
+    public function numberize($num)
     {
         if ($num >= 10 && $num <= 20) {
             $num = $num . 'th';
@@ -397,7 +393,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return $num;
     }
 
-    function getDatabaseVersion($table, $fromPlugin = null)
+    public function getDatabaseVersion($table, $fromPlugin = null)
     {
         $g = "SELECT * FROM `exp_databaseversion` WHERE `database_table` = " . $this->db->quote($table) . ";";
         $query = $this->db->execute($g);
@@ -410,12 +406,12 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function showDbMaintainance($login)
+    public function showDbMaintenance($login)
     {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::SERVER_DATABASE)) {
             $window = Gui\Windows\Maintainance::Create($login);
             $window->init($this->db);
-            $window->setTitle(__('Database Maintainance'));
+            $window->setTitle(__('Database Maintenance'));
             $window->centerOnScreen();
             $window->setSize(160, 100);
 
@@ -423,7 +419,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function showBackupRestore($login)
+    public function showBackupRestore($login)
     {
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::SERVER_DATABASE)) {
             $window = Gui\Windows\BackupRestore::Create($login);
@@ -435,7 +431,7 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function setDatabaseVersion($table, $version)
+    public function setDatabaseVersion($table, $version)
     {
 
         $g = "SELECT * FROM `exp_databaseversion` WHERE `database_table` = " . $this->db->quote($table) . ";";

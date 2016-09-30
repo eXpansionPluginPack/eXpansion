@@ -10,9 +10,9 @@ class Dedimania extends DedimaniaAbstract
     private $checkpoints = array();
     private $bestTimes = array();
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
-        parent::expOnInit();
+        parent::eXpOnInit();
     }
 
     public function onBeginMap($map, $warmUp, $matchContinuation)

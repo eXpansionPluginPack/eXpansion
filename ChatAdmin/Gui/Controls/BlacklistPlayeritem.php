@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Controls;
+namespace ManiaLivePlugins\eXpansion\ChatAdmin\Gui\Controls;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
 
@@ -17,7 +17,7 @@ class BlacklistPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected $bg;
 
-    function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login)
+    public function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login)
     {
         $sizeX = 80;
         $sizeY = 6;

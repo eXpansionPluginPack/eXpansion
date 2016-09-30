@@ -113,7 +113,7 @@ class Core extends types\ExpPlugin
     /**
      * Declares what is necessary for expansion ro run.
      */
-    public function expOnInit()
+    public function eXpOnInit()
     {
         //File to log expansion console logs
         $logFile = "manialive-" . $this->storage->serverLogin . ".console.log";
@@ -158,7 +158,7 @@ class Core extends types\ExpPlugin
         $config = Config::getInstance();
 
         //Start multi lang system for eXpansion. Gogo languages
-        i18n::getInstance()->start();
+        I18n::getInstance()->start();
 
         $expansion = <<<'EOT'
    
@@ -235,10 +235,10 @@ EOT;
         //List of supported languages found
         $this->console('');
         $this->console(
-            'Language support detected for: ' . implode(",", i18n::getInstance()->getSupportedLocales()) . '!'
+            'Language support detected for: ' . implode(",", I18n::getInstance()->getSupportedLocales()) . '!'
         );
         $this->console('Enabling default locale: ' . $config->defaultLanguage . '');
-        i18n::getInstance()->setDefaultLanguage($config->defaultLanguage);
+        I18n::getInstance()->setDefaultLanguage($config->defaultLanguage);
 
         $this->console('');
 
@@ -268,7 +268,7 @@ EOT;
         $this->connection->chatSendServerMessage('$000P L U G I N   P A C K  ');
         $this->connection->chatSendServerMessage(
             'Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . '  $n build '
-            .date("Y-m-d", Helper::getBuildDate()) . ''
+            . date("Y-m-d", Helper::getBuildDate()) . ''
         );
         if (DEBUG) {
             $this->connection->chatSendServerMessage('$f00$w DEBUG MODE enabled');
@@ -694,7 +694,8 @@ EOT;
         \Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings,
         \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings,
         $changes
-    ) {
+    )
+    {
         $this->saveMatchSettings();
     }
 
@@ -1436,7 +1437,7 @@ EOT;
     }
 
     /** converted from fast.. */
-    function positionCompare(Structures\ExpPlayer $a, Structures\ExpPlayer $b)
+    public function positionCompare(Structures\ExpPlayer $a, Structures\ExpPlayer $b)
     {
         // no cp
         if ($a->curCpIndex < 0 && $b->curCpIndex < 0) {

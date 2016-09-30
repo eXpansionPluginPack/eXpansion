@@ -78,13 +78,13 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function billSucess(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill)
     {
-        if ($bill->getDestination_login() != $this->storage->serverLogin) {
-            $this->eXpChatSendServerMessage('#donate#You donated #variable#' . $bill->getAmount() . '#donate# Planets to #variable#' . $toLogin . '$z$s#donate#', $bill->getSource_login());
+        if ($bill->getDestinationLogin() != $this->storage->serverLogin) {
+            $this->eXpChatSendServerMessage('#donate#You donated #variable#' . $bill->getAmount() . '#donate# Planets to #variable#' . $toLogin . '$z$s#donate#', $bill->getSourceLogin());
         } else {
             if ($bill->getAmount() < $this->config->donateAmountForGlobalMsg) {
-                $this->eXpChatSendServerMessage('#donate#You donated #variable#' . $bill->getAmount() . '#donate# Planets to server$z$s#donate#, Thank You.', $bill->getSource_login());
+                $this->eXpChatSendServerMessage('#donate#You donated #variable#' . $bill->getAmount() . '#donate# Planets to server$z$s#donate#, Thank You.', $bill->getSourceLogin());
             } else {
-                $fromPlayer = $this->storage->getPlayerObject($bill->getSource_login());
+                $fromPlayer = $this->storage->getPlayerObject($bill->getSourceLogin());
                 $this->eXpChatSendServerMessage('#donate#The server recieved a donation of #variable#' . $bill->getAmount() . '#donate# Planets from #variable#' . $fromPlayer->nickName . '$z$s#donate#, Thank You.', null);
             }
         }
@@ -93,15 +93,15 @@ class DonatePanel extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function billFail(\ManiaLivePlugins\eXpansion\Core\types\Bill $bill, $state, $stateName)
     {
         if ($state == 5) { // No go
-            $login = $bill->getSource_login();
+            $login = $bill->getSourceLogin();
 
             $this->eXpChatSendServerMessage('#error#No Planets billed.', $login);
         }
 
         if ($state == 6) {  // Error
-            $fromPlayer = $this->storage->getPlayerObject($bill->getSource_login());
+            $fromPlayer = $this->storage->getPlayerObject($bill->getSourceLogin());
             $this->eXpChatSendServerMessage('#error# There was error with player #variable#' . $fromPlayer->nickName . '$z$s#error# donation.');
-            $this->eXpChatSendServerMessage('#error#' . $stateName, $bill->getSource_login());
+            $this->eXpChatSendServerMessage('#error#' . $stateName, $bill->getSourceLogin());
         }
     }
 }

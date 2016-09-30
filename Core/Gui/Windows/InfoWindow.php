@@ -127,7 +127,7 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->button_addFav->setPosition($this->sizeX - 20, -$this->sizeY + 14.5);
     }
 
-    public function Ok($login)
+    public function ok($login)
     {
         $this->erase($login);
     }

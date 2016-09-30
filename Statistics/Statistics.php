@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Statistics;
 class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
         //The Database plugin is needed.
         $this->addDependency(new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Database\\Database"));

@@ -117,7 +117,8 @@ class Webaccess
         $waittimeout = 5,
         $agent = 'XMLaccess',
         $mimeType = "text/html"
-    ) {
+    )
+    {
         global $_web_access_keepalive;
         global $_web_access_keepalive_timeout;
         global $_web_access_keepalive_max;
@@ -320,57 +321,57 @@ class WebaccessUrl
     // Fields
     //-----------------------------
 
-    var $wa;
+    public $wa;
 
-    var $_host;
+    public $_host;
 
-    var $_port;
+    public $_port;
 
-    var $_compress_request;
+    public $_compress_request;
 
-    var $_socket;
+    public $_socket;
 
-    var $_state;
+    public $_state;
 
-    var $_keepalive;
+    public $_keepalive;
 
-    var $_keepalive_timeout;
+    public $_keepalive_timeout;
 
-    var $_keepalive_max;
+    public $_keepalive_max;
 
-    var $_serv_keepalive_timeout;
+    public $_serv_keepalive_timeout;
 
-    var $_serv_keepalive_max;
+    public $_serv_keepalive_max;
 
-    var $_spool;
+    public $_spool;
 
-    var $_wait;
+    public $_wait;
 
-    var $_response;
+    public $_response;
 
-    var $_query_num;
+    public $_query_num;
 
-    var $_request_time;
+    public $_request_time;
 
-    var $_cookies;
+    public $_cookies;
 
-    var $_webaccess_str;
+    public $_webaccess_str;
 
-    var $_bad_time;
+    public $_bad_time;
 
-    var $_bad_timeout;
+    public $_bad_timeout;
 
-    var $_read_time;
+    public $_read_time;
 
-    var $_agent;
+    public $_agent;
 
-    var $_mimeType;
+    public $_mimeType;
 
     //-----------------------------
     // Methods
     //-----------------------------
 
-    function __construct(
+    public function __construct(
         &$wa,
         $host,
         $port,
@@ -379,7 +380,8 @@ class WebaccessUrl
         $keepalive_max = 300,
         $agent = 'XMLaccess',
         $mimeType = "text/html"
-    ) {
+    )
+    {
         global $_web_access_compress_xmlrpc_request;
         global $_web_access_retry_timeout;
         $this->wa = &$wa;
@@ -427,7 +429,7 @@ class WebaccessUrl
     }
 
     // put connection in BAD state
-    function _bad($errstr, $isbad = true)
+    public function _bad($errstr, $isbad = true)
     {
         global $_web_access_retry_timeout;
         print_r('*' . $this->_webaccess_str . $errstr . "\n");
@@ -460,7 +462,7 @@ class WebaccessUrl
         $this->_callCallback($this->_webaccess_str . $errstr);
     }
 
-    function retry()
+    public function retry()
     {
         global $_web_access_retry_timeout;
         if ($this->_state == 'BAD') {
@@ -474,7 +476,7 @@ class WebaccessUrl
     //               'OpenTimeout'=>$opentimeout, 'WaitTimeout'=>$waittimeout);
     // will add:     'State','HDatas','Datas','DatasSize',
     // will add:     'DatasSent','Response','ResponseSize','Headers','Close','Times'
-    function request(&$query)
+    public function request(&$query)
     {
         global $_web_access_compress_reply;
         global $_web_access_post_xmlrpc;
@@ -670,7 +672,7 @@ class WebaccessUrl
     }
 
     // open the connection (if not already opened) and send
-    function _open($opentimeout = 0.0, $waittimeout = 5.0)
+    public function _open($opentimeout = 0.0, $waittimeout = 5.0)
     {
         global $_web_access_retry_timeout_max;
 
@@ -749,7 +751,7 @@ class WebaccessUrl
         }
     }
 
-    function _send($waittimeout = 20)
+    public function _send($waittimeout = 20)
     {
         if (!isset($this->_spool[0]['State'])) {
             return;
@@ -857,14 +859,14 @@ class WebaccessUrl
         } while ($this->_wait && isset($this->_spool[0]['State']) && ($this->_spool[0]['State'] == 'SEND'));
     }
 
-    function _receive($waittimeout = 40)
+    public function _receive($waittimeout = 40)
     {
         global $_Webaccess_last_response;
 
         if (!$this->_socket || $this->_state != 'OPENED') {
             return;
         }
-        
+
         $errno = '';
         $errstr = '';
         $state = false;
@@ -1277,7 +1279,7 @@ class WebaccessUrl
         return true;
     }
 
-    function infos()
+    public function infos()
     {
         try {
             $size = (isset($this->_spool[0]['Response']['Message'])) ? strlen(

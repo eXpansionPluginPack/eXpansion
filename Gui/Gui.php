@@ -30,7 +30,7 @@ class Gui extends ExpPlugin
     public static $items = array();
     public static $callbacks = array();
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
         $this->setVersion("0.1");
     }

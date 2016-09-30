@@ -33,7 +33,7 @@ class Panel2 extends \ManiaLive\Gui\Window
         foreach ($messages as $message) {
             if ($message->login == null || $message->login == $login) {
                 $text = $message->message;
-                if ($message->message instanceof \ManiaLivePlugins\eXpansion\Core\i18n\Message) {
+                if ($message->message instanceof \ManiaLivePlugins\eXpansion\Core\I18n\Message) {
                     $lang = $this->storage->getPlayerObject($login)->language;
 
                     $text = $text->getParsedMessage($lang);

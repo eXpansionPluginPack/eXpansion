@@ -134,9 +134,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * @inheritdoc
      */
-    public function expOnInit()
+    public function eXpOnInit()
     {
-        parent::expOnInit();
+        parent::eXpOnInit();
         self::$instance = $this;
 
         //Recovering the configuration
@@ -159,12 +159,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->msg_needBeAdmin = eXpGetMessage('#admin_error#You need to be an Admin to use that command');
         $this->msg_cmdDontEx = eXpGetMessage(
             '#admin_error#That Admin command doesen\'t exist. '
-            .'Use #variable#/admin help #admin_error#to see all commands'
+            . 'Use #variable#/admin help #admin_error#to see all commands'
         );
         $this->msg_neeMorPerm = eXpGetMessage('#admin_error#You don\'t have the permission to use that admin command');
         $this->msg_aInGroup = eXpGetMessage(
             '#admin_error#Player #variable#%1$s #admin_error#is '
-            .'already in a group #admin_error#%2$s. #admin_error#Remove him first'
+            . 'already in a group #admin_error#%2$s. #admin_error#Remove him first'
         );
         $this->msg_paddSuc = eXpGetMessage(
             '#admin_action#Player #variable# %1$s #admin_action#has been added to admin group #variable#%2$s'
@@ -182,7 +182,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->msg_masterMasterE = eXpGetMessage('#admin_error#Master Admins has all rights. You can\'t change that!');
         $this->msg_removeMlAdmin = eXpGetMessage(
             '#admin_error#Master admin #variable#%1$s has been '
-            .'defined in config.ini and not throught eXpansion. Can\'t remove!'
+            . 'defined in config.ini and not throught eXpansion. Can\'t remove!'
         );
         self::$txt_msg_cmdDontEx = $this->msg_cmdDontEx;
         self::$txt_noPermissionMsg = $this->msg_neeMorPerm;
@@ -443,7 +443,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *  $ag->announceToGroup($ag->getGroup("Admins"), exp_getMessage("your message here"));
      *
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
-     * @param String|\ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
+     * @param String|\ManiaLivePlugins\eXpansion\Core\I18n\Message $msg
      */
     public function announceToGroup(Group $group, $msg, $args = array())
     {
@@ -460,7 +460,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param string $permission common usage would be to use
      *                                                                         Permission::constant
-     * @param String|\ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
+     * @param String|\ManiaLivePlugins\eXpansion\Core\I18n\Message $msg
      */
     public function announceToPermission($permission, $msg, $args = array())
     {
@@ -770,12 +770,11 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * function kick($fromLogin, $params)
      * }
      *
-     * @param String $cmd The string of the command
-     * @param Object $class The object to call
-     * @param String $function The name of the function to call
-     * @param \ManiaLivePlugins\eXpansion\AdminGroups\Permissions $permission The permission level needed to do the
-     *                                                                        command. If null then an admin from any
-     *                                                                        group can do the command
+     * @param string $cmd The string of the command
+     * @param $class
+     * @param string $function The name of the function to call
+     * @param string $permission The permission level needed to do the
+     * command. If null then an admin from any group can do the command
      *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd The AdminCmd object
      */
@@ -797,10 +796,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Adds an alias to an existing command
      *
-     * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd The command object to which we want to add an
-     *                                                                   alias
+     * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd
+     * The command object to which we want to add an alias
      * @param string $cmd The new command
-     */
+     *   */
     public static function addAlias(AdminCmd $adminCmd, $cmd)
     {
         self::addCommand($adminCmd, $cmd);
@@ -813,7 +812,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * They work the same way other commands works.
      *
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd
-     * @param type $cmd
+     * @param string $cmd
      *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
@@ -846,7 +845,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Adds the command
      *
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $adminCmd
-     * @param type $cmd
+     * @param string $cmd
      *
      * @return \ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd
      */
@@ -921,13 +920,14 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Add title to a certain permission.
      *
-     * @param                                               $permissionName
-     * @param \ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
+     * @param string $permissionName
+     * @param \ManiaLivePlugins\eXpansion\Core\I18n\Message $msg
      */
     public static function addPermissionTitleMessage(
         $permissionName,
-        \ManiaLivePlugins\eXpansion\Core\i18n\Message $msg
-    ) {
+        \ManiaLivePlugins\eXpansion\Core\I18n\Message $msg
+    )
+    {
         self::$txt_permissions[$permissionName] = $msg;
     }
 
@@ -936,7 +936,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param String $permissionName The name of the permission to get the message for
      *
-     * @return \ManiaLivePlugins\eXpansion\Core\i18n\Message|string
+     * @return \ManiaLivePlugins\eXpansion\Core\I18n\Message|string
      */
     public static function getPermissionTitleMessage($permissionName)
     {

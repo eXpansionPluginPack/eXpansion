@@ -51,7 +51,7 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    public function expOnInit()
+    public function eXpOnInit()
     {
         $this->setPublicMethod('getVersion');
         $this->config = Config::getInstance();

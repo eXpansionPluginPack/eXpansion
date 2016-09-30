@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace ManiaLivePlugins\eXpansion\Chat_Admin\Structures;
+namespace ManiaLivePlugins\eXpansion\ChatAdmin\Structures;
 
 /**
  * Description of ActionDuration

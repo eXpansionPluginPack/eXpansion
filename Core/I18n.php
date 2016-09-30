@@ -6,7 +6,7 @@ namespace ManiaLivePlugins\eXpansion\Core;
  * a simple internationalization class for string texts
  *
  */
-class i18n extends \ManiaLib\Utils\Singleton
+class I18n extends \ManiaLib\Utils\Singleton
 {
 
     /**
@@ -108,7 +108,7 @@ class i18n extends \ManiaLib\Utils\Singleton
                     }
 
                     if (!isset($this->messages[$orig])) {
-                        $this->messages[$orig] = new i18n\Message($orig);
+                        $this->messages[$orig] = new I18n\Message($orig);
                     }
                     $this->messages[$orig]->addLanguageMessage($language, $trans);
                 }
@@ -131,14 +131,14 @@ class i18n extends \ManiaLib\Utils\Singleton
      *
      * @param $string Translation key
      *
-     * @return i18n\Message FOund message, or new message
+     * @return I18n\Message FOund message, or new message
      */
     public function getObject($string)
     {
         if (isset($this->messages[$string])) {
             return $this->messages[$string];
         } else {
-            $nmessage = new i18n\Message($string);
+            $nmessage = new I18n\Message($string);
 
             return $nmessage;
         }

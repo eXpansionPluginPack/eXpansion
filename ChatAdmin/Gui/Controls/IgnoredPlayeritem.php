@@ -1,6 +1,6 @@
 <?php
 
-namespace ManiaLivePlugins\eXpansion\Chat_Admin\Gui\Controls;
+namespace ManiaLivePlugins\eXpansion\ChatAdmin\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Icons64x64_1;
 use ManiaLib\Gui\Elements\Label;

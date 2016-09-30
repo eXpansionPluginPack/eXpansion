@@ -15,7 +15,7 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     private $access;
     private $clublinks = array("", "");
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
         $this->exp_addTitleSupport("TM");
         $this->exp_addTitleSupport("Trackmania");

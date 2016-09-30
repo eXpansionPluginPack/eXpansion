@@ -47,7 +47,8 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->registerChatCommand(
             "disconnect",
             "disconnect",
-            1, true,
+            1,
+            true,
             \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get()
         );
         $this->registerChatCommand(
@@ -77,7 +78,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         parent::eXpOnUnload();
     }
 
-    function onTick()
+    public function onTick()
     {
         if ($this->testActive) {
             if ($this->ticker == 1) {
@@ -95,21 +96,21 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
     }
 
-    function testWin($login)
+    public function testWin($login)
     {
         $win = Gui\testWindow::create($login);
         $win->setSize(120, 60);
         $win->show($login);
     }
 
-    function connect($login, $playercount)
+    public function connect($login, $playercount)
     {
         for ($x = 0; $x < $playercount; $x++) {
             $this->connection->connectFakePlayer();
         }
     }
 
-    function disconnect($login, $amount)
+    public function disconnect($login, $amount)
     {
         try {
             if (is_numeric($amount)) {
@@ -141,23 +142,23 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Dispatcher::setApplicationListener(new Profiler());
     }
 
-    function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
+    public function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
     {
     }
 
-    function test($login)
+    public function test($login)
     {
         $this->testActive = !$this->testActive;
     }
 
-    function logMemory()
+    public function logMemory()
     {
         $mem = "Memory Usage: " . round(memory_get_usage() / 1024 / 1024) . "Kb";
         print "\n" . $mem . "\n";
         $this->connection->chatSend($mem);
     }
 
-    function mem($login)
+    public function mem($login)
     {
         Gui\debugWidget::EraseAll();
         $widget = Gui\debugWidget::Create(null);
@@ -165,7 +166,7 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $widget->show();
     }
 
-    function crash()
+    public function crash()
     {
         throw new \Exception("Crash Test");
     }

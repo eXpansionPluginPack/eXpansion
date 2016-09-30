@@ -65,7 +65,7 @@ class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    public function expOnInit()
+    public function eXpOnInit()
     {
 
     }

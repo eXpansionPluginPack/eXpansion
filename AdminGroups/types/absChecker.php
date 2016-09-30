@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\types;
+use ManiaLib\Utils\Singleton;
 
 /**
  * Description of absChecker
@@ -8,7 +9,7 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups\types;
  * @author oliverde8
  * @abstract
  */
-abstract class absChecker extends \ManiaLib\Utils\Singleton
+abstract class absChecker extends Singleton
 {
 
     abstract public function check($data);

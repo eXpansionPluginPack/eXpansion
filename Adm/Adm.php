@@ -16,7 +16,7 @@ use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerOptions;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Events\Event;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
-use ManiaLivePlugins\eXpansion\Core\i18n\Message;
+use ManiaLivePlugins\eXpansion\Core\I18n\Message;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
@@ -325,8 +325,8 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     public function skipMap($login)
     {
         if (AdminGroups::hasPermission($login, Permission::MAP_SKIP)) {
-            if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\Chat_Admin\Chat_Admin")) {
-                $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Chat_Admin\Chat_Admin", "skipMap", $login);
+            if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\ChatAdmin\ChatAdmin")) {
+                $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\ChatAdmin\ChatAdmin", "skipMap", $login);
             }
         }
     }
@@ -358,8 +358,8 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
      */
     public function cancelVote($login)
     {
-        if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin")) {
-            $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin", "cancelVote", $login);
+        if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\ChatAdmin\\ChatAdmin")) {
+            $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\ChatAdmin\\ChatAdmin", "cancelVote", $login);
 
             return;
         }
@@ -373,8 +373,8 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
      */
     public function endRound($login)
     {
-        if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin")) {
-            $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\Chat_Admin\\Chat_Admin", "forceEndRound", $login);
+        if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\ChatAdmin\\ChatAdmin")) {
+            $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\ChatAdmin\\ChatAdmin", "forceEndRound", $login);
 
             return;
         }

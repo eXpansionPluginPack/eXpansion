@@ -8,12 +8,12 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
     public $msg_broadcast;
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
-        parent::expOnInit();
+        parent::eXpOnInit();
 
         $this->addDependency(
-            new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin")
+            new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\ChatAdmin\\ChatAdmin")
         );
 
         Gui\Windows\Playerlist::$mainPlugin = $this;

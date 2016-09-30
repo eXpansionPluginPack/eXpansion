@@ -13,7 +13,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public static $action_Lol;
     public static $action_Bg;
 
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         EmotePanel::$emotePlugin = $this;
@@ -50,7 +50,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function bootme($login)
+    public function bootme($login)
     {
         $player = $this->storage->getPlayerObject($login);
         $nick = $player->nickName;
@@ -60,7 +60,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->connection->kick($login, "thanks for playing");
     }
 
-    function rq($login)
+    public function rq($login)
     {
         $player = $this->storage->getPlayerObject($login);
         $nick = $player->nickName;
@@ -69,136 +69,136 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->connection->kick($login, "thanks for playing");
     }
 
-    function hi($login, $args = "")
+    public function hi($login, $args = "")
     {
         $this->helper($login, $args, $this->config->hi, $this->config->hi2);
     }
 
-    function hello($login, $args = "")
+    public function hello($login, $args = "")
     {
         $this->helper($login, $args, $this->config->hi, $this->config->hi2);
     }
 
-    function thx($login, $args = "")
+    public function thx($login, $args = "")
     {
 
         $this->helper($login, $args, $this->config->thx, $this->config->thx2);
     }
 
-    function ty($login, $args = "")
+    public function ty($login, $args = "")
     {
 
         $this->helper($login, $args, $this->config->thx, $this->config->thx2);
     }
 
-    function bb($login, $args = "")
+    public function bb($login, $args = "")
     {
 
         $this->helper($login, $args, $this->config->bb, $this->config->bb2);
     }
 
-    function bye($login, $args = "")
+    public function bye($login, $args = "")
     {
 
         $this->helper($login, $args, $this->config->bb, $this->config->bb2);
     }
 
-    function lol($login, $args = "")
+    public function lol($login, $args = "")
     {
         $this->helper($login, $args, $this->config->lol, $this->config->lol2);
     }
 
-    function brb($login, $args = "")
+    public function brb($login, $args = "")
     {
         $this->helper($login, $args, $this->config->brb, $this->config->brb2);
     }
 
-    function afk($login, $args = "")
+    public function afk($login, $args = "")
     {
         $this->helper($login, $args, $this->config->afk, $this->config->afk2);
         $this->connection->forceSpectator($login, 3);
     }
 
-    function gg($login, $args = "")
+    public function gg($login, $args = "")
     {
         $this->helper($login, $args, $this->config->gg, $this->config->gg2);
     }
 
-    function nl($login, $args = "")
+    public function nl($login, $args = "")
     {
         $this->helper($login, $args, $this->config->nl, $this->config->nl2);
     }
 
-    function bgm($login, $args = "")
+    public function bgm($login, $args = "")
     {
 
         $this->helper($login, $args, $this->config->bgm, $this->config->bgm2);
     }
 
-    function sry($login, $args = "")
+    public function sry($login, $args = "")
     {
         $this->helper($login, $args, $this->config->sry, $this->config->sry2);
     }
 
-    function sorry($login, $args = "")
+    public function sorry($login, $args = "")
     {
         $this->helper($login, $args, $this->config->sry, $this->config->sry2);
     }
 
-    function glhf($login, $args = "")
+    public function glhf($login, $args = "")
     {
         $this->helper($login, $args, $this->config->glhf, $this->config->glhf2);
     }
 
-    function wb($login, $args = "")
+    public function wb($login, $args = "")
     {
         $this->helper($login, $args, $this->config->wb, $this->config->wb2);
     }
 
-    function omg($login, $args = "")
+    public function omg($login, $args = "")
     {
         $this->helper($login, $args, $this->config->omg, $this->config->omg2);
     }
 
-    function buzz($login, $args = "")
+    public function buzz($login, $args = "")
     {
 
         $this->helper($login, $args, $this->config->buzz, $this->config->buzz2);
     }
 
-    function eat($login, $args = "")
+    public function eat($login, $args = "")
     {
 
         $this->helper($login, $args, $this->config->eat, $this->config->eat2);
     }
 
-    function drink($login, $args = "")
+    public function drink($login, $args = "")
     {
 
         $this->helper($login, $args, $this->config->drink, $this->config->drink2);
     }
 
-    function rant($login, $args = "")
+    public function rant($login, $args = "")
     {
         $this->helper($login, $args, $this->config->rant, $this->config->rant2);
     }
 
-    function joke($login)
+    public function joke($login)
     {
         $this->oneLiner($login, "jokes");
     }
 
-    function fact($login)
+    public function fact($login)
     {
         $this->oneLiner($login, "facts");
     }
 
-    function proverb($login)
+    public function proverb($login)
     {
         $this->oneLiner($login, "proverbs");
     }
 
-    function quote($login)
+    public function quote($login)
     {
         $this->oneLiner($login, "quotes");
     }
@@ -215,7 +215,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function helper($login, $args, $source1, $source2)
+    public function helper($login, $args, $source1, $source2)
     {
 
         if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Chat\Chat')
@@ -251,7 +251,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function getPlayerNick($login)
+    public function getPlayerNick($login)
     {
         try {
             $player = $this->storage->getPlayerObject($login);
@@ -274,7 +274,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return void
      */
-    function oneLiner($login, $file)
+    public function oneLiner($login, $file)
     {
         $data = file_get_contents(__DIR__ . '/Texts/' . $file . '.txt');
         $lines = explode("\n", $data);
@@ -283,7 +283,7 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->eXpChatSendServerMessage($player->nickName . '$z$s #emote#' . trim($message) . '$z$s');
     }
 
-    function eXpOnUnload()
+    public function eXpOnUnload()
     {
         EmotePanel::EraseAll();
     }

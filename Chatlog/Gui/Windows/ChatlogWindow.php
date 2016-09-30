@@ -13,7 +13,7 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $ok;
     private $widths = array(2, 5, 25);
 
-    function onConstruct()
+    public function onConstruct()
     {
         parent::onConstruct();
 
@@ -23,7 +23,7 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     }
 
-    function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setPositionY(6);
@@ -35,7 +35,7 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
      *
      * @param \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage[] $messages
      */
-    function populateList($messages)
+    public function populateList($messages)
     {
         foreach ($this->items as $item) {
             $item->erase();
@@ -58,12 +58,12 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    function Close($login)
+    public function Close($login)
     {
         $this->erase($login);
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item) {
             $item->erase();

@@ -74,7 +74,7 @@ class Maps extends ExpPlugin
     private $is_onBeginMatch = false;
     private $is_onEndMatch = false;
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
         $this->messages = new \StdClass();
 
@@ -597,7 +597,7 @@ class Maps extends ExpPlugin
     public function validateQueuMap(Bill $bill)
     {
         $this->paymentInProgress = false;
-        $this->queueMap($bill->getSource_login(), $bill->map, false, false);
+        $this->queueMap($bill->getSourceLogin(), $bill->map, false, false);
     }
 
     public function failQueuMap(Bill $bill, $state, $stateName)

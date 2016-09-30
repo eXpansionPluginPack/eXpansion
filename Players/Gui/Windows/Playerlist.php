@@ -44,27 +44,27 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         if (AdminGroups::hasPermission($login, Permission::PLAYER_IGNORE)) {
             $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
             $btn->setText(__("Ignore List", $login));
-            $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['ignore']);
+            $btn->setAction(\ManiaLivePlugins\eXpansion\ChatAdmin\ChatAdmin::$showActions['ignore']);
             $line->addComponent($btn);
         }
 
         if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
             $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
             $btn->setText(__("Guest List", $login));
-            $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['guest']);
+            $btn->setAction(\ManiaLivePlugins\eXpansion\ChatAdmin\ChatAdmin::$showActions['guest']);
             $line->addComponent($btn);
         }
 
         if (AdminGroups::hasPermission($login, Permission::PLAYER_UNBAN)) {
             $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
             $btn->setText(__("Ban List", $login));
-            $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['ban']);
+            $btn->setAction(\ManiaLivePlugins\eXpansion\ChatAdmin\ChatAdmin::$showActions['ban']);
             $line->addComponent($btn);
         }
         if (AdminGroups::hasPermission($login, Permission::PLAYER_BLACK)) {
             $btn = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
             $btn->setText(__("Black List", $login));
-            $btn->setAction(\ManiaLivePlugins\eXpansion\Chat_Admin\Chat_Admin::$showActions['black']);
+            $btn->setAction(\ManiaLivePlugins\eXpansion\ChatAdmin\ChatAdmin::$showActions['black']);
             $line->addComponent($btn);
         }
 

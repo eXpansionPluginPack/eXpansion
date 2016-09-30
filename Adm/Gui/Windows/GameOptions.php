@@ -48,7 +48,7 @@ class GameOptions extends Window
     private $e = array();
     private $nextMode = null;
 
-    function onConstruct()
+    public function onConstruct()
     {
         parent::onConstruct();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();

@@ -21,14 +21,14 @@ class ManiaExchange extends ExpPlugin
     /** @var string */
     private $titleId;
 
-    /** @var \ManiaLivePlugins\eXpansion\Core\i18n\Message */
+    /** @var \ManiaLivePlugins\eXpansion\Core\I18n\Message */
     private $msg_add;
 
     /** @var \ManiaLivePlugins\eXpansion\Core\DataAccess */
     private $dataAccess;
     private $cmd_add;
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
         $this->config = Config::getInstance();
     }

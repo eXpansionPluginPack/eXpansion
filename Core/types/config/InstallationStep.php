@@ -3,13 +3,13 @@
 namespace ManiaLivePlugins\eXpansion\Core\types\config;
 
 /**
- * Description of InstallationSteps
+ * Description of InstallationStep
  *
  * @author De Cramer Oliver
  */
-class InstallationStepss
+class InstallationStep
 {
-    function __construct($name)
+    public function __construct($name)
     {
     }
 }

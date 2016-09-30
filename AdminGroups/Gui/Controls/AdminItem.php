@@ -18,7 +18,7 @@ class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     private $plistButton;
 
-    function __construct($indexNumber, Admin $admin, $controller, $login)
+    public function __construct($indexNumber, Admin $admin, $controller, $login)
     {
         $sizeX = 75;
         $sizeY = 6;
@@ -63,7 +63,7 @@ class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }

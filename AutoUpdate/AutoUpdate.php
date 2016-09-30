@@ -56,7 +56,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Will check if updates are necessary.
      */
-    function checkUpdate()
+    public function checkUpdate()
     {
         $AdminGroups = AdminGroups::getInstance();
 
@@ -132,7 +132,7 @@ class AutoUpdate extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param $login
      */
-    function autoUpdate($login)
+    public function autoUpdate($login)
     {
         $AdminGroups = AdminGroups::getInstance();
 

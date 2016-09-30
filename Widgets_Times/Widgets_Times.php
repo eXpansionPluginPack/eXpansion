@@ -10,7 +10,7 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
     protected $references = array();
 
-    public function expOnInit()
+    public function eXpOnInit()
     {
     }
 

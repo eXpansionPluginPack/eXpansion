@@ -200,7 +200,7 @@ class Bets extends ExpPlugin
      */
     public function billPaySuccess(Bill $bill)
     {
-        $login = $bill->getSource_login();
+        $login = $bill->getSourceLogin();
         $this->eXpChatSendServerMessage($this->msg_billPaySuccess, $login, array($bill->getAmount()));
     }
 
@@ -211,7 +211,7 @@ class Bets extends ExpPlugin
      */
     public function billAcceptSuccess(Bill $bill)
     {
-        $login = $bill->getSource_login();
+        $login = $bill->getSourceLogin();
         try {
             $this->players[$login] = $this->storage->getPlayerObject($login);
             $this->eXpChatSendServerMessage($this->msg_billSuccess, $login, array($bill->getAmount()));
@@ -230,7 +230,7 @@ class Bets extends ExpPlugin
     public function billSetSuccess(Bill $bill)
     {
         $this->setState(self::ACCEPT);
-        $login = $bill->getSource_login();
+        $login = $bill->getSourceLogin();
         try {
             $this->players[$login] = $this->storage->getPlayerObject($login);
             $this->eXpChatSendServerMessage($this->msg_billSuccess, $login, array($bill->getAmount()));
@@ -251,12 +251,12 @@ class Bets extends ExpPlugin
 
     public function billFail(Bill $bill, $state, $stateName)
     {
-        $this->eXpChatSendServerMessage($this->msg_fail, $bill->getSource_login());
+        $this->eXpChatSendServerMessage($this->msg_fail, $bill->getSourceLogin());
     }
 
     public function billPayFail(Bill $bill, $state, $stateName)
     {
-        $this->eXpChatSendServerMessage($this->msg_payFail, $bill->getSource_login());
+        $this->eXpChatSendServerMessage($this->msg_payFail, $bill->getSourceLogin());
     }
 
     public function updateBetWidget()

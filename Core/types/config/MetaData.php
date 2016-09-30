@@ -3,7 +3,10 @@
 namespace ManiaLivePlugins\eXpansion\Core\types\config;
 
 use ManiaLive\Data\Storage;
+use ManiaLivePlugins\eXpansion\Core\ConfigManager;
+use ManiaLivePlugins\eXpansion\Core\Core;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
+use ManiaLivePlugins\eXpansion\Helpers\Storage as eXpStorage;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 /**
@@ -85,7 +88,7 @@ abstract class MetaData
     private $relaySupport = true;
 
     /**
-     * @var Whatever plugins support soft title name, or
+     * @var bool Whatever plugins support soft title name, or
      */
     private $softTitleSupport = true;
 
@@ -95,7 +98,7 @@ abstract class MetaData
     private $enviAsTitle = true;
 
     /**
-     * @param String The Id of the plugin the meta data is working for
+     * @param string $pluginId The Id of the plugin the meta data is working for
      *
      * @return MetaData The meta data of the plugin.
      */
@@ -118,7 +121,7 @@ abstract class MetaData
     final private function __construct($pluginId)
     {
         $this->pluginId = $pluginId;
-        $this->confManager = \ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance();
+        $this->confManager = ConfigManager::getInstance();
 
         $this->onBeginLoad();
         $this->onEndLoad();
@@ -280,7 +283,7 @@ abstract class MetaData
     /**
      * Core plugins can't be unloaded from ManiaLive once they have been loaded.
      *
-     * @param type $isCore Whatever or not this plugin is part of the core of eXpansion.
+     * @param boolean $isCore Whatever or not this plugin is part of the core of eXpansion.
      */
     public function setIsCorePlugin($isCore)
     {
@@ -407,15 +410,15 @@ abstract class MetaData
         if (!empty($this->gameModeSupport)) {
             //Get current state if need be
             if ($gamemode == null) {
-                $storage = \ManiaLive\Data\Storage::getInstance();
+                $storage = Storage::getInstance();
                 $gamemode = $storage->gameInfos->gameMode;
-                if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
+                if ($gamemode == GameInfos::GAMEMODE_SCRIPT) {
                     $scriptName = $storage->gameInfos->scriptName;
                 }
             }
 
             //Scrit mode special checking.
-            if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
+            if ($gamemode == GameInfos::GAMEMODE_SCRIPT) {
                 return $this->checkScriptGameModeCompatibility($scriptName);
             }
 
@@ -429,7 +432,7 @@ abstract class MetaData
     protected function checkScriptGameModeCompatibility($scriptName)
     {
         if ($this->scriptCompatibiliyMode) {
-            $gmode = \ManiaLivePlugins\eXpansion\Core\Core::eXpGetScriptCompatibilityMode($scriptName);
+            $gmode = Core::eXpGetScriptCompatibilityMode($scriptName);
 
             return isset($this->gameModeSupport[$gmode]) ? $this->gameModeSupport[$gmode] : false;
         }
@@ -458,13 +461,14 @@ abstract class MetaData
                  * @var Storage $storage
                  */
                 if ($this->checkTitleCompatibility(
-                    \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId
-                )) {
+                    eXpStorage::getInstance()->version->titleId
+                )
+                ) {
                     return true;
                 }
-                $titleName = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->simpleEnviTitle;
+                $titleName = eXpStorage::getInstance()->simpleEnviTitle;
             } else {
-                $titleName = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->version->titleId;
+                $titleName = eXpStorage::getInstance()->version->titleId;
             }
         }
 
@@ -488,9 +492,7 @@ abstract class MetaData
 
     public function checkOtherCompatibility()
     {
-        /** @var \ManiaLivePlugins\eXpansion\Helpers\Storage $expStorage */
-        $expStorage = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance();
-        if ($expStorage->isRelay && !$this->getRelaySupport()) {
+        if (eXpStorage::getInstance()->isRelay && !$this->getRelaySupport()) {
             return array('This plugin don\'t support Relay servers');
         }
 
