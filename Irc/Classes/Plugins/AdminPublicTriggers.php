@@ -37,7 +37,7 @@ class AdminPublicTriggers implements \ManiaLivePlugins\eXpansion\Irc\Classes\Irc
 
     /** @var ManiaLive\Data\Storage */
     private $storage;
-    private $allowedLogins = Array();
+    private $allowedLogins = array();
 
     public function __construct()
     {

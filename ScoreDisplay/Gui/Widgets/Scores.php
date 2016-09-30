@@ -15,8 +15,10 @@ use ManiaLivePlugins\eXpansion\Helpers\Countries;
 class Scores extends Widget
 {
 
-    protected $points1, $points2;
-    protected $frame, $frame2;
+    protected $points1;
+    protected $points2;
+    protected $frame;
+    protected $frame2;
     private $counter = array(0, 0);
 
     public function eXpOnBeginConstruct()
@@ -69,7 +71,7 @@ class Scores extends Widget
         $team1->setImage("http://reaby.kapsi.fi/ml/flags/" . $cname . ".dds", true);
         $this->frame->addComponent($team1);
 
-        $team1Name = New Label(40, 6);
+        $team1Name = new Label(40, 6);
         $team1Name->setText($data->team1Name);
         $team1Name->setStyle("TextRaceMessageBig");
         $this->frame->addComponent($team1Name);
@@ -89,7 +91,7 @@ class Scores extends Widget
         $this->points2->setStyle("TextRaceChrono");
         $this->frame->addComponent($this->points2);
 
-        $team2Name = New Label(40, 6);
+        $team2Name = new Label(40, 6);
         $team2Name->setText($data->team2Name);
         $team2Name->setStyle("TextRaceMessageBig");
         $this->frame->addComponent($team2Name);

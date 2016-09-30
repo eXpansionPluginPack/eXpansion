@@ -47,7 +47,7 @@ class IrcBot
     /** @var \ResourceBundle|null */
     private $socket;
 
-    private $callbackClasses = Array();
+    private $callbackClasses = array();
 
     /** @var IrcConfig */
     private $config;
@@ -61,14 +61,14 @@ class IrcBot
     {
         $this->config = $config;
         $this->socket = \socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-        if ($this->socket === false || !is_resource($this->socket))
+        if ($this->socket === false || !is_resource($this->socket)) {
             $this->throwError();
-
-// @\socket_set_nonblock($this->socket);
+        }
 
         $this->connected = socket_connect($this->socket, $config->server, $config->port);
-        if ($this->connected === false)
+        if ($this->connected === false) {
             $this->throwError();
+        }
 
         if (!empty($this->config->serverPass)) {
             $this->sendCommand("PASS", $this->config->serverPass);
@@ -85,11 +85,13 @@ class IrcBot
     final public function onTick()
     {
 
-        if ($this->connected === false)
+        if ($this->connected === false) {
             return false;
+        }
 
-        if (is_resource($this->socket) === false)
+        if (is_resource($this->socket) === false) {
             return false;
+        }
 
 
         $read = array($this->socket);
@@ -167,7 +169,7 @@ class IrcBot
                 break;
             case "PING":
                 $this->pong($messages[4]);
-
+                break;
             default:
                 break;
         }

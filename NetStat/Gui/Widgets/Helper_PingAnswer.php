@@ -17,7 +17,7 @@ class Helper_PingAnswer extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWid
         parent::onConstruct();
         $this->setName('Netstat PingAnswer');
 
-        $this->script = New \ManiaLivePlugins\eXpansion\Gui\Structures\Script("NetStat/Gui/Scripts/PingAnswer");
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("NetStat/Gui/Scripts/PingAnswer");
         $this->registerScript($this->script);
     }
 

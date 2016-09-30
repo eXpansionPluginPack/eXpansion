@@ -9,7 +9,10 @@ namespace ManiaLivePlugins\eXpansion\NetStat\Gui\Widgets;
 class Helper_Netstat extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
 
-    protected $iLogin, $iStamp, $latency, $script;
+    protected $iLogin;
+    protected $iStamp;
+    protected $latency;
+    protected $script;
 
     protected function onConstruct()
     {
@@ -31,7 +34,7 @@ class Helper_Netstat extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $this->addComponent($this->latency);
 
 
-        $this->script = New \ManiaLivePlugins\eXpansion\Gui\Structures\Script("NetStat/Gui/Scripts/Netstat");
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("NetStat/Gui/Scripts/Netstat");
         $this->script->setParam('updateFreq', 5000);
         $this->registerScript($this->script);
     }

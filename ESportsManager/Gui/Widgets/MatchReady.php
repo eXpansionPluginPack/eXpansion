@@ -14,10 +14,20 @@ class MatchReady extends \ManiaLive\Gui\Window
 {
 
     public static $actions;
-    protected $background, $lbl_nextMatch, $lbl_info, $btn_ready, $btn_wait, $btn_continue, $btn_spec, $btn_play;
-    protected $btn_joinRed, $btn_joinBlue;
+    protected $background;
+    protected $lbl_nextMatch;
+    protected $lbl_info;
+    protected $btn_ready;
+    protected $btn_wait;
+    protected $btn_continue;
+    protected $btn_spec;
+    protected $btn_play;
+    protected $btn_joinRed;
+    protected $btn_joinBlue;
     /** @var \ManiaLive\Gui\Controls\Frame */
-    protected $frame_team_blue, $frame_team_red, $frame_rounds;
+    protected $frame_team_blue;
+    protected $frame_team_red;
+    protected $frame_rounds;
     private $gameMode;
     /** @var  \Maniaplanet\DedicatedServer\Connection */
     private $connection;
@@ -35,16 +45,14 @@ class MatchReady extends \ManiaLive\Gui\Window
         $this->background->setAlign("left", "top");
         $this->background->setStyle("Bgs1");
         $this->background->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgCard1);
-        //$this->addComponent($this->background);
 
-
-        $this->lbl_nextMatch = New \ManiaLib\Gui\Elements\Label(60, 6);
+        $this->lbl_nextMatch = new \ManiaLib\Gui\Elements\Label(60, 6);
         $this->lbl_nextMatch->setStyle("TextRaceMessageBig");
         $this->lbl_nextMatch->setAlign("center", "top");
         $this->lbl_nextMatch->setText(ESportsManager::$matchSettings->matchTitle);
         $this->addComponent($this->lbl_nextMatch);
 
-        $this->lbl_info = New \ManiaLib\Gui\Elements\Label(60, 6);
+        $this->lbl_info = new \ManiaLib\Gui\Elements\Label(60, 6);
         $this->lbl_info->setText(ESportsManager::$matchSettings->rulesText);
         $this->lbl_info->setAlign("center");
         $this->addComponent($this->lbl_info);
@@ -142,18 +150,25 @@ class MatchReady extends \ManiaLive\Gui\Window
 
         $x = 0;
         foreach (ESportsManager::$playerStatuses as $login => $player) {
-            if ($player === null)
+            if ($player === null) {
                 continue;
+            }
 
             if ($this->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM) {
                 if ($player->player->teamId == 0) {
-                    $this->frame_team_blue->addComponent(new PlayerStatusItem($x, $player, $this, $this->gameMode, $isAdmin, $sizeX));
+                    $this->frame_team_blue->addComponent(
+                        new PlayerStatusItem($x, $player, $this, $this->gameMode, $isAdmin, $sizeX)
+                    );
                 }
                 if ($player->player->teamId == 1) {
-                    $this->frame_team_red->addComponent(new PlayerStatusItem($x, $player, $this, $this->gameMode, $isAdmin, $sizeX));
+                    $this->frame_team_red->addComponent(
+                        new PlayerStatusItem($x, $player, $this, $this->gameMode, $isAdmin, $sizeX)
+                    );
                 }
             } else {
-                $this->frame_rounds->addComponent(new PlayerStatusItem($x, $player, $this, $this->gameMode, $isAdmin, $sizeX));
+                $this->frame_rounds->addComponent(
+                    new PlayerStatusItem($x, $player, $this, $this->gameMode, $isAdmin, $sizeX)
+                );
             }
             $x++;
         }
@@ -176,7 +191,6 @@ class MatchReady extends \ManiaLive\Gui\Window
 
         $sX = $this->getSizeX();
         $sY = $this->getSizeY();
-        //    $this->background->setSize($sX, $sY);
         $this->lbl_nextMatch->setPosition(($sX / 2), 0);
         $this->lbl_info->setPosition(($sX / 2), -10);
         $this->btn_ready->setPosition(($sX / 2) - 30, -$sY + 18);
@@ -188,8 +202,6 @@ class MatchReady extends \ManiaLive\Gui\Window
 
         $this->frame_team_blue->setPosition(($sX / 2) - 60, -24);
         $this->frame_team_red->setPosition(($sX / 2) + 60, -24);
-        //  $this->btn_joinBlue->setPosition(($sX / 2) - 60, - 18);
-        //   $this->btn_joinRed->setPosition(($sX / 2) + 60, - 18);
 
         $this->frame_rounds->setPosition(($sX / 2), -24);
         parent::onResize($oldX, $oldY);

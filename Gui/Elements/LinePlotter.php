@@ -28,7 +28,7 @@ class LinePlotter extends \ManiaLivePlugins\eXpansion\Gui\Control
     public function __construct($sizeX = 100, $sizeY = 100)
     {
         $this->plots = array();
-        $this->sizes = Array($sizeX, $sizeY);
+        $this->sizes = array($sizeX, $sizeY);
 
         $this->colors = array();
         $this->graph = new Graph($sizeX - 8, $sizeY - 4);
@@ -162,7 +162,8 @@ declare CMlGraphCurve[] scaleX;
         foreach ($this->plots as $u => $plot) {
             $val .= 'Curves.add(Graph.AddCurve());' . "\n";
             foreach ($plot as $i => $vals) {
-                $val .= "Curves[" . $index . "].Points.add(<" . $this->getNumber($this->plots[$u][$i][0]) . "," . $this->getNumber($this->plots[$u][$i][1]) . ">);\n";
+                $val .= "Curves[" . $index . "].Points.add(<" . $this->getNumber($this->plots[$u][$i][0])
+                    . "," . $this->getNumber($this->plots[$u][$i][1]) . ">);\n";
             }
             $index++;
         }

@@ -12,7 +12,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     {
         parent::onConstruct();
 
-        $this->frame = New \ManiaLive\Gui\Controls\Frame(0, 0, new \ManiaLib\Gui\Layouts\Column(50, 20));
+        $this->frame = new \ManiaLive\Gui\Controls\Frame(0, 0, new \ManiaLib\Gui\Layouts\Column(50, 20));
         $this->frame->setId("Menu");
         $this->addComponent($this->frame);
 
@@ -24,7 +24,10 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $this->script->setParam("name", "Submenu");
         $storage = \ManiaLive\Data\Storage::getInstance();
         if ($storage->gameInfos->gameMode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT) {
-            $this->script->setParam("gameMode", \ManiaLivePlugins\eXpansion\Gui\Gui::fixString($this->storage->gameInfos->scriptName));
+            $this->script->setParam(
+                "gameMode",
+                \ManiaLivePlugins\eXpansion\Gui\Gui::fixString($this->storage->gameInfos->scriptName)
+            );
         } else {
             $this->script->setParam("gameMode", $storage->gameInfos->gameMode);
         }

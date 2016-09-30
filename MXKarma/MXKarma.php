@@ -54,7 +54,8 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
     private $votesTemp = array();
 
     /** @var MXVote */
-    private $msg_error, $msg_connected;
+    private $msg_error;
+    private $msg_connected;
 
     /** @var Config */
     private $config;
@@ -87,7 +88,8 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
         if (!$this->mxConnection->isConnected()) {
             if (empty($this->config->mxKarmaServerLogin) || empty($this->config->mxKarmaApiKey)) {
                 $admins->announceToPermission(
-                    Permission::EXPANSION_PLUGIN_SETTINGS, "#admin_error#Server login or/and Server code is empty in MXKarma Configuration"
+                    Permission::EXPANSION_PLUGIN_SETTINGS,
+                    "#admin_error#Server login or/and Server code is empty in MXKarma Configuration"
                 );
                 $this->console("Server code or/and login is not configured for MXKarma plugin!");
 
@@ -96,7 +98,8 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
             $this->mxConnection->connect($this->config->mxKarmaServerLogin, $this->config->mxKarmaApiKey);
         } else {
             $admins->announceToPermission(
-                Permission::EXPANSION_PLUGIN_SETTINGS, "#admin_error#Tried to connect to MXKarma, but connection is already made."
+                Permission::EXPANSION_PLUGIN_SETTINGS,
+                "#admin_error#Tried to connect to MXKarma, but connection is already made."
             );
             $this->console("Tried to connect to MXKarma, but connection is already made.");
         }
@@ -105,7 +108,9 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
     public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
     {
         $this->settingsChanged[$var->getName()] = true;
-        if (array_key_exists("mxKarmaApiKey", $this->settingsChanged) && array_key_exists("mxKarmaServerLogin", $this->settingsChanged)) {
+        if (array_key_exists("mxKarmaApiKey", $this->settingsChanged)
+            && array_key_exists("mxKarmaServerLogin", $this->settingsChanged)
+        ) {
             $this->tryConnect();
             $this->settingsChanged = array();
         }
@@ -113,8 +118,9 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
 
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
-        if ($playerUid == 0)
+        if ($playerUid == 0) {
             return;
+        }
         if ((substr($text, 0, 1) == "+" || substr($text, 0, 1) == "-")) {
 
             $player = $this->storage->getPlayerObject($login);
@@ -176,8 +182,7 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
                 if ($oldVote->vote != $vote->vote) {
                     $newVotes[] = $vote;
                 }
-            } // othervice cast it as new vote
-            else {
+            } else { // othervice cast it as new vote
                 $newVotes[] = $vote;
             }
         }
@@ -223,7 +228,7 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
     {
         if ($this->mxRatings === null) {
             $this->mxRatings = $votes;
-            $this->votes = Array();
+            $this->votes = array();
             foreach ($votes->votes as $vote) {
                 $this->votes[] = $vote;
             }

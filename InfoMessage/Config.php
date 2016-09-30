@@ -5,7 +5,7 @@ namespace ManiaLivePlugins\eXpansion\InfoMessage;
 class Config extends \ManiaLib\Utils\Singleton
 {
 
-    public $infoMessages = Array();
+    public $infoMessages = array();
 
     public $infoMessageColor = '$fff';
 

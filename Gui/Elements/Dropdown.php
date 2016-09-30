@@ -19,8 +19,9 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
 
     public function __construct($name, $items = array("initial"), $selectedIndex = 0, $sizeX = 35)
     {
-        if (!is_array($items))
+        if (!is_array($items)) {
             throw new \Exception("Dropdown constructor needs array of values");
+        }
 
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\DropDownScript();
         $this->script->setParam("name", $name);
@@ -51,7 +52,7 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
         $this->addComponent($this->label);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame(0, 0);
-        $this->frame->setLayout(New \ManiaLib\Gui\Layouts\Flow($sizeX, 6));
+        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow($sizeX, 6));
         $this->frame->setScriptEvents(true);
         $this->frame->setId($name . "f");
         $this->frame->setAlign("center", "center");

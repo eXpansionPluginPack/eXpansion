@@ -60,7 +60,11 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 
     public function eXpOnLoad()
     {
-        $helpText = "\n\nPlease correct your config with these instructions: \nEdit and add following configuration lines to manialive config.ini\n\n ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config.login = 'your_server_login_here' \n ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config.code = 'your_server_code_here' \n\n Visit http://dedimania.net/tm2stats/?do=register to get code for your server.";
+        $helpText = "\n\nPlease correct your config with these instructions: \nEdit and add following configuration "
+            ."lines to manialive config.ini\n\n ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config."
+            ."login = 'your_server_login_here' \n "
+            ."ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config.code = 'your_server_code_here' \n\n "
+            ."Visit http://dedimania.net/tm2stats/?do=register to get code for your server.";
         if (empty($this->config->login)) {
             $this->console("Server login is not configured for dedimania plugin!");
             $this->running = false;
@@ -71,8 +75,13 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         }
         Dispatcher::register(DediEvent::getClass(), $this);
         $this->dedimania = DediConnection::getInstance();
-        $this->msg_record = eXpGetMessage('%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record!  #rank#%2$s: #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)');
-        $this->msg_newRecord = eXpGetMessage('%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record! #time#%3$s');
+        $this->msg_record = eXpGetMessage(
+            '%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. '
+            .'Dedimania Record!  #rank#%2$s: #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)'
+        );
+        $this->msg_newRecord = eXpGetMessage(
+            '%1$s#dedirecord# claimed the #rank#%2$s#dedirecord#. Dedimania Record! #time#%3$s'
+        );
         $this->msg_norecord = eXpGetMessage('#dedirecord#No dedimania records found for the map!');
     }
 
@@ -83,9 +92,11 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         $this->enableApplicationEvents();
         $this->enableStorageEvents();
 
-        \ManiaLive\Event\Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(), $this);
+        \ManiaLive\Event\Dispatcher::register(
+            \ManiaLivePlugins\eXpansion\Core\Events\ScriptmodeEvent::getClass(),
+            $this
+        );
 
-        //$this->registerChatCommand("test", "test",0,true);
         $this->tryConnection();
     }
 
@@ -105,7 +116,10 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         if (!$this->running) {
             if (empty($this->config->login) || empty($this->config->code)) {
                 $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
-                $admins->announceToPermission(Permission::EXPANSION_PLUGIN_SETTINGS, "#admin_error#Server login or/and Server code is empty in Dedimania Configuration");
+                $admins->announceToPermission(
+                    Permission::EXPANSION_PLUGIN_SETTINGS,
+                    "#admin_error#Server login or/and Server code is empty in Dedimania Configuration"
+                );
                 $this->console("\$f00Server code or/and login is not configured for dedimania plugin!");
             } else {
                 try {
@@ -117,13 +131,21 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 
                     $this->running = true;
                     $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
-                    $admins->announceToPermission('expansion_settings', "#admin_action#Dedimania connection successfull.");
+                    $admins->announceToPermission(
+                        'expansion_settings',
+                        "#admin_action#Dedimania connection successfull."
+                    );
 
-                    self::$actionOpenRecs = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, "showRecs"));
-                    self::$actionOpenCps = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, "showCps"));
+                    self::$actionOpenRecs = \ManiaLive\Gui\ActionHandler::getInstance()
+                        ->createAction(array($this, "showRecs"));
+                    self::$actionOpenCps = \ManiaLive\Gui\ActionHandler::getInstance()
+                        ->createAction(array($this, "showCps"));
                 } catch (\Exception $ex) {
                     $admins = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::getInstance();
-                    $admins->announceToPermission('expansion_settings', "#admin_error#Server login or/and Server code is wrong in Dedimania Configuration");
+                    $admins->announceToPermission(
+                        'expansion_settings',
+                        "#admin_error#Server login or/and Server code is wrong in Dedimania Configuration"
+                    );
                     $admins->announceToPermission('expansion_settings', "#admin_error#" . $ex->getMessage());
                     $this->console("\$f00Server code or/and login is wrong for the dedimania plugin!");
                 }
@@ -158,7 +180,6 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         if (!$this->running) {
             return;
         }
-        // echo "beginMatch\n";
         $this->records = array();
         $this->dedimania->getChallengeRecords();
     }
@@ -168,7 +189,6 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         if (!$this->running) {
             return;
         }
-        // echo "beginround\n";
         $this->wasWarmup = $this->connection->getWarmUp();
     }
 
@@ -237,7 +257,10 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         $data = array('Records' => array());
         $i = 1;
         foreach ($this->records as $record) {
-            $data['Records'][] = Array("Login" => $record->login, "MaxRank" => $record->maxRank, "NickName" => $record->nickname, "Best" => $record->time, "Rank" => $i, "Checks" => $record->checkpoints);
+            $data['Records'][] = array(
+                "Login" => $record->login, "MaxRank" => $record->maxRank, "NickName" => $record->nickname,
+                "Best" => $record->time, "Rank" => $i, "Checks" => $record->checkpoints
+            );
             $i++;
         }
 
@@ -285,7 +308,14 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         $this->records = array();
 
         foreach ($data['Records'] as $record) {
-            $this->records[$record['Login']] = new DediRecord($record['Login'], $record['NickName'], $record['MaxRank'], $record['Best'], $record['Rank'], $record['Checks']);
+            $this->records[$record['Login']] = new DediRecord(
+                $record['Login'],
+                $record['NickName'],
+                $record['MaxRank'],
+                $record['Best'],
+                $record['Rank'],
+                $record['Checks']
+            );
         }
         $this->lastRecord = end($this->records);
         $this->recordCount = count($this->records);
@@ -314,7 +344,6 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
     public function onDedimaniaUpdateRecords($data)
     {
         $this->debug("Dedimania update records:");
-        // $this->debug($data);
     }
 
     /**
@@ -344,7 +373,11 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
                 }
             }
 
-            $this->eXpChatSendServerMessage($this->msg_newRecord, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time));
+            $this->eXpChatSendServerMessage(
+                $this->msg_newRecord,
+                $recepient,
+                array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time)
+            );
         } catch (\Exception $e) {
             $this->console("Error: couldn't show dedimania message" . $e->getMessage());
         }
@@ -385,7 +418,16 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
                 }
             }
 
-            $this->eXpChatSendServerMessage($this->msg_record, $recepient, array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time, $oldRecord->place, $diff));
+            $this->eXpChatSendServerMessage(
+                $this->msg_record,
+                $recepient,
+                array(
+                    \ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"),
+                    $record->place,
+                    $time,
+                    $oldRecord->place, $diff
+                )
+            );
             $this->debug("message sent.");
         } catch (\Exception $e) {
             $this->console("Error: couldn't show dedimania message");
@@ -416,7 +458,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
             $window->setTitle(__('Dedimania -records for', $login), $this->storage->currentMap->name);
             $window->centerOnScreen();
             $window->populateList($this->records);
-            $url = "http://dedimania.net/tm2stats/?do=stat&Envir=" . $this->storage->currentMap->environnement . "&RecOrder3=REC-ASC&UId=" . $this->storage->currentMap->uId . "&Show=RECORDS";
+            $url = "http://dedimania.net/tm2stats/?do=stat&Envir=" . $this->storage->currentMap->environnement
+                . "&RecOrder3=REC-ASC&UId=" . $this->storage->currentMap->uId . "&Show=RECORDS";
             $window->setDediUrl($url);
 
             $window->setSize(120, 100);
