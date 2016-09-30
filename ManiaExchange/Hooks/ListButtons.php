@@ -50,4 +50,4 @@ class ListButtons extends \ManiaLive\Event\Event
                 break;
         }
     }
-} 
+}

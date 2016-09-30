@@ -12,14 +12,18 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         parent::expOnInit();
 
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin"));
+        $this->addDependency(
+            new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Chat_Admin\\Chat_Admin")
+        );
 
         Gui\Windows\Playerlist::$mainPlugin = $this;
     }
 
     public function eXpOnLoad()
     {
-        $this->msg_broadcast = eXpGetMessage('%s$1 $z$s$fff is $f00broadcasting$fff at $lwww.twitch.tv$l, say hello to all the viewers :)');
+        $this->msg_broadcast = eXpGetMessage(
+            '%s$1 $z$s$fff is $f00broadcasting$fff at $lwww.twitch.tv$l, say hello to all the viewers :)'
+        );
     }
 
     public function eXpOnReady()
@@ -34,8 +38,14 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if ($this->isPluginLoaded('eXpansion\Menu')) {
             $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addSeparator', __('Players'), false);
-            $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Menu', 'addItem', __('Show Players'), null, array($this, 'showPlayerList'),
-                false);
+            $this->callPublicMethod(
+                '\ManiaLivePlugins\eXpansion\Menu',
+                'addItem',
+                __('Show Players'),
+                null,
+                array($this, 'showPlayerList'),
+                false
+            );
         }
     }
 
@@ -51,7 +61,9 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         // needs to be removed, autoupdate windows doesn't work good with high number of players
         //$this->updateOpenedWindows();
         $player = $this->storage->getPlayerObject($login);
-        if ($player->isBroadcasting) $this->announceBroadcasting($player->login);
+        if ($player->isBroadcasting) {
+            $this->announceBroadcasting($player->login);
+        }
     }
 
     public function updateOpenedWindows()
@@ -95,7 +107,6 @@ class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onPlayerInfoChanged($playerInfo)
     {
-        // $this->updateOpenedWindows();
     }
 
 

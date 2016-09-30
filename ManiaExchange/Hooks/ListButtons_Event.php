@@ -33,4 +33,4 @@ interface ListButtons_Event
      * @return mixed
      */
     public function hook_ManiaExchangeListButtons($buttons, $login);
-} 
+}

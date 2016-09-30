@@ -110,7 +110,7 @@ class Config extends \ManiaLib\Utils\Singleton
     public $size_7 = 30;  // image width in maniaplanet display units
 
     public $x_7 = -30;  // image position x in maniaplanet display units
-    public $y_7 = 90; // image position y in maniaplanet display units 
+    public $y_7 = 90; // image position y in maniaplanet display units
 
     //Setting _8
     public $active_8 = false;

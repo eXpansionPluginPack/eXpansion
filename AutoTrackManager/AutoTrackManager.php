@@ -40,7 +40,7 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $rating = 0;
     private $ratingTotal = 0;
     public static $MINVotes = "10"; // Must be greater then 0. Best is to have a functional of 10.
-    public static $integervalue = "0.6";  /* Ratio in percents (0.6 mean 60 
+    public static $integervalue = "0.6";  /* Ratio in percents (0.6 mean 60
 
       % good/totalvotes => 40% bad!) the tracks will be sort out if a track is lower than this value
      */
@@ -96,7 +96,8 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function atmhelp($login)
     {
-        $msg = 'AutoTrackManager lets you remove / delete tracks from tracklist if track karma got lower than a given value!';
+        $msg = 'AutoTrackManager lets you remove / delete tracks '
+            .'from tracklist if track karma got lower than a given value!';
         $this->connection->chatSendServerMessage($msg, $login);
     }
 
@@ -114,8 +115,8 @@ class AutoTrackManager extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function autotrackmanager()
     {
         $q = $this->db->execute(
-            "SELECT avg(rating) AS rating, COUNT(rating) AS ratingTotal 
-FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";"
+            "SELECT avg(rating) AS rating, COUNT(rating) AS ratingTotal
+ FROM exp_ratings WHERE `uid`=" . $this->db->quote($this->storage->currentMap->uId) . ";"
         )->fetchObject();
         $this->rating = 0;
         $this->ratingTotal = 0;

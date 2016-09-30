@@ -54,4 +54,4 @@ class BarElements extends \ManiaLive\Event\Event
                 break;
         }
     }
-} 
+}

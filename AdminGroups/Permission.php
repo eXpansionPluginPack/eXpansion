@@ -41,7 +41,7 @@ class Permission
     const SERVER_UPDATE = "server_update";
     const EXPANSION_PLUGIN_SETTINGS = "expansion_pluginSettings";
     const EXPANSION_PLUGIN_START_STOP = "expansion_pluginStartStop";
-    //Concerning Game Settings      
+    //Concerning Game Settings
     const GAME_GAMEMODE = 'game_gamemode';
     const GAME_SETTINGS = 'game_settings';
     const GAME_MATCH_SAVE = 'game_matchSave';
