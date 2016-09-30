@@ -31,8 +31,9 @@ class Ximporter
 
     function readconfig()
     {
-        if (!file_exists("xaseco_migration.ini"))
+        if (!file_exists("xaseco_migration.ini")) {
             die("Cannot locate main configuration file: xaseco_migration.ini.");
+        }
         $this->config = parse_ini_file("xaseco_migration.ini");
         if ($this->config === false) {
             die("# Fatal error reading configuration file. Check .ini syntax");
@@ -83,12 +84,15 @@ class Ximporter
 
         $this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);
 
-        $records = $this->query("Select
+        $records = $this->query(
+            "Select
 p.Login as record_playerlogin, c.Uid as record_challengeuid,
 r.score as record_score, UNIX_TIMESTAMP(r.Date) as record_date,
 r.Checkpoints as record_checkpoints,
 r.score as record_avgScore
-FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", $this->conn);
+FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;",
+            $this->conn
+        );
         while ($xaseco_recs[] = mysql_fetch_object($records)) ;
         unset($records);
         $this->query("USE " . $this->config['exp_db'] . ";", $this->conn);
@@ -266,7 +270,8 @@ where r.Playerid = p.id and r.MapId = c.id;",
             "SELECT p.login AS transaction_fromLogin, Donations AS transaction_amount
 FROM players p, players_extra r
 WHERE r.Playerid = p.id
-AND Donations >0;", $this->conn
+AND Donations >0;",
+            $this->conn
         );
         while ($xaseco_dons[] = mysql_fetch_object($xdons)) ;
         unset($xdons);

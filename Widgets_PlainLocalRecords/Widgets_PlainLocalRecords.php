@@ -30,7 +30,8 @@ class Widgets_PlainLocalRecords extends ExpPlugin implements Listener
 
         if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\SM_ObstaclesScores\\SM_ObstaclesScores')) {
             self::$localrecords = $this->callPublicMethod(
-                "\\ManiaLivePlugins\\eXpansion\\SM_ObstaclesScores\\SM_ObstaclesScores", "getRecords"
+                "\\ManiaLivePlugins\\eXpansion\\SM_ObstaclesScores\\SM_ObstaclesScores",
+                "getRecords"
             );
         }
         $this->updateLocalPanel();

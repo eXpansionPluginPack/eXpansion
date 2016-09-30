@@ -424,7 +424,8 @@ EOT;
         $this->connection->resetServerTags();
         $this->connection->setServerTag("nl.controller", "ManiaLive / eXpansion");
         $this->connection->setServerTag(
-            "nl.controller.version", \ManiaLive\Application\VERSION . " / " . Core::EXP_VERSION
+            "nl.controller.version",
+            \ManiaLive\Application\VERSION . " / " . Core::EXP_VERSION
         );
         $this->syncAdminStatus();
 

@@ -82,14 +82,16 @@ class Dedimania_Script extends DedimaniaAbstract
         }
 
         if (!array_key_exists('BestTime', $this->rankings[$login])) {
-            $this->rankings[$login] = array('Login' => $login, 'BestTime' => $time, 'BestCheckpoints' => implode(
-                ",", $playerinfo[$login]->checkpoints
-            ));
+            $this->rankings[$login] = array(
+                'Login' => $login, 'BestTime' => $time,
+                'BestCheckpoints' => implode(",", $playerinfo[$login]->checkpoints)
+            );
         } else {
             if ($time < $this->rankings[$login]['BestTime']) {
-                $this->rankings[$login] = array('Login' => $login, 'BestTime' => $time, 'BestCheckpoints' => implode(
-                    ",", $playerinfo[$login]->checkpoints
-                ));
+                $this->rankings[$login] = array(
+                    'Login' => $login, 'BestTime' => $time,
+                    'BestCheckpoints' => implode(",", $playerinfo[$login]->checkpoints)
+                );
             }
         }
 
@@ -101,7 +103,14 @@ class Dedimania_Script extends DedimaniaAbstract
                 $this->console("Player CP mismatch");
             }
 
-            $this->records[$login] = new DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, $playerinfo[$login]->checkpoints);
+            $this->records[$login] = new DediRecord(
+                $login,
+                $player->nickName,
+                DediConnection::$players[$login]->maxRank,
+                $time,
+                -1,
+                $playerinfo[$login]->checkpoints
+            );
             $this->reArrage($login);
             Dispatcher::dispatch(new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login]));
 
@@ -137,20 +146,30 @@ class Dedimania_Script extends DedimaniaAbstract
                 if ($this->records[$login]->time > $time) {
                     $oldRecord = $this->records[$login];
 
-                    $this->records[$login] = new DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, array());
+                    $this->records[$login] = new DediRecord(
+                        $login,
+                        $player->nickName,
+                        DediConnection::$players[$login]->maxRank,
+                        $time,
+                        -1,
+                        array()
+                    );
 
                     // if new records count is greater than old count, and doesn't exceed the maxrank of the server
                     $oldCount = count($this->records);
-                    if ((count($this->records) > $oldCount) && ((DediConnection::$dediMap->mapMaxRank + 1) < DediConnection::$serverMaxRank)) {
+                    if ((count($this->records) > $oldCount)
+                        && ((DediConnection::$dediMap->mapMaxRank + 1) < DediConnection::$serverMaxRank)
+                    ) {
                         //print "increasing maxrank! \n";
                         DediConnection::$dediMap->mapMaxRank++;
                     }
                     $this->reArrage($login);
                     // have to recheck if the player is still at the dedi array
                     if (array_key_exists($login, $this->records)
-                    ) // have to recheck if the player is still at the dedi array
-                    {
-                        Dispatcher::dispatch(new DediEvent(DediEvent::ON_DEDI_RECORD, $this->records[$login], $oldRecord));
+                    ) {// have to recheck if the player is still at the dedi array
+                        Dispatcher::dispatch(
+                            new DediEvent(DediEvent::ON_DEDI_RECORD, $this->records[$login], $oldRecord)
+                        );
                     }
 
                     return;
@@ -159,10 +178,19 @@ class Dedimania_Script extends DedimaniaAbstract
                 // if not, add the player to records table
             } else {
                 $oldCount = count($this->records);
-                $this->records[$login] = new DediRecord($login, $player->nickName, DediConnection::$players[$login]->maxRank, $time, -1, array());
+                $this->records[$login] = new DediRecord(
+                    $login,
+                    $player->nickName,
+                    DediConnection::$players[$login]->maxRank,
+                    $time,
+                    -1,
+                    array()
+                );
                 // if new records count is greater than old count, increase the map records limit
 
-                if ((count($this->records) > $oldCount) && ((DediConnection::$dediMap->mapMaxRank + 1) < DediConnection::$serverMaxRank)) {
+                if ((count($this->records) > $oldCount)
+                    && ((DediConnection::$dediMap->mapMaxRank + 1) < DediConnection::$serverMaxRank)
+                ) {
                     DediConnection::$dediMap->mapMaxRank++;
                 }
                 $this->reArrage($login);
@@ -184,7 +212,7 @@ class Dedimania_Script extends DedimaniaAbstract
 
     /**
      *
-     * @param array $rankings
+     * @param array $rankings_old
      * @param string $winnerTeamOrMap
      *
      */
@@ -241,13 +269,21 @@ class Dedimania_Script extends DedimaniaAbstract
             $this->vReplay = $this->connection->getValidationReplay($rankings[0]['Login']);
 
             $greplay = "";
-            $grfile = sprintf('Dedimania/%s.%d.%07d.%s.Replay.Gbx', $this->storage->currentMap->uId, $this->storage->gameInfos->gameMode, $rankings[0]['BestTime'], $rankings[0]['Login']);
+            $grfile = sprintf(
+                'Dedimania/%s.%d.%07d.%s.Replay.Gbx',
+                $this->storage->currentMap->uId,
+                $this->storage->gameInfos->gameMode,
+                $rankings[0]['BestTime'],
+                $rankings[0]['Login']
+            );
             $this->connection->saveBestGhostsReplay($rankings[0]['Login'], $grfile);
             $this->gReplay = file_get_contents($this->connection->gameDataDirectory() . 'Replays/' . $grfile);
 
             // Dedimania doesn't allow times sent without validation relay. So, let's just stop here if there is none.
             if (empty($this->vReplay)) {
-                $this->console("[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent.");
+                $this->console(
+                    "[Dedimania] Couldn't get validation replay of the first player. Dedimania times not sent."
+                );
 
                 return;
             }

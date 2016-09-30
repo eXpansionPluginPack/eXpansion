@@ -67,8 +67,8 @@ class Widgets_Advertising extends ExpPlugin
                 $widget->setManialink($this->config->$varManialink);
                 $widget->setUrl($this->config->$varUrl);
                 $widget->setImageSize(
-                    $this->config->$varImageSizeX
-                    , $this->config->$varImageSizeY,
+                    $this->config->$varImageSizeX,
+                    $this->config->$varImageSizeY,
                     $this->config->$varSize
                 );
                 $widget->setPositionX($this->config->$varX);
