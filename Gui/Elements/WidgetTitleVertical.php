@@ -12,7 +12,9 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    protected $bg, $bgStr, $lbl_title;
+    protected $bg;
+    protected $bgStr;
+    protected $lbl_title;
     protected $config;
 
     public function __construct($sizeX, $sizeY)
@@ -45,8 +47,6 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
         $this->bg->setSize($this->sizeX, $this->sizeY);
-        //$this->bgStr->setAttribute("rot", 180);
-        //$this->bgStr->setSize($this->sizeX, $this->sizeY + 6);
 
         $this->lbl_title->setSizeX($this->sizeX - 2);
         $this->lbl_title->setPosition(($this->sizeX / 2), -1.5);

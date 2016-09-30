@@ -8,13 +8,17 @@ class ManagedVoteLimit extends \ManiaLivePlugins\eXpansion\Gui\Control
     private $bg;
     private $label;
     private $frame;
-    private $ratio, $limit, $voters;
+    private $ratio;
+    private $limit;
+    private $voters;
 
     /**
-     *
+     * ManagedVoteLimit constructor.
      * @param type $indexNumber
-     * @param \ManiaLivePlugins\eXpansion\Votes\Structures\ManagedVote $voteObject
-     * @param type $sizeX
+     * @param $name
+     * @param $desc
+     * @param $value
+     * @param $sizeX
      */
     public function __construct($indexNumber, $name, $desc, $value, $sizeX)
     {
@@ -43,8 +47,6 @@ class ManagedVoteLimit extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->frame->addComponent($spacer);
 
-        //     $this->frame->addComponent(clone $spacer);
-
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(4, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
@@ -65,4 +67,3 @@ class ManagedVoteLimit extends \ManiaLivePlugins\eXpansion\Gui\Control
         parent::destroy();
     }
 }
-

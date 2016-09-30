@@ -12,7 +12,8 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
     protected $label;
     protected $labelDesc;
     protected $activeFrame;
-    protected $backGround, $bgFrame;
+    protected $backGround;
+    protected $bgFrame;
     protected $backGroundDesc;
     protected $frameDescription;
     protected $icon;
@@ -57,7 +58,6 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->label->setTextColor($config->buttonTitleColor);
 
         $this->frameDescription = new \ManiaLive\Gui\Controls\Frame();
-        //$this->frameDescription->setId("Desc_Icon_" . $this->buttonId);
         $this->frameDescription->setPositionZ($this->getPosZ() + 10);
         $this->frameDescription->setAttribute('class', 'exp_button');
 
@@ -70,8 +70,6 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
         $this->backGround = new \ManiaLib\Gui\Elements\Quad($sizeX + 2, $sizeY + 1);
         $this->backGround->setAlign('left', 'center2');
-        //$this->backGround->setStyle('Bgs1InRace');
-        //$this->backGround->setSubStyle('BgCard');
         $this->backGround->setImage("file://Media/Manialinks/Common/Demo/demo-button-green.png", true);
         $this->backGround->setImageFocus("file://Media/Manialinks/Common/Demo/demo-button-green-focus.png", true);
         $this->backGround->setId("backGround_" . $this->buttonId);
@@ -92,9 +90,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->backGroundDesc->setId("eXp_ButtonDescBg_Icon_" . $this->buttonId);
         $this->backGroundDesc->setStyle('Bgs1');
         $this->backGroundDesc->setSubStyle('BgMetalBar');
-        // $this->backGroundDesc->setImage($config->getImage("button", "normal.png"),true);
         $this->backGroundDesc->setColorize("fff");
-        //$this->backGroundDesc->setOpacity(0.75);
         $this->backGroundDesc->setPosition(5, 3);
         $this->backGroundDesc->setPositionZ(1);
         $this->backGroundDesc->setAttribute('hidden', '1');
@@ -127,7 +123,6 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
         if ($this->icon == null) {
             $this->addComponent($this->backGround);
-            //  $this->addComponent($this->bgFrame);
         }
         if ($this->isActive) {
             $this->addComponent($this->activeFrame);
@@ -216,7 +211,6 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
     {
         $this->backGround->setAction($action);
 
-        //$this->label->setAction($action);
         $this->action = $action;
         if ($this->icon != null) {
             $this->icon->setAction($action);
@@ -259,7 +253,6 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
     public function setId($id)
     {
-        //parent::setId($id);
         $this->buttonId = $id;
 
         if ($this->icon != null) {

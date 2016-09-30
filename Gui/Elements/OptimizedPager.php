@@ -16,9 +16,12 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
 
     protected $data = array();
 
-    protected $scroll, $bg, $scrollBg;
+    protected $scroll;
+    protected $bg;
+    protected $scrollBg;
 
-    protected $scrollDown, $scrollUp;
+    protected $scrollDown;
+    protected $scrollUp;
 
     protected $myScript;
 

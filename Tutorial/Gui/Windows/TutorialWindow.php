@@ -31,7 +31,8 @@ use ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Line;
 class TutorialWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    protected $button, $frame;
+    protected $button;
+    protected $frame;
     protected $mScript;
 
     protected function onConstruct()

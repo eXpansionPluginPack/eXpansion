@@ -14,8 +14,15 @@ class PlayerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     private static $bgStyle = 'Bgs1';
     private static $bgStyles = array('BgList', 'BgListLine');
-    protected $bg_nick, $bg_login, $bg_nation, $bg_ladder, $bg_spec;
-    protected $label_nick, $label_login, $label_nation, $label_ladder;
+    protected $bg_nick;
+    protected $bg_login;
+    protected $bg_nation;
+    protected $bg_ladder;
+    protected $bg_spec;
+    protected $label_nick;
+    protected $label_login;
+    protected $label_nation;
+    protected $label_ladder;
     protected $icon_spec;
 
     //nickname, login, nation, ladder, spectator

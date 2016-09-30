@@ -15,7 +15,9 @@ use ManiaLive\Gui\Controls\Frame;
 class HaltMatch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    protected $label_halt, $label_reason, $frame;
+    protected $label_halt;
+    protected $label_reason;
+    protected $frame;
 
     protected function onConstruct()
     {

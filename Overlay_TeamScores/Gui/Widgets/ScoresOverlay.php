@@ -14,10 +14,13 @@ class ScoresOverlay extends \ManiaLive\Gui\Window
     protected $score2;
     protected $inputbox;
     protected $xml;
-    protected $button, $reset;
+    protected $button;
+    protected $reset;
     public static $status = false;
-    public static $resetAction, $toggleAction;
-    public static $action, $action2;
+    public static $resetAction;
+    public static $toggleAction;
+    public static $action;
+    public static $action2;
 
     protected function onConstruct()
     {

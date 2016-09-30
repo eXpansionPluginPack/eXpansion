@@ -9,9 +9,11 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  */
 abstract class WindowNative extends \ManiaLive\Gui\Window
 {
-    protected $_titlebar, $_titlebar2;
+    protected $_titlebar;
+    protected $_titlebar2;
 
-    protected $_title, $title2;
+    protected $_title;
+    protected $title2;
 
     protected $_mainWindow;
 

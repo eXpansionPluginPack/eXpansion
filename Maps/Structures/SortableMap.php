@@ -14,10 +14,14 @@ class SortableMap
     public $map;
 
     /** @var string */
-    public $author, $name, $style;
+    public $author;
+    public $name;
+    public $style;
 
     /** @var int */
-    public $goldtime, $localrecord, $localmax;
+    public $goldtime;
+    public $localrecord;
+    public $localmax;
 
     /** @var \ManiaLivePlugins\eXpansion\MapRatings\Structures\Rating */
     public $rating;

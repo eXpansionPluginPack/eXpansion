@@ -10,7 +10,11 @@ use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 class JoinLeaveMessage extends ExpPlugin
 {
-    private $joinMsg, $joinMsgTime, $leaveMsg, $tabNoticeMsg, $playtimeMsg;
+    private $joinMsg;
+    private $joinMsgTime;
+    private $leaveMsg;
+    private $tabNoticeMsg;
+    private $playtimeMsg;
 
     public function eXpOnLoad()
     {

@@ -14,8 +14,14 @@ class UndefStyle extends AbsControl
     protected $bg;
     protected $label_name;
 
-    protected $icon_status, $icon_game, $icon_player, $icon_specs, $icon_ladder;
-    protected $label_nbPlayers, $label_nbSpecs, $label_ladder;
+    protected $icon_status;
+    protected $icon_game;
+    protected $icon_player;
+    protected $icon_specs;
+    protected $icon_ladder;
+    protected $label_nbPlayers;
+    protected $label_nbSpecs;
+    protected $label_ladder;
 
     function __construct($i, $ctr, Server $server)
     {
@@ -39,7 +45,9 @@ class UndefStyle extends AbsControl
         $this->icon_game->setPosX($this->getSizeX() - 4);
         $this->icon_game->setStyle('Icons128x32_1');
         $this->icon_game->setSubStyle(
-            \ManiaLivePlugins\eXpansion\ServerNeighborhood\ServerNeighborhood::$gamemodes[(int)$server->getServer_data()->server->gamemode]['icon']
+            \ManiaLivePlugins\eXpansion\ServerNeighborhood\ServerNeighborhood::$gamemodes[
+            (int)$server->getServer_data()->server->gamemode
+            ]['icon']
         );
         $this->addComponent($this->icon_game);
 
@@ -108,7 +116,9 @@ class UndefStyle extends AbsControl
         }
 
         $this->icon_game->setSubStyle(
-            \ManiaLivePlugins\eXpansion\ServerNeighborhood\ServerNeighborhood::$gamemodes[(int)$server->getServer_data()->server->gamemode]['icon']
+            \ManiaLivePlugins\eXpansion\ServerNeighborhood\ServerNeighborhood::$gamemodes[
+            (int)$server->getServer_data()->server->gamemode
+            ]['icon']
         );
 
         if ((int)$server->getServer_data()->server->players->current

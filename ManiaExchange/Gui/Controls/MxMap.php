@@ -19,7 +19,8 @@ class MxMap extends Control
 
     protected $buttons = array();
     protected $actionSearch;
-    protected $line1, $line2;
+    protected $line1;
+    protected $line2;
 
     /**
      * @param                                                            $indexNumber
@@ -28,8 +29,13 @@ class MxMap extends Control
      * @param ButtonHook[] $buttons
      * @param                                                            $sizeX
      */
-    public function __construct($indexNumber, \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map, $controller, $buttons, $sizeX)
-    {
+    public function __construct(
+        $indexNumber,
+        \ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap $map,
+        $controller,
+        $buttons,
+        $sizeX
+    ) {
         $sizeY = 12;
 
         $id = "";

@@ -16,7 +16,8 @@ namespace ManiaLivePlugins\eXpansion\Overlay_Positions\Gui\Widgets;
 class PositionPanel extends \ManiaLive\Gui\Window
 {
 
-    protected $frame, $label;
+    protected $frame;
+    protected $label;
 
     protected function onConstruct()
     {

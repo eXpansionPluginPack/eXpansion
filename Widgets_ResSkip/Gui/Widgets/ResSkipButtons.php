@@ -11,7 +11,10 @@ class ResSkipButtons extends Widget
     /**
      * @var WidgetButton
      */
-    protected $btn_res, $btn_skip, $btn_fav, $edgeWidget;
+    protected $btn_res;
+    protected $btn_skip;
+    protected $btn_fav;
+    protected $edgeWidget;
 
     protected function eXpOnBeginConstruct()
     {

@@ -10,7 +10,8 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
     /** @var Maniaplanet\DedicatedServer\Structures\Status */
     private $status;
-    private $action, $action2;
+    private $action;
+    private $action2;
     private $access;
     private $clublinks = array("", "");
 
@@ -147,7 +148,7 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
             return;
         }
-        $widget = Gui\Widgets\ScoresOverlay::Erase($login);
+        Gui\Widgets\ScoresOverlay::Erase($login);
     }
 
     public function onPlayerConnect($login, $isSpectator)

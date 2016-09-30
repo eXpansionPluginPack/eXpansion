@@ -6,9 +6,13 @@ class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
     protected $bg;
-    protected $authorTime, $logo;
-    protected $leftFrame, $centerFrame, $rightFrame;
-    protected $environment, $country;
+    protected $authorTime;
+    protected $logo;
+    protected $leftFrame;
+    protected $centerFrame;
+    protected $rightFrame;
+    protected $environment;
+    protected $country;
 
     protected function eXpOnBeginConstruct()
     {

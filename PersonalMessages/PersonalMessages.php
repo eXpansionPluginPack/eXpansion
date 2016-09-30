@@ -18,7 +18,11 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $config;
 
     /** @var \ManiaLivePlugins\eXpansion\Core\i18n\Message */
-    private $msg_noLogin, $msg_noMessage, $msg_noReply, $msg_self, $msg_help;
+    private $msg_noLogin;
+    private $msg_noMessage;
+    private $msg_noReply;
+    private $msg_self;
+    private $msg_help;
 
     private $cmd_chat;
 

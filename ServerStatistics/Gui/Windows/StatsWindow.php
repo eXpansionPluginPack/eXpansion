@@ -19,7 +19,9 @@ class StatsWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $contentFrame;
     protected $closeButton;
     protected $actions;
-    protected $btn1, $btn2, $btn3;
+    protected $btn1;
+    protected $btn2;
+    protected $btn3;
     protected $btnDb;
 
     public function onConstruct()

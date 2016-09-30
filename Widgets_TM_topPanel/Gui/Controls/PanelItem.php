@@ -5,7 +5,9 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Controls;
 class PanelItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    public $quad, $lbl_title, $lbl_value;
+    public $quad;
+    public $lbl_title;
+    public $lbl_value;
 
     public function __construct($title, $value, $sizeX = 20, $StyleorUrl = null, $iconSubStyle = null)
     {

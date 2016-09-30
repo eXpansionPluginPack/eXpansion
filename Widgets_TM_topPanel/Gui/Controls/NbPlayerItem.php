@@ -34,9 +34,15 @@ use ManiaLivePlugins\eXpansion\Helpers\Maniascript;
 class NbPlayerItem extends Control implements ScriptedContainer
 {
 
-    protected $players_bg_quad, $players_quad, $spec_bg_quad, $spec_quad;
+    protected $players_bg_quad;
+    protected $players_quad;
+    protected $spec_bg_quad;
+    protected $spec_quad;
 
-    protected $lbl_players, $lbl_specs, $lbl_info, $lbl_title;
+    protected $lbl_players;
+    protected $lbl_specs;
+    protected $lbl_info;
+    protected $lbl_title;
 
     protected $div;
 

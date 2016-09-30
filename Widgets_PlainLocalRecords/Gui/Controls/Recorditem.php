@@ -12,7 +12,8 @@ use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 class Recorditem extends Control
 {
 
-    private $bg, $bg2;
+    private $bg;
+    private $bg2;
     private $nick;
     private $label;
     private $time;
@@ -46,11 +47,8 @@ class Recorditem extends Control
         $this->bg2->setColorize("3af");
         $this->bg2->setAttribute("rot", 270);
         $this->bg2->setAlign('left', 'top');
-        //$this->bg->setBgcolor('6af5');
         $this->bg2->setHidden(1);
-        //$this->bg2->setPosX(-1);
         $this->bg2->setPosY(-2.25);
-        //$this->bg2->setPosX($sizeX);
 
         $this->bg2->setId("RecBg_" . $index);
         $this->addComponent($this->bg2);
@@ -101,8 +99,6 @@ class Recorditem extends Control
 
     public function destroy()
     {
-        // $this->frame->clearComponents();
-        // $this->frame->destroy();
         $this->destroyComponents();
         parent::destroy();
     }

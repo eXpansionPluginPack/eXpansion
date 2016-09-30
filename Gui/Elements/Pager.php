@@ -15,7 +15,10 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
     protected $pager;
     protected $items = array();
     protected $scroll;
-    protected $scrollBg, $scrollUp, $scrollDown, $barFrame;
+    protected $scrollBg;
+    protected $scrollUp;
+    protected $scrollDown;
+    protected $barFrame;
     protected $itemSizeY = 6;
     protected $myScript;
 
@@ -38,7 +41,6 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
         $this->scrollBg->setSubStyle('BgPlayerCard');
 
         $this->scrollBg->setOpacity(0.9);
-        //$this->scrollBg->setScriptEvents();
         $this->barFrame->addComponent($this->scrollBg);
 
         $this->scroll = new \ManiaLib\Gui\Elements\Quad(3, 15);

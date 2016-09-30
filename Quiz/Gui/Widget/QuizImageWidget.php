@@ -31,7 +31,12 @@ use ManiaLivePlugins\eXpansion\Helpers\Maniascript;
 class QuizImageWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-    protected $quad, $title, $bg, $script, $frame, $hiddenQuestion;
+    protected $quad;
+    protected $title;
+    protected $bg;
+    protected $script;
+    protected $frame;
+    protected $hiddenQuestion;
 
     protected function eXpOnBeginConstruct()
     {

@@ -32,7 +32,10 @@ class PlainPanel extends Widget
     /**
      * @var Quad
      */
-    public $bgborder, $bg, $bgTitle, $bgFirst;
+    public $bgborder;
+    public $bg;
+    public $bgTitle;
+    public $bgFirst;
 
     /**
      * @var Button

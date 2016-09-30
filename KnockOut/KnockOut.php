@@ -49,7 +49,11 @@ class KnockOut extends ExpPlugin
 
     private $adm_ko = null;
 
-    private $msg_newRound, $msg_koStart, $msg_knockout, $msg_knockoutDNF, $msg_champ;
+    private $msg_newRound;
+    private $msg_koStart;
+    private $msg_knockout;
+    private $msg_knockoutDNF;
+    private $msg_champ;
 
     public function eXpOnLoad()
     {

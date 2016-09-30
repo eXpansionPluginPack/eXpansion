@@ -12,7 +12,13 @@ use Maniaplanet\DedicatedServer\Structures\GameInfos;
 class Widgets_ResSkip extends ExpPlugin
 {
 
-    private $msg_resOnProgress, $msg_resUnused, $msg_resMax, $msg_skipUnused, $msg_skipMax, $msg_prestart, $msg_pskip;
+    private $msg_resOnProgress;
+    private $msg_resUnused;
+    private $msg_resMax;
+    private $msg_skipUnused;
+    private $msg_skipMax;
+    private $msg_prestart;
+    private $msg_pskip;
 
     private $config;
 

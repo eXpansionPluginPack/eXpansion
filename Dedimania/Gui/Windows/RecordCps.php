@@ -9,7 +9,12 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
 class RecordCps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
     private $frame;
-    private $label_rank, $label_nick, $label_score, $frameCP, $nextButton, $prevButton;
+    private $label_rank;
+    private $label_nick;
+    private $label_score;
+    private $frameCP;
+    private $nextButton;
+    private $prevButton;
     private $widths = array(0.5, 3, 10);
     private $pager;
     private $items = array();

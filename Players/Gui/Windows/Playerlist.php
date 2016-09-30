@@ -21,7 +21,9 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $storage;
     protected $items = array();
     protected $frame;
-    protected $title_status, $title_login, $title_nickname;
+    protected $title_status;
+    protected $title_login;
+    protected $title_nickname;
 
     public static $widths = array(1, 8, 6, 6);
 
@@ -29,7 +31,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         parent::onConstruct();
         $login = $this->getRecipient();
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
+        \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->setScriptEvents();
@@ -68,11 +70,7 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $this->mainFrame->addComponent($line);
 
-
-        $textStyle = "TextCardRaceRank";
-        $textColor = "fff";
-        $textSize = 2.5;
-        $scaledSizes = Gui::getScaledSize(self::$widths, $this->sizeX);
+        Gui::getScaledSize(self::$widths, $this->sizeX);
     }
 
     public function ignorePlayer($login, $target)
@@ -208,7 +206,6 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->clearItems();
         $this->items = array();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
-        $x = 0;
         $login = $this->getRecipient();
         $isadmin = AdminGroups::hasPermission($login, Permission::PLAYER_FORCESPEC);
 

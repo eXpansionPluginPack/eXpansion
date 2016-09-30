@@ -18,17 +18,32 @@ class ServerItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $label_sname;
     //Server information
     protected $icons_frame;
-    protected $icon_game, $icon_player, $icon_specs, $icon_ladder;
-    protected $label_nbPlayers, $label_nbSpecs, $label_ladder;
+    protected $icon_game;
+    protected $icon_player;
+    protected $icon_specs;
+    protected $icon_ladder;
+    protected $label_nbPlayers;
+    protected $label_nbSpecs;
+    protected $label_ladder;
     //Server Map information
     protected $info_frame;
-    protected $icon_map, $icon_author, $icon_envi, $icon_atime;
-    protected $label_map, $label_author, $label_envi, $label_atime;
+    protected $icon_map;
+    protected $icon_author;
+    protected $icon_envi;
+    protected $icon_atime;
+    protected $label_map;
+    protected $label_author;
+    protected $label_envi;
+    protected $label_atime;
     protected $icon_jspec;
     protected $icon_jplayer;
     protected $icon_fav;
     protected $icon_info;
-    protected $frame_main, $frame_info, $frame_map, $frame_server, $frame;
+    protected $frame_main;
+    protected $frame_info;
+    protected $frame_map;
+    protected $frame_server;
+    protected $frame;
 
     public function __construct($indexNumber, $ctr, \ManiaLivePlugins\eXpansion\ServerNeighborhood\Server $server)
     {

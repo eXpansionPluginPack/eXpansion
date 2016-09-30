@@ -11,7 +11,9 @@ class FaqWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
     public static $mainPlugin;
-    protected $frame, $label_help, $icon_help;
+    protected $frame;
+    protected $label_help;
+    protected $icon_help;
     protected $action_help;
 
     protected function eXpOnBeginConstruct()

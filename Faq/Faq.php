@@ -12,7 +12,8 @@ use ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWindow;
 class Faq extends ExpPlugin
 {
 
-    private $msg_admin_redirect, $msg_admin_info;
+    private $msg_admin_redirect;
+    private $msg_admin_info;
     public static $availableLanguages = array();
 
     public function eXpOnLoad()
@@ -29,7 +30,9 @@ class Faq extends ExpPlugin
                 continue;
             }
             if ($lang->isDir()) {
-                if (is_file($lang->getPath() . DIRECTORY_SEPARATOR . $lang->getFilename() . DIRECTORY_SEPARATOR . "toc.txt")) {
+                if (is_file(
+                    $lang->getPath() . DIRECTORY_SEPARATOR . $lang->getFilename() . DIRECTORY_SEPARATOR . "toc.txt"
+                )) {
                     self::$availableLanguages[] = $lang->getFilename();
                 }
             }
@@ -43,12 +46,6 @@ class Faq extends ExpPlugin
         $this->registerChatCommand("faq", "showFaq", 2, true);
         FaqWindow::$mainPlugin = $this;
         FaqWidget::$mainPlugin = $this;
-
-        /*$window = FaqWidget::Create(null);
-        $window->setSize(7, 5);
-	$window->setDisableAxis("x");
-        $window->show();*/
-
     }
 
     public function showFaq($login, $topic = "toc", $recipient = null)

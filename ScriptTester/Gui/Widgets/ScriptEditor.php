@@ -19,8 +19,17 @@ use ManiaLivePlugins\eXpansion\ScriptTester\Config;
 class ScriptEditor extends PlainWidget
 {
 
-    protected $scriptEditor, $mlEditor, $lbl_ml, $lbl_script, $background, $btn_apply, $btn_close;
-    protected $input_script, $input_ml, $script, $actionId;
+    protected $scriptEditor;
+    protected $mlEditor;
+    protected $lbl_ml;
+    protected $lbl_script;
+    protected $background;
+    protected $btn_apply;
+    protected $btn_close;
+    protected $input_script;
+    protected $input_ml;
+    protected $script;
+    protected $actionId;
 
 
     protected function onConstruct()

@@ -5,7 +5,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls;
 class TeamItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    protected $bg, $bg2;
+    protected $bg;
+    protected $bg2;
     protected $nick;
     protected $label;
     protected $time;

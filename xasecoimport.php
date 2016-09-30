@@ -266,7 +266,8 @@ where r.Playerid = p.id and r.MapId = c.id;",
             "SELECT p.login AS transaction_fromLogin, Donations AS transaction_amount
 FROM players p, players_extra r
 WHERE r.Playerid = p.id
-AND Donations >0;", $this->conn);
+AND Donations >0;", $this->conn
+        );
         while ($xaseco_dons[] = mysql_fetch_object($xdons)) ;
         unset($xdons);
         $this->query("USE " . $this->config['exp_db'] . ";", $this->conn);

@@ -13,7 +13,12 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
 class RankItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    protected $label_rank, $label_nick, $label_wins, $label_score, $label_finish, $label_lastRec;
+    protected $label_rank;
+    protected $label_nick;
+    protected $label_wins;
+    protected $label_score;
+    protected $label_finish;
+    protected $label_lastRec;
     protected $bg;
     protected $widths;
 

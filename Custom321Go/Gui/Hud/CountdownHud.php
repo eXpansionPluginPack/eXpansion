@@ -14,7 +14,8 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget;
 class CountdownHud extends PlainWidget
 {
 
-    protected $sprite, $sprite2;
+    protected $sprite;
+    protected $sprite2;
 
     function onConstruct()
     {
@@ -26,7 +27,6 @@ class CountdownHud extends PlainWidget
         $this->sprite->setStyle("Bgs1InRace");
         $this->sprite->setSubStyle("BgEmpty");
         $this->sprite->setImage($config->sprite1, true);
-        //$this->sprite->setBgcolor("f00");
 
 
         $this->sprite->setAlign("center", "center");

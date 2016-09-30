@@ -10,7 +10,11 @@ namespace ManiaLivePlugins\eXpansion\ESportsManager\Gui\Windows;
 class MatchWait extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    protected $label_halt, $label_reason, $frame, $btn_continue, $btn_select;
+    protected $label_halt;
+    protected $label_reason;
+    protected $frame;
+    protected $btn_continue;
+    protected $btn_select;
     private $admin = false;
     private $action;
 

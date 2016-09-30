@@ -7,9 +7,19 @@ use ManiaLivePlugins\eXpansion\MapRatings\Gui\Controls\RateButton2;
 class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-    protected $label, $xml, $frame, $bg, $titlebg, $labelMap;
+    protected $label;
+    protected $xml;
+    protected $frame;
+    protected $bg;
+    protected $titlebg;
+    protected $labelMap;
 
-    protected $b0, $b1, $b2, $b3, $b4, $b5;
+    protected $b0;
+    protected $b1;
+    protected $b2;
+    protected $b3;
+    protected $b4;
+    protected $b5;
 
     public static $parentPlugin;
 
@@ -65,18 +75,6 @@ class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
         $this->b0 = new RateButton2(0);
         $this->frame->addComponent($this->b0);
-
-        /* $this->b1 = new RateButton(1);
-        $this->frame->addComponent($this->b1);
-
-        $this->b2 = new RateButton(2);
-        $this->frame->addComponent($this->b2);
-
-        $this->b3 = new RateButton(3);
-        $this->frame->addComponent($this->b3);
-
-        $this->b4 = new RateButton(4);
-        $this->frame->addComponent($this->b4); */
 
         $this->b5 = new RateButton2(5);
         $this->frame->addComponent($this->b5);

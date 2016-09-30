@@ -12,7 +12,12 @@ class ScoreItem extends Control
 {
 
     protected $bg;
-    protected $score, $nick, $time, $win1, $win2, $win3;
+    protected $score;
+    protected $nick;
+    protected $time;
+    protected $win1;
+    protected $win2;
+    protected $win3;
 
     public function __construct(PlayerScore $playerScore)
     {
@@ -85,4 +90,3 @@ class ScoreItem extends Control
         parent::destroy();
     }
 }
-

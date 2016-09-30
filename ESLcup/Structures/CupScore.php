@@ -14,10 +14,12 @@ class CupScore extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
     public $player;
 
     /** @var string */
-    public $login, $nickName;
+    public $login;
+    public $nickName;
 
     /** @var integer */
-    public $score, $playerId;
+    public $score;
+    public $playerId;
     public $finalist = false;
     public $hasWin = false;
     public $place = -1;

@@ -32,7 +32,9 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 class MapInfoItem extends Control implements ScriptedContainer
 {
 
-    protected $quad, $map, $author;
+    protected $quad;
+    protected $map;
+    protected $author;
 
     function __construct($sizeX, $sizeY = 9)
     {

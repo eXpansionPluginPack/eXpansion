@@ -48,7 +48,9 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 
     /* @var bool $warmup */
     protected $wasWarmup = false;
-    protected $msg_newRecord, $msg_norecord, $msg_record;
+    protected $msg_newRecord;
+    protected $msg_norecord;
+    protected $msg_record;
     public static $actionOpenRecs = -1;
     public static $actionOpenCps = -1;
 

@@ -16,7 +16,8 @@ class Sector extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
     public static $nbResult = 5;
-    protected $label_sector, $label_pos;
+    protected $label_sector;
+    protected $label_pos;
     protected $widths = array(3, 7, 7, 7, 7, 7);
     protected $pager;
     protected $items = array();

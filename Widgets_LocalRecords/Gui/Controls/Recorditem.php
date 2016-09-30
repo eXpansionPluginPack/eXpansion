@@ -4,7 +4,8 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Controls;
 
 class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-    protected $bg, $bg2;
+    protected $bg;
+    protected $bg2;
 
     protected $nick;
 

@@ -10,7 +10,12 @@ namespace ManiaLivePlugins\eXpansion\ScriptTester\Gui\Widgets;
 class TestWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-    protected $scriptt, $xmlData, $title, $frame, $frame2, $closeButton;
+    protected $scriptt;
+    protected $xmlData;
+    protected $title;
+    protected $frame;
+    protected $frame2;
+    protected $closeButton;
 
     protected function eXpOnBeginConstruct()
     {

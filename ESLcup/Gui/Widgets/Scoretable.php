@@ -10,7 +10,12 @@ namespace ManiaLivePlugins\eXpansion\ESLcup\Gui\Widgets;
 class Scoretable extends \ManiaLive\Gui\Window
 {
 
-    protected $background, $rankingslabel, $pointslimit, $gamemode, $next, $prev;
+    protected $background;
+    protected $rankingslabel;
+    protected $pointslimit;
+    protected $gamemode;
+    protected $next;
+    protected $prev;
     protected $frame;
     private $page = 0;
     private $itemsOnPage = 16;

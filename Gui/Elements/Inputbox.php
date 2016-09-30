@@ -9,7 +9,9 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $label;
     protected $button;
     protected $name;
-    protected $bgleft, $bgcenter, $bgright;
+    protected $bgleft;
+    protected $bgcenter;
+    protected $bgright;
 
     public function __construct($name, $sizeX = 35, $editable = true)
     {

@@ -11,7 +11,12 @@ class ScoreItem extends Control
 {
 
     protected $bg;
-    protected $score1, $score2, $winner, $team1, $team2, $roundNumber;
+    protected $score1;
+    protected $score2;
+    protected $winner;
+    protected $team1;
+    protected $team2;
+    protected $roundNumber;
 
     public function __construct(RoundScore $score)
     {
@@ -97,4 +102,3 @@ class ScoreItem extends Control
         parent::destroy();
     }
 }
-

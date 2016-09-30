@@ -12,12 +12,22 @@ use ManiaLivePlugins\eXpansion\Gui\Gui;
  */
 class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-    protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish, $label_login;
-    protected $bg, $button_report;
+    protected $label_rank;
+    protected $label_nick;
+    protected $label_score;
+    protected $label_avgScore;
+    protected $label_nbFinish;
+    protected $label_login;
+    protected $bg;
+    protected $button_report;
     protected $widths;
 
-    public function __construct($indexNumber, $login, \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $record, $widths)
-    {
+    public function __construct(
+        $indexNumber,
+        $login,
+        \ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord $record,
+        $widths
+    ) {
         $this->widths = $widths;
         $this->sizeY = 6;
         $this->bg = new ListBackGround($indexNumber, 100, 6);

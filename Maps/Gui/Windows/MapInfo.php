@@ -26,7 +26,8 @@ use Maniaplanet\DedicatedServer\Connection;
  */
 class MapInfo extends Window
 {
-    protected $frame, $frame2;
+    protected $frame;
+    protected $frame2;
 
     /** @var Connection */
     protected $connection;
@@ -88,7 +89,6 @@ class MapInfo extends Window
                 $map->authorTime = $gbxInfo->authorTime;
                 $map->silverTime = $gbxInfo->silverTime;
                 $map->bronzeTime = $gbxInfo->bronzeTime;
-                //   $map->nbCheckpoints = $gbxInfo->nbCheckpoints;
                 $map->{"nick"} = $gbxInfo->author->nickname;
             }
         } catch (Exception $ex) {
@@ -122,10 +122,10 @@ class MapInfo extends Window
         $lbl->setText($gbxInfo->playerModel);
         $this->frame->addComponent($lbl);
 
-// frame 2
+        // frame 2
         $y = 0;
 
-// add time
+        // add time
         $lbl = new Label($x, 6);
         $lbl->setPosition($x, $y);
         $lbl->setText("Add Date");
@@ -140,7 +140,10 @@ class MapInfo extends Window
         $y -= 5;
 
         // time datas
-        $mapData = array("authorTime" => "Author Time", "goldTime" => "Gold Time", "silverTime" => "Silver Time", "bronzeTime" => "Bronze Time");
+        $mapData = array(
+            "authorTime" => "Author Time", "goldTime" => "Gold Time",
+            "silverTime" => "Silver Time", "bronzeTime" => "Bronze Time"
+        );
         foreach ($mapData as $field => $descr) {
             $lbl = new Label($x, 6);
             $lbl->setPosition($x, $y);

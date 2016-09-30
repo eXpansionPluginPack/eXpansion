@@ -19,7 +19,10 @@ use ManiaLivePlugins\eXpansion\Widgets_TeamPlayerScores\Structures\PlayerScore;
 class PlayerScoreWidget extends Widget
 {
 
-    private $frame, $bg, $lbl_title, $bgTitle;
+    private $frame;
+    private $bg;
+    private $lbl_title;
+    private $bgTitle;
 
     protected function eXpOnBeginConstruct()
     {

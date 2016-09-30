@@ -32,7 +32,8 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 class ClockItem extends Control implements ScriptedContainer
 {
 
-    protected $lbl_value, $lbl_title;
+    protected $lbl_value;
+    protected $lbl_title;
 
     public function __construct($sizeX, $sizeY = 9)
     {

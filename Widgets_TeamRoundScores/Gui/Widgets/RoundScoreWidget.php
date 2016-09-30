@@ -16,7 +16,10 @@ use ManiaLivePlugins\eXpansion\Widgets_TeamRoundScores\Gui\Controls\ScoreItem;
 class RoundScoreWidget extends Widget
 {
 
-    protected $frame, $bg, $lbl_title, $bgTitle;
+    protected $frame;
+    protected $bg;
+    protected $lbl_title;
+    protected $bgTitle;
 
     protected function eXpOnBeginConstruct()
     {

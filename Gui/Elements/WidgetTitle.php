@@ -11,7 +11,9 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
  */
 class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-    protected $bg, $bgStr, $lbl_title;
+    protected $bg;
+    protected $bgStr;
+    protected $lbl_title;
     protected $config;
     protected $direction = "top";
 
@@ -31,11 +33,6 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg->setSubStyle('BgWindow4');
         $this->bg->setAlign("center", "center");
         $this->addComponent($this->bg);
-
-        //$this->bgStr = new \ManiaLib\Gui\Elements\Quad();
-        //$this->bgStr->setAlign("right", "center");
-        //$this->bgStr->setImage('file://Media/Manialinks/Common/WarmUp/Structure.dds', true);
-        // $this->addComponent($this->bgStr);
 
         $this->lbl_title = new DicoLabel($sizeX, $sizeY);
         $this->lbl_title->setTextSize($config->style_widget_title_lbSize);

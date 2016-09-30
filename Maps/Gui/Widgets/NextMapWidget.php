@@ -6,11 +6,15 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
     protected $bg;
-    protected $leftFrame, $rightFrame;
+    protected $leftFrame;
+    protected $rightFrame;
     protected $mapName;
     protected $mapAuthor;
     protected $labelName;
-    protected $labelAuthor, $environment, $time, $country;
+    protected $labelAuthor;
+    protected $environment;
+    protected $time;
+    protected $country;
 
     /** @var \Maniaplanet\DedicatedServer\Structures\Map */
     protected $map;
@@ -87,7 +91,6 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->map = $map;
         $this->labelName->setText($this->map->name);
         $this->labelAuthor->setText($this->map->author);
-        // $this->time->setText($this->map->goldTime);
         $this->environment->setText($map->environnement);
 
         if ($map->author == "Nadeo") {

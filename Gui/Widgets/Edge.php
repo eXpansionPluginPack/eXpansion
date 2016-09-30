@@ -17,11 +17,15 @@ use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 class Edge extends Widget
 {
 
-    protected $quad, $quad2;
-    protected $label, $label2;
+    protected $quad;
+    protected $quad2;
+    protected $label;
+    protected $label2;
     protected $orientation;
     protected $background;
-    protected $_mainWindow, $_windowFrame, $bg;
+    protected $_mainWindow;
+    protected $_windowFrame;
+    protected $bg;
     protected $sscript;
     protected $widgetSize;
 

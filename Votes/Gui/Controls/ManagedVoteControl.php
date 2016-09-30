@@ -9,12 +9,14 @@ class ManagedVoteControl extends \ManiaLivePlugins\eXpansion\Gui\Control
     private $label;
     private $inputbox;
     private $frame;
-    private $ratio, $timeout, $voters;
+    private $ratio;
+    private $timeout;
+    private $voters;
 
     /**
      *
      * @param type $indexNumber
-     * @param \ManiaLivePlugins\eXpansion\Votes\Structures\ManagedVote $voteObject
+     * @param \ManiaLivePlugins\eXpansion\Votes\Structures\ManagedVote $vote
      * @param type $sizeX
      */
     public function __construct($indexNumber, \ManiaLivePlugins\eXpansion\Votes\Structures\ManagedVote $vote, $sizeX)
@@ -52,7 +54,12 @@ class ManagedVoteControl extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->frame->addComponent(clone $spacer);
 
-        $this->voters = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown($vote->command . "_voters", array("Select", "Active Players", "Players", "Everybody"), ($vote->voters + 1), 20);
+        $this->voters = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown(
+            $vote->command . "_voters",
+            array("Select", "Active Players", "Players", "Everybody"),
+            ($vote->voters + 1),
+            20
+        );
         $this->voters->setPosY(-1);
         $this->frame->addComponent($this->voters);
 
@@ -80,4 +87,3 @@ class ManagedVoteControl extends \ManiaLivePlugins\eXpansion\Gui\Control
         parent::destroy();
     }
 }
-

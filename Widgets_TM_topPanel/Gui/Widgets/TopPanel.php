@@ -27,9 +27,12 @@ namespace ManiaLivePlugins\eXpansion\Widgets_TM_topPanel\Gui\Widgets;
 class TopPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
 
-    protected $bg, $logo;
+    protected $bg;
+    protected $logo;
 
-    protected $frameRight, $frameLeft, $frameCenter;
+    protected $frameRight;
+    protected $frameLeft;
+    protected $frameCenter;
 
     protected $script;
 

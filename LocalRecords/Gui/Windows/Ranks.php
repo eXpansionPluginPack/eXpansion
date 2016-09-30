@@ -15,10 +15,18 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
     protected $frame;
-    protected $label_rank, $label_nick, $label_wins, $label_score, $label_finish, $label_nbRecords, $label_ptime, $label_lastRec;
+    protected $label_rank;
+    protected $label_nick;
+    protected $label_wins;
+    protected $label_score;
+    protected $label_finish;
+    protected $label_nbRecords;
+    protected $label_ptime;
+    protected $label_lastRec;
     protected $widths = array(1, 6, 2, 2, 2, 2, 3, 3);
 
-    protected $pager, $headerbar;
+    protected $pager;
+    protected $headerbar;
     protected $items = array();
 
     protected function onConstruct()
@@ -31,9 +39,6 @@ class Ranks extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->setPosX(0);
         $this->pager->setPosY(2);
         $this->mainFrame->addComponent($this->pager);
-
-        //$this->headerbar = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround($sizeX, 4.5);
-        //$this->mainFrame->addComponent($this->headerbar);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
         $this->frame->setSize($sizeX, 4);

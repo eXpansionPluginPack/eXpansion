@@ -5,7 +5,10 @@ namespace ManiaLivePlugins\eXpansion\MXKarma\Gui\Widgets;
 class MXRatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-    protected $frame, $starFrame, $move, $gauge;
+    protected $frame;
+    protected $starFrame;
+    protected $move;
+    protected $gauge;
 
     protected $stars = array();
 

@@ -7,7 +7,11 @@ class Netlost extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     protected $clockBg;
 
-    protected $frame, $players, $specs, $map, $author;
+    protected $frame;
+    protected $players;
+    protected $specs;
+    protected $map;
+    protected $author;
 
     protected $line;
 

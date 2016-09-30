@@ -20,7 +20,9 @@ use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
  */
 class DediReport extends Window
 {
-    protected $textedit, $infolabel, $frame;
+    protected $textedit;
+    protected $infolabel;
+    protected $frame;
 
     protected function onConstruct()
     {
@@ -32,7 +34,9 @@ class DediReport extends Window
 
         $info = new Label(100, 16);
         $info->setTextSize(2);
-        $info->setText("To report invalid records for dedimania, \n please copy the following info at clipboard (ctrl-a + ctrl-c)");
+        $info->setText(
+            "To report invalid records for dedimania, \n please copy the following info at clipboard (ctrl-a + ctrl-c)"
+        );
         $this->frame->addComponent($info);
 
         $this->textedit = new TextEdit("", 100, 40);
@@ -40,7 +44,10 @@ class DediReport extends Window
 
         $info = new Label(100, 32);
         $info->setTextSize(2);
-        $info->setText('$fffThen go click following link:$3af' . "\n" . '$lhttp://dedimania.net/SITE/forum/viewtopic.php?id=384$l ' . "\n" . '$fffand post this information there.');
+        $info->setText(
+            '$fffThen go click following link:$3af' . "\n" . '$lhttp://dedimania.net/SITE/forum/viewtopic.php?id=384$l '
+            . "\n" . '$fffand post this information there.'
+        );
         $this->frame->addComponent($info);
     }
 

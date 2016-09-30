@@ -16,7 +16,8 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $ok;
     protected $stats;
     protected $actionOk;
-    protected $button_cpJoin, $button_addFav;
+    protected $button_cpJoin;
+    protected $button_addFav;
 
     /** @var \Maniaplanet\DedicatedServer\Connection */
     protected $connection;
@@ -60,7 +61,13 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $line = new Infoline(5, "Manialive version", \ManiaLive\Application\VERSION, 0);
         $this->frame->addComponent($line);
 
-        $line = new Infoline(5, "eXpansion version", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . " - " . (date("Y-m-d h:i:s A", Helper::getBuildDate())), 0);
+        $line = new Infoline(
+            5,
+            "eXpansion version",
+            \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION
+            . " - " . (date("Y-m-d h:i:s A", Helper::getBuildDate())),
+            0
+        );
         $this->frame->addComponent($line);
 
         $line = new Infoline(5, "Php Version", phpversion(), 0);

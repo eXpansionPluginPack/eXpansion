@@ -15,7 +15,10 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalBase;
 class SecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    protected $label_rank, $label_nick, $label_time, $frames;
+    protected $label_rank;
+    protected $label_nick;
+    protected $label_time;
+    protected $frames;
     protected $bg;
     protected $widths;
 
@@ -47,12 +50,10 @@ class SecItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
             $this->label_nick[$i] = new \ManiaLib\Gui\Elements\Label(10., 4);
             $this->label_nick[$i]->setAlign('center', 'top');
-            //$this->label_nick[$i]->setScale(0.8);
             $this->label_nick[$i]->setText($sector['recordObj']->nickName);
 
             $this->label_time[$i] = new \ManiaLib\Gui\Elements\Label(10, 4);
             $this->label_time[$i]->setAlign('center', 'top');
-            //$this->label_time[$i]->setScale(0.8);
             $this->label_time[$i]->setPosY(-4);
 
             if ($i < Sector::$nbResult) {

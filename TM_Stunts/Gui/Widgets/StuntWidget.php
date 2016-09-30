@@ -27,7 +27,10 @@ namespace ManiaLivePlugins\eXpansion\TM_Stunts\Gui\Widgets;
 class StuntWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-    protected $lbl_stuntName, $lbl_description, $frame, $script;
+    protected $lbl_stuntName;
+    protected $lbl_description;
+    protected $frame;
+    protected $script;
 
     protected function eXpOnBeginConstruct()
     {

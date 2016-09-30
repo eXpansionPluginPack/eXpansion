@@ -12,7 +12,12 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 class TopsumItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 
-    protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish, $label_login;
+    protected $label_rank;
+    protected $label_nick;
+    protected $label_score;
+    protected $label_avgScore;
+    protected $label_nbFinish;
+    protected $label_login;
 
     protected $bg;
 

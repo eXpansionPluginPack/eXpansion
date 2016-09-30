@@ -6,7 +6,8 @@ class GenericItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
     protected $bg;
     protected $nick;
-    protected $label, $label1;
+    protected $label;
+    protected $label1;
     protected $time;
     protected $frame;
 
@@ -71,4 +72,3 @@ class GenericItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         parent::destroy();
     }
 }
-

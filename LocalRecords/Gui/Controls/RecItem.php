@@ -17,7 +17,11 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaL
 {
 
     /** @var \ManiaLib\Gui\Elements\Label */
-    protected $label_rank, $label_nick, $label_score, $label_avgScore, $label_nbFinish;
+    protected $label_rank;
+    protected $label_nick;
+    protected $label_score;
+    protected $label_avgScore;
+    protected $label_nbFinish;
 
     protected $button_delete;
 

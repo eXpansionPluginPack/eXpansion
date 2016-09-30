@@ -11,9 +11,15 @@ use ManiaLivePlugins\eXpansion\ESportsManager\ESportsManager;
 class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
-    protected $label_halt, $btn_apply, $btn_cancel, $label_reason, $frame, $line;
+    protected $label_halt;
+    protected $btn_apply;
+    protected $btn_cancel;
+    protected $label_reason;
+    protected $frame;
+    protected $line;
     private $organizers = array();
-    private $rulesDir, $dir;
+    private $rulesDir;
+    private $dir;
     private $settingsFile = "";
 
     /** @var  \Maniaplanet\DedicatedServer\Connection */
